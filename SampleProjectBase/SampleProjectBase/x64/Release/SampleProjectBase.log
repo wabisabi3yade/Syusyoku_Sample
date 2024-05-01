@@ -1,0 +1,40 @@
+﻿  compilation object save succeeded; see C:\Users\takum\Documents\専門\Visualstudio workspace\Syusyoku\SampleProjectBase\SampleProjectBase\Assets\Shader\PixelShader.cso
+  compilation object save succeeded; see C:\Users\takum\Documents\専門\Visualstudio workspace\Syusyoku\SampleProjectBase\SampleProjectBase\Assets\Shader\VertexShader.cso
+  pch.cpp
+  BlendState.cpp
+  BroadSceneType.cpp
+  BroadScene_Base.cpp
+  Camera.cpp
+  ChangeBroadScene.cpp
+  ChangeSubScene.cpp
+  D3D11_Renderer.cpp
+  Direct3D11.cpp
+  Float2.cpp
+  Float3.cpp
+  Float4.cpp
+  main.cpp
+  MainApplication.cpp
+  Mesh.cpp
+  MessageError.cpp
+  Model.cpp
+  RenderParam.cpp
+  SceneInfo.cpp
+  SceneManager.cpp
+  SceneMoveInfo.cpp
+  コンパイル中...
+  SceneRunningState.cpp
+  SetUpPerspectiveProj.cpp
+  SetUpViewTrans.cpp
+  ShaderRetation.cpp
+  Singleton_Base.cpp
+  SubScene_Base.cpp
+  Test_Broad.cpp
+  Test_ChangeSubScene.cpp
+  Test_SubScene.cpp
+  Triangle.cpp
+  Window.cpp
+  コード生成しています。
+  Previous IPDB not found, fall back to full compilation.
+  All 340 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  コード生成が終了しました。
+  SampleProjectBase.vcxproj -> C:\Users\takum\Documents\専門\Visualstudio workspace\Syusyoku\SampleProjectBase\x64\Release\SampleProjectBase.exe

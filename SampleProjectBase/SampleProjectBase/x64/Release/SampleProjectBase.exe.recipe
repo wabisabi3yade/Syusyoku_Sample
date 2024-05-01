@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\Users\takum\Documents\専門\Visualstudio workspace\Syusyoku\SampleProjectBase\x64\Release\SampleProjectBase.exe</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles>
+    <ContentFile>
+      <FullPath>C:\Users\takum\Documents\専門\Visualstudio workspace\Syusyoku\SampleProjectBase\SampleProjectBase\Assets\Shader\PixelShader.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\takum\Documents\専門\Visualstudio workspace\Syusyoku\SampleProjectBase\SampleProjectBase\Assets\Shader\VertexShader.cso</FullPath>
+    </ContentFile>
+  </ContentFiles>
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>
