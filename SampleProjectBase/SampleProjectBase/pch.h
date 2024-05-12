@@ -11,6 +11,7 @@
 #include "Float2.h"	// float型変数2つクラス
 #include "Float3.h"	// float型変数3つクラス
 #include "Float4.h"	// float型変数3つクラス
+#include "Transform.h"	// 座標・回転・スケールのクラス
 #include "MessageError.h"	// エラーテキストを出す
 
 // クラス前方宣言

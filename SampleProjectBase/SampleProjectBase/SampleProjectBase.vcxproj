@@ -40,8 +40,10 @@
     <ClCompile Include="Float2.cpp" />
     <ClCompile Include="Float3.cpp" />
     <ClCompile Include="Float4.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainApplication.cpp" />
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MessageError.cpp" />
     <ClCompile Include="Model.cpp" />
@@ -51,6 +53,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="RenderParam.cpp" />
+    <ClCompile Include="Sampler.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneMoveInfo.cpp" />
     <ClCompile Include="SceneRunningState.cpp" />
@@ -63,6 +66,7 @@
     <ClCompile Include="Test_ChangeSubScene.cpp" />
     <ClCompile Include="Test_SubScene.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
@@ -81,10 +85,12 @@
     <ClInclude Include="Float2.h" />
     <ClInclude Include="Float3.h" />
     <ClInclude Include="Float4.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="IGetRenderPara.h" />
     <ClInclude Include="IGetRenderResource.h" />
     <ClInclude Include="ISetUpProjection.h" />
     <ClInclude Include="MainApplication.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MessageError.h" />
     <ClInclude Include="Model.h" />
@@ -92,6 +98,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="RenderParam.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Sampler.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SceneMoveInfo.h" />
     <ClInclude Include="SceneRunningState.h" />
@@ -104,6 +111,7 @@
     <ClInclude Include="Test_ChangeSubScene.h" />
     <ClInclude Include="Test_SubScene.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Transform.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>

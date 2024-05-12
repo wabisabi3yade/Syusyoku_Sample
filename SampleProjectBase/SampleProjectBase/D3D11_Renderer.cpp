@@ -4,6 +4,7 @@
 
 #include "ShaderRetation.h"
 #include "BlendState.h"
+#include "Sampler.h"
 #include "SetUpPerspectiveProj.h"
 #include "SetUpViewTrans.h"
 
@@ -146,6 +147,10 @@ bool D3D11_Renderer::InitBackBuffer()
 	// ブレンドステート初期化
 	pBlendState = new BlendState(GetDevice());
 
+	// サンプラー初期化
+	pSampler = new Sampler();
+	pSampler->Init(*GetDevice());
+
 	return true;
 }
 
@@ -153,6 +158,7 @@ void D3D11_Renderer::Release()
 {
 	// クラス解放
 	CLASS_DELETE(pBlendState);
+	CLASS_DELETE(pSampler);
 
 	// デバイス・ステートのクリア
 	if (pImmediateContext) pImmediateContext->ClearState();
@@ -190,8 +196,10 @@ void D3D11_Renderer::SetUpDraw()
 	pImmediateContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);
 
 	float color[] = { 0.f, 0.f, 1.f, 0.f };
+	
 	pImmediateContext->ClearRenderTargetView(pRenderTargetView, color);
-
+	ID3D11SamplerState* sampler = pSampler->GetSampler();
+	pImmediateContext->PSSetSamplers(0, 1, &sampler);
 	pImmediateContext->IASetInputLayout(pShaderRetation->GetInputLayout());
 	pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	pImmediateContext->VSSetShader(pShaderRetation->GetVertexShader(), nullptr, 0);
@@ -208,6 +216,16 @@ void D3D11_Renderer::SetUpViewTransform(DirectX::XMMATRIX _viewMatrix)
 {
 	// ビュー変換行列準備クラスに渡す
 	pViewTransform->SetUpViewTransform(_viewMatrix, this);
+}
+
+ID3D11VertexShader* D3D11_Renderer::GetVertexShader()
+{
+	return pShaderRetation->GetVertexShader();
+}
+
+ID3D11PixelShader* D3D11_Renderer::GetPixelShader()
+{
+	return pShaderRetation->GetPixelShader();
 }
 
 bool D3D11_Renderer::CompileShader(const WCHAR* _pVsPath, const WCHAR* _pPsPath, ShaderRetation& _outShader)
@@ -249,7 +267,9 @@ bool D3D11_Renderer::CompileShader(const WCHAR* _pVsPath, const WCHAR* _pPsPath,
 	// Vertex構造体のメンバ変数のサイズを指定して、シェーダーの何の情報なのかを判別する
 	D3D11_INPUT_ELEMENT_DESC layout[] = {
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 	};
 	hr = pDevice->CreateInputLayout(
 		layout,

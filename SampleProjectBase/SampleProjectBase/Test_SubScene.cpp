@@ -8,8 +8,8 @@ Test_SubScene::Test_SubScene(SceneMoveInfo* _pSceneMoveInfo)
 	: SubScene_Base(_pSceneMoveInfo)
 {
 	ModelSettings settings;
-	settings.modelPath = "assets/Alicia_solid_Unity.FBX";
-	settings.isRighthand = true;
+	settings.modelPath = "assets/spot.fbx";
+	settings.isRighthand = false;
 	cube = new Model(settings);
 }
 
@@ -20,6 +20,7 @@ Test_SubScene::~Test_SubScene()
 
 void Test_SubScene::Update()
 {
+	
 }
 
 void Test_SubScene::LateUpdate()

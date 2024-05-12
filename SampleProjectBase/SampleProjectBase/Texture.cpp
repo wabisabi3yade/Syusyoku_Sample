@@ -1,4 +1,6 @@
 #include "pch.h"
+#include<filesystem>
+
 #include "Texture.h"
 #include "Direct3D11.h"
 #include "DirectXTex/TextureLoad.h"
@@ -29,7 +31,6 @@ bool Texture::Setup(const char* _pathName)
 
 	if (FAILED(hr))
 	{
-		MessageError("âÊëúì«çûÇ≈ÉGÉâÅ[");
 		return false;
 	}
 
@@ -51,12 +52,28 @@ bool Texture::Setup(const char* _pathName)
 	return true;
 }
 
-Texture::Texture(const char* _pathName) : width(0), height(0), pSRV(nullptr)
+void Texture::Release()
 {
-	Setup(_pathName);
+	SAFE_RELEASE(pSRV);
+}
+
+const wchar_t* Texture::ReplaceExtension(const std::wstring& _pathName, const char* ext)
+{
+	std::filesystem::path p = _pathName.c_str();
+
+	return p.replace_extension(ext).c_str();
+}
+
+Texture::Texture() : width(0), height(0), pSRV(nullptr)
+{
+}
+
+Texture::Texture(const char* _pathName, bool& _isSucess) : width(0), height(0), pSRV(nullptr)
+{
+	_isSucess = Setup(_pathName);
 }
 
 Texture::~Texture()
 {
-	SAFE_RELEASE(pSRV);
+	Release();
 }

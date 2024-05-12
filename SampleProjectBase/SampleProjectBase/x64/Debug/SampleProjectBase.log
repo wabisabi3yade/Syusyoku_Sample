@@ -1,2 +1,10 @@
-﻿  Camera.cpp
+﻿  BlendState.cpp
+  D3D11_Renderer.cpp
+  Material.cpp
+  Model.cpp
+  Texture.cpp
+C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Texture.cpp(48,25): warning C4267: '=': 'size_t' から 'u_int' に変換しました。データが失われているかもしれません。
+C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Texture.cpp(49,27): warning C4267: '=': 'size_t' から 'u_int' に変換しました。データが失われているかもしれません。
+  Transform.cpp
+  コードを生成中...
   SampleProjectBase.vcxproj -> C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\x64\Debug\SampleProjectBase.exe

@@ -7,7 +7,7 @@ class Model;
 class Test_SubScene :
     public SubScene_Base
 {
-    Model* cube;
+    Model* cube{nullptr};
 
 public:
     Test_SubScene(SceneMoveInfo* _pSceneMoveInfo);

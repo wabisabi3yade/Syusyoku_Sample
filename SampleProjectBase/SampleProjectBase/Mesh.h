@@ -9,11 +9,13 @@ class Mesh
 
 	Vertex* pVertices{ nullptr };	// メッシュの頂点データ
 
-	u_int* pIndicies{ nullptr };
+	u_int* pIndicies{ nullptr };	// 頂点インデックス
 
 	u_int vertexNum;	// 頂点数
 
-	u_int indexNum;	// 頂点インデックス
+	u_int indexNum;	// 頂点インデックス数
+
+	u_int materialIndex;	// マテリアルのインデックス
 
 	ID3D11Buffer* pVertexBuffer{ nullptr };	// 頂点バッファ
 

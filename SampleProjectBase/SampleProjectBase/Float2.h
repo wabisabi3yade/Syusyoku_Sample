@@ -5,6 +5,8 @@ class Float2 : public DirectX::XMFLOAT2
 public:
 	// ‰Šú’l‘S‚Ä0
 	Float2(float _x = 0, float _y = 0);
+	Float2(const Float2&) = default;
+	Float2(DirectX::XMFLOAT2 _f);
 
 	/// <summary>
 	/// 2‚Â‚ÌFloat2Œ^•Ï”‚Ì‹——£‚ğ‹‚ß‚é

@@ -14,6 +14,11 @@ Float2::Float2(float _x, float _y) : DirectX::XMFLOAT2(_x, _y)
 {
 }
 
+Float2::Float2(DirectX::XMFLOAT2 _f)
+{
+	this->x = _f.x; this->y = _f.y;
+}
+
 Float2 Float2::Distance(Float2 _v1, Float2 _v2)
 {
 	Float2 d = _v1 - _v2;

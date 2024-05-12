@@ -61,7 +61,7 @@ bool Mesh::CreateIndexBuffer(D3D11_Renderer& _renderer)
 	return true;
 }
 
-Mesh::Mesh() : vertexNum(0), indexNum(0)
+Mesh::Mesh() : vertexNum(0), indexNum(0), materialIndex(0)
 {
 }
 
@@ -100,6 +100,7 @@ bool Mesh::Setup(D3D11_Renderer& _renderer, aiMesh* pMeshData)
 		pVertices[vertexIdx].color = { COLOR, COLOR, COLOR, 1.f };
 	}
 
+	// 頂点シェーダー作成
 	if (CreateVertexBuffer(_renderer) == false)
 	{
 		return false;
@@ -109,6 +110,7 @@ bool Mesh::Setup(D3D11_Renderer& _renderer, aiMesh* pMeshData)
 	indexNum = pMeshData->mNumFaces * 3;	// 1ポリゴンに3個のインデックス
 	pIndicies = new u_int[indexNum];
 
+	// インデックスを割り振る
 	for (u_int faceIdx = 0; faceIdx < pMeshData->mNumFaces; faceIdx++)
 	{
 		auto& face = pMeshData->mFaces[faceIdx];
@@ -116,7 +118,7 @@ bool Mesh::Setup(D3D11_Renderer& _renderer, aiMesh* pMeshData)
 
 		for (u_int idx = 0; idx < 3; idx++)
 		{
-			// この面の頂点インデックスを取得する
+			// この面の頂点インデックスを取得する(0,1,2,0,1,2・・・)
 			pIndicies[faceIdx * 3 + idx] = face.mIndices[idx];
 		}
 
@@ -125,7 +127,8 @@ bool Mesh::Setup(D3D11_Renderer& _renderer, aiMesh* pMeshData)
 	if (CreateIndexBuffer(_renderer) == false)
 		return false;
 
-
+	// マテリアルの割り当て
+	materialIndex = pMeshData->mMaterialIndex;
 
 	return true;
 }

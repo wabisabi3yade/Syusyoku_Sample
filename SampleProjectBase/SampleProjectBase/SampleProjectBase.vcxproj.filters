@@ -25,9 +25,6 @@
     <Filter Include="ソース ファイル\Application\Window">
       <UniqueIdentifier>{9aaa4cd1-100a-437d-8b04-368c45b8da7d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Camera">
-      <UniqueIdentifier>{6a26953d-a672-405b-952f-60d285febe89}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics">
       <UniqueIdentifier>{562a209c-0565-4c33-be9d-a735858792ad}</UniqueIdentifier>
     </Filter>
@@ -154,6 +151,27 @@
     <Filter Include="ソース ファイル\Graphics\Texture">
       <UniqueIdentifier>{026d8e4c-f51d-4e82-9a2d-1ac9ee929f14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Graphics\Material">
+      <UniqueIdentifier>{a83c15aa-5988-40c1-ac96-d5c7154ca83a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Application\DirectX3D11\Render\Sampler">
+      <UniqueIdentifier>{ef2a43b5-a26c-496b-80e2-a491592009f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Shader">
+      <UniqueIdentifier>{e7d17c28-0c61-4a5c-a1b9-6436bfa75e54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Transform">
+      <UniqueIdentifier>{d3eb84ad-7e35-417a-9ffc-d5938579ae06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object">
+      <UniqueIdentifier>{55c4fa45-2e89-43b4-91f6-f99c07eb6859}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\GameObject">
+      <UniqueIdentifier>{a607ffd0-a3e3-47ae-94d0-d85404b0472c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Camera">
+      <UniqueIdentifier>{6a26953d-a672-405b-952f-60d285febe89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PixelShader.hlsl">
@@ -171,7 +189,7 @@
       <Filter>ソース ファイル\Application\DirectX3D11\Render\BlendState</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>ソース ファイル\Camera</Filter>
+      <Filter>ソース ファイル\Object\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Direct3D11.cpp">
       <Filter>ソース ファイル\Application\DirectX3D11</Filter>
@@ -263,6 +281,18 @@
     <ClCompile Include="Texture.cpp">
       <Filter>ソース ファイル\Graphics\Texture</Filter>
     </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>ソース ファイル\Graphics\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="Sampler.cpp">
+      <Filter>ソース ファイル\Application\DirectX3D11\Render\Sampler</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>ソース ファイル\System\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>ソース ファイル\Object\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -272,7 +302,7 @@
       <Filter>ソース ファイル\Application\DirectX3D11\Render\BlendState</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>ソース ファイル\Camera</Filter>
+      <Filter>ソース ファイル\Object\Camera</Filter>
     </ClInclude>
     <ClInclude Include="CbProjectionSet.h">
       <Filter>ソース ファイル\Application\DirectX3D11\Render\CbSet</Filter>
@@ -381,6 +411,18 @@
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>ソース ファイル\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>ソース ファイル\Graphics\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="Sampler.h">
+      <Filter>ソース ファイル\Application\DirectX3D11\Render\Sampler</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>ソース ファイル\System\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>ソース ファイル\Object\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

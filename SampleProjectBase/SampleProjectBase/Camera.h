@@ -1,7 +1,8 @@
 #pragma once
+#include "GameObject.h"
 
 // ゲーム内カメラクラス
-class Camera
+class Camera : GameObject
 {
 	// カメラの座標
 	Float3 eyePos{ 0,0,0 };

@@ -4,6 +4,7 @@
 
 class ShaderRetation;
 class BlendState;
+class Sampler;
 class SetUpPerspectiveProj;
 class SetUpViewTrans;
 
@@ -20,12 +21,12 @@ private:
 	// デバイス＝DirectXの各種機能を作る
 	ID3D11Device* pD3DDevice = nullptr;
 	// コンテキスト＝描画関連を司る機能
-	ID3D11DeviceContext* pImmediateContext = nullptr;
+	ID3D11DeviceContext* pImmediateContext{ nullptr };
 	// スワップチェイン＝ダブルバッファ機能
 	IDXGISwapChain* pSwapChain = nullptr;
 
 	// レンダーターゲット＝描画先を表す機能
-	ID3D11RenderTargetView* pRenderTargetView = nullptr;
+	ID3D11RenderTargetView* pRenderTargetView{ nullptr };
 	// ビューポート
 	D3D11_VIEWPORT viewPort[1];
 
@@ -38,6 +39,9 @@ private:
 
 	// ブレンドステート（半透明処理）のクラス
 	BlendState* pBlendState {nullptr};
+
+	// サンプラー
+	Sampler* pSampler{ nullptr };
 
 	// プロジェクション行列を準備するクラス
 	std::unique_ptr<SetUpPerspectiveProj> pProjection;
@@ -72,5 +76,8 @@ public:
 
 	ID3D11Device* GetDevice()const override { return pD3DDevice; }
 	ID3D11DeviceContext* GetDeviceContext() override { return pImmediateContext; }
+
+	ID3D11VertexShader* GetVertexShader();	// 頂点シェーダー取得
+	ID3D11PixelShader* GetPixelShader();	// ピクセルシェーダー取得
 };
 

@@ -15,6 +15,11 @@ Float3::Float3(float _x, float _y, float _z) : DirectX::XMFLOAT3(_x, _y, _z)
 {
 }
 
+Float3::Float3(DirectX::XMFLOAT4 _f)
+{
+	this->x = _f.x; this->y = _f.y; this->z = _f.z;
+}
+
 Float3 Float3::Distance(Float3 _v1, Float3 _v2)
 {
 	Float3 d = _v1 - _v2;

@@ -4,6 +4,8 @@ class Float4 : public DirectX::XMFLOAT4
 public:
 	// ‰Šú’l‘S‚Ä0
 	Float4(float _x = 0, float _y = 0, float _z = 0, float _w = 0);
+	Float4(const Float4&) = default;
+	Float4(DirectX::XMFLOAT4 _f);
 
 	// ’è”
 	static const Float4 one;	// (1,1,1,1)

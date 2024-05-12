@@ -9,6 +9,11 @@ Float4::Float4(float _x, float _y, float _z, float _w)
 {
 }
 
+Float4::Float4(DirectX::XMFLOAT4 _f)
+{
+	this->x = _f.x;  this->y = _f.y; this->z = _f.z; this->w = _f.w;
+}
+
 Float4 Float4::operator+(Float4 _v)
 {
 	return { this->x + _v.x, this->y + _v.y, this->z + _v.z, this->w + _v.w };
@@ -54,3 +59,4 @@ Float4 Float4::operator!=(Float4 _v)
 
 	return isRet;
 }
+

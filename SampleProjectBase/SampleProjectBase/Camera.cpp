@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Camera.h"
 
-Camera::Camera() :eyePos(0, -300, -300)
+Camera::Camera() :eyePos(0, 0, -5), focusPos(0,0,0)
 {
 }
 
@@ -11,6 +11,7 @@ Camera::~Camera()
 
 void Camera::Update()
 {
+	
 }
 
 DirectX::XMMATRIX Camera::GetViewMatrix() const

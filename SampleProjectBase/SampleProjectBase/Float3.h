@@ -6,6 +6,8 @@ class Float3 : public DirectX::XMFLOAT3
 public:
 	// ‰Šú’l‘S‚Ä0
 	Float3(float _x = 0, float _y = 0, float _z = 0);
+	Float3(const Float3&) = default;
+	Float3(DirectX::XMFLOAT4 _f);
 
 	// ’è”
 	static const Float3 one;	// (1,1,1)
