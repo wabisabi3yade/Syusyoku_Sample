@@ -1,16 +1,20 @@
 #include "Test_SubScene.h"
 #include "Triangle.h"
 #include "Direct3D11.h"
-
-#include "Model.h"
+#include "GameObject.h"
+#include "ModelCollect.h"
 
 Test_SubScene::Test_SubScene(SceneMoveInfo* _pSceneMoveInfo)
 	: SubScene_Base(_pSceneMoveInfo)
 {
-	ModelSettings settings;
-	settings.modelPath = "assets/spot.fbx";
-	settings.isRighthand = false;
-	cube = new Model(settings);
+	ModelCollect* MC = ModelCollect::GetInstance();
+
+	ModelSettings set;
+	set.Setup("assets/spot.fbx", "Md_Cow", true);
+	ModelCollect::GetInstance()->Load(set);
+
+	go = new GameObject();
+	go->SetModel(MC->GetResource(set.modelName));
 }
 
 Test_SubScene::~Test_SubScene()
@@ -30,10 +34,10 @@ void Test_SubScene::LateUpdate()
 
 void Test_SubScene::Draw()
 {
-	cube->Draw();
+	go->Draw();
 }
 
 void Test_SubScene::Release()
 {
-	CLASS_DELETE(cube);
+	CLASS_DELETE(go);
 }

@@ -5,8 +5,14 @@
 #include "Direct3D11.h"
 #include "DirectXTex/TextureLoad.h"
 
-bool Texture::Setup(const char* _pathName)
+bool Texture::Load(const char* _pathName)
 {
+	if (isImported)
+	{
+		MessageError("既にこのTextureはロードされています");
+		return true;
+	}
+
 	// マルチバイト文字列をワイド文字列に変換
 	wchar_t widePath[MAX_PATH];
 	size_t wideLen = 0;
@@ -36,6 +42,7 @@ bool Texture::Setup(const char* _pathName)
 
 	// SRVを作成
 	ID3D11Device* device = Direct3D11::GetInstance()->GetRenderer()->GetDevice();
+	/*ID3D11ShaderResourceView* srv = pSRV;*/
 	hr = DirectX::CreateShaderResourceView(device, image.GetImages(), image.GetImageCount(), metaData, &pSRV);
 
 	if (FAILED(hr))
@@ -64,13 +71,8 @@ const wchar_t* Texture::ReplaceExtension(const std::wstring& _pathName, const ch
 	return p.replace_extension(ext).c_str();
 }
 
-Texture::Texture() : width(0), height(0), pSRV(nullptr)
+Texture::Texture() : width(0), height(0), pSRV(nullptr), isImported(false), isPermanent(false)
 {
-}
-
-Texture::Texture(const char* _pathName, bool& _isSucess) : width(0), height(0), pSRV(nullptr)
-{
-	_isSucess = Setup(_pathName);
 }
 
 Texture::~Texture()

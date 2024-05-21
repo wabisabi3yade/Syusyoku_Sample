@@ -2,6 +2,7 @@
 #include "Mesh.h"
 #include "Material.h"
 #include "Direct3D11.h"
+#include "ModelCollect.h"
 
 // assimpライブラリ読込
 #ifdef _DEBUG
@@ -13,9 +14,9 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-Model::Model(const ModelSettings& _settings) : meshNum(0)
+Model::Model() : meshNum(0), modelName(""), isPermanent(false), isImported(false)
 {
-	Load(_settings, *Direct3D11::GetInstance()->GetRenderer());
+	
 }
 
 Model::~Model()
@@ -25,9 +26,19 @@ Model::~Model()
 
 bool Model::Load(const ModelSettings& _settings, D3D11_Renderer& _renderer)
 {
+	// モデル格納クラスに既にロードされているならロード処理しない
+	bool isImported = ModelCollect::GetInstance()->GetIsImported(_settings.modelName);
+	if (isImported)
+		return true;
+
 	if (_settings.modelPath == nullptr)
 	{
 		MessageError("モデルのファイルパスが設定されていません");
+		return false;
+	}
+	if (_settings.modelName == "")
+	{
+		MessageError("モデルの名前が設定されていません");
 		return false;
 	}
 
@@ -107,11 +118,11 @@ bool Model::Load(const ModelSettings& _settings, D3D11_Renderer& _renderer)
 
 			bool isSuccess = false;
 			// そのまま探索
-			material->texture = new Texture(path.C_Str(), isSuccess);
+			material->texture = new Texture();
 			// モデルと同じ階層を探索
 			std::string file = dir;
 			file += path.C_Str();
-			isSuccess = material->texture->Setup(file.c_str());
+			isSuccess = material->texture->Load(file.c_str());
 
 			// ファイル名のみで探索
 			if (!isSuccess) {
@@ -120,7 +131,7 @@ bool Model::Load(const ModelSettings& _settings, D3D11_Renderer& _renderer)
 				{
 					file = file.substr(idx + 1);
 					file = dir + file;
-					isSuccess = material->texture->Setup(file.c_str());
+					isSuccess = material->texture->Load(file.c_str());
 				}
 
 				// ファイル目のパスが"\\ではなく"/"の場合の対応
@@ -129,7 +140,7 @@ bool Model::Load(const ModelSettings& _settings, D3D11_Renderer& _renderer)
 					{
 						file = file.substr(idx + 1);
 						file = dir + file;
-						isSuccess = material->texture->Setup(file.c_str());
+						isSuccess = material->texture->Load(file.c_str());
 					}
 				}
 			}
@@ -146,19 +157,33 @@ bool Model::Load(const ModelSettings& _settings, D3D11_Renderer& _renderer)
 	return true;
 }
 
-void Model::SetupTransform()
+void Model::SetupTransform(const Transform& _transform)
 {
 	// レンダラー取得
 	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
 
 	CbTransformSet& cb = renderer.GetParameter().cbTransformSet;
 
-	auto mtx = DirectX::XMMatrixIdentity();
+	// 移動行列
+	DirectX::XMMATRIX moveMatrix = DirectX::XMMatrixTranslation(_transform.position.x, _transform.position.y, _transform.position.z);
+	// 拡大行列
+	DirectX::XMMATRIX scaleMatrix = DirectX::XMMatrixScaling(_transform.scale.x, _transform.scale.y, _transform.scale.z);
+	// 回転行列
+	DirectX::XMMATRIX rotateMatX = DirectX::XMMatrixRotationX(_transform.rotation.x);
+	DirectX::XMMATRIX rotateMatY = DirectX::XMMatrixRotationY(_transform.rotation.y);
+	DirectX::XMMATRIX rotateMatZ = DirectX::XMMatrixRotationZ(_transform.rotation.z);
+	DirectX::XMMATRIX rotateMatrix = rotateMatX * rotateMatY * rotateMatZ;
+
+	DirectX::XMMATRIX mtx = scaleMatrix
+		* rotateMatrix
+		* moveMatrix;
 
 	DirectX::XMStoreFloat4x4(&cb.data.transform, XMMatrixTranspose(mtx));
+
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
 	// CBufferにひもづくハードウェアリソースマップ取得（ロックして取得）
 	auto pDeviceContext = renderer.GetDeviceContext();
+
 
 	HRESULT hr = pDeviceContext->Map(
 		cb.pBuffer,
@@ -174,14 +199,16 @@ void Model::SetupTransform()
 	CopyMemory(mappedResource.pData, &cb.data, sizeof(cb.data));
 	// マップ解除
 	pDeviceContext->Unmap(cb.pBuffer, 0);
+
+
 	pDeviceContext->VSSetConstantBuffers(0, 1, &cb.pBuffer);
 
 	return;
 }
 
-void Model::Draw()
+void Model::Draw(const Transform& _transform)
 {
-	SetupTransform();
+	SetupTransform(_transform);
 	// レンダラー取得
 	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
 	for (u_int meshIdx = 0; meshIdx < meshNum; meshIdx++)
@@ -205,4 +232,19 @@ void Model::Release()
 	{
 		CLASS_DELETE(mt);
 	}
+}
+
+bool Model::SetSetting(const ModelSettings& _settings)
+{
+	// モデルをロードする
+	bool isSuccess = Load(_settings, *Direct3D11::GetInstance()->GetRenderer());
+	if (!isSuccess)
+		return false;
+
+	// モデル情報を所持する
+	modelData = _settings;
+	// モデル導入されたフラグを立てる
+	isImported = true;
+
+	return true;
 }

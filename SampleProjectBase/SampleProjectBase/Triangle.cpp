@@ -55,7 +55,7 @@ void Triangle::SetupTransform(D3D11_Renderer& _renderer)
 
 	DirectX::XMStoreFloat4x4(&cb.data.transform, XMMatrixTranspose(mtx));
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	// CBufferにひもづくハードウェアリソースマップ取得（ロックして取得）
+	//// CBufferにひもづくハードウェアリソースマップ取得（ロックして取得）
 	auto pDeviceContext = _renderer.GetDeviceContext();
 
 	HRESULT hr = pDeviceContext->Map(

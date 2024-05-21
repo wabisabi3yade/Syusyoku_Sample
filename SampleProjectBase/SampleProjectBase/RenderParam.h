@@ -6,6 +6,12 @@
 // 描画に必要なパラメータクラス
 class RenderParam
 {
+public:
+	struct ConstBuffer
+	{
+
+	};
+private:
 	// GPUに渡す定数バッファを初期化する
 	bool InitConstBuffer(ID3D11Device* _device);
 
@@ -14,7 +20,7 @@ public:
 	CbProjectionSet cbProjectionSet;	// GPUに渡す投影データ
 	CbViewSet cbViewSet;	// GPUに渡すビュー変換データ
 
-	RenderParam(){};
+	RenderParam() {};
 	~RenderParam();
 
 	/// <summary>

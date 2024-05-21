@@ -1,7 +1,8 @@
 #include <Windows.h>
 #include <crtdbg.h>
 #include "MainApplication.h"
-
+#include "ModelCollect.h"
+#include "TextureCollect.h"
 // エントリポイント
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int)
 {

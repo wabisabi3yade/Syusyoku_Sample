@@ -172,6 +172,18 @@
     <Filter Include="ソース ファイル\Object\Camera">
       <UniqueIdentifier>{6a26953d-a672-405b-952f-60d285febe89}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Application\FramerRate">
+      <UniqueIdentifier>{ab52b659-b273-451b-8c83-6c89a4913459}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\ModelCollect">
+      <UniqueIdentifier>{170553aa-c152-435f-bc36-4da73984e7ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\TextureCollect">
+      <UniqueIdentifier>{45fd70f0-2bc3-4e3d-8d67-fccbb9ce93e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\ResourceCollect_Base">
+      <UniqueIdentifier>{9b816ea1-95ea-46ef-b6a5-18290ca60457}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PixelShader.hlsl">
@@ -292,6 +304,15 @@
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>ソース ファイル\Object\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelCollect.cpp">
+      <Filter>ソース ファイル\Graphics\ModelCollect</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameRate.cpp">
+      <Filter>ソース ファイル\Application\FramerRate</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureCollect.cpp">
+      <Filter>ソース ファイル\Graphics\TextureCollect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -423,6 +444,18 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>ソース ファイル\Object\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelCollect.h">
+      <Filter>ソース ファイル\Graphics\ModelCollect</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameRate.h">
+      <Filter>ソース ファイル\Application\FramerRate</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureCollect.h">
+      <Filter>ソース ファイル\Graphics\TextureCollect</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceCollect_Base.h">
+      <Filter>ソース ファイル\Scene\ResourceCollect_Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

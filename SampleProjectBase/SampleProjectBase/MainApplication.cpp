@@ -3,6 +3,9 @@
 #include "SceneManager.h"
 #include "Camera.h"
 
+#include "ModelCollect.h"
+#include "TextureCollect.h"
+
 MainApplication::MainApplication()
 {
 }
@@ -16,6 +19,9 @@ void MainApplication::Release()
 {
 	Direct3D11::Delete();
 	SceneManager::Delete();
+	ModelCollect::Delete();
+	TextureCollect::Delete();
+	
 
 	CLASS_DELETE(pWindow);
 }

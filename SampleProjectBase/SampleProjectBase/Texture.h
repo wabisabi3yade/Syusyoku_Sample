@@ -3,23 +3,25 @@
 // テクスチャクラス
 class Texture
 {
-	// シェーダーリソースビュー(SRV)
-	// テクスチャ、バッファなどのリソースをシェーダーで参照可能な形式
-	ID3D11ShaderResourceView* pSRV;
+	bool isPermanent;	// モデルを解放させないようにする
+
+	bool isImported;	// モデル情報が入ったかどうか
 
 	// 画像(横・縦サイズ)
 	u_int width;
 	u_int height;
 
+	// シェーダーリソースビュー(SRV)
+	// テクスチャ、バッファなどのリソースをシェーダーで参照可能な形式
+	ID3D11ShaderResourceView* pSRV;
 public:
 
 	// ファイル形式を指定した形式に変更する
 	static const wchar_t* ReplaceExtension(const std::wstring& _pathName, const char* ext);
 
 	Texture();
-	Texture(const char* _pathName, bool& _isSucess);
 	// 準備する
-	bool Setup(const char* _pathName);
+	bool Load(const char* _pathName);
 
 	void Release();
 
