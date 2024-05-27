@@ -1,8 +1,13 @@
-﻿  Material.cpp
+﻿  BroadScene_Base.cpp
+  Camera.cpp
+  ChangeSubScene.cpp
+  GameObject.cpp
+  main.cpp
+  MainApplication.cpp
   Model.cpp
-  Texture.cpp
-C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Texture.cpp(55,25): warning C4267: '=': 'size_t' から 'u_int' に変換しました。データが失われているかもしれません。
-C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Texture.cpp(56,27): warning C4267: '=': 'size_t' から 'u_int' に変換しました。データが失われているかもしれません。
-  TextureCollect.cpp
+  ModelCollect.cpp
+  SubScene_Base.cpp
+  Test_ChangeSubScene.cpp
+  Test_SubScene.cpp
   コードを生成中...
   SampleProjectBase.vcxproj -> C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\x64\Debug\SampleProjectBase.exe

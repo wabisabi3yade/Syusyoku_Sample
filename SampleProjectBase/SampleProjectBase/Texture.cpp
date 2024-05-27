@@ -12,6 +12,11 @@ bool Texture::Load(const char* _pathName)
 		MessageError("既にこのTextureはロードされています");
 		return true;
 	}
+	else if (_pathName == "")
+	{
+		MessageError("テクスチャのパス名が入力されていません");
+		return false;
+	}
 
 	// マルチバイト文字列をワイド文字列に変換
 	wchar_t widePath[MAX_PATH];
@@ -28,6 +33,12 @@ bool Texture::Load(const char* _pathName)
 	if (strstr(_pathName, ".tga"))
 	{
 		hr = DirectX::LoadFromTGAFile(widePath, &metaData, image);
+	}
+	// 読み込まれたファイルがpsd形式なら
+	else if (strstr(_pathName, ".psd"))
+	{
+		std::string message = "psdファイルは対応していません\n" + std::string(_pathName);
+		MessageError(message.c_str());
 	}
 	else
 	{

@@ -10,7 +10,7 @@ Test_SubScene::Test_SubScene(SceneMoveInfo* _pSceneMoveInfo)
 	ModelCollect* MC = ModelCollect::GetInstance();
 
 	ModelSettings set;
-	set.Setup("assets/spot.fbx", "Md_Cow", true);
+	set.Setup("assets/spot.fbx", "Cow", true);
 	ModelCollect::GetInstance()->Load(set);
 
 	go = new GameObject();

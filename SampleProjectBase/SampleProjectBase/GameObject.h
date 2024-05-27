@@ -4,7 +4,7 @@
 // 画面に写されるオブジェクトクラス
 class GameObject
 {
-	Model* model;	// モデル情報
+	const Model* model;	// モデル情報
 
 	void Release();	// 解放処理
 public:
@@ -13,7 +13,7 @@ public:
 	GameObject();
 	virtual ~GameObject();
 
-	void SetModel(Model* _setModel) { model = _setModel; }
+	void SetModel(const Model* _setModel) { model = _setModel; }
 
 	void Update();	// 更新処理
 	void Draw();	// 描画処理

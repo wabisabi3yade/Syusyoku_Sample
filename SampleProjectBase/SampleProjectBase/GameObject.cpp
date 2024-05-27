@@ -1,11 +1,12 @@
 #include "pch.h"
 #include "GameObject.h"
+#include "ModelCollect.h"
 
 void GameObject::Release()
 {
 }
 
-GameObject::GameObject() : model(nullptr)
+GameObject::GameObject() : model()
 {
 }
 
@@ -17,10 +18,14 @@ GameObject::~GameObject()
 void GameObject::Update()
 {
 
+
 }
 
 void GameObject::Draw()
 {
-	if(model->GetImported())	// モデルにデータが入っているなら
-	model->Draw(transform);
+	ModelCollect* m = ModelCollect::GetInstance();
+
+	
+		model->Draw(transform);
+
 }

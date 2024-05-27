@@ -26,7 +26,7 @@ public:
 	/// </summary>
 	/// <param name="_getName"></param>
 	/// <returns></returns>
-	T* GetResource(std::string _getName);
+	const T* GetResource(std::string _getName);
 };
 
 template<typename T>
@@ -67,14 +67,14 @@ inline bool ResourceCollect_Base<T>::SetResource(std::unique_ptr<T> _pResource, 
 }
 
 template<typename T>
-inline T* ResourceCollect_Base<T>::GetResource(std::string _getName)
+inline const T* ResourceCollect_Base<T>::GetResource(std::string _getName)
 {
 	// モデルがロードされていないなら
 	if (!GetIsImported(_getName))
 	{
 		std::string message = "ロードされていないリソースです　" + _getName;
 		MessageError(message.c_str());
-		return nullptr;
+		return {};
 	}
 
 	return resourceList[_getName].get();

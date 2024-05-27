@@ -25,13 +25,13 @@ class Model
 
 	bool Load(const ModelSettings& _settings, D3D11_Renderer& _renderer);
 	// 座標変換行列を作成
-	void SetupTransform(const Transform& _transform);
+	void SetupTransform(const Transform& _transform) const;
 public:
 	Model();
 	~Model();
 
 	// モデルの描画をする
-	void Draw(const Transform& _transform);
+	void Draw(const Transform& _transform) const;
 	void Release();
 
 	// 外部から情報渡されてモデルをロードする処理

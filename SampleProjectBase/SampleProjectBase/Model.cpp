@@ -2,7 +2,8 @@
 #include "Mesh.h"
 #include "Material.h"
 #include "Direct3D11.h"
-#include "ModelCollect.h"
+
+#include "TextureCollect.h"
 
 // assimpライブラリ読込
 #ifdef _DEBUG
@@ -26,8 +27,7 @@ Model::~Model()
 
 bool Model::Load(const ModelSettings& _settings, D3D11_Renderer& _renderer)
 {
-	// モデル格納クラスに既にロードされているならロード処理しない
-	bool isImported = ModelCollect::GetInstance()->GetIsImported(_settings.modelName);
+	// 既にこのモデルが入っていたら
 	if (isImported)
 		return true;
 
@@ -50,7 +50,7 @@ bool Model::Load(const ModelSettings& _settings, D3D11_Renderer& _renderer)
 	flag |= aiProcess_FlipUVs;	//　UV値をY軸を基準に反転させる
 	flag |= aiProcess_PreTransformVertices;	// ノードを一つに統合 アニメーション情報が消えることに注意
 
-	if (_settings.isRighthand)
+	if (!_settings.isRighthand)
 		flag |= aiProcess_MakeLeftHanded;		// 左手系座標に変換
 
 	// モデルを読み込む
@@ -122,10 +122,12 @@ bool Model::Load(const ModelSettings& _settings, D3D11_Renderer& _renderer)
 			// モデルと同じ階層を探索
 			std::string file = dir;
 			file += path.C_Str();
-			isSuccess = material->texture->Load(file.c_str());
+
+			// テクスチャ管理クラスにモデルのテクスチャを代入する(名前はモデルと一緒)
+			isSuccess = TextureCollect::GetInstance()->Load(file.c_str(), _settings.modelName);
 
 			// ファイル名のみで探索
-			if (!isSuccess) {
+			if(!isSuccess) {
 				std::string file = path.C_Str();
 				if (size_t idx = file.find_last_of('\\'); idx != std::string::npos)
 				{
@@ -157,7 +159,7 @@ bool Model::Load(const ModelSettings& _settings, D3D11_Renderer& _renderer)
 	return true;
 }
 
-void Model::SetupTransform(const Transform& _transform)
+void Model::SetupTransform(const Transform& _transform) const
 {
 	// レンダラー取得
 	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
@@ -206,7 +208,7 @@ void Model::SetupTransform(const Transform& _transform)
 	return;
 }
 
-void Model::Draw(const Transform& _transform)
+void Model::Draw(const Transform& _transform) const
 {
 	SetupTransform(_transform);
 	// レンダラー取得
@@ -248,3 +250,4 @@ bool Model::SetSetting(const ModelSettings& _settings)
 
 	return true;
 }
+
