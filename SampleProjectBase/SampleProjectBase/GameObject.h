@@ -4,7 +4,8 @@
 // 画面に写されるオブジェクトクラス
 class GameObject
 {
-	const Model* model;	// モデル情報
+	std::unique_ptr<Model> pModel;	// モデル情報
+	const Model* pConstModel;	// 頂点座標などが変わらないならconstポインタでもらい、メモリ節約
 
 	void Release();	// 解放処理
 public:
@@ -13,7 +14,7 @@ public:
 	GameObject();
 	virtual ~GameObject();
 
-	void SetModel(const Model* _setModel) { model = _setModel; }
+	void SetModel(const Model* _setModel) { pConstModel = _setModel; }
 
 	void Update();	// 更新処理
 	void Draw();	// 描画処理

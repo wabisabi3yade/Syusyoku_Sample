@@ -6,7 +6,7 @@ void GameObject::Release()
 {
 }
 
-GameObject::GameObject() : model()
+GameObject::GameObject() : pConstModel()
 {
 }
 
@@ -26,6 +26,6 @@ void GameObject::Draw()
 	ModelCollect* m = ModelCollect::GetInstance();
 
 	
-		model->Draw(transform);
+		pConstModel->Draw(transform);
 
 }

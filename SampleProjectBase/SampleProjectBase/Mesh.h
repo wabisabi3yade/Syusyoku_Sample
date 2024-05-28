@@ -32,6 +32,12 @@ class Mesh
 public:
 	Mesh();
 	~Mesh();
+	/// <summary>
+	/// メッシュを新しく確保し、セットする
+	/// </summary>
+	/// <param name="_setMesh">セットするメッシュ</param>
+	/// <returns></returns>
+	bool SetMesh(const Mesh& _setMesh);
 
 	// メッシュの読込
 	bool Setup(D3D11_Renderer& _renderer, aiMesh* pMeshData);

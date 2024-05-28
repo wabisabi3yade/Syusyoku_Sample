@@ -184,6 +184,9 @@
     <Filter Include="ソース ファイル\Scene\ResourceCollect_Base">
       <UniqueIdentifier>{9b816ea1-95ea-46ef-b6a5-18290ca60457}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Graphics\MaterialCollect">
+      <UniqueIdentifier>{a7d96d5e-8cfa-488c-83dc-6bbf4f28c822}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PixelShader.hlsl">
@@ -313,6 +316,9 @@
     </ClCompile>
     <ClCompile Include="TextureCollect.cpp">
       <Filter>ソース ファイル\Graphics\TextureCollect</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialCollect.cpp">
+      <Filter>ソース ファイル\Graphics\MaterialCollect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -456,6 +462,9 @@
     </ClInclude>
     <ClInclude Include="ResourceCollect_Base.h">
       <Filter>ソース ファイル\Scene\ResourceCollect_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialCollect.h">
+      <Filter>ソース ファイル\Graphics\MaterialCollect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

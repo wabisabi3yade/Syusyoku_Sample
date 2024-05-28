@@ -11,6 +11,6 @@ public:
 	Float4 diffuse;
 	Float4 ambient;
 	Float4 specular;
-	Texture* texture;	// テクスチャ
+	const Texture* texture;	// テクスチャ
 };
 

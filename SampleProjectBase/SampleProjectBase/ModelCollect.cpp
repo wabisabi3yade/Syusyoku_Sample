@@ -22,3 +22,25 @@ bool ModelCollect::Load(const ModelSettings& _settings)
 
 	return true;
 }
+
+std::unique_ptr<Model> ModelCollect::GetModel(std::string _modelName)
+{
+	// データ元のモデルを取得する
+	const Model* pOriginModel = GetConstResource(_modelName);
+
+	// モデルがなかったなら
+	if (pOriginModel == nullptr)
+	{
+		std::string message = "モデルがまだロードされていません" + _modelName;
+		MessageError(message.c_str());
+
+		return nullptr;	// nullptrを返す
+	}
+
+	// 送る新しくポインタを確保する
+	std::unique_ptr<Model> pSetModel = std::make_unique<Model>();
+	pSetModel->SetModel(*pOriginModel);	// 元のモデルからメッシュなどの情報をコピーする
+
+	// アドレスを移動させる
+	return std::move(pSetModel);
+}

@@ -5,6 +5,7 @@
 
 #include "ModelCollect.h"
 #include "TextureCollect.h"
+#include "MaterialCollect.h"
 
 MainApplication::MainApplication()
 {
@@ -21,7 +22,7 @@ void MainApplication::Release()
 	SceneManager::Delete();
 	ModelCollect::Delete();
 	TextureCollect::Delete();
-	
+	MaterialCollect::Delete();
 
 	CLASS_DELETE(pWindow);
 }

@@ -25,7 +25,7 @@ public:
 
 	void Release();
 
-	ID3D11ShaderResourceView* GetSRV() { return pSRV; }
+	ID3D11ShaderResourceView* GetSRV()const { return pSRV; }
 
 	u_int GetWidth()const { return width; }	// •‚ğæ“¾
 	u_int GetHeight()const { return height; }	// ‚‚³‚ğæ“¾

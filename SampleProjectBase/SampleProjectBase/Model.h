@@ -24,20 +24,25 @@ class Model
 	std::vector<Material*> materials;	// マテリアル
 
 	bool Load(const ModelSettings& _settings, D3D11_Renderer& _renderer);
-	// 座標変換行列を作成
-	void SetupTransform(const Transform& _transform) const;
+
+	void SetupTransform(const Transform& _transform) const;	// 座標変換行列を作成
+
+	void ResetParam();	// メッシュなどの情報を全て初期化する
 public:
 	Model();
 	~Model();
 
-	// モデルの描画をする
-	void Draw(const Transform& _transform) const;
-	void Release();
+	// モデルの情報を自身のモデルに設定する(メッシュなど)
+	bool SetModel(const Model& _setModel);
 
-	// 外部から情報渡されてモデルをロードする処理
-	bool SetSetting(const ModelSettings& _settings);
+	void Draw(const Transform& _transform) const;	// モデルの描画をする
+	void Release();	// モデルのインスタンス解放処理
 
-	// モデルの情報があるかフラグを取得
-	bool GetImported()const { return isImported; }
+	bool SetSetting(const ModelSettings& _settings);	// 外部から情報渡されてモデルをロードする処理
+
+	bool GetImported()const { return isImported; }	// モデルの情報があるかフラグを取得
+	u_int GetMeshNum()const { return meshNum; }	// モデルのメッシュ数を取得
+	const std::vector<Mesh*> GetMeshes()const { return meshes; }	// メッシュの配列を取得する
+	const ModelSettings GetModelData()const { return modelData; }	// モデルのデータを取得する
 };
 

@@ -14,7 +14,7 @@ Test_SubScene::Test_SubScene(SceneMoveInfo* _pSceneMoveInfo)
 	ModelCollect::GetInstance()->Load(set);
 
 	go = new GameObject();
-	go->SetModel(MC->GetResource(set.modelName));
+	go->SetModel(MC->GetConstResource(set.modelName));
 }
 
 Test_SubScene::~Test_SubScene()

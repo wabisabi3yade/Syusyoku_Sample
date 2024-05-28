@@ -70,6 +70,11 @@ Mesh::~Mesh()
 	Release();
 }
 
+bool Mesh::SetMesh(const Mesh& _setMesh)
+{
+	return false;
+}
+
 bool Mesh::Setup(D3D11_Renderer& _renderer, aiMesh* pMeshData)
 {
 	// 頂点データを取得 //
