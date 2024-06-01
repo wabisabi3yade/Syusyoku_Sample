@@ -8,5 +8,6 @@ class Material;
 class MaterialCollect : public Singleton_Base<MaterialCollect>, public ResourceCollect_Base<Material>
 {
 	friend class Singleton_Base<MaterialCollect>;
+	//~MaterialCollect() {};
 };
 

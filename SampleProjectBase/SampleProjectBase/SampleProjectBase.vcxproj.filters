@@ -187,6 +187,9 @@
     <Filter Include="ソース ファイル\Graphics\MaterialCollect">
       <UniqueIdentifier>{a7d96d5e-8cfa-488c-83dc-6bbf4f28c822}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Application\ResourceCollection">
+      <UniqueIdentifier>{0914fd39-6184-4c51-bbf5-0a403f0e3bdd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PixelShader.hlsl">
@@ -319,6 +322,9 @@
     </ClCompile>
     <ClCompile Include="MaterialCollect.cpp">
       <Filter>ソース ファイル\Graphics\MaterialCollect</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceCollection.cpp">
+      <Filter>ソース ファイル\Application\ResourceCollection</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -465,6 +471,9 @@
     </ClInclude>
     <ClInclude Include="MaterialCollect.h">
       <Filter>ソース ファイル\Graphics\MaterialCollect</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceCollection.h">
+      <Filter>ソース ファイル\Application\ResourceCollection</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
