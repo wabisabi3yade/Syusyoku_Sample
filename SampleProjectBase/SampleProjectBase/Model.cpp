@@ -63,7 +63,7 @@ bool Model::SetModel(const Model& _setModel)
 	return true;
 }
 
-bool Model::Load(const ModelSettings& _settings, D3D11_Renderer& _renderer)
+bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _renderer)
 {
 	// 既にこのモデルが入っていたら
 	if (isImported)
@@ -318,10 +318,10 @@ void Model::Release()
 	}
 }
 
-bool Model::SetSetting(const ModelSettings& _settings)
+bool Model::Load(const ModelSettings& _settings)
 {
 	// モデルをロードする
-	bool isSuccess = Load(_settings, *Direct3D11::GetInstance()->GetRenderer());
+	bool isSuccess = LoadProcess(_settings, *Direct3D11::GetInstance()->GetRenderer());
 	if (!isSuccess)
 		return false;
 

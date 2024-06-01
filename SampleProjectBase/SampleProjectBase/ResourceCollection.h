@@ -2,6 +2,14 @@
 #include "Singleton_Base.h"
 class Resource_Base;
 
+/* 
+	命名規則　この後に_モデル名を入力(UE5に則る)
+	スケルタルメッシュ：SK
+	スタティックメッシュ：SM
+	テクスチャ：T
+	マテリアル：M
+*/ 
+
 // ゲームないでの利用するリソース(テクスチャ、モデルなど)をunique_ptrで管理するクラス
 class ResourceCollection :
 	public Singleton_Base<ResourceCollection>
@@ -23,7 +31,7 @@ public:
 	/// <param name="_resourceName">追加する名前</param>
 	/// <param name="_resourcePtr">追加するポインタ</param>
 	/// <returns>追加したリソースの生ポインタ</returns>
-	template<class T> T* SetResource(std::string _resourceName, std::unique_ptr<T> _resourcePtr);
+	template<class T> void  SetResource(std::string _resourceName, std::unique_ptr<T> _resourcePtr);
 
 	/// <summary>
 	/// 名前に対応したリソースポインタを取得する
@@ -44,18 +52,19 @@ public:
 
 // リソースクラス
 template<class T>
-class Resource : Resource_Base
+class Resource : public Resource_Base
 {
 	std::unique_ptr<T> ptr;	// ポインタクラス
 public:
-	Resource(std::unique_ptr<T> _ptr) : ptr(_ptr) {};
-	~Resource() {};
+	// リソースポインタの所有権をこのクラスのポインタに移行させる
+	Resource(std::unique_ptr<T> _ptr) { ptr = std::move(_ptr); }
+	~Resource() {}
 
 	T* GetPtr() { return ptr.get(); }	// 生ポインタ取得
 };
 
 template<class T>
-inline T* ResourceCollection::SetResource(std::string _resourceName, std::unique_ptr<T> _resourcePtr)
+inline void ResourceCollection::SetResource(std::string _resourceName, std::unique_ptr<T> _resourcePtr)
 {
 	// デバッグ時にだけ名前参照をして被るか確認
 	auto itr = resources.find(_resourceName);
@@ -63,15 +72,13 @@ inline T* ResourceCollection::SetResource(std::string _resourceName, std::unique
 	{
 		std::string message = "既にリソースがあります" + _resourceName;
 		MessageError(message.c_str());
-		return nullptr;
+		return;
 	}
 
 	// リソースを生成し、配列に入れる
-	std::unique_ptr<Resource> resource = std::make_unique<Resource>(std::move(_resourcePtr));
-	resources.emplace(_resourceName, resource);
-	
-	// リソースポインタを返す
-	return resource.GetPtr();
+	std::unique_ptr<Resource_Base> setPtr = std::make_unique<Resource<T>>(std::move(_resourcePtr));
+	resources.insert(std::pair<std::string, std::unique_ptr<Resource_Base>>(_resourceName, std::move(setPtr)));
+	return;
 }
 
 template<class T>
@@ -79,7 +86,7 @@ inline T* ResourceCollection::GetResource(std::string _resourceName)
 {
 	// 名前から探す
 	auto itr = resources.find(_resourceName);
-	if (itr != resources.end())
+	if (itr == resources.end())
 	{
 		std::string message = "ロードされていないので取得できません　" + _resourceName;
 		MessageError(message.c_str());
@@ -89,7 +96,7 @@ inline T* ResourceCollection::GetResource(std::string _resourceName)
 	// 生ポインタをもらう
 	Resource_Base* basePtr = itr->second.get();
 	// Resourceクラスにキャスト変換し、リソースのポインタをもらう
-	Resource* resource = dynamic_cast<Resource*>(basePtr);
+	Resource<T>* resource = dynamic_cast<Resource<T>*>(basePtr);
 	T* retPtr = resource->GetPtr();
 
 	return retPtr;	// リソースのポインタを返す

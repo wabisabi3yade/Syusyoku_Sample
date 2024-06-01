@@ -19,6 +19,8 @@ SubScene_Base::SubScene_Base(SceneMoveInfo* _pSceneMoveInfo)
 {
 	// BroadSceneから持ってくる
 	pSceneMoveInfo = _pSceneMoveInfo;
+	// リソース管理ポインタ取得
+	resourceCollection = ResourceCollection::GetInstance();
 	// カメラ生成
 	mainCamera = std::make_unique<Camera>();
 }

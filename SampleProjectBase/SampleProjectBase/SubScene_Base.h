@@ -1,6 +1,7 @@
 #pragma once
 #include "BroadSceneType.h"
 #include "Camera.h"
+#include "ModelLoader.h"
 
 class SceneMoveInfo;
 
@@ -11,6 +12,7 @@ class SubScene_Base
 	SceneMoveInfo* pSceneMoveInfo;
 
 protected:
+	ResourceCollection* resourceCollection;	// リソース管理ポインタ
 	std::unique_ptr<Camera> mainCamera;	// メインカメラオブジェクト
 
 	// 更新処理

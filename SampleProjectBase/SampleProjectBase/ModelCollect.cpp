@@ -13,7 +13,7 @@ bool ModelCollect::Load(const ModelSettings& _settings)
 	// ロードされるモデル情報
 	std::unique_ptr<Model> loadModel = std::make_unique<Model>();
 	// モデルのロード処理を行う
-	bool isSucess  = loadModel->SetSetting(_settings);
+	bool isSucess  = loadModel->Load(_settings);
 	if (!isSucess)
 		return false;
 

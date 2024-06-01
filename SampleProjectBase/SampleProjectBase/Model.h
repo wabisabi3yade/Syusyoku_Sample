@@ -23,7 +23,7 @@ class Model
 
 	std::vector<Material*> materials;	// マテリアル
 
-	bool Load(const ModelSettings& _settings, D3D11_Renderer& _renderer);
+	bool LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _renderer);
 
 	void SetupTransform(const Transform& _transform) const;	// 座標変換行列を作成
 
@@ -38,7 +38,7 @@ public:
 	void Draw(const Transform& _transform) const;	// モデルの描画をする
 	void Release();	// モデルのインスタンス解放処理
 
-	bool SetSetting(const ModelSettings& _settings);	// 外部から情報渡されてモデルをロードする処理
+	bool Load(const ModelSettings& _settings);	// 外部から情報渡されてモデルをロードする処理
 
 	bool GetImported()const { return isImported; }	// モデルの情報があるかフラグを取得
 	u_int GetMeshNum()const { return meshNum; }	// モデルのメッシュ数を取得

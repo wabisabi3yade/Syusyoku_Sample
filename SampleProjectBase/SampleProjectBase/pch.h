@@ -3,6 +3,12 @@
 // プリコンパイル済みヘッダー
 // よく使うインクルードファイルをまとめ、時間とリソースを節約
 
+// マクロ定義 /////////////////
+// リソースを解放するマクロ
+#define SAFE_RELEASE(x)    { if(x) { (x)->Release(); (x) = nullptr; } }
+// クラスの安全に解放するマクロ定義
+#define CLASS_DELETE(p) {if(p != nullptr) { delete p; p = nullptr;} }
+
 // インクルードファイル /////////////////
 #include <d3d11.h>	// DX11の機能
 #pragma comment(lib, "d3d11.lib")	// ライブラリ
@@ -10,21 +16,15 @@
 #include <iostream>	// std使うために
 #include <vector>	// 動的配列
 #include <unordered_map>	// 順番を気にしないmap配列
+#include "MessageError.h"	// エラーテキストを出す
 #include "Float2.h"	// float型変数2つクラス
 #include "Float3.h"	// float型変数3つクラス
 #include "Float4.h"	// float型変数3つクラス
 #include "Transform.h"	// 座標・回転・スケールのクラス
-
-#include "MessageError.h"	// エラーテキストを出す
+#include "ResourceCollection.h"	// リソースを管理するクラス
 
 // クラス前方宣言
 class D3D11_Renderer;	// Direct3Dの描画クラス
-
-// マクロ定義 /////////////////
-// リソースを解放するマクロ
-#define SAFE_RELEASE(x)    { if(x) { (x)->Release(); (x) = nullptr; } }
-// クラスの安全に解放するマクロ定義
-#define CLASS_DELETE(p) {if(p != nullptr) { delete p; p = nullptr;} }
 
 // 構造体 /////////////////
 // 頂点座標

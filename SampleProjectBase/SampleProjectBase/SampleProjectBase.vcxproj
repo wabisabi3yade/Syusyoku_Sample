@@ -50,6 +50,7 @@
     <ClCompile Include="MessageError.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelCollect.cpp" />
+    <ClCompile Include="ModelLoader.cpp" />
     <ClCompile Include="ModelSettings.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -102,6 +103,7 @@
     <ClInclude Include="MessageError.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelCollect.h" />
+    <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="ModelSettings.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RenderParam.h" />
