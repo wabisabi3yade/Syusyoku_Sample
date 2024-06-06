@@ -40,6 +40,14 @@ public:
 	/// <param name="_resourceName">リソースの名前</param>
 	/// <returns>リソースの生ポインタ</returns>
 	template<class T> T* GetResource(std::string _resourceName);
+
+	/// <summary>
+	/// リソースのインスタンスを作成し、配列に追加する
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="_resourceName"></param>
+	/// <returns></returns>
+	template<class T> T* CreateResource(std::string _resourceName);
 };
 
 // リソース基底クラス
@@ -100,4 +108,16 @@ inline T* ResourceCollection::GetResource(std::string _resourceName)
 	T* retPtr = resource->GetPtr();
 
 	return retPtr;	// リソースのポインタを返す
+}
+
+template<class T>
+inline T* ResourceCollection::CreateResource(std::string _resourceName)
+{
+	// 既にその名前のリソースがあれば
+	if (GetImpotred(_resourceName))
+	{
+		
+
+		return nullptr;
+	}
 }

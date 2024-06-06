@@ -199,6 +199,15 @@
     <Filter Include="ソース ファイル\System\ImGui\ImGuiMethod">
       <UniqueIdentifier>{9a7b730b-6221-4868-8065-b8647ec4a3d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\VertexShader">
+      <UniqueIdentifier>{b20dd661-d435-40da-a672-7a44490d89d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\PixelShader">
+      <UniqueIdentifier>{6aa3cdc0-0f6b-4445-8284-29196709cd6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\ImGui\ImGuiDebugLog">
+      <UniqueIdentifier>{d8b0d211-7435-40ae-a429-f77666623c0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PixelShader.hlsl">
@@ -361,6 +370,18 @@
     </ClCompile>
     <ClCompile Include="imgui\include\imgui_widgets.cpp">
       <Filter>ソース ファイル\System\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="PixelShader.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\PixelShader</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexShader.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\VertexShader</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiDebugLog.cpp">
+      <Filter>ソース ファイル\System\ImGui\ImGuiDebugLog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -543,6 +564,18 @@
     </ClInclude>
     <ClInclude Include="imgui_gryph.h">
       <Filter>ソース ファイル\System\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>ソース ファイル\Graphics\Shader\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexShader.h">
+      <Filter>ソース ファイル\Graphics\Shader\VertexShader</Filter>
+    </ClInclude>
+    <ClInclude Include="PixelShader.h">
+      <Filter>ソース ファイル\Graphics\Shader\PixelShader</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiDebugLog.h">
+      <Filter>ソース ファイル\System\ImGui\ImGuiDebugLog</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

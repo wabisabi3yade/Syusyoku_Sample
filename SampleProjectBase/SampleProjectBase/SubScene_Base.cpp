@@ -50,9 +50,7 @@ void SubScene_Base::Exec()
 	// シーン内の描画処理
 	Draw();
 
-	// ImGui　描画
-	ImGui::Render();
-	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+	ImGuiMethod::Draw();
 
 	// スワップチェイン
 	Direct3D11::GetInstance()->GetRenderer()->Swap();

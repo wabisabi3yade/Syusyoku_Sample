@@ -1,6 +1,8 @@
 #pragma once
 #include "ModelSettings.h"
 #include "Model.h"
+#include "VertexShader.h"
+#include "PixelShader.h"
 
 class Mesh;
 class Material;
@@ -22,6 +24,10 @@ class Model
 	u_int meshNum;	// メッシュの数
 
 	std::vector<Material*> materials;	// マテリアル
+
+	// このモデルで使うシェーダー
+	std::unique_ptr<VertexShader> pVertexShader;
+	std::unique_ptr<PixelShader> pPixelShader;
 
 	bool LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _renderer);
 

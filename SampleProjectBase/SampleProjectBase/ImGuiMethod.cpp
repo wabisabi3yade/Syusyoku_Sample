@@ -5,6 +5,8 @@
 #include "imgui_impl_dx11.h"
 #include "imgui.h"
 
+#include "ImGuiDebugLog.h"
+
 void ImGuiMethod::Initialize(HWND _hwnd, ID3D11Device* _pDevice, ID3D11DeviceContext* _pDeviceContext)
 {
 	IMGUI_CHECKVERSION();
@@ -31,8 +33,20 @@ void ImGuiMethod::NewFrame()
 	ImGui::NewFrame();
 }
 
+void ImGuiMethod::Draw()
+{
+	ImGuiDebugLog::DisplayMessage();
+
+	// ImGui　描画
+	ImGui::Render();
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+}
+
 void ImGuiMethod::End()
 {
+	// デバッグログ終了処理
+	ImGuiDebugLog::Terminate();
+
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();

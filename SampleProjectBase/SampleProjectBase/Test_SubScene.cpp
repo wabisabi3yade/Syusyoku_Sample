@@ -7,6 +7,7 @@
 #include "imgui_impl_dx11.h"
 #include "imgui.h"
 
+#include "ImGuiMethod.h"
 using namespace DirectX::SimpleMath;
 Test_SubScene::Test_SubScene(SceneMoveInfo* _pSceneMoveInfo)
 	: SubScene_Base(_pSceneMoveInfo)
@@ -46,6 +47,8 @@ void Test_SubScene::Update()
 
 	if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
 		counter++;
+	if (ImGui::Button("Debug"))
+		ImGuiDebugLog::AddDebugLog("cccccc");
 	ImGui::SameLine();
 	ImGui::Text("counter = %d", counter);
 	ImGuiIO& io = ImGui::GetIO(); 

@@ -1,12 +1,11 @@
 #pragma once
+#include "ImGuiDebugLog.h"
 
 // imguiの処理をまとめたクラス(staticクラス)
 class ImGuiMethod
 {
-	ImGuiMethod(){};
+	ImGuiMethod();
 	~ImGuiMethod() {};
-
-	//static ID3D11DeviceContext* pDeviceContext;	// デバイスコンテキスト
  public:
 	 /// <summary>
 	 /// ImGuiの初期化処理
@@ -18,6 +17,8 @@ class ImGuiMethod
 	 /// フレーム更新処理
 	 /// </summary>
 	 static void NewFrame();
+
+	 static void Draw();
 
 	 /// <summary>
 	 /// 終了処理
