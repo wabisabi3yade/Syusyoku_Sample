@@ -7,7 +7,7 @@ BlendState::BlendState(ID3D11Device* _device)
 	bool isCheck = BlendStateInit(_device);
 	// 初期化失敗なら
 	if (!isCheck)
-		MessageError("ブレンドステート初期化でエラー");
+		ImGuiDebugLog::AddDebugLog("ブレンドステート初期化でエラー");
 
 }
 

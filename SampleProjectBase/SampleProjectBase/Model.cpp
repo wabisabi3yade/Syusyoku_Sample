@@ -44,8 +44,7 @@ bool Model::SetModel(const Model& _setModel)
 		const Mesh* setMesh = _setMeshes[meshIdx];
 		if (setMesh == nullptr)	// 無かったら
 		{
-			// エラー
-			MessageError("メッシュのポインタがnullptrです");
+			ImGuiDebugLog::AddDebugLog("メッシュのポインタがnullptrです");
 			// パラメータをリセットする
 			ResetParam();
 			return false;	// 失敗
@@ -70,12 +69,12 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 
 	if (_settings.modelPath == nullptr)
 	{
-		MessageError("モデルのファイルパスが設定されていません");
+		ImGuiDebugLog::AddDebugLog("モデルのファイルパスが設定されていません");
 		return false;
 	}
 	if (_settings.modelName == "")
 	{
-		MessageError("モデルの名前が設定されていません");
+		ImGuiDebugLog::AddDebugLog("モデルの名前が設定されていません");
 		return false;
 	}
 
@@ -109,7 +108,7 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 			// メッシュの準備
 			if (mesh->Setup(_renderer, pMeshData) == false)
 			{
-				MessageError("メッシュのセットアップ失敗");
+				ImGuiDebugLog::AddDebugLog("メッシュのセットアップ失敗");
 				// 作成したメッシュを解放
 				CLASS_DELETE(mesh);
 
@@ -160,7 +159,7 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 			// ファイル形式チェック
 			if (strstr(path.C_Str(), ".psd"))
 			{
-				MessageError("psdには対応していません");
+				ImGuiDebugLog::AddDebugLog("psdには対応していません");
 			}
 			bool isSuccess = false;	// ロード成功したかフラグ
 			// モデルと同じ階層を探索
@@ -192,7 +191,7 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 			// 失敗
 			if (!isSuccess) {
 				std::string message = "モデルのテクスチャ読込失敗　" + materialName;
-				MessageError(message.c_str());
+				ImGuiDebugLog::AddDebugLog(message);
 
 				return false;
 			}

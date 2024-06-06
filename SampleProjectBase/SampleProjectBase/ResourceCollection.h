@@ -79,7 +79,7 @@ inline void ResourceCollection::SetResource(std::string _resourceName, std::uniq
 	if (itr != resources.end())	// 既に名前があったら
 	{
 		std::string message = "既にリソースがあります" + _resourceName;
-		MessageError(message.c_str());
+		ImGuiDebugLog::AddDebugLog(message);
 		return;
 	}
 
@@ -97,7 +97,7 @@ inline T* ResourceCollection::GetResource(std::string _resourceName)
 	if (itr == resources.end())
 	{
 		std::string message = "ロードされていないので取得できません　" + _resourceName;
-		MessageError(message.c_str());
+		ImGuiDebugLog::AddDebugLog(message);
 		return nullptr;
 	} 
 

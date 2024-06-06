@@ -9,12 +9,12 @@ bool Texture::Load(const char* _pathName)
 {
 	if (isImported)
 	{
-		MessageError("既にこのTextureはロードされています");
+		ImGuiDebugLog::AddDebugLog("既にこのTextureはロードされています");
 		return true;
 	}
 	else if (_pathName == "")
 	{
-		MessageError("テクスチャのパス名が入力されていません");
+		ImGuiDebugLog::AddDebugLog("テクスチャのパス名が入力されていません");
 		return false;
 	}
 
@@ -38,7 +38,7 @@ bool Texture::Load(const char* _pathName)
 	else if (strstr(_pathName, ".psd"))
 	{
 		std::string message = "psdファイルは対応していません\n" + std::string(_pathName);
-		MessageError(message.c_str());
+		ImGuiDebugLog::AddDebugLog(message);
 	}
 	else
 	{
@@ -58,7 +58,7 @@ bool Texture::Load(const char* _pathName)
 
 	if (FAILED(hr))
 	{
-		MessageError("SRV作成でエラー");
+		ImGuiDebugLog::AddDebugLog("SRV作成でエラー");
 		return false;
 	}
 	else if (SUCCEEDED(hr))

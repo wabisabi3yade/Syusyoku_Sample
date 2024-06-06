@@ -46,7 +46,7 @@ bool SetUpPerspectiveProj::SetUpProjection(UINT _screenWidth, UINT _screenHeight
 
     if (FAILED(hr))
     {
-        MessageError("ビュー変換行列作成でエラー");
+        ImGuiDebugLog::AddDebugLog("ビュー変換行列作成でエラー");
         return false;
     }
 

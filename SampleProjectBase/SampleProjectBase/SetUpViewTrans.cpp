@@ -28,7 +28,7 @@ bool SetUpViewTrans::SetUpViewTransform(const DirectX::XMMATRIX& _viewMatrix,
         0,
         &mappedResource);
     if (FAILED(hr)) {
-        MessageError("ビュー変換行列準備でエラー");
+        ImGuiDebugLog::AddDebugLog("ビュー変換行列準備でエラー");
         return false;
     }
     CopyMemory(mappedResource.pData, &cb.data, sizeof(cb.data));

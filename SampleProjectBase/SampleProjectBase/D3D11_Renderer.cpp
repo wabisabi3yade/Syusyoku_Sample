@@ -20,7 +20,7 @@ D3D11_Renderer::D3D11_Renderer(HWND _hWnd)
 
 	bool isSuccess = Init(_hWnd);   // 初期化
 	if (!isSuccess)
-		MessageError("D3D11描画クラス初期化でエラー");
+		ImGuiDebugLog::AddDebugLog("D3D11描画クラス初期化でエラー");
 }
 
 bool D3D11_Renderer::Init(HWND _hWnd)

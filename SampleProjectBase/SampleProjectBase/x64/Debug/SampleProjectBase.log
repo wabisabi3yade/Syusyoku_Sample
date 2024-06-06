@@ -1,31 +1,115 @@
 ﻿  モジュール依存関係のソースをスキャンしています...
-  BroadScene_Base.cpp
+  pch.cpp
+  BlendState.cpp
+  Direct3D11.cpp
+  ImGuiDebugLog.cpp
   Camera.cpp
-  PixelShader.cpp
-  GameObject.cpp
-  Test_SubScene.cpp
+  Float4.cpp
+  BroadScene_Base.cpp
+  D3D11_Renderer.cpp
+  BroadSceneType.cpp
+  Float3.cpp
   ChangeSubScene.cpp
+  Float2.cpp
+  PixelShader.cpp
+  Shader.cpp
+  ChangeBroadScene.cpp
+  VariableFrameRate.cpp
+  GameObject.cpp
+  imgui_draw.cpp
+  imgui_demo.cpp
+  imgui.cpp
+  ImGuiMethod.cpp
+  imgui_impl_win32.cpp
+  imgui_tables.cpp
+  imgui_impl_dx11.cpp
+  imgui_widgets.cpp
   MainApplication.cpp
-  ModelCollect.cpp
-  TextureCollect.cpp
+  Material.cpp
+  main.cpp
   MaterialCollect.cpp
-  ModelLoader.cpp
-  SubScene_Base.cpp
-  Test_ChangeSubScene.cpp
+  MessageError.cpp
+  Mesh.cpp
   Model.cpp
+  ModelCollect.cpp
+  ModelSettings.cpp
+  ModelLoader.cpp
+  ResourceCollection.cpp
+  RenderParam.cpp
+  Sampler.cpp
+  SceneManager.cpp
+  SceneRunningState.cpp
+  SceneMoveInfo.cpp
+  SetUpViewTrans.cpp
+  SetUpPerspectiveProj.cpp
+  ShaderRetation.cpp
+  Singleton_Base.cpp
+  SubScene_Base.cpp
+  Test_Broad.cpp
+  Test_ChangeSubScene.cpp
+  Test_SubScene.cpp
+  Texture.cpp
+  Transform.cpp
+  TextureCollect.cpp
+  Triangle.cpp
+  VertexShader.cpp
+  Window.cpp
   コンパイルしています...
+  pch.cpp
+  BroadSceneType.cpp
+  BlendState.cpp
+  ChangeBroadScene.cpp
+  GameObject.cpp
+  Float2.cpp
   Camera.cpp
   BroadScene_Base.cpp
-  PixelShader.cpp
-  GameObject.cpp
-  SubScene_Base.cpp
-  TextureCollect.cpp
-  ModelLoader.cpp
-  Model.cpp
-  MaterialCollect.cpp
-  Test_ChangeSubScene.cpp
-  Test_SubScene.cpp
+  Float3.cpp
   ChangeSubScene.cpp
+  D3D11_Renderer.cpp
+  Float4.cpp
+  PixelShader.cpp
+  VariableFrameRate.cpp
+  ImGuiDebugLog.cpp
+  Shader.cpp
+  Direct3D11.cpp
+  ImGuiMethod.cpp
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_dx11.cpp
+  imgui_impl_win32.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
   MainApplication.cpp
+  main.cpp
+  Material.cpp
+  MaterialCollect.cpp
+  Mesh.cpp
+  MessageError.cpp
+  Model.cpp
   ModelCollect.cpp
+  RenderParam.cpp
+  ModelSettings.cpp
+  ModelLoader.cpp
+  ResourceCollection.cpp
+  Sampler.cpp
+  SceneManager.cpp
+  SceneMoveInfo.cpp
+  SceneRunningState.cpp
+  SetUpPerspectiveProj.cpp
+  SetUpViewTrans.cpp
+  SubScene_Base.cpp
+  ShaderRetation.cpp
+  Singleton_Base.cpp
+  Test_ChangeSubScene.cpp
+  Test_Broad.cpp
+  Test_SubScene.cpp
+  Texture.cpp
+  TextureCollect.cpp
+  Transform.cpp
+  VertexShader.cpp
+  Window.cpp
+  Triangle.cpp
+C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Texture.cpp(66,25): warning C4267: '=': 'size_t' から 'u_int' に変換しました。データが失われているかもしれません。
+C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Texture.cpp(67,27): warning C4267: '=': 'size_t' から 'u_int' に変換しました。データが失われているかもしれません。
   SampleProjectBase.vcxproj -> C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\x64\Debug\SampleProjectBase.exe

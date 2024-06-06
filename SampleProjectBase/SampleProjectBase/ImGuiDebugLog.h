@@ -21,7 +21,7 @@ public:
 	/// デバッグログに追加する
 	/// </summary>
 	/// <param name="_debugMessage">デバッグで表示するメッセージ</param>
-	static void AddDebugLog(const char* _debugMessage);
+	static void AddDebugLog(const std::string& _debugMessage);
 
 	/// <summary>
 	/// デバッグログを表示させる

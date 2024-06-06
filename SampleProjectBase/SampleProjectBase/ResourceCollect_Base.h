@@ -68,14 +68,14 @@ inline bool ResourceCollect_Base<T>::SetResource(std::unique_ptr<T> _pResource, 
 	if (GetIsImported(_setName))
 	{
 		std::string message = "既にリソースがあるのでセットできません" + _setName;
-		MessageError(message.c_str());
+		ImGuiDebugLog::AddDebugLog(message);
 		return false;
 	}
 	// リソースはnullptrなら
 	else if (_pResource == nullptr)
 	{
 		std::string message = "リソースがnullptrです" + _setName;
-		MessageError(message.c_str());
+		ImGuiDebugLog::AddDebugLog(message);
 		return false;
 	}
 
@@ -91,7 +91,7 @@ inline const T* ResourceCollect_Base<T>::GetConstResource(std::string _getName)
 	if (!GetIsImported(_getName))
 	{
 		std::string message = "ロードされていないリソースです　" + _getName;
-		MessageError(message.c_str());
+		ImGuiDebugLog::AddDebugLog(message);
 		return nullptr;
 	}
 
@@ -105,7 +105,7 @@ inline T* ResourceCollect_Base<T>::GetResource(std::string _getName)
 	if (!GetIsImported(_getName))
 	{
 		std::string message = "ロードされていないリソースです　" + _getName;
-		MessageError(message.c_str());
+		ImGuiDebugLog::AddDebugLog(message);
 		return nullptr;
 	}
 

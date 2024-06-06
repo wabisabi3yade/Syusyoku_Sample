@@ -35,7 +35,7 @@ void VariableFrameRate::Wait()
 	CaluculateDelta();
 
 	// Ÿ‚ÌƒtƒŒ[ƒ€‚Ü‚Å‚É‘Ò‹@‚·‚éŠÔ‚ğ‹‚ß‚é
-	float waitTime = microSecondsPerFrame - deltaTime * 1000;
+	float waitTime = static_cast<float>(microSecondsPerFrame) - deltaTime * 1000;
 
 	if (waitTime > 0)
 	{

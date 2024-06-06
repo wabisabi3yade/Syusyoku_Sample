@@ -27,7 +27,7 @@ bool RenderParam::InitConstBuffer(ID3D11Device* _device)
 		&cbTransformSet.pBuffer);
 	if (FAILED(hr))
 	{
-		MessageError("座標定数バッファの初期化でエラー");
+		ImGuiDebugLog::AddDebugLog("座標定数バッファの初期化でエラー");
 		return false;
 	}
 
@@ -38,7 +38,7 @@ bool RenderParam::InitConstBuffer(ID3D11Device* _device)
 		&cbViewSet.pBuffer);
 	if (FAILED(hr))
 	{
-		MessageError("ビュー変換定数バッファの初期化でエラー");
+		ImGuiDebugLog::AddDebugLog("ビュー変換定数バッファの初期化でエラー");
 		return false;
 	}
 
@@ -50,7 +50,7 @@ bool RenderParam::InitConstBuffer(ID3D11Device* _device)
 
 	if (FAILED(hr)) 
 	{
-		MessageError("プロジェクション定数バッファの初期化でエラー");
+		ImGuiDebugLog::AddDebugLog("プロジェクション定数バッファの初期化でエラー");
 		return false;
 	}
 
@@ -63,7 +63,7 @@ bool RenderParam::Init(ID3D11Device* _device)
 
 	if (!result)
 	{
-		MessageError("RenderParamクラスの初期化でエラー");
+		ImGuiDebugLog::AddDebugLog("RenderParamクラスの初期化でエラー");
 		return false;
 	}
 

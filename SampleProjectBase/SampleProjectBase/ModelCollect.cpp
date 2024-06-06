@@ -32,7 +32,7 @@ std::unique_ptr<Model> ModelCollect::GetModel(std::string _modelName)
 	if (pOriginModel == nullptr)
 	{
 		std::string message = "ƒ‚ƒfƒ‹‚ª‚Ü‚¾ƒ[ƒh‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ" + _modelName;
-		MessageError(message.c_str());
+		ImGuiDebugLog::AddDebugLog(message);
 
 		return nullptr;	// nullptr‚ğ•Ô‚·
 	}
