@@ -8,6 +8,7 @@ class Camera;
 
 class SceneManager;
 class Direct3D11;
+class VariableFrameRate;
 
 // ゲームループなどアプリを動かすのに主要な機能をもつクラス(シングルトンパターン)
 class MainApplication
@@ -16,9 +17,10 @@ class MainApplication
 	// 基底クラスにコンストラクタを渡すために
 	friend class Singleton_Base<MainApplication>;	
 
-	Window* pWindow;	// ウィンドウ処理クラス
+	std::unique_ptr<Window> pWindow;	// ウィンドウ処理クラス
 	Direct3D11* pD3D;	// Direct3Dの機能を持つクラス
 	SceneManager* pSceneManager;	// シーンマネージャークラス
+	std::unique_ptr<VariableFrameRate> variableFps;	// 可変フレームレートクラス
 
 	MainApplication();
 	~MainApplication();

@@ -1,7 +1,7 @@
 #pragma once
-
 // プリコンパイル済みヘッダー
 // よく使うインクルードファイルをまとめ、時間とリソースを節約
+
 
 // マクロ定義 /////////////////
 // リソースを解放するマクロ
@@ -13,13 +13,14 @@
 #include <d3d11.h>	// DX11の機能
 #pragma comment(lib, "d3d11.lib")	// ライブラリ
 #include <DirectXMath.h>	// 数学系の機能
+#include <SimpleMath.h>	// DirectXTKの数学系
+#pragma comment(lib, "DirectXTK.lib")	// DirectXTKライブラリ
+
 #include <iostream>	// std使うために
-#include <vector>	// 動的配列
 #include <unordered_map>	// 順番を気にしないmap配列
+#include <vector>	// 動的配列
+
 #include "MessageError.h"	// エラーテキストを出す
-#include "Float2.h"	// float型変数2つクラス
-#include "Float3.h"	// float型変数3つクラス
-#include "Float4.h"	// float型変数3つクラス
 #include "Transform.h"	// 座標・回転・スケールのクラス
 #include "ResourceCollection.h"	// リソースを管理するクラス
 
@@ -31,14 +32,14 @@ class D3D11_Renderer;	// Direct3Dの描画クラス
 struct Vertex
 {
 	// 座標
-	Float3 position = {};
+	DirectX::SimpleMath::Vector3 position = {};
 	// 色(RGBA)
-	Float4 color = {};
+	DirectX::SimpleMath::Color color = {};
 
 	// UV座標（テクスチャ座標）
-	DirectX::XMFLOAT2 uv = {};
+	DirectX::SimpleMath::Vector2 uv = {};
 	// 頂点の法線ベクトル
-	Float3 normal = {};
+	DirectX::SimpleMath::Vector3 normal = {};
 };
 
 

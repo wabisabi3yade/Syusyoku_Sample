@@ -3,9 +3,6 @@
 #include "Material.h"
 #include "Direct3D11.h"
 
-#include "TextureCollect.h"
-#include "MaterialCollect.h"
-
 // assimpライブラリ読込
 #ifdef _DEBUG
 #pragma comment(lib, "assimp-vc142-mtd.lib")
@@ -16,9 +13,11 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+using namespace DirectX::SimpleMath;
+
 Model::Model() : meshNum(0), modelName(""), isPermanent(false), isImported(false)
 {
-	
+
 }
 
 Model::~Model()
@@ -36,7 +35,7 @@ bool Model::SetModel(const Model& _setModel)
 
 	const std::vector<Mesh*> _setMeshes = _setModel.GetMeshes();
 
-	for (int meshIdx = 0; meshIdx < meshNum; meshIdx++)
+	for (u_int meshIdx = 0; meshIdx < meshNum; meshIdx++)
 	{
 		// インスタンスを生成する
 		Mesh* mesh = new Mesh();
@@ -122,32 +121,22 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 	}
 
 	// マテリアルの作成
-	// マテリアルを保管クラスに入れる
-	MaterialCollect* mC = MaterialCollect::GetInstance();
-
 	// ファイルの探索
 	std::string dir = _settings.modelPath;
 	dir = dir.substr(0, dir.find_last_of('/') + 1);
 
 	aiColor3D color(0.0f, 0.0f, 0.0f);
-	Float4 diffuse(1.0f, 1.0f, 1.0f, 1.0f);
-	Float4 ambient(0.3f, 0.3f, 0.3f, 1.0f);
+	Vector4 diffuse(1.0f, 1.0f, 1.0f, 1.0f);
+	Vector4 ambient(0.3f, 0.3f, 0.3f, 1.0f);
+
+	// リソース管理クラス取得
+	ResourceCollection* resourceCollection = ResourceCollection::GetInstance();
 
 	// モデルの各マテリアルを作成する
 	for (unsigned int i = 0; i < pScene->mNumMaterials; ++i)
 	{
-		// マテリアルのセットする名前は "モデルの名前 順番"
-		std::string materialName = _settings.modelName + std::to_string(i);
-
-		// マテリアルが既にロードされているなら
-		if (mC->GetIsImported(materialName))
-		{
-			// 取得して、配列に入れる
-			Material* loadMaterial =  mC->GetResource(materialName);
-			materials.push_back(loadMaterial);
-			continue;	// 次のループへ
-		}
-
+		// マテリアルのセットする名前は "M_名前 + 数字"
+		std::string materialName = "M_" + _settings.modelName + std::to_string(i);
 		// マテリアルを作成
 		std::unique_ptr<Material> material = std::make_unique<Material>();
 		// 各種パラメーター
@@ -161,10 +150,10 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 			DirectX::XMFLOAT4(color.r, color.g, color.b, shininess) : DirectX::XMFLOAT4(0.0f, 0.0f, 0.0f, shininess);
 
 		// テクスチャ
-		// 保管クラスのインスタンスを取得
-		TextureCollect* texCollect = TextureCollect::GetInstance();
-		// テクスチャの名前はマテリアルと同じ
-		std::string texName = materialName;
+		// テクスチャのインスタンスを作成
+		std::unique_ptr<Texture> texture = std::make_unique<Texture>();
+		// テクスチャの名前頭文字をT_にする
+		std::string texName = "T_" + _settings.modelName + std::to_string(i);
 		aiString path;
 		if (pScene->mMaterials[i]->Get(AI_MATKEY_TEXTURE_DIFFUSE(0), path) == AI_SUCCESS)
 		{
@@ -174,25 +163,20 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 				MessageError("psdには対応していません");
 			}
 			bool isSuccess = false;	// ロード成功したかフラグ
-
-			// テクスチャのインスタンスを作成
-			std::unique_ptr<Texture> texture = std::make_unique<Texture>();
-			/*material->texture = new Texture();*/
 			// モデルと同じ階層を探索
 			std::string file = dir;
 			file += path.C_Str();
-
 			// テクスチャ管理クラスにモデルのテクスチャを代入する(名前はモデルと一緒)
-			isSuccess = texCollect->Load(file.c_str(), texName);
+			isSuccess = texture->Load(file.c_str());
 
 			// ファイル名のみで探索
-			if(!isSuccess) {
+			if (!isSuccess) {
 				std::string file = path.C_Str();
 				if (size_t idx = file.find_last_of('\\'); idx != std::string::npos)
 				{
 					file = file.substr(idx + 1);
 					file = dir + file;
-					isSuccess = texCollect->Load(file.c_str(), texName);
+					isSuccess = texture->Load(file.c_str());
 				}
 
 				// ファイル目のパスが"\\ではなく"/"の場合の対応
@@ -201,7 +185,7 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 					{
 						file = file.substr(idx + 1);
 						file = dir + file;
-						isSuccess = texCollect->Load(file.c_str(), texName);
+						isSuccess = texture->Load(file.c_str());
 					}
 				}
 			}
@@ -209,19 +193,21 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 			if (!isSuccess) {
 				std::string message = "モデルのテクスチャ読込失敗　" + materialName;
 				MessageError(message.c_str());
-				
+
 				return false;
 			}
+
 		}
-		
+
+		// テクスチャ読込み成功
 		// 読み込んだテクスチャをマテリアルに設定する
-		material->texture = texCollect->GetConstResource(texName);
-		// 保管クラスに入れる
-		mC->SetResource(std::move(material), materialName);
-		// マテリアルを受け取る
-		Material* mat = mC->GetResource(materialName);
+		material->texture = texture.get();
+		// リソース管理にテクスチャ追加
+		resourceCollection->SetResource<Texture>(texName, std::move(texture));
 		// マテリアル追加
-		materials.push_back(mat);
+		materials.push_back(material.get());
+		// マテリアルを保管クラスに入れる
+		resourceCollection->SetResource<Material>(materialName, std::move(material));
 	}
 
 	return true;

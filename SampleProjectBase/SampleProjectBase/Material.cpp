@@ -7,5 +7,4 @@ Material::Material() : texture(nullptr)
 
 Material::~Material()
 {
-	CLASS_DELETE(texture);
 }

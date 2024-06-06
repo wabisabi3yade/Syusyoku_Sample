@@ -1,5 +1,12 @@
 #include "Window.h"
 
+#include "imgui_impl_win32.h"
+#include "imgui_impl_dx11.h"
+#include "imgui.h"
+
+// IMGUIがWindowsAPIのイベントを取得するための関数を外部参照
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 constexpr SIZE DEFAULT_SIZE = { 1080, 720 };
 constexpr char CLASS_NAME[] = "ウィンドウ";
 
@@ -95,6 +102,9 @@ bool Window::Terminate()
 
 LRESULT Window::MainWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+    if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+        return true;
+
     switch (msg)
     {
     case WM_DESTROY:// ウィンドウ破棄のメッセージ

@@ -3,14 +3,13 @@
 // 座標・回転・スケールをまとめたパラメータ
 class Transform
 {
-
 public: 
-	Float3 position;	// 座標
-	Float3 rotation;	// 回転角度
-	Float3 scale;	// スケール
-	Float4 Quaternion;	// クォータニオン
+	DirectX::SimpleMath::Vector3 position;	// 座標
+	DirectX::SimpleMath::Vector3 rotation;	// 回転角度
+	DirectX::SimpleMath::Vector3 scale;	// スケール
+	DirectX::SimpleMath::Quaternion Quaternion;	// クォータニオン
 
-	Transform();
-	~Transform();	
+	Transform() : scale(DirectX::SimpleMath::Vector3::One) {};
+	~Transform() {};
 };
 

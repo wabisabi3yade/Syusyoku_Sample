@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ModelLoader.h"
 
-#define MODEL_NC_NUM (2)	// モデルの命名規則で使われる文字数
+#define MODEL_NC_NUM (3)	// モデルの命名規則で使われる文字数
 
 bool ModelLoader::Load(const ModelSettings& _modelData)
 {
@@ -9,10 +9,10 @@ bool ModelLoader::Load(const ModelSettings& _modelData)
 	// モデル名にM_がついていなければ
 	std::string setName = _modelData.modelName;
 	
-	// モデルの頭文字2文字が M_ でないなら
-	if (setName.size() >= MODEL_NC_NUM && setName.substr(0, MODEL_NC_NUM) != "M_")
+	// 名前の頭文字3文字が Md_ でないなら
+	if (setName.size() >= MODEL_NC_NUM && setName.substr(0, MODEL_NC_NUM) != "Md_")
 	{
-		setName = "M_" + setName;	// 名前の最初に命名規則をつける
+		setName = "Md_" + setName;	// 名前の最初に命名規則をつける
 	}
 
 	// リソース管理に既にあるか確認する

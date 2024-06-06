@@ -187,8 +187,17 @@
     <Filter Include="ソース ファイル\Graphics\MaterialCollect">
       <UniqueIdentifier>{a7d96d5e-8cfa-488c-83dc-6bbf4f28c822}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Application\ResourceCollection">
+    <Filter Include="ソース ファイル\ResourceCollection">
       <UniqueIdentifier>{0914fd39-6184-4c51-bbf5-0a403f0e3bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ModelLoader">
+      <UniqueIdentifier>{281bfbc1-950c-4bbd-b5b2-d0bd373a2ee8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\ImGui">
+      <UniqueIdentifier>{3a4f88db-e57c-4ce8-9c11-57982a744aca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\ImGui\ImGuiMethod">
+      <UniqueIdentifier>{9a7b730b-6221-4868-8065-b8647ec4a3d9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -314,7 +323,7 @@
     <ClCompile Include="ModelCollect.cpp">
       <Filter>ソース ファイル\Graphics\ModelCollect</Filter>
     </ClCompile>
-    <ClCompile Include="FrameRate.cpp">
+    <ClCompile Include="VariableFrameRate.cpp">
       <Filter>ソース ファイル\Application\FramerRate</Filter>
     </ClCompile>
     <ClCompile Include="TextureCollect.cpp">
@@ -324,10 +333,34 @@
       <Filter>ソース ファイル\Graphics\MaterialCollect</Filter>
     </ClCompile>
     <ClCompile Include="ResourceCollection.cpp">
-      <Filter>ソース ファイル\Application\ResourceCollection</Filter>
+      <Filter>ソース ファイル\ResourceCollection</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiMethod.cpp">
+      <Filter>ソース ファイル\System\ImGui\ImGuiMethod</Filter>
     </ClCompile>
     <ClCompile Include="ModelLoader.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ModelLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\include\imgui.cpp">
+      <Filter>ソース ファイル\System\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\include\imgui_demo.cpp">
+      <Filter>ソース ファイル\System\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\include\imgui_draw.cpp">
+      <Filter>ソース ファイル\System\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\include\imgui_impl_dx11.cpp">
+      <Filter>ソース ファイル\System\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\include\imgui_impl_win32.cpp">
+      <Filter>ソース ファイル\System\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\include\imgui_tables.cpp">
+      <Filter>ソース ファイル\System\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\include\imgui_widgets.cpp">
+      <Filter>ソース ファイル\System\ImGui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -463,7 +496,7 @@
     <ClInclude Include="ModelCollect.h">
       <Filter>ソース ファイル\Graphics\ModelCollect</Filter>
     </ClInclude>
-    <ClInclude Include="FrameRate.h">
+    <ClInclude Include="VariableFrameRate.h">
       <Filter>ソース ファイル\Application\FramerRate</Filter>
     </ClInclude>
     <ClInclude Include="TextureCollect.h">
@@ -476,10 +509,40 @@
       <Filter>ソース ファイル\Graphics\MaterialCollect</Filter>
     </ClInclude>
     <ClInclude Include="ResourceCollection.h">
-      <Filter>ソース ファイル\Application\ResourceCollection</Filter>
+      <Filter>ソース ファイル\ResourceCollection</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiMethod.h">
+      <Filter>ソース ファイル\System\ImGui\ImGuiMethod</Filter>
     </ClInclude>
     <ClInclude Include="ModelLoader.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\ModelLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\include\imconfig.h">
+      <Filter>ソース ファイル\System\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\include\imgui.h">
+      <Filter>ソース ファイル\System\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\include\imgui_impl_dx11.h">
+      <Filter>ソース ファイル\System\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\include\imgui_impl_win32.h">
+      <Filter>ソース ファイル\System\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\include\imgui_internal.h">
+      <Filter>ソース ファイル\System\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\include\imstb_rectpack.h">
+      <Filter>ソース ファイル\System\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\include\imstb_textedit.h">
+      <Filter>ソース ファイル\System\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\include\imstb_truetype.h">
+      <Filter>ソース ファイル\System\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_gryph.h">
+      <Filter>ソース ファイル\System\ImGui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

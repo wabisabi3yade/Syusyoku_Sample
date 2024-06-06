@@ -1,7 +1,11 @@
 #include "pch.h"
 #include "GameObject.h"
-#include "ModelCollect.h"
 
+#include "imgui_impl_win32.h"
+#include "imgui_impl_dx11.h"
+#include "imgui.h"
+
+using namespace DirectX::SimpleMath;
 void GameObject::Release()
 {
 }
@@ -17,15 +21,9 @@ GameObject::~GameObject()
 
 void GameObject::Update()
 {
-
-
 }
 
 void GameObject::Draw()
 {
-	ModelCollect* m = ModelCollect::GetInstance();
-
-	
-		pConstModel->Draw(transform);
-
+	pConstModel->Draw(transform);
 }

@@ -4,6 +4,11 @@
 #include "Direct3D11.h"
 #include "Camera.h"
 
+#include "imgui_impl_win32.h"
+#include "imgui_impl_dx11.h"
+#include "imgui.h"
+#include "ImGuiMethod.h"
+
 /// <summary>
 /// シーン移動するとなったら呼び出す
 /// </summary>
@@ -39,13 +44,16 @@ void SubScene_Base::Exec()
 
 	// 画面クリア
 	Direct3D11::GetInstance()->GetRenderer()->SetUpDraw();
-
 	// ビュー変換行列を求める
 	DirectX::XMMATRIX viewMatrix = mainCamera->GetViewMatrix();
 	Direct3D11::GetInstance()->GetRenderer()->SetUpViewTransform(viewMatrix);
-
 	// シーン内の描画処理
 	Draw();
+
+	// ImGui　描画
+	ImGui::Render();
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
 	// スワップチェイン
 	Direct3D11::GetInstance()->GetRenderer()->Swap();
 }

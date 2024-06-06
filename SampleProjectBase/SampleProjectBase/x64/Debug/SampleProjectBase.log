@@ -1,10 +1,16 @@
-﻿  BlendState.cpp
-  Model.cpp
-C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Model.cpp(39,32): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
-  ModelCollect.cpp
-  ModelLoader.cpp
-  ModelSettings.cpp
-  Transform.cpp
-  Window.cpp
-  コードを生成中...
+﻿  モジュール依存関係のソースをスキャンしています...
+  SubScene_Base.cpp
+  SceneManager.cpp
+  MainApplication.cpp
+  ImGuiMethod.cpp
+  main.cpp
+  VariableFrameRate.cpp
+  コンパイルしています...
+  VariableFrameRate.cpp
+  SubScene_Base.cpp
+  MainApplication.cpp
+  SceneManager.cpp
+  ImGuiMethod.cpp
+  main.cpp
+C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\VariableFrameRate.cpp(38,17): warning C4244: '初期化中': 'uint64_t' から 'float' への変換です。データが失われる可能性があります。
   SampleProjectBase.vcxproj -> C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\x64\Debug\SampleProjectBase.exe

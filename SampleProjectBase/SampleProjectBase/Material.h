@@ -8,9 +8,9 @@ public:
 	Material();
 	~Material();
 
-	Float4 diffuse;
-	Float4 ambient;
-	Float4 specular;
+	DirectX::SimpleMath::Vector4 diffuse;
+	DirectX::SimpleMath::Vector4 ambient;
+	DirectX::SimpleMath::Vector4 specular;
 	const Texture* texture;	// テクスチャ
 };
 
