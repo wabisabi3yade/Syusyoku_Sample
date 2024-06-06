@@ -1,16 +1,110 @@
-﻿  モジュール依存関係のソースをスキャンしています...
-  SubScene_Base.cpp
-  SceneManager.cpp
-  MainApplication.cpp
+﻿  compilation object save succeeded; see C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\PixelShader.cso
+  compilation object save succeeded; see C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VertexShader.cso
+  モジュール依存関係のソースをスキャンしています...
+  pch.cpp
+  BlendState.cpp
+  Float3.cpp
+  Float4.cpp
+  BroadSceneType.cpp
+  ChangeSubScene.cpp
   ImGuiMethod.cpp
-  main.cpp
+  D3D11_Renderer.cpp
+  Direct3D11.cpp
+  imgui_demo.cpp
+  Camera.cpp
+  imgui.cpp
   VariableFrameRate.cpp
+  Float2.cpp
+  GameObject.cpp
+  ChangeBroadScene.cpp
+  BroadScene_Base.cpp
+  imgui_draw.cpp
+  imgui_impl_dx11.cpp
+  imgui_impl_win32.cpp
+  imgui_tables.cpp
+  MainApplication.cpp
+  imgui_widgets.cpp
+  Material.cpp
+  main.cpp
+  Mesh.cpp
+  MessageError.cpp
+  Model.cpp
+  MaterialCollect.cpp
+  ModelCollect.cpp
+  ModelSettings.cpp
+  ModelLoader.cpp
+  RenderParam.cpp
+  SceneManager.cpp
+  ResourceCollection.cpp
+  SceneMoveInfo.cpp
+  Sampler.cpp
+  SetUpPerspectiveProj.cpp
+  SceneRunningState.cpp
+  SetUpViewTrans.cpp
+  SubScene_Base.cpp
+  ShaderRetation.cpp
+  Singleton_Base.cpp
+  Test_ChangeSubScene.cpp
+  Test_Broad.cpp
+  Test_SubScene.cpp
+  Texture.cpp
+  TextureCollect.cpp
+  Triangle.cpp
+  Transform.cpp
+  Window.cpp
   コンパイルしています...
-  VariableFrameRate.cpp
-  SubScene_Base.cpp
-  MainApplication.cpp
-  SceneManager.cpp
+  pch.cpp
+  BlendState.cpp
+  BroadSceneType.cpp
+  ChangeBroadScene.cpp
+  BroadScene_Base.cpp
+  ChangeSubScene.cpp
   ImGuiMethod.cpp
+  Camera.cpp
+  Float4.cpp
+  Float3.cpp
+  Direct3D11.cpp
+  D3D11_Renderer.cpp
+  Float2.cpp
+  imgui_demo.cpp
+  GameObject.cpp
+  VariableFrameRate.cpp
+  imgui.cpp
+  imgui_draw.cpp
+  imgui_impl_dx11.cpp
+  imgui_impl_win32.cpp
+  imgui_tables.cpp
   main.cpp
+  imgui_widgets.cpp
+  MainApplication.cpp
+  MaterialCollect.cpp
+  Mesh.cpp
+  MessageError.cpp
+  Material.cpp
+  Model.cpp
+  ModelCollect.cpp
+  ModelLoader.cpp
+  ResourceCollection.cpp
+  RenderParam.cpp
+  ModelSettings.cpp
+  Sampler.cpp
+  SceneMoveInfo.cpp
+  SceneManager.cpp
+  SceneRunningState.cpp
+  SetUpPerspectiveProj.cpp
+  SetUpViewTrans.cpp
+  ShaderRetation.cpp
+  Singleton_Base.cpp
+  Test_Broad.cpp
+  SubScene_Base.cpp
+  Test_SubScene.cpp
+  Test_ChangeSubScene.cpp
+  Texture.cpp
+  TextureCollect.cpp
+  Transform.cpp
+  Triangle.cpp
+  Window.cpp
 C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\VariableFrameRate.cpp(38,17): warning C4244: '初期化中': 'uint64_t' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Texture.cpp(66,25): warning C4267: '=': 'size_t' から 'u_int' に変換しました。データが失われているかもしれません。
+C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Texture.cpp(67,27): warning C4267: '=': 'size_t' から 'u_int' に変換しました。データが失われているかもしれません。
   SampleProjectBase.vcxproj -> C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\x64\Debug\SampleProjectBase.exe
