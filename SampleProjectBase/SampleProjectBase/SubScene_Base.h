@@ -2,6 +2,8 @@
 #include "BroadSceneType.h"
 #include "Camera.h"
 #include "ModelLoader.h"
+#include "SceneObjects.h"
+#include "Object_3D.h"
 
 class SceneMoveInfo;
 
@@ -14,6 +16,7 @@ class SubScene_Base
 protected:
 	ResourceCollection* resourceCollection;	// リソース管理ポインタ
 	std::unique_ptr<Camera> mainCamera;	// メインカメラオブジェクト
+	std::unique_ptr<SceneObjects> sceneObjects;	// シーンで使用するオブジェクト管理クラス
 
 	// 更新処理
 	virtual void Update() = 0;

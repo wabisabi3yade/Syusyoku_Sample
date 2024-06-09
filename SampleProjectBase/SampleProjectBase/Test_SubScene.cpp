@@ -1,7 +1,6 @@
 #include "Test_SubScene.h"
 #include "Triangle.h"
 #include "Direct3D11.h"
-#include "GameObject.h"
 
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
@@ -17,9 +16,11 @@ Test_SubScene::Test_SubScene(SceneMoveInfo* _pSceneMoveInfo)
 
 	ModelLoader::Load(set);
 
-	go = new GameObject();
+	std::unique_ptr<Object_3D> go = std::make_unique<Object_3D>();
 	Model* m = resourceCollection->GetResource<Model>("Md_Cow");
 	go->SetModel(m);
+
+	sceneObjects->SetObject("CowObj", std::move(go));
 }
 
 Test_SubScene::~Test_SubScene()
@@ -54,20 +55,20 @@ void Test_SubScene::Update()
 	ImGuiIO& io = ImGui::GetIO(); 
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 	ImGui::End();
+
+	sceneObjects->Update();
 }
 
 void Test_SubScene::LateUpdate()
 {
-	mainCamera->Update();
+	sceneObjects->LateUpdate();
 }
 
 void Test_SubScene::Draw()
-{
-	go->Draw();
-	
+{	
+	sceneObjects->Draw();
 }
 
 void Test_SubScene::Release()
 {
-	CLASS_DELETE(go);
 }

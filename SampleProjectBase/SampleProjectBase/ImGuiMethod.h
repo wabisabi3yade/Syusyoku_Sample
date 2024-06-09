@@ -18,6 +18,9 @@ class ImGuiMethod
 	 /// </summary>
 	 static void NewFrame();
 
+	 /// <summary>
+	 /// •`‰æˆ—
+	 /// </summary>
 	 static void Draw();
 
 	 /// <summary>

@@ -145,9 +145,6 @@
     <Filter Include="ソース ファイル\Graphics\Model\ModelSettings">
       <UniqueIdentifier>{d7dfd3b7-613e-4384-a6a6-448d15ef6344}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics\Model\AssimpLoader">
-      <UniqueIdentifier>{f632c357-29b8-49b0-b15f-7ad749081454}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\Texture">
       <UniqueIdentifier>{026d8e4c-f51d-4e82-9a2d-1ac9ee929f14}</UniqueIdentifier>
     </Filter>
@@ -165,9 +162,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Object">
       <UniqueIdentifier>{55c4fa45-2e89-43b4-91f6-f99c07eb6859}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\GameObject">
-      <UniqueIdentifier>{a607ffd0-a3e3-47ae-94d0-d85404b0472c}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Object\Camera">
       <UniqueIdentifier>{6a26953d-a672-405b-952f-60d285febe89}</UniqueIdentifier>
@@ -190,9 +184,6 @@
     <Filter Include="ソース ファイル\ResourceCollection">
       <UniqueIdentifier>{0914fd39-6184-4c51-bbf5-0a403f0e3bdd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\ModelLoader">
-      <UniqueIdentifier>{281bfbc1-950c-4bbd-b5b2-d0bd373a2ee8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\System\ImGui">
       <UniqueIdentifier>{3a4f88db-e57c-4ce8-9c11-57982a744aca}</UniqueIdentifier>
     </Filter>
@@ -207,6 +198,27 @@
     </Filter>
     <Filter Include="ソース ファイル\System\ImGui\ImGuiDebugLog">
       <UniqueIdentifier>{d8b0d211-7435-40ae-a429-f77666623c0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\ImGui\ImGui">
+      <UniqueIdentifier>{65a46e3a-d104-4ba9-bbba-6c4a1a612f0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\ModelLoader">
+      <UniqueIdentifier>{281bfbc1-950c-4bbd-b5b2-d0bd373a2ee8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\GameObject">
+      <UniqueIdentifier>{54651696-70bc-4ca7-ba6d-128c5dc1b8e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\BoneMesh">
+      <UniqueIdentifier>{8ce03dad-64af-4c79-802a-ecc4af38d471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Object_3D">
+      <UniqueIdentifier>{a607ffd0-a3e3-47ae-94d0-d85404b0472c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Object_2D">
+      <UniqueIdentifier>{4c2b8f6c-2586-4267-9747-074a4ca953b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\SceneObjects">
+      <UniqueIdentifier>{4b5fda20-e416-43b8-99cd-92e298c295f2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -326,8 +338,8 @@
     <ClCompile Include="Transform.cpp">
       <Filter>ソース ファイル\System\Transform</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>ソース ファイル\Object\GameObject</Filter>
+    <ClCompile Include="Object_3D.cpp">
+      <Filter>ソース ファイル\Object\Object_3D</Filter>
     </ClCompile>
     <ClCompile Include="ModelCollect.cpp">
       <Filter>ソース ファイル\Graphics\ModelCollect</Filter>
@@ -348,28 +360,7 @@
       <Filter>ソース ファイル\System\ImGui\ImGuiMethod</Filter>
     </ClCompile>
     <ClCompile Include="ModelLoader.cpp">
-      <Filter>ソース ファイル\ModelLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui\include\imgui.cpp">
-      <Filter>ソース ファイル\System\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui\include\imgui_demo.cpp">
-      <Filter>ソース ファイル\System\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui\include\imgui_draw.cpp">
-      <Filter>ソース ファイル\System\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui\include\imgui_impl_dx11.cpp">
-      <Filter>ソース ファイル\System\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui\include\imgui_impl_win32.cpp">
-      <Filter>ソース ファイル\System\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui\include\imgui_tables.cpp">
-      <Filter>ソース ファイル\System\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui\include\imgui_widgets.cpp">
-      <Filter>ソース ファイル\System\ImGui</Filter>
+      <Filter>ソース ファイル\Graphics\ModelLoader</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>ソース ファイル\Graphics\Shader\Shader</Filter>
@@ -382,6 +373,39 @@
     </ClCompile>
     <ClCompile Include="ImGuiDebugLog.cpp">
       <Filter>ソース ファイル\System\ImGui\ImGuiDebugLog</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\include\imgui.cpp">
+      <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\include\imgui_demo.cpp">
+      <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\include\imgui_draw.cpp">
+      <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\include\imgui_impl_dx11.cpp">
+      <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\include\imgui_impl_win32.cpp">
+      <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\include\imgui_tables.cpp">
+      <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\include\imgui_widgets.cpp">
+      <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Object_2D.cpp">
+      <Filter>ソース ファイル\Object\Object_2D</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>ソース ファイル\Object\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="BoneMesh.cpp">
+      <Filter>ソース ファイル\Graphics\BoneMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneObjects.cpp">
+      <Filter>ソース ファイル\Object\SceneObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -511,8 +535,8 @@
     <ClInclude Include="Transform.h">
       <Filter>ソース ファイル\System\Transform</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>ソース ファイル\Object\GameObject</Filter>
+    <ClInclude Include="Object_3D.h">
+      <Filter>ソース ファイル\Object\Object_3D</Filter>
     </ClInclude>
     <ClInclude Include="ModelCollect.h">
       <Filter>ソース ファイル\Graphics\ModelCollect</Filter>
@@ -536,34 +560,7 @@
       <Filter>ソース ファイル\System\ImGui\ImGuiMethod</Filter>
     </ClInclude>
     <ClInclude Include="ModelLoader.h">
-      <Filter>ソース ファイル\ModelLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\include\imconfig.h">
-      <Filter>ソース ファイル\System\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\include\imgui.h">
-      <Filter>ソース ファイル\System\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\include\imgui_impl_dx11.h">
-      <Filter>ソース ファイル\System\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\include\imgui_impl_win32.h">
-      <Filter>ソース ファイル\System\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\include\imgui_internal.h">
-      <Filter>ソース ファイル\System\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\include\imstb_rectpack.h">
-      <Filter>ソース ファイル\System\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\include\imstb_textedit.h">
-      <Filter>ソース ファイル\System\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\include\imstb_truetype.h">
-      <Filter>ソース ファイル\System\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui_gryph.h">
-      <Filter>ソース ファイル\System\ImGui</Filter>
+      <Filter>ソース ファイル\Graphics\ModelLoader</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>ソース ファイル\Graphics\Shader\Shader</Filter>
@@ -576,6 +573,45 @@
     </ClInclude>
     <ClInclude Include="ImGuiDebugLog.h">
       <Filter>ソース ファイル\System\ImGui\ImGuiDebugLog</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\include\imconfig.h">
+      <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\include\imgui.h">
+      <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_gryph.h">
+      <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\include\imgui_impl_dx11.h">
+      <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\include\imgui_impl_win32.h">
+      <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\include\imgui_internal.h">
+      <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\include\imstb_rectpack.h">
+      <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\include\imstb_textedit.h">
+      <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\include\imstb_truetype.h">
+      <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Object_2D.h">
+      <Filter>ソース ファイル\Object\Object_2D</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>ソース ファイル\Object\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="BoneMesh.h">
+      <Filter>ソース ファイル\Graphics\BoneMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneObjects.h">
+      <Filter>ソース ファイル\Object\SceneObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

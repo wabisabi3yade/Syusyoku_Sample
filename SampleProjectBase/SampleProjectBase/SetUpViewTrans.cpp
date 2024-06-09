@@ -4,14 +4,6 @@
 #include "RenderParam.h"
 #include "IGetRenderResource.h"
 
-SetUpViewTrans::SetUpViewTrans()
-{
-}
-
-SetUpViewTrans::~SetUpViewTrans()
-{
-}
-
 bool SetUpViewTrans::SetUpViewTransform(const DirectX::XMMATRIX& _viewMatrix, 
     IGetRenderResource* _pRenderResource)
 {

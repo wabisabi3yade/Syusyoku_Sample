@@ -1,13 +1,19 @@
 #pragma once
 #include "Shader.h"
 
-// ピクセルシェーダーにバッファを送ったりなどするクラス
+// ピクセルシェーダーのセットアップをするクラス
 class PixelShader : public Shader
 {
-	void MakeBuffer() override;
+	std::unique_ptr<ID3D11PixelShader> pPxShader;	// ピクセルシェーダー
+
+	// ピクセルシェーダー作成
+	void MakeShader(const char* _pData, u_int _dataSize) override;
 
 public:
-	PixelShader();
-	~PixelShader();
+	PixelShader() : Shader(Shader::Type::Pixel) {}
+	~PixelShader() {};
+
+	// GPUにシェーダーを送る
+	void Bind() override;
 };
 

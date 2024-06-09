@@ -31,6 +31,7 @@ bool RenderParam::InitConstBuffer(ID3D11Device* _device)
 		return false;
 	}
 
+	// ビュー変換バッファを確保する
 	cbDesc.ByteWidth = sizeof(CbView);
 	hr = _device->CreateBuffer(
 		&cbDesc,
@@ -42,6 +43,7 @@ bool RenderParam::InitConstBuffer(ID3D11Device* _device)
 		return false;
 	}
 
+	// プロジェクションのバッファ確保
 	cbDesc.ByteWidth = sizeof(CbProjection);
 	hr = _device->CreateBuffer(
 		&cbDesc,

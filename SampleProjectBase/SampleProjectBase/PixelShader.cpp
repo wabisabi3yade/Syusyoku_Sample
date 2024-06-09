@@ -2,40 +2,22 @@
 #include "PixelShader.h"
 #include "Direct3D11.h"
 
-void PixelShader::MakeBuffer()
+void PixelShader::MakeShader(const char* _pData, u_int _dataSize)
 {
-	//HRESULT hr;
-	//// ピクセルシェーダー作成
-	//ID3DBlob* pPsBlob = nullptr;
-	//hr = D3DCompileFromFile(
-	//	_pPsPath,
-	//	nullptr,
-	//	D3D_COMPILE_STANDARD_FILE_INCLUDE,
-	//	"main",
-	//	"ps_4_0",
-	//	D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,
-	//	0,
-	//	&pPsBlob,
-	//	&errBlob
-	//);
-
-	//// ピクセルシェーダーオブジェクトを作成
-	//ID3D11Device* pDevice = Direct3D11::GetInstance()->GetRenderer()->GetDevice();
-	//ID3D11PixelShader* pPixelShader = nullptr;
-	//hr = pDevice->CreatePixelShader(
-	//	pPsBlob->GetBufferPointer(),
-	//	pPsBlob->GetBufferSize(),
-	//	nullptr,
-	//	&pPixelShader
-	//);
-	//if (FAILED(hr))
-	//	MessageError("ピクセルシェーダー作成失敗");
+	// ピクセルシェーダーを作成
+	ID3D11PixelShader* ptr = pPxShader.get();
+	Direct3D11::GetInstance()->GetRenderer()->GetDevice()->
+		CreatePixelShader(_pData, _dataSize, NULL, &ptr);
 }
 
-PixelShader::PixelShader()
+void PixelShader::Bind()
 {
-}
-
-PixelShader::~PixelShader()
-{
+	ID3D11DeviceContext* pContext = Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
+	// シェーダーを送る
+	pContext->PSSetShader(pPxShader.get(), nullptr, 0);
+	// 定数バッファを送る
+	for (int i = 0; i < pBuffers.size(); i++)
+		pContext->PSSetConstantBuffers(i, 1, &pBuffers[i]);
+	for (int i = 0; i < pTextures.size(); i++)
+		pContext->PSSetShaderResources(i, 1, &pTextures[i]);
 }

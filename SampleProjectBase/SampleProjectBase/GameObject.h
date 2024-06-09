@@ -1,22 +1,19 @@
 #pragma once
-#include "Model.h"
 
-// 画面に写されるオブジェクトクラス
+// シーンで使用するオブジェクト全般の基底クラス
 class GameObject
 {
-	std::unique_ptr<Model> pModel;	// モデル情報
-	const Model* pConstModel;	// 頂点座標などが変わらないならconstポインタでもらい、メモリ節約
+protected:
+	bool isActive = false;	// アクティブ状態かどうか
 
-	void Release();	// 解放処理
 public:
-	Transform transform;	// 移動情報
+	Transform transform;	// Transformパラメータ
 
 	GameObject();
 	virtual ~GameObject();
 
-	void SetModel(const Model* _setModel) { pConstModel = _setModel; }
-
-	void Update();	// 更新処理
-	void Draw();	// 描画処理
+	virtual void Update(){};	// 更新処理
+	virtual void LateUpdate() {};	// Updateを行ったあとの更新処理
+	virtual void Draw() {};	// 描画処理
 };
 

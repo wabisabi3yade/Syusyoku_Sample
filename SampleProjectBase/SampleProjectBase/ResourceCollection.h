@@ -116,8 +116,6 @@ inline T* ResourceCollection::CreateResource(std::string _resourceName)
 	// 既にその名前のリソースがあれば
 	if (GetImpotred(_resourceName))
 	{
-		
-
 		return nullptr;
 	}
 }

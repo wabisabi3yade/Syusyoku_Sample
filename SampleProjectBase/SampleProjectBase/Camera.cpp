@@ -9,9 +9,8 @@ Camera::~Camera()
 {
 }
 
-void Camera::Update()
+void Camera::LateUpdate()
 {
-	
 }
 
 DirectX::XMMATRIX Camera::GetViewMatrix() const

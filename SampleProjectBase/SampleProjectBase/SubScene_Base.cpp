@@ -26,6 +26,8 @@ SubScene_Base::SubScene_Base(SceneMoveInfo* _pSceneMoveInfo)
 	pSceneMoveInfo = _pSceneMoveInfo;
 	// リソース管理ポインタ取得
 	resourceCollection = ResourceCollection::GetInstance();
+	// シーンオブジェクト管理クラス作成
+	sceneObjects = std::make_unique<SceneObjects>();
 	// カメラ生成
 	mainCamera = std::make_unique<Camera>();
 }

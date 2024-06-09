@@ -1,6 +1,6 @@
 #pragma once
 
-// ImGuiでデバッグログを表示させるクラス
+// ImGuiでデバッグログを表示させるクラス(staticクラス)
 class ImGuiDebugLog
 {
 
@@ -28,6 +28,9 @@ public:
 	/// </summary>
 	static void DisplayMessage();
 
+	/// <summary>
+	/// 終了処理
+	/// </summary>
 	static void Terminate();
 };
 
