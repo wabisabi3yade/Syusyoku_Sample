@@ -2,7 +2,7 @@
 #include <d3dcompiler.h>
 #pragma comment(lib,"d3dcompiler.lib")
 
-#include "ShaderRetation.h"
+#include "ShaderCollection.h"
 #include "BlendState.h"
 #include "Sampler.h"
 #include "SetUpPerspectiveProj.h"
@@ -10,22 +10,22 @@
 
 D3D11_Renderer::D3D11_Renderer(HWND _hWnd)
 {
-	// クラス作成
-	pShaderRetation = std::make_unique<ShaderRetation>();
-
-	// 投影行列をバッファに入れる
-	pProjection = std::make_unique<SetUpPerspectiveProj>();
-	// ビュー変換行列を準備する
-	pViewTransform = std::make_unique<SetUpViewTrans>();
+	pRenderParam = std::make_unique<RenderParam>();
 
 	bool isSuccess = Init(_hWnd);   // 初期化
 	if (!isSuccess)
 		ImGuiDebugLog::AddDebugLog("D3D11描画クラス初期化でエラー");
 }
 
+RenderParam& D3D11_Renderer::GetParameter()
+{
+	RenderParam* ptr = pRenderParam.get();
+	return *ptr;
+}
+
 bool D3D11_Renderer::Init(HWND _hWnd)
 {
-	bool isOk; // 初期化成功したか
+	bool isResult; // 初期化成功したか
 	// Windowに合わせてスクリーンサイズ初期化
 	RECT rc;
 	GetClientRect(_hWnd, &rc);
@@ -33,23 +33,21 @@ bool D3D11_Renderer::Init(HWND _hWnd)
 	screenHeight = rc.bottom - rc.top;
 
 	// 初期化
-	isOk = InitDeviceAndSwapChain(_hWnd);
-	if (!isOk) return false;
+	isResult = InitDeviceAndSwapChain(_hWnd);
+	if (!isResult) return false;
 
-	isOk = InitBackBuffer();
-	if (!isOk) return false;
-
-	// シェーダーを作成する
-	isOk = CompileShader(L"VertexShader.hlsl", L"PixelShader.hlsl", *pShaderRetation);
-	if (!isOk) return false;
-
-	isOk = renderParam.Init(GetDevice());
-	if (!isOk) return false;
+	isResult = InitBackBuffer();
+	if (!isResult) return false;
 
 	// 投影行列をバッファに入れる
-	isOk = pProjection->SetUpProjection(screenWidth, screenHeight, this);
-	if (!isOk)
+	pProjection = std::make_unique<SetUpPerspectiveProj>();
+	// 投影行列をバッファに入れる
+	isResult = pProjection->SetUpProjection(screenWidth, screenHeight, this);
+	if (!isResult)
 		return false;
+
+	// ビュー変換行列を準備する
+	pViewTransform = std::make_unique<SetUpViewTrans>();
 
 	return true;
 }
@@ -144,22 +142,24 @@ bool D3D11_Renderer::InitBackBuffer()
 	viewPort[0].MaxDepth = 1.0f; // ビューポート領域の深度値の最大値
 	pImmediateContext->RSSetViewports(1, &viewPort[0]);
 
+	
 	// ブレンドステート初期化
-	pBlendState = new BlendState(GetDevice());
+	pBlendState = std::make_unique<BlendState>();
+	bool isResult = pBlendState->Init(*pD3DDevice);
+	if (!isResult)
+		return false;
 
 	// サンプラー初期化
-	pSampler = new Sampler();
-	pSampler->Init(*GetDevice());
+	pSampler = std::make_unique<Sampler>();
+	isResult = pSampler->Init(*pD3DDevice);
+	if (!isResult)
+		return false;
 
 	return true;
 }
 
 void D3D11_Renderer::Release()
 {
-	// クラス解放
-	CLASS_DELETE(pBlendState);
-	CLASS_DELETE(pSampler);
-
 	// デバイス・ステートのクリア
 	if (pImmediateContext) pImmediateContext->ClearState();
 
@@ -196,118 +196,18 @@ void D3D11_Renderer::SetUpDraw()
 	pImmediateContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);
 
 	float color[] = { 0.f, 0.f, 1.f, 0.f };
-	
+	// 塗りつぶし
 	pImmediateContext->ClearRenderTargetView(pRenderTargetView, color);
+	// サンプラー
 	ID3D11SamplerState* sampler = pSampler->GetSampler();
 	pImmediateContext->PSSetSamplers(0, 1, &sampler);
-	pImmediateContext->IASetInputLayout(pShaderRetation->GetInputLayout());
+	// 入力レイアウト
+	pImmediateContext->IASetInputLayout(pInputLayout.get());
 	pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	pImmediateContext->VSSetShader(pShaderRetation->GetVertexShader(), nullptr, 0);
-	pImmediateContext->PSSetShader(pShaderRetation->GetPixelShader(), nullptr, 0);
 
 	// OMにブレンドステートオブジェクトを設定
 	// OMは出力(Output)マネージャーのこと
 	FLOAT BlendFactor[4] = { 0.f, 0.f, 0.f, 0.f };
 	// RenderTargetが1つのときは基本的に考慮不要で0xffffffff
 	pImmediateContext->OMSetBlendState(pBlendState->GetParaObject(), BlendFactor, 0xffffffff);
-}
-
-void D3D11_Renderer::SetUpViewTransform(DirectX::XMMATRIX _viewMatrix)
-{
-	// ビュー変換行列準備クラスに渡す
-	pViewTransform->SetUpViewTransform(_viewMatrix, this);
-}
-
-ID3D11VertexShader* D3D11_Renderer::GetVertexShader()
-{
-	return pShaderRetation->GetVertexShader();
-}
-
-ID3D11PixelShader* D3D11_Renderer::GetPixelShader()
-{
-	return pShaderRetation->GetPixelShader();
-}
-
-bool D3D11_Renderer::CompileShader(const WCHAR* _pVsPath, const WCHAR* _pPsPath, ShaderRetation& _outShader)
-{
-	// ID3DBlob　→　メッシュの最適化と読み込み操作中に頂点、隣接性、
-	// およびマテリアル情報を格納するデータバッファー
-	ID3DBlob* pVsBlob = nullptr;
-	ID3DBlob* errBlob = nullptr;
-	// デバイスを取得
-	auto pDevice = GetDevice();
-
-	// シェーダーコンパイル
-	HRESULT hr = D3DCompileFromFile(
-		_pVsPath,
-		nullptr,
-		D3D_COMPILE_STANDARD_FILE_INCLUDE,
-		"main",
-		"vs_4_0",
-		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,
-		0,
-		&pVsBlob,
-		&errBlob
-	);
-	if (FAILED(hr)) return false;
-
-	// 頂点シェーダーオブジェクト作成
-	ID3D11VertexShader* pVertexShader = nullptr;
-	hr = pDevice->CreateVertexShader(
-		pVsBlob->GetBufferPointer(),
-		pVsBlob->GetBufferSize(),
-		nullptr,
-		&pVertexShader
-	);
-	if (FAILED(hr)) return false;
-
-	// 入力レイアウトオブジェクト作成
-	// →　頂点シェーダーにはどういったデータ構造の頂点データが渡ってくるかを定義した入力レイアウト
-	ID3D11InputLayout* pInputLayout = nullptr;
-	// Vertex構造体のメンバ変数のサイズを指定して、シェーダーの何の情報なのかを判別する
-	D3D11_INPUT_ELEMENT_DESC layout[] = {
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
-	};
-	hr = pDevice->CreateInputLayout(
-		layout,
-		_countof(layout),
-		pVsBlob->GetBufferPointer(),
-		pVsBlob->GetBufferSize(),
-		&pInputLayout
-	);
-	if (FAILED(hr)) return false;
-
-	// ピクセルシェーダー作成
-	ID3DBlob* pPsBlob = nullptr;
-	hr = D3DCompileFromFile(
-		_pPsPath,
-		nullptr,
-		D3D_COMPILE_STANDARD_FILE_INCLUDE,
-		"main",
-		"ps_4_0",
-		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION,
-		0,
-		&pPsBlob,
-		&errBlob
-	);
-
-	// ピクセルシェーダーオブジェクトを作成
-	ID3D11PixelShader* pPixelShader = nullptr;
-	hr = pDevice->CreatePixelShader(
-		pPsBlob->GetBufferPointer(),
-		pPsBlob->GetBufferSize(),
-		nullptr,
-		&pPixelShader
-	);
-	if (FAILED(hr)) return false;
-
-	// 各オブジェクトをシェーダー保持クラスに代入する
-	_outShader.SetVertexShader(pVertexShader);
-	_outShader.SetPixelShader(pPixelShader);
-	_outShader.SetInputLayout(pInputLayout);
-
-	return true;
 }

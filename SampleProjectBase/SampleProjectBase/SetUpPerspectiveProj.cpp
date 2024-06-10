@@ -31,31 +31,6 @@ bool SetUpPerspectiveProj::SetUpProjection(UINT _screenWidth, UINT _screenHeight
     mat = XMMatrixTranspose(mat);
 
     // 投影行列の参照を取得し、ビュー変換行列を代入する
-    auto& cb = _pRenderResource->GetParameter().cbProjectionSet;
-    XMStoreFloat4x4(&cb.data.projection, mat);
-
-    D3D11_MAPPED_SUBRESOURCE mappedResource;
-    auto pDeviceContext = _pRenderResource->GetDeviceContext();
-    // CBufferにひもづくハードウェアリソースマップ取得（ロックして取得）
-    HRESULT hr = pDeviceContext->Map(
-        cb.pBuffer,
-        0,
-        D3D11_MAP_WRITE_DISCARD,
-        0,
-        &mappedResource);
-
-    if (FAILED(hr))
-    {
-        ImGuiDebugLog::AddDebugLog("ビュー変換行列作成でエラー");
-        return false;
-    }
-
-    CopyMemory(mappedResource.pData, &cb.data, sizeof(cb.data));
-    // マップ解除
-    pDeviceContext->Unmap(cb.pBuffer, 0);
-
-    // VSにProjectionMatrixをセット(ここで1度セットして以後不変)
-    pDeviceContext->VSSetConstantBuffers(2, 1, &cb.pBuffer);
-
+   _pRenderResource->GetParameter().SetProjection(mat);
     return true;
 }

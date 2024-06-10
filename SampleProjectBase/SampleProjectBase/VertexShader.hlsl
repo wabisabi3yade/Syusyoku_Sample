@@ -1,15 +1,7 @@
 // Slot0 座標変換
-cbuffer cbTransform : register(b0) {
-    matrix transform;
-};
-
-// Slot1 ビュー変換
-cbuffer cbView : register(b1) { 
+cbuffer WVP : register(b0) {
+    matrix world;
     matrix view;
-};
-
-// Slot2 投影変換
-cbuffer cbProjection : register(b2) { 
     matrix projection;
 };
 
@@ -35,7 +27,7 @@ VS_OUTPUT main(VS_INPUT input)
 
     // 各行列を計算する
     float4 pos = float4(input.pos, 1.0);
-    pos = mul(pos, transform);
+    pos = mul(pos, world);
     pos = mul(pos, view);
     pos = mul(pos, projection);
     output.pos = pos;

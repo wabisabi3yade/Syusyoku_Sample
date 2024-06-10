@@ -26,12 +26,12 @@ class Model
 	std::vector<Material*> materials;	// マテリアル
 
 	// このモデルで使うシェーダー
-	std::unique_ptr<VertexShader> pVertexShader;
-	std::unique_ptr<PixelShader> pPixelShader;
+	VertexShader* pVertexShader;
+	PixelShader* pPixelShader;
 
 	bool LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _renderer);
 
-	void SetupTransform(const Transform& _transform) const;	// 座標変換行列を作成
+	void SetupDraw(const Transform& _transform) const;	// 座標変換行列を作成
 
 	void ResetParam();	// メッシュなどの情報を全て初期化する
 public:
@@ -50,5 +50,8 @@ public:
 	u_int GetMeshNum()const { return meshNum; }	// モデルのメッシュ数を取得
 	const std::vector<Mesh*> GetMeshes()const { return meshes; }	// メッシュの配列を取得する
 	const ModelSettings GetModelData()const { return modelData; }	// モデルのデータを取得する
+
+	void SetVertexShader(VertexShader* _vertexSh) { pVertexShader = _vertexSh; }
+	void SetPixelShader(PixelShader* _pixelSh) { pPixelShader = _pixelSh; };
 };
 

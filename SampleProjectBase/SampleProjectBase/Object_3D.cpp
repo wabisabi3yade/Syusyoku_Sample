@@ -10,7 +10,7 @@ void Object_3D::Release()
 {
 }
 
-Object_3D::Object_3D() : pConstModel(nullptr)
+Object_3D::Object_3D() : pModel(nullptr)
 {
 }
 
@@ -25,5 +25,5 @@ void Object_3D::Update()
 
 void Object_3D::Draw()
 {
-	pConstModel->Draw(transform);
+	pModel->Draw(transform);
 }

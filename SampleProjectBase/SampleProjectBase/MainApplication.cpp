@@ -41,6 +41,7 @@ void MainApplication::Init(HINSTANCE _hInst)
 	HWND hwnd = pWindow->GetWindowHandle();
 	// 初期化
 	pD3D->Init(hwnd);
+
 	// シーンマネージャーを作成
 	pSceneManager = SceneManager::GetInstance();
 

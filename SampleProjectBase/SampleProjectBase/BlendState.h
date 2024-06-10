@@ -4,16 +4,17 @@
 // 半透明処理をするためのブレンドオブジェクト
 class BlendState : public IGetRenderPara<ID3D11BlendState*>
 {
-	ID3D11BlendState* pBlendStateObj{ nullptr };
+	std::unique_ptr<ID3D11BlendState> pBlendStateObj;
 
-	// 初期化
-	bool BlendStateInit(ID3D11Device* _pDevice);
 public:
 	// 引数：デバイス
-	BlendState(ID3D11Device* _pDevice);
-	~BlendState();
+	BlendState(){};
+	~BlendState(){};
+
+	// 初期化
+	bool Init(ID3D11Device& _pDevice);
 
 	// ブレンドステートオブジェクトを渡す
-	ID3D11BlendState* GetParaObject() override { return pBlendStateObj; }
+	ID3D11BlendState* GetParaObject() override { return pBlendStateObj.get(); }
 };
 

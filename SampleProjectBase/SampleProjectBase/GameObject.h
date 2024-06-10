@@ -4,13 +4,13 @@
 class GameObject
 {
 protected:
-	bool isActive = false;	// アクティブ状態かどうか
+	bool isActive;	// アクティブ状態かどうか
 
 public:
 	Transform transform;	// Transformパラメータ
 
-	GameObject();
-	virtual ~GameObject();
+	GameObject() : isActive(true) {};
+	virtual ~GameObject() {};
 
 	virtual void Update(){};	// 更新処理
 	virtual void LateUpdate() {};	// Updateを行ったあとの更新処理

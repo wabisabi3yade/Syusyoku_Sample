@@ -212,12 +212,10 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 	return true;
 }
 
-void Model::SetupTransform(const Transform& _transform) const
+void Model::SetupDraw(const Transform& _transform) const
 {
 	// レンダラー取得
 	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
-
-	CbTransformSet& cb = renderer.GetParameter().cbTransformSet;
 
 	// 移動行列
 	DirectX::XMMATRIX moveMatrix = DirectX::XMMatrixTranslation(_transform.position.x, _transform.position.y, _transform.position.z);
@@ -233,37 +231,21 @@ void Model::SetupTransform(const Transform& _transform) const
 		* rotateMatrix
 		* moveMatrix;
 
-	DirectX::XMStoreFloat4x4(&cb.data.transform, XMMatrixTranspose(mtx));
+	// ワールド変換行列の座標にモデルの座標を入れる
+	RenderParam::WorldMatrix wMat = renderer.GetParameter().GetWorldMatrix();
+	DirectX::XMStoreFloat4x4(&wMat.world, XMMatrixTranspose(mtx));
 
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	// CBufferにひもづくハードウェアリソースマップ取得（ロックして取得）
-	auto pDeviceContext = renderer.GetDeviceContext();
+	// シェーダーをバインド
+	pVertexShader->Bind();
+	pPixelShader->Bind();
 
-
-	HRESULT hr = pDeviceContext->Map(
-		cb.pBuffer,
-		0,
-		D3D11_MAP_WRITE_DISCARD,
-		0,
-		&mappedResource);
-	if (FAILED(hr))
-	{
-		return;
-	}
-
-	CopyMemory(mappedResource.pData, &cb.data, sizeof(cb.data));
-	// マップ解除
-	pDeviceContext->Unmap(cb.pBuffer, 0);
-
-
-	pDeviceContext->VSSetConstantBuffers(0, 1, &cb.pBuffer);
-
-	return;
+	// バッファを更新する
+	pVertexShader->UpdateBuffer(0, &wMat);
 }
 
 void Model::Draw(const Transform& _transform) const
 {
-	SetupTransform(_transform);
+	SetupDraw(_transform);
 
 	// レンダラー取得
 	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();

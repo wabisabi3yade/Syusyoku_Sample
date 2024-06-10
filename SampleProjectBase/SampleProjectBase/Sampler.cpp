@@ -1,16 +1,5 @@
 #include "pch.h"
 #include "Sampler.h"
-
-Sampler::Sampler()
-{
-
-}
-
-Sampler::~Sampler()
-{
-    SAFE_RELEASE(pSampler);
-}
-
 bool Sampler::Init(ID3D11Device& _device)
 {
     // サンプラー作成
@@ -21,7 +10,8 @@ bool Sampler::Init(ID3D11Device& _device)
     smpDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
     smpDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
     smpDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-    HRESULT hr = _device.CreateSamplerState(&smpDesc, &pSampler);
+    ID3D11SamplerState* samplePtr = pSampler.get();
+    HRESULT hr = _device.CreateSamplerState(&smpDesc, &samplePtr);
     if (FAILED(hr))
     {
         ImGuiDebugLog::AddDebugLog("サンプラー初期化失敗");

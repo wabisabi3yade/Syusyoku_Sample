@@ -49,30 +49,30 @@ bool Triangle::CreateVertexBuffer(D3D11_Renderer& _renderer)
 
 void Triangle::SetupTransform(D3D11_Renderer& _renderer)
 {
-	CbTransformSet& cb = _renderer.GetParameter().cbTransformSet;
+	//CbTransformSet& cb = _renderer.GetParameter().cbTransformSet;
 
-	auto mtx = DirectX::XMMatrixTranslation(0.0f, 0.0f, 0);
+	//auto mtx = DirectX::XMMatrixTranslation(0.0f, 0.0f, 0);
 
-	DirectX::XMStoreFloat4x4(&cb.data.transform, XMMatrixTranspose(mtx));
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	//// CBufferにひもづくハードウェアリソースマップ取得（ロックして取得）
-	auto pDeviceContext = _renderer.GetDeviceContext();
+	//DirectX::XMStoreFloat4x4(&cb.data.transform, XMMatrixTranspose(mtx));
+	//D3D11_MAPPED_SUBRESOURCE mappedResource;
+	////// CBufferにひもづくハードウェアリソースマップ取得（ロックして取得）
+	//auto pDeviceContext = _renderer.GetDeviceContext();
 
-	HRESULT hr = pDeviceContext->Map(
-		cb.pBuffer,
-		0,
-		D3D11_MAP_WRITE_DISCARD,
-		0,
-		&mappedResource);
-	if (FAILED(hr)) {
-		//DXTRACE_ERR(L"DrawSceneGraph failed", hr);
-		return;
-	}
+	//HRESULT hr = pDeviceContext->Map(
+	//	cb.pBuffer,
+	//	0,
+	//	D3D11_MAP_WRITE_DISCARD,
+	//	0,
+	//	&mappedResource);
+	//if (FAILED(hr)) {
+	//	//DXTRACE_ERR(L"DrawSceneGraph failed", hr);
+	//	return;
+	//}
 
-	CopyMemory(mappedResource.pData, &cb.data, sizeof(cb.data));
-	// マップ解除
-	pDeviceContext->Unmap(cb.pBuffer, 0);
-	pDeviceContext->VSSetConstantBuffers(0, 1, &cb.pBuffer);
+	//CopyMemory(mappedResource.pData, &cb.data, sizeof(cb.data));
+	//// マップ解除
+	//pDeviceContext->Unmap(cb.pBuffer, 0);
+	//pDeviceContext->VSSetConstantBuffers(0, 1, &cb.pBuffer);
 
 }
 

@@ -1,22 +1,6 @@
 #include "pch.h"
 #include "BlendState.h"
-
-BlendState::BlendState(ID3D11Device* _device)
-{
-	// 初期化を行う
-	bool isCheck = BlendStateInit(_device);
-	// 初期化失敗なら
-	if (!isCheck)
-		ImGuiDebugLog::AddDebugLog("ブレンドステート初期化でエラー");
-
-}
-
-BlendState::~BlendState()
-{
-	SAFE_RELEASE(pBlendStateObj);
-}
-
-bool BlendState::BlendStateInit(ID3D11Device* _pDevice)
+bool BlendState::Init(ID3D11Device& _pDevice)
 {
 	// RenderTarget0へのAlphaブレンド描画設定
 	D3D11_BLEND_DESC BlendState;
@@ -31,9 +15,10 @@ bool BlendState::BlendStateInit(ID3D11Device* _pDevice)
 	BlendState.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
 	BlendState.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 	BlendState.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-	auto hr = _pDevice->CreateBlendState(&BlendState, &pBlendStateObj);
-	if (FAILED(hr)) {
-		//TRACE(L"InitDirect3D g_pD3DDevice->CreateBlendState", hr);
+	ID3D11BlendState* blendPtr = pBlendStateObj.get();
+	auto hr = _pDevice.CreateBlendState(&BlendState, &blendPtr);
+	if (FAILED(hr)) // 失敗
+	{
 		return false;
 	}
 

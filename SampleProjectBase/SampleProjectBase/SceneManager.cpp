@@ -3,10 +3,16 @@
 #include "ChangeBroadScene.h"
 #include "Test_ChangeSubScene.h"
 #include "SceneMoveInfo.h"
+#include "ShaderCollection.h"
+
 SceneManager* SceneManager::pInstance = nullptr;	// インスタンスの初期化
 
 SceneManager::SceneManager()
 {
+	// シェーダー管理クラス初期化
+	ShaderCollection* shCollection = ShaderCollection::GetInstance();
+	shCollection->Init();
+
 	// 初期シーンの情報
 	int initSub = Test_ChangeSubScene::TEST1;
 	BROAD_TYPE::TYPE initBroad = BROAD_TYPE::TEST;
@@ -39,6 +45,8 @@ void SceneManager::Release()
 {
 	CLASS_DELETE(pChaneBroad);
 	CLASS_DELETE(pMoveInfo);
+
+	ShaderCollection::Delete();
 }
 
 void SceneManager::Exec()

@@ -275,7 +275,7 @@
     <ClCompile Include="SetUpViewTrans.cpp">
       <Filter>ソース ファイル\Application\DirectX3D11\Render\View</Filter>
     </ClCompile>
-    <ClCompile Include="ShaderRetation.cpp">
+    <ClCompile Include="ShaderCollection.cpp">
       <Filter>ソース ファイル\Graphics\Shader\ShaderRetaion</Filter>
     </ClCompile>
     <ClCompile Include="Singleton_Base.cpp">
@@ -472,7 +472,7 @@
     <ClInclude Include="SetUpViewTrans.h">
       <Filter>ソース ファイル\Application\DirectX3D11\Render\View</Filter>
     </ClInclude>
-    <ClInclude Include="ShaderRetation.h">
+    <ClInclude Include="ShaderCollection.h">
       <Filter>ソース ファイル\Graphics\Shader\ShaderRetaion</Filter>
     </ClInclude>
     <ClInclude Include="Singleton_Base.h">

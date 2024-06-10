@@ -20,17 +20,17 @@ public:
 	void Draw();	// 描画処理
 
 	// 配列にオブジェクトを入れる
-	void SetObject(std::string _objectName, std::unique_ptr<GameObject> _objPtr);
+	void SetObject(const std::string& _objectName, std::unique_ptr<GameObject> _objPtr);
 
 	// オブジェクトの名前からオブジェクトを返す
-	template<class T> T* GetObject(std::string _objectName);
+	template<class T> T* GetSceneObject(const std::string& _objectName);
 
 	// オブジェクトの数を返す
-	u_int GetObjectsNum()const { return list.size(); }
+	u_int GetObjectsNum()const { return static_cast<u_int>(list.size()); }
 };
 
 template<class T>
-inline T* SceneObjects::GetObject(std::string _objectName)
+inline T* SceneObjects::GetSceneObject(const std::string& _objectName)
 {
 	// 名前から探す
 	auto itr = list.find(_objectName);

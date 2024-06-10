@@ -44,11 +44,11 @@ void SubScene_Base::Exec()
 	// Updateの後に行う更新処理(カメラに処理とか)
 	LateUpdate();
 
-	// 画面クリア
+	// 画面クリアなど準備
 	Direct3D11::GetInstance()->GetRenderer()->SetUpDraw();
-	// ビュー変換行列を求める
-	DirectX::XMMATRIX viewMatrix = mainCamera->GetViewMatrix();
-	Direct3D11::GetInstance()->GetRenderer()->SetUpViewTransform(viewMatrix);
+	// ビュー変換行列を更新
+	mainCamera->UpdateViewMatrix();
+
 	// シーン内の描画処理
 	Draw();
 

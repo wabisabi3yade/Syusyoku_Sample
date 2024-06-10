@@ -1,56 +1,57 @@
 #include "pch.h"
 #include "Shader.h"
-//#include <d3dcompiler.h>
+#include <d3dcompiler.h>
 #include "Direct3D11.h"
 
-//#pragma comment(lib, "d3dcompiler.lib")
+#pragma comment(lib, "d3dcompiler.lib")
+#pragma comment(lib, "dxguid.lib")
 
 void Shader::MakeBuffer(const char* _pData, u_int _dataSize)
 {
-	//HRESULT hr;
-	//// シェーダーに含む情報にアクセスするためのリフレクション情報を取得
-	//ID3D11ShaderReflection* pReflection;
-	//hr = D3DReflect(_pData, _dataSize, IID_ID3D11ShaderReflection, (void**)&pReflection);
-	//if (FAILED(hr))
-	//{
-	//	ImGuiDebugLog::AddDebugLog("リフレクション情報取得に失敗");
-	//	return;
-	//}
+	HRESULT hr;
+	// シェーダーに含む情報にアクセスするためのリフレクション情報を取得
+	ID3D11ShaderReflection* pReflection;
+	hr = D3DReflect(_pData, _dataSize, IID_ID3D11ShaderReflection, (void**)&pReflection);
+	if (FAILED(hr))
+	{
+		ImGuiDebugLog::AddDebugLog("リフレクション情報取得に失敗");
+		return;
+	}
 
-	//// シェーダー作成でのプロパティなどの構造体
-	//D3D11_SHADER_DESC desc;
-	//pReflection->GetDesc(&desc);	// 取得
-	//pBuffers.resize(desc.ConstantBuffers);	// バッファの数分配列を確保する
+	// シェーダー作成でのプロパティなどの構造体
+	D3D11_SHADER_DESC desc;
+	pReflection->GetDesc(&desc);	// 取得
+	pBuffers.resize(desc.ConstantBuffers);	// バッファの数分配列を確保する
 
-	//ID3D11Device* pDevice = Direct3D11::GetInstance()->GetRenderer()->GetDevice();
-	//// 定数バッファ情報を取得し、バッファを作成する
-	//for (int i = 0; i < desc.ConstantBuffers; i++)
-	//{
-	//	// シェーダーの定数バッファ取得する
-	//	D3D11_SHADER_BUFFER_DESC shaderBufDesc;
-	//	ID3D11ShaderReflectionConstantBuffer* refCBuffer = pReflection->GetConstantBufferByIndex(i);
-	//	refCBuffer->GetDesc(&shaderBufDesc);
+	ID3D11Device* pDevice = Direct3D11::GetInstance()->GetRenderer()->GetDevice();
+	// 定数バッファ情報を取得し、バッファを作成する
+	for (u_int i = 0; i < desc.ConstantBuffers; i++)
+	{
+		// シェーダーの定数バッファ取得する
+		D3D11_SHADER_BUFFER_DESC shaderBufDesc;
+		ID3D11ShaderReflectionConstantBuffer* refCBuffer = pReflection->GetConstantBufferByIndex(i);
+		refCBuffer->GetDesc(&shaderBufDesc);
 
-	//	// 作成する
-	//	// バッファ情報を作成
-	//	D3D11_BUFFER_DESC bufDesc = {};
-	//	bufDesc.ByteWidth = shaderBufDesc.Size;	// サイズ
-	//	bufDesc.Usage = D3D11_USAGE_DEFAULT;
-	//	bufDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	//	// バッファ作成
-	//	hr = pDevice->CreateBuffer(&bufDesc, nullptr, &pBuffers[i]);
-	//	if (FAILED(hr))
-	//	{
-	//		ImGuiDebugLog::AddDebugLog("頂点シェーダーで定数バッファ作成失敗");
-	//		return;
-	//	}
-	//}
+		// 作成する
+		// バッファ情報を作成
+		D3D11_BUFFER_DESC bufDesc = {};
+		bufDesc.ByteWidth = shaderBufDesc.Size;	// サイズ
+		bufDesc.Usage = D3D11_USAGE_DEFAULT;
+		bufDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		// バッファ作成
+		hr = pDevice->CreateBuffer(&bufDesc, nullptr, &pBuffers[i]);
+		if (FAILED(hr))
+		{
+			ImGuiDebugLog::AddDebugLog("頂点シェーダーで定数バッファ作成失敗");
+			return;
+		}
+	}
 
-	//// テクスチャのサイズを確保
-	//pTextures.resize(desc.BoundResources, nullptr);
+	// テクスチャのサイズを確保
+	pTextures.resize(desc.BoundResources, nullptr);
 
-	//// 各シェーダーを作成する
-	//MakeShader(_pData, _dataSize);
+	// 各シェーダーを作成する
+	MakeShader(_pData, _dataSize);
 }
 void Shader::LoadCsoFile(const char* _filePath)
 {

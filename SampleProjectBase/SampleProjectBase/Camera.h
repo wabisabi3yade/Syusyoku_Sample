@@ -10,13 +10,12 @@ class Camera : public GameObject
 	DirectX::SimpleMath::Vector3 focusPos{ 0,0,0 };
 	// カメラの上ベクトル
 	DirectX::SimpleMath::Vector3 camUp{ 0,1.f,0 };
-
 public:
 	Camera();
 	~Camera();
 
 	void LateUpdate() override;
 
-	DirectX::XMMATRIX GetViewMatrix()const;
+	void UpdateViewMatrix();	// ビュー変換行列を更新
 };
 

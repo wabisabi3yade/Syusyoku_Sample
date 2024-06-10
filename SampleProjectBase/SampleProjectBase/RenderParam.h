@@ -1,33 +1,31 @@
 #pragma once
-#include "CbTransformSet.h"
-#include "CbProjectionSet.h"
-#include "CbViewSet.h"
 
 // 描画に必要なパラメータクラス
 class RenderParam
 {
 public:
-	struct ConstBuffer
+	struct WorldMatrix
 	{
-
+		DirectX::SimpleMath::Matrix world;	// ワールド座標
+		DirectX::SimpleMath::Matrix view;	// ビュー変換
+		DirectX::SimpleMath::Matrix projection;	// プロジェクション
 	};
+
+
 private:
-	// GPUに渡す定数バッファを初期化する
-	bool InitConstBuffer(ID3D11Device* _device);
-
+	ID3D11InputLayout* pInputLayout;	// インプットレイアウト
+	WorldMatrix worldMatrix;	// ワールド行列
 public:
-	CbTransformSet cbTransformSet;	// GPUに渡す座標データ
-	CbProjectionSet cbProjectionSet;	// GPUに渡す投影データ
-	CbViewSet cbViewSet;	// GPUに渡すビュー変換データ
-
 	RenderParam() {};
 	~RenderParam();
 
-	/// <summary>
-	/// パラメータを初期化する(バッファのサイズ確保)
-	/// </summary>
-	/// <param name="_device">デバイス</param>
-	/// <returns>問題なくできたかどうかフラグ</returns>
-	bool Init(ID3D11Device* _device);
+	// インプットレイアウトを取得
+	ID3D11InputLayout& GetInputLayout();
+	const WorldMatrix& GetWorldMatrix() { return worldMatrix; }
+
+	// インプットレイアウトを代入
+	void SetInputLayout(ID3D11InputLayout* _inputLayout) { pInputLayout = _inputLayout; }
+	void SetView(DirectX::SimpleMath::Matrix _view) { worldMatrix.view = _view; }
+	void SetProjection(DirectX::SimpleMath::Matrix _proj) { worldMatrix.projection = _proj; }
 };
 

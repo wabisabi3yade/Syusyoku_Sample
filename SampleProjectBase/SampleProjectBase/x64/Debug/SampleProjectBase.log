@@ -1,21 +1,7 @@
 ﻿  モジュール依存関係のソースをスキャンしています...
-  BroadScene_Base.cpp
-  Test_SubScene.cpp
-  Test_ChangeSubScene.cpp
-  SceneObjects.cpp
-  ChangeSubScene.cpp
-  SubScene_Base.cpp
+  PixelShader.cpp
+  VertexShader.cpp
   コンパイルしています...
-  BroadScene_Base.cpp
-  Test_SubScene.cpp
-  Test_ChangeSubScene.cpp
-  ChangeSubScene.cpp
-  SubScene_Base.cpp
-  SceneObjects.cpp
-C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\SceneObjects.h(29,29): warning C4267: 'return': 'size_t' から 'u_int' に変換しました。データが失われているかもしれません。
-C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\SceneObjects.h(29,29): warning C4267: 'return': 'size_t' から 'u_int' に変換しました。データが失われているかもしれません。
-C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\SceneObjects.h(29,29): warning C4267: 'return': 'size_t' から 'u_int' に変換しました。データが失われているかもしれません。
-C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\SceneObjects.h(29,29): warning C4267: 'return': 'size_t' から 'u_int' に変換しました。データが失われているかもしれません。
-C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\SceneObjects.h(29,29): warning C4267: 'return': 'size_t' から 'u_int' に変換しました。データが失われているかもしれません。
-C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\SceneObjects.h(29,29): warning C4267: 'return': 'size_t' から 'u_int' に変換しました。データが失われているかもしれません。
+  PixelShader.cpp
+  VertexShader.cpp
   SampleProjectBase.vcxproj -> C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\x64\Debug\SampleProjectBase.exe

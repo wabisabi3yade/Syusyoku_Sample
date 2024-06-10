@@ -79,7 +79,7 @@
     <ClCompile Include="SceneRunningState.cpp" />
     <ClCompile Include="SetUpPerspectiveProj.cpp" />
     <ClCompile Include="SetUpViewTrans.cpp" />
-    <ClCompile Include="ShaderRetation.cpp" />
+    <ClCompile Include="ShaderCollection.cpp" />
     <ClCompile Include="Singleton_Base.cpp" />
     <ClCompile Include="SubScene_Base.cpp" />
     <ClCompile Include="Test_Broad.cpp" />
@@ -149,7 +149,7 @@
     <ClInclude Include="SceneRunningState.h" />
     <ClInclude Include="SetUpPerspectiveProj.h" />
     <ClInclude Include="SetUpViewTrans.h" />
-    <ClInclude Include="ShaderRetation.h" />
+    <ClInclude Include="ShaderCollection.h" />
     <ClInclude Include="Singleton_Base.h" />
     <ClInclude Include="SubScene_Base.h" />
     <ClInclude Include="Test_Broad.h" />

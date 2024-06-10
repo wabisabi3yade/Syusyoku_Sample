@@ -3,14 +3,13 @@
 // サンプラー（テクスチャをオブジェクトに貼るときの補間方法）
 class Sampler
 {
-	ID3D11SamplerState* pSampler;
-
+	std::unique_ptr<ID3D11SamplerState> pSampler;
 public:
-	Sampler();
-	~Sampler();
+	Sampler(){};
+	~Sampler(){};
 
 	bool Init(ID3D11Device& _device);
 
-	ID3D11SamplerState* GetSampler() { return pSampler; }
+	ID3D11SamplerState* GetSampler() { return pSampler.get(); }
 };
 

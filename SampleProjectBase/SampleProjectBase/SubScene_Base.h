@@ -4,6 +4,7 @@
 #include "ModelLoader.h"
 #include "SceneObjects.h"
 #include "Object_3D.h"
+#include "ShaderCollection.h"
 
 class SceneMoveInfo;
 
