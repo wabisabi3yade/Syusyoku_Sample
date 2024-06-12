@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "PixelShader.h"
-#include "Direct3D11.h"
 
 void PixelShader::MakeShader(const char* _pData, u_int _dataSize)
 {

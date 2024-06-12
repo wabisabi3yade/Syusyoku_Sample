@@ -16,7 +16,6 @@ class SubScene_Base
 
 protected:
 	ResourceCollection* resourceCollection;	// リソース管理ポインタ
-	std::unique_ptr<Camera> mainCamera;	// メインカメラオブジェクト
 	std::unique_ptr<SceneObjects> sceneObjects;	// シーンで使用するオブジェクト管理クラス
 
 	// 更新処理

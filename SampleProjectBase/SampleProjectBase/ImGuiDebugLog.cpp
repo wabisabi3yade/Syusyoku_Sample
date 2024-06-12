@@ -10,7 +10,7 @@ std::list<ImGuiDebugLog::Message> ImGuiDebugLog::displayList = {};
 
 constexpr u_int MAX_DISPLAY = (1000); // デバッグログ表示最大数
 
-void ImGuiDebugLog::AddDebugLog(const std::string& _debugMessage)
+void ImGuiDebugLog::Add(const std::string& _debugMessage)
 {
 #ifdef _DEBUG
 	// リストの中に既に同じメッセージがあるなら

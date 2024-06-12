@@ -37,7 +37,7 @@ inline T* SceneObjects::GetSceneObject(const std::string& _objectName)
 	if (itr == list.end())
 	{
 		std::string message = "リスト内に名前のオブジェクトがありませんでした" + _objectName;
-		ImGuiDebugLog::AddDebugLog(message);
+		ImGuiDebugLog::Add(message);
 		return nullptr;
 	}
 
@@ -47,9 +47,9 @@ inline T* SceneObjects::GetSceneObject(const std::string& _objectName)
 	{
 		std::string message = _objectName + "を指定した型に変換できませんでした";
 #ifdef _DEBUG
-		message + "　" + typeid(retPtr).name;	// 変換先の型名を表示
+		//message + "　" + typeid(retPtr).name;	// 変換先の型名を表示
 #endif // _DEBUG
-		ImGuiDebugLog::AddDebugLog(message);
+		ImGuiDebugLog::Add(message);
 		return nullptr;
 	}
 

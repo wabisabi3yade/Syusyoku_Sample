@@ -4,8 +4,6 @@
 // ゲーム内カメラクラス
 class Camera : public GameObject
 {
-	// カメラの座標
-	DirectX::SimpleMath::Vector3 eyePos{ 0,0,0 };
 	// カメラの注視点
 	DirectX::SimpleMath::Vector3 focusPos{ 0,0,0 };
 	// カメラの上ベクトル

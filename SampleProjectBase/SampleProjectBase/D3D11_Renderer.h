@@ -36,7 +36,6 @@ private:
 	std::unique_ptr<Sampler> pSampler;	// サンプラー
 	std::unique_ptr<SetUpPerspectiveProj> pProjection;	// プロジェクション行列を準備するクラス
 	std::unique_ptr<SetUpViewTrans> pViewTransform;	// ビュー変換行列を準備するクラス
-	std::unique_ptr<ID3D11InputLayout> pInputLayout;	// インプットレイアウト
 
 	bool Init(HWND _hWnd);  // 初期化
 	bool InitDeviceAndSwapChain(HWND _hWnd);    // デバイスとスワップチェインの作成

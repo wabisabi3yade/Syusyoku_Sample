@@ -1,6 +1,5 @@
 #include "Test_SubScene.h"
 #include "Triangle.h"
-#include "Direct3D11.h"
 
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
@@ -16,15 +15,17 @@ Test_SubScene::Test_SubScene(SceneMoveInfo* _pSceneMoveInfo)
 
 	Model* m = resourceCollection->GetResource<Model>("Md_Cow");
 	std::unique_ptr<Object_3D> go = std::make_unique<Object_3D>();
+	std::unique_ptr<Object_3D> go2 = std::make_unique<Object_3D>();
 	go->SetModel(m);
+	go2->SetModel(m);
+	go2->transform.position.x = 3.f;
 	VertexShader* vertexSh = ShaderCollection::GetInstance()->GetVertexShader("VertexShader");
 	PixelShader* pixelSh = ShaderCollection::GetInstance()->GetPixelShader("PixelShader");
 
-	go->GetModel().SetVertexShader(vertexSh);
-	go->GetModel().SetPixelShader(pixelSh);
 	sceneObjects->SetObject("Cow", std::move(go));
+	sceneObjects->SetObject("Cow", std::move(go2));
 
-
+	cube = std::make_unique<Cube>();
 }
 
 Test_SubScene::~Test_SubScene()
@@ -44,9 +45,24 @@ void Test_SubScene::LateUpdate()
 
 void Test_SubScene::Draw()
 {
+	ShaderCollection* shCol = ShaderCollection::GetInstance();
+	Shader* shader[] =
+	{
+		shCol->GetVertexShader("VertexShader"),
+		shCol->GetPixelShader("PixelShader"),
+	};
+	Object_3D* go = sceneObjects->GetSceneObject<Object_3D>("Cow");
+	ImGui::Begin("a");
+	ImGui::SliderFloat("posX", &go->transform.position.z, -10, 10);
+	ImGui::End();
 
+	cube->Draw();
 
+	go->GetModel().SetVertexShader(shader[0]);
+	go->GetModel().SetPixelShader(shader[1]);
 	sceneObjects->Draw();
+
+	
 }
 
 void Test_SubScene::Release()

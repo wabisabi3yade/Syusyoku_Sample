@@ -1,7 +1,6 @@
 ﻿  モジュール依存関係のソースをスキャンしています...
-  PixelShader.cpp
-  VertexShader.cpp
+  Cube.cpp
   コンパイルしています...
-  PixelShader.cpp
-  VertexShader.cpp
+  Cube.cpp
+C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Cube.cpp(34,28): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
   SampleProjectBase.vcxproj -> C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\x64\Debug\SampleProjectBase.exe

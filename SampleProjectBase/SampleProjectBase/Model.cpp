@@ -1,7 +1,6 @@
 #include "Model.h"
 #include "Mesh.h"
 #include "Material.h"
-#include "Direct3D11.h"
 
 // assimpライブラリ読込
 #ifdef _DEBUG
@@ -44,7 +43,7 @@ bool Model::SetModel(const Model& _setModel)
 		const Mesh* setMesh = _setMeshes[meshIdx];
 		if (setMesh == nullptr)	// 無かったら
 		{
-			ImGuiDebugLog::AddDebugLog("メッシュのポインタがnullptrです");
+			ImGuiDebugLog::Add("メッシュのポインタがnullptrです");
 			// パラメータをリセットする
 			ResetParam();
 			return false;	// 失敗
@@ -69,12 +68,12 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 
 	if (_settings.modelPath == nullptr)
 	{
-		ImGuiDebugLog::AddDebugLog("モデルのファイルパスが設定されていません");
+		ImGuiDebugLog::Add("モデルのファイルパスが設定されていません");
 		return false;
 	}
 	if (_settings.modelName == "")
 	{
-		ImGuiDebugLog::AddDebugLog("モデルの名前が設定されていません");
+		ImGuiDebugLog::Add("モデルの名前が設定されていません");
 		return false;
 	}
 
@@ -108,7 +107,7 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 			// メッシュの準備
 			if (mesh->Setup(_renderer, pMeshData) == false)
 			{
-				ImGuiDebugLog::AddDebugLog("メッシュのセットアップ失敗");
+				ImGuiDebugLog::Add("メッシュのセットアップ失敗");
 				// 作成したメッシュを解放
 				CLASS_DELETE(mesh);
 
@@ -159,7 +158,7 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 			// ファイル形式チェック
 			if (strstr(path.C_Str(), ".psd"))
 			{
-				ImGuiDebugLog::AddDebugLog("psdには対応していません");
+				ImGuiDebugLog::Add("psdには対応していません");
 			}
 			bool isSuccess = false;	// ロード成功したかフラグ
 			// モデルと同じ階層を探索
@@ -191,7 +190,7 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 			// 失敗
 			if (!isSuccess) {
 				std::string message = "モデルのテクスチャ読込失敗　" + materialName;
-				ImGuiDebugLog::AddDebugLog(message);
+				ImGuiDebugLog::Add(message);
 
 				return false;
 			}
@@ -232,15 +231,15 @@ void Model::SetupDraw(const Transform& _transform) const
 		* moveMatrix;
 
 	// ワールド変換行列の座標にモデルの座標を入れる
-	RenderParam::WorldMatrix wMat = renderer.GetParameter().GetWorldMatrix();
+	RenderParam::WVP wMat = renderer.GetParameter().GetWVP();
 	DirectX::XMStoreFloat4x4(&wMat.world, XMMatrixTranspose(mtx));
+
+	// バッファを更新する
+	pVertexShader->UpdateBuffer(0, &wMat);
 
 	// シェーダーをバインド
 	pVertexShader->Bind();
 	pPixelShader->Bind();
-
-	// バッファを更新する
-	pVertexShader->UpdateBuffer(0, &wMat);
 }
 
 void Model::Draw(const Transform& _transform) const
@@ -249,6 +248,8 @@ void Model::Draw(const Transform& _transform) const
 
 	// レンダラー取得
 	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
+	renderer.GetDeviceContext()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
 	for (u_int meshIdx = 0; meshIdx < meshNum; meshIdx++)
 	{
 		// テクスチャをピクセルシェーダーに送る
@@ -298,5 +299,15 @@ bool Model::Load(const ModelSettings& _settings)
 	isImported = true;
 
 	return true;
+}
+
+void Model::SetVertexShader(Shader* _vertexSh)
+{
+	pVertexShader = dynamic_cast<VertexShader*>(_vertexSh);
+}
+
+void Model::SetPixelShader(Shader* _pixelSh)
+{
+	pPixelShader = dynamic_cast<PixelShader*>(_pixelSh);
 }
 

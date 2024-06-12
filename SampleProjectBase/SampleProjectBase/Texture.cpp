@@ -2,19 +2,18 @@
 #include<filesystem>
 
 #include "Texture.h"
-#include "Direct3D11.h"
 #include "DirectXTex/TextureLoad.h"
 
 bool Texture::Load(const char* _pathName)
 {
 	if (isImported)
 	{
-		ImGuiDebugLog::AddDebugLog("既にこのTextureはロードされています");
+		ImGuiDebugLog::Add("既にこのTextureはロードされています");
 		return true;
 	}
 	else if (_pathName == "")
 	{
-		ImGuiDebugLog::AddDebugLog("テクスチャのパス名が入力されていません");
+		ImGuiDebugLog::Add("テクスチャのパス名が入力されていません");
 		return false;
 	}
 
@@ -38,7 +37,7 @@ bool Texture::Load(const char* _pathName)
 	else if (strstr(_pathName, ".psd"))
 	{
 		std::string message = "psdファイルは対応していません\n" + std::string(_pathName);
-		ImGuiDebugLog::AddDebugLog(message);
+		ImGuiDebugLog::Add(message);
 	}
 	else
 	{
@@ -58,7 +57,7 @@ bool Texture::Load(const char* _pathName)
 
 	if (FAILED(hr))
 	{
-		ImGuiDebugLog::AddDebugLog("SRV作成でエラー");
+		ImGuiDebugLog::Add("SRV作成でエラー");
 		return false;
 	}
 	else if (SUCCEEDED(hr))

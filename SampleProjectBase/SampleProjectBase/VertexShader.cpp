@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "VertexShader.h"
 #include <d3dcompiler.h>
-#include "Direct3D11.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "dxguid.lib")
@@ -16,7 +15,7 @@ void VertexShader::MakeShader(const char* _pData, u_int _dataSize)
 	hr = pDevice->CreateVertexShader(_pData, _dataSize, nullptr, &pVxShader);
 	if (FAILED(hr))
 	{
-		ImGuiDebugLog::AddDebugLog("頂点シェーダー作成失敗");
+		ImGuiDebugLog::Add("頂点シェーダー作成失敗");
 		return;
 	}
 
@@ -55,7 +54,7 @@ void VertexShader::MakeShader(const char* _pData, u_int _dataSize)
 	hr = D3DReflect(_pData, _dataSize, IID_PPV_ARGS(&pReflection));
 	if (FAILED(hr)) 
 	{ 
-		ImGuiDebugLog::AddDebugLog("リフレクション情報作成で失敗");
+		ImGuiDebugLog::Add("リフレクション情報作成で失敗");
 		return; 
 	}
 
@@ -90,7 +89,7 @@ void VertexShader::MakeShader(const char* _pData, u_int _dataSize)
 		pInputDesc[i].InstanceDataStepRate = 0;
 	}
 
-	// インプットレイアウト作成
+	 //インプットレイアウト作成
 	ID3D11InputLayout* pInputLayout = nullptr;
 	hr = pDevice->CreateInputLayout(
 		pInputDesc, shaderDesc.InputParameters,
@@ -98,13 +97,38 @@ void VertexShader::MakeShader(const char* _pData, u_int _dataSize)
 	);
 	if (FAILED(hr))
 	{
-		ImGuiDebugLog::AddDebugLog("インプットレイアウト作成失敗");
+		ImGuiDebugLog::Add("インプットレイアウト作成失敗");
 		delete[] pInputDesc;
 		return;
 	}
 	renderer->GetParameter().SetInputLayout(pInputLayout);	// レンダラーにインプットレイアウトを渡す
 
 	delete[] pInputDesc;
+
+
+
+	//// 入力レイアウトオブジェクト作成
+	//// →　頂点シェーダーにはどういったデータ構造の頂点データが渡ってくるかを定義した入力レイアウト
+	//ID3D11InputLayout* pInputLayout = nullptr;
+	//// Vertex構造体のメンバ変数のサイズを指定して、シェーダーの何の情報なのかを判別する
+	//D3D11_INPUT_ELEMENT_DESC layout[] = {
+	//	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	//	{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	//	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	//	{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+	//};
+	//hr = pDevice->CreateInputLayout(
+	//	layout,
+	//	_countof(layout),
+	//	_pData,
+	//	_dataSize,
+	//	&pInputLayout
+	//);
+	//renderer->GetParameter().SetInputLayout(pInputLayout);	// レンダラーにインプットレイアウトを渡す
+	//if (FAILED(hr))
+	//{
+	//	ImGuiDebugLog::AddDebugLog("失敗");
+	//};
 }
 
 VertexShader::VertexShader() : Shader(Shader::Type::Vertex)

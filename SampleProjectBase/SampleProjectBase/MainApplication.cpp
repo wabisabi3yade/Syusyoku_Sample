@@ -1,5 +1,4 @@
 #include "MainApplication.h"
-#include "Direct3D11.h"
 #include "SceneManager.h"
 #include "Camera.h"
 #include "ImGuiMethod.h"

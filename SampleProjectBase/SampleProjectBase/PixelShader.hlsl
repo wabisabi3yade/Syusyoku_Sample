@@ -4,16 +4,14 @@ SamplerState mySampler : register(s0);	// サンプラー
 struct PS_INPUT
 {
 	float4 pos : SV_POSITION;
-	float4 col : COLOR;
+	float4 color : COLOR;
 	float2 uv : TEXCOORD0;
 };
 
-float4 main(PS_INPUT input) : SV_TARGET
-{
-	float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
-
+float4 main(PS_INPUT pin) : SV_TARGET
+{ 
 	// テクスチャからデータを取得
-	color = myTexture.Sample(mySampler, input.uv);
+    float4 color = myTexture.Sample(mySampler, pin.uv);;
 
 	return color;
 }

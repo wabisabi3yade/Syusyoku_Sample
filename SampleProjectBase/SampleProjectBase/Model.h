@@ -51,7 +51,7 @@ public:
 	const std::vector<Mesh*> GetMeshes()const { return meshes; }	// メッシュの配列を取得する
 	const ModelSettings GetModelData()const { return modelData; }	// モデルのデータを取得する
 
-	void SetVertexShader(VertexShader* _vertexSh) { pVertexShader = _vertexSh; }
-	void SetPixelShader(PixelShader* _pixelSh) { pPixelShader = _pixelSh; };
+	void SetVertexShader(Shader* _vertexSh);
+	void SetPixelShader(Shader* _pixelSh);
 };
 

@@ -1,7 +1,6 @@
 #include "SubScene_Base.h"
 #include "SceneMoveInfo.h"
 
-#include "Direct3D11.h"
 #include "Camera.h"
 
 #include "imgui_impl_win32.h"
@@ -29,7 +28,8 @@ SubScene_Base::SubScene_Base(SceneMoveInfo* _pSceneMoveInfo)
 	// シーンオブジェクト管理クラス作成
 	sceneObjects = std::make_unique<SceneObjects>();
 	// カメラ生成
-	mainCamera = std::make_unique<Camera>();
+	std::unique_ptr<Camera> mainCamera = std::make_unique<Camera>();
+	sceneObjects->SetObject("mainCamera", std::move(mainCamera));
 }
 
 SubScene_Base::~SubScene_Base()
@@ -47,6 +47,7 @@ void SubScene_Base::Exec()
 	// 画面クリアなど準備
 	Direct3D11::GetInstance()->GetRenderer()->SetUpDraw();
 	// ビュー変換行列を更新
+	Camera* mainCamera = sceneObjects->GetSceneObject<Camera>("mainCamera");
 	mainCamera->UpdateViewMatrix();
 
 	// シーン内の描画処理

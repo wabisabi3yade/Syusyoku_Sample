@@ -23,12 +23,19 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
+    <FxCompile Include="PS_VertexColor.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="VertexShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BasicObject_Base.cpp" />
     <ClCompile Include="BlendState.cpp" />
     <ClCompile Include="BoneMesh.cpp" />
     <ClCompile Include="BroadSceneType.cpp" />
@@ -36,6 +43,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ChangeBroadScene.cpp" />
     <ClCompile Include="ChangeSubScene.cpp" />
+    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="D3D11_Renderer.cpp" />
     <ClCompile Include="Direct3D11.cpp" />
     <ClCompile Include="Float2.cpp" />
@@ -93,6 +101,7 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BasicObject_Base.h" />
     <ClInclude Include="BlendState.h" />
     <ClInclude Include="BoneMesh.h" />
     <ClInclude Include="BroadSceneType.h" />
@@ -103,6 +112,7 @@
     <ClInclude Include="CbViewSet.h" />
     <ClInclude Include="ChangeBroadScene.h" />
     <ClInclude Include="ChangeSubScene.h" />
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="D3D11_Renderer.h" />
     <ClInclude Include="Direct3D11.h" />
     <ClInclude Include="Float2.h" />

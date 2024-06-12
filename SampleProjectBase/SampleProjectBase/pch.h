@@ -17,15 +17,15 @@
 #pragma comment(lib, "DirectXTK.lib")	// DirectXTKライブラリ
 
 #include <iostream>	// std使うために
+#include <string>
 #include <unordered_map>	// 順番を気にしないmap配列
 #include <vector>	// 動的配列
 
 #include "ImGuiDebugLog.h"	// デバッグログを出す
+#include "Direct3D11.h"	// 自前のDirectX11クラス
 #include "Transform.h"	// 座標・回転・スケールのクラス
 #include "ResourceCollection.h"	// リソースを管理するクラス
 
-// クラス前方宣言
-class D3D11_Renderer;	// Direct3Dの描画クラス
 
 // 構造体 /////////////////
 // 頂点座標

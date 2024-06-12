@@ -220,6 +220,15 @@
     <Filter Include="ソース ファイル\Object\SceneObjects">
       <UniqueIdentifier>{4b5fda20-e416-43b8-99cd-92e298c295f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Graphics\BasicObject">
+      <UniqueIdentifier>{8ad7004a-18e3-467b-b982-788b90b03a7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\BasicObject\Cube">
+      <UniqueIdentifier>{16f344dc-964c-4351-bda8-45c1b06dcb98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\BasicObject\BasicObject_Base">
+      <UniqueIdentifier>{7dede4c7-afd2-4dbd-af48-ff8d2e681c4b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PixelShader.hlsl">
@@ -227,6 +236,9 @@
     </FxCompile>
     <FxCompile Include="VertexShader.hlsl">
       <Filter>リソース ファイル\VertrxShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_VertexColor.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -406,6 +418,12 @@
     </ClCompile>
     <ClCompile Include="SceneObjects.cpp">
       <Filter>ソース ファイル\Object\SceneObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>ソース ファイル\Graphics\BasicObject\Cube</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicObject_Base.cpp">
+      <Filter>ソース ファイル\Graphics\BasicObject\BasicObject_Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -612,6 +630,12 @@
     </ClInclude>
     <ClInclude Include="SceneObjects.h">
       <Filter>ソース ファイル\Object\SceneObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>ソース ファイル\Graphics\BasicObject\Cube</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicObject_Base.h">
+      <Filter>ソース ファイル\Graphics\BasicObject\BasicObject_Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

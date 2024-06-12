@@ -14,7 +14,7 @@ D3D11_Renderer::D3D11_Renderer(HWND _hWnd)
 
 	bool isSuccess = Init(_hWnd);   // 初期化
 	if (!isSuccess)
-		ImGuiDebugLog::AddDebugLog("D3D11描画クラス初期化でエラー");
+		ImGuiDebugLog::Add("D3D11描画クラス初期化でエラー");
 }
 
 RenderParam& D3D11_Renderer::GetParameter()
@@ -202,8 +202,8 @@ void D3D11_Renderer::SetUpDraw()
 	ID3D11SamplerState* sampler = pSampler->GetSampler();
 	pImmediateContext->PSSetSamplers(0, 1, &sampler);
 	// 入力レイアウト
-	pImmediateContext->IASetInputLayout(pInputLayout.get());
-	pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	pImmediateContext->IASetInputLayout(&pRenderParam->GetInputLayout());
+	/*pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);*/
 
 	// OMにブレンドステートオブジェクトを設定
 	// OMは出力(Output)マネージャーのこと

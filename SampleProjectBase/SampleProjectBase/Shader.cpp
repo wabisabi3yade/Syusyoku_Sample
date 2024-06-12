@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "Shader.h"
 #include <d3dcompiler.h>
-#include "Direct3D11.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "dxguid.lib")
@@ -14,7 +13,7 @@ void Shader::MakeBuffer(const char* _pData, u_int _dataSize)
 	hr = D3DReflect(_pData, _dataSize, IID_ID3D11ShaderReflection, (void**)&pReflection);
 	if (FAILED(hr))
 	{
-		ImGuiDebugLog::AddDebugLog("リフレクション情報取得に失敗");
+		ImGuiDebugLog::Add("リフレクション情報取得に失敗");
 		return;
 	}
 
@@ -42,7 +41,7 @@ void Shader::MakeBuffer(const char* _pData, u_int _dataSize)
 		hr = pDevice->CreateBuffer(&bufDesc, nullptr, &pBuffers[i]);
 		if (FAILED(hr))
 		{
-			ImGuiDebugLog::AddDebugLog("頂点シェーダーで定数バッファ作成失敗");
+			ImGuiDebugLog::Add("頂点シェーダーで定数バッファ作成失敗");
 			return;
 		}
 	}
@@ -62,7 +61,7 @@ void Shader::LoadCsoFile(const char* _filePath)
 	fopen_s(&fp, _filePath, "rb");
 	if (!fp)	// ファイルがなければ
 	{
-		ImGuiDebugLog::AddDebugLog("読み込もうとした " + std::string(_filePath) + " がありません");
+		ImGuiDebugLog::Add("読み込もうとした " + std::string(_filePath) + " がありません");
 		return;
 	}
 
@@ -77,8 +76,8 @@ void Shader::LoadCsoFile(const char* _filePath)
 	fread(pData, fileSize, 1, fp);
 	fclose(fp);
 
-	// シェーダー作成
-	MakeShader(pData, fileSize);
+	// バッファ作成
+	MakeBuffer(pData, fileSize);
 
 	// 解放処理
 	if (pData)

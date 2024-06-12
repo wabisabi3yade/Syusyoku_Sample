@@ -6,7 +6,9 @@ struct aiMesh;
 // 頂点、辺（エッジ）、面（ポリゴン）の集合のこと
 class Mesh
 {
+private:
 
+protected:
 	Vertex* pVertices{ nullptr };	// メッシュの頂点データ
 
 	u_int* pIndicies{ nullptr };	// 頂点インデックス
@@ -31,7 +33,7 @@ class Mesh
 
 public:
 	Mesh();
-	~Mesh();
+	virtual ~Mesh();
 	/// <summary>
 	/// メッシュを新しく確保し、セットする
 	/// </summary>
@@ -43,5 +45,7 @@ public:
 	bool Setup(D3D11_Renderer& _renderer, aiMesh* pMeshData);
 	// 描画処理
 	void Draw(D3D11_Renderer& _renderer);
+
+	const u_int GetMaterialIdx() { return materialIndex; }
 };
 

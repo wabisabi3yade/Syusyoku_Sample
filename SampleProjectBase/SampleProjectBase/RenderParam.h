@@ -4,9 +4,9 @@
 class RenderParam
 {
 public:
-	struct WorldMatrix
+	struct WVP	// ワールド・ビュー・プロジェクション	
 	{
-		DirectX::SimpleMath::Matrix world;	// ワールド座標
+		DirectX::SimpleMath::Matrix world;	// ワールド変換行列
 		DirectX::SimpleMath::Matrix view;	// ビュー変換
 		DirectX::SimpleMath::Matrix projection;	// プロジェクション
 	};
@@ -14,14 +14,14 @@ public:
 
 private:
 	ID3D11InputLayout* pInputLayout;	// インプットレイアウト
-	WorldMatrix worldMatrix;	// ワールド行列
+	WVP worldMatrix;	// ワールド行列
 public:
-	RenderParam() {};
+	RenderParam() : pInputLayout(nullptr) {};
 	~RenderParam();
 
 	// インプットレイアウトを取得
 	ID3D11InputLayout& GetInputLayout();
-	const WorldMatrix& GetWorldMatrix() { return worldMatrix; }
+	const WVP& GetWVP() { return worldMatrix; }	// WVPを取得
 
 	// インプットレイアウトを代入
 	void SetInputLayout(ID3D11InputLayout* _inputLayout) { pInputLayout = _inputLayout; }
