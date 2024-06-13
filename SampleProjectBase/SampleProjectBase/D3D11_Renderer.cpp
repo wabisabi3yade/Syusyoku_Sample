@@ -114,13 +114,13 @@ bool D3D11_Renderer::InitBackBuffer()
 		__uuidof(ID3D11Texture2D), // バッファにアクセスするインターフェイス
 		(LPVOID*)&pBackBuffer);    // バッファを受け取る変数
 	if (FAILED(hr)) {
-		//TRACE("InitBackBuffer g_pSwapChain->GetBuffer(%0x08x)n", hr);  // 失敗
+		
 		return false;
 	}
 
-	// バック・バッファの情報
-	D3D11_TEXTURE2D_DESC descBackBuffer;
-	pBackBuffer->GetDesc(&descBackBuffer);
+	//// バック・バッファの情報
+	//D3D11_TEXTURE2D_DESC descBackBuffer;
+	//pBackBuffer->GetDesc(&descBackBuffer);
 
 	// バック・バッファの描画ターゲット・ビューを作る
 	hr = pD3DDevice->CreateRenderTargetView(
@@ -128,10 +128,38 @@ bool D3D11_Renderer::InitBackBuffer()
 		nullptr,               // 描画ターゲット・ビューの定義
 		&pRenderTargetView); // 描画ターゲット・ビューを受け取る変数
 	SAFE_RELEASE(pBackBuffer);  // 以降、バック・バッファは直接使わないので解放
-	if (FAILED(hr)) {
-		//TRACE("InitBackBuffer g_pD3DDevice->CreateRenderTargetView(%0x08x)n", hr);  // 失敗
+	if (FAILED(hr)) 
+	{
 		return false;
 	}
+
+	// 深度ステンシルバッファを作成
+	// ※深度バッファ（Zバッファ）→奥行を判定して前後関係を正しく描画できる
+	D3D11_TEXTURE2D_DESC txDesc;
+	ZeroMemory(&txDesc, sizeof(txDesc));
+	txDesc.Width = screenWidth;
+	txDesc.Height = screenHeight;
+	txDesc.MipLevels = 1;
+	txDesc.ArraySize = 1;
+	txDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	txDesc.SampleDesc.Count = 1;
+	txDesc.SampleDesc.Quality = 0;
+	txDesc.Usage = D3D11_USAGE_DEFAULT;
+	txDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	txDesc.CPUAccessFlags = 0;
+	txDesc.MiscFlags = 0;
+	hr = pD3DDevice->CreateTexture2D(&txDesc, NULL, &pDepthStencilTexture);
+	if (FAILED(hr))
+		return hr;
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC dsDesc;
+	ZeroMemory(&dsDesc, sizeof(dsDesc));
+	dsDesc.Format = txDesc.Format;
+	dsDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	dsDesc.Texture2D.MipSlice = 0;
+	hr = pD3DDevice->CreateDepthStencilView(pDepthStencilTexture, &dsDesc, &pDepthStencilView);
+	if (FAILED(hr))
+		return hr;
 
 	// ビューポートの設定
 	viewPort[0].TopLeftX = 0.0f;    // ビューポート領域の左上X座標。
@@ -171,6 +199,8 @@ void D3D11_Renderer::Release()
 	SAFE_RELEASE(pSwapChain);
 	SAFE_RELEASE(pImmediateContext);
 	SAFE_RELEASE(pD3DDevice);
+	SAFE_RELEASE(pDepthStencilTexture);
+	SAFE_RELEASE(pDepthStencilView);
 }
 
 
@@ -193,7 +223,8 @@ void D3D11_Renderer::SetUpDraw()
 {
 	if (!pImmediateContext || !pRenderTargetView) return;
 
-	pImmediateContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);
+	// 描画先のキャンバスと使用する深度バッファを指定する
+	pImmediateContext->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView);
 
 	float color[] = { 0.f, 0.f, 1.f, 0.f };
 	// 塗りつぶし
@@ -201,9 +232,13 @@ void D3D11_Renderer::SetUpDraw()
 	// サンプラー
 	ID3D11SamplerState* sampler = pSampler->GetSampler();
 	pImmediateContext->PSSetSamplers(0, 1, &sampler);
+
+	// 深度バッファをリセットする
+	pImmediateContext->ClearDepthStencilView(pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
 	// 入力レイアウト
 	pImmediateContext->IASetInputLayout(&pRenderParam->GetInputLayout());
-	/*pImmediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);*/
+
 
 	// OMにブレンドステートオブジェクトを設定
 	// OMは出力(Output)マネージャーのこと

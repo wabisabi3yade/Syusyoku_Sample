@@ -2,6 +2,8 @@
 #include "SceneObjects.h"
 #include <string>
 
+#include "Camera.h"
+
 SceneObjects::SceneObjects()
 {
 }
@@ -27,7 +29,7 @@ void SceneObjects::LateUpdate()
 	}
 }
 
-void SceneObjects::Draw()
+void SceneObjects::Draw(const Camera& _viewCamera)
 {
 	for (auto itr = list.begin(); itr != list.end(); itr++)
 	{

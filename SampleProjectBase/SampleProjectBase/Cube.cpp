@@ -28,6 +28,7 @@ void Cube::Draw()
 
 void Cube::Make()
 {
+
 	// キューブの頂点座標作成
 	vertexNum = VERTEX_NUM;
 	pVertices = new Vertex[vertexNum];

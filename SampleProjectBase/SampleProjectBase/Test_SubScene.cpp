@@ -60,9 +60,9 @@ void Test_SubScene::Draw()
 
 	go->GetModel().SetVertexShader(shader[0]);
 	go->GetModel().SetPixelShader(shader[1]);
-	sceneObjects->Draw();
 
-	
+	Camera* cam = sceneObjects->GetSceneObject<Camera>("mainCamera");
+	sceneObjects->Draw(*cam);
 }
 
 void Test_SubScene::Release()

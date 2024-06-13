@@ -5,6 +5,8 @@
 #include <typeinfo>
 #endif // _DEBUG
 
+class Camera;
+
 // シーンで使用するオブジェクト配列クラス
 class SceneObjects
 {
@@ -17,7 +19,7 @@ public:
 
 	void Update();	// 更新処理
 	void LateUpdate();	// Updateのあとの更新処理
-	void Draw();	// 描画処理
+	void Draw(const Camera& _viewCamera);	// 描画処理(カメラとの距離で描画順を決める)
 
 	// 配列にオブジェクトを入れる
 	void SetObject(const std::string& _objectName, std::unique_ptr<GameObject> _objPtr);

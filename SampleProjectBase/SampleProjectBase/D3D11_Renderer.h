@@ -25,6 +25,11 @@ private:
 	IDXGISwapChain* pSwapChain = nullptr;
 	// レンダーターゲット＝描画先を表す機能
 	ID3D11RenderTargetView* pRenderTargetView{ nullptr };
+	// 深度バッファ用テクスチャ
+	ID3D11Texture2D* pDepthStencilTexture{ nullptr };
+	// 深度バッファ
+	ID3D11DepthStencilView* pDepthStencilView{ nullptr };
+
 	D3D11_VIEWPORT viewPort[1];	// ビューポート
 
 	UINT backBufferNum = 3;
