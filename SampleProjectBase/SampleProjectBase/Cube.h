@@ -2,7 +2,7 @@
 #include "BasicObject_Base.h"
 
 // キューブのメッシュを表示するクラス
-class Cube : BasicObject_Base
+class Cube : public BasicObject_Base
 {
 	DirectX::SimpleMath::Vector3 length;	// 長さ
 

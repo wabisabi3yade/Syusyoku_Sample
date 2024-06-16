@@ -4,6 +4,10 @@
 #include "ImGuiMethod.h"
 #include "VariableFrameRate.h"
 
+#include "imgui_impl_win32.h"
+#include "imgui_impl_dx11.h"
+#include "imgui.h"
+
 constexpr short FPS(60);	// フレームレート数
 
 MainApplication::MainApplication()
@@ -57,6 +61,11 @@ void MainApplication::GameLoop()
 {
 	variableFps->Init();
 
+#ifdef _DEBUG
+	ImGuiIO& io = ImGui::GetIO();
+#endif // _DEBUG
+
+
 	while (true)
 	{
 		bool result = pWindow->MessageLoop();
@@ -65,10 +74,21 @@ void MainApplication::GameLoop()
 		// ImGuiの更新処理
 		ImGuiMethod::NewFrame();
 
+#ifdef _DEBUG
+		ImGui::Begin("System");
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+		ImGui::End();
+#endif // _DEBUG
+
 		// 更新処理
 		pSceneManager->Exec();
 
 		// 対応したフレームレートにするために時間を待機させる
 		variableFps->Wait();
 	}
+}
+
+float MainApplication::DeltaTime()
+{
+	return variableFps->GetDeltaTime();
 }

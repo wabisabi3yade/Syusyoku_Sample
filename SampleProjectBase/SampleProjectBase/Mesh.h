@@ -23,6 +23,8 @@ protected:
 
 	ID3D11Buffer* pIndexBuffer{ nullptr };	// インデックスバッファ
 
+	DirectX::SimpleMath::Vector2 uvScroll;	// UV座標の原点(左上)
+	DirectX::SimpleMath::Vector2 uvSize;;	// UV座標のサイズ
 
 	// 頂点バッファ作成
 	bool CreateVertexBuffer(D3D11_Renderer& _renderer);
@@ -45,7 +47,9 @@ public:
 	bool Setup(D3D11_Renderer& _renderer, aiMesh* pMeshData);
 	// 描画処理
 	void Draw(D3D11_Renderer& _renderer);
-
+	// マテリアルのインデックスを取得
 	const u_int GetMaterialIdx() { return materialIndex; }
+	// 外部から頂点とインデックスを代入
+	void SetVertexData(Vertex* _pVerticies, u_int _vertexNum, u_int* _pIndecies, u_int _indexNum);
 };
 

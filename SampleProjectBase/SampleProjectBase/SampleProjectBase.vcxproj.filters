@@ -229,6 +229,12 @@
     <Filter Include="ソース ファイル\Graphics\BasicObject\BasicObject_Base">
       <UniqueIdentifier>{7dede4c7-afd2-4dbd-af48-ff8d2e681c4b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Object\Onject_UI">
+      <UniqueIdentifier>{2a78615c-49c6-40be-9f3a-a0488595b157}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Tag">
+      <UniqueIdentifier>{988b4f81-a66d-4eef-8758-f35438d16df4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PixelShader.hlsl">
@@ -239,6 +245,9 @@
     </FxCompile>
     <FxCompile Include="PS_VertexColor.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_UVScroll.hlsl">
+      <Filter>リソース ファイル\VertrxShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -424,6 +433,12 @@
     </ClCompile>
     <ClCompile Include="BasicObject_Base.cpp">
       <Filter>ソース ファイル\Graphics\BasicObject\BasicObject_Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Object_UI.cpp">
+      <Filter>ソース ファイル\Object\Onject_UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Tag.cpp">
+      <Filter>ソース ファイル\Object\Tag</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -636,6 +651,12 @@
     </ClInclude>
     <ClInclude Include="BasicObject_Base.h">
       <Filter>ソース ファイル\Graphics\BasicObject\BasicObject_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Object_UI.h">
+      <Filter>ソース ファイル\Object\Onject_UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Tag.h">
+      <Filter>ソース ファイル\Object\Tag</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,8 +5,7 @@
 // 3Dモデルを持ったオブジェクト
 class Object_3D : public GameObject
 {
-	//std::unique_ptr<Model> pModel;	// モデル情報
-	Model* pModel;
+	Model* pModel;	// モデル
 
 	void Release();	// 解放処理
 public:

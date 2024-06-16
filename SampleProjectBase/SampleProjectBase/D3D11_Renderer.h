@@ -52,6 +52,10 @@ public:
 	D3D11_Renderer(HWND _hWnd);
 	~D3D11_Renderer();
 
+	static DirectX::SimpleMath::Matrix GetWorldMtx(Transform _transform);
+	void SetPerspective();	// 透視投影行列に設定
+	DirectX::SimpleMath::Matrix GetOrthographic();	// 正投影行列を取得（2D）
+
 	void SetUpDraw();    // 描画処理の準備（クリアスクリーン）
 
 	void Swap();    //バックバッファをフロントバッファ(画面)へ表示

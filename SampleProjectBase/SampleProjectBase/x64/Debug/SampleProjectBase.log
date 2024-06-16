@@ -1,6 +1,5 @@
 ﻿  モジュール依存関係のソースをスキャンしています...
-  Cube.cpp
+  Test_SubScene.cpp
   コンパイルしています...
-  Cube.cpp
-C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Cube.cpp(36,28): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+  Test_SubScene.cpp
   SampleProjectBase.vcxproj -> C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\x64\Debug\SampleProjectBase.exe

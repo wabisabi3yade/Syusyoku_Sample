@@ -5,6 +5,8 @@ cbuffer WVP : register(b0) {
     matrix projection;
 };
 
+
+
 struct VS_INPUT
 {
     float3 pos : POSITION; // 頂点座標（モデル座標系）

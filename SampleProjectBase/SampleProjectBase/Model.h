@@ -23,7 +23,8 @@ class Model
 	std::vector<Mesh*> meshes;	// モデルに使われるメッシュ配列
 	u_int meshNum;	// メッシュの数
 
-	std::vector<Material*> materials;	// マテリアル
+	std::vector<Material*> pMaterials;	// マテリアル
+	std::vector<Texture*> pTextures;	//	テクスチャ
 
 	// このモデルで使うシェーダー
 	VertexShader* pVertexShader;

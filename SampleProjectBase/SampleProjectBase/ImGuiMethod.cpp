@@ -7,6 +7,8 @@
 
 #include "ImGuiDebugLog.h"
 
+using namespace DirectX::SimpleMath;
+
 void ImGuiMethod::Initialize(HWND _hwnd, ID3D11Device* _pDevice, ID3D11DeviceContext* _pDeviceContext)
 {
 	IMGUI_CHECKVERSION();
@@ -50,4 +52,14 @@ void ImGuiMethod::End()
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
+}
+
+void ImGuiMethod::DragFloat3(Vector3& _vector3, const std::string& _name)
+{
+	static float f[3];
+	f[0] = _vector3.x;
+	f[1] = _vector3.y;
+	f[2] = _vector3.z;
+	ImGui::DragFloat3(_name.c_str(), f);
+	_vector3 = { f[0], f[1], f[2] };	// ç¿ïW
 }

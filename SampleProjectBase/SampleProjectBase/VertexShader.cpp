@@ -131,7 +131,7 @@ void VertexShader::MakeShader(const char* _pData, u_int _dataSize)
 	//};
 }
 
-VertexShader::VertexShader() : Shader(Shader::Type::Vertex)
+VertexShader::VertexShader() : Shader(Shader::Type::Vertex), pVxShader(nullptr)
 {
 }
 

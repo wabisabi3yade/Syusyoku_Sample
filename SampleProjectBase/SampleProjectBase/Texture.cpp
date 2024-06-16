@@ -52,7 +52,6 @@ bool Texture::Load(const char* _pathName)
 
 	// SRV‚ðì¬
 	ID3D11Device* device = Direct3D11::GetInstance()->GetRenderer()->GetDevice();
-	/*ID3D11ShaderResourceView* srv = pSRV;*/
 	hr = DirectX::CreateShaderResourceView(device, image.GetImages(), image.GetImageCount(), metaData, &pSRV);
 
 	if (FAILED(hr))

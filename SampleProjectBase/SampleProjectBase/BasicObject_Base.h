@@ -22,7 +22,10 @@ public:
 
 	// ÉpÉâÉÅÅ[É^ë„ì¸
 	void SetPosition(const DirectX::SimpleMath::Vector3& _position) { transform.position = _position; }
-	void SetRotation(const DirectX::SimpleMath::Vector3& _rotation) { transform.position = _rotation; }
-	void SetScale(const DirectX::SimpleMath::Vector3& _scale) { transform.position = _scale; }
+	void SetRotation(const DirectX::SimpleMath::Vector3& _rotation) { transform.rotation = _rotation; }
+	void SetScale(const DirectX::SimpleMath::Vector3& _scale) { transform.scale = _scale; }
 	void SetTransform(const Transform& _transform) { transform = _transform; }
+
+	void SetColor(const DirectX::SimpleMath::Color& _color);
+
 };

@@ -10,11 +10,13 @@ void ShaderCollection::Load()
 	std::vector<std::string> vFileNames
 	{
 		"VertexShader.cso",
+		"VS_UVScroll.cso"
 	};
 	// セットする名前
 	std::vector<std::string> vShaderNames
 	{
 		"VertexShader",
+		"VS_UVScroll"
 	};
 	for (int i = 0; i < vShaderNames.size(); i++)
 	{

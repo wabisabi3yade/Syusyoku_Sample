@@ -199,11 +199,11 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 
 		// テクスチャ読込み成功
 		// 読み込んだテクスチャをマテリアルに設定する
-		material->texture = texture.get();
+		pTextures.push_back(texture.get());
 		// リソース管理にテクスチャ追加
 		resourceCollection->SetResource<Texture>(texName, std::move(texture));
 		// マテリアル追加
-		materials.push_back(material.get());
+		pMaterials.push_back(material.get());
 		// マテリアルを保管クラスに入れる
 		resourceCollection->SetResource<Material>(materialName, std::move(material));
 	}
@@ -216,26 +216,15 @@ void Model::SetupDraw(const Transform& _transform) const
 	// レンダラー取得
 	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
 
-	// 移動行列
-	DirectX::XMMATRIX moveMatrix = DirectX::XMMatrixTranslation(_transform.position.x, _transform.position.y, _transform.position.z);
-	// 拡大行列
-	DirectX::XMMATRIX scaleMatrix = DirectX::XMMatrixScaling(_transform.scale.x, _transform.scale.y, _transform.scale.z);
-	// 回転行列
-	DirectX::XMMATRIX rotateMatX = DirectX::XMMatrixRotationX(_transform.rotation.x);
-	DirectX::XMMATRIX rotateMatY = DirectX::XMMatrixRotationY(_transform.rotation.y);
-	DirectX::XMMATRIX rotateMatZ = DirectX::XMMatrixRotationZ(_transform.rotation.z);
-	DirectX::XMMATRIX rotateMatrix = rotateMatX * rotateMatY * rotateMatZ;
-
-	DirectX::XMMATRIX mtx = scaleMatrix
-		* rotateMatrix
-		* moveMatrix;
+	// ワールド変換行列を取得
+	DirectX::SimpleMath::Matrix worldMatrix = D3D11_Renderer::GetWorldMtx(_transform);
 
 	// ワールド変換行列の座標にモデルの座標を入れる
-	RenderParam::WVP wMat = renderer.GetParameter().GetWVP();
-	DirectX::XMStoreFloat4x4(&wMat.world, XMMatrixTranspose(mtx));
+	RenderParam::WVP wvp = renderer.GetParameter().GetWVP();
+	wvp.world = worldMatrix;
 
 	// バッファを更新する
-	pVertexShader->UpdateBuffer(0, &wMat);
+	pVertexShader->UpdateBuffer(0, &wvp);
 
 	// シェーダーをバインド
 	pVertexShader->Bind();
@@ -252,9 +241,8 @@ void Model::Draw(const Transform& _transform) const
 
 	for (u_int meshIdx = 0; meshIdx < meshNum; meshIdx++)
 	{
-		// テクスチャをピクセルシェーダーに送る
-		ID3D11ShaderResourceView* srv = materials[meshIdx]->texture->GetSRV();
-		renderer.GetDeviceContext()->PSSetShaderResources(0, 1, &srv);
+		// テクスチャ設定
+		pPixelShader->SetTexture(0, pTextures[meshIdx]);
 
 		meshes[meshIdx]->Draw(renderer);
 	}
@@ -267,8 +255,8 @@ void Model::ResetParam()
 	meshes.clear();
 	meshes.shrink_to_fit();
 
-	materials.clear();
-	materials.shrink_to_fit();
+	pMaterials.clear();
+	pMaterials.shrink_to_fit();
 
 	meshNum = 0;
 

@@ -8,6 +8,12 @@
 #include "SetUpPerspectiveProj.h"
 #include "SetUpViewTrans.h"
 
+using namespace DirectX::SimpleMath;
+
+constexpr float DEFAULT_FOV = 45.0f;
+constexpr float DEFAULT_NEARZ = 0.1f;
+constexpr float DEFAULT_FARZ = 1000.0f;
+
 D3D11_Renderer::D3D11_Renderer(HWND _hWnd)
 {
 	pRenderParam = std::make_unique<RenderParam>();
@@ -114,7 +120,7 @@ bool D3D11_Renderer::InitBackBuffer()
 		__uuidof(ID3D11Texture2D), // バッファにアクセスするインターフェイス
 		(LPVOID*)&pBackBuffer);    // バッファを受け取る変数
 	if (FAILED(hr)) {
-		
+
 		return false;
 	}
 
@@ -128,7 +134,7 @@ bool D3D11_Renderer::InitBackBuffer()
 		nullptr,               // 描画ターゲット・ビューの定義
 		&pRenderTargetView); // 描画ターゲット・ビューを受け取る変数
 	SAFE_RELEASE(pBackBuffer);  // 以降、バック・バッファは直接使わないので解放
-	if (FAILED(hr)) 
+	if (FAILED(hr))
 	{
 		return false;
 	}
@@ -170,18 +176,26 @@ bool D3D11_Renderer::InitBackBuffer()
 	viewPort[0].MaxDepth = 1.0f; // ビューポート領域の深度値の最大値
 	pImmediateContext->RSSetViewports(1, &viewPort[0]);
 
-	
+
 	// ブレンドステート初期化
 	pBlendState = std::make_unique<BlendState>();
 	bool isResult = pBlendState->Init(*pD3DDevice);
 	if (!isResult)
 		return false;
+	// OMにブレンドステートオブジェクトを設定
+	// OMは出力(Output)マネージャーのこと
+	FLOAT BlendFactor[4] = { 0.f, 0.f, 0.f, 0.f };
+	// RenderTargetが1つのときは基本的に考慮不要で0xffffffff
+	pImmediateContext->OMSetBlendState(pBlendState->GetParaObject(), BlendFactor, 0xffffffff);
 
 	// サンプラー初期化
 	pSampler = std::make_unique<Sampler>();
 	isResult = pSampler->Init(*pD3DDevice);
 	if (!isResult)
 		return false;
+	// サンプラー
+	ID3D11SamplerState* sampler = pSampler->GetSampler();
+	pImmediateContext->PSSetSamplers(0, 1, &sampler);
 
 	return true;
 }
@@ -209,6 +223,64 @@ D3D11_Renderer::~D3D11_Renderer()
 	Release();
 }
 
+Matrix D3D11_Renderer::GetWorldMtx(Transform _transform)
+{
+	// 変換行列を作成
+	// 移動行列
+	Matrix t = Matrix::CreateTranslation(
+		_transform.position.x,
+		_transform.position.y,
+		_transform.position.z
+	);
+
+	Matrix s = Matrix::CreateScale(
+		_transform.scale.x,
+		_transform.scale.y,
+		_transform.scale.z
+	);
+
+	// 回転行列
+	Matrix r = Matrix::CreateFromYawPitchRoll(
+		DirectX::XMConvertToRadians(_transform.rotation.y),
+		DirectX::XMConvertToRadians(_transform.rotation.x),
+		DirectX::XMConvertToRadians(_transform.rotation.z)
+	);
+
+	Matrix worldMtx = s * r * t;	// ワールド変換行列を作成
+	worldMtx = worldMtx.Transpose();	// 転置行列
+
+	return worldMtx;
+}
+
+void D3D11_Renderer::SetPerspective()
+{
+	// ビュー変換行列を作成する
+	Matrix mat = DirectX::XMMatrixPerspectiveFovLH(
+		DEFAULT_FOV,
+		static_cast<float>(screenWidth) / static_cast<float>(screenHeight),   // アスペクト比
+		DEFAULT_NEARZ,
+		DEFAULT_FARZ);
+	mat = mat.Transpose();
+
+	// ビュー変換行列を代入する
+	pRenderParam->SetProjection(mat);
+}
+
+Matrix D3D11_Renderer::GetOrthographic()
+{
+	// 正投影行列を作成する
+	Matrix mat = DirectX::XMMatrixOrthographicOffCenterLH(
+		0.0f,	// 左上
+		static_cast<float>(screenWidth), 		// 右上
+		static_cast<float>(screenHeight),		// 左下
+		0.0f,	// 右下
+		0.0f,
+		1.0f);
+	mat = mat.Transpose();
+
+	return mat;
+}
+
 void D3D11_Renderer::Swap()
 {
 	// バックバッファの表示（画面をすぐに更新）
@@ -229,20 +301,10 @@ void D3D11_Renderer::SetUpDraw()
 	float color[] = { 0.f, 0.f, 1.f, 0.f };
 	// 塗りつぶし
 	pImmediateContext->ClearRenderTargetView(pRenderTargetView, color);
-	// サンプラー
-	ID3D11SamplerState* sampler = pSampler->GetSampler();
-	pImmediateContext->PSSetSamplers(0, 1, &sampler);
 
 	// 深度バッファをリセットする
 	pImmediateContext->ClearDepthStencilView(pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 	// 入力レイアウト
 	pImmediateContext->IASetInputLayout(&pRenderParam->GetInputLayout());
-
-
-	// OMにブレンドステートオブジェクトを設定
-	// OMは出力(Output)マネージャーのこと
-	FLOAT BlendFactor[4] = { 0.f, 0.f, 0.f, 0.f };
-	// RenderTargetが1つのときは基本的に考慮不要で0xffffffff
-	pImmediateContext->OMSetBlendState(pBlendState->GetParaObject(), BlendFactor, 0xffffffff);
 }

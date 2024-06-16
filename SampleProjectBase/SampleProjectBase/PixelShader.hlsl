@@ -11,7 +11,7 @@ struct PS_INPUT
 float4 main(PS_INPUT pin) : SV_TARGET
 { 
 	// テクスチャからデータを取得
-    float4 color = myTexture.Sample(mySampler, pin.uv);;
+    float4 color = myTexture.Sample(mySampler, pin.uv);
 
 	return color;
 }

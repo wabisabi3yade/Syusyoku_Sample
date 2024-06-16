@@ -12,6 +12,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+
 bool Mesh::CreateVertexBuffer(D3D11_Renderer& _renderer)
 {
 	// バッファ定義の構造体を設定
@@ -151,6 +152,24 @@ void Mesh::Draw(D3D11_Renderer& _renderer)
 	// インデックスバッファを利用して描画する
 	// 第1引数：描画する頂点数
 	pDeviceContext->DrawIndexed(indexNum, 0, 0);
+}
+
+void Mesh::SetVertexData(Vertex* _pVerticies, u_int _vertexNum, u_int* _pIndecies, u_int _indexNum)
+{
+	Release();	// 前残っているバッファ等を解放する
+
+	// 頂点
+	pVertices = _pVerticies;
+	vertexNum = _vertexNum;
+
+	// インデックス
+	pIndicies = _pIndecies;
+	indexNum = _indexNum;
+
+	// 頂点バッファ・インデックスバッファを作成
+	D3D11_Renderer* renderer =  Direct3D11::GetInstance()->GetRenderer();
+	CreateVertexBuffer(*renderer);
+	CreateIndexBuffer(*renderer);
 }
 
 void Mesh::Release()

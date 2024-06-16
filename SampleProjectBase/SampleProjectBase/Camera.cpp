@@ -7,7 +7,12 @@
 
 using namespace DirectX::SimpleMath;
 
-Camera::Camera() :focusPos(0,0,0)
+void Camera::UpdateFocus()
+{
+
+}
+
+Camera::Camera() :focusPos(0, 0, 0)
 {
 	transform.position.z = -9.f;
 }
@@ -18,12 +23,11 @@ Camera::~Camera()
 
 void Camera::LateUpdate()
 {
-	ImGui::Begin("Camera");
-	ImGui::SliderFloat("pos", &transform.position.z, -30.f, 10.f);
-	ImGui::SliderFloat("look", &focusPos.x, -30.f, 10.f);
-	ImGui::End();
+	static float centerAngle = 0.0f;
+	centerAngle += 180.0f * MainApplication::GetInstance()->DeltaTime();
 
-	ImGuiDebugLog::Add(std::to_string(transform.position.z));
+	transform.position.x = 5.f *  cos(DirectX::XMConvertToRadians(centerAngle));
+	transform.position.z = 5.f * sin(DirectX::XMConvertToRadians(centerAngle));
 }
 
 void Camera::UpdateViewMatrix()
@@ -33,7 +37,7 @@ void Camera::UpdateViewMatrix()
 		transform.position.z += 0.001f;
 	}
 
-	Vector3 p = {0,0,-10.f};
+	UpdateFocus();	// 注視点を求めるs
 
 	// ビュー変換行列を求める
 	DirectX::SimpleMath::Matrix viewMatrix = DirectX::XMMatrixLookAtLH

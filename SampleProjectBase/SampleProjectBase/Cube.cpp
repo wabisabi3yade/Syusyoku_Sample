@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "Cube.h"
 
-constexpr short FACE_NUM = (12);	// 三角形ポリゴン数
 constexpr short VERTEX_NUM = (8);	// 頂点数
 constexpr short INDEX_NUM = (24);	// 頂点インデックス数
 
@@ -28,41 +27,49 @@ void Cube::Draw()
 
 void Cube::Make()
 {
-
 	// キューブの頂点座標作成
 	vertexNum = VERTEX_NUM;
 	pVertices = new Vertex[vertexNum];
+
 	pVertices[0].position.x = -(length.x / 2.0);
 	pVertices[0].position.y = (length.y / 2.0f);
 	pVertices[0].position.z = -(length.z / 2.0f);
+	pVertices[0].normal = Vector3(0.0f, 0.0f, -1.0f);
 
 	pVertices[1].position.x = (length.x / 2.0f);
 	pVertices[1].position.y = ( length.y / 2.0f );
 	pVertices[1].position.z = -(length.z / 2.0f);
+	pVertices[1].normal = Vector3(0.0f, 1.0f, 0.0f);
 
 	pVertices[2].position.x = ( length.x / 2.0f );
 	pVertices[2].position.y = -( length.y / 2.0f );
 	pVertices[2].position.z = -(length.z / 2.0f);
+	pVertices[2].normal = Vector3(1.0f, 0.0f, 0.0f);
 
 	pVertices[3].position.x = -(length.x / 2.0f);
 	pVertices[3].position.y = -(length.y / 2.0f);
 	pVertices[3].position.z = -(length.z / 2.0f);
+	pVertices[3].normal = Vector3(0.0f, -1.0f, 0.0f);
 
 	pVertices[4].position.x = -(length.x / 2.0f);
 	pVertices[4].position.y = (length.y / 2.0f);
 	pVertices[4].position.z = (length.z / 2.0f);
+	pVertices[4].normal = Vector3(0.0f, 1.0f, 0.0f);
 
 	pVertices[5].position.x = (length.x / 2.0f);
 	pVertices[5].position.y = (length.y / 2.0f);
 	pVertices[5].position.z = (length.z / 2.0f);
+	pVertices[5].normal = Vector3(0.0f, 0.0f, 1.0f);
 
 	pVertices[6].position.x = (length.x / 2.0f);
 	pVertices[6].position.y = -(length.y / 2.0f);
 	pVertices[6].position.z = (length.z / 2.0f);
+	pVertices[6].normal = Vector3(0.0f, -1.0f, 0.0f);
 
 	pVertices[7].position.x = -(length.x / 2.0f);
 	pVertices[7].position.y = -(length.y / 2.0f);
 	pVertices[7].position.z = (length.z / 2.0f);
+	pVertices[7].normal = Vector3(-1.0f, 0.0f, 0.0f);
 
 	// インデックスを設定(TRIANGLESTRIP)
 	indexNum = INDEX_NUM;

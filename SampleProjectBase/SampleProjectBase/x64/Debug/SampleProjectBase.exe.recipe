@@ -15,6 +15,9 @@
     <ContentFile>
       <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VertexShader.cso</FullPath>
     </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VS_UVScroll.cso</FullPath>
+    </ContentFile>
   </ContentFiles>
   <SatelliteDlls />
   <NonRecipeFileRefs />

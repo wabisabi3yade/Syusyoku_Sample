@@ -49,8 +49,6 @@ bool Triangle::CreateVertexBuffer(D3D11_Renderer& _renderer)
 
 void Triangle::SetupTransform(D3D11_Renderer& _renderer)
 {
-	//CbTransformSet& cb = _renderer.GetParameter().cbTransformSet;
-
 	//auto mtx = DirectX::XMMatrixTranslation(0.0f, 0.0f, 0);
 
 	//DirectX::XMStoreFloat4x4(&cb.data.transform, XMMatrixTranspose(mtx));

@@ -1,18 +1,14 @@
 #pragma once
 #include "GameObject.h"
 
-#ifdef _DEBUG
-#include <typeinfo>
-#endif // _DEBUG
-
 class Camera;
-
 // シーンで使用するオブジェクト配列クラス
 class SceneObjects
 {
 	// シーンで使用するオブジェクト配列（オブジェクトの名前がキー値）
 	std::unordered_map<std::string, std::unique_ptr<GameObject>> list;
-
+	// UI用のリスト(描画を上のリストより後にするため)
+	std::unordered_map<std::string, std::unique_ptr<GameObject>> uiList;
 public:
 	SceneObjects();
 	~SceneObjects();
@@ -34,13 +30,22 @@ public:
 template<class T>
 inline T* SceneObjects::GetSceneObject(const std::string& _objectName)
 {
+	// 先に3D空間状のオブジェクトから探す　→　無かったらUIの方を探す
+	
 	// 名前から探す
 	auto itr = list.find(_objectName);
 	if (itr == list.end())
 	{
-		std::string message = "リスト内に名前のオブジェクトがありませんでした" + _objectName;
-		ImGuiDebugLog::Add(message);
-		return nullptr;
+		// オブジェクトに無かったらUiで探す
+		itr = uiList.find(_objectName);
+
+		// それでもなかったら
+		if (itr == list.end())
+		{
+			std::string message = "リスト内に名前のオブジェクトがありませんでした" + _objectName;
+			ImGuiDebugLog::Add(message);
+			return nullptr;
+		}
 	}
 
 	// 指定した型に変換する(GameObjectを派生しているクラスのみ)
@@ -48,9 +53,6 @@ inline T* SceneObjects::GetSceneObject(const std::string& _objectName)
 	if (retPtr == nullptr)	// GameObjectを派生していないクラスだったら
 	{
 		std::string message = _objectName + "を指定した型に変換できませんでした";
-#ifdef _DEBUG
-		//message + "　" + typeid(retPtr).name;	// 変換先の型名を表示
-#endif // _DEBUG
 		ImGuiDebugLog::Add(message);
 		return nullptr;
 	}

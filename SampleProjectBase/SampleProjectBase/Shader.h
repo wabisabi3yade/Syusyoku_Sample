@@ -1,5 +1,6 @@
 #pragma once
 
+class Texture;
 // シェーダーの基底クラス
 class Shader
 {
@@ -43,6 +44,13 @@ public:
 	/// <param name="_slot">スロットの番号</param>
 	/// <param name="_pData">バッファに入れる情報</param>
 	void UpdateBuffer(u_int _slot, void* _pData);	
+
+	/// <summary>
+	/// シェーダーに送るための配列に追加
+	/// </summary>
+	/// <param name="_slot">スロットの番号</param>
+	/// <param name="_texture"></param>
+	void SetTexture(u_int _slot, Texture* _texture);
 
 	// GPUに所持しているバッファを送る
 	virtual void Bind() = 0;

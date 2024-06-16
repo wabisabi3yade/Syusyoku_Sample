@@ -33,6 +33,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
+    <FxCompile Include="VS_UVScroll.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicObject_Base.cpp" />
@@ -51,10 +57,12 @@
     <ClCompile Include="Float4.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="ImGuiDebugLog.cpp" />
+    <ClCompile Include="Object_UI.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="SceneObjects.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Object_2D.cpp" />
+    <ClCompile Include="Tag.cpp" />
     <ClCompile Include="VariableFrameRate.cpp" />
     <ClCompile Include="Object_3D.cpp" />
     <ClCompile Include="ImGuiMethod.cpp" />
@@ -120,10 +128,12 @@
     <ClInclude Include="Float4.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="ImGuiDebugLog.h" />
+    <ClInclude Include="Object_UI.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="SceneObjects.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Object_2D.h" />
+    <ClInclude Include="Tag.h" />
     <ClInclude Include="VariableFrameRate.h" />
     <ClInclude Include="Object_3D.h" />
     <ClInclude Include="IGetRenderPara.h" />
@@ -291,6 +301,7 @@
       <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(ProjectDir)directxtk/include;$(ProjectDir)imgui/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
+      <AdditionalOptions>/wd26812 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -324,6 +335,7 @@
       <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(ProjectDir)directxtk/include;$(ProjectDir)imgui/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
+      <AdditionalOptions>/wd26812 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>

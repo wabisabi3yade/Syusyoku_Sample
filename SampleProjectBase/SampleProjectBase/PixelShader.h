@@ -10,7 +10,7 @@ class PixelShader : public Shader
 	void MakeShader(const char* _pData, u_int _dataSize) override;
 
 public:
-	PixelShader() : Shader(Shader::Type::Pixel) {}
+	PixelShader() : Shader(Shader::Type::Pixel), pPxShader(nullptr) {}
 	~PixelShader();
 
 	// GPUにシェーダーを送る

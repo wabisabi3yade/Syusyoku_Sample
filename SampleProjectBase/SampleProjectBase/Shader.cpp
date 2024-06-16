@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Shader.h"
 #include <d3dcompiler.h>
+#include "Texture.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "dxguid.lib")
@@ -102,4 +103,31 @@ void Shader::UpdateBuffer(u_int _slot, void* _pData)
 			0,	// 行ピッチ
 			0	// 深度バッファピッチ
 		);
+}
+
+void Shader::SetTexture(u_int _slot, Texture* _texture)
+{
+#ifdef _DEBUG
+	if (_texture == nullptr)
+	{
+		ImGuiDebugLog::Add("テクスチャが設定されていません");
+		return;
+	}
+#endif // _DEBUG
+
+	
+
+	if (_slot > pTextures.size()) return;	// スロット番号がテクスチャ配列上限より上なら
+
+	ID3D11ShaderResourceView* pSetSrv = _texture->GetSRV();
+	if (pSetSrv == nullptr) return;
+
+	pTextures[_slot] = pSetSrv;	// 配列に追加
+
+	ID3D11DeviceContext* pContext = Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
+	switch (type)
+	{
+		case Type::Vertex: pContext->VSSetShaderResources(_slot, 1, &pSetSrv); break;
+		case Type::Pixel: pContext->PSSetShaderResources(_slot, 1, &pSetSrv); break;
+	}
 }

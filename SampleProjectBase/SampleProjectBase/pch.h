@@ -21,9 +21,10 @@
 #include <unordered_map>	// 順番を気にしないmap配列
 #include <vector>	// 動的配列
 
-#include "ImGuiDebugLog.h"	// デバッグログを出す
-#include "Direct3D11.h"	// 自前のDirectX11クラス
+#include "ImGuiMethod.h"	// ImGui便利関数
 #include "Transform.h"	// 座標・回転・スケールのクラス
+#include "MainApplication.h"
+#include "Direct3D11.h"	// 自前のDirectX11クラス
 #include "ResourceCollection.h"	// リソースを管理するクラス
 
 

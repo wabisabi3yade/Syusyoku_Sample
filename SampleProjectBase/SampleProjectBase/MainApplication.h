@@ -33,5 +33,7 @@ public:
 
 	// ゲームループの処理を書く
 	void GameLoop();	
+
+	float DeltaTime();	// 前フレームとの時間
 };
 
