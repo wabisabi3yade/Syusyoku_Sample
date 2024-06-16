@@ -4,7 +4,7 @@ constexpr int SUBSCENE_TYPE_MIN = 0;	// サブシーンタイプの最低値
 constexpr int SUBSCENE_TYPE_MAX = 256;	// サブシーンタイプの最大値
 										// (何個あるかは各大局クラスによって変わる)
 
-SceneMoveInfo::SceneMoveInfo(int _initSub, BROAD_TYPE::TYPE _initBroad)
+SceneMoveInfo::SceneMoveInfo(int _initSub, BroadType::Type _initBroad)
 {
 	// 初期のシーン情報を代入
 	broadType = _initBroad;
@@ -18,7 +18,7 @@ SceneMoveInfo::~SceneMoveInfo()
 	CLASS_DELETE(pRunningState);
 }
 
-void SceneMoveInfo::OnChangeScene(int _nextSub, BROAD_TYPE::TYPE _nextBroad)
+void SceneMoveInfo::OnChangeScene(int _nextSub, BroadType::Type _nextBroad)
 {
 	// 遷移先の大局・サブシーンのタイプを代入
 	subType = _nextSub;

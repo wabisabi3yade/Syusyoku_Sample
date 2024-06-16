@@ -1,6 +1,5 @@
 #include "ChangeSubScene.h"
-#include "SubScene_Base.h"
-#include "SceneMoveInfo.h"
+
 
 ChangeSubScene::ChangeSubScene(SceneMoveInfo* _moveInfo)
 {

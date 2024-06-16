@@ -56,7 +56,7 @@ void SceneObjects::LateUpdate()
 	}
 }
 
-void SceneObjects::Draw(const Camera& _viewCamera)
+void SceneObjects::Draw()
 {
 	// 3D空間上のオブジェクト描画
 	for (auto itr = list.begin(); itr != list.end(); itr++)

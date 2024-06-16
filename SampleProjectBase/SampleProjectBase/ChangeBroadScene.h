@@ -1,5 +1,6 @@
 #pragma once
-#include "BroadSceneType.h"
+#include "SceneMoveInfo.h"
+
 class BroadScene_Base;
 class SceneMoveInfo;
 
@@ -9,7 +10,7 @@ class ChangeBroadScene
 	BroadScene_Base* pBroadScene{nullptr};	// 大局シーン変数
 	SceneMoveInfo* pMoveInfo{ nullptr };	// シーン遷移情報
 
-	BROAD_TYPE::TYPE c_BroadId;	// 現在の大局シーンのid
+	BroadType::Type c_BroadId;	// 現在の大局シーンのid
 
 public:
 	ChangeBroadScene(SceneMoveInfo* _moveInfo);

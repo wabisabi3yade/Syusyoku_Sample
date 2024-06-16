@@ -2,11 +2,12 @@
 #include "SceneMoveInfo.h"
 #include "Test_Broad.h"
 #include "Test_ChangeSubScene.h"
+#include "Tank_BroadScene.h"
 
 ChangeBroadScene::ChangeBroadScene(SceneMoveInfo* _moveInfo)
 {
 	pMoveInfo = _moveInfo;	// シーン遷移情報を代入
-	c_BroadId = BROAD_TYPE::NONE;	// 初期値（どのシーンにも被らない値にしておく）
+	c_BroadId = BroadType::None;	// 初期値（どのシーンにも被らない値にしておく）
 }
 
 ChangeBroadScene::~ChangeBroadScene()
@@ -17,7 +18,7 @@ ChangeBroadScene::~ChangeBroadScene()
 BroadScene_Base* ChangeBroadScene::OnChangeBroad()
 {
 	// 次の大局シーンIdを取得
-	const BROAD_TYPE::TYPE nextBroad = pMoveInfo->GetNextBroadType();
+	const BroadType::Type nextBroad = pMoveInfo->GetNextBroadType();
 
 	// 現在の大局と遷移先の大局が同じなら
 	if (c_BroadId == nextBroad)
@@ -34,11 +35,15 @@ BroadScene_Base* ChangeBroadScene::OnChangeBroad()
 	// 大局シーンを変更する
 	switch (nextBroad)
 	{
-	case BROAD_TYPE::TEST:
+	case BroadType::Test:
 		pBroadScene = new Test_Broad(pMoveInfo);
 		break;
+
+	case BroadType::Tank:
+		pBroadScene = new Tank_BroadScene(pMoveInfo);
+		break;
+
 	default:
-		
 		break;
 	}
 	// 遷移先の大局Idを保存しておく

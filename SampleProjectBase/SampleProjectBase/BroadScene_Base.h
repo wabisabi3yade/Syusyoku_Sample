@@ -1,7 +1,7 @@
 #pragma once
+#include "SceneMoveInfo.h"
 
 class SubScene_Base;
-class SceneMoveInfo;
 class ChangeSubScene;
 
 // 複数の関連したシーンが集まった大局クラス(分野によって分ける)

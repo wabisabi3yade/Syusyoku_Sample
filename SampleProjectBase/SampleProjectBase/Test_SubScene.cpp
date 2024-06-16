@@ -74,7 +74,7 @@ void Test_SubScene::Draw()
 	cube->SetPosition(t.position);
 	cube->Draw();
 
-	sceneObjects->Draw(*cam);
+	sceneObjects->Draw();
 }
 
 void Test_SubScene::Release()

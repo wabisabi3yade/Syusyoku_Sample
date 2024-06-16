@@ -6,12 +6,12 @@ class Test_ChangeSubScene
     : public ChangeSubScene
 {
 public:
-    enum TEST_SCENE
+    enum Scene
     {
-        TEST1,
-        TEST2,
-        TEST3,
-        NUM
+        Test1,
+        Test2,
+        Test3,
+        Num
     };
 
     Test_ChangeSubScene(SceneMoveInfo* _moveInfo);

@@ -1,7 +1,6 @@
 #pragma once
-
-class SubScene_Base;
-class SceneMoveInfo;
+#include "SceneMoveInfo.h"
+#include "SubScene_Base.h"
 
 // SubScene‚Ì‘JˆÚ‚ð‚·‚éƒNƒ‰ƒX
 class ChangeSubScene

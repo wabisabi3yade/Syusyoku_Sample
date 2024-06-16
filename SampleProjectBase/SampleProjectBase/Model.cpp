@@ -16,7 +16,6 @@ using namespace DirectX::SimpleMath;
 
 Model::Model() : meshNum(0), modelName(""), isPermanent(false), isImported(false)
 {
-
 }
 
 Model::~Model()

@@ -44,7 +44,6 @@
     <ClCompile Include="BasicObject_Base.cpp" />
     <ClCompile Include="BlendState.cpp" />
     <ClCompile Include="BoneMesh.cpp" />
-    <ClCompile Include="BroadSceneType.cpp" />
     <ClCompile Include="BroadScene_Base.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ChangeBroadScene.cpp" />
@@ -63,6 +62,11 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Object_2D.cpp" />
     <ClCompile Include="Tag.cpp" />
+    <ClCompile Include="Tank_BroadScene.cpp" />
+    <ClCompile Include="Tank_ChangeSub.cpp" />
+    <ClCompile Include="Tank_InGameSub.cpp" />
+    <ClCompile Include="Tank_ResultSub.cpp" />
+    <ClCompile Include="Tank_TitleSub.cpp" />
     <ClCompile Include="VariableFrameRate.cpp" />
     <ClCompile Include="Object_3D.cpp" />
     <ClCompile Include="ImGuiMethod.cpp" />
@@ -112,7 +116,6 @@
     <ClInclude Include="BasicObject_Base.h" />
     <ClInclude Include="BlendState.h" />
     <ClInclude Include="BoneMesh.h" />
-    <ClInclude Include="BroadSceneType.h" />
     <ClInclude Include="BroadScene_Base.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CbProjectionSet.h" />
@@ -134,6 +137,11 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Object_2D.h" />
     <ClInclude Include="Tag.h" />
+    <ClInclude Include="Tank_BroadScene.h" />
+    <ClInclude Include="Tank_ChangeSub.h" />
+    <ClInclude Include="Tank_InGameSub.h" />
+    <ClInclude Include="Tank_ResultSub.h" />
+    <ClInclude Include="Tank_TitleSub.h" />
     <ClInclude Include="VariableFrameRate.h" />
     <ClInclude Include="Object_3D.h" />
     <ClInclude Include="IGetRenderPara.h" />

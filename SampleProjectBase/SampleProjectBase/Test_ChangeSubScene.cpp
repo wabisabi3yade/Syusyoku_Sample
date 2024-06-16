@@ -22,14 +22,14 @@ SubScene_Base* Test_ChangeSubScene::ChangeScene()
 	// 遷移先のサブシーンに対応したシーンを作成する
 	switch (nextSubId)
 	{
-	case TEST_SCENE::TEST1:
+	case Scene::Test1:
 		pSubScene = new Test_SubScene(moveInfo);
 		break;
 
-	case TEST_SCENE::TEST2:
+	case Scene::Test2:
 		break;
 
-	case TEST_SCENE::TEST3:
+	case Scene::Test3:
 		break;
 
 	default:

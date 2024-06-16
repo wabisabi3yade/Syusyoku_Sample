@@ -112,9 +112,6 @@
     <Filter Include="ソース ファイル\Scene\BroadScene">
       <UniqueIdentifier>{ad402460-ec50-4210-a177-c1bc80af3852}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Scene\BroadScene\Type">
-      <UniqueIdentifier>{649f7db4-56af-4072-b5aa-e1ba1f5c8168}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Scene\BroadScene\BroadScane_Base">
       <UniqueIdentifier>{0f654507-8770-4faa-9cbd-8b3b2c691e81}</UniqueIdentifier>
     </Filter>
@@ -235,6 +232,27 @@
     <Filter Include="ソース ファイル\Object\Tag">
       <UniqueIdentifier>{988b4f81-a66d-4eef-8758-f35438d16df4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Scene\TankFire">
+      <UniqueIdentifier>{d4db0105-4185-4068-8f42-f57819645494}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\TankFire\ChangeSub">
+      <UniqueIdentifier>{58733c0a-0731-4438-9236-0be8e83cfd5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\TankFire\SubScene">
+      <UniqueIdentifier>{e6273f7e-7454-4fe7-8739-0d37deeb5863}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\TankFire\BroadScene">
+      <UniqueIdentifier>{a5887d5e-dc54-4947-bffb-467f1f55c4a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\TankFire\SubScene\InGame">
+      <UniqueIdentifier>{20231241-ed76-454f-af9b-1ce0d9e965a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\TankFire\SubScene\Title">
+      <UniqueIdentifier>{55b9c26e-8608-40e1-b899-9bf3507cef0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\TankFire\SubScene\Result">
+      <UniqueIdentifier>{11db7113-88cb-4f3e-83ac-e139c9c32672}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PixelShader.hlsl">
@@ -310,9 +328,6 @@
     </ClCompile>
     <ClCompile Include="BroadScene_Base.cpp">
       <Filter>ソース ファイル\Scene\BroadScene\BroadScane_Base</Filter>
-    </ClCompile>
-    <ClCompile Include="BroadSceneType.cpp">
-      <Filter>ソース ファイル\Scene\BroadScene\Type</Filter>
     </ClCompile>
     <ClCompile Include="ChangeBroadScene.cpp">
       <Filter>ソース ファイル\Scene\BroadScene\ChangeScene</Filter>
@@ -440,6 +455,21 @@
     <ClCompile Include="Tag.cpp">
       <Filter>ソース ファイル\Object\Tag</Filter>
     </ClCompile>
+    <ClCompile Include="Tank_ChangeSub.cpp">
+      <Filter>ソース ファイル\Scene\TankFire\ChangeSub</Filter>
+    </ClCompile>
+    <ClCompile Include="Tank_InGameSub.cpp">
+      <Filter>ソース ファイル\Scene\TankFire\SubScene\InGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Tank_ResultSub.cpp">
+      <Filter>ソース ファイル\Scene\TankFire\SubScene\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="Tank_TitleSub.cpp">
+      <Filter>ソース ファイル\Scene\TankFire\SubScene\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Tank_BroadScene.cpp">
+      <Filter>ソース ファイル\Scene\TankFire\BroadScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -519,9 +549,6 @@
     </ClInclude>
     <ClInclude Include="BroadScene_Base.h">
       <Filter>ソース ファイル\Scene\BroadScene\BroadScane_Base</Filter>
-    </ClInclude>
-    <ClInclude Include="BroadSceneType.h">
-      <Filter>ソース ファイル\Scene\BroadScene\Type</Filter>
     </ClInclude>
     <ClInclude Include="ChangeBroadScene.h">
       <Filter>ソース ファイル\Scene\BroadScene\ChangeScene</Filter>
@@ -657,6 +684,21 @@
     </ClInclude>
     <ClInclude Include="Tag.h">
       <Filter>ソース ファイル\Object\Tag</Filter>
+    </ClInclude>
+    <ClInclude Include="Tank_ChangeSub.h">
+      <Filter>ソース ファイル\Scene\TankFire\ChangeSub</Filter>
+    </ClInclude>
+    <ClInclude Include="Tank_InGameSub.h">
+      <Filter>ソース ファイル\Scene\TankFire\SubScene\InGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Tank_ResultSub.h">
+      <Filter>ソース ファイル\Scene\TankFire\SubScene\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="Tank_TitleSub.h">
+      <Filter>ソース ファイル\Scene\TankFire\SubScene\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Tank_BroadScene.h">
+      <Filter>ソース ファイル\Scene\TankFire\BroadScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

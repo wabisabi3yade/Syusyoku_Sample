@@ -1,5 +1,6 @@
 #pragma once
-#include "BroadSceneType.h"
+#include "SceneMoveInfo.h"
+
 #include "Camera.h"
 #include "ModelLoader.h"
 #include "SceneObjects.h"
@@ -8,7 +9,6 @@
 #include "Object_UI.h"
 #include "ShaderCollection.h"
 
-class SceneMoveInfo;
 
 // サブシーン（小さなシーン、例えば街の中の家の中とか）の基底クラス
 class SubScene_Base
@@ -30,7 +30,7 @@ protected:
 	virtual void Draw() = 0;
 
 	// シーン移動で呼び出す
-	void OnMoveScene(int _nextSubType, BROAD_TYPE::TYPE _nextBroadType);
+	void OnMoveScene(int _nextSubType, BroadType::Type _nextBroadType);
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -43,6 +43,6 @@ public:
 	void Exec();
 
 	// 解放処理
-	virtual void Release() = 0;
+	virtual void Release() {};
 };
 

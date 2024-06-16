@@ -13,7 +13,7 @@
 /// </summary>
 /// <param name="_nextSubType">次のサブシーンのタイプ</param>
 /// <param name="_nextBroadType">次の大局シーンのタイプ</param>
-void SubScene_Base::OnMoveScene(int _nextSubType, BROAD_TYPE::TYPE _nextBroadType)
+void SubScene_Base::OnMoveScene(int _nextSubType, BroadType::Type _nextBroadType)
 {
 	// シーン遷移情報を遷移先に変える
 	pSceneMoveInfo->OnChangeScene(_nextSubType, _nextBroadType);
@@ -41,9 +41,10 @@ void SubScene_Base::Exec()
 {
 	// シーン内の更新処理
 	Update();
+	sceneObjects->Update();
 	// Updateの後に行う更新処理(カメラに処理とか)
 	LateUpdate();
-
+	sceneObjects->LateUpdate();
 	// 画面クリアなど準備
 	Direct3D11::GetInstance()->GetRenderer()->SetUpDraw();
 	// ビュー変換行列を更新
@@ -52,7 +53,7 @@ void SubScene_Base::Exec()
 
 	// シーン内の描画処理
 	Draw();
-
+	sceneObjects->Draw();
 	ImGuiMethod::Draw();
 
 	// スワップチェイン
