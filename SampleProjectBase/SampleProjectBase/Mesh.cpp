@@ -102,8 +102,8 @@ bool Mesh::Setup(D3D11_Renderer& _renderer, aiMesh* pMeshData)
 		pVertices[vertexIdx].uv = { uv.x, uv.y };
 
 		// 仮
-		constexpr float COLOR = 0.5f;
-		pVertices[vertexIdx].color = { COLOR, COLOR, COLOR, 1.f };
+		constexpr float COLOR = 1.0f;
+		pVertices[vertexIdx].color = { COLOR, COLOR, COLOR, 1.0f };
 	}
 
 	// 頂点シェーダー作成

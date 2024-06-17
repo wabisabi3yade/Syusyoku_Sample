@@ -1,6 +1,7 @@
 #pragma once
 #include "Texture.h"
 
+
 class VertexShader;
 class PixelShader;
 // モデルの表面データ

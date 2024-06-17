@@ -1,5 +1,7 @@
 #pragma once
+#include <typeinfo>
 #include "Tag.h"
+#include "Component.h"
 
 // シーンで使用するオブジェクト全般の基底クラス
 class GameObject
@@ -12,15 +14,20 @@ protected:
 	Layer layer;	// ゲームオブジェクトのレイヤー
 
 	DirectX::SimpleMath::Vector2 uvScroll;	// UVスクロール値
+
+	std::list<std::unique_ptr<Component>> components;	// コンポーネントリスト
 public:
 	Transform transform;	// Transformパラメータ
 
 	GameObject() : isActive(true), name(""), uvScroll(DirectX::SimpleMath::Vector2::Zero) {};
 	virtual ~GameObject() {};
 
-	virtual void Update(){};	// 更新処理
-	virtual void LateUpdate() {};	// Updateを行ったあとの更新処理
-	virtual void Draw() {};	// 描画処理
+	virtual void Update();	// 更新処理
+	virtual void LateUpdate();	// Updateを行ったあとの更新処理
+	virtual void Draw();	// 描画処理
+
+	template<typename T> T* AddComponent();	// コンポーネントをつける
+	template<typename T> T* GetComponent();	// コンポーネントを取得
 
 	virtual void ImGuiSet();	// ImGuiの設定
 
@@ -32,3 +39,29 @@ public:
 	const Layer& GetLayer() { return layer; }
 };
 
+template<typename T>
+inline T* GameObject::AddComponent()
+{
+	// コンポーネントを作成
+	std::unique_ptr<Component> addComp = std::make_unique<T>(this);
+	addComp->Init();	// 初期処理
+
+	T* retPtr = dynamic_cast<T*>(addComp.get());
+	components.push_back(std::move(addComp));	// リストに追加
+
+	return retPtr;
+}
+
+template<typename T>
+inline T* GameObject::GetComponent()
+{
+	// 指定した型名と同じコンポーネントがあるか確認
+	for (auto comp : components)
+	{
+		if (typeid(std::unique_ptr<T>) != typeid(comp)) continue;
+		
+		return comp.get(); // あるなら返す
+	}
+
+	return nullptr;	// 無かったらnullptr
+}

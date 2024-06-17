@@ -26,13 +26,7 @@ class Model
 	std::vector<Material*> pMaterials;	// マテリアル
 	std::vector<Texture*> pTextures;	//	テクスチャ
 
-	// このモデルで使うシェーダー
-	VertexShader* pVertexShader;
-	PixelShader* pPixelShader;
-
 	bool LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _renderer);
-
-	void SetupDraw(const Transform& _transform) const;	// 座標変換行列を作成
 
 	void ResetParam();	// メッシュなどの情報を全て初期化する
 public:
@@ -52,7 +46,8 @@ public:
 	const std::vector<Mesh*> GetMeshes()const { return meshes; }	// メッシュの配列を取得する
 	const ModelSettings GetModelData()const { return modelData; }	// モデルのデータを取得する
 
-	void SetVertexShader(Shader* _vertexSh);
+	// マテリアル全体のシェーダーを変更する
+	void SetVertexShader(Shader* _vertexSh);	
 	void SetPixelShader(Shader* _pixelSh);
 };
 

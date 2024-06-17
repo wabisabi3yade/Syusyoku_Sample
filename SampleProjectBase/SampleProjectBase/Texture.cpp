@@ -38,6 +38,8 @@ bool Texture::Load(const char* _pathName)
 	{
 		std::string message = "psdƒtƒ@ƒCƒ‹‚Í‘Î‰ž‚µ‚Ä‚¢‚Ü‚¹‚ñ\n" + std::string(_pathName);
 		ImGuiDebugLog::Add(message);
+
+		return false;
 	}
 	else
 	{

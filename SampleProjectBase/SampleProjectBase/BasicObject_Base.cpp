@@ -17,8 +17,6 @@ BasicObject_Base::BasicObject_Base() : color(Vector4::One)
 		std::unique_ptr<Material> makeMaterial = std::make_unique<Material>();
 		// シェーダーを設定
 		ShaderCollection* shCol = ShaderCollection::GetInstance();
-		VertexShader* v = shCol->GetVertexShader("VertexShader");
-		makeMaterial->pVertexShader = v;
 		PixelShader* p = shCol->GetPixelShader("PS_VertexColor");
 		makeMaterial->pPixelShader = p;
 

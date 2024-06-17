@@ -9,15 +9,17 @@ void ShaderCollection::Load()
 	// csoファイルの名前
 	std::vector<std::string> vFileNames
 	{
-		"VertexShader.cso",
+		"VS_Basic.cso",
 		"VS_UVScroll.cso"
 	};
 	// セットする名前
 	std::vector<std::string> vShaderNames
 	{
-		"VertexShader",
+		"VS_Basic",
 		"VS_UVScroll"
 	};
+	defaultVS = "VS_Basic";
+
 	for (int i = 0; i < vShaderNames.size(); i++)
 	{
 		std::unique_ptr<VertexShader> vShader = std::make_unique<VertexShader>();
@@ -31,15 +33,17 @@ void ShaderCollection::Load()
 	// csoファイルの名前
 	std::vector<std::string> pFileNames
 	{
-		"PixelShader.cso",
+		"PS_Basic.cso",
 		"PS_VertexColor.cso"
 	};
 	// セットする名前
 	std::vector<std::string> pShaderNames
 	{
-		"PixelShader",
+		"PS_Basic",
 		"PS_VertexColor"
 	};
+	defaultPS = "PS_Basic";
+
 	for (int i = 0; i < pShaderNames.size(); i++)
 	{
 		std::unique_ptr<PixelShader> pShader = std::make_unique<PixelShader>();
@@ -66,14 +70,6 @@ void ShaderCollection::SetShader(std::string _shaderName, std::unique_ptr<Shader
 
 	// 配列に追加
 	shaders.emplace(_shaderName, std::move(_pSetShader));
-}
-
-void ShaderCollection::SetInputLayout(ID3D11InputLayout* _pSetInput)
-{
-	SAFE_RELEASE(pInputLayout);	// 先に解放する
-
-	// アドレスを代入
-	pInputLayout = _pSetInput;
 }
 
 VertexShader* ShaderCollection::GetVertexShader(std::string _shaderName)

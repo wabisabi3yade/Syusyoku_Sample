@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="PixelShader.hlsl">
+    <FxCompile Include="PS_Basic.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
@@ -29,7 +29,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="VertexShader.hlsl">
+    <FxCompile Include="VS_Basic.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
@@ -48,6 +48,8 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ChangeBroadScene.cpp" />
     <ClCompile Include="ChangeSubScene.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="GamePad.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="D3D11_Renderer.cpp" />
     <ClCompile Include="Direct3D11.cpp" />
@@ -56,8 +58,11 @@
     <ClCompile Include="Float4.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="ImGuiDebugLog.cpp" />
+    <ClCompile Include="InputClass.cpp" />
+    <ClCompile Include="JISToUTF8.cpp" />
     <ClCompile Include="Object_UI.cpp" />
     <ClCompile Include="PixelShader.cpp" />
+    <ClCompile Include="PlayerMove.cpp" />
     <ClCompile Include="SceneObjects.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Object_2D.cpp" />
@@ -123,6 +128,8 @@
     <ClInclude Include="CbViewSet.h" />
     <ClInclude Include="ChangeBroadScene.h" />
     <ClInclude Include="ChangeSubScene.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="GamePad.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="D3D11_Renderer.h" />
     <ClInclude Include="Direct3D11.h" />
@@ -131,11 +138,14 @@
     <ClInclude Include="Float4.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="ImGuiDebugLog.h" />
+    <ClInclude Include="InputClass.h" />
     <ClInclude Include="Object_UI.h" />
     <ClInclude Include="PixelShader.h" />
+    <ClInclude Include="PlayerMove.h" />
     <ClInclude Include="SceneObjects.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Object_2D.h" />
+    <ClInclude Include="JISToUTF8.h" />
     <ClInclude Include="Tag.h" />
     <ClInclude Include="Tank_BroadScene.h" />
     <ClInclude Include="Tank_ChangeSub.h" />

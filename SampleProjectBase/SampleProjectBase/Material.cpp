@@ -7,8 +7,8 @@ Material::Material() : diffuse(Vector4::One), ambient(Vector4::One), specular(Ve
 					emissive(Vector4::One)
 {
 	ShaderCollection* shCol =  ShaderCollection::GetInstance();
-	pVertexShader = shCol->GetVertexShader("VertexShader")
-
+	pVertexShader = shCol->GetVertexShader(shCol->defaultVS);
+	pPixelShader = shCol->GetPixelShader(shCol->defaultPS);
 }
 
 Material::~Material()

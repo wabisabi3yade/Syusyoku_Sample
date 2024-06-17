@@ -9,7 +9,7 @@ struct PS_IN
 // ’¸“_F‚ğ•`‰æ‚·‚é
 float4 main(PS_IN pin) : SV_TARGET
 {
-    float4 color = pin.color;
+    float4 color = /*pin.color*/float4(1.0f, 1.0f, 1.0f,1.0f);
     
 	return color;
 }

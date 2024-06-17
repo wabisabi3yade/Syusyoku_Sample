@@ -188,32 +188,33 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 			}
 			// 失敗
 			if (!isSuccess) {
-				std::string message = "モデルのテクスチャ読込失敗　" + materialName;
+				std::string message = "モデルのテクスチャ読込失敗　" + texName;
 				ImGuiDebugLog::Add(message);
-
-				return false;
+			}
+			else
+			{
+				// テクスチャ読込み成功
+				// 読み込んだテクスチャをマテリアルに設定する
+				pTextures.push_back(texture.get());
+				// リソース管理にテクスチャ追加
+				resourceCollection->SetResource<Texture>(texName, std::move(texture));
 			}
 
+			// マテリアル追加
+			pMaterials.push_back(material.get());
+			// マテリアルを保管クラスに入れる
+			resourceCollection->SetResource<Material>(materialName, std::move(material));
 		}
-
-		// テクスチャ読込み成功
-		// 読み込んだテクスチャをマテリアルに設定する
-		pTextures.push_back(texture.get());
-		// リソース管理にテクスチャ追加
-		resourceCollection->SetResource<Texture>(texName, std::move(texture));
-		// マテリアル追加
-		pMaterials.push_back(material.get());
-		// マテリアルを保管クラスに入れる
-		resourceCollection->SetResource<Material>(materialName, std::move(material));
 	}
 
 	return true;
 }
 
-void Model::SetupDraw(const Transform& _transform) const
+void Model::Draw(const Transform& _transform) const
 {
 	// レンダラー取得
 	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
+	renderer.GetDeviceContext()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// ワールド変換行列を取得
 	DirectX::SimpleMath::Matrix worldMatrix = D3D11_Renderer::GetWorldMtx(_transform);
@@ -222,26 +223,16 @@ void Model::SetupDraw(const Transform& _transform) const
 	RenderParam::WVP wvp = renderer.GetParameter().GetWVP();
 	wvp.world = worldMatrix;
 
-	// バッファを更新する
-	pVertexShader->UpdateBuffer(0, &wvp);
-
-	// シェーダーをバインド
-	pVertexShader->Bind();
-	pPixelShader->Bind();
-}
-
-void Model::Draw(const Transform& _transform) const
-{
-	SetupDraw(_transform);
-
-	// レンダラー取得
-	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
-	renderer.GetDeviceContext()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
 	for (u_int meshIdx = 0; meshIdx < meshNum; meshIdx++)
 	{
+		// バッファを更新する
+		pMaterials[meshIdx]->pVertexShader->UpdateBuffer(0, &wvp);
 		// テクスチャ設定
-		pPixelShader->SetTexture(0, pTextures[meshIdx]);
+		if(pTextures.size() > meshIdx)	// テクスチャなくても読み込める用にしたいので
+		pMaterials[meshIdx]->pPixelShader->SetTexture(0, pTextures[meshIdx]);
+		// シェーダーをバインド
+		pMaterials[meshIdx]->pVertexShader->Bind();
+		pMaterials[meshIdx]->pPixelShader->Bind();
 
 		meshes[meshIdx]->Draw(renderer);
 	}
@@ -290,11 +281,17 @@ bool Model::Load(const ModelSettings& _settings)
 
 void Model::SetVertexShader(Shader* _vertexSh)
 {
-	pVertexShader = dynamic_cast<VertexShader*>(_vertexSh);
+	for (auto material : pMaterials)
+	{
+		material->pVertexShader = dynamic_cast<VertexShader*>(_vertexSh);
+	}
 }
 
 void Model::SetPixelShader(Shader* _pixelSh)
 {
-	pPixelShader = dynamic_cast<PixelShader*>(_pixelSh);
+	for (auto material : pMaterials)
+	{
+		material->pPixelShader = dynamic_cast<PixelShader*>(_pixelSh);
+	}
 }
 

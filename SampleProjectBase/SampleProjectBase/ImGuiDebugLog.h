@@ -1,5 +1,6 @@
 #pragma once
 
+#include "JISToUTF8.h"	
 // ImGuiでデバッグログを表示させるクラス(staticクラス)
 class ImGuiDebugLog
 {
@@ -14,7 +15,7 @@ class ImGuiDebugLog
 	static std::list<Message> displayList;
 
 	ImGuiDebugLog() {};
-	~ImGuiDebugLog(){};
+	~ImGuiDebugLog() { Terminate(); };
 public:
 
 	/// <summary>

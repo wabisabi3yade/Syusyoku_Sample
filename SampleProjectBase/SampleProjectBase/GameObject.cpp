@@ -4,6 +4,30 @@
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 #include "imgui.h"
+#include "Component.h"
+void GameObject::Update()
+{
+	for (auto& itr : components)
+	{
+		itr->Update();
+	}
+}
+
+void GameObject::LateUpdate()
+{
+	for (auto& itr : components)
+	{
+		itr->LateUpdate();
+	}
+}
+
+void GameObject::Draw()
+{
+	for (auto& itr : components)
+	{
+		itr->Draw();
+	}
+}
 
 void GameObject::ImGuiSet()
 {

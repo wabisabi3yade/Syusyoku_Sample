@@ -25,5 +25,6 @@ void Object_3D::Update()
 
 void Object_3D::Draw()
 {
+	if(pModel)
 	pModel->Draw(transform);
 }

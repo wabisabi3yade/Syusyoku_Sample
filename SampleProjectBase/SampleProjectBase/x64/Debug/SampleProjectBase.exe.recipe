@@ -7,13 +7,13 @@
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\PixelShader.cso</FullPath>
+      <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\PS_Basic.cso</FullPath>
     </ContentFile>
     <ContentFile>
       <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\PS_VertexColor.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VertexShader.cso</FullPath>
+      <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VS_Basic.cso</FullPath>
     </ContentFile>
     <ContentFile>
       <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VS_UVScroll.cso</FullPath>

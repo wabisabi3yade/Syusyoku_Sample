@@ -23,11 +23,6 @@ Camera::~Camera()
 
 void Camera::LateUpdate()
 {
-	static float centerAngle = 0.0f;
-	centerAngle += 180.0f * MainApplication::GetInstance()->DeltaTime();
-
-	transform.position.x = 5.f *  cos(DirectX::XMConvertToRadians(centerAngle));
-	transform.position.z = 5.f * sin(DirectX::XMConvertToRadians(centerAngle));
 }
 
 void Camera::UpdateViewMatrix()

@@ -80,6 +80,8 @@ void MainApplication::GameLoop()
 		ImGui::End();
 #endif // _DEBUG
 
+		input->Update();	// 入力関係の更新
+
 		// 更新処理
 		pSceneManager->Exec();
 

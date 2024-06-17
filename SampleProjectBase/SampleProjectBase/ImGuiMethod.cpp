@@ -60,6 +60,6 @@ void ImGuiMethod::DragFloat3(Vector3& _vector3, const std::string& _name)
 	f[0] = _vector3.x;
 	f[1] = _vector3.y;
 	f[2] = _vector3.z;
-	ImGui::DragFloat3(_name.c_str(), f);
+	ImGui::DragFloat3(ShiftJisToUtf8(_name).c_str(), f);
 	_vector3 = { f[0], f[1], f[2] };	// ç¿ïW
 }

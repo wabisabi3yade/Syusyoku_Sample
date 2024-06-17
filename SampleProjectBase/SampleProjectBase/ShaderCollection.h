@@ -10,13 +10,15 @@ class ShaderCollection : public Singleton_Base<ShaderCollection>
 
 	// 頂点シェーダーリスト
 	std::unordered_map<std::string, std::unique_ptr<Shader>> shaders;
-	// 入力レイアウトオブジェクト（VRAMに情報を入力するオブジェクト）
-	ID3D11InputLayout* pInputLayout = nullptr;
 
-	ShaderCollection(){};
+	ShaderCollection() : defaultVS(""), defaultPS("") {};
 	~ShaderCollection(){};
 	void Load();	// csoファイルをロードする
 public:
+	// デフォルトのシェーダーの名前
+	std::string defaultVS;	// 頂点シェーダー
+	std::string defaultPS;	// ピクセルシェーダー
+
 	void Init();
 
 	void SetShader(std::string _shaderName, std::unique_ptr<Shader> _pSetShader);
@@ -26,6 +28,5 @@ public:
 	// 取得する
 	VertexShader* GetVertexShader(std::string _shaderName);
 	PixelShader* GetPixelShader(std::string _shaderName);
-	ID3D11InputLayout* GetInputLayout() { return pInputLayout; };
 };
 

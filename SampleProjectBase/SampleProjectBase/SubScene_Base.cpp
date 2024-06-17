@@ -42,11 +42,14 @@ void SubScene_Base::Exec()
 	// シーン内の更新処理
 	Update();
 	sceneObjects->Update();
+
 	// Updateの後に行う更新処理(カメラに処理とか)
 	LateUpdate();
 	sceneObjects->LateUpdate();
+
 	// 画面クリアなど準備
 	Direct3D11::GetInstance()->GetRenderer()->SetUpDraw();
+
 	// ビュー変換行列を更新
 	Camera* mainCamera = sceneObjects->GetSceneObject<Camera>("mainCamera");
 	mainCamera->UpdateViewMatrix();
