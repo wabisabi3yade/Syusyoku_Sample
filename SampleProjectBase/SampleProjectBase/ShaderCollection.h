@@ -23,8 +23,6 @@ public:
 
 	void SetShader(std::string _shaderName, std::unique_ptr<Shader> _pSetShader);
 
-	void SetInputLayout(ID3D11InputLayout* _pSetInput);
-
 	// Žæ“¾‚·‚é
 	VertexShader* GetVertexShader(std::string _shaderName);
 	PixelShader* GetPixelShader(std::string _shaderName);

@@ -15,7 +15,7 @@ public:
 
 private:
 	Type type;	// シェーダーの種類
-
+	std::string name;	// 名前
 protected:	
 	// このシェーダーで利用するGPUに送るバッファのリスト
 	std::vector<ID3D11Buffer*> pBuffers;	
@@ -32,7 +32,7 @@ protected:
 	virtual void MakeBuffer(const char* _pData, u_int _dataSize);
 
 public:
-	Shader(Type _type) : type(_type) {}
+	Shader(Type _type) : type(_type), name("") {}
 	virtual ~Shader() {};
 	
 	// csoファイルからシェーダーを作成する
@@ -51,6 +51,8 @@ public:
 	/// <param name="_slot">スロットの番号</param>
 	/// <param name="_texture"></param>
 	void SetTexture(u_int _slot, Texture* _texture);
+
+	void SetName(std::string _name);
 
 	// GPUに所持しているバッファを送る
 	virtual void Bind() = 0;

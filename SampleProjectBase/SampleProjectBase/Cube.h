@@ -11,5 +11,5 @@ public:
 	Cube();
 	~Cube() override;
 
-	void Draw() override;
+	void Draw(Transform& _transform, DirectX::SimpleMath::Color& _color) override;
 };

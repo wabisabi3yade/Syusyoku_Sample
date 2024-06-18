@@ -7,7 +7,7 @@
 #include "Component.h"
 void GameObject::Update()
 {
-	for (auto& itr : components)
+	for (auto& itr : pComponents)
 	{
 		itr->Update();
 	}
@@ -15,7 +15,7 @@ void GameObject::Update()
 
 void GameObject::LateUpdate()
 {
-	for (auto& itr : components)
+	for (auto& itr : pComponents)
 	{
 		itr->LateUpdate();
 	}
@@ -23,7 +23,7 @@ void GameObject::LateUpdate()
 
 void GameObject::Draw()
 {
-	for (auto& itr : components)
+	for (auto& itr : pComponents)
 	{
 		itr->Draw();
 	}

@@ -10,13 +10,15 @@ void ShaderCollection::Load()
 	std::vector<std::string> vFileNames
 	{
 		"VS_Basic.cso",
-		"VS_UVScroll.cso"
+		"VS_UVScroll.cso",
+		"VS_BaseObject.cso"
 	};
 	// セットする名前
 	std::vector<std::string> vShaderNames
 	{
 		"VS_Basic",
-		"VS_UVScroll"
+		"VS_UVScroll",
+		"VS_BaseObject"
 	};
 	defaultVS = "VS_Basic";
 
@@ -25,7 +27,7 @@ void ShaderCollection::Load()
 		std::unique_ptr<VertexShader> vShader = std::make_unique<VertexShader>();
 		std::string loadFilePath = shaderPath + vFileNames[i];	// ロードする全体のパス名
 		vShader->LoadCsoFile(loadFilePath.c_str());
-
+		vShader->SetName(vShaderNames[i]);
 		shaders.emplace(vShaderNames[i], std::move(vShader));	// 配列に追加する
 	}
 
@@ -49,7 +51,7 @@ void ShaderCollection::Load()
 		std::unique_ptr<PixelShader> pShader = std::make_unique<PixelShader>();
 		std::string loadFilePath = shaderPath + pFileNames[i];	// ロードする全体のパス名
 		pShader->LoadCsoFile(loadFilePath.c_str());
-
+		pShader->SetName((pShaderNames[i]));
 		shaders.emplace(pShaderNames[i], std::move(pShader));	// 配列に追加する
 	}
 }

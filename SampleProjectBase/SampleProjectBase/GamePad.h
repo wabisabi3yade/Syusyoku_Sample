@@ -50,7 +50,6 @@ public:
 
 private:
 	DWORD isResult;	// 今の状態
-	DWORD o_IsResult;	//1フレーム前の状態
 
 	bool buttonState[static_cast<int>(Button::Button_Num)];	// 現在のボタン状態
 	bool o_buttonState[static_cast<int>(Button::Button_Num)];	// 1つ前のボタン状態

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "GamePad.h"
 
-GamePad::GamePad() :isResult(ERROR_SUCCESS), o_IsResult(ERROR_SUCCESS)
+GamePad::GamePad() :isResult(ERROR_SUCCESS)
 {
 }
 
@@ -19,13 +19,14 @@ void GamePad::InputUpdate()
 	isResult = XInputGetState(0, &state);
 
 #ifdef _DEBUG
+	static DWORD o_IsResult = 1;	//1フレーム前の状態
 	if (isResult != o_IsResult)	// デバッグログ
 	{
 		if (isResult) ImGuiDebugLog::Add("ゲームパッドが接続されました！");
 		else ImGuiDebugLog::Add("ゲームパッドと接続が切れました");
 	}
-#endif // _DEBUG
 	o_IsResult = isResult; // 更新
+#endif // _DEBUG
 	if (isResult != ERROR_SUCCESS) return;	// コントローラーにつながっていないなら
 
 	// 前フレームの状態を更新する

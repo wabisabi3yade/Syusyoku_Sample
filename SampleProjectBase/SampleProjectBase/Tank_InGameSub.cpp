@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Tank_InGameSub.h"
+#include "PlayerMove.h"
 
 Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveInfo)
 {
@@ -11,6 +12,7 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	std::unique_ptr<Object_3D> object = std::make_unique<Object_3D>();
 	model = resourceCollection->GetResource<Model>("Md_Spot");
 	object->SetModel(model);
+	object->AddComponent<PlayerMove>();
 	
 	/*object->GetModel().SetPixelShader(ShaderCollection::GetInstance()->GetPixelShader("PS_VertexColor"));*/
 	sceneObjects->SetObject("Spot", std::move(object));

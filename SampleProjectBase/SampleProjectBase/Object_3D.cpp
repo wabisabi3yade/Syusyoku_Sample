@@ -21,10 +21,18 @@ Object_3D::~Object_3D()
 
 void Object_3D::Update()
 {
+	GameObject::Update();
+}
+
+void Object_3D::LateUpdate()
+{
+	GameObject::LateUpdate();
 }
 
 void Object_3D::Draw()
 {
-	if(pModel)
-	pModel->Draw(transform);
+	GameObject::Draw();
+
+	/*if(pModel)
+	pModel->Draw(transform);*/
 }

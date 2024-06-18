@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "Cube.h"
 
-constexpr short VERTEX_NUM = (8);	// 頂点数
-constexpr short INDEX_NUM = (24);	// 頂点インデックス数
+constexpr short VERTEX_NUM = (24);	// 頂点数
+constexpr short INDEX_NUM = (36);	// 頂点インデックス数
 
 using namespace DirectX::SimpleMath;
 
@@ -15,106 +15,75 @@ Cube::~Cube()
 {
 }
 
-void Cube::Draw()
+void Cube::Draw(Transform& _transform, DirectX::SimpleMath::Color& _color)
 {
 	// トポロジーを設定
-	Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	BasicObject_Base::Draw();
-
-	length = Vector3::One;	// 長さを戻す	
+	BasicObject_Base::Draw(_transform, _color);
 }
 
 void Cube::Make()
 {
-	// キューブの頂点座標作成
 	vertexNum = VERTEX_NUM;
 	pVertices = new Vertex[vertexNum];
+	const float d = 0.5f;
 
-	pVertices[0].position.x = -(length.x / 2.0);
-	pVertices[0].position.y = (length.y / 2.0f);
-	pVertices[0].position.z = -(length.z / 2.0f);
-	pVertices[0].normal = Vector3(0.0f, 0.0f, -1.0f);
+	DirectX::XMFLOAT4 color(1.0f, 1.0f, 1.0f, 1.0f);
+	DirectX::XMFLOAT3 normal[] = {
+		DirectX::XMFLOAT3(1.0f, 0.0f, 0.0f),
+		DirectX::XMFLOAT3(-1.0f, 0.0f, 0.0f),
+		DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f),
+		DirectX::XMFLOAT3(0.0f,-1.0f, 0.0f),
+		DirectX::XMFLOAT3(0.0f, 0.0f, 1.0f),
+		DirectX::XMFLOAT3(0.0f, 0.0f,-1.0f),
+	};
 
-	pVertices[1].position.x = (length.x / 2.0f);
-	pVertices[1].position.y = ( length.y / 2.0f );
-	pVertices[1].position.z = -(length.z / 2.0f);
-	pVertices[1].normal = Vector3(0.0f, 1.0f, 0.0f);
+	pVertices[0] = { DirectX::XMFLOAT3(-d, d,-d), color, Vector2::One,normal[0] };
+	pVertices[1] = { DirectX::XMFLOAT3(d, d, -d), color, Vector2::One,normal[0] };
+	pVertices[2] = { DirectX::XMFLOAT3(-d,-d,-d), color, Vector2::One,normal[0] };
+	pVertices[3] = { DirectX::XMFLOAT3(d,-d, -d), color, Vector2::One,normal[0] };
 
-	pVertices[2].position.x = ( length.x / 2.0f );
-	pVertices[2].position.y = -( length.y / 2.0f );
-	pVertices[2].position.z = -(length.z / 2.0f);
-	pVertices[2].normal = Vector3(1.0f, 0.0f, 0.0f);
+	pVertices[4] = { DirectX::XMFLOAT3(-d, d, d), color, Vector2::One,normal[1] };
+	pVertices[5] = { DirectX::XMFLOAT3(-d, -d,d), color,Vector2::One ,normal[1] };
+	pVertices[6] = { DirectX::XMFLOAT3(d,d, d), color, Vector2::One,normal[1] };
+	pVertices[7] = { DirectX::XMFLOAT3(d,-d,d), color, Vector2::One,normal[1] };
 
-	pVertices[3].position.x = -(length.x / 2.0f);
-	pVertices[3].position.y = -(length.y / 2.0f);
-	pVertices[3].position.z = -(length.z / 2.0f);
-	pVertices[3].normal = Vector3(0.0f, -1.0f, 0.0f);
+	pVertices[8] = { DirectX::XMFLOAT3(-d, d, d), color,Vector2::One,normal[2] };
+	pVertices[9] = { DirectX::XMFLOAT3(-d, d, -d), color, Vector2::One,normal[2] };
+	pVertices[10] = { DirectX::XMFLOAT3(-d, -d,d), color,Vector2::One ,normal[2] };
+	pVertices[11] = { DirectX::XMFLOAT3(-d, -d,-d), color, Vector2::One,normal[2] };
+	
+	pVertices[12] = { DirectX::XMFLOAT3(d,d,d), color,Vector2::One ,normal[3] };
+	pVertices[13] = { DirectX::XMFLOAT3(d,-d,d), color, Vector2::One,normal[3] };
+	pVertices[14] = { DirectX::XMFLOAT3(d,d, -d), color,Vector2::One ,normal[3] };
+	pVertices[15] = { DirectX::XMFLOAT3(d,-d, -d), color,Vector2::One,normal[3] };
+	
+	pVertices[16] = { DirectX::XMFLOAT3(-d, d, d), color, Vector2::One,normal[4] };
+	pVertices[17] = { DirectX::XMFLOAT3(d, d, d), color,Vector2::One ,normal[4] };
+	pVertices[18] = { DirectX::XMFLOAT3(-d,d, -d), color, Vector2::One,normal[4] };
+	pVertices[19] = { DirectX::XMFLOAT3(d,d, -d), color,Vector2::One,normal[4] };
+	
+	pVertices[20] = { DirectX::XMFLOAT3(-d,-d,d), color,Vector2::One ,normal[5] };
+	pVertices[21] = { DirectX::XMFLOAT3(-d,-d,-d), color, Vector2::One,normal[5] };
+	pVertices[22] = { DirectX::XMFLOAT3(d, -d,d), color,Vector2::One ,normal[5] };
+	pVertices[23] = { DirectX::XMFLOAT3(d, -d,-d), color,Vector2::One,normal[5] };
 
-	pVertices[4].position.x = -(length.x / 2.0f);
-	pVertices[4].position.y = (length.y / 2.0f);
-	pVertices[4].position.z = (length.z / 2.0f);
-	pVertices[4].normal = Vector3(0.0f, 1.0f, 0.0f);
-
-	pVertices[5].position.x = (length.x / 2.0f);
-	pVertices[5].position.y = (length.y / 2.0f);
-	pVertices[5].position.z = (length.z / 2.0f);
-	pVertices[5].normal = Vector3(0.0f, 0.0f, 1.0f);
-
-	pVertices[6].position.x = (length.x / 2.0f);
-	pVertices[6].position.y = -(length.y / 2.0f);
-	pVertices[6].position.z = (length.z / 2.0f);
-	pVertices[6].normal = Vector3(0.0f, -1.0f, 0.0f);
-
-	pVertices[7].position.x = -(length.x / 2.0f);
-	pVertices[7].position.y = -(length.y / 2.0f);
-	pVertices[7].position.z = (length.z / 2.0f);
-	pVertices[7].normal = Vector3(-1.0f, 0.0f, 0.0f);
-
-	// インデックスを設定(TRIANGLESTRIP)
 	indexNum = INDEX_NUM;
 	pIndicies = new u_int[indexNum];
 
-	// 手前
-	pIndicies[0] = 0;
-	pIndicies[1] = 1;
-	pIndicies[2] = 3;
-	pIndicies[3] = 2;
+	WORD idx[] = {
+		 0, 1, 2,  3, 2, 1,
+		 4, 5, 6,  7, 6, 5,
+		8, 9, 10,  11,10,9,
+		12,13,14, 15,14,13,
+		16,17,18, 19,18,17,
+		20,21,22, 23,22,21,
+	};
 
-	// 奥
-	pIndicies[4] = 5;
-	pIndicies[5] = 4;
-	pIndicies[6] = 6;
-	pIndicies[7] = 7;
-
-	// 右
-	pIndicies[8] = 1;
-	pIndicies[9] = 5;
-	pIndicies[10] = 2;
-	pIndicies[11] = 6;
-
-	// 左
-	pIndicies[12] = 4;
-	pIndicies[13] = 0;
-	pIndicies[14] = 7;
-	pIndicies[15] = 3;
-
-	// 上
-	pIndicies[16] = 4;
-	pIndicies[17] = 5;
-	pIndicies[18] = 0;
-	pIndicies[19] = 1;
-
-	// 下
-	pIndicies[20] = 3;
-	pIndicies[21] = 2;
-	pIndicies[22] = 7;
-	pIndicies[23] = 6;
-
-	// 全頂点に
-	for (short i = 0; i < VERTEX_NUM; i++)
+	for (int i = 0; i < indexNum; i++)
 	{
-		pVertices[i].color = color;	// 頂点カラー		
+		pIndicies[i] = idx[i];
 	}
 
 	// バッファ作成

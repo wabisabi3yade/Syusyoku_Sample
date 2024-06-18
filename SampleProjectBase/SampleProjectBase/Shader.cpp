@@ -131,3 +131,8 @@ void Shader::SetTexture(u_int _slot, Texture* _texture)
 		case Type::Pixel: pContext->PSSetShaderResources(_slot, 1, &pSetSrv); break;
 	}
 }
+
+void Shader::SetName(std::string _name)
+{
+	name = _name;
+}

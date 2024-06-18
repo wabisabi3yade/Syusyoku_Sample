@@ -4,7 +4,7 @@
 
 using namespace DirectX::SimpleMath;
 
-BasicObject_Base::BasicObject_Base() : color(Vector4::One)
+BasicObject_Base::BasicObject_Base()
 {
 	// 基本オブジェクト用のマテリアルを作成する
 	ResourceCollection* reCol = ResourceCollection::GetInstance();
@@ -17,7 +17,9 @@ BasicObject_Base::BasicObject_Base() : color(Vector4::One)
 		std::unique_ptr<Material> makeMaterial = std::make_unique<Material>();
 		// シェーダーを設定
 		ShaderCollection* shCol = ShaderCollection::GetInstance();
+		VertexShader* v = shCol->GetVertexShader("VS_BaseObject");
 		PixelShader* p = shCol->GetPixelShader("PS_VertexColor");
+		makeMaterial->pVertexShader = v;
 		makeMaterial->pPixelShader = p;
 
 		material = makeMaterial.get();	// このオブジェクトにマテリアルセット
@@ -35,12 +37,12 @@ BasicObject_Base::~BasicObject_Base()
 {
 }
 
-void BasicObject_Base::Draw()
+void BasicObject_Base::Draw(Transform& _transform, DirectX::SimpleMath::Color& _color)
 {
 	D3D11_Renderer* renderer = Direct3D11::GetInstance()->GetRenderer();
 	
 	// ワールド変換行列を取得
-	Matrix worldmtx = D3D11_Renderer::GetWorldMtx(transform);
+	Matrix worldmtx = D3D11_Renderer::GetWorldMtx(_transform);
 	
 	// ワールド変換行列をWVPに入れる
 	RenderParam::WVP wMat  = renderer->GetParameter().GetWVP();
@@ -48,18 +50,12 @@ void BasicObject_Base::Draw()
 
 	// シェーダーにバッファを送る
 	material->pVertexShader->UpdateBuffer(0, &wMat);
+	material->pVertexShader->UpdateBuffer(1, &_color);
 	// シェーダーをセット
 	material->pVertexShader->Bind();
 	material->pPixelShader->Bind();
 
 	Mesh::Draw(*renderer);
 
-	transform.ResetParameter();	// 描画し終えたらリセット
-	color = Vector4::One;	// 白色に戻す
-	color.w = 0.f;
-}
-
-void BasicObject_Base::SetColor(const DirectX::SimpleMath::Color& _color)
-{
-	color = _color;
+	_transform.ResetParameter();	// 描画し終えたらリセット
 }

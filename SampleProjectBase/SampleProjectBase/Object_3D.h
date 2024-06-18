@@ -15,6 +15,7 @@ public:
 	void SetModel(Model* _setModel) { pModel = _setModel; }
 
 	void Update() override;	// XVˆ—
+	void LateUpdate() override;	// Update‚Ì‚ ‚Æˆ—
 	void Draw() override;	// •`‰æˆ—
 
 	Model& GetModel() { return *pModel; }

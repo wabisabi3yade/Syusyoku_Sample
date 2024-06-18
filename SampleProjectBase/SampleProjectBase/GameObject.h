@@ -15,7 +15,7 @@ protected:
 
 	DirectX::SimpleMath::Vector2 uvScroll;	// UVスクロール値
 
-	std::list<std::unique_ptr<Component>> components;	// コンポーネントリスト
+	std::list<std::unique_ptr<Component>> pComponents;	// コンポーネントリスト
 public:
 	Transform transform;	// Transformパラメータ
 
@@ -47,7 +47,7 @@ inline T* GameObject::AddComponent()
 	addComp->Init();	// 初期処理
 
 	T* retPtr = dynamic_cast<T*>(addComp.get());
-	components.push_back(std::move(addComp));	// リストに追加
+	pComponents.push_back(std::move(addComp));	// リストに追加
 
 	return retPtr;
 }
@@ -56,7 +56,7 @@ template<typename T>
 inline T* GameObject::GetComponent()
 {
 	// 指定した型名と同じコンポーネントがあるか確認
-	for (auto comp : components)
+	for (auto comp : pComponents)
 	{
 		if (typeid(std::unique_ptr<T>) != typeid(comp)) continue;
 		

@@ -14,6 +14,7 @@ MainApplication::MainApplication()
 {
 	// 可変フレームレートクラス生成
 	variableFps = std::make_unique<VariableFrameRate>(FPS);
+	input = std::make_unique<InputClass>();
 }
 
 MainApplication::~MainApplication()

@@ -2,49 +2,4 @@
   PlayerMove.cpp
   コンパイルしています...
   PlayerMove.cpp
-  Tank_InGameSub.cpp
-  Tank_ResultSub.cpp
-  VariableFrameRate.cpp
-  imgui_impl_dx11.cpp
-  Object_3D.cpp
-  imgui_draw.cpp
-  Tank_TitleSub.cpp
-  ImGuiMethod.cpp
-  imgui.cpp
-  imgui_tables.cpp
-  MainApplication.cpp
-  imgui_demo.cpp
-  imgui_impl_win32.cpp
-  imgui_widgets.cpp
-  main.cpp
-  Material.cpp
-  ModelSettings.cpp
-  Mesh.cpp
-  MessageError.cpp
-  ResourceCollection.cpp
-  RenderParam.cpp
-  MaterialCollect.cpp
-  ModelLoader.cpp
-  ModelCollect.cpp
-  Model.cpp
-  Sampler.cpp
-  SetUpPerspectiveProj.cpp
-  SceneManager.cpp
-  SceneRunningState.cpp
-  SceneMoveInfo.cpp
-  SetUpViewTrans.cpp
-  ShaderCollection.cpp
-  SubScene_Base.cpp
-  Singleton_Base.cpp
-  Test_Broad.cpp
-  Test_SubScene.cpp
-  Test_ChangeSubScene.cpp
-  TextureCollect.cpp
-  Texture.cpp
-  Transform.cpp
-  Triangle.cpp
-  VertexShader.cpp
-  Window.cpp
-C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Texture.cpp(66,25): warning C4267: '=': 'size_t' から 'u_int' に変換しました。データが失われているかもしれません。
-C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Texture.cpp(67,27): warning C4267: '=': 'size_t' から 'u_int' に変換しました。データが失われているかもしれません。
   SampleProjectBase.vcxproj -> C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\x64\Debug\SampleProjectBase.exe

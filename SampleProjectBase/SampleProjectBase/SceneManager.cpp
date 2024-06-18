@@ -5,6 +5,7 @@
 #include "Tank_ChangeSub.h"
 #include "SceneMoveInfo.h"
 #include "ShaderCollection.h"
+#include "BaseObject.h"
 
 SceneManager* SceneManager::pInstance = nullptr;	// インスタンスの初期化
 
@@ -13,6 +14,8 @@ SceneManager::SceneManager()
 	// シェーダー管理クラス初期化
 	ShaderCollection* shCollection = ShaderCollection::GetInstance();
 	shCollection->Init();
+
+	BaseObject::Init();	// 基本オブジェクトの初期化
 
 	// 初期シーンの情報
 	int initSub = Tank_ChangeSub::Scene::InGame;

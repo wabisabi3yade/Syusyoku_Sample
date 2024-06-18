@@ -1,5 +1,9 @@
 #include "pch.h"
 #include "PlayerMove.h"
+#include "GameObject.h"
+#include "BaseObject.h"
+
+using namespace DirectX::SimpleMath;
 
 void PlayerMove::Input()
 {
@@ -29,6 +33,8 @@ void PlayerMove::Init()
 void PlayerMove::Update()
 {
 	Input();	// “ü—Í
+
+	/*gameObject->transform.rotation.y += 1.0f;*/
 }
 
 void PlayerMove::LateUpdate()
