@@ -1,21 +1,29 @@
 #include "pch.h"
 #include "Tank_InGameSub.h"
 #include "PlayerMove.h"
+#include "BoxCollider.h"
 
 Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveInfo)
 {
+	std::vector<ModelSettings> modelSets =
+	{
+		ModelSettings("assets/model/tank/Tank02.fbx", "Tank", false),
+	};
+	// ƒ[ƒhˆ—‚ð‚·‚é
+	for (auto m : modelSets)
+	{
+		ModelLoader::Load(m);
+	}
+
 	Model* model = nullptr;
-	ModelSettings modelSetting;
-	modelSetting.Setup("assets/model/tank/Tank02.fbx", "Spot",false);
-	ModelLoader::Load(modelSetting);
-	
+	model = resourceCollection->GetResource<Model>("Md_Tank");
+
 	std::unique_ptr<Object_3D> object = std::make_unique<Object_3D>();
-	model = resourceCollection->GetResource<Model>("Md_Spot");
 	object->SetModel(model);
 	object->AddComponent<PlayerMove>();
-	
-	/*object->GetModel().SetPixelShader(ShaderCollection::GetInstance()->GetPixelShader("PS_VertexColor"));*/
-	sceneObjects->SetObject("Spot", std::move(object));
+	object->AddComponent<BoxCollider>();
+
+	sceneObjects->SetObject("Tank", std::move(object));
 }
 
 Tank_InGameSub::~Tank_InGameSub()

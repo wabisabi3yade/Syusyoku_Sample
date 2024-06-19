@@ -30,5 +30,7 @@ bool ModelLoader::Load(const ModelSettings& _modelData)
 
 	// リソース管理にセットする
 	pReCollecter->SetResource<Model>(setName, std::move(model));
+
 	return true;
 }
+

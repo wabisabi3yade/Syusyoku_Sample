@@ -268,11 +268,26 @@
     <Filter Include="ソース ファイル\Component\Base">
       <UniqueIdentifier>{e135d10e-460d-42fc-9c33-8f241482b589}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\Player">
+    <Filter Include="ソース ファイル\Component\Collider">
+      <UniqueIdentifier>{6de16cb7-6707-458b-af59-05b35201c7b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame">
+      <UniqueIdentifier>{2e409227-6957-4c53-a14b-b823bba68a51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Player">
       <UniqueIdentifier>{44a70ce8-ddd0-445a-b29f-38a25df60c0c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\Player\PlayerMove">
+    <Filter Include="ソース ファイル\Component\InGame\Player\PlayerMove">
       <UniqueIdentifier>{6c7be51c-6d1a-480a-89c3-1083e505d0d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Camera">
+      <UniqueIdentifier>{76d719ff-9c96-4140-9f9b-437adc20c404}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Collider\Box">
+      <UniqueIdentifier>{fa82fd3a-a0fe-471e-aaa2-4716a878de6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Collider\Sphere">
+      <UniqueIdentifier>{43f104c6-d005-4633-a3d8-0ae524b6de22}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -504,13 +519,28 @@
       <Filter>ソース ファイル\System\Input\GamePad</Filter>
     </ClCompile>
     <ClCompile Include="PlayerMove.cpp">
-      <Filter>ソース ファイル\Component\Player\PlayerMove</Filter>
+      <Filter>ソース ファイル\Component\InGame\Player\PlayerMove</Filter>
     </ClCompile>
     <ClCompile Include="InputClass.cpp">
       <Filter>ソース ファイル\System\Input</Filter>
     </ClCompile>
-    <ClCompile Include="BaseObject.cpp">
+    <ClCompile Include="Geometory.cpp">
       <Filter>ソース ファイル\Graphics\BasicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraMove.cpp">
+      <Filter>ソース ファイル\Component\InGame\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>ソース ファイル\Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereCollider.cpp">
+      <Filter>ソース ファイル\Component\Collider\Sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>ソース ファイル\Component\Collider\Box</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugCube.cpp">
+      <Filter>ソース ファイル\Graphics\BasicObject\Cube</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -752,13 +782,28 @@
       <Filter>ソース ファイル\System\Input\GamePad</Filter>
     </ClInclude>
     <ClInclude Include="PlayerMove.h">
-      <Filter>ソース ファイル\Component\Player\PlayerMove</Filter>
+      <Filter>ソース ファイル\Component\InGame\Player\PlayerMove</Filter>
     </ClInclude>
     <ClInclude Include="InputClass.h">
       <Filter>ソース ファイル\System\Input</Filter>
     </ClInclude>
-    <ClInclude Include="BaseObject.h">
+    <ClInclude Include="Geometory.h">
       <Filter>ソース ファイル\Graphics\BasicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraMove.h">
+      <Filter>ソース ファイル\Component\InGame\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>ソース ファイル\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereCollider.h">
+      <Filter>ソース ファイル\Component\Collider\Sphere</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>ソース ファイル\Component\Collider\Box</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugCube.h">
+      <Filter>ソース ファイル\Graphics\BasicObject\Cube</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

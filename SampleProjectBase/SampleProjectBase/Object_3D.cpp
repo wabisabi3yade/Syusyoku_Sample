@@ -31,8 +31,10 @@ void Object_3D::LateUpdate()
 
 void Object_3D::Draw()
 {
+	if (!isActive) return;
+
 	GameObject::Draw();
 
-	/*if(pModel)
-	pModel->Draw(transform);*/
+	if(pModel)
+	pModel->Draw(transform);
 }

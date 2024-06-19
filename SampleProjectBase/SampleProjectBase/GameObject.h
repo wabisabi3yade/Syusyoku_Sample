@@ -43,12 +43,20 @@ template<typename T>
 inline T* GameObject::AddComponent()
 {
 	// コンポーネントを作成
-	std::unique_ptr<Component> addComp = std::make_unique<T>(this);
-	addComp->Init();	// 初期処理
+	auto t = this;
+	std::unique_ptr<T> addComp = std::make_unique<T>(t);
 
-	T* retPtr = dynamic_cast<T*>(addComp.get());
+	Component* comp = dynamic_cast<Component*>(addComp.get());
+	if (comp == nullptr)	// コンポーネントクラスを継承してるかチェック
+	{
+		ImGuiDebugLog::Add("AddComponent：Componentを継承していないので処理できません");
+		return nullptr;
+	}
+	comp->Init();	// 初期処理
+	T* retPtr = addComp.get();	// 返すポインタを取得しておく
+	
 	pComponents.push_back(std::move(addComp));	// リストに追加
-
+	
 	return retPtr;
 }
 

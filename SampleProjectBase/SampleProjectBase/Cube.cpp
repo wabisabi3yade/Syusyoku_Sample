@@ -6,7 +6,7 @@ constexpr short INDEX_NUM = (36);	// 頂点インデックス数
 
 using namespace DirectX::SimpleMath;
 
-Cube::Cube() : length(Vector3::One)
+Cube::Cube()
 {
 	Make();
 }
@@ -18,7 +18,9 @@ Cube::~Cube()
 void Cube::Draw(Transform& _transform, DirectX::SimpleMath::Color& _color)
 {
 	// トポロジーを設定
-	Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	ID3D11DeviceContext* pContext = Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
+
+	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	BasicObject_Base::Draw(_transform, _color);
 }

@@ -22,6 +22,7 @@ public:
 
 	void UpdateViewMatrix();	// ビュー変換行列を更新
 
-	void LookAt(DirectX::SimpleMath::Vector3 _targetPos) { focusPos = _targetPos; }
+	// 
+	void LookAt(DirectX::SimpleMath::Vector3 _targetPos);
 };
 

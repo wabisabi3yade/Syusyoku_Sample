@@ -47,15 +47,19 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BaseObject.cpp" />
+    <ClCompile Include="Geometory.cpp" />
     <ClCompile Include="BasicObject_Base.cpp" />
     <ClCompile Include="BlendState.cpp" />
     <ClCompile Include="BoneMesh.cpp" />
+    <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="BroadScene_Base.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraMove.cpp" />
     <ClCompile Include="ChangeBroadScene.cpp" />
     <ClCompile Include="ChangeSubScene.cpp" />
+    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="DebugCube.cpp" />
     <ClCompile Include="GamePad.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="D3D11_Renderer.cpp" />
@@ -73,6 +77,7 @@
     <ClCompile Include="SceneObjects.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Object_2D.cpp" />
+    <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="Tag.cpp" />
     <ClCompile Include="Tank_BroadScene.cpp" />
     <ClCompile Include="Tank_ChangeSub.cpp" />
@@ -125,18 +130,22 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BaseObject.h" />
+    <ClInclude Include="Geometory.h" />
     <ClInclude Include="BasicObject_Base.h" />
     <ClInclude Include="BlendState.h" />
     <ClInclude Include="BoneMesh.h" />
+    <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="BroadScene_Base.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraMove.h" />
     <ClInclude Include="CbProjectionSet.h" />
     <ClInclude Include="CbTransformSet.h" />
     <ClInclude Include="CbViewSet.h" />
     <ClInclude Include="ChangeBroadScene.h" />
     <ClInclude Include="ChangeSubScene.h" />
+    <ClInclude Include="Collider.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="DebugCube.h" />
     <ClInclude Include="GamePad.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="D3D11_Renderer.h" />
@@ -154,6 +163,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Object_2D.h" />
     <ClInclude Include="JISToUTF8.h" />
+    <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="Tag.h" />
     <ClInclude Include="Tank_BroadScene.h" />
     <ClInclude Include="Tank_ChangeSub.h" />

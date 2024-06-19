@@ -1,10 +1,6 @@
 #include "pch.h"
 #include "Camera.h"
 
-#include "imgui.h"
-#include "imgui_impl_dx11.h"
-#include "imgui_impl_win32.h"
-
 using namespace DirectX::SimpleMath;
 
 void Camera::UpdateFocus()
@@ -23,6 +19,7 @@ Camera::~Camera()
 
 void Camera::LateUpdate()
 {
+	GameObject::LateUpdate();
 }
 
 void Camera::UpdateViewMatrix()
@@ -45,4 +42,9 @@ void Camera::UpdateViewMatrix()
 
 	// ビュー変換行列をセット
 	Direct3D11::GetInstance()->GetRenderer()->GetParameter().SetView(viewMatrix);
+}
+
+void Camera::LookAt(DirectX::SimpleMath::Vector3 _targetPos)
+{
+	focusPos = _targetPos; 
 }

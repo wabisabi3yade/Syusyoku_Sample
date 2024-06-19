@@ -13,5 +13,5 @@ public:
 	BasicObject_Base();
 	virtual ~BasicObject_Base();
 
-	virtual void Draw(Transform& _transform,DirectX::SimpleMath::Color& _color);	// •`‰æ
+	virtual void Draw(Transform& _transform, DirectX::SimpleMath::Color& _color);	// •`‰æ
 };

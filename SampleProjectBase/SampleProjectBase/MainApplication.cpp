@@ -1,6 +1,5 @@
 #include "MainApplication.h"
 #include "SceneManager.h"
-#include "Camera.h"
 #include "ImGuiMethod.h"
 #include "VariableFrameRate.h"
 
@@ -10,24 +9,21 @@
 
 constexpr short FPS(60);	// フレームレート数
 
-MainApplication::MainApplication()
-{
-	// 可変フレームレートクラス生成
-	variableFps = std::make_unique<VariableFrameRate>(FPS);
-	input = std::make_unique<InputClass>();
-}
-
-MainApplication::~MainApplication()
-{
-	Release();
-}
+std::unique_ptr<Window> MainApplication::pWindow = nullptr;	// ウィンドウ処理クラス
+Direct3D11* MainApplication::pD3D = nullptr;	// Direct3Dの機能を持つクラス
+SceneManager* MainApplication::pSceneManager = nullptr;	// シーンマネージャークラス
+std::unique_ptr<VariableFrameRate> MainApplication::variableFps = nullptr;	// 可変フレームレート
+std::unique_ptr<InputClass> MainApplication::input = nullptr;	// 入力クラス
 
 void MainApplication::Release()
 {
 	// シングルトンインスタンスを解放
 	Direct3D11::Delete();
 	SceneManager::Delete();
-	ResourceCollection::Delete();
+	// メモリリークの表示に映らないように手動で解放
+	pWindow.reset();
+	variableFps.reset();
+	input.reset();
 
 	// ImGuiの終了処理
 	ImGuiMethod::End();
@@ -39,6 +35,10 @@ void MainApplication::Init(HINSTANCE _hInst)
 	pWindow = std::make_unique<Window>();
 	// ウィンドウの初期化
 	pWindow->Init(_hInst);
+
+	// 可変フレームレートクラス生成
+	variableFps = std::make_unique<VariableFrameRate>(FPS);
+	input = std::make_unique<InputClass>();	// 入力
 
 	// Direct3Dクラスの確保
 	pD3D = Direct3D11::GetInstance();
@@ -75,13 +75,15 @@ void MainApplication::GameLoop()
 		// ImGuiの更新処理
 		ImGuiMethod::NewFrame();
 
+		input->Update();	// 入力関係の更新
+
 #ifdef _DEBUG
 		ImGui::Begin("System");
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+
+		GamePad()->DebugInput();
 		ImGui::End();
 #endif // _DEBUG
-
-		input->Update();	// 入力関係の更新
 
 		// 更新処理
 		pSceneManager->Exec();

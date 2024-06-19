@@ -55,7 +55,5 @@ void BasicObject_Base::Draw(Transform& _transform, DirectX::SimpleMath::Color& _
 	material->pVertexShader->Bind();
 	material->pPixelShader->Bind();
 
-	Mesh::Draw(*renderer);
-
-	_transform.ResetParameter();	// 描画し終えたらリセット
+	Mesh::Draw(*renderer);	
 }

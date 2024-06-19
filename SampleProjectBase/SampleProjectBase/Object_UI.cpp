@@ -78,7 +78,7 @@ void Object_UI::MakeMaterial()
 void Object_UI::Update()
 {
 	static float time = 0.0f;
-	time += MainApplication::GetInstance()->DeltaTime();
+	time += MainApplication::DeltaTime();
 
 	if (time > 0.1f)
 	{

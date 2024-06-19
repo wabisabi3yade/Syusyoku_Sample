@@ -17,7 +17,6 @@ void ImGuiMethod::Initialize(HWND _hwnd, ID3D11Device* _pDevice, ID3D11DeviceCon
 	ImWchar const ranges[] = { 0x0020, 0xfffd, 0, };
 	io.Fonts->AddFontFromFileTTF("assets/font/MSGOTHIC.TTF", 18.0f, nullptr, io.Fonts->GetGlyphRangesJapanese());
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
 
 	// ImGui‚ÌƒXƒ^ƒCƒ‹‚ğİ’è

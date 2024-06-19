@@ -1,18 +1,19 @@
 #pragma once
 #include "Component.h"
 class PlayerMove :
-    public Component
+	public Component
 {
-    float moveSpeed;
-    DirectX::SimpleMath::Vector3 moveVec;   // ˆÚ“®•ûŒü
+	float moveSpeed;
+	DirectX::SimpleMath::Vector3 moveVec;   // ˆÚ“®•ûŒü
 
-    void Input();   // “ü—Í
+	void Input();   // “ü—Í
 public:
-    Component::Component;
+	using Component::Component;
 
-    void Init() override;
-    void Update() override;
-    void LateUpdate() override;
-    void Draw() override;
+	void Init() override;
+	void Update() override;
+	void LateUpdate() override;
+	void Draw() override;
+	void SetParameter() override;
 };
 

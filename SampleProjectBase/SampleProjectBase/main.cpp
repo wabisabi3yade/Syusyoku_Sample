@@ -4,18 +4,14 @@
 // エントリポイント
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int)
 {
-	// ウィンドウを表示する機能クラスを取得
-	MainApplication* application;
-	application = MainApplication::GetInstance();
-
 	// アプリ初期化
-	application->Init(hInst);
+	MainApplication::Init(hInst);
 
 	//// ループ : アプリメインの実装を書くところ
-	application->GameLoop();
+	MainApplication::GameLoop();
 
 	// アプリ解放
-	MainApplication::Delete();
+	MainApplication::Release();
 
 	// メモリリーク検出
 	_CrtDumpMemoryLeaks();

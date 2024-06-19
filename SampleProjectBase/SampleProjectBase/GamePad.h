@@ -9,7 +9,7 @@ public:
 	enum Button	// ボタン
 	{
 		// 十字
-		Arrow_Up,
+		Arrow_Up = 0,
 		Arrow_Down,
 		Arrow_Right,
 		Arrow_Left,
@@ -22,9 +22,9 @@ public:
 
 		// RL
 		R1,
-		R2,
 		L1,
-		L2,
+		R3,
+		L3,
 
 		// オプション
 		Option,
@@ -36,7 +36,7 @@ public:
 	enum Value	// 傾きをとる
 	{
 		// スティック
-		StickR_X,
+		StickR_X = 0,
 		StickR_Y,
 		StickL_X,
 		StickL_Y,
@@ -67,5 +67,7 @@ public:
 	bool ButtonUp(const Button& _getButton)const;	// 離れた瞬間(瞬間)
 
 	float GetValue(const Value& _getValue)const;
+
+	void DebugInput();	// デバッグ確認
 };
 

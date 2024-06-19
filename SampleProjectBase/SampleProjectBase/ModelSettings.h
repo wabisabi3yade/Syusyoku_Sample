@@ -11,6 +11,8 @@ public:
 	std::string modelName;	// モデルの名前
 
 	ModelSettings();
+	ModelSettings(const char* _modelPath, std::string _modelName,
+		bool _isRighthand = false, bool _isPermanent = false);
 	~ModelSettings();
 
 	// モデルをロードする前の準備

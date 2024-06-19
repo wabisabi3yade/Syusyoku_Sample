@@ -5,7 +5,7 @@
 #include "Tank_ChangeSub.h"
 #include "SceneMoveInfo.h"
 #include "ShaderCollection.h"
-#include "BaseObject.h"
+#include "Geometory.h"
 
 SceneManager* SceneManager::pInstance = nullptr;	// インスタンスの初期化
 
@@ -15,7 +15,7 @@ SceneManager::SceneManager()
 	ShaderCollection* shCollection = ShaderCollection::GetInstance();
 	shCollection->Init();
 
-	BaseObject::Init();	// 基本オブジェクトの初期化
+	Geometory::Init();	// 基本オブジェクトの初期化
 
 	// 初期シーンの情報
 	int initSub = Tank_ChangeSub::Scene::InGame;
@@ -50,6 +50,8 @@ void SceneManager::Release()
 	CLASS_DELETE(pChaneBroad);
 	CLASS_DELETE(pMoveInfo);
 
+	Geometory::Release();
+	ResourceCollection::Delete();
 	ShaderCollection::Delete();
 }
 
