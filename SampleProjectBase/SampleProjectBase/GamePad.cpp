@@ -189,37 +189,42 @@ void GamePad::InputUpdate()
 	if (state.Gamepad.sThumbRX > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE || state.Gamepad.sThumbRX < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE ||
 		state.Gamepad.sThumbRY > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE || state.Gamepad.sThumbRY < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
 	{
+		// 正入力は負に比べて1小さい値になるので1足す
+		long int valX = state.Gamepad.sThumbRX;	// オーバーフロー対策
+		long int valY = state.Gamepad.sThumbRY;
 		// 正の方向は1小さいので
 		if (state.Gamepad.sThumbRX > 0)
 		{
-			state.Gamepad.sThumbRX += 1;
+			valX += 1;
 		}
 		if (state.Gamepad.sThumbRY > 0)
 		{
-			state.Gamepad.sThumbRY += 1;
+			valY += 1;
 		}
 
 		// -1.0～1,0の範囲におさめる
-		padValue[Value::StickR_X] = static_cast<float>(state.Gamepad.sThumbRX) / MAX_STICK_VALUE;
-		padValue[Value::StickR_Y] = static_cast<float>(state.Gamepad.sThumbRY) / MAX_STICK_VALUE;
+		padValue[Value::StickR_X] = static_cast<float>(valX) / MAX_STICK_VALUE;
+		padValue[Value::StickR_Y] = static_cast<float>(valY) / MAX_STICK_VALUE;
 	}
 
 	if (state.Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE || state.Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE ||
 		state.Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE || state.Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 	{
-		// 正の方向は1小さいので
+		// 正入力は負に比べて1小さい値になるので1足す
+		long int valX = state.Gamepad.sThumbLX;	// オーバーフロー対策
+		long int valY = state.Gamepad.sThumbLY;
 		if (state.Gamepad.sThumbLX > 0)
 		{
-			state.Gamepad.sThumbLX += 1;
+			valX += 1;
 		}
 		if (state.Gamepad.sThumbLY > 0)
 		{
-			state.Gamepad.sThumbLY += 1;
+			valY += 1;
 		}
 
 		// -1.0～1,0の範囲におさめる
-		padValue[Value::StickL_X] = static_cast<float>(state.Gamepad.sThumbLX) / MAX_STICK_VALUE;
-		padValue[Value::StickL_Y] = static_cast<float>(state.Gamepad.sThumbLY) / MAX_STICK_VALUE;
+		padValue[Value::StickL_X] = static_cast<float>(valX) / MAX_STICK_VALUE;
+		padValue[Value::StickL_Y] = static_cast<float>(valY) / MAX_STICK_VALUE;
 	}
 
 }

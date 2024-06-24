@@ -76,7 +76,7 @@ bool Mesh::SetMesh(const Mesh& _setMesh)
 	return false;
 }
 
-bool Mesh::Setup(D3D11_Renderer& _renderer, aiMesh* pMeshData)
+bool Mesh::Setup(D3D11_Renderer& _renderer, aiMesh* pMeshData, float _scaleBase)
 {
 	// 頂点データを取得 //
 
@@ -91,6 +91,8 @@ bool Mesh::Setup(D3D11_Renderer& _renderer, aiMesh* pMeshData)
 		// 頂点の座標を取得して、頂点構造体へ代入する
 		auto& pos = pMeshData->mVertices[vertexIdx];
 		pVertices[vertexIdx].position = { pos.x, pos.y, pos.z };
+		// インポート時の大きさ倍率を掛けてあげる
+		pVertices[vertexIdx].position *= _scaleBase;
 
 		// 法線べクトルを取得
 		auto& normal = pMeshData->HasNormals() ? pMeshData->mNormals[vertexIdx] : zero;
@@ -101,7 +103,6 @@ bool Mesh::Setup(D3D11_Renderer& _renderer, aiMesh* pMeshData)
 			: zero;
 		pVertices[vertexIdx].uv = { uv.x, uv.y };
 
-		// 仮
 		constexpr float COLOR = 1.0f;
 		pVertices[vertexIdx].color = { COLOR, COLOR, COLOR, 1.0f };
 	}

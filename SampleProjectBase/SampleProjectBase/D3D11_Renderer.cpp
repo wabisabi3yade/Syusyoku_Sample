@@ -45,16 +45,6 @@ bool D3D11_Renderer::Init(HWND _hWnd)
 	isResult = InitBackBuffer();
 	if (!isResult) return false;
 
-	// 投影行列をバッファに入れる
-	pProjection = std::make_unique<SetUpPerspectiveProj>();
-	// 投影行列をバッファに入れる
-	isResult = pProjection->SetUpProjection(screenWidth, screenHeight, this);
-	if (!isResult)
-		return false;
-
-	// ビュー変換行列を準備する
-	pViewTransform = std::make_unique<SetUpViewTrans>();
-
 	return true;
 }
 
@@ -168,14 +158,15 @@ bool D3D11_Renderer::InitBackBuffer()
 		return hr;
 
 	// ビューポートの設定
-	viewPort[0].TopLeftX = 0.0f;    // ビューポート領域の左上X座標。
-	viewPort[0].TopLeftY = 0.0f;    // ビューポート領域の左上Y座標。
-	viewPort[0].Width = static_cast<float>(screenWidth);  // ビューポート領域の幅
-	viewPort[0].Height = static_cast<float>(screenHeight);  // ビューポート領域の高さ
-	viewPort[0].MinDepth = 0.0f; // ビューポート領域の深度値の最小値
-	viewPort[0].MaxDepth = 1.0f; // ビューポート領域の深度値の最大値
-	pImmediateContext->RSSetViewports(1, &viewPort[0]);
-
+	D3D11_VIEWPORT viewport;
+	viewport.TopLeftX = 0.0f;    // ビューポート領域の左上X座標。
+	viewport.TopLeftY = 0.0f;    // ビューポート領域の左上Y座標。
+	viewport.Width = static_cast<float>(screenWidth);  // ビューポート領域の幅
+	viewport.Height = static_cast<float>(screenHeight);  // ビューポート領域の高さ
+	viewport.MinDepth = 0.0f; // ビューポート領域の深度値の最小値
+	viewport.MaxDepth = 1.0f; // ビューポート領域の深度値の最大値
+	pImmediateContext->RSSetViewports(1, &viewport);
+	viewPorts.push_back(viewport);	// 追加
 
 	// ブレンドステート初期化
 	pBlendState = std::make_unique<BlendState>();
@@ -250,35 +241,6 @@ Matrix D3D11_Renderer::GetWorldMtx(Transform _transform)
 	worldMtx = worldMtx.Transpose();	// 転置行列
 
 	return worldMtx;
-}
-
-void D3D11_Renderer::SetPerspective()
-{
-	// ビュー変換行列を作成する
-	Matrix mat = DirectX::XMMatrixPerspectiveFovLH(
-		DEFAULT_FOV,
-		static_cast<float>(screenWidth) / static_cast<float>(screenHeight),   // アスペクト比
-		DEFAULT_NEARZ,
-		DEFAULT_FARZ);
-	mat = mat.Transpose();
-
-	// ビュー変換行列を代入する
-	pRenderParam->SetProjection(mat);
-}
-
-Matrix D3D11_Renderer::GetOrthographic()
-{
-	// 正投影行列を作成する
-	Matrix mat = DirectX::XMMatrixOrthographicOffCenterLH(
-		0.0f,	// 左上
-		static_cast<float>(screenWidth), 		// 右上
-		static_cast<float>(screenHeight),		// 左下
-		0.0f,	// 右下
-		0.0f,
-		1.0f);
-	mat = mat.Transpose();
-
-	return mat;
 }
 
 void D3D11_Renderer::Swap()

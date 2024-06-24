@@ -3,8 +3,9 @@
 #pragma comment (lib, "xinput.lib")
 
 // ゲームパッドクラス
-class GamePad
+class GamePad	
 {
+
 public:
 	enum Button	// ボタン
 	{

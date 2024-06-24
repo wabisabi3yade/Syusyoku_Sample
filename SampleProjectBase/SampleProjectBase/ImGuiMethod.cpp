@@ -62,3 +62,14 @@ void ImGuiMethod::DragFloat3(Vector3& _vector3, const std::string& _name)
 	ImGui::DragFloat3(ShiftJisToUtf8(_name).c_str(), f);
 	_vector3 = { f[0], f[1], f[2] };	// ç¿ïW
 }
+
+void ImGuiMethod::ColorEdit4(DirectX::SimpleMath::Color& _color, const std::string& _name)
+{
+	static float f[4];
+	f[0] = _color.x;
+	f[1] = _color.y;
+	f[2] = _color.z;
+	f[3] = _color.w;
+	ImGui::ColorEdit4(ShiftJisToUtf8(_name).c_str(), f);
+	_color = { f[0], f[1], f[2], f[3]};	// êF
+}

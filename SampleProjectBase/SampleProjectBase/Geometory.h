@@ -1,6 +1,7 @@
 #pragma once
 #include "Cube.h"
 #include "DebugCube.h"
+#include "Sphere.h"
 
 class Geometory
 {
@@ -8,6 +9,7 @@ class Geometory
 	static DirectX::SimpleMath::Color color;	// 色
 	static std::unique_ptr<Cube> pCube;	// キューブ
 	static std::unique_ptr<DebugCube> pDebugCube;	// キューブ
+	static std::unique_ptr<Sphere> pSphere;	// 球
 
 	Geometory() {};
 	~Geometory() {};
@@ -34,5 +36,7 @@ public:
 	static void SetColor(const DirectX::SimpleMath::Color& _color) { color = _color; }
 
 	static void DrawCube(bool _isWireFrame = false);	// キューブ描画
+
+	static void DrawSphere(bool _isWireFrame = false);	// キューブ描画
 };
 

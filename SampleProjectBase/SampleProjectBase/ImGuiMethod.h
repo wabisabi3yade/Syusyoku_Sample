@@ -34,5 +34,13 @@ class ImGuiMethod
 	 /// <param name="_vector3">‘Î‰‚³‚¹‚éVector3</param>
 	 /// <param name="_name">•Ï”–¼</param>
 	 static void DragFloat3(DirectX::SimpleMath::Vector3& _vector3, const std::string& _name);
+
+
+	 /// <summary>
+	 /// ColorEdit4‚ÅColor‚É‘Î‰‚³‚¹‚½ŠÖ”
+	 /// </summary>
+	 /// <param name="_vector3">‘Î‰‚³‚¹‚éColor</param>
+	 /// <param name="_name">•Ï”–¼</param>
+	 static void ColorEdit4(DirectX::SimpleMath::Color& _color, const std::string& _name);
 };
 

@@ -13,7 +13,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int)
 	// アプリ解放
 	MainApplication::Release();
 
+#ifdef _DEBUG
 	// メモリリーク検出
 	_CrtDumpMemoryLeaks();
+#endif
 	return 0;
 }

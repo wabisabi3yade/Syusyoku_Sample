@@ -2,7 +2,6 @@
 // プリコンパイル済みヘッダー
 // よく使うインクルードファイルをまとめ、時間とリソースを節約
 
-
 // マクロ定義 /////////////////
 // リソースを解放するマクロ
 #define SAFE_RELEASE(x)    { if(x) { (x)->Release(); (x) = nullptr; } }
@@ -17,10 +16,12 @@
 #pragma comment(lib, "DirectXTK.lib")	// DirectXTKライブラリ
 
 #include <iostream>	// std使うために
+#include <algorithm>
 #include <string>
 #include <unordered_map>	// 順番を気にしないmap配列
 #include <vector>	// 動的配列
 
+#include "MathUseful.h"	// 自作数学便利関数
 #include "ImGuiMethod.h"	// ImGui便利関数
 #include "Transform.h"	// 座標・回転・スケールのクラス
 #include "MainApplication.h"

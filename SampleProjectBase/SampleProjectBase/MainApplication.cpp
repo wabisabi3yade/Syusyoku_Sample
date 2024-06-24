@@ -20,10 +20,13 @@ void MainApplication::Release()
 	// シングルトンインスタンスを解放
 	Direct3D11::Delete();
 	SceneManager::Delete();
+
+#ifdef _DEBUG
 	// メモリリークの表示に映らないように手動で解放
 	pWindow.reset();
 	variableFps.reset();
 	input.reset();
+#endif // DEBUG
 
 	// ImGuiの終了処理
 	ImGuiMethod::End();

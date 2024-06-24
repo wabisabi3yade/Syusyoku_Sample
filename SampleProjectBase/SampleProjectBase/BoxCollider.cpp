@@ -7,31 +7,31 @@ using namespace DirectX::SimpleMath;
 
 void BoxCollider::Init()
 {
-	size = Vector3::One;
-}
+	Collider::Init();	// 追加処理をする
 
-void BoxCollider::Update()
-{
+	size = Vector3::One;
+	type = Collider::Type::Box;	// ボックスに設定する
 }
 
 void BoxCollider::Draw()
 {
 	// ボックス表示
 	const Transform& t = gameObject->transform;
-	Geometory::SetPosition(t.position + offset);	// 足す
-	Geometory::SetRotation(t.rotation + angle);	// 足す
-	Geometory::SetScale(t.scale * size);// 掛ける
+
+	// ワールド座標系で求める
+	Vector3 centerPos_w = t.position + posOffset * t.scale; // スケールに対応させたオフセット座標を足す
+	Geometory::SetPosition(centerPos_w);
+	Vector3 rotation_w = t.rotation + angleOffset;	// 足す
+	Geometory::SetRotation(rotation_w);	
+	Vector3 scale_w = t.scale * size;// 掛ける
+	Geometory::SetScale(scale_w);
 
 	// 色
-	Geometory::SetColor(Color(0,1,0,1));
-	if(isHit)
-	Geometory::SetColor(Color(1, 1, 0, 1));
-
-	//BaseObject::SetColor(normalColor);
-	//if (isHit)	// 当たってるなら
-	//{
-	//	BaseObject::SetColor(hitColor);	// 色を変える
-	//}
+	Geometory::SetColor(Collider::normalColor);
+	if (hitColliders.size() > 0)	// 何かに当たってるなら
+	{
+		Geometory::SetColor(Collider::hitColor);	// 色を変える
+	}
 	Geometory::DrawCube(true);
 }
 
@@ -39,9 +39,26 @@ void BoxCollider::SetParameter()
 {
 	if(ImGui::TreeNode("BoxCollider"))
 	{
-		ImGuiMethod::DragFloat3(offset, "Offset");
-		ImGuiMethod::DragFloat3(angle, "Angle");
-		ImGuiMethod::DragFloat3(size, "Size");
+		ImGui::Checkbox("AABB", &isAABB);
+		ImGuiMethod::DragFloat3(posOffset, "posOffset");
+		ImGuiMethod::DragFloat3(angleOffset, "angleOffset");
+		ImGuiMethod::DragFloat3(size, "size");
 		ImGui::TreePop();
 	}
+}
+
+DirectX::SimpleMath::Vector3 BoxCollider::GetCenterPos() const
+{
+	const Transform& t =  gameObject->transform;
+	return t.position + posOffset * t.scale;
+}
+
+DirectX::SimpleMath::Vector3 BoxCollider::GetRotation() const
+{
+	return gameObject->transform.rotation + angleOffset;
+}
+
+DirectX::SimpleMath::Vector3 BoxCollider::GetScale() const
+{
+	return gameObject->transform.scale * size;
 }

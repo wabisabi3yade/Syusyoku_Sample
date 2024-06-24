@@ -9,6 +9,9 @@ class SceneObjects
 	std::unordered_map<std::string, std::unique_ptr<GameObject>> list;
 	// UI用のリスト(描画を上のリストより後にするため)
 	std::unordered_map<std::string, std::unique_ptr<GameObject>> uiList;
+
+	// Start関数の処理を行うゲームオブジェクト配列
+	std::list<Component*> startComponents;
 public:
 	SceneObjects();
 	~SceneObjects();
@@ -19,6 +22,9 @@ public:
 
 	// 配列にオブジェクトを入れる
 	void SetObject(const std::string& _objectName, std::unique_ptr<GameObject> _objPtr);
+
+	// Start処理をする
+	void Start();
 
 	// オブジェクトの名前からオブジェクトを返す
 	template<class T> T* GetSceneObject(const std::string& _objectName);

@@ -2,7 +2,6 @@
 #include "GameObject.h"
 #include "Texture.h"
 #include "Mesh.h"
-#include "Material.h"
 
 // 空間上でなく画面におく2Dオブジェクト(UI)
 class Object_UI :
@@ -11,7 +10,7 @@ class Object_UI :
     Texture* pTexture;  // テクスチャ
     std::unique_ptr<Mesh> poligon;  // ポリゴン
 
-    static Material* pMaterial; // 共通のマテリアル
+    static MaterialClass* pShareMaterial; // 共通のマテリアル
 
     void MakePoligon(); // ポリゴン作成
     void MakeMaterial();    // 共通のマテリアルを作成する

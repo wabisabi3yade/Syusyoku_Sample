@@ -44,7 +44,7 @@ public:
 	bool SetMesh(const Mesh& _setMesh);
 
 	// メッシュの読込
-	bool Setup(D3D11_Renderer& _renderer, aiMesh* pMeshData);
+	bool Setup(D3D11_Renderer& _renderer, aiMesh* pMeshData, float _scaleBase);
 	// 描画処理
 	void Draw(D3D11_Renderer& _renderer);
 	// マテリアルのインデックスを取得

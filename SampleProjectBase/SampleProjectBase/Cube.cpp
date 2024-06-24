@@ -83,7 +83,7 @@ void Cube::Make()
 		20,21,22, 23,22,21,
 	};
 
-	for (int i = 0; i < indexNum; i++)
+	for (u_int i = 0; i < indexNum; i++)
 	{
 		pIndicies[i] = idx[i];
 	}

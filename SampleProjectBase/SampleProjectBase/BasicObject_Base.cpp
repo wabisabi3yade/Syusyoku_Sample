@@ -14,13 +14,13 @@ BasicObject_Base::BasicObject_Base()
 	if (!reCol->GetImpotred(MATERIAL_NAME))	// 無かったら
 	{
 		// マテリアル作成
-		std::unique_ptr<Material> makeMaterial = std::make_unique<Material>();
+		std::unique_ptr<MaterialClass> makeMaterial = std::make_unique<MaterialClass>();
 		// シェーダーを設定
 		ShaderCollection* shCol = ShaderCollection::GetInstance();
 		VertexShader* v = shCol->GetVertexShader("VS_BaseObject");
 		PixelShader* p = shCol->GetPixelShader("PS_VertexColor");
-		makeMaterial->pVertexShader = v;
-		makeMaterial->pPixelShader = p;
+		makeMaterial->SetVertexShader(v);
+		makeMaterial ->SetPixelShader(p);
 
 		material = makeMaterial.get();	// このオブジェクトにマテリアルセット
 		// 管理クラスにセット
@@ -29,7 +29,7 @@ BasicObject_Base::BasicObject_Base()
 	else
 	{
 		// マテリアルを取得
-		material = reCol->GetResource<Material>(MATERIAL_NAME);	
+		material = reCol->GetResource<MaterialClass>(MATERIAL_NAME);	
 	}
 }
 
@@ -49,11 +49,11 @@ void BasicObject_Base::Draw(Transform& _transform, DirectX::SimpleMath::Color& _
 	wMat.world = worldmtx;
 
 	// シェーダーにバッファを送る
-	material->pVertexShader->UpdateBuffer(0, &wMat);
-	material->pVertexShader->UpdateBuffer(1, &_color);
+	material->GetVertexShader().UpdateBuffer(0, &wMat);
+	material->GetVertexShader().UpdateBuffer(1, &_color);
 	// シェーダーをセット
-	material->pVertexShader->Bind();
-	material->pPixelShader->Bind();
+	material->GetVertexShader().Bind();
+	material->GetVertexShader().Bind();
 
 	Mesh::Draw(*renderer);	
 }

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "PlayerMove.h"
 #include "GameObject.h"
+#include "Geometory.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -12,22 +13,8 @@ void PlayerMove::Input()
 
 	moveVec = Vector3::Zero;
 
-	if (pad->ButtonPress(GamePad::Button::Arrow_Up))
-	{
-		moveVec.y = 1.0f;
-	}
-	if (pad->ButtonPress(GamePad::Button::Arrow_Down))
-	{
-		moveVec.y = -1.0f;
-	}
-	if (pad->ButtonPress(GamePad::Button::Arrow_Right))
-	{
-		moveVec.x = 1.0f;
-	}
-	if (pad->ButtonPress(GamePad::Button::Arrow_Left))
-	{
-		moveVec.x = -1.0f;
-	}
+	moveVec.x = pad->GetValue(GamePad::Value::StickL_X);
+	moveVec.z = pad->GetValue(GamePad::Value::StickL_Y);
 }
 
 void PlayerMove::Init()

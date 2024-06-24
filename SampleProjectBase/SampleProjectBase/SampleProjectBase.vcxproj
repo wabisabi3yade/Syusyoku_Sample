@@ -47,6 +47,10 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CameraInput.cpp" />
+    <ClCompile Include="CollisionChecker.cpp" />
+    <ClCompile Include="CollisionRegister.cpp" />
+    <ClCompile Include="GameKey.cpp" />
     <ClCompile Include="Geometory.cpp" />
     <ClCompile Include="BasicObject_Base.cpp" />
     <ClCompile Include="BlendState.cpp" />
@@ -64,19 +68,18 @@
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="D3D11_Renderer.cpp" />
     <ClCompile Include="Direct3D11.cpp" />
-    <ClCompile Include="Float2.cpp" />
-    <ClCompile Include="Float3.cpp" />
-    <ClCompile Include="Float4.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="ImGuiDebugLog.cpp" />
     <ClCompile Include="InputClass.cpp" />
     <ClCompile Include="JISToUTF8.cpp" />
+    <ClCompile Include="MathUseful.cpp" />
     <ClCompile Include="Object_UI.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="PlayerMove.cpp" />
     <ClCompile Include="SceneObjects.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Object_2D.cpp" />
+    <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="Tag.cpp" />
     <ClCompile Include="Tank_BroadScene.cpp" />
@@ -96,12 +99,10 @@
     <ClCompile Include="imgui\include\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainApplication.cpp" />
-    <ClCompile Include="Material.cpp" />
-    <ClCompile Include="MaterialCollect.cpp" />
+    <ClCompile Include="MaterialClass.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MessageError.cpp" />
     <ClCompile Include="Model.cpp" />
-    <ClCompile Include="ModelCollect.cpp" />
     <ClCompile Include="ModelLoader.cpp" />
     <ClCompile Include="ModelSettings.cpp" />
     <ClCompile Include="pch.cpp">
@@ -123,13 +124,16 @@
     <ClCompile Include="Test_ChangeSubScene.cpp" />
     <ClCompile Include="Test_SubScene.cpp" />
     <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="TextureCollect.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="VertexShader.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CameraInput.h" />
+    <ClInclude Include="CollisionChecker.h" />
+    <ClInclude Include="CollisionRegister.h" />
+    <ClInclude Include="GameKey.h" />
     <ClInclude Include="Geometory.h" />
     <ClInclude Include="BasicObject_Base.h" />
     <ClInclude Include="BlendState.h" />
@@ -150,12 +154,10 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="D3D11_Renderer.h" />
     <ClInclude Include="Direct3D11.h" />
-    <ClInclude Include="Float2.h" />
-    <ClInclude Include="Float3.h" />
-    <ClInclude Include="Float4.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="ImGuiDebugLog.h" />
     <ClInclude Include="InputClass.h" />
+    <ClInclude Include="MathUseful.h" />
     <ClInclude Include="Object_UI.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="PlayerMove.h" />
@@ -163,6 +165,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Object_2D.h" />
     <ClInclude Include="JISToUTF8.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="Tag.h" />
     <ClInclude Include="Tank_BroadScene.h" />
@@ -186,19 +189,16 @@
     <ClInclude Include="imgui_gryph.h" />
     <ClInclude Include="ISetUpProjection.h" />
     <ClInclude Include="MainApplication.h" />
-    <ClInclude Include="Material.h" />
-    <ClInclude Include="MaterialCollect.h" />
+    <ClInclude Include="MaterialClass.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MessageError.h" />
     <ClInclude Include="Model.h" />
-    <ClInclude Include="ModelCollect.h" />
     <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="ModelSettings.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RenderParam.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceCollection.h" />
-    <ClInclude Include="ResourceCollect_Base.h" />
     <ClInclude Include="Sampler.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SceneMoveInfo.h" />
@@ -212,7 +212,6 @@
     <ClInclude Include="Test_ChangeSubScene.h" />
     <ClInclude Include="Test_SubScene.h" />
     <ClInclude Include="Texture.h" />
-    <ClInclude Include="TextureCollect.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="VertexShader.h" />

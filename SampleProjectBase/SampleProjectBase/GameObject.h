@@ -2,6 +2,11 @@
 #include <typeinfo>
 #include "Tag.h"
 #include "Component.h"
+#include "MaterialClass.h"
+
+#include "imgui_impl_win32.h"
+#include "imgui_impl_dx11.h"
+#include "imgui.h"
 
 // シーンで使用するオブジェクト全般の基底クラス
 class GameObject
@@ -16,6 +21,9 @@ protected:
 	DirectX::SimpleMath::Vector2 uvScroll;	// UVスクロール値
 
 	std::list<std::unique_ptr<Component>> pComponents;	// コンポーネントリスト
+
+	void ActiveProcess();	// アクティブに変更したときの処理
+	void NotActiveProcess();	// 非アクティブに変更したときの処理
 public:
 	Transform transform;	// Transformパラメータ
 
@@ -33,6 +41,12 @@ public:
 
 	void SetName(const std::string& _name) { name = _name; }	// 名前
 	const std::string& GetName() { return name; }
+
+	// アクティブ状態を変更する
+	void SetActive(bool _isActive);
+
+	// Active状態か取得
+	bool GetIsActive() { return isActive; }
 
 	// タグ・レイヤーを取得
 	const Tag& GetTag() { return tag; }
@@ -64,11 +78,11 @@ template<typename T>
 inline T* GameObject::GetComponent()
 {
 	// 指定した型名と同じコンポーネントがあるか確認
-	for (auto comp : pComponents)
+	for (auto& comp : pComponents)
 	{
-		if (typeid(std::unique_ptr<T>) != typeid(comp)) continue;
-		
-		return comp.get(); // あるなら返す
+		if (typeid(T) != typeid(*comp.get())) continue;
+		T* retPtr = static_cast<T*>(comp.get());	// 変換
+		return retPtr; // あるなら返す
 	}
 
 	return nullptr;	// 無かったらnullptr

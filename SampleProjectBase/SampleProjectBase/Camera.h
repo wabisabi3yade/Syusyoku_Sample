@@ -9,20 +9,24 @@ class Camera : public GameObject
 	// カメラの上ベクトル
 	DirectX::SimpleMath::Vector3 camUp{ 0,1.f,0 };
 
-	float DEFAULT_FOV = 45.0f;
-	float DEFAULT_NEARZ = 0.1f;
-	float DEFAULT_FARZ = 1000.0f;
-
-	void UpdateFocus();	// 注視点の座標をカメラの角度から更新する
+	float fov;	// 視野角
+	// 描画距離
+	float nearZ;	// 最短
+	float farZ;	 // 最長
+	bool isOrthographic;	// 平行投影をするか
+	void UpdatePerspective(u_int _viewPortSlot = 0);	// 透視投影をセットする
+	void UpdateOrthographic(u_int _viewPortSlot = 0);	// 透視投影をセットする
 public:
 	Camera();
 	~Camera();
 
+	void Update() override;
 	void LateUpdate() override;
 
 	void UpdateViewMatrix();	// ビュー変換行列を更新
-
-	// 
-	void LookAt(DirectX::SimpleMath::Vector3 _targetPos);
+	
+	// 各プロジェクションに設定
+	void SetOrthographic();	// 平行投影
+	void SetPerspective();	// 透視投影
 };
 

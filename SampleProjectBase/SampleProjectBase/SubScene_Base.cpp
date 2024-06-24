@@ -2,6 +2,7 @@
 #include "SceneMoveInfo.h"
 
 #include "Camera.h"
+#include "CollisionRegister.h"
 
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
@@ -29,11 +30,15 @@ SubScene_Base::SubScene_Base(SceneMoveInfo* _pSceneMoveInfo)
 	sceneObjects = std::make_unique<SceneObjects>();
 	// カメラ生成
 	std::unique_ptr<Camera> mainCamera = std::make_unique<Camera>();
-	sceneObjects->SetObject("mainCamera", std::move(mainCamera));
+	sceneObjects->SetObject("MainCamera", std::move(mainCamera));
+	// 当たり判定チェッカークラスを生成し、当たり判定登録対象にする
+	collisionChcker = std::make_unique<CollisionChecker>();
+	CollisionRegister::GetInstance()->SetCollisionChecker(*collisionChcker);
 }
 
 SubScene_Base::~SubScene_Base()
 {
+	sceneObjects.reset();	// シーン内のオブジェクトの終了処理を行う
 }
 
 
@@ -47,18 +52,18 @@ void SubScene_Base::Exec()
 	LateUpdate();
 	sceneObjects->LateUpdate();
 
+	// シーン内の当たり判定をチェックする
+	/*collisionChcker->CollisionCheck();*/
+
 	// 画面クリアなど準備
 	Direct3D11::GetInstance()->GetRenderer()->SetUpDraw();
-
 	// ビュー変換行列を更新
-	Camera* mainCamera = sceneObjects->GetSceneObject<Camera>("mainCamera");
+	Camera* mainCamera = sceneObjects->GetSceneObject<Camera>("MainCamera");
 	mainCamera->UpdateViewMatrix();
-
 	// シーン内の描画処理
 	Draw();
 	sceneObjects->Draw();
 	ImGuiMethod::Draw();
-
 	// スワップチェイン
 	Direct3D11::GetInstance()->GetRenderer()->Swap();
 }

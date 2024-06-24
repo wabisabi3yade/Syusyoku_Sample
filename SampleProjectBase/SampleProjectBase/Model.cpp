@@ -1,6 +1,6 @@
 #include "Model.h"
 #include "Mesh.h"
-#include "Material.h"
+#include "MaterialClass.h"
 
 // assimpライブラリ読込
 #ifdef _DEBUG
@@ -12,9 +12,14 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+#include "imgui_impl_win32.h"
+#include "imgui_impl_dx11.h"
+#include "imgui.h"
+
+
 using namespace DirectX::SimpleMath;
 
-Model::Model() : meshNum(0), modelName(""), isPermanent(false), isImported(false)
+Model::Model() : meshNum(0)
 {
 }
 
@@ -62,7 +67,7 @@ bool Model::SetModel(const Model& _setModel)
 bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _renderer)
 {
 	// 既にこのモデルが入っていたら
-	if (isImported)
+	if (meshNum > 0)
 		return true;
 
 	if (_settings.modelPath == nullptr)
@@ -89,7 +94,12 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 
 	// モデルを読み込む
 	auto pScene = importer.ReadFile(_settings.modelPath, flag);
-	if (pScene == nullptr) return false;
+	if (pScene == nullptr)
+	{
+		ImGuiDebugLog::Add("モデルファイル名が見つかりませんでした。" 
+			+ std::string(_settings.modelPath));
+		return false;
+	}
 
 	// メッシュの数を取得する
 	meshNum = pScene->mNumMeshes;
@@ -104,7 +114,8 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 			auto pMeshData = pScene->mMeshes[meshIdx];
 
 			// メッシュの準備
-			if (mesh->Setup(_renderer, pMeshData) == false)
+			float baseScale = _settings.scaleBase;
+			if (mesh->Setup(_renderer, pMeshData, baseScale) == false)
 			{
 				ImGuiDebugLog::Add("メッシュのセットアップ失敗");
 				// 作成したメッシュを解放
@@ -123,8 +134,11 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 	dir = dir.substr(0, dir.find_last_of('/') + 1);
 
 	aiColor3D color(0.0f, 0.0f, 0.0f);
-	Vector4 diffuse(1.0f, 1.0f, 1.0f, 1.0f);
-	Vector4 ambient(0.3f, 0.3f, 0.3f, 1.0f);
+	Color diffuse(1.0f, 1.0f, 1.0f, 1.0f);
+	Color ambient(0.3f, 0.3f, 0.3f, 1.0f);
+	Color specular(0.0f, 0.0f, 0.0f, 0.0f);
+	Color emissive(0.0f, 0.0f, 0.0f, 0.0f);
+	float shininess = 0.0f;
 
 	// リソース管理クラス取得
 	ResourceCollection* resourceCollection = ResourceCollection::GetInstance();
@@ -135,16 +149,22 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 		// マテリアルのセットする名前は "M_名前 + 数字"
 		std::string materialName = "M_" + _settings.modelName + std::to_string(i);
 		// マテリアルを作成
-		std::unique_ptr<Material> material = std::make_unique<Material>();
+		std::unique_ptr<MaterialClass> material = std::make_unique<MaterialClass>();
 		// 各種パラメーター
-		float shininess;
-		material->diffuse = pScene->mMaterials[i]->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS ?
+		MaterialParameter materialParam;
+		materialParam.diffuse = pScene->mMaterials[i]->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS ?
 			DirectX::XMFLOAT4(color.r, color.g, color.b, 1.0f) : diffuse;
-		material->ambient = pScene->mMaterials[i]->Get(AI_MATKEY_COLOR_AMBIENT, color) == AI_SUCCESS ?
+
+		materialParam.ambient = pScene->mMaterials[i]->Get(AI_MATKEY_COLOR_AMBIENT, color) == AI_SUCCESS ?
 			DirectX::XMFLOAT4(color.r, color.g, color.b, 1.0f) : ambient;
-		shininess = pScene->mMaterials[i]->Get(AI_MATKEY_SHININESS, shininess) == AI_SUCCESS ? shininess : 0.0f;
-		material->specular = pScene->mMaterials[i]->Get(AI_MATKEY_COLOR_SPECULAR, color) == AI_SUCCESS ?
-			DirectX::XMFLOAT4(color.r, color.g, color.b, shininess) : DirectX::XMFLOAT4(0.0f, 0.0f, 0.0f, shininess);
+
+		materialParam.shininess = pScene->mMaterials[i]->Get(AI_MATKEY_SHININESS, shininess) == AI_SUCCESS ? shininess : 0.0f;
+
+		materialParam.specular = pScene->mMaterials[i]->Get(AI_MATKEY_COLOR_SPECULAR, color) == AI_SUCCESS ?
+			DirectX::XMFLOAT4(color.r, color.g, color.b, 1.0f) : specular;
+
+		materialParam.emissive = pScene->mMaterials[i]->Get(AI_MATKEY_COLOR_EMISSIVE, color) == AI_SUCCESS ?
+			DirectX::XMFLOAT4(color.r, color.g, color.b, 1.0f) : emissive;
 
 		// テクスチャ
 		// テクスチャのインスタンスを作成
@@ -152,6 +172,7 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 		// テクスチャの名前頭文字をT_にする
 		std::string texName = "T_" + _settings.modelName + std::to_string(i);
 		aiString path;
+
 		if (pScene->mMaterials[i]->Get(AI_MATKEY_TEXTURE_DIFFUSE(0), path) == AI_SUCCESS)
 		{
 			// ファイル形式チェック
@@ -159,13 +180,13 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 			{
 				ImGuiDebugLog::Add("psdには対応していません");
 			}
+
 			bool isSuccess = false;	// ロード成功したかフラグ
-			// モデルと同じ階層を探索
-			std::string file = dir;
+			std::string file = dir;	// モデルと同じ階層を探索
 			file += path.C_Str();
+
 			// テクスチャ管理クラスにモデルのテクスチャを代入する(名前はモデルと一緒)
 			isSuccess = texture->Load(file.c_str());
-
 			// ファイル名のみで探索
 			if (!isSuccess) {
 				std::string file = path.C_Str();
@@ -188,25 +209,36 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 			}
 			// 失敗
 			if (!isSuccess) {
-				std::string message = "モデルのテクスチャ読込失敗　" + texName;
+				materialParam.isTextureEnable = false;	// テクスチャ使用フラグを降ろす
+				std::string message = "モデルのテクスチャ読込失敗　" + file;
 				ImGuiDebugLog::Add(message);
 			}
 			else
 			{
+				materialParam.isTextureEnable = true;	// テクスチャ使用フラグを立てる
 				// テクスチャ読込み成功
 				// 読み込んだテクスチャをマテリアルに設定する
 				pTextures.push_back(texture.get());
 				// リソース管理にテクスチャ追加
 				resourceCollection->SetResource<Texture>(texName, std::move(texture));
 			}
-
-			// マテリアル追加
-			pMaterials.push_back(material.get());
-			// マテリアルを保管クラスに入れる
-			resourceCollection->SetResource<Material>(materialName, std::move(material));
 		}
+		else // シーン内からテクスチャのパスが見つけられなかったら
+		{
+			std::string message = "モデルのテクスチャ読込失敗　" + std::string(path.C_Str());
+			ImGuiDebugLog::Add(message);
+			materialParam.isTextureEnable = false;	// テクスチャ使用フラグを降ろす
+		}
+
+		// パラメータをマテリアルクラスに設定する
+		material->SetMaterialParameter(materialParam);
+		// マテリアル追加
+		pMaterials.push_back(material.get());
+		// マテリアルを保管クラスに入れる
+		resourceCollection->SetResource<MaterialClass>(materialName, std::move(material));
 	}
 
+	modelData = _settings;	// モデル情報を入れる
 	return true;
 }
 
@@ -225,15 +257,24 @@ void Model::Draw(const Transform& _transform) const
 
 	for (u_int meshIdx = 0; meshIdx < meshNum; meshIdx++)
 	{
-		// バッファを更新する
-		pMaterials[meshIdx]->pVertexShader->UpdateBuffer(0, &wvp);
-		// テクスチャ設定
-		if(pTextures.size() > meshIdx)	// テクスチャなくても読み込める用にしたいので
-		pMaterials[meshIdx]->pPixelShader->SetTexture(0, pTextures[meshIdx]);
-		// シェーダーをバインド
-		pMaterials[meshIdx]->pVertexShader->Bind();
-		pMaterials[meshIdx]->pPixelShader->Bind();
+		if (meshIdx > pMaterials.size() - 1) return;	// マテリアルがないなら終わる
 
+		MaterialClass& material = *pMaterials[meshIdx];
+		MaterialParameter& materialParam = material.GetMaterialParameter();	// パラメータ
+		// バッファを更新する
+		// 頂点シェーダー
+		material.GetVertexShader().UpdateBuffer(0, &wvp);
+		material.GetVertexShader().UpdateBuffer(1, &materialParam);
+		// ピクセルシェーダー
+		material.GetPixelShader().UpdateBuffer(1, &materialParam);
+		if(materialParam.isTextureEnable)	// テクスチャがあるなら
+			material.GetPixelShader().SetTexture(0, pTextures[meshIdx]);
+
+		// シェーダーをバインド
+		material.GetVertexShader().Bind();
+		material.GetPixelShader().Bind();
+
+		// メッシュ描画
 		meshes[meshIdx]->Draw(renderer);
 	}
 }
@@ -251,9 +292,6 @@ void Model::ResetParam()
 	meshNum = 0;
 
 	modelData = {};
-
-	isImported = false;
-	isPermanent = false;
 }
 
 void Model::Release()
@@ -273,8 +311,6 @@ bool Model::Load(const ModelSettings& _settings)
 
 	// モデル情報を所持する
 	modelData = _settings;
-	// モデル導入されたフラグを立てる
-	isImported = true;
 
 	return true;
 }
@@ -283,7 +319,7 @@ void Model::SetVertexShader(Shader* _vertexSh)
 {
 	for (auto material : pMaterials)
 	{
-		material->pVertexShader = dynamic_cast<VertexShader*>(_vertexSh);
+		material->SetVertexShader(dynamic_cast<VertexShader*>(_vertexSh));
 	}
 }
 
@@ -291,7 +327,16 @@ void Model::SetPixelShader(Shader* _pixelSh)
 {
 	for (auto material : pMaterials)
 	{
-		material->pPixelShader = dynamic_cast<PixelShader*>(_pixelSh);
+		material->SetPixelShader(dynamic_cast<PixelShader*>(_pixelSh));
 	}
 }
+
+void Model::SetTexture(std::vector<Texture*> _setTextures)
+{
+	// 前のテクスチャ配列をリセット
+	pTextures.clear();
+
+	pTextures = _setTextures;	//新しいテクスチャ配列をセットする
+}
+
 

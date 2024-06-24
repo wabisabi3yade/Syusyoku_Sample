@@ -16,7 +16,7 @@ SceneObjects::SceneObjects()
 SceneObjects::~SceneObjects()
 {
 	list.clear();	// 解放する
-	uiList.clear();	
+	uiList.clear();
 }
 
 void SceneObjects::Update()
@@ -28,19 +28,23 @@ void SceneObjects::Update()
 	for (auto itr = list.begin(); itr != list.end(); itr++)
 	{
 		itr->second->Update();
+#ifdef _DEBUG
 		itr->second->ImGuiSet();
+#endif // _DEBUG
 	}
 
 	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
 	{
 		itr->second->Update();
+#ifdef _DEBUG
 		itr->second->ImGuiSet();
+#endif // _DEBUG
 	}
 #ifdef _DEBUG
 	ImGui::End();
 #endif // _DEBUG
 
-	
+
 }
 
 void SceneObjects::LateUpdate()
@@ -64,6 +68,12 @@ void SceneObjects::Draw()
 		itr->second->Draw();
 	}
 
+
+	// ↓平行投影をさせる //
+
+
+	//------------------//
+	
 	// 2D空間（UI）のオブジェクト
 	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
 	{
@@ -92,7 +102,7 @@ void SceneObjects::SetObject(const std::string& _objectName, std::unique_ptr<Gam
 		{
 			number = "";
 		}
-		
+
 		setName = _objectName + number;	// オブジェクトの名前＋数字
 
 		auto itr = setList->find(setName);
@@ -107,4 +117,14 @@ void SceneObjects::SetObject(const std::string& _objectName, std::unique_ptr<Gam
 
 	_objPtr->SetName(setName);	// オブジェクトに名前を設定
 	setList->insert(std::pair<std::string, std::unique_ptr<GameObject>>(setName, std::move(_objPtr)));
+}
+
+void SceneObjects::Start()
+{
+	// Start処理をする
+	for(auto itr = startComponents.begin(); itr != startComponents.end();)
+	{
+		(*itr)->Start();
+		startComponents.erase(itr);
+	}
 }

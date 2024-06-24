@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Texture.h"
-#include "Material.h"
+#include "MaterialClass.h"
 #include "Model.h"
 
 /// <summary>

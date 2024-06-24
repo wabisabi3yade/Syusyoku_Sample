@@ -30,7 +30,7 @@ private:
 	// 深度バッファ
 	ID3D11DepthStencilView* pDepthStencilView{ nullptr };
 
-	D3D11_VIEWPORT viewPort[1];	// ビューポート
+	std::vector<D3D11_VIEWPORT> viewPorts;	// ビューポート
 
 	UINT backBufferNum = 3;
 	UINT screenWidth = 0;
@@ -39,8 +39,6 @@ private:
 	std::unique_ptr<RenderParam> pRenderParam;	// 描画に必要な情報(定数バッファなど)
 	std::unique_ptr<BlendState> pBlendState;	// ブレンドステート（半透明処理）のクラス
 	std::unique_ptr<Sampler> pSampler;	// サンプラー
-	std::unique_ptr<SetUpPerspectiveProj> pProjection;	// プロジェクション行列を準備するクラス
-	std::unique_ptr<SetUpViewTrans> pViewTransform;	// ビュー変換行列を準備するクラス
 
 	bool Init(HWND _hWnd);  // 初期化
 	bool InitDeviceAndSwapChain(HWND _hWnd);    // デバイスとスワップチェインの作成
@@ -53,8 +51,6 @@ public:
 	~D3D11_Renderer();
 
 	static DirectX::SimpleMath::Matrix GetWorldMtx(Transform _transform);
-	void SetPerspective();	// 透視投影行列に設定
-	DirectX::SimpleMath::Matrix GetOrthographic();	// 正投影行列を取得（2D）
 
 	void SetUpDraw();    // 描画処理の準備（クリアスクリーン）
 
@@ -64,5 +60,8 @@ public:
 	RenderParam& GetParameter() override;
 	ID3D11Device* GetDevice()const override { return pD3DDevice; }
 	ID3D11DeviceContext* GetDeviceContext() override { return pImmediateContext; }
+	// ビューポートを取得（どのビューポートを指定）
+	const D3D11_VIEWPORT& GetViewPort(u_int _slot) { return viewPorts[_slot]; }
+	u_int GetViewPortNum() { return viewPorts.size(); }
 };
 

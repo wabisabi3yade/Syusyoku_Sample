@@ -6,6 +6,7 @@
 #include "SceneMoveInfo.h"
 #include "ShaderCollection.h"
 #include "Geometory.h"
+#include "CollisionRegister.h"
 
 SceneManager* SceneManager::pInstance = nullptr;	// インスタンスの初期化
 
@@ -53,6 +54,7 @@ void SceneManager::Release()
 	Geometory::Release();
 	ResourceCollection::Delete();
 	ShaderCollection::Delete();
+	CollisionRegister::Delete();
 }
 
 void SceneManager::Exec()

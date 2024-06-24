@@ -8,7 +8,7 @@
 #include "Object_2D.h"
 #include "Object_UI.h"
 #include "ShaderCollection.h"
-
+#include "CollisionChecker.h"
 
 // サブシーン（小さなシーン、例えば街の中の家の中とか）の基底クラス
 class SubScene_Base
@@ -19,6 +19,7 @@ class SubScene_Base
 protected:
 	ResourceCollection* resourceCollection;	// リソース管理ポインタ
 	std::unique_ptr<SceneObjects> sceneObjects;	// シーンで使用するオブジェクト管理クラス
+	std::unique_ptr<CollisionChecker> collisionChcker;	// 当たり判定の判定を行うクラス
 
 	// 更新処理
 	virtual void Update() = 0;

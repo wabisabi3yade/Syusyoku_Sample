@@ -3,18 +3,24 @@
 
 using namespace DirectX::SimpleMath;
 
-void Camera::UpdateFocus()
-{
+constexpr float DEFAULT_FOV = 45.0f;
+constexpr float DEFAULT_NEARZ = 0.1f;
+constexpr float DEFAULT_FARZ = 1000.0f;
 
-}
-
-Camera::Camera() :focusPos(0, 0, 0)
+Camera::Camera() :focusPos(0, 0, 0), fov(DEFAULT_FOV), nearZ(DEFAULT_NEARZ), farZ(DEFAULT_FARZ),
+	isOrthographic(false)
 {
-	transform.position.z = -9.f;
+	transform.position.z = -10.0f;
+	SetPerspective();	// 透視投影から始める
 }
 
 Camera::~Camera()
 {
+}
+
+void Camera::Update()
+{
+	GameObject::Update();
 }
 
 void Camera::LateUpdate()
@@ -28,15 +34,15 @@ void Camera::UpdateViewMatrix()
 	{
 		transform.position.z += 0.001f;
 	}
-
-	UpdateFocus();	// 注視点を求めるs
+	
+	focusPos = transform.position + transform.Forward();	// カメラの前を注視点にする
 
 	// ビュー変換行列を求める
 	DirectX::SimpleMath::Matrix viewMatrix = DirectX::XMMatrixLookAtLH
 	(
-		DirectX::XMLoadFloat3(&transform.position),		// カメラ座標
-		DirectX::XMLoadFloat3(&focusPos),	// 注視点
-		DirectX::XMLoadFloat3(&camUp)	// 上ベクトル
+		transform.position,		// カメラ座標
+		focusPos,	// 注視点
+		Vector3::Up // 上ベクトル
 	);
 	viewMatrix = DirectX::XMMatrixTranspose(viewMatrix);
 
@@ -44,7 +50,59 @@ void Camera::UpdateViewMatrix()
 	Direct3D11::GetInstance()->GetRenderer()->GetParameter().SetView(viewMatrix);
 }
 
-void Camera::LookAt(DirectX::SimpleMath::Vector3 _targetPos)
+void Camera::UpdatePerspective(u_int _viewPortSlot)
 {
-	focusPos = _targetPos; 
+	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
+
+	// ビューポートを取得
+	const D3D11_VIEWPORT& viewport = renderer.GetViewPort(_viewPortSlot);
+	u_int screenWidth = viewport.Width;
+	u_int screenHeight = viewport.Height;
+
+	// ビュー変換行列を作成する
+	DirectX::XMMATRIX mat = DirectX::XMMatrixPerspectiveFovLH(
+		fov,
+		static_cast<float>(screenWidth) / static_cast<float>(screenHeight),   // アスペクト比
+		nearZ,
+		farZ);
+	mat = XMMatrixTranspose(mat);
+
+	// 投影行列の参照を取得し、ビュー変換行列を代入する
+	RenderParam& param = renderer.GetParameter();
+	param.SetProjection(mat);
+}
+
+void Camera::UpdateOrthographic(u_int _viewPortSlot)
+{
+	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
+
+	// ビューポートを取得
+	const D3D11_VIEWPORT& viewport = renderer.GetViewPort(_viewPortSlot);
+	u_int screenWidth = viewport.Width;
+	u_int screenHeight = viewport.Height;
+	// 正投影行列を作成する
+	Matrix mat = DirectX::XMMatrixOrthographicOffCenterLH(
+		0.0f,	// 左上
+		static_cast<float>(screenWidth), 		// 右上
+		static_cast<float>(screenHeight),		// 左下
+		0.0f,	// 右下
+		0.0f,
+		1.0f);
+	mat = mat.Transpose();
+
+	// 投影行列の参照を取得し、ビュー変換行列を代入する
+	RenderParam& param = renderer.GetParameter();
+	param.SetProjection(mat);
+}
+
+void Camera::SetOrthographic()
+{
+	isOrthographic = true;
+	UpdateOrthographic(0);
+}
+
+void Camera::SetPerspective()
+{
+	isOrthographic = false;
+	UpdatePerspective(0);
 }

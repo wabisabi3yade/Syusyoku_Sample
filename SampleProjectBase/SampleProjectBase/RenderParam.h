@@ -11,21 +11,20 @@ public:
 		DirectX::SimpleMath::Matrix projection;	// プロジェクション
 	};
 
-
 private:
 	ID3D11InputLayout* pInputLayout;	// インプットレイアウト
-	WVP worldMatrix;	// ワールド行列
+	WVP wvp;	// ワールド行列
 public:
 	RenderParam() : pInputLayout(nullptr) {};
 	~RenderParam();
 
 	// インプットレイアウトを取得
 	ID3D11InputLayout& GetInputLayout();
-	const WVP& GetWVP() { return worldMatrix; }	// WVPを取得
+	const WVP& GetWVP() { return wvp; }	// WVPを取得
 
 	// インプットレイアウトを代入
 	void SetInputLayout(ID3D11InputLayout* _inputLayout) { pInputLayout = _inputLayout; }
-	void SetView(DirectX::SimpleMath::Matrix _view) { worldMatrix.view = _view; }
-	void SetProjection(DirectX::SimpleMath::Matrix _proj) { worldMatrix.projection = _proj; }
+	void SetView(DirectX::SimpleMath::Matrix _view) { wvp.view = _view; }
+	void SetProjection(DirectX::SimpleMath::Matrix _proj) { wvp.projection = _proj; }
 };
 

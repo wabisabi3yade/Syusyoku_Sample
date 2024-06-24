@@ -9,20 +9,20 @@ void Object_2D::MaterialSetting()
 	// 2D用マテリアルを取得する
 	const std::string MATERIAL_NAME = "M_Object_2D";
 	ResourceCollection* reCollect = ResourceCollection::GetInstance();
-	pMaterial = reCollect->GetResource<Material>(MATERIAL_NAME);
+	pMaterial = reCollect->GetResource<MaterialClass>(MATERIAL_NAME);
 
 	if (pMaterial == nullptr)	// マテリアルが無かったら作成
 	{
-		std::unique_ptr<Material> setMaterial = std::make_unique<Material>();
+		std::unique_ptr<MaterialClass> setMaterial = std::make_unique<MaterialClass>();
 		ShaderCollection* shCol = ShaderCollection::GetInstance();
 
 		// 使用するシェーダーをマテリアルに設定
-		setMaterial->pVertexShader = shCol->GetVertexShader("VertexShader");
-		setMaterial->pPixelShader = shCol->GetPixelShader("PixelShader");
+		setMaterial->SetVertexShader(shCol->GetVertexShader("VertexShader"));
+		setMaterial->SetPixelShader(shCol->GetPixelShader("PixelShader"));
 
 		pMaterial = setMaterial.get();	// ポインタを受け取る
 		// リソース管理に2D用マテリアルをセットする
-		reCollect->SetResource<Material>(MATERIAL_NAME, std::move(setMaterial));
+		reCollect->SetResource<MaterialClass>(MATERIAL_NAME, std::move(setMaterial));
 	}
 
 }
@@ -92,12 +92,12 @@ void Object_2D::DrawSetup(D3D11_Renderer& _renderer)
 	RenderParam::WVP wvp = _renderer.GetParameter().GetWVP();
 	wvp.world = worldMatrix;
 
-	pMaterial->pVertexShader->UpdateBuffer(0, &wvp);	// wvp行列を送る
-	pMaterial->pPixelShader->SetTexture(0, pTexture);	//テクスチャを送る
+	pMaterial->GetVertexShader().UpdateBuffer(0, &wvp);	// wvp行列を送る
+	pMaterial->GetPixelShader().SetTexture(0, pTexture);	//テクスチャを送る
 
 	// シェーダーを固定
-	pMaterial->pVertexShader->Bind();
-	pMaterial->pPixelShader->Bind();
+	pMaterial->GetVertexShader().Bind();
+	pMaterial->GetPixelShader().Bind();
 }
 
 

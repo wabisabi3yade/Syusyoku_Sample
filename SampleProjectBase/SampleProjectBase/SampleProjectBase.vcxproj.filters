@@ -70,18 +70,6 @@
     <Filter Include="ソース ファイル\System\MessageError">
       <UniqueIdentifier>{2f5e4082-2ae6-402d-90d1-8dcf684cbeab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\System\Float">
-      <UniqueIdentifier>{4e970090-b780-4683-b4d6-a04784865db2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\System\Float\Float2">
-      <UniqueIdentifier>{86d8f1bd-a92e-4105-9745-373e6815b139}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\System\Float\Float3">
-      <UniqueIdentifier>{2e027e68-191c-4f4a-9d94-302c5cce2ed3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\System\Float\Float4">
-      <UniqueIdentifier>{26146b0f-458c-452a-891f-15d679bd7bb9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Application\DirectX3D11\Render\Projection\PerspectiveProj">
       <UniqueIdentifier>{571bfd00-895f-4fc2-a3bb-f8979231d705}</UniqueIdentifier>
     </Filter>
@@ -166,18 +154,6 @@
     <Filter Include="ソース ファイル\Application\FramerRate">
       <UniqueIdentifier>{ab52b659-b273-451b-8c83-6c89a4913459}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics\ModelCollect">
-      <UniqueIdentifier>{170553aa-c152-435f-bc36-4da73984e7ba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics\TextureCollect">
-      <UniqueIdentifier>{45fd70f0-2bc3-4e3d-8d67-fccbb9ce93e6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\ResourceCollect_Base">
-      <UniqueIdentifier>{9b816ea1-95ea-46ef-b6a5-18290ca60457}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics\MaterialCollect">
-      <UniqueIdentifier>{a7d96d5e-8cfa-488c-83dc-6bbf4f28c822}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\ResourceCollection">
       <UniqueIdentifier>{0914fd39-6184-4c51-bbf5-0a403f0e3bdd}</UniqueIdentifier>
     </Filter>
@@ -213,9 +189,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Object\Object_2D">
       <UniqueIdentifier>{4c2b8f6c-2586-4267-9747-074a4ca953b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\SceneObjects">
-      <UniqueIdentifier>{4b5fda20-e416-43b8-99cd-92e298c295f2}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Graphics\BasicObject">
       <UniqueIdentifier>{8ad7004a-18e3-467b-b982-788b90b03a7c}</UniqueIdentifier>
@@ -256,12 +229,6 @@
     <Filter Include="ソース ファイル\System\JISToUTF8">
       <UniqueIdentifier>{044f28fe-fa18-4027-b4b8-860014ccfae3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\System\Input">
-      <UniqueIdentifier>{32ae1d60-8e3d-44fb-8b87-d1a0ed7397f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\System\Input\GamePad">
-      <UniqueIdentifier>{7e2c85a4-9e53-488f-882b-c17ed29167f2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Component">
       <UniqueIdentifier>{42921805-de89-4f40-8d80-903ddaa8a6e7}</UniqueIdentifier>
     </Filter>
@@ -288,6 +255,39 @@
     </Filter>
     <Filter Include="ソース ファイル\Component\Collider\Sphere">
       <UniqueIdentifier>{43f104c6-d005-4633-a3d8-0ae524b6de22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\BasicObject\Sphere">
+      <UniqueIdentifier>{5268db00-a05b-40ef-8ccc-481a51095ac4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Collider\CollisionChecker">
+      <UniqueIdentifier>{ee02f005-9104-4dc7-80e5-56016c5bdf4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\SceneObjects">
+      <UniqueIdentifier>{4b5fda20-e416-43b8-99cd-92e298c295f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Collider\Base">
+      <UniqueIdentifier>{0157a627-13bf-479e-b143-2b1c12827e0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Collider\CollisionRegister">
+      <UniqueIdentifier>{3ab90406-cf9c-4eae-9535-14d7e715d14b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\MathUseful">
+      <UniqueIdentifier>{4c0f1f54-09cf-4963-af1b-02fdd0832fe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Camera\CameraMove">
+      <UniqueIdentifier>{6b4aa409-ce39-44d4-b402-3a73fef4490a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Camera\CameraInput">
+      <UniqueIdentifier>{82bec4ac-dc99-4c37-a7ba-9b5b3727bd14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Application\Input">
+      <UniqueIdentifier>{32ae1d60-8e3d-44fb-8b87-d1a0ed7397f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Application\Input\GamePad">
+      <UniqueIdentifier>{7e2c85a4-9e53-488f-882b-c17ed29167f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Application\Input\Keyboard">
+      <UniqueIdentifier>{67dedc71-2688-4e08-8632-ead66bf81b9e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -337,15 +337,6 @@
     </ClCompile>
     <ClCompile Include="RenderParam.cpp">
       <Filter>ソース ファイル\Application\DirectX3D11\Render\RenderParam</Filter>
-    </ClCompile>
-    <ClCompile Include="Float2.cpp">
-      <Filter>ソース ファイル\System\Float\Float2</Filter>
-    </ClCompile>
-    <ClCompile Include="Float3.cpp">
-      <Filter>ソース ファイル\System\Float\Float3</Filter>
-    </ClCompile>
-    <ClCompile Include="Float4.cpp">
-      <Filter>ソース ファイル\System\Float\Float4</Filter>
     </ClCompile>
     <ClCompile Include="SetUpPerspectiveProj.cpp">
       <Filter>ソース ファイル\Application\DirectX3D11\Render\Projection\PerspectiveProj</Filter>
@@ -404,7 +395,7 @@
     <ClCompile Include="Texture.cpp">
       <Filter>ソース ファイル\Graphics\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="Material.cpp">
+    <ClCompile Include="MaterialClass.cpp">
       <Filter>ソース ファイル\Graphics\Material</Filter>
     </ClCompile>
     <ClCompile Include="Sampler.cpp">
@@ -416,17 +407,8 @@
     <ClCompile Include="Object_3D.cpp">
       <Filter>ソース ファイル\Object\Object_3D</Filter>
     </ClCompile>
-    <ClCompile Include="ModelCollect.cpp">
-      <Filter>ソース ファイル\Graphics\ModelCollect</Filter>
-    </ClCompile>
     <ClCompile Include="VariableFrameRate.cpp">
       <Filter>ソース ファイル\Application\FramerRate</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureCollect.cpp">
-      <Filter>ソース ファイル\Graphics\TextureCollect</Filter>
-    </ClCompile>
-    <ClCompile Include="MaterialCollect.cpp">
-      <Filter>ソース ファイル\Graphics\MaterialCollect</Filter>
     </ClCompile>
     <ClCompile Include="ResourceCollection.cpp">
       <Filter>ソース ファイル\ResourceCollection</Filter>
@@ -516,22 +498,16 @@
       <Filter>ソース ファイル\Component\Base</Filter>
     </ClCompile>
     <ClCompile Include="GamePad.cpp">
-      <Filter>ソース ファイル\System\Input\GamePad</Filter>
+      <Filter>ソース ファイル\Application\Input\GamePad</Filter>
     </ClCompile>
     <ClCompile Include="PlayerMove.cpp">
       <Filter>ソース ファイル\Component\InGame\Player\PlayerMove</Filter>
     </ClCompile>
     <ClCompile Include="InputClass.cpp">
-      <Filter>ソース ファイル\System\Input</Filter>
+      <Filter>ソース ファイル\Application\Input</Filter>
     </ClCompile>
     <ClCompile Include="Geometory.cpp">
       <Filter>ソース ファイル\Graphics\BasicObject</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraMove.cpp">
-      <Filter>ソース ファイル\Component\InGame\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>ソース ファイル\Component\Collider</Filter>
     </ClCompile>
     <ClCompile Include="SphereCollider.cpp">
       <Filter>ソース ファイル\Component\Collider\Sphere</Filter>
@@ -541,6 +517,30 @@
     </ClCompile>
     <ClCompile Include="DebugCube.cpp">
       <Filter>ソース ファイル\Graphics\BasicObject\Cube</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>ソース ファイル\Graphics\BasicObject\Sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionChecker.cpp">
+      <Filter>ソース ファイル\Component\Collider\CollisionChecker</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>ソース ファイル\Component\Collider\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionRegister.cpp">
+      <Filter>ソース ファイル\Component\Collider\CollisionRegister</Filter>
+    </ClCompile>
+    <ClCompile Include="MathUseful.cpp">
+      <Filter>ソース ファイル\System\MathUseful</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraMove.cpp">
+      <Filter>ソース ファイル\Component\InGame\Camera\CameraMove</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraInput.cpp">
+      <Filter>ソース ファイル\Component\InGame\Camera\CameraInput</Filter>
+    </ClCompile>
+    <ClCompile Include="GameKey.cpp">
+      <Filter>ソース ファイル\Application\Input\Keyboard</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -591,15 +591,6 @@
     </ClInclude>
     <ClInclude Include="RenderParam.h">
       <Filter>ソース ファイル\Application\DirectX3D11\Render\RenderParam</Filter>
-    </ClInclude>
-    <ClInclude Include="Float2.h">
-      <Filter>ソース ファイル\System\Float\Float2</Filter>
-    </ClInclude>
-    <ClInclude Include="Float3.h">
-      <Filter>ソース ファイル\System\Float\Float3</Filter>
-    </ClInclude>
-    <ClInclude Include="Float4.h">
-      <Filter>ソース ファイル\System\Float\Float4</Filter>
     </ClInclude>
     <ClInclude Include="SetUpPerspectiveProj.h">
       <Filter>ソース ファイル\Application\DirectX3D11\Render\Projection\PerspectiveProj</Filter>
@@ -658,7 +649,7 @@
     <ClInclude Include="Texture.h">
       <Filter>ソース ファイル\Graphics\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="Material.h">
+    <ClInclude Include="MaterialClass.h">
       <Filter>ソース ファイル\Graphics\Material</Filter>
     </ClInclude>
     <ClInclude Include="Sampler.h">
@@ -670,20 +661,8 @@
     <ClInclude Include="Object_3D.h">
       <Filter>ソース ファイル\Object\Object_3D</Filter>
     </ClInclude>
-    <ClInclude Include="ModelCollect.h">
-      <Filter>ソース ファイル\Graphics\ModelCollect</Filter>
-    </ClInclude>
     <ClInclude Include="VariableFrameRate.h">
       <Filter>ソース ファイル\Application\FramerRate</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureCollect.h">
-      <Filter>ソース ファイル\Graphics\TextureCollect</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceCollect_Base.h">
-      <Filter>ソース ファイル\Scene\ResourceCollect_Base</Filter>
-    </ClInclude>
-    <ClInclude Include="MaterialCollect.h">
-      <Filter>ソース ファイル\Graphics\MaterialCollect</Filter>
     </ClInclude>
     <ClInclude Include="ResourceCollection.h">
       <Filter>ソース ファイル\ResourceCollection</Filter>
@@ -779,22 +758,16 @@
       <Filter>ソース ファイル\Component\Base</Filter>
     </ClInclude>
     <ClInclude Include="GamePad.h">
-      <Filter>ソース ファイル\System\Input\GamePad</Filter>
+      <Filter>ソース ファイル\Application\Input\GamePad</Filter>
     </ClInclude>
     <ClInclude Include="PlayerMove.h">
       <Filter>ソース ファイル\Component\InGame\Player\PlayerMove</Filter>
     </ClInclude>
     <ClInclude Include="InputClass.h">
-      <Filter>ソース ファイル\System\Input</Filter>
+      <Filter>ソース ファイル\Application\Input</Filter>
     </ClInclude>
     <ClInclude Include="Geometory.h">
       <Filter>ソース ファイル\Graphics\BasicObject</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraMove.h">
-      <Filter>ソース ファイル\Component\InGame\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>ソース ファイル\Component\Collider</Filter>
     </ClInclude>
     <ClInclude Include="SphereCollider.h">
       <Filter>ソース ファイル\Component\Collider\Sphere</Filter>
@@ -804,6 +777,30 @@
     </ClInclude>
     <ClInclude Include="DebugCube.h">
       <Filter>ソース ファイル\Graphics\BasicObject\Cube</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>ソース ファイル\Graphics\BasicObject\Sphere</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionChecker.h">
+      <Filter>ソース ファイル\Component\Collider\CollisionChecker</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>ソース ファイル\Component\Collider\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionRegister.h">
+      <Filter>ソース ファイル\Component\Collider\CollisionRegister</Filter>
+    </ClInclude>
+    <ClInclude Include="MathUseful.h">
+      <Filter>ソース ファイル\System\MathUseful</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraMove.h">
+      <Filter>ソース ファイル\Component\InGame\Camera\CameraMove</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraInput.h">
+      <Filter>ソース ファイル\Component\InGame\Camera\CameraInput</Filter>
+    </ClInclude>
+    <ClInclude Include="GameKey.h">
+      <Filter>ソース ファイル\Application\Input\Keyboard</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

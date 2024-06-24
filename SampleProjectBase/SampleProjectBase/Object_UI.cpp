@@ -4,7 +4,7 @@
 
 using namespace DirectX::SimpleMath;
 
-Material* Object_UI::pMaterial = nullptr;
+MaterialClass* Object_UI::pShareMaterial = nullptr;
 
 void Object_UI::MakePoligon()
 {
@@ -48,7 +48,7 @@ Object_UI::Object_UI() : pTexture(nullptr)
 {
 	MakePoligon();
 
-	if (pMaterial == nullptr)	// 共通にマテリアルが設定されていないなら
+	if (pShareMaterial == nullptr)	// 共通にマテリアルが設定されていないなら
 	{
 		MakeMaterial();	// マテリアルを作成する
 	}
@@ -63,16 +63,16 @@ Object_UI::~Object_UI()
 void Object_UI::MakeMaterial()
 {
 	// マテリアルを生成
-	std::unique_ptr<Material> pMakeMaterial = std::make_unique<Material>();
+	std::unique_ptr<MaterialClass> pMakeMaterial = std::make_unique<MaterialClass>();
 
 	// シェーダーを設定
 	ShaderCollection* shCol = ShaderCollection::GetInstance();
-	pMakeMaterial->pVertexShader =  shCol->GetVertexShader("VS_UVScroll");
-	pMakeMaterial->pPixelShader = shCol->GetPixelShader("PixelShader");
-	pMaterial = pMakeMaterial.get();	// マテリアルをもらう
+	pMakeMaterial->SetVertexShader(shCol->GetVertexShader("VS_UVScroll"));
+	pMakeMaterial->SetPixelShader(shCol->GetPixelShader("PixelShader"));
+	pShareMaterial = pMakeMaterial.get();	// マテリアルをもらう
 
 	// 送る
-	ResourceCollection::GetInstance()->SetResource<Material>("M_ObjectUI", std::move(pMakeMaterial));
+	ResourceCollection::GetInstance()->SetResource<MaterialClass>("M_ObjectUI", std::move(pMakeMaterial));
 }
 
 void Object_UI::Update()
@@ -126,15 +126,14 @@ void Object_UI::SetupDraw()
 	wvp.world = worldMtx;
 	wvp.view = Matrix::Identity;
 	wvp.view = wvp.view.Transpose();
-	wvp.projection = renderer->GetOrthographic();	// 正投影行列を取得
 
-	pMaterial->pVertexShader->UpdateBuffer(0, &wvp);	// WVP行列を渡す
-	pMaterial->pVertexShader->UpdateBuffer(1, &uvScroll);	// WVP行列を渡す
-	pMaterial->pPixelShader->SetTexture(0, pTexture);	// シェーダーにテクスチャセット
+	pShareMaterial->GetVertexShader().UpdateBuffer(0, &wvp);	// WVP行列を渡す
+	pShareMaterial->GetVertexShader().UpdateBuffer(1, &uvScroll);	// WVP行列を渡す
+	pShareMaterial->GetPixelShader().SetTexture(0, pTexture);	// シェーダーにテクスチャセット
 
 	// シェーダーを固定
-	pMaterial->pVertexShader->Bind();
-	pMaterial->pPixelShader->Bind();
+	pShareMaterial->GetVertexShader().Bind();
+	pShareMaterial->GetPixelShader().Bind();
 }
 
 void Object_UI::LateUpdate()

@@ -2,13 +2,12 @@
 #include "GameObject.h"
 #include "Texture.h"
 #include "Mesh.h"
-#include "Material.h"
 
 // 2Dテクスチャを持ったオブジェクト
 class Object_2D : public GameObject
 {
 	std::unique_ptr<Mesh> pSquareMesh;	// テクスチャを貼るメッシュ
-	Material* pMaterial;	// 使用するマテリアル
+	MaterialClass* pMaterial;	// 使用するマテリアル
 	Texture* pTexture;	// 使用するテクスチャ
 
 	void MaterialSetting();	// マテリアルの設定

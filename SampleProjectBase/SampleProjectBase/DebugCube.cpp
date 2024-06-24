@@ -44,7 +44,7 @@ void DebugCube::Make()
 		4,6, 0,4, 4,5,
 	};
 
-	for (int i = 0; i < indexNum; i++)
+	for (u_int i = 0; i < indexNum; i++)
 	{
 		pIndicies[i] = idx[i];
 	}
