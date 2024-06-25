@@ -28,18 +28,15 @@ void SceneObjects::Update()
 	for (auto itr = list.begin(); itr != list.end(); itr++)
 	{
 		itr->second->Update();
-#ifdef _DEBUG
 		itr->second->ImGuiSet();
-#endif // _DEBUG
 	}
 
 	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
 	{
 		itr->second->Update();
-#ifdef _DEBUG
-		itr->second->ImGuiSet();
-#endif // _DEBUG
+		itr->second->ImGuiSet();	
 	}
+
 #ifdef _DEBUG
 	ImGui::End();
 #endif // _DEBUG
@@ -70,7 +67,7 @@ void SceneObjects::Draw()
 
 
 	// ↓平行投影をさせる //
-
+	
 
 	//------------------//
 	
@@ -81,7 +78,7 @@ void SceneObjects::Draw()
 	}
 }
 
-void SceneObjects::SetObject(const std::string& _objectName, std::unique_ptr<GameObject> _objPtr)
+GameObject* SceneObjects::SetObject(const std::string& _objectName, std::unique_ptr<GameObject> _objPtr)
 {
 	// 既にオブジェクトの名前があるなら
 	u_int loop = 0;
@@ -95,10 +92,11 @@ void SceneObjects::SetObject(const std::string& _objectName, std::unique_ptr<Gam
 		setList = &uiList;	// UIリストにセットする
 	}
 
+	// 同じ名前のオブジェクトがあった場合名前の後ろに数字をつける
 	while (true)	// セットできるまで
 	{
 		std::string number = std::to_string(loop);
-		if (loop == 0)	// 最初は何もつけないようにする
+		if (loop == 0)	// １回目は数字をつけないようにする
 		{
 			number = "";
 		}
@@ -106,7 +104,7 @@ void SceneObjects::SetObject(const std::string& _objectName, std::unique_ptr<Gam
 		setName = _objectName + number;	// オブジェクトの名前＋数字
 
 		auto itr = setList->find(setName);
-		if (itr == setList->end())	// 探してなかったら
+		if (itr == setList->end())	// 探して無かったら
 		{
 			break;	// ループを終わる
 		}
@@ -116,7 +114,33 @@ void SceneObjects::SetObject(const std::string& _objectName, std::unique_ptr<Gam
 	}
 
 	_objPtr->SetName(setName);	// オブジェクトに名前を設定
+	GameObject* retPtr = _objPtr.get();
 	setList->insert(std::pair<std::string, std::unique_ptr<GameObject>>(setName, std::move(_objPtr)));
+
+	return retPtr;
+}
+
+void SceneObjects::DeleteObj(GameObject& _deleteObj)
+{
+	// 配列内に同じアドレスを探す
+	for (auto itr = list.begin(); itr != list.end(); itr++)
+	{
+		if (itr->second.get() != &_deleteObj) continue;
+
+		// あったら
+		list.erase(itr);	// 削除する
+		return;
+	}
+
+	// 配列内に同じアドレスを探す
+	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
+	{
+		if (itr->second.get() != &_deleteObj) continue;
+
+		// あったら
+		uiList.erase(itr);	// 削除する
+		return;
+	}
 }
 
 void SceneObjects::Start()

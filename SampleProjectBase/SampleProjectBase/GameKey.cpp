@@ -14,8 +14,8 @@ GameKey::GameKey()
 GameKey::~GameKey()
 {
 	// 解放処理
-	key->Unacquire();
-	key->Release();
+	inputDevice->Unacquire();
+	inputDevice->Release();
 }
 
 bool GameKey::Init(HWND _hwnd)
@@ -27,22 +27,22 @@ bool GameKey::Init(HWND _hwnd)
 		return false;
 
 	// キーデバイスの作成
-	hr = input->CreateDevice(GUID_SysKeyboard, &key, NULL);
+	hr = input->CreateDevice(GUID_SysKeyboard, &inputDevice, NULL);
 	if (FAILED(hr))
 		return false;
 
 	// キーフォーマットのセット
-	hr = key->SetDataFormat(&c_dfDIKeyboard);
+	hr = inputDevice->SetDataFormat(&c_dfDIKeyboard);
 	if (FAILED(hr))
 		return false;
 
 	// キーの協調レベルをセット
-	hr = key->SetCooperativeLevel(_hwnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
+	hr = inputDevice->SetCooperativeLevel(_hwnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
 	if (FAILED(hr))
 		return false;
 
 	// 入力デバイスへのアクセス権利を取得
-	hr = key->Acquire();
+	hr = inputDevice->Acquire();
 	if (FAILED(hr))
 		return false;
 
@@ -55,10 +55,25 @@ void GameKey::InputUpdate()
 	memcpy_s(o_keyState, sizeof(o_keyState), keyState, sizeof(keyState));
 
 	// キーボードデバイスの取得
-	HRESULT hr = key->GetDeviceState(KEY_MAX, keyState);
+	HRESULT hr = inputDevice->GetDeviceState(KEY_MAX, keyState);
 
 	if (FAILED(hr))	// デバイスロスト時は再度制御開始する
 	{
-		key->Acquire();
+		inputDevice->Acquire();
 	}
+}
+
+bool GameKey::GetKey(int _key)
+{
+	return (keyState[_key] & 0x80);
+}
+
+bool GameKey::GetKeyDown(int _key)
+{
+	return ((keyState[_key] & 0x80) && !(o_keyState[_key] & 0x80));
+}
+
+bool GameKey::GetKeyUp(int _key)
+{
+	return (!(keyState[_key] & 0x80) && (o_keyState[_key] & 0x80));
 }

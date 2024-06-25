@@ -13,18 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="ソース ファイル\Application">
-      <UniqueIdentifier>{5466729c-5537-4707-b5b1-05328d8fd375}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Application\DirectX3D11">
-      <UniqueIdentifier>{b04cefbf-b898-49b0-95d6-17faa5e46b0f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Application\MainApplication">
-      <UniqueIdentifier>{52bc151c-6b6b-4f7e-b980-0fbd87175227}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Application\Window">
-      <UniqueIdentifier>{9aaa4cd1-100a-437d-8b04-368c45b8da7d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics">
       <UniqueIdentifier>{562a209c-0565-4c33-be9d-a735858792ad}</UniqueIdentifier>
     </Filter>
@@ -46,32 +34,8 @@
     <Filter Include="ソース ファイル\Graphics\Model\Mesh">
       <UniqueIdentifier>{da97f189-bf52-4ca3-a034-e91971362e8d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Application\DirectX3D11\Render">
-      <UniqueIdentifier>{80e102d7-e0fd-43b9-9a50-a1df9c440f43}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Application\DirectX3D11\Render\BlendState">
-      <UniqueIdentifier>{e46d00a0-0292-4162-9bb5-01ed5a935ebd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Application\DirectX3D11\Render\CbSet">
-      <UniqueIdentifier>{beac274c-3daf-40c2-8f23-58d0ac398439}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Application\DirectX3D11\Render\D3D11_Renderer">
-      <UniqueIdentifier>{a41c40b7-d197-4bfd-96a9-b698e0e82856}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Application\DirectX3D11\Render\View">
-      <UniqueIdentifier>{c234daf4-e652-4ee1-a90e-8a9a60a9a141}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Application\DirectX3D11\Render\RenderParam">
-      <UniqueIdentifier>{7c9d4fd5-d3da-448f-af4d-a491c239d133}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Application\DirectX3D11\Render\Projection">
-      <UniqueIdentifier>{c1b93871-cebf-4d8d-a674-d96b47a06c5b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\System\MessageError">
       <UniqueIdentifier>{2f5e4082-2ae6-402d-90d1-8dcf684cbeab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Application\DirectX3D11\Render\Projection\PerspectiveProj">
-      <UniqueIdentifier>{571bfd00-895f-4fc2-a3bb-f8979231d705}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Shader\ShaderRetaion">
       <UniqueIdentifier>{0a8827b4-8d96-4039-a144-585385fd6fc7}</UniqueIdentifier>
@@ -136,9 +100,6 @@
     <Filter Include="ソース ファイル\Graphics\Material">
       <UniqueIdentifier>{a83c15aa-5988-40c1-ac96-d5c7154ca83a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Application\DirectX3D11\Render\Sampler">
-      <UniqueIdentifier>{ef2a43b5-a26c-496b-80e2-a491592009f1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\Shader\Shader">
       <UniqueIdentifier>{e7d17c28-0c61-4a5c-a1b9-6436bfa75e54}</UniqueIdentifier>
     </Filter>
@@ -150,9 +111,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Object\Camera">
       <UniqueIdentifier>{6a26953d-a672-405b-952f-60d285febe89}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Application\FramerRate">
-      <UniqueIdentifier>{ab52b659-b273-451b-8c83-6c89a4913459}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\ResourceCollection">
       <UniqueIdentifier>{0914fd39-6184-4c51-bbf5-0a403f0e3bdd}</UniqueIdentifier>
@@ -280,14 +238,68 @@
     <Filter Include="ソース ファイル\Component\InGame\Camera\CameraInput">
       <UniqueIdentifier>{82bec4ac-dc99-4c37-a7ba-9b5b3727bd14}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Application\Input">
+    <Filter Include="ソース ファイル\System\Application">
+      <UniqueIdentifier>{5466729c-5537-4707-b5b1-05328d8fd375}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\DirectX3D11">
+      <UniqueIdentifier>{b04cefbf-b898-49b0-95d6-17faa5e46b0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\DirectX3D11\Render">
+      <UniqueIdentifier>{80e102d7-e0fd-43b9-9a50-a1df9c440f43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\DirectX3D11\Render\BlendState">
+      <UniqueIdentifier>{e46d00a0-0292-4162-9bb5-01ed5a935ebd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\DirectX3D11\Render\CbSet">
+      <UniqueIdentifier>{beac274c-3daf-40c2-8f23-58d0ac398439}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\DirectX3D11\Render\D3D11_Renderer">
+      <UniqueIdentifier>{a41c40b7-d197-4bfd-96a9-b698e0e82856}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\DirectX3D11\Render\View">
+      <UniqueIdentifier>{c234daf4-e652-4ee1-a90e-8a9a60a9a141}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\DirectX3D11\Render\RenderParam">
+      <UniqueIdentifier>{7c9d4fd5-d3da-448f-af4d-a491c239d133}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\DirectX3D11\Render\Projection">
+      <UniqueIdentifier>{c1b93871-cebf-4d8d-a674-d96b47a06c5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\DirectX3D11\Render\Projection\PerspectiveProj">
+      <UniqueIdentifier>{571bfd00-895f-4fc2-a3bb-f8979231d705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\DirectX3D11\Render\Sampler">
+      <UniqueIdentifier>{ef2a43b5-a26c-496b-80e2-a491592009f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\MainApplication">
+      <UniqueIdentifier>{52bc151c-6b6b-4f7e-b980-0fbd87175227}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\Window">
+      <UniqueIdentifier>{9aaa4cd1-100a-437d-8b04-368c45b8da7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\FramerRate">
+      <UniqueIdentifier>{ab52b659-b273-451b-8c83-6c89a4913459}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\Input">
       <UniqueIdentifier>{32ae1d60-8e3d-44fb-8b87-d1a0ed7397f2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Application\Input\GamePad">
+    <Filter Include="ソース ファイル\System\Application\Input\GamePad">
       <UniqueIdentifier>{7e2c85a4-9e53-488f-882b-c17ed29167f2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Application\Input\Keyboard">
+    <Filter Include="ソース ファイル\System\Application\Input\Keyboard">
       <UniqueIdentifier>{67dedc71-2688-4e08-8632-ead66bf81b9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\GameMode">
+      <UniqueIdentifier>{9c95c819-a91d-411a-80fd-9a3899e66cc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Test">
+      <UniqueIdentifier>{3c61951c-e04f-4483-8c93-ee48a0b9497f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\TankFireObj">
+      <UniqueIdentifier>{edfb3745-ef82-405e-ada1-6969c13f46aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\TankFireObj\Tank">
+      <UniqueIdentifier>{30742376-b87f-4e1a-8e2c-fb6837c989bb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -312,19 +324,19 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="BlendState.cpp">
-      <Filter>ソース ファイル\Application\DirectX3D11\Render\BlendState</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\BlendState</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>ソース ファイル\Object\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Direct3D11.cpp">
-      <Filter>ソース ファイル\Application\DirectX3D11</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11</Filter>
     </ClCompile>
     <ClCompile Include="D3D11_Renderer.cpp">
-      <Filter>ソース ファイル\Application\DirectX3D11\Render\D3D11_Renderer</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\D3D11_Renderer</Filter>
     </ClCompile>
     <ClCompile Include="MainApplication.cpp">
-      <Filter>ソース ファイル\Application\MainApplication</Filter>
+      <Filter>ソース ファイル\System\Application\MainApplication</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>ソース ファイル\Graphics\Model\Mesh</Filter>
@@ -336,25 +348,22 @@
       <Filter>ソース ファイル\Graphics\Model</Filter>
     </ClCompile>
     <ClCompile Include="RenderParam.cpp">
-      <Filter>ソース ファイル\Application\DirectX3D11\Render\RenderParam</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\RenderParam</Filter>
     </ClCompile>
     <ClCompile Include="SetUpPerspectiveProj.cpp">
-      <Filter>ソース ファイル\Application\DirectX3D11\Render\Projection\PerspectiveProj</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\Projection\PerspectiveProj</Filter>
     </ClCompile>
     <ClCompile Include="SetUpViewTrans.cpp">
-      <Filter>ソース ファイル\Application\DirectX3D11\Render\View</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\View</Filter>
     </ClCompile>
     <ClCompile Include="ShaderCollection.cpp">
       <Filter>ソース ファイル\Graphics\Shader\ShaderRetaion</Filter>
-    </ClCompile>
-    <ClCompile Include="Singleton_Base.cpp">
-      <Filter>ソース ファイル\System\Singleton_Base</Filter>
     </ClCompile>
     <ClCompile Include="Triangle.cpp">
       <Filter>ソース ファイル\Graphics\Triangle</Filter>
     </ClCompile>
     <ClCompile Include="Window.cpp">
-      <Filter>ソース ファイル\Application\Window</Filter>
+      <Filter>ソース ファイル\System\Application\Window</Filter>
     </ClCompile>
     <ClCompile Include="BroadScene_Base.cpp">
       <Filter>ソース ファイル\Scene\BroadScene\BroadScane_Base</Filter>
@@ -399,7 +408,7 @@
       <Filter>ソース ファイル\Graphics\Material</Filter>
     </ClCompile>
     <ClCompile Include="Sampler.cpp">
-      <Filter>ソース ファイル\Application\DirectX3D11\Render\Sampler</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\Sampler</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>ソース ファイル\System\Transform</Filter>
@@ -408,7 +417,7 @@
       <Filter>ソース ファイル\Object\Object_3D</Filter>
     </ClCompile>
     <ClCompile Include="VariableFrameRate.cpp">
-      <Filter>ソース ファイル\Application\FramerRate</Filter>
+      <Filter>ソース ファイル\System\Application\FramerRate</Filter>
     </ClCompile>
     <ClCompile Include="ResourceCollection.cpp">
       <Filter>ソース ファイル\ResourceCollection</Filter>
@@ -498,13 +507,13 @@
       <Filter>ソース ファイル\Component\Base</Filter>
     </ClCompile>
     <ClCompile Include="GamePad.cpp">
-      <Filter>ソース ファイル\Application\Input\GamePad</Filter>
+      <Filter>ソース ファイル\System\Application\Input\GamePad</Filter>
     </ClCompile>
     <ClCompile Include="PlayerMove.cpp">
       <Filter>ソース ファイル\Component\InGame\Player\PlayerMove</Filter>
     </ClCompile>
     <ClCompile Include="InputClass.cpp">
-      <Filter>ソース ファイル\Application\Input</Filter>
+      <Filter>ソース ファイル\System\Application\Input</Filter>
     </ClCompile>
     <ClCompile Include="Geometory.cpp">
       <Filter>ソース ファイル\Graphics\BasicObject</Filter>
@@ -540,7 +549,19 @@
       <Filter>ソース ファイル\Component\InGame\Camera\CameraInput</Filter>
     </ClCompile>
     <ClCompile Include="GameKey.cpp">
-      <Filter>ソース ファイル\Application\Input\Keyboard</Filter>
+      <Filter>ソース ファイル\System\Application\Input\Keyboard</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMode.cpp">
+      <Filter>ソース ファイル\System\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="SObjectRegister.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Tank.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Field.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -548,37 +569,37 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="BlendState.h">
-      <Filter>ソース ファイル\Application\DirectX3D11\Render\BlendState</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\BlendState</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>ソース ファイル\Object\Camera</Filter>
     </ClInclude>
     <ClInclude Include="CbProjectionSet.h">
-      <Filter>ソース ファイル\Application\DirectX3D11\Render\CbSet</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\CbSet</Filter>
     </ClInclude>
     <ClInclude Include="CbTransformSet.h">
-      <Filter>ソース ファイル\Application\DirectX3D11\Render\CbSet</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\CbSet</Filter>
     </ClInclude>
     <ClInclude Include="CbViewSet.h">
-      <Filter>ソース ファイル\Application\DirectX3D11\Render\CbSet</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\CbSet</Filter>
     </ClInclude>
     <ClInclude Include="Direct3D11.h">
-      <Filter>ソース ファイル\Application\DirectX3D11</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11</Filter>
     </ClInclude>
     <ClInclude Include="D3D11_Renderer.h">
-      <Filter>ソース ファイル\Application\DirectX3D11\Render\D3D11_Renderer</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\D3D11_Renderer</Filter>
     </ClInclude>
     <ClInclude Include="ISetUpProjection.h">
-      <Filter>ソース ファイル\Application\DirectX3D11\Render\Projection</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\Projection</Filter>
     </ClInclude>
     <ClInclude Include="IGetRenderResource.h">
-      <Filter>ソース ファイル\Application\DirectX3D11\Render\RenderParam</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\RenderParam</Filter>
     </ClInclude>
     <ClInclude Include="IGetRenderPara.h">
-      <Filter>ソース ファイル\Application\DirectX3D11\Render</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\Render</Filter>
     </ClInclude>
     <ClInclude Include="MainApplication.h">
-      <Filter>ソース ファイル\Application\MainApplication</Filter>
+      <Filter>ソース ファイル\System\Application\MainApplication</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>ソース ファイル\Graphics\Model\Mesh</Filter>
@@ -590,13 +611,13 @@
       <Filter>ソース ファイル\Graphics\Model</Filter>
     </ClInclude>
     <ClInclude Include="RenderParam.h">
-      <Filter>ソース ファイル\Application\DirectX3D11\Render\RenderParam</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\RenderParam</Filter>
     </ClInclude>
     <ClInclude Include="SetUpPerspectiveProj.h">
-      <Filter>ソース ファイル\Application\DirectX3D11\Render\Projection\PerspectiveProj</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\Projection\PerspectiveProj</Filter>
     </ClInclude>
     <ClInclude Include="SetUpViewTrans.h">
-      <Filter>ソース ファイル\Application\DirectX3D11\Render\View</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\View</Filter>
     </ClInclude>
     <ClInclude Include="ShaderCollection.h">
       <Filter>ソース ファイル\Graphics\Shader\ShaderRetaion</Filter>
@@ -608,7 +629,7 @@
       <Filter>ソース ファイル\Graphics\Triangle</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
-      <Filter>ソース ファイル\Application\Window</Filter>
+      <Filter>ソース ファイル\System\Application\Window</Filter>
     </ClInclude>
     <ClInclude Include="BroadScene_Base.h">
       <Filter>ソース ファイル\Scene\BroadScene\BroadScane_Base</Filter>
@@ -653,7 +674,7 @@
       <Filter>ソース ファイル\Graphics\Material</Filter>
     </ClInclude>
     <ClInclude Include="Sampler.h">
-      <Filter>ソース ファイル\Application\DirectX3D11\Render\Sampler</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\Sampler</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>ソース ファイル\System\Transform</Filter>
@@ -662,7 +683,7 @@
       <Filter>ソース ファイル\Object\Object_3D</Filter>
     </ClInclude>
     <ClInclude Include="VariableFrameRate.h">
-      <Filter>ソース ファイル\Application\FramerRate</Filter>
+      <Filter>ソース ファイル\System\Application\FramerRate</Filter>
     </ClInclude>
     <ClInclude Include="ResourceCollection.h">
       <Filter>ソース ファイル\ResourceCollection</Filter>
@@ -758,13 +779,13 @@
       <Filter>ソース ファイル\Component\Base</Filter>
     </ClInclude>
     <ClInclude Include="GamePad.h">
-      <Filter>ソース ファイル\Application\Input\GamePad</Filter>
+      <Filter>ソース ファイル\System\Application\Input\GamePad</Filter>
     </ClInclude>
     <ClInclude Include="PlayerMove.h">
       <Filter>ソース ファイル\Component\InGame\Player\PlayerMove</Filter>
     </ClInclude>
     <ClInclude Include="InputClass.h">
-      <Filter>ソース ファイル\Application\Input</Filter>
+      <Filter>ソース ファイル\System\Application\Input</Filter>
     </ClInclude>
     <ClInclude Include="Geometory.h">
       <Filter>ソース ファイル\Graphics\BasicObject</Filter>
@@ -800,7 +821,19 @@
       <Filter>ソース ファイル\Component\InGame\Camera\CameraInput</Filter>
     </ClInclude>
     <ClInclude Include="GameKey.h">
-      <Filter>ソース ファイル\Application\Input\Keyboard</Filter>
+      <Filter>ソース ファイル\System\Application\Input\Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMode.h">
+      <Filter>ソース ファイル\System\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="SObjectRegister.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Tank.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Field.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

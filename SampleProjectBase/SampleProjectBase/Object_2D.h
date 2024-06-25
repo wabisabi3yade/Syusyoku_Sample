@@ -14,7 +14,7 @@ class Object_2D : public GameObject
 	void MakeVerticies();	// ’¸“_‚ÌˆÊ’u‚ğ•Ï‚¦‚é
 public:
 	Object_2D();
-	~Object_2D();
+	virtual ~Object_2D();
 
 	void Draw();
 	void DrawSetup(D3D11_Renderer& _renderer);	// •`‰æ€”õ

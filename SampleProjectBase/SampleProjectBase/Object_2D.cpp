@@ -17,8 +17,8 @@ void Object_2D::MaterialSetting()
 		ShaderCollection* shCol = ShaderCollection::GetInstance();
 
 		// 使用するシェーダーをマテリアルに設定
-		setMaterial->SetVertexShader(shCol->GetVertexShader("VertexShader"));
-		setMaterial->SetPixelShader(shCol->GetPixelShader("PixelShader"));
+		setMaterial->SetVertexShader(shCol->GetVertexShader(shCol->defaultVS));
+		setMaterial->SetPixelShader(shCol->GetPixelShader(shCol->defaultPS));
 
 		pMaterial = setMaterial.get();	// ポインタを受け取る
 		// リソース管理に2D用マテリアルをセットする

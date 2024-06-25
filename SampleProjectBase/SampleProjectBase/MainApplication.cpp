@@ -39,16 +39,20 @@ void MainApplication::Init(HINSTANCE _hInst)
 	// ウィンドウの初期化
 	pWindow->Init(_hInst);
 
-	// 可変フレームレートクラス生成
-	variableFps = std::make_unique<VariableFrameRate>(FPS);
-	input = std::make_unique<InputClass>();	// 入力
-
 	// Direct3Dクラスの確保
 	pD3D = Direct3D11::GetInstance();
 	HWND hwnd = pWindow->GetWindowHandle();
 	// 初期化
 	pD3D->Init(hwnd);
 
+	// 可変フレームレートクラス生成
+	variableFps = std::make_unique<VariableFrameRate>(FPS);
+
+	// 入力クラスを作成
+	input = std::make_unique<InputClass>();	
+	input->Init(hwnd);	// 初期化
+
+	
 	// シーンマネージャーを作成
 	pSceneManager = SceneManager::GetInstance();
 
@@ -84,7 +88,7 @@ void MainApplication::GameLoop()
 		ImGui::Begin("System");
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 
-		GamePad()->DebugInput();
+		GamePad().DebugInput();
 		ImGui::End();
 #endif // _DEBUG
 

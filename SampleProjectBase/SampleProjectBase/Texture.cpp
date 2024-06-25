@@ -63,8 +63,8 @@ bool Texture::Load(const char* _pathName)
 	}
 	else if (SUCCEEDED(hr))
 	{
-		width = metaData.width;
-		height = metaData.height;
+		width = static_cast<u_int>(metaData.width);
+		height = static_cast<u_int>(metaData.height);
 	}
 
 	return true;

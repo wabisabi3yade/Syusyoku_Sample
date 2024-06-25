@@ -9,11 +9,13 @@ using namespace DirectX::SimpleMath;
 
 SphereCollider::~SphereCollider()
 {
-	
+
 }
 
 void SphereCollider::Init()
 {
+	name = "SphereCollider";
+
 	Collider::Init();	// ’Ç‰Áˆ—‚·‚é
 
 	radius = VERTEX_RADIUS;	// ”¼Œa‚ğ‰Šú‰»
@@ -40,12 +42,8 @@ void SphereCollider::Draw()
 
 void SphereCollider::SetParameter()
 {
-	if (ImGui::TreeNode("SphereCollider"))
-	{
-		ImGui::DragFloat("radius", &radius);
-		ImGuiMethod::DragFloat3(posOffset, "posOffset");
-		ImGui::TreePop();
-	}
+	ImGui::DragFloat("radius", &radius);
+	ImGuiMethod::DragFloat3(posOffset, "posOffset");
 }
 
 DirectX::SimpleMath::Vector3 SphereCollider::GetCenterPos() const

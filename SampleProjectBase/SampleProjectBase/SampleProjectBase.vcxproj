@@ -50,7 +50,9 @@
     <ClCompile Include="CameraInput.cpp" />
     <ClCompile Include="CollisionChecker.cpp" />
     <ClCompile Include="CollisionRegister.cpp" />
+    <ClCompile Include="Field.cpp" />
     <ClCompile Include="GameKey.cpp" />
+    <ClCompile Include="GameMode.cpp" />
     <ClCompile Include="Geometory.cpp" />
     <ClCompile Include="BasicObject_Base.cpp" />
     <ClCompile Include="BlendState.cpp" />
@@ -79,9 +81,11 @@
     <ClCompile Include="SceneObjects.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Object_2D.cpp" />
+    <ClCompile Include="SObjectRegister.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="Tag.cpp" />
+    <ClCompile Include="Tank.cpp" />
     <ClCompile Include="Tank_BroadScene.cpp" />
     <ClCompile Include="Tank_ChangeSub.cpp" />
     <ClCompile Include="Tank_InGameSub.cpp" />
@@ -118,7 +122,6 @@
     <ClCompile Include="SetUpPerspectiveProj.cpp" />
     <ClCompile Include="SetUpViewTrans.cpp" />
     <ClCompile Include="ShaderCollection.cpp" />
-    <ClCompile Include="Singleton_Base.cpp" />
     <ClCompile Include="SubScene_Base.cpp" />
     <ClCompile Include="Test_Broad.cpp" />
     <ClCompile Include="Test_ChangeSubScene.cpp" />
@@ -133,7 +136,9 @@
     <ClInclude Include="CameraInput.h" />
     <ClInclude Include="CollisionChecker.h" />
     <ClInclude Include="CollisionRegister.h" />
+    <ClInclude Include="Field.h" />
     <ClInclude Include="GameKey.h" />
+    <ClInclude Include="GameMode.h" />
     <ClInclude Include="Geometory.h" />
     <ClInclude Include="BasicObject_Base.h" />
     <ClInclude Include="BlendState.h" />
@@ -165,9 +170,11 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Object_2D.h" />
     <ClInclude Include="JISToUTF8.h" />
+    <ClInclude Include="SObjectRegister.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="Tag.h" />
+    <ClInclude Include="Tank.h" />
     <ClInclude Include="Tank_BroadScene.h" />
     <ClInclude Include="Tank_ChangeSub.h" />
     <ClInclude Include="Tank_InGameSub.h" />
@@ -330,7 +337,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>

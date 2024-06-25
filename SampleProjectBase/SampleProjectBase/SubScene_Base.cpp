@@ -3,6 +3,8 @@
 
 #include "Camera.h"
 #include "CollisionRegister.h"
+#include "GameMode.h"
+#include "SObjectRegister.h"
 
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
@@ -28,9 +30,15 @@ SubScene_Base::SubScene_Base(SceneMoveInfo* _pSceneMoveInfo)
 	resourceCollection = ResourceCollection::GetInstance();
 	// シーンオブジェクト管理クラス作成
 	sceneObjects = std::make_unique<SceneObjects>();
+	// シーンオブジェクト登録クラスに登録する
+	SObjectRegister::GetInstance()->SetSceneObjects(*sceneObjects.get());
+
 	// カメラ生成
 	std::unique_ptr<Camera> mainCamera = std::make_unique<Camera>();
+	Camera* camPtr = mainCamera.get();
+	GameMode::GetInstance()->SetCamera(*camPtr);	// ゲームモードにカメラを設定する
 	sceneObjects->SetObject("MainCamera", std::move(mainCamera));
+
 	// 当たり判定チェッカークラスを生成し、当たり判定登録対象にする
 	collisionChcker = std::make_unique<CollisionChecker>();
 	CollisionRegister::GetInstance()->SetCollisionChecker(*collisionChcker);
@@ -39,6 +47,10 @@ SubScene_Base::SubScene_Base(SceneMoveInfo* _pSceneMoveInfo)
 SubScene_Base::~SubScene_Base()
 {
 	sceneObjects.reset();	// シーン内のオブジェクトの終了処理を行う
+	GameMode::Delete();	// シーンごとにゲームモードを作り直す
+	// 登録クラスを消しておく
+	CollisionRegister::Delete();
+	SObjectRegister::Delete();
 }
 
 

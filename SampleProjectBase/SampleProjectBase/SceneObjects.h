@@ -21,7 +21,10 @@ public:
 	void Draw();	// 描画処理(カメラとの距離で描画順を決める)
 
 	// 配列にオブジェクトを入れる
-	void SetObject(const std::string& _objectName, std::unique_ptr<GameObject> _objPtr);
+	GameObject* SetObject(const std::string& _objectName, std::unique_ptr<GameObject> _objPtr);
+
+	//　配列からゲームオブジェクトを削除する
+	void DeleteObj(GameObject& _deleteObj);
 
 	// Start処理をする
 	void Start();
@@ -46,7 +49,7 @@ inline T* SceneObjects::GetSceneObject(const std::string& _objectName)
 		itr = uiList.find(_objectName);
 
 		// それでもなかったら
-		if (itr == list.end())
+		if (itr == uiList.end())
 		{
 			std::string message = "リスト内に名前のオブジェクトがありませんでした" + _objectName;
 			ImGuiDebugLog::Add(message);

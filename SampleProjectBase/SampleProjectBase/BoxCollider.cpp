@@ -7,6 +7,8 @@ using namespace DirectX::SimpleMath;
 
 void BoxCollider::Init()
 {
+	name = "BoxCollider";
+
 	Collider::Init();	// 追加処理をする
 
 	size = Vector3::One;
@@ -22,7 +24,7 @@ void BoxCollider::Draw()
 	Vector3 centerPos_w = t.position + posOffset * t.scale; // スケールに対応させたオフセット座標を足す
 	Geometory::SetPosition(centerPos_w);
 	Vector3 rotation_w = t.rotation + angleOffset;	// 足す
-	Geometory::SetRotation(rotation_w);	
+	Geometory::SetRotation(rotation_w);
 	Vector3 scale_w = t.scale * size;// 掛ける
 	Geometory::SetScale(scale_w);
 
@@ -37,19 +39,15 @@ void BoxCollider::Draw()
 
 void BoxCollider::SetParameter()
 {
-	if(ImGui::TreeNode("BoxCollider"))
-	{
-		ImGui::Checkbox("AABB", &isAABB);
-		ImGuiMethod::DragFloat3(posOffset, "posOffset");
-		ImGuiMethod::DragFloat3(angleOffset, "angleOffset");
-		ImGuiMethod::DragFloat3(size, "size");
-		ImGui::TreePop();
-	}
+	ImGui::Checkbox("AABB", &isAABB);
+	ImGuiMethod::DragFloat3(posOffset, "posOffset");
+	ImGuiMethod::DragFloat3(angleOffset, "angleOffset");
+	ImGuiMethod::DragFloat3(size, "size");
 }
 
 DirectX::SimpleMath::Vector3 BoxCollider::GetCenterPos() const
 {
-	const Transform& t =  gameObject->transform;
+	const Transform& t = gameObject->transform;
 	return t.position + posOffset * t.scale;
 }
 

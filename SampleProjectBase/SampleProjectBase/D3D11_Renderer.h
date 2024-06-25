@@ -62,6 +62,6 @@ public:
 	ID3D11DeviceContext* GetDeviceContext() override { return pImmediateContext; }
 	// ビューポートを取得（どのビューポートを指定）
 	const D3D11_VIEWPORT& GetViewPort(u_int _slot) { return viewPorts[_slot]; }
-	u_int GetViewPortNum() { return viewPorts.size(); }
+	u_int GetViewPortNum() { return static_cast<u_int>(viewPorts.size()); }
 };
 

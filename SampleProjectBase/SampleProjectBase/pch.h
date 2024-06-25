@@ -19,6 +19,7 @@
 #include <algorithm>
 #include <string>
 #include <unordered_map>	// 順番を気にしないmap配列
+#include <typeinfo>	// 型名を取得
 #include <vector>	// 動的配列
 
 #include "MathUseful.h"	// 自作数学便利関数

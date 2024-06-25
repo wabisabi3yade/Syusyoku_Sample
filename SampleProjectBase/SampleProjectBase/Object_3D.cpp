@@ -15,16 +15,6 @@ Object_3D::~Object_3D()
 	Release();
 }
 
-void Object_3D::Update()
-{
-	GameObject::Update();
-}
-
-void Object_3D::LateUpdate()
-{
-	GameObject::LateUpdate();
-}
-
 void Object_3D::Draw()
 {
 	if (!isActive) return;

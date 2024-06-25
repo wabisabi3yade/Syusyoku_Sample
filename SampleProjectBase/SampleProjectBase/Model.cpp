@@ -265,6 +265,7 @@ void Model::Draw(const Transform& _transform) const
 		// 頂点シェーダー
 		material.GetVertexShader().UpdateBuffer(0, &wvp);
 		material.GetVertexShader().UpdateBuffer(1, &materialParam);
+
 		// ピクセルシェーダー
 		material.GetPixelShader().UpdateBuffer(1, &materialParam);
 		if(materialParam.isTextureEnable)	// テクスチャがあるなら

@@ -9,16 +9,17 @@ constexpr float MOVE_SPEED(10.0f);
 
 void PlayerMove::Input()
 {
-	GamePad* pad = MainApplication::GamePad();
+	const GamePad& pad = MainApplication::GetInput().GetGamePad();
 
 	moveVec = Vector3::Zero;
 
-	moveVec.x = pad->GetValue(GamePad::Value::StickL_X);
-	moveVec.z = pad->GetValue(GamePad::Value::StickL_Y);
+	moveVec.x = pad.GetValue(GamePad::Value::StickL_X);
+	moveVec.z = pad.GetValue(GamePad::Value::StickL_Y);
 }
 
 void PlayerMove::Init()
 {
+	name = "PlayerMove";
 	moveSpeed = MOVE_SPEED;
 }
 
@@ -39,10 +40,5 @@ void PlayerMove::Draw()
 
 void PlayerMove::SetParameter()
 {
-	if (ImGui::TreeNode("PlayerMove"))
-	{
-		ImGui::DragFloat("moveSpeed", &moveSpeed);
-
-		ImGui::TreePop();
-	}
+	ImGui::DragFloat("moveSpeed", &moveSpeed);
 }

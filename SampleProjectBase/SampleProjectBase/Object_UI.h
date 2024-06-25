@@ -18,7 +18,7 @@ class Object_UI :
     void SetupDraw();
 public:
     Object_UI();
-    ~Object_UI();
+    virtual ~Object_UI();
 
     // ˆê˜Aˆ—
     void Update() override;

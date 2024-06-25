@@ -6,11 +6,11 @@ class GameKey
 {
 	static const u_int KEY_MAX = 256;	//キー最大数
 
-	bool keyState[KEY_MAX];	// キー入力状態
-	bool o_keyState[KEY_MAX];	// 1フレーム前の状態
+	unsigned char keyState[KEY_MAX];	// キー入力状態
+	unsigned char o_keyState[KEY_MAX];	// 1フレーム前の状態
 
 	LPDIRECTINPUT8 input;	// インプット
-	LPDIRECTINPUTDEVICE8 key;	// インプットデバイス
+	LPDIRECTINPUTDEVICE8 inputDevice;	// インプットデバイス
 
 public:
 	GameKey();
@@ -20,5 +20,8 @@ public:
 
 	void InputUpdate();
 
+	bool GetKey(int _key);	// 押されているか
+	bool GetKeyDown(int _key);	// 押した瞬間
+	bool GetKeyUp(int _key);	// 離された瞬間
 };
 

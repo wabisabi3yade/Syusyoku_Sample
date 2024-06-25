@@ -4,6 +4,8 @@
 #include "Component.h"
 #include "Collider.h"
 #include "CollisionRegister.h"
+#include "SObjectRegister.h"
+
 void GameObject::ActiveProcess()
 {
 	CollisionRegister* colRegister = CollisionRegister::GetInstance();
@@ -11,14 +13,14 @@ void GameObject::ActiveProcess()
 	{
 		// 当たり判定チェッククラスに追加
 		Collider* col = dynamic_cast<Collider*>(c.get());
-		if (col != nullptr)	
+		if (col != nullptr)
 		{
 			colRegister->AddCollider(*col);	// 追加
 		}
 
 		if (!c->GetIsStartYet())
 		{
-			
+
 		}
 
 	}
@@ -44,14 +46,19 @@ void GameObject::NotActiveProcess()
 }
 void GameObject::Update()
 {
+	for (auto& itr : pComponents)
+	{
+		if (!itr->isEnable) continue;
+		itr->Update();
+	}
+}
+
+void GameObject::UpdateBase()
+{
 	if (!isActive) return;
 
 	transform.UpdateVector();	// 方向ベクトルを更新する
-
-	for (auto& itr : pComponents)
-	{
-		itr->Update();
-	}
+	Update();
 }
 
 void GameObject::LateUpdate()
@@ -60,6 +67,7 @@ void GameObject::LateUpdate()
 
 	for (auto& itr : pComponents)
 	{
+		if (!itr->isEnable) continue;
 		itr->LateUpdate();
 	}
 }
@@ -70,8 +78,15 @@ void GameObject::Draw()
 
 	for (auto& itr : pComponents)
 	{
+		if (!itr->isEnable) continue;
 		itr->Draw();
 	}
+}
+
+void GameObject::Destroy()
+{
+	// シーンオブジェクトから自身を削除する
+	SObjectRegister::GetInstance()->PopObject(*this);
 }
 
 void GameObject::ImGuiSet()
@@ -86,7 +101,12 @@ void GameObject::ImGuiSet()
 
 		for (auto& itr : pComponents)
 		{
-			itr->SetParameter();
+			if (ImGui::TreeNode(itr->name.c_str()))
+			{
+				ImGui::Checkbox("isEnabled", &itr->isEnable);
+				itr->SetParameter();
+				ImGui::TreePop();
+			}
 		}
 
 		ImGui::TreePop();

@@ -92,7 +92,7 @@ bool Window::MessageLoop()
 
 bool Window::Terminate()
 {
-   /* DestroyWindow(hWnd);*/
+    DestroyWindow(hWnd);
 
     // ウインドウ クラスの登録解除
     UnregisterClass(wc.lpszClassName, wc.hInstance);

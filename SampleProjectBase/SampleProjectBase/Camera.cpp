@@ -18,16 +18,6 @@ Camera::~Camera()
 {
 }
 
-void Camera::Update()
-{
-	GameObject::Update();
-}
-
-void Camera::LateUpdate()
-{
-	GameObject::LateUpdate();
-}
-
 void Camera::UpdateViewMatrix()
 {
 	if (transform.position == focusPos)
@@ -56,13 +46,13 @@ void Camera::UpdatePerspective(u_int _viewPortSlot)
 
 	// ビューポートを取得
 	const D3D11_VIEWPORT& viewport = renderer.GetViewPort(_viewPortSlot);
-	u_int screenWidth = viewport.Width;
-	u_int screenHeight = viewport.Height;
+	float screenWidth = viewport.Width;
+	float screenHeight = viewport.Height;
 
 	// ビュー変換行列を作成する
 	DirectX::XMMATRIX mat = DirectX::XMMatrixPerspectiveFovLH(
 		fov,
-		static_cast<float>(screenWidth) / static_cast<float>(screenHeight),   // アスペクト比
+		screenWidth / screenHeight,   // アスペクト比
 		nearZ,
 		farZ);
 	mat = XMMatrixTranspose(mat);
@@ -78,13 +68,13 @@ void Camera::UpdateOrthographic(u_int _viewPortSlot)
 
 	// ビューポートを取得
 	const D3D11_VIEWPORT& viewport = renderer.GetViewPort(_viewPortSlot);
-	u_int screenWidth = viewport.Width;
-	u_int screenHeight = viewport.Height;
+	float screenWidth = viewport.Width;
+	float screenHeight = viewport.Height;
 	// 正投影行列を作成する
 	Matrix mat = DirectX::XMMatrixOrthographicOffCenterLH(
 		0.0f,	// 左上
-		static_cast<float>(screenWidth), 		// 右上
-		static_cast<float>(screenHeight),		// 左下
+		screenWidth, 		// 右上
+		screenHeight,		// 左下
 		0.0f,	// 右下
 		0.0f,
 		1.0f);

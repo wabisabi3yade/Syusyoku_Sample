@@ -5,6 +5,8 @@
 #include "SphereCollider.h"
 #include "CameraMove.h"
 #include "CameraInput.h"
+
+#include "Field.h"
 Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveInfo)
 {
 	std::vector<ModelSettings> modelSets =
@@ -17,10 +19,15 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	{
 		ModelLoader::Load(m);
 	}
-
+	std::vector<TextureLoader::TextureSetting> textureSets =
+	{
+		{"assets/texture/Grass.png", "Grass01"}
+	};
 	Model* model = nullptr;
-	model = resourceCollection->GetResource<Model>("Md_Tank01");
+	Texture* tex = nullptr;
 
+	// íŽÔ
+	model = resourceCollection->GetResource<Model>("Md_Tank01");
 	std::unique_ptr<Object_3D> object = std::make_unique<Object_3D>();
 	object->SetModel(model);
 	object->AddComponent<PlayerMove>();
@@ -28,10 +35,17 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	GameObject* tank = object.get();
 	sceneObjects->SetObject("Tank", std::move(object));
 
+	// ƒJƒƒ‰
 	GameObject* camera = sceneObjects->GetSceneObject<GameObject>("MainCamera");
 	CameraMove* camMove = camera->AddComponent<CameraMove>();
 	camMove->SetPlayer(*tank);
 	camera->AddComponent<CameraInput>();
+
+	// ’n–Ê
+	std::unique_ptr<Field> field = std::make_unique<Field>();
+	tex = TextureLoader::Load(textureSets[0]);
+	field->SetTexture(tex);
+	sceneObjects->SetObject("Field", std::move(field));
 }
 
 Tank_InGameSub::~Tank_InGameSub()
@@ -40,6 +54,9 @@ Tank_InGameSub::~Tank_InGameSub()
 
 void Tank_InGameSub::Update()
 {
+	/*GameObject* spot = sceneObjects->GetSceneObject<GameObject>("Spot");
+	GameObject* tank = sceneObjects->GetSceneObject<GameObject>("Tank");*/
+	/*spot->transform.LookAt(tank->transform.position);*/
 }
 
 void Tank_InGameSub::LateUpdate()

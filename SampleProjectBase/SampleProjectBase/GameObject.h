@@ -1,5 +1,4 @@
 #pragma once
-#include <typeinfo>
 #include "Tag.h"
 #include "Component.h"
 #include "MaterialClass.h"
@@ -8,20 +7,18 @@
 #include "imgui_impl_dx11.h"
 #include "imgui.h"
 
+class SceneObjects;
 // シーンで使用するオブジェクト全般の基底クラス
 class GameObject
 {
 protected:
 	bool isActive;	// アクティブ状態かどうか
 	std::string name;	// このオブジェクトの名前
-
 	Tag tag;	// ゲームオブジェクトのタグ
 	Layer layer;	// ゲームオブジェクトのレイヤー
-
 	DirectX::SimpleMath::Vector2 uvScroll;	// UVスクロール値
-
 	std::list<std::unique_ptr<Component>> pComponents;	// コンポーネントリスト
-
+	
 	void ActiveProcess();	// アクティブに変更したときの処理
 	void NotActiveProcess();	// 非アクティブに変更したときの処理
 public:
@@ -31,8 +28,11 @@ public:
 	virtual ~GameObject() {};
 
 	virtual void Update();	// 更新処理
+	void UpdateBase();	// どのオブジェクトも行う処理はここ
 	virtual void LateUpdate();	// Updateを行ったあとの更新処理
 	virtual void Draw();	// 描画処理
+
+	void Destroy();	// このオブジェクトを削除する
 
 	template<typename T> T* AddComponent();	// コンポーネントをつける
 	template<typename T> T* GetComponent();	// コンポーネントを取得
@@ -40,14 +40,10 @@ public:
 	virtual void ImGuiSet();	// ImGuiの設定
 
 	void SetName(const std::string& _name) { name = _name; }	// 名前
+	void SetActive(bool _isActive);	// アクティブ状態を変更する
+
 	const std::string& GetName() { return name; }
-
-	// アクティブ状態を変更する
-	void SetActive(bool _isActive);
-
-	// Active状態か取得
-	bool GetIsActive() { return isActive; }
-
+	bool GetIsActive() { return isActive; }	// Active状態か取得
 	// タグ・レイヤーを取得
 	const Tag& GetTag() { return tag; }
 	const Layer& GetLayer() { return layer; }

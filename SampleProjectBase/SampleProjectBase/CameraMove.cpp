@@ -8,11 +8,11 @@ using namespace DirectX::SimpleMath;
 void CameraMove::Roll(Vector2 _input)
 {
 	// 横に回転する
-	centerAngle += _input.x * rotateSpeed * MainApplication::DeltaTime();
+	centerAngle += -_input.x * rotateSpeed * MainApplication::DeltaTime();
 	centerAngle = std::fmod(centerAngle, Mathf::roundDeg);	// 角度を正規化
 
 	// 高さを変える
-	nowHeight += _input.y * heightSpeed * MainApplication::DeltaTime();
+	nowHeight += -_input.y * heightSpeed * MainApplication::DeltaTime();
 	nowHeight = std::clamp(nowHeight, minHeight, maxHeight);	// 範囲内におさめる
 }
 
@@ -20,7 +20,7 @@ void CameraMove::UpdatePosition()
 {
 	// カメラ座標の目標座標を求める
 	Vector3 posTarget = pPlayer->transform.position;
-	float rad = DirectX::XMConvertToRadians(centerAngle);
+	float rad = DirectX::XMConvertToRadians(centerAngle - 90.0f);
 	// XZ平面は中心との角度から距離を求める
 	posTarget.x += cos(rad) * distance;
 	posTarget.z += sin(rad) * distance;
@@ -46,6 +46,8 @@ void CameraMove::UpdateLook()
 
 void CameraMove::Init()
 {
+	name = "CameraMove";
+
 	camera = static_cast<Camera*>(gameObject);	// カメラを取得する
 
 	rotateSpeed = 360.0f;	// 回転速度
@@ -67,24 +69,20 @@ void CameraMove::LateUpdate()
 
 void CameraMove::SetParameter()
 {
-	if (ImGui::TreeNode("CameraMove"))
-	{
-		ImGui::Text("Roll");
-		ImGui::DragFloat("rotateSpeed{", &rotateSpeed);
-		ImGui::DragFloat("centerAngle", &centerAngle);
-		ImGui::DragFloat(" heightSpeed", &heightSpeed);
-		ImGui::DragFloat("minHeight", &minHeight);
-		ImGui::DragFloat("nowHeight", &nowHeight);
+	ImGui::Text("Roll");
+	ImGui::DragFloat("rotateSpeed{", &rotateSpeed);
+	ImGui::DragFloat("centerAngle", &centerAngle);
+	ImGui::DragFloat(" heightSpeed", &heightSpeed);
+	ImGui::DragFloat("minHeight", &minHeight);
+	ImGui::DragFloat("nowHeight", &nowHeight);
 
-		ImGui::Text("UpdatePosition");
-		ImGui::DragFloat("moveSpeed", &moveSpeed);
-		ImGui::DragFloat("playDistance", &playDistance);
-		ImGui::DragFloat("distnce", &distance);
+	ImGui::Text("UpdatePosition");
+	ImGui::DragFloat("moveSpeed", &moveSpeed);
+	ImGui::DragFloat("playDistance", &playDistance);
+	ImGui::DragFloat("distnce", &distance);
 
-		ImGui::Text("UpdateLook");
-		ImGui::DragFloat("lookSpeed", &lookSpeed);
-		ImGui::DragFloat("lookOffsetY", &lookOffsetY);
+	ImGui::Text("UpdateLook");
+	ImGui::DragFloat("lookSpeed", &lookSpeed);
+	ImGui::DragFloat("lookOffsetY", &lookOffsetY);
 
-		ImGui::TreePop();
-	}
 }

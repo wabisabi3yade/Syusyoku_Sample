@@ -8,13 +8,15 @@ class GameObject;
 // ゲームのサブシステムとなるコンポーネントの基底クラス
 class Component
 {
+	friend class GameObject;
 	bool isStartYet;	// まだStart関数が処理されていないフラグ
 protected:
+	bool isEnable;	// 使用しているかフラグ
+	std::string name;	// 名前
 	GameObject* gameObject;	// コンポーネント所持しているオブジェクト
-
 	Transform& GetTransform();	// トランスフォーム
 public:
-	Component(GameObject* _gameObject) : gameObject(_gameObject), isStartYet(false) {};
+	Component(GameObject* _gameObject); 
 	virtual ~Component(){};
 
 	virtual void Init() {};	// AddComponentされたときに行う

@@ -7,16 +7,16 @@ using namespace DirectX::SimpleMath;
 
 void CameraInput::Init()
 {
+	name = "CameraInput";
 	camMove = gameObject->GetComponent<CameraMove>();
 }
 
 void CameraInput::Update()
 {
 	// “ü—Í
-	GamePad* pad = MainApplication::GamePad();
-	Vector2 input = Vector2(pad->GetValue(GamePad::Value::StickR_X),
-		pad->GetValue(GamePad::Value::StickR_Y));
+	InputClass& input = MainApplication::GetInput();
+	Vector2 inputVal = input.GetValue("Right");
 
-	if (input.x != 0.0f || input.y != 0.0f)
-		camMove->Roll(input);	// ƒJƒƒ‰‚Ì‰ñ“]
+	if(inputVal != Vector2::Zero)
+	camMove->Roll(inputVal);	// ƒJƒƒ‰‚Ì‰ñ“]
 }

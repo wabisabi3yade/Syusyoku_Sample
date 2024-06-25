@@ -20,9 +20,6 @@ public:
 	Camera();
 	~Camera();
 
-	void Update() override;
-	void LateUpdate() override;
-
 	void UpdateViewMatrix();	// ビュー変換行列を更新
 	
 	// 各プロジェクションに設定

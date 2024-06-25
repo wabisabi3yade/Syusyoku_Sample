@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Transform.h"
-
 using namespace DirectX::SimpleMath;
 
 #include "imgui.h"
@@ -46,17 +45,25 @@ void Transform::LookAt(DirectX::SimpleMath::Vector3 _worldPos, const DirectX::Si
 {
 	// Atan2関数からベクトルで角度を求める
 	Vector3 vec = _worldPos - position;
-	rotation.x = DirectX::XMConvertToDegrees(atan2(vec.y, vec.z));
-	rotation.y = DirectX::XMConvertToDegrees(atan2(vec.x, vec.z));
-	rotation.z = DirectX::XMConvertToDegrees(atan2(vec.x, vec.y));
+	vec.Normalize();
+	forward = vec;	// 正面ベクトルとする
+	up = Vector3::Up;	// 上方向
+	right = up.Cross(forward);	// 右方向ベクトルを求める
+	right.Normalize();
+	up = forward.Cross(right);	// 真上方向を再計算する
+	up.Normalize();	
 
-	UpdateVector();	// 方向ベクトルを更新
-
-	// 逆さまにならないように調整
-	// こいつの上向きベクトルが指定の上ベクトルと真逆なら
-	float dotUp = up.Dot(_upVector);	
-	if (dotUp < 0.0f)
+	float sy = sqrtf(forward.x * forward.x + up.x * up.x);
+	bool singular = sy < 1e-6; // near singularity
+	if (!singular)
 	{
-		ImGuiDebugLog::Add("逆さま");
+		rotation.x = atan2f(forward.y, forward.z) * Mathf::radToDeg;
+		rotation.y = atan2f(-forward.x, sy) * Mathf::radToDeg;
+		rotation.z = atan2f(up.x, right.x) * Mathf::radToDeg;
+	}
+	else {
+		rotation.x = atan2f(-up.z, up.y) * Mathf::radToDeg;
+		rotation.y = atan2f(-forward.x, sy) * Mathf::radToDeg;
+		rotation.z = 0;
 	}
 }

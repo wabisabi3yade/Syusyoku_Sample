@@ -7,6 +7,9 @@
 
 class SceneManager;
 class Direct3D11;
+
+
+
 // ゲームループなどアプリを動かすのに主要な機能をもつクラス(シングルトンパターン)
 class MainApplication
 {
@@ -28,8 +31,8 @@ public:
 
 	static void Release();
 
-	static float DeltaTime();	// 前フレームとの時間
+	static float DeltaTime();
 
-	static GamePad* GamePad() { return input->GetGamePad(); }	// ゲームパッド取得
+	static InputClass& GetInput() { return *input; }
 };
 
