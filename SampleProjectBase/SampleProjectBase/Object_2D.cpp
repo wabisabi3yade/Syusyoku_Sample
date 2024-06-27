@@ -36,7 +36,7 @@ void Object_2D::MakeVerticies()
 	pVerticies[1].position = { 0.5f, 0.5f, 0.0f };	// 右上
 	pVerticies[2].position = { -0.5f, -0.5f, 0.0f };	// 左下
 	pVerticies[3].position = { 0.5f, -0.5f, 0.0f };	// 右下
-	
+
 	// uv座標
 	pVerticies[0].uv = { 0.0f, 0.0f };	// 左上
 	pVerticies[1].uv = { 1.0f, 0.0f };	// 右上
@@ -92,12 +92,27 @@ void Object_2D::DrawSetup(D3D11_Renderer& _renderer)
 	RenderParam::WVP wvp = _renderer.GetParameter().GetWVP();
 	wvp.world = worldMatrix;
 
-	pMaterial->GetVertexShader().UpdateBuffer(0, &wvp);	// wvp行列を送る
-	pMaterial->GetPixelShader().SetTexture(0, pTexture);	//テクスチャを送る
+	// マテリアルのパラメータを取得
+	MaterialParameter& material = pMaterial->GetMaterialParameter();
+	// 頂点シェーダー
+	VertexShader& vtxSh = pMaterial->GetVertexShader();
+	vtxSh.UpdateBuffer(0, &wvp);	// wvp行列を送る
+	vtxSh.UpdateBuffer(1, &material);	// マテリアル情報を送る
+
+	// ピクセルシェーダー
+	if (material.isTextureEnable)
+		pMaterial->GetPixelShader().SetTexture(0, pTexture);	//テクスチャを送る
+	pMaterial->GetPixelShader().UpdateBuffer(1, &material);	// マテリアル情報を送る
 
 	// シェーダーを固定
 	pMaterial->GetVertexShader().Bind();
 	pMaterial->GetPixelShader().Bind();
+}
+
+void Object_2D::SetTexture(Texture* _texture)
+{
+	pMaterial->GetMaterialParameter().isTextureEnable = true;
+	pTexture = _texture;
 }
 
 

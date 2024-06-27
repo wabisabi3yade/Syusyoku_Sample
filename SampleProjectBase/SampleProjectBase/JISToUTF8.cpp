@@ -1,5 +1,9 @@
-#include "JISToUTF8.h"
+//codecvtŠÖ˜A‚ÌŒx‚ğ–³‹‚·‚é
+#pragma warning(disable:4996)
 
+#include "JISToUTF8.h"
+#include <codecvt>
+#include <locale>
 std::string ShiftJisToUtf8(std::string const& _jisString)
 {
     auto const wide = StringToWString(_jisString);

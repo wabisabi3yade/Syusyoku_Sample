@@ -77,18 +77,6 @@ void Object_UI::MakeMaterial()
 
 void Object_UI::Update()
 {
-	static float time = 0.0f;
-	time += MainApplication::DeltaTime();
-
-	if (time > 0.1f)
-	{
-		uvScroll.x += 1.0f / 3.0f;
-		if (uvScroll.x > 1.1f - 1.0f / 3.0f)
-			uvScroll.x = 0.0f;
-
-		time = 0.0f;
-	}
-
 }
 
 void Object_UI::SetupDraw()
@@ -128,7 +116,6 @@ void Object_UI::SetupDraw()
 	wvp.view = wvp.view.Transpose();
 
 	pShareMaterial->GetVertexShader().UpdateBuffer(0, &wvp);	// WVP行列を渡す
-	pShareMaterial->GetVertexShader().UpdateBuffer(1, &uvScroll);	// WVP行列を渡す
 	pShareMaterial->GetPixelShader().SetTexture(0, pTexture);	// シェーダーにテクスチャセット
 
 	// シェーダーを固定

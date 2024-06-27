@@ -37,6 +37,6 @@ public:
 
 	static void DrawCube(bool _isWireFrame = false);	// キューブ描画
 
-	static void DrawSphere(bool _isWireFrame = false);	// キューブ描画
+	static void DrawSphere(bool _isWireFrame = false);	// 球描画
 };
 

@@ -20,21 +20,21 @@ void BoxCollider::Draw()
 	// ボックス表示
 	const Transform& t = gameObject->transform;
 
-	// ワールド座標系で求める
-	Vector3 centerPos_w = t.position + posOffset * t.scale; // スケールに対応させたオフセット座標を足す
-	Geometory::SetPosition(centerPos_w);
-	Vector3 rotation_w = t.rotation + angleOffset;	// 足す
-	Geometory::SetRotation(rotation_w);
-	Vector3 scale_w = t.scale * size;// 掛ける
-	Geometory::SetScale(scale_w);
+	//// ワールド座標系で求める
+	//Vector3 centerPos_w = t.position + posOffset * t.scale; // スケールに対応させたオフセット座標を足す
+	//Geometory::SetPosition(centerPos_w);
+	//Vector3 rotation_w = t.rotation + angleOffset;	// 足す
+	//Geometory::SetRotation(rotation_w);
+	//Vector3 scale_w = t.scale * size;// 掛ける
+	//Geometory::SetScale(scale_w);
 
-	// 色
-	Geometory::SetColor(Collider::normalColor);
-	if (hitColliders.size() > 0)	// 何かに当たってるなら
-	{
-		Geometory::SetColor(Collider::hitColor);	// 色を変える
-	}
-	Geometory::DrawCube(true);
+	//// 色
+	//Geometory::SetColor(Collider::normalColor);
+	//if (hitColliders.size() > 0)	// 何かに当たってるなら
+	//{
+	//	Geometory::SetColor(Collider::hitColor);	// 色を変える
+	//}
+	//Geometory::DrawCube(true);
 }
 
 void BoxCollider::SetParameter()

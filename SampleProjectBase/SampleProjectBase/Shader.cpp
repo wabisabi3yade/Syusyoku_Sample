@@ -42,7 +42,7 @@ void Shader::MakeBuffer(const char* _pData, u_int _dataSize)
 		hr = pDevice->CreateBuffer(&bufDesc, nullptr, &pBuffers[i]);
 		if (FAILED(hr))
 		{
-			ImGuiDebugLog::Add("頂点シェーダーで定数バッファ作成失敗");
+			ImGuiDebugLog::Add("定数バッファ作成失敗");
 			return;
 		}
 	}

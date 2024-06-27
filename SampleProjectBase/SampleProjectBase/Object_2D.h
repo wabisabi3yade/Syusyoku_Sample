@@ -20,7 +20,7 @@ public:
 	void DrawSetup(D3D11_Renderer& _renderer);	// 描画準備
 
 	// テクスチャを設定する
-	void SetTexture(Texture* _texture) { pTexture = _texture; }
+	void SetTexture(Texture* _texture);
 	
 	//// サイズを設定
 	//void SetSizeWidth(float _width);

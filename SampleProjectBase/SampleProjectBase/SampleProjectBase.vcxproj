@@ -78,6 +78,8 @@
     <ClCompile Include="Object_UI.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="PlayerMove.cpp" />
+    <ClCompile Include="SaveJson.cpp" />
+    <ClCompile Include="SaveJsonValue.cpp" />
     <ClCompile Include="SceneObjects.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Object_2D.cpp" />
@@ -166,6 +168,8 @@
     <ClInclude Include="Object_UI.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="PlayerMove.h" />
+    <ClInclude Include="SaveJson.h" />
+    <ClInclude Include="SaveJsonValue.h" />
     <ClInclude Include="SceneObjects.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Object_2D.h" />
@@ -341,7 +345,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(ProjectDir)directxtk/include;$(ProjectDir)imgui/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)directxtk/include;$(ProjectDir)imgui/include;$(ProjectDir)json/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <AdditionalOptions>/wd26812 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -375,7 +379,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(ProjectDir)directxtk/include;$(ProjectDir)imgui/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)directxtk/include;$(ProjectDir)imgui/include;$(ProjectDir)json/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <AdditionalOptions>/wd26812 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>

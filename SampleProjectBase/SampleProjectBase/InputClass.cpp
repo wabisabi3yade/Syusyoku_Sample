@@ -26,13 +26,37 @@ void InputClass::Update()
 	gamePad->InputUpdate();
 	keyboard->InputUpdate();
 
-	// 値を更新する
-	// 左入力
+	// スティック値を更新する
+	Vector2 vecR;
 	Vector2 vecL;
-	if (gamePad->GetValue(GamePad::Value::StickL_X) == 0.0f &&	// コントローラ入力がないなら
-		gamePad->GetValue(GamePad::Value::StickL_Y) == 0.0f)
+	if (gamePad->GetConnecting())	// ゲームパッドが繋がっている
 	{
-		
+		vecR.x = gamePad->GetValue(GamePad::Value::StickR_X);
+		vecR.y = gamePad->GetValue(GamePad::Value::StickR_Y);
+
+		vecL.x = gamePad->GetValue(GamePad::Value::StickL_X);
+		vecL.y = gamePad->GetValue(GamePad::Value::StickL_Y);
+	}
+	else	// キーボード入力
+	{
+		// Rスティックと同様
+		if (keyboard->GetKey(DIK_UP))
+		{
+			vecR.y += 1.0f;
+		}
+		if ((keyboard->GetKey(DIK_DOWN)))
+		{
+			vecR.y += -1.0f;
+		}
+		if ((keyboard->GetKey(DIK_RIGHT)))
+		{
+			vecR.x += 1.0f;
+		}
+		if ((keyboard->GetKey(DIK_LEFT)))
+		{
+			vecR.x += -1.0f;
+		}
+		// Lスティックと同様
 		if (keyboard->GetKey(DIK_W))
 		{
 			vecL.y += 1.0f;
@@ -50,42 +74,9 @@ void InputClass::Update()
 			vecL.x += -1.0f;
 		}
 	}
-	else	// コントローラ入力
-	{
-		vecL.x = gamePad->GetValue(GamePad::Value::StickL_X);
-		vecL.y = gamePad->GetValue(GamePad::Value::StickL_Y);
-	}
-	inputValue["Left"] = vecL;
-
-	// 左入力
-	Vector2 vecR;
-	if (gamePad->GetValue(GamePad::Value::StickR_X) == 0.0f &&	// コントローラ入力がないなら
-		gamePad->GetValue(GamePad::Value::StickR_Y) == 0.0f)
-	{
-
-		if (keyboard->GetKey(DIK_UP))
-		{
-			vecR.y += 1.0f;
-		}
-		if ((keyboard->GetKey(DIK_DOWN)))
-		{
-			vecR.y += -1.0f;
-		}
-		if ((keyboard->GetKey(DIK_RIGHT)))
-		{
-			vecR.x += 1.0f;
-		}
-		if ((keyboard->GetKey(DIK_LEFT)))
-		{
-			vecR.x += -1.0f;
-		}
-	}
-	else	// コントローラ入力
-	{
-		vecR.x = gamePad->GetValue(GamePad::Value::StickR_X);
-		vecR.y = gamePad->GetValue(GamePad::Value::StickR_Y);
-	}
+	// 値代入
 	inputValue["Right"] = vecR;
+	inputValue["Left"] = vecL;
 }
 
 Vector2 InputClass::GetValue(const std::string& _getType) const

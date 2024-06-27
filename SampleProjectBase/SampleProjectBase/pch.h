@@ -9,19 +9,22 @@
 #define CLASS_DELETE(p) {if(p != nullptr) { delete p; p = nullptr;} }
 
 // インクルードファイル /////////////////
-#include <d3d11.h>	// DX11の機能
-#pragma comment(lib, "d3d11.lib")	// ライブラリ
-#include <DirectXMath.h>	// 数学系の機能
-#include <SimpleMath.h>	// DirectXTKの数学系
-#pragma comment(lib, "DirectXTK.lib")	// DirectXTKライブラリ
-
 #include <iostream>	// std使うために
 #include <algorithm>
 #include <string>
 #include <unordered_map>	// 順番を気にしないmap配列
 #include <typeinfo>	// 型名を取得
 #include <vector>	// 動的配列
+#include <d3d11.h>	// DX11の機能
+#pragma comment(lib, "d3d11.lib")	// ライブラリ
 
+// 外部ライブラリ
+#include <DirectXMath.h>	// 数学系の機能
+#include <SimpleMath.h>	// DirectXTKの数学系
+#pragma comment(lib, "DirectXTK.lib")	// DirectXTKライブラリ
+#include <nlohmann/json.hpp>	// json書き出し
+
+// 自前クラス
 #include "MathUseful.h"	// 自作数学便利関数
 #include "ImGuiMethod.h"	// ImGui便利関数
 #include "Transform.h"	// 座標・回転・スケールのクラス

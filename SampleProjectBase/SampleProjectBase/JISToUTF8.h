@@ -1,7 +1,4 @@
 #pragma once
-#include <codecvt>
-#include <locale>
-
 // ImGui‚ªUTF-8‘Î‰‚È‚Ì‚ÅShift-JIS‚©‚ç•ÏŠ·‚·‚éŠÖ”
 std::string ShiftJisToUtf8(std::string const& _jisString);
 

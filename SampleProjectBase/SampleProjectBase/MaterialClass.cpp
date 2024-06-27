@@ -10,7 +10,13 @@ MaterialClass::MaterialClass()
 	pVertexShader = shCol->GetVertexShader(shCol->defaultVS);
 	pPixelShader = shCol->GetPixelShader(shCol->defaultPS);
 
-	parameter.isTextureEnable = false;	// ‰Šú‰»
+	// ‰Šú‰»
+	parameter.diffuse = Color(1.0f, 1.0f, 1.0f, 1.0f);
+	parameter.ambient = Color(1.0f, 1.0f, 1.0f, 1.0f);
+	parameter.specular = Color(1.0f, 1.0f, 1.0f, 1.0f);
+	parameter.emissive = Color(1.0f, 1.0f, 1.0f, 1.0f);
+	parameter.shininess = 0.0f;
+	parameter.isTextureEnable = false;	
 }
 
 MaterialClass::~MaterialClass()

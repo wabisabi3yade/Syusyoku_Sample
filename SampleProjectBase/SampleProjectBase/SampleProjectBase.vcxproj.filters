@@ -136,9 +136,6 @@
     <Filter Include="ソース ファイル\Graphics\ModelLoader">
       <UniqueIdentifier>{281bfbc1-950c-4bbd-b5b2-d0bd373a2ee8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\GameObject">
-      <UniqueIdentifier>{54651696-70bc-4ca7-ba6d-128c5dc1b8e4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\BoneMesh">
       <UniqueIdentifier>{8ce03dad-64af-4c79-802a-ecc4af38d471}</UniqueIdentifier>
     </Filter>
@@ -147,15 +144,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Object\Object_2D">
       <UniqueIdentifier>{4c2b8f6c-2586-4267-9747-074a4ca953b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics\BasicObject">
-      <UniqueIdentifier>{8ad7004a-18e3-467b-b982-788b90b03a7c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics\BasicObject\Cube">
-      <UniqueIdentifier>{16f344dc-964c-4351-bda8-45c1b06dcb98}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics\BasicObject\BasicObject_Base">
-      <UniqueIdentifier>{7dede4c7-afd2-4dbd-af48-ff8d2e681c4b}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Object\Onject_UI">
       <UniqueIdentifier>{2a78615c-49c6-40be-9f3a-a0488595b157}</UniqueIdentifier>
@@ -213,9 +201,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Component\Collider\Sphere">
       <UniqueIdentifier>{43f104c6-d005-4633-a3d8-0ae524b6de22}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics\BasicObject\Sphere">
-      <UniqueIdentifier>{5268db00-a05b-40ef-8ccc-481a51095ac4}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Component\Collider\CollisionChecker">
       <UniqueIdentifier>{ee02f005-9104-4dc7-80e5-56016c5bdf4e}</UniqueIdentifier>
@@ -300,6 +285,36 @@
     </Filter>
     <Filter Include="ソース ファイル\Object\TankFireObj\Tank">
       <UniqueIdentifier>{30742376-b87f-4e1a-8e2c-fb6837c989bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\SObjectRegister">
+      <UniqueIdentifier>{115688cf-7547-4987-bbcb-4952b9027d62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\GameObject">
+      <UniqueIdentifier>{54651696-70bc-4ca7-ba6d-128c5dc1b8e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Geometory">
+      <UniqueIdentifier>{8ad7004a-18e3-467b-b982-788b90b03a7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Geometory\Cube">
+      <UniqueIdentifier>{16f344dc-964c-4351-bda8-45c1b06dcb98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Geometory\BasicObject_Base">
+      <UniqueIdentifier>{7dede4c7-afd2-4dbd-af48-ff8d2e681c4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Geometory\Sphere">
+      <UniqueIdentifier>{5268db00-a05b-40ef-8ccc-481a51095ac4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Json">
+      <UniqueIdentifier>{0e2f16b8-5e83-4119-867e-087426684a3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Json\SaveJsonValue">
+      <UniqueIdentifier>{c5ddcc57-61e7-4c28-8254-6882c301f71c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Json\Save">
+      <UniqueIdentifier>{e8e81301-115a-4a0a-93dd-3fa9d701854e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\TankFireObj\Field">
+      <UniqueIdentifier>{7e6cb0cd-663f-451d-b683-2dacb70581ea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -474,10 +489,10 @@
       <Filter>ソース ファイル\Object\SceneObjects</Filter>
     </ClCompile>
     <ClCompile Include="Cube.cpp">
-      <Filter>ソース ファイル\Graphics\BasicObject\Cube</Filter>
+      <Filter>ソース ファイル\Graphics\Geometory\Cube</Filter>
     </ClCompile>
     <ClCompile Include="BasicObject_Base.cpp">
-      <Filter>ソース ファイル\Graphics\BasicObject\BasicObject_Base</Filter>
+      <Filter>ソース ファイル\Graphics\Geometory\BasicObject_Base</Filter>
     </ClCompile>
     <ClCompile Include="Object_UI.cpp">
       <Filter>ソース ファイル\Object\Onject_UI</Filter>
@@ -516,7 +531,7 @@
       <Filter>ソース ファイル\System\Application\Input</Filter>
     </ClCompile>
     <ClCompile Include="Geometory.cpp">
-      <Filter>ソース ファイル\Graphics\BasicObject</Filter>
+      <Filter>ソース ファイル\Graphics\Geometory</Filter>
     </ClCompile>
     <ClCompile Include="SphereCollider.cpp">
       <Filter>ソース ファイル\Component\Collider\Sphere</Filter>
@@ -525,10 +540,10 @@
       <Filter>ソース ファイル\Component\Collider\Box</Filter>
     </ClCompile>
     <ClCompile Include="DebugCube.cpp">
-      <Filter>ソース ファイル\Graphics\BasicObject\Cube</Filter>
+      <Filter>ソース ファイル\Graphics\Geometory\Cube</Filter>
     </ClCompile>
     <ClCompile Include="Sphere.cpp">
-      <Filter>ソース ファイル\Graphics\BasicObject\Sphere</Filter>
+      <Filter>ソース ファイル\Graphics\Geometory\Sphere</Filter>
     </ClCompile>
     <ClCompile Include="CollisionChecker.cpp">
       <Filter>ソース ファイル\Component\Collider\CollisionChecker</Filter>
@@ -555,13 +570,19 @@
       <Filter>ソース ファイル\System\GameMode</Filter>
     </ClCompile>
     <ClCompile Include="SObjectRegister.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Object\SObjectRegister</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveJson.cpp">
+      <Filter>ソース ファイル\System\Json\Save</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveJsonValue.cpp">
+      <Filter>ソース ファイル\System\Json\SaveJsonValue</Filter>
     </ClCompile>
     <ClCompile Include="Tank.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Object\TankFireObj\Tank</Filter>
     </ClCompile>
     <ClCompile Include="Field.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Object\TankFireObj\Field</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -746,10 +767,10 @@
       <Filter>ソース ファイル\Object\SceneObjects</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h">
-      <Filter>ソース ファイル\Graphics\BasicObject\Cube</Filter>
+      <Filter>ソース ファイル\Graphics\Geometory\Cube</Filter>
     </ClInclude>
     <ClInclude Include="BasicObject_Base.h">
-      <Filter>ソース ファイル\Graphics\BasicObject\BasicObject_Base</Filter>
+      <Filter>ソース ファイル\Graphics\Geometory\BasicObject_Base</Filter>
     </ClInclude>
     <ClInclude Include="Object_UI.h">
       <Filter>ソース ファイル\Object\Onject_UI</Filter>
@@ -788,7 +809,7 @@
       <Filter>ソース ファイル\System\Application\Input</Filter>
     </ClInclude>
     <ClInclude Include="Geometory.h">
-      <Filter>ソース ファイル\Graphics\BasicObject</Filter>
+      <Filter>ソース ファイル\Graphics\Geometory</Filter>
     </ClInclude>
     <ClInclude Include="SphereCollider.h">
       <Filter>ソース ファイル\Component\Collider\Sphere</Filter>
@@ -797,10 +818,10 @@
       <Filter>ソース ファイル\Component\Collider\Box</Filter>
     </ClInclude>
     <ClInclude Include="DebugCube.h">
-      <Filter>ソース ファイル\Graphics\BasicObject\Cube</Filter>
+      <Filter>ソース ファイル\Graphics\Geometory\Cube</Filter>
     </ClInclude>
     <ClInclude Include="Sphere.h">
-      <Filter>ソース ファイル\Graphics\BasicObject\Sphere</Filter>
+      <Filter>ソース ファイル\Graphics\Geometory\Sphere</Filter>
     </ClInclude>
     <ClInclude Include="CollisionChecker.h">
       <Filter>ソース ファイル\Component\Collider\CollisionChecker</Filter>
@@ -827,13 +848,19 @@
       <Filter>ソース ファイル\System\GameMode</Filter>
     </ClInclude>
     <ClInclude Include="SObjectRegister.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Object\SObjectRegister</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveJsonValue.h">
+      <Filter>ソース ファイル\System\Json\SaveJsonValue</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveJson.h">
+      <Filter>ソース ファイル\System\Json\Save</Filter>
     </ClInclude>
     <ClInclude Include="Tank.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Object\TankFireObj\Tank</Filter>
     </ClInclude>
     <ClInclude Include="Field.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Object\TankFireObj\Field</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -11,7 +11,7 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 {
 	std::vector<ModelSettings> modelSets =
 	{
-		ModelSettings("assets/model/tank/uploads_files_4079647_tank+00a.fbx", "Tank01", 0.0025f, true),
+		ModelSettings("assets/model/tank/Tank_Toon.fbx", "Tank01", 1.0f, true),
 		ModelSettings("assets/model/spot/spot.fbx", "Spot01", 1.0f, true),
 	};
 	// ƒ[ƒhˆ—‚ð‚·‚é
@@ -35,6 +35,12 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	GameObject* tank = object.get();
 	sceneObjects->SetObject("Tank", std::move(object));
 
+	// ‹
+	model = resourceCollection->GetResource<Model>("Md_Spot01");
+	object = std::make_unique<Object_3D>();
+	object->SetModel(model);
+	sceneObjects->SetObject("Spot", std::move(object));
+
 	// ƒJƒƒ‰
 	GameObject* camera = sceneObjects->GetSceneObject<GameObject>("MainCamera");
 	CameraMove* camMove = camera->AddComponent<CameraMove>();
@@ -54,9 +60,9 @@ Tank_InGameSub::~Tank_InGameSub()
 
 void Tank_InGameSub::Update()
 {
-	/*GameObject* spot = sceneObjects->GetSceneObject<GameObject>("Spot");
-	GameObject* tank = sceneObjects->GetSceneObject<GameObject>("Tank");*/
-	/*spot->transform.LookAt(tank->transform.position);*/
+	GameObject* spot = sceneObjects->GetSceneObject<GameObject>("Spot");
+	GameObject* tank = sceneObjects->GetSceneObject<GameObject>("Tank");
+	spot->transform.LookAt(tank->transform.position);
 }
 
 void Tank_InGameSub::LateUpdate()

@@ -70,5 +70,7 @@ public:
 	float GetValue(const Value& _getValue)const;
 
 	void DebugInput();	// デバッグ確認
+
+	bool GetConnecting() { return (isResult == ERROR_SUCCESS); }	// 繋がってるか確認する
 };
 

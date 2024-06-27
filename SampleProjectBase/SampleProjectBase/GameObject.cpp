@@ -1,10 +1,13 @@
 #include "pch.h"
 #include "GameObject.h"
-
+// コンポーネント
 #include "Component.h"
 #include "Collider.h"
+// 登録
 #include "CollisionRegister.h"
 #include "SObjectRegister.h"
+
+using json = nlohmann::json;
 
 void GameObject::ActiveProcess()
 {
@@ -44,13 +47,10 @@ void GameObject::NotActiveProcess()
 		}
 	}
 }
-void GameObject::Update()
+
+GameObject::GameObject() : isActive(true), name("")
 {
-	for (auto& itr : pComponents)
-	{
-		if (!itr->isEnable) continue;
-		itr->Update();
-	}
+	/*saveValues = std::make_unique<SaveJsonValue>();*/
 }
 
 void GameObject::UpdateBase()
@@ -58,7 +58,14 @@ void GameObject::UpdateBase()
 	if (!isActive) return;
 
 	transform.UpdateVector();	// 方向ベクトルを更新する
+
 	Update();
+
+	for (auto& itr : pComponents)
+	{
+		if (!itr->isEnable) continue;
+		itr->Update();
+	}
 }
 
 void GameObject::LateUpdate()
@@ -113,6 +120,7 @@ void GameObject::ImGuiSet()
 	}
 #endif // _DEBUG
 }
+
 
 void GameObject::SetActive(bool _isActive)
 {

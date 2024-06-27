@@ -29,18 +29,16 @@ float4 main(PS_INPUT pin) : SV_TARGET
 {
     float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
    
-    color = myTexture.Sample(mySampler, pin.uv);
-    color *= pin.color;
-    color.a = 1.0f;
-    //if (material.isTextureEnable)     // テクスチャを使用しているなら
-    //{
-    //    color = myTexture.Sample(mySampler, pin.uv);
-    //    color *= pin.color;
-    //}
-    //else // テクスチャを使用していないなら
-    //{
-    //    color = pin.color;
-    //}
+    if (material.isTextureEnable)     // テクスチャを使用しているなら
+    {
+        color = myTexture.Sample(mySampler, pin.uv);
+        color *= pin.color;
+    }
+    else // テクスチャを使用していないなら
+    {
+        color = pin.color;
+        color.r = 0.0f;
+    }
 
     return color;
 }

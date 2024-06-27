@@ -36,6 +36,8 @@ void PlayerMove::LateUpdate()
 
 void PlayerMove::Draw()
 {
+	Geometory::SetPosition(gameObject->transform.position + gameObject->transform.Forward() * 5.0f);
+	Geometory::DrawCube();
 }
 
 void PlayerMove::SetParameter()

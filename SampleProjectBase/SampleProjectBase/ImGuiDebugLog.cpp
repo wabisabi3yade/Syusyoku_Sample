@@ -66,5 +66,6 @@ void ImGuiDebugLog::Terminate()
 #ifdef _DEBUG
 	// I—¹ˆ—
 	displayList.clear();
+	
 #endif
 }

@@ -20,11 +20,6 @@ Camera::~Camera()
 
 void Camera::UpdateViewMatrix()
 {
-	if (transform.position == focusPos)
-	{
-		transform.position.z += 0.001f;
-	}
-	
 	focusPos = transform.position + transform.Forward();	// カメラの前を注視点にする
 
 	// ビュー変換行列を求める

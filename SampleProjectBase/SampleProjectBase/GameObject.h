@@ -2,7 +2,11 @@
 #include "Tag.h"
 #include "Component.h"
 #include "MaterialClass.h"
-
+// Json
+#include "SaveJson.h"
+#include "LoadJson.h"
+#include "SaveJsonValue.h"
+// ImGui
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 #include "imgui.h"
@@ -16,18 +20,21 @@ protected:
 	std::string name;	// このオブジェクトの名前
 	Tag tag;	// ゲームオブジェクトのタグ
 	Layer layer;	// ゲームオブジェクトのレイヤー
-	DirectX::SimpleMath::Vector2 uvScroll;	// UVスクロール値
 	std::list<std::unique_ptr<Component>> pComponents;	// コンポーネントリスト
-	
+	//std::unique_ptr<SaveJsonValue> saveValues;	// セーブをする変数クラス
+
 	void ActiveProcess();	// アクティブに変更したときの処理
 	void NotActiveProcess();	// 非アクティブに変更したときの処理
+
+	virtual void Update(){};	// 更新処理
+
+	virtual void FromJson(const nlohmann::json& _jsonData) {};
 public:
 	Transform transform;	// Transformパラメータ
 
-	GameObject() : isActive(true), name(""), uvScroll(DirectX::SimpleMath::Vector2::Zero) {};
+	GameObject();
 	virtual ~GameObject() {};
 
-	virtual void Update();	// 更新処理
 	void UpdateBase();	// どのオブジェクトも行う処理はここ
 	virtual void LateUpdate();	// Updateを行ったあとの更新処理
 	virtual void Draw();	// 描画処理
@@ -39,6 +46,9 @@ public:
 
 	virtual void ImGuiSet();	// ImGuiの設定
 
+	//void ToJsonBase(); // Jsonファイルに書き込む
+	//void FromJsonBase(const nlohmann::json& _jsonData);	// Jsonファイルからロードする
+	
 	void SetName(const std::string& _name) { name = _name; }	// 名前
 	void SetActive(bool _isActive);	// アクティブ状態を変更する
 

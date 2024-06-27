@@ -27,13 +27,13 @@ void SceneObjects::Update()
 
 	for (auto itr = list.begin(); itr != list.end(); itr++)
 	{
-		itr->second->Update();
+		itr->second->UpdateBase();
 		itr->second->ImGuiSet();
 	}
 
 	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
 	{
-		itr->second->Update();
+		itr->second->UpdateBase();
 		itr->second->ImGuiSet();	
 	}
 

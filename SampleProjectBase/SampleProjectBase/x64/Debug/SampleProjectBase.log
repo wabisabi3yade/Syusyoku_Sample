@@ -1,7 +1,6 @@
 ﻿  モジュール依存関係のソースをスキャンしています...
-  Field.cpp
-  Tank_InGameSub.cpp
+  Transform.cpp
   コンパイルしています...
-  Field.cpp
-  Tank_InGameSub.cpp
-  SampleProjectBase.vcxproj -> C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\x64\Debug\SampleProjectBase.exe
+  Transform.cpp
+C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Transform.cpp(70,10): error C2374: 'vec': 再定義されています。2 回以上初期化されています。
+  C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Transform.cpp(47): note: 'vec' の宣言を確認してください
