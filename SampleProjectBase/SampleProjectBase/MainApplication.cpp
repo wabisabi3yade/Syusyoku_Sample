@@ -7,6 +7,11 @@
 #include "imgui_impl_dx11.h"
 #include "imgui.h"
 
+
+#ifdef _DEBUG
+#define _EDIT
+#endif
+
 constexpr short FPS(60);	// フレームレート数
 
 std::unique_ptr<Window> MainApplication::pWindow = nullptr;	// ウィンドウ処理クラス
@@ -36,24 +41,20 @@ void MainApplication::Init(HINSTANCE _hInst)
 {
 	// ウィンドウクラスの確保
 	pWindow = std::make_unique<Window>();
-	// ウィンドウの初期化
 	pWindow->Init(_hInst);
 
 	// Direct3Dクラスの確保
 	pD3D = Direct3D11::GetInstance();
 	HWND hwnd = pWindow->GetWindowHandle();
-	// 初期化
 	pD3D->Init(hwnd);
 
 	// 可変フレームレートクラス生成
 	variableFps = std::make_unique<VariableFrameRate>(FPS);
 
 	// 入力クラスを作成
-	input = std::make_unique<InputClass>();	
-	input->Init(hwnd);	// 初期化
+	input = std::make_unique<InputClass>();
+	input->Init(hwnd);
 
-	
-	// シーンマネージャーを作成
 	pSceneManager = SceneManager::GetInstance();
 
 	// ImGuiの初期化
@@ -67,35 +68,32 @@ void MainApplication::Init(HINSTANCE _hInst)
 
 void MainApplication::GameLoop()
 {
-	variableFps->Init();
-
-#ifdef _DEBUG
-	ImGuiIO& io = ImGui::GetIO();
-#endif // _DEBUG
-
-
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	while (true)
 	{
 		bool result = pWindow->MessageLoop();
 		if (result == false) break;
 
-		// ImGuiの更新処理
 		ImGuiMethod::NewFrame();
-
-		input->Update();	// 入力関係の更新
-
-#ifdef _DEBUG
-		ImGui::Begin("System");
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-
-		GamePad().DebugInput();
-		ImGui::End();
-#endif // _DEBUG
+		// 入力更新
+		input->Update();
 
 		// 更新処理
 		pSceneManager->Exec();
 
-		// 対応したフレームレートにするために時間を待機させる
+#ifdef _DEBUG
+		ImGui::Begin("System");
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+		ImGui::End();
+#endif // _DEBUG
+
+		ImGuiMethod::Draw();
+		// スワップチェイン
+		Direct3D11::GetInstance()->GetRenderer()->Swap();
+
+		// deltaTimeを計算
+		variableFps->CaluculateDelta();
+		// 待機
 		variableFps->Wait();
 	}
 }

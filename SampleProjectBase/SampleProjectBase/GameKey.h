@@ -20,8 +20,8 @@ public:
 
 	void InputUpdate();
 
-	bool GetKey(int _key);	// ‰Ÿ‚³‚ê‚Ä‚¢‚é‚©
-	bool GetKeyDown(int _key);	// ‰Ÿ‚µ‚½uŠÔ
-	bool GetKeyUp(int _key);	// —£‚³‚ê‚½uŠÔ
+	bool GetKey(int _key)const;	// ‰Ÿ‚³‚ê‚Ä‚¢‚é‚©
+	bool GetKeyDown(int _key)const;	// ‰Ÿ‚µ‚½uŠÔ
+	bool GetKeyUp(int _key)const;	// —£‚³‚ê‚½uŠÔ
 };
 

@@ -9,7 +9,8 @@ private:
 	uint64_t currentTime;	// 現在時間
 	uint64_t previousFrameTime;	// 前のフレームレートが終了したときの時間
 
-	void CaluculateDelta();	// Δtを計算する
+	LARGE_INTEGER frequency;
+	LARGE_INTEGER startTime, endTime;
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -19,6 +20,8 @@ public:
 	~VariableFrameRate();
 
 	void Init();	// 初期化処理
+
+	void CaluculateDelta();	// Δtを計算する
 
 	// 対応したfpsにするために次のループまで待つ関数
 	void Wait();	 

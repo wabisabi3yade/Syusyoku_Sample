@@ -25,5 +25,7 @@ public:
 	// 各プロジェクションに設定
 	void SetOrthographic();	// 平行投影
 	void SetPerspective();	// 透視投影
+
+	void SetFocusPos(const DirectX::SimpleMath::Vector3& _focusPos);
 };
 

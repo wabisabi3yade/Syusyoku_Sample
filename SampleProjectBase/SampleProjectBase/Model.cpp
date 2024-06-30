@@ -267,7 +267,7 @@ void Model::Draw(const Transform& _transform) const
 		material.GetVertexShader().UpdateBuffer(1, &materialParam);
 
 		// ピクセルシェーダー
-		material.GetPixelShader().UpdateBuffer(1, &materialParam);
+		/*material.GetPixelShader().UpdateBuffer(1, &materialParam);*/
 		if(materialParam.isTextureEnable)	// テクスチャがあるなら
 			material.GetPixelShader().SetTexture(0, pTextures[meshIdx]);
 

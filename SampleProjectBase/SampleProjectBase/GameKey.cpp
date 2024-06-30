@@ -63,17 +63,17 @@ void GameKey::InputUpdate()
 	}
 }
 
-bool GameKey::GetKey(int _key)
+bool GameKey::GetKey(int _key)const
 {
 	return (keyState[_key] & 0x80);
 }
 
-bool GameKey::GetKeyDown(int _key)
+bool GameKey::GetKeyDown(int _key)const
 {
 	return ((keyState[_key] & 0x80) && !(o_keyState[_key] & 0x80));
 }
 
-bool GameKey::GetKeyUp(int _key)
+bool GameKey::GetKeyUp(int _key)const
 {
 	return (!(keyState[_key] & 0x80) && (o_keyState[_key] & 0x80));
 }

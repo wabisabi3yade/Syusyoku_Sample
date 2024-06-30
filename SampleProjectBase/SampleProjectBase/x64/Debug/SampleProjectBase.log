@@ -1,6 +1,29 @@
 ﻿  モジュール依存関係のソースをスキャンしています...
-  Transform.cpp
+  ChangeBroadScene.cpp
+  BroadScene_Base.cpp
+  Tank_TitleSub.cpp
+  Tank_ChangeSub.cpp
+  Test_ChangeSubScene.cpp
+  SceneManager.cpp
+  Tank_BroadScene.cpp
+  ChangeSubScene.cpp
+  Tank_InGameSub.cpp
+  Tank_ResultSub.cpp
+  SubScene_Base.cpp
+  Test_SubScene.cpp
+  Test_Broad.cpp
   コンパイルしています...
-  Transform.cpp
-C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Transform.cpp(70,10): error C2374: 'vec': 再定義されています。2 回以上初期化されています。
-  C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Transform.cpp(47): note: 'vec' の宣言を確認してください
+  ChangeSubScene.cpp
+  BroadScene_Base.cpp
+  SceneManager.cpp
+  Tank_ResultSub.cpp
+  ChangeBroadScene.cpp
+  Tank_BroadScene.cpp
+  Tank_InGameSub.cpp
+  Tank_ChangeSub.cpp
+  Tank_TitleSub.cpp
+  SubScene_Base.cpp
+  Test_ChangeSubScene.cpp
+  Test_Broad.cpp
+  Test_SubScene.cpp
+  SampleProjectBase.vcxproj -> C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\x64\Debug\SampleProjectBase.exe

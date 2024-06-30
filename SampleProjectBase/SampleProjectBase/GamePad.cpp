@@ -174,12 +174,12 @@ void GamePad::InputUpdate()
 	if (state.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD)	// ‚ ‚»‚Ñ‚ð’´‚¦‚½‚ç
 	{
 		padValue[Value::Trigger_R2] = static_cast<float>(state.Gamepad.bRightTrigger) / MAX_TRIGGER_VALUE;	// 0.0 `1.0‚Ì”ÍˆÍ‚É‚¨‚³‚ß‚é
-		/*buttonState[Button::R2] = true;*/
+		buttonState[Button::R2] = true;
 	}
 	if (state.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD)
 	{
 		padValue[Value::Trigger_L2] = static_cast<float>(state.Gamepad.bLeftTrigger) / MAX_TRIGGER_VALUE;
-		/*buttonState[Button::L2] = true;*/
+		buttonState[Button::L2] = true;
 	}
 
 	if (state.Gamepad.wButtons & XINPUT_GAMEPAD_START)	buttonState[Button::Option] = true;

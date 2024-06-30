@@ -2,10 +2,15 @@
 #include "Tag.h"
 #include "Component.h"
 #include "MaterialClass.h"
+
+// シーン関数
+#include "SF_Include.h"
+
 // Json
 #include "SaveJson.h"
 #include "LoadJson.h"
 #include "SaveJsonValue.h"
+
 // ImGui
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
@@ -16,45 +21,77 @@ class SceneObjects;
 class GameObject
 {
 protected:
-	bool isActive;	// アクティブ状態かどうか
-	std::string name;	// このオブジェクトの名前
-	Tag tag;	// ゲームオブジェクトのタグ
-	Layer layer;	// ゲームオブジェクトのレイヤー
-	std::list<std::unique_ptr<Component>> pComponents;	// コンポーネントリスト
-	//std::unique_ptr<SaveJsonValue> saveValues;	// セーブをする変数クラス
+	// アクティブ状態かどうか
+	bool isActive;	
 
-	void ActiveProcess();	// アクティブに変更したときの処理
-	void NotActiveProcess();	// 非アクティブに変更したときの処理
+	// このオブジェクトの名前
+	std::string name;	
 
-	virtual void Update(){};	// 更新処理
+	// タグ
+	Tag tag;
 
+	// レイヤー
+	Layer layer;	
+
+	// コンポーネントリスト
+	std::list<std::unique_ptr<Component>> pComponents;
+
+	// セーブをする変数リスト
+	//std::unique_ptr<SaveJsonValue> saveValues;	
+
+	// アクティブ変更時の処理
+	void ActiveProcess();
+
+	// 非アクティブ変更時の処理
+	void NotActiveProcess();
+
+	// 更新処理
+	virtual void Update() {};	
+
+	// Jsonからロード
 	virtual void FromJson(const nlohmann::json& _jsonData) {};
+
+	virtual GameObject& Copy(const GameObject& _other);
 public:
-	Transform transform;	// Transformパラメータ
+	Transform transform;	
 
 	GameObject();
+	GameObject(const GameObject& _other);	
+	GameObject& operator=(const GameObject& _other);
 	virtual ~GameObject() {};
 
-	void UpdateBase();	// どのオブジェクトも行う処理はここ
-	virtual void LateUpdate();	// Updateを行ったあとの更新処理
-	virtual void Draw();	// 描画処理
+	// どのオブジェクトも行う処理はここ
+	void UpdateBase();	
 
-	void Destroy();	// このオブジェクトを削除する
+	// Updateを行ったあとの更新処理
+	virtual void LateUpdate();
 
-	template<typename T> T* AddComponent();	// コンポーネントをつける
-	template<typename T> T* GetComponent();	// コンポーネントを取得
+	// 描画処理
+	virtual void Draw();	
 
-	virtual void ImGuiSet();	// ImGuiの設定
+	// 自身を削除
+	void Destroy();
 
-	//void ToJsonBase(); // Jsonファイルに書き込む
-	//void FromJsonBase(const nlohmann::json& _jsonData);	// Jsonファイルからロードする
+	// コンポーネントをアタッチ
+	template<typename T> T* AddComponent();	
+
+	// コンポーネントを取得
+	template<typename T> T* GetComponent();	
+
+	// ImGuiの設定
+	virtual void ImGuiSet();	
+
+	// Jsonファイルに書き込む
+	//void ToJsonBase(); 
 	
-	void SetName(const std::string& _name) { name = _name; }	// 名前
-	void SetActive(bool _isActive);	// アクティブ状態を変更する
+	// Jsonファイルからロードする
+	//void FromJsonBase(const nlohmann::json& _jsonData);	
+
+	void SetName(const std::string& _name) { name = _name; }
+	void SetActive(bool _isActive);
 
 	const std::string& GetName() { return name; }
-	bool GetIsActive() { return isActive; }	// Active状態か取得
-	// タグ・レイヤーを取得
+	bool GetIsActive() { return isActive; }
 	const Tag& GetTag() { return tag; }
 	const Layer& GetLayer() { return layer; }
 };
@@ -74,9 +111,9 @@ inline T* GameObject::AddComponent()
 	}
 	comp->Init();	// 初期処理
 	T* retPtr = addComp.get();	// 返すポインタを取得しておく
-	
+
 	pComponents.push_back(std::move(addComp));	// リストに追加
-	
+
 	return retPtr;
 }
 
@@ -87,9 +124,9 @@ inline T* GameObject::GetComponent()
 	for (auto& comp : pComponents)
 	{
 		if (typeid(T) != typeid(*comp.get())) continue;
-		T* retPtr = static_cast<T*>(comp.get());	// 変換
-		return retPtr; // あるなら返す
+		T* retPtr = static_cast<T*>(comp.get());	
+		return retPtr; 
 	}
 
-	return nullptr;	// 無かったらnullptr
+	return nullptr;
 }

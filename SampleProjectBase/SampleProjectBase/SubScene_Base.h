@@ -1,14 +1,18 @@
 #pragma once
 #include "SceneMoveInfo.h"
 
+// オブジェクト
 #include "Camera.h"
-#include "ModelLoader.h"
-#include "SceneObjects.h"
 #include "Object_3D.h"
 #include "Object_2D.h"
 #include "Object_UI.h"
-#include "ShaderCollection.h"
+
+// システム関連
+#include "SceneObjects.h"
+#include "SceneLights.h"
 #include "CollisionChecker.h"
+#include "ModelLoader.h"
+#include "ShaderCollection.h"
 
 // サブシーン（小さなシーン、例えば街の中の家の中とか）の基底クラス
 class SubScene_Base
@@ -17,9 +21,17 @@ class SubScene_Base
 	SceneMoveInfo* pSceneMoveInfo;
 
 protected:
-	ResourceCollection* resourceCollection;	// リソース管理ポインタ
-	std::unique_ptr<SceneObjects> sceneObjects;	// シーンで使用するオブジェクト管理クラス
-	std::unique_ptr<CollisionChecker> collisionChcker;	// 当たり判定の判定を行うクラス
+	// リソース管理
+	ResourceCollection* resourceCollection;	
+
+	// シーン内オブジェクト管理
+	std::unique_ptr<SceneObjects> sceneObjects;
+
+	// シーン内光源
+	std::unique_ptr<SceneLights> sceneLights;
+
+	// 当たり判定のチェック
+	std::unique_ptr<CollisionChecker> collisionChcker;	
 
 	// 更新処理
 	virtual void Update() = 0;

@@ -2,32 +2,30 @@
 #include "PlayerMove.h"
 #include "GameObject.h"
 #include "Geometory.h"
+#include "GameMode.h"
+#include "Camera.h"
 
 using namespace DirectX::SimpleMath;
 
 constexpr float MOVE_SPEED(10.0f);
 
-void PlayerMove::Input()
+void PlayerMove::Move()
 {
-	const GamePad& pad = MainApplication::GetInput().GetGamePad();
-
-	moveVec = Vector3::Zero;
-
-	moveVec.x = pad.GetValue(GamePad::Value::StickL_X);
-	moveVec.z = pad.GetValue(GamePad::Value::StickL_Y);
+	// 座標を更新
+	gameObject->transform.position += moveVec * moveSpeed * MainApplication::DeltaTime();
 }
 
 void PlayerMove::Init()
 {
 	name = "PlayerMove";
 	moveSpeed = MOVE_SPEED;
+
+	camera = &GameMode::GetInstance()->GetCamera();
 }
 
 void PlayerMove::Update()
 {
-	Input();	// 入力
-	moveVec.Normalize();
-	gameObject->transform.position += moveVec * moveSpeed * MainApplication::DeltaTime();
+	Move();	// 移動
 }
 
 void PlayerMove::LateUpdate()
@@ -38,9 +36,26 @@ void PlayerMove::Draw()
 {
 	Geometory::SetPosition(gameObject->transform.position + gameObject->transform.Forward() * 5.0f);
 	Geometory::DrawCube();
+
+	Geometory::SetPosition(gameObject->transform.position + gameObject->transform.Forward() * 5.0f);
+	Geometory::DrawCube();
+
+	Geometory::SetPosition(gameObject->transform.position + gameObject->transform.Forward() * 5.0f);
+	Geometory::DrawCube();
 }
 
-void PlayerMove::SetParameter()
+void PlayerMove::ImGuiSetting()
 {
 	ImGui::DragFloat("moveSpeed", &moveSpeed);
+}
+
+void PlayerMove::DecideMoveVector(DirectX::SimpleMath::Vector2 _input)
+{
+	// カメラを考慮した移動方向を決定する
+	moveVec = Vector3::Zero;
+
+	moveVec.x = _input.x;
+	moveVec.z = _input.y;
+	moveVec.y = 0.0f;
+	moveVec.Normalize();
 }

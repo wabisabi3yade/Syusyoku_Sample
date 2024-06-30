@@ -11,6 +11,8 @@ class GameMode :  public Singleton_Base<GameMode>
 	Camera* pMainCamera;	// シーン内のメインカメラ
 	std::vector<GameObject*> pPlayers;	// プレイヤー配列
 
+	GameMode() : pMainCamera(nullptr){}
+	~GameMode() {};
 public:
 	Camera& GetCamera() { return *pMainCamera; }
 	GameObject* GetPlayer(u_int _idx);

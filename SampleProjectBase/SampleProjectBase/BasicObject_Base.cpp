@@ -53,7 +53,7 @@ void BasicObject_Base::Draw(Transform& _transform, DirectX::SimpleMath::Color& _
 	material->GetVertexShader().UpdateBuffer(1, &_color);
 	// シェーダーをセット
 	material->GetVertexShader().Bind();
-	material->GetVertexShader().Bind();
+	material->GetPixelShader().Bind();
 
 	Mesh::Draw(*renderer);	
 }

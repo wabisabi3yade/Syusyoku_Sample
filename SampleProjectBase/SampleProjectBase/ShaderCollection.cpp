@@ -36,13 +36,15 @@ void ShaderCollection::Load()
 	std::vector<std::string> pFileNames
 	{
 		"PS_Basic.cso",
-		"PS_VertexColor.cso"
+		"PS_VertexColor.cso",
+		"PS_TexNotEnable.cso"
 	};
 	// セットする名前
 	std::vector<std::string> pShaderNames
 	{
 		"PS_Basic",
-		"PS_VertexColor"
+		"PS_VertexColor",
+		"PS_TexNotEnable"
 	};
 	defaultPS = "PS_Basic";
 

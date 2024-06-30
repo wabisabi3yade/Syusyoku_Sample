@@ -22,4 +22,21 @@ namespace Vec3
 		DirectX::SimpleMath::Vector3 _endPos,
 		float _ratio
 	);
+	// ワールド座標系3軸単位ベクトル
+	constexpr DirectX::SimpleMath::Vector3 Up = { 0.0f, 1.0f, 0.0f };
+	constexpr DirectX::SimpleMath::Vector3 Right = { 1.0f, 0.0f, 0.0f };
+	constexpr DirectX::SimpleMath::Vector3 Forward = { 0.0f, 0.0f, 1.0f };
+
+	// 内積
+	float Dot(DirectX::SimpleMath::Vector3 _v1, DirectX::SimpleMath::Vector3 _v2);
+
+	// 外積
+	DirectX::SimpleMath::Vector3 Cross(DirectX::SimpleMath::Vector3 _v1,
+		DirectX::SimpleMath::Vector3 _v2);
+}
+
+// 行列
+namespace Mat
+{
+	DirectX::XMMATRIX CreateRotateMatrix(DirectX::SimpleMath::Vector3 _rotation);
 }

@@ -316,6 +316,42 @@
     <Filter Include="ソース ファイル\Object\TankFireObj\Field">
       <UniqueIdentifier>{7e6cb0cd-663f-451d-b683-2dacb70581ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Player\PlayerShot">
+      <UniqueIdentifier>{e8cb6f07-29cc-4a68-856c-348340aea293}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\TankFireObj\Bullet">
+      <UniqueIdentifier>{f82d5a10-6c18-46cf-b336-59926f35276a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Bullet">
+      <UniqueIdentifier>{dfebd937-7ad1-49d9-9a20-14cf68f37213}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Player\PlayerInput">
+      <UniqueIdentifier>{3ead3f7f-0159-4fa0-bb22-adcd1bbdcafa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Input">
+      <UniqueIdentifier>{14bbbb30-cc08-4f5d-aed8-c33d20c3c291}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\SceneFunction">
+      <UniqueIdentifier>{873b7fd4-8efe-4072-b1f3-edf202c51acb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\SceneFunction\GameObject">
+      <UniqueIdentifier>{561d5b96-25b2-4652-b462-abca12791b72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Light">
+      <UniqueIdentifier>{130fca24-6f0a-4d75-8ff5-0a6a29288a52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Light\PointLight">
+      <UniqueIdentifier>{819b1d3b-96f3-4789-b52c-b1470be208c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Light\SpotLight">
+      <UniqueIdentifier>{0313a73a-9476-4d1b-b163-2eff4e4edc6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\SceneLights">
+      <UniqueIdentifier>{fbb366e6-a9a5-4cec-9729-311d7c914502}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Light\Direction">
+      <UniqueIdentifier>{ab500ce5-d941-4082-abd1-6388cfbf8545}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Basic.hlsl">
@@ -332,6 +368,15 @@
     </FxCompile>
     <FxCompile Include="VS_BaseObject.hlsl">
       <Filter>リソース ファイル\VertrxShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_TexNotEnable.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_PointLight.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_SpotLight.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -583,6 +628,36 @@
     </ClCompile>
     <ClCompile Include="Field.cpp">
       <Filter>ソース ファイル\Object\TankFireObj\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerShot.cpp">
+      <Filter>ソース ファイル\Component\InGame\Player\PlayerShot</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>ソース ファイル\Object\TankFireObj\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletMove.cpp">
+      <Filter>ソース ファイル\Component\InGame\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerInput.cpp">
+      <Filter>ソース ファイル\Component\InGame\Player\PlayerInput</Filter>
+    </ClCompile>
+    <ClCompile Include="SF_GameObject.cpp">
+      <Filter>ソース ファイル\SceneFunction\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>ソース ファイル\Object\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLight.cpp">
+      <Filter>ソース ファイル\Object\Light\PointLight</Filter>
+    </ClCompile>
+    <ClCompile Include="SpotLight.cpp">
+      <Filter>ソース ファイル\Object\Light\SpotLight</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneLights.cpp">
+      <Filter>ソース ファイル\Object\SceneLights</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectionLight.cpp">
+      <Filter>ソース ファイル\Object\Light\Direction</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -861,6 +936,39 @@
     </ClInclude>
     <ClInclude Include="Field.h">
       <Filter>ソース ファイル\Object\TankFireObj\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerShot.h">
+      <Filter>ソース ファイル\Component\InGame\Player\PlayerShot</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>ソース ファイル\Object\TankFireObj\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletMove.h">
+      <Filter>ソース ファイル\Component\InGame\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerInput.h">
+      <Filter>ソース ファイル\Component\InGame\Player\PlayerInput</Filter>
+    </ClInclude>
+    <ClInclude Include="SF_GameObject.h">
+      <Filter>ソース ファイル\SceneFunction\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SF_Include.h">
+      <Filter>ソース ファイル\SceneFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>ソース ファイル\Object\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLight.h">
+      <Filter>ソース ファイル\Object\Light\PointLight</Filter>
+    </ClInclude>
+    <ClInclude Include="SpotLight.h">
+      <Filter>ソース ファイル\Object\Light\SpotLight</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneLights.h">
+      <Filter>ソース ファイル\Object\SceneLights</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectionLight.h">
+      <Filter>ソース ファイル\Object\Light\Direction</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

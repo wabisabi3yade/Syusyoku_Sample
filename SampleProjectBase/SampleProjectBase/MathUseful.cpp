@@ -16,7 +16,7 @@ Vector3 Vec3::Slerp(Vector3 _startPos, Vector3 _endPos, float _ratio)
 
     // ２ベクトル間の角度を求める（鋭角側）
     // アークコサインは角度が求められる
-    float theta = acos(s.Dot(e));
+    float theta = acos(Vec3::Dot(s, e));
     // sinθ
     float SinTh = sin(theta);
 
@@ -26,4 +26,23 @@ Vector3 Vec3::Slerp(Vector3 _startPos, Vector3 _endPos, float _ratio)
     retVec3 = (Ps * s + Pe * e) / SinTh;
 
     return retVec3;
+}
+
+float Vec3::Dot(DirectX::SimpleMath::Vector3 _v1, DirectX::SimpleMath::Vector3 _v2)
+{
+    return DirectX::XMVector3Dot(_v1, _v2).m128_f32[0];
+}
+
+DirectX::SimpleMath::Vector3 Vec3::Cross(DirectX::SimpleMath::Vector3 _v1, DirectX::SimpleMath::Vector3 _v2)
+{
+    return DirectX::XMVector3Cross(_v1, _v2);
+}
+
+DirectX::XMMATRIX Mat::CreateRotateMatrix(DirectX::SimpleMath::Vector3 _rotation)
+{
+    Matrix rotateMatrixY = DirectX::XMMatrixRotationY(_rotation.y * Mathf::degToRad);
+    Matrix rotateMatrixX = DirectX::XMMatrixRotationX(_rotation.x * Mathf::degToRad);
+    Matrix rotateMatrixZ = DirectX::XMMatrixRotationZ(_rotation.z * Mathf::degToRad);
+
+    return rotateMatrixY * rotateMatrixX * rotateMatrixZ;
 }

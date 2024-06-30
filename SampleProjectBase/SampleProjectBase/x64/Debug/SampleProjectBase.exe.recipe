@@ -7,6 +7,15 @@
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
+      <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\PS_PointLight.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\PS_SpotLight.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\PS_TexNotEnable.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\PS_Basic.cso</FullPath>
     </ContentFile>
     <ContentFile>

@@ -15,7 +15,7 @@ SceneObjects::SceneObjects()
 
 SceneObjects::~SceneObjects()
 {
-	list.clear();	// 解放する
+	objList.clear();	// 解放する
 	uiList.clear();
 }
 
@@ -25,7 +25,7 @@ void SceneObjects::Update()
 	ImGui::Begin("SceneObjects");
 #endif // _DEBUG
 
-	for (auto itr = list.begin(); itr != list.end(); itr++)
+	for (auto itr = objList.begin(); itr != objList.end(); itr++)
 	{
 		itr->second->UpdateBase();
 		itr->second->ImGuiSet();
@@ -46,7 +46,7 @@ void SceneObjects::Update()
 
 void SceneObjects::LateUpdate()
 {
-	for (auto itr = list.begin(); itr != list.end(); itr++)
+	for (auto itr = objList.begin(); itr != objList.end(); itr++)
 	{
 		itr->second->LateUpdate();
 	}
@@ -60,7 +60,7 @@ void SceneObjects::LateUpdate()
 void SceneObjects::Draw()
 {
 	// 3D空間上のオブジェクト描画
-	for (auto itr = list.begin(); itr != list.end(); itr++)
+	for (auto itr = objList.begin(); itr != objList.end(); itr++)
 	{
 		itr->second->Draw();
 	}
@@ -85,7 +85,7 @@ GameObject* SceneObjects::SetObject(const std::string& _objectName, std::unique_
 	std::string setName;	// セットするときの名前
 
 	// セットするリスト（オブジェクト側かUIか）
-	ObjectList* setList = &list;
+	ObjectList* setList = &objList;
 
 	if (_objPtr->GetLayer().GetType() == Layer::Type::UI)	// UIなら
 	{
@@ -123,12 +123,12 @@ GameObject* SceneObjects::SetObject(const std::string& _objectName, std::unique_
 void SceneObjects::DeleteObj(GameObject& _deleteObj)
 {
 	// 配列内に同じアドレスを探す
-	for (auto itr = list.begin(); itr != list.end(); itr++)
+	for (auto itr = objList.begin(); itr != objList.end(); itr++)
 	{
 		if (itr->second.get() != &_deleteObj) continue;
 
 		// あったら
-		list.erase(itr);	// 削除する
+		objList.erase(itr);	// 削除する
 		return;
 	}
 

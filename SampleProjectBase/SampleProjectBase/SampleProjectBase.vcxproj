@@ -19,6 +19,24 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="PS_PointLight.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="PS_SpotLight.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="PS_TexNotEnable.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="PS_Basic.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -47,9 +65,12 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletMove.cpp" />
     <ClCompile Include="CameraInput.cpp" />
     <ClCompile Include="CollisionChecker.cpp" />
     <ClCompile Include="CollisionRegister.cpp" />
+    <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="GameKey.cpp" />
     <ClCompile Include="GameMode.cpp" />
@@ -74,18 +95,25 @@
     <ClCompile Include="ImGuiDebugLog.cpp" />
     <ClCompile Include="InputClass.cpp" />
     <ClCompile Include="JISToUTF8.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="MathUseful.cpp" />
     <ClCompile Include="Object_UI.cpp" />
     <ClCompile Include="PixelShader.cpp" />
+    <ClCompile Include="PlayerInput.cpp" />
     <ClCompile Include="PlayerMove.cpp" />
+    <ClCompile Include="PlayerShot.cpp" />
+    <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="SaveJson.cpp" />
     <ClCompile Include="SaveJsonValue.cpp" />
+    <ClCompile Include="SceneLights.cpp" />
     <ClCompile Include="SceneObjects.cpp" />
+    <ClCompile Include="SF_GameObject.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Object_2D.cpp" />
     <ClCompile Include="SObjectRegister.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
+    <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Tag.cpp" />
     <ClCompile Include="Tank.cpp" />
     <ClCompile Include="Tank_BroadScene.cpp" />
@@ -135,9 +163,12 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletMove.h" />
     <ClInclude Include="CameraInput.h" />
     <ClInclude Include="CollisionChecker.h" />
     <ClInclude Include="CollisionRegister.h" />
+    <ClInclude Include="DirectionLight.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="GameKey.h" />
     <ClInclude Include="GameMode.h" />
@@ -164,19 +195,27 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="ImGuiDebugLog.h" />
     <ClInclude Include="InputClass.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="MathUseful.h" />
     <ClInclude Include="Object_UI.h" />
     <ClInclude Include="PixelShader.h" />
+    <ClInclude Include="PlayerInput.h" />
     <ClInclude Include="PlayerMove.h" />
+    <ClInclude Include="PlayerShot.h" />
+    <ClInclude Include="PointLight.h" />
     <ClInclude Include="SaveJson.h" />
     <ClInclude Include="SaveJsonValue.h" />
+    <ClInclude Include="SceneLights.h" />
     <ClInclude Include="SceneObjects.h" />
+    <ClInclude Include="SF_GameObject.h" />
+    <ClInclude Include="SF_Include.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Object_2D.h" />
     <ClInclude Include="JISToUTF8.h" />
     <ClInclude Include="SObjectRegister.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SphereCollider.h" />
+    <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Tag.h" />
     <ClInclude Include="Tank.h" />
     <ClInclude Include="Tank_BroadScene.h" />

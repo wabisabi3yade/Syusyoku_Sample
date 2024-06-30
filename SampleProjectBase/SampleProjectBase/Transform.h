@@ -26,5 +26,7 @@ public:
 	const DirectX::SimpleMath::Vector3 Right()const { return right; }	// 右ベクトル
 	const DirectX::SimpleMath::Vector3 Up()const { return up; }	// 上ベクトル
 	const DirectX::SimpleMath::Vector3 Forward()const { return forward; }	// 正面ベクトル
+
+	void ShiftForward() { forward.x += 0.001f; }
 };
 

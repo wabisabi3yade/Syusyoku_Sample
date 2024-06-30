@@ -7,9 +7,15 @@ constexpr float VERTEX_RADIUS(0.5f);	// í∏ì_çÏê¨éûÇÃîºåa
 
 using namespace DirectX::SimpleMath;
 
-SphereCollider::~SphereCollider()
+SphereCollider& SphereCollider::operator=(const SphereCollider& _other)
 {
+	if (this == &_other) return *this;
+	Collider::operator=(_other);
 
+	radius = _other.radius;
+	posOffset = _other.posOffset;
+
+	return *this;
 }
 
 void SphereCollider::Init()
@@ -40,7 +46,7 @@ void SphereCollider::Draw()
 	//Geometory::DrawSphere(true);
 }
 
-void SphereCollider::SetParameter()
+void SphereCollider::ImGuiSetting()
 {
 	ImGui::DragFloat("radius", &radius);
 	ImGuiMethod::DragFloat3(posOffset, "posOffset");

@@ -1,8 +1,8 @@
 // ピクセルシェーダーに渡す
 struct PS_IN
 {
-    float4 pos : SV_POSITION;
-    float4 color : COLOR;
+    float4 pos : SV_POSITION0;
+    float4 color : COLOR0;
     float2 uv : TEXCOORD0;
 };
 

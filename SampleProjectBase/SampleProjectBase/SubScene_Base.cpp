@@ -24,30 +24,35 @@ void SubScene_Base::OnMoveScene(int _nextSubType, BroadType::Type _nextBroadType
 
 SubScene_Base::SubScene_Base(SceneMoveInfo* _pSceneMoveInfo)
 {
-	// BroadSceneから持ってくる
 	pSceneMoveInfo = _pSceneMoveInfo;
-	// リソース管理ポインタ取得
 	resourceCollection = ResourceCollection::GetInstance();
-	// シーンオブジェクト管理クラス作成
+
+	// インスタンス生成
 	sceneObjects = std::make_unique<SceneObjects>();
-	// シーンオブジェクト登録クラスに登録する
+	sceneLights = std::make_unique<SceneLights>();
+	collisionChcker = std::make_unique<CollisionChecker>();
+	std::unique_ptr<Camera> mainCamera = std::make_unique<Camera>();
+
+	// シーンオブジェクト登録クラスセット
 	SObjectRegister::GetInstance()->SetSceneObjects(*sceneObjects.get());
 
-	// カメラ生成
-	std::unique_ptr<Camera> mainCamera = std::make_unique<Camera>();
+	// 当たり判定チェッカークラスを生成し、当たり判定登録対象にする
+	CollisionRegister::GetInstance()->SetCollisionChecker(*collisionChcker);
+
+	// カメラ設定
 	Camera* camPtr = mainCamera.get();
 	GameMode::GetInstance()->SetCamera(*camPtr);	// ゲームモードにカメラを設定する
 	sceneObjects->SetObject("MainCamera", std::move(mainCamera));
-
-	// 当たり判定チェッカークラスを生成し、当たり判定登録対象にする
-	collisionChcker = std::make_unique<CollisionChecker>();
-	CollisionRegister::GetInstance()->SetCollisionChecker(*collisionChcker);
 }
 
 SubScene_Base::~SubScene_Base()
 {
-	sceneObjects.reset();	// シーン内のオブジェクトの終了処理を行う
-	GameMode::Delete();	// シーンごとにゲームモードを作り直す
+	// シーン内のオブジェクトの終了処理を行う
+	sceneObjects.reset();	
+
+	// シーンごとにゲームモードを作り直す
+	GameMode::Delete();
+
 	// 登録クラスを消しておく
 	CollisionRegister::Delete();
 	SObjectRegister::Delete();
@@ -75,7 +80,5 @@ void SubScene_Base::Exec()
 	// シーン内の描画処理
 	Draw();
 	sceneObjects->Draw();
-	ImGuiMethod::Draw();
-	// スワップチェイン
-	Direct3D11::GetInstance()->GetRenderer()->Swap();
+	
 }

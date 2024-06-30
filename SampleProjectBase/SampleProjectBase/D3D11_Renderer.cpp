@@ -8,6 +8,7 @@
 #include "SetUpPerspectiveProj.h"
 #include "SetUpViewTrans.h"
 
+using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
 constexpr float DEFAULT_FOV = 45.0f;
@@ -76,6 +77,7 @@ bool D3D11_Renderer::InitDeviceAndSwapChain(HWND _hWnd)
 	sd.SampleDesc.Quality = 0;            // マルチサンプル（アンチエイリアス）のクオリティ
 	sd.Windowed = TRUE;        // ウィンドウモード（TRUEがウィンドウモード）
 	sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;        // モード自動切り替え
+	sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 
 	// デバイスと、コンテキスト、スワップチェインを作る関数を呼び出し
 	hr = D3D11CreateDeviceAndSwapChain(NULL,
@@ -218,24 +220,21 @@ Matrix D3D11_Renderer::GetWorldMtx(Transform _transform)
 {
 	// 変換行列を作成
 	// 移動行列
-	Matrix t = Matrix::CreateTranslation(
+	Matrix t = XMMatrixTranslation(
 		_transform.position.x,
 		_transform.position.y,
 		_transform.position.z
 	);
 
-	Matrix s = Matrix::CreateScale(
+	// スケーリング行列
+	Matrix s = XMMatrixScaling(
 		_transform.scale.x,
 		_transform.scale.y,
 		_transform.scale.z
 	);
 
-	// 回転行列
-	Matrix r = Matrix::CreateFromYawPitchRoll(
-		DirectX::XMConvertToRadians(_transform.rotation.y),
-		DirectX::XMConvertToRadians(_transform.rotation.x),
-		DirectX::XMConvertToRadians(_transform.rotation.z)
-	);
+	 // 回転行列
+	Matrix r = Mat::CreateRotateMatrix(_transform.rotation);
 
 	Matrix worldMtx = s * r * t;	// ワールド変換行列を作成
 	worldMtx = worldMtx.Transpose();	// 転置行列
@@ -245,6 +244,7 @@ Matrix D3D11_Renderer::GetWorldMtx(Transform _transform)
 
 void D3D11_Renderer::Swap()
 {
+
 	// バックバッファの表示（画面をすぐに更新）
 	HRESULT hr = pSwapChain->Present(0, 0);
 	if (FAILED(hr))

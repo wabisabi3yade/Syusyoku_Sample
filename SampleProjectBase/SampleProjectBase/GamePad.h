@@ -24,6 +24,8 @@ public:
 		// RL
 		R1,
 		L1,
+		R2,
+		L2,
 		R3,
 		L3,
 

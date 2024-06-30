@@ -20,7 +20,7 @@ Camera::~Camera()
 
 void Camera::UpdateViewMatrix()
 {
-	focusPos = transform.position + transform.Forward();	// カメラの前を注視点にする
+	focusPos = transform.Forward() * 1.0f;
 
 	// ビュー変換行列を求める
 	DirectX::SimpleMath::Matrix viewMatrix = DirectX::XMMatrixLookAtLH
@@ -90,4 +90,9 @@ void Camera::SetPerspective()
 {
 	isOrthographic = false;
 	UpdatePerspective(0);
+}
+
+void Camera::SetFocusPos(const DirectX::SimpleMath::Vector3& _focusPos)
+{
+	focusPos = _focusPos;
 }

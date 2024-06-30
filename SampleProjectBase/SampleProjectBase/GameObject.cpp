@@ -41,6 +41,7 @@ void GameObject::NotActiveProcess()
 			colRegister->PopCollider(*col);	// 削除
 		}
 
+		// Start関数がまだなら
 		if (!c->GetIsStartYet())
 		{
 
@@ -48,16 +49,42 @@ void GameObject::NotActiveProcess()
 	}
 }
 
+GameObject& GameObject::Copy(const GameObject& _other)
+{
+	// 同じなら処理しない
+	if (this == &_other) return *this;
+
+	// パラメータ代入
+	transform = _other.transform;
+	isActive = _other.isActive;	
+	name = _other.name;
+	tag = _other.tag;
+	layer = _other.layer;
+
+	// コンポーネントをコピー
+	std::list<std::unique_ptr<Component>> pComponents;	
+
+	return *this;
+}
+
 GameObject::GameObject() : isActive(true), name("")
 {
 	/*saveValues = std::make_unique<SaveJsonValue>();*/
 }
 
+GameObject::GameObject(const GameObject& _other)
+{
+	Copy(_other);
+}
+
+GameObject& GameObject::operator=(const GameObject& _other)
+{
+	return Copy(_other);
+}
+
 void GameObject::UpdateBase()
 {
 	if (!isActive) return;
-
-	transform.UpdateVector();	// 方向ベクトルを更新する
 
 	Update();
 
@@ -82,6 +109,9 @@ void GameObject::LateUpdate()
 void GameObject::Draw()
 {
 	if (!isActive) return;
+
+	// 方向ベクトルを更新する
+	transform.UpdateVector();	
 
 	for (auto& itr : pComponents)
 	{
@@ -111,7 +141,7 @@ void GameObject::ImGuiSet()
 			if (ImGui::TreeNode(itr->name.c_str()))
 			{
 				ImGui::Checkbox("isEnabled", &itr->isEnable);
-				itr->SetParameter();
+				itr->ImGuiSetting();
 				ImGui::TreePop();
 			}
 		}

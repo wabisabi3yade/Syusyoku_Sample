@@ -1,6 +1,9 @@
 #pragma once
 #include "Component.h"
 
+class Tag;
+class Layer;
+
 // 当たり判定基礎クラス
 class Collider :
     public Component
@@ -16,27 +19,38 @@ public :
 protected:
     Type type;  // タイプ
 
-    std::vector<Collider*> hitColliders;    // 今フレームで当たった判定
-    std::vector<Collider*> o_hitColliders;  // 前フレームで当たった判定
-
-    //bool isHit{false}; // 当たってるかフラグ
+   // 今フレーム・前フレームで当たった判定
+    std::list<Collider*> hitColliders;
+    std::list<Collider*> o_hitColliders; 
 
     // 当たってない・当たってるときの当たり判定の色
     static const DirectX::SimpleMath::Color normalColor;
     static const DirectX::SimpleMath::Color hitColor;
 
-    Collider() = delete;
+    Collider() = delete;    
     virtual ~Collider();
 public:
     using Component::Component;
-    void Init()override;    // 初期処理をする(Collider継承したクラスは絶対に呼ぶようにする)
+    Collider& operator=(const Collider& _other);
 
-    /* void SetIsHit(bool _isHit) { isHit = _isHit; }*/
-
-    // この当たり判定に当たったコライダーを配列に追加する
+    void Init()override;   
+    // 判定に当たったコライダー追加
     void SetHitCollider(Collider& _hitCollider) { hitColliders.push_back(&_hitCollider); }
-    void ResetColliders() { hitColliders.clear(); } // 当たってる判定をリセットする
+    // 判定をリセット
+    void ResetColliders() { hitColliders.clear(); } 
 
     Type GetType()const { return type; }    // 種類を取得
+
+private:
+#ifdef _DEBUG
+    // これに当たると色を変える
+    std::list<Tag> colorTags;   
+    std::list<Layer> colorLayers;
+#endif // _DEBUG
+
+public:
+    // 色を変えるタグ・レイヤーを設定
+    void SetTagColor(const Tag& _tag); 
+    void SetLayerColor(const Layer& _layer);
 };
 

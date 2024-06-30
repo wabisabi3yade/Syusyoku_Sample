@@ -1,12 +1,13 @@
 #pragma once
 #include "GameObject.h"
+#include "Light.h"
 
 class Camera;
 // シーンで使用するオブジェクト配列クラス
 class SceneObjects
 {
 	// シーンで使用するオブジェクト配列（オブジェクトの名前がキー値）
-	std::unordered_map<std::string, std::unique_ptr<GameObject>> list;
+	std::unordered_map<std::string, std::unique_ptr<GameObject>> objList;
 	// UI用のリスト(描画を上のリストより後にするため)
 	std::unordered_map<std::string, std::unique_ptr<GameObject>> uiList;
 
@@ -33,7 +34,7 @@ public:
 	template<class T> T* GetSceneObject(const std::string& _objectName);
 
 	// オブジェクトの数を返す
-	u_int GetObjectsNum()const { return static_cast<u_int>(list.size()); }
+	u_int GetObjectsNum()const { return static_cast<u_int>(objList.size()); }
 };
 
 template<class T>
@@ -42,8 +43,8 @@ inline T* SceneObjects::GetSceneObject(const std::string& _objectName)
 	// 先に3D空間状のオブジェクトから探す　→　無かったらUIの方を探す
 	
 	// 名前から探す
-	auto itr = list.find(_objectName);
-	if (itr == list.end())
+	auto itr = objList.find(_objectName);
+	if (itr == objList.end())
 	{
 		// オブジェクトに無かったらUiで探す
 		itr = uiList.find(_objectName);

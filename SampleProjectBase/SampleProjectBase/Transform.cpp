@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Transform.h"
+using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
 #include "imgui.h"
@@ -7,12 +8,8 @@ using namespace DirectX::SimpleMath;
 #include "imgui_impl_win32.h"
 void Transform::UpdateVector()
 {
-	// 回転行列をもとめる
-	Matrix rotateMatrix = Matrix::CreateFromYawPitchRoll(
-		DirectX::XMConvertToRadians(rotation.y),
-		DirectX::XMConvertToRadians(rotation.x),
-		DirectX::XMConvertToRadians(rotation.z)
-	);
+	// 回転行列を求める
+	Matrix rotateMatrix = Mat::CreateRotateMatrix(rotation);
 
 	// 更新する
 	// rotateMatrix[0] → 右成分
@@ -43,51 +40,69 @@ void Transform::ResetParameter()
 
 void Transform::LookAt(DirectX::SimpleMath::Vector3 _worldPos, const DirectX::SimpleMath::Vector3 _upVector)
 {
-	// Atan2関数からベクトルで角度を求める
-	Vector3 vec = _worldPos - position;
-	vec.Normalize();
-	forward = vec;	// 正面ベクトルとする
-	up = Vector3::Up;	// 上方向
-	right = up.Cross(forward);	// 右方向ベクトルを求める
-	right.Normalize();
-	up = forward.Cross(right);	// 真上方向を再計算する
-	up.Normalize();	
-
-	//float sy = sqrtf(forward.x * forward.x + up.x * up.x);
-	//bool singular = sy < 1e-6;	// 近すぎるときに
-	//if (!singular)
-	//{
-	//	rotation.x = atan2f(forward.y, forward.z) * Mathf::radToDeg;
-	//	rotation.y = atan2f(-forward.x, sy) * Mathf::radToDeg;
-	//	rotation.z = atan2f(up.x, right.x) * Mathf::radToDeg;
-	//}
-	//else {
-	//	rotation.x = atan2f(-up.z, up.y) * Mathf::radToDeg;
-	//	rotation.y = atan2f(-forward.x, sy) * Mathf::radToDeg;
-	//	rotation.z = 0;
-	//}
-
+	// 距離がないなら
 	Vector3 vec = _worldPos - position;
 	float distance = vec.Length();
 	if (distance == 0.0f)
-	{
-		position.z -= 0.0001f;
-	}
+		position.z -= 0.0001f;	// 少しずらす
+	vec.Normalize();
 
-	Matrix rotateMatrix = Matrix::CreateLookAt(position, _worldPos, Vector3::Up);
+	// 座標へのビュー行列を求め、逆行列にする
+	Matrix lookMatrix = DirectX::XMMatrixLookAtLH(position, _worldPos, Vector3::Up);
+	Matrix invertMatrix = lookMatrix.Invert();
+
 	// 更新する
-	// rotateMatrix[0] → 右成分
-	right.x = rotateMatrix.m[0][0];
-	right.y = rotateMatrix.m[0][1];
-	right.z = rotateMatrix.m[0][2];
+	// invertMatrix[0] → 右成分
+	right.x = invertMatrix.m[0][0];
+	right.y = invertMatrix.m[0][1];
+	right.z = invertMatrix.m[0][2];
 
-	// rotateMatrix[1] → 上成分
-	up.x = rotateMatrix.m[1][0];
-	up.y = rotateMatrix.m[1][1];
-	up.z = rotateMatrix.m[1][2];
+	// invertMatrix[1] → 上成分
+	up.x = invertMatrix.m[1][0];
+	up.y = invertMatrix.m[1][1];
+	up.z = invertMatrix.m[1][2];
 
-	// rotateMatrix[2] → 前成分
-	forward.x = rotateMatrix.m[2][0];
-	forward.y = rotateMatrix.m[2][1];
-	forward.z = rotateMatrix.m[2][2];
+	// invertMatrix[2] → 前成分
+	forward.x = invertMatrix.m[2][0];
+	forward.y = invertMatrix.m[2][1];
+	forward.z = invertMatrix.m[2][2];
+
+	// Atan2関数からベクトルで角度を求める
+	// 正面ベクトルとする
+	forward = vec;
+	up = Vec3::Up;
+
+	// 右方向ベクトルを求める
+	right = forward.Cross(up);
+	right.Normalize();
+
+	// 真上方向を再計算する
+	up = right.Cross(forward);
+	up.Normalize();
+
+	// 各軸角度を求める
+	// Y軸
+	Vector3 v = up;
+
+	// 求めたい軸の成分を0(XZ平面)
+	v.y = 0.0f;
+	v.Normalize();
+
+	// 基準のワールド系の単位軸ベクトルと内積
+	float dotXZ = Vec3::Dot(v, Vec3::Right);
+	rotation.y = acosf(dotXZ) * Mathf::radToDeg - 90.0f;
+
+	// X軸
+	v = right;
+	v.x = 0.0f;
+	v.Normalize();
+	float dotYZ = Vec3::Dot(v, Vec3::Forward);
+	rotation.x = acosf(dotYZ) * Mathf::radToDeg;
+
+	// Z軸
+	v = forward;
+	v.z = 0.0f;
+	v.Normalize();
+	float dotXY = Vec3::Dot(v, Vec3::Right);
+	rotation.z = acosf(dotXY) * Mathf::radToDeg;
 }

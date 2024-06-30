@@ -4,7 +4,6 @@
 // ImGuiでデバッグログを表示させるクラス(staticクラス)
 class ImGuiDebugLog
 {
-
 	struct Message
 	{
 		int writeNum;	// 書き出し回数

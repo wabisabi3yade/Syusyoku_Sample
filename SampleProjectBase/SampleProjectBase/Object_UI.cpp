@@ -2,6 +2,7 @@
 #include "Object_UI.h"
 #include "ShaderCollection.h"
 
+using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
 MaterialClass* Object_UI::pShareMaterial = nullptr;
@@ -88,27 +89,24 @@ void Object_UI::SetupDraw()
 	// WVPのWとVを単位行列にする
 	// 変換行列を作成
 	// 移動行列
-	Matrix t = Matrix::CreateTranslation(
-		transform.position.x,
-		transform.position.y,
+	Matrix t = XMMatrixTranslation(
+		transform.position.x, 
+		transform.position.y, 
 		transform.position.z
 	);
 
-	Matrix s = Matrix::CreateScale(
+	// スケーリング行列
+	Matrix s = XMMatrixScaling(
 		transform.scale.x,
 		transform.scale.y,
 		transform.scale.z
 	);
 
 	// 回転行列
-	Matrix r = Matrix::CreateFromYawPitchRoll(
-		0.0f,
-		0.0f,
-		DirectX::XMConvertToRadians(transform.rotation.z)
-	);
+	Matrix r = Mat::CreateRotateMatrix(transform.rotation);
 
 	Matrix worldMtx = s * r * t;	// ワールド変換行列を作成
-	worldMtx = worldMtx.Transpose();	// 転置行列
+	worldMtx.Transpose();
 
 	RenderParam::WVP wvp;
 	wvp.world = worldMtx;
