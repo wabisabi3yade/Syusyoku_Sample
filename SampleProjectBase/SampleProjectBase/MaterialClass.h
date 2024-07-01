@@ -33,9 +33,9 @@ public:
 	// マテリアル・各パラメータを設定
 	void SetMaterialParameter(const MaterialParameter& _mat) { parameter = _mat; }
 	void SetDiffuse(const DirectX::SimpleMath::Color& _diffuse) { parameter.diffuse = _diffuse; }
-	void SetAmbeint(const DirectX::SimpleMath::Color& _ambient) { parameter.diffuse = _ambient; }
-	void SetSpecular(const DirectX::SimpleMath::Color& _specular) { parameter.diffuse = _specular; }
-	void SetEmissive(const DirectX::SimpleMath::Color& _emmisive) { parameter.diffuse = _emmisive; }
+	void SetAmbeint(const DirectX::SimpleMath::Color& _ambient) { parameter.ambient = _ambient; }
+	void SetSpecular(const DirectX::SimpleMath::Color& _specular) { parameter.specular = _specular; }
+	void SetEmissive(const DirectX::SimpleMath::Color& _emmisive) { parameter.emissive = _emmisive; }
 
 	VertexShader& GetVertexShader()const { return *pVertexShader; }
 	PixelShader& GetPixelShader()const { return *pPixelShader; }
