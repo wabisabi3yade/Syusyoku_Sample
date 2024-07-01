@@ -5,8 +5,12 @@
 // マクロ定義 /////////////////
 // リソースを解放するマクロ
 #define SAFE_RELEASE(x)    { if(x) { (x)->Release(); (x) = nullptr; } }
+
 // クラスの安全に解放するマクロ定義
 #define CLASS_DELETE(p) {if(p != nullptr) { delete p; p = nullptr;} }
+
+// max min関数を無効にする
+#define NOMINMAX
 
 // インクルードファイル /////////////////
 #include <iostream>	// std使うために

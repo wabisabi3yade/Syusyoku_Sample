@@ -21,7 +21,7 @@ PointLight& PointLight::operator=(const PointLight& _other)
 	return *this;
 }
 
-PointLParameter PointLight::GetParameter()
+const PointLParameter& PointLight::GetParameter()
 {
 	PointLParameter p;
 	p.base = parameter;

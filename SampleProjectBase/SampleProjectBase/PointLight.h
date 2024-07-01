@@ -7,7 +7,7 @@ struct PointLParameter
 	float range{5.0f};
 };
 
-// 点光源
+// ポイントライト
 class PointLight :
 	public Light
 {

@@ -20,7 +20,7 @@ DirectionLight& DirectionLight::operator=(const DirectionLight& _other)
 	return *this;
 }
 
-DirectionLParameter DirectionLight::GetParameter()
+const DirectionLParameter DirectionLight::GetParameter()
 {
 	DirectionLParameter d;
 	d.base = parameter;

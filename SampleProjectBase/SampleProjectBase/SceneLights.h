@@ -2,13 +2,16 @@
 #include "Light.h"
 #include "PointLight.h"
 #include "SpotLight.h"
+
 // シーン内の光源リスト
 class SceneLights
 {
 	// ディレクション
 	std::unique_ptr<Light> pDirection;
-	// 点光源
+
+	// ポイントライト
 	std::list<std::unique_ptr<PointLight>> pointLights;
+
 	// スポットライト
 	std::list<std::unique_ptr<SpotLight>> spotLights;
 

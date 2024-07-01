@@ -61,12 +61,6 @@ Tank_InGameSub::~Tank_InGameSub()
 
 void Tank_InGameSub::Update()
 {
-	static bool isT = false;
-	ImGui::Checkbox("a", & isT);
-	GameObject* spot = sceneObjects->GetSceneObject<GameObject>("Spot");
-	GameObject* tank = sceneObjects->GetSceneObject<GameObject>("Tank");
-	if(isT)
-	spot->transform.LookAt(tank->transform.position);
 }
 
 void Tank_InGameSub::LateUpdate()
