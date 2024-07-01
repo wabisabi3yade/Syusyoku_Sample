@@ -7,11 +7,6 @@
 #include "imgui_impl_dx11.h"
 #include "imgui.h"
 
-
-#ifdef _DEBUG
-#define _EDIT
-#endif
-
 constexpr short FPS(60);	// フレームレート数
 
 std::unique_ptr<Window> MainApplication::pWindow = nullptr;	// ウィンドウ処理クラス
@@ -19,6 +14,7 @@ Direct3D11* MainApplication::pD3D = nullptr;	// Direct3Dの機能を持つクラス
 SceneManager* MainApplication::pSceneManager = nullptr;	// シーンマネージャークラス
 std::unique_ptr<VariableFrameRate> MainApplication::variableFps = nullptr;	// 可変フレームレート
 std::unique_ptr<InputClass> MainApplication::input = nullptr;	// 入力クラス
+bool MainApplication::isEscapeDisplay = false;
 
 void MainApplication::Release()
 {
@@ -35,6 +31,47 @@ void MainApplication::Release()
 
 	// ImGuiの終了処理
 	ImGuiMethod::End();
+}
+
+bool MainApplication::Escape()
+{
+	// エスケープキー押されたら
+	if (!isEscapeDisplay && input->GetKeyboard().GetKeyDown(DIK_ESCAPE))
+		isEscapeDisplay = true;
+
+	if (!isEscapeDisplay) return false;
+
+	bool isEscape = false;
+
+	// アプリケーション終了表示
+
+	// ウィンドウ大きさ設定
+	ImVec2 windowSize(170, 70);
+	ImVec2 windowPos(
+		(ImGui::GetIO().DisplaySize.x - windowSize.x) * 0.5f,
+		(ImGui::GetIO().DisplaySize.y - windowSize.y) * 0.5f
+	);
+	ImGui::SetNextWindowPos(windowPos);
+	ImGui::SetNextWindowSize(windowSize);
+
+	// ボタン処理
+	ImGui::Begin(ShiftJisToUtf8("終了しますか").c_str(), nullptr, 
+		ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+	if (ImGui::Button(ShiftJisToUtf8("はい").c_str()/*, size*/))
+	{
+		isEscape = true;
+		isEscapeDisplay = false;
+	}
+	ImGui::SameLine();
+	ImGui::Dummy(ImVec2(30.0f, 0.0f));
+	ImGui::SameLine();
+	if (ImGui::Button(ShiftJisToUtf8("いいえ").c_str()/*, size*/))
+	{
+		isEscapeDisplay = false;
+	}
+	ImGui::End();
+
+	return isEscape;
 }
 
 void MainApplication::Init(HINSTANCE _hInst)
@@ -75,19 +112,25 @@ void MainApplication::GameLoop()
 		if (result == false) break;
 
 		ImGuiMethod::NewFrame();
+
+		// 終了処理チェック
+		if (Escape())
+			return;
+
 		// 入力更新
 		input->Update();
 
 		// 更新処理
 		pSceneManager->Exec();
 
-#ifdef _DEBUG
+#ifdef EDIT
 		ImGui::Begin("System");
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 		ImGui::End();
-#endif // _DEBUG
+#endif // EDIT
 
 		ImGuiMethod::Draw();
+
 		// スワップチェイン
 		Direct3D11::GetInstance()->GetRenderer()->Swap();
 

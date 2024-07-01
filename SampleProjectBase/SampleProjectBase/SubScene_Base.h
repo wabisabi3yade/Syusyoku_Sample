@@ -41,6 +41,7 @@ protected:
 
 	// •`‰æ‚ğ‚·‚é
 	virtual void Draw() = 0;
+	void DrawSetup();
 
 	// ƒV[ƒ“ˆÚ“®‚ÅŒÄ‚Ño‚·
 	void OnMoveScene(int _nextSubType, BroadType::Type _nextBroadType);

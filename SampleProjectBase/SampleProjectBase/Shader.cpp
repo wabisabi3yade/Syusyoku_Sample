@@ -107,13 +107,13 @@ void Shader::UpdateBuffer(u_int _slot, void* _pData)
 
 void Shader::SetTexture(u_int _slot, Texture* _texture)
 {
-#ifdef _DEBUG
+#ifdef EDIT
 	if (_texture == nullptr)
 	{
 		ImGuiDebugLog::Add("テクスチャが設定されていません");
 		return;
 	}
-#endif // _DEBUG
+#endif // EDIT
 
 	if (_slot > pTextures.size()) return;	// スロット番号がテクスチャ配列上限より上なら
 

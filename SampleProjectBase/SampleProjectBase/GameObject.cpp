@@ -128,7 +128,7 @@ void GameObject::Destroy()
 
 void GameObject::ImGuiSet()
 {
-#ifdef _DEBUG
+#ifdef EDIT
 	if (ImGui::TreeNode(name.c_str()))	// –¼‘OTree
 	{
 		ImGui::Checkbox("isActive", &isActive);
@@ -148,7 +148,7 @@ void GameObject::ImGuiSet()
 
 		ImGui::TreePop();
 	}
-#endif // _DEBUG
+#endif // EDIT
 }
 
 

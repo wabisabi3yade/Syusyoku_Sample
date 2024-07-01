@@ -19,8 +19,13 @@ class MainApplication
 	static std::unique_ptr<VariableFrameRate> variableFps;	// 可変フレームレートクラス
 	static std::unique_ptr<InputClass> input;	// 入力クラス
 
+	// アプリケーション終了
+	static bool isEscapeDisplay;
+
 	MainApplication(){};
 	~MainApplication(){};
+
+	static bool Escape();
 public:
 	// 初期化する
 	// 引数：インスタンスハンドル

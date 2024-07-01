@@ -20,7 +20,7 @@ void ImGuiMethod::Initialize(HWND _hwnd, ID3D11Device* _pDevice, ID3D11DeviceCon
 
 
 	// ImGuiのスタイルを設定
-	ImGui::StyleColorsDark();
+	ImGui::StyleColorsClassic();
 
 	// ImGuiのバックエンドを初期化
 	ImGui_ImplWin32_Init(_hwnd);

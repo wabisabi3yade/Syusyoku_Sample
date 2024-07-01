@@ -86,7 +86,7 @@ VertexShader* ShaderCollection::GetVertexShader(std::string _shaderName)
 	}
 
 	VertexShader* retPtr = dynamic_cast<VertexShader*>(itr->second.get());
-#ifdef _DEBUG
+#ifdef EDIT
 	if (retPtr == nullptr)
 	{
 
@@ -108,7 +108,7 @@ PixelShader* ShaderCollection::GetPixelShader(std::string _shaderName)
 	}
 
 	PixelShader* retPtr = dynamic_cast<PixelShader*>(itr->second.get());
-#ifdef _DEBUG
+#ifdef EDIT
 	if (retPtr == nullptr)
 	{
 

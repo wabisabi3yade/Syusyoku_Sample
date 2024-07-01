@@ -214,9 +214,6 @@
     <Filter Include="ソース ファイル\Component\Collider\CollisionRegister">
       <UniqueIdentifier>{3ab90406-cf9c-4eae-9535-14d7e715d14b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\System\MathUseful">
-      <UniqueIdentifier>{4c0f1f54-09cf-4963-af1b-02fdd0832fe5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Component\InGame\Camera\CameraMove">
       <UniqueIdentifier>{6b4aa409-ce39-44d4-b402-3a73fef4490a}</UniqueIdentifier>
     </Filter>
@@ -351,6 +348,15 @@
     </Filter>
     <Filter Include="ソース ファイル\Object\Light\Direction">
       <UniqueIdentifier>{ab500ce5-d941-4082-abd1-6388cfbf8545}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Useful">
+      <UniqueIdentifier>{7a7bde62-f1ee-405c-bca3-eb0e4517e016}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Useful\CUseful">
+      <UniqueIdentifier>{8d2e074a-3358-4341-94a5-dcfabc90dfaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Useful\MathUseful">
+      <UniqueIdentifier>{4c0f1f54-09cf-4963-af1b-02fdd0832fe5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -600,7 +606,7 @@
       <Filter>ソース ファイル\Component\Collider\CollisionRegister</Filter>
     </ClCompile>
     <ClCompile Include="MathUseful.cpp">
-      <Filter>ソース ファイル\System\MathUseful</Filter>
+      <Filter>ソース ファイル\System\Useful\MathUseful</Filter>
     </ClCompile>
     <ClCompile Include="CameraMove.cpp">
       <Filter>ソース ファイル\Component\InGame\Camera\CameraMove</Filter>
@@ -908,7 +914,7 @@
       <Filter>ソース ファイル\Component\Collider\CollisionRegister</Filter>
     </ClInclude>
     <ClInclude Include="MathUseful.h">
-      <Filter>ソース ファイル\System\MathUseful</Filter>
+      <Filter>ソース ファイル\System\Useful\MathUseful</Filter>
     </ClInclude>
     <ClInclude Include="CameraMove.h">
       <Filter>ソース ファイル\Component\InGame\Camera\CameraMove</Filter>

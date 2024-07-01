@@ -9,7 +9,11 @@ using namespace DirectX::SimpleMath;
 void Transform::UpdateVector()
 {
 	// 回転行列を求める
-	Matrix rotateMatrix = Mat::CreateRotateMatrix(rotation);
+	Matrix rotateMatrix = Matrix::CreateFromYawPitchRoll(
+		rotation.y * Mathf::degToRad,
+		rotation.x * Mathf::degToRad,
+		rotation.z * Mathf::degToRad
+	);
 
 	// 更新する
 	// rotateMatrix[0] → 右成分

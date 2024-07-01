@@ -37,12 +37,3 @@ DirectX::SimpleMath::Vector3 Vec3::Cross(DirectX::SimpleMath::Vector3 _v1, Direc
 {
     return DirectX::XMVector3Cross(_v1, _v2);
 }
-
-DirectX::XMMATRIX Mat::CreateRotateMatrix(DirectX::SimpleMath::Vector3 _rotation)
-{
-    Matrix rotateMatrixY = DirectX::XMMatrixRotationY(_rotation.y * Mathf::degToRad);
-    Matrix rotateMatrixX = DirectX::XMMatrixRotationX(_rotation.x * Mathf::degToRad);
-    Matrix rotateMatrixZ = DirectX::XMMatrixRotationZ(_rotation.z * Mathf::degToRad);
-
-    return rotateMatrixY * rotateMatrixX * rotateMatrixZ;
-}

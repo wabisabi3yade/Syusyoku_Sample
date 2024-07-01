@@ -21,11 +21,13 @@ Collider& Collider::operator=(const Collider& _other)
 
 	this->type = _other.type;
 
-#ifdef _DEBUG
+#ifdef EDIT
 	// Ç±ÇÍÇ…ìñÇΩÇÈÇ∆êFÇïœÇ¶ÇÈ
 	colorTags = _other.colorTags;
 	colorLayers = _other.colorLayers;
-#endif // _DEBUG
+#endif // EDIT
+
+	return *this;
 }
 
 void Collider::Init()
@@ -36,7 +38,7 @@ void Collider::Init()
 
 void Collider::SetTagColor(const Tag& _tag)
 {
-#ifdef _DEBUG
+#ifdef EDIT
 
 
 
@@ -44,12 +46,12 @@ void Collider::SetTagColor(const Tag& _tag)
 
 
 
-#endif // _DEBUG
+#endif // EDIT
 }
 
 void Collider::SetLayerColor(const Layer& _layer)
 {
-#ifdef _DEBUG
+#ifdef EDIT
 	
 
 
@@ -57,5 +59,5 @@ void Collider::SetLayerColor(const Layer& _layer)
 
 
 
-#endif // _DEBUG
+#endif // EDIT
 }

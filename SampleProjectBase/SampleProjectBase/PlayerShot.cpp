@@ -8,6 +8,7 @@ using namespace SceneFunction;
 
 void PlayerShot::Init()
 {
+	name = typeid(PlayerShot).name();
 	bullet = std::make_unique<Bullet>();
 }
 

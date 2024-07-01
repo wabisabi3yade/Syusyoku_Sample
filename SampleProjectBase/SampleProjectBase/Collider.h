@@ -42,11 +42,11 @@ public:
     Type GetType()const { return type; }    // 種類を取得
 
 private:
-#ifdef _DEBUG
+#ifdef EDIT
     // これに当たると色を変える
     std::list<Tag> colorTags;   
     std::list<Layer> colorLayers;
-#endif // _DEBUG
+#endif // EDIT
 
 public:
     // 色を変えるタグ・レイヤーを設定

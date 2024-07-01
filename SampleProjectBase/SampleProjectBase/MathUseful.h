@@ -34,9 +34,3 @@ namespace Vec3
 	DirectX::SimpleMath::Vector3 Cross(DirectX::SimpleMath::Vector3 _v1,
 		DirectX::SimpleMath::Vector3 _v2);
 }
-
-// çsóÒ
-namespace Mat
-{
-	DirectX::XMMATRIX CreateRotateMatrix(DirectX::SimpleMath::Vector3 _rotation);
-}

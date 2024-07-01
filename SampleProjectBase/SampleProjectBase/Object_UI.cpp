@@ -103,7 +103,11 @@ void Object_UI::SetupDraw()
 	);
 
 	// 回転行列
-	Matrix r = Mat::CreateRotateMatrix(transform.rotation);
+	Matrix r = Matrix::CreateFromYawPitchRoll(
+		transform.rotation.y * Mathf::degToRad,
+		transform.rotation.x * Mathf::degToRad,
+		transform.rotation.z * Mathf::degToRad
+	);
 
 	Matrix worldMtx = s * r * t;	// ワールド変換行列を作成
 	worldMtx.Transpose();

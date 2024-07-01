@@ -21,9 +21,9 @@ SceneObjects::~SceneObjects()
 
 void SceneObjects::Update()
 {
-#ifdef _DEBUG
+#ifdef EDIT
 	ImGui::Begin("SceneObjects");
-#endif // _DEBUG
+#endif // EDIT
 
 	for (auto itr = objList.begin(); itr != objList.end(); itr++)
 	{
@@ -37,9 +37,9 @@ void SceneObjects::Update()
 		itr->second->ImGuiSet();	
 	}
 
-#ifdef _DEBUG
+#ifdef EDIT
 	ImGui::End();
-#endif // _DEBUG
+#endif // EDIT
 
 
 }

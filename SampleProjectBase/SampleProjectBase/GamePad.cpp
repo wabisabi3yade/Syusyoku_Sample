@@ -128,7 +128,7 @@ void GamePad::InputUpdate()
 	ZeroMemory(&state, sizeof(XINPUT_STATE));
 	isResult = XInputGetState(0, &state);
 
-#ifdef _DEBUG
+#ifdef EDIT
 	static DWORD o_IsResult = 1;	//1フレーム前の状態
 	if (isResult != o_IsResult)	// デバッグログ
 	{
@@ -136,7 +136,7 @@ void GamePad::InputUpdate()
 		else ImGuiDebugLog::Add("ゲームパッドと接続が切れました");
 	}
 	o_IsResult = isResult; // 更新
-#endif // _DEBUG
+#endif // EDIT
 	if (isResult != ERROR_SUCCESS) return;	// コントローラーにつながっていないなら
 
 	// 前フレームの状態を更新する

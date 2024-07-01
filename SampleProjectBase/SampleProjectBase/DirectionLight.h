@@ -21,6 +21,11 @@ public:
 
 	DirectionLight& operator=(const DirectionLight& _other);
 
+	void Draw() override;
+
+	void SetDirection(const DirectX::SimpleMath::Vector3& _dir);
+
+	const DirectX::SimpleMath::Vector3& GetDirection() { return direction; }
 	DirectionLParameter GetParameter();
 };
 

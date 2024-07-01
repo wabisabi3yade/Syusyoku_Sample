@@ -53,6 +53,10 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	tex = TextureLoader::Load(textureSets[0]);
 	field->SetTexture(tex);
 	sceneObjects->SetObject("Field", std::move(field));
+
+	//　ディレクションライト
+	std::unique_ptr<DirectionLight> pDirLight = std::make_unique<DirectionLight>();
+	sceneLights->SetDirectionLight(std::move(pDirLight));
 }
 
 Tank_InGameSub::~Tank_InGameSub()

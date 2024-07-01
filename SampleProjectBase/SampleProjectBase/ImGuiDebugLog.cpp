@@ -12,7 +12,7 @@ constexpr u_int MAX_DISPLAY = (1000); // デバッグログ表示最大数
 
 void ImGuiDebugLog::Add(const std::string& _debugMessage)
 {
-#ifdef _DEBUG
+#ifdef EDIT
 	std::string s =  ShiftJisToUtf8(_debugMessage);	// UTF-8に変換
 
 	// リストの中に既に同じメッセージがあるなら
@@ -42,7 +42,7 @@ void ImGuiDebugLog::Add(const std::string& _debugMessage)
 
 void ImGuiDebugLog::DisplayMessage()
 {
-#ifdef _DEBUG
+#ifdef EDIT
 	ImGui::Begin(ShiftJisToUtf8("デバッグログ").c_str());
 	
 	// リスト内のメッセージを表示させる

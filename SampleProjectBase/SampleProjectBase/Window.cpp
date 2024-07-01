@@ -53,7 +53,7 @@ bool Window::Init(HINSTANCE _hInst)
     AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
 
     hWnd = CreateWindow(wc.lpszClassName, CLASS_NAME,
-        WS_OVERLAPPEDWINDOW,
+        WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME,
         CW_USEDEFAULT, CW_USEDEFAULT,
         rect.right - rect.left, rect.bottom - rect.top,
         nullptr, nullptr, _hInst, nullptr);

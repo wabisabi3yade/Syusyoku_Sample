@@ -20,7 +20,12 @@ Camera::~Camera()
 
 void Camera::UpdateViewMatrix()
 {
-	focusPos = transform.Forward() * 1.0f;
+	focusPos = transform.position + transform.Forward() * 1.0f;
+
+	if (Vector3::Distance(transform.position, focusPos) < 0.0001f)
+	{
+		focusPos.z += 0.001f;
+	}
 
 	// ƒrƒ…[•ÏŠ·s—ñ‚ð‹‚ß‚é
 	DirectX::SimpleMath::Matrix viewMatrix = DirectX::XMMatrixLookAtLH

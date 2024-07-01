@@ -33,8 +33,12 @@ public:
 	~Light() {};
 	Light& operator=(const Light& _other);
 
+	virtual void Draw() {};
+
 	// 各パラメータセット
 	void SetPosition(const DirectX::SimpleMath::Vector3& _position) { parameter.position = _position; }
-	void SeColor(const DirectX::SimpleMath::Color& _color) { parameter.color = _color; }
-	Type GetType() { return type; }
+	void SetColor(const DirectX::SimpleMath::Color& _color) { parameter.color = _color; }
+
+	const DirectX::SimpleMath::Vector3& GetPosition() { return parameter.position; }
+	const DirectX::SimpleMath::Color& GetColor() { return parameter.color; }
 };

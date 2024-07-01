@@ -11,6 +11,19 @@
 #include "imgui.h"
 #include "ImGuiMethod.h"
 
+void SubScene_Base::DrawSetup()
+{
+	// 画面クリアなど準備
+	Direct3D11::GetInstance()->GetRenderer()->SetUpDraw();
+
+	// ビュー変換行列を更新
+	Camera* mainCamera = sceneObjects->GetSceneObject<Camera>("MainCamera");
+	mainCamera->UpdateViewMatrix();
+
+	// 光源の更新処理
+	sceneLights->Update();
+}
+
 /// <summary>
 /// シーン移動するとなったら呼び出す
 /// </summary>
@@ -72,11 +85,9 @@ void SubScene_Base::Exec()
 	// シーン内の当たり判定をチェックする
 	/*collisionChcker->CollisionCheck();*/
 
-	// 画面クリアなど準備
-	Direct3D11::GetInstance()->GetRenderer()->SetUpDraw();
-	// ビュー変換行列を更新
-	Camera* mainCamera = sceneObjects->GetSceneObject<Camera>("MainCamera");
-	mainCamera->UpdateViewMatrix();
+	// 描画前準備
+	DrawSetup();
+
 	// シーン内の描画処理
 	Draw();
 	sceneObjects->Draw();

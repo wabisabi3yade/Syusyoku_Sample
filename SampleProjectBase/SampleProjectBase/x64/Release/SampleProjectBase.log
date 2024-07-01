@@ -1,2 +1,18 @@
 ﻿  モジュール依存関係のソースをスキャンしています...
+  Shader.cpp
+  ImGuiDebugLog.cpp
+  SceneObjects.cpp
+  MainApplication.cpp
+  ShaderCollection.cpp
+  コンパイルしています...
+  ImGuiDebugLog.cpp
+  Shader.cpp
+  ShaderCollection.cpp
+  SceneObjects.cpp
+  MainApplication.cpp
+  コード生成しています。
+  539 of 4667 functions (11.5%) were compiled, the rest were copied from previous compilation.
+    57 functions were new in current compilation
+    225 functions had inline decision re-evaluated but remain unchanged
+  コード生成が終了しました。
   SampleProjectBase.vcxproj -> C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\x64\Release\SampleProjectBase.exe
