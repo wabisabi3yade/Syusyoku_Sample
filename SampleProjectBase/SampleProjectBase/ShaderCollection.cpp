@@ -22,13 +22,13 @@ void ShaderCollection::Load()
 	};
 	defaultVS = "VS_Basic";
 
-	for (int i = 0; i < vShaderNames.size(); i++)
+	for (int vsCount = 0; vsCount < static_cast<int>(vShaderNames.size()); vsCount++)
 	{
 		std::unique_ptr<VertexShader> vShader = std::make_unique<VertexShader>();
-		std::string loadFilePath = shaderPath + vFileNames[i];	// ロードする全体のパス名
+		std::string loadFilePath = shaderPath + vFileNames[vsCount];	// ロードする全体のパス名
 		vShader->LoadCsoFile(loadFilePath.c_str());
-		vShader->SetName(vShaderNames[i]);
-		shaders.emplace(vShaderNames[i], std::move(vShader));	// 配列に追加する
+		vShader->SetName(vShaderNames[vsCount]);
+		shaders.emplace(vShaderNames[vsCount], std::move(vShader));	// 配列に追加する
 	}
 
 	// ピクセルシェーダーを作成
@@ -37,24 +37,26 @@ void ShaderCollection::Load()
 	{
 		"PS_Basic.cso",
 		"PS_VertexColor.cso",
-		"PS_TexNotEnable.cso"
+		"PS_TexNotEnable.cso",
+		"PS_Unlit.cso"
 	};
 	// セットする名前
 	std::vector<std::string> pShaderNames
 	{
 		"PS_Basic",
 		"PS_VertexColor",
-		"PS_TexNotEnable"
+		"PS_TexNotEnable",
+		"PS_Unlit"
 	};
 	defaultPS = "PS_Basic";
 
-	for (int i = 0; i < pShaderNames.size(); i++)
+	for (int psCount = 0; psCount < static_cast<int>(pShaderNames.size()); psCount++)
 	{
 		std::unique_ptr<PixelShader> pShader = std::make_unique<PixelShader>();
-		std::string loadFilePath = shaderPath + pFileNames[i];	// ロードする全体のパス名
+		std::string loadFilePath = shaderPath + pFileNames[psCount];	// ロードする全体のパス名
 		pShader->LoadCsoFile(loadFilePath.c_str());
-		pShader->SetName((pShaderNames[i]));
-		shaders.emplace(pShaderNames[i], std::move(pShader));	// 配列に追加する
+		pShader->SetName((pShaderNames[psCount]));
+		shaders.emplace(pShaderNames[psCount], std::move(pShader));	// 配列に追加する
 	}
 }
 

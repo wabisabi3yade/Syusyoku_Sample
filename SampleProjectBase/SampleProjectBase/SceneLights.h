@@ -35,8 +35,8 @@ public:
 	void Update();
 
 	void SetDirectionLight(std::unique_ptr<DirectionLight> _direction);
-	PointLight& SetPointLight(std::unique_ptr<PointLight> _point);
-	SpotLight& SetSpotLight(std::unique_ptr<SpotLight> _spot);
+	PointLight* SetPointLight(std::unique_ptr<PointLight> _point);
+	SpotLight* SetSpotLight(std::unique_ptr<SpotLight> _spot);
 
 	DirectionLParameter GetDirectionParameter();
 	const std::vector<PointLParameter>& GetPointParameter();

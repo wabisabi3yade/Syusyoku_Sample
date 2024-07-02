@@ -57,7 +57,7 @@ bool MainApplication::Escape()
 	// É{É^Éìèàóù
 	ImGui::Begin(ShiftJisToUtf8("èIóπÇµÇ‹Ç∑Ç©").c_str(), nullptr, 
 		ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-	if (ImGui::Button(ShiftJisToUtf8("ÇÕÇ¢").c_str()/*, size*/))
+	if (ImGui::Button(ShiftJisToUtf8("ÇÕÇ¢").c_str()))
 	{
 		isEscape = true;
 		isEscapeDisplay = false;
@@ -65,7 +65,7 @@ bool MainApplication::Escape()
 	ImGui::SameLine();
 	ImGui::Dummy(ImVec2(30.0f, 0.0f));
 	ImGui::SameLine();
-	if (ImGui::Button(ShiftJisToUtf8("Ç¢Ç¢Ç¶").c_str()/*, size*/))
+	if (ImGui::Button(ShiftJisToUtf8("Ç¢Ç¢Ç¶").c_str()))
 	{
 		isEscapeDisplay = false;
 	}

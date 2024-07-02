@@ -209,13 +209,11 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 			}
 			// 失敗
 			if (!isSuccess) {
-				materialParam.isTextureEnable = false;	// テクスチャ使用フラグを降ろす
 				std::string message = "モデルのテクスチャ読込失敗　" + file;
 				ImGuiDebugLog::Add(message);
 			}
 			else
 			{
-				materialParam.isTextureEnable = true;	// テクスチャ使用フラグを立てる
 				// テクスチャ読込み成功
 				// 読み込んだテクスチャをマテリアルに設定する
 				pTextures.push_back(texture.get());
@@ -227,7 +225,6 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 		{
 			std::string message = "モデルのテクスチャ読込失敗　" + std::string(path.C_Str());
 			ImGuiDebugLog::Add(message);
-			materialParam.isTextureEnable = false;	// テクスチャ使用フラグを降ろす
 		}
 
 		// パラメータをマテリアルクラスに設定する
@@ -258,17 +255,20 @@ void Model::Draw(const Transform& _transform) const
 	for (u_int meshIdx = 0; meshIdx < meshNum; meshIdx++)
 	{
 		if (meshIdx > pMaterials.size() - 1) return;	// マテリアルがないなら終わる
-
 		MaterialClass& material = *pMaterials[meshIdx];
-		MaterialParameter& materialParam = material.GetMaterialParameter();	// パラメータ
+
+		// パラメータ
+		MaterialParameter& materialParam = material.GetMaterialParameter();
+
 		// バッファを更新する
 		// 頂点シェーダー
 		material.GetVertexShader().UpdateBuffer(0, &wvp);
 		material.GetVertexShader().UpdateBuffer(1, &materialParam);
 
-		// ピクセルシェーダー
-		/*material.GetPixelShader().UpdateBuffer(1, &materialParam);*/
-		if(materialParam.isTextureEnable)	// テクスチャがあるなら
+
+		material.GetPixelShader().UpdateBuffer(1, &materialParam);
+
+		if (pTextures.size() > meshIdx && pTextures[meshIdx] != nullptr)	
 			material.GetPixelShader().SetTexture(0, pTextures[meshIdx]);
 
 		// シェーダーをバインド

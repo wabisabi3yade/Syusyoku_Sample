@@ -99,10 +99,9 @@ void Object_2D::DrawSetup(D3D11_Renderer& _renderer)
 	vtxSh.UpdateBuffer(0, &wvp);	// wvp行列を送る
 	vtxSh.UpdateBuffer(1, &material);	// マテリアル情報を送る
 
-	// ピクセルシェーダー
-	if (material.isTextureEnable)
-		pMaterial->GetPixelShader().SetTexture(0, pTexture);	//テクスチャを送る
-	pMaterial->GetPixelShader().UpdateBuffer(1, &material);	// マテリアル情報を送る
+	if(pTexture != nullptr)
+	pMaterial->GetPixelShader().SetTexture(0, pTexture);	//テクスチャを送る
+	pMaterial->GetPixelShader().UpdateBuffer(0, &material);	// マテリアル情報を送る
 
 	// シェーダーを固定
 	pMaterial->GetVertexShader().Bind();
@@ -111,7 +110,6 @@ void Object_2D::DrawSetup(D3D11_Renderer& _renderer)
 
 void Object_2D::SetTexture(Texture* _texture)
 {
-	pMaterial->GetMaterialParameter().isTextureEnable = true;
 	pTexture = _texture;
 }
 

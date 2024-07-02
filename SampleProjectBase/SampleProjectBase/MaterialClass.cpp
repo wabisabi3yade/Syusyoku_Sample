@@ -16,7 +16,6 @@ MaterialClass::MaterialClass()
 	parameter.specular = Color(1.0f, 1.0f, 1.0f, 1.0f);
 	parameter.emissive = Color(1.0f, 1.0f, 1.0f, 1.0f);
 	parameter.shininess = 0.0f;
-	parameter.isTextureEnable = false;	
 }
 
 MaterialClass::~MaterialClass()

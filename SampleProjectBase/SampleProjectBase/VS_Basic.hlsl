@@ -13,7 +13,6 @@ struct Material
     float4 specular; // 鏡面反射
     float4 emissive; // 自発光
     float shininess; // 光沢
-    bool isTextureEnable; // テクスチャを使用しているかフラグ
 };
 // Slot1 マテリアル
 cbuffer MaterialBuffer : register(b1)
@@ -24,7 +23,7 @@ cbuffer MaterialBuffer : register(b1)
 struct VS_INPUT
 {
     float3 pos : POSITION; // 頂点座標（モデル座標系）
-    float4 color : COLOR; // 頂点色
+    float4 color : COLOR0; // 頂点色
     float2 uv : TEXCOORD0; // uv座標
     float3 normal : NORMAL0; // 法線ベクトル
 };
@@ -38,6 +37,8 @@ struct VS_OUTPUT
     float4 color : COLOR0;
     // uv座標
     float2 uv : TEXCOORD0;
+    // 法線ベクトル
+    float3 normal : NORMAL0;
     // ワールド座標
     float4 worldPos : POSITION0;
 };
@@ -62,6 +63,8 @@ VS_OUTPUT main(VS_INPUT vin)
     output.color.a = vin.color.a * material.diffuse.a;
   
     output.uv = vin.uv;
+    
+    output.normal = mul(vin.normal, (float3x3) world);
 
     return output;
 }

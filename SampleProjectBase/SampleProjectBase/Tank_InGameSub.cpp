@@ -36,12 +36,6 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	GameObject* tankPtr = tank.get();
 	sceneObjects->SetObject("Tank", std::move(tank));
 
-	// ‹
-	model = resourceCollection->GetResource<Model>("Md_Bullet01");
-	std::unique_ptr<Object_3D> object = std::make_unique<Object_3D>();
-	object->SetModel(model);
-	sceneObjects->SetObject("Spot", std::move(object));
-
 	// ƒJƒƒ‰
 	GameObject* camera = sceneObjects->GetSceneObject<GameObject>("MainCamera");
 	CameraMove* camMove = camera->AddComponent<CameraMove>();

@@ -11,7 +11,6 @@ struct MaterialParameter
 	DirectX::SimpleMath::Color specular;	// 鏡面反射
 	DirectX::SimpleMath::Color emissive;	// 自発光
 	float shininess;	// 光沢
-	bool isTextureEnable;	// テクスチャを使用しているかフラグ
 };
 
 // モデルの表面データ
