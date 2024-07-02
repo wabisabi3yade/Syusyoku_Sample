@@ -21,10 +21,5 @@ public:
 
 	// テクスチャを設定する
 	void SetTexture(Texture* _texture);
-	
-	//// サイズを設定
-	//void SetSizeWidth(float _width);
-	//void SetSizeHeight(float _height);
-	//void SetSize(const DirectX::SimpleMath::Vector2& _size);
 };
 

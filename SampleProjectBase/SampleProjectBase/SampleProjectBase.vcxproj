@@ -63,7 +63,19 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
+    <FxCompile Include="VS_Gouraud.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="VS_UVScroll.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="VS_WorldPosition.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
@@ -100,6 +112,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="ImGuiDebugLog.cpp" />
     <ClCompile Include="InputClass.cpp" />
+    <ClCompile Include="InSceneManager.cpp" />
     <ClCompile Include="JISToUTF8.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="MathUseful.cpp" />
@@ -201,6 +214,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="ImGuiDebugLog.h" />
     <ClInclude Include="InputClass.h" />
+    <ClInclude Include="InSceneManager.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="MathUseful.h" />
     <ClInclude Include="Object_UI.h" />

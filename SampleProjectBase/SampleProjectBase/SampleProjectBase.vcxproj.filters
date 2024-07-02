@@ -358,6 +358,9 @@
     <Filter Include="ソース ファイル\System\Useful\MathUseful">
       <UniqueIdentifier>{4c0f1f54-09cf-4963-af1b-02fdd0832fe5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Scene\InSceneManager">
+      <UniqueIdentifier>{b54ce796-f7aa-42ab-a133-8a4a2882bec4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Basic.hlsl">
@@ -386,6 +389,12 @@
     </FxCompile>
     <FxCompile Include="PS_Unlit.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_WorldPosition.hlsl">
+      <Filter>リソース ファイル\VertrxShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_Gouraud.hlsl">
+      <Filter>リソース ファイル\VertrxShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -667,6 +676,9 @@
     </ClCompile>
     <ClCompile Include="DirectionLight.cpp">
       <Filter>ソース ファイル\Object\Light\Direction</Filter>
+    </ClCompile>
+    <ClCompile Include="InSceneManager.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -978,6 +990,9 @@
     </ClInclude>
     <ClInclude Include="DirectionLight.h">
       <Filter>ソース ファイル\Object\Light\Direction</Filter>
+    </ClInclude>
+    <ClInclude Include="InSceneManager.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

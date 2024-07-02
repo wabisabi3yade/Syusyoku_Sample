@@ -11,16 +11,20 @@ void ShaderCollection::Load()
 	{
 		"VS_Basic.cso",
 		"VS_UVScroll.cso",
-		"VS_BaseObject.cso"
+		"VS_BaseObject.cso",
+		"VS_WorldPosition.cso",
+		"VS_Gouraud.cso"
 	};
 	// セットする名前
 	std::vector<std::string> vShaderNames
 	{
 		"VS_Basic",
 		"VS_UVScroll",
-		"VS_BaseObject"
+		"VS_BaseObject",
+		"VS_WorldPosition",
+		"VS_Gouraud"
 	};
-	defaultVS = "VS_Basic";
+	defaultVS = "VS_Gouraud";
 
 	for (int vsCount = 0; vsCount < static_cast<int>(vShaderNames.size()); vsCount++)
 	{
@@ -48,7 +52,7 @@ void ShaderCollection::Load()
 		"PS_TexNotEnable",
 		"PS_Unlit"
 	};
-	defaultPS = "PS_Basic";
+	defaultPS = "PS_Unlit";
 
 	for (int psCount = 0; psCount < static_cast<int>(pShaderNames.size()); psCount++)
 	{

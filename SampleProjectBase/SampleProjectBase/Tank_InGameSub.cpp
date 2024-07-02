@@ -5,15 +5,13 @@
 #include "SphereCollider.h"
 #include "CameraMove.h"
 #include "CameraInput.h"
-#include "Tank.h"
 #include "Field.h"
+
 Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveInfo)
 {
 	std::vector<ModelSettings> modelSets =
 	{
-		ModelSettings("assets/model/tank/Tank_Toon.fbx", "Tank01", 1.0f, true),
 		ModelSettings("assets/model/spot/spot.fbx", "Spot01", 1.0f, true),
-		ModelSettings("assets/model/tank/Bullet.STL", "Bullet", 1.0f, true),
 	};
 	// ロード処理をする
 	for (auto m : modelSets)
@@ -27,19 +25,9 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	Model* model = nullptr;
 	Texture* tex = nullptr;
 
-	// 戦車
-	model = resourceCollection->GetResource<Model>("Md_Tank01");
-	std::unique_ptr <Tank> tank = std::make_unique<Tank>();
-	tank->SetModel(model);
-	PixelShader& pixelSh = *ShaderCollection::GetInstance()->GetPixelShader("PS_TexNotEnable");
-	tank->GetModel().SetPixelShader(&pixelSh);
-	GameObject* tankPtr = tank.get();
-	sceneObjects->SetObject("Tank", std::move(tank));
-
 	// カメラ
 	GameObject* camera = sceneObjects->GetSceneObject<GameObject>("MainCamera");
 	CameraMove* camMove = camera->AddComponent<CameraMove>();
-	camMove->SetPlayer(*tankPtr);
 	camera->AddComponent<CameraInput>();
 
 	// 地面

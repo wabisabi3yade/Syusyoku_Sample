@@ -112,22 +112,3 @@ void Object_2D::SetTexture(Texture* _texture)
 {
 	pTexture = _texture;
 }
-
-
-//void Object_2D::SetSizeWidth(float _width)
-//{
-//	size.x = _width;
-//	MakeVerticies();
-//}
-//
-//void Object_2D::SetSizeHeight(float _height)
-//{
-//	size.y = _height;
-//	MakeVerticies();
-//}
-//
-//void Object_2D::SetSize(const DirectX::SimpleMath::Vector2& _size)
-//{
-//	size = _size;
-//	MakeVerticies();
-//}

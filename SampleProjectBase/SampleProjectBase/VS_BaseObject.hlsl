@@ -15,9 +15,8 @@ cbuffer InputColor : register(b1)
 struct VS_INPUT
 {
     float3 pos : POSITION; // 頂点座標（モデル座標系）
-    float4 color : COLOR; // 頂点色
+    float4 color : COLOR0; // 頂点色
     float2 uv : TEXCOORD0; // uv座標
-    float3 normal : NORMAL0; // 法線ベクトル
 };
 
 // ピクセルシェーダーに渡す
@@ -39,7 +38,7 @@ VS_OUTPUT main(VS_INPUT vin)
     pos = mul(pos, projection);
     output.pos = pos;
 
-    output.color = vin.color * multiColor;  // 色を代入 
+    output.color = multiColor;  // 色を代入 
     output.uv = vin.uv;
 
     return output;

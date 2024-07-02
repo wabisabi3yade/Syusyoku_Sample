@@ -9,49 +9,38 @@
 void Shader::MakeBuffer(const char* _pData, u_int _dataSize)
 {
 	HRESULT hr;
-	// シェーダーに含む情報にアクセスするためのリフレクション情報を取得
-	ID3D11ShaderReflection* pReflection;
-	hr = D3DReflect(_pData, _dataSize, IID_ID3D11ShaderReflection, (void**)&pReflection);
-	if (FAILED(hr))
-	{
-		ImGuiDebugLog::Add("リフレクション情報取得に失敗");
-		return;
-	}
-
-	// シェーダー作成でのプロパティなどの構造体
-	D3D11_SHADER_DESC desc;
-	pReflection->GetDesc(&desc);	// 取得
-	pBuffers.resize(desc.ConstantBuffers);	// バッファの数分配列を確保する
-
 	ID3D11Device* pDevice = Direct3D11::GetInstance()->GetRenderer()->GetDevice();
-	// 定数バッファ情報を取得し、バッファを作成する
-	for (u_int i = 0; i < desc.ConstantBuffers; i++)
-	{
-		// シェーダーの定数バッファ取得する
-		D3D11_SHADER_BUFFER_DESC shaderBufDesc;
-		ID3D11ShaderReflectionConstantBuffer* refCBuffer = pReflection->GetConstantBufferByIndex(i);
-		refCBuffer->GetDesc(&shaderBufDesc);
 
-		// 作成する
-		// バッファ情報を作成
+	// 解析用のリフレクション作成
+	ID3D11ShaderReflection* pReflection;
+	hr = D3DReflect(_pData, _dataSize, IID_PPV_ARGS(&pReflection));
+	if (FAILED(hr)) { return; }
+
+	// 定数バッファ作成
+	D3D11_SHADER_DESC shaderDesc;
+	pReflection->GetDesc(&shaderDesc);
+	pBuffers.resize(shaderDesc.ConstantBuffers, nullptr);
+	for (UINT i = 0; i < shaderDesc.ConstantBuffers; ++i)
+	{
+		// シェーダーの定数バッファの情報を取得
+		D3D11_SHADER_BUFFER_DESC shaderBufDesc;
+		ID3D11ShaderReflectionConstantBuffer* cbuf = pReflection->GetConstantBufferByIndex(i);
+		cbuf->GetDesc(&shaderBufDesc);
+
+		// 作成するバッファの情報
 		D3D11_BUFFER_DESC bufDesc = {};
-		bufDesc.ByteWidth = shaderBufDesc.Size;	// サイズ
+		bufDesc.ByteWidth = shaderBufDesc.Size;
 		bufDesc.Usage = D3D11_USAGE_DEFAULT;
 		bufDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-		// バッファ作成
+
+		// バッファの作成
 		hr = pDevice->CreateBuffer(&bufDesc, nullptr, &pBuffers[i]);
-		if (FAILED(hr))
-		{
-			ImGuiDebugLog::Add("定数バッファ作成失敗");
-			return;
-		}
+		if (FAILED(hr)) { return; }
 	}
+	// テクスチャ領域作成
+	pTextures.resize(shaderDesc.BoundResources, nullptr);
 
-	// テクスチャのサイズを確保
-	pTextures.resize(desc.BoundResources, nullptr);
-
-	// 各シェーダーを作成する
-	MakeShader(_pData, _dataSize);
+	return MakeShader(_pData, _dataSize);
 }
 void Shader::LoadCsoFile(const char* _filePath)
 {
@@ -60,32 +49,25 @@ void Shader::LoadCsoFile(const char* _filePath)
 	// ファイルを読み込む
 	FILE* fp;
 	fopen_s(&fp, _filePath, "rb");
-	if (!fp)	// ファイルがなければ
-	{
-		ImGuiDebugLog::Add("読み込もうとした " + std::string(_filePath) + " がありません");
-		return;
-	}
+	if (!fp) { return; }
 
 	// ファイルのサイズを調べる
 	int fileSize = 0;
-	fseek(fp, 0, SEEK_END);	// 最後読み取り位置に移動する	
-	fileSize = ftell(fp);	// ファイルサイズ取得
+	fseek(fp, 0, SEEK_END);
+	fileSize = ftell(fp);
 
 	// メモリに読み込み
-	fseek(fp, 0, SEEK_SET);	// 最初に移動
+	fseek(fp, 0, SEEK_SET);
 	char* pData = new char[fileSize];
 	fread(pData, fileSize, 1, fp);
 	fclose(fp);
 
-	// バッファ作成
+	// シェーダー作成
 	MakeBuffer(pData, fileSize);
 
-	// 解放処理
-	if (pData)
-	{
-		delete[] pData;
-	}
-
+	// 終了処理
+	if (pData) { delete[] pData; }
+	return;
 }
 
 void Shader::UpdateBuffer(u_int _slot, void* _pData)
