@@ -20,6 +20,7 @@ public:
 	float GetRadius() { return radius; }
 	DirectX::SimpleMath::Vector3 GetCenterPos()const;
 
-	static bool CollisionSphere(Collider& sphere1, Collider& sphere2);
+	static bool CollisionSphere(Collider& _sphere1, Collider& _sphere2);
+	static bool CollisionBox(Collider& _sphere, Collider& _box);
 };
 

@@ -37,6 +37,10 @@ void SceneLights::ImGuiDirection()
 	ImGui::Begin(ShiftJisToUtf8("シーン　光源").c_str());
 	if (ImGui::TreeNode(ShiftJisToUtf8("ディレクションライト").c_str()))
 	{
+		bool isDisplay = pDirection->GetDisplay();
+		ImGui::Checkbox("Display", &isDisplay);
+		pDirection->SetDisplay(isDisplay);
+
 		Vector3 p = pDirection->GetPosition();
 		ImGuiMethod::DragFloat3(p, "座標");
 		pDirection->SetPosition(p);

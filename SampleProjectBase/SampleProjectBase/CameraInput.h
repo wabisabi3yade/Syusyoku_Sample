@@ -6,8 +6,6 @@ class CameraMove;
 class CameraInput :
     public Component
 {
-    CameraMove* camMove{nullptr};
-
 public:
     using Component::Component;
     void Init()override;

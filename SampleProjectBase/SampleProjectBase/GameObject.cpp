@@ -106,12 +106,14 @@ void GameObject::LateUpdate()
 	}
 }
 
-void GameObject::Draw()
+void GameObject::DrawBase()
 {
 	if (!isActive) return;
 
 	// 方向ベクトルを更新する
-	transform.UpdateVector();	
+	transform.UpdateVector();
+
+	Draw();
 
 	for (auto& itr : pComponents)
 	{

@@ -30,7 +30,7 @@ float4 main(PS_INPUT pin) : SV_TARGET
    
     // テクスチャを使用しているなら
     color = myTexture.Sample(mySampler, pin.uv);
-    color *= pin.color;
+    //color *= pin.color;
     
     return color;
 }

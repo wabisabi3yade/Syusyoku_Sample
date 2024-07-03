@@ -5,6 +5,15 @@
 
 using namespace DirectX::SimpleMath;
 
+void BoxCollider::CheckCollisionAABB(Collider& _box1, Collider& _box2)
+{
+
+}
+
+void BoxCollider::CheckCollisionOBB(Collider& _box1, Collider& _box2)
+{
+}
+
 BoxCollider& BoxCollider::operator=(const BoxCollider& _other)
 {
 	if (this == &_other) return *this;
@@ -37,10 +46,15 @@ void BoxCollider::Draw()
 	// ワールド座標系で求める
 	Vector3 centerPos_w = t.position + posOffset * t.scale; // スケールに対応させたオフセット座標を足す
 	Geometory::SetPosition(centerPos_w);
-	Vector3 rotation_w = t.rotation + angleOffset;	// 足す
-	Geometory::SetRotation(rotation_w);
+	
 	Vector3 scale_w = t.scale * size;// 掛ける
 	Geometory::SetScale(scale_w);
+
+	// OBBは回転
+	Vector3 rotation_w;
+	if (!isAABB)
+		rotation_w = t.rotation + angleOffset;	// 足す
+	Geometory::SetRotation(rotation_w);
 
 	// 色
 	Geometory::SetColor(Collider::normalColor);
@@ -73,4 +87,13 @@ DirectX::SimpleMath::Vector3 BoxCollider::GetWorldRotation() const
 DirectX::SimpleMath::Vector3 BoxCollider::GetWorldScale() const
 {
 	return gameObject->transform.scale * size;
+}
+
+bool BoxCollider::CollisionBox(Collider& _box1, Collider& _box2)
+{
+	// AABBとOBBで処理を変える
+
+
+
+	return false;
 }

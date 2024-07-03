@@ -112,7 +112,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="ImGuiDebugLog.cpp" />
     <ClCompile Include="InputClass.cpp" />
-    <ClCompile Include="InSceneManager.cpp" />
+    <ClCompile Include="InSceneSystemManager.cpp" />
     <ClCompile Include="JISToUTF8.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="MathUseful.cpp" />
@@ -129,6 +129,8 @@
     <ClCompile Include="SF_GameObject.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Object_2D.cpp" />
+    <ClCompile Include="ShaderSphere.cpp" />
+    <ClCompile Include="SinCurve.cpp" />
     <ClCompile Include="SObjectRegister.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
@@ -140,6 +142,7 @@
     <ClCompile Include="Tank_InGameSub.cpp" />
     <ClCompile Include="Tank_ResultSub.cpp" />
     <ClCompile Include="Tank_TitleSub.cpp" />
+    <ClCompile Include="Tokutei_Sphere.cpp" />
     <ClCompile Include="VariableFrameRate.cpp" />
     <ClCompile Include="Object_3D.cpp" />
     <ClCompile Include="ImGuiMethod.cpp" />
@@ -174,7 +177,6 @@
     <ClCompile Include="SubScene_Base.cpp" />
     <ClCompile Include="Test_Broad.cpp" />
     <ClCompile Include="Test_ChangeSubScene.cpp" />
-    <ClCompile Include="Test_SubScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Triangle.cpp" />
@@ -214,7 +216,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="ImGuiDebugLog.h" />
     <ClInclude Include="InputClass.h" />
-    <ClInclude Include="InSceneManager.h" />
+    <ClInclude Include="InSceneSystemManager.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="MathUseful.h" />
     <ClInclude Include="Object_UI.h" />
@@ -232,6 +234,8 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Object_2D.h" />
     <ClInclude Include="JISToUTF8.h" />
+    <ClInclude Include="ShaderSphere.h" />
+    <ClInclude Include="SinCurve.h" />
     <ClInclude Include="SObjectRegister.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SphereCollider.h" />
@@ -243,6 +247,7 @@
     <ClInclude Include="Tank_InGameSub.h" />
     <ClInclude Include="Tank_ResultSub.h" />
     <ClInclude Include="Tank_TitleSub.h" />
+    <ClInclude Include="Tokutei_Sphere.h" />
     <ClInclude Include="VariableFrameRate.h" />
     <ClInclude Include="Object_3D.h" />
     <ClInclude Include="IGetRenderPara.h" />
@@ -280,7 +285,6 @@
     <ClInclude Include="SubScene_Base.h" />
     <ClInclude Include="Test_Broad.h" />
     <ClInclude Include="Test_ChangeSubScene.h" />
-    <ClInclude Include="Test_SubScene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Triangle.h" />

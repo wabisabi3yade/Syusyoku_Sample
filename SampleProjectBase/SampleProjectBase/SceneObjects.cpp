@@ -22,7 +22,7 @@ SceneObjects::~SceneObjects()
 void SceneObjects::Update()
 {
 #ifdef EDIT
-	ImGui::Begin("SceneObjects");
+	ImGui::Begin(ShiftJisToUtf8("シーンオブジェクト").c_str());
 #endif // EDIT
 
 	for (auto itr = objList.begin(); itr != objList.end(); itr++)
@@ -62,7 +62,7 @@ void SceneObjects::Draw()
 	// 3D空間上のオブジェクト描画
 	for (auto itr = objList.begin(); itr != objList.end(); itr++)
 	{
-		itr->second->Draw();
+		itr->second->DrawBase();
 	}
 
 
@@ -74,7 +74,7 @@ void SceneObjects::Draw()
 	// 2D空間（UI）のオブジェクト
 	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
 	{
-		itr->second->Draw();
+		itr->second->DrawBase();
 	}
 }
 

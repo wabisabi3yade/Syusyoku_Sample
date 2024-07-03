@@ -12,6 +12,7 @@ class CollisionChecker
 	// 1‚Â–Ú‚ª‹…‚¾‚Á‚½Žž‚ÌƒRƒŠƒWƒ‡ƒ“
 	static bool SphereCollision(Collider& _sphere, Collider& _other);
 	
+	static bool BoxCollision(Collider& _box, Collider& _other);
 public:
 	CollisionChecker(){};
 	~CollisionChecker();

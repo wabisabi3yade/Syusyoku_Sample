@@ -8,10 +8,8 @@ using namespace DirectX::SimpleMath;
 void CameraInput::Init()
 {
 	name = "CameraInput";
-	camMove = gameObject->GetComponent<CameraMove>();
 }
 
 void CameraInput::Update()
 {
-
 }

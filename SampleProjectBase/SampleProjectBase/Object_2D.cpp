@@ -9,9 +9,9 @@ void Object_2D::MaterialSetting()
 	// 2D用マテリアルを取得する
 	const std::string MATERIAL_NAME = "M_Object_2D";
 	ResourceCollection* reCollect = ResourceCollection::GetInstance();
-	pMaterial = reCollect->GetResource<MaterialClass>(MATERIAL_NAME);
+	bool isImpoted = reCollect->GetImpotred(MATERIAL_NAME);
 
-	if (pMaterial == nullptr)	// マテリアルが無かったら作成
+	if (!isImpoted)	// マテリアルが無かったら作成
 	{
 		std::unique_ptr<MaterialClass> setMaterial = std::make_unique<MaterialClass>();
 		ShaderCollection* shCol = ShaderCollection::GetInstance();

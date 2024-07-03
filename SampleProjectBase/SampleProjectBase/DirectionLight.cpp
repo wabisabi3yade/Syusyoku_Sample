@@ -28,6 +28,8 @@ void DirectionLight::Draw()
 {
 	Geometory::SetPosition(parameter.position);
 	Geometory::SetColor(parameter.color);
+
+	if(GetDisplay())
 	Geometory::DrawCube();
 }
 

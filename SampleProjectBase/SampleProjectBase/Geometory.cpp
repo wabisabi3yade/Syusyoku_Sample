@@ -40,7 +40,7 @@ void Geometory::DrawCube(bool _isWireFrame)
 void Geometory::DrawSphere(bool _isWireFrame)
 {
 
-	pSphere->Draw(transform, color, _isWireFrame);
+	pSphere->DebugDraw(transform, color, _isWireFrame);
 
 	// Œ³‚É–ß‚·
 	transform.ResetParameter();

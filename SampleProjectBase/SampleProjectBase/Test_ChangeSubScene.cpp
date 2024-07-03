@@ -1,6 +1,5 @@
 #include "Test_ChangeSubScene.h"
 #include "SceneMoveInfo.h"
-#include "Test_SubScene.h"
 
 Test_ChangeSubScene::Test_ChangeSubScene(SceneMoveInfo* _moveInfo)
 	: ChangeSubScene(_moveInfo)
@@ -23,7 +22,7 @@ SubScene_Base* Test_ChangeSubScene::ChangeScene()
 	switch (nextSubId)
 	{
 	case Scene::Test1:
-		pSubScene = new Test_SubScene(moveInfo);
+	
 		break;
 
 	case Scene::Test2:

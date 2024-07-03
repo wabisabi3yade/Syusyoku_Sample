@@ -1,10 +1,211 @@
-﻿  モジュール依存関係のソースをスキャンしています...
+﻿  compilation object save succeeded; see C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\PS_Lit.cso
+  compilation object save succeeded; see C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\PS_PointLight.cso
+  compilation object save succeeded; see C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\PS_TexNotEnable.cso
+  compilation object save succeeded; see C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\PS_Basic.cso
+  compilation object save succeeded; see C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\PS_Unlit.cso
+  compilation object save succeeded; see C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\PS_VertexColor.cso
+  compilation object save succeeded; see C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VS_BaseObject.cso
+  compilation object save succeeded; see C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VS_Basic.cso
+  compilation object save succeeded; see C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VS_Gouraud.cso
+  compilation object save succeeded; see C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VS_UVScroll.cso
+  compilation object save succeeded; see C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VS_WorldPosition.cso
+  モジュール依存関係のソースをスキャンしています...
+  pch.cpp
+  Bullet.cpp
+  BulletMove.cpp
+  Camera.cpp
+  GameMode.cpp
+  DirectionLight.cpp
+  GameKey.cpp
+  Field.cpp
+  CameraInput.cpp
+  BasicObject_Base.cpp
+  BlendState.cpp
+  Geometory.cpp
+  CollisionChecker.cpp
+  BoneMesh.cpp
+  BroadScene_Base.cpp
+  CollisionRegister.cpp
+  BoxCollider.cpp
+  CameraMove.cpp
+  ChangeSubScene.cpp
+  ChangeBroadScene.cpp
+  Component.cpp
+  Collider.cpp
+  Cube.cpp
+  DebugCube.cpp
+  GamePad.cpp
+  Direct3D11.cpp
+  D3D11_Renderer.cpp
+  GameObject.cpp
+  ImGuiDebugLog.cpp
+  InSceneSystemManager.cpp
+  InputClass.cpp
+  Light.cpp
+  JISToUTF8.cpp
+  MathUseful.cpp
+  Object_UI.cpp
+  PointLight.cpp
+  PlayerInput.cpp
+  PixelShader.cpp
+  PlayerMove.cpp
+  PlayerShot.cpp
+  SaveJson.cpp
+  SaveJsonValue.cpp
+  SF_GameObject.cpp
+  SceneLights.cpp
+  Shader.cpp
+  SceneObjects.cpp
+  Object_2D.cpp
+  ShaderSphere.cpp
+  SinCurve.cpp
+  SObjectRegister.cpp
+  Sphere.cpp
+  SphereCollider.cpp
+  SpotLight.cpp
+  Tag.cpp
+  Tank.cpp
+  Tank_BroadScene.cpp
+  Tank_ChangeSub.cpp
+  ImGuiMethod.cpp
+  Object_3D.cpp
+  Tank_ResultSub.cpp
+  Tokutei_Sphere.cpp
+  VariableFrameRate.cpp
+  Tank_TitleSub.cpp
+  Tank_InGameSub.cpp
+  imgui.cpp
+  imgui_impl_dx11.cpp
+  main.cpp
+  MessageError.cpp
+  imgui_demo.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  imgui_impl_win32.cpp
+  MainApplication.cpp
+  imgui_draw.cpp
+  Mesh.cpp
+  ModelLoader.cpp
+  MaterialClass.cpp
+  Model.cpp
+  ModelSettings.cpp
+  RenderParam.cpp
+  Sampler.cpp
+  ResourceCollection.cpp
+  SceneMoveInfo.cpp
+  SceneManager.cpp
+  SetUpPerspectiveProj.cpp
+  SceneRunningState.cpp
   ShaderCollection.cpp
+  SetUpViewTrans.cpp
+  Texture.cpp
+  SubScene_Base.cpp
+  Transform.cpp
+  Test_ChangeSubScene.cpp
+  Test_Broad.cpp
+  VertexShader.cpp
+  Triangle.cpp
+  Window.cpp
   コンパイルしています...
+  pch.cpp
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Bullet.cpp
+  BulletMove.cpp
+  Field.cpp
+  BlendState.cpp
+  CollisionChecker.cpp
+  CameraInput.cpp
+  BoneMesh.cpp
+  DirectionLight.cpp
+  CollisionRegister.cpp
+  GameKey.cpp
+  BasicObject_Base.cpp
+  Camera.cpp
+  BroadScene_Base.cpp
+  GameMode.cpp
+  Geometory.cpp
+  BoxCollider.cpp
+  CameraMove.cpp
+  ChangeBroadScene.cpp
+  ChangeSubScene.cpp
+  Collider.cpp
+  Component.cpp
+  DebugCube.cpp
+  GamePad.cpp
+  Cube.cpp
+  D3D11_Renderer.cpp
+  Direct3D11.cpp
+  GameObject.cpp
+  ImGuiDebugLog.cpp
+  PixelShader.cpp
+  Object_UI.cpp
+  InputClass.cpp
+  JISToUTF8.cpp
+  Light.cpp
+  MathUseful.cpp
+  InSceneSystemManager.cpp
+  PlayerInput.cpp
+  PlayerMove.cpp
+  PlayerShot.cpp
+  SaveJson.cpp
+  SceneLights.cpp
+  SF_GameObject.cpp
+  PointLight.cpp
+  SaveJsonValue.cpp
+  Shader.cpp
+  SceneObjects.cpp
+  Object_2D.cpp
+  ShaderSphere.cpp
+  SinCurve.cpp
+  SObjectRegister.cpp
+  Sphere.cpp
+  SphereCollider.cpp
+  Tank_ChangeSub.cpp
+  Tag.cpp
+  Tank_ResultSub.cpp
+  SpotLight.cpp
+  Tank_BroadScene.cpp
+  Tank_InGameSub.cpp
+  Tank.cpp
+  Tank_TitleSub.cpp
+  Tokutei_Sphere.cpp
+  VariableFrameRate.cpp
+  imgui_draw.cpp
+  imgui_demo.cpp
+  Object_3D.cpp
+  imgui_impl_dx11.cpp
+  imgui_impl_win32.cpp
+  imgui.cpp
+  ImGuiMethod.cpp
+  imgui_widgets.cpp
+  MaterialClass.cpp
+  MainApplication.cpp
+  imgui_tables.cpp
+  Mesh.cpp
+  Model.cpp
+  main.cpp
+  MessageError.cpp
+  ModelLoader.cpp
+  RenderParam.cpp
+  ModelSettings.cpp
+  ResourceCollection.cpp
+  Sampler.cpp
+  SceneMoveInfo.cpp
+  SceneManager.cpp
+  SceneRunningState.cpp
+  SetUpViewTrans.cpp
+  SetUpPerspectiveProj.cpp
+  SubScene_Base.cpp
+  Test_ChangeSubScene.cpp
   ShaderCollection.cpp
+  Test_Broad.cpp
+  Texture.cpp
+  Transform.cpp
+  Triangle.cpp
+  VertexShader.cpp
+  Window.cpp
   コード生成しています。
-  1 of 4852 functions (<0.1%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    47 functions had inline decision re-evaluated but remain unchanged
+  Previous IPDB not found, fall back to full compilation.
+  All 4844 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   コード生成が終了しました。
   SampleProjectBase.vcxproj -> C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\x64\Release\SampleProjectBase.exe

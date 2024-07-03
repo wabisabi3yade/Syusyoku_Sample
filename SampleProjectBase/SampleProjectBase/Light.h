@@ -19,16 +19,19 @@ public:
 		Num,
 		None
 	};
-
+private:
+	// ライトの座標に目印
+	bool isDebugDisplay;
 protected:
 	// ライトの種類
 	Type type;
+
 	// ライトのパラメータ構造体
 	LightParameter parameter;
 
 	void Copy(const Light& _other);
 public:
-	Light() : type(Type::None) {}
+	Light() : type(Type::None), isDebugDisplay(false) {}
 	Light(const Light& _other);
 	~Light() {};
 	Light& operator=(const Light& _other);
@@ -36,9 +39,11 @@ public:
 	virtual void Draw() {};
 
 	// 各パラメータセット
+	void SetDisplay(bool _isDisplay) { isDebugDisplay = _isDisplay; }
 	void SetPosition(const DirectX::SimpleMath::Vector3& _position) { parameter.position = _position; }
 	void SetColor(const DirectX::SimpleMath::Color& _color) { parameter.color = _color; }
 
+	bool GetDisplay() { return isDebugDisplay; }
 	const DirectX::SimpleMath::Vector3& GetPosition() { return parameter.position; }
 	const DirectX::SimpleMath::Color& GetColor() { return parameter.color; }
 };

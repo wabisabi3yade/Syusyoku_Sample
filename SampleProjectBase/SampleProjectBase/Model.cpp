@@ -260,20 +260,19 @@ void Model::Draw(const Transform& _transform) const
 		// パラメータ
 		MaterialParameter& materialParam = material.GetMaterialParameter();
 
+		// シェーダーをバインド
+		material.GetVertexShader().Bind();
+		material.GetPixelShader().Bind();
+
 		// バッファを更新する
 		// 頂点シェーダー
 		material.GetVertexShader().UpdateBuffer(0, &wvp);
 		material.GetVertexShader().UpdateBuffer(1, &materialParam);
 
 		material.GetPixelShader().UpdateBuffer(0, &materialParam);
-		
 
 		if (pTextures.size() > meshIdx && pTextures[meshIdx] != nullptr)	
 			material.GetPixelShader().SetTexture(0, pTextures[meshIdx]);
-
-		// シェーダーをバインド
-		material.GetVertexShader().Bind();
-		material.GetPixelShader().Bind();
 
 		// メッシュ描画
 		meshes[meshIdx]->Draw(renderer);

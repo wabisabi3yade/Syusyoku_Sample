@@ -48,6 +48,9 @@ public:
 	/// <param name="_resourceName"></param>
 	/// <returns></returns>
 	template<class T> T* CreateResource(std::string _resourceName);
+
+	// 中身を表示する
+	void ImportDisplay();
 };
 
 // リソース基底クラス

@@ -18,7 +18,6 @@ struct Material
     float4 specular; // 鏡面反射
     float4 emissive; // 自発光
     float shininess; // 光沢
-    bool isTexEnable;
 };
 
 // ライトの基礎パラメータ
@@ -64,9 +63,6 @@ float4 main(PS_IN pin) : SV_TARGET
 {
     float4 color = pin.color;
     
-    if(material.isTexEnable)
-    {
-        color = myTexture.Sample(mySampler, pin.uv);
-    }
+    
 	return color;
 }

@@ -13,6 +13,8 @@ class BoxCollider :
 	// AABBƒtƒ‰ƒO
 	bool isAABB = false;	
 
+	static void CheckCollisionAABB(Collider& _box1, Collider& _box2);
+	static void CheckCollisionOBB(Collider& _box1, Collider& _box2);
 public:
 	using Collider::Collider;
 	BoxCollider& operator=(const BoxCollider& _other);
@@ -30,5 +32,7 @@ public:
 	DirectX::SimpleMath::Vector3 GetWorldCenterPos()const;
 	DirectX::SimpleMath::Vector3 GetWorldRotation()const;
 	DirectX::SimpleMath::Vector3 GetWorldScale()const;
+
+	static bool CollisionBox(Collider& _box1, Collider& _box2);
 };
 

@@ -7,7 +7,7 @@
 // IMGUIがWindowsAPIのイベントを取得するための関数を外部参照
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-constexpr SIZE DEFAULT_SIZE = { 1080, 720 };
+constexpr SIZE DEFAULT_SIZE = { 1280, 720 };
 constexpr char CLASS_NAME[] = "ウィンドウ";
 
 Window::Window()

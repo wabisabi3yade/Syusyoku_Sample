@@ -6,7 +6,6 @@ struct Material
     float4 specular; // 鏡面反射
     float4 emissive; // 自発光
     float shininess; // 光沢
-    bool isTexEnable;
 };
 
 // ライトの基礎パラメータ
@@ -20,7 +19,7 @@ struct LightBase
 struct DirectionLight
 {
     LightBase base;
-    float3 direction;
+    float4 direction;
 };
 
 // Slot0 座標変換
@@ -38,8 +37,8 @@ cbuffer MaterialBuffer : register(b1)
     Material material;
 };
 
-
-cbuffer BufDirectionL
+// ディレクションライト
+cbuffer BufDirectionL : register(b2)
 {
     DirectionLight directionL;
 };
@@ -69,18 +68,20 @@ struct VS_OUTPUT
 
 VS_OUTPUT main(VS_INPUT vin)
 {
-    VS_OUTPUT vout;
-    vout.pos = float4(vin.pos, 1.0f);
-    vout.pos = mul(vout.pos, world);
-    vout.worldPos = vout.pos;
-    vout.pos = mul(vout.pos, view);
-    vout.pos = mul(vout.pos, projection);
+    VS_OUTPUT output;
+    output.pos = float4(vin.pos, 1.0f);
+    output.pos = mul(output.pos, world);
+    output.worldPos = output.pos;
+    output.pos = mul(output.pos, view);
+    output.pos = mul(output.pos, projection);
 
 	// 頂点シェーダーで陰の計算
     float3 N = vin.normal;
     float3 L = directionL.direction.xyz;
 	// 計算前に手を加える
     N = mul(N, (float3x3) world);
+    output.normal = N;
+    
     L = -L;
 	// 正規化
     N = normalize(N);
@@ -88,9 +89,11 @@ VS_OUTPUT main(VS_INPUT vin)
 	// 陰計算
     float diffuse = saturate(dot(N, L));
 	// 色決定
-    vout.color = float4(diffuse + directionL.base.color.rgb, 1.0f);
+    output.color = float4(diffuse + directionL.base.color.rgb, 1.0f) + material.ambient;
 
-    vout.uv = vin.uv;
+    output.uv = vin.uv;
+    
+    
 
-    return vout;
+    return output;
 }

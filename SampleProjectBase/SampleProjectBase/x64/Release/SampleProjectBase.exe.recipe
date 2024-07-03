@@ -31,7 +31,13 @@
       <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VS_Basic.cso</FullPath>
     </ContentFile>
     <ContentFile>
+      <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VS_Gouraud.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
       <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VS_UVScroll.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VS_WorldPosition.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

@@ -31,7 +31,7 @@ protected:
 	std::unique_ptr<SceneLights> sceneLights;
 
 	// 当たり判定のチェック
-	std::unique_ptr<CollisionChecker> collisionChcker;	
+	std::unique_ptr<CollisionChecker> collisionChecker;	
 
 	// 更新処理
 	virtual void Update() = 0;

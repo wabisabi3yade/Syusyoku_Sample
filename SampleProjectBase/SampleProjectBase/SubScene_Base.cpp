@@ -1,10 +1,15 @@
 #include "SubScene_Base.h"
 #include "SceneMoveInfo.h"
 
+// カメラ
 #include "Camera.h"
+
+// システム系
+#include "SObjectRegister.h"
 #include "CollisionRegister.h"
 #include "GameMode.h"
-#include "SObjectRegister.h"
+#include "InSceneSystemManager.h"
+
 
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
@@ -22,6 +27,8 @@ void SubScene_Base::DrawSetup()
 
 	// 光源の更新処理
 	sceneLights->Update();
+
+	resourceCollection->ImportDisplay();
 }
 
 /// <summary>
@@ -43,14 +50,20 @@ SubScene_Base::SubScene_Base(SceneMoveInfo* _pSceneMoveInfo)
 	// インスタンス生成
 	sceneObjects = std::make_unique<SceneObjects>();
 	sceneLights = std::make_unique<SceneLights>();
-	collisionChcker = std::make_unique<CollisionChecker>();
+	collisionChecker = std::make_unique<CollisionChecker>();
 	std::unique_ptr<Camera> mainCamera = std::make_unique<Camera>();
 
 	// シーンオブジェクト登録クラスセット
 	SObjectRegister::GetInstance()->SetSceneObjects(*sceneObjects.get());
 
 	// 当たり判定チェッカークラスを生成し、当たり判定登録対象にする
-	CollisionRegister::GetInstance()->SetCollisionChecker(*collisionChcker);
+	CollisionRegister::GetInstance()->SetCollisionChecker(*collisionChecker);
+
+	// 各インスタンスを渡す
+	InSceneSystemManager* system = InSceneSystemManager::GetInstance();
+	system->SetSceneObjects(*sceneObjects.get());
+	system->SetSceneLights(*sceneLights.get());
+	system->SetCollisonChecker(*collisionChecker);
 
 	// カメラ設定
 	Camera* camPtr = mainCamera.get();
@@ -83,7 +96,7 @@ void SubScene_Base::Exec()
 	sceneObjects->LateUpdate();
 
 	// シーン内の当たり判定をチェックする
-	/*collisionChcker->CollisionCheck();*/
+	collisionChecker->CollisionCheck();
 
 	// 描画前準備
 	DrawSetup();

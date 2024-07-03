@@ -46,6 +46,15 @@ bool D3D11_Renderer::Init(HWND _hWnd)
 	isResult = InitBackBuffer();
 	if (!isResult) return false;
 
+//	// フルスクリーンにするか
+//#ifndef _DEBUG
+//
+//	bool isFullScreen = MessageBoxA(_hWnd, "フルスクリーンで起動しますか？", "就職作品",
+//		MB_YESNO | MB_ICONQUESTION);
+//	if (isFullScreen)
+//		pSwapChain->SetFullscreenState(TRUE, NULL);
+//#endif // _RELEASE
+
 	return true;
 }
 
@@ -264,7 +273,7 @@ void D3D11_Renderer::SetUpDraw()
 	// 描画先のキャンバスと使用する深度バッファを指定する
 	pImmediateContext->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView);
 
-	float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	float color[] = { 175.0f / 255.0f, 223.0f / 255.0f, 228.0f / 255.0f, 0.0f };
 	// 塗りつぶし
 	pImmediateContext->ClearRenderTargetView(pRenderTargetView, color);
 

@@ -66,8 +66,9 @@ public:
 	// Updateを行ったあとの更新処理
 	virtual void LateUpdate();
 
+	void DrawBase();
 	// 描画処理
-	virtual void Draw();	
+	virtual void Draw(){};
 
 	// 自身を削除
 	void Destroy();

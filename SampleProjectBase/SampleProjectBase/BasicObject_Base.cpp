@@ -22,14 +22,14 @@ BasicObject_Base::BasicObject_Base()
 		makeMaterial->SetVertexShader(v);
 		makeMaterial ->SetPixelShader(p);
 
-		material = makeMaterial.get();	// このオブジェクトにマテリアルセット
+		pMaterial = makeMaterial.get();	// このオブジェクトにマテリアルセット
 		// 管理クラスにセット
 		reCol->SetResource(MATERIAL_NAME, std::move(makeMaterial));
 	}
 	else
 	{
 		// マテリアルを取得
-		material = reCol->GetResource<MaterialClass>(MATERIAL_NAME);	
+		pMaterial = reCol->GetResource<MaterialClass>(MATERIAL_NAME);	
 	}
 }
 
@@ -48,12 +48,18 @@ void BasicObject_Base::Draw(Transform& _transform, DirectX::SimpleMath::Color& _
 	RenderParam::WVP wMat  = renderer->GetParameter().GetWVP();
 	wMat.world = worldmtx;
 
-	// シェーダーにバッファを送る
-	material->GetVertexShader().UpdateBuffer(0, &wMat);
-	material->GetVertexShader().UpdateBuffer(1, &_color);
 	// シェーダーをセット
-	material->GetVertexShader().Bind();
-	material->GetPixelShader().Bind();
+	pMaterial->GetVertexShader().Bind();
+	pMaterial->GetPixelShader().Bind();
+
+	// シェーダーにバッファを送る
+	pMaterial->GetVertexShader().UpdateBuffer(0, &wMat);
+	pMaterial->GetVertexShader().UpdateBuffer(1, &_color);
 
 	Mesh::Draw(*renderer);	
+}
+
+void BasicObject_Base::SetMaterial(MaterialClass& _material)
+{
+	pMaterial = &_material;
 }

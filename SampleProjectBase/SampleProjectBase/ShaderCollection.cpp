@@ -24,7 +24,7 @@ void ShaderCollection::Load()
 		"VS_WorldPosition",
 		"VS_Gouraud"
 	};
-	defaultVS = "VS_Gouraud";
+	defaultVS = "VS_Basic";
 
 	for (int vsCount = 0; vsCount < static_cast<int>(vShaderNames.size()); vsCount++)
 	{
@@ -52,7 +52,7 @@ void ShaderCollection::Load()
 		"PS_TexNotEnable",
 		"PS_Unlit"
 	};
-	defaultPS = "PS_Unlit";
+	defaultPS = "PS_Basic";
 
 	for (int psCount = 0; psCount < static_cast<int>(pShaderNames.size()); psCount++)
 	{

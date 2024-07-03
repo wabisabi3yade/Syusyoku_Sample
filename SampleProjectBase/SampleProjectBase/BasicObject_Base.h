@@ -6,7 +6,7 @@
 class BasicObject_Base : public Mesh
 {
 protected:
-	const MaterialClass* material;	// マテリアル
+	MaterialClass* pMaterial;	// マテリアル
 	virtual void Make() = 0;	// 各メッシュを作成
 	
 public:
@@ -14,4 +14,5 @@ public:
 	virtual ~BasicObject_Base();
 
 	virtual void Draw(Transform& _transform, DirectX::SimpleMath::Color& _color);	// 描画
+	void SetMaterial(MaterialClass& _material);
 };

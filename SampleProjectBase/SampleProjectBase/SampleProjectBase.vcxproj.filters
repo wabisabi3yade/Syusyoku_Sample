@@ -358,7 +358,13 @@
     <Filter Include="ソース ファイル\System\Useful\MathUseful">
       <UniqueIdentifier>{4c0f1f54-09cf-4963-af1b-02fdd0832fe5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Scene\InSceneManager">
+    <Filter Include="ソース ファイル\Object\Tokutei">
+      <UniqueIdentifier>{1bb2e871-5d1d-496d-919b-7103383fa296}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Tokutei\Sphere">
+      <UniqueIdentifier>{08e93cbc-352c-4118-9e33-3d5c65bb834c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\InSceneSystem">
       <UniqueIdentifier>{b54ce796-f7aa-42ab-a133-8a4a2882bec4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -469,9 +475,6 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>ソース ファイル\System\pch</Filter>
-    </ClCompile>
-    <ClCompile Include="Test_SubScene.cpp">
-      <Filter>ソース ファイル\Scene\Test\SubScene</Filter>
     </ClCompile>
     <ClCompile Include="Test_ChangeSubScene.cpp">
       <Filter>ソース ファイル\Scene\Test\ChangeSub</Filter>
@@ -677,7 +680,16 @@
     <ClCompile Include="DirectionLight.cpp">
       <Filter>ソース ファイル\Object\Light\Direction</Filter>
     </ClCompile>
-    <ClCompile Include="InSceneManager.cpp">
+    <ClCompile Include="Tokutei_Sphere.cpp">
+      <Filter>ソース ファイル\Object\Tokutei\Sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderSphere.cpp">
+      <Filter>ソース ファイル\Object\Tokutei\Sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="InSceneSystemManager.cpp">
+      <Filter>ソース ファイル\Scene\InSceneSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SinCurve.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -774,9 +786,6 @@
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>ソース ファイル\System\pch</Filter>
-    </ClInclude>
-    <ClInclude Include="Test_SubScene.h">
-      <Filter>ソース ファイル\Scene\Test\SubScene</Filter>
     </ClInclude>
     <ClInclude Include="Test_ChangeSubScene.h">
       <Filter>ソース ファイル\Scene\Test\ChangeSub</Filter>
@@ -991,7 +1000,16 @@
     <ClInclude Include="DirectionLight.h">
       <Filter>ソース ファイル\Object\Light\Direction</Filter>
     </ClInclude>
-    <ClInclude Include="InSceneManager.h">
+    <ClInclude Include="Tokutei_Sphere.h">
+      <Filter>ソース ファイル\Object\Tokutei\Sphere</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderSphere.h">
+      <Filter>ソース ファイル\Object\Tokutei\Sphere</Filter>
+    </ClInclude>
+    <ClInclude Include="InSceneSystemManager.h">
+      <Filter>ソース ファイル\Scene\InSceneSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SinCurve.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

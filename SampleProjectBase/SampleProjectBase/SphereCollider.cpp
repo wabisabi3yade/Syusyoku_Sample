@@ -30,20 +30,20 @@ void SphereCollider::Init()
 
 void SphereCollider::Draw()
 {
-	//// あたり判定描画
-	//const Transform& t = gameObject->transform;
-	//Vector3 centerPos = t.position + posOffset * t.scale;	// 中心座標
-	//Geometory::SetPosition(centerPos);
-	//// 大きさを求める
-	//float scale = radius / VERTEX_RADIUS;
-	//Geometory::SetScale(Vector3::One * scale);
+	// あたり判定描画
+	const Transform& t = gameObject->transform;
+	Vector3 centerPos = t.position + posOffset * t.scale;	// 中心座標
+	Geometory::SetPosition(centerPos);
 
-	//// 当たってるかで色変える
-	//Geometory::SetColor(normalColor);
-	//if (hitColliders.size() > 0)
-	//	Geometory::SetColor(hitColor);
+	// 大きさを求める
+	float scale = radius / VERTEX_RADIUS;
+	Geometory::SetScale(Vector3::One * scale);
 
-	//Geometory::DrawSphere(true);
+	// 当たってるかで色変える
+	Geometory::SetColor(normalColor);
+	if (hitColliders.size() > 0)
+		Geometory::SetColor(hitColor);
+	Geometory::DrawSphere(true);
 }
 
 void SphereCollider::ImGuiSetting()
@@ -76,5 +76,10 @@ bool SphereCollider::CollisionSphere(Collider& _sphere1, Collider& _sphere2)
 		return true;
 	}
 
+	return false;
+}
+
+bool SphereCollider::CollisionBox(Collider& _sphere, Collider& _box)
+{
 	return false;
 }

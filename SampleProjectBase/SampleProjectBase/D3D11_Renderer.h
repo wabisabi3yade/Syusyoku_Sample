@@ -2,7 +2,6 @@
 #include "RenderParam.h"
 #include "IGetRenderResource.h"
 
-class ShaderCollection;
 class BlendState;
 class Sampler;
 class SetUpPerspectiveProj;

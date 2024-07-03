@@ -12,7 +12,7 @@ MaterialClass::MaterialClass()
 
 	// ‰Šú‰»
 	parameter.diffuse = Color(1.0f, 1.0f, 1.0f, 1.0f);
-	parameter.ambient = Color(1.0f, 1.0f, 1.0f, 1.0f);
+	parameter.ambient = Color(0.2f, 0.2f, 0.2f, 1.0f);
 	parameter.specular = Color(1.0f, 1.0f, 1.0f, 1.0f);
 	parameter.emissive = Color(1.0f, 1.0f, 1.0f, 1.0f);
 	parameter.shininess = 0.0f;

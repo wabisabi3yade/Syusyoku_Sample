@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Sphere.h"
 
+#include "InSceneSystemManager.h"
+
 using namespace DirectX::SimpleMath;
 void Sphere::Make()
 {
@@ -72,7 +74,42 @@ Sphere::~Sphere()
 {
 }
 
-void Sphere::Draw(Transform& _transform, DirectX::SimpleMath::Color& _color, bool _isWireFrame)
+void Sphere::Draw(const Transform& _transform)
+{
+
+	D3D11_Renderer* renderer = Direct3D11::GetInstance()->GetRenderer();
+
+	renderer->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	// ワールド変換行列を取得
+	Matrix worldmtx = D3D11_Renderer::GetWorldMtx(_transform);
+
+	// ワールド変換行列をWVPに入れる
+	RenderParam::WVP wMat = renderer->GetParameter().GetWVP();
+	wMat.world = worldmtx;
+
+	// シェーダーをセット
+	pMaterial->GetVertexShader().Bind();
+	pMaterial->GetPixelShader().Bind();
+
+	// シェーダーにバッファを送る
+	pMaterial->GetVertexShader().UpdateBuffer(0, &wMat);
+	MaterialParameter& materialParam = pMaterial->GetMaterialParameter();
+	pMaterial->GetVertexShader().UpdateBuffer(1, &materialParam);
+
+	// ディレクションライトをバッファにセットして送る
+	SceneLights& pSceneLights =  InSceneSystemManager::GetInstance()->GetSceneLights();
+	DirectionLParameter dirParam = pSceneLights.GetDirectionParameter();
+	pMaterial->GetVertexShader().UpdateBuffer(2, &dirParam);
+
+	pMaterial->GetPixelShader().UpdateBuffer(0, &materialParam);
+
+	
+
+	Mesh::Draw(*renderer);
+}
+
+void Sphere::DebugDraw(Transform& _transform, DirectX::SimpleMath::Color& _color, bool _isWireFrame)
 {
 	// トポロジーを設定
 	ID3D11DeviceContext* pContext = Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();

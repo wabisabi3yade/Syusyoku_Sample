@@ -4,49 +4,67 @@
 #include "Camera.h"
 
 using namespace DirectX::SimpleMath;
-void CameraMove::UpdatePosition()
+
+
+void CameraMove::UpdateVector()
 {
+	Transform transform = GetTransform();
+
+	InputClass& input = MainApplication::GetInput();
+
+	// 座標移動
+	Vector2 inputL = input.GetValue("Left");
+
+	// 移動方向を求める
+	moveVec = Vector3::Zero;
+	moveVec += transform.Forward() * inputL.y;
+	moveVec += transform.Right() * inputL.x;
+
+	// 上昇・下降
+	if (input.GetGamePad().ButtonPress(GamePad::Button::Sankaku) || input.GetKeyboard().GetKey(DIK_SPACE))
+		moveVec += transform.Up();
+	if (input.GetGamePad().ButtonPress(GamePad::Button::Batsu) || input.GetKeyboard().GetKey(DIK_LCONTROL))
+		moveVec -= transform.Up();
+	moveVec.Normalize();
+
+	//　視点移動
+	Vector2 inputR = input.GetValue("Right");
+	
+
+	rotateVec.y = inputR.x;
+	rotateVec.x = -inputR.y;
+	rotateVec.z = -inputR.y;
+
 }
 
-void CameraMove::UpdateLook()
+void CameraMove::Move()
 {
-	// 注視点の目標座標
-	Vector3 lookTarget = pPlayer->transform.position + Vector3::Up * lookOffsetY;
+	Transform& transform = GetTransform();
 
-	// 線形補間で現在の注視点を目標座標に近づける
-	lookPos = Vector3::Lerp(lookPos, lookTarget, lookSpeed * MainApplication::DeltaTime());
+	transform.position += moveVec * moveSpeed * MainApplication::DeltaTime();
 
-	/*Transform& t = GetTransform();
-	t.LookAt(lookPos);*/
+	transform.rotation += rotateVec * lookSpeed * MainApplication::DeltaTime();
 }
+
 
 void CameraMove::Init()
 {
 	name = "CameraMove";
 
 	camera = static_cast<Camera*>(gameObject);	// カメラを取得する
-	nowHeight = 7.0f;	//	現在の高さ
-	horizonDistance = 10.0f;
-	lookSpeed = 3.0f;
-	lookOffsetY = 1.0f;
+
 	moveSpeed = 5.0f;
-	playDistance = 1.0f;
+	lookSpeed = 180.0f;
 }
+
 void CameraMove::LateUpdate()
 {
-	UpdatePosition();
-	UpdateLook();
+	UpdateVector();
+	Move();
 }
 
 void CameraMove::ImGuiSetting()
 {
-	ImGui::Text("UpdatePosition");
-	ImGui::DragFloat("nowHeight", &nowHeight);
 	ImGui::DragFloat("moveSpeed", &moveSpeed);
-	ImGui::DragFloat("playDistance", &playDistance);
-
-	ImGui::Text("UpdateLook");
 	ImGui::DragFloat("lookSpeed", &lookSpeed);
-	ImGui::DragFloat("lookOffsetY", &lookOffsetY);
-	ImGui::DragFloat("lookPlay", &lookPlayDistance);
 }
