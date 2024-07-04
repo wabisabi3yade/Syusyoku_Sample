@@ -48,12 +48,12 @@ void SceneObjects::LateUpdate()
 {
 	for (auto itr = objList.begin(); itr != objList.end(); itr++)
 	{
-		itr->second->LateUpdate();
+		itr->second->LateUpdateBase();
 	}
 
 	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
 	{
-		itr->second->LateUpdate();
+		itr->second->LateUpdateBase();
 	}
 }
 

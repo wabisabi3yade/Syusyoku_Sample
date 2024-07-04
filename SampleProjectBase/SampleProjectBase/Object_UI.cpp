@@ -5,7 +5,7 @@
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
-MaterialClass* Object_UI::pShareMaterial = nullptr;
+Material* Object_UI::pShareMaterial = nullptr;
 
 void Object_UI::MakePoligon()
 {
@@ -64,7 +64,7 @@ Object_UI::~Object_UI()
 void Object_UI::MakeMaterial()
 {
 	// マテリアルを生成
-	std::unique_ptr<MaterialClass> pMakeMaterial = std::make_unique<MaterialClass>();
+	std::unique_ptr<Material> pMakeMaterial = std::make_unique<Material>();
 
 	// シェーダーを設定
 	ShaderCollection* shCol = ShaderCollection::GetInstance();
@@ -73,7 +73,7 @@ void Object_UI::MakeMaterial()
 	pShareMaterial = pMakeMaterial.get();	// マテリアルをもらう
 
 	// 送る
-	ResourceCollection::GetInstance()->SetResource<MaterialClass>("M_ObjectUI", std::move(pMakeMaterial));
+	ResourceCollection::GetInstance()->SetResource<Material>("M_ObjectUI", std::move(pMakeMaterial));
 }
 
 void Object_UI::Update()

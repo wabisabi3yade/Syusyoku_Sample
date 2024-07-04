@@ -2,7 +2,7 @@
 #include "GameObject.h"
 // コンポーネント
 #include "Component.h"
-#include "Collider.h"
+#include "CP_Collider.h"
 // 登録
 #include "CollisionRegister.h"
 #include "SObjectRegister.h"
@@ -15,7 +15,7 @@ void GameObject::ActiveProcess()
 	for (auto& c : pComponents)
 	{
 		// 当たり判定チェッククラスに追加
-		Collider* col = dynamic_cast<Collider*>(c.get());
+		CP_Collider* col = dynamic_cast<CP_Collider*>(c.get());
 		if (col != nullptr)
 		{
 			colRegister->AddCollider(*col);	// 追加
@@ -35,7 +35,7 @@ void GameObject::NotActiveProcess()
 	for (auto& c : pComponents)
 	{
 		// 当たり判定チェッククラスから削除
-		Collider* col = dynamic_cast<Collider*>(c.get());
+		CP_Collider* col = dynamic_cast<CP_Collider*>(c.get());
 		if (col != nullptr)
 		{
 			colRegister->PopCollider(*col);	// 削除
@@ -95,9 +95,11 @@ void GameObject::UpdateBase()
 	}
 }
 
-void GameObject::LateUpdate()
+void GameObject::LateUpdateBase()
 {
 	if (!isActive) return;
+
+	LateUpdate();
 
 	for (auto& itr : pComponents)
 	{

@@ -10,7 +10,7 @@ using namespace DirectX::SimpleMath;
 SphereCollider& SphereCollider::operator=(const SphereCollider& _other)
 {
 	if (this == &_other) return *this;
-	Collider::operator=(_other);
+	CP_Collider::operator=(_other);
 
 	radius = _other.radius;
 	posOffset = _other.posOffset;
@@ -22,7 +22,7 @@ void SphereCollider::Init()
 {
 	name = "SphereCollider";
 
-	Collider::Init();	// 追加処理する
+	CP_Collider::Init();	// 追加処理する
 
 	radius = VERTEX_RADIUS;	// 半径を初期化
 	type = Type::Sphere;	// 球と設定する
@@ -58,7 +58,7 @@ DirectX::SimpleMath::Vector3 SphereCollider::GetCenterPos() const
 	return t.position + posOffset * t.scale;
 }
 
-bool SphereCollider::CollisionSphere(Collider& _sphere1, Collider& _sphere2)
+bool SphereCollider::CollisionSphere(CP_Collider& _sphere1, CP_Collider& _sphere2)
 {
 	// これ以前に種類をチェックし安全なので実行速度重視でstatoc_cast変換する
 	SphereCollider& s1 = static_cast<SphereCollider&>(_sphere1);
@@ -79,7 +79,7 @@ bool SphereCollider::CollisionSphere(Collider& _sphere1, Collider& _sphere2)
 	return false;
 }
 
-bool SphereCollider::CollisionBox(Collider& _sphere, Collider& _box)
+bool SphereCollider::CollisionBox(CP_Collider& _sphere, CP_Collider& _box)
 {
 	return false;
 }

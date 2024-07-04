@@ -4,34 +4,34 @@
 
 using namespace DirectX::SimpleMath;
 
-bool CollisionChecker::SphereCollision(Collider& _sphere, Collider& _other)
+bool CollisionChecker::SphereCollision(CP_Collider& _sphere, CP_Collider& _other)
 {
 	bool isHit = false;
 	
 	switch (_other.GetType())	// もう一つの当たり判定の種類を取得する
 	{
-	case Collider::Type::Box:
+	case CP_Collider::Type::Box:
 		SphereCollider::CollisionBox(_sphere, _other);	// 球とボックスの判定
 		break;
 
-	case Collider::Type::Sphere:
+	case CP_Collider::Type::Sphere:
 		isHit = SphereCollider::CollisionSphere(_sphere, _other);	// 球同士の判定
 		break;
 	}
 
 	return isHit;
 }
-bool CollisionChecker::BoxCollision(Collider& _box, Collider& _other)
+bool CollisionChecker::BoxCollision(CP_Collider& _box, CP_Collider& _other)
 {
 	bool isHit = false;
 
 	switch (_other.GetType())	// もう一つの当たり判定の種類を取得する
 	{
-	case Collider::Type::Box:
+	case CP_Collider::Type::Box:
 		isHit = BoxCollider::CollisionBox(_box, _other);	// ボックス同士の判定
 		break;
 
-	case Collider::Type::Sphere:
+	case CP_Collider::Type::Sphere:
 		isHit = SphereCollider::CollisionBox(_other, _box);	// 球とボックスの判定
 		break;
 	}
@@ -48,7 +48,7 @@ void CollisionChecker::CollisionCheck()
 	if (colliders.size() == 0) return;
 
 	// 当たり判定を取るものと取らない物で分ける
-	std::vector<Collider*> checkColliders;	// とる配列
+	std::vector<CP_Collider*> checkColliders;	// とる配列
 	for (auto col : colliders)
 	{
 		col->ResetColliders();
@@ -63,17 +63,17 @@ void CollisionChecker::CollisionCheck()
 	for (u_int i = 0; i < checkColliders.size() - 1; i++)
 	{
 		// 一個目の当たり判定取得
-		Collider& col1 = *checkColliders[i];
+		CP_Collider& col1 = *checkColliders[i];
 		
 		// タイプで当たり判定の関数を決める
-		bool (*pFunc)(Collider&, Collider&);	// 関数ポインタ
+		bool (*pFunc)(CP_Collider&, CP_Collider&);	// 関数ポインタ
 		switch (checkColliders[i]->GetType())
 		{
 		// ボックス
-		case Collider::Type::Box: pFunc = &BoxCollision; break;
+		case CP_Collider::Type::Box: pFunc = &BoxCollision; break;
 
 		// 球
-		case Collider::Type::Sphere: pFunc = &SphereCollision; break;
+		case CP_Collider::Type::Sphere: pFunc = &SphereCollision; break;
 
 		default: break;
 		}
@@ -81,14 +81,14 @@ void CollisionChecker::CollisionCheck()
 		// 1つずつ決めていく
 		for (u_int j = i + 1; j < checkColliders.size(); j++)
 		{
-			Collider& col2 = *checkColliders[j];
+			CP_Collider& col2 = *checkColliders[j];
 
 			pFunc(col1, col2);	// 当たり判定を取る
 		}
 	}
 }
 
-void CollisionChecker::AddCollider(Collider& _collider)
+void CollisionChecker::AddCollider(CP_Collider& _collider)
 {
 	// 同じやつがあるか確認する
 	auto itr = std::find(colliders.begin(), colliders.end(), &_collider);
@@ -102,7 +102,7 @@ void CollisionChecker::AddCollider(Collider& _collider)
 
 }
 
-void CollisionChecker::PopCollider(Collider& _collider)
+void CollisionChecker::PopCollider(CP_Collider& _collider)
 {
 	// 同じやつがあるか確認する
 	auto itr = std::find(colliders.begin(), colliders.end(), &_collider);

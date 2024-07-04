@@ -31,7 +31,7 @@ public:
 	/// <param name="_resourceName">追加する名前</param>
 	/// <param name="_resourcePtr">追加するポインタ</param>
 	/// <returns>追加したリソースの生ポインタ</returns>
-	template<class T> void  SetResource(std::string _resourceName, std::unique_ptr<T> _resourcePtr);
+	template<class T> T*  SetResource(std::string _resourceName, std::unique_ptr<T> _resourcePtr);
 
 	/// <summary>
 	/// 名前に対応したリソースポインタを取得する
@@ -75,7 +75,7 @@ public:
 };
 
 template<class T>
-inline void ResourceCollection::SetResource(std::string _resourceName, std::unique_ptr<T> _resourcePtr)
+inline T* ResourceCollection::SetResource(std::string _resourceName, std::unique_ptr<T> _resourcePtr)
 {
 	// デバッグ時にだけ名前参照をして被るか確認
 	auto itr = resources.find(_resourceName);
@@ -83,13 +83,19 @@ inline void ResourceCollection::SetResource(std::string _resourceName, std::uniq
 	{
 		std::string message = "既にリソースがあります" + _resourceName;
 		ImGuiDebugLog::Add(message);
-		return;
+		
+		// 元あるリソースのポインタを返す
+		Resource<T>* resourceGetter = dynamic_cast<Resource<T>*>(itr->second.get());
+		return  resourceGetter->GetPtr();
 	}
+
+	// 戻り値の生ポインタを取得
+	T* retResourcePtr = _resourcePtr.get();
 
 	// リソースを生成し、配列に入れる
 	std::unique_ptr<Resource_Base> setPtr = std::make_unique<Resource<T>>(std::move(_resourcePtr));
 	resources.insert(std::pair<std::string, std::unique_ptr<Resource_Base>>(_resourceName, std::move(setPtr)));
-	return;
+	return retResourcePtr;
 }
 
 template<class T>

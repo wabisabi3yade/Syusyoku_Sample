@@ -31,6 +31,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
+    <FxCompile Include="PS_Test.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="PS_TexNotEnable.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
@@ -69,6 +75,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
+    <FxCompile Include="VS_Test.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="VS_UVScroll.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
@@ -88,6 +100,8 @@
     <ClCompile Include="CameraInput.cpp" />
     <ClCompile Include="CollisionChecker.cpp" />
     <ClCompile Include="CollisionRegister.cpp" />
+    <ClCompile Include="CP_ModelRenderer.cpp" />
+    <ClCompile Include="CP_SpriteRenderer.cpp" />
     <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="GameKey.cpp" />
@@ -102,7 +116,7 @@
     <ClCompile Include="CameraMove.cpp" />
     <ClCompile Include="ChangeBroadScene.cpp" />
     <ClCompile Include="ChangeSubScene.cpp" />
-    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="CP_Collider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="DebugCube.cpp" />
     <ClCompile Include="GamePad.cpp" />
@@ -116,12 +130,14 @@
     <ClCompile Include="JISToUTF8.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="MathUseful.cpp" />
+    <ClCompile Include="CP_MeshRenderer.cpp" />
     <ClCompile Include="Object_UI.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="PlayerInput.cpp" />
     <ClCompile Include="PlayerMove.cpp" />
     <ClCompile Include="PlayerShot.cpp" />
     <ClCompile Include="PointLight.cpp" />
+    <ClCompile Include="CP_Renderer.cpp" />
     <ClCompile Include="SaveJson.cpp" />
     <ClCompile Include="SaveJsonValue.cpp" />
     <ClCompile Include="SceneLights.cpp" />
@@ -135,6 +151,7 @@
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="SpotLight.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Tag.cpp" />
     <ClCompile Include="Tank.cpp" />
     <ClCompile Include="Tank_BroadScene.cpp" />
@@ -189,6 +206,8 @@
     <ClInclude Include="CameraInput.h" />
     <ClInclude Include="CollisionChecker.h" />
     <ClInclude Include="CollisionRegister.h" />
+    <ClInclude Include="CP_ModelRenderer.h" />
+    <ClInclude Include="CP_SpriteRenderer.h" />
     <ClInclude Include="DirectionLight.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="GameKey.h" />
@@ -206,7 +225,7 @@
     <ClInclude Include="CbViewSet.h" />
     <ClInclude Include="ChangeBroadScene.h" />
     <ClInclude Include="ChangeSubScene.h" />
-    <ClInclude Include="Collider.h" />
+    <ClInclude Include="CP_Collider.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="DebugCube.h" />
     <ClInclude Include="GamePad.h" />
@@ -219,12 +238,14 @@
     <ClInclude Include="InSceneSystemManager.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="MathUseful.h" />
+    <ClInclude Include="CP_MeshRenderer.h" />
     <ClInclude Include="Object_UI.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="PlayerInput.h" />
     <ClInclude Include="PlayerMove.h" />
     <ClInclude Include="PlayerShot.h" />
     <ClInclude Include="PointLight.h" />
+    <ClInclude Include="CP_Renderer.h" />
     <ClInclude Include="SaveJson.h" />
     <ClInclude Include="SaveJsonValue.h" />
     <ClInclude Include="SceneLights.h" />
@@ -240,6 +261,7 @@
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="SpotLight.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="Tag.h" />
     <ClInclude Include="Tank.h" />
     <ClInclude Include="Tank_BroadScene.h" />

@@ -15,6 +15,12 @@ Object_3D::~Object_3D()
 	Release();
 }
 
+void Object_3D::Update()
+{
+	// モデルのパラメータをImGuiで更新
+	pModel->ImGuiSetting();
+}
+
 void Object_3D::Draw()
 {
 	if (!isActive) return;

@@ -1,8 +1,8 @@
 #pragma once
-#include "Collider.h"
+#include "CP_Collider.h"
 
 class BoxCollider :
-	public Collider
+	public CP_Collider
 {
 	// 座標オフセット
 	DirectX::SimpleMath::Vector3 posOffset;
@@ -13,10 +13,10 @@ class BoxCollider :
 	// AABBフラグ
 	bool isAABB = false;	
 
-	static void CheckCollisionAABB(Collider& _box1, Collider& _box2);
-	static void CheckCollisionOBB(Collider& _box1, Collider& _box2);
+	static void CheckCollisionAABB(CP_Collider& _box1, CP_Collider& _box2);
+	static void CheckCollisionOBB(CP_Collider& _box1, CP_Collider& _box2);
 public:
-	using Collider::Collider;
+	using CP_Collider::CP_Collider;
 	BoxCollider& operator=(const BoxCollider& _other);
 
 	void Init();
@@ -33,6 +33,6 @@ public:
 	DirectX::SimpleMath::Vector3 GetWorldRotation()const;
 	DirectX::SimpleMath::Vector3 GetWorldScale()const;
 
-	static bool CollisionBox(Collider& _box1, Collider& _box2);
+	static bool CollisionBox(CP_Collider& _box1, CP_Collider& _box2);
 };
 

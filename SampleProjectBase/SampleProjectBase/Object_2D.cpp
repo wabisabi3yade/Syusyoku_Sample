@@ -13,7 +13,7 @@ void Object_2D::MaterialSetting()
 
 	if (!isImpoted)	// マテリアルが無かったら作成
 	{
-		std::unique_ptr<MaterialClass> setMaterial = std::make_unique<MaterialClass>();
+		std::unique_ptr<Material> setMaterial = std::make_unique<Material>();
 		ShaderCollection* shCol = ShaderCollection::GetInstance();
 
 		// 使用するシェーダーをマテリアルに設定
@@ -22,7 +22,7 @@ void Object_2D::MaterialSetting()
 
 		pMaterial = setMaterial.get();	// ポインタを受け取る
 		// リソース管理に2D用マテリアルをセットする
-		reCollect->SetResource<MaterialClass>(MATERIAL_NAME, std::move(setMaterial));
+		reCollect->SetResource<Material>(MATERIAL_NAME, std::move(setMaterial));
 	}
 
 }

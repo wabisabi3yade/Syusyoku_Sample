@@ -82,7 +82,7 @@ const wchar_t* Texture::ReplaceExtension(const std::wstring& _pathName, const ch
 	return p.replace_extension(ext).c_str();
 }
 
-Texture::Texture() : width(0), height(0), pSRV(nullptr), isImported(false), isPermanent(false)
+Texture::Texture() : width(0), height(0), pSRV(nullptr), isImported(false)
 {
 }
 

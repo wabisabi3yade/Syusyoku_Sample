@@ -15,7 +15,7 @@ cbuffer UV_OFFSET : register(b1)
 struct VS_INPUT
 {
     float3 pos : POSITION; // 頂点座標（モデル座標系）
-    float4 color : COLOR; // 頂点色
+    float4 color : COLOR0; // 頂点色
     float2 uv : TEXCOORD0; // uv座標
     float3 normal : NORMAL0; // 法線ベクトル
 };

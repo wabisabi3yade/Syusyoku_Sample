@@ -2,9 +2,13 @@
 #include "BasicObject_Base.h"
 #include "ShaderCollection.h"
 
+#include "imgui_impl_win32.h"
+#include "imgui_impl_dx11.h"
+#include "imgui.h"
+
 using namespace DirectX::SimpleMath;
 
-BasicObject_Base::BasicObject_Base()
+BasicObject_Base::BasicObject_Base() : pMaterial{ nullptr }
 {
 	// 基本オブジェクト用のマテリアルを作成する
 	ResourceCollection* reCol = ResourceCollection::GetInstance();
@@ -14,7 +18,7 @@ BasicObject_Base::BasicObject_Base()
 	if (!reCol->GetImpotred(MATERIAL_NAME))	// 無かったら
 	{
 		// マテリアル作成
-		std::unique_ptr<MaterialClass> makeMaterial = std::make_unique<MaterialClass>();
+		std::unique_ptr<Material> makeMaterial = std::make_unique<Material>();
 		// シェーダーを設定
 		ShaderCollection* shCol = ShaderCollection::GetInstance();
 		VertexShader* v = shCol->GetVertexShader("VS_BaseObject");
@@ -22,14 +26,14 @@ BasicObject_Base::BasicObject_Base()
 		makeMaterial->SetVertexShader(v);
 		makeMaterial ->SetPixelShader(p);
 
-		pMaterial = makeMaterial.get();	// このオブジェクトにマテリアルセット
+		pBaseMaterial = makeMaterial.get();	// このオブジェクトにマテリアルセット
 		// 管理クラスにセット
 		reCol->SetResource(MATERIAL_NAME, std::move(makeMaterial));
 	}
 	else
 	{
 		// マテリアルを取得
-		pMaterial = reCol->GetResource<MaterialClass>(MATERIAL_NAME);	
+		pBaseMaterial = reCol->GetResource<Material>(MATERIAL_NAME);	
 	}
 }
 
@@ -37,7 +41,7 @@ BasicObject_Base::~BasicObject_Base()
 {
 }
 
-void BasicObject_Base::Draw(Transform& _transform, DirectX::SimpleMath::Color& _color)
+void BasicObject_Base::BasicDraw(Transform& _transform, DirectX::SimpleMath::Color& _color)
 {
 	D3D11_Renderer* renderer = Direct3D11::GetInstance()->GetRenderer();
 	
@@ -49,17 +53,29 @@ void BasicObject_Base::Draw(Transform& _transform, DirectX::SimpleMath::Color& _
 	wMat.world = worldmtx;
 
 	// シェーダーをセット
-	pMaterial->GetVertexShader().Bind();
-	pMaterial->GetPixelShader().Bind();
+	pBaseMaterial->GetVertexShader().Bind();
+	pBaseMaterial->GetPixelShader().Bind();
 
 	// シェーダーにバッファを送る
-	pMaterial->GetVertexShader().UpdateBuffer(0, &wMat);
-	pMaterial->GetVertexShader().UpdateBuffer(1, &_color);
+	pBaseMaterial->GetVertexShader().UpdateBuffer(0, &wMat);
+	pBaseMaterial->GetVertexShader().UpdateBuffer(1, &_color);
 
 	Mesh::Draw(*renderer);	
 }
 
-void BasicObject_Base::SetMaterial(MaterialClass& _material)
+void BasicObject_Base::SetMaterial(Material& _material)
 {
 	pMaterial = &_material;
+}
+
+void BasicObject_Base::ImGuiSetting()
+{
+	if (pMaterial == nullptr) return;
+
+	if (ImGui::TreeNode("Material"))
+	{
+
+
+		ImGui::TreePop();
+	}
 }

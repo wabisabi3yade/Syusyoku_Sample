@@ -14,7 +14,7 @@ struct MaterialParameter
 };
 
 // モデルの表面データ
-class MaterialClass
+class Material
 {
 	MaterialParameter parameter;	// マテリアルのパラメータ
 
@@ -22,8 +22,8 @@ class MaterialClass
 	VertexShader* pVertexShader;	// 頂点	
 	PixelShader* pPixelShader;	// ピクセル
 public:
-	MaterialClass();
-	~MaterialClass();
+	Material();
+	~Material();
 
 	// シェーダーを設定
 	void SetVertexShader(VertexShader* _vs) { pVertexShader = _vs; }
@@ -39,5 +39,7 @@ public:
 	VertexShader& GetVertexShader()const { return *pVertexShader; }
 	PixelShader& GetPixelShader()const { return *pPixelShader; }
 	MaterialParameter& GetMaterialParameter() { return parameter; }
+
+	void ImGuiSetting();
 };
 

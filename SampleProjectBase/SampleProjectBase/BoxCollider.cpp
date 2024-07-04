@@ -5,19 +5,19 @@
 
 using namespace DirectX::SimpleMath;
 
-void BoxCollider::CheckCollisionAABB(Collider& _box1, Collider& _box2)
+void BoxCollider::CheckCollisionAABB(CP_Collider& _box1, CP_Collider& _box2)
 {
 
 }
 
-void BoxCollider::CheckCollisionOBB(Collider& _box1, Collider& _box2)
+void BoxCollider::CheckCollisionOBB(CP_Collider& _box1, CP_Collider& _box2)
 {
 }
 
 BoxCollider& BoxCollider::operator=(const BoxCollider& _other)
 {
 	if (this == &_other) return *this;
-	Collider::operator=(_other);
+	CP_Collider::operator=(_other);
 
 	// パラメータ代入
 	posOffset = _other.posOffset;
@@ -32,10 +32,10 @@ void BoxCollider::Init()
 {
 	name = "BoxCollider";
 
-	Collider::Init();	// 追加処理をする
+	CP_Collider::Init();	// 追加処理をする
 
 	size = Vector3::One;
-	type = Collider::Type::Box;	// ボックスに設定する
+	type = CP_Collider::Type::Box;	// ボックスに設定する
 }
 
 void BoxCollider::Draw()
@@ -57,10 +57,10 @@ void BoxCollider::Draw()
 	Geometory::SetRotation(rotation_w);
 
 	// 色
-	Geometory::SetColor(Collider::normalColor);
+	Geometory::SetColor(CP_Collider::normalColor);
 	if (hitColliders.size() > 0)	// 何かに当たってるなら
 	{
-		Geometory::SetColor(Collider::hitColor);	// 色を変える
+		Geometory::SetColor(CP_Collider::hitColor);	// 色を変える
 	}
 	Geometory::DrawCube(true);
 }
@@ -89,7 +89,7 @@ DirectX::SimpleMath::Vector3 BoxCollider::GetWorldScale() const
 	return gameObject->transform.scale * size;
 }
 
-bool BoxCollider::CollisionBox(Collider& _box1, Collider& _box2)
+bool BoxCollider::CollisionBox(CP_Collider& _box1, CP_Collider& _box2)
 {
 	// AABBとOBBで処理を変える
 

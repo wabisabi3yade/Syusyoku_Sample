@@ -10,8 +10,10 @@ public:
 	ShaderSphere();
 	~ShaderSphere(){};
 
+	void Update() override;
+
 	void Draw()override;
 
-	void SetMaterial(MaterialClass& _material);
+	void SetMaterial(Material& _material);
 };
 

@@ -149,7 +149,7 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 		// マテリアルのセットする名前は "M_名前 + 数字"
 		std::string materialName = "M_" + _settings.modelName + std::to_string(i);
 		// マテリアルを作成
-		std::unique_ptr<MaterialClass> material = std::make_unique<MaterialClass>();
+		std::unique_ptr<Material> material = std::make_unique<Material>();
 		// 各種パラメーター
 		MaterialParameter materialParam;
 		materialParam.diffuse = pScene->mMaterials[i]->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS ?
@@ -232,7 +232,7 @@ bool Model::LoadProcess(const ModelSettings& _settings, D3D11_Renderer& _rendere
 		// マテリアル追加
 		pMaterials.push_back(material.get());
 		// マテリアルを保管クラスに入れる
-		resourceCollection->SetResource<MaterialClass>(materialName, std::move(material));
+		resourceCollection->SetResource<Material>(materialName, std::move(material));
 	}
 
 	modelData = _settings;	// モデル情報を入れる
@@ -255,7 +255,7 @@ void Model::Draw(const Transform& _transform) const
 	for (u_int meshIdx = 0; meshIdx < meshNum; meshIdx++)
 	{
 		if (meshIdx > pMaterials.size() - 1) return;	// マテリアルがないなら終わる
-		MaterialClass& material = *pMaterials[meshIdx];
+		Material& material = *pMaterials[meshIdx];
 
 		// パラメータ
 		MaterialParameter& materialParam = material.GetMaterialParameter();
@@ -337,6 +337,22 @@ void Model::SetTexture(std::vector<Texture*> _setTextures)
 	pTextures.clear();
 
 	pTextures = _setTextures;	//新しいテクスチャ配列をセットする
+}
+
+void Model::ImGuiSetting()
+{
+#ifdef EDIT
+	u_int materialCnt = 0;
+	for (auto material : pMaterials)
+	{
+		std::string treeName = "Material" + std::to_string(materialCnt);
+		if (ImGui::TreeNode(treeName.c_str()))
+		{
+			material->ImGuiSetting();
+			ImGui::TreePop();
+		}
+	}
+#endif // EDIT
 }
 
 

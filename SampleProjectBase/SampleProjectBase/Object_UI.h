@@ -10,7 +10,7 @@ class Object_UI :
     Texture* pTexture;  // テクスチャ
     std::unique_ptr<Mesh> poligon;  // ポリゴン
 
-    static MaterialClass* pShareMaterial; // 共通のマテリアル
+    static Material* pShareMaterial; // 共通のマテリアル
 
     void MakePoligon(); // ポリゴン作成
     void MakeMaterial();    // 共通のマテリアルを作成する

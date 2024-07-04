@@ -39,14 +39,14 @@ protected:
 	// セーブをする変数リスト
 	//std::unique_ptr<SaveJsonValue> saveValues;	
 
-	// アクティブ変更時の処理
+	// アクティブ変更時処理
 	void ActiveProcess();
-
-	// 非アクティブ変更時の処理
 	void NotActiveProcess();
 
-	// 更新処理
+	// 各オブジェクトの処理
 	virtual void Update() {};	
+	virtual void LateUpdate(){};
+	virtual void Draw() {};
 
 	// Jsonからロード
 	virtual void FromJson(const nlohmann::json& _jsonData) {};
@@ -60,15 +60,11 @@ public:
 	GameObject& operator=(const GameObject& _other);
 	virtual ~GameObject() {};
 
-	// どのオブジェクトも行う処理はここ
+	// 更新処理
 	void UpdateBase();	
-
-	// Updateを行ったあとの更新処理
-	virtual void LateUpdate();
-
+	void LateUpdateBase();
 	void DrawBase();
-	// 描画処理
-	virtual void Draw(){};
+
 
 	// 自身を削除
 	void Destroy();

@@ -5,8 +5,6 @@
 #include "imgui_impl_dx11.h"
 #include "imgui.h"
 
-#include "ImGuiDebugLog.h"
-
 using namespace DirectX::SimpleMath;
 
 void ImGuiMethod::Initialize(HWND _hwnd, ID3D11Device* _pDevice, ID3D11DeviceContext* _pDeviceContext)

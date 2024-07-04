@@ -120,5 +120,5 @@ void Sphere::DebugDraw(Transform& _transform, DirectX::SimpleMath::Color& _color
 
 	pContext->IASetPrimitiveTopology(topology);
 
-	BasicObject_Base::Draw(_transform, _color);
+	BasicObject_Base::BasicDraw(_transform, _color);
 }

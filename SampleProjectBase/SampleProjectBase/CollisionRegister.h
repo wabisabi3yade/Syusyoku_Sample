@@ -1,7 +1,7 @@
 #pragma once
 #include "Singleton_Base.h"
 
-class Collider;
+class CP_Collider;
 class CollisionChecker;
 
 // コライダーをシーンの当たり判定チェッカーに追加するクラス
@@ -18,8 +18,8 @@ public:
 	// 当たり判定チェッカークラスをセット
 	void SetCollisionChecker(CollisionChecker& _pCollisionChecker);	
 	// 当たり判定チェッカークラスに追加する
-	void AddCollider(Collider& _collider);
+	void AddCollider(CP_Collider& _collider);
 	// 当たり判定チェッカークラス
-	void PopCollider(Collider& _collider);
+	void PopCollider(CP_Collider& _collider);
 };
 

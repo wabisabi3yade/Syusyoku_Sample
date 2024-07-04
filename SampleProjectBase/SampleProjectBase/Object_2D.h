@@ -7,7 +7,7 @@
 class Object_2D : public GameObject
 {
 	std::unique_ptr<Mesh> pSquareMesh;	// テクスチャを貼るメッシュ
-	MaterialClass* pMaterial;	// 使用するマテリアル
+	Material* pMaterial;	// 使用するマテリアル
 	Texture* pTexture;	// 使用するテクスチャ
 
 	void MaterialSetting();	// マテリアルの設定

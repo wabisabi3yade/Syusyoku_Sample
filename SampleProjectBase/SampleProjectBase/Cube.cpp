@@ -22,7 +22,7 @@ void Cube::Draw(Transform& _transform, DirectX::SimpleMath::Color& _color)
 
 	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	BasicObject_Base::Draw(_transform, _color);
+	BasicObject_Base::BasicDraw(_transform, _color);
 }
 
 void Cube::Make()

@@ -12,9 +12,12 @@ public:
 	Object_3D();
 	virtual ~Object_3D();
 
-	void SetModel(Model* _setModel) { pModel = _setModel; }
+	void Update() override;
 
 	void Draw() override;	// •`‰æˆ—
+
+	void SetModel(Model* _setModel) { pModel = _setModel; }
+
 	Model& GetModel() { return *pModel; }
 };
 

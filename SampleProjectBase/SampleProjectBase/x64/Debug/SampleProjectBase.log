@@ -1,11 +1,17 @@
 ﻿  モジュール依存関係のソースをスキャンしています...
-  CameraMove.cpp
-  Tank_InGameSub.cpp
-  CameraInput.cpp
-  Window.cpp
+  DirectionLight.cpp
+  BoxCollider.cpp
+  SceneManager.cpp
+  SphereCollider.cpp
+  Geometory.cpp
+  PlayerMove.cpp
+  ShaderSphere.cpp
   コンパイルしています...
-  CameraInput.cpp
-  CameraMove.cpp
-  Tank_InGameSub.cpp
-  Window.cpp
+  DirectionLight.cpp
+  SceneManager.cpp
+  ShaderSphere.cpp
+  SphereCollider.cpp
+  PlayerMove.cpp
+  Geometory.cpp
+  BoxCollider.cpp
   SampleProjectBase.vcxproj -> C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\x64\Debug\SampleProjectBase.exe

@@ -94,9 +94,6 @@
     <Filter Include="ソース ファイル\Graphics\Model\ModelSettings">
       <UniqueIdentifier>{d7dfd3b7-613e-4384-a6a6-448d15ef6344}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics\Texture">
-      <UniqueIdentifier>{026d8e4c-f51d-4e82-9a2d-1ac9ee929f14}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\Material">
       <UniqueIdentifier>{a83c15aa-5988-40c1-ac96-d5c7154ca83a}</UniqueIdentifier>
     </Filter>
@@ -325,9 +322,6 @@
     <Filter Include="ソース ファイル\Component\InGame\Player\PlayerInput">
       <UniqueIdentifier>{3ead3f7f-0159-4fa0-bb22-adcd1bbdcafa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\Input">
-      <UniqueIdentifier>{14bbbb30-cc08-4f5d-aed8-c33d20c3c291}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\SceneFunction">
       <UniqueIdentifier>{873b7fd4-8efe-4072-b1f3-edf202c51acb}</UniqueIdentifier>
     </Filter>
@@ -367,6 +361,24 @@
     <Filter Include="ソース ファイル\Scene\InSceneSystem">
       <UniqueIdentifier>{b54ce796-f7aa-42ab-a133-8a4a2882bec4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Component\Renderer">
+      <UniqueIdentifier>{5bfa5bf5-a68f-4f72-8436-bd497064ced2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Renderer\Mesh">
+      <UniqueIdentifier>{a935276e-aa2f-4154-aa45-1d0a427befec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Renderer\Sprite">
+      <UniqueIdentifier>{44adb63d-0c85-4d42-a76d-a8b8a2ae4ce7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Renderer\CP_ModelRenderer">
+      <UniqueIdentifier>{cc9834c4-25a7-4280-b9ed-97e59705b9e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Sprite">
+      <UniqueIdentifier>{aefcb463-41f4-43d8-9ff6-52a0c8089a17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Sprite\Texture">
+      <UniqueIdentifier>{026d8e4c-f51d-4e82-9a2d-1ac9ee929f14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Basic.hlsl">
@@ -401,6 +413,12 @@
     </FxCompile>
     <FxCompile Include="VS_Gouraud.hlsl">
       <Filter>リソース ファイル\VertrxShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_Test.hlsl">
+      <Filter>リソース ファイル\VertrxShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_Test.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -483,7 +501,7 @@
       <Filter>ソース ファイル\Graphics\Model\ModelSettings</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
-      <Filter>ソース ファイル\Graphics\Texture</Filter>
+      <Filter>ソース ファイル\Graphics\Sprite\Texture</Filter>
     </ClCompile>
     <ClCompile Include="MaterialClass.cpp">
       <Filter>ソース ファイル\Graphics\Material</Filter>
@@ -614,7 +632,7 @@
     <ClCompile Include="CollisionChecker.cpp">
       <Filter>ソース ファイル\Component\Collider\CollisionChecker</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
+    <ClCompile Include="CP_Collider.cpp">
       <Filter>ソース ファイル\Component\Collider\Base</Filter>
     </ClCompile>
     <ClCompile Include="CollisionRegister.cpp">
@@ -691,6 +709,21 @@
     </ClCompile>
     <ClCompile Include="SinCurve.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_MeshRenderer.cpp">
+      <Filter>ソース ファイル\Component\Renderer\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Renderer.cpp">
+      <Filter>ソース ファイル\Component\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_SpriteRenderer.cpp">
+      <Filter>ソース ファイル\Component\Renderer\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_ModelRenderer.cpp">
+      <Filter>ソース ファイル\Component\Renderer\CP_ModelRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>ソース ファイル\Graphics\Sprite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -794,7 +827,7 @@
       <Filter>ソース ファイル\Graphics\Model\ModelSettings</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
-      <Filter>ソース ファイル\Graphics\Texture</Filter>
+      <Filter>ソース ファイル\Graphics\Sprite\Texture</Filter>
     </ClInclude>
     <ClInclude Include="MaterialClass.h">
       <Filter>ソース ファイル\Graphics\Material</Filter>
@@ -931,7 +964,7 @@
     <ClInclude Include="CollisionChecker.h">
       <Filter>ソース ファイル\Component\Collider\CollisionChecker</Filter>
     </ClInclude>
-    <ClInclude Include="Collider.h">
+    <ClInclude Include="CP_Collider.h">
       <Filter>ソース ファイル\Component\Collider\Base</Filter>
     </ClInclude>
     <ClInclude Include="CollisionRegister.h">
@@ -1011,6 +1044,21 @@
     </ClInclude>
     <ClInclude Include="SinCurve.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_MeshRenderer.h">
+      <Filter>ソース ファイル\Component\Renderer\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Renderer.h">
+      <Filter>ソース ファイル\Component\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_SpriteRenderer.h">
+      <Filter>ソース ファイル\Component\Renderer\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_ModelRenderer.h">
+      <Filter>ソース ファイル\Component\Renderer\CP_ModelRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>ソース ファイル\Graphics\Sprite</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

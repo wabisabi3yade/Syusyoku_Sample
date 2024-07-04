@@ -14,6 +14,8 @@ void Geometory::Init()
 	pCube = std::make_unique<Cube>();
 	pDebugCube = std::make_unique<DebugCube>();
 	pSphere = std::make_unique<Sphere>();
+
+
 }
 
 void Geometory::Release()

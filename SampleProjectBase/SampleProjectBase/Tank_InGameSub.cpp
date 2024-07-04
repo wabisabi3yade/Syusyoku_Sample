@@ -9,7 +9,7 @@
 #include "ShaderSphere.h"
 #include "SinCurve.h"
 
-constexpr u_int SPHERE_NUM(2);
+constexpr u_int SPHERE_NUM(3);
 constexpr u_int CUBE_NUM(2);
 
 Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveInfo)
@@ -55,27 +55,38 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 		std::unique_ptr<ShaderSphere> createSphere = std::make_unique<ShaderSphere>();
 		spheres.push_back(std::move(createSphere));
 	}
+
+	Material* setMaterial = nullptr;
+
 	// unlitマテリアルを作成
-	std::unique_ptr<MaterialClass> unlitMaterial = std::make_unique<MaterialClass>();
+	std::unique_ptr<Material> unlitMaterial = std::make_unique<Material>();
 	unlitMaterial->SetVertexShader(vs);
 	unlitMaterial->SetPixelShader(ps);
-	spheres[0]->SetMaterial(*unlitMaterial.get());
-	resourceCollection->SetResource<MaterialClass>("UnlitMaterial", std::move(unlitMaterial));
+	setMaterial = resourceCollection->SetResource<Material>("UnlitMaterial", std::move(unlitMaterial));
+
+	spheres[0]->SetMaterial(*setMaterial);
+	
 	spheres[0]->AddComponent<SinCurve>();
 	spheres[0]->AddComponent<SphereCollider>();
 	sceneObjects->SetObject("UnlitSphere", std::move(spheres[0]));
 
 	// 同じ名前があるなら名前の後に数字を入れる
+	spheres[1]->SetMaterial(*setMaterial);
 	spheres[1]->AddComponent<SphereCollider>();
 	sceneObjects->SetObject("UnlitSphere", std::move(spheres[1]));
 
-	//// キューブを作成
-	//std::vector<std::unique_ptr<Object_3D>> spheres;
-	//for (u_int sphereLoop = 0; sphereLoop < SPHERE_NUM; sphereLoop++)
-	//{
-	//	std::unique_ptr<ShaderSphere> createSphere = std::make_unique<ShaderSphere>();
-	//	spheres.push_back(std::move(createSphere));
-	//}
+	// 同じ名前があるなら名前の後に数字を入れる
+	vs = shCollect->GetVertexShader("VS_Test");
+	ps = shCollect->GetPixelShader("PS_Test");
+
+	// testMaterialを作成
+	std::unique_ptr<Material> testMaterial = std::make_unique<Material>();
+	testMaterial->SetVertexShader(vs);
+	testMaterial->SetPixelShader(ps);
+	setMaterial = resourceCollection->SetResource<Material>("TestMaterial", std::move(testMaterial));
+	spheres[2]->SetMaterial(*setMaterial);
+	spheres[2]->transform.position.x = 3.0f;
+	sceneObjects->SetObject("UnlitSphere", std::move(spheres[2]));
 }
 
 Tank_InGameSub::~Tank_InGameSub()
@@ -84,6 +95,7 @@ Tank_InGameSub::~Tank_InGameSub()
 
 void Tank_InGameSub::Update()
 {
+
 }
 
 void Tank_InGameSub::LateUpdate()

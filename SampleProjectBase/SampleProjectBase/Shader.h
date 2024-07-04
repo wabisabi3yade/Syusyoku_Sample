@@ -43,7 +43,7 @@ public:
 	/// </summary>
 	/// <param name="_slot">スロットの番号</param>
 	/// <param name="_pData">バッファに入れる情報</param>
-	void UpdateBuffer(u_int _slot, void* _pData);	
+	void UpdateBuffer(u_int _slot, void* _pData);
 
 	/// <summary>
 	/// シェーダーに送るための配列に追加
