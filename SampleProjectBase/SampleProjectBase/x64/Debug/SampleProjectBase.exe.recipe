@@ -10,15 +10,6 @@
       <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\PS_Lit.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\PS_PointLight.cso</FullPath>
-    </ContentFile>
-    <ContentFile>
-      <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\PS_Test.cso</FullPath>
-    </ContentFile>
-    <ContentFile>
-      <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\PS_TexNotEnable.cso</FullPath>
-    </ContentFile>
-    <ContentFile>
       <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\PS_Basic.cso</FullPath>
     </ContentFile>
     <ContentFile>
@@ -35,12 +26,6 @@
     </ContentFile>
     <ContentFile>
       <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VS_Gouraud.cso</FullPath>
-    </ContentFile>
-    <ContentFile>
-      <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VS_Test.cso</FullPath>
-    </ContentFile>
-    <ContentFile>
-      <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VS_UVScroll.cso</FullPath>
     </ContentFile>
     <ContentFile>
       <FullPath>C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VS_WorldPosition.cso</FullPath>

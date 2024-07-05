@@ -5,6 +5,7 @@
 class CP_Renderer :
     public Component
 {
+    virtual void DrawSetup(){};
 public:
     using Component::Component;
 

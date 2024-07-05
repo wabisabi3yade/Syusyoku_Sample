@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "CP_Collider.h"
-#include "CollisionRegister.h"
 #include "Tag.h"
+
+#include "InSceneSystemManager.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -11,7 +12,8 @@ const Color CP_Collider::hitColor = { 1,0,0,1 };
 CP_Collider::~CP_Collider()
 {
 	// 当たり判定チェッカーから削除する
-	CollisionRegister::GetInstance()->PopCollider(*this);
+	CollisionChecker& colCheck = InSceneSystemManager::GetInstance()->GetCollisonChecker();
+	colCheck.PopCollider(*this);
 }
 
 CP_Collider& CP_Collider::operator=(const CP_Collider& _other)
@@ -33,7 +35,8 @@ CP_Collider& CP_Collider::operator=(const CP_Collider& _other)
 void CP_Collider::Init()
 {
 	// シーン内の当たり判定チェッカーに追加する
-	CollisionRegister::GetInstance()->AddCollider(*this);
+	CollisionChecker& colCheck = InSceneSystemManager::GetInstance()->GetCollisonChecker();
+	colCheck.AddCollider(*this);
 }
 
 void CP_Collider::SetTagColor(const Tag& _tag)

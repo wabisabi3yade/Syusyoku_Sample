@@ -10,18 +10,20 @@ class InSceneSystemManager : public Singleton_Base<InSceneSystemManager>
 {
 	friend class Singleton_Base<InSceneSystemManager>;
 
-	InSceneSystemManager() : pSceneObjects(nullptr), pSceneLights(nullptr), pCollisionChecker(nullptr) {};
-	~InSceneSystemManager(){};
+	InSceneSystemManager(){};
+	~InSceneSystemManager();
 
 	// インスタンス
-	SceneObjects* pSceneObjects;
-	SceneLights* pSceneLights;
-	CollisionChecker* pCollisionChecker;
-public:
+	// シーンオブジェクト
+	std::unique_ptr<SceneObjects> pSceneObjects;
 
-	void SetSceneObjects(SceneObjects& _sceneObjects) { pSceneObjects = &_sceneObjects; }
-	void SetSceneLights(SceneLights& _sceneLights) { pSceneLights = &_sceneLights; }
-	void SetCollisonChecker(CollisionChecker& _collisionChecker) { pCollisionChecker = &_collisionChecker; }
+	// シーンライティング
+	std::unique_ptr<SceneLights> pSceneLights;
+
+	// 衝突判定
+	std::unique_ptr<CollisionChecker> pCollisionChecker;
+public:
+	void Init();
 
 	SceneObjects& GetSceneObjects() { return *pSceneObjects; }
 	SceneLights& GetSceneLights() { return *pSceneLights; }

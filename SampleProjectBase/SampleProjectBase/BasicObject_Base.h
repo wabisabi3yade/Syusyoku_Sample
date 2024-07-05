@@ -1,6 +1,6 @@
 #pragma once
 #include "Mesh.h"
-#include "MaterialClass.h"
+#include "Material.h"
 
 // キューブ、球など基本的なメッシュクラスの基底
 class BasicObject_Base : public Mesh

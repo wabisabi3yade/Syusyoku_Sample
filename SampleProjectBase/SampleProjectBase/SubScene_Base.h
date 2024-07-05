@@ -8,11 +8,12 @@
 #include "Object_UI.h"
 
 // システム関連
-#include "SceneObjects.h"
-#include "SceneLights.h"
-#include "CollisionChecker.h"
 #include "ModelLoader.h"
 #include "ShaderCollection.h"
+#include "InSceneSystemManager.h"
+
+class SceneObjects;
+class CollisionChecker;
 
 // サブシーン（小さなシーン、例えば街の中の家の中とか）の基底クラス
 class SubScene_Base
@@ -24,14 +25,8 @@ protected:
 	// リソース管理
 	ResourceCollection* resourceCollection;	
 
-	// シーン内オブジェクト管理
-	std::unique_ptr<SceneObjects> sceneObjects;
-
-	// シーン内光源
-	std::unique_ptr<SceneLights> sceneLights;
-
-	// 当たり判定のチェック
-	std::unique_ptr<CollisionChecker> collisionChecker;	
+	//	シーン内のシステムマネジャー
+	InSceneSystemManager* systemManager;
 
 	// 更新処理
 	virtual void Update() = 0;

@@ -1,23 +1,12 @@
 #include "pch.h"
 #include "ShaderSphere.h"
-#include "Geometory.h"
+
+
+#include "CP_MeshRenderer.h"
+#include "SphereCollider.h"
 
 ShaderSphere::ShaderSphere()
 {
-	pSphereMesh = std::make_unique<Sphere>();
-}
-
-void ShaderSphere::Update()
-{
-
-}
-
-void ShaderSphere::Draw()
-{
-	pSphereMesh->Draw(transform);
-}
-
-void ShaderSphere::SetMaterial(Material& _material)
-{
-	pSphereMesh->SetMaterial(_material);
+	AddComponent<SphereCollider>();
+	AddComponent<CP_MeshRenderer>();
 }

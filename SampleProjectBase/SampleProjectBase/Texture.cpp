@@ -6,12 +6,7 @@
 
 bool Texture::Load(const char* _pathName)
 {
-	if (isImported)
-	{
-		ImGuiDebugLog::Add("既にこのTextureはロードされています");
-		return true;
-	}
-	else if (_pathName == "")
+	 if (_pathName == "")
 	{
 		ImGuiDebugLog::Add("テクスチャのパス名が入力されていません");
 		return false;
@@ -75,14 +70,7 @@ void Texture::Release()
 	SAFE_RELEASE(pSRV);
 }
 
-const wchar_t* Texture::ReplaceExtension(const std::wstring& _pathName, const char* ext)
-{
-	std::filesystem::path p = _pathName.c_str();
-
-	return p.replace_extension(ext).c_str();
-}
-
-Texture::Texture() : width(0), height(0), pSRV(nullptr), isImported(false)
+Texture::Texture() : width(0), height(0), pSRV(nullptr)
 {
 }
 

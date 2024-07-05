@@ -25,24 +25,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="PS_PointLight.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="PS_Test.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="PS_TexNotEnable.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
     <FxCompile Include="PS_Basic.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -75,18 +57,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="VS_Test.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-    </FxCompile>
-    <FxCompile Include="VS_UVScroll.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-    </FxCompile>
     <FxCompile Include="VS_WorldPosition.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
@@ -99,7 +69,8 @@
     <ClCompile Include="BulletMove.cpp" />
     <ClCompile Include="CameraInput.cpp" />
     <ClCompile Include="CollisionChecker.cpp" />
-    <ClCompile Include="CollisionRegister.cpp" />
+    <ClCompile Include="ComponentFactory.cpp" />
+    <ClCompile Include="CPS_Unlit.cpp" />
     <ClCompile Include="CP_ModelRenderer.cpp" />
     <ClCompile Include="CP_SpriteRenderer.cpp" />
     <ClCompile Include="DirectionLight.cpp" />
@@ -145,9 +116,7 @@
     <ClCompile Include="SF_GameObject.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Object_2D.cpp" />
-    <ClCompile Include="ShaderSphere.cpp" />
     <ClCompile Include="SinCurve.cpp" />
-    <ClCompile Include="SObjectRegister.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="SpotLight.cpp" />
@@ -159,7 +128,6 @@
     <ClCompile Include="Tank_InGameSub.cpp" />
     <ClCompile Include="Tank_ResultSub.cpp" />
     <ClCompile Include="Tank_TitleSub.cpp" />
-    <ClCompile Include="Tokutei_Sphere.cpp" />
     <ClCompile Include="VariableFrameRate.cpp" />
     <ClCompile Include="Object_3D.cpp" />
     <ClCompile Include="ImGuiMethod.cpp" />
@@ -172,7 +140,7 @@
     <ClCompile Include="imgui\include\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainApplication.cpp" />
-    <ClCompile Include="MaterialClass.cpp" />
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MessageError.cpp" />
     <ClCompile Include="Model.cpp" />
@@ -205,7 +173,9 @@
     <ClInclude Include="BulletMove.h" />
     <ClInclude Include="CameraInput.h" />
     <ClInclude Include="CollisionChecker.h" />
-    <ClInclude Include="CollisionRegister.h" />
+    <ClInclude Include="ComponentDefine.h" />
+    <ClInclude Include="ComponentFactory.h" />
+    <ClInclude Include="CPS_Unlit.h" />
     <ClInclude Include="CP_ModelRenderer.h" />
     <ClInclude Include="CP_SpriteRenderer.h" />
     <ClInclude Include="DirectionLight.h" />
@@ -255,9 +225,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Object_2D.h" />
     <ClInclude Include="JISToUTF8.h" />
-    <ClInclude Include="ShaderSphere.h" />
     <ClInclude Include="SinCurve.h" />
-    <ClInclude Include="SObjectRegister.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="SpotLight.h" />
@@ -269,7 +237,6 @@
     <ClInclude Include="Tank_InGameSub.h" />
     <ClInclude Include="Tank_ResultSub.h" />
     <ClInclude Include="Tank_TitleSub.h" />
-    <ClInclude Include="Tokutei_Sphere.h" />
     <ClInclude Include="VariableFrameRate.h" />
     <ClInclude Include="Object_3D.h" />
     <ClInclude Include="IGetRenderPara.h" />
@@ -286,7 +253,7 @@
     <ClInclude Include="imgui_gryph.h" />
     <ClInclude Include="ISetUpProjection.h" />
     <ClInclude Include="MainApplication.h" />
-    <ClInclude Include="MaterialClass.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MessageError.h" />
     <ClInclude Include="Model.h" />

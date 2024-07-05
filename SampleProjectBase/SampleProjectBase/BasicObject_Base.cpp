@@ -12,10 +12,12 @@ BasicObject_Base::BasicObject_Base() : pMaterial{ nullptr }
 {
 	// 基本オブジェクト用のマテリアルを作成する
 	ResourceCollection* reCol = ResourceCollection::GetInstance();
+
 	// 既にあるか確認
 	const std::string MATERIAL_NAME = "M_BaseObject";
 
-	if (!reCol->GetImpotred(MATERIAL_NAME))	// 無かったら
+	// 無かったら
+	if (!reCol->GetImpotred(MATERIAL_NAME))	
 	{
 		// マテリアル作成
 		std::unique_ptr<Material> makeMaterial = std::make_unique<Material>();
@@ -26,7 +28,9 @@ BasicObject_Base::BasicObject_Base() : pMaterial{ nullptr }
 		makeMaterial->SetVertexShader(v);
 		makeMaterial ->SetPixelShader(p);
 
-		pBaseMaterial = makeMaterial.get();	// このオブジェクトにマテリアルセット
+		// このオブジェクトにマテリアルセット
+		pBaseMaterial = makeMaterial.get();	
+
 		// 管理クラスにセット
 		reCol->SetResource(MATERIAL_NAME, std::move(makeMaterial));
 	}
@@ -60,7 +64,7 @@ void BasicObject_Base::BasicDraw(Transform& _transform, DirectX::SimpleMath::Col
 	pBaseMaterial->GetVertexShader().UpdateBuffer(0, &wMat);
 	pBaseMaterial->GetVertexShader().UpdateBuffer(1, &_color);
 
-	Mesh::Draw(*renderer);	
+	Mesh::Draw();	
 }
 
 void BasicObject_Base::SetMaterial(Material& _material)

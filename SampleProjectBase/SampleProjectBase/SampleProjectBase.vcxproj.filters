@@ -37,9 +37,6 @@
     <Filter Include="ソース ファイル\System\MessageError">
       <UniqueIdentifier>{2f5e4082-2ae6-402d-90d1-8dcf684cbeab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics\Shader\ShaderRetaion">
-      <UniqueIdentifier>{0a8827b4-8d96-4039-a144-585385fd6fc7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="リソース ファイル\PixelShader">
       <UniqueIdentifier>{c18d5dcc-a17c-49ea-8084-6fd4491bf52a}</UniqueIdentifier>
     </Filter>
@@ -139,9 +136,6 @@
     <Filter Include="ソース ファイル\Object\Object_3D">
       <UniqueIdentifier>{a607ffd0-a3e3-47ae-94d0-d85404b0472c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Object_2D">
-      <UniqueIdentifier>{4c2b8f6c-2586-4267-9747-074a4ca953b7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Object\Onject_UI">
       <UniqueIdentifier>{2a78615c-49c6-40be-9f3a-a0488595b157}</UniqueIdentifier>
     </Filter>
@@ -207,9 +201,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Component\Collider\Base">
       <UniqueIdentifier>{0157a627-13bf-479e-b143-2b1c12827e0c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\Collider\CollisionRegister">
-      <UniqueIdentifier>{3ab90406-cf9c-4eae-9535-14d7e715d14b}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Component\InGame\Camera\CameraMove">
       <UniqueIdentifier>{6b4aa409-ce39-44d4-b402-3a73fef4490a}</UniqueIdentifier>
@@ -280,9 +271,6 @@
     <Filter Include="ソース ファイル\Object\TankFireObj\Tank">
       <UniqueIdentifier>{30742376-b87f-4e1a-8e2c-fb6837c989bb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\SObjectRegister">
-      <UniqueIdentifier>{115688cf-7547-4987-bbcb-4952b9027d62}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Object\GameObject">
       <UniqueIdentifier>{54651696-70bc-4ca7-ba6d-128c5dc1b8e4}</UniqueIdentifier>
     </Filter>
@@ -352,12 +340,6 @@
     <Filter Include="ソース ファイル\System\Useful\MathUseful">
       <UniqueIdentifier>{4c0f1f54-09cf-4963-af1b-02fdd0832fe5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Tokutei">
-      <UniqueIdentifier>{1bb2e871-5d1d-496d-919b-7103383fa296}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Tokutei\Sphere">
-      <UniqueIdentifier>{08e93cbc-352c-4118-9e33-3d5c65bb834c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Scene\InSceneSystem">
       <UniqueIdentifier>{b54ce796-f7aa-42ab-a133-8a4a2882bec4}</UniqueIdentifier>
     </Filter>
@@ -379,6 +361,15 @@
     <Filter Include="ソース ファイル\Graphics\Sprite\Texture">
       <UniqueIdentifier>{026d8e4c-f51d-4e82-9a2d-1ac9ee929f14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Component\ComponentFactory">
+      <UniqueIdentifier>{c00e3501-2e10-4883-95a4-80544b487499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\ShaderCollection">
+      <UniqueIdentifier>{0a8827b4-8d96-4039-a144-585385fd6fc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Object_2D">
+      <UniqueIdentifier>{4c2b8f6c-2586-4267-9747-074a4ca953b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Basic.hlsl">
@@ -390,17 +381,8 @@
     <FxCompile Include="PS_VertexColor.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
-    <FxCompile Include="VS_UVScroll.hlsl">
-      <Filter>リソース ファイル\VertrxShader</Filter>
-    </FxCompile>
     <FxCompile Include="VS_BaseObject.hlsl">
       <Filter>リソース ファイル\VertrxShader</Filter>
-    </FxCompile>
-    <FxCompile Include="PS_TexNotEnable.hlsl">
-      <Filter>リソース ファイル\PixelShader</Filter>
-    </FxCompile>
-    <FxCompile Include="PS_PointLight.hlsl">
-      <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
     <FxCompile Include="PS_Lit.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
@@ -413,12 +395,6 @@
     </FxCompile>
     <FxCompile Include="VS_Gouraud.hlsl">
       <Filter>リソース ファイル\VertrxShader</Filter>
-    </FxCompile>
-    <FxCompile Include="VS_Test.hlsl">
-      <Filter>リソース ファイル\VertrxShader</Filter>
-    </FxCompile>
-    <FxCompile Include="PS_Test.hlsl">
-      <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -459,7 +435,7 @@
       <Filter>ソース ファイル\System\Application\DirectX3D11\Render\View</Filter>
     </ClCompile>
     <ClCompile Include="ShaderCollection.cpp">
-      <Filter>ソース ファイル\Graphics\Shader\ShaderRetaion</Filter>
+      <Filter>ソース ファイル\Graphics\Shader\ShaderCollection</Filter>
     </ClCompile>
     <ClCompile Include="Triangle.cpp">
       <Filter>ソース ファイル\Graphics\Triangle</Filter>
@@ -503,7 +479,7 @@
     <ClCompile Include="Texture.cpp">
       <Filter>ソース ファイル\Graphics\Sprite\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="MaterialClass.cpp">
+    <ClCompile Include="Material.cpp">
       <Filter>ソース ファイル\Graphics\Material</Filter>
     </ClCompile>
     <ClCompile Include="Sampler.cpp">
@@ -635,9 +611,6 @@
     <ClCompile Include="CP_Collider.cpp">
       <Filter>ソース ファイル\Component\Collider\Base</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionRegister.cpp">
-      <Filter>ソース ファイル\Component\Collider\CollisionRegister</Filter>
-    </ClCompile>
     <ClCompile Include="MathUseful.cpp">
       <Filter>ソース ファイル\System\Useful\MathUseful</Filter>
     </ClCompile>
@@ -652,9 +625,6 @@
     </ClCompile>
     <ClCompile Include="GameMode.cpp">
       <Filter>ソース ファイル\System\GameMode</Filter>
-    </ClCompile>
-    <ClCompile Include="SObjectRegister.cpp">
-      <Filter>ソース ファイル\Object\SObjectRegister</Filter>
     </ClCompile>
     <ClCompile Include="SaveJson.cpp">
       <Filter>ソース ファイル\System\Json\Save</Filter>
@@ -698,12 +668,6 @@
     <ClCompile Include="DirectionLight.cpp">
       <Filter>ソース ファイル\Object\Light\Direction</Filter>
     </ClCompile>
-    <ClCompile Include="Tokutei_Sphere.cpp">
-      <Filter>ソース ファイル\Object\Tokutei\Sphere</Filter>
-    </ClCompile>
-    <ClCompile Include="ShaderSphere.cpp">
-      <Filter>ソース ファイル\Object\Tokutei\Sphere</Filter>
-    </ClCompile>
     <ClCompile Include="InSceneSystemManager.cpp">
       <Filter>ソース ファイル\Scene\InSceneSystem</Filter>
     </ClCompile>
@@ -724,6 +688,12 @@
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>ソース ファイル\Graphics\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentFactory.cpp">
+      <Filter>ソース ファイル\Component\ComponentFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="CPS_Unlit.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -782,7 +752,7 @@
       <Filter>ソース ファイル\System\Application\DirectX3D11\Render\View</Filter>
     </ClInclude>
     <ClInclude Include="ShaderCollection.h">
-      <Filter>ソース ファイル\Graphics\Shader\ShaderRetaion</Filter>
+      <Filter>ソース ファイル\Graphics\Shader\ShaderCollection</Filter>
     </ClInclude>
     <ClInclude Include="Singleton_Base.h">
       <Filter>ソース ファイル\System\Singleton_Base</Filter>
@@ -829,7 +799,7 @@
     <ClInclude Include="Texture.h">
       <Filter>ソース ファイル\Graphics\Sprite\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="MaterialClass.h">
+    <ClInclude Include="Material.h">
       <Filter>ソース ファイル\Graphics\Material</Filter>
     </ClInclude>
     <ClInclude Include="Sampler.h">
@@ -967,9 +937,6 @@
     <ClInclude Include="CP_Collider.h">
       <Filter>ソース ファイル\Component\Collider\Base</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionRegister.h">
-      <Filter>ソース ファイル\Component\Collider\CollisionRegister</Filter>
-    </ClInclude>
     <ClInclude Include="MathUseful.h">
       <Filter>ソース ファイル\System\Useful\MathUseful</Filter>
     </ClInclude>
@@ -984,9 +951,6 @@
     </ClInclude>
     <ClInclude Include="GameMode.h">
       <Filter>ソース ファイル\System\GameMode</Filter>
-    </ClInclude>
-    <ClInclude Include="SObjectRegister.h">
-      <Filter>ソース ファイル\Object\SObjectRegister</Filter>
     </ClInclude>
     <ClInclude Include="SaveJsonValue.h">
       <Filter>ソース ファイル\System\Json\SaveJsonValue</Filter>
@@ -1033,12 +997,6 @@
     <ClInclude Include="DirectionLight.h">
       <Filter>ソース ファイル\Object\Light\Direction</Filter>
     </ClInclude>
-    <ClInclude Include="Tokutei_Sphere.h">
-      <Filter>ソース ファイル\Object\Tokutei\Sphere</Filter>
-    </ClInclude>
-    <ClInclude Include="ShaderSphere.h">
-      <Filter>ソース ファイル\Object\Tokutei\Sphere</Filter>
-    </ClInclude>
     <ClInclude Include="InSceneSystemManager.h">
       <Filter>ソース ファイル\Scene\InSceneSystem</Filter>
     </ClInclude>
@@ -1059,6 +1017,15 @@
     </ClInclude>
     <ClInclude Include="Sprite.h">
       <Filter>ソース ファイル\Graphics\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentFactory.h">
+      <Filter>ソース ファイル\Component\ComponentFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="CPS_Unlit.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentDefine.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -66,10 +66,6 @@ DebugCube::~DebugCube()
 
 void DebugCube::Draw(Transform& _transform, DirectX::SimpleMath::Color& _color)
 {
-	// トポロジーを設定
-	ID3D11DeviceContext* pContext = Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
-
-	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 
 	BasicObject_Base::BasicDraw(_transform, _color);
 }

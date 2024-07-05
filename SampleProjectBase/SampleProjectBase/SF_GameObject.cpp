@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "SF_GameObject.h"
 #include "GameObject.h"
-#include "SObjectRegister.h"
+
+// システム
+#include "InSceneSystemManager.h"
 
 GameObject& SceneFunction::CreateObject(const GameObject& _obj, DirectX::SimpleMath::Vector3 _worldPos)
 {
@@ -13,8 +15,9 @@ GameObject& SceneFunction::CreateObject(const GameObject& _obj, DirectX::SimpleM
 	// 初期座標設定
 	create->transform.position = _worldPos;
 
+	SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->GetSceneObjects();
 	// シーンオブジェクト配列に追加
-	SObjectRegister::GetInstance()->AddSceneObject(std::move(create));
+	sceneObjects.SetObject(retPtr->GetName(), std::move(create));
 
 	return *retPtr;
 }

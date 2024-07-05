@@ -4,15 +4,30 @@
 #include "Sphere.h"
 
 class Geometory
-{
-	static Transform transform;	// トランスフォーム
-	static DirectX::SimpleMath::Color color;	// 色
-	static std::unique_ptr<Cube> pCube;	// キューブ
-	static std::unique_ptr<DebugCube> pDebugCube;	// キューブ
-	static std::unique_ptr<Sphere> pSphere;	// 球
+{	
+	// トランスフォーム
+	static Transform transform;
+
+	// Material
+	static Material* pMaterial;
+
+	// 色
+	static DirectX::SimpleMath::Color color;	
+
+	// キューブ
+	static Cube* pCube;	
+	
+	// 球
+	static Sphere* pSphere;	
+
+	// デバッグのキューブ 
+	static std::unique_ptr<DebugCube> pDebugCube;
+
 
 	Geometory() {};
 	~Geometory() {};
+
+	static void DrawSetup();
 public:
 	static void Init();	// 初期化
 	static void Release();

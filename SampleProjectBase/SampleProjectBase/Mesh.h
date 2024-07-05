@@ -45,8 +45,10 @@ public:
 
 	// メッシュの読込
 	bool Setup(D3D11_Renderer& _renderer, aiMesh* pMeshData, float _scaleBase);
+
 	// 描画処理
-	void Draw(D3D11_Renderer& _renderer);
+	void Draw(D3D11_PRIMITIVE_TOPOLOGY _topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST)const;
+
 	// マテリアルのインデックスを取得
 	const u_int GetMaterialIdx() { return materialIndex; }
 	// 外部から頂点とインデックスを代入

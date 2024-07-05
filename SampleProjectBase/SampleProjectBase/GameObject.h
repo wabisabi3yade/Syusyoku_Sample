@@ -1,7 +1,7 @@
 #pragma once
 #include "Tag.h"
 #include "Component.h"
-#include "MaterialClass.h"
+#include "Material.h"
 
 // ƒV[ƒ“ŠÖ”
 #include "SF_Include.h"
@@ -87,7 +87,7 @@ public:
 	void SetName(const std::string& _name) { name = _name; }
 	void SetActive(bool _isActive);
 
-	const std::string& GetName() { return name; }
+	const std::string& GetName() { return name; }const
 	bool GetIsActive() { return isActive; }
 	const Tag& GetTag() { return tag; }
 	const Layer& GetLayer() { return layer; }

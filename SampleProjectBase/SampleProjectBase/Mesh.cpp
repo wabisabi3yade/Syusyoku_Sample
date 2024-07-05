@@ -140,9 +140,14 @@ bool Mesh::Setup(D3D11_Renderer& _renderer, aiMesh* pMeshData, float _scaleBase)
 	return true;
 }
 
-void Mesh::Draw(D3D11_Renderer& _renderer)
+void Mesh::Draw(D3D11_PRIMITIVE_TOPOLOGY _topology)const
 {
-	auto pDeviceContext = _renderer.GetDeviceContext();
+	// トポロジを設定
+	Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext()->
+		IASetPrimitiveTopology(_topology);
+
+	D3D11_Renderer& pRenderer = *Direct3D11::GetInstance()->GetRenderer();
+	auto pDeviceContext = pRenderer.GetDeviceContext();
 	u_int strides[1] = { sizeof(Vertex) };	// 頂点サイズ
 	u_int offset[1] = { 0 };
 

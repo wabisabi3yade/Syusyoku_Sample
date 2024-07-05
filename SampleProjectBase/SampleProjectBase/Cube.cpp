@@ -15,16 +15,6 @@ Cube::~Cube()
 {
 }
 
-void Cube::Draw(Transform& _transform, DirectX::SimpleMath::Color& _color)
-{
-	// トポロジーを設定
-	ID3D11DeviceContext* pContext = Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
-
-	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	BasicObject_Base::BasicDraw(_transform, _color);
-}
-
 void Cube::Make()
 {
 	vertexNum = VERTEX_NUM;

@@ -10,23 +10,19 @@ void ShaderCollection::Load()
 	std::vector<std::string> vFileNames
 	{
 		"VS_Basic.cso",
-		"VS_UVScroll.cso",
 		"VS_BaseObject.cso",
 		"VS_WorldPosition.cso",
 		"VS_Gouraud.cso",
-		"VS_Test.cso"
 	};
 	// セットする名前
 	std::vector<std::string> vShaderNames
 	{
 		"VS_Basic",
-		"VS_UVScroll",
 		"VS_BaseObject",
 		"VS_WorldPosition",
-		"VS_Gouraud",
-		"VS_Test"
+		"VS_Gouraud"
 	};
-	defaultVS = "VS_Basic";
+	defaultVS = "VS_Gouraud";
 
 	for (int vsCount = 0; vsCount < static_cast<int>(vShaderNames.size()); vsCount++)
 	{
@@ -43,20 +39,16 @@ void ShaderCollection::Load()
 	{
 		"PS_Basic.cso",
 		"PS_VertexColor.cso",
-		"PS_TexNotEnable.cso",
 		"PS_Unlit.cso",
-		"PS_Test.cso"
 	};
 	// セットする名前
 	std::vector<std::string> pShaderNames
 	{
 		"PS_Basic",
 		"PS_VertexColor",
-		"PS_TexNotEnable",
 		"PS_Unlit",
-		"PS_Test"
 	};
-	defaultPS = "PS_Basic";
+	defaultPS = "PS_Unlit";
 
 	for (int psCount = 0; psCount < static_cast<int>(pShaderNames.size()); psCount++)
 	{

@@ -3,22 +3,24 @@
 // コンポーネント
 #include "Component.h"
 #include "CP_Collider.h"
-// 登録
-#include "CollisionRegister.h"
-#include "SObjectRegister.h"
+
+// システム
+#include "InSceneSystemManager.h"
 
 using json = nlohmann::json;
 
 void GameObject::ActiveProcess()
 {
-	CollisionRegister* colRegister = CollisionRegister::GetInstance();
+	CollisionChecker& collisionChecker = InSceneSystemManager::GetInstance()->
+		GetCollisonChecker();
+
 	for (auto& c : pComponents)
 	{
 		// 当たり判定チェッククラスに追加
 		CP_Collider* col = dynamic_cast<CP_Collider*>(c.get());
 		if (col != nullptr)
 		{
-			colRegister->AddCollider(*col);	// 追加
+			collisionChecker.AddCollider(*col);	// 追加
 		}
 
 		if (!c->GetIsStartYet())
@@ -31,14 +33,16 @@ void GameObject::ActiveProcess()
 
 void GameObject::NotActiveProcess()
 {
-	CollisionRegister* colRegister = CollisionRegister::GetInstance();
+	CollisionChecker& collisionChecker = InSceneSystemManager::GetInstance()->
+		GetCollisonChecker();
+
 	for (auto& c : pComponents)
 	{
 		// 当たり判定チェッククラスから削除
 		CP_Collider* col = dynamic_cast<CP_Collider*>(c.get());
 		if (col != nullptr)
 		{
-			colRegister->PopCollider(*col);	// 削除
+			collisionChecker.PopCollider(*col);	// 削除
 		}
 
 		// Start関数がまだなら
@@ -127,7 +131,9 @@ void GameObject::DrawBase()
 void GameObject::Destroy()
 {
 	// シーンオブジェクトから自身を削除する
-	SObjectRegister::GetInstance()->PopObject(*this);
+	SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->
+		GetSceneObjects();
+	sceneObjects.DeleteObj(*this);
 }
 
 void GameObject::ImGuiSet()

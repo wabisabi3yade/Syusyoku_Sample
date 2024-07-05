@@ -1,6 +1,6 @@
 #include "Model.h"
 #include "Mesh.h"
-#include "MaterialClass.h"
+#include "Material.h"
 
 // assimpライブラリ読込
 #ifdef _DEBUG
@@ -275,7 +275,7 @@ void Model::Draw(const Transform& _transform) const
 			material.GetPixelShader().SetTexture(0, pTextures[meshIdx]);
 
 		// メッシュ描画
-		meshes[meshIdx]->Draw(renderer);
+		meshes[meshIdx]->Draw();
 	}
 }
 

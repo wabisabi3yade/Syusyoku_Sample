@@ -132,5 +132,5 @@ void Object_UI::LateUpdate()
 void Object_UI::Draw()
 {
 	SetupDraw();
-	poligon->Draw(*Direct3D11::GetInstance()->GetRenderer());
+	poligon->Draw();
 }

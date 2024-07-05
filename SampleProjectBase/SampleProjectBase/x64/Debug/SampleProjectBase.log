@@ -1,17 +1,3 @@
-﻿  モジュール依存関係のソースをスキャンしています...
-  DirectionLight.cpp
-  BoxCollider.cpp
-  SceneManager.cpp
-  SphereCollider.cpp
-  Geometory.cpp
-  PlayerMove.cpp
-  ShaderSphere.cpp
-  コンパイルしています...
-  DirectionLight.cpp
-  SceneManager.cpp
-  ShaderSphere.cpp
-  SphereCollider.cpp
-  PlayerMove.cpp
-  Geometory.cpp
-  BoxCollider.cpp
+﻿  compilation object save succeeded; see C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\SampleProjectBase\Assets\Shader\VS_Gouraud.cso
+  モジュール依存関係のソースをスキャンしています...
   SampleProjectBase.vcxproj -> C:\Users\takum\Documents\GitHub\Syusyoku_GYSample\SampleProjectBase\x64\Debug\SampleProjectBase.exe

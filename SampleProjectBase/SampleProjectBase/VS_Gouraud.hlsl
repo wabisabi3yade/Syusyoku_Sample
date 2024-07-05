@@ -6,20 +6,21 @@ struct Material
     float4 specular; // 鏡面反射
     float4 emissive; // 自発光
     float shininess; // 光沢
+    int isTextureEnable; // テクスチャフラグ
 };
 
 // ライトの基礎パラメータ
 struct LightBase
 {
-    float3 position;
     float4 color;
+    float3 position;
 };
 
 // ディレクションライト
 struct DirectionLight
 {
     LightBase base;
-    float4 direction;
+    float3 direction;
 };
 
 // Slot0 座標変換
@@ -77,23 +78,16 @@ VS_OUTPUT main(VS_INPUT vin)
 
 	// 頂点シェーダーで陰の計算
     float3 N = vin.normal;
-    float3 L = directionL.direction.xyz;
 	// 計算前に手を加える
     N = mul(N, (float3x3) world);
     output.normal = N;
     
-    L = -L;
-	// 正規化
-    N = normalize(N);
-    L = normalize(L);
-	// 陰計算
-    float diffuse = saturate(dot(N, L));
-	// 色決定
-    output.color = float4(diffuse + directionL.base.color.rgb, 1.0f) + material.ambient;
-
+	// マテリアル色
+    output.color = material.diffuse;
+    // ディレクションライトに色乗算
+    output.color.rgb *= directionL.base.color.rgb;
+   
     output.uv = vin.uv;
     
-    
-
     return output;
 }

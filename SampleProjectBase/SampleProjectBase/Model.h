@@ -3,7 +3,7 @@
 #include "Model.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
-#include "MaterialClass.h"
+#include "Material.h"
 
 class Mesh;
 
