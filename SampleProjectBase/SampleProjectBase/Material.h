@@ -6,22 +6,41 @@
 
 struct MaterialParameter
 {
-	DirectX::SimpleMath::Color diffuse;	// 色
-	DirectX::SimpleMath::Color ambient;	// 環境光
-	DirectX::SimpleMath::Color specular;	// 鏡面反射
-	DirectX::SimpleMath::Color emissive;	// 自発光
-	float shininess;	// 光沢
-	int isTextureEnable;	// 0がfalse それ以外がtrue
+	// 色
+	DirectX::SimpleMath::Color diffuse;	
+
+	// 環境光
+	DirectX::SimpleMath::Color ambient;
+
+	// 鏡面反射
+	DirectX::SimpleMath::Color specular;	
+
+	// 自発光
+	DirectX::SimpleMath::Color emissive;	
+
+	// 光沢
+	float shininess;
+
+	// テクスチャ使用フラグ
+	int isTextureEnable;	
 };
 
 // モデルの表面データ
 class Material
 {
-	MaterialParameter parameter;	// マテリアルのパラメータ
+	// マテリアルのパラメータ
+	MaterialParameter parameter;	
+
+	// 色テクスチャ
+	Texture* pDiffuseTexture;	
+	// 法線テクスチャ
+	Texture* pNormalTexture;
 
 	// 使用する各シェーダー
-	VertexShader* pVertexShader;	// 頂点	
-	PixelShader* pPixelShader;	// ピクセル
+	// 頂点	
+	VertexShader* pVertexShader;
+	// ピクセル
+	PixelShader* pPixelShader;	
 public:
 	Material();
 	~Material();
@@ -30,7 +49,7 @@ public:
 	void SetVertexShader(VertexShader* _vs) { pVertexShader = _vs; }
 	void SetPixelShader(PixelShader* _ps) { pPixelShader = _ps; }
 	
-	// マテリアル・各パラメータを設定
+	// マテリアル・各パラメータをセット
 	void SetMaterialParameter(const MaterialParameter& _mat) { parameter = _mat; }
 	void SetDiffuse(const DirectX::SimpleMath::Color& _diffuse) { parameter.diffuse = _diffuse; }
 	void SetAmbeint(const DirectX::SimpleMath::Color& _ambient) { parameter.ambient = _ambient; }
@@ -38,9 +57,17 @@ public:
 	void SetEmissive(const DirectX::SimpleMath::Color& _emmisive) { parameter.emissive = _emmisive; }
 	void SetTextureEnable(bool _isTextureEnable) { parameter.isTextureEnable = _isTextureEnable; }
 
+	// 各テクスチャをセット
+	void SetDiffuseTexture(Texture& _diffuseTex);
+	void SetNormalTexture(Texture& _normalTex) { pNormalTexture = &_normalTex; }
+
 	VertexShader& GetVertexShader()const { return *pVertexShader; }
 	PixelShader& GetPixelShader()const { return *pPixelShader; }
+
 	MaterialParameter& GetMaterialParameter() { return parameter; }
+
+	Texture& GetDiffuseTexture()const { return *pDiffuseTexture; }
+	Texture& GetNormalTexture()const { return *pNormalTexture; }
 
 	void ImGuiSetting();
 };

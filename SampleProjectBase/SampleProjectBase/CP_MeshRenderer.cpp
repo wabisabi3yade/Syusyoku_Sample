@@ -5,7 +5,7 @@
 #include "InSceneSystemManager.h"
 #include "ShaderCollection.h"
 
-void CP_MeshRenderer::DrawSetup()
+const RenderParam::WVP CP_MeshRenderer::WVPSetup()
 {
 	// レンダラー取得
 	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
@@ -16,13 +16,21 @@ void CP_MeshRenderer::DrawSetup()
 	RenderParam::WVP wvp = renderer.GetParameter().GetWVP();
 	wvp.world = worldMatrix;
 
+	return wvp;
+}
+
+void CP_MeshRenderer::MeshDraw(u_int _meshIdx, RenderParam::WVP& _wvp)
+{
+	RenderMesh& renderMesh = renderMeshes[_meshIdx];
+
 	// シェーダーの設定
-	VertexShader& pVs = pMaterials->GetVertexShader();
-	PixelShader& pPs = pMaterials->GetPixelShader();
+	Material& useMaterial = *pMaterials[renderMesh.materialID];
+	VertexShader& pVs = useMaterial.GetVertexShader();
+	PixelShader& pPs = useMaterial.GetPixelShader();
 
-	pVs.UpdateBuffer(0, &wvp);
+	pVs.UpdateBuffer(0, &_wvp);
 
-	MaterialParameter& materialParam = pMaterials->GetMaterialParameter();
+	MaterialParameter& materialParam = useMaterial.GetMaterialParameter();
 	pVs.UpdateBuffer(1, &materialParam);
 
 	// ディレクションライトの情報を取得
@@ -34,52 +42,76 @@ void CP_MeshRenderer::DrawSetup()
 
 	pVs.Bind();
 	pPs.Bind();
+
+	// 描画
+	renderMesh.pMesh->Draw();
 }
 
 void CP_MeshRenderer::Init()
 {
 	name = "Mesh_Renderer";
 
-	// デフォルトでキューブを入れておく
-	pMeshes = ResourceCollection::GetInstance()->GetResource<Mesh>("SM_Cube");
+	// デフォルトのメッシュを入れておく
+	ResourceCollection& resourceCollect = *ResourceCollection::GetInstance();
+	RenderMesh renderMesh;
+	renderMesh.pMesh = resourceCollect.GetResource<Mesh>("SM_Cube");
+	renderMesh.materialID = 0;
+	renderMeshes.push_back(renderMesh);
 
-	ResourceCollection* reCol = ResourceCollection::GetInstance();
-	// 既にあるか確認
+	// マテリアルがあるか確認
 	const std::string MATERIAL_NAME = "M_Unlit";
-
-	if (!reCol->GetImpotred(MATERIAL_NAME))	// 無かったら
+	if (!resourceCollect.GetImpotred(MATERIAL_NAME))	// 無かったら
 	{
 		// マテリアル作成
 		std::unique_ptr<Material> makeMaterial = std::make_unique<Material>();
-		// シェーダーを設定
+
+		// シェーダーをセット
 		ShaderCollection* shCol = ShaderCollection::GetInstance();
-		VertexShader* v = shCol->GetVertexShader(shCol->defaultVS);
-		PixelShader* p = shCol->GetPixelShader(shCol->defaultPS);
-		makeMaterial->SetVertexShader(v);
-		makeMaterial->SetPixelShader(p);
+		VertexShader* defaultVS = shCol->GetVertexShader(shCol->defaultVS);
+		PixelShader* defaultPS = shCol->GetPixelShader(shCol->defaultPS);
+		makeMaterial->SetVertexShader(defaultVS);
+		makeMaterial->SetPixelShader(defaultPS);
 
 		// 管理クラスにセット
-		pMaterials = reCol->SetResource(MATERIAL_NAME, std::move(makeMaterial));
+		resourceCollect.SetResource(MATERIAL_NAME, std::move(makeMaterial));
 	}
-	else	// あるなら
-	{
-		// マテリアルを取得
-		pMaterials = reCol->GetResource<Material>(MATERIAL_NAME);
-	}
+
+	// マテリアル
+	Material& defaultMaterial = *resourceCollect.GetResource<Material>(MATERIAL_NAME);
+	pMaterials.push_back(&defaultMaterial);
 }
 
 void CP_MeshRenderer::Draw()
 {
-	for (auto pMesh : pMeshes)
-	{
-		DrawSetup();
+	// ワールド変換行列を求める
+	RenderParam::WVP wvp = WVPSetup();
 
-		pMesh->Draw();
-	}	
+	for (u_int meshIdx = 0; meshIdx < static_cast<u_int>(renderMeshes.size()); meshIdx++)
+	{
+		assert(renderMeshes[meshIdx].pMesh != nullptr && "メッシュ、マテリアルがない");
+
+		// メッシュ描画
+		MeshDraw(meshIdx, wvp);
+	}
+}
+
+void CP_MeshRenderer::SetModel(Model& _model)
+{
+
+}
+
+void CP_MeshRenderer::SetRenderMesh(const RenderMesh& _renderMesh)
+{
+	renderMeshes.clear();
+
+	RenderMesh newRenderMesh;
+	newRenderMesh.pMesh = _renderMesh.pMesh;
+	newRenderMesh.materialID = _renderMesh.materialID;
+
+	renderMeshes.push_back(newRenderMesh);
 }
 
 void CP_MeshRenderer::ImGuiSetting()
 {
-	for()
-	pMaterials->ImGuiSetting();
+
 }

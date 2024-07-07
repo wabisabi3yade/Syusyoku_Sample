@@ -28,7 +28,6 @@ void CP_SpriteRenderer::DrawSetup()
 
 	pVs.UpdateBuffer(0, &wvp);
 	MaterialParameter materialParam = pMaterial->GetMaterialParameter();
-	Texture& tex = pSprite->GetTexture();
 	pVs.UpdateBuffer(1, &materialParam);
 
 	// ディレクションライトの情報を取得
@@ -36,8 +35,10 @@ void CP_SpriteRenderer::DrawSetup()
 	DirectionLParameter dirLightParam = sceneLights.GetDirectionParameter();
 	pVs.UpdateBuffer(2, &dirLightParam);
 
+	Texture& diffuseTex = pMaterial->GetDiffuseTexture();
 	pPs.UpdateBuffer(0, &materialParam);
-	pPs.SetTexture(0, &tex);
+	pPs.SetTexture(0, &diffuseTex);
+
 	pVs.Bind();
 	pPs.Bind();
 }
@@ -96,7 +97,10 @@ void CP_SpriteRenderer::Draw()
 
 void CP_SpriteRenderer::SetTexture(Texture& _texture)
 {
-	pMaterial->SetTextureEnable(true);
+	// マテリアルに渡す
+	pMaterial->SetDiffuseTexture(_texture);
+
+	// スプライトに渡す
 	pSprite->SetTexture(_texture);
 }
 

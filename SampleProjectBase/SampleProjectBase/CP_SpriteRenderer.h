@@ -16,7 +16,7 @@ class CP_SpriteRenderer : public CP_Renderer
 	void Copy(const CP_SpriteRenderer& _other);
 
 	// •`‰æ€”õ
-	void DrawSetup()override;
+	void DrawSetup();
 
 	// ƒ}ƒeƒŠƒAƒ‹‚Ì€”õ
 	void MaterialSetup();

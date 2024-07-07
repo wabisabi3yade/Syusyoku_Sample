@@ -9,7 +9,8 @@
 
 
 using namespace DirectX::SimpleMath;
-Material::Material()
+Material::Material() : pDiffuseTexture(nullptr), pNormalTexture(nullptr), pVertexShader(nullptr),
+					pPixelShader(nullptr)
 {
 	// デフォルトのシェーダーを初期設定しておく
 	ShaderCollection* shCol =  ShaderCollection::GetInstance();
@@ -27,6 +28,12 @@ Material::Material()
 
 Material::~Material()
 {
+}
+
+void Material::SetDiffuseTexture(Texture& _diffuseTex)
+{
+	pDiffuseTexture = &_diffuseTex;
+	parameter.isTextureEnable = true;
 }
 
 void Material::ImGuiSetting()
