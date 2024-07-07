@@ -1,7 +1,7 @@
 #pragma once
 #include "CP_Collider.h"
 
-class BoxCollider :
+class CP_BoxCollider :
 	public CP_Collider
 {
 	// 座標オフセット
@@ -17,7 +17,7 @@ class BoxCollider :
 	static void CheckCollisionOBB(CP_Collider& _box1, CP_Collider& _box2);
 public:
 	using CP_Collider::CP_Collider;
-	BoxCollider& operator=(const BoxCollider& _other);
+	CP_BoxCollider& operator=(const CP_BoxCollider& _other);
 
 	void Init();
 	void Draw() override;

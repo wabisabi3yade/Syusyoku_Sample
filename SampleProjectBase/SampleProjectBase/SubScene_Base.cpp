@@ -5,8 +5,6 @@
 #include "Camera.h"
 
 // ƒVƒXƒeƒ€Œn
-#include "SObjectRegister.h"
-#include "CollisionRegister.h"
 #include "GameMode.h"
 #include "InSceneSystemManager.h"
 

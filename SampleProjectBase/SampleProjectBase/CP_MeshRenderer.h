@@ -6,10 +6,11 @@
 // メッシュ描画コンポーネント
 class CP_MeshRenderer : public CP_Renderer
 {
-	const Mesh* pMesh{nullptr};
+	std::vector<const Mesh*> pMeshes{ nullptr };
 
-	Material* pMaterial;
+	std::vector<const Material*> pMaterials{ nullptr };
 
+	// 描画準備
 	void DrawSetup() override;
 public:
 	using CP_Renderer::CP_Renderer;
@@ -17,8 +18,8 @@ public:
 
 	void Draw() override;
 
-	void SetMaterial(Material& _pMaterial) { pMaterial = &_pMaterial; }
-	void SetMesh(const Mesh& _pMesh) { pMesh = &_pMesh; }
+	void SetMaterial(std::vector<const Material*>& _pMaterial) { pMaterials = _pMaterial; }
+	void SetMesh(std::vector<const Mesh*>& _pMesh) { pMeshes = _pMesh; }
 
 	void ImGuiSetting() override;
 };

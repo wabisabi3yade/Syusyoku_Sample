@@ -22,12 +22,6 @@ void GameObject::ActiveProcess()
 		{
 			collisionChecker.AddCollider(*col);	// ’Ç‰Á
 		}
-
-		if (!c->GetIsStartYet())
-		{
-
-		}
-
 	}
 }
 
@@ -43,12 +37,6 @@ void GameObject::NotActiveProcess()
 		if (col != nullptr)
 		{
 			collisionChecker.PopCollider(*col);	// íœ
-		}
-
-		// StartŠÖ”‚ª‚Ü‚¾‚È‚ç
-		if (!c->GetIsStartYet())
-		{
-
 		}
 	}
 }
@@ -89,8 +77,6 @@ GameObject& GameObject::operator=(const GameObject& _other)
 void GameObject::UpdateBase()
 {
 	if (!isActive) return;
-
-	Update();
 
 	for (auto& itr : pComponents)
 	{

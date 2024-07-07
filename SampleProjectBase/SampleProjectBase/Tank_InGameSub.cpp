@@ -63,7 +63,7 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	{
 		std::unique_ptr<GameObject> createSphere = std::make_unique<GameObject>();
 		CP_MeshRenderer* m = createSphere->AddComponent<CP_MeshRenderer>();
-		createSphere->AddComponent<SphereCollider>();
+		createSphere->AddComponent<CP_SphereCollider>();
 		m->SetMaterial(*setMaterial);
 		m->SetMesh(*sm_sphere);
 		sceneObjects.SetObject("unlitObj", std::move(createSphere));

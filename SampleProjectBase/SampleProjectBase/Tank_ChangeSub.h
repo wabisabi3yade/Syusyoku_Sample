@@ -7,9 +7,7 @@ class Tank_ChangeSub
 public:
     enum Scene
     {
-        Title,
         InGame,
-        Result,
         Num
     };
 

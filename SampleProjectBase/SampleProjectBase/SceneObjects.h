@@ -8,27 +8,28 @@ class SceneObjects
 {
 	// シーンで使用するオブジェクト配列（オブジェクトの名前がキー値）
 	std::unordered_map<std::string, std::unique_ptr<GameObject>> objList;
+
 	// UI用のリスト(描画を上のリストより後にするため)
 	std::unordered_map<std::string, std::unique_ptr<GameObject>> uiList;
 
-	// Start関数の処理を行うゲームオブジェクト配列
-	std::list<Component*> startComponents;
 public:
 	SceneObjects();
 	~SceneObjects();
 
-	void Update();	// 更新処理
-	void LateUpdate();	// Updateのあとの更新処理
-	void Draw();	// 描画処理(カメラとの距離で描画順を決める)
+	// 更新処理
+	void Update();
+
+	// Updateのあとの更新処理
+	void LateUpdate();	
+
+	// 描画処理
+	void Draw();	
 
 	// 配列にオブジェクトを入れる
 	GameObject* SetObject(const std::string& _objectName, std::unique_ptr<GameObject> _objPtr);
 
 	//　配列からゲームオブジェクトを削除する
 	void DeleteObj(GameObject& _deleteObj);
-
-	// Start処理をする
-	void Start();
 
 	// オブジェクトの名前からオブジェクトを返す
 	template<class T> T* GetSceneObject(const std::string& _objectName);

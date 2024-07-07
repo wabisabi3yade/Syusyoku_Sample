@@ -17,12 +17,12 @@ void CP_MeshRenderer::DrawSetup()
 	wvp.world = worldMatrix;
 
 	// シェーダーの設定
-	VertexShader& pVs = pMaterial->GetVertexShader();
-	PixelShader& pPs = pMaterial->GetPixelShader();
+	VertexShader& pVs = pMaterials->GetVertexShader();
+	PixelShader& pPs = pMaterials->GetPixelShader();
 
 	pVs.UpdateBuffer(0, &wvp);
 
-	MaterialParameter& materialParam = pMaterial->GetMaterialParameter();
+	MaterialParameter& materialParam = pMaterials->GetMaterialParameter();
 	pVs.UpdateBuffer(1, &materialParam);
 
 	// ディレクションライトの情報を取得
@@ -41,7 +41,7 @@ void CP_MeshRenderer::Init()
 	name = "Mesh_Renderer";
 
 	// デフォルトでキューブを入れておく
-	pMesh = ResourceCollection::GetInstance()->GetResource<Mesh>("SM_Cube");
+	pMeshes = ResourceCollection::GetInstance()->GetResource<Mesh>("SM_Cube");
 
 	ResourceCollection* reCol = ResourceCollection::GetInstance();
 	// 既にあるか確認
@@ -59,23 +59,27 @@ void CP_MeshRenderer::Init()
 		makeMaterial->SetPixelShader(p);
 
 		// 管理クラスにセット
-		pMaterial = reCol->SetResource(MATERIAL_NAME, std::move(makeMaterial));
+		pMaterials = reCol->SetResource(MATERIAL_NAME, std::move(makeMaterial));
 	}
 	else	// あるなら
 	{
 		// マテリアルを取得
-		pMaterial = reCol->GetResource<Material>(MATERIAL_NAME);
+		pMaterials = reCol->GetResource<Material>(MATERIAL_NAME);
 	}
 }
 
 void CP_MeshRenderer::Draw()
 {
-	DrawSetup();
+	for (auto pMesh : pMeshes)
+	{
+		DrawSetup();
 
-	pMesh->Draw();
+		pMesh->Draw();
+	}	
 }
 
 void CP_MeshRenderer::ImGuiSetting()
 {
-	pMaterial->ImGuiSetting();
+	for()
+	pMaterials->ImGuiSetting();
 }

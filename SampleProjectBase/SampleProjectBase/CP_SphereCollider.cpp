@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "SphereCollider.h"
+#include "CP_SphereCollider.h"
 #include "Geometory.h"
 #include "GameObject.h"
 
@@ -7,7 +7,7 @@ constexpr float VERTEX_RADIUS(0.5f);	// 頂点作成時の半径
 
 using namespace DirectX::SimpleMath;
 
-SphereCollider& SphereCollider::operator=(const SphereCollider& _other)
+CP_SphereCollider& CP_SphereCollider::operator=(const CP_SphereCollider& _other)
 {
 	if (this == &_other) return *this;
 	CP_Collider::operator=(_other);
@@ -18,7 +18,7 @@ SphereCollider& SphereCollider::operator=(const SphereCollider& _other)
 	return *this;
 }
 
-void SphereCollider::Init()
+void CP_SphereCollider::Init()
 {
 	name = "SphereCollider";
 
@@ -28,7 +28,7 @@ void SphereCollider::Init()
 	type = Type::Sphere;	// 球と設定する
 }
 
-void SphereCollider::Draw()
+void CP_SphereCollider::Draw()
 {
 	// あたり判定描画
 	const Transform& t = gameObject->transform;
@@ -46,23 +46,23 @@ void SphereCollider::Draw()
 	Geometory::DrawSphere(true);
 }
 
-void SphereCollider::ImGuiSetting()
+void CP_SphereCollider::ImGuiSetting()
 {
 	ImGui::DragFloat("radius", &radius);
 	ImGuiMethod::DragFloat3(posOffset, "posOffset");
 }
 
-DirectX::SimpleMath::Vector3 SphereCollider::GetCenterPos() const
+DirectX::SimpleMath::Vector3 CP_SphereCollider::GetCenterPos() const
 {
 	const Transform& t = gameObject->transform;
 	return t.position + posOffset * t.scale;
 }
 
-bool SphereCollider::CollisionSphere(CP_Collider& _sphere1, CP_Collider& _sphere2)
+bool CP_SphereCollider::CollisionSphere(CP_Collider& _sphere1, CP_Collider& _sphere2)
 {
 	// これ以前に種類をチェックし安全なので実行速度重視でstatoc_cast変換する
-	SphereCollider& s1 = static_cast<SphereCollider&>(_sphere1);
-	SphereCollider& s2 = static_cast<SphereCollider&>(_sphere2);
+	CP_SphereCollider& s1 = static_cast<CP_SphereCollider&>(_sphere1);
+	CP_SphereCollider& s2 = static_cast<CP_SphereCollider&>(_sphere2);
 
 	// 球の中心座標同士の長さを求める
 	Vector3 vec = s1.GetCenterPos() - s2.GetCenterPos();
@@ -79,7 +79,7 @@ bool SphereCollider::CollisionSphere(CP_Collider& _sphere1, CP_Collider& _sphere
 	return false;
 }
 
-bool SphereCollider::CollisionBox(CP_Collider& _sphere, CP_Collider& _box)
+bool CP_SphereCollider::CollisionBox(CP_Collider& _sphere, CP_Collider& _box)
 {
 	return false;
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include "CP_Collider.h"
 
-class SphereCollider : public CP_Collider
+class CP_SphereCollider : public CP_Collider
 {
 	// ”¼Œa
 	float radius;	
@@ -9,8 +9,8 @@ class SphereCollider : public CP_Collider
 	DirectX::SimpleMath::Vector3 posOffset;	
 public:
 	using CP_Collider::CP_Collider;
-	SphereCollider& operator=(const SphereCollider& _other);
-	~SphereCollider(){};
+	CP_SphereCollider& operator=(const CP_SphereCollider& _other);
+	~CP_SphereCollider(){};
 
 	void Init() override;
 	

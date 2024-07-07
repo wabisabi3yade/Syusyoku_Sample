@@ -8,6 +8,7 @@
 class CP_ModelRenderer : public CP_Renderer
 {
 	const Model* pModel{nullptr};
+
 public:
 	using CP_Renderer::CP_Renderer;
 

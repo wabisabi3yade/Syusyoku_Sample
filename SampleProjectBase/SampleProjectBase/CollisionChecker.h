@@ -1,7 +1,7 @@
 #pragma once
 #include "CP_Collider.h"
-#include "BoxCollider.h"
-#include "SphereCollider.h"
+#include "CP_BoxCollider.h"
+#include "CP_SphereCollider.h"
 
 // シーン内のあたり判定同士の判定を取るクラス
 class CollisionChecker

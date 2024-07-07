@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Bullet.h"
 #include "BulletMove.h"
-#include "SphereCollider.h"
+#include "CP_SphereCollider.h"
 
 Bullet::Bullet()
 {
@@ -9,7 +9,7 @@ Bullet::Bullet()
 
 	// コンポーネントアタッチ
 	AddComponent<BulletMove>();	// 弾移動
-	AddComponent<SphereCollider>();	// 球当たり判定
+	AddComponent<CP_SphereCollider>();	// 球当たり判定
 }
 
 Bullet::~Bullet()

@@ -1,20 +1,20 @@
 #include "pch.h"
-#include "BoxCollider.h"
+#include "CP_BoxCollider.h"
 #include "Geometory.h"
 #include "GameObject.h"
 
 using namespace DirectX::SimpleMath;
 
-void BoxCollider::CheckCollisionAABB(CP_Collider& _box1, CP_Collider& _box2)
+void CP_BoxCollider::CheckCollisionAABB(CP_Collider& _box1, CP_Collider& _box2)
 {
 
 }
 
-void BoxCollider::CheckCollisionOBB(CP_Collider& _box1, CP_Collider& _box2)
+void CP_BoxCollider::CheckCollisionOBB(CP_Collider& _box1, CP_Collider& _box2)
 {
 }
 
-BoxCollider& BoxCollider::operator=(const BoxCollider& _other)
+CP_BoxCollider& CP_BoxCollider::operator=(const CP_BoxCollider& _other)
 {
 	if (this == &_other) return *this;
 	CP_Collider::operator=(_other);
@@ -28,7 +28,7 @@ BoxCollider& BoxCollider::operator=(const BoxCollider& _other)
 	return *this;
 }
 
-void BoxCollider::Init()
+void CP_BoxCollider::Init()
 {
 	name = "BoxCollider";
 
@@ -38,7 +38,7 @@ void BoxCollider::Init()
 	type = CP_Collider::Type::Box;	// ボックスに設定する
 }
 
-void BoxCollider::Draw()
+void CP_BoxCollider::Draw()
 {
 	// ボックス表示
 	const Transform& t = gameObject->transform;
@@ -65,7 +65,7 @@ void BoxCollider::Draw()
 	Geometory::DrawCube(true);
 }
 
-void BoxCollider::ImGuiSetting()
+void CP_BoxCollider::ImGuiSetting()
 {
 	ImGui::Checkbox("AABB", &isAABB);
 	ImGuiMethod::DragFloat3(posOffset, "posOffset");
@@ -73,23 +73,23 @@ void BoxCollider::ImGuiSetting()
 	ImGuiMethod::DragFloat3(size, "size");
 }
 
-DirectX::SimpleMath::Vector3 BoxCollider::GetWorldCenterPos() const
+DirectX::SimpleMath::Vector3 CP_BoxCollider::GetWorldCenterPos() const
 {
 	const Transform& t = gameObject->transform;
 	return t.position + posOffset * t.scale;
 }
 
-DirectX::SimpleMath::Vector3 BoxCollider::GetWorldRotation() const
+DirectX::SimpleMath::Vector3 CP_BoxCollider::GetWorldRotation() const
 {
 	return gameObject->transform.rotation + angleOffset;
 }
 
-DirectX::SimpleMath::Vector3 BoxCollider::GetWorldScale() const
+DirectX::SimpleMath::Vector3 CP_BoxCollider::GetWorldScale() const
 {
 	return gameObject->transform.scale * size;
 }
 
-bool BoxCollider::CollisionBox(CP_Collider& _box1, CP_Collider& _box2)
+bool CP_BoxCollider::CollisionBox(CP_Collider& _box1, CP_Collider& _box2)
 {
 	// AABBとOBBで処理を変える
 

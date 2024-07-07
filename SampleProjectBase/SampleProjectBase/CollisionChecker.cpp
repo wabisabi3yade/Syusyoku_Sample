@@ -11,11 +11,11 @@ bool CollisionChecker::SphereCollision(CP_Collider& _sphere, CP_Collider& _other
 	switch (_other.GetType())	// もう一つの当たり判定の種類を取得する
 	{
 	case CP_Collider::Type::Box:
-		SphereCollider::CollisionBox(_sphere, _other);	// 球とボックスの判定
+		CP_SphereCollider::CollisionBox(_sphere, _other);	// 球とボックスの判定
 		break;
 
 	case CP_Collider::Type::Sphere:
-		isHit = SphereCollider::CollisionSphere(_sphere, _other);	// 球同士の判定
+		isHit = CP_SphereCollider::CollisionSphere(_sphere, _other);	// 球同士の判定
 		break;
 	}
 
@@ -28,11 +28,11 @@ bool CollisionChecker::BoxCollision(CP_Collider& _box, CP_Collider& _other)
 	switch (_other.GetType())	// もう一つの当たり判定の種類を取得する
 	{
 	case CP_Collider::Type::Box:
-		isHit = BoxCollider::CollisionBox(_box, _other);	// ボックス同士の判定
+		isHit = CP_BoxCollider::CollisionBox(_box, _other);	// ボックス同士の判定
 		break;
 
 	case CP_Collider::Type::Sphere:
-		isHit = SphereCollider::CollisionBox(_other, _box);	// 球とボックスの判定
+		isHit = CP_SphereCollider::CollisionBox(_other, _box);	// 球とボックスの判定
 		break;
 	}
 
@@ -82,6 +82,8 @@ void CollisionChecker::CollisionCheck()
 		for (u_int j = i + 1; j < checkColliders.size(); j++)
 		{
 			CP_Collider& col2 = *checkColliders[j];
+
+			assert(pFunc == nullptr);
 
 			pFunc(col1, col2);	// 当たり判定を取る
 		}

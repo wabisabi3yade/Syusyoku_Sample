@@ -157,12 +157,6 @@
     <Filter Include="ソース ファイル\Scene\TankFire\SubScene\InGame">
       <UniqueIdentifier>{20231241-ed76-454f-af9b-1ce0d9e965a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Scene\TankFire\SubScene\Title">
-      <UniqueIdentifier>{55b9c26e-8608-40e1-b899-9bf3507cef0c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\TankFire\SubScene\Result">
-      <UniqueIdentifier>{11db7113-88cb-4f3e-83ac-e139c9c32672}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\System\JISToUTF8">
       <UniqueIdentifier>{044f28fe-fa18-4027-b4b8-860014ccfae3}</UniqueIdentifier>
     </Filter>
@@ -192,12 +186,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Component\Collider\Sphere">
       <UniqueIdentifier>{43f104c6-d005-4633-a3d8-0ae524b6de22}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\Collider\CollisionChecker">
-      <UniqueIdentifier>{ee02f005-9104-4dc7-80e5-56016c5bdf4e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\SceneObjects">
-      <UniqueIdentifier>{4b5fda20-e416-43b8-99cd-92e298c295f2}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Component\Collider\Base">
       <UniqueIdentifier>{0157a627-13bf-479e-b143-2b1c12827e0c}</UniqueIdentifier>
@@ -310,12 +298,6 @@
     <Filter Include="ソース ファイル\Component\InGame\Player\PlayerInput">
       <UniqueIdentifier>{3ead3f7f-0159-4fa0-bb22-adcd1bbdcafa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\SceneFunction">
-      <UniqueIdentifier>{873b7fd4-8efe-4072-b1f3-edf202c51acb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\SceneFunction\GameObject">
-      <UniqueIdentifier>{561d5b96-25b2-4652-b462-abca12791b72}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Object\Light">
       <UniqueIdentifier>{130fca24-6f0a-4d75-8ff5-0a6a29288a52}</UniqueIdentifier>
     </Filter>
@@ -324,9 +306,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Object\Light\SpotLight">
       <UniqueIdentifier>{0313a73a-9476-4d1b-b163-2eff4e4edc6c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\SceneLights">
-      <UniqueIdentifier>{fbb366e6-a9a5-4cec-9729-311d7c914502}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Object\Light\Direction">
       <UniqueIdentifier>{ab500ce5-d941-4082-abd1-6388cfbf8545}</UniqueIdentifier>
@@ -361,14 +340,26 @@
     <Filter Include="ソース ファイル\Graphics\Sprite\Texture">
       <UniqueIdentifier>{026d8e4c-f51d-4e82-9a2d-1ac9ee929f14}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\ComponentFactory">
-      <UniqueIdentifier>{c00e3501-2e10-4883-95a4-80544b487499}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\Shader\ShaderCollection">
       <UniqueIdentifier>{0a8827b4-8d96-4039-a144-585385fd6fc7}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Object\Object_2D">
       <UniqueIdentifier>{4c2b8f6c-2586-4267-9747-074a4ca953b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\SceneFunction">
+      <UniqueIdentifier>{873b7fd4-8efe-4072-b1f3-edf202c51acb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\SceneFunction\GameObject">
+      <UniqueIdentifier>{561d5b96-25b2-4652-b462-abca12791b72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\InSceneSystem\CollisionChecker">
+      <UniqueIdentifier>{ee02f005-9104-4dc7-80e5-56016c5bdf4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\InSceneSystem\SceneObjects">
+      <UniqueIdentifier>{4b5fda20-e416-43b8-99cd-92e298c295f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\InSceneSystem\SceneLights">
+      <UniqueIdentifier>{fbb366e6-a9a5-4cec-9729-311d7c914502}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -546,7 +537,7 @@
       <Filter>ソース ファイル\Graphics\BoneMesh</Filter>
     </ClCompile>
     <ClCompile Include="SceneObjects.cpp">
-      <Filter>ソース ファイル\Object\SceneObjects</Filter>
+      <Filter>ソース ファイル\Scene\InSceneSystem\SceneObjects</Filter>
     </ClCompile>
     <ClCompile Include="Cube.cpp">
       <Filter>ソース ファイル\Graphics\Geometory\Cube</Filter>
@@ -565,12 +556,6 @@
     </ClCompile>
     <ClCompile Include="Tank_InGameSub.cpp">
       <Filter>ソース ファイル\Scene\TankFire\SubScene\InGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Tank_ResultSub.cpp">
-      <Filter>ソース ファイル\Scene\TankFire\SubScene\Result</Filter>
-    </ClCompile>
-    <ClCompile Include="Tank_TitleSub.cpp">
-      <Filter>ソース ファイル\Scene\TankFire\SubScene\Title</Filter>
     </ClCompile>
     <ClCompile Include="Tank_BroadScene.cpp">
       <Filter>ソース ファイル\Scene\TankFire\BroadScene</Filter>
@@ -593,10 +578,10 @@
     <ClCompile Include="Geometory.cpp">
       <Filter>ソース ファイル\Graphics\Geometory</Filter>
     </ClCompile>
-    <ClCompile Include="SphereCollider.cpp">
+    <ClCompile Include="CP_SphereCollider.cpp">
       <Filter>ソース ファイル\Component\Collider\Sphere</Filter>
     </ClCompile>
-    <ClCompile Include="BoxCollider.cpp">
+    <ClCompile Include="CP_BoxCollider.cpp">
       <Filter>ソース ファイル\Component\Collider\Box</Filter>
     </ClCompile>
     <ClCompile Include="DebugCube.cpp">
@@ -606,7 +591,7 @@
       <Filter>ソース ファイル\Graphics\Geometory\Sphere</Filter>
     </ClCompile>
     <ClCompile Include="CollisionChecker.cpp">
-      <Filter>ソース ファイル\Component\Collider\CollisionChecker</Filter>
+      <Filter>ソース ファイル\Scene\InSceneSystem\CollisionChecker</Filter>
     </ClCompile>
     <ClCompile Include="CP_Collider.cpp">
       <Filter>ソース ファイル\Component\Collider\Base</Filter>
@@ -651,7 +636,7 @@
       <Filter>ソース ファイル\Component\InGame\Player\PlayerInput</Filter>
     </ClCompile>
     <ClCompile Include="SF_GameObject.cpp">
-      <Filter>ソース ファイル\SceneFunction\GameObject</Filter>
+      <Filter>ソース ファイル\Scene\SceneFunction\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Light.cpp">
       <Filter>ソース ファイル\Object\Light</Filter>
@@ -663,7 +648,7 @@
       <Filter>ソース ファイル\Object\Light\SpotLight</Filter>
     </ClCompile>
     <ClCompile Include="SceneLights.cpp">
-      <Filter>ソース ファイル\Object\SceneLights</Filter>
+      <Filter>ソース ファイル\Scene\InSceneSystem\SceneLights</Filter>
     </ClCompile>
     <ClCompile Include="DirectionLight.cpp">
       <Filter>ソース ファイル\Object\Light\Direction</Filter>
@@ -688,9 +673,6 @@
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>ソース ファイル\Graphics\Sprite</Filter>
-    </ClCompile>
-    <ClCompile Include="ComponentFactory.cpp">
-      <Filter>ソース ファイル\Component\ComponentFactory</Filter>
     </ClCompile>
     <ClCompile Include="CPS_Unlit.cpp">
       <Filter>ソース ファイル</Filter>
@@ -872,7 +854,7 @@
       <Filter>ソース ファイル\Graphics\BoneMesh</Filter>
     </ClInclude>
     <ClInclude Include="SceneObjects.h">
-      <Filter>ソース ファイル\Object\SceneObjects</Filter>
+      <Filter>ソース ファイル\Scene\InSceneSystem\SceneObjects</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h">
       <Filter>ソース ファイル\Graphics\Geometory\Cube</Filter>
@@ -891,12 +873,6 @@
     </ClInclude>
     <ClInclude Include="Tank_InGameSub.h">
       <Filter>ソース ファイル\Scene\TankFire\SubScene\InGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Tank_ResultSub.h">
-      <Filter>ソース ファイル\Scene\TankFire\SubScene\Result</Filter>
-    </ClInclude>
-    <ClInclude Include="Tank_TitleSub.h">
-      <Filter>ソース ファイル\Scene\TankFire\SubScene\Title</Filter>
     </ClInclude>
     <ClInclude Include="Tank_BroadScene.h">
       <Filter>ソース ファイル\Scene\TankFire\BroadScene</Filter>
@@ -919,10 +895,10 @@
     <ClInclude Include="Geometory.h">
       <Filter>ソース ファイル\Graphics\Geometory</Filter>
     </ClInclude>
-    <ClInclude Include="SphereCollider.h">
+    <ClInclude Include="CP_SphereCollider.h">
       <Filter>ソース ファイル\Component\Collider\Sphere</Filter>
     </ClInclude>
-    <ClInclude Include="BoxCollider.h">
+    <ClInclude Include="CP_BoxCollider.h">
       <Filter>ソース ファイル\Component\Collider\Box</Filter>
     </ClInclude>
     <ClInclude Include="DebugCube.h">
@@ -932,7 +908,7 @@
       <Filter>ソース ファイル\Graphics\Geometory\Sphere</Filter>
     </ClInclude>
     <ClInclude Include="CollisionChecker.h">
-      <Filter>ソース ファイル\Component\Collider\CollisionChecker</Filter>
+      <Filter>ソース ファイル\Scene\InSceneSystem\CollisionChecker</Filter>
     </ClInclude>
     <ClInclude Include="CP_Collider.h">
       <Filter>ソース ファイル\Component\Collider\Base</Filter>
@@ -977,10 +953,10 @@
       <Filter>ソース ファイル\Component\InGame\Player\PlayerInput</Filter>
     </ClInclude>
     <ClInclude Include="SF_GameObject.h">
-      <Filter>ソース ファイル\SceneFunction\GameObject</Filter>
+      <Filter>ソース ファイル\Scene\SceneFunction\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="SF_Include.h">
-      <Filter>ソース ファイル\SceneFunction</Filter>
+      <Filter>ソース ファイル\Scene\SceneFunction</Filter>
     </ClInclude>
     <ClInclude Include="Light.h">
       <Filter>ソース ファイル\Object\Light</Filter>
@@ -992,7 +968,7 @@
       <Filter>ソース ファイル\Object\Light\SpotLight</Filter>
     </ClInclude>
     <ClInclude Include="SceneLights.h">
-      <Filter>ソース ファイル\Object\SceneLights</Filter>
+      <Filter>ソース ファイル\Scene\InSceneSystem\SceneLights</Filter>
     </ClInclude>
     <ClInclude Include="DirectionLight.h">
       <Filter>ソース ファイル\Object\Light\Direction</Filter>
@@ -1017,9 +993,6 @@
     </ClInclude>
     <ClInclude Include="Sprite.h">
       <Filter>ソース ファイル\Graphics\Sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentFactory.h">
-      <Filter>ソース ファイル\Component\ComponentFactory</Filter>
     </ClInclude>
     <ClInclude Include="CPS_Unlit.h">
       <Filter>ヘッダー ファイル</Filter>

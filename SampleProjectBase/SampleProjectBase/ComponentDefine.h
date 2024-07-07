@@ -3,8 +3,8 @@
 // コンポーネントのヘッダー宣言ヘッダー
 
 // 当たり判定
-#include "BoxCollider.h"
-#include "SphereCollider.h"
+#include "CP_BoxCollider.h"
+#include "CP_SphereCollider.h"
 
 // 描画
 #include "CP_MeshRenderer.h"

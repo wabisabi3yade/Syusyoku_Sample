@@ -9,12 +9,19 @@ class GameObject;
 class Component
 {
 	friend class GameObject;
-	bool isStartYet;	// まだStart関数が処理されていないフラグ
+
 protected:
-	bool isEnable;	// 使用しているかフラグ
-	std::string name;	// 名前
-	GameObject* gameObject;	// コンポーネント所持しているオブジェクト
-	Transform& GetTransform();	// トランスフォーム
+	// 活動フラグ
+	bool isEnable;
+
+	// 名前
+	std::string name;	
+
+	// このコンポーネントの所持オブジェクト
+	GameObject* gameObject;	
+
+	// 所持オブジェクトのトランスフォーム
+	Transform& GetTransform();	
 public:
 	Component(GameObject* _gameObject); 
 	virtual ~Component(){};
@@ -22,16 +29,21 @@ public:
 	// コピー代入演算子
 	Component& operator=(const Component & _other);
 
-	virtual void Init() {};	// AddComponentされたときに行う
-	virtual void Start() {};	// 最初の更新フレームで行う処理
-	virtual void Update() {};	// 毎フレーム更新処理
-	virtual void LateUpdate() {};	// Updateの後に行う更新処理
-	virtual void Draw() {};	// 描画処理
+	// AddComponentされたときに行う
+	virtual void Init() {};	
 
-	virtual void ImGuiSetting() {};	// ImGuiでパラメータを変える処理
-	void StartComplete() { isStartYet = true; }	// Start処理が終わった処理
+	// 毎フレーム更新処理
+	virtual void Update() {};	
+
+	// Updateの後に行う更新処理
+	virtual void LateUpdate() {};
+
+	// 描画処理
+	virtual void Draw() {};
+
+	// ImGuiでパラメータを変える処理
+	virtual void ImGuiSetting() {};	
 
 	GameObject& GetGameObject() { return *gameObject; }	// ゲームオブジェクト取得
-	bool GetIsStartYet() { return isStartYet; }
 };
 

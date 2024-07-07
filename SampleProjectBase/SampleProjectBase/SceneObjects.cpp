@@ -143,12 +143,3 @@ void SceneObjects::DeleteObj(GameObject& _deleteObj)
 	}
 }
 
-void SceneObjects::Start()
-{
-	// Startˆ—‚ğ‚·‚é
-	for(auto itr = startComponents.begin(); itr != startComponents.end();)
-	{
-		(*itr)->Start();
-		startComponents.erase(itr);
-	}
-}
