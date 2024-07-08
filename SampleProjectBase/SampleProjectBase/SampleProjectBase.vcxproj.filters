@@ -361,6 +361,15 @@
     <Filter Include="ソース ファイル\Scene\InSceneSystem\SceneLights">
       <UniqueIdentifier>{fbb366e6-a9a5-4cec-9729-311d7c914502}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\System\Asset">
+      <UniqueIdentifier>{d60656a8-224c-4460-8e9e-d3930e297711}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Asset\IAsset">
+      <UniqueIdentifier>{77764a2e-eaca-41dd-b328-79a9afcc0caf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Asset\NewFilter1">
+      <UniqueIdentifier>{1be6c5c1-2c35-466a-94c8-6be5b9ca243a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Basic.hlsl">
@@ -673,9 +682,6 @@
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>ソース ファイル\Graphics\Sprite</Filter>
-    </ClCompile>
-    <ClCompile Include="CPS_Unlit.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

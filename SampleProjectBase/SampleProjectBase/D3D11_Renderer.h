@@ -17,17 +17,17 @@ private:
 	// デバイス作成時に返される機能レベル
 	D3D_FEATURE_LEVEL featureLevelsSupported;
 	// デバイス＝DirectXの各種機能を作る
-	ID3D11Device* pD3DDevice = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11Device> pD3DDevice;
 	// コンテキスト＝描画関連を司る機能
-	ID3D11DeviceContext* pImmediateContext{ nullptr };
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> pImmediateContext;
 	// スワップチェイン＝ダブルバッファ機能
-	IDXGISwapChain* pSwapChain = nullptr;
+	Microsoft::WRL::ComPtr<IDXGISwapChain> pSwapChain;
 	// レンダーターゲット＝描画先を表す機能
-	ID3D11RenderTargetView* pRenderTargetView{ nullptr };
+	ID3D11RenderTargetView* pRenderTargetView;
 	// 深度バッファ用テクスチャ
-	ID3D11Texture2D* pDepthStencilTexture{ nullptr };
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> pDepthStencilTexture;
 	// 深度バッファ
-	ID3D11DepthStencilView* pDepthStencilView{ nullptr };
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> pDepthStencilView;
 
 	std::vector<D3D11_VIEWPORT> viewPorts;	// ビューポート
 
@@ -57,8 +57,8 @@ public:
 
 	// 描画の情報を取得
 	RenderParam& GetParameter() override;
-	ID3D11Device* GetDevice()const override { return pD3DDevice; }
-	ID3D11DeviceContext* GetDeviceContext() override { return pImmediateContext; }
+	ID3D11Device* GetDevice()const override { return pD3DDevice.Get(); }
+	ID3D11DeviceContext* GetDeviceContext() override { return pImmediateContext.Get(); }
 	// ビューポートを取得（どのビューポートを指定）
 	const D3D11_VIEWPORT& GetViewPort(u_int _slot) { return viewPorts[_slot]; }
 	u_int GetViewPortNum() { return static_cast<u_int>(viewPorts.size()); }

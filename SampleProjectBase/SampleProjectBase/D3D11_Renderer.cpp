@@ -164,7 +164,7 @@ bool D3D11_Renderer::InitBackBuffer()
 	dsDesc.Format = txDesc.Format;
 	dsDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	dsDesc.Texture2D.MipSlice = 0;
-	hr = pD3DDevice->CreateDepthStencilView(pDepthStencilTexture, &dsDesc, &pDepthStencilView);
+	hr = pD3DDevice->CreateDepthStencilView(pDepthStencilTexture.Get(), &dsDesc, &pDepthStencilView);
 	if (FAILED(hr))
 		return hr;
 
@@ -181,7 +181,7 @@ bool D3D11_Renderer::InitBackBuffer()
 
 	// ブレンドステート初期化
 	pBlendState = std::make_unique<BlendState>();
-	bool isResult = pBlendState->Init(*pD3DDevice);
+	bool isResult = pBlendState->Init(*pD3DDevice.Get());
 	if (!isResult)
 		return false;
 	// OMにブレンドステートオブジェクトを設定
@@ -192,7 +192,7 @@ bool D3D11_Renderer::InitBackBuffer()
 
 	// サンプラー初期化
 	pSampler = std::make_unique<Sampler>();
-	isResult = pSampler->Init(*pD3DDevice);
+	isResult = pSampler->Init(*pD3DDevice.Get());
 	if (!isResult)
 		return false;
 	// サンプラー
@@ -212,11 +212,6 @@ void D3D11_Renderer::Release()
 
 	// 取得したインターフェイスの開放
 	SAFE_RELEASE(pRenderTargetView);
-	SAFE_RELEASE(pSwapChain);
-	SAFE_RELEASE(pImmediateContext);
-	SAFE_RELEASE(pD3DDevice);
-	SAFE_RELEASE(pDepthStencilTexture);
-	SAFE_RELEASE(pDepthStencilView);
 }
 
 
@@ -271,14 +266,14 @@ void D3D11_Renderer::SetUpDraw()
 	if (!pImmediateContext || !pRenderTargetView) return;
 
 	// 描画先のキャンバスと使用する深度バッファを指定する
-	pImmediateContext->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView);
+	pImmediateContext->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView.Get());
 
 	float color[] = { 175.0f / 255.0f, 223.0f / 255.0f, 228.0f / 255.0f, 0.0f };
 	// 塗りつぶし
 	pImmediateContext->ClearRenderTargetView(pRenderTargetView, color);
 
 	// 深度バッファをリセットする
-	pImmediateContext->ClearDepthStencilView(pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	pImmediateContext->ClearDepthStencilView(pDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 	// 入力レイアウト
 	pImmediateContext->IASetInputLayout(&pRenderParam->GetInputLayout());

@@ -4,13 +4,18 @@
 class VariableFrameRate
 {
 private:
-	uint64_t microSecondsPerFrame;	// 1フレームごとのマイクロ秒
-	uint64_t deltaTime;	// Δt（ミリ秒）
-	uint64_t currentTime;	// 現在時間
-	uint64_t previousFrameTime;	// 前のフレームレートが終了したときの時間
+	// 1フレームごとの秒
+	double secondsPerFrame;	
 
-	LARGE_INTEGER frequency;
-	LARGE_INTEGER startTime, endTime;
+	// Δt(s)
+	double deltaTime;	
+
+	// 現在時間
+	ULONGLONG currentTime;
+
+	// 前のフレームレートが終了したときの時間
+	ULONGLONG previousFrameTime;	
+
 public:
 	/// <summary>
 	/// コンストラクタ
@@ -19,14 +24,13 @@ public:
 	VariableFrameRate(uint64_t setFrameRate);
 	~VariableFrameRate();
 
-	void Init();	// 初期化処理
-
-	void CaluculateDelta();	// Δtを計算する
+	// 初期化処理
+	void Init();	
 
 	// 対応したfpsにするために次のループまで待つ関数
 	void Wait();	 
 
 	// Δtを取得（秒で返す）
-	float GetDeltaTime()const { return deltaTime / 1000.0f; }
+	float GetDeltaTime()const { return static_cast<float>(deltaTime); }
 };
 

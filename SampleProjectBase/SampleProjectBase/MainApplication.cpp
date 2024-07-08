@@ -108,8 +108,9 @@ void MainApplication::GameLoop()
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	while (true)
 	{
-		// deltaTimeを計算
-		variableFps->CaluculateDelta();
+		static ULONGLONG start = 0;
+		static ULONGLONG end = 0;
+		start = GetTickCount64();
 
 		bool result = pWindow->MessageLoop();
 		if (result == false) break;
@@ -126,20 +127,23 @@ void MainApplication::GameLoop()
 		// 更新処理
 		pSceneManager->Exec();
 
-//#ifdef EDIT
-//		ImGui::Begin("System");
-//		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-//		ImGui::End();
-//#endif // EDIT
-
 		ImGuiMethod::Draw();
 
 		// スワップチェイン
 		Direct3D11::GetInstance()->GetRenderer()->Swap();
-
 		
+		ULONGLONG b = 0;
+		
+		end = GetTickCount64();
+		ULONGLONG delta1 = end - start;
+
 		// 待機
 		variableFps->Wait();
+
+		
+		end = GetTickCount64();
+
+		ULONGLONG delta = end - start;
 	}
 }
 

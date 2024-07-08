@@ -69,7 +69,6 @@
     <ClCompile Include="BulletMove.cpp" />
     <ClCompile Include="CameraInput.cpp" />
     <ClCompile Include="CollisionChecker.cpp" />
-    <ClCompile Include="CPS_Unlit.cpp" />
     <ClCompile Include="CP_ModelRenderer.cpp" />
     <ClCompile Include="CP_SpriteRenderer.cpp" />
     <ClCompile Include="DirectionLight.cpp" />

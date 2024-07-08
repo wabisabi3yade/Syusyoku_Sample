@@ -8,20 +8,10 @@
 #include "imgui_impl_dx11.h"
 #include "imgui.h"
 
-void VariableFrameRate::CaluculateDelta()
-{
-	currentTime = GetTickCount64();				// 現在時刻取得
-	deltaTime = currentTime - previousFrameTime;	// 前回実行時からに経過時間を取得
-	previousFrameTime = currentTime;
-}
-
 VariableFrameRate::VariableFrameRate(uint64_t setFrameRate) : deltaTime(0), currentTime(0),
 previousFrameTime(0)
 {
-	microSecondsPerFrame = (1000 * 1000) / setFrameRate;	// 1フレームのマイクロ秒数を求める
-
-	QueryPerformanceFrequency(&frequency);
-	QueryPerformanceCounter(&startTime);
+	secondsPerFrame = 1000.0f / setFrameRate;	// 1フレームのマイクロ秒数を求める
 }
 
 VariableFrameRate::~VariableFrameRate()
@@ -35,13 +25,18 @@ void VariableFrameRate::Init()
 
 void VariableFrameRate::Wait()
 {
+	// 前回実行時からに経過時間を取得
+	currentTime = GetTickCount64();				
+	deltaTime = static_cast<double>(currentTime - previousFrameTime) / 1000.0f;
+
 	// 次のフレームまでに待機する時間を求める
-	int64_t waitTime = microSecondsPerFrame - deltaTime;
+	double waitTime = secondsPerFrame - deltaTime;
 
 	if (waitTime > 0)
 	{
-		float tt = waitTime / 1000.0f;
-
-		std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(tt)));	// スレッドを待機させる
+		// 待機
+		Sleep(static_cast<DWORD>(waitTime));
 	}
+
+	previousFrameTime = GetTickCount64();
 }

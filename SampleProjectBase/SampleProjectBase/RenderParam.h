@@ -12,11 +12,11 @@ public:
 	};
 
 private:
-	ID3D11InputLayout* pInputLayout;	// インプットレイアウト
+	Microsoft::WRL::ComPtr<ID3D11InputLayout> pInputLayout;	// インプットレイアウト
 	WVP wvp;	// ワールド行列
 public:
 	RenderParam() : pInputLayout(nullptr) {};
-	~RenderParam();
+	~RenderParam() {};
 
 	// インプットレイアウトを取得
 	ID3D11InputLayout& GetInputLayout();

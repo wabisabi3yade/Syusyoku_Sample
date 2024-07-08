@@ -27,7 +27,8 @@
 #include <typeinfo>	// 型名を取得
 #include <vector>	// 動的配列
 #include <d3d11.h>	// DX11の機能
-#pragma comment(lib, "d3d11.lib")	// ライブラリ
+#include <wrl.h>	// ComPtr
+#pragma comment(lib, "d3d11.lib")
 
 // 外部ライブラリ
 #include <DirectXMath.h>	// 数学系の機能
