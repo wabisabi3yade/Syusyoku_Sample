@@ -40,29 +40,3 @@ Model* ModelLoader::Load(const ModelSettings& _modelData)
 
 	return retModel;
 }
-
-Texture* TextureLoader::Load(TextureSetting _texSetting)
-{
-	// リソース管理に既にロードされているか確認する
-	std::string& setName = _texSetting.setName;
-
-	// リソース管理に既にあるか確認する
-	ResourceCollection* pReCollecter = ResourceCollection::GetInstance();
-	if (pReCollecter->GetImpotred(setName))
-	{
-		// 既にロードしているテクスチャを返す
-		return pReCollecter->GetResource<Texture>(setName);	
-	}
-
-	// テクスチャをロードする
-	std::unique_ptr<Texture> pTex = std::make_unique<Texture>();
-	bool isSuccess = pTex->Load(_texSetting.pathName);
-	if (!isSuccess)
-		return nullptr;	// 失敗したら終了
-
-	Texture* retTex = pTex.get();
-	// リソース管理にセットする
-	pReCollecter->SetResource<Texture>(setName, std::move(pTex));
-
-	return retTex;
-}

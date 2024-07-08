@@ -99,7 +99,7 @@ void Shader::SetTexture(u_int _slot, Texture* _texture)
 
 	if (_slot >= pTextures.size()) return;	// スロット番号がテクスチャ配列上限より上なら
 
-	ID3D11ShaderResourceView* pSetSrv = _texture->GetSRV();
+	ID3D11ShaderResourceView* pSetSrv = &_texture->GetSRV();
 	if (pSetSrv == nullptr) return;
 
 	pTextures[_slot] = pSetSrv;	// 配列に追加

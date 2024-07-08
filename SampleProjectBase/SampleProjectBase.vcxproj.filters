@@ -115,9 +115,6 @@
     <Filter Include="ソース ファイル\System\ImGui\ImGui">
       <UniqueIdentifier>{65a46e3a-d104-4ba9-bbba-6c4a1a612f0f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics\ModelLoader">
-      <UniqueIdentifier>{281bfbc1-950c-4bbd-b5b2-d0bd373a2ee8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Object\Object_3D">
       <UniqueIdentifier>{a607ffd0-a3e3-47ae-94d0-d85404b0472c}</UniqueIdentifier>
     </Filter>
@@ -355,6 +352,18 @@
     <Filter Include="ソース ファイル\Graphics\Shader">
       <UniqueIdentifier>{5ab34369-180c-463a-a98c-0888e0f123e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Asset">
+      <UniqueIdentifier>{a26d63dc-8a9b-49c0-931a-460745a76043}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Loader">
+      <UniqueIdentifier>{6fb219dd-20f3-4daf-838c-d6ecf47f452f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Loader\Texture">
+      <UniqueIdentifier>{9c8ab555-d3af-431d-96e6-6c6ba0c93379}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Loader\Model">
+      <UniqueIdentifier>{281bfbc1-950c-4bbd-b5b2-d0bd373a2ee8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Basic.hlsl">
@@ -489,7 +498,7 @@
       <Filter>ソース ファイル\System\ImGui\ImGuiMethod</Filter>
     </ClCompile>
     <ClCompile Include="ModelLoader.cpp">
-      <Filter>ソース ファイル\Graphics\ModelLoader</Filter>
+      <Filter>ソース ファイル\Asset\Loader\Model</Filter>
     </ClCompile>
     <ClCompile Include="ImGuiDebugLog.cpp">
       <Filter>ソース ファイル\System\ImGui\ImGuiDebugLog</Filter>
@@ -674,6 +683,12 @@
     <ClCompile Include="CP_Collider.cpp">
       <Filter>ソース ファイル\Component\Collider\Base</Filter>
     </ClCompile>
+    <ClCompile Include="IAssetLoader.cpp">
+      <Filter>ソース ファイル\Asset\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureLoader.cpp">
+      <Filter>ソース ファイル\Asset\Loader\Texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -794,7 +809,7 @@
       <Filter>ソース ファイル\System\ImGui\ImGuiMethod</Filter>
     </ClInclude>
     <ClInclude Include="ModelLoader.h">
-      <Filter>ソース ファイル\Graphics\ModelLoader</Filter>
+      <Filter>ソース ファイル\Asset\Loader\Model</Filter>
     </ClInclude>
     <ClInclude Include="ImGuiDebugLog.h">
       <Filter>ソース ファイル\System\ImGui\ImGuiDebugLog</Filter>
@@ -984,6 +999,12 @@
     </ClInclude>
     <ClInclude Include="CP_Collider.h">
       <Filter>ソース ファイル\Component\Collider\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="IAssetLoader.h">
+      <Filter>ソース ファイル\Asset\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureLoader.h">
+      <Filter>ソース ファイル\Asset\Loader\Texture</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

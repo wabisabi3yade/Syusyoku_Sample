@@ -110,6 +110,7 @@
     <ClCompile Include="D3D11_Renderer.cpp" />
     <ClCompile Include="Direct3D11.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="IAssetLoader.cpp" />
     <ClCompile Include="ImGuiDebugLog.cpp" />
     <ClCompile Include="InputClass.cpp" />
     <ClCompile Include="InSceneSystemManager.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="Tank_InGameSub.cpp" />
     <ClCompile Include="Tank_ResultSub.cpp" />
     <ClCompile Include="Tank_TitleSub.cpp" />
+    <ClCompile Include="TextureLoader.cpp" />
     <ClCompile Include="VariableFrameRate.cpp" />
     <ClCompile Include="Object_3D.cpp" />
     <ClCompile Include="ImGuiMethod.cpp" />
@@ -213,6 +215,7 @@
     <ClInclude Include="D3D11_Renderer.h" />
     <ClInclude Include="Direct3D11.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="IAssetLoader.h" />
     <ClInclude Include="ImGuiDebugLog.h" />
     <ClInclude Include="InputClass.h" />
     <ClInclude Include="InSceneSystemManager.h" />
@@ -246,6 +249,7 @@
     <ClInclude Include="Tank_InGameSub.h" />
     <ClInclude Include="Tank_ResultSub.h" />
     <ClInclude Include="Tank_TitleSub.h" />
+    <ClInclude Include="TextureLoader.h" />
     <ClInclude Include="VariableFrameRate.h" />
     <ClInclude Include="Object_3D.h" />
     <ClInclude Include="IGetRenderPara.h" />
