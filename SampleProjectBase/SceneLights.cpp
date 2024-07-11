@@ -65,6 +65,11 @@ void SceneLights::Draw()
 	pDirection->Draw();
 }
 
+SceneLights::SceneLights()
+{
+	pDirection = std::make_unique<NullDirectionLight>();
+}
+
 void SceneLights::Update()
 {
 	UpdateParameter();

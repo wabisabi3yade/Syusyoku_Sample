@@ -12,10 +12,6 @@ SceneManager* SceneManager::pInstance = nullptr;	// インスタンスの初期化
 
 SceneManager::SceneManager()
 {
-	// シェーダー管理クラス初期化
-	ShaderCollection* shCollection = ShaderCollection::GetInstance();
-	shCollection->Init();
-
 	Geometory::Init();	// 基本オブジェクトの初期化
 
 	// 初期シーンの情報
@@ -52,8 +48,6 @@ void SceneManager::Release()
 	CLASS_DELETE(pMoveInfo);
 
 	Geometory::Release();
-	ResourceCollection::Delete();
-	ShaderCollection::Delete();
 	InSceneSystemManager::Delete();
 }
 

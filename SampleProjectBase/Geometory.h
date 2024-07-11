@@ -3,6 +3,8 @@
 #include "DebugCube.h"
 #include "Sphere.h"
 
+class Material;
+
 class Geometory
 {	
 	// トランスフォーム

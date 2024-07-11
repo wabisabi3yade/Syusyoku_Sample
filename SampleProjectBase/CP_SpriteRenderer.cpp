@@ -47,24 +47,24 @@ void CP_SpriteRenderer::MaterialSetup()
 {
 	// デフォルトでマテリアルを設定する
 	const std::string MATERIAL_NAME = "M_SpriteUnlit";
-	ResourceCollection* recol = ResourceCollection::GetInstance();
-	if (recol->GetImpotred(MATERIAL_NAME))	// デフォルトのマテリアルがある
-	{
-		pMaterial = recol->GetResource<Material>(MATERIAL_NAME);
-	}
-	else		// ない
-	{
-		// マテリアルを作成し、管理クラスにセット
-		std::unique_ptr<Material> createMaterial = std::make_unique<Material>();
+	//AssetCollection* recol = AssetCollection::GetInstance();
+	//if (recol->GetImpotred(MATERIAL_NAME))	// デフォルトのマテリアルがある
+	//{
+	//	pMaterial = recol->GetResource<Material>(MATERIAL_NAME);
+	//}
+	//else		// ない
+	//{
+	//	// マテリアルを作成し、管理クラスにセット
+	//	std::unique_ptr<Material> createMaterial = std::make_unique<Material>();
 
-		ShaderCollection* shCol = ShaderCollection::GetInstance();
-		VertexShader* pVs = shCol->GetVertexShader(shCol->defaultVS);
-		PixelShader* pPs = shCol->GetPixelShader(shCol->defaultPS);
-		createMaterial->SetVertexShader(pVs);
-		createMaterial->SetPixelShader(pPs);
+	//	ShaderCollection* shCol = ShaderCollection::GetInstance();
+	//	VertexShader* pVs = shCol->GetVertexShader(shCol->defaultVS);
+	//	PixelShader* pPs = shCol->GetPixelShader(shCol->defaultPS);
+	//	createMaterial->SetVertexShader(pVs);
+	//	createMaterial->SetPixelShader(pPs);
 
-		pMaterial = ResourceCollection::GetInstance()->SetResource<Material>(MATERIAL_NAME, std::move(createMaterial));
-	}
+	//	pMaterial = AssetCollection::GetInstance()->SetResource<Material>(MATERIAL_NAME, std::move(createMaterial));
+	//}
 }
 
 CP_SpriteRenderer& CP_SpriteRenderer::operator=(const CP_SpriteRenderer& _other)
@@ -92,7 +92,7 @@ void CP_SpriteRenderer::Draw()
 	// 描画準備
 	DrawSetup();
 
-	pSprite->Draw();
+	/*pSprite->Draw();*/
 }
 
 void CP_SpriteRenderer::SetTexture(Texture& _texture)

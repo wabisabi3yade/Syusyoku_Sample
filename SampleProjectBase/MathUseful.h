@@ -1,5 +1,7 @@
 #pragma once
 
+struct aiScene;
+
 // 数学的な便利関数（頑張って勉強中！）
 namespace Mathf
 {

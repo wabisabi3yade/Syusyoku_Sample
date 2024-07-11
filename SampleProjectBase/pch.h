@@ -42,7 +42,6 @@
 #include "Transform.h"	// 座標・回転・スケールのクラス
 #include "MainApplication.h"
 #include "Direct3D11.h"	// 自前のDirectX11クラス
-#include "ResourceCollection.h"	// リソースを管理するクラス
 
 
 // 構造体 /////////////////
@@ -59,5 +58,3 @@ struct Vertex
 	// 頂点の法線ベクトル
 	DirectX::SimpleMath::Vector3 normal = {};
 };
-
-

@@ -1,15 +1,13 @@
 #include "pch.h"
 #include "DebugCube.h"
 
+constexpr u_int VERTEX_NUM(8);
+constexpr u_int INDEX_NUM(24);
+
 using namespace DirectX::SimpleMath;
 
 void DebugCube::Make()
 {
-	constexpr int VERTEX_NUM(8);
-	constexpr int INDEX_NUM(24);
-
-	vertexNum = VERTEX_NUM;
-	pVertices = new Vertex[vertexNum];
 	const float d = 0.5f;
 
 	DirectX::XMFLOAT4 color(1.0f, 1.0f, 1.0f, 1.0f);
@@ -22,21 +20,20 @@ void DebugCube::Make()
 		DirectX::XMFLOAT3(0.0f, 0.0f,-1.0f),
 	};
 
-	pVertices[0] = { DirectX::XMFLOAT3(-d, d,-d), color, Vector2::One,normal[1] };
-	pVertices[1] = { DirectX::XMFLOAT3(d, d, -d), color, Vector2::One,normal[0] };
-	pVertices[2] = { DirectX::XMFLOAT3(-d, -d, -d), color, Vector2::One,normal[3] };
-	pVertices[3] = { DirectX::XMFLOAT3(d, -d, -d), color, Vector2::One,normal[3] };
+	// 頂点データを作成
+	verticies.resize(VERTEX_NUM);
+	verticies[0] = { DirectX::XMFLOAT3(-d, d,-d), color, Vector2::One,normal[1] };
+	verticies[1] = { DirectX::XMFLOAT3(d, d, -d), color, Vector2::One,normal[0] };
+	verticies[2] = { DirectX::XMFLOAT3(-d, -d, -d), color, Vector2::One,normal[3] };
+	verticies[3] = { DirectX::XMFLOAT3(d, -d, -d), color, Vector2::One,normal[3] };
+	verticies[4] = { DirectX::XMFLOAT3(-d, d, d), color, Vector2::One,normal[2] };
+	verticies[5] = { DirectX::XMFLOAT3(d, d, d), color, Vector2::One,normal[0] };
+	verticies[6] = { DirectX::XMFLOAT3(-d, -d, d), color, Vector2::One,normal[1] };
+	verticies[7] = { DirectX::XMFLOAT3(d, -d, d), color, Vector2::One,normal[4] };
 
-	pVertices[4] = { DirectX::XMFLOAT3(-d, d, d), color, Vector2::One,normal[2] };
-	pVertices[5] = { DirectX::XMFLOAT3(d, d, d), color, Vector2::One,normal[0] };
-	pVertices[6] = { DirectX::XMFLOAT3(-d, -d, d), color, Vector2::One,normal[1] };
-	pVertices[7] = { DirectX::XMFLOAT3(d, -d, d), color, Vector2::One,normal[4] };
-
-
-	indexNum = INDEX_NUM;
-	pIndicies = new u_int[indexNum];
-
-	WORD idx[] = 
+	// インデックスデータを作成
+	indicies.resize(INDEX_NUM);
+	u_int idx[] = 
 	{
 		0,1, 0,2, 2,3,
 		1,3, 1,5, 5,7,
@@ -44,28 +41,13 @@ void DebugCube::Make()
 		4,6, 0,4, 4,5,
 	};
 
-	for (u_int i = 0; i < indexNum; i++)
+	for (u_int index = 0; index < INDEX_NUM; index++)
 	{
-		pIndicies[i] = idx[i];
+		indicies[index] = idx[index];
 	}
-
-	// バッファ作成
-	D3D11_Renderer* renderer = Direct3D11::GetInstance()->GetRenderer();
-	CreateVertexBuffer(*renderer);
-	CreateIndexBuffer(*renderer);
 }
 
 DebugCube::DebugCube()
 {
 	Make();
-}
-
-DebugCube::~DebugCube()
-{
-}
-
-void DebugCube::Draw(Transform& _transform, DirectX::SimpleMath::Color& _color)
-{
-
-	BasicObject_Base::BasicDraw(_transform, _color);
 }

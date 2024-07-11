@@ -2,6 +2,8 @@
 #include "Geometory.h"
 #include "ShaderCollection.h"
 
+#include "Material.h"
+
 using namespace DirectX::SimpleMath;
 
 Transform Geometory::transform = {};
@@ -37,30 +39,30 @@ void Geometory::DrawSetup()
 
 void Geometory::Init()
 {
-	ResourceCollection* pReCollect = ResourceCollection::GetInstance();
+	//AssetCollection* pReCollect = AssetCollection::GetInstance();
 
-	// マテリアル作成
-	const std::string MATERIAL_NAME = "M_BaseObject";
-	std::unique_ptr<Material> makeMaterial = std::make_unique<Material>();
+	//// マテリアル作成
+	//const std::string MATERIAL_NAME = "M_BaseObject";
+	//std::unique_ptr<Material> makeMaterial = std::make_unique<Material>();
 
-	// シェーダーを初期化
-	ShaderCollection* shCol = ShaderCollection::GetInstance();
-	VertexShader* v = shCol->GetVertexShader("VS_BaseObject");
-	PixelShader* p = shCol->GetPixelShader("PS_VertexColor");
-	makeMaterial->SetVertexShader(v);
-	makeMaterial->SetPixelShader(p);
+	//// シェーダーを初期化
+	//ShaderCollection* shCol = ShaderCollection::GetInstance();
+	//VertexShader* v = shCol->GetVertexShader("VS_BaseObject");
+	//PixelShader* p = shCol->GetPixelShader("PS_VertexColor");
+	//makeMaterial->SetVertexShader(v);
+	//makeMaterial->SetPixelShader(p);
 
-	// このオブジェクトにマテリアルセット
-	pMaterial = ResourceCollection::GetInstance()->SetResource<Material>(MATERIAL_NAME, std::move(makeMaterial));
+	//// このオブジェクトにマテリアルセット
+	//pMaterial = AssetCollection::GetInstance()->SetResource<Material>(MATERIAL_NAME, std::move(makeMaterial));
 
-	// メッシュを作成
-	std::unique_ptr<Cube> createCube = std::make_unique<Cube>();
-	std::unique_ptr<DebugCube> createDebugCube = std::make_unique<DebugCube>();
-	std::unique_ptr<Sphere> createSphere = std::make_unique<Sphere>();
+	//// メッシュを作成
+	//std::unique_ptr<Cube> createCube = std::make_unique<Cube>();
+	//std::unique_ptr<DebugCube> createDebugCube = std::make_unique<DebugCube>();
+	//std::unique_ptr<Sphere> createSphere = std::make_unique<Sphere>();
 
-	// メッシュをセットする
-	pCube = static_cast<Cube*>(pReCollect->SetResource<Mesh>("SM_Cube", std::move(createCube)));
-	pSphere = static_cast<Sphere*>(pReCollect->SetResource<Mesh>("SM_Sphere", std::move(createSphere)));
+	//// メッシュをセットする
+	//pCube = static_cast<Cube*>(pReCollect->SetResource<Mesh>("SM_Cube", std::move(createCube)));
+	//pSphere = static_cast<Sphere*>(pReCollect->SetResource<Mesh>("SM_Sphere", std::move(createSphere)));
 }
 
 void Geometory::Release()
@@ -69,28 +71,28 @@ void Geometory::Release()
 
 void Geometory::DrawCube(bool _isWireFrame)
 {
-	DrawSetup();
+	//DrawSetup();
 
-	if (_isWireFrame)
-		pDebugCube->Draw(transform, color);
-	else
-		pCube->Draw();
+	//if (_isWireFrame)
+	//	pDebugCube->Draw(transform, color);
+	//else
+	//	pCube->Draw();
 
-	// 元に戻す
-	transform.ResetParameter();
-	color = Color(1, 1, 1, 1);
+	//// 元に戻す
+	//transform.ResetParameter();
+	//color = Color(1, 1, 1, 1);
 }
 
 void Geometory::DrawSphere(bool _isWireFrame)
 {
-	DrawSetup();
+	//DrawSetup();
 
-	if (!_isWireFrame)
-		pSphere->Draw();
-	else
-		pSphere->Draw(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+	//if (!_isWireFrame)
+	//	pSphere->Draw();
+	//else
+	//	pSphere->Draw(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 
-	// 元に戻す
-	transform.ResetParameter();
-	color = Color(1, 1, 1, 1);
+	//// 元に戻す
+	//transform.ResetParameter();
+	//color = Color(1, 1, 1, 1);
 }

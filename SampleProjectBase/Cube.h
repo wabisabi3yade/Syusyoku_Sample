@@ -1,11 +1,12 @@
 #pragma once
-#include "BasicObject_Base.h"
+#include "Mesh.h"
 
-// キューブのメッシュを表示するクラス
+// キューブメッシュクラス
 class Cube : public Mesh
 {
-	void Make();	// 頂点データなどの作成
+	/// @brief キューブを作成
+	void Make();
 public:
 	Cube();
-	~Cube() override;
+	~Cube() {};
 };

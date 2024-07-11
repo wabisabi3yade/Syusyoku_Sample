@@ -7,21 +7,24 @@ class Material;
 // 四角形ポリゴンにテクスチャを貼って表示するクラス
 class Sprite
 {
-	Texture* pTexture;	// テクスチャ
+	/// @brief テクスチャ
+	Texture* pTexture;	
 
-	// 四角形
+	/// @brief 四角形ポリゴン
 	std::unique_ptr<Mesh> pSquareMesh;
 
+	/// @brief コピー関数
+	/// @param _other コピーされる対象
 	void Copy(const Sprite& _other);
 
-	// テクスチャ用のメッシュ作成
+	/// @brief 四角ポリゴンを作成
 	void MakeSquare();
 public:
 	Sprite();
 	Sprite(const Sprite& _other);
 	~Sprite() {};
 
-	void Draw();
+	Sprite& operator=(const Sprite& _other);
 
 	void SetTexture(Texture& _tex) { pTexture = &_tex; }
 

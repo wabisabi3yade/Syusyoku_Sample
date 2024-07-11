@@ -1,57 +1,51 @@
 #pragma once
 
-struct aiMesh;
-
 // メッシュクラス
-// 頂点、辺（エッジ）、面（ポリゴン）の集合のこと
 class Mesh
 {
-private:
-
 protected:
-	Vertex* pVertices{ nullptr };	// メッシュの頂点データ
+	/// @brief 頂点データ
+	std::vector<Vertex> verticies;
 
-	u_int* pIndicies{ nullptr };	// 頂点インデックス
+	/// @brief インデックス
+	std::vector<u_int> indicies;
 
-	u_int vertexNum;	// 頂点数
+	/// @brief 名前
+	std::string name;
 
-	u_int indexNum;	// 頂点インデックス数
-
-	u_int materialIndex;	// マテリアルのインデックス
-
-	ID3D11Buffer* pVertexBuffer{ nullptr };	// 頂点バッファ
-
-	ID3D11Buffer* pIndexBuffer{ nullptr };	// インデックスバッファ
-
-	DirectX::SimpleMath::Vector2 uvScroll;	// UV座標の原点(左上)
-	DirectX::SimpleMath::Vector2 uvSize;;	// UV座標のサイズ
-
-	// 頂点バッファ作成
-	bool CreateVertexBuffer(D3D11_Renderer& _renderer);
-	// インデックスバッファ（頂点1つ1つののID的なモノ)を作成
-	bool CreateIndexBuffer(D3D11_Renderer& _renderer);
-	// 削除関数
-	void Release();
+	/// @brief マテリアルインデックス
+	u_int materialID;
 
 public:
-	Mesh();
-	virtual ~Mesh();
-	/// <summary>
-	/// メッシュを新しく確保し、セットする
-	/// </summary>
-	/// <param name="_setMesh">セットするメッシュ</param>
-	/// <returns></returns>
-	bool SetMesh(const Mesh& _setMesh);
+	Mesh() : name(""), materialID(0) {}
+	Mesh(const Mesh& _other);
+	virtual ~Mesh() {}
 
-	// メッシュの読込
-	bool Setup(D3D11_Renderer& _renderer, aiMesh* pMeshData, float _scaleBase);
+	Mesh& operator=(const Mesh& _other);
 
-	// 描画処理
-	void Draw(D3D11_PRIMITIVE_TOPOLOGY _topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST)const;
+	/// @brief 頂点データを取得
+	/// @return 頂点データ
+	std::vector<Vertex>& GetVerticies();
 
-	// マテリアルのインデックスを取得
-	const u_int GetMaterialIdx() { return materialIndex; }
-	// 外部から頂点とインデックスを代入
-	void SetVertexData(Vertex* _pVerticies, u_int _vertexNum, u_int* _pIndecies, u_int _indexNum);
+	/// @brief インデックスを取得
+	/// @return インデックスデータ
+	std::vector<u_int>& GetIndicies();
+
+	/// @brief インデックス数を取得
+	/// @return インデックス数
+	u_int GetIndexNum();
+
+	/// @brief 名前を設定する
+	/// @param _name 名前
+	void SetName(const std::string& _name);
+
+	/// @brief マテリアルのインデックスをセット
+	/// @param _materialID マテリアルインデックス
+	void SetMaterialID(u_int _materialID);
+
+private:
+	/// @brief コピー
+	/// @param _other　対象 
+	void Copy(const Mesh& _other);
 };
 

@@ -19,17 +19,11 @@
     <Filter Include="ソース ファイル\Graphics\Model">
       <UniqueIdentifier>{70d2c2f9-9413-494d-b580-9eae1887a1bc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics\Triangle">
-      <UniqueIdentifier>{49c4df4b-af85-4977-a217-30807ec7bc57}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\System">
       <UniqueIdentifier>{cb740849-337d-4694-9bce-0770957dc20d}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Scene">
       <UniqueIdentifier>{1768e9eb-7645-4140-ade3-e62b7258dbb7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics\Model\Mesh">
-      <UniqueIdentifier>{da97f189-bf52-4ca3-a034-e91971362e8d}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\System\MessageError">
       <UniqueIdentifier>{2f5e4082-2ae6-402d-90d1-8dcf684cbeab}</UniqueIdentifier>
@@ -99,9 +93,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Object\Camera">
       <UniqueIdentifier>{6a26953d-a672-405b-952f-60d285febe89}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\ResourceCollection">
-      <UniqueIdentifier>{0914fd39-6184-4c51-bbf5-0a403f0e3bdd}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\System\ImGui">
       <UniqueIdentifier>{3a4f88db-e57c-4ce8-9c11-57982a744aca}</UniqueIdentifier>
@@ -265,9 +256,6 @@
     <Filter Include="ソース ファイル\Graphics\Geometory\Cube">
       <UniqueIdentifier>{16f344dc-964c-4351-bda8-45c1b06dcb98}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics\Geometory\BasicObject_Base">
-      <UniqueIdentifier>{7dede4c7-afd2-4dbd-af48-ff8d2e681c4b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\Geometory\Sphere">
       <UniqueIdentifier>{5268db00-a05b-40ef-8ccc-481a51095ac4}</UniqueIdentifier>
     </Filter>
@@ -294,12 +282,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Component\InGame\Player\PlayerInput">
       <UniqueIdentifier>{3ead3f7f-0159-4fa0-bb22-adcd1bbdcafa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\SceneFunction">
-      <UniqueIdentifier>{873b7fd4-8efe-4072-b1f3-edf202c51acb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\SceneFunction\GameObject">
-      <UniqueIdentifier>{561d5b96-25b2-4652-b462-abca12791b72}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Object\Light">
       <UniqueIdentifier>{130fca24-6f0a-4d75-8ff5-0a6a29288a52}</UniqueIdentifier>
@@ -328,9 +310,6 @@
     <Filter Include="ソース ファイル\Scene\InSceneSystem">
       <UniqueIdentifier>{b54ce796-f7aa-42ab-a133-8a4a2882bec4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\NewFilter1">
-      <UniqueIdentifier>{2ea84a88-024c-4a6b-abca-a96581e4e2fa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Component\Renderer">
       <UniqueIdentifier>{c8d276b6-693f-456b-b610-b6732ac7bc87}</UniqueIdentifier>
     </Filter>
@@ -358,11 +337,50 @@
     <Filter Include="ソース ファイル\Asset\Loader">
       <UniqueIdentifier>{6fb219dd-20f3-4daf-838c-d6ecf47f452f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Asset\Loader\Texture">
-      <UniqueIdentifier>{9c8ab555-d3af-431d-96e6-6c6ba0c93379}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Asset\Get">
+      <UniqueIdentifier>{a0b7a1e8-da1e-4da0-bfdc-0cdbf998ba55}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Asset\Loader\Model">
-      <UniqueIdentifier>{281bfbc1-950c-4bbd-b5b2-d0bd373a2ee8}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Scene\SceneFunction">
+      <UniqueIdentifier>{873b7fd4-8efe-4072-b1f3-edf202c51acb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\SceneFunction\GameObject">
+      <UniqueIdentifier>{561d5b96-25b2-4652-b462-abca12791b72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Collection">
+      <UniqueIdentifier>{0914fd39-6184-4c51-bbf5-0a403f0e3bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Display">
+      <UniqueIdentifier>{a6513ca5-8784-4484-b15a-f0da6b60d05a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Mesh">
+      <UniqueIdentifier>{da97f189-bf52-4ca3-a034-e91971362e8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Mesh\Mesh">
+      <UniqueIdentifier>{233b27fc-bb59-4ebb-856c-989f6a454fd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Mesh\StaticMesh">
+      <UniqueIdentifier>{3e0b97e4-f769-4ae6-9811-eba34f80f577}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Mesh\SkeletalMesh">
+      <UniqueIdentifier>{3809995c-1437-4c7a-ab17-d7c291a74efb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Asset_Base">
+      <UniqueIdentifier>{5e4258b4-aaaa-48c5-9f60-b10c8a265734}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\IAssetContacter">
+      <UniqueIdentifier>{333b47f0-4487-44d6-b0ee-473ec0bc5c9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Buffer">
+      <UniqueIdentifier>{4fac6332-97e3-4d69-8966-9c1e468ac2b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Buffer\Vertex">
+      <UniqueIdentifier>{723a56db-5138-4d56-b0af-ca01bea9c13d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Buffer\Index">
+      <UniqueIdentifier>{8df22556-54f4-4b6c-9f80-312f734da4c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Buffer\Interface">
+      <UniqueIdentifier>{e51dfb6c-9168-4783-bdb0-0997e7af955a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -419,9 +437,6 @@
     <ClCompile Include="MainApplication.cpp">
       <Filter>ソース ファイル\System\Application\MainApplication</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>ソース ファイル\Graphics\Model\Mesh</Filter>
-    </ClCompile>
     <ClCompile Include="MessageError.cpp">
       <Filter>ソース ファイル\System\MessageError</Filter>
     </ClCompile>
@@ -436,9 +451,6 @@
     </ClCompile>
     <ClCompile Include="SetUpViewTrans.cpp">
       <Filter>ソース ファイル\System\Application\DirectX3D11\Render\View</Filter>
-    </ClCompile>
-    <ClCompile Include="Triangle.cpp">
-      <Filter>ソース ファイル\Graphics\Triangle</Filter>
     </ClCompile>
     <ClCompile Include="Window.cpp">
       <Filter>ソース ファイル\System\Application\Window</Filter>
@@ -491,14 +503,11 @@
     <ClCompile Include="VariableFrameRate.cpp">
       <Filter>ソース ファイル\System\Application\FramerRate</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceCollection.cpp">
-      <Filter>ソース ファイル\ResourceCollection</Filter>
+    <ClCompile Include="AssetCollection.cpp">
+      <Filter>ソース ファイル\Asset\Collection</Filter>
     </ClCompile>
     <ClCompile Include="ImGuiMethod.cpp">
       <Filter>ソース ファイル\System\ImGui\ImGuiMethod</Filter>
-    </ClCompile>
-    <ClCompile Include="ModelLoader.cpp">
-      <Filter>ソース ファイル\Asset\Loader\Model</Filter>
     </ClCompile>
     <ClCompile Include="ImGuiDebugLog.cpp">
       <Filter>ソース ファイル\System\ImGui\ImGuiDebugLog</Filter>
@@ -514,12 +523,6 @@
     </ClCompile>
     <ClCompile Include="Cube.cpp">
       <Filter>ソース ファイル\Graphics\Geometory\Cube</Filter>
-    </ClCompile>
-    <ClCompile Include="BasicObject_Base.cpp">
-      <Filter>ソース ファイル\Graphics\Geometory\BasicObject_Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Object_UI.cpp">
-      <Filter>ソース ファイル\Object\Onject_UI</Filter>
     </ClCompile>
     <ClCompile Include="Tag.cpp">
       <Filter>ソース ファイル\Object\Tag</Filter>
@@ -606,7 +609,7 @@
       <Filter>ソース ファイル\Component\InGame\Player\PlayerInput</Filter>
     </ClCompile>
     <ClCompile Include="SF_GameObject.cpp">
-      <Filter>ソース ファイル\SceneFunction\GameObject</Filter>
+      <Filter>ソース ファイル\Scene\SceneFunction\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Light.cpp">
       <Filter>ソース ファイル\Object\Light</Filter>
@@ -683,11 +686,41 @@
     <ClCompile Include="CP_Collider.cpp">
       <Filter>ソース ファイル\Component\Collider\Base</Filter>
     </ClCompile>
-    <ClCompile Include="IAssetLoader.cpp">
+    <ClCompile Include="AssetGetter.cpp">
+      <Filter>ソース ファイル\Asset\Get</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetLoader.cpp">
       <Filter>ソース ファイル\Asset\Loader</Filter>
     </ClCompile>
-    <ClCompile Include="TextureLoader.cpp">
-      <Filter>ソース ファイル\Asset\Loader\Texture</Filter>
+    <ClCompile Include="AssetDisplay.cpp">
+      <Filter>ソース ファイル\Asset\Display</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>ソース ファイル\Graphics\Mesh\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh_Base.cpp">
+      <Filter>ソース ファイル\Graphics\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="SkeletalMesh.cpp">
+      <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticMesh.cpp">
+      <Filter>ソース ファイル\Graphics\Mesh\StaticMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset_Base.cpp">
+      <Filter>ソース ファイル\Asset\Asset_Base</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetContacter.cpp">
+      <Filter>ソース ファイル\Asset\IAssetContacter</Filter>
+    </ClCompile>
+    <ClCompile Include="IBuffer.cpp">
+      <Filter>ソース ファイル\Graphics\Buffer\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBuffer.cpp">
+      <Filter>ソース ファイル\Graphics\Buffer\Vertex</Filter>
+    </ClCompile>
+    <ClCompile Include="IndexBuffer.cpp">
+      <Filter>ソース ファイル\Graphics\Buffer\Index</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -727,9 +760,6 @@
     <ClInclude Include="MainApplication.h">
       <Filter>ソース ファイル\System\Application\MainApplication</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>ソース ファイル\Graphics\Model\Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="MessageError.h">
       <Filter>ソース ファイル\System\MessageError</Filter>
     </ClInclude>
@@ -747,9 +777,6 @@
     </ClInclude>
     <ClInclude Include="Singleton_Base.h">
       <Filter>ソース ファイル\System\Singleton_Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Triangle.h">
-      <Filter>ソース ファイル\Graphics\Triangle</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
       <Filter>ソース ファイル\System\Application\Window</Filter>
@@ -802,14 +829,11 @@
     <ClInclude Include="VariableFrameRate.h">
       <Filter>ソース ファイル\System\Application\FramerRate</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceCollection.h">
-      <Filter>ソース ファイル\ResourceCollection</Filter>
+    <ClInclude Include="AssetCollection.h">
+      <Filter>ソース ファイル\Asset\Collection</Filter>
     </ClInclude>
     <ClInclude Include="ImGuiMethod.h">
       <Filter>ソース ファイル\System\ImGui\ImGuiMethod</Filter>
-    </ClInclude>
-    <ClInclude Include="ModelLoader.h">
-      <Filter>ソース ファイル\Asset\Loader\Model</Filter>
     </ClInclude>
     <ClInclude Include="ImGuiDebugLog.h">
       <Filter>ソース ファイル\System\ImGui\ImGuiDebugLog</Filter>
@@ -825,12 +849,6 @@
     </ClInclude>
     <ClInclude Include="Cube.h">
       <Filter>ソース ファイル\Graphics\Geometory\Cube</Filter>
-    </ClInclude>
-    <ClInclude Include="BasicObject_Base.h">
-      <Filter>ソース ファイル\Graphics\Geometory\BasicObject_Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Object_UI.h">
-      <Filter>ソース ファイル\Object\Onject_UI</Filter>
     </ClInclude>
     <ClInclude Include="Tag.h">
       <Filter>ソース ファイル\Object\Tag</Filter>
@@ -917,10 +935,10 @@
       <Filter>ソース ファイル\Component\InGame\Player\PlayerInput</Filter>
     </ClInclude>
     <ClInclude Include="SF_GameObject.h">
-      <Filter>ソース ファイル\SceneFunction\GameObject</Filter>
+      <Filter>ソース ファイル\Scene\SceneFunction\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="SF_Include.h">
-      <Filter>ソース ファイル\SceneFunction</Filter>
+      <Filter>ソース ファイル\Scene\SceneFunction</Filter>
     </ClInclude>
     <ClInclude Include="Light.h">
       <Filter>ソース ファイル\Object\Light</Filter>
@@ -1000,11 +1018,41 @@
     <ClInclude Include="CP_Collider.h">
       <Filter>ソース ファイル\Component\Collider\Base</Filter>
     </ClInclude>
-    <ClInclude Include="IAssetLoader.h">
+    <ClInclude Include="AssetGetter.h">
+      <Filter>ソース ファイル\Asset\Get</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetLoader.h">
       <Filter>ソース ファイル\Asset\Loader</Filter>
     </ClInclude>
-    <ClInclude Include="TextureLoader.h">
-      <Filter>ソース ファイル\Asset\Loader\Texture</Filter>
+    <ClInclude Include="AssetDisplay.h">
+      <Filter>ソース ファイル\Asset\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>ソース ファイル\Graphics\Mesh\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh_Base.h">
+      <Filter>ソース ファイル\Graphics\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="SkeletalMesh.h">
+      <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticMesh.h">
+      <Filter>ソース ファイル\Graphics\Mesh\StaticMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset_Base.h">
+      <Filter>ソース ファイル\Asset\Asset_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetContacter.h">
+      <Filter>ソース ファイル\Asset\IAssetContacter</Filter>
+    </ClInclude>
+    <ClInclude Include="IBuffer.h">
+      <Filter>ソース ファイル\Graphics\Buffer\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>ソース ファイル\Graphics\Buffer\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>ソース ファイル\Graphics\Buffer\Index</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

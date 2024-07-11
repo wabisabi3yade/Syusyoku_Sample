@@ -28,8 +28,6 @@ void SubScene_Base::DrawSetup()
 
 	// 光源の更新処理
 	sceneLights.Update();
-
-	resourceCollection->ImportDisplay();
 }
 
 /// <summary>
@@ -46,7 +44,6 @@ void SubScene_Base::OnMoveScene(int _nextSubType, BroadType::Type _nextBroadType
 SubScene_Base::SubScene_Base(SceneMoveInfo* _pSceneMoveInfo)
 {
 	pSceneMoveInfo = _pSceneMoveInfo;
-	resourceCollection = ResourceCollection::GetInstance();
 
 	// システム初期化
 	systemManager = InSceneSystemManager::GetInstance();

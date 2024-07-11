@@ -11,14 +11,10 @@ Cube::Cube()
 	Make();
 }
 
-Cube::~Cube()
-{
-}
-
 void Cube::Make()
 {
-	vertexNum = VERTEX_NUM;
-	pVertices = new Vertex[vertexNum];
+	std::unique_ptr<Mesh> pMesh = std::make_unique<Mesh>();
+
 	const float d = 0.5f;
 
 	DirectX::XMFLOAT4 color(1.0f, 1.0f, 1.0f, 1.0f);
@@ -31,40 +27,43 @@ void Cube::Make()
 		DirectX::XMFLOAT3(0.0f, 0.0f,-1.0f),
 	};
 
-	pVertices[0] = { DirectX::XMFLOAT3(-d, d,-d), color, Vector2::One,normal[0] };
-	pVertices[1] = { DirectX::XMFLOAT3(d, d, -d), color, Vector2::One,normal[0] };
-	pVertices[2] = { DirectX::XMFLOAT3(-d,-d,-d), color, Vector2::One,normal[0] };
-	pVertices[3] = { DirectX::XMFLOAT3(d,-d, -d), color, Vector2::One,normal[0] };
+	// 頂点データを作成
+	verticies.resize(VERTEX_NUM);
+	verticies[0] = { DirectX::XMFLOAT3(-d, d,-d), color, Vector2::One,normal[0] };
+	verticies[1] = { DirectX::XMFLOAT3(d, d, -d), color, Vector2::One,normal[0] };
+	verticies[2] = { DirectX::XMFLOAT3(-d,-d,-d), color, Vector2::One,normal[0] };
+	verticies[3] = { DirectX::XMFLOAT3(d,-d, -d), color, Vector2::One,normal[0] };
 
-	pVertices[4] = { DirectX::XMFLOAT3(-d, d, d), color, Vector2::One,normal[1] };
-	pVertices[5] = { DirectX::XMFLOAT3(-d, -d,d), color,Vector2::One ,normal[1] };
-	pVertices[6] = { DirectX::XMFLOAT3(d,d, d), color, Vector2::One,normal[1] };
-	pVertices[7] = { DirectX::XMFLOAT3(d,-d,d), color, Vector2::One,normal[1] };
+	verticies[4] = { DirectX::XMFLOAT3(-d, d, d), color, Vector2::One,normal[1] };
+	verticies[5] = { DirectX::XMFLOAT3(-d, -d,d), color,Vector2::One ,normal[1] };
+	verticies[6] = { DirectX::XMFLOAT3(d,d, d), color, Vector2::One,normal[1] };
+	verticies[7] = { DirectX::XMFLOAT3(d,-d,d), color, Vector2::One,normal[1] };
 
-	pVertices[8] = { DirectX::XMFLOAT3(-d, d, d), color,Vector2::One,normal[2] };
-	pVertices[9] = { DirectX::XMFLOAT3(-d, d, -d), color, Vector2::One,normal[2] };
-	pVertices[10] = { DirectX::XMFLOAT3(-d, -d,d), color,Vector2::One ,normal[2] };
-	pVertices[11] = { DirectX::XMFLOAT3(-d, -d,-d), color, Vector2::One,normal[2] };
+	verticies[8] = { DirectX::XMFLOAT3(-d, d, d), color,Vector2::One,normal[2] };
+	verticies[9] = { DirectX::XMFLOAT3(-d, d, -d), color, Vector2::One,normal[2] };
+	verticies[10] = { DirectX::XMFLOAT3(-d, -d,d), color,Vector2::One ,normal[2] };
+	verticies[11] = { DirectX::XMFLOAT3(-d, -d,-d), color, Vector2::One,normal[2] };
 	
-	pVertices[12] = { DirectX::XMFLOAT3(d,d,d), color,Vector2::One ,normal[3] };
-	pVertices[13] = { DirectX::XMFLOAT3(d,-d,d), color, Vector2::One,normal[3] };
-	pVertices[14] = { DirectX::XMFLOAT3(d,d, -d), color,Vector2::One ,normal[3] };
-	pVertices[15] = { DirectX::XMFLOAT3(d,-d, -d), color,Vector2::One,normal[3] };
+	verticies[12] = { DirectX::XMFLOAT3(d,d,d), color,Vector2::One ,normal[3] };
+	verticies[13] = { DirectX::XMFLOAT3(d,-d,d), color, Vector2::One,normal[3] };
+	verticies[14] = { DirectX::XMFLOAT3(d,d, -d), color,Vector2::One ,normal[3] };
+	verticies[15] = { DirectX::XMFLOAT3(d,-d, -d), color,Vector2::One,normal[3] };
 	
-	pVertices[16] = { DirectX::XMFLOAT3(-d, d, d), color, Vector2::One,normal[4] };
-	pVertices[17] = { DirectX::XMFLOAT3(d, d, d), color,Vector2::One ,normal[4] };
-	pVertices[18] = { DirectX::XMFLOAT3(-d,d, -d), color, Vector2::One,normal[4] };
-	pVertices[19] = { DirectX::XMFLOAT3(d,d, -d), color,Vector2::One,normal[4] };
+	verticies[16] = { DirectX::XMFLOAT3(-d, d, d), color, Vector2::One,normal[4] };
+	verticies[17] = { DirectX::XMFLOAT3(d, d, d), color,Vector2::One ,normal[4] };
+	verticies[18] = { DirectX::XMFLOAT3(-d,d, -d), color, Vector2::One,normal[4] };
+	verticies[19] = { DirectX::XMFLOAT3(d,d, -d), color,Vector2::One,normal[4] };
 	
-	pVertices[20] = { DirectX::XMFLOAT3(-d,-d,d), color,Vector2::One ,normal[5] };
-	pVertices[21] = { DirectX::XMFLOAT3(-d,-d,-d), color, Vector2::One,normal[5] };
-	pVertices[22] = { DirectX::XMFLOAT3(d, -d,d), color,Vector2::One ,normal[5] };
-	pVertices[23] = { DirectX::XMFLOAT3(d, -d,-d), color,Vector2::One,normal[5] };
+	verticies[20] = { DirectX::XMFLOAT3(-d,-d,d), color,Vector2::One ,normal[5] };
+	verticies[21] = { DirectX::XMFLOAT3(-d,-d,-d), color, Vector2::One,normal[5] };
+	verticies[22] = { DirectX::XMFLOAT3(d, -d,d), color,Vector2::One ,normal[5] };
+	verticies[23] = { DirectX::XMFLOAT3(d, -d,-d), color,Vector2::One,normal[5] };
 
-	indexNum = INDEX_NUM;
-	pIndicies = new u_int[indexNum];
 
-	WORD idx[] = {
+	// インデックスデータ作成
+	indicies.resize(INDEX_NUM);
+
+	u_int idx[] = {
 		 0, 1, 2,  3, 2, 1,
 		 4, 5, 6,  7, 6, 5,
 		8, 9, 10,  11,10,9,
@@ -73,13 +72,8 @@ void Cube::Make()
 		20,21,22, 23,22,21,
 	};
 
-	for (u_int i = 0; i < indexNum; i++)
+	for (u_int i = 0; i < INDEX_NUM; i++)
 	{
-		pIndicies[i] = idx[i];
+		indicies[i] = idx[i];
 	}
-
-	// バッファ作成
-	D3D11_Renderer* renderer = Direct3D11::GetInstance()->GetRenderer();
-	CreateVertexBuffer(*renderer);
-	CreateIndexBuffer(*renderer);
 }

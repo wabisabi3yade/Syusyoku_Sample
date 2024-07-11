@@ -1,27 +1,47 @@
 #pragma once
+#include "Asset_Base.h"
 
-// テクスチャクラス
-class Texture
+/// @brief テクスチャクラス
+class Texture : public Asset_Base
 {
-	friend class TextureLoader;
+	friend class AssetLoader;
 
-	// 画像(横・縦サイズ)
+	/// @brief テクスチャ、バッファなどのリソースをシェーダーで参照可能な形式
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> pSRV;
+
+	/// @brief 画像(横・縦サイズ)
 	u_int width;
 	u_int height;
-
-	// シェーダーリソースビュー(SRV)
-	// テクスチャ、バッファなどのリソースをシェーダーで参照可能な形式
-	ID3D11ShaderResourceView* pSRV;
 public:
-	Texture();
+	Texture() : width(0), height(0) {}
+	~Texture() {}
 
-	void Release();
+	/// @brief SRVの参照を取得
+	/// @return SRVの参照
+	ID3D11ShaderResourceView& GetSRV()const { return *pSRV.Get(); }
 
-	ID3D11ShaderResourceView& GetSRV()const { return *pSRV; }
+	/// @brief 幅を取得
+	/// @return 画像の横幅(px)
+	u_int GetWidth()const { return width; }
 
-	u_int GetWidth()const { return width; }	// 幅を取得
-	u_int GetHeight()const { return height; }	// 高さを取得
+	/// @brief 高さを取得
+	/// @return 画像の高さ(px)
+	u_int GetHeight()const { return height; }
+};
 
-	~Texture();
+/// @brief テクスチャのNullオブジェクトクラス
+class NullTexture : public Texture
+{
+public:
+	NullTexture() {}
+	~NullTexture() {}
+
+	/// @brief 幅を取得
+	/// @return 画像の横幅(px)
+	u_int GetWidth()const { return 0; }
+
+	/// @brief 高さを取得
+	/// @return 画像の高さ(px)
+	u_int GetHeight()const { return 0; }
 };
 

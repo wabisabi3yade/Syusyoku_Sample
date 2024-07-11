@@ -29,7 +29,7 @@ class SceneLights
 
 	void Draw();
 public:
-	SceneLights() {};
+	SceneLights();
 	~SceneLights() {};
 
 	void Update();

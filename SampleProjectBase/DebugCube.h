@@ -1,13 +1,13 @@
 #pragma once
-#include "BasicObject_Base.h"
-class DebugCube :
-    public BasicObject_Base
+#include "Mesh.h"
+
+// ワイヤーフレームのキューブ
+class DebugCube : public Mesh
 {
-	void Make() override;	// 頂点データなどの作成
+	/// @brief  キューブを作成
+	void Make();	
 public:
 	DebugCube();
-	~DebugCube() override;
-
-	void Draw(Transform& _transform, DirectX::SimpleMath::Color& _color);
+	~DebugCube() {}
 };
 

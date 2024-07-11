@@ -9,6 +9,6 @@ class Sphere :
 
 public:
 	Sphere();
-	~Sphere() override;
+	~Sphere() {}
 };
 

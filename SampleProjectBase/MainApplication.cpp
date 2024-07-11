@@ -1,42 +1,46 @@
 #include "MainApplication.h"
-#include "SceneManager.h"
-#include "ImGuiMethod.h"
-#include "VariableFrameRate.h"
 
+// システム関連
+#include "SceneManager.h"
+#include "AssetCollection.h"
+#include "ShaderCollection.h"
+
+// Asset関連
+#include "AssetContacter.h"
+
+// ImGui
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 #include "imgui.h"
 
-constexpr short FPS(60);	// フレームレート数
+constexpr u_int FPS(60);	// フレームレート数
 
-std::unique_ptr<Window> MainApplication::pWindow = nullptr;	// ウィンドウ処理クラス
-Direct3D11* MainApplication::pD3D = nullptr;	// Direct3Dの機能を持つクラス
-SceneManager* MainApplication::pSceneManager = nullptr;	// シーンマネージャークラス
-std::unique_ptr<VariableFrameRate> MainApplication::variableFps = nullptr;	// 可変フレームレート
-std::unique_ptr<InputClass> MainApplication::input = nullptr;	// 入力クラス
+// static変数初期化
+std::unique_ptr<Window> MainApplication::pWindow = nullptr;
+Direct3D11* MainApplication::pD3D = nullptr;
+SceneManager* MainApplication::pSceneManager = nullptr;
+std::unique_ptr<VariableFrameRate> MainApplication::pVariableFps = nullptr;
+std::unique_ptr<InputClass> MainApplication::pInput = nullptr;
+std::unique_ptr<AssetCollection> MainApplication::pAssetCollection = nullptr;
 bool MainApplication::isEscapeDisplay = false;
 
 void MainApplication::Release()
 {
-	// シングルトンインスタンスを解放
-	Direct3D11::Delete();
-	SceneManager::Delete();
-
-#ifdef _DEBUG
-	// メモリリークの表示に映らないように手動で解放
-	pWindow.reset();
-	variableFps.reset();
-	input.reset();
-#endif // DEBUG
-
 	// ImGuiの終了処理
 	ImGuiMethod::End();
+
+	// シングルトンインスタンスを解放
+	SceneManager::Delete();
+	ShaderCollection::Delete();
+	Direct3D11::Delete();
 }
 
-bool MainApplication::Escape()
+
+
+bool MainApplication::EscapeCheck()
 {
 	// エスケープキー押されたら
-	if (!isEscapeDisplay && input->GetKeyboard().GetKeyDown(DIK_ESCAPE))
+	if (!isEscapeDisplay && pInput->GetKeyboard().GetKeyDown(DIK_ESCAPE))
 		isEscapeDisplay = true;
 
 	if (!isEscapeDisplay) return false;
@@ -55,7 +59,7 @@ bool MainApplication::Escape()
 	ImGui::SetNextWindowSize(windowSize);
 
 	// ボタン処理
-	ImGui::Begin(ShiftJisToUtf8("終了しますか").c_str(), nullptr, 
+	ImGui::Begin(ShiftJisToUtf8("終了しますか").c_str(), nullptr,
 		ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
 	if (ImGui::Button(ShiftJisToUtf8("はい").c_str()))
 	{
@@ -76,36 +80,27 @@ bool MainApplication::Escape()
 
 void MainApplication::Init(HINSTANCE _hInst)
 {
-	// ウィンドウクラスの確保
-	pWindow = std::make_unique<Window>();
-	pWindow->Init(_hInst);
+	WindowSetup(_hInst);
 
-	// Direct3Dクラスの確保
-	pD3D = Direct3D11::GetInstance();
 	HWND hwnd = pWindow->GetWindowHandle();
-	pD3D->Init(hwnd);
 
-	// 可変フレームレートクラス生成
-	variableFps = std::make_unique<VariableFrameRate>(FPS);
+	D3DSetup(hwnd);
 
-	// 入力クラスを作成
-	input = std::make_unique<InputClass>();
-	input->Init(hwnd);
+	VariableFrameSetup();
 
-	pSceneManager = SceneManager::GetInstance();
+	InputSetup(hwnd);
 
-	// ImGuiの初期化
-	D3D11_Renderer* pRenderer = pD3D->GetRenderer();
-	ImGuiMethod::Initialize(
-		pWindow->GetWindowHandle(),
-		pRenderer->GetDevice(),
-		pRenderer->GetDeviceContext()
-	);
+	AssetSysytemSetup();
+
+	ShaderSetup();
+
+	ImuiSetup();
+
+	SceneManagerSetup();
 }
 
 void MainApplication::GameLoop()
 {
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	while (true)
 	{
 		static ULONGLONG start = 0;
@@ -115,16 +110,16 @@ void MainApplication::GameLoop()
 		bool result = pWindow->MessageLoop();
 		if (result == false) break;
 
-		variableFps->CaluculateDelta();
+		pVariableFps->CaluculateDelta();
 
 		ImGuiMethod::NewFrame();
 
 		// 終了処理チェック
-		if (Escape())
+		if (EscapeCheck())
 			return;
 
 		// 入力更新
-		input->Update();
+		pInput->Update();
 
 		// 更新処理
 		pSceneManager->Exec();
@@ -140,8 +135,7 @@ void MainApplication::GameLoop()
 		ULONGLONG delta1 = end - start;
 
 		// 待機
-		variableFps->Wait();
-
+		pVariableFps->Wait();
 		
 		end = GetTickCount64();
 
@@ -151,5 +145,61 @@ void MainApplication::GameLoop()
 
 float MainApplication::DeltaTime()
 {
-	return variableFps->GetDeltaTime();
+	return pVariableFps->GetDeltaTime();
+}
+
+void MainApplication::WindowSetup(HINSTANCE _hInst)
+{
+	// ウィンドウクラスの確保
+	pWindow = std::make_unique<Window>();
+	pWindow->Init(_hInst);
+}
+
+void MainApplication::D3DSetup(HWND _hwnd)
+{
+	// Direct3Dクラスの確保
+	pD3D = Direct3D11::GetInstance();
+	pD3D->Init(_hwnd);
+}
+
+void MainApplication::VariableFrameSetup()
+{
+	pVariableFps = std::make_unique<VariableFrameRate>(FPS);
+}
+
+void MainApplication::InputSetup(HWND _hwnd)
+{
+	// 入力クラスを作成
+	pInput = std::make_unique<InputClass>();
+	pInput->Init(_hwnd);
+}
+
+void MainApplication::ImuiSetup()
+{
+	// ImGuiの初期化
+	D3D11_Renderer* pRenderer = pD3D->GetRenderer();
+	ImGuiMethod::Initialize(
+		pWindow->GetWindowHandle(),
+		pRenderer->GetDevice(),
+		pRenderer->GetDeviceContext()
+	);
+}
+
+void MainApplication::AssetSysytemSetup()
+{
+	pAssetCollection = std::make_unique<AssetCollection>();
+
+	// アセット連絡インターフェースに管理クラスの参照を渡す
+	AssetContacter::SetAssetCollection(*pAssetCollection.get());
+}
+
+void MainApplication::ShaderSetup()
+{
+	ShaderCollection* shCol = ShaderCollection::GetInstance();
+	shCol->Init();
+}
+
+void MainApplication::SceneManagerSetup()
+{
+	pSceneManager = SceneManager::GetInstance();
 }

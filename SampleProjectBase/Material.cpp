@@ -7,8 +7,8 @@
 #include "imgui_impl_dx11.h"
 #include "imgui.h"
 
-
 using namespace DirectX::SimpleMath;
+
 Material::Material() : pDiffuseTexture(nullptr), pNormalTexture(nullptr), pVertexShader(nullptr),
 					pPixelShader(nullptr)
 {
@@ -22,7 +22,7 @@ Material::Material() : pDiffuseTexture(nullptr), pNormalTexture(nullptr), pVerte
 	parameter.ambient = Color(0.2f, 0.2f, 0.2f, 1.0f);
 	parameter.specular = Color(1.0f, 1.0f, 1.0f, 1.0f);
 	parameter.emissive = Color(1.0f, 1.0f, 1.0f, 1.0f);
-	parameter.shininess = 0.0f;
+	parameter.shiness = 0.0f;
 	parameter.isTextureEnable = 0;
 }
 
@@ -43,7 +43,7 @@ void Material::ImGuiSetting()
 		ImGuiMethod::ColorEdit4(parameter.ambient, "ambient");
 		ImGuiMethod::ColorEdit4(parameter.specular, "specular");
 		ImGuiMethod::ColorEdit4(parameter.emissive, "emmisive");
-		ImGui::DragFloat("shiness", &parameter.shininess);
+		ImGui::DragFloat("shiness", &parameter.shiness);
 #endif
 }
 

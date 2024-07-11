@@ -5,10 +5,9 @@
 #include "Camera.h"
 #include "Object_3D.h"
 #include "Object_2D.h"
-#include "Object_UI.h"
 
 // システム関連
-#include "ModelLoader.h"
+#include "AssetLoader.h"
 #include "ShaderCollection.h"
 #include "InSceneSystemManager.h"
 
@@ -22,9 +21,6 @@ class SubScene_Base
 	SceneMoveInfo* pSceneMoveInfo;
 
 protected:
-	// リソース管理
-	ResourceCollection* resourceCollection;	
-
 	//	シーン内のシステムマネジャー
 	InSceneSystemManager* systemManager;
 
