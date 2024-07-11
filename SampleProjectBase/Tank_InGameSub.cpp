@@ -9,17 +9,25 @@
 constexpr u_int SPHERE_NUM(1);
 constexpr u_int CUBE_NUM(2);
 
+using namespace SceneFunction;
+
 Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveInfo)
 {
+	std::vector<Texture*> pTextures;
+
 	std::vector<std::string> texturePath =
 	{
 		{"assets/texture/Grass.png"}
 	};
 	for (auto texPath : texturePath)
 	{
-		AssetLoader::TextureLoad(texPath);
+		Texture* pTex = AssetLoader::TextureLoad(texPath);
+		pTextures.push_back(pTex);
 	}
 
+	GameObject& gameObject = Object::CreateEmpty("Ground");
+	CP_SpriteRenderer* pSpriteRenderer = gameObject.AddComponent<CP_SpriteRenderer>();
+	pSpriteRenderer->SetTexture(*pTextures[0]);
 
 	/*Model* model = nullptr;
 	Texture* tex = nullptr;*/

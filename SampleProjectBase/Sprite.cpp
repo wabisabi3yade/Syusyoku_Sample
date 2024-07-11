@@ -51,6 +51,9 @@ void Sprite::MakeSquare()
 	indicies[3] = 0;
 	indicies[4] = 2;
 	indicies[5] = 3;
+
+	// バッファ作成
+	pSquareMesh->InitBuffer();
 }
 
 

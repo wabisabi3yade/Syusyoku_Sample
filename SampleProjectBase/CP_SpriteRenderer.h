@@ -1,8 +1,9 @@
 #pragma once
 #include "CP_Renderer.h"
-#include "Sprite.h"
 
-class Material;
+// 描画関係
+#include "Sprite.h"
+#include "Material.h"
 
 // スプライトを描画するコンポーネント
 class CP_SpriteRenderer : public CP_Renderer

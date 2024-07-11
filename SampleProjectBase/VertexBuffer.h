@@ -1,24 +1,18 @@
 #pragma once
-#include "IBuffer.h"
+#include "Buffer_Base.h"
 
 //頂点バッファクラス
-class VertexBuffer : public IBuffer
+class VertexBuffer : public Buffer_Base
 {
-	/// @brief 頂点バッファ
-	Microsoft::WRL::ComPtr<ID3D11Buffer> pBuffer;
-
 public:
 	VertexBuffer() {}
 	~VertexBuffer() {}
 	
 	/// @brief 頂点バッファを作成
-	/// @param size サイズ
+	/// @param _allSize 全体のサイズ
+	/// @param _elementSize 要素のサイズ
 	/// @param pInitData 頂点データ
 	/// @return 成功フラグ
-	bool CreateBuffer(UINT size, void* pInitData) override;
-
-	/// @brief 頂点バッファを返す
-	/// @return 頂点バッファ
-	const ID3D11Buffer& GetBuffer()const override;
+	bool CreateBuffer(u_int _allSize, u_int _elementSize, void* pInitData)override;
 };
 

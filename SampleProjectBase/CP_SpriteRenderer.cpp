@@ -2,7 +2,9 @@
 #include "CP_SpriteRenderer.h"
 #include "ShaderCollection.h"
 
-#include "Material.h"
+// アセット関連
+#include "AssetSetter.h"
+#include "AssetGetter.h"
 
 #include "InSceneSystemManager.h"
 
@@ -35,9 +37,9 @@ void CP_SpriteRenderer::DrawSetup()
 	DirectionLParameter dirLightParam = sceneLights.GetDirectionParameter();
 	pVs.UpdateBuffer(2, &dirLightParam);
 
-	Texture& diffuseTex = pMaterial->GetDiffuseTexture();
+	Texture& pTex = pSprite->GetTexture();
 	pPs.UpdateBuffer(0, &materialParam);
-	pPs.SetTexture(0, &diffuseTex);
+	pPs.SetTexture(0, &pTex);
 
 	pVs.Bind();
 	pPs.Bind();
@@ -47,24 +49,17 @@ void CP_SpriteRenderer::MaterialSetup()
 {
 	// デフォルトでマテリアルを設定する
 	const std::string MATERIAL_NAME = "M_SpriteUnlit";
-	//AssetCollection* recol = AssetCollection::GetInstance();
-	//if (recol->GetImpotred(MATERIAL_NAME))	// デフォルトのマテリアルがある
-	//{
-	//	pMaterial = recol->GetResource<Material>(MATERIAL_NAME);
-	//}
-	//else		// ない
-	//{
-	//	// マテリアルを作成し、管理クラスにセット
-	//	std::unique_ptr<Material> createMaterial = std::make_unique<Material>();
+	
+	// 既に作成済みなら
+	if (AssetSetter::CheckImport<Material>(MATERIAL_NAME))
+	{
+		pMaterial = AssetGetter::GetAsset<Material>(MATERIAL_NAME);
+		return;
+	}
 
-	//	ShaderCollection* shCol = ShaderCollection::GetInstance();
-	//	VertexShader* pVs = shCol->GetVertexShader(shCol->defaultVS);
-	//	PixelShader* pPs = shCol->GetPixelShader(shCol->defaultPS);
-	//	createMaterial->SetVertexShader(pVs);
-	//	createMaterial->SetPixelShader(pPs);
-
-	//	pMaterial = AssetCollection::GetInstance()->SetResource<Material>(MATERIAL_NAME, std::move(createMaterial));
-	//}
+	// マテリアル作成し、アセットをセットする
+	std::unique_ptr<Material> pCreateMaterial = std::make_unique<Material>();
+	pMaterial = AssetSetter::SetAsset(MATERIAL_NAME, std::move(pCreateMaterial));
 }
 
 CP_SpriteRenderer& CP_SpriteRenderer::operator=(const CP_SpriteRenderer& _other)
@@ -91,15 +86,10 @@ void CP_SpriteRenderer::Draw()
 {
 	// 描画準備
 	DrawSetup();
-
-	/*pSprite->Draw();*/
 }
 
 void CP_SpriteRenderer::SetTexture(Texture& _texture)
 {
-	// マテリアルに渡す
-	pMaterial->SetDiffuseTexture(_texture);
-
 	// スプライトに渡す
 	pSprite->SetTexture(_texture);
 }

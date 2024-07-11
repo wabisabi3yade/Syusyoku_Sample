@@ -34,7 +34,7 @@ void SceneObjects::Update()
 	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
 	{
 		itr->second->UpdateBase();
-		itr->second->ImGuiSet();	
+		itr->second->ImGuiSet();
 	}
 
 #ifdef EDIT
@@ -67,10 +67,10 @@ void SceneObjects::Draw()
 
 
 	// ↓平行投影をさせる //
-	
+
 
 	//------------------//
-	
+
 	// 2D空間（UI）のオブジェクト
 	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
 	{
@@ -78,43 +78,26 @@ void SceneObjects::Draw()
 	}
 }
 
-GameObject* SceneObjects::SetObject(const std::string& _objectName, std::unique_ptr<GameObject> _objPtr)
+GameObject* SceneObjects::SetObject(std::unique_ptr<GameObject> _objPtr)
 {
-	// 既にオブジェクトの名前があるなら
-	u_int loop = 0;
-	std::string setName;	// セットするときの名前
+	// 名前が空か確認
+	CheckEmptyName(*_objPtr.get());
+
+	// 名前が重複しているか確認
+	CheckDuplicationName(*_objPtr.get(), objList);
+	CheckDuplicationName(*_objPtr.get(), uiList);
 
 	// セットするリスト（オブジェクト側かUIか）
 	ObjectList* setList = &objList;
 
-	if (_objPtr->GetLayer().GetType() == Layer::Type::UI)	// UIなら
-	{
+	// UIなら
+	if (IsUI(*_objPtr.get()))
 		setList = &uiList;	// UIリストにセットする
-	}
 
-	// 同じ名前のオブジェクトがあった場合名前の後ろに数字をつける
-	while (true)	// セットできるまで
-	{
-		std::string number = std::to_string(loop);
-		if (loop == 0)	// １回目は数字をつけないようにする
-		{
-			number = "";
-		}
-
-		setName = _objectName + number;	// オブジェクトの名前＋数字
-
-		auto itr = setList->find(setName);
-		if (itr == setList->end())	// 探して無かったら
-		{
-			break;	// ループを終わる
-		}
-
-		// あるなら
-		loop++;	// ループ回数を増やす
-	}
-
-	_objPtr->SetName(setName);	// オブジェクトに名前を設定
 	GameObject* retPtr = _objPtr.get();
+
+	// 配列に入れる
+	std::string setName = _objPtr->GetName();	
 	setList->insert(std::pair<std::string, std::unique_ptr<GameObject>>(setName, std::move(_objPtr)));
 
 	return retPtr;
@@ -141,5 +124,50 @@ void SceneObjects::DeleteObj(GameObject& _deleteObj)
 		uiList.erase(itr);	// 削除する
 		return;
 	}
+}
+
+void SceneObjects::CheckEmptyName(GameObject& _gameObject)
+{
+	if (_gameObject.GetName() != "") return;
+
+	_gameObject.SetName("Empty");
+}
+
+void SceneObjects::CheckDuplicationName(GameObject& _gameObject, Objects& _objects)
+{
+	std::string objName = _gameObject.GetName();
+
+	std::string setName;
+
+	// 同じ名前のオブジェクトがあった場合名前の後ろに数字をつける
+	u_int loop = 0;
+	while (true)	// セットできるまで
+	{
+		// オブジェクトの名前＋数字
+		std::string number = std::to_string(loop);
+		if (loop == 0)
+		{
+			number = "";
+		}
+		setName = objName + number;
+
+		auto itr = _objects.find(setName);
+		// 探して無かったら
+		if (itr == _objects.end())
+		{
+			break;	// ループを終わる
+		}
+
+		// あるなら
+		loop++;	// ループ回数を増やす
+	}
+
+	_gameObject.SetName(setName);
+}
+
+bool SceneObjects::IsUI(GameObject& _gameObject)
+{
+	Layer::Type layer = _gameObject.GetLayer().GetType();
+	return layer == Layer::Type::UI ? true : false;
 }
 

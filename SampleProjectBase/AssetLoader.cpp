@@ -237,7 +237,7 @@ Texture* AssetLoader::TextureLoad(const std::string& _filePath)
 	return returnPtr;
 }
 
-Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPathPath,
+Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPath,
 	const std::string& _texturePath)
 {
 	std::unique_ptr<Mesh_Base> pMeshGather = std::make_unique<Mesh_Base>();
@@ -247,13 +247,13 @@ Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPathPath,
 
 	// シーン情報を構築
 	const aiScene* pScene = importer.ReadFile(
-		_modelPathPath.c_str(),
+		_modelPath.c_str(),
 		aiProcess_ConvertToLeftHanded |	// 左手座標系に変換する
 		aiProcess_Triangulate);			// 三角形化する
 
 	if (pScene == nullptr)
 	{
-		ImGuiDebugLog::Add("読込失敗：" + _modelPathPath);
+		ImGuiDebugLog::Add("読込失敗：" + _modelPath);
 	}
 	assert(pScene != nullptr);
 
@@ -315,8 +315,6 @@ Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPathPath,
 
 			// 頂点データを追加
 			verticies.push_back(vertex);
-
-			pMeshGather->AddMesh(std::move(pCreateMesh));
 		}
 
 		// インデックスを取得する
@@ -334,9 +332,15 @@ Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPathPath,
 				indicies.push_back(face.mIndices[i]);
 		}
 
+		pMeshGather->AddMesh(std::move(pCreateMesh));
 	}
+	// 名前設定
+	std::string modelName = PathToFileName(_modelPath);
+	pMeshGather->SetName(modelName);
 
-	return nullptr;
+	Mesh_Base* pReturnMeshGather = SendAsset<Mesh_Base>(modelName, std::move(pMeshGather));
+
+	return pReturnMeshGather;
 }
 
 std::string AssetLoader::PathToFileName(const std::string& _pathName)

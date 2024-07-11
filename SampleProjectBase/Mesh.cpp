@@ -1,6 +1,12 @@
 #include "pch.h"
 #include "Mesh.h"
 
+Mesh::Mesh() : name(""), materialID(0)
+{
+	pVertexBuffer = std::make_unique<VertexBuffer>();
+	pIndexBuffer = std::make_unique<IndexBuffer>();
+}
+
 Mesh::Mesh(const Mesh& _other)
 {
 	Copy(_other);
@@ -10,6 +16,20 @@ Mesh& Mesh::operator=(const Mesh& _other)
 {
 	Copy(_other);
 	return *this;
+}
+
+void Mesh::InitBuffer()
+{
+	assert(static_cast<int>(verticies.size()) > 0 || 
+		static_cast<int>(indicies.size()) > 0);
+
+	// 頂点バッファ作成
+	u_int size = static_cast<u_int>(verticies.size() * sizeof(Vertex));
+	pVertexBuffer->CreateBuffer(size, 0, verticies.data());
+
+	// インデックスバッファ作成
+	size = static_cast<u_int>(indicies.size() * sizeof(u_int));
+	pIndexBuffer->CreateBuffer(size, 0, indicies.data());
 }
 
 std::vector<Vertex>& Mesh::GetVerticies()
@@ -50,6 +70,8 @@ void Mesh::Copy(const Mesh& _other)
 	indicies.clear();
 	for (u_int index : _other.indicies)
 		indicies.push_back(index);
+
+	InitBuffer();
 
 	name = _other.name;
 

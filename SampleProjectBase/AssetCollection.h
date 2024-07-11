@@ -5,14 +5,14 @@
 
 // 扱うアセットの型
 class Texture;
-class StaticMesh;
-class SkeletalMesh;
+class Mesh_Base;
 class Material;
 
 // アセット管理にアクセスするクラス
 class AssetLoader;
 class AssetGetter;
 class AssetDisplay;
+class AssetSetter;
 
 /*
 	命名規則　この後に_モデル名を入力(UE5に則る)
@@ -34,12 +34,13 @@ class AssetCollection
 	friend class AssetLoader;
 	friend class AssetGetter;
 	friend class AssetDisplay;
+	friend class AssetSetter;
 
 	/// @brief テクスチャのアセットリスト
 	AssetList textureAssets;
 
-	/// @brief スタティックメッシュのアセットリスト
-	AssetList SM_Assets;
+	/// @brief スタティック・スケルタルメッシュのアセットリスト
+	AssetList modelAssets;
 
 	/// @brief スケルタルメッシュのアセットリスト
 	AssetList SK_Assets;
@@ -148,13 +149,9 @@ inline AssetList& AssetCollection::GetAssetList()
 	if constexpr (std::is_same<T, Texture>::value)
 		return textureAssets;
 
-	// スタティックメッシュ
-	else if constexpr (std::is_same<T, StaticMesh>::value)
-		return SM_Assets;
-
-	// スケルタルメッシュ
-	else if constexpr (std::is_same<T, SkeletalMesh>::value)
-		return SK_Assets;
+	// スタティック・スケルタルメッシュメッシュ
+	else if constexpr (std::is_same<T, Mesh_Base>::value)
+		return modelAssets;
 
 	// マテリアル
 	else if constexpr (std::is_same<T, Material>::value)

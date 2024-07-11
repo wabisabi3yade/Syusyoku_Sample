@@ -84,6 +84,7 @@
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_widgets.cpp" />
     <ClCompile Include="AssetDisplay.cpp" />
     <ClCompile Include="AssetGetter.cpp" />
+    <ClCompile Include="AssetSetter.cpp" />
     <ClCompile Include="Asset_Base.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletMove.cpp" />
@@ -113,7 +114,7 @@
     <ClCompile Include="Direct3D11.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="AssetContacter.cpp" />
-    <ClCompile Include="IBuffer.cpp" />
+    <ClCompile Include="Buffer_Base.cpp" />
     <ClCompile Include="ImGuiDebugLog.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="InputClass.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="..\ThirdParty\imgui\include\imstb_truetype.h" />
     <ClInclude Include="AssetDisplay.h" />
     <ClInclude Include="AssetGetter.h" />
+    <ClInclude Include="AssetSetter.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletMove.h" />
     <ClInclude Include="CameraInput.h" />
@@ -223,7 +225,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Asset_Base.h" />
     <ClInclude Include="AssetContacter.h" />
-    <ClInclude Include="IBuffer.h" />
+    <ClInclude Include="Buffer_Base.h" />
     <ClInclude Include="ImGuiDebugLog.h" />
     <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="InputClass.h" />

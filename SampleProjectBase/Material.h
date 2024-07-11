@@ -41,9 +41,6 @@ class Material : public Asset_Base
 	
 	/// @brief ピクセルシェーダー
 	PixelShader* pPixelShader;	
-
-	/// @brief 名前
-	std::string name;
 public:
 	Material();
 	~Material();
@@ -68,10 +65,6 @@ public:
 	// 各テクスチャをセット
 	void SetDiffuseTexture(Texture& _diffuseTex);
 	void SetNormalTexture(Texture& _normalTex) { pNormalTexture = &_normalTex; }
-
-	/// @brief 名前をセット
-	/// @param _name セットする名前
-	void SetName(const std::string& _name) { name = _name; }
 
 	VertexShader& GetVertexShader()const { return *pVertexShader; }
 	PixelShader& GetPixelShader()const { return *pPixelShader; }

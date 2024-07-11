@@ -1,14 +1,14 @@
 #include "pch.h"
 #include "VertexBuffer.h"
 
-bool VertexBuffer::CreateBuffer(UINT size, void* pInitData)
+bool VertexBuffer::CreateBuffer(u_int _allSize, u_int _elementSize, void* pInitData)
 {
 	auto pDevice = Direct3D11::GetInstance()->GetRenderer()->GetDevice();
 
 	D3D11_BUFFER_DESC desc;
 
 	// 頂点バッファの初期化設定
-	desc.ByteWidth = size;
+	desc.ByteWidth = _allSize;
 	desc.Usage = D3D11_USAGE_DEFAULT;
 	desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	desc.CPUAccessFlags = 0;
@@ -23,18 +23,10 @@ bool VertexBuffer::CreateBuffer(UINT size, void* pInitData)
 	data.SysMemSlicePitch = 0;
 
 	// 頂点バッファの生成
-	ID3D11Buffer* buffer = pBuffer.Get();
-	HRESULT hr = pDevice->CreateBuffer(&desc, &data, &buffer);
+	HRESULT hr = pDevice->CreateBuffer(&desc, &data, &pBuffer);
 	
 	if (FAILED(hr))
 		return false;
 	
 	return true;
-}
-
-const ID3D11Buffer& VertexBuffer::GetBuffer()const
-{
-	assert(pBuffer != NULL || "頂点バッファ取得失敗");
-
-	return *pBuffer.Get();
 }

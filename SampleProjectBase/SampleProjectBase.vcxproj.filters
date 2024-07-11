@@ -382,6 +382,9 @@
     <Filter Include="ソース ファイル\Graphics\Buffer\Interface">
       <UniqueIdentifier>{e51dfb6c-9168-4783-bdb0-0997e7af955a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Asset\Set">
+      <UniqueIdentifier>{9fd6fdb1-928a-4b90-84b7-151791e0d456}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Basic.hlsl">
@@ -713,7 +716,7 @@
     <ClCompile Include="AssetContacter.cpp">
       <Filter>ソース ファイル\Asset\IAssetContacter</Filter>
     </ClCompile>
-    <ClCompile Include="IBuffer.cpp">
+    <ClCompile Include="Buffer_Base.cpp">
       <Filter>ソース ファイル\Graphics\Buffer\Interface</Filter>
     </ClCompile>
     <ClCompile Include="VertexBuffer.cpp">
@@ -721,6 +724,9 @@
     </ClCompile>
     <ClCompile Include="IndexBuffer.cpp">
       <Filter>ソース ファイル\Graphics\Buffer\Index</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetSetter.cpp">
+      <Filter>ソース ファイル\Asset\Set</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1045,7 +1051,7 @@
     <ClInclude Include="AssetContacter.h">
       <Filter>ソース ファイル\Asset\IAssetContacter</Filter>
     </ClInclude>
-    <ClInclude Include="IBuffer.h">
+    <ClInclude Include="Buffer_Base.h">
       <Filter>ソース ファイル\Graphics\Buffer\Interface</Filter>
     </ClInclude>
     <ClInclude Include="VertexBuffer.h">
@@ -1053,6 +1059,9 @@
     </ClInclude>
     <ClInclude Include="IndexBuffer.h">
       <Filter>ソース ファイル\Graphics\Buffer\Index</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetSetter.h">
+      <Filter>ソース ファイル\Asset\Set</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

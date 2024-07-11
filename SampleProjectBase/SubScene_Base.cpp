@@ -59,8 +59,11 @@ SubScene_Base::SubScene_Base(SceneMoveInfo* _pSceneMoveInfo)
 	// カメラ設定
 	Camera* camPtr = mainCamera.get();
 	GameMode::GetInstance()->SetCamera(*camPtr);	// ゲームモードにカメラを設定する
+
+	camPtr->SetName("MainCamera");
+
 	SceneObjects& sceneObjects = systemManager->GetSceneObjects();
-	sceneObjects.SetObject("MainCamera", std::move(mainCamera));
+	sceneObjects.SetObject(std::move(mainCamera));
 }
 
 SubScene_Base::~SubScene_Base()

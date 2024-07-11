@@ -84,7 +84,7 @@ public:
 	// Jsonファイルからロードする
 	//void FromJsonBase(const nlohmann::json& _jsonData);	
 
-	void SetName(const std::string& _name) { name = _name; }
+	void SetName(const std::string& _name);
 	void SetActive(bool _isActive);
 
 	const std::string& GetName() { return name; }const

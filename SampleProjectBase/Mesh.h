@@ -1,5 +1,9 @@
 #pragma once
 
+// バッファ
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
+
 // メッシュクラス
 class Mesh
 {
@@ -7,8 +11,14 @@ protected:
 	/// @brief 頂点データ
 	std::vector<Vertex> verticies;
 
+	/// @brief 頂点バッファ
+	std::unique_ptr<VertexBuffer> pVertexBuffer;
+
 	/// @brief インデックス
 	std::vector<u_int> indicies;
+
+	/// @brief インデックスバッファ
+	std::unique_ptr<IndexBuffer> pIndexBuffer;
 
 	/// @brief 名前
 	std::string name;
@@ -17,15 +27,18 @@ protected:
 	u_int materialID;
 
 public:
-	Mesh() : name(""), materialID(0) {}
+	Mesh();
 	Mesh(const Mesh& _other);
-	virtual ~Mesh() {}
+	~Mesh() {}
 
 	Mesh& operator=(const Mesh& _other);
 
+	/// @brief バッファの初期化
+	void InitBuffer();
+
 	/// @brief 頂点データを取得
 	/// @return 頂点データ
-	std::vector<Vertex>& GetVerticies();
+	std::vector<Vertex>& GetVerticies(); 
 
 	/// @brief インデックスを取得
 	/// @return インデックスデータ

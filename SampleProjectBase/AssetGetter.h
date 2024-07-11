@@ -17,5 +17,5 @@ public:
 template<HashiTaku::AssetType T>
 inline T* AssetGetter::GetAsset(const std::string& _assetName)
 {
-	return pAssetCollection->GetAsset(_assetName);
+	return pAssetCollection->GetAsset<T>(_assetName);
 }

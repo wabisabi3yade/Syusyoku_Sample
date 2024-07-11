@@ -74,5 +74,11 @@ private:	// 便利関数
 template<class T>
 inline T* AssetLoader::SendAsset(const std::string& _assetName, std::unique_ptr<T> _pAsset)
 {
+	// 既にインポートされているなら
+	if (pAssetCollection->CheckImport<T>(_assetName))
+	{
+		return pAssetCollection->GetAsset<T>(_assetName);
+	}
+
 	return pAssetCollection->SetAsset<T>(_assetName, std::move(_pAsset));
 }

@@ -148,6 +148,12 @@ void GameObject::ImGuiSet()
 }
 
 
+void GameObject::SetName(const std::string& _name)
+{
+	if (_name == "") return;
+	name = _name;
+}
+
 void GameObject::SetActive(bool _isActive)
 {
 	if (isActive == _isActive) return;	// “¯‚¶ó‘Ô‚É•Ï‚¦‚æ‚¤‚Æ‚·‚é‚È‚çI‚í‚é

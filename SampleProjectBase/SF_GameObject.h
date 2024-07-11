@@ -1,10 +1,24 @@
 #pragma once
 
 class GameObject;
-// ゲームオブジェクト関連
+
+// シーン内関数
 namespace SceneFunction
 {
-	// オブジェクトを作成する
-	GameObject& CreateObject(const GameObject& _obj, DirectX::SimpleMath::Vector3 _worldPos);
+	// オブジェクト
+	namespace Object
+	{
+		/// @brief オブジェクトを新しく生成する
+		/// @param _obj 対象オブジェクト
+		/// @param _worldPos 生成する座標
+		/// @return 
+		GameObject& Instantiate(const GameObject& _obj, const DirectX::SimpleMath::Vector3& _worldPos);
+
+		/// @brief 
+		/// @param _objectName 
+		/// @return 
+		GameObject& CreateEmpty(std::string _objectName);
+	}
+	
 }
 

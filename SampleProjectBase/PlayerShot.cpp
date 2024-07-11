@@ -22,5 +22,5 @@ void PlayerShot::Shot()
 	Vector3 shotPos = GetTransform().position + shotVec * shotDistance;
 
 	// íeê∂ê¨
-	Bullet* createBullet = static_cast<Bullet*>(&CreateObject(*bullet, shotPos));
+	Bullet* createBullet = static_cast<Bullet*>(&Object::Instantiate(*bullet, shotPos));
 }
