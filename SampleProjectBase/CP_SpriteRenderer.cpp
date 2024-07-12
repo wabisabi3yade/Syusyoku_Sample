@@ -8,9 +8,23 @@
 
 #include "InSceneSystemManager.h"
 
-void CP_SpriteRenderer::Copy(const CP_SpriteRenderer& _other)
+void CP_SpriteRenderer::MaterialSetup()
 {
+	// デフォルトでマテリアルを設定する
+	const std::string MATERIAL_NAME = "M_SpriteUnlit";
+
+	// 既に作成済みなら
+	if (AssetSetter::CheckImport<Material>(MATERIAL_NAME))
+	{
+		pMaterial = AssetGetter::GetAsset<Material>(MATERIAL_NAME);
+		return;
+	}
+
+	// マテリアル作成し、アセットをセットする
+	std::unique_ptr<Material> pCreateMaterial = std::make_unique<Material>();
+	pMaterial = AssetSetter::SetAsset(MATERIAL_NAME, std::move(pCreateMaterial));
 }
+
 
 void CP_SpriteRenderer::DrawSetup()
 {
@@ -37,30 +51,21 @@ void CP_SpriteRenderer::DrawSetup()
 	DirectionLParameter dirLightParam = sceneLights.GetDirectionParameter();
 	pVs.UpdateBuffer(2, &dirLightParam);
 
-	Texture& pTex = pSprite->GetTexture();
 	pPs.UpdateBuffer(0, &materialParam);
+
+	Texture& pTex = pSprite->GetTexture();
 	pPs.SetTexture(0, &pTex);
 
 	pVs.Bind();
 	pPs.Bind();
 }
 
-void CP_SpriteRenderer::MaterialSetup()
+void CP_SpriteRenderer::DrawMesh()
 {
-	// デフォルトでマテリアルを設定する
-	const std::string MATERIAL_NAME = "M_SpriteUnlit";
-	
-	// 既に作成済みなら
-	if (AssetSetter::CheckImport<Material>(MATERIAL_NAME))
-	{
-		pMaterial = AssetGetter::GetAsset<Material>(MATERIAL_NAME);
-		return;
-	}
 
-	// マテリアル作成し、アセットをセットする
-	std::unique_ptr<Material> pCreateMaterial = std::make_unique<Material>();
-	pMaterial = AssetSetter::SetAsset(MATERIAL_NAME, std::move(pCreateMaterial));
+
 }
+
 
 CP_SpriteRenderer& CP_SpriteRenderer::operator=(const CP_SpriteRenderer& _other)
 {
@@ -97,4 +102,9 @@ void CP_SpriteRenderer::SetTexture(Texture& _texture)
 void CP_SpriteRenderer::SetMaterial(Material& _material)
 {
 	pMaterial = &_material;
+}
+
+
+void CP_SpriteRenderer::Copy(const CP_SpriteRenderer& _other)
+{
 }

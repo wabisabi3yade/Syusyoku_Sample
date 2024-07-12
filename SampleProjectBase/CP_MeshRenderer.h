@@ -13,7 +13,7 @@ class CP_MeshRenderer : public CP_Renderer
 	const RenderParam::WVP WVPSetup();
 
 	// ƒ}ƒeƒŠƒAƒ‹‚Ì•`‰æ€”õ
-	void MeshDraw(u_int _meshIdx, RenderParam::WVP& _wvp);
+	/*void MeshDraw(u_int _meshIdx, RenderParam::WVP& _wvp);*/
 public:
 	using CP_Renderer::CP_Renderer;
 	void Init();

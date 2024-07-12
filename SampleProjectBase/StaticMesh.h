@@ -7,7 +7,7 @@ class StaticMesh :
 {
 
 public:
-    StaticMesh() {}
+    StaticMesh() : Mesh_Base(Type::SM) {}
     ~StaticMesh() {}
 };
 

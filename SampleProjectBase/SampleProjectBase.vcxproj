@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -93,6 +93,7 @@
     <ClCompile Include="CP_BoxCollider.cpp" />
     <ClCompile Include="CP_Collider.cpp" />
     <ClCompile Include="CP_MeshRenderer.cpp" />
+    <ClCompile Include="CP_Renderer.cpp" />
     <ClCompile Include="CP_SphereCollider.cpp" />
     <ClCompile Include="CP_SpriteRenderer.cpp" />
     <ClCompile Include="DirectionLight.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="CP_BoxCollider.h" />
     <ClInclude Include="CP_Collider.h" />
     <ClInclude Include="CP_MeshRenderer.h" />
+    <ClInclude Include="CP_Renderer.h" />
     <ClInclude Include="CP_SphereCollider.h" />
     <ClInclude Include="CP_SpriteRenderer.h" />
     <ClInclude Include="DirectionLight.h" />

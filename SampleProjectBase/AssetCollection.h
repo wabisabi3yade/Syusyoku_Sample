@@ -61,6 +61,9 @@ class AssetCollection
 	/// @return アセットのポインタ
 	template<class T> T* GetAsset(const std::string& _assetName);
 public:
+	AssetCollection() {}
+	~AssetCollection() {}
+
 
 	/// @brief アセットがインポートされているか確認
 	/// @tparam T アセットの型名

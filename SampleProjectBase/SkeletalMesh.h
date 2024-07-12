@@ -7,7 +7,7 @@ class SkeletalMesh :
 {
 
 public:
-    SkeletalMesh() {}
+    SkeletalMesh() : Mesh_Base(Type::SK) {}
     ~SkeletalMesh() {}
 };
 

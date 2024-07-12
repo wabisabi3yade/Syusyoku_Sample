@@ -26,10 +26,13 @@ protected:
 	/// @brief マテリアルインデックス
 	u_int materialID;
 
+	/// @brief トポロジー
+	D3D11_PRIMITIVE_TOPOLOGY topology;
+
 public:
 	Mesh();
 	Mesh(const Mesh& _other);
-	~Mesh() {}
+	virtual ~Mesh() {}
 
 	Mesh& operator=(const Mesh& _other);
 
@@ -40,13 +43,21 @@ public:
 	/// @return 頂点データ
 	std::vector<Vertex>& GetVerticies(); 
 
+	/// @brief 頂点バッファを取得
+	/// @return 頂点バッファ
+	const ID3D11Buffer& GetVertexBuffer() const;
+
+	/// @brief インデックスバッファを取得
+	/// @return インデックスバッファ
+	const ID3D11Buffer& GetIndexBuffer() const;
+
 	/// @brief インデックスを取得
 	/// @return インデックスデータ
 	std::vector<u_int>& GetIndicies();
 
 	/// @brief インデックス数を取得
 	/// @return インデックス数
-	u_int GetIndexNum();
+	u_int GetIndexNum() const;
 
 	/// @brief 名前を設定する
 	/// @param _name 名前

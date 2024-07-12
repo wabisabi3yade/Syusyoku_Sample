@@ -14,13 +14,14 @@ class CP_SpriteRenderer : public CP_Renderer
 	// マテリアル
 	Material* pMaterial;
 
-	void Copy(const CP_SpriteRenderer& _other);
+	// マテリアルの準備
+	void MaterialSetup();
 
 	// 描画準備
 	void DrawSetup();
 
-	// マテリアルの準備
-	void MaterialSetup();
+	/// @brief メッシュを描画
+	void DrawMesh();
 public:
 	using CP_Renderer::CP_Renderer;
 
@@ -33,5 +34,9 @@ public:
 	void SetTexture(Texture& _texture);
 
 	void SetMaterial(Material& _material);
+
+private:
+
+	void Copy(const CP_SpriteRenderer& _other);
 };
 

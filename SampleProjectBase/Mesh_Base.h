@@ -9,16 +9,29 @@
 // メッシュ集合体（スケルタル・スタティックメッシュ）の基底クラス
 class Mesh_Base : public Asset_Base
 {
+public:
+
+	/// @brief メッシュの種類
+	enum class Type
+	{
+		SM,	// スタティックメッシュ
+		SK,	// スケルタルメッシュ
+		None	// 設定なし
+	};
+private:
 	/// @brief メッシュ配列
 	std::vector<std::unique_ptr<Mesh>> pMeshes;
 
 	/// @brief マテリアル配列
 	std::vector<Material*> pMaterials;
+
+	Type meshType;
 public:
+	Mesh_Base() : meshType(Type::None) {}
 
 	/// @brief コンストラクタ
-	/// @param _assetType アセットの種類
-	Mesh_Base() {}
+	/// @param _meshType メッシュの種類
+	Mesh_Base(Type _meshType) : meshType(_meshType) {}
 	virtual ~Mesh_Base() {}
 	
 	/// @brief メッシュを追加

@@ -2,6 +2,9 @@
 
 class AssetCollection;
 
+// アセット管理をセットできるクラスを指定
+class MainApplication;
+
 // アセットの型名
 class Texture;
 class StaticMesh;
@@ -18,15 +21,15 @@ namespace HashiTaku
 		std::is_same_v<T, SkeletalMesh> || std::is_same_v<T, Material>;
 }
 
-// アセット管理にアクセスするクラスの基底クラスs
+// アセット管理にアクセスするクラスの基底クラス
 class AssetContacter
 {
-protected:
-	/// @brief アセット管理のクラス
-	static AssetCollection* pAssetCollection;
+	friend class MainApplication;
 
-public:
 	/// @brief アセット管理クラスを設定
 	/// @param _assetCollection アセット管理クラスの参照
 	static void SetAssetCollection(AssetCollection& _assetCollection);
+protected:
+	/// @brief アセット管理のクラス
+	static AssetCollection* pAssetCollection;	
 };

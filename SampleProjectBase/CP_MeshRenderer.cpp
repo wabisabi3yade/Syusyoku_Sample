@@ -19,33 +19,33 @@ const RenderParam::WVP CP_MeshRenderer::WVPSetup()
 	return wvp;
 }
 
-void CP_MeshRenderer::MeshDraw(u_int _meshIdx, RenderParam::WVP& _wvp)
-{
-	//RenderMesh& renderMesh = renderMeshes[_meshIdx];
-
-	//// シェーダーの設定
-	//Material& useMaterial = *pMaterials[renderMesh.materialID];
-	//VertexShader& pVs = useMaterial.GetVertexShader();
-	//PixelShader& pPs = useMaterial.GetPixelShader();
-
-	//pVs.UpdateBuffer(0, &_wvp);
-
-	//MaterialParameter& materialParam = useMaterial.GetMaterialParameter();
-	//pVs.UpdateBuffer(1, &materialParam);
-
-	//// ディレクションライトの情報を取得
-	//SceneLights& sceneLights = InSceneSystemManager::GetInstance()->GetSceneLights();
-	//DirectionLParameter dirLightParam = sceneLights.GetDirectionParameter();
-	//pVs.UpdateBuffer(2, &dirLightParam);
-
-	//pPs.UpdateBuffer(0, &materialParam);
-
-	//pVs.Bind();
-	//pPs.Bind();
-
-	//// 描画
-	//renderMesh.pMesh->Draw();
-}
+//void CP_MeshRenderer::MeshDraw(u_int _meshIdx, RenderParam::WVP& _wvp)
+//{
+//	//RenderMesh& renderMesh = renderMeshes[_meshIdx];
+//
+//	//// シェーダーの設定
+//	//Material& useMaterial = *pMaterials[renderMesh.materialID];
+//	//VertexShader& pVs = useMaterial.GetVertexShader();
+//	//PixelShader& pPs = useMaterial.GetPixelShader();
+//
+//	//pVs.UpdateBuffer(0, &_wvp);
+//
+//	//MaterialParameter& materialParam = useMaterial.GetMaterialParameter();
+//	//pVs.UpdateBuffer(1, &materialParam);
+//
+//	//// ディレクションライトの情報を取得
+//	//SceneLights& sceneLights = InSceneSystemManager::GetInstance()->GetSceneLights();
+//	//DirectionLParameter dirLightParam = sceneLights.GetDirectionParameter();
+//	//pVs.UpdateBuffer(2, &dirLightParam);
+//
+//	//pPs.UpdateBuffer(0, &materialParam);
+//
+//	//pVs.Bind();
+//	//pPs.Bind();
+//
+//	//// 描画
+//	//renderMesh.pMesh->Draw();
+//}
 
 void CP_MeshRenderer::Init()
 {

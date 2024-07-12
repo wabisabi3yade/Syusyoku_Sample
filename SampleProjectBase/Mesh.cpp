@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Mesh.h"
 
-Mesh::Mesh() : name(""), materialID(0)
+Mesh::Mesh() : name(""), materialID(0), topology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
 {
 	pVertexBuffer = std::make_unique<VertexBuffer>();
 	pIndexBuffer = std::make_unique<IndexBuffer>();
@@ -37,12 +37,22 @@ std::vector<Vertex>& Mesh::GetVerticies()
 	return verticies;
 }
 
+const ID3D11Buffer& Mesh::GetVertexBuffer() const
+{
+	return pVertexBuffer->GetBuffer();
+}
+
+const ID3D11Buffer& Mesh::GetIndexBuffer() const
+{
+	return pIndexBuffer->GetBuffer();
+}
+
 std::vector<u_int>& Mesh::GetIndicies()
 {
 	return indicies;
 }
 
-u_int Mesh::GetIndexNum()
+u_int Mesh::GetIndexNum() const
 {
 	return static_cast<u_int>(indicies.size());
 }
@@ -71,9 +81,10 @@ void Mesh::Copy(const Mesh& _other)
 	for (u_int index : _other.indicies)
 		indicies.push_back(index);
 
+	// バッファ作成
 	InitBuffer();
 
 	name = _other.name;
-
 	materialID = _other.materialID;
+	topology = _other.topology;
 }
