@@ -1,5 +1,5 @@
 #include "Model.h"
-#include "Mesh.h"
+#include "SingleMesh.h"
 #include "Material.h"
 
 // assimpƒ‰ƒCƒuƒ‰ƒŠ“Ç

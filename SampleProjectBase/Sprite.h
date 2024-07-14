@@ -1,6 +1,6 @@
 #pragma once
 #include "Texture.h"
-#include "Mesh.h"
+#include "PlaneMesh.h"
 
 class Material;
 
@@ -11,14 +11,20 @@ class Sprite
 	Texture* pTexture;	
 
 	/// @brief 四角形ポリゴン
-	std::unique_ptr<Mesh> pSquareMesh;
+	std::unique_ptr<PlaneMesh> pSquareMesh;
+
+	/// @brief uv座標の始点(左上)
+	DirectX::SimpleMath::Vector2 uvStart;
+
+	/// @brief uv座標の終点(右下)
+	DirectX::SimpleMath::Vector2 uvEnd;
+
+	/// @brief uvの分割数
+	DirectX::SimpleMath::Vector2 uvDivideNum;
 
 	/// @brief コピー関数
 	/// @param _other コピーされる対象
 	void Copy(const Sprite& _other);
-
-	/// @brief 四角ポリゴンを作成
-	void MakeSquare();
 public:
 	Sprite();
 	Sprite(const Sprite& _other);
@@ -26,7 +32,20 @@ public:
 
 	Sprite& operator=(const Sprite& _other);
 
-	void SetTexture(Texture& _tex) { pTexture = &_tex; }
+	/// @brief テクスチャをセット
+	/// @param _tex テクスチャの参照
+	void SetTexture(Texture& _tex);
 
-	Texture& GetTexture()const { return *pTexture; }
+	/// @brief テクスチャを取得
+	/// @return テクスチャの参照
+	Texture& GetTexture() const;
+
+	/// @brief 四角形ポリゴンを取得
+	/// @return 四角形ポリゴンのconst参照
+	const PlaneMesh& GetSquare() const;
+
+	/// @brief uv座標を設定
+	/// @param _uvStart uv座標始点
+	/// @param _uvEnd uv座標終点
+	void SetUV(const DirectX::SimpleMath::Vector2& _uvStart, const DirectX::SimpleMath::Vector2& _uvEnd);
 };

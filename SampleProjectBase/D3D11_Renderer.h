@@ -7,6 +7,8 @@ class Sampler;
 class SetUpPerspectiveProj;
 class SetUpViewTrans;
 
+constexpr u_int RASTERIZE_NUM(3);
+
 // Direct3D11の描画クラス
 class D3D11_Renderer : public IGetRenderResource
 {
@@ -19,7 +21,7 @@ private:
 	// デバイス＝DirectXの各種機能を作る
 	Microsoft::WRL::ComPtr<ID3D11Device> pD3DDevice;
 	// コンテキスト＝描画関連を司る機能
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext> pImmediateContext;
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> pDeviceContext;
 	// スワップチェイン＝ダブルバッファ機能
 	Microsoft::WRL::ComPtr<IDXGISwapChain> pSwapChain;
 	// レンダーターゲット＝描画先を表す機能
@@ -28,6 +30,8 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> pDepthStencilTexture;
 	// 深度バッファ
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> pDepthStencilView;
+	// ラスタライザ
+	Microsoft::WRL::ComPtr<ID3D11RasterizerState> pRasterizerStates[RASTERIZE_NUM];
 
 	std::vector<D3D11_VIEWPORT> viewPorts;	// ビューポート
 
@@ -55,10 +59,12 @@ public:
 
 	void Swap();    //バックバッファをフロントバッファ(画面)へ表示
 
+	void SetCullingMode(D3D11_CULL_MODE _cullMode);
+
 	// 描画の情報を取得
 	RenderParam& GetParameter() override;
 	ID3D11Device* GetDevice()const override { return pD3DDevice.Get(); }
-	ID3D11DeviceContext* GetDeviceContext() override { return pImmediateContext.Get(); }
+	ID3D11DeviceContext* GetDeviceContext() override { return pDeviceContext.Get(); }
 	// ビューポートを取得（どのビューポートを指定）
 	const D3D11_VIEWPORT& GetViewPort(u_int _slot) { return viewPorts[_slot]; }
 	u_int GetViewPortNum() { return static_cast<u_int>(viewPorts.size()); }

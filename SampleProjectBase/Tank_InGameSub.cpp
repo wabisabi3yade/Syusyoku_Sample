@@ -10,6 +10,7 @@ constexpr u_int SPHERE_NUM(1);
 constexpr u_int CUBE_NUM(2);
 
 using namespace SceneFunction;
+namespace fs = std::filesystem;
 
 Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveInfo)
 {
@@ -17,7 +18,7 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 
 	std::vector<std::string> texturePath =
 	{
-		{"assets/texture/Grass.png"}
+		{"assets/texture/an.jpg"}
 	};
 	for (auto texPath : texturePath)
 	{
@@ -25,9 +26,25 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 		pTextures.push_back(pTex);
 	}
 
-	GameObject& gameObject = Object::CreateEmpty("Ground");
-	CP_SpriteRenderer* pSpriteRenderer = gameObject.AddComponent<CP_SpriteRenderer>();
+	std::vector<Mesh_Base*> pModels;
+	std::vector<std::string> SMPaths =
+	{
+		{"assets/model/spot/spot.fbx"}
+	};
+	for (auto modelPath : SMPaths)
+	{
+		fs::path path = modelPath;
+		Mesh_Base* pSM = AssetLoader::ModelLoad(modelPath, 1.0f, true);
+		pModels.push_back(pSM);
+	}
+
+	GameObject* gameObject = &Object::CreateEmpty("Ground");
+	CP_SpriteRenderer* pSpriteRenderer = gameObject->AddComponent<CP_SpriteRenderer>();
 	pSpriteRenderer->SetTexture(*pTextures[0]);
+
+	gameObject = &Object::CreateEmpty("Cube");
+	CP_MeshRenderer* pMeshRenderer = gameObject->AddComponent<CP_MeshRenderer>();
+	pMeshRenderer->SetRenderMesh(*pModels[0]);
 
 	/*Model* model = nullptr;
 	Texture* tex = nullptr;*/

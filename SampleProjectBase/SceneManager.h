@@ -13,8 +13,12 @@ class SceneManager :public Singleton_Base<SceneManager>
 	BroadScene_Base* pNowBroadScene = nullptr;	// 今実行している大局シーン
 	ChangeBroadScene* pChaneBroad = nullptr;	// 大局シーンを遷移するクラス
 	SceneMoveInfo* pMoveInfo;	// シーン遷移情報
+
 	SceneManager();
 	~SceneManager();
+
+	/// @brief アセットの準備
+	void AssetSetup();
 
 	void CheckChangeBroad();	// シーンを遷移するか確認する
 
@@ -25,5 +29,12 @@ public:
 
 	// 実行関数
 	void Exec();
+
+private:
+	/// @brief マテリアルの準備
+	void MaterialSetup();
+
+	/// @brief メッシュの準備
+	void BasicMeshSetup();
 };
 

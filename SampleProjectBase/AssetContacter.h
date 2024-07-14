@@ -7,6 +7,7 @@ class MainApplication;
 
 // アセットの型名
 class Texture;
+class Mesh_Base;
 class StaticMesh;
 class SkeletalMesh;
 class Material;
@@ -17,8 +18,9 @@ namespace HashiTaku
 	// コンセプトで取得できるリソースの型を指定
 	template<typename T>
 	concept AssetType =
-		std::is_same_v<T, Texture> || std::is_same_v<T, StaticMesh> ||
-		std::is_same_v<T, SkeletalMesh> || std::is_same_v<T, Material>;
+		std::is_same_v<T, Texture> || std::is_same_v<T, Mesh_Base> ||
+		std::is_same_v<T, StaticMesh> || std::is_same_v<T, SkeletalMesh> || 
+		std::is_same_v<T, Material>;
 }
 
 // アセット管理にアクセスするクラスの基底クラス

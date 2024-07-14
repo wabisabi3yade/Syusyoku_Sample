@@ -5,15 +5,22 @@
 #include "Tank_ChangeSub.h"
 #include "SceneMoveInfo.h"
 #include "ShaderCollection.h"
-#include "Geometory.h"
+
 #include "InSceneSystemManager.h"
+
+// アセット初期化
+#include "AssetSetter.h"
+#include "Geometory.h"
+#include "Material.h"
+#include "StaticMesh.h"
+#include "Cube.h"
 
 SceneManager* SceneManager::pInstance = nullptr;	// インスタンスの初期化
 
 SceneManager::SceneManager()
 {
-	Geometory::Init();	// 基本オブジェクトの初期化
-
+	AssetSetup();
+	
 	// 初期シーンの情報
 	int initSub = Tank_ChangeSub::Scene::InGame;
 	BroadType::Type initBroad = BroadType::Tank;
@@ -30,6 +37,15 @@ SceneManager::SceneManager()
 SceneManager::~SceneManager()
 {
 	Release();
+}
+
+void SceneManager::AssetSetup()
+{
+	// デフォであるマテリアルを作成
+	MaterialSetup();
+
+	// 基本オブジェクトの初期化
+	Geometory::Init();
 }
 
 void SceneManager::CheckChangeBroad()
@@ -58,4 +74,11 @@ void SceneManager::Exec()
 
 	// シーン遷移するかどうか確認
 	CheckChangeBroad();
+}
+
+void SceneManager::MaterialSetup()
+{
+	// Unlitマテリアル作成
+	std::unique_ptr<Material> pUnlit = std::make_unique<Material>();
+	AssetSetter::SetAsset("M_Unlit", std::move(pUnlit));
 }

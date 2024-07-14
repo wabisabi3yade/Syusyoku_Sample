@@ -43,15 +43,8 @@ class Material : public Asset_Base
 	PixelShader* pPixelShader;	
 public:
 	Material();
+	Material(const std::string& _vsName, const std::string& _psName);
 	~Material();
-
-	/// @brief 頂点シェーダーセット
-	/// @param _vs 頂点シェーダー
-	void SetVertexShader(VertexShader* _vs) { pVertexShader = _vs; }
-
-	/// @brief  ピクセルシェーダーセット
-	/// @param _ps ピクセルシェーダー
-	void SetPixelShader(PixelShader* _ps) { pPixelShader = _ps; }
 	
 	// マテリアル・各パラメータをセット
 	void SetMaterialParameter(const MaterialParameter& _mat) { parameter = _mat; }
@@ -75,5 +68,9 @@ public:
 	Texture& GetNormalTexture()const { return *pNormalTexture; }
 
 	void ImGuiSetting();
+
+private:
+	/// @brief マテリアルのパラメータ初期化
+	void InitParameter();
 };
 

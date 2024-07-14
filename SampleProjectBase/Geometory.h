@@ -1,10 +1,10 @@
 #pragma once
-#include "Cube.h"
-#include "DebugCube.h"
-#include "Sphere.h"
 
+// 描画
+class StaticMesh;
 class Material;
 
+// 当たり判定の描画などを手軽にするクラス
 class Geometory
 {	
 	// トランスフォーム
@@ -17,14 +17,13 @@ class Geometory
 	static DirectX::SimpleMath::Color color;	
 
 	// キューブ
-	static Cube* pCube;	
-	
-	// 球
-	static Sphere* pSphere;	
+	static StaticMesh* pCube;	
 
 	// デバッグのキューブ 
-	static std::unique_ptr<DebugCube> pDebugCube;
-
+	static StaticMesh* pDebugCube;
+	
+	// 球
+	static StaticMesh* pSphere;
 
 	Geometory() {};
 	~Geometory() {};
@@ -55,5 +54,12 @@ public:
 	static void DrawCube(bool _isWireFrame = false);	// キューブ描画
 
 	static void DrawSphere(bool _isWireFrame = false);	// 球描画
+
+private:
+	/// @brief マテリアルを作成
+	static void MakeMaterial();
+
+	/// @brief キューブ作成
+	static void MakeCube();
 };
 

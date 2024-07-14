@@ -28,13 +28,13 @@ void Camera::UpdateViewMatrix()
 	}
 
 	// ビュー変換行列を求める
-	DirectX::SimpleMath::Matrix viewMatrix = DirectX::XMMatrixLookAtLH
+	Matrix viewMatrix = DirectX::XMMatrixLookAtLH
 	(
 		transform.position,		// カメラ座標
 		focusPos,	// 注視点
 		Vector3::Up // 上ベクトル
 	);
-	viewMatrix = DirectX::XMMatrixTranspose(viewMatrix);
+	viewMatrix =viewMatrix.Transpose();
 
 	// ビュー変換行列をセット
 	Direct3D11::GetInstance()->GetRenderer()->GetParameter().SetView(viewMatrix);
@@ -50,12 +50,12 @@ void Camera::UpdatePerspective(u_int _viewPortSlot)
 	float screenHeight = viewport.Height;
 
 	// ビュー変換行列を作成する
-	DirectX::XMMATRIX mat = DirectX::XMMatrixPerspectiveFovLH(
+	Matrix mat = DirectX::XMMatrixPerspectiveFovLH(
 		fov,
 		screenWidth / screenHeight,   // アスペクト比
 		nearZ,
 		farZ);
-	mat = XMMatrixTranspose(mat);
+	mat = mat.Transpose();
 
 	// 投影行列の参照を取得し、ビュー変換行列を代入する
 	RenderParam& param = renderer.GetParameter();

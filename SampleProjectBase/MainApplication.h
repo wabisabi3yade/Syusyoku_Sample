@@ -40,6 +40,9 @@ class MainApplication
 	/// @return 終了フラグ
 	static bool EscapeCheck();
 
+	/// @brief システム関連の描画
+	static void SystemDraw();
+
 public:
 
 	/// @brief 初期化

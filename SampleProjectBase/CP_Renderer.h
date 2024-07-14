@@ -1,18 +1,18 @@
 #pragma once
 #include "Component.h"
 
-class Mesh;
+// メッシュ
+class SingleMesh;
 
 // 描画コンポーネントのベース
 class CP_Renderer :
     public Component
 {
-
 protected:
 
     /// @brief メッシュを描画
     /// @param _mesh 描画するメッシュ
-    void MeshDraw(const Mesh& _mesh);
+    void DrawMesh(const SingleMesh& _mesh);
 public:
     using Component::Component;
 

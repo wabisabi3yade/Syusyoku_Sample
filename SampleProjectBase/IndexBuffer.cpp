@@ -30,3 +30,14 @@ bool IndexBuffer::CreateBuffer(u_int _allSize, u_int _elementSize, void* pInitDa
 
 	return true;
 }
+
+void IndexBuffer::SetGPU() const
+{
+	assert(pBuffer != NULL && "GPU送信でインデックスバッファがNULL");
+
+	ID3D11DeviceContext* pDevicecontext = 
+		Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
+
+	// インデックスバッファをセット
+	pDevicecontext->IASetIndexBuffer(pBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+}

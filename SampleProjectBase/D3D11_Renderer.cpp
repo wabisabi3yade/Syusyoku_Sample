@@ -100,7 +100,7 @@ bool D3D11_Renderer::InitDeviceAndSwapChain(HWND _hWnd)
 		&pSwapChain,
 		&pD3DDevice,
 		&level,
-		&pImmediateContext);
+		&pDeviceContext);
 
 	if (FAILED(hr)) // ifで上の関数が失敗してないか判定
 	{
@@ -166,7 +166,7 @@ bool D3D11_Renderer::InitBackBuffer()
 	dsDesc.Texture2D.MipSlice = 0;
 	hr = pD3DDevice->CreateDepthStencilView(pDepthStencilTexture.Get(), &dsDesc, &pDepthStencilView);
 	if (FAILED(hr))
-		return hr;
+		return false;
 
 	// ビューポートの設定
 	D3D11_VIEWPORT viewport;
@@ -176,7 +176,7 @@ bool D3D11_Renderer::InitBackBuffer()
 	viewport.Height = static_cast<float>(screenHeight);  // ビューポート領域の高さ
 	viewport.MinDepth = 0.0f; // ビューポート領域の深度値の最小値
 	viewport.MaxDepth = 1.0f; // ビューポート領域の深度値の最大値
-	pImmediateContext->RSSetViewports(1, &viewport);
+	pDeviceContext->RSSetViewports(1, &viewport);
 	viewPorts.push_back(viewport);	// 追加
 
 	// ブレンドステート初期化
@@ -188,7 +188,7 @@ bool D3D11_Renderer::InitBackBuffer()
 	// OMは出力(Output)マネージャーのこと
 	FLOAT BlendFactor[4] = { 0.f, 0.f, 0.f, 0.f };
 	// RenderTargetが1つのときは基本的に考慮不要で0xffffffff
-	pImmediateContext->OMSetBlendState(pBlendState->GetParaObject(), BlendFactor, 0xffffffff);
+	pDeviceContext->OMSetBlendState(pBlendState->GetParaObject(), BlendFactor, 0xffffffff);
 
 	// サンプラー初期化
 	pSampler = std::make_unique<Sampler>();
@@ -197,7 +197,25 @@ bool D3D11_Renderer::InitBackBuffer()
 		return false;
 	// サンプラー
 	ID3D11SamplerState* sampler = pSampler->GetSampler();
-	pImmediateContext->PSSetSamplers(0, 1, &sampler);
+	pDeviceContext->PSSetSamplers(0, 1, &sampler);
+
+	// カリング設定
+	D3D11_RASTERIZER_DESC rasterizer = {};
+	D3D11_CULL_MODE cull[] = {
+		D3D11_CULL_NONE,
+		D3D11_CULL_FRONT,
+		D3D11_CULL_BACK
+	};
+	rasterizer.FillMode = D3D11_FILL_SOLID;
+	rasterizer.FrontCounterClockwise = false;
+	for (int rasIdx = 0; rasIdx < RASTERIZE_NUM; ++rasIdx)
+	{
+		rasterizer.CullMode = cull[rasIdx];
+		hr = pD3DDevice->CreateRasterizerState(&rasterizer, &pRasterizerStates[rasIdx]);
+		if (FAILED(hr)) 
+			return false; 
+	}
+	SetCullingMode(D3D11_CULL_BACK);
 
 	return true;
 }
@@ -205,7 +223,7 @@ bool D3D11_Renderer::InitBackBuffer()
 void D3D11_Renderer::Release()
 {
 	// デバイス・ステートのクリア
-	if (pImmediateContext) pImmediateContext->ClearState();
+	if (pDeviceContext) pDeviceContext->ClearState();
 
 	// スワップ チェインをウインドウ モードにする
 	if (pSwapChain) pSwapChain->SetFullscreenState(FALSE, nullptr);
@@ -245,7 +263,8 @@ Matrix D3D11_Renderer::GetWorldMtx(Transform _transform)
 	);
 
 	Matrix worldMtx = s * r * t;	// ワールド変換行列を作成
-	worldMtx = worldMtx.Transpose();	// 転置行列
+
+	worldMtx = worldMtx.Transpose();
 
 	return worldMtx;
 }
@@ -261,20 +280,31 @@ void D3D11_Renderer::Swap()
 	}
 }
 
+void D3D11_Renderer::SetCullingMode(D3D11_CULL_MODE _cullMode)
+{
+	switch (_cullMode)
+	{
+	case D3D11_CULL_NONE: pDeviceContext->RSSetState(pRasterizerStates[0].Get()); break;
+	case D3D11_CULL_FRONT: pDeviceContext->RSSetState(pRasterizerStates[1].Get()); break;
+	case D3D11_CULL_BACK: pDeviceContext->RSSetState(pRasterizerStates[2].Get()); break;
+	default: assert(!"カリングモードが不正です");
+	}
+}
+
 void D3D11_Renderer::SetUpDraw()
 {
-	if (!pImmediateContext || !pRenderTargetView) return;
+	if (!pDeviceContext || !pRenderTargetView) return;
 
 	// 描画先のキャンバスと使用する深度バッファを指定する
-	pImmediateContext->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView.Get());
+	pDeviceContext->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView.Get());
 
 	float color[] = { 175.0f / 255.0f, 223.0f / 255.0f, 228.0f / 255.0f, 0.0f };
 	// 塗りつぶし
-	pImmediateContext->ClearRenderTargetView(pRenderTargetView, color);
+	pDeviceContext->ClearRenderTargetView(pRenderTargetView, color);
 
 	// 深度バッファをリセットする
-	pImmediateContext->ClearDepthStencilView(pDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	pDeviceContext->ClearDepthStencilView(pDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 	// 入力レイアウト
-	pImmediateContext->IASetInputLayout(&pRenderParam->GetInputLayout());
+	pDeviceContext->IASetInputLayout(&pRenderParam->GetInputLayout());
 }

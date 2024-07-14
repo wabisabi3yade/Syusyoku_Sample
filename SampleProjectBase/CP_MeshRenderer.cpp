@@ -2,8 +2,39 @@
 #include "CP_MeshRenderer.h"
 
 // システム
+#include "AssetSetter.h"
+#include "AssetGetter.h"
 #include "InSceneSystemManager.h"
 #include "ShaderCollection.h"
+
+// メッシュ
+#include "StaticMesh.h"
+#include "SkeletalMesh.h"
+
+
+
+void CP_MeshRenderer::Init()
+{
+	name = "Mesh_Renderer";
+
+	// デフォルトのメッシュを入れておく
+	pRenderMesh = AssetGetter::GetAsset<StaticMesh>("SM_Cube");
+}
+
+void CP_MeshRenderer::Draw()
+{
+	// メッシュ描画
+	DrawMesh(WVPSetup());
+}
+
+void CP_MeshRenderer::SetRenderMesh(Mesh_Base& _renderMesh)
+{
+	pRenderMesh = &_renderMesh;
+}
+
+void CP_MeshRenderer::ImGuiSetting()
+{
+}
 
 const RenderParam::WVP CP_MeshRenderer::WVPSetup()
 {
@@ -19,93 +50,40 @@ const RenderParam::WVP CP_MeshRenderer::WVPSetup()
 	return wvp;
 }
 
-//void CP_MeshRenderer::MeshDraw(u_int _meshIdx, RenderParam::WVP& _wvp)
-//{
-//	//RenderMesh& renderMesh = renderMeshes[_meshIdx];
-//
-//	//// シェーダーの設定
-//	//Material& useMaterial = *pMaterials[renderMesh.materialID];
-//	//VertexShader& pVs = useMaterial.GetVertexShader();
-//	//PixelShader& pPs = useMaterial.GetPixelShader();
-//
-//	//pVs.UpdateBuffer(0, &_wvp);
-//
-//	//MaterialParameter& materialParam = useMaterial.GetMaterialParameter();
-//	//pVs.UpdateBuffer(1, &materialParam);
-//
-//	//// ディレクションライトの情報を取得
-//	//SceneLights& sceneLights = InSceneSystemManager::GetInstance()->GetSceneLights();
-//	//DirectionLParameter dirLightParam = sceneLights.GetDirectionParameter();
-//	//pVs.UpdateBuffer(2, &dirLightParam);
-//
-//	//pPs.UpdateBuffer(0, &materialParam);
-//
-//	//pVs.Bind();
-//	//pPs.Bind();
-//
-//	//// 描画
-//	//renderMesh.pMesh->Draw();
-//}
-
-void CP_MeshRenderer::Init()
+void CP_MeshRenderer::DrawMesh(RenderParam::WVP _wvp)
 {
-	//name = "Mesh_Renderer";
+	u_int meshNum = pRenderMesh->GetMeshNum();
+	for (u_int meshLoop = 0; meshLoop < meshNum; meshLoop++)
+	{
+		// メッシュを取得
+		const SingleMesh* pSingleMesh = pRenderMesh->GetMesh(meshLoop);
 
-	//// デフォルトのメッシュを入れておく
-	//AssetCollection& resourceCollect = *AssetCollection::GetInstance();
-	//RenderMesh renderMesh;
-	//renderMesh.pMesh = resourceCollect.GetResource<Mesh>("SM_Cube");
-	//renderMesh.materialID = 0;
-	//renderMeshes.push_back(renderMesh);
+		// 使用するマテリアル取得
+		u_int materialID = pSingleMesh->GetMaterialID();
+		Material* pMaterial = pRenderMesh->GetMaterial(materialID);
 
-	//// マテリアルがあるか確認
-	//const std::string MATERIAL_NAME = "M_Unlit";
-	//if (!resourceCollect.GetImpotred(MATERIAL_NAME))	// 無かったら
-	//{
-	//	// マテリアル作成
-	//	std::unique_ptr<Material> makeMaterial = std::make_unique<Material>();
+		// シェーダーの設定
+		VertexShader& pVs = pMaterial->GetVertexShader();
+		PixelShader& pPs = pMaterial->GetPixelShader();
 
-	//	// シェーダーをセット
-	//	ShaderCollection* shCol = ShaderCollection::GetInstance();
-	//	VertexShader* defaultVS = shCol->GetVertexShader(shCol->defaultVS);
-	//	PixelShader* defaultPS = shCol->GetPixelShader(shCol->defaultPS);
-	//	makeMaterial->SetVertexShader(defaultVS);
-	//	makeMaterial->SetPixelShader(defaultPS);
+		pVs.UpdateBuffer(0, &_wvp);
+		MaterialParameter& materialParam = pMaterial->GetMaterialParameter();
 
-	//	// 管理クラスにセット
-	//	resourceCollect.SetResource(MATERIAL_NAME, std::move(makeMaterial));
-	//}
+		pVs.UpdateBuffer(1, &materialParam);
 
-	//// マテリアル
-	//Material& defaultMaterial = *resourceCollect.GetResource<Material>(MATERIAL_NAME);
-	//pMaterials.push_back(&defaultMaterial);
-}
+		// ディレクションライトの情報を取得
+		SceneLights& sceneLights = InSceneSystemManager::GetInstance()->GetSceneLights();
+		DirectionLParameter dirLightParam = sceneLights.GetDirectionParameter();
+		pVs.UpdateBuffer(2, &dirLightParam);
 
-void CP_MeshRenderer::Draw()
-{
-	//// ワールド変換行列を求める
-	//RenderParam::WVP wvp = WVPSetup();
+		pPs.UpdateBuffer(0, &materialParam);
 
-	//for (u_int meshIdx = 0; meshIdx < static_cast<u_int>(renderMeshes.size()); meshIdx++)
-	//{
-	//	assert(renderMeshes[meshIdx].pMesh != nullptr && "メッシュ、マテリアルがない");
+		if(materialParam.isTextureEnable)
+		pPs.SetTexture(0, &pMaterial->GetDiffuseTexture());
 
-	//	// メッシュ描画
-	//	MeshDraw(meshIdx, wvp);
-	//}
-}
-//
-//void CP_MeshRenderer::SetModel(Model& _model)
-//{
-//
-//}
+		pVs.Bind();
+		pPs.Bind();
 
-void CP_MeshRenderer::SetRenderMesh(Mesh_Base& _renderMesh)
-{
-	pRenderMesh = &_renderMesh;
-}
-
-void CP_MeshRenderer::ImGuiSetting()
-{
-
+		CP_Renderer::DrawMesh(*pSingleMesh);
+	}
 }

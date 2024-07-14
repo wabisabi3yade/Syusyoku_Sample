@@ -2,11 +2,11 @@
 #include "Asset_Base.h"
 
 // 描画関連
-#include "Mesh.h"
+#include "SingleMesh.h"
 #include "Material.h"
 #include "Texture.h"
 
-// メッシュ集合体（スケルタル・スタティックメッシュ）の基底クラス
+// モデル（スケルタル・スタティックメッシュ）の基底クラス
 class Mesh_Base : public Asset_Base
 {
 public:
@@ -20,11 +20,15 @@ public:
 	};
 private:
 	/// @brief メッシュ配列
-	std::vector<std::unique_ptr<Mesh>> pMeshes;
+	std::vector<std::unique_ptr<SingleMesh>> pMeshes;
 
 	/// @brief マテリアル配列
 	std::vector<Material*> pMaterials;
 
+	/// @brief モデルサイズ
+	DirectX::SimpleMath::Vector3 size;
+
+	/// @brief メッシュの種類
 	Type meshType;
 public:
 	Mesh_Base() : meshType(Type::None) {}
@@ -37,14 +41,28 @@ public:
 	/// @brief メッシュを追加
 	/// @param _pMesh メッシュのユニークポインタ
 	/// @param _materialID マテリアルインデックス
-	void AddMesh(std::unique_ptr<Mesh> _pMesh);
+	void AddMesh(std::unique_ptr<SingleMesh> _pMesh);
 
 	/// @brief マテリアルを追加
 	/// @param _pMaterial セットするマテリアル
 	void AddMaterial(Material& _pMaterial);
 
+	/// @brief メッシュを取得
+	/// @param _meshIdx 何個目
+	/// @return メッシュ
+	const SingleMesh* GetMesh(u_int _meshIdx) const;
+
 	/// @brief メッシュの数取得
 	/// @return メッシュの数
 	u_int GetMeshNum();
+
+	/// @brief マテリアル取得
+	/// @param _materialIdx マテリアルID
+	/// @return マテリアルのポインタ
+	Material* GetMaterial(u_int _materialIdx);
+
+	/// @brief サイズをセット
+	/// @param _size サイズ
+	void SetSize(const DirectX::SimpleMath::Vector3& _size);
 };
 

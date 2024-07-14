@@ -4,8 +4,8 @@
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 
-// メッシュクラス
-class Mesh
+// 1つのメッシュクラス
+class SingleMesh
 {
 protected:
 	/// @brief 頂点データ
@@ -29,12 +29,18 @@ protected:
 	/// @brief トポロジー
 	D3D11_PRIMITIVE_TOPOLOGY topology;
 
-public:
-	Mesh();
-	Mesh(const Mesh& _other);
-	virtual ~Mesh() {}
+	/// @brief メッシュのサイズ
+	DirectX::SimpleMath::Vector3 size;
 
-	Mesh& operator=(const Mesh& _other);
+	// 初期設定
+	void InitSetting(const std::string& _name, D3D11_PRIMITIVE_TOPOLOGY _topology);
+
+public:
+	SingleMesh();
+	SingleMesh(const SingleMesh& _other);
+	virtual ~SingleMesh() {}
+
+	SingleMesh& operator=(const SingleMesh& _other);
 
 	/// @brief バッファの初期化
 	void InitBuffer();
@@ -45,11 +51,11 @@ public:
 
 	/// @brief 頂点バッファを取得
 	/// @return 頂点バッファ
-	const ID3D11Buffer& GetVertexBuffer() const;
+	const VertexBuffer& GetVertexBuffer() const;
 
 	/// @brief インデックスバッファを取得
 	/// @return インデックスバッファ
-	const ID3D11Buffer& GetIndexBuffer() const;
+	const IndexBuffer& GetIndexBuffer() const;
 
 	/// @brief インデックスを取得
 	/// @return インデックスデータ
@@ -59,6 +65,14 @@ public:
 	/// @return インデックス数
 	u_int GetIndexNum() const;
 
+	/// @brief マテリアルインデックスを取得
+	/// @return マテリアルインデックス
+	u_int GetMaterialID() const;
+
+	/// @brief トポロジーを取得
+	/// @return トポロジー
+	D3D11_PRIMITIVE_TOPOLOGY GetTopology() const;
+
 	/// @brief 名前を設定する
 	/// @param _name 名前
 	void SetName(const std::string& _name);
@@ -67,9 +81,17 @@ public:
 	/// @param _materialID マテリアルインデックス
 	void SetMaterialID(u_int _materialID);
 
-private:
+	/// @brief トポロジーをセット
+	/// @param _topology トポロジー
+	void SetTopology(D3D11_PRIMITIVE_TOPOLOGY _topology);
+
+	/// @brief サイズをセット
+	/// @param _size モデルのサイズ
+	void SetSize(const DirectX::SimpleMath::Vector3& _size);
+
+protected:
 	/// @brief コピー
 	/// @param _other　対象 
-	void Copy(const Mesh& _other);
+	void Copy(const SingleMesh& _other);
 };
 

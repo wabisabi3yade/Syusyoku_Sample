@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Texture.h"
-#include "Mesh.h"
+#include "SingleMesh.h"
 
 // 2Dテクスチャを持ったオブジェクト
 class Object_2D : public GameObject

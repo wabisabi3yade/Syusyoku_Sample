@@ -52,19 +52,34 @@ public:
 	/// @param _filePath テクスチャのパス
 	/// @return 成功したかフラグ
 	static Texture* TextureLoad(const std::string& _filePath);
-
-	/// @brief モデルをロードしてアセット管理に追加
-	/// @param _modelPathPath モデルのパス名
-	/// @param _texturePath テクスチャのパス名
-	/// @return ロードしたモデルのポインタ
-	static Mesh_Base* ModelLoad(const std::string& _modelPathPath, const std::string& _texturePath);
+	
+	/// @brief  モデルをロードしてアセット管理に追加
+	/// @param _modelPath モデルのパス名
+	/// @param _scale ロードするときのスケール値
+	/// @param _isRightHand 左手系か？
+	/// @param _isGetScale モデルのスケールを取得するか？
+	/// @return ロードしたメッシュ
+	static Mesh_Base* ModelLoad(const std::string& _modelPath, float _scale, bool _isLeftHand, 
+		bool _isGetScale = true);
 
 private:	// 便利関数
 
 	/// @brief パスからファイル名を取得する
 	/// @param _pathName パス名
+	///  @param _isExtexsion 拡張子をつけるか？
 	/// @return ファイル名
-	static std::string PathToFileName(const std::string& _pathName);
+	static std::string PathToFileName(const std::string& _pathName, bool _isExtension);
+
+	/// @brief 親パス名を取得
+	/// @param _pathName パス名
+	/// @return 親パス名
+	static std::string GetParentPath(const std::string& _pathName);
+
+	/// @brief 最大・最小サイズを更新
+	/// @param _vertexPos 頂点座標
+	/// @param _max 最大
+	/// @param _min 最小
+	static void UpdateSize(const DirectX::SimpleMath::Vector3& _vertexPos, DirectX::SimpleMath::Vector3& _max, DirectX::SimpleMath::Vector3& _min);
 };
 
 /// @brief アセット管理クラスにアセットを送る

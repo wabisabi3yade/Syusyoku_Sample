@@ -35,4 +35,7 @@ namespace Vec3
 	// ŠOÏ
 	DirectX::SimpleMath::Vector3 Cross(DirectX::SimpleMath::Vector3 _v1,
 		DirectX::SimpleMath::Vector3 _v2);
+
+	/// @brief floatŒ^‚Æ‚ÌÅ‘å’l‚ğ‹‚ß‚é
+	DirectX::SimpleMath::Vector3 Max(const DirectX::SimpleMath::Vector3& _v3, float _floatVal);
 }

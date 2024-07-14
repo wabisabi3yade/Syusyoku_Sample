@@ -24,7 +24,7 @@ public:
 	void SetShader(std::string _shaderName, std::unique_ptr<Shader> _pSetShader);
 
 	// Žæ“¾‚·‚é
-	VertexShader* GetVertexShader(std::string _shaderName);
-	PixelShader* GetPixelShader(std::string _shaderName);
+	VertexShader* GetVertexShader(const std::string& _shaderName);
+	PixelShader* GetPixelShader(const std::string& _shaderName);
 };
 

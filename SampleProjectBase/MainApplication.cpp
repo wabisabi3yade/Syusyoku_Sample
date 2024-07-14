@@ -7,6 +7,7 @@
 
 // Asset関連
 #include "AssetContacter.h"
+#include "AssetDisplay.h"
 
 // ImGui
 #include "imgui_impl_win32.h"
@@ -61,21 +62,30 @@ bool MainApplication::EscapeCheck()
 	// ボタン処理
 	ImGui::Begin(ShiftJisToUtf8("終了しますか").c_str(), nullptr,
 		ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+
 	if (ImGui::Button(ShiftJisToUtf8("はい").c_str()))
 	{
 		isEscape = true;
 		isEscapeDisplay = false;
 	}
+
 	ImGui::SameLine();
 	ImGui::Dummy(ImVec2(30.0f, 0.0f));
 	ImGui::SameLine();
+
 	if (ImGui::Button(ShiftJisToUtf8("いいえ").c_str()))
 	{
 		isEscapeDisplay = false;
 	}
+
 	ImGui::End();
 
 	return isEscape;
+}
+
+void MainApplication::SystemDraw()
+{
+	AssetDisplay::Draw();
 }
 
 void MainApplication::Init(HINSTANCE _hInst)
@@ -107,10 +117,10 @@ void MainApplication::GameLoop()
 		static ULONGLONG end = 0;
 		start = GetTickCount64();
 
+		pVariableFps->CaluculateDelta();
+
 		bool result = pWindow->MessageLoop();
 		if (result == false) break;
-
-		pVariableFps->CaluculateDelta();
 
 		ImGuiMethod::NewFrame();
 
@@ -123,6 +133,8 @@ void MainApplication::GameLoop()
 
 		// 更新処理
 		pSceneManager->Exec();
+
+		SystemDraw();
 
 		ImGuiMethod::Draw();
 

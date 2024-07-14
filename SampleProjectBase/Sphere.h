@@ -1,9 +1,9 @@
 #pragma once
-#include "Mesh.h"
+#include "SingleMesh.h"
 
 // 球メッシュクラス
 class Sphere :
-    public Mesh
+    public SingleMesh
 {
 	void Make();	// 頂点データなどの作成
 

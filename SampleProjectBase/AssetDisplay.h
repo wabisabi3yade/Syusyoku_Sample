@@ -8,6 +8,7 @@ class AssetDisplay : private AssetContacter
 	~AssetDisplay() {}
 public:
 
-	void Draw();
+	/// @brief アセットの中身を描画
+	static void Draw();
 };
 

@@ -12,7 +12,10 @@ class CP_SpriteRenderer : public CP_Renderer
 	std::unique_ptr<Sprite> pSprite;
 
 	// マテリアル
-	Material* pMaterial;
+	Material* pMaterial{ nullptr };
+
+	/// @brief テクスチャが設定されているか
+	bool isTextureEnable{ false };
 
 	// マテリアルの準備
 	void MaterialSetup();
@@ -20,8 +23,6 @@ class CP_SpriteRenderer : public CP_Renderer
 	// 描画準備
 	void DrawSetup();
 
-	/// @brief メッシュを描画
-	void DrawMesh();
 public:
 	using CP_Renderer::CP_Renderer;
 

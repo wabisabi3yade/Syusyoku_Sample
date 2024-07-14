@@ -7,7 +7,7 @@
 #include "PixelShader.h"
 #include "Material.h"
 
-class Mesh;
+class SingleMesh;
 
 // 3Dモデルクラス(複数のメッシュで構成される表示物)
 class Model

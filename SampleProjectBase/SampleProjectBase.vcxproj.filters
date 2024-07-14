@@ -253,12 +253,6 @@
     <Filter Include="ソース ファイル\Graphics\Geometory">
       <UniqueIdentifier>{8ad7004a-18e3-467b-b982-788b90b03a7c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics\Geometory\Cube">
-      <UniqueIdentifier>{16f344dc-964c-4351-bda8-45c1b06dcb98}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics\Geometory\Sphere">
-      <UniqueIdentifier>{5268db00-a05b-40ef-8ccc-481a51095ac4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\System\Json">
       <UniqueIdentifier>{0e2f16b8-5e83-4119-867e-087426684a3a}</UniqueIdentifier>
     </Filter>
@@ -355,9 +349,6 @@
     <Filter Include="ソース ファイル\Graphics\Mesh">
       <UniqueIdentifier>{da97f189-bf52-4ca3-a034-e91971362e8d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics\Mesh\Mesh">
-      <UniqueIdentifier>{233b27fc-bb59-4ebb-856c-989f6a454fd3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\Mesh\StaticMesh">
       <UniqueIdentifier>{3e0b97e4-f769-4ae6-9811-eba34f80f577}</UniqueIdentifier>
     </Filter>
@@ -384,6 +375,21 @@
     </Filter>
     <Filter Include="ソース ファイル\Asset\Set">
       <UniqueIdentifier>{9fd6fdb1-928a-4b90-84b7-151791e0d456}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Renderer\Base">
+      <UniqueIdentifier>{e042d57d-0041-48e4-9ab9-365bdbd9bde3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Mesh\Sphere">
+      <UniqueIdentifier>{5268db00-a05b-40ef-8ccc-481a51095ac4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Mesh\Single">
+      <UniqueIdentifier>{233b27fc-bb59-4ebb-856c-989f6a454fd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Mesh\Cube">
+      <UniqueIdentifier>{16f344dc-964c-4351-bda8-45c1b06dcb98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Mesh\Plane">
+      <UniqueIdentifier>{fe5ea2a1-9919-4cbe-9ad6-2c1fe81fb474}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -525,7 +531,7 @@
       <Filter>ソース ファイル\Object\SceneObjects</Filter>
     </ClCompile>
     <ClCompile Include="Cube.cpp">
-      <Filter>ソース ファイル\Graphics\Geometory\Cube</Filter>
+      <Filter>ソース ファイル\Graphics\Mesh\Cube</Filter>
     </ClCompile>
     <ClCompile Include="Tag.cpp">
       <Filter>ソース ファイル\Object\Tag</Filter>
@@ -564,10 +570,10 @@
       <Filter>ソース ファイル\Graphics\Geometory</Filter>
     </ClCompile>
     <ClCompile Include="DebugCube.cpp">
-      <Filter>ソース ファイル\Graphics\Geometory\Cube</Filter>
+      <Filter>ソース ファイル\Graphics\Mesh\Cube</Filter>
     </ClCompile>
     <ClCompile Include="Sphere.cpp">
-      <Filter>ソース ファイル\Graphics\Geometory\Sphere</Filter>
+      <Filter>ソース ファイル\Graphics\Mesh\Sphere</Filter>
     </ClCompile>
     <ClCompile Include="CollisionChecker.cpp">
       <Filter>ソース ファイル\Component\Collider\CollisionChecker</Filter>
@@ -698,8 +704,8 @@
     <ClCompile Include="AssetDisplay.cpp">
       <Filter>ソース ファイル\Asset\Display</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>ソース ファイル\Graphics\Mesh\Mesh</Filter>
+    <ClCompile Include="SingleMesh.cpp">
+      <Filter>ソース ファイル\Graphics\Mesh\Single</Filter>
     </ClCompile>
     <ClCompile Include="Mesh_Base.cpp">
       <Filter>ソース ファイル\Graphics\Mesh</Filter>
@@ -727,6 +733,12 @@
     </ClCompile>
     <ClCompile Include="AssetSetter.cpp">
       <Filter>ソース ファイル\Asset\Set</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Renderer.cpp">
+      <Filter>ソース ファイル\Component\Renderer\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaneMesh.cpp">
+      <Filter>ソース ファイル\Graphics\Mesh\Plane</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -854,7 +866,7 @@
       <Filter>ソース ファイル\Object\SceneObjects</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h">
-      <Filter>ソース ファイル\Graphics\Geometory\Cube</Filter>
+      <Filter>ソース ファイル\Graphics\Mesh\Cube</Filter>
     </ClInclude>
     <ClInclude Include="Tag.h">
       <Filter>ソース ファイル\Object\Tag</Filter>
@@ -893,10 +905,10 @@
       <Filter>ソース ファイル\Graphics\Geometory</Filter>
     </ClInclude>
     <ClInclude Include="DebugCube.h">
-      <Filter>ソース ファイル\Graphics\Geometory\Cube</Filter>
+      <Filter>ソース ファイル\Graphics\Mesh\Cube</Filter>
     </ClInclude>
     <ClInclude Include="Sphere.h">
-      <Filter>ソース ファイル\Graphics\Geometory\Sphere</Filter>
+      <Filter>ソース ファイル\Graphics\Mesh\Sphere</Filter>
     </ClInclude>
     <ClInclude Include="CollisionChecker.h">
       <Filter>ソース ファイル\Component\Collider\CollisionChecker</Filter>
@@ -1033,8 +1045,8 @@
     <ClInclude Include="AssetDisplay.h">
       <Filter>ソース ファイル\Asset\Display</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>ソース ファイル\Graphics\Mesh\Mesh</Filter>
+    <ClInclude Include="SingleMesh.h">
+      <Filter>ソース ファイル\Graphics\Mesh\Single</Filter>
     </ClInclude>
     <ClInclude Include="Mesh_Base.h">
       <Filter>ソース ファイル\Graphics\Mesh</Filter>
@@ -1062,6 +1074,12 @@
     </ClInclude>
     <ClInclude Include="AssetSetter.h">
       <Filter>ソース ファイル\Asset\Set</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Renderer.h">
+      <Filter>ソース ファイル\Component\Renderer\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaneMesh.h">
+      <Filter>ソース ファイル\Graphics\Mesh\Plane</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

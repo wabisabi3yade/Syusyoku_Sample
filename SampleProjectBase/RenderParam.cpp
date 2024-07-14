@@ -8,3 +8,8 @@ ID3D11InputLayout& RenderParam::GetInputLayout()
 	return *pInputLayout.Get();
 }
 
+const RenderParam::WVP& RenderParam::GetWVP()
+{
+	return wvp;
+}
+

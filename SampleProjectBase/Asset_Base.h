@@ -12,7 +12,7 @@ public:
 	/// @brief コンストラクタ
 	/// @param _type アセットの種類
 	Asset_Base() : name("") {};
-	~Asset_Base() {};
+	virtual ~Asset_Base() {};
 
 	/// @brief 名前をセットする
 	/// @param _name アセットの名前

@@ -1,9 +1,6 @@
 #include "pch.h"
 #include "AssetLoader.h"
 
-// パス名取得
-#include<filesystem>
-
 // assimpライブラリ読込
 #ifdef _DEBUG
 #pragma comment(lib, "assimp-vc142-mtd.lib")
@@ -44,7 +41,7 @@ void AssetLoader::MaterialLoad(Mesh_Base* _pMeshgather,
 		aiMaterial* material = pScene->mMaterials[m];
 
 		// マテリアル名取得
-		std::string mtrlname = std::string(material->GetName().C_Str());
+		std::string mtrlname = material->GetName().C_Str();
 
 		// マテリアル情報
 		aiColor4D ambient;
@@ -103,10 +100,10 @@ void AssetLoader::MaterialLoad(Mesh_Base* _pMeshgather,
 		for (unsigned int t = 0; t < material->GetTextureCount(aiTextureType_DIFFUSE); t++)
 		{
 			// t番目のテクスチャパス取得
-			if (AI_SUCCESS == material->Get(AI_MATKEY_TEXTURE(aiTextureType_DIFFUSE, t), path))
+			if (AI_SUCCESS == material->GetTexture(aiTextureType_DIFFUSE, t, &path))
 			{
 				// テクスチャパス取得
-				std::string texpath = std::string(path.C_Str());
+				std::string texPath = path.C_Str();
 
 				// 内蔵テクスチャかどうかを判断する
 				if (auto tex = pScene->GetEmbeddedTexture(path.C_Str()))
@@ -125,7 +122,7 @@ void AssetLoader::MaterialLoad(Mesh_Base* _pMeshgather,
 				}
 				else // 外部テクスチャファイルの場合
 				{
-					std::string texname = texturedirectory + "/" + texpath;
+					std::string texname = texturedirectory + "/" + PathToFileName(texPath,true);
 
 					Texture* diffuseTex = TextureLoad(texname);
 					createMaterial->SetDiffuseTexture(*diffuseTex);
@@ -215,7 +212,7 @@ std::unique_ptr<Texture> AssetLoader::MakeTexture(const std::string& _filePath)
 	pMakeTex->height = static_cast<u_int>(metaData.height);
 
 	// パスから名前取得する
-	std::string texName = PathToFileName(_filePath);
+	std::string texName = PathToFileName(_filePath, true);
 	pMakeTex->SetName(texName);
 
 	return std::move(pMakeTex);
@@ -237,19 +234,23 @@ Texture* AssetLoader::TextureLoad(const std::string& _filePath)
 	return returnPtr;
 }
 
-Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPath,
-	const std::string& _texturePath)
+Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, bool _isLeftHand, bool _isGetScale)
 {
 	std::unique_ptr<Mesh_Base> pMeshGather = std::make_unique<Mesh_Base>();
 
 	// シーン情報構築
 	Assimp::Importer importer;
 
+	int flag = aiProcess_Triangulate;
+
+	if (_isLeftHand)
+		flag |= aiProcess_ConvertToLeftHanded;
+
+
 	// シーン情報を構築
 	const aiScene* pScene = importer.ReadFile(
 		_modelPath.c_str(),
-		aiProcess_ConvertToLeftHanded |	// 左手座標系に変換する
-		aiProcess_Triangulate);			// 三角形化する
+		flag);			// 三角形化する
 
 	if (pScene == nullptr)
 	{
@@ -257,12 +258,19 @@ Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPath,
 	}
 	assert(pScene != nullptr);
 
+	// 親パス名
+	std::string parentPath = GetParentPath(_modelPath);
+
 	// マテリアル情報取得
-	MaterialLoad(pMeshGather.get(), pScene, _texturePath);
+	MaterialLoad(pMeshGather.get(), pScene, parentPath);
+
+	// メッシュの最大・最小座標
+	Vector3 modelMaxPos;
+	Vector3 modelMinPos;
 
 	for (unsigned int m = 0; m < pScene->mNumMeshes; m++)
 	{
-		std::unique_ptr<Mesh> pCreateMesh = std::make_unique<Mesh>();
+		std::unique_ptr<SingleMesh> pCreateMesh = std::make_unique<SingleMesh>();
 
 		aiMesh* mesh = pScene->mMeshes[m];
 
@@ -274,16 +282,23 @@ Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPath,
 		u_int materialIdx = mesh->mMaterialIndex;
 		pCreateMesh->SetMaterialID(materialIdx);
 
+		// 頂点の最大・最小座標
+		Vector3 maxVPos, minVPos;
+		
 		std::vector<Vertex>& verticies = pCreateMesh->GetVerticies();
-
 		//　頂点数分ループ
 		for (unsigned int vidx = 0; vidx < mesh->mNumVertices; vidx++)
 		{
 			// 頂点データ
 			Vertex vertex;
 
-			// 座標		
-			vertex.position = ToVector3(mesh->mVertices[vidx]);
+			// 座標(スケール値を反映する)
+			vertex.position = ToVector3(mesh->mVertices[vidx]) * _scale;
+
+			// 最大・最小を更新
+			if (_isGetScale)
+				UpdateSize(vertex.position, maxVPos, minVPos);
+
 
 			// 法線あり？
 			if (mesh->HasNormals()) {
@@ -332,21 +347,67 @@ Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPath,
 				indicies.push_back(face.mIndices[i]);
 		}
 
+		// バッファ生成
+		pCreateMesh->InitBuffer();
+
+		// メッシュのサイズをセット
+		pCreateMesh->SetSize(maxVPos - minVPos);
+		
+		// モデルの最大・最小を更新
+		if (_isGetScale)
+		{
+			UpdateSize(maxVPos, modelMaxPos, modelMinPos);
+			UpdateSize(minVPos, modelMaxPos, modelMinPos);
+		}
+		
 		pMeshGather->AddMesh(std::move(pCreateMesh));
 	}
 	// 名前設定
-	std::string modelName = PathToFileName(_modelPath);
+	std::string modelName = PathToFileName(_modelPath, false);
 	pMeshGather->SetName(modelName);
+
+	pMeshGather->SetSize(modelMaxPos - modelMinPos);
 
 	Mesh_Base* pReturnMeshGather = SendAsset<Mesh_Base>(modelName, std::move(pMeshGather));
 
 	return pReturnMeshGather;
 }
 
-std::string AssetLoader::PathToFileName(const std::string& _pathName)
+std::string AssetLoader::PathToFileName(const std::string& _pathName, bool _isExtension)
 {
 	fs::path fsPath = _pathName;
-	return fsPath.stem().string();
+
+	if (_isExtension)
+		return fsPath.filename().string();
+	else
+		return fsPath.stem().string();
+}
+
+std::string AssetLoader::GetParentPath(const std::string& _pathName)
+{
+	fs::path fsPath = _pathName;
+	return fsPath.parent_path().string();
+}
+
+void AssetLoader::UpdateSize(const DirectX::SimpleMath::Vector3& _vertexPos, DirectX::SimpleMath::Vector3& _max, DirectX::SimpleMath::Vector3& _min)
+{
+	if (_vertexPos.x > _max.x)
+		_max.x = _vertexPos.x;
+
+	if (_vertexPos.y > _max.y)
+		_max.y = _vertexPos.y;
+
+	if (_vertexPos.z > _max.z)
+		_max.z = _vertexPos.z;
+
+	if (_vertexPos.x < _min.x)
+		_min.x = _vertexPos.x;
+
+	if (_vertexPos.y < _min.y)
+		_min.y = _vertexPos.y;
+
+	if (_vertexPos.z < _min.z)
+		_min.z = _vertexPos.z;
 }
 
 DirectX::SimpleMath::Vector3 ToVector3(const aiVector3D& _aiVector3)

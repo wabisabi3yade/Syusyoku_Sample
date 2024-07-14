@@ -21,5 +21,12 @@ public:
 	/// @brief バッファを取得する
 	/// @return バッファ
 	const ID3D11Buffer& GetBuffer()const;
+
+	/// @brief GPUに送信する
+	virtual void SetGPU() const = 0;
+
+	/// @brief バッファを更新する
+	/// @param _updateData 上書きするデータ
+	void UpdateBuffer(void* _updateData) const;
 };
 

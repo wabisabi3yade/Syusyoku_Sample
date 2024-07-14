@@ -78,7 +78,7 @@ void ShaderCollection::SetShader(std::string _shaderName, std::unique_ptr<Shader
 	shaders.emplace(_shaderName, std::move(_pSetShader));
 }
 
-VertexShader* ShaderCollection::GetVertexShader(std::string _shaderName)
+VertexShader* ShaderCollection::GetVertexShader(const std::string& _shaderName)
 {
 	auto itr = shaders.find(_shaderName);
 	if (itr == shaders.end())	// 同じ名前のシェーダーを見つけたら
@@ -100,7 +100,7 @@ VertexShader* ShaderCollection::GetVertexShader(std::string _shaderName)
 	return retPtr;
 }
 
-PixelShader* ShaderCollection::GetPixelShader(std::string _shaderName)
+PixelShader* ShaderCollection::GetPixelShader(const std::string& _shaderName)
 {
 	auto itr = shaders.find(_shaderName);
 	if (itr == shaders.end())	// 同じ名前のシェーダーを見つけたら

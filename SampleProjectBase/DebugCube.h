@@ -1,8 +1,8 @@
 #pragma once
-#include "Mesh.h"
+#include "SingleMesh.h"
 
 // ワイヤーフレームのキューブ
-class DebugCube : public Mesh
+class DebugCube : public SingleMesh
 {
 	/// @brief  キューブを作成
 	void Make();	

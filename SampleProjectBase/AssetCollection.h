@@ -6,6 +6,8 @@
 // 扱うアセットの型
 class Texture;
 class Mesh_Base;
+class SkeletalMesh;
+class StaticMesh;
 class Material;
 
 // アセット管理にアクセスするクラス
@@ -41,9 +43,6 @@ class AssetCollection
 
 	/// @brief スタティック・スケルタルメッシュのアセットリスト
 	AssetList modelAssets;
-
-	/// @brief スケルタルメッシュのアセットリスト
-	AssetList SK_Assets;
 
 	/// @brief マテリアルのアセットリスト
 	AssetList materialAssets;
@@ -153,7 +152,8 @@ inline AssetList& AssetCollection::GetAssetList()
 		return textureAssets;
 
 	// スタティック・スケルタルメッシュメッシュ
-	else if constexpr (std::is_same<T, Mesh_Base>::value)
+	else if constexpr (std::is_same<T, Mesh_Base>::value || std::is_same<T, SkeletalMesh>::value || 
+		std::is_same<T, StaticMesh>::value)
 		return modelAssets;
 
 	// マテリアル

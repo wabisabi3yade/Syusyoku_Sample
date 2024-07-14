@@ -11,6 +11,10 @@
 #include "ShaderCollection.h"
 #include "InSceneSystemManager.h"
 
+// アセット
+#include "StaticMesh.h"
+#include "SkeletalMesh.h"
+
 class SceneObjects;
 class CollisionChecker;
 

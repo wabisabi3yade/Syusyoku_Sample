@@ -25,6 +25,7 @@
 #include <string>
 #include <unordered_map>	// 順番を気にしないmap配列
 #include <typeinfo>	// 型名を取得
+#include <filesystem>	// パス名
 #include <vector>	// 動的配列
 #include <d3d11.h>	// DX11の機能
 #include <wrl.h>	// ComPtr

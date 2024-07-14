@@ -9,11 +9,6 @@ class CP_MeshRenderer : public CP_Renderer
 {
 	Mesh_Base* pRenderMesh{ nullptr };
 
-	// ワールド変換行列を求める
-	const RenderParam::WVP WVPSetup();
-
-	// マテリアルの描画準備
-	/*void MeshDraw(u_int _meshIdx, RenderParam::WVP& _wvp);*/
 public:
 	using CP_Renderer::CP_Renderer;
 	void Init();
@@ -24,5 +19,14 @@ public:
 	void SetRenderMesh(Mesh_Base& _renderMesh);
 
 	void ImGuiSetting() override;
+
+private:
+
+	/// @brief ワールド変換行列を求める
+	/// @return 
+	const RenderParam::WVP WVPSetup();
+
+	/// @brief メッシュを描画
+	void DrawMesh(RenderParam::WVP _wvp);
 };
 

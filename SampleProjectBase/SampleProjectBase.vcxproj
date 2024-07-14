@@ -126,6 +126,7 @@
     <ClCompile Include="MathUseful.cpp" />
     <ClCompile Include="Mesh_Base.cpp" />
     <ClCompile Include="PixelShader.cpp" />
+    <ClCompile Include="PlaneMesh.cpp" />
     <ClCompile Include="PlayerInput.cpp" />
     <ClCompile Include="PlayerMove.cpp" />
     <ClCompile Include="PlayerShot.cpp" />
@@ -157,7 +158,7 @@
     <ClCompile Include="ImGuiMethod.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainApplication.cpp" />
-    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="SingleMesh.cpp" />
     <ClCompile Include="MessageError.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelSettings.cpp" />
@@ -237,6 +238,7 @@
     <ClInclude Include="MathUseful.h" />
     <ClInclude Include="Mesh_Base.h" />
     <ClInclude Include="PixelShader.h" />
+    <ClInclude Include="PlaneMesh.h" />
     <ClInclude Include="PlayerInput.h" />
     <ClInclude Include="PlayerMove.h" />
     <ClInclude Include="PlayerShot.h" />
@@ -272,7 +274,7 @@
     <ClInclude Include="ImGuiMethod.h" />
     <ClInclude Include="ISetUpProjection.h" />
     <ClInclude Include="MainApplication.h" />
-    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="SingleMesh.h" />
     <ClInclude Include="MessageError.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelSettings.h" />

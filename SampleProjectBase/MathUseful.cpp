@@ -38,4 +38,13 @@ DirectX::SimpleMath::Vector3 Vec3::Cross(DirectX::SimpleMath::Vector3 _v1, Direc
 	return DirectX::XMVector3Cross(_v1, _v2);
 }
 
+DirectX::SimpleMath::Vector3 Vec3::Max(const DirectX::SimpleMath::Vector3& _v3, float _floatVal)
+{
+	Vector3 retV3;
+	retV3.x = std::max<float>(_v3.x, _floatVal);
+	retV3.y = std::max<float>(_v3.y, _floatVal);
+	retV3.z = std::max<float>(_v3.z, _floatVal);
+	return retV3;
+}
+
 

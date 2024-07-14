@@ -13,7 +13,7 @@ Cube::Cube()
 
 void Cube::Make()
 {
-	std::unique_ptr<Mesh> pMesh = std::make_unique<Mesh>();
+	std::unique_ptr<SingleMesh> pMesh = std::make_unique<SingleMesh>();
 
 	const float d = 0.5f;
 
@@ -76,4 +76,8 @@ void Cube::Make()
 	{
 		indicies[i] = idx[i];
 	}
+
+	InitBuffer();
+
+	InitSetting("Mesh_Cube", D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }

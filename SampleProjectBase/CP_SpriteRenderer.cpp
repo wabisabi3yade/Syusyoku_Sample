@@ -38,12 +38,16 @@ void CP_SpriteRenderer::DrawSetup()
 	RenderParam::WVP wvp = renderer.GetParameter().GetWVP();
 	wvp.world = worldMatrix;
 
+
 	// シェーダーの設定
 	VertexShader& pVs = pMaterial->GetVertexShader();
 	PixelShader& pPs = pMaterial->GetPixelShader();
 
 	pVs.UpdateBuffer(0, &wvp);
-	MaterialParameter materialParam = pMaterial->GetMaterialParameter();
+	MaterialParameter& materialParam = pMaterial->GetMaterialParameter();
+
+	materialParam.isTextureEnable = isTextureEnable;
+
 	pVs.UpdateBuffer(1, &materialParam);
 
 	// ディレクションライトの情報を取得
@@ -59,13 +63,6 @@ void CP_SpriteRenderer::DrawSetup()
 	pVs.Bind();
 	pPs.Bind();
 }
-
-void CP_SpriteRenderer::DrawMesh()
-{
-
-
-}
-
 
 CP_SpriteRenderer& CP_SpriteRenderer::operator=(const CP_SpriteRenderer& _other)
 {
@@ -91,10 +88,15 @@ void CP_SpriteRenderer::Draw()
 {
 	// 描画準備
 	DrawSetup();
+
+	// 四角形ポリゴンを描画
+	CP_Renderer::DrawMesh(pSprite->GetSquare());
 }
 
 void CP_SpriteRenderer::SetTexture(Texture& _texture)
 {
+	isTextureEnable = true;
+
 	// スプライトに渡す
 	pSprite->SetTexture(_texture);
 }
@@ -107,4 +109,7 @@ void CP_SpriteRenderer::SetMaterial(Material& _material)
 
 void CP_SpriteRenderer::Copy(const CP_SpriteRenderer& _other)
 {
+	pSprite = std::make_unique<Sprite>(*_other.pSprite);
+	pMaterial = _other.pMaterial;
+	isTextureEnable = _other.isTextureEnable;
 }

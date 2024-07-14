@@ -10,20 +10,29 @@
 using namespace DirectX::SimpleMath;
 
 Material::Material() : pDiffuseTexture(nullptr), pNormalTexture(nullptr), pVertexShader(nullptr),
-					pPixelShader(nullptr)
+pPixelShader(nullptr)
 {
 	// デフォルトのシェーダーを初期設定しておく
-	ShaderCollection* shCol =  ShaderCollection::GetInstance();
+	ShaderCollection* shCol = ShaderCollection::GetInstance();
 	pVertexShader = shCol->GetVertexShader(shCol->defaultVS);
 	pPixelShader = shCol->GetPixelShader(shCol->defaultPS);
 
-	// 初期化
-	parameter.diffuse = Color(1.0f, 1.0f, 1.0f, 1.0f);
-	parameter.ambient = Color(0.2f, 0.2f, 0.2f, 1.0f);
-	parameter.specular = Color(1.0f, 1.0f, 1.0f, 1.0f);
-	parameter.emissive = Color(1.0f, 1.0f, 1.0f, 1.0f);
-	parameter.shiness = 0.0f;
-	parameter.isTextureEnable = 0;
+	InitParameter();
+}
+
+Material::Material(const std::string& _vsName, const std::string& _psName)
+{
+	InitParameter();
+
+	// デフォルトのシェーダーを初期設定しておく
+	ShaderCollection* shCol = ShaderCollection::GetInstance();
+	pVertexShader = shCol->GetVertexShader(_vsName);
+	if (pVertexShader == nullptr)
+		ImGuiDebugLog::Add(_vsName + "：頂点シェーダーがありません");
+
+	pPixelShader = shCol->GetPixelShader(_psName);
+	if (pPixelShader == nullptr)
+		ImGuiDebugLog::Add(_psName + "：ピクセルシェーダーはありません");
 }
 
 Material::~Material()
@@ -39,11 +48,22 @@ void Material::SetDiffuseTexture(Texture& _diffuseTex)
 void Material::ImGuiSetting()
 {
 #ifdef EDIT
-		ImGuiMethod::ColorEdit4(parameter.diffuse, "diffuse");
-		ImGuiMethod::ColorEdit4(parameter.ambient, "ambient");
-		ImGuiMethod::ColorEdit4(parameter.specular, "specular");
-		ImGuiMethod::ColorEdit4(parameter.emissive, "emmisive");
-		ImGui::DragFloat("shiness", &parameter.shiness);
+	ImGuiMethod::ColorEdit4(parameter.diffuse, "diffuse");
+	ImGuiMethod::ColorEdit4(parameter.ambient, "ambient");
+	ImGuiMethod::ColorEdit4(parameter.specular, "specular");
+	ImGuiMethod::ColorEdit4(parameter.emissive, "emmisive");
+	ImGui::DragFloat("shiness", &parameter.shiness);
 #endif
+}
+
+void Material::InitParameter()
+{
+	// 初期化
+	parameter.diffuse = Color(1.0f, 1.0f, 1.0f, 1.0f);
+	parameter.ambient = Color(0.2f, 0.2f, 0.2f, 1.0f);
+	parameter.specular = Color(1.0f, 1.0f, 1.0f, 1.0f);
+	parameter.emissive = Color(1.0f, 1.0f, 1.0f, 1.0f);
+	parameter.shiness = 0.0f;
+	parameter.isTextureEnable = 0;
 }
 

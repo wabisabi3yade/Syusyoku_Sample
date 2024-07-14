@@ -14,5 +14,7 @@ public:
 	/// @param pInitData インデックスデータ
 	/// @return 成功フラグ
 	bool CreateBuffer(u_int _allSize, u_int _elementSize, void* pInitData)override;
+
+	void SetGPU() const override;
 };
 

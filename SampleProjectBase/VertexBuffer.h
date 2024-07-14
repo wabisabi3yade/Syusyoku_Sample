@@ -13,6 +13,10 @@ public:
 	/// @param _elementSize 要素のサイズ
 	/// @param pInitData 頂点データ
 	/// @return 成功フラグ
-	bool CreateBuffer(u_int _allSize, u_int _elementSize, void* pInitData)override;
+	bool CreateBuffer(u_int _allSize, u_int _elementSize, void* pInitData) override;
+
+	/// @brief GPUにバッファを送る
+	void SetGPU() const override;
+
 };
 
