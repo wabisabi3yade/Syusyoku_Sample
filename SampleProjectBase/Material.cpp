@@ -28,11 +28,11 @@ Material::Material(const std::string& _vsName, const std::string& _psName)
 	ShaderCollection* shCol = ShaderCollection::GetInstance();
 	pVertexShader = shCol->GetVertexShader(_vsName);
 	if (pVertexShader == nullptr)
-		ImGuiDebugLog::Add(_vsName + "：頂点シェーダーがありません");
+		HASHI_DEBUG_LOG(_vsName + "：頂点シェーダーがありません");
 
 	pPixelShader = shCol->GetPixelShader(_psName);
 	if (pPixelShader == nullptr)
-		ImGuiDebugLog::Add(_psName + "：ピクセルシェーダーはありません");
+		HASHI_DEBUG_LOG(_psName + "：ピクセルシェーダーはありません");
 }
 
 Material::~Material()

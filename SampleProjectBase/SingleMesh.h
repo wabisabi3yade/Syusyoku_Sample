@@ -29,6 +29,9 @@ protected:
 	/// @brief トポロジー
 	D3D11_PRIMITIVE_TOPOLOGY topology;
 
+	/// @brief 中心座標
+	DirectX::SimpleMath::Vector3 centerPos;
+
 	/// @brief メッシュのサイズ
 	DirectX::SimpleMath::Vector3 size;
 
@@ -69,6 +72,14 @@ public:
 	/// @return マテリアルインデックス
 	u_int GetMaterialID() const;
 
+	/// @brief 中心座標を取得する
+	/// @return 中心座標
+	DirectX::SimpleMath::Vector3 GetCenterPos();
+
+	/// @brief サイズを取得する
+	/// @return メッシュの大きさ
+	DirectX::SimpleMath::Vector3 GetSize();
+
 	/// @brief トポロジーを取得
 	/// @return トポロジー
 	D3D11_PRIMITIVE_TOPOLOGY GetTopology() const;
@@ -84,6 +95,10 @@ public:
 	/// @brief トポロジーをセット
 	/// @param _topology トポロジー
 	void SetTopology(D3D11_PRIMITIVE_TOPOLOGY _topology);
+
+	/// @brief 中心座標をセット
+	/// @param _centerPos 中心座標
+	void SetCenterPosition(const DirectX::SimpleMath::Vector3& _centerPos);
 
 	/// @brief サイズをセット
 	/// @param _size モデルのサイズ

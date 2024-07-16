@@ -15,7 +15,7 @@ void VertexShader::MakeShader(const char* _pData, u_int _dataSize)
 	hr = pDevice->CreateVertexShader(_pData, _dataSize, nullptr, &pVxShader);
 	if (FAILED(hr))
 	{
-		ImGuiDebugLog::Add("頂点シェーダー作成失敗");
+		HASHI_DEBUG_LOG("頂点シェーダー作成失敗");
 		return;
 	}
 
@@ -54,7 +54,7 @@ void VertexShader::MakeShader(const char* _pData, u_int _dataSize)
 	//hr = D3DReflect(_pData, _dataSize, IID_PPV_ARGS(&pReflection));
 	//if (FAILED(hr)) 
 	//{ 
-	//	ImGuiDebugLog::Add("リフレクション情報作成で失敗");
+	//	HASHI_DEBUG_LOG("リフレクション情報作成で失敗");
 	//	return; 
 	//}
 
@@ -97,7 +97,7 @@ void VertexShader::MakeShader(const char* _pData, u_int _dataSize)
 	//);
 	//if (FAILED(hr))
 	//{
-	//	ImGuiDebugLog::Add("インプットレイアウト作成失敗");
+	//	HASHI_DEBUG_LOG("インプットレイアウト作成失敗");
 	//	delete[] pInputDesc;
 	//	return;
 	//}
@@ -127,7 +127,7 @@ void VertexShader::MakeShader(const char* _pData, u_int _dataSize)
 	renderer->GetParameter().SetInputLayout(pInputLayout);	// レンダラーにインプットレイアウトを渡す
 	if (FAILED(hr))
 	{
-		ImGuiDebugLog::Add("失敗");
+		HASHI_DEBUG_LOG("失敗");
 	};
 }
 

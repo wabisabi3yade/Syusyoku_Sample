@@ -132,8 +132,8 @@ void GamePad::InputUpdate()
 	static DWORD o_IsResult = 1;	//1フレーム前の状態
 	if (isResult != o_IsResult)	// デバッグログ
 	{
-		if (isResult == ERROR_SUCCESS) ImGuiDebugLog::Add("ゲームパッドが接続されました！");
-		else ImGuiDebugLog::Add("ゲームパッドと接続が切れました");
+		if (isResult == ERROR_SUCCESS) HASHI_DEBUG_LOG("ゲームパッドが接続されました！");
+		else HASHI_DEBUG_LOG("ゲームパッドと接続が切れました");
 	}
 	o_IsResult = isResult; // 更新
 #endif // EDIT
@@ -233,7 +233,7 @@ bool GamePad::ButtonPress(const Button& _getButton) const
 {
 	if (_getButton < 0 || _getButton > Button::Button_Num)
 	{
-		ImGuiDebugLog::Add("ButtonPress：指定した値が違います");
+		HASHI_DEBUG_LOG("ButtonPress：指定した値が違います");
 		return false;
 	}
 
@@ -244,7 +244,7 @@ bool GamePad::ButtonDown(const Button& _getButton) const
 {
 	if (_getButton < 0 || _getButton >  Button::Button_Num)
 	{
-		ImGuiDebugLog::Add("ButtonDown：指定した値が違います");
+		HASHI_DEBUG_LOG("ButtonDown：指定した値が違います");
 		return false;
 	}
 	return (buttonState[_getButton] && !o_buttonState[_getButton]);
@@ -254,7 +254,7 @@ bool GamePad::ButtonUp(const Button& _getButton) const
 {
 	if (_getButton < 0 || _getButton >  Button::Button_Num)
 	{
-		ImGuiDebugLog::Add("ButtonUp：指定した値が違います");
+		HASHI_DEBUG_LOG("ButtonUp：指定した値が違います");
 		return false;
 	}
 	return (!buttonState[_getButton] && o_buttonState[_getButton]);
@@ -264,7 +264,7 @@ float GamePad::GetValue(const Value& _getValue) const
 {
 	if (_getValue < 0 || _getValue > Value::Value_Num)
 	{
-		ImGuiDebugLog::Add("GetValue：指定した値が違います");
+		HASHI_DEBUG_LOG("GetValue：指定した値が違います");
 		return 0.0f;
 	}
 	return padValue[_getValue];

@@ -46,7 +46,7 @@ using namespace DirectX::SimpleMath;
 //		const Mesh* setMesh = _setMeshes[meshIdx];
 //		if (setMesh == nullptr)	// 無かったら
 //		{
-//			ImGuiDebugLog::Add("メッシュのポインタがnullptrです");
+//			HASHI_DEBUG_LOG("メッシュのポインタがnullptrです");
 //			// パラメータをリセットする
 //			ResetParam();
 //			return false;	// 失敗
@@ -71,12 +71,12 @@ using namespace DirectX::SimpleMath;
 //
 //	if (_settings.modelPath == nullptr)
 //	{
-//		ImGuiDebugLog::Add("モデルのファイルパスが設定されていません");
+//		HASHI_DEBUG_LOG("モデルのファイルパスが設定されていません");
 //		return false;
 //	}
 //	if (_settings.modelName == "")
 //	{
-//		ImGuiDebugLog::Add("モデルの名前が設定されていません");
+//		HASHI_DEBUG_LOG("モデルの名前が設定されていません");
 //		return false;
 //	}
 //
@@ -95,7 +95,7 @@ using namespace DirectX::SimpleMath;
 //	auto pScene = importer.ReadFile(_settings.modelPath, flag);
 //	if (pScene == nullptr)
 //	{
-//		ImGuiDebugLog::Add("モデルファイル名が見つかりませんでした。" 
+//		HASHI_DEBUG_LOG("モデルファイル名が見つかりませんでした。" 
 //			+ std::string(_settings.modelPath));
 //		return false;
 //	}
@@ -116,7 +116,7 @@ using namespace DirectX::SimpleMath;
 //			float baseScale = _settings.scaleBase;
 //			if (mesh->Setup(_renderer, pMeshData, baseScale) == false)
 //			{
-//				ImGuiDebugLog::Add("メッシュのセットアップ失敗");
+//				HASHI_DEBUG_LOG("メッシュのセットアップ失敗");
 //				// 作成したメッシュを解放
 //				CLASS_DELETE(mesh);
 //
@@ -177,7 +177,7 @@ using namespace DirectX::SimpleMath;
 //			// ファイル形式チェック
 //			if (strstr(path.C_Str(), ".psd"))
 //			{
-//				ImGuiDebugLog::Add("psdには対応していません");
+//				HASHI_DEBUG_LOG("psdには対応していません");
 //			}
 //
 //			bool isSuccess = false;	// ロード成功したかフラグ
@@ -209,7 +209,7 @@ using namespace DirectX::SimpleMath;
 //			// 失敗
 //			if (!isSuccess) {
 //				std::string message = "モデルのテクスチャ読込失敗　" + file;
-//				ImGuiDebugLog::Add(message);
+//				HASHI_DEBUG_LOG(message);
 //			}
 //			else
 //			{
@@ -223,7 +223,7 @@ using namespace DirectX::SimpleMath;
 //		else // シーン内からテクスチャのパスが見つけられなかったら
 //		{
 //			std::string message = "モデルのテクスチャ読込失敗　" + std::string(path.C_Str());
-//			ImGuiDebugLog::Add(message);
+//			HASHI_DEBUG_LOG(message);
 //		}
 //
 //		// パラメータをマテリアルクラスに設定する

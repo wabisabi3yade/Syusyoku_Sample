@@ -130,7 +130,7 @@ inline T* AssetCollection::GetAsset(const std::string& _assetName)
 	if (itr == assetList.end())
 	{
 		std::string message = "ƒ[ƒh‚³‚ê‚Ä‚¢‚È‚¢‚Ì‚Åæ“¾‚Å‚«‚Ü‚¹‚ñ@" + _assetName;
-		ImGuiDebugLog::Add(message);
+		HASHI_DEBUG_LOG(message);
 		return nullptr;
 	}
 

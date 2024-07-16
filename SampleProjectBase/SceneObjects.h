@@ -72,7 +72,7 @@ inline T* SceneObjects::GetSceneObject(const std::string& _objectName)
 		if (itr == uiList.end())
 		{
 			std::string message = "リスト内に名前のオブジェクトがありませんでした" + _objectName;
-			ImGuiDebugLog::Add(message);
+			HASHI_DEBUG_LOG(message);
 			return nullptr;
 		}
 	}
@@ -82,7 +82,7 @@ inline T* SceneObjects::GetSceneObject(const std::string& _objectName)
 	if (retPtr == nullptr)	// GameObjectを派生していないクラスだったら
 	{
 		std::string message = _objectName + "を指定した型に変換できませんでした";
-		ImGuiDebugLog::Add(message);
+		HASHI_DEBUG_LOG(message);
 		return nullptr;
 	}
 

@@ -17,6 +17,10 @@ class Texture;
 class Mesh_Base;
 class Material;
 
+
+struct  aiTexture;
+
+
 // アセットをロードするクラス(staticクラス)
 class AssetLoader : private AssetContacter
 {
@@ -38,9 +42,8 @@ class AssetLoader : private AssetContacter
 
 	/// @brief モデルの内部テクスチャを読み込むクラス
 	/// @param _texture 情報を入れるテクスチャの参照
-	/// @param Data 先頭アドレス
-	/// @param len テクスチャサイズ（メモリにある場合、幅がサイズ）
-	static bool TextureMemoryLoad(Texture& _texture , const unsigned char* Data, int len);
+	/// @param _aiTex 内部テクスチャ
+	static bool LoadEmbeddedTexture(Texture& _texture, const aiTexture& _aiTex);
 
 	/// @brief テクスチャを作成する
 	/// @param _filePath テクスチャパス名

@@ -45,6 +45,10 @@ void DebugCube::Make()
 	{
 		indicies[index] = idx[index];
 	}
+
+	InitSetting("Mesh_WireCube", D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+
+	InitBuffer();
 }
 
 DebugCube::DebugCube()

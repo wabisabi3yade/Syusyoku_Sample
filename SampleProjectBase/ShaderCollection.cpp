@@ -70,7 +70,7 @@ void ShaderCollection::SetShader(std::string _shaderName, std::unique_ptr<Shader
 	auto itr = shaders.find(_shaderName);
 	if (itr != shaders.end())	// 同じ名前のシェーダーを見つけたら
 	{
-		ImGuiDebugLog::Add(_shaderName + " が既に頂点シェーダー配列にあります");
+		HASHI_DEBUG_LOG(_shaderName + " が既に頂点シェーダー配列にあります");
 		return;
 	}
 
@@ -83,7 +83,7 @@ VertexShader* ShaderCollection::GetVertexShader(const std::string& _shaderName)
 	auto itr = shaders.find(_shaderName);
 	if (itr == shaders.end())	// 同じ名前のシェーダーを見つけたら
 	{
-		ImGuiDebugLog::Add(_shaderName + " が見つかりませんでした");
+		HASHI_DEBUG_LOG(_shaderName + " が見つかりませんでした");
 		return nullptr;
 	}
 
@@ -92,7 +92,7 @@ VertexShader* ShaderCollection::GetVertexShader(const std::string& _shaderName)
 	if (retPtr == nullptr)
 	{
 
-		ImGuiDebugLog::Add(_shaderName + "指定したシェーダー名は頂点シェーダーではありません");
+		HASHI_DEBUG_LOG(_shaderName + "指定したシェーダー名は頂点シェーダーではありません");
 		return nullptr;
 	}
 #endif
@@ -105,7 +105,7 @@ PixelShader* ShaderCollection::GetPixelShader(const std::string& _shaderName)
 	auto itr = shaders.find(_shaderName);
 	if (itr == shaders.end())	// 同じ名前のシェーダーを見つけたら
 	{
-		ImGuiDebugLog::Add(_shaderName + " が見つかりませんでした");
+		HASHI_DEBUG_LOG(_shaderName + " が見つかりませんでした");
 		return nullptr;
 	}
 
@@ -114,7 +114,7 @@ PixelShader* ShaderCollection::GetPixelShader(const std::string& _shaderName)
 	if (retPtr == nullptr)
 	{
 
-		ImGuiDebugLog::Add(_shaderName + "指定したシェーダーはピクセルシェーダーではありません");
+		HASHI_DEBUG_LOG(_shaderName + "指定したシェーダーはピクセルシェーダーではありません");
 		return nullptr;
 	}
 #endif

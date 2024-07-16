@@ -34,5 +34,10 @@ public:
 	DirectX::SimpleMath::Vector3 GetWorldScale()const;
 
 	static bool CollisionBox(CP_Collider& _box1, CP_Collider& _box2);
+
+private:
+
+	/// @brief モデルのサイズから当たり判定の大きさを決める
+	void SizeFromModelSize();
 };
 

@@ -44,12 +44,12 @@ inline T* AssetSetter::SetAsset(const std::string& _assetName, std::unique_ptr<T
 {
     if (_assetName == "")
     {
-        ImGuiDebugLog::Add("名前が設定されていません");
+        HASHI_DEBUG_LOG("名前が設定されていません");
         return nullptr;
     }
     else if (_pAsset == nullptr)
     {
-        ImGuiDebugLog::Add(_assetName + "：アセットのポインタがnullです");
+        HASHI_DEBUG_LOG(_assetName + "：アセットのポインタがnullです");
         return nullptr;
     }
 

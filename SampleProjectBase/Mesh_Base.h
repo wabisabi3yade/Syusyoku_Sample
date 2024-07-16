@@ -25,6 +25,9 @@ private:
 	/// @brief マテリアル配列
 	std::vector<Material*> pMaterials;
 
+	/// @brief 中心座標
+	DirectX::SimpleMath::Vector3 centerPos;
+
 	/// @brief モデルサイズ
 	DirectX::SimpleMath::Vector3 size;
 
@@ -45,7 +48,7 @@ public:
 
 	/// @brief マテリアルを追加
 	/// @param _pMaterial セットするマテリアル
-	void AddMaterial(Material& _pMaterial);
+	void AddMaterial(Material* _pMaterial);
 
 	/// @brief メッシュを取得
 	/// @param _meshIdx 何個目
@@ -56,10 +59,22 @@ public:
 	/// @return メッシュの数
 	u_int GetMeshNum();
 
-	/// @brief マテリアル取得
+	/// @brief マテリアル取得mesh
 	/// @param _materialIdx マテリアルID
 	/// @return マテリアルのポインタ
 	Material* GetMaterial(u_int _materialIdx);
+
+	/// @brief 中心座標を取得
+	/// @return 中心座標
+	DirectX::SimpleMath::Vector3 GetCenterPosition() const;
+
+	/// @brief モデルのサイズを取得
+	/// @return サイズ
+	DirectX::SimpleMath::Vector3 GetSize() const;
+
+	/// @brief モデルの中心座標をセット
+	/// @param _size 中心座標
+	void SetCenterPosition(const DirectX::SimpleMath::Vector3& _centerPos);
 
 	/// @brief サイズをセット
 	/// @param _size サイズ

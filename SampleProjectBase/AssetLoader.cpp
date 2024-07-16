@@ -42,6 +42,10 @@ void AssetLoader::MaterialLoad(Mesh_Base* _pMeshgather,
 
 		// マテリアル名取得
 		std::string mtrlname = material->GetName().C_Str();
+		if (mtrlname.length() <= 0)
+		{
+			mtrlname = "M_" + std::string(pScene->mMeshes[m]->mName.C_Str());
+		}
 
 		// マテリアル情報
 		aiColor4D ambient;
@@ -106,13 +110,12 @@ void AssetLoader::MaterialLoad(Mesh_Base* _pMeshgather,
 				std::string texPath = path.C_Str();
 
 				// 内蔵テクスチャかどうかを判断する
-				if (auto tex = pScene->GetEmbeddedTexture(path.C_Str()))
+				if (auto aiTex = pScene->GetEmbeddedTexture(path.C_Str()))
 				{
 					// 内蔵テクスチャの場合
-					bool sts = TextureMemoryLoad(
+					bool sts = LoadEmbeddedTexture(
 						*texture.get(),
-						(unsigned char*)tex->pcData,
-						tex->mWidth
+						*aiTex
 					);
 
 					// 読み込めたら
@@ -122,39 +125,73 @@ void AssetLoader::MaterialLoad(Mesh_Base* _pMeshgather,
 				}
 				else // 外部テクスチャファイルの場合
 				{
-					std::string texname = texturedirectory + "/" + PathToFileName(texPath,true);
+					std::string texname = texturedirectory + "/" + PathToFileName(texPath, true);
 
-					Texture* diffuseTex = TextureLoad(texname);
-					createMaterial->SetDiffuseTexture(*diffuseTex);
+					texture = MakeTexture(texname);
 				}
 			}
 			// ディフューズテクスチャがなかった場合
 			else
 			{
-				ImGuiDebugLog::Add("マテリアル名：" + mtrlname +
+				HASHI_DEBUG_LOG("マテリアル名：" + mtrlname +
 					std::to_string(t) + "番目のテクスチャはありません");
 			}
 		}
+
+		// テクスチャを管理にセット
+		std::string texName = texture->GetName();
+		Texture* pTex = SendAsset(texName, std::move(texture));
+
+		createMaterial->SetDiffuseTexture(*pTex);
 
 		// 管理クラスにセットする
 		Material* materialPtr =
 			SendAsset<Material>(mtrlname, std::move(createMaterial));
 
 		// メッシュにマテリアル追加
-		_pMeshgather->AddMaterial(*materialPtr);
+		_pMeshgather->AddMaterial(materialPtr);
 	}
 }
 
-bool AssetLoader::TextureMemoryLoad(Texture& _texture, const unsigned char* Data, int len)
+bool AssetLoader::LoadEmbeddedTexture(Texture& _texture, const aiTexture& _aiTex)
 {
-	return false;
+	DirectX::ScratchImage image;
+
+	HRESULT hr;
+	// 圧縮した画像
+	if (_aiTex.mHeight == 0)	
+	{
+		hr = DirectX::LoadFromDDSMemory(_aiTex.pcData, _aiTex.mWidth, DirectX::DDS_FLAGS_NONE, nullptr, image);
+	}
+	else 
+	{
+		hr = DirectX::LoadFromWICMemory(_aiTex.pcData, _aiTex.mWidth * _aiTex.mHeight, DirectX::WIC_FLAGS_NONE, nullptr, image);
+	}
+
+	if (FAILED(hr))
+	{
+		HASHI_DEBUG_LOG("埋め込みテクスチャ読込失敗");
+		return false;
+	}
+
+	// SRV作成
+	ID3D11Device* device = Direct3D11::GetInstance()->GetRenderer()->GetDevice();
+	hr = DirectX::CreateShaderResourceView(device, image.GetImages(), image.GetImageCount(), image.GetMetadata(),&_texture.pSRV);
+
+	if (FAILED(hr))
+	{
+		HASHI_DEBUG_LOG("SRV作成失敗");
+		return false;
+	}
+
+	return true;
 }
 
 std::unique_ptr<Texture> AssetLoader::MakeTexture(const std::string& _filePath)
 {
 	if (_filePath == "")
 	{
-		ImGuiDebugLog::Add("テクスチャのパス名が入力されていません");
+		HASHI_DEBUG_LOG("テクスチャのパス名が入力されていません");
 		return nullptr;
 	}
 
@@ -181,7 +218,7 @@ std::unique_ptr<Texture> AssetLoader::MakeTexture(const std::string& _filePath)
 	else if (strstr(_filePath.c_str(), ".psd"))
 	{
 		std::string message = "psdファイルは対応していません\n" + std::string(_filePath);
-		ImGuiDebugLog::Add(message);
+		HASHI_DEBUG_LOG(message);
 
 		return nullptr;
 	}
@@ -194,7 +231,7 @@ std::unique_ptr<Texture> AssetLoader::MakeTexture(const std::string& _filePath)
 	if (FAILED(hr))
 	{
 		std::string message = "テクスチャ読込失敗：" + std::string(_filePath);
-		ImGuiDebugLog::Add(message);
+		HASHI_DEBUG_LOG(message);
 		return nullptr;
 	}
 
@@ -204,7 +241,7 @@ std::unique_ptr<Texture> AssetLoader::MakeTexture(const std::string& _filePath)
 
 	if (FAILED(hr))
 	{
-		ImGuiDebugLog::Add("SRV作成でエラー");
+		HASHI_DEBUG_LOG("SRV作成でエラー");
 		return nullptr;
 	}
 
@@ -254,7 +291,7 @@ Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, b
 
 	if (pScene == nullptr)
 	{
-		ImGuiDebugLog::Add("読込失敗：" + _modelPath);
+		HASHI_DEBUG_LOG("読込失敗：" + _modelPath);
 	}
 	assert(pScene != nullptr);
 
@@ -265,9 +302,10 @@ Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, b
 	MaterialLoad(pMeshGather.get(), pScene, parentPath);
 
 	// メッシュの最大・最小座標
-	Vector3 modelMaxPos;
-	Vector3 modelMinPos;
+	Vector3 modelMaxPos = Vector3::One * -10.0f;
+	Vector3 modelMinPos = Vector3::One * 10.0f;
 
+	// メッシュ分ループ
 	for (unsigned int m = 0; m < pScene->mNumMeshes; m++)
 	{
 		std::unique_ptr<SingleMesh> pCreateMesh = std::make_unique<SingleMesh>();
@@ -283,8 +321,8 @@ Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, b
 		pCreateMesh->SetMaterialID(materialIdx);
 
 		// 頂点の最大・最小座標
-		Vector3 maxVPos, minVPos;
-		
+		Vector3 maxVPos = Vector3::One * -10.0f, minVPos = Vector3::One * 10.0f;
+
 		std::vector<Vertex>& verticies = pCreateMesh->GetVerticies();
 		//　頂点数分ループ
 		for (unsigned int vidx = 0; vidx < mesh->mNumVertices; vidx++)
@@ -350,23 +388,28 @@ Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, b
 		// バッファ生成
 		pCreateMesh->InitBuffer();
 
-		// メッシュのサイズをセット
-		pCreateMesh->SetSize(maxVPos - minVPos);
-		
 		// モデルの最大・最小を更新
 		if (_isGetScale)
 		{
+			// メッシュの中心座標・サイズをセット
+			pCreateMesh->SetCenterPosition((maxVPos + minVPos) * 0.5f);
+			pCreateMesh->SetSize(maxVPos - minVPos);
+
 			UpdateSize(maxVPos, modelMaxPos, modelMinPos);
 			UpdateSize(minVPos, modelMaxPos, modelMinPos);
 		}
-		
 		pMeshGather->AddMesh(std::move(pCreateMesh));
 	}
 	// 名前設定
 	std::string modelName = PathToFileName(_modelPath, false);
 	pMeshGather->SetName(modelName);
 
-	pMeshGather->SetSize(modelMaxPos - modelMinPos);
+	//モデルの中心座標・サイズをセット
+	if (_isGetScale)
+	{
+		pMeshGather->SetCenterPosition((modelMaxPos + modelMinPos) * 0.5f);
+		pMeshGather->SetSize(modelMaxPos - modelMinPos);
+	}
 
 	Mesh_Base* pReturnMeshGather = SendAsset<Mesh_Base>(modelName, std::move(pMeshGather));
 

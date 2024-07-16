@@ -21,7 +21,7 @@ D3D11_Renderer::D3D11_Renderer(HWND _hWnd)
 
 	bool isSuccess = Init(_hWnd);   // 初期化
 	if (!isSuccess)
-		ImGuiDebugLog::Add("D3D11描画クラス初期化でエラー");
+		HASHI_DEBUG_LOG("D3D11描画クラス初期化でエラー");
 }
 
 RenderParam& D3D11_Renderer::GetParameter()
@@ -207,7 +207,6 @@ bool D3D11_Renderer::InitBackBuffer()
 		D3D11_CULL_BACK
 	};
 	rasterizer.FillMode = D3D11_FILL_SOLID;
-	rasterizer.FrontCounterClockwise = false;
 	for (int rasIdx = 0; rasIdx < RASTERIZE_NUM; ++rasIdx)
 	{
 		rasterizer.CullMode = cull[rasIdx];

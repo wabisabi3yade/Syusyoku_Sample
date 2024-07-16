@@ -2,7 +2,7 @@
 #include "Component.h"
 #include "GameObject.h"
 
-Transform& Component::GetTransform()
+Transform& Component::GetTransform() const
 {
     return gameObject->transform;
 }

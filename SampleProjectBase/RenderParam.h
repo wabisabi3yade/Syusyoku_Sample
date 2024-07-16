@@ -20,7 +20,11 @@ public:
 
 	// インプットレイアウトを取得
 	ID3D11InputLayout& GetInputLayout();
-	const WVP& GetWVP();
+
+	/// @brief WVP変換行列を作成して渡す
+	/// @param _transform 座標
+	/// @return wvp行列
+	const WVP& GetWVP(const Transform& _transform);
 
 	// インプットレイアウトを代入
 	void SetInputLayout(ID3D11InputLayout* _inputLayout) { pInputLayout = _inputLayout; }

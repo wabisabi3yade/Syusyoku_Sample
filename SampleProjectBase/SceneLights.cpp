@@ -86,7 +86,7 @@ PointLight* SceneLights::SetPointLight(std::unique_ptr<PointLight> _point)
 {
 	if (static_cast<u_int>(pPointLights.size()) > MAX_POINTS)
 	{
-		ImGuiDebugLog::Add("配置できるポイントライトの最大数を超えました" 
+		HASHI_DEBUG_LOG("配置できるポイントライトの最大数を超えました" 
 			+ std::to_string(MAX_POINTS));
 		return nullptr;
 	}
@@ -101,7 +101,7 @@ SpotLight* SceneLights::SetSpotLight(std::unique_ptr<SpotLight> _spot)
 {
 	if (static_cast<u_int>(pPointLights.size()) > MAX_SPOTS)
 	{
-		ImGuiDebugLog::Add("配置できるスポットライトの最大数を超えました"
+		HASHI_DEBUG_LOG("配置できるスポットライトの最大数を超えました"
 			+ std::to_string(MAX_SPOTS));
 		return nullptr;
 	}
@@ -117,7 +117,7 @@ DirectionLParameter SceneLights::GetDirectionParameter()
 	if (pDirection != nullptr)
 		return pDirection->GetParameter();
 
-	ImGuiDebugLog::Add("ディレクションライトが設定されていません");
+	HASHI_DEBUG_LOG("ディレクションライトが設定されていません");
 	DirectionLParameter d;
 	return d;
 }

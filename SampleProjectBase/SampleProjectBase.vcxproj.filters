@@ -391,6 +391,9 @@
     <Filter Include="ソース ファイル\Graphics\Mesh\Plane">
       <UniqueIdentifier>{fe5ea2a1-9919-4cbe-9ad6-2c1fe81fb474}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\System\Prototype">
+      <UniqueIdentifier>{8b44edf1-50c2-4f9c-b724-f1e67abf683a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Basic.hlsl">
@@ -1080,6 +1083,12 @@
     </ClInclude>
     <ClInclude Include="PlaneMesh.h">
       <Filter>ソース ファイル\Graphics\Mesh\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentDefine.h">
+      <Filter>ソース ファイル\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="IPrototype.h">
+      <Filter>ソース ファイル\System\Prototype</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

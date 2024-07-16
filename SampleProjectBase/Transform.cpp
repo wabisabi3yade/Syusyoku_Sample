@@ -110,3 +110,8 @@ void Transform::LookAt(DirectX::SimpleMath::Vector3 _worldPos, const DirectX::Si
 	float dotXY = Vec3::Dot(v, Vec3::Right);
 	rotation.z = acosf(dotXY) * Mathf::radToDeg;
 }
+
+void Transform::SetParent(Transform& _parent)
+{
+	pParent = &_parent;
+}

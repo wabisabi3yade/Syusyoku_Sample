@@ -92,7 +92,7 @@ void Shader::SetTexture(u_int _slot, Texture* _texture)
 #ifdef EDIT
 	if (_texture == nullptr)
 	{
-		ImGuiDebugLog::Add("テクスチャが設定されていません");
+		HASHI_DEBUG_LOG("テクスチャが設定されていません");
 		return;
 	}
 #endif // EDIT

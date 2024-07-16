@@ -1,10 +1,25 @@
 #pragma once
-#include "ImGuiDebugLog.h"
+
+struct ImFont;
 
 // imguiの処理をまとめたクラス(staticクラス)
 class ImGuiMethod
 {
-	ImGuiMethod();
+public:
+	// フォントの大きさ
+	enum class FontSize
+	{
+		Small,	// 小
+		Mid,	// 中
+		Big,	// 大
+		Num
+	};
+
+private:
+	/// @brief フォントリスト(サイズ違い)
+	static ImFont* pFonts[static_cast<u_int>(FontSize::Num)];
+
+	ImGuiMethod() {}
 	~ImGuiMethod() {};
  public:
 	 /// <summary>
@@ -18,6 +33,9 @@ class ImGuiMethod
 	 /// </summary>
 	 static void NewFrame();
 
+	 /// @brief	フレーム終了処理
+	 static void EndFrame();
+
 	 /// <summary>
 	 /// 描画処理
 	 /// </summary>
@@ -26,21 +44,28 @@ class ImGuiMethod
 	 /// <summary>
 	 /// 終了処理
 	 /// </summary>
-	 static void End();
-
-	 /// <summary>
-	 /// DragFloat3でVector3に対応させた関数
-	 /// </summary>
-	 /// <param name="_vector3">対応させるVector3</param>
-	 /// <param name="_name">変数名</param>
-	 static void DragFloat3(DirectX::SimpleMath::Vector3& _vector3, const std::string& _name);
-
-
-	 /// <summary>
-	 /// ColorEdit4でColorに対応させた関数
-	 /// </summary>
-	 /// <param name="_vector3">対応させるColor</param>
-	 /// <param name="_name">変数名</param>
+	 static void Terminal();
+	 
+	 /// @brief DragFloat3でVector3に対応させた関数
+	 /// @param _vector3 Vector3
+	 /// @param _name 変数名
+	 /// @param _speed 速度
+	 static void DragFloat3(DirectX::SimpleMath::Vector3& _vector3, const std::string& _name, float _speed = 1.0f);
+	 
+	 /// @brief ColorEdit4でColorに対応させた関数
+	 /// @param _color Color
+	 /// @param _name 変数名
 	 static void ColorEdit4(DirectX::SimpleMath::Color& _color, const std::string& _name);
+
+	 /// @brief フォントの大きさを変える
+	 /// @param _size フォントの大きさ
+	 static void SetFontSize(FontSize _size);
+
+	 /// @brief フォントの大きさを戻す
+	 static void PopFontSize();
+private:
+
+	/// @brief フォントを読み込む
+	static void ImGuiLoadFonts();
 };
 

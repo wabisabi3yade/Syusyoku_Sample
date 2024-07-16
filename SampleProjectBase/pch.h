@@ -37,9 +37,12 @@
 #pragma comment(lib, "DirectXTK.lib")	// DirectXTKライブラリ
 #include <nlohmann/json.hpp>	// json書き出し
 
+// 外部ヘッダー
+
 // 自前クラス
 #include "MathUseful.h"	// 自作数学便利関数
 #include "ImGuiMethod.h"	// ImGui便利関数
+#include "ImGuiDebugLog.h"	// デバッグログ
 #include "Transform.h"	// 座標・回転・スケールのクラス
 #include "MainApplication.h"
 #include "Direct3D11.h"	// 自前のDirectX11クラス

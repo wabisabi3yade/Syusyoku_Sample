@@ -2,8 +2,8 @@
 class GameObject;
 
 #include "imgui.h"
-#include "imgui_impl_dx11.h"
 #include "imgui_impl_win32.h"
+#include "imgui_impl_dx11.h"
 
 // ゲームのサブシステムとなるコンポーネントの基底クラス
 class Component
@@ -20,8 +20,7 @@ protected:
 	// このコンポーネントの所持オブジェクト
 	GameObject* gameObject;	
 
-	// 所持オブジェクトのトランスフォーム
-	Transform& GetTransform();	
+	
 public:
 	Component(GameObject* _gameObject); 
 	virtual ~Component(){};
@@ -40,6 +39,9 @@ public:
 
 	// 描画処理
 	virtual void Draw() {};
+
+	// オブジェクトのトランスフォーム
+	Transform& GetTransform() const;
 
 	// ImGuiでパラメータを変える処理
 	virtual void ImGuiSetting() {};	

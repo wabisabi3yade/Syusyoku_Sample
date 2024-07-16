@@ -18,7 +18,7 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 
 	std::vector<std::string> texturePath =
 	{
-		{"assets/texture/an.jpg"}
+		{"assets/texture/Grass.png"}
 	};
 	for (auto texPath : texturePath)
 	{
@@ -27,24 +27,33 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	}
 
 	std::vector<Mesh_Base*> pModels;
-	std::vector<std::string> SMPaths =
+
+	struct ModelData
 	{
-		{"assets/model/spot/spot.fbx"}
+		std::string path;
+		float scale;
+		bool isLeftHand;
+		bool isGetScale;
 	};
-	for (auto modelPath : SMPaths)
+
+	std::vector<ModelData> SMPaths =
 	{
-		fs::path path = modelPath;
-		Mesh_Base* pSM = AssetLoader::ModelLoad(modelPath, 1.0f, true);
-		pModels.push_back(pSM);
-	}
+		{"assets/model/spot/spot.fbx", 1.0f, true},
+		{"assets/model/knight/Knight D Pelegrini.fbx", 0.01f, true},
+	};
+
+	Mesh_Base* pSM = AssetLoader::ModelLoad(SMPaths[1].path, SMPaths[1].scale, SMPaths[1].isLeftHand);
+	pModels.push_back(pSM);
 
 	GameObject* gameObject = &Object::CreateEmpty("Ground");
 	CP_SpriteRenderer* pSpriteRenderer = gameObject->AddComponent<CP_SpriteRenderer>();
 	pSpriteRenderer->SetTexture(*pTextures[0]);
 
-	gameObject = &Object::CreateEmpty("Cube");
+	gameObject = &Object::CreateEmpty("knight");
 	CP_MeshRenderer* pMeshRenderer = gameObject->AddComponent<CP_MeshRenderer>();
 	pMeshRenderer->SetRenderMesh(*pModels[0]);
+	gameObject->AddComponent<CP_BoxCollider>();
+
 
 	/*Model* model = nullptr;
 	Texture* tex = nullptr;*/
@@ -100,7 +109,6 @@ Tank_InGameSub::~Tank_InGameSub()
 
 void Tank_InGameSub::Update()
 {
-
 }
 
 void Tank_InGameSub::LateUpdate()

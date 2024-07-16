@@ -6,7 +6,7 @@
 
 using namespace DirectX::SimpleMath;
 
-const Color CP_Collider::normalColor = { 0,1,0,1 };
+const Color CP_Collider::normalColor = { 1,1,1,0.8f };
 const Color CP_Collider::hitColor = { 1,0,0,1 };
 
 CP_Collider::~CP_Collider()

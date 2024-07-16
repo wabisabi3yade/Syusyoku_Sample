@@ -96,7 +96,7 @@ void CollisionChecker::AddCollider(CP_Collider& _collider)
 	auto itr = std::find(colliders.begin(), colliders.end(), &_collider);
 	if (itr != colliders.end())
 	{
-		ImGuiDebugLog::Add("同じコライダーは追加できません");
+		HASHI_DEBUG_LOG("同じコライダーは追加できません");
 		return;
 	}
 
@@ -110,7 +110,7 @@ void CollisionChecker::PopCollider(CP_Collider& _collider)
 	auto itr = std::find(colliders.begin(), colliders.end(), &_collider);
 	if (itr == colliders.end())
 	{
-		ImGuiDebugLog::Add("削除するコライダーがありません");
+		HASHI_DEBUG_LOG("削除するコライダーがありません");
 		return;
 	}
 

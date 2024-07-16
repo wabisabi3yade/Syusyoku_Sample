@@ -20,11 +20,9 @@ public:
 
 	void ImGuiSetting() override;
 
-private:
+	const Mesh_Base* GetRenderMesh();
 
-	/// @brief ワールド変換行列を求める
-	/// @return 
-	const RenderParam::WVP WVPSetup();
+private:
 
 	/// @brief メッシュを描画
 	void DrawMesh(RenderParam::WVP _wvp);

@@ -14,7 +14,7 @@ bool Sampler::Init(ID3D11Device& _device)
     HRESULT hr = _device.CreateSamplerState(&smpDesc, &samplePtr);
     if (FAILED(hr))
     {
-        ImGuiDebugLog::Add("サンプラー初期化失敗");
+        HASHI_DEBUG_LOG("サンプラー初期化失敗");
         return false;
     }
 

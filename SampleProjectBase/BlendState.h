@@ -4,7 +4,7 @@
 // 半透明処理をするためのブレンドオブジェクト
 class BlendState : public IGetRenderPara<ID3D11BlendState*>
 {
-	ID3D11BlendState* pBlendAlpha;
+	Microsoft::WRL::ComPtr<ID3D11BlendState> pBlendAlpha;
 
 public:
 	// 引数：デバイス
@@ -15,6 +15,6 @@ public:
 	bool Init(ID3D11Device& _pDevice);
 
 	// ブレンドステートオブジェクトを渡す
-	ID3D11BlendState* GetParaObject() override { return pBlendAlpha; }
+	ID3D11BlendState* GetParaObject() override { return pBlendAlpha.Get(); }
 };
 

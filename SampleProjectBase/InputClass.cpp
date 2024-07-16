@@ -83,7 +83,7 @@ Vector2 InputClass::GetValue(const std::string& _getType) const
 {
 	if (!inputValue.contains(_getType))
 	{
-		ImGuiDebugLog::Add("“ü—Í’l‚ÌŽæ“¾–¼‚ªŠÔˆá‚Á‚Ä‚¢‚Ü‚·");
+		HASHI_DEBUG_LOG("“ü—Í’l‚ÌŽæ“¾–¼‚ªŠÔˆá‚Á‚Ä‚¢‚Ü‚·");
 		return Vector2::Zero;
 	}
 

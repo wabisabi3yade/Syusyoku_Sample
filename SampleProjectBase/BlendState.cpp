@@ -9,6 +9,7 @@ bool BlendState::Init(ID3D11Device& _pDevice)
     BlendState.IndependentBlendEnable = FALSE;
     BlendState.RenderTarget[0].BlendEnable = TRUE;
     BlendState.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+
     // îwåiêFÇ…ä|ÇØçáÇÌÇπÇÈåWêî
     BlendState.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
     BlendState.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;

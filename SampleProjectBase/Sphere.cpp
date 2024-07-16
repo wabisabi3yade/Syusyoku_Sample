@@ -40,6 +40,10 @@ void Sphere::Make()
 			indicies.push_back((j + 1) * detail + i);
 		}
 	}
+
+	InitSetting("Mesh_Sphere", D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	InitBuffer();
 }
 
 Sphere::Sphere()

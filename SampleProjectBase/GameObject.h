@@ -1,7 +1,8 @@
 #pragma once
+
+// メンバ変数
 #include "Tag.h"
 #include "Component.h"
-#include "Material.h"
 
 // シーン関数
 #include "SF_Include.h"
@@ -65,7 +66,6 @@ public:
 	void LateUpdateBase();
 	void DrawBase();
 
-
 	// 自身を削除
 	void Destroy();
 
@@ -103,7 +103,7 @@ inline T* GameObject::AddComponent()
 	Component* comp = dynamic_cast<Component*>(addComp.get());
 	if (comp == nullptr)	// コンポーネントクラスを継承してるかチェック
 	{
-		ImGuiDebugLog::Add("AddComponent：Componentを継承していないので処理できません");
+		HASHI_DEBUG_LOG("AddComponent：Componentを継承していないので処理できません");
 		return nullptr;
 	}
 	comp->Init();	// 初期処理

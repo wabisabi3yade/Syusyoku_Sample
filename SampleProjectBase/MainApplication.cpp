@@ -28,7 +28,7 @@ bool MainApplication::isEscapeDisplay = false;
 void MainApplication::Release()
 {
 	// ImGuiの終了処理
-	ImGuiMethod::End();
+	ImGuiMethod::Terminal();
 
 	// シングルトンインスタンスを解放
 	SceneManager::Delete();
@@ -86,6 +86,8 @@ bool MainApplication::EscapeCheck()
 void MainApplication::SystemDraw()
 {
 	AssetDisplay::Draw();
+
+	ImGuiMethod::Draw();
 }
 
 void MainApplication::Init(HINSTANCE _hInst)
@@ -136,22 +138,11 @@ void MainApplication::GameLoop()
 
 		SystemDraw();
 
-		ImGuiMethod::Draw();
-
 		// スワップチェイン
 		Direct3D11::GetInstance()->GetRenderer()->Swap();
-		
-		ULONGLONG b = 0;
-		
-		end = GetTickCount64();
-		ULONGLONG delta1 = end - start;
 
 		// 待機
 		pVariableFps->Wait();
-		
-		end = GetTickCount64();
-
-		ULONGLONG delta = end - start;
 	}
 }
 

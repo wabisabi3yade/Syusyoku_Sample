@@ -68,6 +68,16 @@ u_int SingleMesh::GetMaterialID() const
 	return materialID;
 }
 
+DirectX::SimpleMath::Vector3 SingleMesh::GetCenterPos()
+{
+	return centerPos;
+}
+
+DirectX::SimpleMath::Vector3 SingleMesh::GetSize()
+{
+	return size;
+}
+
 D3D11_PRIMITIVE_TOPOLOGY SingleMesh::GetTopology() const
 {
 	return topology;
@@ -86,6 +96,11 @@ void SingleMesh::SetMaterialID(u_int _materialID)
 void SingleMesh::SetTopology(D3D11_PRIMITIVE_TOPOLOGY _topology)
 {
 	topology = _topology;
+}
+
+void SingleMesh::SetCenterPosition(const DirectX::SimpleMath::Vector3& _centerPos)
+{
+	centerPos = _centerPos;
 }
 
 void SingleMesh::SetSize(const DirectX::SimpleMath::Vector3& _size)
@@ -114,4 +129,6 @@ void SingleMesh::Copy(const SingleMesh& _other)
 	name = _other.name;
 	materialID = _other.materialID;
 	topology = _other.topology;
+	centerPos = _other.centerPos;
+	size = _other.size;
 }

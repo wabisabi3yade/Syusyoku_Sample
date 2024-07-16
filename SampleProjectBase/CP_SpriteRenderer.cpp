@@ -31,13 +31,8 @@ void CP_SpriteRenderer::DrawSetup()
 	// レンダラー取得
 	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
 
-	// ワールド変換行列を取得
-	DirectX::SimpleMath::Matrix worldMatrix = D3D11_Renderer::GetWorldMtx(GetTransform());
-
 	// ワールド変換行列の座標にモデルの座標を入れる
-	RenderParam::WVP wvp = renderer.GetParameter().GetWVP();
-	wvp.world = worldMatrix;
-
+	RenderParam::WVP wvp = renderer.GetParameter().GetWVP(GetTransform());
 
 	// シェーダーの設定
 	VertexShader& pVs = pMaterial->GetVertexShader();

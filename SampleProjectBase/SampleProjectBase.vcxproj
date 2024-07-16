@@ -199,6 +199,7 @@
     <ClInclude Include="BulletMove.h" />
     <ClInclude Include="CameraInput.h" />
     <ClInclude Include="CollisionChecker.h" />
+    <ClInclude Include="ComponentDefine.h" />
     <ClInclude Include="CP_BoxCollider.h" />
     <ClInclude Include="CP_Collider.h" />
     <ClInclude Include="CP_MeshRenderer.h" />
@@ -233,6 +234,7 @@
     <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="InputClass.h" />
     <ClInclude Include="InSceneSystemManager.h" />
+    <ClInclude Include="IPrototype.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="MathUseful.h" />

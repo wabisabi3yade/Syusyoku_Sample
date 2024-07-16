@@ -23,8 +23,10 @@ void CP_MeshRenderer::Init()
 
 void CP_MeshRenderer::Draw()
 {
+	RenderParam& rendererParam = Direct3D11::GetInstance()->GetRenderer()->GetParameter();
+
 	// メッシュ描画
-	DrawMesh(WVPSetup());
+	DrawMesh(rendererParam.GetWVP(GetTransform()));
 }
 
 void CP_MeshRenderer::SetRenderMesh(Mesh_Base& _renderMesh)
@@ -36,18 +38,9 @@ void CP_MeshRenderer::ImGuiSetting()
 {
 }
 
-const RenderParam::WVP CP_MeshRenderer::WVPSetup()
+const Mesh_Base* CP_MeshRenderer::GetRenderMesh()
 {
-	// レンダラー取得
-	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
-	// ワールド変換行列を取得
-	DirectX::SimpleMath::Matrix worldMatrix = D3D11_Renderer::GetWorldMtx(GetTransform());
-
-	// ワールド変換行列の座標にモデルの座標を入れる
-	RenderParam::WVP wvp = renderer.GetParameter().GetWVP();
-	wvp.world = worldMatrix;
-
-	return wvp;
+	return pRenderMesh;
 }
 
 void CP_MeshRenderer::DrawMesh(RenderParam::WVP _wvp)
@@ -77,6 +70,7 @@ void CP_MeshRenderer::DrawMesh(RenderParam::WVP _wvp)
 		pVs.UpdateBuffer(2, &dirLightParam);
 
 		pPs.UpdateBuffer(0, &materialParam);
+
 
 		if(materialParam.isTextureEnable)
 		pPs.SetTexture(0, &pMaterial->GetDiffuseTexture());
