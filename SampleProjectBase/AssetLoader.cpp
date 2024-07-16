@@ -12,7 +12,9 @@
 #include <assimp/postprocess.h>
 
 // テクスチャ
-#include "DirectXTex/TextureLoad.h"
+// stb_imageライブラリ
+#define STB_IMAGE_IMPLEMENTATION
+#include	"stb_image.h"
 #include "Texture.h"
 
 // モデル
@@ -155,98 +157,139 @@ void AssetLoader::MaterialLoad(Mesh_Base* _pMeshgather,
 
 bool AssetLoader::LoadEmbeddedTexture(Texture& _texture, const aiTexture& _aiTex)
 {
-	DirectX::ScratchImage image;
+	bool sts = true;
+	unsigned char* pixels;
 
-	HRESULT hr;
-	// 圧縮した画像
-	if (_aiTex.mHeight == 0)	
-	{
-		hr = DirectX::LoadFromDDSMemory(_aiTex.pcData, _aiTex.mWidth, DirectX::DDS_FLAGS_NONE, nullptr, image);
-	}
-	else 
-	{
-		hr = DirectX::LoadFromWICMemory(_aiTex.pcData, _aiTex.mWidth * _aiTex.mHeight, DirectX::WIC_FLAGS_NONE, nullptr, image);
-	}
+	const unsigned char* Data = (unsigned char*)_aiTex.pcData;
+	int len = _aiTex.mWidth;
 
-	if (FAILED(hr))
-	{
-		HASHI_DEBUG_LOG("埋め込みテクスチャ読込失敗");
-		return false;
-	}
+	int texWidth = 0;
+	int texHeight = 0;
 
-	// SRV作成
+	// 画像読み込み
+	pixels = stbi_load_from_memory(Data,
+		len,
+		&texWidth,
+		&texHeight,
+		nullptr,
+		STBI_rgb_alpha);
+
+	// テクスチャ2Dリソース生成
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> pTexture;
+
+	D3D11_TEXTURE2D_DESC desc;
+	ZeroMemory(&desc, sizeof(desc));
+
+	desc.Width = texWidth;
+	desc.Height = texHeight;
+	desc.MipLevels = 1;
+	desc.ArraySize = 1;
+	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;			// RGBA
+	desc.SampleDesc.Count = 1;
+	desc.Usage = D3D11_USAGE_DEFAULT;
+	desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	desc.CPUAccessFlags = 0;
+
+	D3D11_SUBRESOURCE_DATA subResource{};
+	subResource.pSysMem = pixels;
+	subResource.SysMemPitch = desc.Width * 4;			// RGBA = 4 bytes per pixel
+	subResource.SysMemSlicePitch = 0;
+
 	ID3D11Device* device = Direct3D11::GetInstance()->GetRenderer()->GetDevice();
-	hr = DirectX::CreateShaderResourceView(device, image.GetImages(), image.GetImageCount(), image.GetMetadata(),&_texture.pSRV);
 
-	if (FAILED(hr))
-	{
-		HASHI_DEBUG_LOG("SRV作成失敗");
+	HRESULT hr = device->CreateTexture2D(&desc, &subResource, pTexture.GetAddressOf());
+	if (FAILED(hr)) {
+		stbi_image_free(pixels);
 		return false;
 	}
+
+	// SRV生成
+	hr = device->CreateShaderResourceView(pTexture.Get(), nullptr, _texture.pSRV.GetAddressOf());
+	if (FAILED(hr)) {
+		stbi_image_free(pixels);
+		return false;
+	}
+
+	// ピクセルイメージ解放
+	stbi_image_free(pixels);
+
+	// 名前設定
+	std::string texName = PathToFileName(_aiTex.mFilename.C_Str(), true);
+	_texture.SetName(texName);
+
+	// 幅設定
+	_texture.width = texWidth;
+	_texture.height = texHeight;
 
 	return true;
 }
 
 std::unique_ptr<Texture> AssetLoader::MakeTexture(const std::string& _filePath)
 {
-	if (_filePath == "")
-	{
-		HASHI_DEBUG_LOG("テクスチャのパス名が入力されていません");
-		return nullptr;
-	}
+	
 
-	// テクスチャをロードする
 	std::unique_ptr<Texture> pMakeTex = std::make_unique<NullTexture>();
 
-	// マルチバイト文字列をワイド文字列に変換
-	wchar_t widePath[MAX_PATH];
-	size_t wideLen = 0;
-	MultiByteToWideChar(0, 0, _filePath.c_str(), -1, widePath, MAX_PATH);
+	bool sts = true;
+	unsigned char* pixels;
 
-	// ファイル読込
-	DirectX::TexMetadata metaData;
-	DirectX::ScratchImage image;
+	int width = 0;
+	int height = 0;
 
-	HRESULT hr;
-
-	// 読み込まれたファイルがtga形式なら
-	if (strstr(_filePath.c_str(), ".tga"))
+	// 画像読み込み
+	pixels = stbi_load(_filePath.c_str(), &width, &height, nullptr, 4);
+	if (pixels == nullptr) 
 	{
-		hr = DirectX::LoadFromTGAFile(widePath, &metaData, image);
-	}
-	// 読み込まれたファイルがpsd形式なら
-	else if (strstr(_filePath.c_str(), ".psd"))
-	{
-		std::string message = "psdファイルは対応していません\n" + std::string(_filePath);
-		HASHI_DEBUG_LOG(message);
-
-		return nullptr;
-	}
-	else
-	{
-		// Windowsに対応した画像形式(bmp, png, gif, tiff, jpegなど)を読み込む
-		hr = DirectX::LoadFromWICFile(widePath, DirectX::WIC_FLAGS::WIC_FLAGS_NONE, &metaData, image);
+		
+		HASHI_DEBUG_LOG("画像読込失敗");
+		return std::move(pMakeTex);
 	}
 
-	if (FAILED(hr))
-	{
-		std::string message = "テクスチャ読込失敗：" + std::string(_filePath);
-		HASHI_DEBUG_LOG(message);
-		return nullptr;
+	// テクスチャ2Dリソース生成
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> pTexture;
+
+	D3D11_TEXTURE2D_DESC desc;
+	ZeroMemory(&desc, sizeof(desc));
+
+	desc.Width = width;
+	desc.Height = height;
+	desc.MipLevels = 1;
+	desc.ArraySize = 1;
+	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;			// RGBA
+	desc.SampleDesc.Count = 1;
+	desc.Usage = D3D11_USAGE_DEFAULT;
+	desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	desc.CPUAccessFlags = 0;
+
+	D3D11_SUBRESOURCE_DATA subResource{};
+	subResource.pSysMem = pixels;
+	subResource.SysMemPitch = desc.Width * 4;			// RGBA = 4 bytes per pixel
+	subResource.SysMemSlicePitch = 0;
+
+	ID3D11Device* device =Direct3D11::GetInstance()->GetRenderer()->GetDevice();
+
+	HRESULT hr = device->CreateTexture2D(&desc, &subResource, pTexture.GetAddressOf());
+	if (FAILED(hr)) {
+		HASHI_DEBUG_LOG("テクスチャ作成失敗");
+
+		stbi_image_free(pixels);
+		return std::move(pMakeTex);
 	}
 
-	// SRVを作成
-	ID3D11Device* device = Direct3D11::GetInstance()->GetRenderer()->GetDevice();
-	hr = DirectX::CreateShaderResourceView(device, image.GetImages(), image.GetImageCount(), metaData, &pMakeTex->pSRV);
-
-	if (FAILED(hr))
+	// SRV生成
+	hr = device->CreateShaderResourceView(pTexture.Get(), nullptr, pMakeTex->pSRV.GetAddressOf());
+	if (FAILED(hr)) 
 	{
-		HASHI_DEBUG_LOG("SRV作成でエラー");
-		return nullptr;
+		HASHI_DEBUG_LOG("SRV作成失敗");
+		stbi_image_free(pixels);
+		return std::move(pMakeTex);
 	}
 
-	pMakeTex->width = static_cast<u_int>(metaData.width);
-	pMakeTex->height = static_cast<u_int>(metaData.height);
+	// ピクセルイメージ解放
+	stbi_image_free(pixels);
+
+	pMakeTex->width = static_cast<u_int>(width);
+	pMakeTex->height = static_cast<u_int>(height);
 
 	// パスから名前取得する
 	std::string texName = PathToFileName(_filePath, true);

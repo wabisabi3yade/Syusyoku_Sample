@@ -42,7 +42,7 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 		{"assets/model/knight/Knight D Pelegrini.fbx", 0.01f, true},
 	};
 
-	Mesh_Base* pSM = AssetLoader::ModelLoad(SMPaths[1].path, SMPaths[1].scale, SMPaths[1].isLeftHand);
+	Mesh_Base* pSM = AssetLoader::ModelLoad(SMPaths[0].path, SMPaths[0].scale, SMPaths[0].isLeftHand);
 	pModels.push_back(pSM);
 
 	GameObject* gameObject = &Object::CreateEmpty("Ground");
