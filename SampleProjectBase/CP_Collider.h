@@ -26,8 +26,7 @@ protected:
     // “–‚½‚Á‚Ä‚È‚¢E“–‚½‚Á‚Ä‚é‚Æ‚«‚Ì“–‚½‚è”»’è‚ÌF
     static const DirectX::SimpleMath::Color normalColor;
     static const DirectX::SimpleMath::Color hitColor;
-
-    CP_Collider() = delete;    
+ 
     virtual ~CP_Collider();
 public:
     using Component::Component;

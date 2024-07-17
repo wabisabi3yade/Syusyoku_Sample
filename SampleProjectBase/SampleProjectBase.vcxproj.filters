@@ -262,15 +262,6 @@
     <Filter Include="ソース ファイル\System\Json\Save">
       <UniqueIdentifier>{e8e81301-115a-4a0a-93dd-3fa9d701854e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\TankFireObj\Field">
-      <UniqueIdentifier>{7e6cb0cd-663f-451d-b683-2dacb70581ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\InGame\Player\PlayerShot">
-      <UniqueIdentifier>{e8cb6f07-29cc-4a68-856c-348340aea293}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\TankFireObj\Bullet">
-      <UniqueIdentifier>{f82d5a10-6c18-46cf-b336-59926f35276a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Component\InGame\Bullet">
       <UniqueIdentifier>{dfebd937-7ad1-49d9-9a20-14cf68f37213}</UniqueIdentifier>
     </Filter>
@@ -394,6 +385,15 @@
     <Filter Include="ソース ファイル\System\Prototype">
       <UniqueIdentifier>{8b44edf1-50c2-4f9c-b724-f1e67abf683a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\template">
+      <UniqueIdentifier>{3413918b-02ea-4457-9d59-ea33c05fc5e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Factory">
+      <UniqueIdentifier>{59c4033c-957f-4e5b-bd6b-1be4ed5e0fbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Design">
+      <UniqueIdentifier>{5b795805-d875-470d-8722-32b3709be5fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Basic.hlsl">
@@ -509,9 +509,6 @@
     <ClCompile Include="Transform.cpp">
       <Filter>ソース ファイル\System\Transform</Filter>
     </ClCompile>
-    <ClCompile Include="Object_3D.cpp">
-      <Filter>ソース ファイル\Object\Object_3D</Filter>
-    </ClCompile>
     <ClCompile Include="VariableFrameRate.cpp">
       <Filter>ソース ファイル\System\Application\FramerRate</Filter>
     </ClCompile>
@@ -523,9 +520,6 @@
     </ClCompile>
     <ClCompile Include="ImGuiDebugLog.cpp">
       <Filter>ソース ファイル\System\ImGui\ImGuiDebugLog</Filter>
-    </ClCompile>
-    <ClCompile Include="Object_2D.cpp">
-      <Filter>ソース ファイル\Object\Object_2D</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>ソース ファイル\Object\GameObject</Filter>
@@ -601,18 +595,6 @@
     </ClCompile>
     <ClCompile Include="SaveJsonValue.cpp">
       <Filter>ソース ファイル\System\Json\SaveJsonValue</Filter>
-    </ClCompile>
-    <ClCompile Include="Tank.cpp">
-      <Filter>ソース ファイル\Object\TankFireObj\Tank</Filter>
-    </ClCompile>
-    <ClCompile Include="Field.cpp">
-      <Filter>ソース ファイル\Object\TankFireObj\Field</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerShot.cpp">
-      <Filter>ソース ファイル\Component\InGame\Player\PlayerShot</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>ソース ファイル\Object\TankFireObj\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="BulletMove.cpp">
       <Filter>ソース ファイル\Component\InGame\Bullet</Filter>
@@ -743,6 +725,12 @@
     <ClCompile Include="PlaneMesh.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\Plane</Filter>
     </ClCompile>
+    <ClCompile Include="MyClass.cpp">
+      <Filter>ヘッダー ファイル\template</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentFactory.cpp">
+      <Filter>ソース ファイル\Component\Factory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -844,9 +832,6 @@
     <ClInclude Include="Transform.h">
       <Filter>ソース ファイル\System\Transform</Filter>
     </ClInclude>
-    <ClInclude Include="Object_3D.h">
-      <Filter>ソース ファイル\Object\Object_3D</Filter>
-    </ClInclude>
     <ClInclude Include="VariableFrameRate.h">
       <Filter>ソース ファイル\System\Application\FramerRate</Filter>
     </ClInclude>
@@ -858,9 +843,6 @@
     </ClInclude>
     <ClInclude Include="ImGuiDebugLog.h">
       <Filter>ソース ファイル\System\ImGui\ImGuiDebugLog</Filter>
-    </ClInclude>
-    <ClInclude Include="Object_2D.h">
-      <Filter>ソース ファイル\Object\Object_2D</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>ソース ファイル\Object\GameObject</Filter>
@@ -936,18 +918,6 @@
     </ClInclude>
     <ClInclude Include="SaveJson.h">
       <Filter>ソース ファイル\System\Json\Save</Filter>
-    </ClInclude>
-    <ClInclude Include="Tank.h">
-      <Filter>ソース ファイル\Object\TankFireObj\Tank</Filter>
-    </ClInclude>
-    <ClInclude Include="Field.h">
-      <Filter>ソース ファイル\Object\TankFireObj\Field</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerShot.h">
-      <Filter>ソース ファイル\Component\InGame\Player\PlayerShot</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>ソース ファイル\Object\TankFireObj\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="BulletMove.h">
       <Filter>ソース ファイル\Component\InGame\Bullet</Filter>
@@ -1089,6 +1059,12 @@
     </ClInclude>
     <ClInclude Include="IPrototype.h">
       <Filter>ソース ファイル\System\Prototype</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass.hpp">
+      <Filter>ヘッダー ファイル\template</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentFactory.h">
+      <Filter>ソース ファイル\Component\Factory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

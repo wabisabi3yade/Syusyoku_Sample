@@ -90,5 +90,9 @@ private:
 
 	/// @brief シーンマネージャー初期化
 	static void SceneManagerSetup();
+
+	/// @brief Updateできるか取得する
+	/// @return Updateできるか？
+	static bool CanUpdate();
 };
 

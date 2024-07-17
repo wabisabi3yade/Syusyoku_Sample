@@ -6,7 +6,7 @@ class CameraMove : public Component
 {
 	const GameObject* pPlayer{ nullptr };	// プレイヤーのオブジェクト
 
-	// カメラオブジェクト
+	// カメラクラス
 	Camera* camera{ nullptr };
 
 	// カメラの移動速度
@@ -29,8 +29,6 @@ public:
 
 	virtual void Init();
 	virtual void LateUpdate();
-
-	
 
 	virtual void ImGuiSetting() override;
 };

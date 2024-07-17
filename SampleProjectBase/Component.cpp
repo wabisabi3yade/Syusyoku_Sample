@@ -7,15 +7,18 @@ Transform& Component::GetTransform() const
     return gameObject->transform;
 }
 
-Component::Component(GameObject* _gameObject) : gameObject(_gameObject), isEnable(true)
+void Component::Copy(const Component& _other)
 {
+    if (this == &_other) return;
+
+    isEnable = _other.isEnable;
+    name = _other.name;
+    gameObject = _other.gameObject;
 }
 
 Component& Component::operator=(const Component& _other)
 {
-    if (this == &_other) return *this;  // “¯‚¶‚È‚ç•Ô‚·
-    
-    isEnable = _other.isEnable;
+    Copy(_other);
 
     return *this;
 }

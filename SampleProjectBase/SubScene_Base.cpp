@@ -8,7 +8,7 @@
 #include "GameMode.h"
 #include "InSceneSystemManager.h"
 
-
+// ImGui
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 #include "imgui.h"
@@ -16,15 +16,14 @@
 
 void SubScene_Base::DrawSetup()
 {
-	SceneObjects& sceneObjects = systemManager->GetSceneObjects();
 	SceneLights& sceneLights = systemManager->GetSceneLights();
 
 	// 画面クリアなど準備
 	Direct3D11::GetInstance()->GetRenderer()->SetUpDraw();
 
 	// ビュー変換行列を更新
-	Camera* mainCamera = sceneObjects.GetSceneObject<Camera>("MainCamera");
-	mainCamera->UpdateViewMatrix();
+	Camera& mainCamera = systemManager->GetMainCamera();
+	mainCamera.UpdateViewMatrix();
 
 	// 光源の更新処理
 	sceneLights.Update();
@@ -48,22 +47,6 @@ SubScene_Base::SubScene_Base(SceneMoveInfo* _pSceneMoveInfo)
 	// システム初期化
 	systemManager = InSceneSystemManager::GetInstance();
 	systemManager->Init();
-
-	// インスタンス生成
-	std::unique_ptr<Camera> mainCamera = std::make_unique<Camera>();
-
-
-	// 各インスタンスを渡す
-	InSceneSystemManager* system = InSceneSystemManager::GetInstance();
-
-	// カメラ設定
-	Camera* camPtr = mainCamera.get();
-	GameMode::GetInstance()->SetCamera(*camPtr);	// ゲームモードにカメラを設定する
-
-	camPtr->SetName("MainCamera");
-
-	SceneObjects& sceneObjects = systemManager->GetSceneObjects();
-	sceneObjects.SetObject(std::move(mainCamera));
 }
 
 SubScene_Base::~SubScene_Base()

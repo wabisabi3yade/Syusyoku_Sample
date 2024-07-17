@@ -1,32 +1,40 @@
 #pragma once
 
+
+
 // 可変フレームレートの秒数を計算するクラス
 class VariableFrameRate
 {
 private:
-	uint64_t microSecondsPerFrame;	// 1フレームごとのマイクロ秒
-	uint64_t deltaTime;	// Δt（ミリ秒）
-	uint64_t currentTime;	// 現在時間
-	uint64_t previousFrameTime;	// 前のフレームレートが終了したときの時間
+	long long microSecondsPerFrame;	// 1フレームごとのマイクロ秒
+	double deltaTime;	// Δt（ms）
+	long long previousFrameTime;	// 前のフレームレートが終了したときの時間
 
-	LARGE_INTEGER frequency;
-	LARGE_INTEGER startTime, endTime;
+	// FPS固定用変数
+	LARGE_INTEGER liWork; // 関数から値を受け取る用
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="setFrameRate">対応させたいフレームレート</param>
-	VariableFrameRate(uint64_t setFrameRate);
-	~VariableFrameRate();
+	VariableFrameRate() : microSecondsPerFrame(0), deltaTime(0), previousFrameTime(0), liWork() {}
+	~VariableFrameRate() {}
 
-	void Init();	// 初期化処理
-
-	void CaluculateDelta();	// Δtを計算する
+	void Init(u_int setFrameRate);	// 初期化処理
 
 	// 対応したfpsにするために次のループまで待つ関数
-	void Wait();	 
+	bool UpdateCheck();
+
+	// フレームレート描画
+	void Draw();
 
 	// Δtを取得（秒で返す）
-	float GetDeltaTime()const { return deltaTime / 1000.0f; }
+	float GetDeltaTime()const { return deltaTime * 0.001f ; }
+
+private:
+
+	/// @brief 現在時間を取得する
+	/// @return 
+	long long GetNowTime();
 };
 

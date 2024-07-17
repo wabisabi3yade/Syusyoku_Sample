@@ -1,11 +1,6 @@
 #pragma once
 #include "SceneMoveInfo.h"
 
-// オブジェクト
-#include "Camera.h"
-#include "Object_3D.h"
-#include "Object_2D.h"
-
 // システム関連
 #include "AssetLoader.h"
 #include "ShaderCollection.h"

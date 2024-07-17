@@ -20,9 +20,8 @@ protected:
 	// このコンポーネントの所持オブジェクト
 	GameObject* gameObject;	
 
-	
 public:
-	Component(GameObject* _gameObject); 
+	Component() : isEnable(true), name(""), gameObject(nullptr) {}
 	virtual ~Component(){};
 
 	// コピー代入演算子
@@ -46,6 +45,9 @@ public:
 	// ImGuiでパラメータを変える処理
 	virtual void ImGuiSetting() {};	
 
-	GameObject& GetGameObject() { return *gameObject; }	// ゲームオブジェクト取得
+	const GameObject& GetGameObject() { return *gameObject; }	// ゲームオブジェクト取得
+
+private:
+	void Copy(const Component& _other);
 };
 

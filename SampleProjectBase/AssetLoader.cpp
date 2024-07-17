@@ -322,9 +322,11 @@ Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, b
 	Assimp::Importer importer;
 
 	int flag = aiProcess_Triangulate;
-
+	flag |= aiProcess_JoinIdenticalVertices;
+	flag |= aiProcess_FlipUVs;
+	flag |= aiProcess_CalcTangentSpace;
 	if (_isLeftHand)
-		flag |= aiProcess_ConvertToLeftHanded;
+		flag |= aiProcess_MakeLeftHanded; ;
 
 
 	// ƒV[ƒ“î•ñ‚ğ\’z

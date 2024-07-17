@@ -2,7 +2,9 @@
 
 // メンバ変数
 #include "Tag.h"
-#include "Component.h"
+
+// コンポーネント生成
+#include "ComponentFactory.h"
 
 // シーン関数
 #include "SF_Include.h"
@@ -11,11 +13,6 @@
 #include "SaveJson.h"
 #include "LoadJson.h"
 #include "SaveJsonValue.h"
-
-// ImGui
-#include "imgui_impl_win32.h"
-#include "imgui_impl_dx11.h"
-#include "imgui.h"
 
 class SceneObjects;
 // シーンで使用するオブジェクト全般の基底クラス
@@ -88,7 +85,7 @@ public:
 	void SetActive(bool _isActive);
 
 	const std::string& GetName() { return name; }const
-	bool GetIsActive() { return isActive; }
+	bool GetIsActive() const { return isActive; }
 	const Tag& GetTag() { return tag; }
 	const Layer& GetLayer() { return layer; }
 };
@@ -96,20 +93,18 @@ public:
 template<typename T>
 inline T* GameObject::AddComponent()
 {
-	// コンポーネントを作成
-	auto t = this;
-	std::unique_ptr<T> addComp = std::make_unique<T>(t);
+	// コンポーネントファクトリーから取得
+	std::unique_ptr<Component> createComp = ComponentFactory::Create<T>();
+	createComp->gameObject = this;
 
-	Component* comp = dynamic_cast<Component*>(addComp.get());
-	if (comp == nullptr)	// コンポーネントクラスを継承してるかチェック
-	{
-		HASHI_DEBUG_LOG("AddComponent：Componentを継承していないので処理できません");
-		return nullptr;
-	}
-	comp->Init();	// 初期処理
-	T* retPtr = addComp.get();	// 返すポインタを取得しておく
+	// 初期処理
+	createComp->Init();	
 
-	pComponents.push_back(std::move(addComp));	// リストに追加
+	// 戻り値を取得
+	T* retPtr = static_cast<T*>(createComp.get());	
+
+	// リストに追加
+	pComponents.push_back(std::move(createComp));	
 
 	return retPtr;
 }

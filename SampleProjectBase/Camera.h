@@ -1,31 +1,53 @@
 #pragma once
-#include "GameObject.h"
+#include "Component.h"
 
 // ゲーム内カメラクラス
-class Camera : public GameObject
+class Camera : public Component
 {
-	// カメラの注視点
-	DirectX::SimpleMath::Vector3 focusPos{ 0,0,0 };
-	// カメラの上ベクトル
-	DirectX::SimpleMath::Vector3 camUp{ 0,1.f,0 };
+	/// @brief 注視点
+	DirectX::SimpleMath::Vector3 focusPos{ 0.0f, 0.0f, 0.0f };
 
-	float fov;	// 視野角
-	// 描画距離
-	float nearZ;	// 最短
-	float farZ;	 // 最長
-	bool isOrthographic;	// 平行投影をするか
-	void UpdatePerspective(u_int _viewPortSlot = 0);	// 透視投影をセットする
-	void UpdateOrthographic(u_int _viewPortSlot = 0);	// 透視投影をセットする
+	/// @brief カメラの上ベクトル
+	DirectX::SimpleMath::Vector3 camUp{ Vec3::Up };
+
+	/// @brief 視野角
+	float fov;
+
+	/// @brief 描画最短
+	float nearZ;
+
+	/// @brief 描画最長
+	float farZ;
+
+	/// @brief 平行投影にするか？
+	bool isOrthographic{ false };
 public:
-	Camera();
-	~Camera();
+	using Component::Component;
 
-	void UpdateViewMatrix();	// ビュー変換行列を更新
-	
-	// 各プロジェクションに設定
-	void SetOrthographic();	// 平行投影
-	void SetPerspective();	// 透視投影
+	void Init() override;
 
+	/// @brief ビュー変換行列
+	void UpdateViewMatrix();	
+
+	/// @brief 透視投影に変更
+	/// @param _viewPortSlot 
+	void SetPerspective(u_int _viewPortSlot = 0);
+
+	/// @brief 平行投影に変更
+	/// @param _viewPortSlot ビューポートインデックス
+	void SetOrthographic(u_int _viewPortSlot = 0);
+
+	/// @brief 注視点セット
+	/// @param _focusPos ワールド座標
 	void SetFocusPos(const DirectX::SimpleMath::Vector3& _focusPos);
+
+private:
+	/// @brief 透視投影行列を更新
+	/// @param _viewPortSlot ビューポートインデックス
+	void UpdatePerspective(u_int _viewPortSlot);
+
+	/// @brief 平行投影をセットする
+	/// @param _viewPortSlot ビューポートインデックス
+	void UpdateOrthographic(u_int _viewPortSlot);
 };
 

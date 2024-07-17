@@ -51,7 +51,10 @@ void CameraMove::Init()
 {
 	name = "CameraMove";
 
-	camera = static_cast<Camera*>(gameObject);	// カメラを取得する
+	camera = gameObject->GetComponent<Camera>();	// カメラを取得する
+
+	if (camera == nullptr)
+		HASHI_DEBUG_LOG("Cameraコンポーネントがありません");
 
 	moveSpeed = 5.0f;
 	lookSpeed = 180.0f;

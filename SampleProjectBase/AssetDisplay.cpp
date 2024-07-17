@@ -16,21 +16,19 @@ static void DrawAssetName(const std::string& _treeName, const AssetList& _assets
 
 void AssetDisplay::Draw()
 {
-#ifdef EDIT
-	ImGui::Begin(ShiftJisToUtf8("アセット").c_str());
+	if (ImGui::TreeNode(ShiftJisToUtf8("アセット").c_str()))
+	{
+		AssetList& Tassets = pAssetCollection->GetAssetList<Texture>();
+		DrawAssetName("テクスチャ", Tassets);
 
-	AssetList& Tassets = pAssetCollection->GetAssetList<Texture>();
-	DrawAssetName("テクスチャ", Tassets);
+		AssetList& MBassets = pAssetCollection->GetAssetList<Mesh_Base>();
+		DrawAssetName("モデル", MBassets);
 
-	AssetList& MBassets = pAssetCollection->GetAssetList<Mesh_Base>();
-	DrawAssetName("モデル", MBassets);
+		AssetList& Massets = pAssetCollection->GetAssetList<Material>();
+		DrawAssetName("マテリアル", Massets);
 
-	AssetList& Massets = pAssetCollection->GetAssetList<Material>();
-	DrawAssetName("マテリアル", Massets);
-
-	ImGui::End();
-
-#endif // EDIT
+		ImGui::TreePop();
+	}
 }
 
 void DrawAssetName(const std::string& _treeName, const AssetList& _assets)

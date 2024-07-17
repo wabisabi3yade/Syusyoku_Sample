@@ -8,40 +8,52 @@
 #include "imgui_impl_dx11.h"
 #include "imgui.h"
 
-void VariableFrameRate::CaluculateDelta()
+void VariableFrameRate::Init(u_int setFrameRate)
 {
-	currentTime = GetTickCount64();				// 現在時刻取得
-	deltaTime = currentTime - previousFrameTime;	// 前回実行時からに経過時間を取得
+	// FPS固定用変数
+	long long frequency; // 計測精度
+	// 計測精度を取得
+	QueryPerformanceFrequency(&liWork);
+	frequency = liWork.QuadPart; // １秒あたりの解像度が入る
+	// １フレームあたりのカウント値を計算
+	microSecondsPerFrame = frequency / setFrameRate; // 60FPSで計算
+
+	previousFrameTime = GetNowTime();
+}
+
+bool VariableFrameRate::UpdateCheck()
+{
+	// 前のフレームからの秒数を測る
+	auto currentTime = GetNowTime();
+	auto count = currentTime - previousFrameTime;
+
+	// 1フレーム時間に達したら
+	if (count < microSecondsPerFrame)
+		return false;
+
+	// デルタタイム(ms)にする
+	deltaTime = static_cast<double>(count * 0.0001f);
+
+	// 更新する
 	previousFrameTime = currentTime;
+
+	return true;
 }
 
-VariableFrameRate::VariableFrameRate(uint64_t setFrameRate) : deltaTime(0), currentTime(0),
-previousFrameTime(0)
+void VariableFrameRate::Draw()
 {
-	microSecondsPerFrame = (1000 * 1000) / setFrameRate;	// 1フレームのマイクロ秒数を求める
-
-	QueryPerformanceFrequency(&frequency);
-	QueryPerformanceCounter(&startTime);
-}
-
-VariableFrameRate::~VariableFrameRate()
-{
-}
-
-void VariableFrameRate::Init()
-{
-	previousFrameTime = GetTickCount64();
-}
-
-void VariableFrameRate::Wait()
-{
-	// 次のフレームまでに待機する時間を求める
-	int64_t waitTime = microSecondsPerFrame - deltaTime;
-
-	if (waitTime > 0)
+	if (ImGui::TreeNode("FPS Counter"))
 	{
-		float tt = waitTime / 1000.0f;
+		float fps = 1.0f / (deltaTime * 0.001f);
 
-		std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(tt)));	// スレッドを待機させる
+		ImGui::Text("%.1f FPS", fps);
+
+		ImGui::TreePop();
 	}
+}
+
+long long VariableFrameRate::GetNowTime()
+{
+	QueryPerformanceCounter(&liWork);
+	return liWork.QuadPart;
 }

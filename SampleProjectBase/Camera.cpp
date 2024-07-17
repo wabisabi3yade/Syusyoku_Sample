@@ -3,26 +3,31 @@
 
 using namespace DirectX::SimpleMath;
 
+// デフォルト値
 constexpr float DEFAULT_FOV = 45.0f;
 constexpr float DEFAULT_NEARZ = 0.1f;
 constexpr float DEFAULT_FARZ = 1000.0f;
 
-Camera::Camera() :focusPos(0, 0, 0), fov(DEFAULT_FOV), nearZ(DEFAULT_NEARZ), farZ(DEFAULT_FARZ),
-	isOrthographic(false)
+void Camera::Init()
 {
-	transform.position.z = -10.0f;
+	// 初期値代入
+	focusPos = { 0, 0, 0 };
+	fov = DEFAULT_FOV;
+	nearZ = DEFAULT_NEARZ;
+	farZ = DEFAULT_FARZ;
+	
+	GetTransform().position.y = 3.0f;
+	GetTransform().position.z = 4.0f;
+	GetTransform().rotation.x = 30.0f;
+	GetTransform().rotation.y = 180.0f;
 	SetPerspective();	// 透視投影から始める
-}
-
-Camera::~Camera()
-{
 }
 
 void Camera::UpdateViewMatrix()
 {
-	focusPos = transform.position + transform.Forward() * 1.0f;
+	focusPos = GetTransform().position + GetTransform().Forward() * 1.0f;
 
-	if (Vector3::Distance(transform.position, focusPos) < 0.0001f)
+	if (Vector3::Distance(GetTransform().position, focusPos) < 0.0001f)
 	{
 		focusPos.z += 0.001f;
 	}
@@ -30,7 +35,7 @@ void Camera::UpdateViewMatrix()
 	// ビュー変換行列を求める
 	Matrix viewMatrix = DirectX::XMMatrixLookAtLH
 	(
-		transform.position,		// カメラ座標
+		GetTransform().position,		// カメラ座標
 		focusPos,	// 注視点
 		Vector3::Up // 上ベクトル
 	);
@@ -38,6 +43,23 @@ void Camera::UpdateViewMatrix()
 
 	// ビュー変換行列をセット
 	Direct3D11::GetInstance()->GetRenderer()->GetParameter().SetView(viewMatrix);
+}
+
+void Camera::SetPerspective(u_int _viewPortSlot)
+{
+	isOrthographic = false;
+	UpdatePerspective(_viewPortSlot);
+}
+
+void Camera::SetOrthographic(u_int _viewPortSlot)
+{
+	isOrthographic = true;
+	UpdateOrthographic(_viewPortSlot);
+}
+
+void Camera::SetFocusPos(const DirectX::SimpleMath::Vector3& _focusPos)
+{
+	focusPos = _focusPos;
 }
 
 void Camera::UpdatePerspective(u_int _viewPortSlot)
@@ -83,21 +105,4 @@ void Camera::UpdateOrthographic(u_int _viewPortSlot)
 	// 投影行列の参照を取得し、ビュー変換行列を代入する
 	RenderParam& param = renderer.GetParameter();
 	param.SetProjection(mat);
-}
-
-void Camera::SetOrthographic()
-{
-	isOrthographic = true;
-	UpdateOrthographic(0);
-}
-
-void Camera::SetPerspective()
-{
-	isOrthographic = false;
-	UpdatePerspective(0);
-}
-
-void Camera::SetFocusPos(const DirectX::SimpleMath::Vector3& _focusPos)
-{
-	focusPos = _focusPos;
 }

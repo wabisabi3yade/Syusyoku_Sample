@@ -36,8 +36,6 @@ void MainApplication::Release()
 	Direct3D11::Delete();
 }
 
-
-
 bool MainApplication::EscapeCheck()
 {
 	// エスケープキー押されたら
@@ -85,7 +83,10 @@ bool MainApplication::EscapeCheck()
 
 void MainApplication::SystemDraw()
 {
+	ImGui::Begin(ShiftJisToUtf8("システム").c_str());
 	AssetDisplay::Draw();
+	pVariableFps->Draw();
+	ImGui::End();
 
 	ImGuiMethod::Draw();
 }
@@ -113,13 +114,12 @@ void MainApplication::Init(HINSTANCE _hInst)
 
 void MainApplication::GameLoop()
 {
+	// 前回時間の初期化
+	pVariableFps->Init(FPS);
+
 	while (true)
 	{
-		static ULONGLONG start = 0;
-		static ULONGLONG end = 0;
-		start = GetTickCount64();
-
-		pVariableFps->CaluculateDelta();
+		if (!CanUpdate) continue;
 
 		bool result = pWindow->MessageLoop();
 		if (result == false) break;
@@ -142,7 +142,7 @@ void MainApplication::GameLoop()
 		Direct3D11::GetInstance()->GetRenderer()->Swap();
 
 		// 待機
-		pVariableFps->Wait();
+		pVariableFps->UpdateCheck();
 	}
 }
 
@@ -167,7 +167,7 @@ void MainApplication::D3DSetup(HWND _hwnd)
 
 void MainApplication::VariableFrameSetup()
 {
-	pVariableFps = std::make_unique<VariableFrameRate>(FPS);
+	pVariableFps = std::make_unique<VariableFrameRate>();
 }
 
 void MainApplication::InputSetup(HWND _hwnd)
@@ -205,4 +205,9 @@ void MainApplication::ShaderSetup()
 void MainApplication::SceneManagerSetup()
 {
 	pSceneManager = SceneManager::GetInstance();
+}
+
+bool MainApplication::CanUpdate()
+{
+	return pVariableFps->UpdateCheck();
 }

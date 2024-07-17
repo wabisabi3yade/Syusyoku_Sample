@@ -86,10 +86,10 @@
     <ClCompile Include="AssetGetter.cpp" />
     <ClCompile Include="AssetSetter.cpp" />
     <ClCompile Include="Asset_Base.cpp" />
-    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletMove.cpp" />
     <ClCompile Include="CameraInput.cpp" />
     <ClCompile Include="CollisionChecker.cpp" />
+    <ClCompile Include="ComponentFactory.cpp" />
     <ClCompile Include="CP_BoxCollider.cpp" />
     <ClCompile Include="CP_Collider.cpp" />
     <ClCompile Include="CP_MeshRenderer.cpp" />
@@ -97,7 +97,6 @@
     <ClCompile Include="CP_SphereCollider.cpp" />
     <ClCompile Include="CP_SpriteRenderer.cpp" />
     <ClCompile Include="DirectionLight.cpp" />
-    <ClCompile Include="Field.cpp" />
     <ClCompile Include="GameKey.cpp" />
     <ClCompile Include="GameMode.cpp" />
     <ClCompile Include="Geometory.cpp" />
@@ -125,18 +124,17 @@
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MathUseful.cpp" />
     <ClCompile Include="Mesh_Base.cpp" />
+    <ClCompile Include="MyClass.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="PlaneMesh.cpp" />
     <ClCompile Include="PlayerInput.cpp" />
     <ClCompile Include="PlayerMove.cpp" />
-    <ClCompile Include="PlayerShot.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="SaveJson.cpp" />
     <ClCompile Include="SaveJsonValue.cpp" />
     <ClCompile Include="SceneLights.cpp" />
     <ClCompile Include="SceneObjects.cpp" />
     <ClCompile Include="SF_GameObject.cpp" />
-    <ClCompile Include="Object_2D.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderCollection.cpp" />
     <ClCompile Include="SinCurve.cpp" />
@@ -146,7 +144,6 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StaticMesh.cpp" />
     <ClCompile Include="Tag.cpp" />
-    <ClCompile Include="Tank.cpp" />
     <ClCompile Include="Tank_BroadScene.cpp" />
     <ClCompile Include="Tank_ChangeSub.cpp" />
     <ClCompile Include="Tank_InGameSub.cpp" />
@@ -154,7 +151,6 @@
     <ClCompile Include="Tank_TitleSub.cpp" />
     <ClCompile Include="AssetLoader.cpp" />
     <ClCompile Include="VariableFrameRate.cpp" />
-    <ClCompile Include="Object_3D.cpp" />
     <ClCompile Include="ImGuiMethod.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainApplication.cpp" />
@@ -195,11 +191,11 @@
     <ClInclude Include="AssetDisplay.h" />
     <ClInclude Include="AssetGetter.h" />
     <ClInclude Include="AssetSetter.h" />
-    <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletMove.h" />
     <ClInclude Include="CameraInput.h" />
     <ClInclude Include="CollisionChecker.h" />
     <ClInclude Include="ComponentDefine.h" />
+    <ClInclude Include="ComponentFactory.h" />
     <ClInclude Include="CP_BoxCollider.h" />
     <ClInclude Include="CP_Collider.h" />
     <ClInclude Include="CP_MeshRenderer.h" />
@@ -207,7 +203,6 @@
     <ClInclude Include="CP_SphereCollider.h" />
     <ClInclude Include="CP_SpriteRenderer.h" />
     <ClInclude Include="DirectionLight.h" />
-    <ClInclude Include="Field.h" />
     <ClInclude Include="GameKey.h" />
     <ClInclude Include="GameMode.h" />
     <ClInclude Include="Geometory.h" />
@@ -239,11 +234,11 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="MathUseful.h" />
     <ClInclude Include="Mesh_Base.h" />
+    <ClInclude Include="MyClass.hpp" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="PlaneMesh.h" />
     <ClInclude Include="PlayerInput.h" />
     <ClInclude Include="PlayerMove.h" />
-    <ClInclude Include="PlayerShot.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="SaveJson.h" />
     <ClInclude Include="SaveJsonValue.h" />
@@ -251,7 +246,6 @@
     <ClInclude Include="SceneObjects.h" />
     <ClInclude Include="SF_GameObject.h" />
     <ClInclude Include="SF_Include.h" />
-    <ClInclude Include="Object_2D.h" />
     <ClInclude Include="JISToUTF8.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderCollection.h" />
@@ -262,7 +256,6 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="StaticMesh.h" />
     <ClInclude Include="Tag.h" />
-    <ClInclude Include="Tank.h" />
     <ClInclude Include="Tank_BroadScene.h" />
     <ClInclude Include="Tank_ChangeSub.h" />
     <ClInclude Include="Tank_InGameSub.h" />
@@ -270,7 +263,6 @@
     <ClInclude Include="Tank_TitleSub.h" />
     <ClInclude Include="AssetLoader.h" />
     <ClInclude Include="VariableFrameRate.h" />
-    <ClInclude Include="Object_3D.h" />
     <ClInclude Include="IGetRenderPara.h" />
     <ClInclude Include="IGetRenderResource.h" />
     <ClInclude Include="ImGuiMethod.h" />

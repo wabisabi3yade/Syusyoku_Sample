@@ -5,28 +5,50 @@
 #include "SceneLights.h"
 #include "CollisionChecker.h"
 
+// カメラ
+class Camera;
+
 // シーン内部のシステムのインスタンスを持つクラス
 class InSceneSystemManager : public Singleton_Base<InSceneSystemManager>
 {
 	friend class Singleton_Base<InSceneSystemManager>;
 
-	InSceneSystemManager(){};
-	~InSceneSystemManager();
-
-	// インスタンス
-	// シーンオブジェクト
+	/// @brief メインカメラ
+	Camera* pMainCamera;
+	
+	/// @brief シーンオブジェクト
 	std::unique_ptr<SceneObjects> pSceneObjects;
 
-	// シーンライティング
+	/// @brief シーンライティング
 	std::unique_ptr<SceneLights> pSceneLights;
 
-	// 衝突判定
+	/// @brief 衝突判定
 	std::unique_ptr<CollisionChecker> pCollisionChecker;
+
+	InSceneSystemManager() : pMainCamera(nullptr) {}
+	~InSceneSystemManager();
+
 public:
 	void Init();
 
-	SceneObjects& GetSceneObjects() { return *pSceneObjects; }
-	SceneLights& GetSceneLights() { return *pSceneLights; }
+	/// @brief  メインカメラを取得
+	/// @return 
+	Camera& GetMainCamera();
+
+	/// @brief シーンのオブジェクト配列を取得
+	/// @return オブジェクト配列の参照
+	 SceneObjects& GetSceneObjects();
+
+	/// @brief シーンのライティング配列を取得
+	/// @return ライティング配列の参照
+	SceneLights& GetSceneLights();
+
+	/// @brief シーンの衝突判定システムを取得
+	/// @return 衝突判定システムの参照
 	CollisionChecker& GetCollisonChecker() { return *pCollisionChecker; }
+private:
+
+	/// @brief シーンのメインカメラを作成する
+	void CreateMainCamera();
 };
 

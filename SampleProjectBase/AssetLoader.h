@@ -17,9 +17,7 @@ class Texture;
 class Mesh_Base;
 class Material;
 
-
 struct  aiTexture;
-
 
 // アセットをロードするクラス(staticクラス)
 class AssetLoader : private AssetContacter
