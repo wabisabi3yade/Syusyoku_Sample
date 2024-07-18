@@ -7,7 +7,7 @@
 #include "ComponentFactory.h"
 
 // ƒV[ƒ“ŠÖ”
-#include "SF_Include.h"
+#include "SF_Define.h"
 
 // Json
 #include "SaveJson.h"

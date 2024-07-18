@@ -1,34 +1,44 @@
 #include "pch.h"
 #include "SpotLight.h"
 
-void SpotLight::Copy(const SpotLight& _other)
+using namespace DirectX::SimpleMath;
+
+void SpotLight::SetDistance(float _distance)
 {
-	distance = _other.distance;
-	rangeAngle = _other.rangeAngle;
-	direction = _other.direction;
+	lightDistance = std::max(_distance, 0.0f);
 }
 
-SpotLight::SpotLight(const SpotLight& _other) : Light(_other)
+void SpotLight::SetRangeAngle(float _rangeAngle)
 {
-	if (this == &_other) return;
-	Copy(_other);
-	return;
+	rangeAngle = std::max(_rangeAngle, 0.0f);
 }
 
-SpotLight& SpotLight::operator=(const SpotLight& _other)
+void SpotLight::SetDirection(const DirectX::SimpleMath::Vector3& _direction)
 {
-	if (this == &_other) return *this;
-	Light::operator=(_other);
-	Copy(_other);
-	return *this;
+	lightDir = _direction;
+}
+
+float SpotLight::GetDistance()
+{
+	return lightDistance;
+}
+
+float SpotLight::GetRangeAngle()
+{
+	return rangeAngle;
+}
+
+const DirectX::SimpleMath::Vector3& SpotLight::GetLightDir()
+{
+	return lightDir;
 }
 
 SpotLParameter SpotLight::GetParameter()
 {
 	SpotLParameter s;
 	s.base = parameter;
-	s.direction = direction;
-	s.distance = distance;
+	s.direction = lightDir;
+	s.distance = lightDistance;
 	s.rangeAngle = s.rangeAngle;
 	return s;
 }

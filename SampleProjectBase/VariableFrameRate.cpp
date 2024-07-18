@@ -2,7 +2,6 @@
 #include "VariableFrameRate.h"
 
 #include <thread>
-#include <chrono>
 
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
@@ -44,7 +43,7 @@ void VariableFrameRate::Draw()
 {
 	if (ImGui::TreeNode("FPS Counter"))
 	{
-		float fps = 1.0f / (deltaTime * 0.001f);
+		float fps = static_cast<float>(1.0f / (deltaTime * 0.001f));
 
 		ImGui::Text("%.1f FPS", fps);
 

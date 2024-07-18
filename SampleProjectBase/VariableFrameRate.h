@@ -34,7 +34,7 @@ public:
 private:
 
 	/// @brief Œ»İŠÔ‚ğæ“¾‚·‚é
-	/// @return 
+	/// @return Œ»İŠÔi0.1ns/’PˆÊj
 	long long GetNowTime();
 };
 

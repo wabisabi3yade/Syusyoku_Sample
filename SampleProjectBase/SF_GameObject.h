@@ -6,7 +6,7 @@ class GameObject;
 namespace SceneFunction
 {
 	// オブジェクト
-	namespace Object
+	namespace ObjectFunc
 	{
 		/// @brief オブジェクトを新しく生成する
 		/// @param _obj 対象オブジェクト

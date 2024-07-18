@@ -119,7 +119,8 @@ void MainApplication::GameLoop()
 
 	while (true)
 	{
-		if (!CanUpdate) continue;
+		// 1フレームの時間に合わせる
+		if (!CanUpdate()) continue;
 
 		bool result = pWindow->MessageLoop();
 		if (result == false) break;
@@ -136,6 +137,7 @@ void MainApplication::GameLoop()
 		// 更新処理
 		pSceneManager->Exec();
 
+		// システムのGUI描画
 		SystemDraw();
 
 		// スワップチェイン

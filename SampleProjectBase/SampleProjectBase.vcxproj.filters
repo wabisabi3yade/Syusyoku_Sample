@@ -394,6 +394,39 @@
     <Filter Include="ソース ファイル\Design">
       <UniqueIdentifier>{5b795805-d875-470d-8722-32b3709be5fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Vertex">
+      <UniqueIdentifier>{ce397238-d551-440c-a98a-9990ab849981}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Pixel">
+      <UniqueIdentifier>{ef35cfd6-c110-4ce9-af99-9a564f62db66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Base">
+      <UniqueIdentifier>{54f60261-d464-492f-94cd-725c9e08a910}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\Base">
+      <UniqueIdentifier>{d1452bc8-852a-4657-b55e-a8cb11c4af52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\Base">
+      <UniqueIdentifier>{906f26d9-26c2-4f10-a59a-deec38027e49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\World">
+      <UniqueIdentifier>{be6b606f-cba9-4ed5-8c1b-d82595971065}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\OutLine">
+      <UniqueIdentifier>{6d9f9bbf-d058-49a1-8f01-3308bac93c5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\Unlit">
+      <UniqueIdentifier>{62285b9b-b13a-4a48-90bb-923d7ff90ed0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\Gouraud">
+      <UniqueIdentifier>{5c5f5a2b-4fd4-4219-9474-b9a8fcb8112f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\Lit">
+      <UniqueIdentifier>{023695c9-70cd-4b26-803d-53a8a07213f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\SceneFunction\SF_Light">
+      <UniqueIdentifier>{5659979c-5dac-4fb1-b2b8-1258f1f7db18}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Basic.hlsl">
@@ -665,15 +698,6 @@
     <ClCompile Include="ShaderCollection.cpp">
       <Filter>ソース ファイル\System\ShaderCollection</Filter>
     </ClCompile>
-    <ClCompile Include="VertexShader.cpp">
-      <Filter>ソース ファイル\Graphics\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="PixelShader.cpp">
-      <Filter>ソース ファイル\Graphics\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>ソース ファイル\Graphics\Shader</Filter>
-    </ClCompile>
     <ClCompile Include="CP_BoxCollider.cpp">
       <Filter>ソース ファイル\Component\Collider\Box</Filter>
     </ClCompile>
@@ -730,6 +754,21 @@
     </ClCompile>
     <ClCompile Include="ComponentFactory.cpp">
       <Filter>ソース ファイル\Component\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexShader.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="PixelShader.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="VS_Gouraud.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\Gouraud</Filter>
+    </ClCompile>
+    <ClCompile Include="SF_Light.cpp">
+      <Filter>ソース ファイル\Scene\SceneFunction\SF_Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -928,7 +967,7 @@
     <ClInclude Include="SF_GameObject.h">
       <Filter>ソース ファイル\Scene\SceneFunction\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="SF_Include.h">
+    <ClInclude Include="SF_Define.h">
       <Filter>ソース ファイル\Scene\SceneFunction</Filter>
     </ClInclude>
     <ClInclude Include="Light.h">
@@ -994,15 +1033,6 @@
     <ClInclude Include="ShaderCollection.h">
       <Filter>ソース ファイル\System\ShaderCollection</Filter>
     </ClInclude>
-    <ClInclude Include="VertexShader.h">
-      <Filter>ソース ファイル\Graphics\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="PixelShader.h">
-      <Filter>ソース ファイル\Graphics\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>ソース ファイル\Graphics\Shader</Filter>
-    </ClInclude>
     <ClInclude Include="CP_BoxCollider.h">
       <Filter>ソース ファイル\Component\Collider\Box</Filter>
     </ClInclude>
@@ -1065,6 +1095,21 @@
     </ClInclude>
     <ClInclude Include="ComponentFactory.h">
       <Filter>ソース ファイル\Component\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>ソース ファイル\Graphics\Shader\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexShader.h">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="PixelShader.h">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="VS_Gouraud.h">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\Gouraud</Filter>
+    </ClInclude>
+    <ClInclude Include="SF_Light.h">
+      <Filter>ソース ファイル\Scene\SceneFunction\SF_Light</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

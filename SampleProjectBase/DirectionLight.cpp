@@ -4,26 +4,6 @@
 #include "Geometory.h"
 
 using namespace DirectX::SimpleMath;
-
-void DirectionLight::Copy(const DirectionLight& _other)
-{
-	direction = _other.direction;
-}
-
-DirectionLight::DirectionLight(const DirectionLight& _other) : Light(_other)
-{
-	if (this == &_other) return;
-	Copy(_other);
-}
-
-DirectionLight& DirectionLight::operator=(const DirectionLight& _other)
-{
-	if (this == &_other) return *this;
-	Light::operator=(_other);
-	Copy(_other);
-	return *this;
-}
-
 void DirectionLight::Draw()
 {
 	Geometory::SetPosition(parameter.position);

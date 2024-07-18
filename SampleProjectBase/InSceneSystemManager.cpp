@@ -39,6 +39,6 @@ SceneLights& InSceneSystemManager::GetSceneLights()
 
 void InSceneSystemManager::CreateMainCamera()
 {
-	GameObject& cameraObject = Object::CreateEmpty("MainCamera");
+	GameObject& cameraObject = ObjectFunc::CreateEmpty("MainCamera");
 	pMainCamera = cameraObject.AddComponent<Camera>();
 }

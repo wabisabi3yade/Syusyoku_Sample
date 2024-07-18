@@ -3,7 +3,7 @@
 
 void PointLight::Copy(const PointLight& _other)
 {
-	range = _other.range;
+	lightRange = _other.lightRange;
 }
 
 PointLight::PointLight(const PointLight& _other) : Light(_other)
@@ -21,11 +21,22 @@ PointLight& PointLight::operator=(const PointLight& _other)
 	return *this;
 }
 
+void PointLight::SetRange(float _range)
+{
+	// 0–¢–ž‚É‚µ‚È‚¢
+	lightRange = std::max(_range, 0.0f);
+}
+
+float PointLight::GetRange() const
+{
+	return lightRange;
+}
+
 PointLParameter PointLight::GetParameter()
 {
 	PointLParameter p;
 	p.base = parameter;
-	p.range = range;
+	p.range = lightRange;
 
 	return p;
 }

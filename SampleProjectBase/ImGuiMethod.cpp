@@ -71,7 +71,7 @@ void ImGuiMethod::DragFloat3(Vector3& _vector3, const std::string& _name, float 
 	f[0] = _vector3.x;
 	f[1] = _vector3.y;
 	f[2] = _vector3.z;
-	ImGui::DragFloat3(ShiftJisToUtf8(_name).c_str(), f, _speed);
+	ImGui::DragFloat3(TO_UTF8(_name), f, _speed);
 	_vector3 = { f[0], f[1], f[2] };	// ç¿ïW
 }
 
@@ -82,7 +82,7 @@ void ImGuiMethod::ColorEdit4(DirectX::SimpleMath::Color& _color, const std::stri
 	f[1] = _color.y;
 	f[2] = _color.z;
 	f[3] = _color.w;
-	ImGui::ColorEdit4(ShiftJisToUtf8(_name).c_str(), f);
+	ImGui::ColorEdit4(TO_UTF8(_name), f);
 	_color = { f[0], f[1], f[2], f[3]};	// êF
 }
 

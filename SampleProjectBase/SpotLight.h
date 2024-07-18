@@ -13,27 +13,28 @@ class SpotLight :
 	public Light
 {
 	// 光の距離
-	float distance;
+	float lightDistance;
+
 	// 放射角度
 	float rangeAngle;
-	// 光の方向
-	DirectX::SimpleMath::Vector3 direction;
-	LightParameter parameter;
 
-	void Copy(const SpotLight& _other);
+	// 光の方向
+	DirectX::SimpleMath::Vector3 lightDir;
 public:
-	SpotLight() : distance(5.0f), rangeAngle(45.0f), direction(0.0f, -1.0f, 0.0f)
+	SpotLight() : lightDistance(5.0f), rangeAngle(45.0f), lightDir(0.0f, -1.0f, 0.0f)
 	{
 		type = Type::Spot;
 	};
-
-	SpotLight(const SpotLight& _other);
 	~SpotLight() {};
 
-	SpotLight& operator=(const SpotLight& _other);
+	void SetDistance(float _distance);
+	void SetRangeAngle(float _rangeAngle);
+	void SetDirection(const DirectX::SimpleMath::Vector3& _direction);
 
-	void SetDistance(float _distance) { distance = _distance; }
-	void SetRangeAngle(float _rangeAngle) { rangeAngle = _rangeAngle; }
+	// 各パラメータ取得
+	float GetDistance();
+	float GetRangeAngle();
+	const DirectX::SimpleMath::Vector3& GetLightDir();
 
 	SpotLParameter GetParameter();
 };

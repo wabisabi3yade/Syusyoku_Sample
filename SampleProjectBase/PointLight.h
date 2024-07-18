@@ -13,17 +13,23 @@ class PointLight :
 {
 private:
 	// Œõ‚Ì”ÍˆÍ
-	float range;
+	float lightRange;
 
 	void Copy(const PointLight& _other);
 public:
-	PointLight() : range(5.0f) { type = Type::Point; };
+	PointLight() : lightRange(5.0f) { type = Type::Point; };
 	PointLight(const PointLight& _other);
-	~PointLight(){};
+	~PointLight() {}
 
 	PointLight& operator=(const PointLight& _other);
 
-	void SetRange(float _range) { range = _range; }
+	/// @brief ”ÍˆÍ‚ğİ’è
+	/// @param _range ”ÍˆÍ
+	void SetRange(float _range);
+
+	/// @brief Œõ‚Ì”ÍˆÍ‚ğæ“¾‚·‚é
+	/// @return Œõ‚Ì”ÍˆÍ
+	float GetRange() const;
 	PointLParameter GetParameter();
 };
 

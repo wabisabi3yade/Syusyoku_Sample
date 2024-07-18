@@ -19,27 +19,30 @@ class SceneLights
 	std::list<std::unique_ptr<SpotLight>> pSpotLights;
 	// スポットライトパラメータ配列
 	std::vector<SpotLParameter> spotParameters;
-
-	// 光源のパラメータを更新する
-	void UpdateParameter();
-
-	// ImGuiの表示
-	void ImGuiDisplay();
-	void ImGuiDirection();
-
-	void Draw();
 public:
 	SceneLights();
 	~SceneLights() {};
 
 	void Update();
 
-	void SetDirectionLight(std::unique_ptr<DirectionLight> _direction);
+	DirectionLight* SetDirectionLight(std::unique_ptr<DirectionLight> _direction);
 	PointLight* SetPointLight(std::unique_ptr<PointLight> _point);
 	SpotLight* SetSpotLight(std::unique_ptr<SpotLight> _spot);
 
 	DirectionLParameter GetDirectionParameter();
 	const std::vector<PointLParameter>& GetPointParameter();
 	const std::vector<SpotLParameter>& GetSpotParameter();
+
+private:
+	// 光源のパラメータを更新する
+	void UpdateParameter();
+
+	// ImGuiの表示
+	void ImGuiDisplay();
+	void ImGuiDirection();
+	void ImGuiPoint();
+	void ImGuiSpot();
+
+	void Draw();
 };
 

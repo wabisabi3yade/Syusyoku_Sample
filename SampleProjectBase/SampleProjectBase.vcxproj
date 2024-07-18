@@ -135,6 +135,7 @@
     <ClCompile Include="SceneLights.cpp" />
     <ClCompile Include="SceneObjects.cpp" />
     <ClCompile Include="SF_GameObject.cpp" />
+    <ClCompile Include="SF_Light.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderCollection.cpp" />
     <ClCompile Include="SinCurve.cpp" />
@@ -177,6 +178,7 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
     <ClCompile Include="VertexShader.cpp" />
+    <ClCompile Include="VS_Gouraud.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -245,8 +247,9 @@
     <ClInclude Include="SceneLights.h" />
     <ClInclude Include="SceneObjects.h" />
     <ClInclude Include="SF_GameObject.h" />
-    <ClInclude Include="SF_Include.h" />
+    <ClInclude Include="SF_Define.h" />
     <ClInclude Include="JISToUTF8.h" />
+    <ClInclude Include="SF_Light.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderCollection.h" />
     <ClInclude Include="SinCurve.h" />
@@ -290,6 +293,7 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="VertexBuffer.h" />
     <ClInclude Include="VertexShader.h" />
+    <ClInclude Include="VS_Gouraud.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -6,11 +6,6 @@
 using namespace DirectX;
 using namespace SimpleMath;
 
-ID3D11InputLayout& RenderParam::GetInputLayout()
-{
-	return *pInputLayout.Get();
-}
-
 const RenderParam::WVP& RenderParam::GetWVP(const Transform& _transform)
 {
 	// •ÏŠ·s—ñ‚ğì¬

@@ -28,13 +28,9 @@ protected:
 
 	// ライトのパラメータ構造体
 	LightParameter parameter;
-
-	void Copy(const Light& _other);
 public:
 	Light() : type(Type::None), isDebugDisplay(false) {}
-	Light(const Light& _other);
 	~Light() {};
-	Light& operator=(const Light& _other);
 
 	virtual void Draw() {};
 

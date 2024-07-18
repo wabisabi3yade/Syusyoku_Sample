@@ -45,7 +45,7 @@ void ImGuiDebugLog::Add(const std::string& _debugMessage, const std::string& _pa
 #ifdef EDIT
 
 	// UTF-8に変換
-	std::string u8Message = ShiftJisToUtf8(_debugMessage);	
+	std::string u8Message = TO_UTF8(_debugMessage);	
 
 	// エラーが出たファイル名を取得
 	fs::path filePath = _pathName;

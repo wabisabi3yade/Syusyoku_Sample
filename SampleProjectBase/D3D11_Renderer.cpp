@@ -270,7 +270,6 @@ Matrix D3D11_Renderer::GetWorldMtx(Transform _transform)
 
 void D3D11_Renderer::Swap()
 {
-
 	// バックバッファの表示（画面をすぐに更新）
 	HRESULT hr = pSwapChain->Present(0, 0);
 	if (FAILED(hr))
@@ -303,7 +302,4 @@ void D3D11_Renderer::SetUpDraw()
 
 	// 深度バッファをリセットする
 	pDeviceContext->ClearDepthStencilView(pDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-
-	// 入力レイアウト
-	pDeviceContext->IASetInputLayout(&pRenderParam->GetInputLayout());
 }

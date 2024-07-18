@@ -12,14 +12,9 @@ class DirectionLight
 {
 	// •ûŒüƒxƒNƒgƒ‹
 	DirectX::SimpleMath::Vector3 direction;
-
-	void Copy(const DirectionLight& _other);
 public:
 	DirectionLight() : direction(0.0f, -1.0f, 1.0f) { type = Type::Direction; }
-	DirectionLight(const DirectionLight& _other);
 	~DirectionLight() {}
-
-	DirectionLight& operator=(const DirectionLight& _other);
 
 	virtual void Draw() override;
 
