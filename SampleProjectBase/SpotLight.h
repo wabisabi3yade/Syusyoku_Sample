@@ -4,9 +4,10 @@
 struct SpotLParameter
 {
 	LightParameter base;
+	DirectX::SimpleMath::Vector3 direction{ 0.0f, -1.0f, 0.0f };
 	float distance{5.0f};
 	float rangeAngle{45.0f};
-	DirectX::SimpleMath::Vector3 direction{ 0.0f, -1.0f, 0.0f };
+	float dummy1, dummy2, dummy3;
 };
 
 class SpotLight :

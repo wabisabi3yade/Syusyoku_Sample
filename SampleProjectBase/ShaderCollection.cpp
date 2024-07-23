@@ -65,17 +65,10 @@ void ShaderCollection::Init()
 	Load();	// csoファイルをロードする
 }
 
-void ShaderCollection::SetShader(std::string _shaderName, std::unique_ptr<Shader> _pSetShader)
+void ShaderCollection::UniqueBufferUpdate()
 {
-	auto itr = shaders.find(_shaderName);
-	if (itr != shaders.end())	// 同じ名前のシェーダーを見つけたら
-	{
-		HASHI_DEBUG_LOG(_shaderName + " が既に頂点シェーダー配列にあります");
-		return;
-	}
 
-	// 配列に追加
-	shaders.emplace(_shaderName, std::move(_pSetShader));
+
 }
 
 VertexShader* ShaderCollection::GetVertexShader(const std::string& _shaderName)

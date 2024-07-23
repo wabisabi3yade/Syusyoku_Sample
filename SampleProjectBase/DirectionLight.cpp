@@ -27,6 +27,21 @@ void DirectionLight::SetDirection(const DirectX::SimpleMath::Vector3& _dir)
 	direction = d;
 }
 
+void DirectionLight::SetAmbeimt(const DirectX::SimpleMath::Color& _color)
+{
+	ambiemt = Vec4::Max(_color, 0.0f);
+}
+
+DirectX::SimpleMath::Vector3 DirectionLight::GetDirection()
+{
+	return direction;
+}
+
+DirectX::SimpleMath::Color DirectionLight::GetAmbiemt()
+{
+	return ambiemt;
+}
+
 DirectionLParameter DirectionLight::GetParameter()
 {
 	DirectionLParameter d;

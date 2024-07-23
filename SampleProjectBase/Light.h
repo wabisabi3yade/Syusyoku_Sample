@@ -5,6 +5,7 @@ struct LightParameter
 {
 	DirectX::SimpleMath::Color color{ 1.0f, 1.0f, 1.0f, 1.0f };
 	DirectX::SimpleMath::Vector3 position{ 0.0f, 0.0f, 0.0f };
+	float dummy;
 };
 
 // ƒ‰ƒCƒg‚ÌŠî’ê

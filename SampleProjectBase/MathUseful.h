@@ -39,3 +39,9 @@ namespace Vec3
 	/// @brief floatŒ^‚Æ‚ÌÅ‘å’l‚ğ‹‚ß‚é
 	DirectX::SimpleMath::Vector3 Max(const DirectX::SimpleMath::Vector3& _v3, float _floatVal);
 }
+
+namespace Vec4
+{
+	/// @brief floatŒ^‚Æ‚ÌÅ‘å’l‚ğ‹‚ß‚é
+	DirectX::SimpleMath::Vector4 Max(const DirectX::SimpleMath::Vector4& _v4, float _floatVal);
+}

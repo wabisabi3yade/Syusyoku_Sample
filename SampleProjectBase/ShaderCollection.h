@@ -3,6 +3,8 @@
 #include "VertexShader.h"
 #include "PixelShader.h"
 
+struct SceneLightsParam;
+
 // シェーダーリソースを保有するクラス
 class ShaderCollection : public Singleton_Base<ShaderCollection>
 {
@@ -21,7 +23,8 @@ public:
 
 	void Init();
 
-	void SetShader(std::string _shaderName, std::unique_ptr<Shader> _pSetShader);
+	/// @brief オブジェクトごとに変わらないバッファは更新する(ライト、カメラなど)
+	void UniqueBufferUpdate();
 
 	// 取得する
 	VertexShader* GetVertexShader(const std::string& _shaderName);

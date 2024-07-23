@@ -19,45 +19,12 @@ struct Material
     float4 emissive; // 自発光
     float shininess; // 光沢
     int isTextureEnable;   // テクスチャ使用
-};
-
-// ライトの基礎パラメータ
-struct LightBase
-{
-    float3 position;
-    float4 color;
-};
-
-// ポイントライト
-struct PointLight
-{
-    LightBase base;
-    float range;
-};
-
-
-// スポットライト
-struct SpotLight
-{
-    LightBase base;
-    float distance;
-    float rangeAngle;
-    float3 direction;
+    float2 dummy;
 };
 
 cbuffer BufMaterial : register(b0)
 {
     Material material;
-}
-
-cbuffer BufPoint : register(b1)
-{
-    PointLight pointLights[30];
-}
-
-cbuffer BufSpot : register(b2)
-{
-    SpotLight spotLights[30];
 }
 
 float4 main(PS_IN pin) : SV_TARGET

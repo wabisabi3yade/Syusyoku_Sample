@@ -19,7 +19,9 @@ private:
 protected:	
 	// このシェーダーで利用するGPUに送るバッファのリスト
 	std::vector<ID3D11Buffer*> pBuffers;	
-	std::vector<ID3D11ShaderResourceView*> pTextures;	// シェーダーへ送るテクスチャ情報
+
+	// シェーダーへ送るテクスチャ情報
+	std::vector<ID3D11ShaderResourceView*> pTextures;	
 	
 	/// <summary>
 	//	各シェーダーでの作成処理
@@ -50,7 +52,12 @@ public:
 	/// </summary>
 	/// <param name="_slot">スロットの番号</param>
 	/// <param name="_texture"></param>
-	void SetTexture(u_int _slot, Texture* _texture);
+	void SetTexture(u_int _slot, Texture* _pTexture);
+
+	/// @brief バッファをセットする
+	/// @param _slot スロット番号
+	/// @param _buffer バッファ
+	void SetBuffer(u_int _slot, ID3D11Buffer& _buffer);
 
 	void SetName(std::string _name);
 

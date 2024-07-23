@@ -47,4 +47,12 @@ DirectX::SimpleMath::Vector3 Vec3::Max(const DirectX::SimpleMath::Vector3& _v3, 
 	return retV3;
 }
 
-
+DirectX::SimpleMath::Vector4 Vec4::Max(const DirectX::SimpleMath::Vector4& _v4, float _floatVal)
+{
+	Vector4 retV4;
+	retV4.x = std::max<float>(_v4.x, _floatVal);
+	retV4.y = std::max<float>(_v4.y, _floatVal);
+	retV4.z = std::max<float>(_v4.z, _floatVal);
+	retV4.w = std::max<float>(_v4.w, _floatVal);
+	return retV4;
+}

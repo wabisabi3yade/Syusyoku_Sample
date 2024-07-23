@@ -46,9 +46,9 @@ void CP_SpriteRenderer::DrawSetup()
 	pVs.UpdateBuffer(1, &materialParam);
 
 	// ディレクションライトの情報を取得
-	SceneLights& sceneLights = InSceneSystemManager::GetInstance()->GetSceneLights();
-	DirectionLParameter dirLightParam = sceneLights.GetDirectionParameter();
-	pVs.UpdateBuffer(2, &dirLightParam);
+	//SceneLights& sceneLights = InSceneSystemManager::GetInstance()->GetSceneLights();
+	//DirectionLParameter dirLightParam = sceneLights.GetDirectionParameter();
+	//pVs.UpdateBuffer(2, &dirLightParam);
 
 	pPs.UpdateBuffer(0, &materialParam);
 

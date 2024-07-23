@@ -21,7 +21,9 @@ struct MaterialParameter
 	float shiness;
 
 	/// @brief テクスチャ使用フラグ
-	int isTextureEnable;	
+	int isTextureEnable;
+
+	float dummy1, dummy2;
 };
 
 // モデルの表面データ

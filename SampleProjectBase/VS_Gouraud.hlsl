@@ -7,20 +7,42 @@ struct Material
     float4 emissive; // 自発光
     float shininess; // 光沢
     int isTextureEnable; // テクスチャフラグ
+    float2 dummy;
 };
 
 // ライトの基礎パラメータ
 struct LightBase
 {
-    float4 color;
-    float3 position;
+    float4 color;   // 色
+    float3 position;    // 座標  
+    float dummy;
 };
 
 // ディレクションライト
 struct DirectionLight
 {
     LightBase base;
-    float3 direction;
+    float4 ambiemtColor; // 環境色
+    float3 direction;   // 方向
+    float dummy;
+};
+
+// ポイントライト
+struct PointLight
+{
+    LightBase base;
+    float range;    // 範囲
+    float3 dummy;
+};
+
+// スポットライト
+struct SpotLight
+{
+    LightBase base;
+    float3 direction;   // 方向
+    float distance; // 距離
+    float angleRange;   // 角度範囲
+    float3 dummy;
 };
 
 // Slot0 座標変換
@@ -42,6 +64,7 @@ cbuffer MaterialBuffer : register(b1)
 cbuffer BufDirectionL : register(b2)
 {
     DirectionLight directionL;
+    
 };
 
 struct VS_INPUT
@@ -66,6 +89,8 @@ struct VS_OUTPUT
     // ワールド座標
     float4 worldPos : POSITION0;
 };
+
+float3 
 
 VS_OUTPUT main(VS_INPUT vin)
 {

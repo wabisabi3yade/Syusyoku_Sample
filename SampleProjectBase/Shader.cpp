@@ -42,6 +42,7 @@ void Shader::MakeBuffer(const char* _pData, u_int _dataSize)
 
 	return MakeShader(_pData, _dataSize);
 }
+
 void Shader::LoadCsoFile(const char* _filePath)
 {
 	HRESULT hr = E_FAIL;
@@ -110,6 +111,12 @@ void Shader::SetTexture(u_int _slot, Texture* _texture)
 		case Type::Vertex: pContext->VSSetShaderResources(_slot, 1, &pSetSrv); break;
 		case Type::Pixel: pContext->PSSetShaderResources(_slot, 1, &pSetSrv); break;
 	}
+}
+
+void Shader::SetBuffer(u_int _slot, ID3D11Buffer& _buffer)
+{
+	if (_slot >= pBuffers.size()) return;
+	pBuffers[_slot] = &_buffer;
 }
 
 void Shader::SetName(std::string _name)

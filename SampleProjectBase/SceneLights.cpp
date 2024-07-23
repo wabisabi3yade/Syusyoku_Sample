@@ -3,29 +3,38 @@
 
 using namespace DirectX::SimpleMath;
 
-// 各光源の最大数
-constexpr u_int MAX_SPOTS(30);
-constexpr u_int MAX_POINTS(60);
-
 // GUIパラメータ変更速度
 constexpr float PARAM_CHANGE_SPEED(0.1f);
 
 void SceneLights::UpdateParameter()
 {
-	// パラメータの更新
+	// ディレクションライト
+	pSceneLightsParam->dirParam = pDirection->GetParameter();
 
-	// ポイントライトの更新
-	pointParameters.clear();
-	for (auto& point : pPointLights)
+	// ポイントライト
+	u_int pointCnt = 0;
+	for (auto& p : pPointLights)
 	{
-		pointParameters.push_back(point->GetParameter());
+		pSceneLightsParam->pointParams[pointCnt] = p->GetParameter();
+		pointCnt++;
 	}
 
-	// スポットライトの更新
-	spotParameters.clear();
-	for (auto& spot : pSpotLights)
+	// 使用していない配列は光が反映されないようにしておく
+	for (; pointCnt < MAX_POINTLIGHT; pointCnt++)
 	{
-		spotParameters.push_back(spot->GetParameter());
+		pSceneLightsParam->pointParams[pointCnt].range = 0.0f;
+	}
+
+	// スポットライト
+	u_int spotCnt = 0;
+	for (auto& s : pSpotLights)
+	{
+		pSceneLightsParam->spotParams[spotCnt] = s->GetParameter();
+		spotCnt++;
+	}
+	for (;  spotCnt < MAX_SPOTLIGHT;  spotCnt++)
+	{
+		pSceneLightsParam->spotParams[spotCnt].distance = 0.0f;
 	}
 }
 
@@ -169,6 +178,7 @@ void SceneLights::Draw()
 
 SceneLights::SceneLights()
 {
+	pSceneLightsParam = std::make_unique<SceneLightsParam>();
 	pDirection = std::make_unique<NullDirectionLight>();
 }
 
@@ -188,10 +198,10 @@ DirectionLight* SceneLights::SetDirectionLight(std::unique_ptr<DirectionLight> _
 
 PointLight* SceneLights::SetPointLight(std::unique_ptr<PointLight> _point)
 {
-	if (static_cast<u_int>(pPointLights.size()) > MAX_POINTS)
+	if (static_cast<u_int>(pPointLights.size()) >= MAX_POINTLIGHT)
 	{
 		HASHI_DEBUG_LOG("配置できるポイントライトの最大数を超えました"
-			+ std::to_string(MAX_POINTS));
+			+ std::to_string(MAX_POINTLIGHT));
 		return nullptr;
 	}
 
@@ -203,10 +213,10 @@ PointLight* SceneLights::SetPointLight(std::unique_ptr<PointLight> _point)
 
 SpotLight* SceneLights::SetSpotLight(std::unique_ptr<SpotLight> _spot)
 {
-	if (static_cast<u_int>(pPointLights.size()) > MAX_SPOTS)
+	if (static_cast<u_int>(pPointLights.size()) >= MAX_SPOTLIGHT)
 	{
 		HASHI_DEBUG_LOG("配置できるスポットライトの最大数を超えました"
-			+ std::to_string(MAX_SPOTS));
+			+ std::to_string(MAX_SPOTLIGHT));
 		return nullptr;
 	}
 
@@ -216,22 +226,27 @@ SpotLight* SceneLights::SetSpotLight(std::unique_ptr<SpotLight> _spot)
 	return ptr;
 }
 
-DirectionLParameter SceneLights::GetDirectionParameter()
+SceneLightsParam& SceneLights::GetLightsParam()
 {
-	if (pDirection != nullptr)
-		return pDirection->GetParameter();
-
-	HASHI_DEBUG_LOG("ディレクションライトが設定されていません");
-	DirectionLParameter d;
-	return d;
+	return *pSceneLightsParam;
 }
 
-const std::vector<PointLParameter>& SceneLights::GetPointParameter()
-{
-	return pointParameters;
-}
+//DirectionLParameter SceneLights::GetDirectionParameter()
+//{
+//	if (pDirection != nullptr)
+//		return pDirection->GetParameter();
+//
+//	HASHI_DEBUG_LOG("ディレクションライトが設定されていません");
+//	DirectionLParameter d;
+//	return d;
+//}
 
-const std::vector<SpotLParameter>& SceneLights::GetSpotParameter()
-{
-	return spotParameters;
-}
+//const std::vector<PointLParameter>& SceneLights::GetPointParameter()
+//{
+//	return pointParameters;
+//}
+//
+//const std::vector<SpotLParameter>& SceneLights::GetSpotParameter()
+//{
+//	return spotParameters;
+//}
