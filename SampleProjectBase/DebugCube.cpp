@@ -33,7 +33,7 @@ void DebugCube::Make()
 
 	// インデックスデータを作成
 	indicies.resize(INDEX_NUM);
-	u_int idx[] = 
+	u_int idx[] =
 	{
 		0,1, 0,2, 2,3,
 		1,3, 1,5, 5,7,

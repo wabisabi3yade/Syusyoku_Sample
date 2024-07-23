@@ -46,19 +46,3 @@
 #include "Transform.h"	// 座標・回転・スケールのクラス
 #include "MainApplication.h"
 #include "Direct3D11.h"	// 自前のDirectX11クラス
-
-
-// 構造体 /////////////////
-// 頂点座標
-struct Vertex
-{
-	// 座標
-	DirectX::SimpleMath::Vector3 position = {};
-	// 色(RGBA)
-	DirectX::SimpleMath::Color color = {};
-
-	// UV座標（テクスチャ座標）
-	DirectX::SimpleMath::Vector2 uv = {};
-	// 頂点の法線ベクトル
-	DirectX::SimpleMath::Vector3 normal = {};
-};

@@ -3,7 +3,7 @@
 
 // 球メッシュクラス
 class Sphere :
-    public SingleMesh
+	public SingleMesh
 {
 	void Make();	// 頂点データなどの作成
 
@@ -11,4 +11,3 @@ public:
 	Sphere();
 	~Sphere() {}
 };
-

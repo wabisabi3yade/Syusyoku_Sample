@@ -27,6 +27,10 @@ void SubScene_Base::DrawSetup()
 
 	// 光源の更新処理
 	sceneLights.Update();
+
+	// 1ループ1度だけ更新すればいいバッファ更新
+	ShaderCollection* shCol = ShaderCollection::GetInstance();
+	shCol->UniqueUpdateBuffer();
 }
 
 /// <summary>

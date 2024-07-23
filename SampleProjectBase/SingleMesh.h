@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Vertex.h"
+
 // バッファ
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
@@ -50,7 +52,7 @@ public:
 
 	/// @brief 頂点データを取得
 	/// @return 頂点データ
-	std::vector<Vertex>& GetVerticies(); 
+	std::vector<Vertex>& GetVerticies();
 
 	/// @brief 頂点バッファを取得
 	/// @return 頂点バッファ
@@ -106,7 +108,6 @@ public:
 
 protected:
 	/// @brief コピー
-	/// @param _other　対象 
+	/// @param _other　対象
 	void Copy(const SingleMesh& _other);
 };
-

@@ -23,4 +23,3 @@ void Buffer_Base::UpdateBuffer(void* _updateData) const
 		0
 	);
 }
-

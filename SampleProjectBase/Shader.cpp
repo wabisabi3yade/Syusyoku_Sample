@@ -108,18 +108,22 @@ void Shader::SetTexture(u_int _slot, Texture* _texture)
 	ID3D11DeviceContext* pContext = Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
 	switch (type)
 	{
-		case Type::Vertex: pContext->VSSetShaderResources(_slot, 1, &pSetSrv); break;
-		case Type::Pixel: pContext->PSSetShaderResources(_slot, 1, &pSetSrv); break;
+	case Type::Vertex: pContext->VSSetShaderResources(_slot, 1, &pSetSrv); break;
+	case Type::Pixel: pContext->PSSetShaderResources(_slot, 1, &pSetSrv); break;
 	}
 }
 
-void Shader::SetBuffer(u_int _slot, ID3D11Buffer& _buffer)
-{
-	if (_slot >= pBuffers.size()) return;
-	pBuffers[_slot] = &_buffer;
-}
-
-void Shader::SetName(std::string _name)
+void Shader::SetName(const std::string& _name)
 {
 	name = _name;
+}
+
+Shader::BufferType Shader::GetBufferType(u_int _slot)
+{
+	return bufferTypes[_slot];
+}
+
+u_int Shader::GetBufferNum()
+{
+	return static_cast<u_int>(bufferTypes.size());
 }

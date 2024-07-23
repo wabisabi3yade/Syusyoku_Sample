@@ -17,4 +17,3 @@ public:
 
 	void SetGPU() const override;
 };
-

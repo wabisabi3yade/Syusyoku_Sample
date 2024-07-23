@@ -17,12 +17,19 @@
 #include	"stb_image.h"
 #include "Texture.h"
 
-// モデル
-#include "Mesh_Base.h"
+// メッシュ群
+#include "Mesh_Group.h"
+#include "StaticMesh.h"
+#include "SkeletalMesh.h"
+
+// アニメーション
+#include "AnimationData.h"
 
 namespace fs = std::filesystem;
 
 using namespace DirectX::SimpleMath;
+
+Assimp::Importer g_importer;
 
 /// @brief aiVector3D型をSimpleMathのVector3に変換
 /// @param _aiVector3 変換する値
@@ -34,7 +41,12 @@ static Vector3 ToVector3(const aiVector3D& _aiVector3);
 /// @return 変換されたColor
 static Color ToColor(const aiColor4D& _aiColor);
 
-void AssetLoader::MaterialLoad(Mesh_Base* _pMeshgather,
+/// @brief aiMatrixをDirectXの行列に変換
+/// @param _aiMatrix assimp行列
+/// @return DirectX行列
+static Matrix ToDirectXMatrix(const aiMatrix4x4& _aiMatrix);
+
+void AssetLoader::MaterialLoad(Mesh_Group* _pMeshgather,
 	const aiScene* pScene, std::string texturedirectory)
 {
 	// マテリアル数文ループ
@@ -226,8 +238,6 @@ bool AssetLoader::LoadEmbeddedTexture(Texture& _texture, const aiTexture& _aiTex
 
 std::unique_ptr<Texture> AssetLoader::MakeTexture(const std::string& _filePath)
 {
-	
-
 	std::unique_ptr<Texture> pMakeTex = std::make_unique<NullTexture>();
 
 	bool sts = true;
@@ -238,9 +248,9 @@ std::unique_ptr<Texture> AssetLoader::MakeTexture(const std::string& _filePath)
 
 	// 画像読み込み
 	pixels = stbi_load(_filePath.c_str(), &width, &height, nullptr, 4);
-	if (pixels == nullptr) 
+	if (pixels == nullptr)
 	{
-		
+
 		HASHI_DEBUG_LOG("画像読込失敗");
 		return std::move(pMakeTex);
 	}
@@ -266,7 +276,7 @@ std::unique_ptr<Texture> AssetLoader::MakeTexture(const std::string& _filePath)
 	subResource.SysMemPitch = desc.Width * 4;			// RGBA = 4 bytes per pixel
 	subResource.SysMemSlicePitch = 0;
 
-	ID3D11Device* device =Direct3D11::GetInstance()->GetRenderer()->GetDevice();
+	ID3D11Device* device = Direct3D11::GetInstance()->GetRenderer()->GetDevice();
 
 	HRESULT hr = device->CreateTexture2D(&desc, &subResource, pTexture.GetAddressOf());
 	if (FAILED(hr)) {
@@ -278,7 +288,7 @@ std::unique_ptr<Texture> AssetLoader::MakeTexture(const std::string& _filePath)
 
 	// SRV生成
 	hr = device->CreateShaderResourceView(pTexture.Get(), nullptr, pMakeTex->pSRV.GetAddressOf());
-	if (FAILED(hr)) 
+	if (FAILED(hr))
 	{
 		HASHI_DEBUG_LOG("SRV作成失敗");
 		stbi_image_free(pixels);
@@ -314,10 +324,8 @@ Texture* AssetLoader::TextureLoad(const std::string& _filePath)
 	return returnPtr;
 }
 
-Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, bool _isLeftHand, bool _isGetScale)
+Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, bool _isLeftHand, bool _isGetScale)
 {
-	std::unique_ptr<Mesh_Base> pMeshGather = std::make_unique<Mesh_Base>();
-
 	// シーン情報構築
 	Assimp::Importer importer;
 
@@ -326,7 +334,7 @@ Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, b
 	flag |= aiProcess_FlipUVs;
 	flag |= aiProcess_CalcTangentSpace;
 	if (_isLeftHand)
-		flag |= aiProcess_MakeLeftHanded; ;
+		flag |= aiProcess_MakeLeftHanded;
 
 
 	// シーン情報を構築
@@ -338,31 +346,39 @@ Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, b
 	{
 		HASHI_DEBUG_LOG("読込失敗：" + _modelPath);
 	}
+
 	assert(pScene != nullptr);
+
+	// メッシュのグループを作成する
+	// ここでボーン情報も読み込む
+	std::unique_ptr<Mesh_Group> pMeshGroup = CreateMeshGroup(pScene);
 
 	// 親パス名
 	std::string parentPath = GetParentPath(_modelPath);
 
 	// マテリアル情報取得
-	MaterialLoad(pMeshGather.get(), pScene, parentPath);
+	MaterialLoad(pMeshGroup.get(), pScene, parentPath);
 
 	// メッシュの最大・最小座標
 	Vector3 modelMaxPos = Vector3::One * -10.0f;
 	Vector3 modelMinPos = Vector3::One * 10.0f;
+
+	// ボーンのインデックス
+	u_int boneIdx = 0;
 
 	// メッシュ分ループ
 	for (unsigned int m = 0; m < pScene->mNumMeshes; m++)
 	{
 		std::unique_ptr<SingleMesh> pCreateMesh = std::make_unique<SingleMesh>();
 
-		aiMesh* mesh = pScene->mMeshes[m];
+		aiMesh* pAimesh = pScene->mMeshes[m];
 
 		// メッシュ名取得
-		std::string meshname = std::string(mesh->mName.C_Str());
+		std::string meshname = std::string(pAimesh->mName.C_Str());
 		pCreateMesh->SetName(meshname);
 
 		// マテリアルインデックス取得
-		u_int materialIdx = mesh->mMaterialIndex;
+		u_int materialIdx = pAimesh->mMaterialIndex;
 		pCreateMesh->SetMaterialID(materialIdx);
 
 		// 頂点の最大・最小座標
@@ -370,13 +386,13 @@ Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, b
 
 		std::vector<Vertex>& verticies = pCreateMesh->GetVerticies();
 		//　頂点数分ループ
-		for (unsigned int vidx = 0; vidx < mesh->mNumVertices; vidx++)
+		for (unsigned int vidx = 0; vidx < pAimesh->mNumVertices; vidx++)
 		{
 			// 頂点データ
 			Vertex vertex;
 
 			// 座標(スケール値を反映する)
-			vertex.position = ToVector3(mesh->mVertices[vidx]) * _scale;
+			vertex.position = ToVector3(pAimesh->mVertices[vidx]) * _scale;
 
 			// 最大・最小を更新
 			if (_isGetScale)
@@ -384,32 +400,25 @@ Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, b
 
 
 			// 法線あり？
-			if (mesh->HasNormals()) {
-				vertex.normal = ToVector3(mesh->mNormals[vidx]);
-			}
+			if (pAimesh->HasNormals())
+				vertex.normal = ToVector3(pAimesh->mNormals[vidx]);
 			else
-			{
 				vertex.normal = Vector3::Zero;
-			}
 
 			// 頂点カラー？（０番目）
-			if (mesh->HasVertexColors(0)) {
-				vertex.color = ToColor(mesh->mColors[0][vidx]);
-			}
+			if (pAimesh->HasVertexColors(0))
+				vertex.color = ToColor(pAimesh->mColors[0][vidx]);
 			else
-			{
 				vertex.color = Vector4::One;
-			}
 
 			// テクスチャあり？（０番目）
-			if (mesh->HasTextureCoords(0)) {
-				vertex.uv.x = mesh->mTextureCoords[0][vidx].x;
-				vertex.uv.y = mesh->mTextureCoords[0][vidx].y;
+			if (pAimesh->HasTextureCoords(0))
+			{
+				vertex.uv.x = pAimesh->mTextureCoords[0][vidx].x;
+				vertex.uv.y = pAimesh->mTextureCoords[0][vidx].y;
 			}
 			else
-			{
 				vertex.uv = Vector2::Zero;
-			}
 
 			// 頂点データを追加
 			verticies.push_back(vertex);
@@ -419,9 +428,9 @@ Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, b
 		std::vector<u_int>& indicies = pCreateMesh->GetIndicies();
 
 		// インデックス数分ループ
-		for (unsigned int fidx = 0; fidx < mesh->mNumFaces; fidx++)
+		for (unsigned int fidx = 0; fidx < pAimesh->mNumFaces; fidx++)
 		{
-			aiFace face = mesh->mFaces[fidx];
+			aiFace face = pAimesh->mFaces[fidx];
 
 			assert(face.mNumIndices == 3);	// 三角形のみ対応
 
@@ -443,22 +452,163 @@ Mesh_Base* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, b
 			UpdateSize(maxVPos, modelMaxPos, modelMinPos);
 			UpdateSize(minVPos, modelMaxPos, modelMinPos);
 		}
-		pMeshGather->AddMesh(std::move(pCreateMesh));
+
+		// スケルタルメッシュなら
+		if (pMeshGroup->GetType() == Mesh_Group::MeshType::SK)
+		{
+			SkeletalMesh& pSK = static_cast<SkeletalMesh&>(*pMeshGroup.get());
+
+			// ボーン情報を取得する
+			BonePerMesh bonesPerMesh = CreateBone(pAimesh, *pCreateMesh.get(), boneIdx);
+
+			pSK.AddBonePerMesh(std::move(bonesPerMesh));
+		}
+
+
+		pMeshGroup->AddMesh(std::move(pCreateMesh));
 	}
 	// 名前設定
 	std::string modelName = PathToFileName(_modelPath, false);
-	pMeshGather->SetName(modelName);
+	pMeshGroup->SetName(modelName);
 
-	//モデルの中心座標・サイズをセット
+	// モデルの中心座標・サイズをセット
 	if (_isGetScale)
 	{
-		pMeshGather->SetCenterPosition((modelMaxPos + modelMinPos) * 0.5f);
-		pMeshGather->SetSize(modelMaxPos - modelMinPos);
+		pMeshGroup->SetCenterPosition((modelMaxPos + modelMinPos) * 0.5f);
+		pMeshGroup->SetSize(modelMaxPos - modelMinPos);
 	}
 
-	Mesh_Base* pReturnMeshGather = SendAsset<Mesh_Base>(modelName, std::move(pMeshGather));
+	
 
-	return pReturnMeshGather;
+	Mesh_Group* pRetMeshGroup = SendAsset<Mesh_Group>(modelName, std::move(pMeshGroup));
+
+	return pRetMeshGroup;
+}
+
+AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, bool _isLeftHand)
+{
+	int flag = 0;
+	
+	// 左手系に変換
+	if (_isLeftHand)
+		flag |= aiProcess_ConvertToLeftHanded;	
+
+	auto pAiScene = g_importer.ReadFile(_animPath.c_str(), flag);
+	if (pAiScene == nullptr)
+	{
+		HASHI_DEBUG_LOG(_animPath + "：アニメーションが正常に読み込めませんでした");
+		return nullptr;
+	}
+
+	std::unique_ptr<AnimationData> pAnimData = std::make_unique<AnimationData>();
+	pAnimData->SetAiScene(pAiScene);
+
+	// 名前をパス名から取得
+	std::string assetName = PathToFileName(_animPath, false);
+	pAnimData->SetName(assetName);
+
+	// アセット管理にセット
+	AnimationData* pRetAnim = SendAsset<AnimationData>(assetName, std::move(pAnimData));
+
+	return pRetAnim;
+}
+
+std::unique_ptr<Mesh_Group> AssetLoader::CreateMeshGroup(const aiScene* _pScene)
+{
+	// ボーンがなかったら
+	if (_pScene->mMeshes[0]->mNumBones == 0)
+	{
+		// スタティックメッシュを返す
+		std::unique_ptr<StaticMesh> pSM = std::make_unique<StaticMesh>();
+		return std::move(pSM);
+	}
+
+	std::unique_ptr<SkeletalMesh>pSkeletalMesh = std::make_unique<SkeletalMesh>();
+
+	return std::move(pSkeletalMesh);
+}
+
+void AssetLoader::CreateBone(const aiScene* _pAiScene, SkeletalMesh& _skeletalMesh)
+{
+	u_int boneIdx = 0;
+
+	// モデルのボーン数ループする
+	for (u_int mi = 0; mi < _pAiScene->mNumMeshes; mi++)
+	{
+		const aiMesh* pAiMesh = _pAiScene->mMeshes[mi];
+
+		for (u_int bi = 0; bi < pAiMesh->mNumBones; bi++)
+		{
+			// ボーン生成
+			std::unique_ptr<Bone> pBone = std::make_unique<Bone>();
+
+			// ボーンのインデックスをセット
+			pBone->SetIndex(boneIdx);
+
+		}
+	}
+}
+
+std::vector<std::unique_ptr<Bone>> AssetLoader::CreateBone(const aiMesh* _pAiMesh, SingleMesh& _singleMesh, u_int& _boneIdx)
+{
+	BonePerMesh retBones;
+
+	// ボーン数ループ
+	for (u_int bi = 0; bi < _pAiMesh->mNumBones; bi++)
+	{
+		const aiBone* pAiBone = _pAiMesh->mBones[bi];
+		std::unique_ptr<Bone> pBone = std::make_unique<Bone>();
+
+		// パラメータを取得
+		pBone->SetBoneName(std::string(pAiBone->mName.C_Str()));
+
+		/*pBone->SetMeshName(std::string(pAiBone->mNode->mName.C_Str()));
+		pBone->SetArmatureName(std::string(pAiBone->mArmature->mName.C_Str()));*/
+
+		// デバッグ用
+		HASHI_DEBUG_LOG("ボーン：" + pBone->GetBoneName());
+
+		// オフセット行列
+		pBone->SetOffeetMtx(ToDirectXMatrix(pAiBone->mOffsetMatrix));
+
+		// インデックスを取得
+		pBone->SetIndex(_boneIdx);
+
+		// ウェイト情報を取得する		
+		// 頂点
+		std::vector<Vertex> verticies = _singleMesh.GetVerticies();
+
+		// ウエイト数ループ
+		for (u_int wi = 0; wi < pAiBone->mNumWeights; wi++)
+		{
+			Weight weight;
+			weight.boneName = pBone->GetBoneName();
+			weight.meshName = pBone->GetMeshName();
+
+			weight.weight = pAiBone->mWeights[wi].mWeight;
+			weight.vertexIndex = pAiBone->mWeights[wi].mVertexId;
+
+			// 頂点とボーン情報をリンクさせる
+			Vertex& v = verticies[weight.vertexIndex];
+			u_int& idx = v.boneCnt;
+
+			assert(idx < MAX_WEIGHT_NUM);
+
+			v.boneWeight[idx] = weight.weight;
+			v.boneIndex[idx] = pBone->GetIndex();
+			idx++;
+
+			// ウェイトを追加する
+			pBone->AddWeight(weight);
+		}
+
+		// 1メッシュのボーン配列に追加
+		retBones.push_back(std::move(pBone));
+
+		_boneIdx++;	// 加算
+	}
+
+	return retBones;
 }
 
 std::string AssetLoader::PathToFileName(const std::string& _pathName, bool _isExtension)
@@ -512,4 +662,16 @@ DirectX::SimpleMath::Color ToColor(const aiColor4D& _aiColor)
 	color.x = _aiColor.r; color.y = _aiColor.g; color.z = _aiColor.b; color.w = _aiColor.a;
 
 	return color;
+}
+
+Matrix ToDirectXMatrix(const aiMatrix4x4& _aiMatrix)
+{
+	Matrix dxMatrix = Matrix(
+		_aiMatrix.a1, _aiMatrix.b1, _aiMatrix.c1, _aiMatrix.d1,
+		_aiMatrix.a2, _aiMatrix.b2, _aiMatrix.c2, _aiMatrix.d2,
+		_aiMatrix.a3, _aiMatrix.b3, _aiMatrix.c3, _aiMatrix.d3,
+		_aiMatrix.a4, _aiMatrix.b4, _aiMatrix.c4, _aiMatrix.d4
+	);
+
+	return dxMatrix;
 }

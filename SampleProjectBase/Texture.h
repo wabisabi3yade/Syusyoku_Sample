@@ -44,4 +44,3 @@ public:
 	/// @return ‰æ‘œ‚Ì‚‚³(px)
 	u_int GetHeight()const { return 0; }
 };
-

@@ -59,7 +59,7 @@ VertexShader::~VertexShader()
 {
 }
 
-void VertexShader::Bind()
+void VertexShader::SetGPU()
 {
 	ID3D11DeviceContext* pContext = Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
 

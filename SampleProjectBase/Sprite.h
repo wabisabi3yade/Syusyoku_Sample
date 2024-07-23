@@ -8,7 +8,7 @@ class Material;
 class Sprite
 {
 	/// @brief テクスチャ
-	Texture* pTexture;	
+	Texture* pTexture;
 
 	/// @brief 四角形ポリゴン
 	std::unique_ptr<PlaneMesh> pSquareMesh;

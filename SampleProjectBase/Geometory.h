@@ -6,7 +6,7 @@ class Material;
 
 // 当たり判定の描画などを手軽にするクラス(デバッグ用)
 class Geometory
-{	
+{
 public:
 
 	/// @brief 図形の種類
@@ -24,10 +24,10 @@ private:
 	static Material* pMaterial;
 
 	// 色
-	static DirectX::SimpleMath::Color color;	
+	static DirectX::SimpleMath::Color color;
 
 	// 基本図形
-	static std::vector<StaticMesh*> pGeometory;	
+	static std::vector<StaticMesh*> pGeometory;
 
 	Geometory() {};
 	~Geometory() {};
@@ -70,4 +70,3 @@ private:
 	/// @brief 一般的なメッシュを作成
 	static void MakeGeometory();
 };
-

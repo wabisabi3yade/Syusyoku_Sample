@@ -14,7 +14,6 @@
 #include "LoadJson.h"
 #include "SaveJsonValue.h"
 
-class SceneObjects;
 // シーンで使用するオブジェクト全般の基底クラス
 class GameObject
 {

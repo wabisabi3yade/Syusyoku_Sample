@@ -29,7 +29,7 @@ public:
 	void Draw();
 
 	// ƒ¢t‚ğæ“¾i•b‚Å•Ô‚·j
-	float GetDeltaTime()const { return deltaTime * 0.001f ; }
+	float GetDeltaTime()const { return static_cast<float>(deltaTime * 0.001f); }
 
 private:
 

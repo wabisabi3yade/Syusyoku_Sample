@@ -24,7 +24,7 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 		pTextures.push_back(pTex);
 	}
 
-	std::vector<Mesh_Base*> pModels;
+	std::vector<Mesh_Group*> pModels;
 
 	struct ModelData
 	{
@@ -37,11 +37,13 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	std::vector<ModelData> SMPaths =
 	{
 		{"assets/model/spot/spot.fbx", 1.0f, true},
-		{"assets/model/knight/Knight D Pelegrini.fbx", 0.01f, false},
+		{"assets/model/knight/Akai.fbx", 0.01f, false},
 	};
 
-	Mesh_Base* pSM = AssetLoader::ModelLoad(SMPaths[1].path, SMPaths[1].scale, SMPaths[1].isLeftHand);
+	Mesh_Group* pSM = AssetLoader::ModelLoad(SMPaths[1].path, SMPaths[1].scale, SMPaths[1].isLeftHand);
 	pModels.push_back(pSM);
+
+	AnimationData* pAnimData = AssetLoader::AnimationLoad("assets/animation/Smash.fbx", false);
 
 	GameObject* gameObject = &ObjectFunc::CreateEmpty("Ground");
 	CP_SpriteRenderer* pSpriteRenderer = gameObject->AddComponent<CP_SpriteRenderer>();
@@ -51,11 +53,14 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	gameObject = &ObjectFunc::CreateEmpty("knight");
 	CP_MeshRenderer* pMeshRenderer = gameObject->AddComponent<CP_MeshRenderer>();
 	pMeshRenderer->SetRenderMesh(*pModels[0]);
-	gameObject->AddComponent<CP_BoxCollider>();
+	CP_Animation* pAnimation = gameObject->AddComponent<CP_Animation>();
+	pAnimation->AddAnimations(*pAnimData);
 
 	// ŒõŒ¹
-	LightFunc::CreateDirection();
+	DirectionLight* dirL = LightFunc::CreateDirection();
+	dirL->SetDirection(Vector3(1, -1, -1));
 
+	
 }
 
 Tank_InGameSub::~Tank_InGameSub()

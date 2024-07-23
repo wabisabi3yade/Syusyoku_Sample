@@ -14,6 +14,5 @@ public:
 	~PixelShader();
 
 	// GPUにシェーダーを送る
-	void Bind() override;
+	void SetGPU() override;
 };
-

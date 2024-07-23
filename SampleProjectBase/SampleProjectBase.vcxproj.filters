@@ -16,9 +16,6 @@
     <Filter Include="ソース ファイル\Graphics">
       <UniqueIdentifier>{562a209c-0565-4c33-be9d-a735858792ad}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics\Model">
-      <UniqueIdentifier>{70d2c2f9-9413-494d-b580-9eae1887a1bc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\System">
       <UniqueIdentifier>{cb740849-337d-4694-9bce-0770957dc20d}</UniqueIdentifier>
     </Filter>
@@ -76,9 +73,6 @@
     <Filter Include="ソース ファイル\System\pch">
       <UniqueIdentifier>{8c29c4da-c53b-415b-8ae0-a5554f701a24}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics\Model\ModelSettings">
-      <UniqueIdentifier>{d7dfd3b7-613e-4384-a6a6-448d15ef6344}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\Texture">
       <UniqueIdentifier>{026d8e4c-f51d-4e82-9a2d-1ac9ee929f14}</UniqueIdentifier>
     </Filter>
@@ -105,15 +99,6 @@
     </Filter>
     <Filter Include="ソース ファイル\System\ImGui\ImGui">
       <UniqueIdentifier>{65a46e3a-d104-4ba9-bbba-6c4a1a612f0f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Object_3D">
-      <UniqueIdentifier>{a607ffd0-a3e3-47ae-94d0-d85404b0472c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Object_2D">
-      <UniqueIdentifier>{4c2b8f6c-2586-4267-9747-074a4ca953b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Onject_UI">
-      <UniqueIdentifier>{2a78615c-49c6-40be-9f3a-a0488595b157}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Object\Tag">
       <UniqueIdentifier>{988b4f81-a66d-4eef-8758-f35438d16df4}</UniqueIdentifier>
@@ -268,21 +253,6 @@
     <Filter Include="ソース ファイル\Component\InGame\Player\PlayerInput">
       <UniqueIdentifier>{3ead3f7f-0159-4fa0-bb22-adcd1bbdcafa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Light">
-      <UniqueIdentifier>{130fca24-6f0a-4d75-8ff5-0a6a29288a52}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Light\PointLight">
-      <UniqueIdentifier>{819b1d3b-96f3-4789-b52c-b1470be208c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Light\SpotLight">
-      <UniqueIdentifier>{0313a73a-9476-4d1b-b163-2eff4e4edc6c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\SceneLights">
-      <UniqueIdentifier>{fbb366e6-a9a5-4cec-9729-311d7c914502}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Light\Direction">
-      <UniqueIdentifier>{ab500ce5-d941-4082-abd1-6388cfbf8545}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\System\Useful">
       <UniqueIdentifier>{7a7bde62-f1ee-405c-bca3-eb0e4517e016}</UniqueIdentifier>
     </Filter>
@@ -391,9 +361,6 @@
     <Filter Include="ソース ファイル\Component\Factory">
       <UniqueIdentifier>{59c4033c-957f-4e5b-bd6b-1be4ed5e0fbc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Design">
-      <UniqueIdentifier>{5b795805-d875-470d-8722-32b3709be5fd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\Shader\Vertex">
       <UniqueIdentifier>{ce397238-d551-440c-a98a-9990ab849981}</UniqueIdentifier>
     </Filter>
@@ -427,18 +394,42 @@
     <Filter Include="ソース ファイル\Scene\SceneFunction\SF_Light">
       <UniqueIdentifier>{5659979c-5dac-4fb1-b2b8-1258f1f7db18}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\Geometory">
+      <UniqueIdentifier>{cbda257e-1421-40b1-b730-b6fe0adc5d6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Animation">
+      <UniqueIdentifier>{8488f8d3-f124-4e8f-a712-b2701cde8db4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Mesh\SkeletalMesh\Bone">
+      <UniqueIdentifier>{e86f6aea-431e-4f16-9d1c-e05a7c7963d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Vertex">
+      <UniqueIdentifier>{8ffe6976-e9bc-413b-8acd-14b5a06fcf0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Light">
+      <UniqueIdentifier>{130fca24-6f0a-4d75-8ff5-0a6a29288a52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Light\PointLight">
+      <UniqueIdentifier>{819b1d3b-96f3-4789-b52c-b1470be208c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Light\SpotLight">
+      <UniqueIdentifier>{0313a73a-9476-4d1b-b163-2eff4e4edc6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Light\Direction">
+      <UniqueIdentifier>{ab500ce5-d941-4082-abd1-6388cfbf8545}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Light\SceneLights">
+      <UniqueIdentifier>{fbb366e6-a9a5-4cec-9729-311d7c914502}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation">
+      <UniqueIdentifier>{a11adc7e-fbdb-4ba4-8603-cb26ed4d9386}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="PS_Basic.hlsl">
-      <Filter>リソース ファイル\PixelShader</Filter>
-    </FxCompile>
-    <FxCompile Include="PS_VertexColor.hlsl">
+    <FxCompile Include="PS_Geometory.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
     <FxCompile Include="PS_TexNotEnable.hlsl">
-      <Filter>リソース ファイル\PixelShader</Filter>
-    </FxCompile>
-    <FxCompile Include="PS_PointLight.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
     <FxCompile Include="PS_Lit.hlsl">
@@ -447,16 +438,10 @@
     <FxCompile Include="PS_Unlit.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
-    <FxCompile Include="VS_BaseObject.hlsl">
-      <Filter>リソース ファイル\VertexShader</Filter>
-    </FxCompile>
-    <FxCompile Include="VS_Basic.hlsl">
+    <FxCompile Include="VS_Geometory.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
     </FxCompile>
     <FxCompile Include="VS_Gouraud.hlsl">
-      <Filter>リソース ファイル\VertexShader</Filter>
-    </FxCompile>
-    <FxCompile Include="VS_UVScroll.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
     </FxCompile>
     <FxCompile Include="VS_WorldPosition.hlsl">
@@ -484,9 +469,6 @@
     </ClCompile>
     <ClCompile Include="MessageError.cpp">
       <Filter>ソース ファイル\System\MessageError</Filter>
-    </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>ソース ファイル\Graphics\Model</Filter>
     </ClCompile>
     <ClCompile Include="RenderParam.cpp">
       <Filter>ソース ファイル\System\Application\DirectX3D11\Render\RenderParam</Filter>
@@ -529,9 +511,6 @@
     </ClCompile>
     <ClCompile Include="Test_ChangeSubScene.cpp">
       <Filter>ソース ファイル\Scene\Test\ChangeSub</Filter>
-    </ClCompile>
-    <ClCompile Include="ModelSettings.cpp">
-      <Filter>ソース ファイル\Graphics\Model\ModelSettings</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>ソース ファイル\Graphics\Texture</Filter>
@@ -639,19 +618,19 @@
       <Filter>ソース ファイル\Scene\SceneFunction\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Light.cpp">
-      <Filter>ソース ファイル\Object\Light</Filter>
+      <Filter>ソース ファイル\Graphics\Light</Filter>
     </ClCompile>
     <ClCompile Include="PointLight.cpp">
-      <Filter>ソース ファイル\Object\Light\PointLight</Filter>
+      <Filter>ソース ファイル\Graphics\Light\PointLight</Filter>
     </ClCompile>
     <ClCompile Include="SpotLight.cpp">
-      <Filter>ソース ファイル\Object\Light\SpotLight</Filter>
+      <Filter>ソース ファイル\Graphics\Light\SpotLight</Filter>
     </ClCompile>
     <ClCompile Include="SceneLights.cpp">
-      <Filter>ソース ファイル\Object\SceneLights</Filter>
+      <Filter>ソース ファイル\Graphics\Light\SceneLights</Filter>
     </ClCompile>
     <ClCompile Include="DirectionLight.cpp">
-      <Filter>ソース ファイル\Object\Light\Direction</Filter>
+      <Filter>ソース ファイル\Graphics\Light\Direction</Filter>
     </ClCompile>
     <ClCompile Include="InSceneSystemManager.cpp">
       <Filter>ソース ファイル\Scene\InSceneSystem</Filter>
@@ -716,7 +695,7 @@
     <ClCompile Include="SingleMesh.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\Single</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh_Base.cpp">
+    <ClCompile Include="Mesh_Group.cpp">
       <Filter>ソース ファイル\Graphics\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="SkeletalMesh.cpp">
@@ -770,6 +749,21 @@
     <ClCompile Include="SF_Light.cpp">
       <Filter>ソース ファイル\Scene\SceneFunction\SF_Light</Filter>
     </ClCompile>
+    <ClCompile Include="PS_Unlit.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\Unlit</Filter>
+    </ClCompile>
+    <ClCompile Include="VS_Geometory.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\Geometory</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Animation.cpp">
+      <Filter>ソース ファイル\Component\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Bone.cpp">
+      <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\Bone</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationData.cpp">
+      <Filter>ソース ファイル\Animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -810,9 +804,6 @@
     </ClInclude>
     <ClInclude Include="MessageError.h">
       <Filter>ソース ファイル\System\MessageError</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>ソース ファイル\Graphics\Model</Filter>
     </ClInclude>
     <ClInclude Include="RenderParam.h">
       <Filter>ソース ファイル\System\Application\DirectX3D11\Render\RenderParam</Filter>
@@ -858,9 +849,6 @@
     </ClInclude>
     <ClInclude Include="Test_ChangeSubScene.h">
       <Filter>ソース ファイル\Scene\Test\ChangeSub</Filter>
-    </ClInclude>
-    <ClInclude Include="ModelSettings.h">
-      <Filter>ソース ファイル\Graphics\Model\ModelSettings</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>ソース ファイル\Graphics\Texture</Filter>
@@ -971,19 +959,19 @@
       <Filter>ソース ファイル\Scene\SceneFunction</Filter>
     </ClInclude>
     <ClInclude Include="Light.h">
-      <Filter>ソース ファイル\Object\Light</Filter>
+      <Filter>ソース ファイル\Graphics\Light</Filter>
     </ClInclude>
     <ClInclude Include="PointLight.h">
-      <Filter>ソース ファイル\Object\Light\PointLight</Filter>
+      <Filter>ソース ファイル\Graphics\Light\PointLight</Filter>
     </ClInclude>
     <ClInclude Include="SpotLight.h">
-      <Filter>ソース ファイル\Object\Light\SpotLight</Filter>
+      <Filter>ソース ファイル\Graphics\Light\SpotLight</Filter>
     </ClInclude>
     <ClInclude Include="SceneLights.h">
-      <Filter>ソース ファイル\Object\SceneLights</Filter>
+      <Filter>ソース ファイル\Graphics\Light\SceneLights</Filter>
     </ClInclude>
     <ClInclude Include="DirectionLight.h">
-      <Filter>ソース ファイル\Object\Light\Direction</Filter>
+      <Filter>ソース ファイル\Graphics\Light\Direction</Filter>
     </ClInclude>
     <ClInclude Include="InSceneSystemManager.h">
       <Filter>ソース ファイル\Scene\InSceneSystem</Filter>
@@ -1051,7 +1039,7 @@
     <ClInclude Include="SingleMesh.h">
       <Filter>ソース ファイル\Graphics\Mesh\Single</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh_Base.h">
+    <ClInclude Include="Mesh_Group.h">
       <Filter>ソース ファイル\Graphics\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="SkeletalMesh.h">
@@ -1110,6 +1098,27 @@
     </ClInclude>
     <ClInclude Include="SF_Light.h">
       <Filter>ソース ファイル\Scene\SceneFunction\SF_Light</Filter>
+    </ClInclude>
+    <ClInclude Include="PS_Unlit.h">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\Unlit</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderDefine.h">
+      <Filter>ソース ファイル\Graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="VS_Geometory.h">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\Geometory</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Animation.h">
+      <Filter>ソース ファイル\Component\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Bone.h">
+      <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\Bone</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>ソース ファイル\Graphics\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationData.h">
+      <Filter>ソース ファイル\Animation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

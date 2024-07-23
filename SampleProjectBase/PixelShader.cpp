@@ -13,7 +13,7 @@ PixelShader::~PixelShader()
 	SAFE_RELEASE(pPxShader);
 }
 
-void PixelShader::Bind()
+void PixelShader::SetGPU()
 {
 	ID3D11DeviceContext* pContext = Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
 	// シェーダーを送る

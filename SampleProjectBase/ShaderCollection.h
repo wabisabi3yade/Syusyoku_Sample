@@ -10,12 +10,12 @@ class ShaderCollection : public Singleton_Base<ShaderCollection>
 {
 	friend class Singleton_Base<ShaderCollection>;
 
-	// 頂点シェーダーリスト
-	std::unordered_map<std::string, std::unique_ptr<Shader>> shaders;
+	// シェーダー配列
+	std::unordered_map<std::string, std::unique_ptr<Shader>> pShaders;
 
 	ShaderCollection() : defaultVS(""), defaultPS("") {};
 	~ShaderCollection(){};
-	void Load();	// csoファイルをロードする
+
 public:
 	// デフォルトのシェーダーの名前
 	std::string defaultVS;	// 頂点シェーダー
@@ -23,11 +23,23 @@ public:
 
 	void Init();
 
-	/// @brief オブジェクトごとに変わらないバッファは更新する(ライト、カメラなど)
-	void UniqueBufferUpdate();
+	/// @brief オブジェクトごとで変わらないバッファ情報を更新する(ライト、カメラなど)
+	void UniqueUpdateBuffer();
 
 	// 取得する
 	VertexShader* GetVertexShader(const std::string& _shaderName);
 	PixelShader* GetPixelShader(const std::string& _shaderName);
+
+private:
+	
+	/// @brief CSOファイルから読み込む
+	void LoadFromCSO();	
+
+	/// @brief 頂点シェーダー
+	void LoadVS();
+
+	/// @brief ピクセルシェーダー
+	void LoadPS();
+
 };
 

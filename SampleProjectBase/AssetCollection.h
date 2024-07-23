@@ -5,10 +5,11 @@
 
 // 扱うアセットの型
 class Texture;
-class Mesh_Base;
+class Mesh_Group;
 class SkeletalMesh;
 class StaticMesh;
 class Material;
+class AnimationData;
 
 // アセット管理にアクセスするクラス
 class AssetLoader;
@@ -46,6 +47,9 @@ class AssetCollection
 
 	/// @brief マテリアルのアセットリスト
 	AssetList materialAssets;
+
+	/// @brief アニメーションのアセットリスト
+	AssetList animationAssets;
 
 	/// @brief アセットを追加する
 	/// @tparam T アセットの型名
@@ -152,13 +156,17 @@ inline AssetList& AssetCollection::GetAssetList()
 		return textureAssets;
 
 	// スタティック・スケルタルメッシュメッシュ
-	else if constexpr (std::is_same<T, Mesh_Base>::value || std::is_same<T, SkeletalMesh>::value || 
+	else if constexpr (std::is_same<T, Mesh_Group>::value || std::is_same<T, SkeletalMesh>::value ||
 		std::is_same<T, StaticMesh>::value)
 		return modelAssets;
 
 	// マテリアル
 	else if constexpr (std::is_same<T, Material>::value)
 		return materialAssets;
+
+	// アニメーション
+	else if constexpr (std::is_same<T, AnimationData>::value)
+		return animationAssets;
 
 
 	assert(!"アセット配列取得で不正な型名です");

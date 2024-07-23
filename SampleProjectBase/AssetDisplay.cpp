@@ -10,7 +10,7 @@
 #include "AssetCollection.h"
 
 class Texture;
-class Mesh_Base;
+class Mesh_Group;
 
 static void DrawAssetName(const std::string& _treeName, const AssetList& _assets);
 
@@ -21,11 +21,14 @@ void AssetDisplay::Draw()
 		AssetList& Tassets = pAssetCollection->GetAssetList<Texture>();
 		DrawAssetName("テクスチャ", Tassets);
 
-		AssetList& MBassets = pAssetCollection->GetAssetList<Mesh_Base>();
+		AssetList& MBassets = pAssetCollection->GetAssetList<Mesh_Group>();
 		DrawAssetName("モデル", MBassets);
 
 		AssetList& Massets = pAssetCollection->GetAssetList<Material>();
 		DrawAssetName("マテリアル", Massets);
+
+		AssetList& Aassets = pAssetCollection->GetAssetList<AnimationData>();
+		DrawAssetName("アニメーション", Aassets);
 
 		ImGui::TreePop();
 	}
@@ -34,12 +37,12 @@ void AssetDisplay::Draw()
 void DrawAssetName(const std::string& _treeName, const AssetList& _assets)
 {
 	// アセットを表示
-	if (ImGui::TreeNode(ShiftJisToUtf8(_treeName).c_str()))
+	if (ImGui::TreeNode(TO_UTF8(_treeName)))
 	{
 		// アセットの名前を表示
 		for (auto itr = _assets.begin(); itr != _assets.end(); itr++)
 		{
-			ImGui::Text(ShiftJisToUtf8(itr->first).c_str());
+			ImGui::Text(TO_UTF8(itr->first));
 		}
 
 		ImGui::TreePop();

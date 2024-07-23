@@ -26,7 +26,7 @@ SingleMesh& SingleMesh::operator=(const SingleMesh& _other)
 
 void SingleMesh::InitBuffer()
 {
-	assert(static_cast<int>(verticies.size()) > 0 || 
+	assert(static_cast<int>(verticies.size()) > 0 ||
 		static_cast<int>(indicies.size()) > 0);
 
 	// 頂点バッファ作成

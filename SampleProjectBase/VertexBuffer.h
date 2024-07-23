@@ -7,7 +7,7 @@ class VertexBuffer : public Buffer_Base
 public:
 	VertexBuffer() {}
 	~VertexBuffer() {}
-	
+
 	/// @brief 頂点バッファを作成
 	/// @param _allSize 全体のサイズ
 	/// @param _elementSize 要素のサイズ
@@ -17,6 +17,4 @@ public:
 
 	/// @brief GPUにバッファを送る
 	void SetGPU() const override;
-
 };
-

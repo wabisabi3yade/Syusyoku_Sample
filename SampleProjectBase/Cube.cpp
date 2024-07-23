@@ -43,22 +43,21 @@ void Cube::Make()
 	verticies[9] = { DirectX::XMFLOAT3(-d, d, -d), color, Vector2::One,normal[2] };
 	verticies[10] = { DirectX::XMFLOAT3(-d, -d,d), color,Vector2::One ,normal[2] };
 	verticies[11] = { DirectX::XMFLOAT3(-d, -d,-d), color, Vector2::One,normal[2] };
-	
+
 	verticies[12] = { DirectX::XMFLOAT3(d,d,d), color,Vector2::One ,normal[3] };
 	verticies[13] = { DirectX::XMFLOAT3(d,-d,d), color, Vector2::One,normal[3] };
 	verticies[14] = { DirectX::XMFLOAT3(d,d, -d), color,Vector2::One ,normal[3] };
 	verticies[15] = { DirectX::XMFLOAT3(d,-d, -d), color,Vector2::One,normal[3] };
-	
+
 	verticies[16] = { DirectX::XMFLOAT3(-d, d, d), color, Vector2::One,normal[4] };
 	verticies[17] = { DirectX::XMFLOAT3(d, d, d), color,Vector2::One ,normal[4] };
 	verticies[18] = { DirectX::XMFLOAT3(-d,d, -d), color, Vector2::One,normal[4] };
 	verticies[19] = { DirectX::XMFLOAT3(d,d, -d), color,Vector2::One,normal[4] };
-	
+
 	verticies[20] = { DirectX::XMFLOAT3(-d,-d,d), color,Vector2::One ,normal[5] };
 	verticies[21] = { DirectX::XMFLOAT3(-d,-d,-d), color, Vector2::One,normal[5] };
 	verticies[22] = { DirectX::XMFLOAT3(d, -d,d), color,Vector2::One ,normal[5] };
 	verticies[23] = { DirectX::XMFLOAT3(d, -d,-d), color,Vector2::One,normal[5] };
-
 
 	// インデックスデータ作成
 	indicies.resize(INDEX_NUM);

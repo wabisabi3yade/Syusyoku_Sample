@@ -11,12 +11,22 @@ HAL大阪　
 
 // アセット
 #include "AssetCollection.h"
+#include "AssetSetter.h"
+#include "AssetGetter.h"
 
 // アセットの前方宣言
 class Texture;
-class Mesh_Base;
+class Mesh_Group;
+class SingleMesh;
 class Material;
+class AnimationData;
 
+// ボーン情報
+class Bone;
+
+// assimp構造体
+struct aiScene;
+struct aiMesh;
 struct  aiTexture;
 
 // アセットをロードするクラス(staticクラス)
@@ -36,7 +46,7 @@ class AssetLoader : private AssetContacter
 	/// @param _pMeshgather メッシュ
 	/// @param pScene シーン
 	/// @param texturedirectory 読み込むモデルまでのパス名
-	static void MaterialLoad(Mesh_Base* _pMeshgather, const aiScene* pScene, std::string texturedirectory);
+	static void MaterialLoad(Mesh_Group* _pMeshgather, const aiScene* pScene, std::string texturedirectory);
 
 	/// @brief モデルの内部テクスチャを読み込むクラス
 	/// @param _texture 情報を入れるテクスチャの参照
@@ -60,10 +70,40 @@ public:
 	/// @param _isRightHand 左手系か？
 	/// @param _isGetScale モデルのスケールを取得するか？
 	/// @return ロードしたメッシュ
-	static Mesh_Base* ModelLoad(const std::string& _modelPath, float _scale, bool _isLeftHand, 
+	static Mesh_Group* ModelLoad(const std::string& _modelPath, float _scale, bool _isLeftHand, 
 		bool _isGetScale = true);
 
+
+	/// @brief アニメーションをロードしてアセット管理に追加
+	/// @param _animPath アニメーションのパス
+	/// @param _isLeftHand 左手系か？
+	/// @return アニメーションデータクラス
+	static AnimationData* AnimationLoad(const std::string& _animPath, bool _isLeftHand);
+
+	
+
 private:	// 便利関数
+
+	/// @brief スタティックかスケルタルを判断して作成する
+	/// @param _pScene シーン情報
+	/// @return 作成したメッシュ群
+	static std::unique_ptr<Mesh_Group> CreateMeshGroup(const aiScene* _pScene);
+
+	/// @brief ボーン情報を読み込む
+	/// @param _pAiScene シーン情報
+	/// @param _skeletalMesh スケルタルメッシュ
+	static void CreateBone(const aiScene* _pAiScene, SkeletalMesh& _skeletalMesh);
+
+	/// @brief メッシュからボーン情報を取得
+	/// @param _pAiMesh aiメッシュ
+	/// @return メッシュのボーン情報
+	
+	/// @brief メッシュからボーン情報を取得
+	/// @param _pAiMesh aiメッシュ
+	/// @param _singleMesh 一つメッシュ
+	/// @param _boneIdx ボーンインデックス
+	/// @return メッシュのボーン情報
+	static std::vector<std::unique_ptr<Bone>> CreateBone(const aiMesh* _pAiMesh, SingleMesh& _singleMesh, u_int& _boneIdx);
 
 	/// @brief パスからファイル名を取得する
 	/// @param _pathName パス名
@@ -91,10 +131,10 @@ template<class T>
 inline T* AssetLoader::SendAsset(const std::string& _assetName, std::unique_ptr<T> _pAsset)
 {
 	// 既にインポートされているなら
-	if (pAssetCollection->CheckImport<T>(_assetName))
+	if (AssetSetter::CheckImport<T>(_assetName))
 	{
-		return pAssetCollection->GetAsset<T>(_assetName);
+		return AssetGetter::GetAsset<T>(_assetName);
 	}
 
-	return pAssetCollection->SetAsset<T>(_assetName, std::move(_pAsset));
+	return AssetSetter::SetAsset(_assetName, std::move(_pAsset));
 }

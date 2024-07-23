@@ -6,16 +6,16 @@
 struct MaterialParameter
 {
 	/// @brief 色
-	DirectX::SimpleMath::Color diffuse;	
+	DirectX::SimpleMath::Color diffuse;
 
 	/// @brief 環境光
 	DirectX::SimpleMath::Color ambient;
 
 	/// @brief 鏡面反射
-	DirectX::SimpleMath::Color specular;	
+	DirectX::SimpleMath::Color specular;
 
 	/// @brief 自発光
-	DirectX::SimpleMath::Color emissive;	
+	DirectX::SimpleMath::Color emissive;
 
 	/// @brief 光沢
 	float shiness;
@@ -30,24 +30,28 @@ struct MaterialParameter
 class Material : public Asset_Base
 {
 	/// @brief パラメータ
-	MaterialParameter parameter;	
+	MaterialParameter parameter;
 
 	/// @brief テクスチャ
-	Texture* pDiffuseTexture;	
+	Texture* pDiffuseTexture;
 
 	/// @brief 法線テクスチャ
 	Texture* pNormalTexture;
 
 	/// @brief 頂点シェーダー
 	VertexShader* pVertexShader;
-	
+
 	/// @brief ピクセルシェーダー
-	PixelShader* pPixelShader;	
+	PixelShader* pPixelShader;
 public:
 	Material();
 	Material(const std::string& _vsName, const std::string& _psName);
 	~Material();
-	
+
+	/// @brief 描画準備
+	/// @param _wvp wvp行列
+	void DrawSetup(RenderParam::WVP& _wvp);
+
 	// マテリアル・各パラメータをセット
 	void SetMaterialParameter(const MaterialParameter& _mat) { parameter = _mat; }
 	void SetDiffuse(const DirectX::SimpleMath::Color& _diffuse) { parameter.diffuse = _diffuse; }
@@ -66,13 +70,15 @@ public:
 
 	MaterialParameter& GetMaterialParameter() { return parameter; }
 
-	Texture& GetDiffuseTexture()const { return *pDiffuseTexture; }
-	Texture& GetNormalTexture()const { return *pNormalTexture; }
+	Texture* GetDiffuseTexture()const { return pDiffuseTexture; }
+	Texture* GetNormalTexture()const { return pNormalTexture; }
 
 	void ImGuiSetting();
 
 private:
 	/// @brief マテリアルのパラメータ初期化
 	void InitParameter();
-};
 
+	/// @brief シェーダーの準備
+	void ShaderSetup(Shader& _shader, RenderParam::WVP& _wvp);
+};

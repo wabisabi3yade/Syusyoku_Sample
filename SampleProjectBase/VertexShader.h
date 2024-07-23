@@ -5,8 +5,8 @@
 class VertexShader : public Shader
 {
 	/// @brief 頂点シェーダー
-	Microsoft::WRL::ComPtr<ID3D11VertexShader> pVxShader;	
-	
+	Microsoft::WRL::ComPtr<ID3D11VertexShader> pVxShader;
+
 	/// @brief 入力レイアウト
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> pInputLayout;
 
@@ -20,7 +20,9 @@ public:
 	~VertexShader();
 
 	/// @brief GPUに情報を送る
-	void Bind() override;
+	void SetGPU() override;
+
+	void OnceUpdateBuffer() override {}
 
 private:
 
@@ -29,4 +31,3 @@ private:
 	/// @param _dataSize データのサイズ
 	void MakeShader(const char* _pData, u_int _dataSize) override;
 };
-

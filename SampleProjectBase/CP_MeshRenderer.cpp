@@ -11,7 +11,7 @@
 #include "StaticMesh.h"
 #include "SkeletalMesh.h"
 
-
+constexpr u_int TEX_DIFUSSE_SLOT(0);	// ディフューズテクスチャのスロット
 
 void CP_MeshRenderer::Init()
 {
@@ -26,10 +26,11 @@ void CP_MeshRenderer::Draw()
 	RenderParam& rendererParam = Direct3D11::GetInstance()->GetRenderer()->GetParameter();
 
 	// メッシュ描画
+	// 引数にwvp行列を代入
 	DrawMesh(rendererParam.GetWVP(GetTransform()));
 }
 
-void CP_MeshRenderer::SetRenderMesh(Mesh_Base& _renderMesh)
+void CP_MeshRenderer::SetRenderMesh(Mesh_Group& _renderMesh)
 {
 	pRenderMesh = &_renderMesh;
 }
@@ -38,7 +39,7 @@ void CP_MeshRenderer::ImGuiSetting()
 {
 }
 
-const Mesh_Base* CP_MeshRenderer::GetRenderMesh()
+Mesh_Group* CP_MeshRenderer::GetRenderMesh()
 {
 	return pRenderMesh;
 }
@@ -53,31 +54,55 @@ void CP_MeshRenderer::DrawMesh(RenderParam::WVP _wvp)
 
 		// 使用するマテリアル取得
 		u_int materialID = pSingleMesh->GetMaterialID();
-		Material* pMaterial = pRenderMesh->GetMaterial(materialID);
 
-		// シェーダーの設定
-		VertexShader& pVs = pMaterial->GetVertexShader();
-		PixelShader& pPs = pMaterial->GetPixelShader();
-
-		pVs.UpdateBuffer(0, &_wvp);
-		MaterialParameter& materialParam = pMaterial->GetMaterialParameter();
-
-		pVs.UpdateBuffer(1, &materialParam);
-
-		// ディレクションライトの情報を取得
-		SceneLights& sceneLights = InSceneSystemManager::GetInstance()->GetSceneLights();
-		DirectionLParameter dirLightParam = sceneLights.GetDirectionParameter();
-		pVs.UpdateBuffer(2, &dirLightParam);
-
-		pPs.UpdateBuffer(0, &materialParam);
-
-
-		if(materialParam.isTextureEnable)
-		pPs.SetTexture(0, &pMaterial->GetDiffuseTexture());
-
-		pVs.Bind();
-		pPs.Bind();
+		// マテリアルの描画準備
+		MaterialSetup(_wvp, materialID);
 
 		CP_Renderer::DrawMesh(*pSingleMesh);
+	}
+}
+
+void CP_MeshRenderer::MaterialSetup(RenderParam::WVP& _wvp, u_int _mtrlIdx)
+{
+	Material* pMaterial = pRenderMesh->GetMaterial(_mtrlIdx);
+	if (pMaterial == nullptr) return;
+
+	VertexShader& pVS = pMaterial->GetVertexShader();
+	PixelShader& pPs = pMaterial->GetPixelShader();
+
+	// シェーダーにバッファを送る
+	// (ここではライト、カメラ座標などの1ループで1度しか送らないものは送らない)
+	ShaderSetup(pVS, _wvp, *pMaterial);
+	ShaderSetup(pPs, _wvp, *pMaterial);
+
+	// テクスチャを送る
+	pPs.SetTexture(TEX_DIFUSSE_SLOT, pMaterial->GetDiffuseTexture());
+
+	// GPUに送る
+	pVS.SetGPU();
+	pPs.SetGPU();
+}
+
+void CP_MeshRenderer::ShaderSetup(Shader& _shader, RenderParam::WVP& _wvp, Material& _material)
+{
+	// バッファの種類からスロットの番号に送る
+	u_int bufferNum = _shader.GetBufferNum();
+
+	using enum Shader::BufferType;
+	for (u_int bufLoop = 0; bufLoop < bufferNum; bufLoop++)
+	{
+		switch (_shader.GetBufferType(bufLoop))
+		{
+		case WVP:	// WVP行列
+			_shader.UpdateBuffer(bufLoop, &_wvp);
+			break;
+
+		case Material:	// マテリアル
+			_shader.UpdateBuffer(bufLoop, &_material.GetMaterialParameter());
+			break;
+
+		default:
+			break;
+		}
 	}
 }

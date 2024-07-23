@@ -10,7 +10,7 @@ protected:
 public:
 	Buffer_Base() {};
 	virtual ~Buffer_Base() {};
-	
+
 	/// @brief バッファを作成
 	/// @param _allSize 全体のサイズ
 	/// @param _elementSize 要素のサイズ
@@ -29,4 +29,3 @@ public:
 	/// @param _updateData 上書きするデータ
 	void UpdateBuffer(void* _updateData) const;
 };
-

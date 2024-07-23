@@ -5,9 +5,8 @@
 class DebugCube : public SingleMesh
 {
 	/// @brief  ƒLƒ…[ƒu‚ğì¬
-	void Make();	
+	void Make();
 public:
 	DebugCube();
 	~DebugCube() {}
 };
-

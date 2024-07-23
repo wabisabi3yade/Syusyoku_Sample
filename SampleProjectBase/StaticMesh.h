@@ -1,13 +1,10 @@
 #pragma once
-#include "Mesh_Base.h"
+#include "Mesh_Group.h"
 
 // スタティックメッシュ
-class StaticMesh :
-    public Mesh_Base
+class StaticMesh : public Mesh_Group
 {
-
 public:
-    StaticMesh() : Mesh_Base(Type::SM) {}
-    ~StaticMesh() {}
+	StaticMesh() : Mesh_Group(MeshType::SM) {}
+	~StaticMesh() {}
 };
-

@@ -1,80 +1,114 @@
 #include "ShaderCollection.h"
 
-void ShaderCollection::Load()
-{
-	// csoファイルが入っているフォルダまでのパス名
-	const std::string shaderPath = "assets/Shader/";
+#include "ShaderDefine.h"
 
+// csoファイルが入っているフォルダまでのパス名
+constexpr const char* FILE_FOLDER = "assets/Shader/";
+
+void ShaderCollection::LoadFromCSO()
+{
+	LoadVS();
+	
+	LoadPS();
+}
+
+void ShaderCollection::LoadVS()
+{
 	// 頂点シェーダーを作成
 	// csoファイルの名前
 	std::vector<std::string> vFileNames
 	{
-		"VS_Basic.cso",
-		"VS_BaseObject.cso",
-		"VS_WorldPosition.cso",
 		"VS_Gouraud.cso",
+		"VS_Geometory.cso"
 	};
+
 	// セットする名前
 	std::vector<std::string> vShaderNames
 	{
-		"VS_Basic",
-		"VS_BaseObject",
-		"VS_WorldPosition",
-		"VS_Gouraud"
+		"VS_Gouraud",
+		"VS_Geometory"
 	};
-	defaultVS = "VS_Gouraud";
+	defaultVS = vShaderNames[0];
 
-	for (int vsCount = 0; vsCount < static_cast<int>(vShaderNames.size()); vsCount++)
+	// 頂点シェーダー読み込み配列
+	std::vector<std::unique_ptr<VertexShader>> pVsShaderList;
+
+	// グロー
+	std::unique_ptr<VertexShader> pVShader = std::make_unique<VS_Gouraud>();
+	pVsShaderList.push_back(std::move(pVShader));
+
+	pVShader = std::make_unique<VS_Geometory>();
+	pVsShaderList.push_back(std::move(pVShader));
+
+	for (int vsCount = 0; vsCount < static_cast<int>(pVsShaderList.size()); vsCount++)
 	{
-		std::unique_ptr<VertexShader> vShader = std::make_unique<VertexShader>();
-		std::string loadFilePath = shaderPath + vFileNames[vsCount];	// ロードする全体のパス名
-		vShader->LoadCsoFile(loadFilePath.c_str());
-		vShader->SetName(vShaderNames[vsCount]);
-		shaders.emplace(vShaderNames[vsCount], std::move(vShader));	// 配列に追加する
-	}
+		// ロードする全体のパス名
+		std::string loadFilePath = FILE_FOLDER + vFileNames[vsCount];
+		pVsShaderList[vsCount]->LoadCsoFile(loadFilePath.c_str());
+		pVsShaderList[vsCount]->SetName(vShaderNames[vsCount]);
 
+		// 配列に追加する
+		pShaders.emplace(vShaderNames[vsCount], std::move(pVsShaderList[vsCount]));
+	}
+}
+
+void ShaderCollection::LoadPS()
+{
 	// ピクセルシェーダーを作成
 	// csoファイルの名前
 	std::vector<std::string> pFileNames
 	{
-		"PS_Basic.cso",
-		"PS_VertexColor.cso",
 		"PS_Unlit.cso",
+		"PS_Geometory.cso"
 	};
 	// セットする名前
 	std::vector<std::string> pShaderNames
 	{
-		"PS_Basic",
-		"PS_VertexColor",
 		"PS_Unlit",
+		"PS_Geometory"
 	};
-	defaultPS = "PS_Unlit";
+	defaultPS = pShaderNames[0];
 
-	for (int psCount = 0; psCount < static_cast<int>(pShaderNames.size()); psCount++)
+
+	std::vector<std::unique_ptr<PixelShader>> pPsShaderList;
+
+	// アンリット
+	std::unique_ptr<PixelShader> pPShader = std::make_unique<PS_Unlit>();
+	pPsShaderList.push_back(std::move(pPShader));
+
+	pPShader = std::make_unique<PixelShader>();
+	pPsShaderList.push_back(std::move(pPShader));
+
+	for (int psCount = 0; psCount < static_cast<int>(pPsShaderList.size()); psCount++)
 	{
-		std::unique_ptr<PixelShader> pShader = std::make_unique<PixelShader>();
-		std::string loadFilePath = shaderPath + pFileNames[psCount];	// ロードする全体のパス名
-		pShader->LoadCsoFile(loadFilePath.c_str());
-		pShader->SetName((pShaderNames[psCount]));
-		shaders.emplace(pShaderNames[psCount], std::move(pShader));	// 配列に追加する
+		// ロードする全体のパス名
+		std::string loadFilePath = FILE_FOLDER + pFileNames[psCount];
+		pPsShaderList[psCount]->LoadCsoFile(loadFilePath.c_str());
+		pPsShaderList[psCount]->SetName((pShaderNames[psCount]));
+
+		// 配列に追加する
+		pShaders.emplace(pShaderNames[psCount], std::move(pPsShaderList[psCount]));
 	}
 }
 
 void ShaderCollection::Init()
 {
-	Load();	// csoファイルをロードする
+	LoadFromCSO();	// csoファイルをロードする
 }
 
-void ShaderCollection::UniqueBufferUpdate()
+void ShaderCollection::UniqueUpdateBuffer()
 {
-
-
+	// オブジェクトごとに依存しないバッファ更新
+	for (auto& shader : pShaders)
+	{
+		shader.second->OnceUpdateBuffer();
+	}
 }
 
 VertexShader* ShaderCollection::GetVertexShader(const std::string& _shaderName)
 {
-	auto itr = shaders.find(_shaderName);
-	if (itr == shaders.end())	// 同じ名前のシェーダーを見つけたら
+	auto itr = pShaders.find(_shaderName);
+	if (itr == pShaders.end())	// 同じ名前のシェーダーを見つけたら
 	{
 		HASHI_DEBUG_LOG(_shaderName + " が見つかりませんでした");
 		return nullptr;
@@ -95,8 +129,8 @@ VertexShader* ShaderCollection::GetVertexShader(const std::string& _shaderName)
 
 PixelShader* ShaderCollection::GetPixelShader(const std::string& _shaderName)
 {
-	auto itr = shaders.find(_shaderName);
-	if (itr == shaders.end())	// 同じ名前のシェーダーを見つけたら
+	auto itr = pShaders.find(_shaderName);
+	if (itr == pShaders.end())	// 同じ名前のシェーダーを見つけたら
 	{
 		HASHI_DEBUG_LOG(_shaderName + " が見つかりませんでした");
 		return nullptr;

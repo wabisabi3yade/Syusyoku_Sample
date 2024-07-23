@@ -36,8 +36,8 @@ void Geometory::DrawSetup()
 	pVs.UpdateBuffer(0, &wvp);
 	pVs.UpdateBuffer(1, &color);
 
-	pVs.Bind();
-	pPs.Bind();
+	pVs.SetGPU();
+	pPs.SetGPU();
 }
 
 void Geometory::Draw(StaticMesh& _staticMesh)
@@ -82,9 +82,9 @@ void Geometory::DrawCube(bool _isWireFrame)
 
 	if (_isWireFrame)
 		geoType = static_cast<int>(GeoType::WireCube);
-	
+
 	Draw(*pGeometory[geoType]);
-	
+
 	// 元に戻す
 	transform.ResetParameter();
 	color = Color(1, 1, 1, 1);
@@ -94,7 +94,7 @@ void Geometory::DrawSphere(bool _isWireFrame)
 {
 	DrawSetup();
 
-	int geoType = static_cast<int>(GeoType::Sphere);	
+	int geoType = static_cast<int>(GeoType::Sphere);
 	Draw(*pGeometory[geoType]);
 
 	// 元に戻す
@@ -106,7 +106,7 @@ void Geometory::MakeMaterial()
 {
 	// マテリアル作成
 	const std::string MATERIAL_NAME = "M_Geometory";
-	std::unique_ptr<Material> makeMaterial = std::make_unique<Material>("VS_BaseObject", "PS_VertexColor");
+	std::unique_ptr<Material> makeMaterial = std::make_unique<Material>("VS_Geometory", "PS_Geometory");
 
 	// このオブジェクトにマテリアルセット
 	pMaterial = AssetSetter::SetAsset<Material>(MATERIAL_NAME, std::move(makeMaterial));

@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "VertexBuffer.h"
 
+#include "Vertex.h"
+
 bool VertexBuffer::CreateBuffer(u_int _allSize, u_int _elementSize, void* _pInitData)
 {
 	auto pDevice = Direct3D11::GetInstance()->GetRenderer()->GetDevice();
@@ -24,10 +26,10 @@ bool VertexBuffer::CreateBuffer(u_int _allSize, u_int _elementSize, void* _pInit
 
 	// 頂点バッファの生成
 	HRESULT hr = pDevice->CreateBuffer(&desc, &data, &pBuffer);
-	
+
 	if (FAILED(hr))
 		return false;
-	
+
 	return true;
 }
 
@@ -36,7 +38,7 @@ void VertexBuffer::SetGPU() const
 	assert(pBuffer != NULL && "GPU送信で頂点バッファがNULL");
 
 	// デバイスコンテキスト取得
-	ID3D11DeviceContext* pDevicecontext = 
+	ID3D11DeviceContext* pDevicecontext =
 		Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
 
 	// 頂点バッファをセットする
@@ -44,4 +46,3 @@ void VertexBuffer::SetGPU() const
 	unsigned  offset = 0;
 	pDevicecontext->IASetVertexBuffers(0, 1, pBuffer.GetAddressOf(), &stride, &offset);
 }
-

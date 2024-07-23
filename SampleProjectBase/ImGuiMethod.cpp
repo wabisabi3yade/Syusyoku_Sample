@@ -86,6 +86,31 @@ void ImGuiMethod::ColorEdit4(DirectX::SimpleMath::Color& _color, const std::stri
 	_color = { f[0], f[1], f[2], f[3]};	// êF
 }
 
+bool ImGuiMethod::ComboBox(const std::string& _caption, std::string& _currentItem, const std::vector<std::string>& _items)
+{
+	bool changed = false;
+
+	if (ImGui::BeginCombo(_caption.c_str(), _currentItem.c_str()))
+	{
+		for (int n = 0; n < _items.size(); n++) {
+			bool is_selected = (_currentItem == _items[n]);
+			if (ImGui::Selectable(_items[n].c_str(), is_selected))
+			{
+				_currentItem = _items[n];
+				changed = true;
+			}
+			if (is_selected) 
+			{
+				ImGui::SetItemDefaultFocus();
+			}
+		}
+
+		ImGui::EndCombo();
+	}
+
+	return changed;
+}
+
 void ImGuiMethod::SetFontSize(FontSize _size)
 {
 	ImGui::PushFont(pFonts[static_cast<u_int>(_size)]);

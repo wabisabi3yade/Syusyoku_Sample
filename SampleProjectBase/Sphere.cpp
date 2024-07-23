@@ -21,13 +21,12 @@ void Sphere::Make()
 			vertex.normal = vertex.position;
 			vertex.normal.Normalize();
 			vertex.uv = Vector2::Zero;
-			
+
 			verticies.push_back(vertex);
 		}
 	}
 
 	// インデックスデータ作成
-	std::vector<u_int> indicies;
 	for (int j = 0; j < detail / 2; ++j)
 	{
 		for (int i = 0; i < detail; ++i)

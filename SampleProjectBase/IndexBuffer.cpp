@@ -35,7 +35,7 @@ void IndexBuffer::SetGPU() const
 {
 	assert(pBuffer != NULL && "GPU送信でインデックスバッファがNULL");
 
-	ID3D11DeviceContext* pDevicecontext = 
+	ID3D11DeviceContext* pDevicecontext =
 		Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
 
 	// インデックスバッファをセット

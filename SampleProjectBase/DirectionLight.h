@@ -4,7 +4,7 @@
 struct DirectionLParameter
 {
 	LightParameter base;
-	DirectX::SimpleMath::Color ambeimt{ 0.3f, 0.3f, 0.3f, 1.0f };	// ŠÂ‹«Œõ
+	DirectX::SimpleMath::Color ambeimt{ 0.5f, 0.5f, 0.5f, 1.0f };	// ŠÂ‹«Œõ
 	DirectX::SimpleMath::Vector3 direction{ 0.0f, -1.0f, 1.0f };	// •ûŒü
 };
 

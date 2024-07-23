@@ -15,7 +15,7 @@ void PlaneMesh::MakePlane()
 	verticies[0].position = Vector3(-0.5f, 0.0f, 0.5f);	// 左上
 	verticies[1].position = Vector3(0.5f, 0.0f, 0.5f);	// 右上
 	verticies[2].position = Vector3(-0.5f, 0.0f, -0.5f);		// 左下
-	verticies[3].position = Vector3(0.5f,0.0f, -0.5f);	// 右下
+	verticies[3].position = Vector3(0.5f, 0.0f, -0.5f);	// 右下
 
 	// uv座標
 	verticies[0].uv = { 0.0f, 0.0f };
@@ -27,7 +27,7 @@ void PlaneMesh::MakePlane()
 	for (int i = 0; i < VERTEX_NUM; i++)
 	{
 		verticies[i].color = Vector4::One;	// 色
-		verticies[i].normal = Vector3(0.0f, 0.0f, -1.0f);
+		verticies[i].normal = Vector3(0.0f, 1.0f, 0.0f);
 	}
 
 	// インデックス
@@ -47,7 +47,7 @@ void PlaneMesh::MakePlane()
 PlaneMesh::PlaneMesh()
 {
 	MakePlane();
-} 
+}
 
 void PlaneMesh::SetUV(const DirectX::SimpleMath::Vector2& _startUV, const DirectX::SimpleMath::Vector2& _endUV)
 {

@@ -22,10 +22,53 @@ struct Material
     float2 dummy;
 };
 
+//// ライトの基礎パラメータ
+//struct LightBase
+//{
+//    float4 color; // 色
+//    float3 position; // 座標  
+//    float dummy;
+//};
+
+//// ディレクションライト
+//struct DirectionLight
+//{
+//    LightBase base;
+//    float4 ambiemtColor; // 環境色
+//    float3 direction; // 方向
+//    float dummy;
+//};
+
+//// ポイントライト
+//struct PointLight
+//{
+//    LightBase base;
+//    float range; // 範囲
+//    float3 dummy;
+//};
+
+//// スポットライト
+//struct SpotLight
+//{
+//    LightBase base;
+//    float3 direction; // 方向
+//    float distance; // 距離
+//    float angleRange; // 角度範囲
+//    float3 dummy;
+//};
+
 cbuffer BufMaterial : register(b0)
 {
     Material material;
 }
+
+//// ライト
+//cbuffer BufLight : register(b1)
+//{
+//    DirectionLight dirL;
+//    PointLight pointL;
+//    SpotLight spotL;
+//};
 
 float4 main(PS_IN pin) : SV_TARGET
 {

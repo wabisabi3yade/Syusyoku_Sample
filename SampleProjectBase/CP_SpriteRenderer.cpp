@@ -55,8 +55,8 @@ void CP_SpriteRenderer::DrawSetup()
 	Texture& pTex = pSprite->GetTexture();
 	pPs.SetTexture(0, &pTex);
 
-	pVs.Bind();
-	pPs.Bind();
+	pVs.SetGPU();
+	pPs.SetGPU();
 }
 
 CP_SpriteRenderer& CP_SpriteRenderer::operator=(const CP_SpriteRenderer& _other)

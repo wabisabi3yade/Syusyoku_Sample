@@ -112,7 +112,7 @@ void CP_BoxCollider::SizeFromModelSize()
 
 	if (pMeshRenderer == nullptr) return;
 
-	const Mesh_Base* pModel = pMeshRenderer->GetRenderMesh();
+	const Mesh_Group* pModel = pMeshRenderer->GetRenderMesh();
 
 	if (pModel == nullptr) return;
 

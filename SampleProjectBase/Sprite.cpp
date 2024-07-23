@@ -3,8 +3,6 @@
 
 #include "Material.h"
 
-
-
 using namespace DirectX::SimpleMath;
 
 Sprite::Sprite() : pTexture(nullptr), uvStart(Vector2::Zero), uvEnd(Vector2::One)
@@ -39,7 +37,7 @@ Sprite& Sprite::operator=(const Sprite& _other)
 
 void Sprite::SetTexture(Texture& _tex)
 {
-	 pTexture = &_tex;
+	pTexture = &_tex;
 }
 
 Texture& Sprite::GetTexture() const
@@ -56,5 +54,4 @@ void Sprite::SetUV(const DirectX::SimpleMath::Vector2& _uvStart, const DirectX::
 {
 	uvStart = _uvStart;
 	uvEnd = _uvEnd;
-
 }

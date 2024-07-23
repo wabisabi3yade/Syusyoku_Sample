@@ -13,8 +13,8 @@ struct Material
 // ライトの基礎パラメータ
 struct LightBase
 {
-    float4 color;   // 色
-    float3 position;    // 座標  
+    float4 color; // 色
+    float3 position; // 座標  
     float dummy;
 };
 
@@ -23,7 +23,7 @@ struct DirectionLight
 {
     LightBase base;
     float4 ambiemtColor; // 環境色
-    float3 direction;   // 方向
+    float3 direction; // 方向
     float dummy;
 };
 
@@ -31,7 +31,7 @@ struct DirectionLight
 struct PointLight
 {
     LightBase base;
-    float range;    // 範囲
+    float range; // 範囲
     float3 dummy;
 };
 
@@ -39,9 +39,9 @@ struct PointLight
 struct SpotLight
 {
     LightBase base;
-    float3 direction;   // 方向
+    float3 direction; // 方向
     float distance; // 距離
-    float angleRange;   // 角度範囲
+    float angleRange; // 角度範囲
     float3 dummy;
 };
 
@@ -60,11 +60,12 @@ cbuffer MaterialBuffer : register(b1)
     Material material;
 };
 
-// ディレクションライト
-cbuffer BufDirectionL : register(b2)
+// ライト
+cbuffer BufLight : register(b2)
 {
-    DirectionLight directionL;
-    
+    DirectionLight dirL;
+    PointLight pointL;
+    SpotLight spotL;
 };
 
 struct VS_INPUT
@@ -90,7 +91,19 @@ struct VS_OUTPUT
     float4 worldPos : POSITION0;
 };
 
-float3 
+// DirectionLightが与える色の影響を計算する
+float4 CalcDirLight(float3 _normal)
+{
+    float4 color = float4(0, 0, 0, 0);
+    float3 arcLightDir = -dirL.direction;
+    
+    // 法線ベクトルと逆ライトベクトルの内積
+    float dotNL = dot(_normal, arcLightDir);
+    
+    color = saturate(dotNL * dirL.base.color + dirL.ambiemtColor);
+    
+    return color;
+}
 
 VS_OUTPUT main(VS_INPUT vin)
 {
@@ -110,7 +123,7 @@ VS_OUTPUT main(VS_INPUT vin)
 	// マテリアル色
     output.color = material.diffuse;
     // ディレクションライトに色乗算
-    output.color.rgb *= directionL.base.color.rgb;
+    output.color.rgb *= CalcDirLight(N).rgb;
    
     output.uv = vin.uv;
     
