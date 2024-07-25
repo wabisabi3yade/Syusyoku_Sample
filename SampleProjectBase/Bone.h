@@ -68,6 +68,13 @@ public:
 	std::string GetMeshName() const;
 	std::string GetArmatureName() const;
 
+	// 行列を取得
+	DirectX::SimpleMath::Matrix& GetCombMtx();
+	DirectX::SimpleMath::Matrix& GetAnimMtx();
+	DirectX::SimpleMath::Matrix& GetOffsetMtx();
+
+	void CreateCombMtx(const DirectX::SimpleMath::Matrix& _parentMtx);
+
 	// インデックスを取得
 	u_int GetIndex();
 };

@@ -424,6 +424,15 @@
     <Filter Include="ソース ファイル\Animation">
       <UniqueIdentifier>{a11adc7e-fbdb-4ba4-8603-cb26ed4d9386}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationData">
+      <UniqueIdentifier>{e36a3d30-c6cd-4c11-9242-337369ae187b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\NodeAnim">
+      <UniqueIdentifier>{57f40450-fae2-4e11-b412-be9f6b0cc442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode">
+      <UniqueIdentifier>{d44aa57b-8f2d-4ef1-a0a4-0d076eb8d695}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Geometory.hlsl">
@@ -762,7 +771,13 @@
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\Bone</Filter>
     </ClCompile>
     <ClCompile Include="AnimationData.cpp">
-      <Filter>ソース ファイル\Animation</Filter>
+      <Filter>ソース ファイル\Animation\AnimationData</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeNode.cpp">
+      <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeAnim.cpp">
+      <Filter>ソース ファイル\Animation\NodeAnim</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1118,7 +1133,13 @@
       <Filter>ソース ファイル\Graphics\Vertex</Filter>
     </ClInclude>
     <ClInclude Include="AnimationData.h">
-      <Filter>ソース ファイル\Animation</Filter>
+      <Filter>ソース ファイル\Animation\AnimationData</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeNode.h">
+      <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeAnim.h">
+      <Filter>ソース ファイル\Animation\NodeAnim</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

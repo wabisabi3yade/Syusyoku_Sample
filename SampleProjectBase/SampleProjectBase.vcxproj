@@ -110,6 +110,7 @@
     <ClCompile Include="MathUseful.cpp" />
     <ClCompile Include="Mesh_Group.cpp" />
     <ClCompile Include="MyClass.cpp" />
+    <ClCompile Include="NodeAnim.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="PlaneMesh.cpp" />
     <ClCompile Include="PlayerInput.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="Tank_ResultSub.cpp" />
     <ClCompile Include="Tank_TitleSub.cpp" />
     <ClCompile Include="AssetLoader.cpp" />
+    <ClCompile Include="TreeNode.cpp" />
     <ClCompile Include="VariableFrameRate.cpp" />
     <ClCompile Include="ImGuiMethod.cpp" />
     <ClCompile Include="main.cpp" />
@@ -225,6 +227,7 @@
     <ClInclude Include="MathUseful.h" />
     <ClInclude Include="Mesh_Group.h" />
     <ClInclude Include="MyClass.hpp" />
+    <ClInclude Include="NodeAnim.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="PlaneMesh.h" />
     <ClInclude Include="PlayerInput.h" />
@@ -255,6 +258,7 @@
     <ClInclude Include="Tank_ResultSub.h" />
     <ClInclude Include="Tank_TitleSub.h" />
     <ClInclude Include="AssetLoader.h" />
+    <ClInclude Include="TreeNode.h" />
     <ClInclude Include="VariableFrameRate.h" />
     <ClInclude Include="IGetRenderPara.h" />
     <ClInclude Include="IGetRenderResource.h" />

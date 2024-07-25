@@ -8,6 +8,9 @@ class Bone;
 // アニメーションデータ
 class AnimationData;
 
+// assimp
+struct aiNode;
+
 /// @brief アニメーションコンポーネント
 class CP_Animation : public Component
 {
@@ -20,11 +23,18 @@ class CP_Animation : public Component
 	/// @brief このコンポーネントにあるアニメーション
 	std::list<AnimationData*> pHaveAnimations;
 
+	/// @brief 現在再生しているアニメーションの時間(単位：s)
+	float playingTime_s;
+
+	/// @brief 再生速度
+	float playSpeed;
+
 	/// @brief 再生中か？
 	bool isPlaying;
 
 public:
-	CP_Animation() : pSkeletalMesh(nullptr), pCurrentAnimation(nullptr), isPlaying(false) {}
+	CP_Animation() : pSkeletalMesh(nullptr), pCurrentAnimation(nullptr), playingTime_s(0.0f),
+		playSpeed(1.0f) , isPlaying(false) {}
 	~CP_Animation() {}
 
 	void Init() override;
@@ -54,11 +64,22 @@ public:
 	void SetSkeletalMesh(SkeletalMesh& _skeletalMesh);
 private:
 
-	/// @brief アニメーションを更新する
-	void UpdateAnimation();
+	/// @brief 再生時間を進める
+	void ProgressPlayTime();
+
+	/// @brief ボーンコンビネーション行列を更新
+	void UpdateBoneCombMtx();
+
+	/// @brief 子ノードのコンビネーション行列を更新する（再帰関数）
+	/// @param _aiNode 更新するノード
+	/// @param _parentMtx ワールド変換するための親までの行列
+	void UpdateNodeHierarchy(const aiNode& _aiNode, const DirectX::SimpleMath::Matrix& _parentMtx);
+
+	/// @brief ボーンのコンビネーション行列を更新
+	void UpdateAnimationMtx();
 
 	// 消す
-	const Bone* GetBoneByName(const std::string& _boneName);
+	Bone* GetBoneByName(const std::string& _boneName);
 
 	/// @brief 所持しているアニメーションを探す
 	/// @param _animName 
