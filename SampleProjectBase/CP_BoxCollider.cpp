@@ -17,20 +17,6 @@ void CP_BoxCollider::CheckCollisionOBB(CP_Collider& _box1, CP_Collider& _box2)
 {
 }
 
-CP_BoxCollider& CP_BoxCollider::operator=(const CP_BoxCollider& _other)
-{
-	if (this == &_other) return *this;
-	CP_Collider::operator=(_other);
-
-	// ƒpƒ‰ƒ[ƒ^‘ã“ü
-	posOffset = _other.posOffset;
-	angleOffset = _other.angleOffset;
-	size = _other.size;
-	isAABB = _other.isAABB;
-
-	return *this;
-}
-
 void CP_BoxCollider::Init()
 {
 	name = "BoxCollider";

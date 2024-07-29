@@ -12,6 +12,9 @@ class CameraMove : public Component
 	// カメラの移動速度
 	float moveSpeed{ 0.0f };
 
+	/// @brief 速いときの速度
+	float dashSpeed{ 0.0f };
+
 	// 視点移動速度
 	float lookSpeed{ 0.0f };
 
@@ -21,9 +24,6 @@ class CameraMove : public Component
 	// 視点移動ベクトル
 	DirectX::SimpleMath::Vector3 rotateVec;
 
-	void UpdateVector();
-	void Move();
-
 public:
 	using Component::Component;
 
@@ -31,5 +31,9 @@ public:
 	virtual void LateUpdate();
 
 	virtual void ImGuiSetting() override;
+
+private:
+	void UpdateVector();
+	void Move();
 };
 

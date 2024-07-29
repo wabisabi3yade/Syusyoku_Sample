@@ -19,14 +19,16 @@ void ShaderCollection::LoadVS()
 	std::vector<std::string> vFileNames
 	{
 		"VS_Gouraud.cso",
-		"VS_Geometory.cso"
+		"VS_Geometory.cso",
+		"VS_SkinAnimation.cso"
 	};
 
 	// セットする名前
 	std::vector<std::string> vShaderNames
 	{
 		"VS_Gouraud",
-		"VS_Geometory"
+		"VS_Geometory",
+		"VS_SkinAnimation"
 	};
 	defaultVS = vShaderNames[0];
 
@@ -38,6 +40,9 @@ void ShaderCollection::LoadVS()
 	pVsShaderList.push_back(std::move(pVShader));
 
 	pVShader = std::make_unique<VS_Geometory>();
+	pVsShaderList.push_back(std::move(pVShader));
+
+	pVShader = std::make_unique<VS_SkinnedAnimation>();
 	pVsShaderList.push_back(std::move(pVShader));
 
 	for (int vsCount = 0; vsCount < static_cast<int>(pVsShaderList.size()); vsCount++)
@@ -58,12 +63,14 @@ void ShaderCollection::LoadPS()
 	// csoファイルの名前
 	std::vector<std::string> pFileNames
 	{
+		"PS_TexColor.cso",
 		"PS_Unlit.cso",
 		"PS_Geometory.cso"
 	};
 	// セットする名前
 	std::vector<std::string> pShaderNames
 	{
+		"PS_TexColor",
 		"PS_Unlit",
 		"PS_Geometory"
 	};
@@ -72,8 +79,12 @@ void ShaderCollection::LoadPS()
 
 	std::vector<std::unique_ptr<PixelShader>> pPsShaderList;
 
+	// テクスチャ
+	std::unique_ptr<PixelShader> pPShader = std::make_unique<PS_TexColor>();
+	pPsShaderList.push_back(std::move(pPShader));
+
 	// アンリット
-	std::unique_ptr<PixelShader> pPShader = std::make_unique<PS_Unlit>();
+	pPShader = std::make_unique<PS_Unlit>();
 	pPsShaderList.push_back(std::move(pPShader));
 
 	pPShader = std::make_unique<PixelShader>();
@@ -108,21 +119,18 @@ void ShaderCollection::UniqueUpdateBuffer()
 VertexShader* ShaderCollection::GetVertexShader(const std::string& _shaderName)
 {
 	auto itr = pShaders.find(_shaderName);
-	if (itr == pShaders.end())	// 同じ名前のシェーダーを見つけたら
+	if (itr == pShaders.end())	// シェーダーがなければ
 	{
 		HASHI_DEBUG_LOG(_shaderName + " が見つかりませんでした");
 		return nullptr;
 	}
 
 	VertexShader* retPtr = dynamic_cast<VertexShader*>(itr->second.get());
-#ifdef EDIT
 	if (retPtr == nullptr)
 	{
-
 		HASHI_DEBUG_LOG(_shaderName + "指定したシェーダー名は頂点シェーダーではありません");
 		return nullptr;
 	}
-#endif
 
 	return retPtr;
 }

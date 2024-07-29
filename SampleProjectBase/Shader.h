@@ -21,7 +21,8 @@ public:
 		Material,	// マテリアル
 		Light,	// ライト
 		CameraPos,	// カメラの座標
-		Geometory_Color	// ジオメトリ使用時の色
+		Geometory_Color,	// ジオメトリ使用時の色
+		BoneMatricies	// ボーン行列
 	};
 
 private:
@@ -29,9 +30,10 @@ private:
 	/// @brief シェーダーの種類
 	Type type;
 
+	
+protected:
 	/// @brief 名前
 	std::string name;
-protected:
 
 	/// @brief このシェーダーで利用するGPUに送るバッファの配列
 	std::vector<ID3D11Buffer*> pBuffers;
@@ -63,7 +65,12 @@ public:
 	/// @brief バッファに情報を入れる
 	/// @param _slot スロットの番号
 	/// @param _pData バッファに入れる情報
-	void UpdateBuffer(u_int _slot, void* _pData);
+	void UpdateSubResource(u_int _slot, void* _pData);
+
+	/// @brief バッファに情報を入れる(高速だが、扱い注意)
+	/// @param _slot スロットの番号
+	/// @param _pData バッファに入れる情報
+	void Map(u_int _slot, void* _pData, size_t _dataSize);
 
 	/// @brief 1ループに一回しか更新しなくてもよいバッファはここで更新する
 	virtual void OnceUpdateBuffer() {}

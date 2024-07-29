@@ -69,6 +69,11 @@ void SceneLights::ImGuiDirection()
 		ImGuiMethod::ColorEdit4(c, "カラー");
 		pDirection->SetColor(c);
 
+		// 環境
+		Color ac = pDirection->GetAmbiemt();
+		ImGuiMethod::ColorEdit4(ac, "アンビエント");
+		pDirection->SetAmbiemt(ac);
+
 		// 方向
 		Vector3 d = pDirection->GetDirection();
 		ImGuiMethod::DragFloat3(d, "方向", PARAM_CHANGE_SPEED);

@@ -89,6 +89,33 @@ DirectX::SimpleMath::Vector3 AnimationData::GetScale(u_int _nodeId, float _playi
 	return animScale;
 }
 
+DirectX::SimpleMath::Vector3 AnimationData::GetScale(u_int _nodeId, u_int _flame) const
+{
+	// 2キー以上なければ補間出来ないので
+	if (!HasScaleTwoKeys(_nodeId))
+	{
+		// 最初のキー値を返す
+		return GetScaleByKey(_nodeId, 0);
+	}
+
+	Vector3 animScale;
+
+	const aiNodeAnim* pAiNodeAnim = pAnimationData->mChannels[_nodeId];
+
+	u_int key = _flame % pAiNodeAnim->mNumScalingKeys;
+
+	/*HASHI_DEBUG_LOG(std::string(pAiNodeAnim->mNodeName.C_Str()) + " scale " + std::to_string(key));*/
+
+	// 次のスケール値
+	aiVector3D aiNextScale = pAiNodeAnim->mScalingKeys[key].mValue;
+
+	animScale.x = aiNextScale.x;
+	animScale.y = aiNextScale.y;
+	animScale.z = aiNextScale.z;
+
+	return animScale;
+}
+
 DirectX::SimpleMath::Quaternion AnimationData::GetQuaternion(u_int _nodeId, float _playingTime) const
 {
 	// 2キー以上なければ補間出来ないので
@@ -126,6 +153,34 @@ DirectX::SimpleMath::Quaternion AnimationData::GetQuaternion(u_int _nodeId, floa
 	return animQuat;
 }
 
+DirectX::SimpleMath::Quaternion AnimationData::GetQuaternion(u_int _nodeId, u_int _flame) const
+{
+	// 2キー以上なければ補間出来ないので
+	if (!HasQuatTwoKeys(_nodeId))
+	{
+		// 最初のキー値を返す
+		return GetQuatByKey(_nodeId, 0);
+	}
+
+	Quaternion animQuat;
+
+	const aiNodeAnim* pAiNodeAnim = pAnimationData->mChannels[_nodeId];
+
+	u_int key = _flame % pAiNodeAnim->mNumRotationKeys;
+
+	// 次のクォータニオン
+	aiQuaternion aiQuat = pAiNodeAnim->mRotationKeys[key].mValue;
+	animQuat.x = aiQuat.x;
+	animQuat.y = aiQuat.y;
+	animQuat.z = aiQuat.z;
+	animQuat.w = aiQuat.w;
+
+	// 正規化
+	animQuat.Normalize();
+	/*HASHI_DEBUG_LOG(std::string(pAiNodeAnim->mNodeName.C_Str()) + " quat " + std::to_string(key));*/
+	return animQuat;
+}
+
 DirectX::SimpleMath::Vector3 AnimationData::GetPosition(u_int _nodeId, float _playingTime) const
 {
 	// 2キー以上なければ補間出来ないので
@@ -160,6 +215,31 @@ DirectX::SimpleMath::Vector3 AnimationData::GetPosition(u_int _nodeId, float _pl
 	return animPos;
 }
 
+DirectX::SimpleMath::Vector3 AnimationData::GetPosition(u_int _nodeId, u_int _flame) const
+{
+	// 2キー以上なければ補間出来ないので
+	if (!HasPosTwoKeys(_nodeId))
+	{
+		// 最初のキー値を返す
+		return GetPosByKey(_nodeId, 0);
+	}
+
+	Vector3 animPos;
+
+	const aiNodeAnim* pAiNodeAnim = pAnimationData->mChannels[_nodeId];
+
+	u_int key = _flame % pAiNodeAnim->mNumPositionKeys;
+
+	// 次のスケール値
+	aiVector3D aiNextPos = pAiNodeAnim->mPositionKeys[key].mValue;
+	HASHI_DEBUG_LOG(std::string(pAiNodeAnim->mNodeName.C_Str()) + " pos " + std::to_string(key));
+	animPos.x = aiNextPos.x;
+	animPos.y = aiNextPos.y;
+	animPos.z = aiNextPos.z;
+
+	return animPos;
+}
+
 float AnimationData::GetAnimationTime() const
 {
 	return animationTime;
@@ -174,6 +254,8 @@ const aiNodeAnim* AnimationData::GetAiNodeAnim(const std::string& _nodeName)
 {
 	for (u_int c_i = 0; c_i < pAnimationData->mNumChannels; c_i++)
 	{
+		std::string s = std::string(pAnimationData->mChannels[c_i]->mNodeName.C_Str());
+
 		if (pAnimationData->mChannels[c_i]->mNodeName.C_Str() == _nodeName)
 		{
 			return pAnimationData->mChannels[c_i];
@@ -226,7 +308,12 @@ u_int AnimationData::FindPreviousScaleKey(float _playingTime, const aiNodeAnim* 
 	for (u_int k_i = 0; k_i < _pAiNodeAnim->mNumScalingKeys - 1; k_i++)
 	{
 		if (_playingTime < _pAiNodeAnim->mScalingKeys[k_i + 1].mTime)
+		{
+			/*std::string s = _pAiNodeAnim->mNodeName.C_Str();
+			HASHI_DEBUG_LOG(s + ":" + std::to_string(k_i) + " 番目");*/
 			return k_i;
+		}
+			
 	}
 	std::string message = std::string(_pAiNodeAnim->mNodeName.C_Str());
 	message += " スケーリングキーが正常に取得できませんでした";

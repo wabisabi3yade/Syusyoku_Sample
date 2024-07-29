@@ -66,6 +66,10 @@ public:
 	/// @return インデックスデータ
 	std::vector<u_int>& GetIndicies();
 
+	/// @brief 頂点数を取得
+	/// @return 頂点数
+	u_int GetVertexNum() const;
+
 	/// @brief インデックス数を取得
 	/// @return インデックス数
 	u_int GetIndexNum() const;

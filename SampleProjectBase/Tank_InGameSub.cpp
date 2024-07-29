@@ -1,9 +1,6 @@
 #include "pch.h"
 #include "Tank_InGameSub.h"
 
-// コンポーネント
-#include "ComponentDefine.h"
-
 constexpr u_int SPHERE_NUM(1);
 constexpr u_int CUBE_NUM(2);
 
@@ -37,7 +34,7 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	std::vector<ModelData> SMPaths =
 	{
 		{"assets/model/spot/spot.fbx", 1.0f, true},
-		{"assets/model/knight/Akai.fbx", 0.01f, false},
+		{"assets/model/knight/Knight D Pelegrini.fbx", 1.0f, false},
 	};
 
 	Mesh_Group* pSM = AssetLoader::ModelLoad(SMPaths[1].path, SMPaths[1].scale, SMPaths[1].isLeftHand);
@@ -53,8 +50,16 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	gameObject = &ObjectFunc::CreateEmpty("knight");
 	CP_MeshRenderer* pMeshRenderer = gameObject->AddComponent<CP_MeshRenderer>();
 	pMeshRenderer->SetRenderMesh(*pModels[0]);
+	pMeshRenderer->SetVertexShader("VS_SkinAnimation");
+	pMeshRenderer->SetPixelShader("PS_Unlit");
 	CP_Animation* pAnimation = gameObject->AddComponent<CP_Animation>();
 	pAnimation->AddAnimations(*pAnimData);
+
+	/*gameObject = &ObjectFunc::CreateEmpty("Box1");
+	gameObject->AddComponent<CP_BoxCollider>();
+
+	gameObject = &ObjectFunc::CreateEmpty("Box2");
+	gameObject->AddComponent<CP_BoxCollider>();*/
 
 	// 光源
 	DirectionLight* dirL = LightFunc::CreateDirection();

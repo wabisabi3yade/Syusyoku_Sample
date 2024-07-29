@@ -433,6 +433,12 @@
     <Filter Include="ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode">
       <UniqueIdentifier>{d44aa57b-8f2d-4ef1-a0a4-0d076eb8d695}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\SkinAnimation">
+      <UniqueIdentifier>{bd649246-a2d6-4a62-b4e0-1d28a10c3311}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\TexColor">
+      <UniqueIdentifier>{d7cbca95-6ee4-4195-b332-5c656e152d42}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Geometory.hlsl">
@@ -454,6 +460,15 @@
       <Filter>リソース ファイル\VertexShader</Filter>
     </FxCompile>
     <FxCompile Include="VS_WorldPosition.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_TexColor.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_SkinnedAnimation.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_SkinAnimation.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
     </FxCompile>
   </ItemGroup>
@@ -778,6 +793,12 @@
     </ClCompile>
     <ClCompile Include="NodeAnim.cpp">
       <Filter>ソース ファイル\Animation\NodeAnim</Filter>
+    </ClCompile>
+    <ClCompile Include="VS_SkinnedAnimation.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\SkinAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="PS_TexColor.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\TexColor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1140,6 +1161,12 @@
     </ClInclude>
     <ClInclude Include="NodeAnim.h">
       <Filter>ソース ファイル\Animation\NodeAnim</Filter>
+    </ClInclude>
+    <ClInclude Include="VS_SkinnedAnimation.h">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\SkinAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="PS_TexColor.h">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\TexColor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

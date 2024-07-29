@@ -65,6 +65,12 @@ public:
 	void SetDiffuseTexture(Texture& _diffuseTex);
 	void SetNormalTexture(Texture& _normalTex) { pNormalTexture = &_normalTex; }
 
+	// 頂点・ピクセルシェーダーをセット
+	void SetVertexShader(const std::string& _vsName);
+	void SetVertexShader(VertexShader& _vsShader);
+	void SetPixelShader(const std::string& _psName);
+	void SetPixelShader(PixelShader& _psShader);
+
 	VertexShader& GetVertexShader()const { return *pVertexShader; }
 	PixelShader& GetPixelShader()const { return *pPixelShader; }
 

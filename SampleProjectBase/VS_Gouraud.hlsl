@@ -53,7 +53,6 @@ cbuffer WVP : register(b0)
     matrix projection;
 };
 
-
 // Slot1 マテリアル
 cbuffer MaterialBuffer : register(b1)
 {
@@ -68,11 +67,11 @@ cbuffer BufLight : register(b2)
     SpotLight spotL;
 };
 
-struct VS_INPUT
+struct VS_IN
 {
     float3 pos : POSITION; // 頂点座標（モデル座標系）
-    float2 uv : TEXCOORD0; // uv座標
     float4 color : COLOR0; // 頂点色
+    float2 uv : TEXCOORD0; // uv座標
     float3 normal : NORMAL0; // 法線ベクトル
 };
 
@@ -105,7 +104,7 @@ float4 CalcDirLight(float3 _normal)
     return color;
 }
 
-VS_OUTPUT main(VS_INPUT vin)
+VS_OUTPUT main(VS_IN vin)
 {
     VS_OUTPUT output;
     output.pos = float4(vin.pos, 1.0f);

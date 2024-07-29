@@ -13,6 +13,8 @@ class SkeletalMesh : public Mesh_Group
 	/// @brief ボーン情報
 	std::vector<BonePerMesh> bones;
 
+	std::vector<std::unique_ptr<Bone>> bones;
+
 public:
 	SkeletalMesh() : Mesh_Group(MeshType::SK) {}
 	~SkeletalMesh() {}
@@ -24,4 +26,7 @@ public:
 	/// @brief ボーン配列のconst参照を取得する
 	/// @return 配列のconst参照
 	const std::vector<BonePerMesh>& GetBones();
+
+	// ボーンの数を取得
+	u_int GetBoneNum();
 };

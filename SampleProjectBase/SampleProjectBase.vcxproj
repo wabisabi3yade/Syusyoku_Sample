@@ -43,12 +43,30 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
+    <FxCompile Include="PS_TexColor.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="VS_Geometory.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="VS_Gouraud.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="VS_SkinAnimation.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="VS_SkinnedAnimation.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="VS_WorldPosition.hlsl">
@@ -138,6 +156,7 @@
     <ClCompile Include="Tank_ResultSub.cpp" />
     <ClCompile Include="Tank_TitleSub.cpp" />
     <ClCompile Include="AssetLoader.cpp" />
+    <ClCompile Include="PS_TexColor.cpp" />
     <ClCompile Include="TreeNode.cpp" />
     <ClCompile Include="VariableFrameRate.cpp" />
     <ClCompile Include="ImGuiMethod.cpp" />
@@ -166,6 +185,7 @@
     <ClCompile Include="VertexShader.cpp" />
     <ClCompile Include="VS_Geometory.cpp" />
     <ClCompile Include="VS_Gouraud.cpp" />
+    <ClCompile Include="VS_SkinnedAnimation.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -258,6 +278,7 @@
     <ClInclude Include="Tank_ResultSub.h" />
     <ClInclude Include="Tank_TitleSub.h" />
     <ClInclude Include="AssetLoader.h" />
+    <ClInclude Include="PS_TexColor.h" />
     <ClInclude Include="TreeNode.h" />
     <ClInclude Include="VariableFrameRate.h" />
     <ClInclude Include="IGetRenderPara.h" />
@@ -288,6 +309,7 @@
     <ClInclude Include="VertexShader.h" />
     <ClInclude Include="VS_Geometory.h" />
     <ClInclude Include="VS_Gouraud.h" />
+    <ClInclude Include="VS_SkinnedAnimation.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

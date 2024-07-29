@@ -5,7 +5,6 @@
 
 using namespace DirectX::SimpleMath;
 
-
 void CameraMove::UpdateVector()
 {
 	Transform transform = GetTransform();
@@ -29,7 +28,7 @@ void CameraMove::UpdateVector()
 
 	//　視点移動
 	Vector2 inputR = input.GetValue("Right");
-	
+
 
 	rotateVec.y = inputR.x;
 	rotateVec.x = -inputR.y;
@@ -40,8 +39,13 @@ void CameraMove::UpdateVector()
 void CameraMove::Move()
 {
 	Transform& transform = GetTransform();
+	float speed = moveSpeed;
 
-	transform.position += moveVec * moveSpeed * MainApplication::DeltaTime();
+	InputClass& input = MainApplication::GetInput();
+	if (input.GetKeyboard().GetKey(DIK_LSHIFT))
+		speed = dashSpeed;
+
+	transform.position += moveVec * speed * MainApplication::DeltaTime();
 
 	transform.rotation += rotateVec * lookSpeed * MainApplication::DeltaTime();
 }
@@ -57,6 +61,7 @@ void CameraMove::Init()
 		HASHI_DEBUG_LOG("Cameraコンポーネントがありません");
 
 	moveSpeed = 5.0f;
+	dashSpeed = 10.0f;
 	lookSpeed = 180.0f;
 }
 
@@ -69,5 +74,6 @@ void CameraMove::LateUpdate()
 void CameraMove::ImGuiSetting()
 {
 	ImGui::DragFloat("moveSpeed", &moveSpeed);
+	ImGui::DragFloat("dashSpeed", &dashSpeed);
 	ImGui::DragFloat("lookSpeed", &lookSpeed);
 }
