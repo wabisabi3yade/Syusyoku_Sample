@@ -24,9 +24,6 @@ public:
 	Component() : isEnable(true), name(""), gameObject(nullptr) {}
 	virtual ~Component(){};
 
-	// コピー代入演算子
-	Component& operator=(const Component & _other);
-
 	// AddComponentされたときに行う
 	virtual void Init() {};	
 
@@ -46,8 +43,4 @@ public:
 	virtual void ImGuiSetting() {};	
 
 	const GameObject& GetGameObject() { return *gameObject; }	// ゲームオブジェクト取得
-
-private:
-	void Copy(const Component& _other);
 };
-

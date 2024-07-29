@@ -70,7 +70,7 @@ public:
 	/// @brief バッファに情報を入れる(高速だが、扱い注意)
 	/// @param _slot スロットの番号
 	/// @param _pData バッファに入れる情報
-	void Map(u_int _slot, void* _pData);
+	void Map(u_int _slot, void* _pData, size_t _dataSize);
 
 	/// @brief 1ループに一回しか更新しなくてもよいバッファはここで更新する
 	virtual void OnceUpdateBuffer() {}

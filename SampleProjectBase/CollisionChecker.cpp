@@ -83,7 +83,7 @@ void CollisionChecker::CollisionCheck()
 		{
 			CP_Collider& col2 = *checkColliders[j];
 
-			assert(pFunc == nullptr);
+			assert(pFunc != nullptr);
 
 			pFunc(col1, col2);	// “–‚½‚è”»’è‚ðŽæ‚é
 		}

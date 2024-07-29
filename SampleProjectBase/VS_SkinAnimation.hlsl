@@ -45,25 +45,24 @@ VS_OUT main(VS_IN vin)
         Comb += BoneMatrix[vin.boneIndex[i]] * vin.boneWeight[i];
     }
 	
-    float4 Pos;
+    float4 Pos = (float4) 0.0f;
     Pos = float4(vin.pos, 1.0f);
     Pos = mul(Comb, Pos);
     vout.pos = Pos;
 	
 	// 法線ベクトルを補正
     float4 Normal;
-    Normal = float4(vin.normal.xyz, 0.0);
+    Normal = float4(vin.normal.xyz, 0.0f);
  
     Comb._41 = 0.0f; // 移動成分を消す
     Comb._42 = 0.0f;
     Comb._43 = 0.0f;
     Comb._44 = 1.0f;
 
-    Normal = mul(Comb, float4(vin.normal, 0.0));
+    Normal = mul(Comb, Normal);
     normalize(Normal);
     vin.normal = Normal;
 	
-    vout.pos = float4(vin.pos, 1.0f);
     vout.pos = mul(vout.pos, world);
 
     // ピクセルシェーダーでワールド座標を使用するので

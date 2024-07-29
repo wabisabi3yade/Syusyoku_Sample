@@ -18,16 +18,6 @@ void Bone::SetBoneName(const std::string& _boneName)
 	boneName = _boneName;
 }
 
-void Bone::SetMeshName(const std::string& _meshName)
-{
-	meshName = _meshName;
-}
-
-void Bone::SetArmatureName(const std::string& _armatureName)
-{
-	armatureName = _armatureName;
-}
-
 void Bone::SetAnimationMtx(const DirectX::SimpleMath::Matrix& _animationMatrix)
 {
 	animationMatrix = _animationMatrix;
@@ -46,16 +36,6 @@ void Bone::SetIndex(u_int _idx)
 std::string Bone::GetBoneName() const
 {
 	return boneName;
-}
-
-std::string Bone::GetMeshName() const
-{
-	return meshName;
-}
-
-std::string Bone::GetArmatureName() const
-{
-	return armatureName;
 }
 
 DirectX::SimpleMath::Matrix& Bone::GetCombMtx()

@@ -9,9 +9,6 @@ struct Weight
 	/// @brief ボーン名(デバッグ用)
 	std::string boneName{ "" };
 
-	/// @brief メッシュ名(デバッグ用)
-	std::string meshName{ "" };
-
 	/// @brief 頂点への影響度(0～1)
 	float weight{ 0.0f };
 
@@ -27,12 +24,6 @@ class Bone
 
 	/// @brief ボーン名(デバッグ用)
 	std::string boneName;
-
-	/// @brief メッシュ名(デバッグ用)
-	std::string meshName;
-
-	/// @brief アーマチュア名(デバッグ用)
-	std::string armatureName;
 
 	/// @brief コンビネーション行列
 	DirectX::SimpleMath::Matrix combinationMatrix;
@@ -50,7 +41,7 @@ class Bone
 	u_int boneIdx;
 
 public:
-	Bone() : boneName(""), meshName(""), armatureName(""), boneIdx(0) {}
+	Bone() : boneName(""), boneIdx(0) {}
 	~Bone() {}
 
 	void CreateCombMtx(const DirectX::SimpleMath::Matrix& _parentMtx);
@@ -61,8 +52,6 @@ public:
 
 	// 名前セット
 	void SetBoneName(const std::string& _boneName);
-	void SetMeshName(const std::string& _meshName);
-	void SetArmatureName(const std::string& _armatureName);
 
 	// 行列セット
 	void SetAnimationMtx(const DirectX::SimpleMath::Matrix& _animationMatrix);
@@ -73,8 +62,6 @@ public:
 
 	// 名前取得
 	std::string GetBoneName() const;
-	std::string GetMeshName() const;
-	std::string GetArmatureName() const;
 
 	// 行列を取得
 	DirectX::SimpleMath::Matrix& GetCombMtx();

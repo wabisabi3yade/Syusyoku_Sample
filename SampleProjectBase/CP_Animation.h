@@ -94,7 +94,7 @@ private:
 	void CPUAnimation();
 
 	// 消す
-	Bone* GetBoneByName(const std::string& _boneName);
+	std::vector<Bone*> GetBoneByName(const std::string& _boneName);
 	void RemoveStr(std::string& _str, const std::string& _removeStr);
 
 	/// @brief 所持しているアニメーションを探す

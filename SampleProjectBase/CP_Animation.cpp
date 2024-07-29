@@ -19,6 +19,8 @@
 
 using namespace DirectX::SimpleMath;
 
+u_int g_cnt = 0;
+
 namespace Anim
 {
 	Matrix ToDirectXMatrix(const aiMatrix4x4& _aiMatrix)
@@ -149,6 +151,8 @@ void CP_Animation::ProgressPlayTime()
 
 void CP_Animation::UpdateBoneCombMtx()
 {
+
+	g_cnt = 0;
 	const aiNode* pRootNode = pCurrentAnimation->GetRootNode();
 
 	// ノードを辿って全体のコンビネーション行列を更新していく
@@ -163,14 +167,15 @@ void CP_Animation::UpdateNodeHierarchy(const aiNode& _aiNode, const Matrix& _par
 
 	std::string nodeName = _aiNode.mName.C_Str();
 
-	Bone* pBone = GetBoneByName(nodeName);
+	//Bone* pBone = GetBoneByName(nodeName);
 
-	if (pBone != nullptr)
-	{
-		// コンビネーション行列を求める (ボーンオフセット * アニメーション * 逆オフセット * 親までの行列)
-		pBone->CreateCombMtx(_parentMtx);
-		nodeMatrix = pBone->GetAnimMtx();
-	}
+	//if (pBone != nullptr)
+	//{
+	//	// コンビネーション行列を求める (ボーンオフセット * アニメーション * 逆オフセット * 親までの行列)
+	//	pBone->CreateCombMtx(_parentMtx);
+	//	nodeMatrix = pBone->GetAnimMtx();
+	//	g_cnt++;
+	//}
 
 	// ワールド変換の行列を更新させる
 	Matrix toWorldMtx = nodeMatrix * _parentMtx;
@@ -178,7 +183,7 @@ void CP_Animation::UpdateNodeHierarchy(const aiNode& _aiNode, const Matrix& _par
 	// 子ノードの行列を更新（再帰的）
 	for (u_int c_i = 0; c_i < _aiNode.mNumChildren; c_i++)
 	{
-		UpdateNodeHierarchy(*_aiNode.mChildren[c_i], toWorldMtx);
+		UpdateNodeHierarchy(*_aiNode.mChildren[c_i], Matrix::Identity);
 	}
 }
 
@@ -191,7 +196,7 @@ void CP_Animation::UpdateAnimationMtx()
 	{
 		std::string boneName = pCurrentAnimation->GetBoneName(c_i);
 
-		Bone* pBone = GetBoneByName(boneName);
+		std::vector<Bone*> pBones = GetBoneByName(boneName);
 
 		// 再生時間から各パラメータを取得
 		// スケール
@@ -206,16 +211,17 @@ void CP_Animation::UpdateAnimationMtx()
 		/*HASHI_DEBUG_LOG(boneName + " " + std::to_string(animQuat.x));*/
 		static Vector3 sv = Vector3::Zero;
 
-		sv += Vector3::One * 0.01f;
+		/*sv += Vector3::One * 0.01f;*/
 
 		// アニメーション行列を作成
-		Matrix scaleMtx = Matrix::CreateScale(sv);
+		Matrix scaleMtx = Matrix::CreateScale(animScale);
 		Matrix rotationMtx = Matrix::CreateFromQuaternion(animQuat);
-		Matrix transformMtx = Matrix::CreateTranslation(sv);
+		Matrix transformMtx = Matrix::CreateTranslation(animPos);
 		Matrix animationMtx = scaleMtx * rotationMtx * transformMtx;
 
 		// ボーンにアニメーション行列をセット
-		pBone->SetAnimationMtx(animationMtx);
+		for (auto& b : pBones)
+			b->SetAnimationMtx(animationMtx);
 	}
 
 	flame++;
@@ -249,6 +255,7 @@ void CP_Animation::UpdateBoneBuffer()
 	for (u_int m_i = 0; m_i < mtrlCnt; m_i++)
 	{
 		Material* pMaterial = pSkeletalMesh->GetMaterial(m_i);
+		//pMaterial->GetVertexShader().Map(1, &boneComb, sizeof(BoneCombMtricies));
 		pMaterial->GetVertexShader().UpdateSubResource(1, &boneComb);
 	}
 }
@@ -267,11 +274,11 @@ void CP_Animation::CPUAnimation()
 	}
 }
 
-Bone* CP_Animation::GetBoneByName(const std::string& _boneName)
+std::vector<Bone*> CP_Animation::GetBoneByName(const std::string& _boneName)
 {
 	assert(pSkeletalMesh != nullptr);
 
-	Bone* pRetBone = nullptr;
+	std::vector<Bone*> pRetBones;
 
 	const std::vector<BonePerMesh>& bones = pSkeletalMesh->GetBones();
 
@@ -292,14 +299,13 @@ Bone* CP_Animation::GetBoneByName(const std::string& _boneName)
 			if (bonePerMesh[b_i]->GetBoneName() != _boneName)
 				continue;
 
-			// 見つけたら
-			return bonePerMesh[b_i].get();
+			pRetBones.push_back(bonePerMesh[b_i].get());
 		}
 	}
 
 	/*assert(pRetBone != nullptr && "ボーンが見つかりませんでした");*/
 
-	return nullptr;
+	return pRetBones;
 }
 
 void CP_Animation::RemoveStr(std::string& _str, const std::string& _removeStr)

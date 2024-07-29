@@ -13,6 +13,8 @@ class SkeletalMesh : public Mesh_Group
 	/// @brief ƒ{[ƒ“î•ñ
 	std::vector<BonePerMesh> bones;
 
+	std::vector<std::unique_ptr<Bone>> bones;
+
 public:
 	SkeletalMesh() : Mesh_Group(MeshType::SK) {}
 	~SkeletalMesh() {}

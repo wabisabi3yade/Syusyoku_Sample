@@ -372,7 +372,7 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 		std::unique_ptr<SingleMesh> pCreateMesh = std::make_unique<SingleMesh>();
 
 		aiMesh* pAimesh = pScene->mMeshes[m];
-
+	
 		// メッシュ名取得
 		std::string meshname = std::string(pAimesh->mName.C_Str());
 		pCreateMesh->SetName(meshname);
@@ -541,6 +541,10 @@ std::vector<std::unique_ptr<Bone>> AssetLoader::CreateBone(const aiMesh* _pAiMes
 {
 	BonePerMesh retBones;
 
+	// 頂点にボーン情報を入れるときに何番目の配列に入れるかカウントする
+	u_int vertexNum = _singleMesh.GetVertexNum();
+	std::vector<u_int> vertexBoneCnt(vertexNum);
+
 	// ボーン数ループ
 	for (u_int bi = 0; bi < _pAiMesh->mNumBones; bi++)
 	{
@@ -549,9 +553,6 @@ std::vector<std::unique_ptr<Bone>> AssetLoader::CreateBone(const aiMesh* _pAiMes
 
 		// パラメータを取得
 		pBone->SetBoneName(std::string(pAiBone->mName.C_Str()));
-
-		/*pBone->SetMeshName(std::string(pAiBone->mNode->mName.C_Str()));
-		pBone->SetArmatureName(std::string(pAiBone->mArmature->mName.C_Str()));*/
 
 		// デバッグ用
 		HASHI_DEBUG_LOG("ボーン：" + pBone->GetBoneName());
@@ -571,19 +572,19 @@ std::vector<std::unique_ptr<Bone>> AssetLoader::CreateBone(const aiMesh* _pAiMes
 		{
 			Weight weight;
 			weight.boneName = pBone->GetBoneName();
-			weight.meshName = pBone->GetMeshName();
 
 			weight.weight = pAiBone->mWeights[wi].mWeight;
 			weight.vertexIndex = pAiBone->mWeights[wi].mVertexId;
 
 			// 頂点とボーン情報をリンクさせる
 			Vertex& v = verticies[weight.vertexIndex];
-			u_int& idx = v.boneCnt;
+			u_int& idx = vertexBoneCnt[weight.vertexIndex];
 
 			assert(idx < MAX_WEIGHT_NUM);
-
 			v.boneWeight[idx] = weight.weight;
 			v.boneIndex[idx] = pBone->GetIndex();
+
+			// カウントを増やす
 			idx++;
 
 			// ウェイトを追加する
