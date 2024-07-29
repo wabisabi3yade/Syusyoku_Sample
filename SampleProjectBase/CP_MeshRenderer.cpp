@@ -35,6 +35,20 @@ void CP_MeshRenderer::SetRenderMesh(Mesh_Group& _renderMesh)
 	pRenderMesh = &_renderMesh;
 }
 
+void CP_MeshRenderer::SetVertexShader(const std::string& _vsName)
+{
+	assert(pRenderMesh != nullptr);
+
+	pRenderMesh->SetVertexShader(_vsName);
+}
+
+void CP_MeshRenderer::SetPixelShader(const std::string& _psName)
+{
+	assert(pRenderMesh != nullptr);
+
+	pRenderMesh->SetPixelShader(_psName);
+}
+
 void CP_MeshRenderer::ImGuiSetting()
 {
 }
@@ -94,11 +108,11 @@ void CP_MeshRenderer::ShaderSetup(Shader& _shader, RenderParam::WVP& _wvp, Mater
 		switch (_shader.GetBufferType(bufLoop))
 		{
 		case WVP:	// WVP行列
-			_shader.UpdateBuffer(bufLoop, &_wvp);
+			_shader.UpdateSubResource(bufLoop, &_wvp);
 			break;
 
 		case Material:	// マテリアル
-			_shader.UpdateBuffer(bufLoop, &_material.GetMaterialParameter());
+			_shader.UpdateSubResource(bufLoop, &_material.GetMaterialParameter());
 			break;
 
 		default:

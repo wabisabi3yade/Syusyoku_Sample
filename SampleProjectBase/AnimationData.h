@@ -54,18 +54,21 @@ public:
 	/// @param _playingTime 再生時間
 	/// @return アニメーションのスケール
 	DirectX::SimpleMath::Vector3 GetScale(u_int _nodeId, float _playingTime) const;
+	DirectX::SimpleMath::Vector3 GetScale(u_int _nodeId, u_int _flame) const;
 
 	/// @brief クォータニオンを求める
 	/// @param _nodeId ノードID
 	/// @param _playingTime 再生時間
 	/// @return アニメーションのクォータニオン
 	DirectX::SimpleMath::Quaternion GetQuaternion(u_int _nodeId, float _playingTime) const;
+	DirectX::SimpleMath::Quaternion GetQuaternion(u_int _nodeId, u_int _flame) const;
 
 	/// @brief 座標を求める
 	/// @param _nodeId ノードID
 	/// @param _playingTime 再生時間
 	/// @return アニメーションの座標
 	DirectX::SimpleMath::Vector3 GetPosition(u_int _nodeId, float _playingTime) const;
+	DirectX::SimpleMath::Vector3 GetPosition(u_int _nodeId, u_int _flame) const;
 
 	// アニメーション全体の時間を取得
 	float GetAnimationTime() const;

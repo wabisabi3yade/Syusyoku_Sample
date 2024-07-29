@@ -45,7 +45,7 @@ void VariableFrameRate::Draw()
 	{
 		float fps = static_cast<float>(1.0f / (deltaTime * 0.001f));
 
-		ImGui::Text("%.1f FPS", fps);
+		ImGui::Text("%lf FPS", fps);
 
 		ImGui::TreePop();
 	}

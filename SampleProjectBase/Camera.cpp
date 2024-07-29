@@ -16,8 +16,8 @@ void Camera::Init()
 	nearZ = DEFAULT_NEARZ;
 	farZ = DEFAULT_FARZ;
 	
-	GetTransform().position.y = 3.0f;
-	GetTransform().position.z = 4.0f;
+	GetTransform().position.y = 200.0f;
+	GetTransform().position.z = 400.0f;
 	GetTransform().rotation.x = 30.0f;
 	GetTransform().rotation.y = 180.0f;
 	SetPerspective();	// “§Ž‹“Š‰e‚©‚çŽn‚ß‚é

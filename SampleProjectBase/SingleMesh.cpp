@@ -58,6 +58,11 @@ std::vector<u_int>& SingleMesh::GetIndicies()
 	return indicies;
 }
 
+u_int SingleMesh::GetVertexNum() const
+{
+	return static_cast<u_int>(verticies.size());
+}
+
 u_int SingleMesh::GetIndexNum() const
 {
 	return static_cast<u_int>(indicies.size());

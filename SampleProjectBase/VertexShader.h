@@ -6,15 +6,13 @@ class VertexShader : public Shader
 {
 	/// @brief 頂点シェーダー
 	Microsoft::WRL::ComPtr<ID3D11VertexShader> pVxShader;
+protected:
 
 	/// @brief 入力レイアウト
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> pInputLayout;
 
-protected:
-
 	/// @brief 入力レイアウトを作成する
 	virtual void MakeInputLayout(const char* _pData, u_int _dataSize);
-
 public:
 	VertexShader();
 	~VertexShader();

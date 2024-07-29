@@ -13,7 +13,7 @@ void Shader::MakeBuffer(const char* _pData, u_int _dataSize)
 
 	// 解析用のリフレクション作成
 	ID3D11ShaderReflection* pReflection;
-	hr = D3DReflect(_pData, _dataSize, IID_PPV_ARGS(&pReflection));
+	hr = D3DReflect(_pData, _dataSize, IID_ID3D11ShaderReflection, (void**)&pReflection);
 	if (FAILED(hr)) { return; }
 
 	// 定数バッファ作成
@@ -71,7 +71,7 @@ void Shader::LoadCsoFile(const char* _filePath)
 	return;
 }
 
-void Shader::UpdateBuffer(u_int _slot, void* _pData)
+void Shader::UpdateSubResource(u_int _slot, void* _pData)
 {
 	if (_slot >= pBuffers.size()) return;
 
@@ -86,6 +86,25 @@ void Shader::UpdateBuffer(u_int _slot, void* _pData)
 			0,	// 行ピッチ
 			0	// 深度バッファピッチ
 		);
+}
+
+void Shader::Map(u_int _slot, void* _pData)
+{
+	ID3D11DeviceContext* pDeviceConttext = Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
+
+	// 定数バッファ更新
+	D3D11_MAPPED_SUBRESOURCE MappedResource;
+	HRESULT hr = pDeviceConttext->Map(
+		pBuffers[_slot],
+		0,
+		D3D11_MAP_WRITE_DISCARD,
+		0,
+		&MappedResource);
+
+	/*if (SUCCEEDED(hr)) 
+	{
+		pDeviceConttext->Unmap(&_pData, 0);
+	}*/
 }
 
 void Shader::SetTexture(u_int _slot, Texture* _texture)

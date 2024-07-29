@@ -363,7 +363,7 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 	Vector3 modelMaxPos = Vector3::One * -10.0f;
 	Vector3 modelMinPos = Vector3::One * 10.0f;
 
-	// ボーンのインデックス
+	// ボーンのインデックス(ルートノードの次から作成する)
 	u_int boneIdx = 0;
 
 	// メッシュ分ループ
@@ -439,9 +439,6 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 				indicies.push_back(face.mIndices[i]);
 		}
 
-		// バッファ生成
-		pCreateMesh->InitBuffer();
-
 		// モデルの最大・最小を更新
 		if (_isGetScale)
 		{
@@ -464,6 +461,8 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 			pSK.AddBonePerMesh(std::move(bonesPerMesh));
 		}
 
+		// バッファ生成
+		pCreateMesh->InitBuffer();
 
 		pMeshGroup->AddMesh(std::move(pCreateMesh));
 	}
@@ -477,8 +476,6 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 		pMeshGroup->SetCenterPosition((modelMaxPos + modelMinPos) * 0.5f);
 		pMeshGroup->SetSize(modelMaxPos - modelMinPos);
 	}
-
-	
 
 	Mesh_Group* pRetMeshGroup = SendAsset<Mesh_Group>(modelName, std::move(pMeshGroup));
 
@@ -525,28 +522,19 @@ std::unique_ptr<Mesh_Group> AssetLoader::CreateMeshGroup(const aiScene* _pScene)
 
 	std::unique_ptr<SkeletalMesh>pSkeletalMesh = std::make_unique<SkeletalMesh>();
 
+	//// ルートノードのボーンだけ作成する
+	//const aiNode* pAiRoot = _pScene->mRootNode;
+	//std::unique_ptr<Bone> pRootBone = std::make_unique<Bone>();
+	//
+	//pRootBone->SetBoneName(pAiRoot->mName.C_Str());
+	//pRootBone->SetIndex(0);
+
+	//BonePerMesh boneGroup;
+	//boneGroup.push_back(std::move(pRootBone));
+
+	//pSkeletalMesh->AddBonePerMesh(std::move(boneGroup));
+	
 	return std::move(pSkeletalMesh);
-}
-
-void AssetLoader::CreateBone(const aiScene* _pAiScene, SkeletalMesh& _skeletalMesh)
-{
-	u_int boneIdx = 0;
-
-	// モデルのボーン数ループする
-	for (u_int mi = 0; mi < _pAiScene->mNumMeshes; mi++)
-	{
-		const aiMesh* pAiMesh = _pAiScene->mMeshes[mi];
-
-		for (u_int bi = 0; bi < pAiMesh->mNumBones; bi++)
-		{
-			// ボーン生成
-			std::unique_ptr<Bone> pBone = std::make_unique<Bone>();
-
-			// ボーンのインデックスをセット
-			pBone->SetIndex(boneIdx);
-
-		}
-	}
 }
 
 std::vector<std::unique_ptr<Bone>> AssetLoader::CreateBone(const aiMesh* _pAiMesh, SingleMesh& _singleMesh, u_int& _boneIdx)
@@ -576,7 +564,7 @@ std::vector<std::unique_ptr<Bone>> AssetLoader::CreateBone(const aiMesh* _pAiMes
 
 		// ウェイト情報を取得する		
 		// 頂点
-		std::vector<Vertex> verticies = _singleMesh.GetVerticies();
+		std::vector<Vertex>& verticies = _singleMesh.GetVerticies();
 
 		// ウエイト数ループ
 		for (u_int wi = 0; wi < pAiBone->mNumWeights; wi++)

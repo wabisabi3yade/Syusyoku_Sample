@@ -38,19 +38,19 @@ void CP_SpriteRenderer::DrawSetup()
 	VertexShader& pVs = pMaterial->GetVertexShader();
 	PixelShader& pPs = pMaterial->GetPixelShader();
 
-	pVs.UpdateBuffer(0, &wvp);
+	pVs.UpdateSubResource(0, &wvp);
 	MaterialParameter& materialParam = pMaterial->GetMaterialParameter();
 
 	materialParam.isTextureEnable = isTextureEnable;
 
-	pVs.UpdateBuffer(1, &materialParam);
+	pVs.UpdateSubResource(1, &materialParam);
 
 	// ディレクションライトの情報を取得
 	//SceneLights& sceneLights = InSceneSystemManager::GetInstance()->GetSceneLights();
 	//DirectionLParameter dirLightParam = sceneLights.GetDirectionParameter();
 	//pVs.UpdateBuffer(2, &dirLightParam);
 
-	pPs.UpdateBuffer(0, &materialParam);
+	pPs.UpdateSubResource(0, &materialParam);
 
 	Texture& pTex = pSprite->GetTexture();
 	pPs.SetTexture(0, &pTex);

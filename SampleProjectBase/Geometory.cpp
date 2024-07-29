@@ -33,8 +33,8 @@ void Geometory::DrawSetup()
 	VertexShader& pVs = pMaterial->GetVertexShader();
 	PixelShader& pPs = pMaterial->GetPixelShader();
 
-	pVs.UpdateBuffer(0, &wvp);
-	pVs.UpdateBuffer(1, &color);
+	pVs.UpdateSubResource(0, &wvp);
+	pVs.UpdateSubResource(1, &color);
 
 	pVs.SetGPU();
 	pPs.SetGPU();

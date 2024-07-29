@@ -24,4 +24,7 @@ public:
 	/// @brief ボーン配列のconst参照を取得する
 	/// @return 配列のconst参照
 	const std::vector<BonePerMesh>& GetBones();
+
+	// ボーンの数を取得
+	u_int GetBoneNum();
 };

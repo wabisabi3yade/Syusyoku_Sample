@@ -21,5 +21,5 @@ void VS_Gouraud::OnceUpdateBuffer()
 
 	// ライトの更新
 	SceneLightsParam& lightParam = pSceneSystem->GetSceneLights().GetLightsParam();
-	UpdateBuffer(LIGHT_SLOT, &lightParam);
+	UpdateSubResource(LIGHT_SLOT, &lightParam);
 }
