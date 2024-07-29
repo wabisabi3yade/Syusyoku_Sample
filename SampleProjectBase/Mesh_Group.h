@@ -53,7 +53,7 @@ public:
 	/// @brief メッシュを取得
 	/// @param _meshIdx 何個目
 	/// @return メッシュ
-	const SingleMesh* GetMesh(u_int _meshIdx) const;
+	SingleMesh* GetMesh(u_int _meshIdx) const;
 
 	/// @brief メッシュの数取得
 	/// @return メッシュの数
@@ -63,6 +63,10 @@ public:
 	/// @param _materialIdx マテリアルID
 	/// @return マテリアルのポインタ
 	Material* GetMaterial(u_int _materialIdx);
+
+	/// @brief マテリアルの数取得
+	/// @return マテリアルの数
+	u_int GetMaterialNum();
 
 	/// @brief 中心座標を取得
 	/// @return 中心座標
@@ -83,4 +87,8 @@ public:
 	/// @brief サイズをセット
 	/// @param _size サイズ
 	void SetSize(const DirectX::SimpleMath::Vector3& _size);
+
+	// マテリアルの頂点・ピクセルシェーダーをセット
+	void SetVertexShader(const std::string& _vsName);
+	void SetPixelShader(const std::string& _psName);
 };

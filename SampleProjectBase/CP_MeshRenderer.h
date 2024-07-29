@@ -15,11 +15,18 @@ public:
 
 	void Draw() override;
 
-	// メッシュを設定
-	void SetRenderMesh(Mesh_Group& _renderMesh);
-
 	void ImGuiSetting() override;
 
+	/// @brief 描画するメッシュをセット
+	/// @param _renderMesh メッシュ群
+	void SetRenderMesh(Mesh_Group& _renderMesh);
+	
+	// シェーダーの名前からシェーダーを変更する
+	void SetVertexShader(const std::string& _vsName);
+	void SetPixelShader(const std::string& _psName);
+
+	/// @brief 描画するメッシュを取得
+	/// @return メッシュ群
 	Mesh_Group* GetRenderMesh();
 
 private:

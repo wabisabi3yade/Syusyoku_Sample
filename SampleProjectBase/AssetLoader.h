@@ -28,6 +28,7 @@ class Bone;
 struct aiScene;
 struct aiMesh;
 struct  aiTexture;
+struct aiNode;
 
 // アセットをロードするクラス(staticクラス)
 class AssetLoader : private AssetContacter
@@ -80,23 +81,12 @@ public:
 	/// @return アニメーションデータクラス
 	static AnimationData* AnimationLoad(const std::string& _animPath, bool _isLeftHand);
 
-	
-
 private:	// 便利関数
 
 	/// @brief スタティックかスケルタルを判断して作成する
 	/// @param _pScene シーン情報
 	/// @return 作成したメッシュ群
 	static std::unique_ptr<Mesh_Group> CreateMeshGroup(const aiScene* _pScene);
-
-	/// @brief ボーン情報を読み込む
-	/// @param _pAiScene シーン情報
-	/// @param _skeletalMesh スケルタルメッシュ
-	static void CreateBone(const aiScene* _pAiScene, SkeletalMesh& _skeletalMesh);
-
-	/// @brief メッシュからボーン情報を取得
-	/// @param _pAiMesh aiメッシュ
-	/// @return メッシュのボーン情報
 	
 	/// @brief メッシュからボーン情報を取得
 	/// @param _pAiMesh aiメッシュ

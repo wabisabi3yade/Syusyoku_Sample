@@ -17,13 +17,13 @@ class DirectionLight
 	// •ûŒüƒxƒNƒgƒ‹
 	DirectX::SimpleMath::Vector3 direction;
 public:
-	DirectionLight() : direction(0.0f, -1.0f, 1.0f) { type = Type::Direction; }
+	DirectionLight() : ambiemt(0.2f, 0.2f, 0.2f, 1.0f), direction(0.0f, -1.0f, 1.0f) { type = Type::Direction; }
 	~DirectionLight() {}
 
 	virtual void Draw() override;
 
 	void SetDirection(const DirectX::SimpleMath::Vector3& _dir);
-	void SetAmbeimt(const DirectX::SimpleMath::Color& _color);
+	void SetAmbiemt(const DirectX::SimpleMath::Color& _color);
 
 	DirectX::SimpleMath::Vector3 GetDirection();
 	DirectX::SimpleMath::Color GetAmbiemt();

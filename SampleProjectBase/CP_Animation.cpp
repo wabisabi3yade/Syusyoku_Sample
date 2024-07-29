@@ -19,6 +19,21 @@
 
 using namespace DirectX::SimpleMath;
 
+namespace Anim
+{
+	Matrix ToDirectXMatrix(const aiMatrix4x4& _aiMatrix)
+	{
+		Matrix dxMatrix = Matrix(
+			_aiMatrix.a1, _aiMatrix.b1, _aiMatrix.c1, _aiMatrix.d1,
+			_aiMatrix.a2, _aiMatrix.b2, _aiMatrix.c2, _aiMatrix.d2,
+			_aiMatrix.a3, _aiMatrix.b3, _aiMatrix.c3, _aiMatrix.d3,
+			_aiMatrix.a4, _aiMatrix.b4, _aiMatrix.c4, _aiMatrix.d4
+		);
+
+		return dxMatrix;
+	}
+}
+
 void CP_Animation::Init()
 {
 	name = "CP_Animation";
@@ -35,6 +50,7 @@ void CP_Animation::Init()
 
 void CP_Animation::LateUpdate()
 {
+	// 再生中　かつ　現在のアニメーションがあるなら　更新する
 	if (!isPlaying) return;
 	if (pCurrentAnimation == nullptr) return;
 
@@ -48,6 +64,9 @@ void CP_Animation::LateUpdate()
 
 	// コンビネーション行列を更新
 	UpdateBoneCombMtx();
+
+	// ボーン行列をバッファとして送信
+	UpdateBoneBuffer();
 }
 
 void CP_Animation::ImGuiSetting()
@@ -123,8 +142,9 @@ void CP_Animation::ProgressPlayTime()
 	// 時間を進める
 	playingTime_s += playSpeed * MainApplication::DeltaTime();
 
-	if (playingTime_s > pCurrentAnimation->GetAnimationTime())
-		playingTime_s = 0.0f;
+	// アニメーションの全体時間を超えたら
+	/*if (playingTime_s > pCurrentAnimation->GetAnimationTime())
+		playingTime_s = 0.0f;*/
 }
 
 void CP_Animation::UpdateBoneCombMtx()
@@ -133,19 +153,27 @@ void CP_Animation::UpdateBoneCombMtx()
 
 	// ノードを辿って全体のコンビネーション行列を更新していく
 	UpdateNodeHierarchy(*pRootNode, Matrix::Identity);
+
+	return;
 }
 
 void CP_Animation::UpdateNodeHierarchy(const aiNode& _aiNode, const Matrix& _parentMtx)
 {
+	Matrix nodeMatrix = Anim::ToDirectXMatrix(_aiNode.mTransformation);
+
 	std::string nodeName = _aiNode.mName.C_Str();
 
 	Bone* pBone = GetBoneByName(nodeName);
 
-	// コンビネーション行列を求める (ボーンオフセット * アニメーション * 逆オフセット * 親までの行列)
-	pBone->CreateCombMtx(_parentMtx);
+	if (pBone != nullptr)
+	{
+		// コンビネーション行列を求める (ボーンオフセット * アニメーション * 逆オフセット * 親までの行列)
+		pBone->CreateCombMtx(_parentMtx);
+		nodeMatrix = pBone->GetAnimMtx();
+	}
 
 	// ワールド変換の行列を更新させる
-	Matrix toWorldMtx = _parentMtx * pBone->GetAnimMtx();
+	Matrix toWorldMtx = nodeMatrix * _parentMtx;
 
 	// 子ノードの行列を更新（再帰的）
 	for (u_int c_i = 0; c_i < _aiNode.mNumChildren; c_i++)
@@ -156,6 +184,8 @@ void CP_Animation::UpdateNodeHierarchy(const aiNode& _aiNode, const Matrix& _par
 
 void CP_Animation::UpdateAnimationMtx()
 {
+	static u_int flame = 0;
+
 	// ボーン数分ループしてコンビネーション行列を作成
 	for (unsigned int c_i = 0; c_i < pCurrentAnimation->GetChannelCount(); c_i++)
 	{
@@ -165,35 +195,75 @@ void CP_Animation::UpdateAnimationMtx()
 
 		// 再生時間から各パラメータを取得
 		// スケール
-		Vector3 animScale = pCurrentAnimation->GetScale(c_i, playingTime_s);
+		Vector3 animScale = pCurrentAnimation->GetScale(c_i, flame);
 
 		//クォータニオン
-		Quaternion animQuat = pCurrentAnimation->GetQuaternion(c_i, playingTime_s);
+		Quaternion animQuat = pCurrentAnimation->GetQuaternion(c_i, flame);
 
 		// 座標
-		Vector3 animPos = pCurrentAnimation->GetPosition(c_i, playingTime_s);
+		Vector3 animPos = pCurrentAnimation->GetPosition(c_i, flame);
 
-		HASHI_DEBUG_LOG("quat" +std::to_string(animQuat.x) + " " +
-			std::to_string(animQuat.y) + " " +
-			std::to_string(animQuat.z) + " " + 
-			std::to_string(animQuat.w));
+		/*HASHI_DEBUG_LOG(boneName + " " + std::to_string(animQuat.x));*/
+		static Vector3 sv = Vector3::Zero;
 
-		HASHI_DEBUG_LOG("scale" + std::to_string(animScale.x) + " " +
-			std::to_string(animScale.y) + " " +
-			std::to_string(animScale.z));
-
-		HASHI_DEBUG_LOG("pos" + std::to_string(animPos.x) + " " +
-			std::to_string(animPos.y) + " " +
-			std::to_string(animPos.z));
+		sv += Vector3::One * 0.01f;
 
 		// アニメーション行列を作成
-		Matrix scaleMtx = Matrix::CreateScale(animScale);
+		Matrix scaleMtx = Matrix::CreateScale(sv);
 		Matrix rotationMtx = Matrix::CreateFromQuaternion(animQuat);
-		Matrix transformMtx = Matrix::CreateTranslation(animPos);
+		Matrix transformMtx = Matrix::CreateTranslation(sv);
 		Matrix animationMtx = scaleMtx * rotationMtx * transformMtx;
 
 		// ボーンにアニメーション行列をセット
 		pBone->SetAnimationMtx(animationMtx);
+	}
+
+	flame++;
+}
+
+void CP_Animation::UpdateBoneBuffer()
+{
+	u_int cnt = 0;
+	const std::vector<BonePerMesh>& bones = pSkeletalMesh->GetBones();
+	u_int boneGroupCnt = static_cast<u_int>(bones.size());
+
+	// メッシュ数ループ
+	for (u_int m_i = 0; m_i < boneGroupCnt; m_i++)
+	{
+		const BonePerMesh& bonePerMesh = bones[m_i];
+		u_int boneCnt = static_cast<u_int>(bones[m_i].size());
+
+		// ボーン数ループ
+		for (u_int b_i = 0; b_i < boneCnt; b_i++)
+		{
+			// ボーンのID番目に行列を入れる
+			boneComb.matrix[bonePerMesh[b_i]->GetIndex()] = bonePerMesh[b_i]->GetCombMtx();
+			boneComb.matrix[bonePerMesh[b_i]->GetIndex()].Transpose();
+			cnt++;
+		}
+
+	}
+
+	// マテリアルにボーン行列を渡す
+	u_int mtrlCnt = pSkeletalMesh->GetMaterialNum();
+	for (u_int m_i = 0; m_i < mtrlCnt; m_i++)
+	{
+		Material* pMaterial = pSkeletalMesh->GetMaterial(m_i);
+		pMaterial->GetVertexShader().UpdateSubResource(1, &boneComb);
+	}
+}
+
+void CP_Animation::CPUAnimation()
+{
+	u_int meshCnt = pSkeletalMesh->GetMeshNum();
+	for (u_int m_i = 0; m_i < meshCnt; m_i++)
+	{
+		SingleMesh* sm = pSkeletalMesh->GetMesh(m_i);
+		u_int vertexCnt = sm->GetVertexNum();
+		for (u_int v_i = 0; v_i < vertexCnt; v_i++)
+		{
+
+		}
 	}
 }
 
@@ -223,17 +293,22 @@ Bone* CP_Animation::GetBoneByName(const std::string& _boneName)
 				continue;
 
 			// 見つけたら
-			pRetBone = bonePerMesh[b_i].get();
-			break;
+			return bonePerMesh[b_i].get();
 		}
-
-		if (pRetBone != nullptr)
-			break;
 	}
 
-	assert(pRetBone != nullptr && "ボーンが見つかりませんでした");
+	/*assert(pRetBone != nullptr && "ボーンが見つかりませんでした");*/
 
 	return nullptr;
+}
+
+void CP_Animation::RemoveStr(std::string& _str, const std::string& _removeStr)
+{
+	size_t pos = std::string::npos;
+	// 特定の文字列をすべて見つけて削除
+	while ((pos = _str.find(_removeStr)) != std::string::npos) {
+		_str.erase(pos);
+	}
 }
 
 AnimationData* CP_Animation::FindAnimaton(const std::string& _animName)

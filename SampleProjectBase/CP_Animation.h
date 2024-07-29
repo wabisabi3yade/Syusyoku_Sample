@@ -10,10 +10,21 @@ class AnimationData;
 
 // assimp
 struct aiNode;
+struct aiNodeAnim;
+
+constexpr u_int MAX_BONEMTX(300);	// シェーダーの渡すボーン行列の最大数
 
 /// @brief アニメーションコンポーネント
 class CP_Animation : public Component
 {
+	// シェーダーに渡すボーン行列構造体
+	struct BoneCombMtricies
+	{
+		DirectX::SimpleMath::Matrix matrix[MAX_BONEMTX];
+	};
+
+	BoneCombMtricies boneComb;
+
 	/// @brief スケルタルメッシュ
 	SkeletalMesh* pSkeletalMesh;
 
@@ -31,7 +42,6 @@ class CP_Animation : public Component
 
 	/// @brief 再生中か？
 	bool isPlaying;
-
 public:
 	CP_Animation() : pSkeletalMesh(nullptr), pCurrentAnimation(nullptr), playingTime_s(0.0f),
 		playSpeed(1.0f) , isPlaying(false) {}
@@ -78,8 +88,14 @@ private:
 	/// @brief ボーンのコンビネーション行列を更新
 	void UpdateAnimationMtx();
 
+	/// @brief シェーダーのバッファを更新する
+	void UpdateBoneBuffer();
+
+	void CPUAnimation();
+
 	// 消す
 	Bone* GetBoneByName(const std::string& _boneName);
+	void RemoveStr(std::string& _str, const std::string& _removeStr);
 
 	/// @brief 所持しているアニメーションを探す
 	/// @param _animName 

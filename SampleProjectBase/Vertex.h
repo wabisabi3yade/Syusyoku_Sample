@@ -19,7 +19,7 @@ struct Vertex
 	DirectX::SimpleMath::Vector3 normal;
 
 	/// @brief 影響されるボーンのID
-	int boneIndex[MAX_WEIGHT_NUM]{ 0 };
+	int boneIndex[MAX_WEIGHT_NUM]{ -1, -1, -1, -1 };
 
 	/// @brief ボーンの影響度
 	float boneWeight[MAX_WEIGHT_NUM]{ 0.0f };

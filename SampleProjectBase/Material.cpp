@@ -56,6 +56,36 @@ void Material::SetDiffuseTexture(Texture& _diffuseTex)
 	parameter.isTextureEnable = true;
 }
 
+void Material::SetVertexShader(const std::string& _vsName)
+{
+	VertexShader* pVS = ShaderCollection::GetInstance()->GetVertexShader(_vsName);
+
+	if (pVS == nullptr)
+		return;
+
+	pVertexShader = pVS;
+}
+
+void Material::SetVertexShader(VertexShader& _vsShader)
+{
+	pVertexShader = &_vsShader;
+}
+
+void Material::SetPixelShader(const std::string& _psName)
+{
+	PixelShader* pPS = ShaderCollection::GetInstance()->GetPixelShader(_psName);
+
+	if (pPS == nullptr)
+		return;
+
+	pPixelShader = pPS;
+}
+
+void Material::SetPixelShader(PixelShader& _psShader)
+{
+	pPixelShader = &_psShader;
+}
+
 void Material::ImGuiSetting()
 {
 #ifdef EDIT
@@ -89,11 +119,11 @@ void Material::ShaderSetup(Shader& _shader, RenderParam::WVP& _wvp)
 		switch (_shader.GetBufferType(bufLoop))
 		{
 		case WVP:
-			_shader.UpdateBuffer(bufLoop, &_wvp);
+			_shader.UpdateSubResource(bufLoop, &_wvp);
 			break;
 
 		case Material:
-			_shader.UpdateBuffer(bufLoop, &parameter);
+			_shader.UpdateSubResource(bufLoop, &parameter);
 			break;
 
 		default:
