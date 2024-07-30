@@ -91,20 +91,18 @@ DirectX::SimpleMath::Vector3 AnimationData::GetScale(u_int _nodeId, float _playi
 
 DirectX::SimpleMath::Vector3 AnimationData::GetScale(u_int _nodeId, u_int _flame) const
 {
-	// 2キー以上なければ補間出来ないので
-	if (!HasScaleTwoKeys(_nodeId))
-	{
-		// 最初のキー値を返す
-		return GetScaleByKey(_nodeId, 0);
-	}
+	//// 2キー以上なければ補間出来ないので
+	//if (!HasScaleTwoKeys(_nodeId))
+	//{
+	//	// 最初のキー値を返す
+	//	return GetScaleByKey(_nodeId, 0);
+	//}
 
 	Vector3 animScale;
 
 	const aiNodeAnim* pAiNodeAnim = pAnimationData->mChannels[_nodeId];
 
 	u_int key = _flame % pAiNodeAnim->mNumScalingKeys;
-
-	/*HASHI_DEBUG_LOG(std::string(pAiNodeAnim->mNodeName.C_Str()) + " scale " + std::to_string(key));*/
 
 	// 次のスケール値
 	aiVector3D aiNextScale = pAiNodeAnim->mScalingKeys[key].mValue;
@@ -155,12 +153,12 @@ DirectX::SimpleMath::Quaternion AnimationData::GetQuaternion(u_int _nodeId, floa
 
 DirectX::SimpleMath::Quaternion AnimationData::GetQuaternion(u_int _nodeId, u_int _flame) const
 {
-	// 2キー以上なければ補間出来ないので
-	if (!HasQuatTwoKeys(_nodeId))
-	{
-		// 最初のキー値を返す
-		return GetQuatByKey(_nodeId, 0);
-	}
+	//// 2キー以上なければ補間出来ないので
+	//if (!HasQuatTwoKeys(_nodeId))
+	//{
+	//	// 最初のキー値を返す
+	//	return GetQuatByKey(_nodeId, 0);
+	//}
 
 	Quaternion animQuat;
 
@@ -177,7 +175,7 @@ DirectX::SimpleMath::Quaternion AnimationData::GetQuaternion(u_int _nodeId, u_in
 
 	// 正規化
 	animQuat.Normalize();
-	/*HASHI_DEBUG_LOG(std::string(pAiNodeAnim->mNodeName.C_Str()) + " quat " + std::to_string(key));*/
+
 	return animQuat;
 }
 
@@ -217,12 +215,12 @@ DirectX::SimpleMath::Vector3 AnimationData::GetPosition(u_int _nodeId, float _pl
 
 DirectX::SimpleMath::Vector3 AnimationData::GetPosition(u_int _nodeId, u_int _flame) const
 {
-	// 2キー以上なければ補間出来ないので
-	if (!HasPosTwoKeys(_nodeId))
-	{
-		// 最初のキー値を返す
-		return GetPosByKey(_nodeId, 0);
-	}
+	//// 2キー以上なければ補間出来ないので
+	//if (!HasPosTwoKeys(_nodeId))
+	//{
+	//	// 最初のキー値を返す
+	//	return GetPosByKey(_nodeId, 0);
+	//}
 
 	Vector3 animPos;
 
@@ -232,7 +230,6 @@ DirectX::SimpleMath::Vector3 AnimationData::GetPosition(u_int _nodeId, u_int _fl
 
 	// 次のスケール値
 	aiVector3D aiNextPos = pAiNodeAnim->mPositionKeys[key].mValue;
-	HASHI_DEBUG_LOG(std::string(pAiNodeAnim->mNodeName.C_Str()) + " pos " + std::to_string(key));
 	animPos.x = aiNextPos.x;
 	animPos.y = aiNextPos.y;
 	animPos.z = aiNextPos.z;
@@ -247,6 +244,7 @@ float AnimationData::GetAnimationTime() const
 
 const aiNode* AnimationData::GetRootNode()
 {
+
 	return pAiScene->mRootNode;
 }
 

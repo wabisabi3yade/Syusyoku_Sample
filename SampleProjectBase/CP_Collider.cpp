@@ -16,22 +16,6 @@ CP_Collider::~CP_Collider()
 	colCheck.PopCollider(*this);
 }
 
-CP_Collider& CP_Collider::operator=(const CP_Collider& _other)
-{
-	if (this == &_other) return *this;
-	Component::operator=(_other);
-
-	this->type = _other.type;
-
-#ifdef EDIT
-	// これに当たると色を変える
-	colorTags = _other.colorTags;
-	colorLayers = _other.colorLayers;
-#endif // EDIT
-
-	return *this;
-}
-
 void CP_Collider::Init()
 {
 	// シーン内の当たり判定チェッカーに追加する

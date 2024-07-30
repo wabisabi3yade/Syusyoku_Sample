@@ -30,7 +30,6 @@ protected:
     virtual ~CP_Collider();
 public:
     using Component::Component;
-    CP_Collider& operator=(const CP_Collider& _other);
 
     void Init()override;   
     // 判定に当たったコライダー追加
@@ -41,6 +40,7 @@ public:
     Type GetType()const { return type; }    // 種類を取得
 
 private:
+
 #ifdef EDIT
     // これに当たると色を変える
     std::list<Tag> colorTags;   

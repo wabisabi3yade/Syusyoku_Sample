@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Camera.h"
 
+#include "GameObject.h"
+
 using namespace DirectX::SimpleMath;
 
 // デフォルト値
@@ -16,11 +18,16 @@ void Camera::Init()
 	nearZ = DEFAULT_NEARZ;
 	farZ = DEFAULT_FARZ;
 	
+	/*GetTransform().position.y = 2.0f;
+	GetTransform().position.z = -5.0f;*/
+
 	GetTransform().position.y = 200.0f;
 	GetTransform().position.z = 400.0f;
 	GetTransform().rotation.x = 30.0f;
 	GetTransform().rotation.y = 180.0f;
 	SetPerspective();	// 透視投影から始める
+
+	gameObject->AddComponent<CameraMove>();
 }
 
 void Camera::UpdateViewMatrix()

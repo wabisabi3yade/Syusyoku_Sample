@@ -8,24 +8,9 @@ void Bone::CreateCombMtx(const DirectX::SimpleMath::Matrix& _parentMtx)
 	combinationMatrix = offsetMatrix * animationMatrix * _parentMtx;
 }
 
-void Bone::AddWeight(const Weight& _weight)
-{
-	weights.push_back(_weight);
-}
-
 void Bone::SetBoneName(const std::string& _boneName)
 {
 	boneName = _boneName;
-}
-
-void Bone::SetMeshName(const std::string& _meshName)
-{
-	meshName = _meshName;
-}
-
-void Bone::SetArmatureName(const std::string& _armatureName)
-{
-	armatureName = _armatureName;
 }
 
 void Bone::SetAnimationMtx(const DirectX::SimpleMath::Matrix& _animationMatrix)
@@ -48,33 +33,22 @@ std::string Bone::GetBoneName() const
 	return boneName;
 }
 
-std::string Bone::GetMeshName() const
-{
-	return meshName;
-}
-
-std::string Bone::GetArmatureName() const
-{
-	return armatureName;
-}
-
-DirectX::SimpleMath::Matrix& Bone::GetCombMtx()
+const DirectX::SimpleMath::Matrix& Bone::GetCombMtx() const
 {
 	return combinationMatrix;
 }
-
-DirectX::SimpleMath::Matrix& Bone::GetAnimMtx()
+ 
+const DirectX::SimpleMath::Matrix& Bone::GetAnimMtx() const
 {
 	return animationMatrix;
 }
 
-DirectX::SimpleMath::Matrix& Bone::GetOffsetMtx()
+const DirectX::SimpleMath::Matrix& Bone::GetOffsetMtx() const
 {
 	return offsetMatrix;
 }
 
-
-u_int Bone::GetIndex()
+u_int Bone::GetIndex() const
 {
 	return boneIdx;
 }

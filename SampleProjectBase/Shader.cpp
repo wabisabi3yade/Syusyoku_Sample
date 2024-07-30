@@ -73,12 +73,13 @@ void Shader::LoadCsoFile(const char* _filePath)
 
 void Shader::UpdateSubResource(u_int _slot, void* _pData)
 {
-	if (_slot >= pBuffers.size()) return;
+	if (_slot > pBuffers.size()) return;
 
 	// Map関数は非同期処理でのデッドロック問題がUpdateSubResourceより複雑なので、
 	// 今回はUpdateSubesourceを使用する
-	Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext()
-		->UpdateSubresource(
+	ID3D11DeviceContext* pDeviceContext = Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
+
+	pDeviceContext->UpdateSubresource(
 			pBuffers[_slot],		// 更新対象のリソース
 			0,	// サブリソース(定数バッファは0)
 			nullptr, // 送る対象範囲（全体を送るのでnullptr）
@@ -88,23 +89,26 @@ void Shader::UpdateSubResource(u_int _slot, void* _pData)
 		);
 }
 
-void Shader::Map(u_int _slot, void* _pData)
+void Shader::Map(u_int _slot, void* _pData, size_t _dataSize)
 {
-	ID3D11DeviceContext* pDeviceConttext = Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
+	if (_slot > pBuffers.size()) return;
 
-	// 定数バッファ更新
-	D3D11_MAPPED_SUBRESOURCE MappedResource;
-	HRESULT hr = pDeviceConttext->Map(
+	ID3D11DeviceContext* pDeviceContext = Direct3D11::GetInstance()->
+		GetRenderer()->GetDeviceContext();
+
+	//定数バッファ書き換え
+	D3D11_MAPPED_SUBRESOURCE msr;
+
+	HRESULT hr = pDeviceContext->Map(
 		pBuffers[_slot],
 		0,
-		D3D11_MAP_WRITE_DISCARD,
-		0,
-		&MappedResource);
+		D3D11_MAP_WRITE_DISCARD, 0, &msr);
 
-	/*if (SUCCEEDED(hr)) 
+	if (SUCCEEDED(hr))
 	{
-		pDeviceConttext->Unmap(&_pData, 0);
-	}*/
+		memcpy(msr.pData, &_pData, _dataSize);
+		pDeviceContext->Unmap(pBuffers[_slot], 0);
+	}
 }
 
 void Shader::SetTexture(u_int _slot, Texture* _texture)

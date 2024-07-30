@@ -17,7 +17,6 @@ class CP_BoxCollider :
 	static void CheckCollisionOBB(CP_Collider& _box1, CP_Collider& _box2);
 public:
 	using CP_Collider::CP_Collider;
-	CP_BoxCollider& operator=(const CP_BoxCollider& _other);
 
 	void Init();
 	void Draw() override;

@@ -1,25 +1,38 @@
 #include "pch.h"
 #include "SkeletalMesh.h"
 
-void SkeletalMesh::AddBonePerMesh(BonePerMesh _bones)
+void SkeletalMesh::SetBoneList(BoneList _pBones)
 {
-	bones.push_back(std::move(_bones));
+	pBones = std::move(_pBones);
 }
 
-const std::vector<BonePerMesh>& SkeletalMesh::GetBones()
+void SkeletalMesh::SetRootNode(std::unique_ptr<TreeNode> _pRootNode)
 {
-	return bones;
+	pRootNode = std::move(_pRootNode);
+}
+
+Bone* SkeletalMesh::GetBoneByName(const std::string& _name)
+{
+	for (auto& b : pBones)
+	{
+		if (b->GetBoneName() == _name)
+			return b.get();
+	}
+
+	return nullptr;
+}
+
+Bone& SkeletalMesh::GetBone(u_int _idx)
+{
+	return *pBones[_idx];
 }
 
 u_int SkeletalMesh::GetBoneNum()
 {
-	u_int boneCnt = 0;
+	return static_cast<u_int>(pBones.size());
+}
 
-	// メッシュごとのボーンの数を取得する
-	for(u_int bm_i = 0; bm_i < static_cast<u_int>(bones.size()); bm_i++)
-	{
-		boneCnt += static_cast<u_int>(bones[bm_i].size());
-	}
-
-	return boneCnt;
+TreeNode& SkeletalMesh::GetRootNode()
+{
+	return *pRootNode.get();
 }
