@@ -45,8 +45,7 @@ VS_OUT main(VS_IN vin)
         Comb += BoneMatrix[vin.boneIndex[i]] * vin.boneWeight[i];
     }
 	
-    float4 Pos = (float4) 0.0f;
-    Pos = float4(vin.pos, 1.0f);
+    float4 Pos = float4(vin.pos, 1.0f);
     Pos = mul(Comb, Pos);
     vout.pos = Pos;
 	

@@ -439,6 +439,12 @@
     <Filter Include="ソース ファイル\Graphics\Shader\Pixel\TexColor">
       <UniqueIdentifier>{d7cbca95-6ee4-4195-b332-5c656e152d42}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Graphics\Mesh\SkeletalMesh\MeshTreeNode">
+      <UniqueIdentifier>{f34dc532-0f81-41c8-a776-921bb62f4b26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Mesh\MeshGroup">
+      <UniqueIdentifier>{092d1475-cec9-4248-840b-91e6725f7546}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Geometory.hlsl">
@@ -719,9 +725,6 @@
     <ClCompile Include="SingleMesh.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\Single</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh_Group.cpp">
-      <Filter>ソース ファイル\Graphics\Mesh</Filter>
-    </ClCompile>
     <ClCompile Include="SkeletalMesh.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh</Filter>
     </ClCompile>
@@ -799,6 +802,9 @@
     </ClCompile>
     <ClCompile Include="PS_TexColor.cpp">
       <Filter>ソース ファイル\Graphics\Shader\Pixel\TexColor</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh_Group.cpp">
+      <Filter>ソース ファイル\Graphics\Mesh\MeshGroup</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1075,9 +1081,6 @@
     <ClInclude Include="SingleMesh.h">
       <Filter>ソース ファイル\Graphics\Mesh\Single</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh_Group.h">
-      <Filter>ソース ファイル\Graphics\Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="SkeletalMesh.h">
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh</Filter>
     </ClInclude>
@@ -1167,6 +1170,9 @@
     </ClInclude>
     <ClInclude Include="PS_TexColor.h">
       <Filter>ソース ファイル\Graphics\Shader\Pixel\TexColor</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh_Group.h">
+      <Filter>ソース ファイル\Graphics\Mesh\MeshGroup</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

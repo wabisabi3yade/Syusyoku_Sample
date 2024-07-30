@@ -18,11 +18,13 @@ HAL大阪　
 class Texture;
 class Mesh_Group;
 class SingleMesh;
+class SkeletalMesh;
 class Material;
 class AnimationData;
 
-// ボーン情報
+// ボーン・ツリーノード
 class Bone;
+class TreeNode;
 
 // assimp構造体
 struct aiScene;
@@ -87,13 +89,23 @@ private:	// 便利関数
 	/// @param _pScene シーン情報
 	/// @return 作成したメッシュ群
 	static std::unique_ptr<Mesh_Group> CreateMeshGroup(const aiScene* _pScene);
+
+	/// @brief ボーンを生成する
+	/// @param _pScene シーン情報
+	/// @param _skeletalMesh 情報いれるスケルタルメッシュ
+	static void CreateBone(const aiScene* _pScene, SkeletalMesh& _skeletalMesh);
+
+	/// @brief ノードを生成する再帰関数
+	/// @param _aiChildNode 子ノード
+	/// @param _skeletalMesh スケルタルメッシュ
+	/// @return 生成したノード
+	static std::unique_ptr<TreeNode> CreateNode(const aiNode& _aiChildNode, SkeletalMesh& _skeletalMesh);
 	
-	/// @brief メッシュからボーン情報を取得
+	/// @brief	頂点とボーン情報を紐づける
 	/// @param _pAiMesh aiメッシュ
-	/// @param _singleMesh 一つメッシュ
-	/// @param _boneIdx ボーンインデックス
-	/// @return メッシュのボーン情報
-	static std::vector<std::unique_ptr<Bone>> CreateBone(const aiMesh* _pAiMesh, SingleMesh& _singleMesh, u_int& _boneIdx);
+	/// @param _singleMesh 一つのメッシュ
+	/// @param _skeletalMesh　スケルタルメッシュ
+	static void LinkVertexToBone(const aiMesh* _pAiMesh, SingleMesh& _singleMesh, SkeletalMesh& _skeletalMesh);
 
 	/// @brief パスからファイル名を取得する
 	/// @param _pathName パス名

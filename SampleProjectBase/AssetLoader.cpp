@@ -329,16 +329,23 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 	// シーン情報構築
 	Assimp::Importer importer;
 
-	int flag = aiProcess_Triangulate;
-	flag |= aiProcess_JoinIdenticalVertices;
-	flag |= aiProcess_FlipUVs;
-	flag |= aiProcess_CalcTangentSpace;
-	if (_isLeftHand)
-		flag |= aiProcess_MakeLeftHanded;
+	int flag = 0;
+	//flag |= aiProcess_Triangulate;					// 非三角ポリゴンを三角に割る
+	//flag |= aiProcess_JoinIdenticalVertices;		// 同一位置頂点を一つに統合する
+	//flag |= aiProcess_FlipUVs;						//　UV値をY軸を基準に反転させる
+	//flag |= aiProcess_PreTransformVertices;			// ノードを一つに統合 !!アニメーション情報が消えることに注意!!
+	//flag |= aiProcess_CalcTangentSpace;
+	//if (_isLeftHand)
+
+
+	flag |= aiProcessPreset_TargetRealtime_MaxQuality;	// リアルタイム レンダリング用にデータを最適化するデフォルトの後処理構成。
+	flag |= aiProcess_PopulateArmatureData;				// 標準的なボーン,アーマチュアの設定
+	if (_isLeftHand) 
+		flag |= aiProcess_ConvertToLeftHanded;	// 左手系変更オプションがまとまったもの
 
 
 	// シーン情報を構築
-	const aiScene* pScene = importer.ReadFile(
+	const aiScene* pScene = g_importer.ReadFile(
 		_modelPath.c_str(),
 		flag);			// 三角形化する
 
@@ -362,9 +369,6 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 	// メッシュの最大・最小座標
 	Vector3 modelMaxPos = Vector3::One * -10.0f;
 	Vector3 modelMinPos = Vector3::One * 10.0f;
-
-	// ボーンのインデックス(ルートノードの次から作成する)
-	u_int boneIdx = 0;
 
 	// メッシュ分ループ
 	for (unsigned int m = 0; m < pScene->mNumMeshes; m++)
@@ -455,10 +459,8 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 		{
 			SkeletalMesh& pSK = static_cast<SkeletalMesh&>(*pMeshGroup.get());
 
-			// ボーン情報を取得する
-			BonePerMesh bonesPerMesh = CreateBone(pAimesh, *pCreateMesh.get(), boneIdx);
-
-			pSK.AddBonePerMesh(std::move(bonesPerMesh));
+			// ボーン情報を頂点に紐づける
+			LinkVertexToBone(pAimesh, *pCreateMesh.get(), pSK);
 		}
 
 		// バッファ生成
@@ -520,48 +522,93 @@ std::unique_ptr<Mesh_Group> AssetLoader::CreateMeshGroup(const aiScene* _pScene)
 		return std::move(pSM);
 	}
 
-	std::unique_ptr<SkeletalMesh>pSkeletalMesh = std::make_unique<SkeletalMesh>();
+	std::unique_ptr<SkeletalMesh> pSkeletalMesh = std::make_unique<SkeletalMesh>();
 
-	//// ルートノードのボーンだけ作成する
-	//const aiNode* pAiRoot = _pScene->mRootNode;
-	//std::unique_ptr<Bone> pRootBone = std::make_unique<Bone>();
-	//
-	//pRootBone->SetBoneName(pAiRoot->mName.C_Str());
-	//pRootBone->SetIndex(0);
+	// ボーンを生成する
+	CreateBone(_pScene, *pSkeletalMesh);
 
-	//BonePerMesh boneGroup;
-	//boneGroup.push_back(std::move(pRootBone));
-
-	//pSkeletalMesh->AddBonePerMesh(std::move(boneGroup));
+	// ノードを生成する
+	std::unique_ptr<TreeNode> pRootNode = CreateNode(*_pScene->mRootNode, *pSkeletalMesh);
+	pSkeletalMesh->SetRootNode(std::move(pRootNode));
 	
 	return std::move(pSkeletalMesh);
 }
 
-std::vector<std::unique_ptr<Bone>> AssetLoader::CreateBone(const aiMesh* _pAiMesh, SingleMesh& _singleMesh, u_int& _boneIdx)
+void AssetLoader::CreateBone(const aiScene* _pScene, SkeletalMesh& _skeletalMesh)
 {
-	BonePerMesh retBones;
+	std::vector<std::unique_ptr<Bone>> pBones;
+
+	// メッシュ一個目のボーン情報を見る
+	const aiMesh* pAiMesh = _pScene->mMeshes[0];
+
+	u_int boneIdx = 0;
+
+	// ボーンを生成する
+	for (u_int b_i = 0; b_i < pAiMesh->mNumBones; b_i++)
+	{
+		std::unique_ptr<Bone> pBone = std::make_unique<Bone>();
+		const aiBone* pAiBone = pAiMesh->mBones[b_i];
+
+		// ID
+		pBone->SetIndex(boneIdx);
+		boneIdx++;
+
+		// 名前
+		pBone->SetBoneName(pAiBone->mName.C_Str());
+
+		// オフセット行列
+		pBone->SetOffeetMtx(ToDirectXMatrix(pAiBone->mOffsetMatrix));
+
+		HASHI_DEBUG_LOG(pBone->GetBoneName() + "：ロード完了");
+
+		pBones.push_back(std::move(pBone));
+	}
+
+	// スケルタルメッシュにセット
+	_skeletalMesh.SetBoneList(std::move(pBones));
+}
+
+std::unique_ptr<TreeNode> AssetLoader::CreateNode(const aiNode& _aiChildNode, SkeletalMesh& _skeletalMesh)
+{
+	std::unique_ptr<TreeNode> pCreateNode = std::make_unique<TreeNode>();
+
+	// パラメータセット
+	pCreateNode->SetNodeName(_aiChildNode.mName.C_Str());
+	pCreateNode->SetTransformMtx(ToDirectXMatrix(_aiChildNode.mTransformation));
+
+	// 対応したボーンを名前から取得する
+	Bone* pLinkBone = _skeletalMesh.GetBoneByName(_aiChildNode.mName.C_Str());
+	pCreateNode->SetBone(*pLinkBone);
+
+	// 再帰でノードを生成する
+	for (u_int n_i = 0; n_i < _aiChildNode.mNumChildren; n_i++)
+	{
+		std::unique_ptr<TreeNode> pChildNode = 
+			CreateNode(*_aiChildNode.mChildren[n_i], _skeletalMesh);
+
+		// 子ノードに設定
+		pCreateNode->AddChild(std::move(pChildNode));
+	}
+
+	int i = 0;
+
+	return std::move(pCreateNode);
+}
+
+void AssetLoader::LinkVertexToBone(const aiMesh* _pAiMesh, SingleMesh& _singleMesh, SkeletalMesh& _skeletalMesh)
+{
+	u_int vertexNum = _singleMesh.GetVertexNum();
 
 	// 頂点にボーン情報を入れるときに何番目の配列に入れるかカウントする
-	u_int vertexNum = _singleMesh.GetVertexNum();
 	std::vector<u_int> vertexBoneCnt(vertexNum);
 
 	// ボーン数ループ
 	for (u_int bi = 0; bi < _pAiMesh->mNumBones; bi++)
 	{
 		const aiBone* pAiBone = _pAiMesh->mBones[bi];
-		std::unique_ptr<Bone> pBone = std::make_unique<Bone>();
-
-		// パラメータを取得
-		pBone->SetBoneName(std::string(pAiBone->mName.C_Str()));
-
-		// デバッグ用
-		HASHI_DEBUG_LOG("ボーン：" + pBone->GetBoneName());
-
-		// オフセット行列
-		pBone->SetOffeetMtx(ToDirectXMatrix(pAiBone->mOffsetMatrix));
-
-		// インデックスを取得
-		pBone->SetIndex(_boneIdx);
+		const Bone* pBone = _skeletalMesh.GetBoneByName(pAiBone->mName.C_Str());
+		
+		assert(pBone != nullptr && "Boneがありません");
 
 		// ウェイト情報を取得する		
 		// 頂点
@@ -570,34 +617,21 @@ std::vector<std::unique_ptr<Bone>> AssetLoader::CreateBone(const aiMesh* _pAiMes
 		// ウエイト数ループ
 		for (u_int wi = 0; wi < pAiBone->mNumWeights; wi++)
 		{
-			Weight weight;
-			weight.boneName = pBone->GetBoneName();
-
-			weight.weight = pAiBone->mWeights[wi].mWeight;
-			weight.vertexIndex = pAiBone->mWeights[wi].mVertexId;
+			float weight = pAiBone->mWeights[wi].mWeight;
+			u_int vertexID = pAiBone->mWeights[wi].mVertexId;
 
 			// 頂点とボーン情報をリンクさせる
-			Vertex& v = verticies[weight.vertexIndex];
-			u_int& idx = vertexBoneCnt[weight.vertexIndex];
+			Vertex& v = verticies[vertexID];
+			u_int& idx = vertexBoneCnt[vertexID];
 
 			assert(idx < MAX_WEIGHT_NUM);
-			v.boneWeight[idx] = weight.weight;
+			v.boneWeight[idx] = weight;
 			v.boneIndex[idx] = pBone->GetIndex();
 
 			// カウントを増やす
 			idx++;
-
-			// ウェイトを追加する
-			pBone->AddWeight(weight);
 		}
-
-		// 1メッシュのボーン配列に追加
-		retBones.push_back(std::move(pBone));
-
-		_boneIdx++;	// 加算
 	}
-
-	return retBones;
 }
 
 std::string AssetLoader::PathToFileName(const std::string& _pathName, bool _isExtension)

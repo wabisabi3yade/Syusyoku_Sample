@@ -31,16 +31,18 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 		bool isGetScale;
 	};
 
+
 	std::vector<ModelData> SMPaths =
 	{
 		{"assets/model/spot/spot.fbx", 1.0f, true},
-		{"assets/model/knight/Knight D Pelegrini.fbx", 1.0f, false},
+		{"assets/model/knight/akai.fbx", 1.0f, true},
+		/*{"assets/model/knight/Knight D Pelegrini.fbx", 1.0f, false},*/
 	};
 
 	Mesh_Group* pSM = AssetLoader::ModelLoad(SMPaths[1].path, SMPaths[1].scale, SMPaths[1].isLeftHand);
 	pModels.push_back(pSM);
 
-	AnimationData* pAnimData = AssetLoader::AnimationLoad("assets/animation/Smash.fbx", false);
+	AnimationData* pAnimData = AssetLoader::AnimationLoad("assets/animation/Silly Dancing.fbx", true);
 
 	GameObject* gameObject = &ObjectFunc::CreateEmpty("Ground");
 	CP_SpriteRenderer* pSpriteRenderer = gameObject->AddComponent<CP_SpriteRenderer>();

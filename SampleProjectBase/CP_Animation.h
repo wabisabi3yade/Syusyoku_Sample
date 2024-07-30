@@ -4,6 +4,7 @@
 // モデル
 class SkeletalMesh;
 class Bone;
+class TreeNode;
 
 // アニメーションデータ
 class AnimationData;
@@ -12,7 +13,7 @@ class AnimationData;
 struct aiNode;
 struct aiNodeAnim;
 
-constexpr u_int MAX_BONEMTX(300);	// シェーダーの渡すボーン行列の最大数
+constexpr u_int MAX_BONEMTX(400);	// シェーダーの渡すボーン行列の最大数
 
 /// @brief アニメーションコンポーネント
 class CP_Animation : public Component
@@ -81,9 +82,9 @@ private:
 	void UpdateBoneCombMtx();
 
 	/// @brief 子ノードのコンビネーション行列を更新する（再帰関数）
-	/// @param _aiNode 更新するノード
+	/// @param _treeNode 更新するノード
 	/// @param _parentMtx ワールド変換するための親までの行列
-	void UpdateNodeHierarchy(const aiNode& _aiNode, const DirectX::SimpleMath::Matrix& _parentMtx);
+	void UpdateNodeHierarchy(TreeNode& _treeNode, const DirectX::SimpleMath::Matrix& _parentMtx);
 
 	/// @brief ボーンのコンビネーション行列を更新
 	void UpdateAnimationMtx();
@@ -91,19 +92,9 @@ private:
 	/// @brief シェーダーのバッファを更新する
 	void UpdateBoneBuffer();
 
-	void CPUAnimation();
-
-	// 消す
-	std::vector<Bone*> GetBoneByName(const std::string& _boneName);
-	void RemoveStr(std::string& _str, const std::string& _removeStr);
-
 	/// @brief 所持しているアニメーションを探す
 	/// @param _animName 
 	/// @return 
 	AnimationData* FindAnimaton(const std::string& _animName);
-
-	/// @brief アニメーションの情報にボーンのIDをリンクさせる
-	/// @param _connectAnim リンクするアニメーション
-	void ConnectBoneId(AnimationData& _connectAnim);
 };
 

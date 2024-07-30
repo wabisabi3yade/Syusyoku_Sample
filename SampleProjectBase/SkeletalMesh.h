@@ -1,32 +1,44 @@
 #pragma once
 #include "Mesh_Group.h"
 
-// ボーン
 #include "Bone.h"
+#include "TreeNode.h"
 
-// メッシュごとのボーン配列
-using BonePerMesh = std::vector<std::unique_ptr<Bone>>;
+using BoneList = std::vector<std::unique_ptr<Bone>>;
 
 // スケルタルメッシュクラス
 class SkeletalMesh : public Mesh_Group
 {
 	/// @brief ボーン情報
-	std::vector<BonePerMesh> bones;
+	BoneList pBones;
 
-	std::vector<std::unique_ptr<Bone>> bones;
+	/// @brief ノード情報の元ノードを持つ
+	std::unique_ptr<TreeNode> pRootNode;
 
 public:
 	SkeletalMesh() : Mesh_Group(MeshType::SK) {}
 	~SkeletalMesh() {}
 
-	/// @brief メッシュごとのボーン配列を追加
-	/// @param _bones メッシュごとのボーン配列
-	void AddBonePerMesh(BonePerMesh _bones);
+	/// @brief ボーン配列をセット
+	/// @param _pBones ボーン配列
+	void SetBoneList(BoneList _pBones);
 
-	/// @brief ボーン配列のconst参照を取得する
-	/// @return 配列のconst参照
-	const std::vector<BonePerMesh>& GetBones();
+	// ルートノードをセット
+	void SetRootNode(std::unique_ptr<TreeNode> _pRootNode);
+
+	/// @brief 名前からボーンを探す
+	/// @param _name 探すボーン名
+	/// @return ボーンのポインタ
+	Bone* GetBoneByName(const std::string& _name);
+
+	/// @brief ボーンのIDから探す
+	/// @param _idx ボーンID
+	/// @return ボーンID
+	Bone& GetBone(u_int _idx);
 
 	// ボーンの数を取得
 	u_int GetBoneNum();
+
+	// ルートノードを取得
+	TreeNode& GetRootNode();
 };
