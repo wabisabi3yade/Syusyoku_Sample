@@ -31,22 +31,14 @@ cbuffer BoneMatrixBuffer : register(b1)
 VS_OUT main(VS_IN vin)
 {
     VS_OUT vout;
-	
-	// ワンスキン頂点ブレンドの処理
-    float4x4 Comb = (float4x4) 0;
-    Comb._11 = 1.0f;
-    Comb._22 = 1.0f;
-    Comb._33 = 1.0f;
-    Comb._44 = 1.0f;
     
-    for (int i = 0; i < 4; i++)
-    {
-		// 重みを計算しながら行列生成
-        Comb += BoneMatrix[vin.boneIndex[i]] * vin.boneWeight[i];
-    }
-	
+    matrix Comb = BoneMatrix[vin.boneIndex[0]] * vin.boneWeight[0];
+    Comb += BoneMatrix[vin.boneIndex[1]] * vin.boneWeight[1];
+    Comb += BoneMatrix[vin.boneIndex[2]] * vin.boneWeight[2];
+    Comb += BoneMatrix[vin.boneIndex[3]] * vin.boneWeight[3];
+    
     float4 Pos = float4(vin.pos, 1.0f);
-    Pos = mul(Comb, Pos);
+    Pos = mul(Pos, Comb);
     vout.pos = Pos;
 	
 	// 法線ベクトルを補正
@@ -58,7 +50,7 @@ VS_OUT main(VS_IN vin)
     Comb._43 = 0.0f;
     Comb._44 = 1.0f;
 
-    Normal = mul(Comb, Normal);
+    Normal = mul(Normal, Comb);
     normalize(Normal);
     vin.normal = Normal;
 	

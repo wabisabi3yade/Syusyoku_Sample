@@ -13,10 +13,6 @@
 // アセット取得
 #include "AssetGetter.h"
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
 using namespace DirectX::SimpleMath;
 
 void CP_Animation::Init()
@@ -35,16 +31,12 @@ void CP_Animation::Init()
 
 void CP_Animation::LateUpdate()
 {
-	// 再生中　かつ　現在のアニメーションがあるなら　更新する
-	if (!isPlaying) return;
-	if (pCurrentAnimation == nullptr) return;
-
-	assert(pSkeletalMesh != nullptr && "スケルタルメッシュ非設定");
+	if (!IsCanPlay()) return;
 
 	// 再生時間を進める
 	ProgressPlayTime();
 
-	// アニメーション行列を更新
+	//// アニメーション行列を更新
 	UpdateAnimationMtx();
 
 	// コンビネーション行列を更新
@@ -56,6 +48,8 @@ void CP_Animation::LateUpdate()
 
 void CP_Animation::ImGuiSetting()
 {
+	ImGui::DragFloat("PlaySpeed", &playSpeed, 0.1f);
+
 	ImGui::Checkbox("Play", &isPlaying);
 
 	// コンボボックス
@@ -127,9 +121,9 @@ void CP_Animation::ProgressPlayTime()
 	// 時間を進める
 	playingTime_s += playSpeed * MainApplication::DeltaTime();
 
-	// アニメーションの全体時間を超えたら
+	/* アニメーションの全体時間を超えたら
 	if (playingTime_s > pCurrentAnimation->GetAnimationTime())
-		playingTime_s = 0.0f;
+		playingTime_s = 0.0f;*/
 }
 
 void CP_Animation::UpdateAnimationMtx()
@@ -137,7 +131,6 @@ void CP_Animation::UpdateAnimationMtx()
 	static u_int flame = 0;
 
 	// チャンネル数分ループしてアニメーション行列を作成
-	u_int a = pCurrentAnimation->GetChannelCount();
 	for (unsigned int c_i = 0; c_i < pCurrentAnimation->GetChannelCount(); c_i++)
 	{
 		std::string boneName = pCurrentAnimation->GetBoneName(c_i);
@@ -146,16 +139,16 @@ void CP_Animation::UpdateAnimationMtx()
 
 		// 再生時間から各パラメータを取得
 		// スケール
-		Vector3 animScale = pCurrentAnimation->GetScale(c_i, flame);
+		Vector3 animScale = /*pCurrentAnimation->GetScale(c_i, playingTime_s)*/Vector3::One;
 
 		//クォータニオン
-		Quaternion animQuat = pCurrentAnimation->GetQuaternion(c_i, flame);
+		Quaternion animQuat = pCurrentAnimation->GetQuaternion(c_i, playingTime_s);
 
 		// 座標
-		Vector3 animPos = pCurrentAnimation->GetPosition(c_i, flame);
+		Vector3 animPos = pCurrentAnimation->GetPosition(c_i, playingTime_s);
 
 		// アニメーション行列を作成
-		Matrix scaleMtx = Matrix::CreateScale(animScale);
+		Matrix scaleMtx = Matrix::CreateScale(Vector3::One);
 		Matrix rotationMtx = Matrix::CreateFromQuaternion(animQuat);
 		Matrix transformMtx = Matrix::CreateTranslation(animPos);
 		Matrix animationMtx = scaleMtx * rotationMtx * transformMtx;
@@ -165,6 +158,17 @@ void CP_Animation::UpdateAnimationMtx()
 	}
 
 	flame++;
+}
+
+bool CP_Animation::IsCanPlay()
+{
+	// 再生中　かつ　現在のアニメーションがあるなら　更新する
+	if (!isPlaying) return false;
+	if (pCurrentAnimation == nullptr) false;
+
+	assert(pSkeletalMesh != nullptr && "スケルタルメッシュ非設定");
+
+	return true;
 }
 
 void CP_Animation::UpdateBoneCombMtx()
@@ -185,7 +189,7 @@ void CP_Animation::UpdateNodeHierarchy(TreeNode& _treeNode, const Matrix& _paren
 
 		// コンビネーション行列を求める
 		pBone.CreateCombMtx(_parentMtx);
-		nodeMatrix = pBone.GetAnimMtx();
+		nodeMatrix = pBone.GetAnimMtx() ;
 	}
 
 	// ワールド変換の行列を更新させる
@@ -209,6 +213,7 @@ void CP_Animation::UpdateBoneBuffer()
 
 		// ボーンのID番目に行列を入れる
 		boneComb.matrix[bone.GetIndex()] = bone.GetCombMtx();
+		boneComb.matrix[bone.GetIndex()] = boneComb.matrix[bone.GetIndex()].Transpose();
 	}
 
 	// マテリアルにボーン行列を渡す

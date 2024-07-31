@@ -29,12 +29,15 @@ namespace fs = std::filesystem;
 
 using namespace DirectX::SimpleMath;
 
-Assimp::Importer g_importer;
-
 /// @brief aiVector3D型をSimpleMathのVector3に変換
 /// @param _aiVector3 変換する値
 /// @return 変換されたVector3
 static Vector3 ToVector3(const aiVector3D& _aiVector3);
+
+/// @brief aiQuaternion型をSimpleMathのQuaternionに変換
+/// @param _aiQuaternion 変換する値
+/// @return 変換されたQuaternion
+static Quaternion ToQuaternion(const aiQuaternion& _aiQuat);
 
 /// @brief aiColor4D型をSimpleMathのColorに変換
 /// @param _aiColor 変換する値
@@ -330,22 +333,14 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 	Assimp::Importer importer;
 
 	int flag = 0;
-	//flag |= aiProcess_Triangulate;					// 非三角ポリゴンを三角に割る
-	//flag |= aiProcess_JoinIdenticalVertices;		// 同一位置頂点を一つに統合する
-	//flag |= aiProcess_FlipUVs;						//　UV値をY軸を基準に反転させる
-	//flag |= aiProcess_PreTransformVertices;			// ノードを一つに統合 !!アニメーション情報が消えることに注意!!
-	//flag |= aiProcess_CalcTangentSpace;
-	//if (_isLeftHand)
-
 
 	flag |= aiProcessPreset_TargetRealtime_MaxQuality;	// リアルタイム レンダリング用にデータを最適化するデフォルトの後処理構成。
 	flag |= aiProcess_PopulateArmatureData;				// 標準的なボーン,アーマチュアの設定
-	if (_isLeftHand) 
-		flag |= aiProcess_ConvertToLeftHanded;	// 左手系変更オプションがまとまったもの
+	if (_isLeftHand) flag |= aiProcess_ConvertToLeftHanded;	// 左手系変更オプションがまとまったもの
 
 
 	// シーン情報を構築
-	const aiScene* pScene = g_importer.ReadFile(
+	const aiScene* pScene = importer.ReadFile(
 		_modelPath.c_str(),
 		flag);			// 三角形化する
 
@@ -486,13 +481,15 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 
 AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, bool _isLeftHand)
 {
+	Assimp::Importer importer;
+
 	int flag = 0;
 	
 	// 左手系に変換
 	if (_isLeftHand)
 		flag |= aiProcess_ConvertToLeftHanded;	
 
-	auto pAiScene = g_importer.ReadFile(_animPath.c_str(), flag);
+	auto pAiScene = importer.ReadFile(_animPath.c_str(), flag);
 	if (pAiScene == nullptr)
 	{
 		HASHI_DEBUG_LOG(_animPath + "：アニメーションが正常に読み込めませんでした");
@@ -500,10 +497,19 @@ AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, bool _is
 	}
 
 	std::unique_ptr<AnimationData> pAnimData = std::make_unique<AnimationData>();
-	pAnimData->SetAiScene(pAiScene);
+	const aiAnimation* aiAnimation = pAiScene->mAnimations[0];
+
+	// ノードを作成する
+	for (u_int an_i = 0; an_i < aiAnimation->mNumChannels; an_i++)
+	{
+		std::unique_ptr<AnimationChannel> pAnimChannel = CreateAnimChannel(aiAnimation->mChannels[an_i]);
+
+		// アニメーションの追加していく
+		pAnimData->AddAnimationChannel(std::move(pAnimChannel));
+	}
 
 	// 名前をパス名から取得
-	std::string assetName = PathToFileName(_animPath, false);
+	std::string assetName = PathToFileName(_animPath, true);
 	pAnimData->SetName(assetName);
 
 	// アセット管理にセット
@@ -574,8 +580,13 @@ std::unique_ptr<TreeNode> AssetLoader::CreateNode(const aiNode& _aiChildNode, Sk
 
 	// パラメータセット
 	pCreateNode->SetNodeName(_aiChildNode.mName.C_Str());
-	pCreateNode->SetTransformMtx(ToDirectXMatrix(_aiChildNode.mTransformation));
 
+	/*if (pCreateNode->GetName().find("AssimpFbx") == std::string::npos)
+	{
+		pCreateNode->SetTransformMtx(ToDirectXMatrix(_aiChildNode.mTransformation));
+	}*/
+	pCreateNode->SetTransformMtx(ToDirectXMatrix(_aiChildNode.mTransformation));
+	
 	// 対応したボーンを名前から取得する
 	Bone* pLinkBone = _skeletalMesh.GetBoneByName(_aiChildNode.mName.C_Str());
 	pCreateNode->SetBone(*pLinkBone);
@@ -586,11 +597,8 @@ std::unique_ptr<TreeNode> AssetLoader::CreateNode(const aiNode& _aiChildNode, Sk
 		std::unique_ptr<TreeNode> pChildNode = 
 			CreateNode(*_aiChildNode.mChildren[n_i], _skeletalMesh);
 
-		// 子ノードに設定
 		pCreateNode->AddChild(std::move(pChildNode));
 	}
-
-	int i = 0;
 
 	return std::move(pCreateNode);
 }
@@ -632,6 +640,41 @@ void AssetLoader::LinkVertexToBone(const aiMesh* _pAiMesh, SingleMesh& _singleMe
 			idx++;
 		}
 	}
+}
+
+std::unique_ptr<AnimationChannel> AssetLoader::CreateAnimChannel(const aiNodeAnim* _pAiAnimNode)
+{
+	std::unique_ptr<AnimationChannel> pCreateChannel = std::make_unique<AnimationChannel>();
+
+	pCreateChannel->SetName(_pAiAnimNode->mNodeName.C_Str());
+
+	// 座標キー
+	for (u_int k_i = 0; k_i < _pAiAnimNode->mNumPositionKeys; k_i++)
+	{
+		Vector3 p = ToVector3(_pAiAnimNode->mPositionKeys[k_i].mValue);
+		float t = static_cast<float>(_pAiAnimNode->mPositionKeys[k_i].mTime);
+		pCreateChannel->AddPosKey(t, p);
+	}
+
+	// スケールキー
+	for (u_int k_i = 0; k_i < _pAiAnimNode->mNumScalingKeys; k_i++)
+	{
+		Vector3 s = ToVector3(_pAiAnimNode->mScalingKeys[k_i].mValue);
+		float t = static_cast<float>(_pAiAnimNode->mScalingKeys[k_i].mTime);
+		pCreateChannel->AddScaleKey(t, s);
+	}
+
+	// 回転キー
+	for (u_int k_i = 0; k_i < _pAiAnimNode->mNumRotationKeys; k_i++)
+	{
+		Quaternion q = ToQuaternion(_pAiAnimNode->mRotationKeys[k_i].mValue);
+		float t = static_cast<float>(_pAiAnimNode->mRotationKeys[k_i].mTime);
+		pCreateChannel->AddQuatKey(t, q);
+	}
+
+	int i = 0;
+
+	return std::move(pCreateChannel);
 }
 
 std::string AssetLoader::PathToFileName(const std::string& _pathName, bool _isExtension)
@@ -677,6 +720,13 @@ DirectX::SimpleMath::Vector3 ToVector3(const aiVector3D& _aiVector3)
 	vector3.x = _aiVector3.x; vector3.y = _aiVector3.y; vector3.z = _aiVector3.z;
 
 	return vector3;
+}
+
+Quaternion ToQuaternion(const aiQuaternion& _aiQuat)
+{
+	Quaternion retQuat = Quaternion(_aiQuat.x, _aiQuat.y, _aiQuat.z, _aiQuat.w);
+
+	return retQuat;
 }
 
 DirectX::SimpleMath::Color ToColor(const aiColor4D& _aiColor)

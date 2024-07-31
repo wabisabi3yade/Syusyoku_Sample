@@ -5,7 +5,7 @@ using namespace DirectX::SimpleMath;
 
 void Bone::CreateCombMtx(const DirectX::SimpleMath::Matrix& _parentMtx)
 {
-	combinationMatrix = offsetMatrix * animationMatrix * _parentMtx;
+	combinationMatrix = offsetMatrix * animationMatrix * _parentMtx ;
 }
 
 void Bone::SetBoneName(const std::string& _boneName)

@@ -9,10 +9,6 @@ class TreeNode;
 // アニメーションデータ
 class AnimationData;
 
-// assimp
-struct aiNode;
-struct aiNodeAnim;
-
 constexpr u_int MAX_BONEMTX(400);	// シェーダーの渡すボーン行列の最大数
 
 /// @brief アニメーションコンポーネント
@@ -77,6 +73,10 @@ private:
 
 	/// @brief 再生時間を進める
 	void ProgressPlayTime();
+
+	/// @brief 再生できる状態か？
+	/// @return 再生できるか
+	bool IsCanPlay();
 
 	/// @brief ボーンコンビネーション行列を更新
 	void UpdateBoneCombMtx();

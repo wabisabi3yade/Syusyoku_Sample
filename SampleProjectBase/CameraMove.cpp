@@ -60,9 +60,9 @@ void CameraMove::Init()
 	if (camera == nullptr)
 		HASHI_DEBUG_LOG("Cameraコンポーネントがありません");
 
-	moveSpeed = 5.0f;
-	dashSpeed = 10.0f;
-	lookSpeed = 180.0f;
+	moveSpeed = 50.f;
+	dashSpeed = 100.0f;
+	lookSpeed = 100.0f;
 }
 
 void CameraMove::LateUpdate()
