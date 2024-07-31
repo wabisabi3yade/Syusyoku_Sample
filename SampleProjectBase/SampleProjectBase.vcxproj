@@ -63,12 +63,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="VS_SkinnedAnimation.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-    </FxCompile>
     <FxCompile Include="VS_WorldPosition.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
@@ -128,7 +122,7 @@
     <ClCompile Include="MathUseful.cpp" />
     <ClCompile Include="Mesh_Group.cpp" />
     <ClCompile Include="MyClass.cpp" />
-    <ClCompile Include="NodeAnim.cpp" />
+    <ClCompile Include="AnimationChannel.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="PlaneMesh.cpp" />
     <ClCompile Include="PlayerInput.cpp" />
@@ -247,7 +241,7 @@
     <ClInclude Include="MathUseful.h" />
     <ClInclude Include="Mesh_Group.h" />
     <ClInclude Include="MyClass.hpp" />
-    <ClInclude Include="NodeAnim.h" />
+    <ClInclude Include="AnimationChannel.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="PlaneMesh.h" />
     <ClInclude Include="PlayerInput.h" />

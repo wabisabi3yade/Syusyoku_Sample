@@ -471,9 +471,6 @@
     <FxCompile Include="PS_TexColor.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
-    <FxCompile Include="VS_SkinnedAnimation.hlsl">
-      <Filter>リソース ファイル\VertexShader</Filter>
-    </FxCompile>
     <FxCompile Include="VS_SkinAnimation.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
     </FxCompile>
@@ -794,7 +791,7 @@
     <ClCompile Include="TreeNode.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode</Filter>
     </ClCompile>
-    <ClCompile Include="NodeAnim.cpp">
+    <ClCompile Include="AnimationChannel.cpp">
       <Filter>ソース ファイル\Animation\NodeAnim</Filter>
     </ClCompile>
     <ClCompile Include="VS_SkinnedAnimation.cpp">
@@ -1162,7 +1159,7 @@
     <ClInclude Include="TreeNode.h">
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode</Filter>
     </ClInclude>
-    <ClInclude Include="NodeAnim.h">
+    <ClInclude Include="AnimationChannel.h">
       <Filter>ソース ファイル\Animation\NodeAnim</Filter>
     </ClInclude>
     <ClInclude Include="VS_SkinnedAnimation.h">

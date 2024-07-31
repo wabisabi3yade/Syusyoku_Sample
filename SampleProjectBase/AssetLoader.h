@@ -25,12 +25,14 @@ class AnimationData;
 // ボーン・ツリーノード
 class Bone;
 class TreeNode;
+class AnimationChannel;
 
 // assimp構造体
 struct aiScene;
 struct aiMesh;
-struct  aiTexture;
+struct aiTexture;
 struct aiNode;
+struct aiNodeAnim;
 
 // アセットをロードするクラス(staticクラス)
 class AssetLoader : private AssetContacter
@@ -76,7 +78,6 @@ public:
 	static Mesh_Group* ModelLoad(const std::string& _modelPath, float _scale, bool _isLeftHand, 
 		bool _isGetScale = true);
 
-
 	/// @brief アニメーションをロードしてアセット管理に追加
 	/// @param _animPath アニメーションのパス
 	/// @param _isLeftHand 左手系か？
@@ -106,6 +107,11 @@ private:	// 便利関数
 	/// @param _singleMesh 一つのメッシュ
 	/// @param _skeletalMesh　スケルタルメッシュ
 	static void LinkVertexToBone(const aiMesh* _pAiMesh, SingleMesh& _singleMesh, SkeletalMesh& _skeletalMesh);
+
+	/// @brief アニメーションノードを作成する
+	/// @param _pAiAnimNode assimpのアニメーションノード
+	/// @param _animData アニメーションノードを追加するアニメーションデータ
+	static std::unique_ptr<AnimationChannel> CreateAnimChannel(const aiNodeAnim* _pAiAnimNode);
 
 	/// @brief パスからファイル名を取得する
 	/// @param _pathName パス名

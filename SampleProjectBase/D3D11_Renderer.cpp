@@ -46,14 +46,14 @@ bool D3D11_Renderer::Init(HWND _hWnd)
 	isResult = InitBackBuffer();
 	if (!isResult) return false;
 
-//	// フルスクリーンにするか
-//#ifndef _DEBUG
-//
-//	bool isFullScreen = MessageBoxA(_hWnd, "フルスクリーンで起動しますか？", "就職作品",
-//		MB_YESNO | MB_ICONQUESTION);
-//	if (isFullScreen)
-//		pSwapChain->SetFullscreenState(TRUE, NULL);
-//#endif // _RELEASE
+	// フルスクリーンにするか
+#ifndef _DEBUG
+
+	bool isFullScreen = MessageBoxA(_hWnd, "フルスクリーンで起動しますか？", "就職作品",
+		MB_YESNO | MB_ICONQUESTION);
+	if (isFullScreen)
+		pSwapChain->SetFullscreenState(TRUE, NULL);
+#endif // _RELEASE
 
 	return true;
 }
@@ -214,7 +214,7 @@ bool D3D11_Renderer::InitBackBuffer()
 		if (FAILED(hr)) 
 			return false; 
 	}
-	SetCullingMode(D3D11_CULL_BACK);
+	SetCullingMode(D3D11_CULL_NONE);
 
 	return true;
 }
