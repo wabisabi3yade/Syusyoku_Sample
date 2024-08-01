@@ -21,7 +21,7 @@ public:
 		Material,	// マテリアル
 		Light,	// ライト
 		CameraPos,	// カメラの座標
-		Geometory_Color,	// ジオメトリ使用時の色
+		Color,	// ジオメトリ使用時の色
 		BoneMatricies	// ボーン行列
 	};
 

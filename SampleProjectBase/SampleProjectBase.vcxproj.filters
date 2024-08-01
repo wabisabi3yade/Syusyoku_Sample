@@ -394,9 +394,6 @@
     <Filter Include="ソース ファイル\Scene\SceneFunction\SF_Light">
       <UniqueIdentifier>{5659979c-5dac-4fb1-b2b8-1258f1f7db18}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\Geometory">
-      <UniqueIdentifier>{cbda257e-1421-40b1-b730-b6fe0adc5d6e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Component\Animation">
       <UniqueIdentifier>{8488f8d3-f124-4e8f-a712-b2701cde8db4}</UniqueIdentifier>
     </Filter>
@@ -445,9 +442,12 @@
     <Filter Include="ソース ファイル\Graphics\Mesh\MeshGroup">
       <UniqueIdentifier>{092d1475-cec9-4248-840b-91e6725f7546}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\Primitive">
+      <UniqueIdentifier>{cbda257e-1421-40b1-b730-b6fe0adc5d6e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="PS_Geometory.hlsl">
+    <FxCompile Include="PS_Primitive.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
     <FxCompile Include="PS_TexNotEnable.hlsl">
@@ -459,7 +459,7 @@
     <FxCompile Include="PS_Unlit.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
-    <FxCompile Include="VS_Geometory.hlsl">
+    <FxCompile Include="VS_Primitive.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
     </FxCompile>
     <FxCompile Include="VS_Gouraud.hlsl">
@@ -776,8 +776,8 @@
     <ClCompile Include="PS_Unlit.cpp">
       <Filter>ソース ファイル\Graphics\Shader\Pixel\Unlit</Filter>
     </ClCompile>
-    <ClCompile Include="VS_Geometory.cpp">
-      <Filter>ソース ファイル\Graphics\Shader\Vertex\Geometory</Filter>
+    <ClCompile Include="VS_Primitive.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\Primitive</Filter>
     </ClCompile>
     <ClCompile Include="CP_Animation.cpp">
       <Filter>ソース ファイル\Component\Animation</Filter>
@@ -1141,8 +1141,8 @@
     <ClInclude Include="ShaderDefine.h">
       <Filter>ソース ファイル\Graphics\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="VS_Geometory.h">
-      <Filter>ソース ファイル\Graphics\Shader\Vertex\Geometory</Filter>
+    <ClInclude Include="VS_Primitive.h">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\Primitive</Filter>
     </ClInclude>
     <ClInclude Include="CP_Animation.h">
       <Filter>ソース ファイル\Component\Animation</Filter>

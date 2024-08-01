@@ -8,6 +8,18 @@ void AnimationData::AddAnimationChannel(std::unique_ptr<AnimationChannel> _pAnim
 	pAnimChannels.push_back(std::move(_pAnimNode));
 }
 
+void AnimationData::SetAnimationTime(float _animTime)
+{
+	assert(_animTime >= 0.0f);
+	animationTime_s = std::max(_animTime, 0.0f);
+}
+
+void AnimationData::SetTimePerKey(float _timePerKey)
+{
+	assert(_timePerKey >= 0.0f);
+	timePerKey_s = std::max(_timePerKey, 0.0f);
+}
+
 std::string AnimationData::GetBoneName(u_int _nodeId)
 {
 	assert(_nodeId < static_cast<u_int>(pAnimChannels.size()) && "ノードIDが配列外を指しています");
@@ -29,7 +41,7 @@ DirectX::SimpleMath::Vector3 AnimationData::GetScale(u_int _nodeId, float _playi
 		return channel.GetScaleKey(0).parameter;
 	}
 
-	u_int prevKeyNum = channel.FindPrevScaleKey(_playingTime);
+	u_int prevKeyNum = channel.FindPrevScaleKey(_playingTime, timePerKey_s);
 	u_int nextKeyNum = prevKeyNum + 1;
 
 	if (nextKeyNum >= channel.GetScaleKeyCnt())
@@ -38,10 +50,10 @@ DirectX::SimpleMath::Vector3 AnimationData::GetScale(u_int _nodeId, float _playi
 	const AnimKey_V3& prevKey = channel.GetScaleKey(prevKeyNum);
 	const AnimKey_V3& nextKey = channel.GetScaleKey(nextKeyNum);
 
-	float deltaTime = nextKey.startTime - prevKey.startTime;
+	float deltaTime = (nextKey.startKeyNum - prevKey.startKeyNum) * timePerKey_s;
 
 	// 割合
-	float ratio = (_playingTime - prevKey.startTime) / deltaTime;
+	float ratio = (_playingTime - prevKey.startKeyNum * timePerKey_s) / deltaTime;
 
 	// 線形補間
 	Vector3 lerpedScale = Vector3::Lerp(prevKey.parameter, nextKey.parameter, ratio);
@@ -58,7 +70,7 @@ DirectX::SimpleMath::Quaternion AnimationData::GetQuaternion(u_int _nodeId, floa
 		return channel.GetQuatKey(0).parameter;
 	}
 
-	u_int prevKeyNum = channel.FindPrevQuatKey(_playingTime);
+	u_int prevKeyNum = channel.FindPrevQuatKey(_playingTime, timePerKey_s);
 	u_int nextKeyNum = prevKeyNum + 1;
 
 	if (nextKeyNum >= channel.GetQuatKeyCnt())
@@ -67,10 +79,10 @@ DirectX::SimpleMath::Quaternion AnimationData::GetQuaternion(u_int _nodeId, floa
 	const AnimKey_Q& prevKey = channel.GetQuatKey(prevKeyNum);
 	const AnimKey_Q& nextKey = channel.GetQuatKey(nextKeyNum);
 
-	float deltaTime = nextKey.startTime - prevKey.startTime;
+	float deltaTime = (nextKey.startKeyNum - prevKey.startKeyNum) * timePerKey_s;
 
 	// 割合
-	float ratio = (_playingTime - prevKey.startTime) / deltaTime;
+	float ratio = (_playingTime - prevKey.startKeyNum * timePerKey_s) / deltaTime;
 
 	// 球面線形補間
 	Quaternion slerpedQuat = Quaternion::Slerp(prevKey.parameter, nextKey.parameter, ratio);
@@ -87,7 +99,7 @@ DirectX::SimpleMath::Vector3 AnimationData::GetPosition(u_int _nodeId, float _pl
 		return channel.GetPosKey(0).parameter;
 	}
 
-	u_int prevKeyNum = channel.FindPrevPosKey(_playingTime);
+	u_int prevKeyNum = channel.FindPrevPosKey(_playingTime, timePerKey_s);
 	u_int nextKeyNum = prevKeyNum + 1;
 
 	if (nextKeyNum >= channel.GetPosKeyCnt())
@@ -96,10 +108,10 @@ DirectX::SimpleMath::Vector3 AnimationData::GetPosition(u_int _nodeId, float _pl
 	const AnimKey_V3& prevKey = channel.GetPosKey(prevKeyNum);
 	const AnimKey_V3& nextKey = channel.GetPosKey(nextKeyNum);
 
-	float deltaTime = nextKey.startTime - prevKey.startTime;
+	float deltaTime = (nextKey.startKeyNum - prevKey.startKeyNum) * timePerKey_s;
 
 	// 割合
-	float ratio = (_playingTime - prevKey.startTime) / deltaTime;
+	float ratio = (_playingTime - prevKey.startKeyNum * timePerKey_s) / deltaTime;
 
 	// 線形補間
 	Vector3 lerpedPos = Vector3::Lerp(prevKey.parameter, nextKey.parameter, ratio);
@@ -109,5 +121,5 @@ DirectX::SimpleMath::Vector3 AnimationData::GetPosition(u_int _nodeId, float _pl
 
 float AnimationData::GetAnimationTime() const
 {
-	return animationTime;
+	return animationTime_s;
 }
