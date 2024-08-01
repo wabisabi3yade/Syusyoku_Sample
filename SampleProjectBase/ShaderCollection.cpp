@@ -19,7 +19,7 @@ void ShaderCollection::LoadVS()
 	std::vector<std::string> vFileNames
 	{
 		"VS_Gouraud.cso",
-		"VS_Geometory.cso",
+		"VS_Primitive.cso",
 		"VS_SkinAnimation.cso"
 	};
 
@@ -27,7 +27,7 @@ void ShaderCollection::LoadVS()
 	std::vector<std::string> vShaderNames
 	{
 		"VS_Gouraud",
-		"VS_Geometory",
+		"VS_Primitive",
 		"VS_SkinAnimation"
 	};
 	defaultVS = vShaderNames[0];
@@ -39,7 +39,7 @@ void ShaderCollection::LoadVS()
 	std::unique_ptr<VertexShader> pVShader = std::make_unique<VS_Gouraud>();
 	pVsShaderList.push_back(std::move(pVShader));
 
-	pVShader = std::make_unique<VS_Geometory>();
+	pVShader = std::make_unique<VS_Primitive>();
 	pVsShaderList.push_back(std::move(pVShader));
 
 	pVShader = std::make_unique<VS_SkinnedAnimation>();
@@ -65,14 +65,14 @@ void ShaderCollection::LoadPS()
 	{
 		"PS_TexColor.cso",
 		"PS_Unlit.cso",
-		"PS_Geometory.cso"
+		"PS_Primitive.cso"
 	};
 	// セットする名前
 	std::vector<std::string> pShaderNames
 	{
 		"PS_TexColor",
 		"PS_Unlit",
-		"PS_Geometory"
+		"PS_Primitive"
 	};
 	defaultPS = pShaderNames[0];
 

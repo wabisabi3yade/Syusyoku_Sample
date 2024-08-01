@@ -33,6 +33,7 @@ struct aiMesh;
 struct aiTexture;
 struct aiNode;
 struct aiNodeAnim;
+struct aiAnimation;
 
 // アセットをロードするクラス(staticクラス)
 class AssetLoader : private AssetContacter
@@ -112,6 +113,16 @@ private:	// 便利関数
 	/// @param _pAiAnimNode assimpのアニメーションノード
 	/// @param _animData アニメーションノードを追加するアニメーションデータ
 	static std::unique_ptr<AnimationChannel> CreateAnimChannel(const aiNodeAnim* _pAiAnimNode);
+
+	/// @brief アニメーションの時間を取得する
+	/// @param _pAiAnim assimpアニメーション
+	/// @return アニメーション時間
+	static float GetAnimationTime(const aiAnimation* _pAiAnim);
+
+	/// @brief 1キーごとの時間を取得する
+	/// @param _pAiAnim assimpアニメーション
+	/// @return 1キーごとの時間
+	static float GetTimePerKey(const aiAnimation* _pAiAnim);
 
 	/// @brief パスからファイル名を取得する
 	/// @param _pathName パス名

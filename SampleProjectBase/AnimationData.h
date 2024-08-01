@@ -10,16 +10,25 @@ private:
 	// アニメーションノードリスト
 	std::vector<std::unique_ptr<AnimationChannel>> pAnimChannels;
 
-	/// @brief アニメーションの時間
-	float animationTime;
+	/// @brief アニメーションの時間(s)
+	float animationTime_s;
+
+	/// @brief 1キーごとの時間(s)
+	float timePerKey_s;
 
 public:
-	AnimationData() : animationTime(0.0f) {}
+	AnimationData() : animationTime_s(0.0f), timePerKey_s(0.0f) {}
 	~AnimationData() {}
 
 	/// @brief アニメーションノードを追加する
 	/// @param _pAnimNode アニメーションノード
 	void AddAnimationChannel(std::unique_ptr<AnimationChannel> _pAnimNode);
+
+	// アニメーション時間をセット
+	void SetAnimationTime(float _animTime);
+
+	// 1キーごとのの時間をセット
+	void SetTimePerKey(float _timePerKey);
 
 	/// @brief 〇番目のノードに対応するボーン名を取得
 	/// @param _nodeId ノードのId

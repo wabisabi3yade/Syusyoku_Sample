@@ -508,6 +508,9 @@ AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, bool _is
 		pAnimData->AddAnimationChannel(std::move(pAnimChannel));
 	}
 
+	pAnimData->SetAnimationTime(GetAnimationTime(aiAnimation));
+	pAnimData->SetTimePerKey(GetTimePerKey(aiAnimation));
+
 	// –¼‘O‚ðƒpƒX–¼‚©‚çŽæ“¾
 	std::string assetName = PathToFileName(_animPath, true);
 	pAnimData->SetName(assetName);
@@ -675,6 +678,38 @@ std::unique_ptr<AnimationChannel> AssetLoader::CreateAnimChannel(const aiNodeAni
 	int i = 0;
 
 	return std::move(pCreateChannel);
+}
+
+float AssetLoader::GetAnimationTime(const aiAnimation* _pAiAnim)
+{
+	double animationTime_s = 0.0f;
+
+	if (_pAiAnim->mTicksPerSecond != 0)
+	{
+		animationTime_s = _pAiAnim->mDuration / _pAiAnim->mTicksPerSecond;
+	}
+	else
+	{
+		animationTime_s = _pAiAnim->mDuration;
+	}
+
+	return static_cast<float>(animationTime_s);
+}
+
+float AssetLoader::GetTimePerKey(const aiAnimation* _pAiAnim)
+{
+	double timePerKey_s = 0.0f;
+
+	if (_pAiAnim->mTicksPerSecond != 0) 
+	{
+		timePerKey_s = 1.0 / _pAiAnim->mTicksPerSecond;
+	}
+	else
+	{
+		timePerKey_s = 1.0;
+	}
+
+	return static_cast<float>(timePerKey_s);
 }
 
 std::string AssetLoader::PathToFileName(const std::string& _pathName, bool _isExtension)

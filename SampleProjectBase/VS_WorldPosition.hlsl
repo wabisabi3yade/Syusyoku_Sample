@@ -14,17 +14,12 @@ struct Material
     float4 emissive; // 自発光
     float shininess; // 光沢
 };
-// Slot1 マテリアル
-cbuffer MaterialBuffer : register(b1)
-{
-    Material material;
-};
 
 struct VS_INPUT
 {
     float3 pos : POSITION; // 頂点座標（モデル座標系）
-    float2 uv : TEXCOORD0; // uv座標
     float4 color : COLOR0; // 頂点色
+    float2 uv : TEXCOORD0; // uv座標
     float3 normal : NORMAL0; // 法線ベクトル
 };
 
@@ -57,11 +52,6 @@ VS_OUTPUT main(VS_INPUT vin)
     pos = mul(pos, view);
     pos = mul(pos, projection);
     output.pos = pos;
-    
-    // 頂点カラーとマテリアルの色と乗算
-    output.color.rgb = vin.color.rgb * material.diffuse.rgb;
-    output.color.a = vin.color.a * material.diffuse.a;
-  
     output.uv = vin.uv;
     
     output.normal = mul(vin.normal, (float3x3) world);

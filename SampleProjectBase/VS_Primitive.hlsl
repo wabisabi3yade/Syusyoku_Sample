@@ -17,6 +17,7 @@ struct VS_INPUT
     float3 pos : POSITION; // 頂点座標（モデル座標系）
     float4 color : COLOR0; // 頂点色
     float2 uv : TEXCOORD0; // uv座標
+    float3 normal : NORMAL0; // 法線ベクトル
 };
 
 // ピクセルシェーダーに渡す
@@ -25,6 +26,7 @@ struct VS_OUTPUT
     float4 pos : SV_POSITION0;
     float4 color : COLOR0;
     float2 uv : TEXCOORD0;
+    float3 normal : NORMAL0; // 法線ベクトル
 };
 
 VS_OUTPUT main(VS_INPUT vin)
@@ -37,6 +39,8 @@ VS_OUTPUT main(VS_INPUT vin)
     pos = mul(pos, view);
     pos = mul(pos, projection);
     output.pos = pos;
+    
+    output.normal = mul(float4(vin.normal, 1.0f), world);
 
     output.color = multiColor;  // 色を代入 
     output.uv = vin.uv;

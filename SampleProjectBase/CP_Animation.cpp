@@ -121,9 +121,9 @@ void CP_Animation::ProgressPlayTime()
 	// 時間を進める
 	playingTime_s += playSpeed * MainApplication::DeltaTime();
 
-	/* アニメーションの全体時間を超えたら
+	// アニメーションの全体時間を超えたら
 	if (playingTime_s > pCurrentAnimation->GetAnimationTime())
-		playingTime_s = 0.0f;*/
+		playingTime_s = 0.0f;
 }
 
 void CP_Animation::UpdateAnimationMtx()

@@ -37,7 +37,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="PS_Geometory.hlsl">
+    <FxCompile Include="PS_Primitive.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
@@ -49,7 +49,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="VS_Geometory.hlsl">
+    <FxCompile Include="VS_Primitive.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
@@ -177,7 +177,7 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
     <ClCompile Include="VertexShader.cpp" />
-    <ClCompile Include="VS_Geometory.cpp" />
+    <ClCompile Include="VS_Primitive.cpp" />
     <ClCompile Include="VS_Gouraud.cpp" />
     <ClCompile Include="VS_SkinnedAnimation.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -301,7 +301,7 @@
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="VertexBuffer.h" />
     <ClInclude Include="VertexShader.h" />
-    <ClInclude Include="VS_Geometory.h" />
+    <ClInclude Include="VS_Primitive.h" />
     <ClInclude Include="VS_Gouraud.h" />
     <ClInclude Include="VS_SkinnedAnimation.h" />
     <ClInclude Include="Window.h" />
