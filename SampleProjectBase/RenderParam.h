@@ -23,6 +23,7 @@ public:
 
 	/// @brief WVP変換行列を作成して渡す
 	/// @param _transform 座標
+	/// @param _scaleTimes スケール倍率
 	/// @return wvp行列
 	const WVP& GetWVP(const Transform& _transform);
 

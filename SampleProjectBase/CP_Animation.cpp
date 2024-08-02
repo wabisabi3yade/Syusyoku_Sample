@@ -3,9 +3,6 @@
 
 #include "GameObject.h"
 
-// アニメーション
-#include "AnimationData.h"
-
 // メッシュ
 #include "SkeletalMesh.h"
 #include "CP_MeshRenderer.h"
@@ -14,6 +11,11 @@
 #include "AssetGetter.h"
 
 using namespace DirectX::SimpleMath;
+
+CP_Animation::CP_Animation() : pSkeletalMesh(nullptr), playingTime_s(0.0f), playSpeed(1.0f), isPlaying(false)
+{
+	pAnimController = std::make_unique<AnimationController>();
+}
 
 void CP_Animation::Init()
 {
@@ -48,67 +50,33 @@ void CP_Animation::LateUpdate()
 
 void CP_Animation::ImGuiSetting()
 {
-	ImGui::DragFloat("PlaySpeed", &playSpeed, 0.1f);
+	static bool isWindowOpen = false;
 
+	if (ImGui::Button(TO_UTF8("ウィンドウ")))
+		isWindowOpen = true;
+
+	if (!isWindowOpen) return;
+
+	std::string name = "アニメーション" + pAnimController->GetAssetName();
+	ImGui::Begin(TO_UTF8(name), &isWindowOpen);
+
+	ImGui::Text(std::to_string(playingTime_s).c_str());
+	ImGui::DragFloat("PlaySpeed", &playSpeed, 0.1f);
 	ImGui::Checkbox("Play", &isPlaying);
 
-	// コンボボックス
-	std::string currentName = "";
-	if (pCurrentAnimation != nullptr)
-		currentName = pCurrentAnimation->GetName();
+	pAnimController->ImGuiSetting();
 
-	std::vector<std::string> animNames;
-	for (auto& anim : pHaveAnimations)
-	{
-		animNames.push_back(anim->GetName());
-	}
-	bool isChange = ImGuiMethod::ComboBox(TO_UTF8("アニメーション"), currentName, animNames);
-	if (isChange)
-	{
-		PlayAnimation(currentName);
-	}
-
-}
-
-void CP_Animation::PlayAnimation(const std::string& _animName)
-{
-	// 名前からアニメーションを再生する
-	AnimationData* pPlayAnim = FindAnimaton(_animName);
-	if (pPlayAnim == nullptr) return;
-
-	pCurrentAnimation = pPlayAnim;
-	isPlaying = true;
-}
-
-void CP_Animation::AddAnimations(AnimationData& _addAnim)
-{
-	pHaveAnimations.push_back(&_addAnim);
+	ImGui::End();
 }
 
 void CP_Animation::AddAnimations(const std::string& _animName)
 {
-	AnimationData* pAnimData = AssetGetter::GetAsset<AnimationData>(_animName);
-
-	if (pAnimData == nullptr)
-		return;
-
-	pHaveAnimations.push_back(pAnimData);
+	pAnimController->AddAnimation(_animName);
 }
 
 void CP_Animation::RemoveAnimations(const std::string& _animName)
 {
-	// 削除したか確認するために
-	// 要素数を取得
-	u_int num = static_cast<u_int>(pHaveAnimations.size());
-
-	// 名前が同じアニメーションを探して取り除く
-	pHaveAnimations.remove_if([&](AnimationData* pAnim)
-		{
-			return pAnim->GetName() == _animName;
-		});
-
-	if (static_cast<u_int>(pHaveAnimations.size()) != num)
-		HASHI_DEBUG_LOG("正常に削除されました");
+	pAnimController->RemoveAnimation(_animName);
 }
 
 void CP_Animation::SetSkeletalMesh(SkeletalMesh& _skeletalMesh)
@@ -121,50 +89,60 @@ void CP_Animation::ProgressPlayTime()
 	// 時間を進める
 	playingTime_s += playSpeed * MainApplication::DeltaTime();
 
-	// アニメーションの全体時間を超えたら
-	if (playingTime_s > pCurrentAnimation->GetAnimationTime())
+	const AnimationData& pCurrentAnimation = GetCurrentAnimData();
+	if (playingTime_s >pCurrentAnimation.GetAnimationTime())	// アニメーションの全体時間を超えたら
 		playingTime_s = 0.0f;
 }
 
 void CP_Animation::UpdateAnimationMtx()
 {
-	static u_int flame = 0;
+	u_int boneNum = pSkeletalMesh->GetBoneNum();
 
+	// ボーンのキャッシュ取得のためパラメータを取得する
+	std::vector<BoneTransform> boneTransforms(boneNum);
+
+	const AnimationData& currentAnimData = GetCurrentAnimData();
 	// チャンネル数分ループしてアニメーション行列を作成
-	for (unsigned int c_i = 0; c_i < pCurrentAnimation->GetChannelCount(); c_i++)
+	for (unsigned int c_i = 0; c_i < currentAnimData.GetChannelCount(); c_i++)
 	{
-		std::string boneName = pCurrentAnimation->GetBoneName(c_i);
+		std::string boneName = currentAnimData.GetBoneName(c_i);
 
 		Bone* pBone = pSkeletalMesh->GetBoneByName(boneName);
 
+		BoneTransform transform;
+
 		// 再生時間から各パラメータを取得
 		// スケール
-		Vector3 animScale = /*pCurrentAnimation->GetScale(c_i, playingTime_s)*/Vector3::One;
+		transform.scale = currentAnimData.GetScale(c_i, playingTime_s);
 
 		//クォータニオン
-		Quaternion animQuat = pCurrentAnimation->GetQuaternion(c_i, playingTime_s);
+		transform.rotation = currentAnimData.GetQuaternion(c_i, playingTime_s);
 
 		// 座標
-		Vector3 animPos = pCurrentAnimation->GetPosition(c_i, playingTime_s);
+		transform.position = currentAnimData.GetPosition(c_i, playingTime_s);
 
 		// アニメーション行列を作成
-		Matrix scaleMtx = Matrix::CreateScale(Vector3::One);
-		Matrix rotationMtx = Matrix::CreateFromQuaternion(animQuat);
-		Matrix transformMtx = Matrix::CreateTranslation(animPos);
+		Matrix scaleMtx = Matrix::CreateScale(transform.scale);
+		Matrix rotationMtx = Matrix::CreateFromQuaternion(transform.rotation);
+		Matrix transformMtx = Matrix::CreateTranslation(transform.position);
 		Matrix animationMtx = scaleMtx * rotationMtx * transformMtx;
 
 		// ボーンにアニメーション行列をセット
 		pBone->SetAnimationMtx(animationMtx);
+
+		// トランスフォーム配列に追加する
+		boneTransforms[pBone->GetIndex()] = std::move(transform);
 	}
 
-	flame++;
+	// ボーンのキャッシュを更新する
+	GetCurrentNode().UpdateCache(boneTransforms, MainApplication::DeltaTime());
 }
 
 bool CP_Animation::IsCanPlay()
 {
 	// 再生中　かつ　現在のアニメーションがあるなら　更新する
 	if (!isPlaying) return false;
-	if (pCurrentAnimation == nullptr) false;
+	if (!pAnimController->IsSetAnimation()) return false;
 
 	assert(pSkeletalMesh != nullptr && "スケルタルメッシュ非設定");
 
@@ -206,13 +184,16 @@ void CP_Animation::UpdateBoneBuffer()
 {
 	u_int boneCnt = pSkeletalMesh->GetBoneNum();
 
+	// モデルのスケール倍率をアニメーション行列に反映する
+	Matrix scaleMtx = Matrix::CreateScale(pSkeletalMesh->GetScaleTimes());
+
 	// ボーン数ループ
 	for (u_int b_i = 0; b_i < boneCnt; b_i++)
 	{
 		const Bone& bone = pSkeletalMesh->GetBone(b_i);
 
 		// ボーンのID番目に行列を入れる
-		boneComb.matrix[bone.GetIndex()] = bone.GetCombMtx();
+		boneComb.matrix[bone.GetIndex()] = bone.GetCombMtx() * scaleMtx;
 		boneComb.matrix[bone.GetIndex()] = boneComb.matrix[bone.GetIndex()].Transpose();
 	}
 
@@ -221,25 +202,25 @@ void CP_Animation::UpdateBoneBuffer()
 	for (u_int m_i = 0; m_i < mtrlCnt; m_i++)
 	{
 		Material* pMaterial = pSkeletalMesh->GetMaterial(m_i);
-		//pMaterial->GetVertexShader().Map(1, &boneComb, sizeof(BoneCombMtricies));
+		/*pMaterial->GetVertexShader().Map(1, &boneComb, sizeof(BoneCombMtricies));*/
 		pMaterial->GetVertexShader().UpdateSubResource(1, &boneComb);
 	}
 }
 
-AnimationData* CP_Animation::FindAnimaton(const std::string& _animName)
+void CP_Animation::UpdateTranslation()
 {
-	// 同じ名前のアニメーションを探索
-	auto itr = std::find_if(pHaveAnimations.begin(), pHaveAnimations.end(),
-		[&](AnimationData* pAnim)
-		{
-			return pAnim->GetName() == _animName;
-		});
+}
 
-	if (itr == pHaveAnimations.end())
-	{
-		HASHI_DEBUG_LOG(_animName + "が見つかりませんでした");
-		return nullptr;
-	}
+AnimStateNode& CP_Animation::GetCurrentNode()
+{
+	assert(pAnimController->IsSetAnimation() && "再生中のアニメーションノードがありません");
 
-	return *itr;
+	return pAnimController->GetCurrentNode();
+}
+
+const AnimationData& CP_Animation::GetCurrentAnimData()
+{
+	assert(pAnimController->IsSetAnimation() && "再生中のアニメーションデータがありません");
+
+	return pAnimController->GetCurrentNode().GetAnimationData();
 }

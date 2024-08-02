@@ -89,8 +89,9 @@ private:	// 便利関数
 
 	/// @brief スタティックかスケルタルを判断して作成する
 	/// @param _pScene シーン情報
+	/// @param _assetName アセット名
 	/// @return 作成したメッシュ群
-	static std::unique_ptr<Mesh_Group> CreateMeshGroup(const aiScene* _pScene);
+	static std::unique_ptr<Mesh_Group> CreateMeshGroup(const aiScene* _pScene, const std::string& _assetName);
 
 	/// @brief ボーンを生成する
 	/// @param _pScene シーン情報
@@ -149,6 +150,9 @@ private:	// 便利関数
 template<class T>
 inline T* AssetLoader::SendAsset(const std::string& _assetName, std::unique_ptr<T> _pAsset)
 {
+	Asset_Base& asset = static_cast<Asset_Base&>(*_pAsset);
+	asset.SetAssetName(_assetName);
+
 	// 既にインポートされているなら
 	if (AssetSetter::CheckImport<T>(_assetName))
 	{

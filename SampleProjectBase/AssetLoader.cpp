@@ -113,7 +113,7 @@ void AssetLoader::MaterialLoad(Mesh_Group* _pMeshgather,
 		createMaterial->SetSpecular(ToColor(specular));
 		createMaterial->SetEmissive(ToColor(emission));
 		createMaterial->SetShiness(shiness);
-		createMaterial->SetName(mtrlname);
+		createMaterial->SetAssetName(mtrlname);
 
 		aiString path{};
 		std::unique_ptr<Texture> texture = std::make_unique<Texture>();
@@ -156,7 +156,7 @@ void AssetLoader::MaterialLoad(Mesh_Group* _pMeshgather,
 		}
 
 		// テクスチャを管理にセット
-		std::string texName = texture->GetName();
+		std::string texName = texture->GetAssetName();
 		Texture* pTex = SendAsset(texName, std::move(texture));
 
 		createMaterial->SetDiffuseTexture(*pTex);
@@ -230,7 +230,7 @@ bool AssetLoader::LoadEmbeddedTexture(Texture& _texture, const aiTexture& _aiTex
 
 	// 名前設定
 	std::string texName = PathToFileName(_aiTex.mFilename.C_Str(), true);
-	_texture.SetName(texName);
+	_texture.SetAssetName(texName);
 
 	// 幅設定
 	_texture.width = texWidth;
@@ -306,7 +306,7 @@ std::unique_ptr<Texture> AssetLoader::MakeTexture(const std::string& _filePath)
 
 	// パスから名前取得する
 	std::string texName = PathToFileName(_filePath, true);
-	pMakeTex->SetName(texName);
+	pMakeTex->SetAssetName(texName);
 
 	return std::move(pMakeTex);
 }
@@ -319,7 +319,7 @@ Texture* AssetLoader::TextureLoad(const std::string& _filePath)
 	if (pTexture == nullptr)
 		return nullptr;
 
-	std::string texName = pTexture->GetName();
+	std::string texName = pTexture->GetAssetName();
 
 	// アセット管理クラスにセット
 	Texture* returnPtr = SendAsset<Texture>(texName, std::move(pTexture));
@@ -344,6 +344,8 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 		_modelPath.c_str(),
 		flag);			// 三角形化する
 
+
+
 	if (pScene == nullptr)
 	{
 		HASHI_DEBUG_LOG("読込失敗：" + _modelPath);
@@ -351,9 +353,14 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 
 	assert(pScene != nullptr);
 
+	// 名前設定
+	std::string modelName = PathToFileName(_modelPath, false);
+	
 	// メッシュのグループを作成する
 	// ここでボーン情報も読み込む
-	std::unique_ptr<Mesh_Group> pMeshGroup = CreateMeshGroup(pScene);
+	std::unique_ptr<Mesh_Group> pMeshGroup = CreateMeshGroup(pScene, modelName);
+
+	pMeshGroup->SetScaleTimes(_scale);
 
 	// 親パス名
 	std::string parentPath = GetParentPath(_modelPath);
@@ -391,7 +398,7 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 			Vertex vertex;
 
 			// 座標(スケール値を反映する)
-			vertex.position = ToVector3(pAimesh->mVertices[vidx]) * _scale;
+			vertex.position = ToVector3(pAimesh->mVertices[vidx]);
 
 			// 最大・最小を更新
 			if (_isGetScale)
@@ -463,15 +470,12 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 
 		pMeshGroup->AddMesh(std::move(pCreateMesh));
 	}
-	// 名前設定
-	std::string modelName = PathToFileName(_modelPath, false);
-	pMeshGroup->SetName(modelName);
 
 	// モデルの中心座標・サイズをセット
 	if (_isGetScale)
 	{
 		pMeshGroup->SetCenterPosition((modelMaxPos + modelMinPos) * 0.5f);
-		pMeshGroup->SetSize(modelMaxPos - modelMinPos);
+		pMeshGroup->SetSize((modelMaxPos - modelMinPos) * _scale);
 	}
 
 	Mesh_Group* pRetMeshGroup = SendAsset<Mesh_Group>(modelName, std::move(pMeshGroup));
@@ -512,8 +516,7 @@ AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, bool _is
 	pAnimData->SetTimePerKey(GetTimePerKey(aiAnimation));
 
 	// 名前をパス名から取得
-	std::string assetName = PathToFileName(_animPath, true);
-	pAnimData->SetName(assetName);
+	std::string assetName = PathToFileName(_animPath, false);
 
 	// アセット管理にセット
 	AnimationData* pRetAnim = SendAsset<AnimationData>(assetName, std::move(pAnimData));
@@ -521,17 +524,19 @@ AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, bool _is
 	return pRetAnim;
 }
 
-std::unique_ptr<Mesh_Group> AssetLoader::CreateMeshGroup(const aiScene* _pScene)
+std::unique_ptr<Mesh_Group> AssetLoader::CreateMeshGroup(const aiScene* _pScene, const std::string& _assetName)
 {
 	// ボーンがなかったら
 	if (_pScene->mMeshes[0]->mNumBones == 0)
 	{
 		// スタティックメッシュを返す
 		std::unique_ptr<StaticMesh> pSM = std::make_unique<StaticMesh>();
+		pSM->SetAssetName(_assetName);
 		return std::move(pSM);
 	}
 
 	std::unique_ptr<SkeletalMesh> pSkeletalMesh = std::make_unique<SkeletalMesh>();
+	pSkeletalMesh->SetAssetName(_assetName);
 
 	// ボーンを生成する
 	CreateBone(_pScene, *pSkeletalMesh);
@@ -545,6 +550,7 @@ std::unique_ptr<Mesh_Group> AssetLoader::CreateMeshGroup(const aiScene* _pScene)
 
 void AssetLoader::CreateBone(const aiScene* _pScene, SkeletalMesh& _skeletalMesh)
 {
+	std::unique_ptr<BoneList> pCreateBones = std::make_unique<BoneList>();
 	std::vector<std::unique_ptr<Bone>> pBones;
 
 	// メッシュ一個目のボーン情報を見る
@@ -573,8 +579,13 @@ void AssetLoader::CreateBone(const aiScene* _pScene, SkeletalMesh& _skeletalMesh
 		pBones.push_back(std::move(pBone));
 	}
 
+	pCreateBones->SetBoneList(std::move(pBones));
+
+	std::string boneName = _skeletalMesh.GetAssetName();
+	BoneList* pRetBones = SendAsset<BoneList>(boneName, std::move(pCreateBones));
+
 	// スケルタルメッシュにセット
-	_skeletalMesh.SetBoneList(std::move(pBones));
+	_skeletalMesh.SetBoneList(pRetBones);
 }
 
 std::unique_ptr<TreeNode> AssetLoader::CreateNode(const aiNode& _aiChildNode, SkeletalMesh& _skeletalMesh)

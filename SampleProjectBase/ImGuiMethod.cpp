@@ -111,6 +111,22 @@ bool ImGuiMethod::ComboBox(const std::string& _caption, std::string& _currentIte
 	return changed;
 }
 
+//// コンボボックス　　サンプル
+
+	//std::string currentName = "";
+	//if (pCurrentAnimation != nullptr)
+	//	currentName = pCurrentAnimation->GetName();
+	//std::vector<std::string> animNames;
+	//for (auto& anim : pHaveAnimations)
+	//{
+	//	animNames.push_back(anim->GetName());
+	//}
+	//bool isChange = ImGuiMethod::ComboBox(TO_UTF8("アニメーション"), currentName, animNames);
+	//if (isChange)
+	//{
+	//	PlayAnimation(currentName);
+	//}
+
 void ImGuiMethod::SetFontSize(FontSize _size)
 {
 	ImGui::PushFont(pFonts[static_cast<u_int>(_size)]);

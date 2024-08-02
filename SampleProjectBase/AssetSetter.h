@@ -73,5 +73,5 @@ inline static void AssetSetter::SetAssetName(const std::string& _assetName, T* _
     Asset_Base* pAssetBase = dynamic_cast<Asset_Base*>(_assetPtr);
     if (pAssetBase == nullptr) return;
 
-    pAssetBase->SetName(_assetName);
+    pAssetBase->SetAssetName(_assetName);
 }

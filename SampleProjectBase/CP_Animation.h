@@ -1,13 +1,12 @@
 #pragma once
 #include "Component.h"
 
+#include "AnimationController.h"
+
 // モデル
 class SkeletalMesh;
 class Bone;
 class TreeNode;
-
-// アニメーションデータ
-class AnimationData;
 
 constexpr u_int MAX_BONEMTX(400);	// シェーダーの渡すボーン行列の最大数
 
@@ -25,11 +24,8 @@ class CP_Animation : public Component
 	/// @brief スケルタルメッシュ
 	SkeletalMesh* pSkeletalMesh;
 
-	/// @brief 現在のアニメーション
-	AnimationData* pCurrentAnimation;
-
-	/// @brief このコンポーネントにあるアニメーション
-	std::list<AnimationData*> pHaveAnimations;
+	/// @brief アニメーションコントローラー
+	std::unique_ptr<AnimationController> pAnimController;
 
 	/// @brief 現在再生しているアニメーションの時間(単位：s)
 	float playingTime_s;
@@ -40,8 +36,7 @@ class CP_Animation : public Component
 	/// @brief 再生中か？
 	bool isPlaying;
 public:
-	CP_Animation() : pSkeletalMesh(nullptr), pCurrentAnimation(nullptr), playingTime_s(0.0f),
-		playSpeed(1.0f) , isPlaying(false) {}
+	CP_Animation();
 	~CP_Animation() {}
 
 	void Init() override;
@@ -49,14 +44,6 @@ public:
 	void LateUpdate() override;
 
 	void ImGuiSetting() override;
-
-	/// @brief アニメーションを再生する
-	/// @param _animName 再生したいアニメーションの名前
-	void PlayAnimation(const std::string& _animName);
-
-	/// @brief アニメーションを追加する
-	/// @param _addAnim 追加するアニメーション
-	void AddAnimations(AnimationData& _addAnim);
 
 	/// @brief アニメーションを追加する
 	/// @param _animName 追加するアニメーションの名前
@@ -70,7 +57,7 @@ public:
 	/// @param _skeletalMesh 
 	void SetSkeletalMesh(SkeletalMesh& _skeletalMesh);
 private:
-
+	
 	/// @brief 再生時間を進める
 	void ProgressPlayTime();
 
@@ -92,9 +79,13 @@ private:
 	/// @brief シェーダーのバッファを更新する
 	void UpdateBoneBuffer();
 
-	/// @brief 所持しているアニメーションを探す
-	/// @param _animName 
-	/// @return 
-	AnimationData* FindAnimaton(const std::string& _animName);
+	/// @brief アニメーション遷移時の更新処理
+	void UpdateTranslation();
+
+	// 再生中のアニメーションのノードを取得
+	AnimStateNode& GetCurrentNode();
+
+	// 再生中のアニメーションのデータを取得
+	const AnimationData& GetCurrentAnimData();
 };
 

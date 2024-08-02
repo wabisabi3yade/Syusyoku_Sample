@@ -52,6 +52,11 @@ DirectX::SimpleMath::Vector3 Mesh_Group::GetSize() const
 	return size;
 }
 
+float Mesh_Group::GetScaleTimes() const
+{
+	return scaleTimes;
+}
+
 Mesh_Group::MeshType Mesh_Group::GetType() const
 {
 	return meshType;
@@ -66,6 +71,12 @@ void Mesh_Group::SetSize(const DirectX::SimpleMath::Vector3& _size)
 {
 	// 0ˆÈ‰º‚É‚È‚ç‚È‚¢‚æ‚¤§ŒÀ
 	size = Vec3::Max(_size, 0.0f);
+}
+
+void Mesh_Group::SetScaleTimes(float _scaleTimes)
+{
+	assert(_scaleTimes > 0.0f);
+	scaleTimes = std::max(_scaleTimes, 0.0f);
 }
 
 void Mesh_Group::SetVertexShader(const std::string& _vsName)

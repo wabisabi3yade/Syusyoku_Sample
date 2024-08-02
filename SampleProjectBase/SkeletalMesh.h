@@ -4,24 +4,51 @@
 #include "Bone.h"
 #include "TreeNode.h"
 
-using BoneList = std::vector<std::unique_ptr<Bone>>;
+/// @brief ボーンリスト
+class BoneList : public Asset_Base
+{
+	friend class AssetLoader;
+
+	std::vector<std::unique_ptr<Bone>> pBones;
+	
+	/// @brief ボーン配列をセット
+	/// @param _setList ボーン配列
+	void SetBoneList(std::vector<std::unique_ptr<Bone>> _setList);
+
+public:
+	BoneList() {}
+	~BoneList() {}
+
+	/// @brief ボーンIDからボーンを取得する
+	/// @param _boneIdx ボーンID
+	/// @return ボーン
+	Bone* FindBone(u_int _boneIdx);
+
+	/// @brief 名前からボーンを取得する
+	/// @param  _boneName ボーン名
+	/// @return ボーン
+	Bone* FindBone(const std::string& _boneName);
+
+	// ボーンの数を返す 
+	u_int GetBoneCnt() const;
+};
 
 // スケルタルメッシュクラス
 class SkeletalMesh : public Mesh_Group
 {
 	/// @brief ボーン情報
-	BoneList pBones;
+	BoneList* pBoneList;
 
 	/// @brief ノード情報の元ノードを持つ
 	std::unique_ptr<TreeNode> pRootNode;
 
 public:
-	SkeletalMesh() : Mesh_Group(MeshType::SK) {}
+	SkeletalMesh() : Mesh_Group(MeshType::SK), pBoneList(nullptr) {}
 	~SkeletalMesh() {}
 
 	/// @brief ボーン配列をセット
 	/// @param _pBones ボーン配列
-	void SetBoneList(BoneList _pBones);
+	void SetBoneList(BoneList* _pBones);
 
 	// ルートノードをセット
 	void SetRootNode(std::unique_ptr<TreeNode> _pRootNode);

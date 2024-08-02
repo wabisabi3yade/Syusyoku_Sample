@@ -20,7 +20,7 @@ void AnimationData::SetTimePerKey(float _timePerKey)
 	timePerKey_s = std::max(_timePerKey, 0.0f);
 }
 
-std::string AnimationData::GetBoneName(u_int _nodeId)
+std::string AnimationData::GetBoneName(u_int _nodeId) const
 {
 	assert(_nodeId < static_cast<u_int>(pAnimChannels.size()) && "ノードIDが配列外を指しています");
 

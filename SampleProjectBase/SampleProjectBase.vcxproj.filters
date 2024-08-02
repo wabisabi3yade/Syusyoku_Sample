@@ -253,15 +253,6 @@
     <Filter Include="ソース ファイル\Component\InGame\Player\PlayerInput">
       <UniqueIdentifier>{3ead3f7f-0159-4fa0-bb22-adcd1bbdcafa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\System\Useful">
-      <UniqueIdentifier>{7a7bde62-f1ee-405c-bca3-eb0e4517e016}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\System\Useful\CUseful">
-      <UniqueIdentifier>{8d2e074a-3358-4341-94a5-dcfabc90dfaf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\System\Useful\MathUseful">
-      <UniqueIdentifier>{4c0f1f54-09cf-4963-af1b-02fdd0832fe5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Scene\InSceneSystem">
       <UniqueIdentifier>{b54ce796-f7aa-42ab-a133-8a4a2882bec4}</UniqueIdentifier>
     </Filter>
@@ -424,9 +415,6 @@
     <Filter Include="ソース ファイル\Animation\AnimationData">
       <UniqueIdentifier>{e36a3d30-c6cd-4c11-9242-337369ae187b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Animation\NodeAnim">
-      <UniqueIdentifier>{57f40450-fae2-4e11-b412-be9f6b0cc442}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode">
       <UniqueIdentifier>{d44aa57b-8f2d-4ef1-a0a4-0d076eb8d695}</UniqueIdentifier>
     </Filter>
@@ -444,6 +432,36 @@
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Shader\Vertex\Primitive">
       <UniqueIdentifier>{cbda257e-1421-40b1-b730-b6fe0adc5d6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationController">
+      <UniqueIdentifier>{8fc2ee27-4adf-4e9e-a7ed-7c12971b0fc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationData\NodeAnim">
+      <UniqueIdentifier>{57f40450-fae2-4e11-b412-be9f6b0cc442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimStateNode">
+      <UniqueIdentifier>{4a782538-0eeb-4285-9173-56a211c77dea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method">
+      <UniqueIdentifier>{97c74d9a-604c-4101-a84b-21cf9d7de430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\Interpolation">
+      <UniqueIdentifier>{5c5008da-592a-46a2-949d-45c20cc62cbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\Useful">
+      <UniqueIdentifier>{7a7bde62-f1ee-405c-bca3-eb0e4517e016}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\Useful\MathUseful">
+      <UniqueIdentifier>{4c0f1f54-09cf-4963-af1b-02fdd0832fe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\Interpolation\Ease">
+      <UniqueIdentifier>{dec3ba62-c7fc-4fb1-a900-89708a0951b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\Interpolation\Inertial">
+      <UniqueIdentifier>{d4f80aad-a5d1-4b02-a602-d79224bab1b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\Interpolate">
+      <UniqueIdentifier>{4e16815d-644a-47ba-ad51-330b3af1802b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -615,7 +633,7 @@
       <Filter>ソース ファイル\Component\Collider\CollisionChecker</Filter>
     </ClCompile>
     <ClCompile Include="MathUseful.cpp">
-      <Filter>ソース ファイル\System\Useful\MathUseful</Filter>
+      <Filter>ソース ファイル\Method\Useful\MathUseful</Filter>
     </ClCompile>
     <ClCompile Include="CameraMove.cpp">
       <Filter>ソース ファイル\Component\InGame\Camera\CameraMove</Filter>
@@ -792,7 +810,7 @@
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode</Filter>
     </ClCompile>
     <ClCompile Include="AnimationChannel.cpp">
-      <Filter>ソース ファイル\Animation\NodeAnim</Filter>
+      <Filter>ソース ファイル\Animation\AnimationData\NodeAnim</Filter>
     </ClCompile>
     <ClCompile Include="VS_SkinnedAnimation.cpp">
       <Filter>ソース ファイル\Graphics\Shader\Vertex\SkinAnimation</Filter>
@@ -802,6 +820,15 @@
     </ClCompile>
     <ClCompile Include="Mesh_Group.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\MeshGroup</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimStateNode.cpp">
+      <Filter>ソース ファイル\Animation\AnimStateNode</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationController.cpp">
+      <Filter>ソース ファイル\Animation\AnimationController</Filter>
+    </ClCompile>
+    <ClCompile Include="InertialInterpolation.cpp">
+      <Filter>ソース ファイル\Method\Interpolation\Inertial</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -965,7 +992,7 @@
       <Filter>ソース ファイル\Component\Collider\CollisionChecker</Filter>
     </ClInclude>
     <ClInclude Include="MathUseful.h">
-      <Filter>ソース ファイル\System\Useful\MathUseful</Filter>
+      <Filter>ソース ファイル\Method\Useful\MathUseful</Filter>
     </ClInclude>
     <ClInclude Include="CameraMove.h">
       <Filter>ソース ファイル\Component\InGame\Camera\CameraMove</Filter>
@@ -1160,7 +1187,7 @@
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode</Filter>
     </ClInclude>
     <ClInclude Include="AnimationChannel.h">
-      <Filter>ソース ファイル\Animation\NodeAnim</Filter>
+      <Filter>ソース ファイル\Animation\AnimationData\NodeAnim</Filter>
     </ClInclude>
     <ClInclude Include="VS_SkinnedAnimation.h">
       <Filter>ソース ファイル\Graphics\Shader\Vertex\SkinAnimation</Filter>
@@ -1170,6 +1197,15 @@
     </ClInclude>
     <ClInclude Include="Mesh_Group.h">
       <Filter>ソース ファイル\Graphics\Mesh\MeshGroup</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimStateNode.h">
+      <Filter>ソース ファイル\Animation\AnimStateNode</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationController.h">
+      <Filter>ソース ファイル\Animation\AnimationController</Filter>
+    </ClInclude>
+    <ClInclude Include="InertialInterpolation.h">
+      <Filter>ソース ファイル\Method\Interpolation\Inertial</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
