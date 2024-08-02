@@ -73,7 +73,7 @@ void Shader::LoadCsoFile(const char* _filePath)
 
 void Shader::UpdateSubResource(u_int _slot, void* _pData)
 {
-	if (_slot > pBuffers.size()) return;
+	if (_slot >= pBuffers.size()) return;
 
 	// Map関数は非同期処理でのデッドロック問題がUpdateSubResourceより複雑なので、
 	// 今回はUpdateSubesourceを使用する
@@ -91,7 +91,7 @@ void Shader::UpdateSubResource(u_int _slot, void* _pData)
 
 void Shader::Map(u_int _slot, void* _pData, size_t _dataSize)
 {
-	if (_slot > pBuffers.size()) return;
+	if (_slot >= pBuffers.size()) return;
 
 	ID3D11DeviceContext* pDeviceContext = Direct3D11::GetInstance()->
 		GetRenderer()->GetDeviceContext();

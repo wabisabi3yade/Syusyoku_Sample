@@ -13,6 +13,8 @@
 
 constexpr u_int TEX_DIFUSSE_SLOT(0);	// ディフューズテクスチャのスロット
 
+using namespace DirectX::SimpleMath;
+
 void CP_MeshRenderer::Init()
 {
 	name = "Mesh_Renderer";
@@ -26,7 +28,7 @@ void CP_MeshRenderer::Draw()
 	RenderParam& rendererParam = Direct3D11::GetInstance()->GetRenderer()->GetParameter();
 
 	// メッシュ描画
-	// 引数にwvp行列を代入
+	float scaleTimes = pRenderMesh->GetScaleTimes();
 	DrawMesh(rendererParam.GetWVP(GetTransform()));
 }
 
@@ -61,6 +63,11 @@ Mesh_Group* CP_MeshRenderer::GetRenderMesh()
 void CP_MeshRenderer::DrawMesh(RenderParam::WVP _wvp)
 {
 	u_int meshNum = pRenderMesh->GetMeshNum();
+
+	// スケール倍率行列をかけて
+	Matrix scaleMtx = Matrix::CreateScale(pRenderMesh->GetScaleTimes());
+	_wvp.world = _wvp.world * scaleMtx;
+
 	for (u_int meshLoop = 0; meshLoop < meshNum; meshLoop++)
 	{
 		// メッシュを取得

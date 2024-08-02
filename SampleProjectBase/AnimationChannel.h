@@ -1,7 +1,5 @@
 #pragma once
 
-struct aiNodeAnim;
-
 /// @brief Vector3型パラメータのアニメーションキー
 struct AnimKey_V3
 {

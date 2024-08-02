@@ -86,18 +86,6 @@ void GamePad::DebugInput()
 
 		ImGui::TreePop();
 	}
-
-
-	//if (ImGui::TreeNode(ShiftJisToUtf8("コントローラー入力").c_str()))
-	//{
-	//	/*for (auto s : inputName)
-	//		ImGui::Text(s.c_str());
-
-	//	for (auto s : inputVal)
-	//		ImGui::Text(s.c_str());*/
-
-	//	ImGui::TreePop();
-	//}
 }
 
 GamePad::GamePad() :isResult(ERROR_SUCCESS)

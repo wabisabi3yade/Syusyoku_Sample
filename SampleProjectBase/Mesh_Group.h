@@ -31,6 +31,9 @@ private:
 	/// @brief モデルサイズ
 	DirectX::SimpleMath::Vector3 size;
 
+	/// @brief スケール倍率
+	float scaleTimes;
+
 	/// @brief メッシュの種類
 	MeshType meshType;
 public:
@@ -76,6 +79,10 @@ public:
 	/// @return サイズ
 	DirectX::SimpleMath::Vector3 GetSize() const;
 
+	/// @brief スケール倍率を取得する
+	/// @return スケール倍率
+	float GetScaleTimes() const;
+
 	/// @brief メッシュ群の種類を取得
 	/// @return 種類
 	MeshType GetType() const;
@@ -87,6 +94,10 @@ public:
 	/// @brief サイズをセット
 	/// @param _size サイズ
 	void SetSize(const DirectX::SimpleMath::Vector3& _size);
+
+	/// @brief スケール倍率をセット
+	/// @param _scaleTimes スケール倍率
+	void SetScaleTimes(float _scaleTimes);
 
 	// マテリアルの頂点・ピクセルシェーダーをセット
 	void SetVertexShader(const std::string& _vsName);

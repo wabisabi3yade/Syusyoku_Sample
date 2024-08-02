@@ -10,6 +10,7 @@ class Texture;
 class Mesh_Group;
 class StaticMesh;
 class SkeletalMesh;
+class BoneList;
 class Material;
 class AnimationData;
 
@@ -21,7 +22,8 @@ namespace HashiTaku
 	concept AssetType =
 		std::is_same_v<T, Texture> || std::is_same_v<T, Mesh_Group> ||
 		std::is_same_v<T, StaticMesh> || std::is_same_v<T, SkeletalMesh> || 
-		std::is_same_v<T, Material> || std::is_same_v<T, AnimationData>;
+		std::is_same_v<T, BoneList> || std::is_same_v<T, Material> ||
+		std::is_same_v<T, AnimationData>;
 }
 
 // アセット管理にアクセスするクラスの基底クラス

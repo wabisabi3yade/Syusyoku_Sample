@@ -76,7 +76,9 @@
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_impl_win32.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_tables.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_widgets.cpp" />
+    <ClCompile Include="AnimationController.cpp" />
     <ClCompile Include="AnimationData.cpp" />
+    <ClCompile Include="AnimStateNode.cpp" />
     <ClCompile Include="Bone.cpp" />
     <ClCompile Include="CP_Animation.cpp" />
     <ClCompile Include="AssetDisplay.cpp" />
@@ -114,6 +116,7 @@
     <ClCompile Include="Buffer_Base.cpp" />
     <ClCompile Include="ImGuiDebugLog.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
+    <ClCompile Include="InertialInterpolation.cpp" />
     <ClCompile Include="InputClass.cpp" />
     <ClCompile Include="InSceneSystemManager.cpp" />
     <ClCompile Include="JISToUTF8.cpp" />
@@ -191,7 +194,9 @@
     <ClInclude Include="..\ThirdParty\imgui\include\imstb_rectpack.h" />
     <ClInclude Include="..\ThirdParty\imgui\include\imstb_textedit.h" />
     <ClInclude Include="..\ThirdParty\imgui\include\imstb_truetype.h" />
+    <ClInclude Include="AnimationController.h" />
     <ClInclude Include="AnimationData.h" />
+    <ClInclude Include="AnimStateNode.h" />
     <ClInclude Include="Bone.h" />
     <ClInclude Include="CP_Animation.h" />
     <ClInclude Include="AssetDisplay.h" />
@@ -233,6 +238,7 @@
     <ClInclude Include="Buffer_Base.h" />
     <ClInclude Include="ImGuiDebugLog.h" />
     <ClInclude Include="IndexBuffer.h" />
+    <ClInclude Include="InertialInterpolation.h" />
     <ClInclude Include="InputClass.h" />
     <ClInclude Include="InSceneSystemManager.h" />
     <ClInclude Include="IPrototype.h" />

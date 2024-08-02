@@ -33,7 +33,7 @@ public:
 	/// @brief 〇番目のノードに対応するボーン名を取得
 	/// @param _nodeId ノードのId
 	/// @return ボーンの名前
-	std::string GetBoneName(u_int _nodeId);
+	std::string GetBoneName(u_int _nodeId) const;
 
 	// チャンネルの数を取得
 	u_int GetChannelCount() const;

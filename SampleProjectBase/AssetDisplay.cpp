@@ -30,6 +30,9 @@ void AssetDisplay::Draw()
 		AssetList& Aassets = pAssetCollection->GetAssetList<AnimationData>();
 		DrawAssetName("アニメーション", Aassets);
 
+		AssetList& Bassets = pAssetCollection->GetAssetList<BoneList>();
+		DrawAssetName("ボーン", Bassets);
+
 		ImGui::TreePop();
 	}
 }

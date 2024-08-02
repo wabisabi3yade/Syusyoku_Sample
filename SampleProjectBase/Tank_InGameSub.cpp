@@ -31,17 +31,32 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 		bool isGetScale;
 	};
 
-
 	std::vector<ModelData> SMPaths =
 	{
-		{"assets/model/spot/spot.fbx", 1.0f, true},
-		{"assets/model/knight/Knight D Pelegrini.fbx", 1.0f, true},
+		{"assets/model/spot/spot.fbx", 100.0f, true},
+		{"assets/model/knight/Knight D Pelegrini.fbx", 0.1f, true},
+	};
+
+	struct AnimData
+	{
+		std::string path;
+		bool isLeftHand;
+	};
+
+	std::vector<AnimData> AnimPath =
+	{
+		{"assets/animation/Silly Dancing.fbx", true},
+		{"assets/animation/Akai_Run.fbx", true},
+	};
+
+	for (auto& a : AnimPath)
+	{
+		AssetLoader::AnimationLoad(a.path, a.isLeftHand);
 	};
 
 	Mesh_Group* pSM = AssetLoader::ModelLoad(SMPaths[1].path, SMPaths[1].scale, SMPaths[1].isLeftHand);
 	pModels.push_back(pSM);
 
-	AnimationData* pAnimData = AssetLoader::AnimationLoad("assets/animation/Silly Dancing.fbx", true);
 	GameObject* gameObject = &ObjectFunc::CreateEmpty("Ground");
 	CP_SpriteRenderer* pSpriteRenderer = gameObject->AddComponent<CP_SpriteRenderer>();
 	pSpriteRenderer->SetTexture(*pTextures[0]);
@@ -53,7 +68,8 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	pMeshRenderer->SetVertexShader("VS_SkinAnimation");
 	pMeshRenderer->SetPixelShader("PS_Unlit");
 	CP_Animation* pAnimation = gameObject->AddComponent<CP_Animation>();
-	pAnimation->AddAnimations(*pAnimData);
+	pAnimation->AddAnimations("Silly Dancing");
+	pAnimation->AddAnimations("Akai_Run");
 
 	/*gameObject = &ObjectFunc::CreateEmpty("Box1");
 	gameObject->AddComponent<CP_BoxCollider>();

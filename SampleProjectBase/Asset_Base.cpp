@@ -1,11 +1,11 @@
 #include "Asset_Base.h"
 
-void Asset_Base::SetName(const std::string& _name)
+void Asset_Base::SetAssetName(const std::string& _name)
 {
 	name = _name;
 }
 
-std::string Asset_Base::GetName() const
+std::string Asset_Base::GetAssetName() const
 {
 	return name;
 }
