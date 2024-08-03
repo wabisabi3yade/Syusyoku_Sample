@@ -29,6 +29,14 @@ public:
 	/// @return ボーン
 	Bone* FindBone(const std::string& _boneName);
 
+	// 要素数からボーンを取得
+	Bone& GetBone(u_int _arrayIdx);
+
+	/// @brief 名前からボーンIDを取得する
+	/// @param _boneName ボーン名
+	/// @return ボーンID
+	u_int GetIndex(const std::string& _boneName) const;
+
 	// ボーンの数を返す 
 	u_int GetBoneCnt() const;
 };
@@ -60,12 +68,15 @@ public:
 
 	/// @brief ボーンのIDから探す
 	/// @param _idx ボーンID
-	/// @return ボーンID
-	Bone& GetBone(u_int _idx);
+	/// @return ボーン
+	Bone* GetBone(u_int _idx);
 
 	// ボーンの数を取得
 	u_int GetBoneNum();
 
 	// ルートノードを取得
 	TreeNode& GetRootNode();
+
+	// ボーンリストを取得
+	BoneList& GetBoneList();
 };

@@ -45,3 +45,11 @@ public:
 	// インデックスを取得
 	u_int GetIndex() const;
 };
+
+// ボーンのトランスフォーム
+struct BoneTransform
+{
+	DirectX::SimpleMath::Vector3 position;
+	DirectX::SimpleMath::Vector3 scale{ 1.0f, 1.0f, 1.0f };
+	DirectX::SimpleMath::Quaternion rotation;
+};

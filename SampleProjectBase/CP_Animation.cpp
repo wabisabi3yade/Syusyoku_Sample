@@ -15,6 +15,8 @@ using namespace DirectX::SimpleMath;
 CP_Animation::CP_Animation() : pSkeletalMesh(nullptr), playingTime_s(0.0f), playSpeed(1.0f), isPlaying(false)
 {
 	pAnimController = std::make_unique<AnimationController>();
+
+	isPlaying = true;
 }
 
 void CP_Animation::Init()
@@ -50,7 +52,7 @@ void CP_Animation::LateUpdate()
 
 void CP_Animation::ImGuiSetting()
 {
-	static bool isWindowOpen = false;
+	static bool isWindowOpen = true;
 
 	if (ImGui::Button(TO_UTF8("ウィンドウ")))
 		isWindowOpen = true;
@@ -60,7 +62,7 @@ void CP_Animation::ImGuiSetting()
 	std::string name = "アニメーション" + pAnimController->GetAssetName();
 	ImGui::Begin(TO_UTF8(name), &isWindowOpen);
 
-	ImGui::Text(std::to_string(playingTime_s).c_str());
+	ImGui::Text(TO_UTF8(std::string("再生時間 " + std::to_string(playingTime_s))));
 	ImGui::DragFloat("PlaySpeed", &playSpeed, 0.1f);
 	ImGui::Checkbox("Play", &isPlaying);
 
@@ -89,53 +91,14 @@ void CP_Animation::ProgressPlayTime()
 	// 時間を進める
 	playingTime_s += playSpeed * MainApplication::DeltaTime();
 
-	const AnimationData& pCurrentAnimation = GetCurrentAnimData();
-	if (playingTime_s >pCurrentAnimation.GetAnimationTime())	// アニメーションの全体時間を超えたら
-		playingTime_s = 0.0f;
+	if(IsCanLoop())	// ループできるなら
+	playingTime_s = 0.0f;
 }
 
 void CP_Animation::UpdateAnimationMtx()
 {
-	u_int boneNum = pSkeletalMesh->GetBoneNum();
-
-	// ボーンのキャッシュ取得のためパラメータを取得する
-	std::vector<BoneTransform> boneTransforms(boneNum);
-
-	const AnimationData& currentAnimData = GetCurrentAnimData();
-	// チャンネル数分ループしてアニメーション行列を作成
-	for (unsigned int c_i = 0; c_i < currentAnimData.GetChannelCount(); c_i++)
-	{
-		std::string boneName = currentAnimData.GetBoneName(c_i);
-
-		Bone* pBone = pSkeletalMesh->GetBoneByName(boneName);
-
-		BoneTransform transform;
-
-		// 再生時間から各パラメータを取得
-		// スケール
-		transform.scale = currentAnimData.GetScale(c_i, playingTime_s);
-
-		//クォータニオン
-		transform.rotation = currentAnimData.GetQuaternion(c_i, playingTime_s);
-
-		// 座標
-		transform.position = currentAnimData.GetPosition(c_i, playingTime_s);
-
-		// アニメーション行列を作成
-		Matrix scaleMtx = Matrix::CreateScale(transform.scale);
-		Matrix rotationMtx = Matrix::CreateFromQuaternion(transform.rotation);
-		Matrix transformMtx = Matrix::CreateTranslation(transform.position);
-		Matrix animationMtx = scaleMtx * rotationMtx * transformMtx;
-
-		// ボーンにアニメーション行列をセット
-		pBone->SetAnimationMtx(animationMtx);
-
-		// トランスフォーム配列に追加する
-		boneTransforms[pBone->GetIndex()] = std::move(transform);
-	}
-
-	// ボーンのキャッシュを更新する
-	GetCurrentNode().UpdateCache(boneTransforms, MainApplication::DeltaTime());
+	// アニメーションコントローラーで更新する
+	pAnimController->Update(pSkeletalMesh->GetBoneList(), playingTime_s);
 }
 
 bool CP_Animation::IsCanPlay()
@@ -145,6 +108,22 @@ bool CP_Animation::IsCanPlay()
 	if (!pAnimController->IsSetAnimation()) return false;
 
 	assert(pSkeletalMesh != nullptr && "スケルタルメッシュ非設定");
+
+	return true;
+}
+
+bool CP_Animation::IsCanLoop()
+{
+	const AnimationData& pCurrentAnimation = GetCurrentAnimData();
+
+	// そもそもアニメーションが設定されていないなら
+	if (!pAnimController->IsSetAnimation()) return false;
+
+	// ループ再生しないなら
+	if (!GetCurrentNode().GetIsLoop()) return false;
+
+	// アニメーションの全体時間を超えていないなら
+	if (playingTime_s < pCurrentAnimation.GetAnimationTime()) return false;
 
 	return true;
 }
@@ -190,7 +169,7 @@ void CP_Animation::UpdateBoneBuffer()
 	// ボーン数ループ
 	for (u_int b_i = 0; b_i < boneCnt; b_i++)
 	{
-		const Bone& bone = pSkeletalMesh->GetBone(b_i);
+		const Bone& bone = *pSkeletalMesh->GetBone(b_i);
 
 		// ボーンのID番目に行列を入れる
 		boneComb.matrix[bone.GetIndex()] = bone.GetCombMtx() * scaleMtx;
@@ -205,10 +184,6 @@ void CP_Animation::UpdateBoneBuffer()
 		/*pMaterial->GetVertexShader().Map(1, &boneComb, sizeof(BoneCombMtricies));*/
 		pMaterial->GetVertexShader().UpdateSubResource(1, &boneComb);
 	}
-}
-
-void CP_Animation::UpdateTranslation()
-{
 }
 
 AnimStateNode& CP_Animation::GetCurrentNode()

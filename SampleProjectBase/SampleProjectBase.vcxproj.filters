@@ -412,9 +412,6 @@
     <Filter Include="ソース ファイル\Animation">
       <UniqueIdentifier>{a11adc7e-fbdb-4ba4-8603-cb26ed4d9386}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Animation\AnimationData">
-      <UniqueIdentifier>{e36a3d30-c6cd-4c11-9242-337369ae187b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode">
       <UniqueIdentifier>{d44aa57b-8f2d-4ef1-a0a4-0d076eb8d695}</UniqueIdentifier>
     </Filter>
@@ -436,17 +433,11 @@
     <Filter Include="ソース ファイル\Animation\AnimationController">
       <UniqueIdentifier>{8fc2ee27-4adf-4e9e-a7ed-7c12971b0fc1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Animation\AnimationData\NodeAnim">
-      <UniqueIdentifier>{57f40450-fae2-4e11-b412-be9f6b0cc442}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Animation\AnimStateNode">
       <UniqueIdentifier>{4a782538-0eeb-4285-9173-56a211c77dea}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Method">
       <UniqueIdentifier>{97c74d9a-604c-4101-a84b-21cf9d7de430}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Method\Interpolation">
-      <UniqueIdentifier>{5c5008da-592a-46a2-949d-45c20cc62cbf}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Method\Useful">
       <UniqueIdentifier>{7a7bde62-f1ee-405c-bca3-eb0e4517e016}</UniqueIdentifier>
@@ -454,14 +445,23 @@
     <Filter Include="ソース ファイル\Method\Useful\MathUseful">
       <UniqueIdentifier>{4c0f1f54-09cf-4963-af1b-02fdd0832fe5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Animation\Interpolate">
+      <UniqueIdentifier>{4e16815d-644a-47ba-ad51-330b3af1802b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\Interpolation">
+      <UniqueIdentifier>{5c5008da-592a-46a2-949d-45c20cc62cbf}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ソース ファイル\Method\Interpolation\Ease">
       <UniqueIdentifier>{dec3ba62-c7fc-4fb1-a900-89708a0951b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Method\Interpolation\Inertial">
+    <Filter Include="ソース ファイル\Animation\AnimStateNode\AnimationData">
+      <UniqueIdentifier>{e36a3d30-c6cd-4c11-9242-337369ae187b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\Interpolate\Inertial">
       <UniqueIdentifier>{d4f80aad-a5d1-4b02-a602-d79224bab1b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Animation\Interpolate">
-      <UniqueIdentifier>{4e16815d-644a-47ba-ad51-330b3af1802b}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Animation\AnimStateNode\AnimationData\Channel">
+      <UniqueIdentifier>{57f40450-fae2-4e11-b412-be9f6b0cc442}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -804,13 +804,13 @@
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\Bone</Filter>
     </ClCompile>
     <ClCompile Include="AnimationData.cpp">
-      <Filter>ソース ファイル\Animation\AnimationData</Filter>
+      <Filter>ソース ファイル\Animation\AnimStateNode\AnimationData</Filter>
     </ClCompile>
     <ClCompile Include="TreeNode.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode</Filter>
     </ClCompile>
     <ClCompile Include="AnimationChannel.cpp">
-      <Filter>ソース ファイル\Animation\AnimationData\NodeAnim</Filter>
+      <Filter>ソース ファイル\Animation\AnimStateNode\AnimationData\Channel</Filter>
     </ClCompile>
     <ClCompile Include="VS_SkinnedAnimation.cpp">
       <Filter>ソース ファイル\Graphics\Shader\Vertex\SkinAnimation</Filter>
@@ -827,8 +827,8 @@
     <ClCompile Include="AnimationController.cpp">
       <Filter>ソース ファイル\Animation\AnimationController</Filter>
     </ClCompile>
-    <ClCompile Include="InertialInterpolation.cpp">
-      <Filter>ソース ファイル\Method\Interpolation\Inertial</Filter>
+    <ClCompile Include="InertInterpAnimation.cpp">
+      <Filter>ソース ファイル\Animation\Interpolate\Inertial</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1181,13 +1181,13 @@
       <Filter>ソース ファイル\Graphics\Vertex</Filter>
     </ClInclude>
     <ClInclude Include="AnimationData.h">
-      <Filter>ソース ファイル\Animation\AnimationData</Filter>
+      <Filter>ソース ファイル\Animation\AnimStateNode\AnimationData</Filter>
     </ClInclude>
     <ClInclude Include="TreeNode.h">
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode</Filter>
     </ClInclude>
     <ClInclude Include="AnimationChannel.h">
-      <Filter>ソース ファイル\Animation\AnimationData\NodeAnim</Filter>
+      <Filter>ソース ファイル\Animation\AnimStateNode\AnimationData\Channel</Filter>
     </ClInclude>
     <ClInclude Include="VS_SkinnedAnimation.h">
       <Filter>ソース ファイル\Graphics\Shader\Vertex\SkinAnimation</Filter>
@@ -1204,8 +1204,8 @@
     <ClInclude Include="AnimationController.h">
       <Filter>ソース ファイル\Animation\AnimationController</Filter>
     </ClInclude>
-    <ClInclude Include="InertialInterpolation.h">
-      <Filter>ソース ファイル\Method\Interpolation\Inertial</Filter>
+    <ClInclude Include="InertInterpAnimation.h">
+      <Filter>ソース ファイル\Animation\Interpolate\Inertial</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

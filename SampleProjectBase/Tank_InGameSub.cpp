@@ -37,24 +37,31 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 		{"assets/model/knight/Knight D Pelegrini.fbx", 0.1f, true},
 	};
 
+	for (auto& a : SMPaths)
+	{
+		AssetLoader::ModelLoad(a.path, a.scale, a.isLeftHand);
+	};
+
 	struct AnimData
 	{
 		std::string path;
+		std::string boneName;
 		bool isLeftHand;
 	};
 
 	std::vector<AnimData> AnimPath =
 	{
-		{"assets/animation/Silly Dancing.fbx", true},
-		{"assets/animation/Akai_Run.fbx", true},
+		{"assets/animation/Silly Dancing.fbx", "Knight D Pelegrini", true},
+		{"assets/animation/Akai_Run.fbx", "Knight D Pelegrini", true},
+		{"assets/animation/Reaction.fbx", "Knight D Pelegrini", true},
 	};
 
 	for (auto& a : AnimPath)
 	{
-		AssetLoader::AnimationLoad(a.path, a.isLeftHand);
+		AssetLoader::AnimationLoad(a.path, a.boneName, a.isLeftHand);
 	};
 
-	Mesh_Group* pSM = AssetLoader::ModelLoad(SMPaths[1].path, SMPaths[1].scale, SMPaths[1].isLeftHand);
+	Mesh_Group* pSM = AssetGetter::GetAsset<Mesh_Group>("Knight D Pelegrini");
 	pModels.push_back(pSM);
 
 	GameObject* gameObject = &ObjectFunc::CreateEmpty("Ground");
@@ -70,6 +77,7 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	CP_Animation* pAnimation = gameObject->AddComponent<CP_Animation>();
 	pAnimation->AddAnimations("Silly Dancing");
 	pAnimation->AddAnimations("Akai_Run");
+	pAnimation->AddAnimations("Reaction");
 
 	/*gameObject = &ObjectFunc::CreateEmpty("Box1");
 	gameObject->AddComponent<CP_BoxCollider>();

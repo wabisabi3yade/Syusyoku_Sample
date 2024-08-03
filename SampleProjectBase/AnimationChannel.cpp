@@ -91,17 +91,17 @@ void AnimationChannel::SetName(const std::string& _name)
 	channelName = _name;
 }
 
-const AnimKey_V3& AnimationChannel::GetPosKey(u_int _keyNum)
+const AnimKey_V3& AnimationChannel::GetPosKey(u_int _keyNum) const
 {
 	return positionKeys[_keyNum];
 }
 
-const AnimKey_V3& AnimationChannel::GetScaleKey(u_int _keyNum)
+const AnimKey_V3& AnimationChannel::GetScaleKey(u_int _keyNum) const
 {
 	return scaleKeys[_keyNum];
 }
 
-const AnimKey_Q& AnimationChannel::GetQuatKey(u_int _keyNum)
+const AnimKey_Q& AnimationChannel::GetQuatKey(u_int _keyNum) const
 {
 	return quaternionKeys[_keyNum];
 }

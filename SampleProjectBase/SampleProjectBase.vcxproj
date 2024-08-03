@@ -116,7 +116,7 @@
     <ClCompile Include="Buffer_Base.cpp" />
     <ClCompile Include="ImGuiDebugLog.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
-    <ClCompile Include="InertialInterpolation.cpp" />
+    <ClCompile Include="InertInterpAnimation.cpp" />
     <ClCompile Include="InputClass.cpp" />
     <ClCompile Include="InSceneSystemManager.cpp" />
     <ClCompile Include="JISToUTF8.cpp" />
@@ -238,7 +238,7 @@
     <ClInclude Include="Buffer_Base.h" />
     <ClInclude Include="ImGuiDebugLog.h" />
     <ClInclude Include="IndexBuffer.h" />
-    <ClInclude Include="InertialInterpolation.h" />
+    <ClInclude Include="InertInterpAnimation.h" />
     <ClInclude Include="InputClass.h" />
     <ClInclude Include="InSceneSystemManager.h" />
     <ClInclude Include="IPrototype.h" />
