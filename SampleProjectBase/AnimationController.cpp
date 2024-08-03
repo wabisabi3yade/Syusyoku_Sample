@@ -1,27 +1,113 @@
 #include "pch.h"
 #include "AnimationController.h"
-
 // アセット
 #include "AssetGetter.h"
-
+// ボーンリスト取得するため
+#include "SkeletalMesh.h"
+// 慣性補間
+#include "InertInterpAnimation.h"
 // ImGui
 #include "imgui.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 
+using namespace DirectX::SimpleMath;
+
+AnimationController::AnimationController() : pCurrentAnimNode(nullptr), pNextAnimNode(nullptr), isTransitioning(false)
+{
+	inertInterp = std::make_unique<InertInterpAnimation>();
+}
+
+void AnimationController::Update(BoneList& _boneList, float _playingTime)
+{
+	// ボーンのキャッシュ取得のためパラメータを取得する
+	std::vector<BoneTransform> boneTransforms(_boneList.GetBoneCnt());
+
+	if (isTransitioning)	// アニメーション遷移中なら
+		TransitionUpdate(_boneList, _playingTime, boneTransforms);
+	else
+		NormalUpdate(_boneList, _playingTime, boneTransforms);
+
+	// 慣性補間用のキャッシュを更新する
+	inertInterp->UpdateBoneCache(boneTransforms);
+}
+
+void AnimationController::NormalUpdate(BoneList& _boneList, float& _playingTime, std::vector<BoneTransform>& _cacheTransform)
+{
+	const AnimationData& currentAnimData = pCurrentAnimNode->GetAnimationData();
+
+	//ボーン数ループ
+	for (unsigned int b_i = 0; b_i < _boneList.GetBoneCnt(); b_i++)
+	{
+		Bone& bone = _boneList.GetBone(b_i);
+
+		BoneTransform transform;
+
+		// 再生時間から各パラメータを取得
+		// スケール
+		transform.scale = currentAnimData.GetScale(b_i, _playingTime);
+
+		//クォータニオン
+		transform.rotation = currentAnimData.GetQuaternion(b_i, _playingTime);
+
+		// 座標
+		transform.position = currentAnimData.GetPosition(b_i, _playingTime);
+
+		// アニメーション行列を作成
+		Matrix scaleMtx = Matrix::CreateScale(transform.scale);
+		Matrix rotationMtx = Matrix::CreateFromQuaternion(transform.rotation);
+		Matrix transformMtx = Matrix::CreateTranslation(transform.position);
+		Matrix animationMtx = scaleMtx * rotationMtx * transformMtx;
+
+		// ボーンにアニメーション行列をセット
+		bone.SetAnimationMtx(animationMtx);
+
+		// キャッシュ配列に追加する
+		_cacheTransform[b_i] = std::move(transform);
+	}
+}
+
+void AnimationController::TransitionUpdate(BoneList& _boneList, float& _playingTime, std::vector<BoneTransform>& _cacheTransform)
+{
+	blendElapsedTime += MainApplication::DeltaTime();
+
+	if (blendElapsedTime > blendTime)	// ブレンド時間過ぎたら
+	{
+		// 遷移終了の処理
+		TransitionEnd(_playingTime);
+	}
+
+	for (u_int b_i = 0; b_i < _boneList.GetBoneCnt(); b_i++)
+	{
+		Bone& bone = _boneList.GetBone(b_i);
+
+		BoneTransform transform;
+
+		transform.position = inertInterp->CalcBlendPos(b_i, blendElapsedTime);
+		transform.scale = inertInterp->CalcBlendScale(b_i, blendElapsedTime);
+		transform.rotation = inertInterp->CalcBlendRot(b_i, blendElapsedTime);
+
+		// アニメーション行列を作成
+		Matrix scaleMtx = Matrix::CreateScale(transform.scale);
+		Matrix rotationMtx = Matrix::CreateFromQuaternion(transform.rotation);
+		Matrix transformMtx = Matrix::CreateTranslation(transform.position);
+		Matrix animationMtx = scaleMtx * rotationMtx * transformMtx;
+
+		// ボーンにアニメーション行列をセット
+		bone.SetAnimationMtx(animationMtx);
+
+		// キャッシュ配列に追加する
+		_cacheTransform[b_i] = std::move(transform);
+	}
+}
+
 void AnimationController::ImGuiSetting()
 {
-	if (!ImGui::TreeNode(TO_UTF8("アニメーションコントローラー"))) return;
+	//if (!ImGui::TreeNode(TO_UTF8("アニメーションコントローラー"))) return;
 
-	std::string text = "名前：";
 	if (IsSetAnimation())
 	{
-		const AnimationData& animData = pCurrentAnimNode->GetAnimationData();
-		text += animData.GetAssetName();
-		ImGui::Text(TO_UTF8(text));
-
-		text = "時間：" + std::to_string(animData.GetAnimationTime());
-		ImGui::Text(TO_UTF8(text));
+		pCurrentAnimNode->ImGuiSetting();
 	}
 
 	ImGui::Text(TO_UTF8("アニメーション遷移"));
@@ -30,11 +116,16 @@ void AnimationController::ImGuiSetting()
 		std::string animName = a.second->GetAnimationData().GetAssetName();
 		if(ImGui::Button(animName.c_str()))
 		{
-			ChangeAnimation(animName);
+			ChangeAnimation(animName);	// アニメーション変更
 		}
 	}
 
-	ImGui::TreePop();
+	ImGui::Text(TO_UTF8("遷移情報"));
+
+	if (isTransitioning)
+		ImGuiTransition();
+
+	/*ImGui::TreePop();*/
 }
 
 void AnimationController::ChangeAnimation(const std::string& _animName)
@@ -44,6 +135,20 @@ void AnimationController::ChangeAnimation(const std::string& _animName)
 		HASHI_DEBUG_LOG(_animName + "は取得できませんでした");
 		return;
 	}
+	
+
+	pNextAnimNode = pAnimationNodes[_animName].get();
+
+	// 慣性補間の初期処理
+	bool isSuccess = inertInterp->Calculate(*pNextAnimNode, blendTime);
+
+	if (isSuccess)	// 成功していたら
+	{
+		isTransitioning = true;
+		blendElapsedTime = 0.0f;
+	}
+
+
 }
 
 void AnimationController::AddAnimation(const std::string& _animName)
@@ -57,7 +162,7 @@ void AnimationController::AddAnimation(const std::string& _animName)
 	if (pGetAnim == nullptr) return;
 
 	// ノードを作成する
-	std::unique_ptr<AnimStateNode> pAnimNode = std::make_unique<AnimStateNode>();
+	std::unique_ptr<AnimStateNode> pAnimNode = std::make_unique<AnimStateNode>(_animName);
 	pAnimNode->SetAnimationData(*pGetAnim);
 
 	pAnimationNodes[_animName] = std::move(pAnimNode);
@@ -83,6 +188,20 @@ AnimStateNode& AnimationController::GetCurrentNode()
 	return *pCurrentAnimNode;
 }
 
+void AnimationController::ImGuiTransition()
+{
+	std::string text = pCurrentAnimNode->GetNodeName();
+	text += " ---> ";
+	text += pNextAnimNode->GetNodeName();
+	ImGui::Text(TO_UTF8(text));
+
+	text = "経過：" + std::to_string(blendElapsedTime) + "(s)";
+	ImGui::Text(TO_UTF8(text));
+
+	text = "ブレンド時間" + std::to_string(blendTime) + "(s)";
+	ImGui::Text(TO_UTF8(text));
+}
+
 bool AnimationController::IsHaveAnim(const std::string& _animName)
 {
 	// 配列内に同じ名前があるか
@@ -93,4 +212,13 @@ bool AnimationController::IsHaveAnim(const std::string& _animName)
 	}
 
 	return false;
+}
+
+void AnimationController::TransitionEnd(float& _playTime)
+{
+	_playTime = 0.0f;
+	
+	pCurrentAnimNode = pNextAnimNode;
+	pNextAnimNode = nullptr;
+	isTransitioning = false;
 }

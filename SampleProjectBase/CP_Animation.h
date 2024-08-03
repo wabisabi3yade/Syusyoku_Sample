@@ -65,6 +65,10 @@ private:
 	/// @return 再生できるか
 	bool IsCanPlay();
 
+	/// @brief ループ再生できるか？
+	/// @return 再生できるフラグ
+	bool IsCanLoop();
+
 	/// @brief ボーンコンビネーション行列を更新
 	void UpdateBoneCombMtx();
 
@@ -78,9 +82,6 @@ private:
 
 	/// @brief シェーダーのバッファを更新する
 	void UpdateBoneBuffer();
-
-	/// @brief アニメーション遷移時の更新処理
-	void UpdateTranslation();
 
 	// 再生中のアニメーションのノードを取得
 	AnimStateNode& GetCurrentNode();

@@ -483,7 +483,7 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 	return pRetMeshGroup;
 }
 
-AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, bool _isLeftHand)
+AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, const std::string& _boneName, bool _isLeftHand)
 {
 	Assimp::Importer importer;
 
@@ -503,10 +503,18 @@ AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, bool _is
 	std::unique_ptr<AnimationData> pAnimData = std::make_unique<AnimationData>();
 	const aiAnimation* aiAnimation = pAiScene->mAnimations[0];
 
+	// アニメーション対応させるボーンリストを取得する
+	const BoneList* pBoneList = AssetGetter::GetAsset<BoneList>(_boneName);
+	if (pBoneList == nullptr)
+	{
+		HASHI_DEBUG_LOG(_boneName + "：ボーンがアセットにありませんでした");
+		return nullptr;
+	}
+
 	// ノードを作成する
 	for (u_int an_i = 0; an_i < aiAnimation->mNumChannels; an_i++)
 	{
-		std::unique_ptr<AnimationChannel> pAnimChannel = CreateAnimChannel(aiAnimation->mChannels[an_i]);
+		std::unique_ptr<AnimationChannel> pAnimChannel = CreateAnimChannel(aiAnimation->mChannels[an_i], *pBoneList);
 
 		// アニメーションの追加していく
 		pAnimData->AddAnimationChannel(std::move(pAnimChannel));
@@ -656,11 +664,16 @@ void AssetLoader::LinkVertexToBone(const aiMesh* _pAiMesh, SingleMesh& _singleMe
 	}
 }
 
-std::unique_ptr<AnimationChannel> AssetLoader::CreateAnimChannel(const aiNodeAnim* _pAiAnimNode)
+std::unique_ptr<AnimationChannel> AssetLoader::CreateAnimChannel(const aiNodeAnim* _pAiAnimNode, const BoneList& _boneList)
 {
 	std::unique_ptr<AnimationChannel> pCreateChannel = std::make_unique<AnimationChannel>();
 
-	pCreateChannel->SetName(_pAiAnimNode->mNodeName.C_Str());
+	std::string channelName = _pAiAnimNode->mNodeName.C_Str();
+	pCreateChannel->SetName(channelName);
+
+	// 名前からボーンIDをセットする
+	u_int boneIdx = _boneList.GetIndex(channelName);
+	pCreateChannel->SetBoneIdx(boneIdx);
 
 	// 座標キー
 	for (u_int k_i = 0; k_i < _pAiAnimNode->mNumPositionKeys; k_i++)
@@ -685,8 +698,6 @@ std::unique_ptr<AnimationChannel> AssetLoader::CreateAnimChannel(const aiNodeAni
 		float t = static_cast<float>(_pAiAnimNode->mRotationKeys[k_i].mTime);
 		pCreateChannel->AddQuatKey(t, q);
 	}
-
-	int i = 0;
 
 	return std::move(pCreateChannel);
 }

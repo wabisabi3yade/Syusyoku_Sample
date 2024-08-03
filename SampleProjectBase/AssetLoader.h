@@ -81,9 +81,11 @@ public:
 
 	/// @brief アニメーションをロードしてアセット管理に追加
 	/// @param _animPath アニメーションのパス
+	/// @param _boneName 対応ボーン名
 	/// @param _isLeftHand 左手系か？
 	/// @return アニメーションデータクラス
-	static AnimationData* AnimationLoad(const std::string& _animPath, bool _isLeftHand);
+	static AnimationData* AnimationLoad(const std::string& _animPath, const std::string& _boneName,
+		bool _isLeftHand);
 
 private:	// 便利関数
 
@@ -113,7 +115,8 @@ private:	// 便利関数
 	/// @brief アニメーションノードを作成する
 	/// @param _pAiAnimNode assimpのアニメーションノード
 	/// @param _animData アニメーションノードを追加するアニメーションデータ
-	static std::unique_ptr<AnimationChannel> CreateAnimChannel(const aiNodeAnim* _pAiAnimNode);
+	/// @param _boneList 対応ボーンリスト
+	static std::unique_ptr<AnimationChannel> CreateAnimChannel(const aiNodeAnim* _pAiAnimNode, const BoneList& _boneList);
 
 	/// @brief アニメーションの時間を取得する
 	/// @param _pAiAnim assimpアニメーション

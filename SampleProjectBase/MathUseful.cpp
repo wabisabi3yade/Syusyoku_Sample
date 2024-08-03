@@ -56,3 +56,41 @@ DirectX::SimpleMath::Vector4 Vec4::Max(const DirectX::SimpleMath::Vector4& _v4, 
 	retV4.w = std::max<float>(_v4.w, _floatVal);
 	return retV4;
 }
+
+void Quat::ToAxisAngle(const DirectX::SimpleMath::Quaternion& _q, DirectX::SimpleMath::Vector3& _axis, float& _angle)
+{
+	// ‰ñ“]Šp“x‚ÌŒvŽZ
+	_angle = 2.0f * std::acos(_q.w);
+
+	// sin(ƒÆ/2) ‚ÌŒvŽZ
+	float sinHalfAngle = std::sqrt(1.0f - _q.w * _q.w);
+
+	if (sinHalfAngle < 0.0001f) 
+	{
+		// ‰ñ“]Šp“x‚ª”ñí‚É¬‚³‚¢ê‡AŽ²‚Í”CˆÓ‚Ì•ûŒü‚É‚È‚è“¾‚é
+		_axis = { 1.0f, 0.0f, 0.0f }; // —á‚¦‚ÎAxŽ²‚ðŽg—p
+	}
+	else 
+	{
+		// ‰ñ“]Ž²‚ÌŒvŽZ
+		_axis = { _q.x / sinHalfAngle, _q.y / sinHalfAngle, _q.z / sinHalfAngle };
+	}
+}
+
+Quaternion Quat::Multiply(const Quaternion& _q1, const Quaternion& _q2)
+{
+	Quaternion result = _q1 * _q2;
+	result.Normalize();
+
+	return result;
+}
+
+float Mathf::Repeat(float _t, float _length)
+{
+	float f = fmod(_t, _length);
+
+	if (f < 0.0f)
+		f += _length;
+
+	return f;
+}

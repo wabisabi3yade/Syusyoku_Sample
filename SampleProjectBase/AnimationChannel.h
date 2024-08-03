@@ -64,17 +64,17 @@ public:
 	/// @brief キー数から座標を取得
 	/// @param _keyNum キー数
 	/// @return 座標キー
-	const AnimKey_V3& GetPosKey(u_int _keyNum);
+	const AnimKey_V3& GetPosKey(u_int _keyNum) const;
 
 	/// @brief キー数からスケールを取得
 	/// @param _keyNum キー数
 	/// @return スケールキー
-	const AnimKey_V3& GetScaleKey(u_int _keyNum);
+	const AnimKey_V3& GetScaleKey(u_int _keyNum) const;
 
 	/// @brief キー数からクォータニオンを取得
 	/// @param _keyNum キー数
 	/// @return ボーンのクォータニオン
-	const AnimKey_Q& GetQuatKey(u_int _keyNum);
+	const AnimKey_Q& GetQuatKey(u_int _keyNum) const;
 
 	///// @brief 再生時間から座標を取得する
 	///// @param _playingTime 再生時間
