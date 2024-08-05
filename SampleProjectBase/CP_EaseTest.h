@@ -13,6 +13,7 @@ class CP_EaseTest : public Component
 	float time = 1.0f;
 	float elapsedTime = 0.0f;
 	short int vec = 1;
+	float p = 0;
 public:
 	CP_EaseTest();
 	~CP_EaseTest() {}

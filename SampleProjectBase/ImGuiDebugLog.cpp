@@ -1,10 +1,6 @@
 #include "pch.h"
 #include "ImGuiDebugLog.h"
 
-#include "imgui.h"
-#include "imgui_impl_dx11.h"
-#include "imgui_impl_win32.h"
-
 std::list<ImGuiDebugLog::Message> ImGuiDebugLog::displayList = {};
 
 constexpr u_int MAX_DISPLAY = (1000); // デバッグログ表示最大数

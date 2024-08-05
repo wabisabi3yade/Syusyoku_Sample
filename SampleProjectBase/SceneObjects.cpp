@@ -3,10 +3,6 @@
 #include <string>
 #include "Camera.h"
 
-#include "imgui_impl_win32.h"
-#include "imgui_impl_dx11.h"
-#include "imgui.h"
-
 typedef std::unordered_map<std::string, std::unique_ptr<GameObject>> ObjectList;
 
 SceneObjects::SceneObjects()

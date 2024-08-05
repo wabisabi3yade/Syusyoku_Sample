@@ -36,8 +36,6 @@ void CP_EaseTest::Update()
 		vec = 1;
 		elapsedTime = 0.0f;
 	}
-		
-
 	float p = easeFunc(elapsedTime / time);
 	GetTransform().position.x = p * magnitude - magnitude * 0.5f;
 }
@@ -68,7 +66,6 @@ void CP_EaseTest::Draw()
 void CP_EaseTest::ImGuiSetting()
 {
 	ImGui::DragFloat("magnitude", &magnitude);
-	ImGui::DragFloat("time", &time, 0.1f);
-
+	ImGui::DragFloat("time", &time, 0.1f);	
 	Easing::ImGuiSelect(easeFunc, nowEase);
 }

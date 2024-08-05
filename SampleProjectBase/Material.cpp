@@ -2,11 +2,6 @@
 #include "Material.h"
 #include "ShaderCollection.h"
 
-// ImGui
-#include "imgui_impl_win32.h"
-#include "imgui_impl_dx11.h"
-#include "imgui.h"
-
 using namespace DirectX::SimpleMath;
 
 constexpr u_int DIFFUSETEX_SLOT(0);
