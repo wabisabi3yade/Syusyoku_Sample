@@ -9,11 +9,6 @@
 #include "AssetContacter.h"
 #include "AssetDisplay.h"
 
-// ImGui
-#include "imgui_impl_win32.h"
-#include "imgui_impl_dx11.h"
-#include "imgui.h"
-
 constexpr u_int FPS(60);	// フレームレート数
 
 // static変数初期化

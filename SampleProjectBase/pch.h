@@ -18,7 +18,6 @@
 #define EDIT
 #endif
 
-
 // インクルードファイル /////////////////
 #include <iostream>	// std使うために
 #include <algorithm>
@@ -37,8 +36,11 @@
 #include <SimpleMath.h>	// DirectXTKの数学系
 #pragma comment(lib, "DirectXTK.lib")	// DirectXTKライブラリ
 #include <nlohmann/json.hpp>	// json書き出し
-
-// 外部ヘッダー
+// ImGui
+#define IMGUI_DEFINE_MATH_OPERATORS
+#include <imgui.h>
+#include <imgui_impl_win32.h>
+#include <imgui_impl_dx11.h>
 
 // 自前クラス
 #include "MathUseful.h"	// 自作数学便利関数

@@ -46,9 +46,10 @@ Index of this file:
 // [SECTION] Header mess
 //-----------------------------------------------------------------------------
 
-#ifndef IMGUI_VERSION
+
+#define IMGUI_DEFINE_MATH_OPERATORS
 #include "imgui.h"
-#endif
+
 
 #include <stdio.h>      // FILE*, sscanf
 #include <stdlib.h>     // NULL, malloc, free, qsort, atoi, atof

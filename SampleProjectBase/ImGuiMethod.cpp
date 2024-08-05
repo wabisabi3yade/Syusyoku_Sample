@@ -1,11 +1,6 @@
 #include "pch.h"
 #include "ImGuiMethod.h"
 
-#include "imgui.h"
-#include "imgui_impl_win32.h"
-#include "imgui_impl_dx11.h"
-
-
 // テキストサイズ
 constexpr float FONT_SIZES[static_cast<u_int>(ImGuiMethod::FontSize::Num)] = { 16.0f, 50.0f, 20.0f };
 

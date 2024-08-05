@@ -1,12 +1,6 @@
 #include "pch.h"
 #include "VariableFrameRate.h"
 
-#include <thread>
-
-#include "imgui_impl_win32.h"
-#include "imgui_impl_dx11.h"
-#include "imgui.h"
-
 void VariableFrameRate::Init(u_int setFrameRate)
 {
 	// FPSŒÅ’è—p•Ï”

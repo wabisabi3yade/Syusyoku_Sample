@@ -8,10 +8,6 @@
 #include "GameMode.h"
 #include "InSceneSystemManager.h"
 
-// ImGui
-#include "imgui_impl_win32.h"
-#include "imgui_impl_dx11.h"
-#include "imgui.h"
 #include "ImGuiMethod.h"
 
 void SubScene_Base::DrawSetup()
