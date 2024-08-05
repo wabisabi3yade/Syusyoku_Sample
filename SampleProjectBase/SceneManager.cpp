@@ -4,6 +4,7 @@
 #include "Test_ChangeSubScene.h"
 #include "Tank_ChangeSub.h"
 #include "SceneMoveInfo.h"
+
 #include "ShaderCollection.h"
 
 #include "InSceneSystemManager.h"
@@ -12,14 +13,14 @@
 #include "AssetSetter.h"
 #include "Geometory.h"
 #include "Material.h"
-#include "StaticMesh.h"
-#include "Cube.h"
+
+
 
 SceneManager* SceneManager::pInstance = nullptr;	// インスタンスの初期化
 
 SceneManager::SceneManager()
 {
-	AssetSetup();
+	Setup();
 	
 	// 初期シーンの情報
 	int initSub = Tank_ChangeSub::Scene::InGame;
@@ -37,6 +38,15 @@ SceneManager::SceneManager()
 SceneManager::~SceneManager()
 {
 	Release();
+}
+
+void SceneManager::Setup()
+{
+	// アセット関連
+	AssetSetup();
+
+	// イージング初期化
+	HashiTaku::Easing::Init();
 }
 
 void SceneManager::AssetSetup()

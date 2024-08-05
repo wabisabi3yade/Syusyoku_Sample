@@ -1,6 +1,7 @@
 #pragma once
 
-#include <numbers>
+// イージング
+#include "Easing.hpp"
 
 // 数学的な便利関数（頑張って勉強中！）
 namespace Mathf
@@ -8,7 +9,7 @@ namespace Mathf
 	constexpr float roundDeg = 360.0f;	// 1周の角度
 	constexpr float radToDeg = 57.2958f;	//　ラジアン→角度
 	constexpr float degToRad = 0.0174533f;	//　角度→ラジアン
-	constexpr float epsilon = 1.4013e-45f;	// 最小正数
+	constexpr float epsilon = 1.1920e-7f;	// 最小正数
 	constexpr float PI = std::numbers::pi_v<float>;	// π
 
 	/// @brief 値を0から最大値までで正規化する

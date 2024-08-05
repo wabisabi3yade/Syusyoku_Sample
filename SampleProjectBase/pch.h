@@ -27,6 +27,7 @@
 #include <typeinfo>	// 型名を取得
 #include <filesystem>	// パス名
 #include <vector>	// 動的配列
+#include <numbers>	// 数学
 #include <d3d11.h>	// DX11の機能
 #include <wrl.h>	// ComPtr
 #pragma comment(lib, "d3d11.lib")

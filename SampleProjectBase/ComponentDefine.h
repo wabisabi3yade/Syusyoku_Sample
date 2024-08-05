@@ -16,3 +16,6 @@
 // カメラ
 #include "CameraMove.h"
 #include "CameraInput.h"
+
+// テスト
+#include "CP_EaseTest.h"
