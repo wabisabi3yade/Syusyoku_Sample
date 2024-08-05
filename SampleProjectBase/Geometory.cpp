@@ -106,7 +106,7 @@ void Geometory::MakeMaterial()
 {
 	// マテリアル作成
 	const std::string MATERIAL_NAME = "M_Geometory";
-	std::unique_ptr<Material> makeMaterial = std::make_unique<Material>("VS_Geometory", "PS_Geometory");
+	std::unique_ptr<Material> makeMaterial = std::make_unique<Material>("VS_Primitive", "PS_Primitive");
 
 	// このオブジェクトにマテリアルセット
 	pMaterial = AssetSetter::SetAsset<Material>(MATERIAL_NAME, std::move(makeMaterial));

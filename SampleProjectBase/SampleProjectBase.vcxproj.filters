@@ -463,6 +463,12 @@
     <Filter Include="ソース ファイル\Animation\AnimStateNode\AnimationData\Channel">
       <UniqueIdentifier>{57f40450-fae2-4e11-b412-be9f6b0cc442}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Method\Interpolation\Ease\Back">
+      <UniqueIdentifier>{0701f74e-b247-4198-b227-cf9b3449b94c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\Interpolation\Ease\Function">
+      <UniqueIdentifier>{5a0a1e68-942c-4537-8c48-9c07c48df1d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -829,6 +835,12 @@
     </ClCompile>
     <ClCompile Include="InertInterpAnimation.cpp">
       <Filter>ソース ファイル\Animation\Interpolate\Inertial</Filter>
+    </ClCompile>
+    <ClCompile Include="Easing.cpp">
+      <Filter>ソース ファイル\Method\Interpolation\Ease</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_EaseTest.cpp">
+      <Filter>ソース ファイル\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1206,6 +1218,15 @@
     </ClInclude>
     <ClInclude Include="InertInterpAnimation.h">
       <Filter>ソース ファイル\Animation\Interpolate\Inertial</Filter>
+    </ClInclude>
+    <ClInclude Include="Easing.hpp">
+      <Filter>ソース ファイル\Method\Interpolation\Ease</Filter>
+    </ClInclude>
+    <ClInclude Include="EaseFunction.hpp">
+      <Filter>ソース ファイル\Method\Interpolation\Ease\Function</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_EaseTest.h">
+      <Filter>ソース ファイル\Component</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

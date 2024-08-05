@@ -69,7 +69,7 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	pSpriteRenderer->SetTexture(*pTextures[0]);
 	gameObject->transform.scale = Vector3::One * 50.0f;
 
-	gameObject = &ObjectFunc::CreateEmpty("knight");
+	/*gameObject = &ObjectFunc::CreateEmpty("knight");
 	CP_MeshRenderer* pMeshRenderer = gameObject->AddComponent<CP_MeshRenderer>();
 	pMeshRenderer->SetRenderMesh(*pModels[0]);
 	pMeshRenderer->SetVertexShader("VS_SkinAnimation");
@@ -77,13 +77,13 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	CP_Animation* pAnimation = gameObject->AddComponent<CP_Animation>();
 	pAnimation->AddAnimations("Silly Dancing");
 	pAnimation->AddAnimations("Akai_Run");
-	pAnimation->AddAnimations("Reaction");
+	pAnimation->AddAnimations("Reaction");*/
 
-	/*gameObject = &ObjectFunc::CreateEmpty("Box1");
-	gameObject->AddComponent<CP_BoxCollider>();
+	gameObject = &ObjectFunc::CreateEmpty("Box1");
+	gameObject->AddComponent<CP_EaseTest>();
 
-	gameObject = &ObjectFunc::CreateEmpty("Box2");
-	gameObject->AddComponent<CP_BoxCollider>();*/
+	//gameObject = &ObjectFunc::CreateEmpty("Box2");
+	//gameObject->AddComponent<CP_BoxCollider>();
 
 	// ŒõŒ¹
 	DirectionLight* dirL = LightFunc::CreateDirection();

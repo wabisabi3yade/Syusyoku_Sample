@@ -17,24 +17,25 @@ class SceneManager :public Singleton_Base<SceneManager>
 	SceneManager();
 	~SceneManager();
 
-	/// @brief アセットの準備
-	void AssetSetup();
-
-	void CheckChangeBroad();	// シーンを遷移するか確認する
-
-	// 解放処理
-	void Release();
-
+	
 public:
 
 	// 実行関数
 	void Exec();
 
 private:
+	/// @brief  準備
+	void Setup();
+
+	/// @brief アセットの準備
+	void AssetSetup();
+
 	/// @brief マテリアルの準備
 	void MaterialSetup();
 
-	/// @brief メッシュの準備
-	void BasicMeshSetup();
+	void CheckChangeBroad();	// シーンを遷移するか確認する
+
+	// 解放処理
+	void Release();
 };
 
