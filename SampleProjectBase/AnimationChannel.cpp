@@ -27,15 +27,17 @@ void AnimationChannel::AddQuatKey(float _startKeyNum, const DirectX::SimpleMath:
 	quaternionKeys.push_back(addQuatKey);
 }
 
-u_int AnimationChannel::FindPrevPosKey(float _playingTime, float _timePerKey) const
+u_int AnimationChannel::FindPrevPosKey(float _playingRatio) const
 {
 	u_int prevKeyNum = GetPosKeyCnt() - 1;
+
+	float posKeyNum = GetPosKeyByRatio(_playingRatio);
 
 	// 再生時間から前のキーを探す
 	for (u_int k_i = 0; k_i < GetPosKeyCnt() - 1; k_i++)
 	{
-		float keyTime = positionKeys[k_i + 1].startKeyNum * _timePerKey;
-		if (_playingTime < keyTime)
+		float keyNum = positionKeys[k_i + 1].startKeyNum;
+		if (posKeyNum < keyNum)
 		{
 			prevKeyNum = k_i;
 			break;
@@ -45,15 +47,17 @@ u_int AnimationChannel::FindPrevPosKey(float _playingTime, float _timePerKey) co
 	return prevKeyNum;
 }
 
-u_int AnimationChannel::FindPrevScaleKey(float _playingTime, float _timePerKey)const
+u_int AnimationChannel::FindPrevScaleKey(float _playingRatio)const
 {
 	u_int prevKeyNum = GetScaleKeyCnt() - 1;
+
+	float scaleKeyNum = GetScaleKeyByRatio(_playingRatio);
 
 	// 再生時間から前のキーを探す
 	for (u_int k_i = 0; k_i < GetScaleKeyCnt() - 1; k_i++)
 	{
-		float keyTime = scaleKeys[k_i + 1].startKeyNum * _timePerKey;
-		if (_playingTime < keyTime)
+		float keyNum = scaleKeys[k_i + 1].startKeyNum;
+		if (scaleKeyNum < keyNum)
 		{
 			prevKeyNum = k_i;
 			break;
@@ -63,15 +67,17 @@ u_int AnimationChannel::FindPrevScaleKey(float _playingTime, float _timePerKey)c
 	return prevKeyNum;
 }
 
-u_int AnimationChannel::FindPrevQuatKey(float _playingTime, float _timePerKey) const
+u_int AnimationChannel::FindPrevQuatKey(float _playingRatio) const
 {
 	u_int prevKeyNum = GetQuatKeyCnt() - 1;
+
+	float quatKeyNum = GetQuatKeyByRatio(_playingRatio);
 
 	// 再生時間から前のキーを探す
 	for (u_int k_i = 0; k_i < GetQuatKeyCnt() - 1; k_i++)
 	{
-		float keyTime = quaternionKeys[k_i + 1].startKeyNum * _timePerKey;
-		if (_playingTime < keyTime)
+		float keyNum = quaternionKeys[k_i + 1].startKeyNum;
+		if (quatKeyNum < keyNum)
 		{
 			prevKeyNum = k_i;
 			break;
@@ -106,54 +112,6 @@ const AnimKey_Q& AnimationChannel::GetQuatKey(u_int _keyNum) const
 	return quaternionKeys[_keyNum];
 }
 
-//DirectX::SimpleMath::Vector3 AnimationChannel::GetPosition(float _playingTime) const
-//{
-//	if (GetPosKeyCnt() == 1)	// キーが1つしかないなら
-//	{
-//		return positionKeys[0].parameter;
-//	}
-//
-//	// 前のキーを探す
-//	u_int prevKeyNum = FindPrevPosKey(_playingTime);
-//
-//	// 補間を考慮した座標を取得
-//	Vector3 lerpedPos = CalcInterpolatedPosition(prevKeyNum, _playingTime);
-//
-//	return lerpedPos;
-//}
-//
-//DirectX::SimpleMath::Vector3 AnimationChannel::GetScaling(float _playingTime) const
-//{
-//	if (GetScaleKeyCnt() == 1)
-//	{
-//		return scaleKeys[0].parameter;
-//	}
-//
-//	// 前のキーを探す
-//	u_int prevKeyNum = FindPrevScaleKey(_playingTime);
-//
-//	// 補間を考慮した座標を取得
-//	Vector3 lerpedScale = CalcInterpolatedScale(prevKeyNum, _playingTime);
-//
-//	return lerpedScale;
-//}
-//
-//DirectX::SimpleMath::Quaternion AnimationChannel::GetQuaternion(float _playingTime) const
-//{
-//	if (GetQuatKeyCnt() == 1)
-//	{
-//		return quaternionKeys[0].parameter;
-//	}
-//
-//	// 前のキーを探す
-//	u_int prevKeyNum = FindPrevQuatKey(_playingTime);
-//
-//	// 補間を考慮した座標を取得
-//	Quaternion lerpedQuat = CalcInterpolatedQuaternion(prevKeyNum, _playingTime);
-//
-//	return lerpedQuat;
-//}
-
 u_int AnimationChannel::GetPosKeyCnt() const
 {
 	return static_cast<u_int>(positionKeys.size());
@@ -177,6 +135,33 @@ u_int AnimationChannel::GetBodeIdx() const
 std::string AnimationChannel::GetName()
 {
 	return channelName;
+}
+
+float AnimationChannel::GetPosKeyByRatio(float _playingRatio) const
+{
+	// 最大のキー数を取得
+	u_int lastKeyNum = static_cast<u_int>(positionKeys.size()) - 1;
+	float maxKeyNum = positionKeys[lastKeyNum].startKeyNum;
+
+	return maxKeyNum * _playingRatio;
+}
+
+float AnimationChannel::GetScaleKeyByRatio(float _playingRatio) const
+{
+	// 最大のキー数を取得
+	u_int lastKeyNum = static_cast<u_int>(scaleKeys.size()) - 1;
+	float maxKeyNum = scaleKeys[lastKeyNum].startKeyNum;
+
+	return maxKeyNum * _playingRatio;
+}
+
+float AnimationChannel::GetQuatKeyByRatio(float _playingRatio) const
+{
+	// 最大のキー数を取得
+	u_int lastKeyNum = static_cast<u_int>(quaternionKeys.size()) - 1;
+	float maxKeyNum = quaternionKeys[lastKeyNum].startKeyNum;
+
+	return maxKeyNum * _playingRatio;
 }
 
 //DirectX::SimpleMath::Vector3 AnimationChannel::CalcInterpolatedPosition(u_int _prevKeyNum, float _playingTime) const

@@ -26,6 +26,10 @@ public:
 
 	void Init() override;
 
+	void LateUpdate() override;
+
+	void ImGuiSetting() override;
+
 	/// @brief ƒrƒ…[•ÏŠ·s—ñ
 	void UpdateViewMatrix();	
 

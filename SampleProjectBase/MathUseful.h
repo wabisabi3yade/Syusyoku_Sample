@@ -10,6 +10,7 @@ namespace Mathf
 	constexpr float radToDeg = 57.2958f;	//　ラジアン→角度
 	constexpr float degToRad = 0.0174533f;	//　角度→ラジアン
 	constexpr float epsilon = 1.1920e-7f;	// 最小正数
+	constexpr float smallValue = 0.0001f;	// 小さい値
 	constexpr float PI = std::numbers::pi_v<float>;	// π
 
 	/// @brief 値を0から最大値までで正規化する

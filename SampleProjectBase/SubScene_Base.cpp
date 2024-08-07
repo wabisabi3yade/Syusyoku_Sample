@@ -17,10 +17,6 @@ void SubScene_Base::DrawSetup()
 	// 画面クリアなど準備
 	Direct3D11::GetInstance()->GetRenderer()->SetUpDraw();
 
-	// ビュー変換行列を更新
-	Camera& mainCamera = systemManager->GetMainCamera();
-	mainCamera.UpdateViewMatrix();
-
 	// 光源の更新処理
 	sceneLights.Update();
 

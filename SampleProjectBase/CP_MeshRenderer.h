@@ -20,6 +20,10 @@ public:
 	/// @brief 描画するメッシュをセット
 	/// @param _renderMesh メッシュ群
 	void SetRenderMesh(Mesh_Group& _renderMesh);
+
+	/// @brief 描画するメッシュをセット
+	/// @param _assetName メッシュ名
+	void SetRenderMesh(const std::string& _assetName);
 	
 	// シェーダーの名前からシェーダーを変更する
 	void SetVertexShader(const std::string& _vsName);

@@ -3,6 +3,8 @@
 
 #include "AnimationChannel.h"
 
+struct BoneTransform;
+
 /// @brief アニメーションのデータクラス
 class AnimationData : public Asset_Base
 { 
@@ -15,7 +17,6 @@ private:
 
 	/// @brief 1キーごとの時間(s)
 	float timePerKey_s;
-
 public:
 	AnimationData() : animationTime_s(0.0f), timePerKey_s(0.0f) {}
 	~AnimationData() {}
@@ -50,21 +51,27 @@ public:
 
 	/// @brief スケールを求める
 	/// @param _boneId ボーンID
-	/// @param _playingTime 再生時間
+	/// @param_playingRatio 再生割合
 	/// @return アニメーションのスケール
-	DirectX::SimpleMath::Vector3 GetScale(u_int _boneId, float _playingTime) const;
+	DirectX::SimpleMath::Vector3 GetScale(u_int _boneId, float _playingRatio) const;
 
 	/// @brief クォータニオンを求める
 	/// @param _boneId ボーンID
-	/// @param _playingTime 再生時間
+	/// @param _playingRatio 再生割合
 	/// @return アニメーションのクォータニオン
-	DirectX::SimpleMath::Quaternion GetQuaternion(u_int _boneId, float _playingTime) const;
+	DirectX::SimpleMath::Quaternion GetQuaternion(u_int _boneId, float _playingRatio) const;
 
 	/// @brief 座標を求める
 	/// @param _boneId ボーンID
-	/// @param _playingTime 再生時間
+	/// @param_playingRatio 再生割合
 	/// @return アニメーションの座標
-	DirectX::SimpleMath::Vector3 GetPosition(u_int _boneId, float _playingTime) const;
+	DirectX::SimpleMath::Vector3 GetPosition(u_int _boneId, float _playingRatio) const;
+
+	/// @brief トランスフォーム取得
+	/// @param _boneId ボーンID
+	/// @param _playingRatio 再生割合
+	/// @return ボーンのトランスフォーム
+	BoneTransform GetTransform(u_int _boneId, float _playingRatio) const;
 
 	// アニメーション全体の時間を取得
 	float GetAnimationTime() const;

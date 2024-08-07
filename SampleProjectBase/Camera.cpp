@@ -12,6 +12,8 @@ constexpr float DEFAULT_FARZ = 1000.0f;
 
 void Camera::Init()
 {
+	name = "Camera";
+
 	// 初期値代入
 	focusPos = { 0, 0, 0 };
 	fov = DEFAULT_FOV;
@@ -30,13 +32,23 @@ void Camera::Init()
 	gameObject->AddComponent<CameraMove>();
 }
 
+void Camera::LateUpdate()
+{
+	UpdateViewMatrix();
+}
+
+void Camera::ImGuiSetting()
+{
+	ImGui::DragFloat("fov", &fov, 1.0f, 15.0f, 180.0f);
+}
+
 void Camera::UpdateViewMatrix()
 {
 	focusPos = GetTransform().position + GetTransform().Forward() * 1.0f;
 
-	if (Vector3::Distance(GetTransform().position, focusPos) < 0.0001f)
+	if (Vector3::Distance(GetTransform().position, focusPos) < Mathf::smallValue)
 	{
-		focusPos.z += 0.001f;
+		focusPos.z += Mathf::smallValue;
 	}
 
 	// ビュー変換行列を求める
@@ -46,7 +58,7 @@ void Camera::UpdateViewMatrix()
 		focusPos,	// 注視点
 		Vector3::Up // 上ベクトル
 	);
-	viewMatrix =viewMatrix.Transpose();
+	viewMatrix = viewMatrix.Transpose();
 
 	// ビュー変換行列をセット
 	Direct3D11::GetInstance()->GetRenderer()->GetParameter().SetView(viewMatrix);

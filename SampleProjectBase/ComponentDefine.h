@@ -17,5 +17,8 @@
 #include "CameraMove.h"
 #include "CameraInput.h"
 
+// プレイヤー
+#include "CP_Player.h"
+
 // テスト
 #include "CP_EaseTest.h"
