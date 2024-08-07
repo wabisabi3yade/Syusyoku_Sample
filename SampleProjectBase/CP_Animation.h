@@ -25,10 +25,10 @@ class CP_Animation : public Component
 	SkeletalMesh* pSkeletalMesh;
 
 	/// @brief アニメーションコントローラー
-	std::unique_ptr<AnimationController> pAnimController;
+	AnimationController* pAnimController;
 
-	/// @brief 現在再生しているアニメーションの時間(単位：s)
-	float playingTime_s;
+	/// @brief 現在再生しているアニメーションの割合（0.0f～1.0f）
+	float playingRatio;
 
 	/// @brief 再生速度
 	float playSpeed;
@@ -56,6 +56,9 @@ public:
 	/// @brief スケルタルメッシュをセット
 	/// @param _skeletalMesh 
 	void SetSkeletalMesh(SkeletalMesh& _skeletalMesh);
+
+	// アニメーションコントローラーをセット
+	void SetAnimationController(AnimationController& _controller);
 private:
 	
 	/// @brief 再生時間を進める
@@ -84,9 +87,6 @@ private:
 	void UpdateBoneBuffer();
 
 	// 再生中のアニメーションのノードを取得
-	AnimStateNode& GetCurrentNode();
-
-	// 再生中のアニメーションのデータを取得
-	const AnimationData& GetCurrentAnimData();
+	const AnimationNode_Base* GetCurrentNode();
 };
 

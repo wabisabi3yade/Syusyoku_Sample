@@ -139,12 +139,6 @@
     <Filter Include="ソース ファイル\Component\InGame">
       <UniqueIdentifier>{2e409227-6957-4c53-a14b-b823bba68a51}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\InGame\Player">
-      <UniqueIdentifier>{44a70ce8-ddd0-445a-b29f-38a25df60c0c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\InGame\Player\PlayerMove">
-      <UniqueIdentifier>{6c7be51c-6d1a-480a-89c3-1083e505d0d7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Component\InGame\Camera">
       <UniqueIdentifier>{76d719ff-9c96-4140-9f9b-437adc20c404}</UniqueIdentifier>
     </Filter>
@@ -249,9 +243,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Component\InGame\Bullet">
       <UniqueIdentifier>{dfebd937-7ad1-49d9-9a20-14cf68f37213}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\InGame\Player\PlayerInput">
-      <UniqueIdentifier>{3ead3f7f-0159-4fa0-bb22-adcd1bbdcafa}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Scene\InSceneSystem">
       <UniqueIdentifier>{b54ce796-f7aa-42ab-a133-8a4a2882bec4}</UniqueIdentifier>
@@ -433,9 +424,6 @@
     <Filter Include="ソース ファイル\Animation\AnimationController">
       <UniqueIdentifier>{8fc2ee27-4adf-4e9e-a7ed-7c12971b0fc1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Animation\AnimStateNode">
-      <UniqueIdentifier>{4a782538-0eeb-4285-9173-56a211c77dea}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Method">
       <UniqueIdentifier>{97c74d9a-604c-4101-a84b-21cf9d7de430}</UniqueIdentifier>
     </Filter>
@@ -454,20 +442,47 @@
     <Filter Include="ソース ファイル\Method\Interpolation\Ease">
       <UniqueIdentifier>{dec3ba62-c7fc-4fb1-a900-89708a0951b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Animation\AnimStateNode\AnimationData">
-      <UniqueIdentifier>{e36a3d30-c6cd-4c11-9242-337369ae187b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Animation\Interpolate\Inertial">
       <UniqueIdentifier>{d4f80aad-a5d1-4b02-a602-d79224bab1b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Animation\AnimStateNode\AnimationData\Channel">
-      <UniqueIdentifier>{57f40450-fae2-4e11-b412-be9f6b0cc442}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Method\Interpolation\Ease\Back">
       <UniqueIdentifier>{0701f74e-b247-4198-b227-cf9b3449b94c}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Method\Interpolation\Ease\Function">
       <UniqueIdentifier>{5a0a1e68-942c-4537-8c48-9c07c48df1d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimNode">
+      <UniqueIdentifier>{4a782538-0eeb-4285-9173-56a211c77dea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimNode\Single">
+      <UniqueIdentifier>{9eb5cc6a-89a5-466e-bed5-e5c9c2baf463}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimNode\AnimationData">
+      <UniqueIdentifier>{e36a3d30-c6cd-4c11-9242-337369ae187b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimNode\AnimationData\Channel">
+      <UniqueIdentifier>{57f40450-fae2-4e11-b412-be9f6b0cc442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimNode\Base">
+      <UniqueIdentifier>{914716c0-f649-4d87-944b-d8d45449ad5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimNode\Blend">
+      <UniqueIdentifier>{d0a695e2-7790-421a-bf72-b2df994ea1c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player">
+      <UniqueIdentifier>{f762aecb-5591-4a8a-8c14-1ff5ea162329}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Animation">
+      <UniqueIdentifier>{25db210a-bdf4-48a7-855a-eb3cdc16190a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Component">
+      <UniqueIdentifier>{44a70ce8-ddd0-445a-b29f-38a25df60c0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Component\PlayerMove">
+      <UniqueIdentifier>{6c7be51c-6d1a-480a-89c3-1083e505d0d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Component\PlayerInput">
+      <UniqueIdentifier>{3ead3f7f-0159-4fa0-bb22-adcd1bbdcafa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -621,7 +636,7 @@
       <Filter>ソース ファイル\System\Application\Input\GamePad</Filter>
     </ClCompile>
     <ClCompile Include="PlayerMove.cpp">
-      <Filter>ソース ファイル\Component\InGame\Player\PlayerMove</Filter>
+      <Filter>ソース ファイル\Object\Player\Component\PlayerMove</Filter>
     </ClCompile>
     <ClCompile Include="InputClass.cpp">
       <Filter>ソース ファイル\System\Application\Input</Filter>
@@ -663,7 +678,7 @@
       <Filter>ソース ファイル\Component\InGame\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="PlayerInput.cpp">
-      <Filter>ソース ファイル\Component\InGame\Player\PlayerInput</Filter>
+      <Filter>ソース ファイル\Object\Player\Component\PlayerInput</Filter>
     </ClCompile>
     <ClCompile Include="SF_GameObject.cpp">
       <Filter>ソース ファイル\Scene\SceneFunction\GameObject</Filter>
@@ -810,13 +825,13 @@
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\Bone</Filter>
     </ClCompile>
     <ClCompile Include="AnimationData.cpp">
-      <Filter>ソース ファイル\Animation\AnimStateNode\AnimationData</Filter>
+      <Filter>ソース ファイル\Animation\AnimNode\AnimationData</Filter>
     </ClCompile>
     <ClCompile Include="TreeNode.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode</Filter>
     </ClCompile>
     <ClCompile Include="AnimationChannel.cpp">
-      <Filter>ソース ファイル\Animation\AnimStateNode\AnimationData\Channel</Filter>
+      <Filter>ソース ファイル\Animation\AnimNode\AnimationData\Channel</Filter>
     </ClCompile>
     <ClCompile Include="VS_SkinnedAnimation.cpp">
       <Filter>ソース ファイル\Graphics\Shader\Vertex\SkinAnimation</Filter>
@@ -826,9 +841,6 @@
     </ClCompile>
     <ClCompile Include="Mesh_Group.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\MeshGroup</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimStateNode.cpp">
-      <Filter>ソース ファイル\Animation\AnimStateNode</Filter>
     </ClCompile>
     <ClCompile Include="AnimationController.cpp">
       <Filter>ソース ファイル\Animation\AnimationController</Filter>
@@ -841,6 +853,21 @@
     </ClCompile>
     <ClCompile Include="CP_EaseTest.cpp">
       <Filter>ソース ファイル\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationNode_Base.cpp">
+      <Filter>ソース ファイル\Animation\AnimNode\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleAnimationNode.cpp">
+      <Filter>ソース ファイル\Animation\AnimNode\Single</Filter>
+    </ClCompile>
+    <ClCompile Include="BlendAnimationNode.cpp">
+      <Filter>ソース ファイル\Animation\AnimNode\Blend</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Player.cpp">
+      <Filter>ソース ファイル\Object\Player\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAnimController.cpp">
+      <Filter>ソース ファイル\Object\Player\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -986,7 +1013,7 @@
       <Filter>ソース ファイル\System\Application\Input\GamePad</Filter>
     </ClInclude>
     <ClInclude Include="PlayerMove.h">
-      <Filter>ソース ファイル\Component\InGame\Player\PlayerMove</Filter>
+      <Filter>ソース ファイル\Object\Player\Component\PlayerMove</Filter>
     </ClInclude>
     <ClInclude Include="InputClass.h">
       <Filter>ソース ファイル\System\Application\Input</Filter>
@@ -1028,7 +1055,7 @@
       <Filter>ソース ファイル\Component\InGame\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="PlayerInput.h">
-      <Filter>ソース ファイル\Component\InGame\Player\PlayerInput</Filter>
+      <Filter>ソース ファイル\Object\Player\Component\PlayerInput</Filter>
     </ClInclude>
     <ClInclude Include="SF_GameObject.h">
       <Filter>ソース ファイル\Scene\SceneFunction\GameObject</Filter>
@@ -1193,13 +1220,13 @@
       <Filter>ソース ファイル\Graphics\Vertex</Filter>
     </ClInclude>
     <ClInclude Include="AnimationData.h">
-      <Filter>ソース ファイル\Animation\AnimStateNode\AnimationData</Filter>
+      <Filter>ソース ファイル\Animation\AnimNode\AnimationData</Filter>
     </ClInclude>
     <ClInclude Include="TreeNode.h">
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode</Filter>
     </ClInclude>
     <ClInclude Include="AnimationChannel.h">
-      <Filter>ソース ファイル\Animation\AnimStateNode\AnimationData\Channel</Filter>
+      <Filter>ソース ファイル\Animation\AnimNode\AnimationData\Channel</Filter>
     </ClInclude>
     <ClInclude Include="VS_SkinnedAnimation.h">
       <Filter>ソース ファイル\Graphics\Shader\Vertex\SkinAnimation</Filter>
@@ -1209,9 +1236,6 @@
     </ClInclude>
     <ClInclude Include="Mesh_Group.h">
       <Filter>ソース ファイル\Graphics\Mesh\MeshGroup</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimStateNode.h">
-      <Filter>ソース ファイル\Animation\AnimStateNode</Filter>
     </ClInclude>
     <ClInclude Include="AnimationController.h">
       <Filter>ソース ファイル\Animation\AnimationController</Filter>
@@ -1227,6 +1251,21 @@
     </ClInclude>
     <ClInclude Include="CP_EaseTest.h">
       <Filter>ソース ファイル\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationNode_Base.h">
+      <Filter>ソース ファイル\Animation\AnimNode\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleAnimationNode.h">
+      <Filter>ソース ファイル\Animation\AnimNode\Single</Filter>
+    </ClInclude>
+    <ClInclude Include="BlendAnimationNode.h">
+      <Filter>ソース ファイル\Animation\AnimNode\Blend</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Player.h">
+      <Filter>ソース ファイル\Object\Player\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAnimController.h">
+      <Filter>ソース ファイル\Object\Player\Animation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

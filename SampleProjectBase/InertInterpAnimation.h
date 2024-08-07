@@ -2,7 +2,7 @@
 #include "Bone.h"
 
 class AnimationData;
-class AnimStateNode;
+class SingleAnimationNode;
 
 /// @brief  慣性補間で行う
 class InertInterpAnimation
@@ -60,10 +60,10 @@ public:
 	~InertInterpAnimation() {}
 
 	/// @brief 遷移時の計算をする
-	/// @param _nextAnimation 次のアニメーション
+	/// @param _nextAnimation 遷移先のアニメーションの姿勢
 	/// @param _blendTime ブレンド時間
 	/// @return 計算成功したか？
-	bool Calculate(const AnimStateNode& _nextAnimation, float _blendTime);
+	bool Calculate(const std::vector<BoneTransform>& _nextAnimation, float _blendTime);
 
 	/// @brief ボーンのキャッシュを更新する
 	/// @param boneTransforms 更新するボーンのトランスフォーム
@@ -78,7 +78,7 @@ private:
 	/// @brief 座標の初期計算
 	/// @param _boneIdx ボーンのID
 	/// @param _blendTime 遷移時間
-	void BoneInitTransition(u_int _boneIdx, const AnimationData& _animData, float _blendTime);
+	void BoneInitTransition(u_int _boneIdx, const std::vector<BoneTransform>& _animData, float _blendTime);
 
 	/// @brief Vector3型の慣性補間計算
 	/// @param _transition 遷移情報

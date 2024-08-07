@@ -5,7 +5,7 @@ using namespace DirectX::SimpleMath;
 
 void Bone::CreateCombMtx(const DirectX::SimpleMath::Matrix& _parentMtx)
 {
-	combinationMatrix = offsetMatrix * animationMatrix * _parentMtx ;
+	combinationMatrix = offsetMatrix * GetAnimMtx() * _parentMtx;
 }
 
 void Bone::SetBoneName(const std::string& _boneName)
@@ -13,14 +13,14 @@ void Bone::SetBoneName(const std::string& _boneName)
 	boneName = _boneName;
 }
 
-void Bone::SetAnimationMtx(const DirectX::SimpleMath::Matrix& _animationMatrix)
-{
-	animationMatrix = _animationMatrix;
-}
-
 void Bone::SetOffeetMtx(const DirectX::SimpleMath::Matrix& _offsetMatrix)
 {
 	offsetMatrix = _offsetMatrix;
+}
+
+void Bone::SetAnimTransform(const BoneTransform& _transform)
+{
+	animationTransform = _transform;
 }
 
 void Bone::SetIndex(u_int _idx)
@@ -38,14 +38,25 @@ const DirectX::SimpleMath::Matrix& Bone::GetCombMtx() const
 	return combinationMatrix;
 }
  
-const DirectX::SimpleMath::Matrix& Bone::GetAnimMtx() const
+DirectX::SimpleMath::Matrix Bone::GetAnimMtx() const
 {
-	return animationMatrix;
+	// アニメーション行列を作成
+	Matrix scaleMtx = Matrix::CreateScale(animationTransform.scale);
+	Matrix rotationMtx = Matrix::CreateFromQuaternion(animationTransform.rotation);
+	Matrix transformMtx = Matrix::CreateTranslation(animationTransform.position);
+	Matrix animationMtx = scaleMtx * rotationMtx * transformMtx;
+
+	return animationMtx;
 }
 
 const DirectX::SimpleMath::Matrix& Bone::GetOffsetMtx() const
 {
 	return offsetMatrix;
+}
+
+BoneTransform Bone::GetAnimationTransform() const
+{
+	return animationTransform;
 }
 
 u_int Bone::GetIndex() const

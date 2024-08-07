@@ -12,10 +12,8 @@
 
 using namespace DirectX::SimpleMath;
 
-CP_Animation::CP_Animation() : pSkeletalMesh(nullptr), playingTime_s(0.0f), playSpeed(1.0f), isPlaying(false)
+CP_Animation::CP_Animation() : pSkeletalMesh(nullptr), pAnimController(nullptr), playingRatio(0.0f), playSpeed(1.0f), isPlaying(false)
 {
-	pAnimController = std::make_unique<AnimationController>();
-
 	isPlaying = true;
 }
 
@@ -62,7 +60,9 @@ void CP_Animation::ImGuiSetting()
 	std::string name = "アニメーション" + pAnimController->GetAssetName();
 	ImGui::Begin(TO_UTF8(name), &isWindowOpen);
 
-	ImGui::Text(TO_UTF8(std::string("再生時間 " + std::to_string(playingTime_s))));
+	ImGui::Text(TO_UTF8(std::string("再生割合 " + std::to_string(playingRatio))));
+	if(pAnimController->IsSetAnimation())
+	ImGui::Text(TO_UTF8(std::string("再生時間 " + std::to_string(playingRatio * pAnimController->GetCurrentNode()->GetAnimationTime()))));
 	ImGui::DragFloat("PlaySpeed", &playSpeed, 0.1f);
 	ImGui::Checkbox("Play", &isPlaying);
 
@@ -86,25 +86,34 @@ void CP_Animation::SetSkeletalMesh(SkeletalMesh& _skeletalMesh)
 	pSkeletalMesh = &_skeletalMesh;
 }
 
+void CP_Animation::SetAnimationController(AnimationController& _controller)
+{
+	pAnimController = &_controller;
+}
+
 void CP_Animation::ProgressPlayTime()
 {
-	// 時間を進める
-	playingTime_s += playSpeed * MainApplication::DeltaTime();
+	// 各アニメーションの割合を進める速度
+	float progressRatioSpeed = 1.0f / pAnimController->GetCurrentNode()->GetAnimationTime();
 
-	if(IsCanLoop())	// ループできるなら
-	playingTime_s = 0.0f;
+	// 時間を進める
+	playingRatio += progressRatioSpeed * playSpeed * MainApplication::DeltaTime();
+
+	if (IsCanLoop())	// ループできるなら
+		playingRatio = 0.0f;
 }
 
 void CP_Animation::UpdateAnimationMtx()
 {
 	// アニメーションコントローラーで更新する
-	pAnimController->Update(pSkeletalMesh->GetBoneList(), playingTime_s);
+	pAnimController->Update(pSkeletalMesh->GetBoneList(), playingRatio);
 }
 
 bool CP_Animation::IsCanPlay()
 {
 	// 再生中　かつ　現在のアニメーションがあるなら　更新する
 	if (!isPlaying) return false;
+	if (pAnimController == nullptr) return false;
 	if (!pAnimController->IsSetAnimation()) return false;
 
 	assert(pSkeletalMesh != nullptr && "スケルタルメッシュ非設定");
@@ -114,16 +123,16 @@ bool CP_Animation::IsCanPlay()
 
 bool CP_Animation::IsCanLoop()
 {
-	const AnimationData& pCurrentAnimation = GetCurrentAnimData();
+	const AnimationNode_Base* pCurrentAnimation = GetCurrentNode();
 
 	// そもそもアニメーションが設定されていないなら
 	if (!pAnimController->IsSetAnimation()) return false;
 
 	// ループ再生しないなら
-	if (!GetCurrentNode().GetIsLoop()) return false;
+	if (!pCurrentAnimation->GetIsLoop()) return false;
 
 	// アニメーションの全体時間を超えていないなら
-	if (playingTime_s < pCurrentAnimation.GetAnimationTime()) return false;
+	if (playingRatio < 1.0f) return false;
 
 	return true;
 }
@@ -146,7 +155,7 @@ void CP_Animation::UpdateNodeHierarchy(TreeNode& _treeNode, const Matrix& _paren
 
 		// コンビネーション行列を求める
 		pBone.CreateCombMtx(_parentMtx);
-		nodeMatrix = pBone.GetAnimMtx() ;
+		nodeMatrix = pBone.GetAnimMtx();
 	}
 
 	// ワールド変換の行列を更新させる
@@ -186,16 +195,7 @@ void CP_Animation::UpdateBoneBuffer()
 	}
 }
 
-AnimStateNode& CP_Animation::GetCurrentNode()
+const AnimationNode_Base* CP_Animation::GetCurrentNode()
 {
-	assert(pAnimController->IsSetAnimation() && "再生中のアニメーションノードがありません");
-
 	return pAnimController->GetCurrentNode();
-}
-
-const AnimationData& CP_Animation::GetCurrentAnimData()
-{
-	assert(pAnimController->IsSetAnimation() && "再生中のアニメーションデータがありません");
-
-	return pAnimController->GetCurrentNode().GetAnimationData();
 }

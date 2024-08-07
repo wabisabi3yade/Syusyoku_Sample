@@ -1,13 +1,13 @@
 #include "pch.h"
 #include "InertInterpAnimation.h"
 
-#include "AnimStateNode.h"
+#include "SingleAnimationNode.h"
 
 #include "Bone.h"
 
 using namespace DirectX::SimpleMath;
 
-bool InertInterpAnimation::Calculate(const AnimStateNode& _nextAnimation, float _blendTime)
+bool InertInterpAnimation::Calculate(const std::vector<BoneTransform>& _nextAnimation, float _blendTime)
 {
 	// キャッシュがないなら
 	if (!secondLastBoneCache.isEnable) return false;
@@ -25,15 +25,13 @@ bool InertInterpAnimation::Calculate(const AnimStateNode& _nextAnimation, float 
 	changeTimeTransform.clear();
 	changeTimeTransform.resize(boneCnt);
 
-	const AnimationData& animData = _nextAnimation.GetAnimationData();
-
 	for (u_int b_i = 0; b_i < boneCnt; b_i++)
 	{
 		// 遷移時のトランスフォームを取得
 		changeTimeTransform[b_i] = lastBoneCache.transform[b_i];
 
 		// ボーンの慣性補間の初期処理する
-		BoneInitTransition(b_i, animData, _blendTime);
+		BoneInitTransition(b_i, _nextAnimation, _blendTime);
 	}
 
 	return true;
@@ -84,19 +82,9 @@ DirectX::SimpleMath::Quaternion InertInterpAnimation::CalcBlendRot(u_int _boneId
 	return Quat::Multiply(q, changeTimeTransform[_boneIdx].rotation);
 }
 
-void InertInterpAnimation::BoneInitTransition(u_int _boneIdx, const AnimationData& _requestData, float _blendTime)
+void InertInterpAnimation::BoneInitTransition(u_int _boneIdx, const std::vector<BoneTransform>& _requestData, float _blendTime)
 {
-	BoneTransform requestTransform;
-
-	const AnimationChannel* channel = _requestData.FindChannel(_boneIdx);
-	// アニメーション対応ボーンなら
-	if (channel != nullptr)
-	{
-		// 今は仮で最初キーの姿勢にしている
-		requestTransform.position = channel->GetPosKey(0).parameter;
-		requestTransform.scale = channel->GetScaleKey(0).parameter;
-		requestTransform.rotation = channel->GetQuatKey(0).parameter;
-	}
+	const BoneTransform& requestTransform = _requestData[_boneIdx];
 
 	BoneTransform last = lastBoneCache.transform[_boneIdx];
 	BoneTransform secondLast = secondLastBoneCache.transform[_boneIdx];

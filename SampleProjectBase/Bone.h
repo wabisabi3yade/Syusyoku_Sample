@@ -1,5 +1,13 @@
 #pragma once
 
+// ボーンのトランスフォーム
+struct BoneTransform
+{
+	DirectX::SimpleMath::Vector3 position;
+	DirectX::SimpleMath::Vector3 scale{ 1.0f, 1.0f, 1.0f };
+	DirectX::SimpleMath::Quaternion rotation;
+};
+
 /// @brief モデルの1ボーンだけのクラス
 class Bone
 {
@@ -9,11 +17,11 @@ class Bone
 	/// @brief コンビネーション行列
 	DirectX::SimpleMath::Matrix combinationMatrix;
 
-	/// @brief アニメーション行列
-	DirectX::SimpleMath::Matrix animationMatrix;
-
 	/// @brief ボーンオフセット行列
 	DirectX::SimpleMath::Matrix offsetMatrix;
+
+	/// @brief アニメーションのトランスフォーム
+	BoneTransform animationTransform;
 
 	/// @brief ボーンインデックス
 	u_int boneIdx;
@@ -22,14 +30,18 @@ public:
 	Bone() : boneName(""), boneIdx(0) {}
 	~Bone() {}
 
+	/// @brief コンビネーション行列を作成
+	/// @param _parentMtx 親ノードまでのローカルトランスフォーム
 	void CreateCombMtx(const DirectX::SimpleMath::Matrix& _parentMtx);
 
 	// 名前セット
 	void SetBoneName(const std::string& _boneName);
 
 	// 行列セット
-	void SetAnimationMtx(const DirectX::SimpleMath::Matrix& _animationMatrix);
 	void SetOffeetMtx(const DirectX::SimpleMath::Matrix& _offsetMatrix);
+
+	// アニメーションのトランスフォームをセット
+	void SetAnimTransform(const BoneTransform& _transform);
 
 	// インデックスセット
 	void SetIndex(u_int _idx);
@@ -39,17 +51,12 @@ public:
 
 	// 行列を取得
 	const DirectX::SimpleMath::Matrix& GetCombMtx() const;
-	const DirectX::SimpleMath::Matrix& GetAnimMtx() const;
+	DirectX::SimpleMath::Matrix GetAnimMtx() const;
 	const DirectX::SimpleMath::Matrix& GetOffsetMtx() const;
+
+	// トランスフォームを取得
+	BoneTransform GetAnimationTransform() const;
 
 	// インデックスを取得
 	u_int GetIndex() const;
-};
-
-// ボーンのトランスフォーム
-struct BoneTransform
-{
-	DirectX::SimpleMath::Vector3 position;
-	DirectX::SimpleMath::Vector3 scale{ 1.0f, 1.0f, 1.0f };
-	DirectX::SimpleMath::Quaternion rotation;
 };

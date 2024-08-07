@@ -2,7 +2,6 @@
 #include "CP_MeshRenderer.h"
 
 // ƒVƒXƒeƒ€
-#include "AssetSetter.h"
 #include "AssetGetter.h"
 #include "InSceneSystemManager.h"
 #include "ShaderCollection.h"
@@ -35,6 +34,11 @@ void CP_MeshRenderer::Draw()
 void CP_MeshRenderer::SetRenderMesh(Mesh_Group& _renderMesh)
 {
 	pRenderMesh = &_renderMesh;
+}
+
+void CP_MeshRenderer::SetRenderMesh(const std::string& _assetName)
+{
+	pRenderMesh = AssetGetter::GetAsset<Mesh_Group>(_assetName);
 }
 
 void CP_MeshRenderer::SetVertexShader(const std::string& _vsName)

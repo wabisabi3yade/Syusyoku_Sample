@@ -50,16 +50,31 @@ public:
 	/// @param _quaternion クォータニオン
 	void AddQuatKey(float _startKeyNum, const DirectX::SimpleMath::Quaternion& _quaternion);
 
-	// 前のキー数を探す
-	u_int FindPrevPosKey(float _playingTime, float _timePerKey) const;
-	u_int FindPrevScaleKey(float _playingTime, float _timePerKey) const;
-	u_int FindPrevQuatKey(float _playingTime, float _timePerKey) const;
+	// 割合から前のキー数を探す
+	u_int FindPrevPosKey(float _playingRatio) const;
+	u_int FindPrevScaleKey(float _playingRatio) const;
+	u_int FindPrevQuatKey(float _playingRatio) const;
 
 	// 対応ボーンのIDをセット
 	void SetBoneIdx(u_int _boneIdx);
 
 	// 名前をセット
 	void SetName(const std::string& _name);
+
+	/// @brief 座標キー数を割合から求める
+	/// @param _ratio 再生割合
+	/// @return 座標キー数
+	float GetPosKeyByRatio(float _playingRatio) const;
+
+	/// @brief スケールキー数を割合から求める
+	/// @param _ratio 再生割合
+	/// @return スケールキー数
+	float GetScaleKeyByRatio(float _playingRatio) const;
+
+	/// @brief 回転量キー数を割合から求める
+	/// @param _ratio 再生割合
+	/// @return 回転量キー数
+	float GetQuatKeyByRatio(float _playingRatio) const;
 
 	/// @brief キー数から座標を取得
 	/// @param _keyNum キー数
@@ -101,13 +116,4 @@ public:
 
 	// 名前を取得
 	std::string GetName();
-private:
-
-	//// 再生時間から補間を考慮したパラメータを取得する
-	//// _prevKeyNum　前のキー数
-	//// _playingTime 再生時間
-	//DirectX::SimpleMath::Vector3 CalcInterpolatedPosition(u_int _prevKeyNum, float _playingTime) const;
-	//DirectX::SimpleMath::Vector3 CalcInterpolatedScale(u_int _prevKeyNum, float _playingTime) const;
-	//DirectX::SimpleMath::Quaternion CalcInterpolatedQuaternion(u_int _prevKeyNum, float _playingTime) const;
 };
-
