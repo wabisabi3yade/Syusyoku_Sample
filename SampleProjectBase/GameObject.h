@@ -17,7 +17,7 @@
 // シーンで使用するオブジェクト全般の基底クラス
 class GameObject
 {
-protected:
+private:
 	// アクティブ状態かどうか
 	bool isActive;	
 
@@ -33,27 +33,17 @@ protected:
 	// コンポーネントリスト
 	std::list<std::unique_ptr<Component>> pComponents;
 
+	/// @brief アクティブ状態のコンポーネント
+	std::list<Component*> pActiveComponents;
+
 	// セーブをする変数リスト
 	//std::unique_ptr<SaveJsonValue> saveValues;	
-
-	// アクティブ変更時処理
-	void ActiveProcess();
-	void NotActiveProcess();
-
-	// 各オブジェクトの処理
-	virtual void Update() {};	
-	virtual void LateUpdate(){};
-	virtual void Draw() {};
-
-	// Jsonからロード
-	virtual void FromJson(const nlohmann::json& _jsonData) {};
-
-	virtual GameObject& Copy(const GameObject& _other);
 public:
+	/// @brief トランスフォーム
 	Transform transform;	
 
 	GameObject();
-	GameObject(const GameObject& _other);	
+	GameObject(const GameObject& _other);
 	GameObject& operator=(const GameObject& _other);
 	virtual ~GameObject() {};
 
@@ -71,6 +61,10 @@ public:
 	// コンポーネントを取得
 	template<typename T> T* GetComponent();	
 
+	// アクティブ配列から外す・追加する
+	void RemoveActiveComponent(Component& _removeComonent);
+	void AddActiveComponent(Component& _addComonentComonent);
+
 	// ImGuiの設定
 	virtual void ImGuiSet();	
 
@@ -87,6 +81,26 @@ public:
 	bool GetIsActive() const { return isActive; }
 	const Tag& GetTag() { return tag; }
 	const Layer& GetLayer() { return layer; }
+
+private:
+	// アクティブ変更時処理
+	void ActiveProcess();
+	void NotActiveProcess();
+
+	// Jsonからロード
+	virtual void FromJson(const nlohmann::json& _jsonData) {};
+
+	virtual GameObject& Copy(const GameObject& _other);
+
+	/// @brief 所持している配列にコンポーネントが存在するか
+	/// @param _pCheckComponent 確認するコンポーネント
+	/// @return 存在したか？
+	bool IsExistComponent(const Component& _pCheckComponent);
+
+	/// @brief	アクティブ状態のコンポーネント内にが存在するか
+	/// @param _pCheckComponent 確認するコンポーネント
+	/// @return 存在したか？
+	bool IsExistActiveComponent(const Component& _pCheckComponent);
 };
 
 template<typename T>
@@ -96,16 +110,17 @@ inline T* GameObject::AddComponent()
 	std::unique_ptr<Component> createComp = ComponentFactory::Create<T>();
 	createComp->gameObject = this;
 
-	// 初期処理
-	createComp->Init();	
-
 	// 戻り値を取得
-	T* retPtr = static_cast<T*>(createComp.get());	
+	T& comp = static_cast<T&>(*createComp.get());
 
 	// リストに追加
-	pComponents.push_back(std::move(createComp));	
+	pComponents.push_back(std::move(createComp));
+	pActiveComponents.push_back(&comp);
 
-	return retPtr;
+	// 初期処理
+	comp.Init();	
+
+	return &comp;
 }
 
 template<typename T>

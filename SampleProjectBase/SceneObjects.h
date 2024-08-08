@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "Light.h"
 
-class Camera;
+class CP_Camera;
 
 using Objects = std::unordered_map<std::string, std::unique_ptr<GameObject>>;
 

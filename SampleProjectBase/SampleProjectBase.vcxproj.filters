@@ -484,6 +484,21 @@
     <Filter Include="ソース ファイル\Object\Player\Component\PlayerInput">
       <UniqueIdentifier>{3ead3f7f-0159-4fa0-bb22-adcd1bbdcafa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Move">
+      <UniqueIdentifier>{734f0100-f685-4552-a879-1602de240990}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\State">
+      <UniqueIdentifier>{f4f53bc5-3bc6-468c-8cde-dbcb85d68582}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Move\PlayerState">
+      <UniqueIdentifier>{30b7385e-e266-4a05-8e63-0b4ecc32555c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Move\Controller">
+      <UniqueIdentifier>{8007b5fd-3163-4427-92a4-a7ace58b8af8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Move\PlayerState\Move">
+      <UniqueIdentifier>{10a12211-e7fc-402b-94f0-347b6af8ff71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -635,7 +650,7 @@
     <ClCompile Include="GamePad.cpp">
       <Filter>ソース ファイル\System\Application\Input\GamePad</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerMove.cpp">
+    <ClCompile Include="CP_PlayerMove.cpp">
       <Filter>ソース ファイル\Object\Player\Component\PlayerMove</Filter>
     </ClCompile>
     <ClCompile Include="InputClass.cpp">
@@ -700,9 +715,6 @@
     </ClCompile>
     <ClCompile Include="InSceneSystemManager.cpp">
       <Filter>ソース ファイル\Scene\InSceneSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="SinCurve.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="..\ThirdParty\imgui\include\imgui.cpp">
       <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
@@ -869,6 +881,15 @@
     <ClCompile Include="PlayerAnimController.cpp">
       <Filter>ソース ファイル\Object\Player\Animation</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerState_Base.cpp">
+      <Filter>ソース ファイル\Object\Player\Move\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerActionController.cpp">
+      <Filter>ソース ファイル\Object\Player\Move\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMoveState.cpp">
+      <Filter>ソース ファイル\Object\Player\Move\PlayerState\Move</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -1012,7 +1033,7 @@
     <ClInclude Include="GamePad.h">
       <Filter>ソース ファイル\System\Application\Input\GamePad</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerMove.h">
+    <ClInclude Include="CP_PlayerMove.h">
       <Filter>ソース ファイル\Object\Player\Component\PlayerMove</Filter>
     </ClInclude>
     <ClInclude Include="InputClass.h">
@@ -1080,9 +1101,6 @@
     </ClInclude>
     <ClInclude Include="InSceneSystemManager.h">
       <Filter>ソース ファイル\Scene\InSceneSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="SinCurve.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="..\ThirdParty\imgui\include\imconfig.h">
       <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
@@ -1266,6 +1284,15 @@
     </ClInclude>
     <ClInclude Include="PlayerAnimController.h">
       <Filter>ソース ファイル\Object\Player\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState_Base.h">
+      <Filter>ソース ファイル\Object\Player\Move\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerActionController.h">
+      <Filter>ソース ファイル\Object\Player\Move\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMoveState.h">
+      <Filter>ソース ファイル\Object\Player\Move\PlayerState\Move</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,13 +1,13 @@
 #pragma once
 #include "Component.h"
 
-class Camera;
+class CP_Camera;
 class CameraMove : public Component
 {
 	const GameObject* pPlayer{ nullptr };	// プレイヤーのオブジェクト
 
 	// カメラクラス
-	Camera* camera{ nullptr };
+	CP_Camera* camera{ nullptr };
 
 	// カメラの移動速度
 	float moveSpeed{ 0.0f };

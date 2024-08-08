@@ -137,6 +137,8 @@ void MainApplication::GameLoop()
 
 		// スワップチェイン
 		Direct3D11::GetInstance()->GetRenderer()->Swap();
+
+		pVariableFps->ProcessEnd();
 	}
 }
 

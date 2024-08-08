@@ -6,7 +6,7 @@
 #include "CollisionChecker.h"
 
 // カメラ
-class Camera;
+class CP_Camera;
 
 // シーン内部のシステムのインスタンスを持つクラス
 class InSceneSystemManager : public Singleton_Base<InSceneSystemManager>
@@ -14,7 +14,7 @@ class InSceneSystemManager : public Singleton_Base<InSceneSystemManager>
 	friend class Singleton_Base<InSceneSystemManager>;
 
 	/// @brief メインカメラ
-	Camera* pMainCamera;
+	CP_Camera* pMainCamera;
 	
 	/// @brief シーンオブジェクト
 	std::unique_ptr<SceneObjects> pSceneObjects;
@@ -33,7 +33,7 @@ public:
 
 	/// @brief  メインカメラを取得
 	/// @return 
-	Camera& GetMainCamera();
+	CP_Camera& GetMainCamera();
 
 	/// @brief シーンのオブジェクト配列を取得
 	/// @return オブジェクト配列の参照

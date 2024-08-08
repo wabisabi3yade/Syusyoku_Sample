@@ -2,7 +2,7 @@
 #include "Component.h"
 
 // ゲーム内カメラクラス
-class Camera : public Component
+class CP_Camera : public Component
 {
 	/// @brief 注視点
 	DirectX::SimpleMath::Vector3 focusPos{ 0.0f, 0.0f, 0.0f };
