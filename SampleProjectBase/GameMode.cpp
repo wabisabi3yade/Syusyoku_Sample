@@ -8,7 +8,7 @@ GameObject* GameMode::GetPlayer(u_int _idx)
 	return pPlayers[_idx];
 }
 
-void GameMode::SetCamera(Camera& _camera)
+void GameMode::SetCamera(CP_Camera& _camera)
 {
 	pMainCamera = &_camera;
 }

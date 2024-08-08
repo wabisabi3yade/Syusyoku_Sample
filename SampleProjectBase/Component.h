@@ -5,16 +5,16 @@ class GameObject;
 class Component
 {
 	friend class GameObject;
-
-protected:
-	// 活動フラグ
+	
+	// 活動状態
 	bool isEnable;
 
+protected:
 	// 名前
 	std::string name;	
 
 	// このコンポーネントの所持オブジェクト
-	GameObject* gameObject;	
+	GameObject* gameObject;
 
 public:
 	Component() : isEnable(true), name(""), gameObject(nullptr) {}
@@ -32,11 +32,20 @@ public:
 	// 描画処理
 	virtual void Draw() {};
 
+	// ImGuiでパラメータを変える処理
+	virtual void ImGuiSetting() {};
+
+	/// @brief 活動状態を切り替える
+	void TransitionEnable();
+
+	// 名前を取得
+	std::string GetName() const;
+
 	// オブジェクトのトランスフォーム
 	Transform& GetTransform() const;
 
-	// ImGuiでパラメータを変える処理
-	virtual void ImGuiSetting() {};	
+	// ゲームオブジェクト取得	
+	const GameObject& GetGameObject() const { return *gameObject; }
 
-	const GameObject& GetGameObject() { return *gameObject; }	// ゲームオブジェクト取得
+	bool GetIsEnable() const;
 };

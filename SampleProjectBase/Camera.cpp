@@ -10,7 +10,7 @@ constexpr float DEFAULT_FOV = 45.0f;
 constexpr float DEFAULT_NEARZ = 0.1f;
 constexpr float DEFAULT_FARZ = 1000.0f;
 
-void Camera::Init()
+void CP_Camera::Init()
 {
 	name = "Camera";
 
@@ -32,17 +32,17 @@ void Camera::Init()
 	gameObject->AddComponent<CameraMove>();
 }
 
-void Camera::LateUpdate()
+void CP_Camera::LateUpdate()
 {
 	UpdateViewMatrix();
 }
 
-void Camera::ImGuiSetting()
+void CP_Camera::ImGuiSetting()
 {
 	ImGui::DragFloat("fov", &fov, 1.0f, 15.0f, 180.0f);
 }
 
-void Camera::UpdateViewMatrix()
+void CP_Camera::UpdateViewMatrix()
 {
 	focusPos = GetTransform().position + GetTransform().Forward() * 1.0f;
 
@@ -64,24 +64,24 @@ void Camera::UpdateViewMatrix()
 	Direct3D11::GetInstance()->GetRenderer()->GetParameter().SetView(viewMatrix);
 }
 
-void Camera::SetPerspective(u_int _viewPortSlot)
+void CP_Camera::SetPerspective(u_int _viewPortSlot)
 {
 	isOrthographic = false;
 	UpdatePerspective(_viewPortSlot);
 }
 
-void Camera::SetOrthographic(u_int _viewPortSlot)
+void CP_Camera::SetOrthographic(u_int _viewPortSlot)
 {
 	isOrthographic = true;
 	UpdateOrthographic(_viewPortSlot);
 }
 
-void Camera::SetFocusPos(const DirectX::SimpleMath::Vector3& _focusPos)
+void CP_Camera::SetFocusPos(const DirectX::SimpleMath::Vector3& _focusPos)
 {
 	focusPos = _focusPos;
 }
 
-void Camera::UpdatePerspective(u_int _viewPortSlot)
+void CP_Camera::UpdatePerspective(u_int _viewPortSlot)
 {
 	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
 
@@ -103,7 +103,7 @@ void Camera::UpdatePerspective(u_int _viewPortSlot)
 	param.SetProjection(mat);
 }
 
-void Camera::UpdateOrthographic(u_int _viewPortSlot)
+void CP_Camera::UpdateOrthographic(u_int _viewPortSlot)
 {
 	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
 

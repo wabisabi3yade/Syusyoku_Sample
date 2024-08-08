@@ -1,7 +1,7 @@
 #pragma once
 #include "Component.h"
 
-class PlayerMove;
+class CP_PlayerMove;
 
 class PlayerInput :
     public Component
@@ -9,7 +9,7 @@ class PlayerInput :
     InputClass* input{nullptr};  // 入力
 
     // 操作処理に関係のあるコンポーネント
-    PlayerMove* move{nullptr};   // 移動
+    CP_PlayerMove* move{nullptr};   // 移動
 
 public:
     using Component::Component;

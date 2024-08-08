@@ -81,6 +81,9 @@
     <ClCompile Include="BlendAnimationNode.cpp" />
     <ClCompile Include="CP_Player.cpp" />
     <ClCompile Include="PlayerAnimController.cpp" />
+    <ClCompile Include="PlayerActionController.cpp" />
+    <ClCompile Include="PlayerMoveState.cpp" />
+    <ClCompile Include="PlayerState_Base.cpp" />
     <ClCompile Include="SingleAnimationNode.cpp" />
     <ClCompile Include="AnimationNode_Base.cpp" />
     <ClCompile Include="Bone.cpp" />
@@ -135,7 +138,7 @@
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="PlaneMesh.cpp" />
     <ClCompile Include="PlayerInput.cpp" />
-    <ClCompile Include="PlayerMove.cpp" />
+    <ClCompile Include="CP_PlayerMove.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="PS_Unlit.cpp" />
     <ClCompile Include="SaveJson.cpp" />
@@ -146,7 +149,6 @@
     <ClCompile Include="SF_Light.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderCollection.cpp" />
-    <ClCompile Include="SinCurve.cpp" />
     <ClCompile Include="SkeletalMesh.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SpotLight.cpp" />
@@ -205,6 +207,9 @@
     <ClInclude Include="BlendAnimationNode.h" />
     <ClInclude Include="CP_Player.h" />
     <ClInclude Include="PlayerAnimController.h" />
+    <ClInclude Include="PlayerActionController.h" />
+    <ClInclude Include="PlayerMoveState.h" />
+    <ClInclude Include="PlayerState_Base.h" />
     <ClInclude Include="SingleAnimationNode.h" />
     <ClInclude Include="AnimationNode_Base.h" />
     <ClInclude Include="Bone.h" />
@@ -264,7 +269,7 @@
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="PlaneMesh.h" />
     <ClInclude Include="PlayerInput.h" />
-    <ClInclude Include="PlayerMove.h" />
+    <ClInclude Include="CP_PlayerMove.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="PS_Unlit.h" />
     <ClInclude Include="SaveJson.h" />
@@ -278,7 +283,6 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderCollection.h" />
     <ClInclude Include="ShaderDefine.h" />
-    <ClInclude Include="SinCurve.h" />
     <ClInclude Include="SkeletalMesh.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SpotLight.h" />

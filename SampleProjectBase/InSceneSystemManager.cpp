@@ -22,7 +22,7 @@ void InSceneSystemManager::Init()
 	CreateMainCamera();
 }
 
-Camera& InSceneSystemManager::GetMainCamera()
+CP_Camera& InSceneSystemManager::GetMainCamera()
 {
 	return *pMainCamera;
 }
@@ -40,5 +40,5 @@ SceneLights& InSceneSystemManager::GetSceneLights()
 void InSceneSystemManager::CreateMainCamera()
 {
 	GameObject& cameraObject = ObjectFunc::CreateEmpty("MainCamera");
-	pMainCamera = cameraObject.AddComponent<Camera>();
+	pMainCamera = cameraObject.AddComponent<CP_Camera>();
 }

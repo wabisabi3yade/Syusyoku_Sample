@@ -48,15 +48,39 @@ GameObject& GameObject::Copy(const GameObject& _other)
 
 	// パラメータ代入
 	transform = _other.transform;
-	isActive = _other.isActive;	
+	isActive = _other.isActive;
 	name = _other.name;
 	tag = _other.tag;
 	layer = _other.layer;
 
 	// コンポーネントをコピー
-	std::list<std::unique_ptr<Component>> pComponents;	
+	std::list<std::unique_ptr<Component>> pComponents;
 
 	return *this;
+}
+
+bool GameObject::IsExistComponent(const Component& _pCheckComponent)
+{
+	auto itr = std::find_if(pComponents.begin(), pComponents.end(), [&](const std::unique_ptr<Component>& comp)
+		{
+			return comp.get() == &_pCheckComponent;
+		});
+
+	if (itr != pComponents.end()) return true;
+
+	return false;
+}
+
+bool GameObject::IsExistActiveComponent(const Component& _pCheckComponent)
+{
+	auto itr = std::find_if(pActiveComponents.begin(), pActiveComponents.end(), [&](Component* comp)
+		{
+			return comp == &_pCheckComponent;
+		});
+
+	if (itr != pActiveComponents.end()) return true;
+
+	return false;
 }
 
 GameObject::GameObject() : isActive(true), name("")
@@ -78,9 +102,8 @@ void GameObject::UpdateBase()
 {
 	if (!isActive) return;
 
-	for (auto& itr : pComponents)
+	for (auto& itr : pActiveComponents)
 	{
-		if (!itr->isEnable) continue;
 		itr->Update();
 	}
 }
@@ -89,11 +112,8 @@ void GameObject::LateUpdateBase()
 {
 	if (!isActive) return;
 
-	LateUpdate();
-
-	for (auto& itr : pComponents)
+	for (auto& itr : pActiveComponents)
 	{
-		if (!itr->isEnable) continue;
 		itr->LateUpdate();
 	}
 }
@@ -105,11 +125,8 @@ void GameObject::DrawBase()
 	// 方向ベクトルを更新する
 	transform.UpdateVector();
 
-	Draw();
-
-	for (auto& itr : pComponents)
+	for (auto& itr : pActiveComponents)
 	{
-		if (!itr->isEnable) continue;
 		itr->Draw();
 	}
 }
@@ -120,6 +137,31 @@ void GameObject::Destroy()
 	SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->
 		GetSceneObjects();
 	sceneObjects.DeleteObj(*this);
+}
+
+void GameObject::RemoveActiveComponent(Component& _removeComonent)
+{
+	pActiveComponents.remove(&_removeComonent);
+}
+
+void GameObject::AddActiveComponent(Component& _addComonent)
+{
+	// 所持していないなら
+	if (!IsExistComponent(_addComonent))
+	{
+		HASHI_DEBUG_LOG(_addComonent.name + ":オブジェクトにコンポーネントを所持できていません");
+		return;
+	}
+
+	// アクティブ配列にあるなら
+	if (IsExistActiveComponent(_addComonent))
+	{
+		HASHI_DEBUG_LOG(_addComonent.name + ":既にアクティブ状態です");
+		return;
+	}
+
+	// 追加
+	pActiveComponents.push_back(&_addComonent);
 }
 
 void GameObject::ImGuiSet()
@@ -134,12 +176,23 @@ void GameObject::ImGuiSet()
 
 		for (auto& itr : pComponents)
 		{
-			if (ImGui::TreeNode(itr->name.c_str()))
-			{
-				ImGui::Checkbox("isEnabled", &itr->isEnable);
-				itr->ImGuiSetting();
-				ImGui::TreePop();
-			}
+			if (!ImGui::TreeNode(itr->name.c_str())) continue;
+
+			std::string text = "isEnable:";
+			std::string status = "true";
+			if (!itr->GetIsEnable())
+				status = "false";
+
+			text += status;
+
+			ImGui::Text(text.c_str());
+			ImGui::SameLine();
+			if (ImGui::Button("Change"))
+				itr->TransitionEnable();
+
+			itr->ImGuiSetting();
+			ImGui::TreePop();
+
 		}
 
 		ImGui::TreePop();

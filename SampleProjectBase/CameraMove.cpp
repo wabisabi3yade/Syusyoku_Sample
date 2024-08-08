@@ -55,7 +55,7 @@ void CameraMove::Init()
 {
 	name = "CameraMove";
 
-	camera = gameObject->GetComponent<Camera>();	// カメラを取得する
+	camera = gameObject->GetComponent<CP_Camera>();	// カメラを取得する
 
 	if (camera == nullptr)
 		HASHI_DEBUG_LOG("Cameraコンポーネントがありません");

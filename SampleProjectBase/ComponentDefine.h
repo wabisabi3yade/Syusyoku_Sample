@@ -19,6 +19,7 @@
 
 // プレイヤー
 #include "CP_Player.h"
+#include "CP_PlayerMove.h"
 
 // テスト
 #include "CP_EaseTest.h"
