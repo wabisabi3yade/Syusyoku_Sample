@@ -2,12 +2,12 @@
 #include "Component.h"
 
 class CP_Camera;
-class CameraMove : public Component
+class CP_CameraMove : public Component
 {
-	const GameObject* pPlayer{ nullptr };	// プレイヤーのオブジェクト
+	const GameObject* pTargetObj{ nullptr };	// プレイヤーのオブジェクト
 
 	// カメラクラス
-	CP_Camera* camera{ nullptr };
+	CP_Camera* pCamera{ nullptr };
 
 	// カメラの移動速度
 	float moveSpeed{ 0.0f };

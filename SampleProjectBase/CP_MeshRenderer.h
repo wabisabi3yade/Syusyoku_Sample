@@ -7,8 +7,14 @@
 // メッシュ描画コンポーネント
 class CP_MeshRenderer : public CP_Renderer
 {
+	/// @brief 描画するメッシュ群
 	Mesh_Group* pRenderMesh{ nullptr };
 
+	/// @brief オフセット座標
+	DirectX::SimpleMath::Vector3 offsetPos;
+
+	/// @brief オフセット角度
+	DirectX::SimpleMath::Vector3 offsetAngles;
 public:
 	using CP_Renderer::CP_Renderer;
 	void Init();
@@ -48,5 +54,9 @@ private:
 	/// @param _wvp wvp行列
 	/// @param _material マテリアル
 	void ShaderSetup(Shader& _shader, RenderParam::WVP& _wvp, Material& _material);
+
+	/// @brief ローカル軸を考慮したオフセットに変換
+	/// @param _worldOffset 変換したいオフセット
+	DirectX::SimpleMath::Vector3 WorldOffset(const DirectX::SimpleMath::Vector3& _offset);
 };
 

@@ -47,9 +47,9 @@ public:
 		transform.position = _position;
 	}
 	// ‰ñ“]‚ğİ’è
-	static void SetRotation(const DirectX::SimpleMath::Vector3& _rotation)
+	static void SetRotation(const DirectX::SimpleMath::Vector3& _eularAngle)
 	{
-		transform.rotation = _rotation;
+		transform.SetEularAngles(_eularAngle);
 	}
 	// ‘å‚«‚³‚ğİ’è
 	static void SetScale(const DirectX::SimpleMath::Vector3& _scale)

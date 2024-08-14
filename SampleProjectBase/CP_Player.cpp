@@ -8,16 +8,25 @@ void CP_Player::Init()
 {
 	name = "Player";
 
-	pAnimController = std::make_unique<PlayerAnimController>();
-
+	// モデル関係
 	CP_MeshRenderer* pMeshRenderer = gameObject->AddComponent<CP_MeshRenderer>();
 	pMeshRenderer->SetRenderMesh("Knight D Pelegrini");
 	pMeshRenderer->SetVertexShader("VS_SkinAnimation");
 	pMeshRenderer->SetPixelShader("PS_Unlit");
+
+	// アニメーション関係生成
 	CP_Animation* pAnimation = gameObject->AddComponent<CP_Animation>();
+	pAnimController = std::make_unique<PlayerAnimController>();
 	pAnimation->SetAnimationController(*pAnimController);
 
-	pActionController = std::make_unique<PlayerActionController>(*gameObject);
+	// アクションコントローラー作成
+	pActionController = std::make_unique<PlayerActionController>(*gameObject, *pAnimController);
+
+	// アニメーションオブザーバー作成
+	pAnimObserver = std::make_unique<PlayerAnimObserver>(*pActionController);
+
+	// サブジェクトに渡す
+	pAnimController->AddObserver(*pAnimObserver);
 }
 
 void CP_Player::Update()
@@ -27,5 +36,16 @@ void CP_Player::Update()
 
 void CP_Player::ImGuiSetting()
 {
+	static bool isWindow = true;
+
+	if (ImGui::Button("Window"))
+		isWindow = !isWindow;
+
+	if (!isWindow) return;
+
+	ImGui::Begin("Player", &isWindow);
+
 	pActionController->ImGuiSetting();
+
+	ImGui::End();
 }

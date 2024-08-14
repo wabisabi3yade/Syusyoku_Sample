@@ -3,112 +3,103 @@
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
-void Transform::UpdateVector()
+Transform::Transform() : scale(DirectX::SimpleMath::Vector3::One), up(0,1,0), right(1,0,0), forward(0,0,1), pParent(nullptr)
 {
-	// 回転行列を求める
-	Matrix rotateMatrix = Matrix::CreateFromYawPitchRoll(
-		rotation.y * Mathf::degToRad,
-		rotation.x * Mathf::degToRad,
-		rotation.z * Mathf::degToRad
-	);
-
-	// 更新する
-	// rotateMatrix[0] → 右成分
-	right.x = rotateMatrix.m[0][0];
-	right.y = rotateMatrix.m[0][1];
-	right.z = rotateMatrix.m[0][2];
-
-	// rotateMatrix[1] → 上成分
-	up.x = rotateMatrix.m[1][0];
-	up.y = rotateMatrix.m[1][1];
-	up.z = rotateMatrix.m[1][2];
-
-	// rotateMatrix[2] → 前成分
-	forward.x = rotateMatrix.m[2][0];
-	forward.y = rotateMatrix.m[2][1];
-	forward.z = rotateMatrix.m[2][2];
 }
 
+void Transform::UpdateVector()
+{
+	// クォータニオンから回転行列を求める
+	Matrix rotateMatrix(Matrix::CreateFromQuaternion(rotation));
+
+	// 方向ベクトルを更新
+	right = Mtx::GetRightVector(rotateMatrix);
+	up = Mtx::GetUpVector(rotateMatrix);
+	forward = Mtx::GetForwardVector(rotateMatrix);
+}
 
 void Transform::ResetParameter()
 {
 	// パラメータ初期化
 	position = Vector3::Zero;
-	rotation = Vector3::Zero;
+	eularAngles = Vector3::Zero;
 	scale = Vector3::One;
-	quaternion = Quaternion::Identity;
+	rotation = Quaternion::Identity;
 }
 
 void Transform::LookAt(DirectX::SimpleMath::Vector3 _worldPos, const DirectX::SimpleMath::Vector3 _upVector)
 {
-	// 距離がないなら
-	Vector3 vec = _worldPos - position;
-	float distance = vec.Length();
-	if (distance == 0.0f)
-		position.z -= 0.0001f;	// 少しずらす
-	vec.Normalize();
+	Quaternion q = Quaternion::CreateFromRotationMatrix(Matrix::CreateBillboard(position, _worldPos, _upVector));
 
-	// 座標へのビュー行列を求め、逆行列にする
-	Matrix lookMatrix = DirectX::XMMatrixLookAtLH(position, _worldPos, Vector3::Up);
-	Matrix invertMatrix = lookMatrix.Invert();
-
-	// 更新する
-	// invertMatrix[0] → 右成分
-	right.x = invertMatrix.m[0][0];
-	right.y = invertMatrix.m[0][1];
-	right.z = invertMatrix.m[0][2];
-
-	// invertMatrix[1] → 上成分
-	up.x = invertMatrix.m[1][0];
-	up.y = invertMatrix.m[1][1];
-	up.z = invertMatrix.m[1][2];
-
-	// invertMatrix[2] → 前成分
-	forward.x = invertMatrix.m[2][0];
-	forward.y = invertMatrix.m[2][1];
-	forward.z = invertMatrix.m[2][2];
-
-	// Atan2関数からベクトルで角度を求める
-	// 正面ベクトルとする
-	forward = vec;
-	up = Vec3::Up;
-
-	// 右方向ベクトルを求める
-	right = forward.Cross(up);
-	right.Normalize();
-
-	// 真上方向を再計算する
-	up = right.Cross(forward);
-	up.Normalize();
-
-	// 各軸角度を求める
-	// Y軸
-	Vector3 v = up;
-
-	// 求めたい軸の成分を0(XZ平面)
-	v.y = 0.0f;
-	v.Normalize();
-
-	// 基準のワールド系の単位軸ベクトルと内積
-	float dotXZ = Vec3::Dot(v, Vec3::Right);
-	rotation.y = acosf(dotXZ) * Mathf::radToDeg - 90.0f;
-
-	// X軸
-	v = right;
-	v.x = 0.0f;
-	v.Normalize();
-	float dotYZ = Vec3::Dot(v, Vec3::Forward);
-	rotation.x = acosf(dotYZ) * Mathf::radToDeg;
-
-	// Z軸
-	v = forward;
-	v.z = 0.0f;
-	v.Normalize();
-	float dotXY = Vec3::Dot(v, Vec3::Right);
-	rotation.z = acosf(dotXY) * Mathf::radToDeg;
+	SetRotation(q);
 }
 
 void Transform::SetParent(Transform& _parent)
 {
 	pParent = &_parent;
+}
+
+void Transform::SetEularAngleX(float _angle_x)
+{
+	eularAngles.x = _angle_x;
+
+	// クォータニオンに反映させる
+	rotation = Quaternion::CreateFromYawPitchRoll(
+		eularAngles.y * Mathf::degToRad,
+		eularAngles.x * Mathf::degToRad,
+		eularAngles.z * Mathf::degToRad
+	);
+}
+
+void Transform::SetEularAngleY(float _angle_y)
+{
+	eularAngles.y = _angle_y;
+
+	// クォータニオンに反映させる
+	rotation = Quaternion::CreateFromYawPitchRoll(
+		eularAngles.y * Mathf::degToRad,
+		eularAngles.x * Mathf::degToRad,
+		eularAngles.z * Mathf::degToRad
+	);
+}
+
+void Transform::SetEularAngleZ(float _angle_z)
+{
+	eularAngles.z = _angle_z;
+
+	// クォータニオンに反映させる
+	rotation = Quaternion::CreateFromYawPitchRoll(
+		eularAngles.y * Mathf::degToRad,
+		eularAngles.x * Mathf::degToRad,
+		eularAngles.z * Mathf::degToRad
+	);
+}
+
+void Transform::SetEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
+{
+	eularAngles = _eularAngles;
+
+	// クォータニオンに反映させる
+	rotation = Quaternion::CreateFromYawPitchRoll(
+		eularAngles.y * Mathf::degToRad,
+		eularAngles.x * Mathf::degToRad,
+		eularAngles.z * Mathf::degToRad
+	);
+}
+
+void Transform::SetRotation(const DirectX::SimpleMath::Quaternion& _quaternion)
+{
+	rotation = _quaternion;
+
+	eularAngles = Quat::ToEulerAngles(rotation);
+}
+
+DirectX::SimpleMath::Vector3 Transform::GetEularAngles() const
+{
+	return eularAngles;
+}
+
+DirectX::SimpleMath::Quaternion Transform::GetRotation() const
+{
+	return rotation;
 }

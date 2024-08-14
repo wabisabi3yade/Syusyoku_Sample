@@ -9,6 +9,8 @@
 
 #include "InSceneSystemManager.h"
 
+#include "GameInput.h"
+
 // アセット初期化
 #include "AssetSetter.h"
 #include "Geometory.h"
@@ -75,10 +77,14 @@ void SceneManager::Release()
 
 	Geometory::Release();
 	InSceneSystemManager::Delete();
+	GameInput::Delete();
 }
 
 void SceneManager::Exec()
 {
+	// ゲーム内入力更新
+	GameInput::GetInstance()->Update();
+
 	// 大局シーンの実行
 	pNowBroadScene->Exec();
 

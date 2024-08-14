@@ -2,7 +2,7 @@
 #include "InSceneSystemManager.h"
 
 // ƒJƒƒ‰
-#include "Camera.h"
+#include "CP_Camera.h"
 
 using namespace SceneFunction;
 

@@ -2,7 +2,7 @@
 #include "SceneMoveInfo.h"
 
 // カメラ
-#include "Camera.h"
+#include "CP_Camera.h"
 
 // システム系
 #include "GameMode.h"

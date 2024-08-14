@@ -12,6 +12,7 @@
 
 constexpr u_int TEX_DIFUSSE_SLOT(0);	// ディフューズテクスチャのスロット
 
+using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
 void CP_MeshRenderer::Init()
@@ -28,7 +29,19 @@ void CP_MeshRenderer::Draw()
 
 	// メッシュ描画
 	float scaleTimes = pRenderMesh->GetScaleTimes();
-	DrawMesh(rendererParam.GetWVP(GetTransform()));
+
+	// オフセットを足す
+	Vector3 pos = GetTransform().position + WorldOffset(offsetPos);
+	
+	Quaternion offsetRot = DirectX::XMQuaternionRotationRollPitchYaw(
+		offsetAngles.x * Mathf::degToRad, 
+		offsetAngles.y * Mathf::degToRad,
+		offsetAngles.z * Mathf::degToRad
+	);
+
+	Quaternion rotation = offsetRot * GetTransform().GetRotation();
+
+	DrawMesh(rendererParam.GetWVP(pos, GetTransform().scale, rotation));
 }
 
 void CP_MeshRenderer::SetRenderMesh(Mesh_Group& _renderMesh)
@@ -57,6 +70,8 @@ void CP_MeshRenderer::SetPixelShader(const std::string& _psName)
 
 void CP_MeshRenderer::ImGuiSetting()
 {
+	ImGuiMethod::DragFloat3(offsetPos, "offset", 0.1f);
+	ImGuiMethod::DragFloat3(offsetAngles, "angles", 1.f);
 }
 
 Mesh_Group* CP_MeshRenderer::GetRenderMesh()
@@ -130,4 +145,13 @@ void CP_MeshRenderer::ShaderSetup(Shader& _shader, RenderParam::WVP& _wvp, Mater
 			break;
 		}
 	}
+}
+
+DirectX::SimpleMath::Vector3 CP_MeshRenderer::WorldOffset(const DirectX::SimpleMath::Vector3& _offset)
+{
+	Vector3 worldOffset = _offset.x * GetTransform().Right();
+	worldOffset += _offset.y * GetTransform().Up();
+	worldOffset += _offset.z * GetTransform().Forward();
+
+	return worldOffset;
 }

@@ -73,6 +73,6 @@ public:
 
 	void DebugInput();	// デバッグ確認
 
-	bool GetConnecting() { return (isResult == ERROR_SUCCESS); }	// 繋がってるか確認する
+	bool GetConnecting() const { return (isResult == ERROR_SUCCESS); }	// 繋がってるか確認する
 };
 

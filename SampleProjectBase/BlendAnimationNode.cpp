@@ -29,8 +29,19 @@ void BlendAnimationNode::ImGuiPlaying()
 	{
 		std::string animName = data.pAnimation->GetAssetName();
 		if (!ImGui::TreeNode(animName.c_str())) continue;
-;
+		;
 		ImGui::DragFloat(TO_UTF8("ブレンド"), &data.ratio, 0.01f, 0.0f, 1.0f);
+
+		ImGui::TreePop();
+	}
+
+	if (ImGui::TreeNode("Import"))
+	{
+		static char animName[256] = "";
+		ImGui::InputText("AnimName", animName, 256);
+
+		if (ImGui::Button("Set"))
+			SetAnimationData(animName);
 
 		ImGui::TreePop();
 	}
@@ -38,38 +49,27 @@ void BlendAnimationNode::ImGuiPlaying()
 	ImGui::End();
 }
 
-void BlendAnimationNode::ImGuiSetting()
-{
-	if (!ImGui::TreeNode("Import")) return;
-
-	static char animName[256] = "";
-	ImGui::InputText("AnimName", animName, 256);
-
-	if (ImGui::Button("Set"))
-	{
-		AnimationData* a = AssetGetter::GetAsset<AnimationData>(animName);
-		if (a)
-		{
-			SetAnimationData(*a);
-		}
-	}
-
-	ImGui::TreePop();
-}
-
 void BlendAnimationNode::Update(float _playingTime, BoneList& _boneList)
 {
 	// ブレンド値をターゲットに近づける
 	MoveCurBlend();
-	
+
 	// アニメーションをブレンドする
 	AnimationUpdate(_playingTime, _boneList);
 }
 
-void BlendAnimationNode::SetAnimationData(AnimationData& _animData)
+void BlendAnimationNode::SetAnimationData(const std::string& _animName)
 {
 	BlendData createData;
-	createData.pAnimation = &_animData;
+
+	AnimationData* pData = AssetGetter::GetAsset<AnimationData>(_animName);
+	if (!pData)
+	{
+		HASHI_DEBUG_LOG(_animName + ":がありませんでした");
+		return;
+	}
+
+	createData.pAnimation = pData;
 	createData.ratio = 0.0f;
 
 	blendDatas.push_back(createData);
@@ -201,7 +201,7 @@ void BlendAnimationNode::BlendUpdateAnimation(BlendPair& _blendPair, float _play
 		blendTransform.rotation = Quaternion::Slerp(p_Transform.rotation, n_Transform.rotation, weightRatio);
 
 		// トランスフォームをセット
-		Bone& bone =  _boneList.GetBone(b_i);
+		Bone& bone = _boneList.GetBone(b_i);
 		bone.SetAnimTransform(blendTransform);
 	}
 }
@@ -226,12 +226,12 @@ BlendAnimationNode::BlendData* BlendAnimationNode::FindBlendData(const std::stri
 void BlendAnimationNode::SetRatio(float& _ratio, float _setRatio)
 {
 #ifdef EDIT
-	if (_ratio < 0.0f || _ratio > 1.0f)
+	if (_setRatio < 0.0f || _setRatio > 1.0f)
 		HASHI_DEBUG_LOG("0.0～1.0の範囲で代入してください");
 #endif //  EDIT
 
 	// 範囲内に制限
-	_ratio = std::min(_ratio, 1.0f);
+	_ratio = std::min(_setRatio, 1.0f);
 	_ratio = std::max(_ratio, 0.0f);
 }
 

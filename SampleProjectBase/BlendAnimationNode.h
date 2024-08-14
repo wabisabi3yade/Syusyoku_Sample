@@ -4,6 +4,7 @@
 /// @brief 2つ以上のアニメーションをブレンドされているノード
 class BlendAnimationNode : public AnimationNode_Base
 {
+public:
 	// ブレンドに使用するデータ
 	struct BlendData
 	{
@@ -11,6 +12,7 @@ class BlendAnimationNode : public AnimationNode_Base
 		float ratio{ 0.0f };	// ブレンドの割合(0.0～1.0)
 	};
 
+private:
 	// ブレンドするときのペア
 	struct BlendPair
 	{
@@ -35,7 +37,6 @@ public:
 	~BlendAnimationNode() {}
 
 	void ImGuiPlaying() override;
-	void ImGuiSetting() override;
 
 	/// @brief 更新処理を行う
 	/// @param _playingRatio 再生の割合
@@ -44,7 +45,7 @@ public:
 
 	/// @brief アニメーションを追加する
 	/// @param _animData アニメーションデータ
-	void SetAnimationData(AnimationData& _animData) override;
+	void SetAnimationData(const std::string& _animName) override;
 
 	/// @brief 目標の割合をセットする
 	/// @param _ratio 割合

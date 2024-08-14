@@ -160,9 +160,6 @@
     <Filter Include="ソース ファイル\Component\InGame\Camera\CameraMove">
       <UniqueIdentifier>{6b4aa409-ce39-44d4-b402-3a73fef4490a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\InGame\Camera\CameraInput">
-      <UniqueIdentifier>{82bec4ac-dc99-4c37-a7ba-9b5b3727bd14}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\System\Application">
       <UniqueIdentifier>{5466729c-5537-4707-b5b1-05328d8fd375}</UniqueIdentifier>
     </Filter>
@@ -219,12 +216,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Component\InGame\Test">
       <UniqueIdentifier>{3c61951c-e04f-4483-8c93-ee48a0b9497f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\TankFireObj">
-      <UniqueIdentifier>{edfb3745-ef82-405e-ada1-6969c13f46aa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\TankFireObj\Tank">
-      <UniqueIdentifier>{30742376-b87f-4e1a-8e2c-fb6837c989bb}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Object\GameObject">
       <UniqueIdentifier>{54651696-70bc-4ca7-ba6d-128c5dc1b8e4}</UniqueIdentifier>
@@ -487,9 +478,6 @@
     <Filter Include="ソース ファイル\Object\Player\Move">
       <UniqueIdentifier>{734f0100-f685-4552-a879-1602de240990}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Method\State">
-      <UniqueIdentifier>{f4f53bc5-3bc6-468c-8cde-dbcb85d68582}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Object\Player\Move\PlayerState">
       <UniqueIdentifier>{30b7385e-e266-4a05-8e63-0b4ecc32555c}</UniqueIdentifier>
     </Filter>
@@ -498,6 +486,21 @@
     </Filter>
     <Filter Include="ソース ファイル\Object\Player\Move\PlayerState\Move">
       <UniqueIdentifier>{10a12211-e7fc-402b-94f0-347b6af8ff71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game">
+      <UniqueIdentifier>{ec24e437-56cb-46e1-a163-c0afcf9d909f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Move\PlayerState\Attack">
+      <UniqueIdentifier>{524a883d-d5ba-414d-86a7-c8dd375fabee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Observer">
+      <UniqueIdentifier>{4e6d4fd8-ad0a-4ca2-b4e8-3368ea14ea38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationObserver">
+      <UniqueIdentifier>{8fd6faa5-22ea-4057-adcb-8b28d6760af5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\Observe">
+      <UniqueIdentifier>{9c82779b-423c-4c8a-9678-f49bf3689f32}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -536,7 +539,7 @@
     <ClCompile Include="BlendState.cpp">
       <Filter>ソース ファイル\System\Application\DirectX3D11\Render\BlendState</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
+    <ClCompile Include="CP_Camera.cpp">
       <Filter>ソース ファイル\Object\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Direct3D11.cpp">
@@ -671,11 +674,8 @@
     <ClCompile Include="MathUseful.cpp">
       <Filter>ソース ファイル\Method\Useful\MathUseful</Filter>
     </ClCompile>
-    <ClCompile Include="CameraMove.cpp">
+    <ClCompile Include="CP_CameraMove.cpp">
       <Filter>ソース ファイル\Component\InGame\Camera\CameraMove</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraInput.cpp">
-      <Filter>ソース ファイル\Component\InGame\Camera\CameraInput</Filter>
     </ClCompile>
     <ClCompile Include="GameKey.cpp">
       <Filter>ソース ファイル\System\Application\Input\Keyboard</Filter>
@@ -881,7 +881,7 @@
     <ClCompile Include="PlayerAnimController.cpp">
       <Filter>ソース ファイル\Object\Player\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerState_Base.cpp">
+    <ClCompile Include="PlayerActState_Base.cpp">
       <Filter>ソース ファイル\Object\Player\Move\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerActionController.cpp">
@@ -889,6 +889,21 @@
     </ClCompile>
     <ClCompile Include="PlayerMoveState.cpp">
       <Filter>ソース ファイル\Object\Player\Move\PlayerState\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="GameInput.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAttackState.cpp">
+      <Filter>ソース ファイル\Object\Player\Move\PlayerState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="IObserever.cpp">
+      <Filter>ソース ファイル\Method\Observe</Filter>
+    </ClCompile>
+    <ClCompile Include="IAnimationObserver.cpp">
+      <Filter>ソース ファイル\Animation\AnimationObserver</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAnimObserver.cpp">
+      <Filter>ソース ファイル\Object\Player\Observer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -898,7 +913,7 @@
     <ClInclude Include="BlendState.h">
       <Filter>ソース ファイル\System\Application\DirectX3D11\Render\BlendState</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
+    <ClInclude Include="CP_Camera.h">
       <Filter>ソース ファイル\Object\Camera</Filter>
     </ClInclude>
     <ClInclude Include="CbProjectionSet.h">
@@ -1054,11 +1069,8 @@
     <ClInclude Include="MathUseful.h">
       <Filter>ソース ファイル\Method\Useful\MathUseful</Filter>
     </ClInclude>
-    <ClInclude Include="CameraMove.h">
+    <ClInclude Include="CP_CameraMove.h">
       <Filter>ソース ファイル\Component\InGame\Camera\CameraMove</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraInput.h">
-      <Filter>ソース ファイル\Component\InGame\Camera\CameraInput</Filter>
     </ClInclude>
     <ClInclude Include="GameKey.h">
       <Filter>ソース ファイル\System\Application\Input\Keyboard</Filter>
@@ -1285,7 +1297,7 @@
     <ClInclude Include="PlayerAnimController.h">
       <Filter>ソース ファイル\Object\Player\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerState_Base.h">
+    <ClInclude Include="PlayerActState_Base.h">
       <Filter>ソース ファイル\Object\Player\Move\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerActionController.h">
@@ -1293,6 +1305,21 @@
     </ClInclude>
     <ClInclude Include="PlayerMoveState.h">
       <Filter>ソース ファイル\Object\Player\Move\PlayerState\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="GameInput.h">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAttackState.h">
+      <Filter>ソース ファイル\Object\Player\Move\PlayerState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="IObserever.h">
+      <Filter>ソース ファイル\Method\Observe</Filter>
+    </ClInclude>
+    <ClInclude Include="IAnimationObserver.h">
+      <Filter>ソース ファイル\Animation\AnimationObserver</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAnimObserver.h">
+      <Filter>ソース ファイル\Object\Player\Observer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

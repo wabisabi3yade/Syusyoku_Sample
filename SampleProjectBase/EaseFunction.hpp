@@ -265,7 +265,7 @@ inline float Ease_Bounce::EaseOut(float _ratio) const
 		return n1 * _ratio * _ratio;
 	}
 	else if (_ratio < 2.0f / d1) {
-		_ratio -= 1.5 / d1;
+		_ratio -= 1.5f / d1;
 		return n1 * _ratio * _ratio + 0.75f;
 	}
 	else if (_ratio < 2.5f / d1) {

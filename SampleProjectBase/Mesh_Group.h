@@ -37,11 +37,11 @@ private:
 	/// @brief メッシュの種類
 	MeshType meshType;
 public:
-	Mesh_Group() : meshType(MeshType::None) {}
+	Mesh_Group() : meshType(MeshType::None), scaleTimes(1.0f) {}
 
 	/// @brief コンストラクタ
 	/// @param _meshType メッシュの種類
-	Mesh_Group(MeshType _meshType) : meshType(_meshType) {}
+	Mesh_Group(MeshType _meshType) : meshType(_meshType), scaleTimes(1.0f) {}
 	virtual ~Mesh_Group() {}
 
 	/// @brief メッシュを追加

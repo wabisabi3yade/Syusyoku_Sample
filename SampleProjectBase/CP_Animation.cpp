@@ -12,9 +12,8 @@
 
 using namespace DirectX::SimpleMath;
 
-CP_Animation::CP_Animation() : pSkeletalMesh(nullptr), pAnimController(nullptr), playingRatio(0.0f), playSpeed(1.0f), isPlaying(false)
+CP_Animation::CP_Animation() : pSkeletalMesh(nullptr), pAnimController(nullptr)
 {
-	isPlaying = true;
 }
 
 void CP_Animation::Init()
@@ -34,9 +33,6 @@ void CP_Animation::Init()
 void CP_Animation::LateUpdate()
 {
 	if (!IsCanPlay()) return;
-
-	// 再生時間を進める
-	ProgressPlayTime();
 
 	//// アニメーション行列を更新
 	UpdateAnimationMtx();
@@ -60,25 +56,9 @@ void CP_Animation::ImGuiSetting()
 	std::string name = "アニメーション" + pAnimController->GetAssetName();
 	ImGui::Begin(TO_UTF8(name), &isWindowOpen);
 
-	ImGui::Text(TO_UTF8(std::string("再生割合 " + std::to_string(playingRatio))));
-	if(pAnimController->IsSetAnimation())
-	ImGui::Text(TO_UTF8(std::string("再生時間 " + std::to_string(playingRatio * pAnimController->GetCurrentNode()->GetAnimationTime()))));
-	ImGui::DragFloat("PlaySpeed", &playSpeed, 0.1f);
-	ImGui::Checkbox("Play", &isPlaying);
-
 	pAnimController->ImGuiSetting();
 
 	ImGui::End();
-}
-
-void CP_Animation::AddAnimations(const std::string& _animName)
-{
-	pAnimController->AddAnimation(_animName);
-}
-
-void CP_Animation::RemoveAnimations(const std::string& _animName)
-{
-	pAnimController->RemoveAnimation(_animName);
 }
 
 void CP_Animation::SetSkeletalMesh(SkeletalMesh& _skeletalMesh)
@@ -91,48 +71,18 @@ void CP_Animation::SetAnimationController(AnimationController& _controller)
 	pAnimController = &_controller;
 }
 
-void CP_Animation::ProgressPlayTime()
-{
-	// 各アニメーションの割合を進める速度
-	float progressRatioSpeed = 1.0f / pAnimController->GetCurrentNode()->GetAnimationTime();
-
-	// 時間を進める
-	playingRatio += progressRatioSpeed * playSpeed * MainApplication::DeltaTime();
-
-	if (IsCanLoop())	// ループできるなら
-		playingRatio = 0.0f;
-}
-
 void CP_Animation::UpdateAnimationMtx()
 {
 	// アニメーションコントローラーで更新する
-	pAnimController->Update(pSkeletalMesh->GetBoneList(), playingRatio);
+	pAnimController->Update(pSkeletalMesh->GetBoneList());
 }
 
 bool CP_Animation::IsCanPlay()
 {
-	// 再生中　かつ　現在のアニメーションがあるなら　更新する
-	if (!isPlaying) return false;
+	// アニメーションコントローラー非設定
 	if (pAnimController == nullptr) return false;
-	if (!pAnimController->IsSetAnimation()) return false;
 
 	assert(pSkeletalMesh != nullptr && "スケルタルメッシュ非設定");
-
-	return true;
-}
-
-bool CP_Animation::IsCanLoop()
-{
-	const AnimationNode_Base* pCurrentAnimation = GetCurrentNode();
-
-	// そもそもアニメーションが設定されていないなら
-	if (!pAnimController->IsSetAnimation()) return false;
-
-	// ループ再生しないなら
-	if (!pCurrentAnimation->GetIsLoop()) return false;
-
-	// アニメーションの全体時間を超えていないなら
-	if (playingRatio < 1.0f) return false;
 
 	return true;
 }
@@ -193,9 +143,4 @@ void CP_Animation::UpdateBoneBuffer()
 		/*pMaterial->GetVertexShader().Map(1, &boneComb, sizeof(BoneCombMtricies));*/
 		pMaterial->GetVertexShader().UpdateSubResource(1, &boneComb);
 	}
-}
-
-const AnimationNode_Base* CP_Animation::GetCurrentNode()
-{
-	return pAnimController->GetCurrentNode();
 }

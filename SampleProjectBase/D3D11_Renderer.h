@@ -53,8 +53,6 @@ public:
 	D3D11_Renderer(HWND _hWnd);
 	~D3D11_Renderer();
 
-	static DirectX::SimpleMath::Matrix GetWorldMtx(Transform _transform);
-
 	void SetUpDraw();    // 描画処理の準備（クリアスクリーン）
 
 	void Swap();    //バックバッファをフロントバッファ(画面)へ表示
