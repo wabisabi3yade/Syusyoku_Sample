@@ -6,25 +6,29 @@
 #include "InSceneSystemManager.h"
 #include "ShaderCollection.h"
 
-// メッシュ
-#include "StaticMesh.h"
-#include "SkeletalMesh.h"
-
-constexpr u_int TEX_DIFUSSE_SLOT(0);	// ディフューズテクスチャのスロット
+#include "Geometory.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
+constexpr u_int TEX_DIFUSSE_SLOT(0);	// ディフューズテクスチャのスロット
+constexpr float ORIGIN_SCALE(0.3f);	// 原点表示のオブジェクトのスケール
+constexpr Color ORIGIN_COLOR(1.0f, 1.0f, 0.0f);	// 原点表示のオブジェクトの色
+
+CP_MeshRenderer::CP_MeshRenderer()
+	: pRenderMesh{nullptr}, isOriginDisplay(false)
+{
+}
+
 void CP_MeshRenderer::Init()
 {
 	name = "Mesh_Renderer";
-
-	// デフォルトのメッシュを入れておく
-	pRenderMesh = AssetGetter::GetAsset<StaticMesh>("SM_Cube");
 }
 
 void CP_MeshRenderer::Draw()
 {
+	if (!IsCanDraw()) return;
+
 	RenderParam& rendererParam = Direct3D11::GetInstance()->GetRenderer()->GetParameter();
 
 	// メッシュ描画
@@ -42,6 +46,9 @@ void CP_MeshRenderer::Draw()
 	Quaternion rotation = offsetRot * GetTransform().GetRotation();
 
 	DrawMesh(rendererParam.GetWVP(pos, GetTransform().scale, rotation));
+
+	// 原点表示
+	OriginDisplay();
 }
 
 void CP_MeshRenderer::SetRenderMesh(Mesh_Group& _renderMesh)
@@ -68,15 +75,35 @@ void CP_MeshRenderer::SetPixelShader(const std::string& _psName)
 	pRenderMesh->SetPixelShader(_psName);
 }
 
+void CP_MeshRenderer::SetOffsetPos(const DirectX::SimpleMath::Vector3& _offset)
+{
+	offsetPos = _offset;
+}
+
 void CP_MeshRenderer::ImGuiSetting()
 {
 	ImGuiMethod::DragFloat3(offsetPos, "offset", 0.1f);
 	ImGuiMethod::DragFloat3(offsetAngles, "angles", 1.f);
+	
+	// ImGui開いたときだけ原点表示
+	isOriginDisplay = true;
+}
+
+void CP_MeshRenderer::SetOffsetAngle(const DirectX::SimpleMath::Vector3& _offset)
+{
+	offsetAngles = _offset;
 }
 
 Mesh_Group* CP_MeshRenderer::GetRenderMesh()
 {
 	return pRenderMesh;
+}
+
+bool CP_MeshRenderer::IsCanDraw()
+{
+	if (pRenderMesh == nullptr) return false;
+
+	return true;
 }
 
 void CP_MeshRenderer::DrawMesh(RenderParam::WVP _wvp)
@@ -154,4 +181,18 @@ DirectX::SimpleMath::Vector3 CP_MeshRenderer::WorldOffset(const DirectX::SimpleM
 	worldOffset += _offset.z * GetTransform().Forward();
 
 	return worldOffset;
+}
+
+void CP_MeshRenderer::OriginDisplay()
+{
+#ifdef EDIT
+	if (!isOriginDisplay) return;
+
+	Geometory::SetPosition(GetTransform().position);
+	Geometory::SetScale(ORIGIN_SCALE * Vector3::One);
+	Geometory::SetColor(ORIGIN_COLOR);
+	Geometory::DrawCube();
+
+	isOriginDisplay = false;
+#endif // EDIT
 }

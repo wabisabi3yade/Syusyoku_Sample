@@ -15,8 +15,13 @@ class CP_MeshRenderer : public CP_Renderer
 
 	/// @brief オフセット角度
 	DirectX::SimpleMath::Vector3 offsetAngles;
+
+	/// @brief オブジェクトの原点を表示するか
+	bool isOriginDisplay;
 public:
-	using CP_Renderer::CP_Renderer;
+	CP_MeshRenderer();
+	~CP_MeshRenderer() {}
+
 	void Init();
 
 	void Draw() override;
@@ -35,11 +40,20 @@ public:
 	void SetVertexShader(const std::string& _vsName);
 	void SetPixelShader(const std::string& _psName);
 
+	// オフセット座標をセット
+	void SetOffsetPos(const DirectX::SimpleMath::Vector3& _offset);
+
+	// オフセット角度をセット(deg)
+	void SetOffsetAngle(const DirectX::SimpleMath::Vector3& _offset);
+
 	/// @brief 描画するメッシュを取得
 	/// @return メッシュ群
 	Mesh_Group* GetRenderMesh();
 
 private:
+	/// @brief 描画できるのか返す
+	/// @return 描画できるか？
+	bool IsCanDraw();
 
 	/// @brief メッシュを描画
 	void DrawMesh(RenderParam::WVP _wvp);
@@ -58,5 +72,8 @@ private:
 	/// @brief ローカル軸を考慮したオフセットに変換
 	/// @param _worldOffset 変換したいオフセット
 	DirectX::SimpleMath::Vector3 WorldOffset(const DirectX::SimpleMath::Vector3& _offset);
+
+	/// @brief 原点表示
+	void OriginDisplay();
 };
 

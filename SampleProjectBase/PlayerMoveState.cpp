@@ -7,9 +7,9 @@
 
 using namespace DirectX::SimpleMath;
 
-PlayerMoveState::PlayerMoveState(PlayerActionController& _controller) 
-	: PlayerActState_Base(_controller), currentSpeed(0.0f), maxSpeed(10.0f), acceleration(15.0f)
-{	
+PlayerMoveState::PlayerMoveState(PlayerActionController& _controller)
+	: PlayerActState_Base(_controller), currentSpeed(0.0f), maxSpeed(10.0f), acceleration(15.0f), rotateSpeed(2.0f)
+{
 }
 
 void PlayerMoveState::Init()
@@ -22,7 +22,7 @@ void PlayerMoveState::Update()
 {
 	Move();
 
-	
+
 	Rotation();
 }
 
@@ -38,6 +38,8 @@ void PlayerMoveState::ImGuiSetting()
 	ImGui::Text(text.c_str());
 
 	ImGui::DragFloat(TO_UTF8("‰Á‘¬“x"), &acceleration, 0.1f);
+
+	ImGui::DragFloat(TO_UTF8("‰ñ“]‘¬“x"), &rotateSpeed, 0.1f);
 
 	ImGui::TreePop();
 }
@@ -87,12 +89,12 @@ void PlayerMoveState::Rotation()
 {
 	if (!IsMoveInput()) return;
 
+	// “ü—Í•ûŒü‚ÖŒü‚¯‚é‰ñ“]—Ê‚ð‹‚ß‚é
 	Quaternion targetRotation = Quat::RotateToVector(moveVector);
 
+	// Œ»Ý‚Ì‰ñ“]—Ê‚ð‹…–ÊüŒ`•âŠÔ‚ÅŒü‚¯‚Ä‚¢‚­B
 	Quaternion rotation = pPlayerObject->transform.GetRotation();
-
-	rotation = Quaternion::Slerp(rotation, targetRotation, 0.1f);
-	 
+	rotation = Quaternion::Slerp(rotation, targetRotation, rotateSpeed * MainApplication::DeltaTime());
 	pPlayerObject->transform.SetRotation(rotation);
 }
 

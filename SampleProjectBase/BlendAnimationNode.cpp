@@ -9,7 +9,7 @@ constexpr float DUPLICATE_PLUS(0.01f);	// ブレンド値が重複したときの＋値
 
 using namespace DirectX::SimpleMath;
 
-BlendAnimationNode::BlendAnimationNode(std::string _nodeName) : AnimationNode_Base(_nodeName, NodeType::Blend), curBlendRatio(0.0f), targetBlendRatio(0.0f), ratioMoveTime(0.0f)
+BlendAnimationNode::BlendAnimationNode(std::string _nodeName) : AnimationNode_Base(_nodeName, NodeType::Blend)
 {
 	SetAnimationTime(1.0f);
 }
@@ -78,6 +78,11 @@ void BlendAnimationNode::SetAnimationData(const std::string& _animName)
 void BlendAnimationNode::SetTargetBlendRatio(float _ratio)
 {
 	SetRatio(targetBlendRatio, _ratio);
+
+	// 移動時間をリセットする
+	curRatioSmoothTime = 0.0f;
+	// 変更時の求める
+    changeBlendRatio = curBlendRatio;
 }
 
 void BlendAnimationNode::SetAnimationRatio(float _ratio, const std::string& _animName)
@@ -91,9 +96,22 @@ void BlendAnimationNode::SetAnimationRatio(float _ratio, const std::string& _ani
 
 void BlendAnimationNode::MoveCurBlend()
 {
-	// イージングなどで
+	// 割合移動時間
+	if (ratioSmoothTime < Mathf::epsilon)
+	{
+		curBlendRatio = targetBlendRatio;
+		return;
+	}
 
-	curBlendRatio = targetBlendRatio;
+	curRatioSmoothTime += MainApplication::DeltaTime();
+	curRatioSmoothTime = std::min(curRatioSmoothTime, ratioSmoothTime);
+
+	float easeValue = HashiTaku::Easing::EaseValue(curRatioSmoothTime / ratioSmoothTime, ratioMoveEase);
+
+	float subRatio = targetBlendRatio - changeBlendRatio;
+
+	// イージングで割合を移動する
+	curBlendRatio = changeBlendRatio + subRatio * easeValue;
 }
 
 void BlendAnimationNode::AnimationUpdate(float _playingRatio, BoneList& _boneList)

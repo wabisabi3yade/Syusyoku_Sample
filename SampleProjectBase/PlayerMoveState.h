@@ -15,6 +15,9 @@ class PlayerMoveState : public PlayerActState_Base
 
 	/// @brief ‰Á‘¬“x
 	float acceleration;
+
+	/// @brief ‰ñ“]‘¬“x
+	float rotateSpeed;
 public:
 	PlayerMoveState(PlayerActionController& _controller);
 	~PlayerMoveState() {}

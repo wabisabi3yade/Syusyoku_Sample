@@ -4,6 +4,8 @@
 #include "ComponentDefine.h"
 #include "GameObject.h"
 
+using namespace DirectX::SimpleMath;
+
 void CP_Player::Init()
 {
 	name = "Player";
@@ -13,6 +15,7 @@ void CP_Player::Init()
 	pMeshRenderer->SetRenderMesh("Knight D Pelegrini");
 	pMeshRenderer->SetVertexShader("VS_SkinAnimation");
 	pMeshRenderer->SetPixelShader("PS_Unlit");
+	pMeshRenderer->SetOffsetAngle(Vector3(0.f, 180.f, 0.f));
 
 	// アニメーション関係生成
 	CP_Animation* pAnimation = gameObject->AddComponent<CP_Animation>();

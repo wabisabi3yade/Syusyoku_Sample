@@ -6,48 +6,22 @@
 using namespace HashiTaku;
 
 // static変数初期化
-std::vector<std::unique_ptr<Ease_Base>> Easing::easeList;
-std::unordered_map<std::string, EaseKind> Easing::easeDictionary;
-std::unordered_map<std::string, EaseFuncKind> Easing::funcDictionary;
+std::unordered_map<EaseKind, std::unique_ptr<IEasing>> Easing::easeList;
+std::vector<std::string> Easing::easeNames;
 
-void HashiTaku::Easing::GetEase(EaseFunction& _easeFunc, EaseType _easeType)
+float HashiTaku::Easing::EaseValue(float _ratio, EaseKind _easeType)
 {
-	u_int easeId = static_cast<u_int>(_easeType.ease);
-
-	// イージングの関数オブジェクトを参照にセットする
-	switch (_easeType.funcType)
-	{
-	case HashiTaku::EaseFuncKind::In:
-		_easeFunc = [=](float x) { return easeList[easeId]->EaseIn(x); };
-		break;
-	case HashiTaku::EaseFuncKind::Out:
-		_easeFunc = [=](float x) { return easeList[easeId]->EaseOut(x); };
-		break;
-	case HashiTaku::EaseFuncKind::InOut:
-		_easeFunc = [=](float x) { return easeList[easeId]->EaseInOut(x); };
-		break;
-	default:
-		HASHI_DEBUG_LOG("不正なアクセスです");
-		break;
-	}
+	return easeList[_easeType]->Get(_ratio);
 }
 
-void HashiTaku::Easing::ImGuiSelect(EaseFunction& _easeFunc, EaseType& _nowEase)
+void HashiTaku::Easing::ImGuiSelect(EaseKind& _nowEase)
 {
-	std::string curEaseName = EaseToString(_nowEase.ease);
-	std::string curFuncName = FuncToString(_nowEase.funcType);
-	
-	bool isEaseChange = ImGuiMethod::ComboBox(TO_UTF8("イージング"), curEaseName, GetEaseNames());
+	std::string curEaseName = easeNames[static_cast<u_int>(_nowEase)];
 
-	bool isFuncChange = ImGuiMethod::ComboBox(TO_UTF8("関数"), curFuncName, GetFuncNames());
+	bool isEaseChange = ImGuiMethod::ComboBox(TO_UTF8("イージング"), curEaseName, easeNames);
 
-	if (isEaseChange || isFuncChange)
-	{
-		_nowEase.ease = easeDictionary[curEaseName];
-		_nowEase.funcType = funcDictionary[curFuncName];
-		
-		GetEase(_easeFunc, _nowEase);
-	}
+	if (isEaseChange)
+		_nowEase = StrToEase(curEaseName);
 }
 
 void HashiTaku::Easing::Init()
@@ -55,93 +29,131 @@ void HashiTaku::Easing::Init()
 	// イージングクラスのオブジェクトをを作成
 	for (u_int e_i = 0; e_i < static_cast<u_int>(EaseKind::MaxNum); e_i++)
 		MakeEase(e_i);
-
-	funcDictionary["In"] = EaseFuncKind::In;
-	funcDictionary["Out"] = EaseFuncKind::Out;
-	funcDictionary["InOut"] = EaseFuncKind::InOut;
 }
 
 void HashiTaku::Easing::MakeEase(u_int _easeId)
 {
 	std::string easeName;
-	std::unique_ptr<Ease_Base> easeClass;
+	std::unique_ptr<IEasing> easeClass;
 
 	EaseKind ease = static_cast<EaseKind>(_easeId);
+
 	switch (ease)
 	{
 	case EaseKind::Linear:
 		easeClass = std::make_unique<Ease_Linear>();
 		easeName = "Linear"; break;
 
-	case EaseKind::Sine:
-		easeClass = std::make_unique<Ease_Sine>(); 
-		easeName = "Sine"; break;
+	case EaseKind::InSine:
+		easeClass = std::make_unique<Ease_InSine>();
+		easeName = "In_Sine"; break;
 
-	case EaseKind::Quad: easeClass = std::make_unique<Ease_Quad>(); 
-		easeName = "Quad"; break;
+	case EaseKind::OutSine:
+		easeClass = std::make_unique<Ease_OutSine>();
+		easeName = "Out_Sine"; break;
 
-	case EaseKind::Cubic:  easeClass = std::make_unique<Ease_Cubic>(); 
-		easeName = "Cubic"; break;
+	case EaseKind::InOutSine:
+		easeClass = std::make_unique<Ease_InSine>();
+		easeName = "InOut_Sine"; break;
 
-	case EaseKind::Quart:  easeClass = std::make_unique<Ease_Quart>(); 
-		easeName = "Quart"; break;
+	case EaseKind::InQuad: easeClass = std::make_unique<Ease_InQuad>();
+		easeName = "In_Quad"; break;
 
-	case EaseKind::Back:  easeClass = std::make_unique<Ease_Back>();
-		easeName = "Back"; break;
+	case EaseKind::OutQuad: easeClass = std::make_unique<Ease_OutQuad>();
+		easeName = "Out_Quad"; break;
 
-	case EaseKind::Elastic:  easeClass = std::make_unique<Ease_Elastic>(); 
-		easeName = "Elastic"; break;
+	case EaseKind::InOutQuad: easeClass = std::make_unique<Ease_InOutQuad>();
+		easeName = "InOut_Quad"; break;
 
-	case EaseKind::Bounce:  easeClass = std::make_unique<Ease_Bounce>();
-		easeName = "Bounce"; break;
+	case EaseKind::InCubic:  easeClass = std::make_unique<Ease_InCubic>();
+		easeName = "In_Cubic"; break;
+
+	case EaseKind::OutCubic:  easeClass = std::make_unique<Ease_OutCubic>();
+		easeName = "Out_Cubic"; break;
+
+	case EaseKind::InOutCubic:  easeClass = std::make_unique<Ease_InOutCubic>();
+		easeName = "InOut_Cubic"; break;
+
+	case EaseKind::InQuart:  easeClass = std::make_unique<Ease_InQuart>();
+		easeName = "In_Quart"; break;
+
+	case EaseKind::OutQuart:  easeClass = std::make_unique<Ease_OutQuart>();
+		easeName = "Out_Quart"; break;
+
+	case EaseKind::InOutQuart:  easeClass = std::make_unique<Ease_InOutQuart>();
+		easeName = "InOut_Quart"; break;
+
+	case EaseKind::InQuint:  easeClass = std::make_unique<Ease_InQuint>();
+		easeName = "In_Quint"; break;
+
+	case EaseKind::OutQuint:  easeClass = std::make_unique<Ease_OutQuint>();
+		easeName = "Out_Quint"; break;
+
+	case EaseKind::InOutQuint:  easeClass = std::make_unique<Ease_InOutQuint>();
+		easeName = "InOut_Quint"; break;
+
+	case EaseKind::InExpo:  easeClass = std::make_unique<Ease_InExpo>();
+		easeName = "In_Expo"; break;
+
+	case EaseKind::OutExpo:  easeClass = std::make_unique<Ease_OutExpo>();
+		easeName = "Out_Expo"; break;
+
+	case EaseKind::InOutExpo:  easeClass = std::make_unique<Ease_InOutExpo>();
+		easeName = "InOut_Expo"; break;
+
+	case EaseKind::InCirc:  easeClass = std::make_unique<Ease_InCirc>();
+		easeName = "In_Circ"; break;
+
+	case EaseKind::OutCirc:  easeClass = std::make_unique<Ease_OutCirc>();
+		easeName = "Out_Circ"; break;
+
+	case EaseKind::InOutCirc:  easeClass = std::make_unique<Ease_InOutCirc>();
+		easeName = "InOut_Circ"; break;
+
+	case EaseKind::InBack:  easeClass = std::make_unique<Ease_InBack>();
+		easeName = "In_Back"; break;
+
+	case EaseKind::OutBack:  easeClass = std::make_unique<Ease_OutBack>();
+		easeName = "Out_Back"; break;
+
+	case EaseKind::InOutBack:  easeClass = std::make_unique<Ease_InOutBack>();
+		easeName = "InOut_Back"; break;
+
+	case EaseKind::InElastic:  easeClass = std::make_unique<Ease_InElastic>();
+		easeName = "In_Elastic"; break;
+
+	case EaseKind::OutElastic:  easeClass = std::make_unique<Ease_OutElastic>();
+		easeName = "Out_Elastic"; break;
+
+	case EaseKind::InOutElastic:  easeClass = std::make_unique<Ease_InOutElastic>();
+		easeName = "InOut_Elastic"; break;
+
+	case EaseKind::InBounce:  easeClass = std::make_unique<Ease_InBounce>();
+		easeName = "In_Bounce"; break;
+
+	case EaseKind::OutBounce:  easeClass = std::make_unique<Ease_OutBounce>();
+		easeName = "Out_Bounce"; break;
+
+	case EaseKind::InOutBounce:  easeClass = std::make_unique<Ease_InOutBounce>();
+		easeName = "InOut_Bounce"; break;
 
 	default:
 		HASHI_DEBUG_LOG("イージング作成失敗");
 		break;
 	}
 
-	easeList.push_back(std::move(easeClass));
-	easeDictionary[easeName] = ease;
+	easeList[ease] = std::move(easeClass);
+	easeNames.push_back(easeName);
 }
 
-std::string HashiTaku::Easing::EaseToString(EaseKind _type)
+EaseKind HashiTaku::Easing::StrToEase(const std::string& _easeName)
 {
-	for (auto& pair : easeDictionary)
+	for (u_int n_i = 0; n_i < static_cast<u_int>(EaseKind::MaxNum); n_i++)
 	{
-		if (pair.second == _type)
-			return pair.first;
+		if (easeNames[n_i] == _easeName)
+			return static_cast<EaseKind>(n_i);
 	}
 
-	assert(!"イージングの種類から探せませんでした");
-	return "";
-}
-
-std::string HashiTaku::Easing::FuncToString(EaseFuncKind _type)
-{
-	for (auto& pair : funcDictionary)
-	{
-		if (pair.second == _type)
-			return pair.first;
-	}
-
-	assert(!"関数の種類から探せませんでした");
-	return "";
-}
-
-std::vector<std::string> HashiTaku::Easing::GetEaseNames()
-{
-	std::vector<std::string> s;
-	for (auto& p : easeDictionary)
-		s.push_back(p.first);
-
-	return s;
-}
-
-std::vector<std::string> HashiTaku::Easing::GetFuncNames()
-{
-	std::vector<std::string> s;
-	for (auto& p : funcDictionary)
-		s.push_back(p.first);
-
-	return s;
+	assert(!"イージング名がありません");
+	return EaseKind::InSine;
 }

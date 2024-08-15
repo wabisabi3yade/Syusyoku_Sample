@@ -905,6 +905,9 @@
     <ClCompile Include="PlayerAnimObserver.cpp">
       <Filter>ソース ファイル\Object\Player\Observer</Filter>
     </ClCompile>
+    <ClCompile Include="EaseFunction.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">

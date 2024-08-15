@@ -24,13 +24,22 @@ private:
 	std::list<BlendData> blendDatas;
 
 	/// @brief 現在の割合
-	float curBlendRatio;
+	float curBlendRatio{ 0.0f };
 
-	/// @brief 目指す割合
-	float targetBlendRatio;
+	/// @brief ターゲット割合
+	float targetBlendRatio{ 0.0f };
+
+	/// @brief ターゲット割合決定時の割合
+	float changeBlendRatio{ 0.0f };
 
 	/// @brief ターゲットの割合へ移動するまでの時間
-	float ratioMoveTime;
+	float ratioSmoothTime{ 1.0f };
+
+	/// @brief 現在の割合移動時間
+	float curRatioSmoothTime{ 0.0f };
+
+	/// @brief ターゲットの割合へ移動イージング
+	HashiTaku::EaseKind ratioMoveEase{ HashiTaku::EaseKind::OutCubic };
 public:
 	BlendAnimationNode(std::string _nodeName);
 
@@ -92,7 +101,7 @@ private:
 
 	/// @brief ブレンド値を昇順にソートする
 	void SortBlendValue();
-	
+
 	/// @brief データごとのブレンド値の比較関数
 	/// @param _bd1 データ1
 	/// @param _bd2 データ2

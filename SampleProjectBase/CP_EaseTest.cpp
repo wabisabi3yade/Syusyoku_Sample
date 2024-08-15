@@ -7,12 +7,10 @@ using namespace HashiTaku;
 using namespace DirectX::SimpleMath;
 
 using enum EaseKind;
-using enum EaseFuncKind;
 
-CP_EaseTest::CP_EaseTest() : nowEase({ Sine, In })
+CP_EaseTest::CP_EaseTest() : nowEase(InSine)
 {
 	name = "EaseTest";
-	Easing::GetEase(easeFunc, nowEase);
 }
 
 void CP_EaseTest::Init()
@@ -36,7 +34,8 @@ void CP_EaseTest::Update()
 		vec = 1;
 		elapsedTime = 0.0f;
 	}
-	float p = easeFunc(elapsedTime / time);
+
+	float p = Easing::EaseValue(elapsedTime / time, nowEase);
 	GetTransform().position.x = p * magnitude - magnitude * 0.5f;
 }
 
@@ -67,5 +66,5 @@ void CP_EaseTest::ImGuiSetting()
 {
 	ImGui::DragFloat("magnitude", &magnitude);
 	ImGui::DragFloat("time", &time, 0.1f);	
-	Easing::ImGuiSelect(easeFunc, nowEase);
+	Easing::ImGuiSelect(nowEase);
 }
