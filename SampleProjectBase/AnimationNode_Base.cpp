@@ -12,11 +12,6 @@ void AnimationNode_Base::ImGuiPlaying()
 	ImGui::DragFloat("animationTime", &animationTime, 0.1f, 0.0f, 100.0f);
 }
 
-void AnimationNode_Base::ImGuiSetting()
-{
-	
-}
-
 void AnimationNode_Base::SetNodeName(const std::string& _nodeName)
 {
 	nodeName = _nodeName;

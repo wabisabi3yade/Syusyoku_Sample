@@ -1,11 +1,11 @@
 #include "pch.h"
-#include "CameraMove.h"
+#include "CP_CameraMove.h"
 #include "GameObject.h"
-#include "Camera.h"
+#include "CP_Camera.h"
 
 using namespace DirectX::SimpleMath;
 
-void CameraMove::UpdateVector()
+void CP_CameraMove::UpdateVector()
 {
 	Transform transform = GetTransform();
 
@@ -36,28 +36,18 @@ void CameraMove::UpdateVector()
 
 }
 
-void CameraMove::Move()
+void CP_CameraMove::Move()
 {
-	Transform& transform = GetTransform();
-	float speed = moveSpeed;
-
-	InputClass& input = MainApplication::GetInput();
-	if (input.GetKeyboard().GetKey(DIK_LSHIFT))
-		speed = dashSpeed;
-
-	transform.position += moveVec * speed * MainApplication::DeltaTime();
-
-	transform.rotation += rotateVec * lookSpeed * MainApplication::DeltaTime();
 }
 
 
-void CameraMove::Init()
+void CP_CameraMove::Init()
 {
 	name = "CameraMove";
 
-	camera = gameObject->GetComponent<CP_Camera>();	// カメラを取得する
+	pCamera = gameObject->GetComponent<CP_Camera>();	// カメラを取得する
 
-	if (camera == nullptr)
+	if (pCamera == nullptr)
 		HASHI_DEBUG_LOG("Cameraコンポーネントがありません");
 
 	moveSpeed = 5.0f;
@@ -65,13 +55,13 @@ void CameraMove::Init()
 	lookSpeed = 100.0f;
 }
 
-void CameraMove::LateUpdate()
+void CP_CameraMove::LateUpdate()
 {
 	UpdateVector();
 	Move();
 }
 
-void CameraMove::ImGuiSetting()
+void CP_CameraMove::ImGuiSetting()
 {
 	ImGui::DragFloat("moveSpeed", &moveSpeed);
 	ImGui::DragFloat("dashSpeed", &dashSpeed);

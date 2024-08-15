@@ -336,7 +336,8 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 
 	flag |= aiProcessPreset_TargetRealtime_MaxQuality;	// リアルタイム レンダリング用にデータを最適化するデフォルトの後処理構成。
 	flag |= aiProcess_PopulateArmatureData;				// 標準的なボーン,アーマチュアの設定
-	if (_isLeftHand) flag |= aiProcess_ConvertToLeftHanded;	// 左手系変更オプションがまとまったもの
+	if (_isLeftHand)
+		flag |= aiProcess_ConvertToLeftHanded;	// 左手系変更オプションがまとまったもの
 
 
 	// シーン情報を構築

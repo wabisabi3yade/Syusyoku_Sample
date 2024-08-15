@@ -21,8 +21,12 @@ class CP_Camera : public Component
 
 	/// @brief 平行投影にするか？
 	bool isOrthographic{ false };
+
+	// ビューポートの番号
+	u_int viewPortSlot;
 public:
-	using Component::Component;
+	CP_Camera();
+	~CP_Camera() {}
 
 	void Init() override;
 
@@ -34,24 +38,23 @@ public:
 	void UpdateViewMatrix();	
 
 	/// @brief 透視投影に変更
-	/// @param _viewPortSlot 
-	void SetPerspective(u_int _viewPortSlot = 0);
+	void SetPerspective();
 
 	/// @brief 平行投影に変更
-	/// @param _viewPortSlot ビューポートインデックス
-	void SetOrthographic(u_int _viewPortSlot = 0);
+	void SetOrthographic();
 
 	/// @brief 注視点セット
 	/// @param _focusPos ワールド座標
 	void SetFocusPos(const DirectX::SimpleMath::Vector3& _focusPos);
 
+	// ビューポート番号をセット
+	void SetViewportSlot(u_int _slot);
+
 private:
 	/// @brief 透視投影行列を更新
-	/// @param _viewPortSlot ビューポートインデックス
-	void UpdatePerspective(u_int _viewPortSlot);
+	void UpdatePerspective();
 
 	/// @brief 平行投影をセットする
-	/// @param _viewPortSlot ビューポートインデックス
-	void UpdateOrthographic(u_int _viewPortSlot);
+	void UpdateOrthographic();
 };
 

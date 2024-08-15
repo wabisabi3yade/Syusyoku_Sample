@@ -9,7 +9,7 @@ constexpr float DUPLICATE_PLUS(0.01f);	// ブレンド値が重複したときの＋値
 
 using namespace DirectX::SimpleMath;
 
-BlendAnimationNode::BlendAnimationNode(std::string _nodeName) : AnimationNode_Base(_nodeName, NodeType::Blend), curBlendRatio(0.0f), targetBlendRatio(0.0f), ratioMoveTime(0.0f)
+BlendAnimationNode::BlendAnimationNode(std::string _nodeName) : AnimationNode_Base(_nodeName, NodeType::Blend)
 {
 	SetAnimationTime(1.0f);
 }
@@ -29,8 +29,19 @@ void BlendAnimationNode::ImGuiPlaying()
 	{
 		std::string animName = data.pAnimation->GetAssetName();
 		if (!ImGui::TreeNode(animName.c_str())) continue;
-;
+		;
 		ImGui::DragFloat(TO_UTF8("ブレンド"), &data.ratio, 0.01f, 0.0f, 1.0f);
+
+		ImGui::TreePop();
+	}
+
+	if (ImGui::TreeNode("Import"))
+	{
+		static char animName[256] = "";
+		ImGui::InputText("AnimName", animName, 256);
+
+		if (ImGui::Button("Set"))
+			SetAnimationData(animName);
 
 		ImGui::TreePop();
 	}
@@ -38,38 +49,27 @@ void BlendAnimationNode::ImGuiPlaying()
 	ImGui::End();
 }
 
-void BlendAnimationNode::ImGuiSetting()
-{
-	if (!ImGui::TreeNode("Import")) return;
-
-	static char animName[256] = "";
-	ImGui::InputText("AnimName", animName, 256);
-
-	if (ImGui::Button("Set"))
-	{
-		AnimationData* a = AssetGetter::GetAsset<AnimationData>(animName);
-		if (a)
-		{
-			SetAnimationData(*a);
-		}
-	}
-
-	ImGui::TreePop();
-}
-
 void BlendAnimationNode::Update(float _playingTime, BoneList& _boneList)
 {
 	// ブレンド値をターゲットに近づける
 	MoveCurBlend();
-	
+
 	// アニメーションをブレンドする
 	AnimationUpdate(_playingTime, _boneList);
 }
 
-void BlendAnimationNode::SetAnimationData(AnimationData& _animData)
+void BlendAnimationNode::SetAnimationData(const std::string& _animName)
 {
 	BlendData createData;
-	createData.pAnimation = &_animData;
+
+	AnimationData* pData = AssetGetter::GetAsset<AnimationData>(_animName);
+	if (!pData)
+	{
+		HASHI_DEBUG_LOG(_animName + ":がありませんでした");
+		return;
+	}
+
+	createData.pAnimation = pData;
 	createData.ratio = 0.0f;
 
 	blendDatas.push_back(createData);
@@ -78,6 +78,11 @@ void BlendAnimationNode::SetAnimationData(AnimationData& _animData)
 void BlendAnimationNode::SetTargetBlendRatio(float _ratio)
 {
 	SetRatio(targetBlendRatio, _ratio);
+
+	// 移動時間をリセットする
+	curRatioSmoothTime = 0.0f;
+	// 変更時の求める
+    changeBlendRatio = curBlendRatio;
 }
 
 void BlendAnimationNode::SetAnimationRatio(float _ratio, const std::string& _animName)
@@ -91,9 +96,22 @@ void BlendAnimationNode::SetAnimationRatio(float _ratio, const std::string& _ani
 
 void BlendAnimationNode::MoveCurBlend()
 {
-	// イージングなどで
+	// 割合移動時間
+	if (ratioSmoothTime < Mathf::epsilon)
+	{
+		curBlendRatio = targetBlendRatio;
+		return;
+	}
 
-	curBlendRatio = targetBlendRatio;
+	curRatioSmoothTime += MainApplication::DeltaTime();
+	curRatioSmoothTime = std::min(curRatioSmoothTime, ratioSmoothTime);
+
+	float easeValue = HashiTaku::Easing::EaseValue(curRatioSmoothTime / ratioSmoothTime, ratioMoveEase);
+
+	float subRatio = targetBlendRatio - changeBlendRatio;
+
+	// イージングで割合を移動する
+	curBlendRatio = changeBlendRatio + subRatio * easeValue;
 }
 
 void BlendAnimationNode::AnimationUpdate(float _playingRatio, BoneList& _boneList)
@@ -201,7 +219,7 @@ void BlendAnimationNode::BlendUpdateAnimation(BlendPair& _blendPair, float _play
 		blendTransform.rotation = Quaternion::Slerp(p_Transform.rotation, n_Transform.rotation, weightRatio);
 
 		// トランスフォームをセット
-		Bone& bone =  _boneList.GetBone(b_i);
+		Bone& bone = _boneList.GetBone(b_i);
 		bone.SetAnimTransform(blendTransform);
 	}
 }
@@ -226,12 +244,12 @@ BlendAnimationNode::BlendData* BlendAnimationNode::FindBlendData(const std::stri
 void BlendAnimationNode::SetRatio(float& _ratio, float _setRatio)
 {
 #ifdef EDIT
-	if (_ratio < 0.0f || _ratio > 1.0f)
+	if (_setRatio < 0.0f || _setRatio > 1.0f)
 		HASHI_DEBUG_LOG("0.0～1.0の範囲で代入してください");
 #endif //  EDIT
 
 	// 範囲内に制限
-	_ratio = std::min(_ratio, 1.0f);
+	_ratio = std::min(_setRatio, 1.0f);
 	_ratio = std::max(_ratio, 0.0f);
 }
 

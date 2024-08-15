@@ -2,8 +2,6 @@
 #include "GameObject.h"
 #include "Light.h"
 
-class CP_Camera;
-
 using Objects = std::unordered_map<std::string, std::unique_ptr<GameObject>>;
 
 // シーンで使用するオブジェクト配列クラス

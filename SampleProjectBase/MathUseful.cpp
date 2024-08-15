@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "MathUseful.h"
 
+using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
 Vector3 Vec3::Slerp(Vector3 _startPos, Vector3 _endPos, float _ratio)
@@ -47,6 +48,17 @@ DirectX::SimpleMath::Vector3 Vec3::Max(const DirectX::SimpleMath::Vector3& _v3, 
 	return retV3;
 }
 
+Vector3 Vec3::Abs(const Vector3& _v)
+{
+	Vector3 retV;
+
+	retV.x = abs(_v.x);
+	retV.y = abs(_v.y);
+	retV.z = abs(_v.z);
+
+	return retV;
+}
+
 DirectX::SimpleMath::Vector4 Vec4::Max(const DirectX::SimpleMath::Vector4& _v4, float _floatVal)
 {
 	Vector4 retV4;
@@ -65,7 +77,7 @@ void Quat::ToAxisAngle(const DirectX::SimpleMath::Quaternion& _q, DirectX::Simpl
 	// sin(θ/2) の計算
 	float sinHalfAngle = std::sqrt(1.0f - _q.w * _q.w);
 
-	if (sinHalfAngle < 0.0001f) 
+	if (sinHalfAngle < Mathf::smallValue) 
 	{
 		// 回転角度が非常に小さい場合、軸は任意の方向になり得る
 		_axis = { 1.0f, 0.0f, 0.0f }; // 例えば、x軸を使用
@@ -75,14 +87,62 @@ void Quat::ToAxisAngle(const DirectX::SimpleMath::Quaternion& _q, DirectX::Simpl
 		// 回転軸の計算
 		_axis = { _q.x / sinHalfAngle, _q.y / sinHalfAngle, _q.z / sinHalfAngle };
 	}
+
+	_axis.Normalize();
 }
 
 Quaternion Quat::Multiply(const Quaternion& _q1, const Quaternion& _q2)
 {
-	Quaternion result = _q1 * _q2;
+	Quaternion result = Quaternion::Concatenate(_q1, _q2);
 	result.Normalize();
 
 	return result;
+}
+
+Quaternion Quat::RotateToVector(const Vector3& _vector, const Vector3& _up)
+{
+	Vector3 forward;
+	_vector.Normalize(forward);
+
+	// 右ベクトル
+	Vector3 right = _up.Cross(forward);
+	right.Normalize();
+
+	// 上ベクトル
+	Vector3 up = forward.Cross(right);
+	up.Normalize();
+
+	// 回転行列
+	Matrix rotate = Mtx::RotateMatrixByVecdtor(right, up, forward);
+
+	// クォータニオン生成	
+	Quaternion quaternion = Quaternion::CreateFromRotationMatrix(rotate);
+
+	return quaternion;
+}
+
+Vector3 Quat::ToEulerAngles(const Quaternion& _q)
+{
+	auto sx = 2 * _q.y * _q.z + 2 * _q.x * _q.w;
+	bool unlocked = std::abs(sx) < 0.99999f;
+
+	Vector3 v;
+
+	v.x = asinf(sx);
+
+	if (unlocked)
+	{
+		v.y = std::atan2(-(2 * _q.x * _q.z - 2 * _q.y * _q.w), 2 * _q.w * _q.w + 2 * _q.z * _q.z - 1);
+
+		v.z = std::atan2(-(2 * _q.x * _q.y - 2 * _q.z * _q.w), 2 * _q.w * _q.w + 2 * _q.y * _q.y - 1);
+	}
+	else
+	{
+		v.y = 0.0f;
+		v.z = std::atan2(2 * _q.x * _q.y + 2 * _q.z * _q.w, 2 * _q.w * _q.w + 2 * _q.x * _q.x - 1);
+	}
+
+	return v * Mathf::radToDeg;
 }
 
 float Mathf::Repeat(float _t, float _length)
@@ -93,4 +153,61 @@ float Mathf::Repeat(float _t, float _length)
 		f += _length;
 
 	return f;
+}
+
+Vector3 Mtx::GetRightVector(const Matrix& _matrix)
+{
+	Vector3 right;
+
+	// matrix[0] → 右成分
+	right.x = _matrix.m[0][0];
+	right.y = _matrix.m[0][1];
+	right.z = _matrix.m[0][2];
+
+	return right;
+}
+
+Vector3 Mtx::GetUpVector(const Matrix& _matrix)
+{
+	Vector3 up;
+
+	// matrix[1] → 上成分
+	up.x = _matrix.m[1][0];
+	up.y = _matrix.m[1][1];
+	up.z = _matrix.m[1][2];
+	
+	return up;
+}
+
+Vector3 Mtx::GetForwardVector(const Matrix& _matrix)
+{
+	Vector3 forward;
+
+	// matrix[2] → 前成分
+	forward.x = _matrix.m[2][0];
+	forward.y = _matrix.m[2][1];
+	forward.z = _matrix.m[2][2];
+
+	return forward;	
+}
+
+Matrix Mtx::RotateMatrixByVecdtor(const Vector3& _right, const Vector3& _up, const Vector3& _forward)
+{
+	Matrix rotation = 
+		Matrix(	_right.x,	_right.y,	_right.z,	0.0f,
+				_up.x,		_up.y,		_up.z,		0.0f,
+				_forward.x, _forward.y, _forward.z,	0.0f,
+				0.0f,		0.0f,		 0.0f,		1.0f);
+
+	return rotation;
+}
+
+Vector2 Vec2::Abs(const Vector2& _v)
+{
+	Vector2 retV;
+
+	retV.x = abs(_v.x);
+	retV.y = abs(_v.y);
+
+	return retV;
 }

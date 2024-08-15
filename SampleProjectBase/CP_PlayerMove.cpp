@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "Geometory.h"
 #include "GameMode.h"
-#include "Camera.h"
+#include "CP_Camera.h"
 
 #include "InSceneSystemManager.h"
 

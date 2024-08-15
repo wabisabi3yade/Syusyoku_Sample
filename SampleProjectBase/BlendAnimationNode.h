@@ -4,6 +4,7 @@
 /// @brief 2つ以上のアニメーションをブレンドされているノード
 class BlendAnimationNode : public AnimationNode_Base
 {
+public:
 	// ブレンドに使用するデータ
 	struct BlendData
 	{
@@ -11,6 +12,7 @@ class BlendAnimationNode : public AnimationNode_Base
 		float ratio{ 0.0f };	// ブレンドの割合(0.0～1.0)
 	};
 
+private:
 	// ブレンドするときのペア
 	struct BlendPair
 	{
@@ -22,20 +24,28 @@ class BlendAnimationNode : public AnimationNode_Base
 	std::list<BlendData> blendDatas;
 
 	/// @brief 現在の割合
-	float curBlendRatio;
+	float curBlendRatio{ 0.0f };
 
-	/// @brief 目指す割合
-	float targetBlendRatio;
+	/// @brief ターゲット割合
+	float targetBlendRatio{ 0.0f };
+
+	/// @brief ターゲット割合決定時の割合
+	float changeBlendRatio{ 0.0f };
 
 	/// @brief ターゲットの割合へ移動するまでの時間
-	float ratioMoveTime;
+	float ratioSmoothTime{ 1.0f };
+
+	/// @brief 現在の割合移動時間
+	float curRatioSmoothTime{ 0.0f };
+
+	/// @brief ターゲットの割合へ移動イージング
+	HashiTaku::EaseKind ratioMoveEase{ HashiTaku::EaseKind::OutCubic };
 public:
 	BlendAnimationNode(std::string _nodeName);
 
 	~BlendAnimationNode() {}
 
 	void ImGuiPlaying() override;
-	void ImGuiSetting() override;
 
 	/// @brief 更新処理を行う
 	/// @param _playingRatio 再生の割合
@@ -44,7 +54,7 @@ public:
 
 	/// @brief アニメーションを追加する
 	/// @param _animData アニメーションデータ
-	void SetAnimationData(AnimationData& _animData) override;
+	void SetAnimationData(const std::string& _animName) override;
 
 	/// @brief 目標の割合をセットする
 	/// @param _ratio 割合
@@ -91,7 +101,7 @@ private:
 
 	/// @brief ブレンド値を昇順にソートする
 	void SortBlendValue();
-	
+
 	/// @brief データごとのブレンド値の比較関数
 	/// @param _bd1 データ1
 	/// @param _bd2 データ2

@@ -8,27 +8,28 @@ using namespace SimpleMath;
 
 const RenderParam::WVP& RenderParam::GetWVP(const Transform& _transform)
 {
+	return GetWVP(_transform.position, _transform.scale, _transform.GetRotation());
+}
+
+const RenderParam::WVP& RenderParam::GetWVP(const Vector3& _position, const Vector3& _scale, const Quaternion& _rotation)
+{
 	// 変換行列を作成
 	// 移動行列
 	Matrix t = XMMatrixTranslation(
-		_transform.position.x,
-		_transform.position.y,
-		_transform.position.z
+		_position.x,
+		_position.y,
+		_position.z
 	);
 
 	// スケーリング行列
 	Matrix s = XMMatrixScaling(
-		_transform.scale.x,
-		_transform.scale.y,
-		_transform.scale.z
+		_scale.x,
+		_scale.y,
+		_scale.z
 	);
 
 	// 回転行列
-	Matrix r = Matrix::CreateFromYawPitchRoll(
-		_transform.rotation.y * Mathf::degToRad,
-		_transform.rotation.x * Mathf::degToRad,
-		_transform.rotation.z * Mathf::degToRad
-	);
+	Matrix r = Matrix::CreateFromQuaternion(_rotation);
 
 	Matrix worldMtx = s * r * t;	// ワールド変換行列を作成
 

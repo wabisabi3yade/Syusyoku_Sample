@@ -6,18 +6,15 @@
 
 #include "SkeletalMesh.h"
 
+#include "AssetGetter.h"
+
 using namespace DirectX::SimpleMath;
 
 void SingleAnimationNode::ImGuiPlaying()
 {
-	std::string text = "時間：" + std::to_string(pAnimationData->GetAnimationTime()) + "(s)";
-	ImGui::Text(TO_UTF8(text));
+	AnimationNode_Base::ImGuiPlaying();
 }
 
-void SingleAnimationNode::ImGuiSetting()
-{
-	AnimationNode_Base::ImGuiSetting();
-}
 
 void SingleAnimationNode::Update(float _playingRatio, BoneList& _boneList)
 {
@@ -42,9 +39,17 @@ void SingleAnimationNode::Update(float _playingRatio, BoneList& _boneList)
 	}
 }
 
-void SingleAnimationNode::SetAnimationData(AnimationData& _animData)
+void SingleAnimationNode::SetAnimationData(const std::string& _animName)
 {
-	pAnimationData = &_animData;
+	AnimationData* pData = AssetGetter::GetAsset<AnimationData>(_animName);
+
+	if (!pData)	// 正常に取得できませんでした
+	{
+		HASHI_DEBUG_LOG(_animName + ":アニメーションを取得できませんでした");
+		return;
+	}
+
+	pAnimationData = pData;
 
 	SetAnimationTime(pAnimationData->GetAnimationTime());
 }

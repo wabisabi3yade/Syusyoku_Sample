@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "SceneObjects.h"
 #include <string>
-#include "Camera.h"
 
 typedef std::unordered_map<std::string, std::unique_ptr<GameObject>> ObjectList;
 

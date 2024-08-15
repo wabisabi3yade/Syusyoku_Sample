@@ -7,7 +7,7 @@
 // ƒVƒXƒeƒ€
 #include "InSceneSystemManager.h"
 
-using json = nlohmann::json;
+using namespace DirectX::SimpleMath;
 
 void GameObject::ActiveProcess()
 {
@@ -171,8 +171,10 @@ void GameObject::ImGuiSet()
 	{
 		ImGui::Checkbox("isActive", &isActive);
 		ImGuiMethod::DragFloat3(transform.position, "pos");
-		ImGuiMethod::DragFloat3(transform.rotation, "rot");
 		ImGuiMethod::DragFloat3(transform.scale, "scale");
+		Vector3 angles = transform.GetEularAngles();
+		ImGuiMethod::DragFloat3(angles, "rot");
+		transform.SetEularAngles(angles);
 
 		for (auto& itr : pComponents)
 		{

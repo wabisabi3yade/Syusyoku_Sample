@@ -14,8 +14,8 @@
 #include "CP_Animation.h"
 
 // カメラ
-#include "CameraMove.h"
-#include "CameraInput.h"
+#include "CP_Camera.h"
+#include "CP_CameraMove.h"
 
 // プレイヤー
 #include "CP_Player.h"

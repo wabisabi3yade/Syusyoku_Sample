@@ -33,7 +33,6 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	{
 		{"assets/model/spot/spot.fbx", 100.0f, true},
 		{"assets/model/knight/Knight D Pelegrini.fbx", 0.1f, true},
-		{"assets/model/knight/The Boss.fbx", 0.1f, true}
 	};
 
 	std::vector<Mesh_Group*> pModels;
@@ -52,12 +51,10 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 
 	std::vector<AnimData> AnimPath =
 	{
-		{"assets/animation/Run_Forward.fbx", "Knight D Pelegrini", true},
-		{"assets/animation/Walk_Forward.fbx", "Knight D Pelegrini", true},
-		{"assets/animation/Idle.fbx", "Knight D Pelegrini", true},
-		{"assets/animation/Reaction.fbx", "Knight D Pelegrini", true},
-		{"assets/animation/Silly Dancing.fbx", "Knight D Pelegrini", true},
-		{"assets/animation/Smash.fbx", "Knight D Pelegrini", true},
+		{"assets/animation/Player/RunF.fbx", "Knight D Pelegrini", true},
+		{"assets/animation/Player/WalkF.fbx", "Knight D Pelegrini", true},
+		{"assets/animation/Player/Idle.fbx", "Knight D Pelegrini", true},
+		{"assets/animation/Player/AttackN1.fbx", "Knight D Pelegrini", true},
 	};
 
 	for (auto& a : AnimPath)

@@ -6,8 +6,7 @@ class CP_EaseTest : public Component
 {
 	DirectX::SimpleMath::Color color;
 
-	HashiTaku::EaseFunction easeFunc;
-	HashiTaku::EaseType nowEase;
+	HashiTaku::EaseKind nowEase;
 
 	float magnitude{15.0f};
 	float time = 1.0f;

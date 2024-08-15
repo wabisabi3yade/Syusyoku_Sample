@@ -1,6 +1,6 @@
 #pragma once
 // イージング基底クラス
-class Ease_Base;
+class IEasing;
 
 // 初期化を任せるクラス
 class SceneManager;
@@ -8,34 +8,52 @@ class SceneManager;
 // イージング関数チートシート：https://easings.net/ja
 namespace HashiTaku
 {
-	// イージング関数の戻り値として
-	using EaseFunction = std::function<float(float)>;
-
 	/// @brief イージングの種類
 	enum class EaseKind
 	{
 		Linear,
-		Sine,
-		Quad,
-		Cubic,
-		Quart,
-		Back,
-		Elastic,
-		Bounce,
+
+		InSine,
+		OutSine,
+		InOutSine,
+
+		InQuad,
+		OutQuad,
+		InOutQuad,
+
+		InCubic,
+		OutCubic,
+		InOutCubic,
+
+		InQuart,
+		OutQuart,
+		InOutQuart,
+
+		InQuint,
+		OutQuint,
+		InOutQuint,
+
+		InExpo,
+		OutExpo,
+		InOutExpo,
+
+		InCirc,
+		OutCirc,
+		InOutCirc,
+
+		InBack,
+		OutBack,
+		InOutBack,
+
+		InElastic,
+		OutElastic,
+		InOutElastic,
+
+		InBounce,
+		OutBounce,
+		InOutBounce,
+
 		MaxNum
-	};
-
-	enum class EaseFuncKind
-	{
-		In,
-		Out,
-		InOut
-	};
-
-	struct EaseType
-	{
-		EaseKind ease;
-		EaseFuncKind funcType;
 	};
 
 	/// @brief イージング関数
@@ -44,23 +62,21 @@ namespace HashiTaku
 		friend class SceneManager;
 
 		/// @brief イージングのクラスをまとめたリスト
-		static std::vector<std::unique_ptr<Ease_Base>> easeList;
-		/// @brief stringと相互変換したいので辞書リスト(イージング種類)
-		static std::unordered_map<std::string, EaseKind> easeDictionary;
-		/// @brief stringと相互変換したいので辞書リスト(イージング関数)
-		static std::unordered_map<std::string, EaseFuncKind> funcDictionary;
+		static std::unordered_map<EaseKind, std::unique_ptr<IEasing>> easeList;
 
+		/// @brief イージングの列挙型と名前との対応表
+		static std::vector<std::string> easeNames;
 	public:
-		/// @brief 指定したイージング関数を返す
-		/// @param _easeFunc 格納する関数オブジェクト変数
-		/// @param _getEase 取得したいイージング名
-		/// @param _funcType 関数の種類
-		static void GetEase(EaseFunction& _easeFunc, EaseType _easeType);
+		/// @brief イージングの値を取得
+		/// @param _ratio 割合(0.0～1.0)
+		/// @param _easeType イージング種類
+		/// @return イージングの計算値
+		static float EaseValue(float _ratio, EaseKind _easeType);
 
 		/// @brief ImGui設定
 		/// @param _easeFunc 関数オブジェクト
 		/// @param _nowEase 現在のイージング
-		static void ImGuiSelect(EaseFunction& _easeFunc, EaseType& _nowEase);
+		static void ImGuiSelect(EaseKind& _nowEase);
 
 	private:
 		/// @brief 初期化　シーンマネージャーで
@@ -70,14 +86,9 @@ namespace HashiTaku
 		/// @param _easeId 作成するイージング
 		static void MakeEase(u_int _easeId);
 
-		// イージングの種類からstringの変換
-		static std::string EaseToString(EaseKind _type);
-
-		// 関数の種類からstringの変換
-		static std::string FuncToString(EaseFuncKind _type);
-
-		// 名前配列を取得
-		static std::vector<std::string> GetEaseNames();
-		static std::vector<std::string> GetFuncNames();
+		/// @brief string型から列挙型に変換
+		/// @param _easeName イージング名
+		/// @return イージングの種類
+		static EaseKind StrToEase(const std::string& _easeName);
 	};
 }

@@ -33,8 +33,6 @@ public:
 
 	// 再生中のときに表示
 	virtual void ImGuiPlaying();
-	// 常に表示
-	virtual void ImGuiSetting();
 
 	/// @brief 更新処理を行う
 	/// @param 再生割合
@@ -42,8 +40,8 @@ public:
 	virtual void Update(float _playingRatio, BoneList& _boneList) = 0;
 
 	/// @brief アニメーションを追加する
-	/// @param _animData アニメーションデータ
-	virtual void SetAnimationData(AnimationData& _animData) = 0;
+	/// @param _animData アニメーション名
+	virtual void SetAnimationData(const std::string& _animName) = 0;
 
 	// ノード名をセット
 	void SetNodeName(const std::string& _nodeName);
@@ -60,7 +58,6 @@ public:
 	/// @brief ループ再生フラグを取得
 	/// @return ループ再生フラグ
 	bool GetIsLoop() const;
-
 protected:
 
 	// 再生時間をセットする

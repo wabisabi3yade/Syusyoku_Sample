@@ -20,8 +20,19 @@ namespace Mathf
 	float Repeat(float _t, float _length);
 }
 
+namespace Vec2
+{
+	using namespace DirectX::SimpleMath;
+	/// @brief 絶対値を求める
+	/// @param _v 変数
+	/// @return 絶対値
+	Vector2 Abs(const Vector2& _v);
+}
+
 namespace Vec3
 {
+	using namespace DirectX::SimpleMath;
+
 	/// <summary>
 	/// 球面線形補間をする関数
 	/// </summary>
@@ -29,25 +40,30 @@ namespace Vec3
 	/// <param name="_endPos">終点値</param>
 	/// <param name="_ratio">割合(0～1)</param>
 	/// <returns></returns>
-	DirectX::SimpleMath::Vector3 Slerp(
-		DirectX::SimpleMath::Vector3 _startPos,
-		DirectX::SimpleMath::Vector3 _endPos,
+	Vector3 Slerp(
+		Vector3 _startPos,
+		Vector3 _endPos,
 		float _ratio
 	);
 	// ワールド座標系3軸単位ベクトル
-	constexpr DirectX::SimpleMath::Vector3 Up = { 0.0f, 1.0f, 0.0f };
-	constexpr DirectX::SimpleMath::Vector3 Right = { 1.0f, 0.0f, 0.0f };
-	constexpr DirectX::SimpleMath::Vector3 Forward = { 0.0f, 0.0f, 1.0f };
+	constexpr Vector3 Up = { 0.0f, 1.0f, 0.0f };
+	constexpr Vector3 Right = { 1.0f, 0.0f, 0.0f };
+	constexpr Vector3 Forward = { 0.0f, 0.0f, 1.0f };
 
 	// 内積
-	float Dot(DirectX::SimpleMath::Vector3 _v1, DirectX::SimpleMath::Vector3 _v2);
+	float Dot(Vector3 _v1, Vector3 _v2);
 
 	// 外積
-	DirectX::SimpleMath::Vector3 Cross(DirectX::SimpleMath::Vector3 _v1,
-		DirectX::SimpleMath::Vector3 _v2);
+	Vector3 Cross(Vector3 _v1,
+		Vector3 _v2);
 
 	/// @brief float型との最大値を求める
-	DirectX::SimpleMath::Vector3 Max(const DirectX::SimpleMath::Vector3& _v3, float _floatVal);
+	Vector3 Max(const Vector3& _v3, float _floatVal);
+
+	/// @brief 絶対値を求める
+	/// @param _v 変数
+	/// @return 絶対値
+	Vector3 Abs(const Vector3& _v);
 }
 
 namespace Vec4
@@ -71,4 +87,36 @@ namespace Quat
 	/// @param _q2 クォータニオン2
 	/// @return 掛け算したクォータニオン
 	Quaternion Multiply(const Quaternion& _q1, const Quaternion& _q2);
+
+	/// @brief ターゲットの方向に向けるクォータニオンを生成する
+	/// @param _vector 向けたいベクトル
+	/// @param _up 上方向ベクトル
+	/// @return 向けるクォータニオン
+	Quaternion RotateToVector(const Vector3& _vector, const Vector3& _up = Vec3::Up);
+
+	/// @brief クォータニオンからオイラー角に変換
+	/// @param _q クォータニオン
+	/// @return オイラー角
+	Vector3 ToEulerAngles(const Quaternion& _q);
+}
+
+namespace Mtx
+{
+	using namespace DirectX::SimpleMath;
+
+	// 真右ベクトル取得
+	Vector3 GetRightVector(const Matrix& _matrix);
+
+	// 真上ベクトル取得
+	Vector3 GetUpVector(const Matrix& _matrix);
+
+	// 正面ベクトル取得
+	Vector3 GetForwardVector(const Matrix& _matrix);
+
+	/// @brief 方向ベクトルから回転行列作成
+	/// @param _right 右
+	/// @param _up 上
+	/// @param _forward 前
+	/// @return 回転行列
+	Matrix RotateMatrixByVecdtor(const Vector3& _right, const Vector3& _up, const Vector3& _forward);
 }

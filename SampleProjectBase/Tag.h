@@ -7,6 +7,10 @@ public:
 	enum Type	// タグの種類
 	{
 		Default,	// デフォルト
+		MainCamera,	
+		Player,
+		Enemy,
+		Ground,
 		Num
 	};
 
@@ -30,6 +34,7 @@ public:
 	enum Type	// タグの種類
 	{
 		Default,	// デフォルト
+		Object,
 		UI,	// UI
 		Num
 	};

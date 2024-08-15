@@ -45,7 +45,7 @@ void CP_BoxCollider::Draw()
 	Vector3 rotation_w;
 
 	if (!isAABB)
-		rotation_w = t.rotation + angleOffset;
+		rotation_w = t.GetEularAngles() + angleOffset;
 
 	Geometory::SetRotation(rotation_w);
 
@@ -74,7 +74,7 @@ DirectX::SimpleMath::Vector3 CP_BoxCollider::GetWorldCenterPos() const
 
 DirectX::SimpleMath::Vector3 CP_BoxCollider::GetWorldRotation() const
 {
-	return GetTransform().rotation + angleOffset;
+	return GetTransform().GetEularAngles() + angleOffset;
 }
 
 DirectX::SimpleMath::Vector3 CP_BoxCollider::GetWorldScale() const
