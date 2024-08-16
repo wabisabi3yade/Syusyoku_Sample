@@ -59,6 +59,19 @@ Vector3 Vec3::Abs(const Vector3& _v)
 	return retV;
 }
 
+DirectX::SimpleMath::Vector3 Vec3::WorldMtxToScale(const DirectX::SimpleMath::Matrix& _mtx)
+{
+	Vector3 scale;
+
+	scale.x = sqrt(_mtx.m[0][0] * _mtx.m[0][0] + _mtx.m[0][1] * _mtx.m[0][1] + _mtx.m[0][2] * _mtx.m[0][2]);
+
+	scale.y = sqrt(_mtx.m[1][0] * _mtx.m[1][0] + _mtx.m[1][1] * _mtx.m[1][1] + _mtx.m[1][2] * _mtx.m[1][2]);
+
+	scale.z = sqrt(_mtx.m[2][0] * _mtx.m[2][0] + _mtx.m[2][1] * _mtx.m[2][1] + _mtx.m[2][2] * _mtx.m[2][2]);
+
+	return DirectX::SimpleMath::Vector3();
+}
+
 DirectX::SimpleMath::Vector4 Vec4::Max(const DirectX::SimpleMath::Vector4& _v4, float _floatVal)
 {
 	Vector4 retV4;
@@ -77,12 +90,12 @@ void Quat::ToAxisAngle(const DirectX::SimpleMath::Quaternion& _q, DirectX::Simpl
 	// sin(ƒÆ/2) ‚ÌŒvŽZ
 	float sinHalfAngle = std::sqrt(1.0f - _q.w * _q.w);
 
-	if (sinHalfAngle < Mathf::smallValue) 
+	if (sinHalfAngle < Mathf::smallValue)
 	{
 		// ‰ñ“]Šp“x‚ª”ñí‚É¬‚³‚¢ê‡AŽ²‚Í”CˆÓ‚Ì•ûŒü‚É‚È‚è“¾‚é
 		_axis = { 1.0f, 0.0f, 0.0f }; // —á‚¦‚ÎAxŽ²‚ðŽg—p
 	}
-	else 
+	else
 	{
 		// ‰ñ“]Ž²‚ÌŒvŽZ
 		_axis = { _q.x / sinHalfAngle, _q.y / sinHalfAngle, _q.z / sinHalfAngle };
@@ -93,10 +106,22 @@ void Quat::ToAxisAngle(const DirectX::SimpleMath::Quaternion& _q, DirectX::Simpl
 
 Quaternion Quat::Multiply(const Quaternion& _q1, const Quaternion& _q2)
 {
-	Quaternion result = Quaternion::Concatenate(_q1, _q2);
+	Quaternion q1, q2;
+	_q1.Normalize(q1);
+	_q2.Normalize(q2);
+
+	Quaternion result = Quaternion::Concatenate(q1, q2);
 	result.Normalize();
 
 	return result;
+}
+
+Quaternion Quat::RotationDifference(const Quaternion& _origin, const Quaternion& _target)
+{
+	Quaternion invOrigin;
+	_origin.Inverse(invOrigin);
+
+	return Quat::Multiply(_target, invOrigin);
 }
 
 Quaternion Quat::RotateToVector(const Vector3& _vector, const Vector3& _up)
@@ -145,6 +170,20 @@ Vector3 Quat::ToEulerAngles(const Quaternion& _q)
 	return v * Mathf::radToDeg;
 }
 
+Quaternion Quat::ToQuaternion(const Vector3& _degrees)
+{
+	Quaternion q;
+
+	// ƒNƒH[ƒ^ƒjƒIƒ“‚É”½‰f‚³‚¹‚é
+	q = Quaternion::CreateFromYawPitchRoll(
+		_degrees.y * Mathf::degToRad,
+		_degrees.x * Mathf::degToRad,
+		_degrees.z * Mathf::degToRad
+	);
+
+	return q;
+}
+
 float Mathf::Repeat(float _t, float _length)
 {
 	float f = fmod(_t, _length);
@@ -175,7 +214,7 @@ Vector3 Mtx::GetUpVector(const Matrix& _matrix)
 	up.x = _matrix.m[1][0];
 	up.y = _matrix.m[1][1];
 	up.z = _matrix.m[1][2];
-	
+
 	return up;
 }
 
@@ -188,16 +227,16 @@ Vector3 Mtx::GetForwardVector(const Matrix& _matrix)
 	forward.y = _matrix.m[2][1];
 	forward.z = _matrix.m[2][2];
 
-	return forward;	
+	return forward;
 }
 
 Matrix Mtx::RotateMatrixByVecdtor(const Vector3& _right, const Vector3& _up, const Vector3& _forward)
 {
-	Matrix rotation = 
-		Matrix(	_right.x,	_right.y,	_right.z,	0.0f,
-				_up.x,		_up.y,		_up.z,		0.0f,
-				_forward.x, _forward.y, _forward.z,	0.0f,
-				0.0f,		0.0f,		 0.0f,		1.0f);
+	Matrix rotation =
+		Matrix(_right.x, _right.y, _right.z, 0.0f,
+			_up.x, _up.y, _up.z, 0.0f,
+			_forward.x, _forward.y, _forward.z, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f);
 
 	return rotation;
 }

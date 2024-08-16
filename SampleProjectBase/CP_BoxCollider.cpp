@@ -36,10 +36,10 @@ void CP_BoxCollider::Draw()
 	const Transform& t = gameObject->transform;
 
 	// オブジェクトのスケールも考慮する
-	Vector3 pos_w = t.position + posOffset * t.scale;
+	Vector3 pos_w = t.GetPosition() + posOffset;
 	Geometory::SetPosition(pos_w);
 
-	Vector3 scale_w = t.scale * size;
+	Vector3 scale_w = t.GetScale() * size;
 	Geometory::SetScale(scale_w);
 
 	Vector3 rotation_w;
@@ -69,7 +69,7 @@ void CP_BoxCollider::ImGuiSetting()
 
 DirectX::SimpleMath::Vector3 CP_BoxCollider::GetWorldCenterPos() const
 {
-	return GetTransform().position + posOffset * GetTransform().scale;
+	return GetTransform().GetPosition() + posOffset;
 }
 
 DirectX::SimpleMath::Vector3 CP_BoxCollider::GetWorldRotation() const
@@ -79,7 +79,7 @@ DirectX::SimpleMath::Vector3 CP_BoxCollider::GetWorldRotation() const
 
 DirectX::SimpleMath::Vector3 CP_BoxCollider::GetWorldScale() const
 {
-	return GetTransform().scale * size;
+	return GetTransform().GetScale() * size;
 }
 
 bool CP_BoxCollider::CollisionBox(CP_Collider& _box1, CP_Collider& _box2)

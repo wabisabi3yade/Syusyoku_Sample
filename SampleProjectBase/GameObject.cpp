@@ -170,11 +170,18 @@ void GameObject::ImGuiSet()
 	if (ImGui::TreeNode(name.c_str()))	// –¼‘OTree
 	{
 		ImGui::Checkbox("isActive", &isActive);
-		ImGuiMethod::DragFloat3(transform.position, "pos");
-		ImGuiMethod::DragFloat3(transform.scale, "scale");
-		Vector3 angles = transform.GetEularAngles();
-		ImGuiMethod::DragFloat3(angles, "rot");
-		transform.SetEularAngles(angles);
+
+		Vector3 v = transform.GetLocalPosition();
+		ImGuiMethod::DragFloat3(v, "pos");
+		transform.SetLocalPos(v);
+
+		v = transform.GetLocalScale();
+		ImGuiMethod::DragFloat3(v, "scale");
+		transform.SetLocalScale(v);
+
+		v = transform.GetLocalEularAngles();
+		ImGuiMethod::DragFloat3(v, "rot");
+		transform.SetLocalEularAngles(v);
 
 		for (auto& itr : pComponents)
 		{

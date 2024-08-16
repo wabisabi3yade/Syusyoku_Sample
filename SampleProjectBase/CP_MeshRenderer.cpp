@@ -35,7 +35,7 @@ void CP_MeshRenderer::Draw()
 	float scaleTimes = pRenderMesh->GetScaleTimes();
 
 	// オフセットを足す
-	Vector3 pos = GetTransform().position + WorldOffset(offsetPos);
+	Vector3 pos = GetTransform().GetPosition() + WorldOffset(offsetPos);
 	
 	Quaternion offsetRot = DirectX::XMQuaternionRotationRollPitchYaw(
 		offsetAngles.x * Mathf::degToRad, 
@@ -43,9 +43,9 @@ void CP_MeshRenderer::Draw()
 		offsetAngles.z * Mathf::degToRad
 	);
 
-	Quaternion rotation = offsetRot * GetTransform().GetRotation();
+	Quaternion rotation = Quat::Multiply(offsetRot, GetTransform().GetRotation());
 
-	DrawMesh(rendererParam.GetWVP(pos, GetTransform().scale, rotation));
+	DrawMesh(rendererParam.GetWVP(pos, GetTransform().GetScale(), rotation));
 
 	// 原点表示
 	OriginDisplay();
@@ -188,7 +188,7 @@ void CP_MeshRenderer::OriginDisplay()
 #ifdef EDIT
 	if (!isOriginDisplay) return;
 
-	Geometory::SetPosition(GetTransform().position);
+	Geometory::SetPosition(GetTransform().GetPosition());
 	Geometory::SetScale(ORIGIN_SCALE * Vector3::One);
 	Geometory::SetColor(ORIGIN_COLOR);
 	Geometory::DrawCube();

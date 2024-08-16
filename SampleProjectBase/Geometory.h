@@ -17,11 +17,17 @@ public:
 		Sphere	// 球
 	};
 private:
-	// トランスフォーム
-	static Transform transform;
-
 	// Material
 	static Material* pMaterial;
+
+	/// @brief ワールド座標
+	static DirectX::SimpleMath::Vector3 position;
+
+	/// @brief 大きさ
+	static DirectX::SimpleMath::Vector3 scale;
+
+	/// @brief 角度
+	static DirectX::SimpleMath::Vector3 eularAngle;
 
 	// 色
 	static DirectX::SimpleMath::Color color;
@@ -44,17 +50,17 @@ public:
 	// 座標を設定
 	static void SetPosition(const DirectX::SimpleMath::Vector3& _position)
 	{
-		transform.position = _position;
+		position = _position;
 	}
 	// 回転を設定
 	static void SetRotation(const DirectX::SimpleMath::Vector3& _eularAngle)
 	{
-		transform.SetEularAngles(_eularAngle);
+		eularAngle = _eularAngle;
 	}
 	// 大きさを設定
 	static void SetScale(const DirectX::SimpleMath::Vector3& _scale)
 	{
-		transform.scale = _scale;
+		scale = _scale;
 	}
 	// 色
 	static void SetColor(const DirectX::SimpleMath::Color& _color) { color = _color; }
@@ -69,4 +75,7 @@ private:
 
 	/// @brief 一般的なメッシュを作成
 	static void MakeGeometory();
+
+	/// @brief パラメータをリセット
+	static void ResetParameter();
 };

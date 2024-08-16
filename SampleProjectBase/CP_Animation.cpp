@@ -71,6 +71,11 @@ void CP_Animation::SetAnimationController(AnimationController& _controller)
 	pAnimController = &_controller;
 }
 
+SkeletalMesh& CP_Animation::GetSkeletalMesh()
+{
+	return *pSkeletalMesh;
+}
+
 void CP_Animation::UpdateAnimationMtx()
 {
 	// アニメーションコントローラーで更新する

@@ -76,11 +76,11 @@ void PlayerMoveState::Move()
 
 
 	Vector3 moveSpeed = moveVector * currentSpeed;
-	/*currentSpeed = moveSpeed.Length();*/
 
 	// ˆÚ“®
-	Transform& transform = pPlayerObject->transform;
-	transform.position += moveSpeed * MainApplication::DeltaTime();
+	Vector3 pos = pPlayerObject->transform.GetPosition();
+	pos += moveSpeed * MainApplication::DeltaTime();
+	pPlayerObject->transform.SetPosition(pos);
 
 	pAnimController->SetMoveSpeedRatio(currentSpeed / maxSpeed);
 }

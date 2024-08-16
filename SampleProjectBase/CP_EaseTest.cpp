@@ -15,8 +15,8 @@ CP_EaseTest::CP_EaseTest() : nowEase(InSine)
 
 void CP_EaseTest::Init()
 {
-	GetTransform().position.z = 5.0f;
-	GetTransform().position.y = 2.0f;
+	Vector3 initPos = { 0.0f, 5.0f, 2.0f };
+	GetTransform().SetPosition(initPos);
 }
 
 void CP_EaseTest::Update()
@@ -36,16 +36,20 @@ void CP_EaseTest::Update()
 	}
 
 	float p = Easing::EaseValue(elapsedTime / time, nowEase);
-	GetTransform().position.x = p * magnitude - magnitude * 0.5f;
+
+	Transform& transform = GetTransform();
+	Vector3 pos = transform.GetPosition();
+	pos.x = p * magnitude - magnitude * 0.5f;
+	transform.SetPosition(pos);
 }
 
 void CP_EaseTest::Draw()
 {
-	Geometory::SetPosition(GetTransform().position);
+	Geometory::SetPosition(GetTransform().GetPosition());
 	Geometory::SetScale(Vector3::One * 0.4f);
 	Geometory::DrawSphere();
 
-	Vector3 p = GetTransform().position;
+	Vector3 p = GetTransform().GetPosition();
 	p.x = -magnitude * 0.5f;
 	// 始点
 	Geometory::SetPosition(p);
@@ -53,7 +57,7 @@ void CP_EaseTest::Draw()
 	Geometory::SetColor(Color(1, 0, 0, 1));
 	Geometory::DrawSphere();
 
-	p = GetTransform().position;
+	p = GetTransform().GetPosition();
 	p.x = magnitude * 0.5f;
 	// 始点
 	Geometory::SetPosition(p);

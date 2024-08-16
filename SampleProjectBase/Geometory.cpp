@@ -16,9 +16,11 @@
 
 using namespace DirectX::SimpleMath;
 
-Transform Geometory::transform = {};
 Material* Geometory::pMaterial = nullptr;
 std::vector<StaticMesh*> Geometory::pGeometory = {};
+Vector3 Geometory::position = Vector3::Zero;
+Vector3 Geometory::scale = Vector3::One;
+Vector3 Geometory::eularAngle = Vector3::Zero;
 Color Geometory::color = Color(1.0f, 1.0f, 1.0f, 1.0f);
 
 void Geometory::DrawSetup()
@@ -27,7 +29,8 @@ void Geometory::DrawSetup()
 	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
 
 	// ワールド変換行列の座標にモデルの座標を入れる
-	RenderParam::WVP wvp = renderer.GetParameter().GetWVP(transform);
+	Quaternion q = Quat::ToQuaternion(eularAngle);
+	RenderParam::WVP wvp = renderer.GetParameter().GetWVP(position, scale, q);
 
 	// シェーダーの設定
 	VertexShader& pVs = pMaterial->GetVertexShader();
@@ -86,8 +89,7 @@ void Geometory::DrawCube(bool _isWireFrame)
 	Draw(*pGeometory[geoType]);
 
 	// 元に戻す
-	transform.ResetParameter();
-	color = Color(1, 1, 1, 1);
+	ResetParameter();
 }
 
 void Geometory::DrawSphere(bool _isWireFrame)
@@ -98,8 +100,7 @@ void Geometory::DrawSphere(bool _isWireFrame)
 	Draw(*pGeometory[geoType]);
 
 	// 元に戻す
-	transform.ResetParameter();
-	color = Color(1, 1, 1, 1);
+	ResetParameter();
 }
 
 void Geometory::MakeMaterial()
@@ -143,4 +144,12 @@ void Geometory::MakeGeometory()
 		// アセット管理にセット
 		pGeometory.push_back(AssetSetter::SetAsset(names[loop], std::move(pSM)));
 	}
+}
+
+void Geometory::ResetParameter()
+{
+	position = Vector3::Zero;
+	scale = Vector3::One;
+	eularAngle = Vector3::Zero;
+	color = Color(1.f, 1.f, 1.f, 1.f);
 }
