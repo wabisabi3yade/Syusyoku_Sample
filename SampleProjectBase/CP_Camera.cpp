@@ -24,8 +24,8 @@ CP_Camera::CP_Camera() : viewPortSlot(0)
 
 void CP_Camera::Init()
 {
-	GetTransform().position.y = 2.0f;
-	GetTransform().position.z = -5.0f;
+	Vector3 initPos = { 0.0f, 2.0f, -5.0f };
+	GetTransform().SetPosition(initPos);
 
 	//GetTransform().position.y = 200.0f;
 	//GetTransform().position.z = 400.0f;
@@ -49,9 +49,9 @@ void CP_Camera::ImGuiSetting()
 
 void CP_Camera::UpdateViewMatrix()
 {
-	focusPos = GetTransform().position + GetTransform().Forward();
+	focusPos = GetTransform().GetPosition() + GetTransform().Forward();
 
-	if (Vector3::Distance(GetTransform().position, focusPos) < Mathf::smallValue)
+	if (Vector3::Distance(GetTransform().GetPosition(), focusPos) < Mathf::smallValue)
 	{
 		focusPos.z += Mathf::smallValue;
 	}
@@ -59,7 +59,7 @@ void CP_Camera::UpdateViewMatrix()
 	// ビュー変換行列を求める
 	Matrix viewMatrix = DirectX::XMMatrixLookAtLH
 	(
-		GetTransform().position,		// カメラ座標
+		GetTransform().GetPosition(),		// カメラ座標
 		focusPos,	// 注視点
 		Vector3::Up // 上ベクトル
 	);

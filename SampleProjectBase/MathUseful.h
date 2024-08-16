@@ -64,6 +64,11 @@ namespace Vec3
 	/// @param _v 変数
 	/// @return 絶対値
 	Vector3 Abs(const Vector3& _v);
+
+	/// @brief ワールド行列からスケールを求める
+	/// @param _mtx ワールド行列
+	/// @return スケール値
+	DirectX::SimpleMath::Vector3 WorldMtxToScale(const DirectX::SimpleMath::Matrix& _mtx);
 }
 
 namespace Vec4
@@ -88,6 +93,12 @@ namespace Quat
 	/// @return 掛け算したクォータニオン
 	Quaternion Multiply(const Quaternion& _q1, const Quaternion& _q2);
 
+	/// @brief クォータニオンの差分を求める
+	/// @param _origin 元の回転から
+	/// @param _target ここまで
+	/// @return 差分
+	Quaternion RotationDifference(const Quaternion& _origin, const Quaternion& _target);
+
 	/// @brief ターゲットの方向に向けるクォータニオンを生成する
 	/// @param _vector 向けたいベクトル
 	/// @param _up 上方向ベクトル
@@ -98,6 +109,11 @@ namespace Quat
 	/// @param _q クォータニオン
 	/// @return オイラー角
 	Vector3 ToEulerAngles(const Quaternion& _q);
+
+	/// @brief 角度からクォータニオン生成
+	/// @param _degrees 回転角度(deg)
+	/// @return クォータニオン
+	Quaternion ToQuaternion(const Vector3& _degrees);
 }
 
 namespace Mtx

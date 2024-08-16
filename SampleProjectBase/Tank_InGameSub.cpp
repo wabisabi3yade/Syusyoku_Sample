@@ -31,7 +31,7 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 
 	std::vector<ModelData> SMPaths =
 	{
-		{"assets/model/spot/spot.fbx", 100.0f, true},
+		{"assets/model/spot/spot.fbx", 1.0f, true},
 		{"assets/model/knight/Knight D Pelegrini.fbx", 0.1f, true},
 	};
 
@@ -67,13 +67,28 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	GameObject* gameObject = &ObjectFunc::CreateEmpty("Ground");
 	CP_SpriteRenderer* pSpriteRenderer = gameObject->AddComponent<CP_SpriteRenderer>();
 	pSpriteRenderer->SetTexture(*pTextures[0]);
-	gameObject->transform.scale = Vector3::One * 50.0f;
+	gameObject->transform.SetScale(Vector3::One * 50.0f);
 
-	gameObject = &ObjectFunc::CreateEmpty("Player");
-	gameObject->AddComponent<CP_Player>();
+	GameObject* player = &ObjectFunc::CreateEmpty("Player");
+	player->AddComponent<CP_Player>();
 
-	gameObject = &ObjectFunc::CreateEmpty("Box1");
-	gameObject->AddComponent<CP_EaseTest>();
+	gameObject = &ObjectFunc::CreateEmpty("Sword");
+	gameObject->transform.SetParent(player->transform);
+	CP_Weapon* weapon = gameObject->AddComponent<CP_Weapon>();
+	weapon->SetGrabBoneName("mixamorig:RightHand");
+	
+	CP_Animation* anim = player->GetComponent<CP_Animation>();
+	Bone* bone = anim->GetSkeletalMesh().GetBoneList().FindBone(weapon->GetGrabBoneName());
+	weapon->SetGrabBone(*bone);
+	
+	gameObject = &ObjectFunc::CreateEmpty("spot");
+	gameObject->transform.SetParent(player->transform);
+	CP_MeshRenderer* m = gameObject->AddComponent<CP_MeshRenderer>();
+	m->SetRenderMesh("spot");
+
+	/*gameObject = &ObjectFunc::CreateEmpty("spot");
+	m = gameObject->AddComponent<CP_MeshRenderer>();
+	m->SetRenderMesh("spot.fbx");*/
 
 	//gameObject = &ObjectFunc::CreateEmpty("Box2");
 	//gameObject->AddComponent<CP_BoxCollider>();

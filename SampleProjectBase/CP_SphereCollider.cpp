@@ -32,7 +32,7 @@ void CP_SphereCollider::Draw()
 {
 	// あたり判定描画
 	const Transform& t = gameObject->transform;
-	Vector3 centerPos = t.position + posOffset * t.scale;	// 中心座標
+	Vector3 centerPos = t.GetPosition() + posOffset;	// 中心座標
 	Geometory::SetPosition(centerPos);
 
 	// 大きさを求める
@@ -54,8 +54,7 @@ void CP_SphereCollider::ImGuiSetting()
 
 DirectX::SimpleMath::Vector3 CP_SphereCollider::GetCenterPos() const
 {
-	const Transform& t = gameObject->transform;
-	return t.position + posOffset * t.scale;
+	return GetTransform().GetPosition() + posOffset;
 }
 
 bool CP_SphereCollider::CollisionSphere(CP_Collider& _sphere1, CP_Collider& _sphere2)

@@ -78,7 +78,7 @@
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_widgets.cpp" />
     <ClCompile Include="AnimationController.cpp" />
     <ClCompile Include="AnimationData.cpp" />
-    <ClCompile Include="EaseFunction.cpp" />
+    <ClCompile Include="CP_Weapon.cpp" />
     <ClCompile Include="IAnimationObserver.cpp" />
     <ClCompile Include="BlendAnimationNode.cpp" />
     <ClCompile Include="CP_Player.cpp" />
@@ -98,7 +98,6 @@
     <ClCompile Include="AssetGetter.cpp" />
     <ClCompile Include="AssetSetter.cpp" />
     <ClCompile Include="Asset_Base.cpp" />
-    <ClCompile Include="BulletMove.cpp" />
     <ClCompile Include="CollisionChecker.cpp" />
     <ClCompile Include="ComponentFactory.cpp" />
     <ClCompile Include="CP_BoxCollider.cpp" />
@@ -142,8 +141,6 @@
     <ClCompile Include="AnimationChannel.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="PlaneMesh.cpp" />
-    <ClCompile Include="PlayerInput.cpp" />
-    <ClCompile Include="CP_PlayerMove.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="PS_Unlit.cpp" />
     <ClCompile Include="SaveJson.cpp" />
@@ -209,11 +206,13 @@
     <ClInclude Include="..\ThirdParty\imgui\include\imstb_truetype.h" />
     <ClInclude Include="AnimationController.h" />
     <ClInclude Include="AnimationData.h" />
+    <ClInclude Include="CP_Weapon.h" />
     <ClInclude Include="IAnimationObserver.h" />
     <ClInclude Include="BlendAnimationNode.h" />
     <ClInclude Include="CP_Player.h" />
     <ClInclude Include="GameInput.h" />
     <ClInclude Include="IObserever.h" />
+    <ClInclude Include="NullTransform.h" />
     <ClInclude Include="PlayerAnimController.h" />
     <ClInclude Include="PlayerActionController.h" />
     <ClInclude Include="PlayerAnimObserver.h" />
@@ -227,7 +226,6 @@
     <ClInclude Include="AssetDisplay.h" />
     <ClInclude Include="AssetGetter.h" />
     <ClInclude Include="AssetSetter.h" />
-    <ClInclude Include="BulletMove.h" />
     <ClInclude Include="CollisionChecker.h" />
     <ClInclude Include="ComponentDefine.h" />
     <ClInclude Include="ComponentFactory.h" />
@@ -277,8 +275,6 @@
     <ClInclude Include="AnimationChannel.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="PlaneMesh.h" />
-    <ClInclude Include="PlayerInput.h" />
-    <ClInclude Include="CP_PlayerMove.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="PS_Unlit.h" />
     <ClInclude Include="SaveJson.h" />

@@ -43,6 +43,9 @@ public:
 
 	// アニメーションコントローラーをセット
 	void SetAnimationController(AnimationController& _controller);
+
+	// スケルタルメッシュを取得
+	SkeletalMesh& GetSkeletalMesh();
 private:
 	/// @brief 再生できる状態か？
 	/// @return 再生できるか
