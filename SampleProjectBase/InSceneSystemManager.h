@@ -37,7 +37,7 @@ public:
 
 	/// @brief シーンのオブジェクト配列を取得
 	/// @return オブジェクト配列の参照
-	 SceneObjects& GetSceneObjects();
+	SceneObjects& GetSceneObjects();
 
 	/// @brief シーンのライティング配列を取得
 	/// @return ライティング配列の参照
@@ -46,9 +46,8 @@ public:
 	/// @brief シーンの衝突判定システムを取得
 	/// @return 衝突判定システムの参照
 	CollisionChecker& GetCollisonChecker() { return *pCollisionChecker; }
-private:
 
-	/// @brief シーンのメインカメラを作成する
-	void CreateMainCamera();
+	// カメラをセットする
+	void SetCamera(CP_Camera& _camera);
 };
 

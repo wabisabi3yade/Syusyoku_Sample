@@ -1,7 +1,6 @@
 #pragma once
-
-// アセットインターフェース
-#include "Asset_Base.h"
+// アセットコンセプト
+#include "AssetConcept.h"
 
 // 扱うアセットの型
 class Texture;
@@ -17,6 +16,7 @@ class AssetLoader;
 class AssetGetter;
 class AssetDisplay;
 class AssetSetter;
+class AssetSaveLoader;
 
 /*
 	命名規則　この後に_モデル名を入力(UE5に則る)
@@ -39,6 +39,7 @@ class AssetCollection
 	friend class AssetGetter;
 	friend class AssetDisplay;
 	friend class AssetSetter;
+	friend class AssetSaveLoader;
 
 	/// @brief テクスチャのアセットリスト
 	AssetList textureAssets;
@@ -67,6 +68,11 @@ class AssetCollection
 	/// @param _assetName アセットの名前
 	/// @return アセットのポインタ
 	template<class T> T* GetAsset(const std::string& _assetName);
+
+	/// @brief アセットを削除する
+	/// @tparam T アセットの型名
+	/// @param _assetName アセットの名前
+	template<class T> void DeleteAsset(const std::string& _assetName);
 public:
 	AssetCollection() {}
 	~AssetCollection() {}
@@ -77,8 +83,7 @@ public:
 	/// @return アセットがインポートしているかどうか
 	template<class T> bool CheckImport(const std::string& _assetName);
 
-private:	// 便利関数
-
+private:
 	/// @brief どの配列を取り出すか
 	/// @tparam T アセットのタイプ
 	/// @return アセットの配列
@@ -116,6 +121,9 @@ inline T* AssetCollection::SetAsset(const std::string& _assetName, std::unique_p
 	if (CheckImport<T>(_assetName))
 		return static_cast<T*>(assetList[_assetName].get());
 
+	Asset_Base& asset = static_cast<Asset_Base&>(*_assetPtr);
+	asset.SetAssetName(_assetName);
+
 	// 戻り値のポインタを取得
 	T* pRetAsset = _assetPtr.get();
 	assetList[_assetName] = std::move(_assetPtr);
@@ -146,6 +154,14 @@ inline T* AssetCollection::GetAsset(const std::string& _assetName)
 	T* retPtr = static_cast<T*>(basePtr);
 
 	return retPtr;	
+}
+
+template<class T>
+inline void AssetCollection::DeleteAsset(const std::string& _assetName)
+{
+	AssetList& assetList = GetAssetList<T>();
+
+	assetList.erase(_assetName);
 }
 
 /// @brief どの配列を取り出すか

@@ -1,0 +1,184 @@
+{
+    "objects": [
+        {
+            "active": true,
+            "components": [
+                {
+                    "distance": 1000.0,
+                    "enable": true,
+                    "fov": 45.0,
+                    "isOrth": false,
+                    "name": "Camera",
+                    "viewSlot": 0
+                }
+            ],
+            "layer": 0,
+            "name": "MainCamera",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    10.0,
+                    0.0,
+                    0.0
+                ],
+                "child": null,
+                "havePare": false,
+                "parent": "",
+                "pos": [
+                    0.0,
+                    2.0,
+                    -5.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "AABB": false,
+                    "angleOffset": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "enable": true,
+                    "name": "BoxCollider",
+                    "posOffset": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            ],
+            "layer": 0,
+            "name": "Collider1",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "child": null,
+                "havePare": false,
+                "parent": "",
+                "pos": [
+                    0.0,
+                    2.0,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "AABB": false,
+                    "angleOffset": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "enable": true,
+                    "name": "BoxCollider",
+                    "posOffset": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            ],
+            "layer": 0,
+            "name": "Collider2",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "child": null,
+                "havePare": false,
+                "parent": "",
+                "pos": [
+                    2.0,
+                    2.0,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "AABB": false,
+                    "angleOffset": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "enable": true,
+                    "name": "BoxCollider",
+                    "posOffset": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            ],
+            "layer": 0,
+            "name": "Collider3",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "child": null,
+                "havePare": false,
+                "parent": "",
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        }
+    ]
+}

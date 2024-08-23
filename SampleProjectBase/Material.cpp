@@ -2,6 +2,8 @@
 #include "Material.h"
 #include "ShaderCollection.h"
 
+#include "AssetGetter.h"
+
 using namespace DirectX::SimpleMath;
 
 constexpr u_int DIFFUSETEX_SLOT(0);
@@ -90,6 +92,57 @@ void Material::ImGuiSetting()
 	ImGuiMethod::ColorEdit4(parameter.emissive, "emmisive");
 	ImGui::DragFloat("shiness", &parameter.shiness);
 #endif
+}
+
+nlohmann::json Material::Save()
+{
+	using namespace HashiTaku;
+
+	auto data = Asset_Base::Save();
+
+	SaveJsonVector4("m_diffuse", parameter.diffuse, data);
+	SaveJsonVector4("m_ambient", parameter.ambient, data);
+	SaveJsonVector4("m_specular", parameter.specular, data);
+	SaveJsonVector4("m_emissive", parameter.emissive, data);
+	data["m_shiness"] = parameter.shiness;
+
+	if (pDiffuseTexture)
+		data["diffuseTex"] = pDiffuseTexture->GetAssetName();
+	if (pNormalTexture)
+		data["normalTex"] = pNormalTexture->GetAssetName();
+	if (pVertexShader)
+		data["vertexShader"] = pVertexShader->GetShaderName();
+	if (pPixelShader)
+		data["pixelShader"] = pPixelShader->GetShaderName();
+
+	return data;
+}
+
+void Material::Load(const nlohmann::json& _data)
+{
+	using namespace HashiTaku;
+
+	Asset_Base::Load(_data);
+
+	LoadJsonColor("m_diffuse", parameter.diffuse, _data);
+	LoadJsonColor("m_ambient", parameter.ambient, _data);
+	LoadJsonColor("m_specular", parameter.specular, _data);
+	LoadJsonColor("m_emissive", parameter.emissive, _data);
+	LoadJsonFloat("m_shiness", parameter.shiness, _data);
+
+	pDiffuseTexture = LoadJsonAsset<Texture>("diffuseTex", _data);
+	pNormalTexture = LoadJsonAsset<Texture>("normalTex", _data);
+
+	ShaderCollection* shCol = ShaderCollection::GetInstance();
+	std::string shaderName;
+	LoadJsonString("vertexShader", shaderName, _data);
+	pVertexShader = shCol->GetVertexShader(shaderName);
+
+	LoadJsonString("pixelShader", shaderName, _data);
+	pPixelShader = shCol->GetPixelShader(shaderName);
+
+	if (pDiffuseTexture)	// テクスチャあるなら
+		parameter.isTextureEnable = 1;
 }
 
 void Material::InitParameter()

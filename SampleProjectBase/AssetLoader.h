@@ -73,19 +73,20 @@ public:
 	/// @brief  モデルをロードしてアセット管理に追加
 	/// @param _modelPath モデルのパス名
 	/// @param _scale ロードするときのスケール値
-	/// @param _isRightHand 左手系か？
+	/// @param _angles ロードするときの回転角度(deg)
+	/// @param _isRightHand 右手系か？
 	/// @param _isGetScale モデルのスケールを取得するか？
 	/// @return ロードしたメッシュ
-	static Mesh_Group* ModelLoad(const std::string& _modelPath, float _scale, bool _isLeftHand, 
+	static Mesh_Group* ModelLoad(const std::string& _modelPath, float _scale, DirectX::SimpleMath::Vector3 _angles, bool _isRightHand,
 		bool _isGetScale = true);
 
 	/// @brief アニメーションをロードしてアセット管理に追加
 	/// @param _animPath アニメーションのパス
 	/// @param _boneName 対応ボーン名
-	/// @param _isLeftHand 左手系か？
+	/// @param _isLeftHand 右手系か？
 	/// @return アニメーションデータクラス
 	static AnimationData* AnimationLoad(const std::string& _animPath, const std::string& _boneName,
-		bool _isLeftHand);
+		bool _isRightHand);
 
 private:	// 便利関数
 
@@ -130,9 +131,8 @@ private:	// 便利関数
 
 	/// @brief パスからファイル名を取得する
 	/// @param _pathName パス名
-	///  @param _isExtexsion 拡張子をつけるか？
 	/// @return ファイル名
-	static std::string PathToFileName(const std::string& _pathName, bool _isExtension);
+	static std::string PathToFileName(const std::string& _pathName);
 
 	/// @brief 親パス名を取得
 	/// @param _pathName パス名
@@ -153,9 +153,6 @@ private:	// 便利関数
 template<class T>
 inline T* AssetLoader::SendAsset(const std::string& _assetName, std::unique_ptr<T> _pAsset)
 {
-	Asset_Base& asset = static_cast<Asset_Base&>(*_pAsset);
-	asset.SetAssetName(_assetName);
-
 	// 既にインポートされているなら
 	if (AssetSetter::CheckImport<T>(_assetName))
 	{

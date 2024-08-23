@@ -6,16 +6,13 @@
 #include "Material.h"
 
 // スプライトを描画するコンポーネント
-class CP_SpriteRenderer : public CP_Renderer
+class CP_SpriteRenderer : public CP_Renderer, public CloneComponent<CP_SpriteRenderer>
 {
 	// スプライト
 	std::unique_ptr<Sprite> pSprite;
 
 	// マテリアル
 	Material* pMaterial{ nullptr };
-
-	/// @brief テクスチャが設定されているか
-	bool isTextureEnable{ false };
 
 	// マテリアルの準備
 	void MaterialSetup();
@@ -24,18 +21,22 @@ class CP_SpriteRenderer : public CP_Renderer
 	void DrawSetup();
 
 public:
-	using CP_Renderer::CP_Renderer;
-
+	CP_SpriteRenderer();
+	CP_SpriteRenderer(const CP_SpriteRenderer& _other);
 	CP_SpriteRenderer& operator=(const CP_SpriteRenderer& _other);
 
-	void Init() override;
+	void Start() override;
 
 	void Draw() override;
+
+	void ImGuiSetting() override;
 
 	void SetTexture(Texture& _texture);
 
 	void SetMaterial(Material& _material);
 
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
 private:
 
 	void Copy(const CP_SpriteRenderer& _other);

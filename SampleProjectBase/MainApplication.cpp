@@ -8,6 +8,7 @@
 // Asset関連
 #include "AssetContacter.h"
 #include "AssetDisplay.h"
+#include "AssetSaveLoad.h"
 
 constexpr u_int FPS(60);	// フレームレート数
 
@@ -22,6 +23,9 @@ bool MainApplication::isEscapeDisplay = false;
 
 void MainApplication::Release()
 {
+	// アセットのセーブを行う
+	AssetSaveLoader::Save();
+
 	// ImGuiの終了処理
 	ImGuiMethod::Terminal();
 
@@ -78,12 +82,15 @@ bool MainApplication::EscapeCheck()
 
 void MainApplication::SystemDraw()
 {
+#ifdef EDIT
+
 	ImGui::Begin(ShiftJisToUtf8("システム").c_str());
 	AssetDisplay::Draw();
-	pVariableFps->Draw();
+	pVariableFps->ImGuiDraw();
 	ImGui::End();
-
+	
 	ImGuiMethod::Draw();
+#endif // EDIT
 }
 
 void MainApplication::Init(HINSTANCE _hInst)
@@ -98,9 +105,9 @@ void MainApplication::Init(HINSTANCE _hInst)
 
 	InputSetup(hwnd);
 
-	AssetSysytemSetup();
-
 	ShaderSetup();
+
+	AssetSysytemSetup();
 
 	ImuiSetup();
 
@@ -190,6 +197,9 @@ void MainApplication::AssetSysytemSetup()
 
 	// アセット連絡インターフェースに管理クラスの参照を渡す
 	AssetContacter::SetAssetCollection(*pAssetCollection.get());
+
+	// アセットロードする
+	AssetSaveLoader::Load();
 }
 
 void MainApplication::ShaderSetup()

@@ -27,13 +27,13 @@ void SingleAnimationNode::Update(float _playingRatio, BoneList& _boneList)
 
 		// 再生時間から各パラメータを取得
 		// スケール
-		transform.scale = pAnimationData->GetScale(b_i, _playingRatio);
+		transform.scale = pAnimationData->GetScaleByRatio(b_i, _playingRatio);
 
 		//クォータニオン
-		transform.rotation = pAnimationData->GetQuaternion(b_i, _playingRatio);
+		transform.rotation = pAnimationData->GetQuaternionByRatio(b_i, _playingRatio);
 
 		// 座標
-		transform.position = pAnimationData->GetPosition(b_i, _playingRatio);
+		transform.position = pAnimationData->GetPositionByRatio(b_i, _playingRatio);
 
 		bone.SetAnimTransform(transform);
 	}
@@ -58,3 +58,14 @@ const AnimationData& SingleAnimationNode::GetAnimationData() const
 {
 	return *pAnimationData;
 }
+
+void SingleAnimationNode::GetAnimTransform(std::vector<BoneTransform>& _transforms, u_int _boneNum, u_int _requestKeyNum) const
+{
+	_transforms.resize(_boneNum);
+	for (u_int b_i = 0; b_i < _boneNum; b_i++)
+	{
+		_transforms[b_i] = pAnimationData->GetTransformByKey(b_i, _requestKeyNum);
+	}
+}
+
+

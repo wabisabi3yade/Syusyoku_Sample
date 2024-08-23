@@ -51,7 +51,7 @@ VS_OUT main(VS_IN vin)
     Comb._44 = 1.0f;
 
     Normal = mul(Normal, Comb);
-    vin.normal = Normal;
+    vout.normal = Normal;
 	
     vout.pos = mul(vout.pos, world);
 
@@ -62,8 +62,7 @@ VS_OUT main(VS_IN vin)
     vout.pos = mul(vout.pos, proj);
 
     vout.uv = vin.uv;
-    vout.normal = mul(vin.normal, (float3x3) world);
-    normalize(Normal);
+    vout.normal = mul(vout.normal, (float3x3) world);
     
     vout.color = vin.color;
     

@@ -1,12 +1,11 @@
 #pragma once
-#include "Component.h"
+#include "CloneComponent.h"
 
 // メッシュ
 class SingleMesh;
 
 // 描画コンポーネントのベース
-class CP_Renderer :
-    public Component
+class CP_Renderer : public Component
 {
 protected:
 
@@ -14,9 +13,10 @@ protected:
     /// @param _mesh 描画するメッシュ
     void DrawMesh(const SingleMesh& _mesh);
 public:
-    using Component::Component;
+    CP_Renderer() {}
+    ~CP_Renderer() {}
 
     /// @brief 各レンダラーの描画
-    virtual void Draw() = 0;
+    virtual void Draw() {};
 };
 

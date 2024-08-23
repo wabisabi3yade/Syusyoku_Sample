@@ -3,40 +3,22 @@
 #include "Geometory.h"
 #include "GameObject.h"
 
-constexpr float VERTEX_RADIUS(0.5f);	// 頂点作成時の半径
-
 using namespace DirectX::SimpleMath;
 
-CP_SphereCollider& CP_SphereCollider::operator=(const CP_SphereCollider& _other)
+void CP_SphereCollider::Start()
 {
-	if (this == &_other) return *this;
-	CP_Collider::operator=(_other);
-
-	radius = _other.radius;
-	posOffset = _other.posOffset;
-
-	return *this;
-}
-
-void CP_SphereCollider::Init()
-{
-	name = "SphereCollider";
-
-	CP_Collider::Init();	// 追加処理する
-
-	radius = VERTEX_RADIUS;	// 半径を初期化
-	type = Type::Sphere;	// 球と設定する
+	CP_Collider::Start();	// 追加処理する
 }
 
 void CP_SphereCollider::Draw()
 {
 	// あたり判定描画
 	const Transform& t = gameObject->transform;
-	Vector3 centerPos = t.GetPosition() + posOffset;	// 中心座標
+	Vector3 centerPos = t.GetPosition() + center;	// 中心座標
 	Geometory::SetPosition(centerPos);
 
 	// 大きさを求める
-	float scale = radius / VERTEX_RADIUS;
+	float scale = radius * 2;
 	Geometory::SetScale(Vector3::One * scale);
 
 	// 当たってるかで色変える
@@ -49,12 +31,12 @@ void CP_SphereCollider::Draw()
 void CP_SphereCollider::ImGuiSetting()
 {
 	ImGui::DragFloat("radius", &radius);
-	ImGuiMethod::DragFloat3(posOffset, "posOffset");
+	ImGuiMethod::DragFloat3(center, "posOffset");
 }
 
 DirectX::SimpleMath::Vector3 CP_SphereCollider::GetCenterPos() const
 {
-	return GetTransform().GetPosition() + posOffset;
+	return GetTransform().GetPosition() + center;
 }
 
 bool CP_SphereCollider::CollisionSphere(CP_Collider& _sphere1, CP_Collider& _sphere2)
@@ -81,4 +63,22 @@ bool CP_SphereCollider::CollisionSphere(CP_Collider& _sphere1, CP_Collider& _sph
 bool CP_SphereCollider::CollisionBox(CP_Collider& _sphere, CP_Collider& _box)
 {
 	return false;
+}
+
+nlohmann::json CP_SphereCollider::Save()
+{
+	nlohmann::json data = CP_Collider::Save();
+
+	data["radius"] = radius;
+	HashiTaku::SaveJsonVector3("center", center, data);
+
+	return data;
+}
+
+void CP_SphereCollider::Load(const nlohmann::json& _data)
+{
+	CP_Collider::Load(_data);
+
+	HashiTaku::LoadJsonFloat("radius", radius, _data);
+	HashiTaku::LoadJsonVector3("center", center, _data);
 }

@@ -1,39 +1,46 @@
 #pragma once
-#include "Component.h"
+#include "CloneComponent.h"
 
 class CP_Camera;
-class CP_CameraMove : public Component
+
+class CP_CameraMove : public Component,  public CloneComponent<CP_CameraMove>
 {
-	const GameObject* pTargetObj{ nullptr };	// プレイヤーのオブジェクト
+	/// @brief 追従対象
+	const GameObject* pTargetObj;
 
-	// カメラクラス
-	CP_Camera* pCamera{ nullptr };
+	/// @brief カメラ
+	CP_Camera* pCamera;
 
-	// カメラの移動速度
-	float moveSpeed{ 0.0f };
+	/// @brief カメラの移動速度	
+	float rotateSpeed;
 
-	/// @brief 速いときの速度
-	float dashSpeed{ 0.0f };
+	/// @brief ターゲットとの中心角度
+	float centerAngle;
 
-	// 視点移動速度
-	float lookSpeed{ 0.0f };
+	/// @brief ターゲットとの横距離
+	float distanceHori;
 
-	// 移動方向ベクトル
-	DirectX::SimpleMath::Vector3 moveVec;
-
-	// 視点移動ベクトル
-	DirectX::SimpleMath::Vector3 rotateVec;
+	/// @brief ターゲットとの縦距離
+	float distanceVer;
+	
+	/// @brief 視点移動ベクトル
+	float rotateVec;
 
 public:
-	using Component::Component;
+	CP_CameraMove();
+	~CP_CameraMove() {}
 
-	virtual void Init();
+	virtual void Start();
 	virtual void LateUpdate();
 
 	virtual void ImGuiSetting() override;
 
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
+
 private:
 	void UpdateVector();
 	void Move();
+	void LookUpdate();
 };
 

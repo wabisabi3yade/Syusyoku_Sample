@@ -1,0 +1,90 @@
+{
+    "animations": [
+        {
+            "assetName": "AttackN1.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/AttackN1.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "Idle.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/Idle.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "WalkF.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/WalkF.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "Reaction.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/Reaction.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "RunF.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/RunF.fbx",
+            "rightHand": true
+        }
+    ],
+    "materials": [
+        {
+            "assetName": "M_SpriteUnlit",
+            "m_ambient": [
+                0.20000000298023224,
+                0.20000000298023224,
+                0.20000000298023224,
+                1.0
+            ],
+            "m_diffuse": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "m_emissive": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "m_shiness": 0.0,
+            "m_specular": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "pixelShader": "PS_TexColor",
+            "vertexShader": "VS_Gouraud"
+        }
+    ],
+    "models": [
+        {
+            "assetName": "Knight.fbx",
+            "getSize": true,
+            "loadAngle": [
+                0.0,
+                180.0,
+                0.0
+            ],
+            "loadScale": 0.009999999776482582,
+            "pathName": "assets/model/knight/Knight.fbx",
+            "rightHand": true
+        }
+    ],
+    "textures": [
+        {
+            "assetName": "an.jpg",
+            "pathName": "assets/texture/an.jpg"
+        },
+        {
+            "assetName": "grass.jpg",
+            "pathName": "assets/texture/grass.jpg"
+        }
+    ]
+}

@@ -2,10 +2,12 @@
 #include "Texture.h"
 #include "PlaneMesh.h"
 
+#include "ISaveLoad.h"
+
 class Material;
 
 // 四角形ポリゴンにテクスチャを貼って表示するクラス
-class Sprite
+class Sprite : public ISaveLoad
 {
 	/// @brief テクスチャ
 	Texture* pTexture;
@@ -21,6 +23,9 @@ class Sprite
 
 	/// @brief uvの分割数
 	DirectX::SimpleMath::Vector2 uvDivideNum;
+
+	/// @brief テクスチャが設定されているか
+	bool isTextureEnable{ false };
 
 	/// @brief コピー関数
 	/// @param _other コピーされる対象
@@ -38,14 +43,25 @@ public:
 
 	/// @brief テクスチャを取得
 	/// @return テクスチャの参照
-	Texture& GetTexture() const;
+	Texture* GetTexture() const;
 
 	/// @brief 四角形ポリゴンを取得
 	/// @return 四角形ポリゴンのconst参照
 	const PlaneMesh& GetSquare() const;
 
+	// テクスチャ使用しているか返す
+	bool GetIsTexEnable() const;
+
 	/// @brief uv座標を設定
 	/// @param _uvStart uv座標始点
 	/// @param _uvEnd uv座標終点
 	void SetUV(const DirectX::SimpleMath::Vector2& _uvStart, const DirectX::SimpleMath::Vector2& _uvEnd);
+
+	/// @brief セーブする
+	/// @param _sceneData セーブデータ
+	nlohmann::json Save() override;
+
+	/// @brief ロードする
+	/// @param _sceneData ロードするデータ 
+	void Load(const nlohmann::json& _data) override;
 };

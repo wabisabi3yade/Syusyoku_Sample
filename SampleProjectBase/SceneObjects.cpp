@@ -2,6 +2,8 @@
 #include "SceneObjects.h"
 #include <string>
 
+#include "SF_Define.h"
+
 typedef std::unordered_map<std::string, std::unique_ptr<GameObject>> ObjectList;
 
 SceneObjects::SceneObjects()
@@ -16,26 +18,16 @@ SceneObjects::~SceneObjects()
 
 void SceneObjects::Update()
 {
-#ifdef EDIT
-	ImGui::Begin(ShiftJisToUtf8("シーンオブジェクト").c_str());
-#endif // EDIT
 
 	for (auto itr = objList.begin(); itr != objList.end(); itr++)
 	{
 		itr->second->UpdateBase();
-		itr->second->ImGuiSet();
 	}
 
 	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
 	{
 		itr->second->UpdateBase();
-		itr->second->ImGuiSet();
 	}
-
-#ifdef EDIT
-	ImGui::End();
-#endif // EDIT
-
 
 }
 
@@ -73,6 +65,41 @@ void SceneObjects::Draw()
 	}
 }
 
+void SceneObjects::ImGuiSetting()
+{
+#ifdef EDIT
+
+	ImGui::Begin(ShiftJisToUtf8("シーンオブジェクト").c_str());
+
+	for (auto itr = objList.begin(); itr != objList.end(); itr++)
+	{
+		itr->second->ImGuiSet();
+	}
+
+	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
+	{
+		itr->second->ImGuiSet();
+	}
+
+	ImGui::Dummy(ImVec2(0, 10));
+	constexpr u_int buf = 256;
+
+	// 生成
+	static char createObjName[buf];
+	ImGui::InputText("createName", createObjName, buf);
+	if (ImGui::Button("new Object") && createObjName[0] != '\0')
+		SceneFunction::ObjectFunc::CreateEmpty(createObjName);
+
+	// 削除
+	static char deleteObjName[buf];
+	ImGui::InputText("deleteName", deleteObjName, buf);
+	if (ImGui::Button("delete"))
+		SceneFunction::ObjectFunc::DeleteObject(deleteObjName);
+
+	ImGui::End();
+#endif // EDIT
+}
+
 GameObject* SceneObjects::SetObject(std::unique_ptr<GameObject> _objPtr)
 {
 	// 名前が空か確認
@@ -92,7 +119,7 @@ GameObject* SceneObjects::SetObject(std::unique_ptr<GameObject> _objPtr)
 	GameObject* retPtr = _objPtr.get();
 
 	// 配列に入れる
-	std::string setName = _objPtr->GetName();	
+	std::string setName = _objPtr->GetName();
 	setList->insert(std::pair<std::string, std::unique_ptr<GameObject>>(setName, std::move(_objPtr)));
 
 	return retPtr;
@@ -118,6 +145,73 @@ void SceneObjects::DeleteObj(GameObject& _deleteObj)
 		// あったら
 		uiList.erase(itr);	// 削除する
 		return;
+	}
+
+	HASHI_DEBUG_LOG(_deleteObj.GetName() + "はシーン内にありません");
+}
+
+GameObject* SceneObjects::GetSceneObject(const std::string& _objectName)
+{
+	// 先に3D空間状のオブジェクトから探す　→　無かったらUIの方を探す
+
+	// 名前から探す
+	auto itr = objList.find(_objectName);
+	if (itr == objList.end())
+	{
+		// オブジェクトに無かったらUiで探す
+		itr = uiList.find(_objectName);
+
+		// それでもなかったら
+		if (itr == uiList.end())
+		{
+			std::string message = "リスト内に名前のオブジェクトがありませんでした" + _objectName;
+			HASHI_DEBUG_LOG(message);
+			return nullptr;
+		}
+	}
+
+	return itr->second.get();
+}
+
+nlohmann::json SceneObjects::SaveObject()
+{
+	nlohmann::json objectData;
+
+	for (auto& obj : objList)
+	{
+		if (obj.second->isSave)
+			objectData.push_back(obj.second->Save());
+	}
+
+
+	for (auto& ui : uiList)
+	{
+		if (ui.second->isSave)
+			objectData.push_back(ui.second->Save());
+	}
+
+	return objectData;
+}
+
+void SceneObjects::LoadObject(const nlohmann::json& _objectsData)
+{
+	// オブジェクトを作成する
+	for (const auto& d : _objectsData)
+	{
+		std::string objectName;
+		HashiTaku::LoadJsonString("name", objectName, d);
+		SceneFunction::ObjectFunc::CreateEmpty(objectName);
+	}
+
+	// オブジェクトをロード
+	for (auto& data : _objectsData)
+	{
+		std::string objectName;
+		HashiTaku::LoadJsonString("name", objectName, data);
+		GameObject* go = GetSceneObject(objectName);
+
+		if (go)
+			go->Load(data);
 	}
 }
 

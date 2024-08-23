@@ -1,5 +1,5 @@
 #pragma once
-#include "Asset_Base.h"
+#include "AssetPath_Base.h"
 
 // 描画関連
 #include "SingleMesh.h"
@@ -7,7 +7,7 @@
 #include "Texture.h"
 
 // メッシュ群（スケルタル・スタティックメッシュ）の基底クラス
-class Mesh_Group : public Asset_Base
+class Mesh_Group : public AssetPath_Base
 {
 public:
 
@@ -31,17 +31,26 @@ private:
 	/// @brief モデルサイズ
 	DirectX::SimpleMath::Vector3 size;
 
-	/// @brief スケール倍率
-	float scaleTimes;
+	/// @brief ロード時、スケール倍率
+	float loadScale;
+
+	/// @brief ロード時、回転角度
+	DirectX::SimpleMath::Vector3 loadOffsetAngles;
 
 	/// @brief メッシュの種類
 	MeshType meshType;
+
+	/// @brief サイズは取得するか？
+	bool isGetSize;
+
+	/// @brief 右手系のモデルか？
+	bool isRightHand;
 public:
-	Mesh_Group() : meshType(MeshType::None), scaleTimes(1.0f) {}
+	Mesh_Group() : meshType(MeshType::None), loadScale(1.0f), isGetSize(false), isRightHand(false) {}
 
 	/// @brief コンストラクタ
 	/// @param _meshType メッシュの種類
-	Mesh_Group(MeshType _meshType) : meshType(_meshType), scaleTimes(1.0f) {}
+	Mesh_Group(MeshType _meshType) : meshType(_meshType), loadScale(1.0f), isGetSize(false), isRightHand(false) {}
 	virtual ~Mesh_Group() {}
 
 	/// @brief メッシュを追加
@@ -79,9 +88,13 @@ public:
 	/// @return サイズ
 	DirectX::SimpleMath::Vector3 GetSize() const;
 
-	/// @brief スケール倍率を取得する
+	/// @brief ロード時のスケール倍率を取得する
 	/// @return スケール倍率
-	float GetScaleTimes() const;
+	float GetLoadOffsetScale() const;
+
+	/// @brief ロード時のオフセット角度を取得する
+	/// @return オフセット角度
+	DirectX::SimpleMath::Vector3 GetLoadOffsetAngles() const;
 
 	/// @brief メッシュ群の種類を取得
 	/// @return 種類
@@ -97,9 +110,23 @@ public:
 
 	/// @brief スケール倍率をセット
 	/// @param _scaleTimes スケール倍率
-	void SetScaleTimes(float _scaleTimes);
+	void SetLoadOffsetScale(float _scaleTimes);
+
+	/// @brief オフセット角度をセット
+	/// @param _scaleTimes オフセット角度
+	void SetLoadOffsetAngles(const DirectX::SimpleMath::Vector3& _offsetAngles);
+
+	// 右手系かどうかセット
+	void SetIsRightHand(bool _isRightHand); 
+
+	// サイズを取得するかセット
+	void SetIsGetSize(bool _isGetSize);
 
 	// マテリアルの頂点・ピクセルシェーダーをセット
 	void SetVertexShader(const std::string& _vsName);
 	void SetPixelShader(const std::string& _psName);
+
+	/// @brief セーブする
+	/// @param _sceneData セーブデータ
+	nlohmann::json Save() override;
 };

@@ -108,6 +108,7 @@ void Geometory::MakeMaterial()
 	// マテリアル作成
 	const std::string MATERIAL_NAME = "M_Geometory";
 	std::unique_ptr<Material> makeMaterial = std::make_unique<Material>("VS_Primitive", "PS_Primitive");
+	makeMaterial->SetIsntSave();
 
 	// このオブジェクトにマテリアルセット
 	pMaterial = AssetSetter::SetAsset<Material>(MATERIAL_NAME, std::move(makeMaterial));
@@ -140,6 +141,7 @@ void Geometory::MakeGeometory()
 		// メッシュとマテリアルをセット
 		pSM->AddMesh(std::move(pMeshes[loop]));
 		pSM->AddMaterial(pUnlit);
+		pSM->SetIsntSave();
 
 		// アセット管理にセット
 		pGeometory.push_back(AssetSetter::SetAsset(names[loop], std::move(pSM)));

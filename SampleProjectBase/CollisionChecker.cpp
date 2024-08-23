@@ -21,6 +21,7 @@ bool CollisionChecker::SphereCollision(CP_Collider& _sphere, CP_Collider& _other
 
 	return isHit;
 }
+
 bool CollisionChecker::BoxCollision(CP_Collider& _box, CP_Collider& _other)
 {
 	bool isHit = false;
@@ -38,6 +39,7 @@ bool CollisionChecker::BoxCollision(CP_Collider& _box, CP_Collider& _other)
 
 	return isHit;
 }
+
 CollisionChecker::~CollisionChecker()
 {
 	colliders.clear();
@@ -92,7 +94,7 @@ void CollisionChecker::CollisionCheck()
 
 void CollisionChecker::AddCollider(CP_Collider& _collider)
 {
-	// 同じやつがあるか確認する
+	// 重複しているか確認
 	auto itr = std::find(colliders.begin(), colliders.end(), &_collider);
 	if (itr != colliders.end())
 	{

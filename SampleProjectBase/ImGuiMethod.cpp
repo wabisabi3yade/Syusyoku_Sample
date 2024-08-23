@@ -122,6 +122,25 @@ bool ImGuiMethod::ComboBox(const std::string& _caption, std::string& _currentIte
 	//	PlayAnimation(currentName);
 	//}
 
+std::string ImGuiMethod::InputText(const std::string& _label)
+{
+	constexpr u_int BufferNum = 256;
+	static char str[BufferNum] = "";
+
+	ImGui::InputText(_label.c_str(), str, BufferNum);
+
+	return str;
+}
+
+void ImGuiMethod::Text(const Vector3& _v)
+{
+	ImGui::Text(std::string(
+		"x " + std::to_string(_v.x) +
+		"\ny " + std::to_string(_v.y) +
+		"\nz " + std::to_string(_v.z)
+	).c_str());
+}
+
 void ImGuiMethod::SetFontSize(FontSize _size)
 {
 	ImGui::PushFont(pFonts[static_cast<u_int>(_size)]);

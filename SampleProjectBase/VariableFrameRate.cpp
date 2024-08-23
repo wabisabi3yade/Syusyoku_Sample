@@ -34,7 +34,7 @@ bool VariableFrameRate::UpdateCheck()
 	return true;
 }
 
-void VariableFrameRate::Draw()
+void VariableFrameRate::ImGuiDraw()
 {
 	if (ImGui::TreeNode("FPS Counter"))
 	{

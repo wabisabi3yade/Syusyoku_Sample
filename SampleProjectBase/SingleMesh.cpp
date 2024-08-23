@@ -129,6 +129,10 @@ void SingleMesh::Copy(const SingleMesh& _other)
 		indicies.push_back(index);
 
 	// バッファ作成
+	pVertexBuffer = std::make_unique<VertexBuffer>();
+	pIndexBuffer = std::make_unique<IndexBuffer>();
+
+	// バッファ作成
 	InitBuffer();
 
 	name = _other.name;

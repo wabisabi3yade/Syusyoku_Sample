@@ -1,17 +1,19 @@
 #pragma once
+#include "ISaveLoad.h"
 
 // アセットの基底クラス
-class Asset_Base
+class Asset_Base : public ISaveLoad
 {
-protected:
-
 	/// @brief アセットの名前
-	std::string name;
+	std::string assetName;
+
+	/// @brief セーブするか？
+	bool isSave;
 public:
 
 	/// @brief コンストラクタ
 	/// @param _type アセットの種類
-	Asset_Base() : name("") {};
+	Asset_Base() : assetName(""), isSave(true) {};
 	virtual ~Asset_Base() {};
 
 	/// @brief 名前をセットする
@@ -20,5 +22,19 @@ public:
 
 	/// @brief 名前を取得する
 	/// @return アセットの名前
-	std::string GetAssetName()const;
+	std::string GetAssetName() const;
+
+	// セーブするか取得
+	bool GetIsSave() const;
+
+	/// @brief セーブする
+	/// @return セーブデータ
+	nlohmann::json Save() override;
+
+	/// @brief ロードする
+	/// @param _data ロードするデータ 
+	void Load(const nlohmann::json& _data) override;
+
+	/// @brief セーブしないようにする
+	void SetIsntSave();
 };

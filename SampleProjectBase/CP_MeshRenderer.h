@@ -5,16 +5,10 @@
 #include "Mesh_Group.h"
 
 // メッシュ描画コンポーネント
-class CP_MeshRenderer : public CP_Renderer
+class CP_MeshRenderer : public CP_Renderer, public CloneComponent<CP_MeshRenderer>
 {
 	/// @brief 描画するメッシュ群
 	Mesh_Group* pRenderMesh{ nullptr };
-
-	/// @brief オフセット座標
-	DirectX::SimpleMath::Vector3 offsetPos;
-
-	/// @brief オフセット角度
-	DirectX::SimpleMath::Vector3 offsetAngles;
 
 	/// @brief オブジェクトの原点を表示するか
 	bool isOriginDisplay;
@@ -22,7 +16,7 @@ public:
 	CP_MeshRenderer();
 	~CP_MeshRenderer() {}
 
-	void Init();
+	void Start();
 
 	void Draw() override;
 
@@ -40,16 +34,12 @@ public:
 	void SetVertexShader(const std::string& _vsName);
 	void SetPixelShader(const std::string& _psName);
 
-	// オフセット座標をセット
-	void SetOffsetPos(const DirectX::SimpleMath::Vector3& _offset);
-
-	// オフセット角度をセット(deg)
-	void SetOffsetAngle(const DirectX::SimpleMath::Vector3& _offset);
-
 	/// @brief 描画するメッシュを取得
 	/// @return メッシュ群
 	Mesh_Group* GetRenderMesh();
 
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
 private:
 	/// @brief 描画できるのか返す
 	/// @return 描画できるか？

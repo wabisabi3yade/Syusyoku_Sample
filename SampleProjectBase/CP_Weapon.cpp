@@ -9,7 +9,6 @@ using namespace DirectX::SimpleMath;
 
 CP_Weapon::CP_Weapon() : grabBoneName(""), pGrabBone(nullptr)
 {
-	name = "Weapon";
 }
 
 void CP_Weapon::LateUpdate()
@@ -20,7 +19,20 @@ void CP_Weapon::LateUpdate()
 void CP_Weapon::Draw()
 {
 	Geometory::SetPosition(GetTransform().GetPosition());
-	Geometory::DrawSphere();
+	Geometory::SetScale(GetTransform().GetScale());
+	Geometory::SetRotation(GetTransform().GetEularAngles());
+	Geometory::DrawCube();
+}
+
+void CP_Weapon::ImGuiSetting()
+{
+	ImGuiMethod::DragFloat3(offsetPosition, "offset", 0.01f);
+	ImGuiMethod::DragFloat3(offsetAngles, "angle");
+}
+
+void CP_Weapon::SetSkeletalMesh(const SkeletalMesh& _sk)
+{
+
 }
 
 void CP_Weapon::SetGrabBone(const Bone& _grabBone)
@@ -38,6 +50,26 @@ std::string CP_Weapon::GetGrabBoneName() const
 	return grabBoneName;
 }
 
+nlohmann::json CP_Weapon::Save()
+{
+	auto data = Component::Save();
+
+	data["grabName"] = grabBoneName;
+	HashiTaku::SaveJsonVector3("offsetPos", offsetPosition, data);
+	HashiTaku::SaveJsonVector3("offsetAngles", offsetAngles, data);
+
+	return data;
+}
+
+void CP_Weapon::Load(const nlohmann::json& _data)
+{
+	Component::Load(_data);
+
+	HashiTaku::LoadJsonString("grabName", grabBoneName, _data);
+	HashiTaku::LoadJsonVector3("offsetPos", offsetPosition, _data);
+	HashiTaku::LoadJsonVector3("offsetAngles", offsetAngles, _data);
+}
+
 void CP_Weapon::UpdateTransform()
 {
 	if (!pGrabBone)
@@ -49,11 +81,16 @@ void CP_Weapon::UpdateTransform()
 	const Matrix& boneMtx = pGrabBone->GetCombMtx();
 	Transform& t = GetTransform();
 
-	// 行列からトランスフォームを求める
-	t.SetLocalPos({ boneMtx.m[3][0] * 0.01f, boneMtx.m[3][1] * 0.01f, boneMtx.m[3][2] * 0.01f });
+	// ボーン行列からトランスフォームを求める
+	Vector3 bonePos = {
+		boneMtx.m[3][0] /** 0.01f*/,
+		boneMtx.m[3][1]/* * 0.01f*/,
+		boneMtx.m[3][2]/* * 0.01f*/
+	};
+
+	t.SetLocalPos(bonePos + offsetPosition);
 
 	Vector3 s = Vec3::WorldMtxToScale(boneMtx);
-
 	Matrix rotateMtx = Matrix(
 		boneMtx.m[0][0] / s.x, boneMtx.m[0][1] / s.x, boneMtx.m[0][2] / s.x, 0.0f,
 		boneMtx.m[1][0] / s.y, boneMtx.m[1][1] / s.y, boneMtx.m[1][2] / s.y, 0.0f,
@@ -61,5 +98,8 @@ void CP_Weapon::UpdateTransform()
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
 
-	t.SetLocalRotation(Quaternion::CreateFromRotationMatrix(rotateMtx));
+	Quaternion q = Quaternion::CreateFromRotationMatrix(rotateMtx);
+	//q = Quat::Multiply(q, Quat::ToQuaternion(Vector3(0.0f, 180.f, 0.0f)));
+
+	t.SetLocalRotation(Quat::Multiply(q, Quat::ToQuaternion(offsetAngles)));
 }

@@ -26,6 +26,11 @@ const AnimationChannel* AnimationData::FindChannel(u_int _boneIdx) const
 	return (*itr).get();
 }
 
+void AnimationData::SetBoneListName(const std::string& _boneListName)
+{
+	boneListName = _boneListName;
+}
+
 void AnimationData::SetAnimationTime(float _animTime)
 {
 	assert(_animTime >= 0.0f);
@@ -36,6 +41,11 @@ void AnimationData::SetTimePerKey(float _timePerKey)
 {
 	assert(_timePerKey >= 0.0f);
 	timePerKey_s = std::max(_timePerKey, 0.0f);
+}
+
+void AnimationData::SetIsRightHand(bool _isRightHand)
+{
+	isRightHand = _isRightHand;
 }
 
 std::string AnimationData::GetBoneName(u_int _nodeId) const
@@ -57,7 +67,7 @@ u_int AnimationData::GetChannelCount() const
 	return static_cast<u_int>(pAnimChannels.size());
 }
 
-DirectX::SimpleMath::Vector3 AnimationData::GetScale(u_int _boneId, float _playingRatio) const
+DirectX::SimpleMath::Vector3 AnimationData::GetScaleByRatio(u_int _boneId, float _playingRatio) const
 {
 	const AnimationChannel* channel = FindChannel(_boneId);
 
@@ -92,7 +102,7 @@ DirectX::SimpleMath::Vector3 AnimationData::GetScale(u_int _boneId, float _playi
 	return lerpedScale;
 }
 
-DirectX::SimpleMath::Quaternion AnimationData::GetQuaternion(u_int _boneId, float _playingRatio) const
+DirectX::SimpleMath::Quaternion AnimationData::GetQuaternionByRatio(u_int _boneId, float _playingRatio) const
 {
 	const AnimationChannel* channel = FindChannel(_boneId);
 
@@ -127,7 +137,7 @@ DirectX::SimpleMath::Quaternion AnimationData::GetQuaternion(u_int _boneId, floa
 	return slerpedQuat;
 }
 
-DirectX::SimpleMath::Vector3 AnimationData::GetPosition(u_int _boneId, float _playingRatio) const
+DirectX::SimpleMath::Vector3 AnimationData::GetPositionByRatio(u_int _boneId, float _playingRatio) const
 {
 	const AnimationChannel* channel = FindChannel(_boneId);
 
@@ -162,18 +172,81 @@ DirectX::SimpleMath::Vector3 AnimationData::GetPosition(u_int _boneId, float _pl
 	return lerpedPos;
 }
 
-BoneTransform AnimationData::GetTransform(u_int _boneId, float _playingTime) const
+DirectX::SimpleMath::Vector3 AnimationData::GetScaleByKey(u_int _boneId, u_int _playingKey) const
+{
+	const AnimationChannel* channel = FindChannel(_boneId);
+
+	if (!channel) return Vector3::One;
+	if (_playingKey > channel->GetScaleKeyCnt() - 1)
+	{
+		HASHI_DEBUG_LOG("指定したキーが最大数を超えています");
+		_playingKey = channel->GetScaleKeyCnt();
+	}
+
+	return channel->GetScaleKey(_playingKey).parameter;
+}
+
+DirectX::SimpleMath::Quaternion AnimationData::GetQuaternioneByKey(u_int _boneId, u_int _playingKey) const
+{
+	const AnimationChannel* channel = FindChannel(_boneId);
+
+	if (!channel) return Quaternion::Identity;
+	if (_playingKey > channel->GetQuatKeyCnt() - 1)
+	{
+		HASHI_DEBUG_LOG("指定したキーが最大数を超えています");
+		_playingKey = channel->GetQuatKeyCnt();
+	}
+
+	return channel->GetQuatKey(_playingKey).parameter;
+}
+
+DirectX::SimpleMath::Vector3 AnimationData::GetPositioneByKey(u_int _boneId, u_int _playingKey) const
+{
+	const AnimationChannel* channel = FindChannel(_boneId);
+
+	if (!channel) return Vector3::Zero;
+	if (_playingKey > channel->GetPosKeyCnt() - 1)
+	{
+		HASHI_DEBUG_LOG("指定したキーが最大数を超えています");
+		_playingKey = channel->GetPosKeyCnt();
+	}
+
+	return channel->GetPosKey(_playingKey).parameter;
+}
+
+BoneTransform AnimationData::GetTransformByRatio(u_int _boneId, float _playingTime) const
 {
 	BoneTransform retTransform;
 
-	retTransform.position = GetPosition(_boneId, _playingTime);
-	retTransform.scale = GetScale(_boneId, _playingTime);
-	retTransform.rotation = GetQuaternion(_boneId, _playingTime);
+	retTransform.position = GetPositionByRatio(_boneId, _playingTime);
+	retTransform.scale = GetScaleByRatio(_boneId, _playingTime);
+	retTransform.rotation = GetQuaternionByRatio(_boneId, _playingTime);
 
 	return retTransform;
+}
+
+BoneTransform AnimationData::GetTransformByKey(u_int _boneId, u_int _playingKey) const
+{
+	BoneTransform boneTransform;
+
+	boneTransform.position = GetPositioneByKey(_boneId, _playingKey);
+	boneTransform.scale = GetScaleByKey(_boneId, _playingKey);
+	boneTransform.rotation = GetQuaternioneByKey(_boneId, _playingKey);
+
+	return boneTransform;
 }
 
 float AnimationData::GetAnimationTime() const
 {
 	return animationTime_s;
+}
+
+nlohmann::json AnimationData::Save()
+{
+	auto data = AssetPath_Base::Save();
+
+	data["boneListName"] = boneListName;
+	data["rightHand"] = isRightHand;
+
+	return data;
 }

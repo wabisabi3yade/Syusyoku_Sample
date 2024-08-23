@@ -23,7 +23,11 @@ void BlendAnimationNode::ImGuiPlaying()
 	std::string text = "現在のブレンド: " + std::to_string(curBlendRatio);
 	ImGui::Text(TO_UTF8(text));
 
-	ImGui::DragFloat(TO_UTF8("ターゲット"), &targetBlendRatio, 0.01f, 0.0f, 1.0f);
+	ImGui::Text(std::to_string(curRatioSmoothTime).c_str());
+
+	ImGui::DragFloat("smoothTime", &ratioSmoothTime, 0.01f, 0.0f, 2.0f);
+
+	ImGui::DragFloat("target", &targetBlendRatio, 0.01f, 0.0f, 1.0f);
 
 	for (auto& data : blendDatas)
 	{
@@ -51,6 +55,8 @@ void BlendAnimationNode::ImGuiPlaying()
 
 void BlendAnimationNode::Update(float _playingTime, BoneList& _boneList)
 {
+	if (!IsCanUpdate()) return;
+
 	// ブレンド値をターゲットに近づける
 	MoveCurBlend();
 
@@ -77,6 +83,12 @@ void BlendAnimationNode::SetAnimationData(const std::string& _animName)
 
 void BlendAnimationNode::SetTargetBlendRatio(float _ratio)
 {
+	// 同じ割合をセットするなら処理しない
+	if (abs(_ratio - targetBlendRatio) <= Mathf::epsilon)
+	{
+		return;
+	}
+
 	SetRatio(targetBlendRatio, _ratio);
 
 	// 移動時間をリセットする
@@ -123,6 +135,13 @@ void BlendAnimationNode::AnimationUpdate(float _playingRatio, BoneList& _boneLis
 		SingleUpdateAnimation(*blendPair.prevData, _playingRatio, _boneList);
 	else
 		BlendUpdateAnimation(blendPair, _playingRatio, _boneList);
+}
+
+bool BlendAnimationNode::IsCanUpdate()
+{
+	if (static_cast<u_int>(blendDatas.size()) == 0) return false;
+
+	return true;
 }
 
 BlendAnimationNode::BlendPair BlendAnimationNode::FindBlendPair()
@@ -173,13 +192,13 @@ void BlendAnimationNode::SingleUpdateAnimation(BlendData& _animationData, float 
 
 		// 再生時間から各パラメータを取得
 		// スケール
-		transform.scale = animData.GetScale(b_i, _playingRatio);
+		transform.scale = animData.GetScaleByRatio(b_i, _playingRatio);
 
 		//クォータニオン
-		transform.rotation = animData.GetQuaternion(b_i, _playingRatio);
+		transform.rotation = animData.GetQuaternionByRatio(b_i, _playingRatio);
 
 		// 座標
-		transform.position = animData.GetPosition(b_i, _playingRatio);
+		transform.position = animData.GetPositionByRatio(b_i, _playingRatio);
 
 		bone.SetAnimTransform(transform);
 	}
@@ -203,10 +222,10 @@ void BlendAnimationNode::BlendUpdateAnimation(BlendPair& _blendPair, float _play
 	for (u_int b_i = 0; b_i < _boneList.GetBoneCnt(); b_i++)
 	{
 		BoneTransform p_Transform;	// 前のアニメーション
-		p_Transform = p_pAnimData->GetTransform(b_i, _playingRatio);
+		p_Transform = p_pAnimData->GetTransformByRatio(b_i, _playingRatio);
 
 		BoneTransform n_Transform;	// 後のアニメーション
-		n_Transform = n_pAnimData->GetTransform(b_i, _playingRatio);
+		n_Transform = n_pAnimData->GetTransformByRatio(b_i, _playingRatio);
 
 		BoneTransform blendTransform;
 		// 座標
@@ -261,4 +280,14 @@ void BlendAnimationNode::SortBlendValue()
 bool BlendAnimationNode::CompareBlendValue(const BlendData& _bd1, const BlendData& _bd2)
 {
 	return _bd1.ratio > _bd2.ratio;
+}
+
+void BlendAnimationNode::GetAnimTransform(std::vector<BoneTransform>& _transforms, u_int _boneNum, u_int _requestKeyNum) const
+{
+	_transforms.resize(_boneNum);
+	for (u_int b_i = 0; b_i < _boneNum; b_i++)
+	{
+		const AnimationData* pAnimationData = blendDatas.begin()->pAnimation;
+		_transforms[b_i] = pAnimationData->GetTransformByKey(b_i, _requestKeyNum);
+	}
 }

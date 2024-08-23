@@ -15,7 +15,7 @@
 using namespace DirectX::SimpleMath;
 
 AnimationController::AnimationController()
-	: pCurrentAnimNode(nullptr), pNextAnimNode(nullptr), playingRatio(0.0f), playSpeed(1.0f), blendElapsedTime(0.0f), isPlay(true), isTransitioning(false)
+	: pCurrentAnimNode(nullptr), pNextAnimNode(nullptr), playingRatio(0.0f), playSpeed(1.0f), blendElapsedTime(0.0f), pBoneList(nullptr), isPlay(true), isTransitioning(false)
 {
 	inertInterp = std::make_unique<InertInterpAnimation>();
 }
@@ -46,7 +46,7 @@ void AnimationController::TransitionUpdate(BoneList& _boneList)
 		InterpTransitionEnd();
 	}
 
-	/*for (u_int b_i = 0; b_i < _boneList.GetBoneCnt(); b_i++)
+	for (u_int b_i = 0; b_i < _boneList.GetBoneCnt(); b_i++)
 	{
 		Bone& bone = _boneList.GetBone(b_i);
 
@@ -57,7 +57,7 @@ void AnimationController::TransitionUpdate(BoneList& _boneList)
 		transform.rotation = inertInterp->CalcBlendRot(b_i, blendElapsedTime);
 
 		bone.SetAnimTransform(transform);
-	}*/
+	}
 }
 
 void AnimationController::ImGuiSetting()
@@ -66,13 +66,13 @@ void AnimationController::ImGuiSetting()
 
 	if (IsSetAnimation())
 	{
-		std::string timeStr =std::to_string(playingRatio * pCurrentAnimNode->GetAnimationTime());
+		std::string timeStr = std::to_string(playingRatio * pCurrentAnimNode->GetAnimationTime());
 		ImGui::Text(TO_UTF8("再生時間 " + timeStr));
 	}
 
 	ImGui::Checkbox("Play", &isPlay);
 	ImGui::DragFloat("PlaySpeed", &playSpeed, 0.1f);
-	
+
 	ImGuiImportAnim();
 
 	if (IsSetAnimation())
@@ -129,19 +129,18 @@ void AnimationController::SetBlendRatio(float _ratio)
 	pBlend->SetTargetBlendRatio(_ratio);
 }
 
-void AnimationController::CreateSingleNode(const std::string& _animName)
+void AnimationController::CreateSingleNode(const std::string& _nodeName, const std::string& _animName)
 {
 	// 同じアニメーションがあったら
-	if (IsHaveAnim(_animName))	return;
+	if (IsHaveAnim(_nodeName))	return;
 
-	// ノードを作成する
-	std::unique_ptr<SingleAnimationNode> pAnimNode = std::make_unique<SingleAnimationNode>(_animName);
+	// アニメーションをセットし。ノードを配列に入れる
+	std::unique_ptr<SingleAnimationNode> pAnimNode = std::make_unique<SingleAnimationNode>(_nodeName);
 	pAnimNode->SetAnimationData(_animName);
-
-	pAnimationNodes[_animName] = std::move(pAnimNode);
+	pAnimationNodes[_nodeName] = std::move(pAnimNode);
 
 	if (!IsSetAnimation())	// 再生中のアニメーションがないならセットする
-		pCurrentAnimNode = pAnimationNodes[_animName].get();
+		pCurrentAnimNode = pAnimationNodes[_nodeName].get();
 }
 
 void AnimationController::CreateBlendNode(const std::vector<std::string>& _animNames,
@@ -301,17 +300,19 @@ void AnimationController::InterpTransitionStart(const std::string& _animName)
 {
 	pNextAnimNode = pAnimationNodes[_animName].get();
 
-	//// 次のアニメーションの姿勢を取得する
-	//std::vector<BoneTransform> requestPose;
+	// 次のアニメーションの姿勢を取得する
+	std::vector<BoneTransform> requestPose;
 
-	//// 慣性補間の初期処理
-	//bool isSuccess = inertInterp->Calculate(*pNextAnimNode, blendTime);
+	pNextAnimNode->GetAnimTransform(requestPose, pBoneList->GetBoneCnt(), 0);
 
-	//if (isSuccess)	// 成功していたら
-	//{
-	isTransitioning = true;
-	blendElapsedTime = 0.0f;
-	//}
+	// 慣性補間の初期処理
+	bool isSuccess = inertInterp->Calculate(requestPose, blendTime);
+
+	if (isSuccess)	// 成功していたら
+	{
+		isTransitioning = true;
+		blendElapsedTime = 0.0f;
+	}
 }
 
 void AnimationController::InterpTransitionEnd()
@@ -321,6 +322,11 @@ void AnimationController::InterpTransitionEnd()
 	pCurrentAnimNode = pNextAnimNode;
 	pNextAnimNode = nullptr;
 	isTransitioning = false;
+}
+
+void AnimationController::SetBoneList(BoneList& _boneList)
+{
+	pBoneList = &_boneList;
 }
 
 void AnimationController::OnAnimationFinish()

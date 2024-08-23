@@ -22,4 +22,9 @@ public:
 	// アニメーションデータを取得する
 	const AnimationData& GetAnimationData() const;
 
+	/// @brief アニメーションのトランスフォーム取得
+	/// @param _transforms 格納するボーントランスフォーム配列
+	/// @param _boneNum ボーンの数
+	/// @param _requestKeyNum 取得したいキー数
+	void GetAnimTransform(std::vector<BoneTransform>& _transforms, u_int _boneNum, u_int _requestKeyNum) const override;
 };

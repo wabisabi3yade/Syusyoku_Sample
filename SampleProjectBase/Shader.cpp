@@ -138,7 +138,7 @@ void Shader::SetTexture(u_int _slot, Texture* _texture)
 
 void Shader::SetName(const std::string& _name)
 {
-	name = _name;
+	shaderName = _name;
 }
 
 Shader::BufferType Shader::GetBufferType(u_int _slot)
@@ -149,4 +149,9 @@ Shader::BufferType Shader::GetBufferType(u_int _slot)
 u_int Shader::GetBufferNum()
 {
 	return static_cast<u_int>(bufferTypes.size());
+}
+
+std::string Shader::GetShaderName() const
+{
+	return shaderName;
 }
