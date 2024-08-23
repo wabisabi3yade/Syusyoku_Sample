@@ -69,7 +69,7 @@ DirectX::SimpleMath::Vector3 Vec3::WorldMtxToScale(const DirectX::SimpleMath::Ma
 
 	scale.z = sqrt(_mtx.m[2][0] * _mtx.m[2][0] + _mtx.m[2][1] * _mtx.m[2][1] + _mtx.m[2][2] * _mtx.m[2][2]);
 
-	return DirectX::SimpleMath::Vector3();
+	return scale;
 }
 
 DirectX::SimpleMath::Vector4 Vec4::Max(const DirectX::SimpleMath::Vector4& _v4, float _floatVal)
@@ -148,23 +148,24 @@ Quaternion Quat::RotateToVector(const Vector3& _vector, const Vector3& _up)
 
 Vector3 Quat::ToEulerAngles(const Quaternion& _q)
 {
-	auto sx = 2 * _q.y * _q.z + 2 * _q.x * _q.w;
-	bool unlocked = std::abs(sx) < 0.99999f;
+	auto sx = -(2 * _q.y * _q.z - 2 * _q.x * _q.w);
 
 	Vector3 v;
 
 	v.x = asinf(sx);
 
+	bool unlocked = cos(v.x) != 0.0f;
+
 	if (unlocked)
 	{
-		v.y = std::atan2(-(2 * _q.x * _q.z - 2 * _q.y * _q.w), 2 * _q.w * _q.w + 2 * _q.z * _q.z - 1);
+		v.y = std::atanf((2 * _q.x * _q.z + 2 * _q.y * _q.w) / (2 * _q.w * _q.w + 2 * _q.z * _q.z - 1));
 
-		v.z = std::atan2(-(2 * _q.x * _q.y - 2 * _q.z * _q.w), 2 * _q.w * _q.w + 2 * _q.y * _q.y - 1);
+		v.z = std::atanf((2 * _q.x * _q.y + 2 * _q.z * _q.w) / (2 * _q.w * _q.w + 2 * _q.y * _q.y - 1));
 	}
 	else
 	{
-		v.y = 0.0f;
-		v.z = std::atan2(2 * _q.x * _q.y + 2 * _q.z * _q.w, 2 * _q.w * _q.w + 2 * _q.x * _q.x - 1);
+		v.y = std::atanf(-(2 * _q.x * _q.z - 2 * _q.z * _q.w) / (2 * _q.w * _q.w + 2 * _q.y * _q.y - 1));
+		v.z = 0.0f;
 	}
 
 	return v * Mathf::radToDeg;

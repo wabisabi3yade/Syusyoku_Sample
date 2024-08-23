@@ -38,43 +38,42 @@ void CP_SpriteRenderer::DrawSetup()
 	VertexShader& pVs = pMaterial->GetVertexShader();
 	PixelShader& pPs = pMaterial->GetPixelShader();
 
-	pVs.UpdateSubResource(0, &wvp);
 	MaterialParameter& materialParam = pMaterial->GetMaterialParameter();
+	materialParam.isTextureEnable = pSprite->GetIsTexEnable();
 
-	materialParam.isTextureEnable = isTextureEnable;
+	Texture* pTex = pSprite->GetTexture();
 
+	pVs.UpdateSubResource(0, &wvp);
 	pVs.UpdateSubResource(1, &materialParam);
 
-	// ディレクションライトの情報を取得
-	//SceneLights& sceneLights = InSceneSystemManager::GetInstance()->GetSceneLights();
-	//DirectionLParameter dirLightParam = sceneLights.GetDirectionParameter();
-	//pVs.UpdateBuffer(2, &dirLightParam);
-
 	pPs.UpdateSubResource(0, &materialParam);
-
-	Texture& pTex = pSprite->GetTexture();
-	pPs.SetTexture(0, &pTex);
+	pPs.SetTexture(0, pTex);
 
 	pVs.SetGPU();
 	pPs.SetGPU();
 }
 
+CP_SpriteRenderer::CP_SpriteRenderer()
+{
+	// スプライト作成
+	pSprite = std::make_unique<Sprite>();
+}
+
+CP_SpriteRenderer::CP_SpriteRenderer(const CP_SpriteRenderer& _other)
+{
+	Copy(_other);
+}
+
 CP_SpriteRenderer& CP_SpriteRenderer::operator=(const CP_SpriteRenderer& _other)
 {
-	if (this == &_other) return *this;
-
 	Copy(_other);
 
 	return *this;
 }
 
-void CP_SpriteRenderer::Init()
+void CP_SpriteRenderer::Start()
 {
-	name = "SpriteRenderer";
-
-	// スプライト作成
-	pSprite = std::make_unique<Sprite>();
-
+	
 	// マテリアル初期化
 	MaterialSetup();
 }
@@ -88,10 +87,23 @@ void CP_SpriteRenderer::Draw()
 	CP_Renderer::DrawMesh(pSprite->GetSquare());
 }
 
+void CP_SpriteRenderer::ImGuiSetting()
+{
+	const u_int Buf = 256;
+	static char str[Buf];
+	ImGui::InputText("texture", str, Buf);
+
+	if (ImGui::Button("Set"))
+	{
+		Texture* pTex = AssetGetter::GetAsset<Texture>(str);
+
+		if (pTex)
+			pSprite->SetTexture(*pTex);
+	}
+}
+
 void CP_SpriteRenderer::SetTexture(Texture& _texture)
 {
-	isTextureEnable = true;
-
 	// スプライトに渡す
 	pSprite->SetTexture(_texture);
 }
@@ -101,10 +113,33 @@ void CP_SpriteRenderer::SetMaterial(Material& _material)
 	pMaterial = &_material;
 }
 
+nlohmann::json CP_SpriteRenderer::Save()
+{
+	auto data = CP_Renderer::Save();
+
+	data["sprite"] = pSprite->Save();
+
+	return data;
+}
+
+void CP_SpriteRenderer::Load(const nlohmann::json& _data)
+{
+	CP_Renderer::Load(_data);
+
+	if (!HashiTaku::IsJsonContains(_data, "sprite")) return;
+
+	pSprite->Load(_data["sprite"]);
+}
 
 void CP_SpriteRenderer::Copy(const CP_SpriteRenderer& _other)
 {
-	pSprite = std::make_unique<Sprite>(*_other.pSprite);
-	pMaterial = _other.pMaterial;
-	isTextureEnable = _other.isTextureEnable;
+	if (this == &_other) return;
+
+	CP_Renderer::operator=(_other);
+
+	if (_other.pSprite)
+		pSprite = std::make_unique<Sprite>(*_other.pSprite);
+
+	if (_other.pMaterial)
+		pMaterial = _other.pMaterial;
 }

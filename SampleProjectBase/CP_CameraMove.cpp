@@ -1,69 +1,115 @@
 #include "pch.h"
 #include "CP_CameraMove.h"
 #include "GameObject.h"
+
 #include "CP_Camera.h"
 
+#include "GameInput.h"
+#include "InSceneSystemManager.h"
+
 using namespace DirectX::SimpleMath;
+using namespace HashiTaku;
 
 void CP_CameraMove::UpdateVector()
 {
-	Transform transform = GetTransform();
+	Transform& transform = GetTransform();
 
-	InputClass& input = MainApplication::GetInput();
-
-	// 座標移動
-	Vector2 inputL = input.GetValue("Left");
-
-	// 移動方向を求める
-	moveVec = Vector3::Zero;
-	moveVec += transform.Forward() * inputL.y;
-	moveVec += transform.Right() * inputL.x;
-
-	// 上昇・下降
-	if (input.GetGamePad().ButtonPress(GamePad::Button::Sankaku) || input.GetKeyboard().GetKey(DIK_SPACE))
-		moveVec += transform.Up();
-	if (input.GetGamePad().ButtonPress(GamePad::Button::Batsu) || input.GetKeyboard().GetKey(DIK_LCONTROL))
-		moveVec -= transform.Up();
-	moveVec.Normalize();
-
-	//　視点移動
-	Vector2 inputR = input.GetValue("Right");
-
-
-	rotateVec.y = inputR.x;
-	rotateVec.x = -inputR.y;
-	rotateVec.z = -inputR.y;
-
+	rotateVec = GameInput::GetInstance()->GetValue(GameInput::ValueType::Camera_Move).x;
 }
 
 void CP_CameraMove::Move()
 {
+	centerAngle += rotateVec * rotateSpeed * MainApplication::DeltaTime();
+	Mathf::Repeat(centerAngle, Mathf::roundDeg);
+	
+	Transform& transform = GetTransform();
+	Vector3 position = transform.GetPosition();
+	Vector3 targetPos = pTargetObj->transform.GetPosition();
+
+	float centerRad = centerAngle * Mathf::degToRad;
+
+	position.x = targetPos.x + cos(centerRad) * distanceHori;
+	position.z = targetPos.z + sin(centerRad) * distanceHori;
+	position.y = targetPos.y + distanceVer;
+
+	transform.SetPosition(position);
+}
+
+void CP_CameraMove::LookUpdate()
+{
+	Vector3 targetPos = pTargetObj->transform.GetPosition();
+
+	GetTransform().LookAt(targetPos);
 }
 
 
-void CP_CameraMove::Init()
+CP_CameraMove::CP_CameraMove()
+	:pTargetObj(nullptr), pCamera(nullptr), rotateSpeed(120.f), centerAngle(0.0f), distanceHori(3.0f), distanceVer(1.5f)
 {
-	name = "CameraMove";
+}
 
+void CP_CameraMove::Start()
+{
 	pCamera = gameObject->GetComponent<CP_Camera>();	// カメラを取得する
 
 	if (pCamera == nullptr)
 		HASHI_DEBUG_LOG("Cameraコンポーネントがありません");
-
-	moveSpeed = 5.0f;
-	dashSpeed = 10.0f;
-	lookSpeed = 100.0f;
 }
 
 void CP_CameraMove::LateUpdate()
 {
 	UpdateVector();
 	Move();
+	LookUpdate();
 }
 
 void CP_CameraMove::ImGuiSetting()
 {
-	ImGui::DragFloat("moveSpeed", &moveSpeed);
-	ImGui::DragFloat("dashSpeed", &dashSpeed);
-	ImGui::DragFloat("lookSpeed", &lookSpeed);
+	ImGui::DragFloat("rotSpeed", &rotateSpeed);
+	ImGui::DragFloat("dis_Hori", &distanceHori, 0.1f);
+	ImGui::DragFloat("dis_Veri", &distanceVer, 0.1f);
+
+	std::string text = "target ";
+	if (pTargetObj)
+		text += pTargetObj->GetName();
+
+	ImGui::Text(text.c_str());
+	static char str[IM_INPUT_BUF];
+	ImGui::InputText("targetName", str, IM_INPUT_BUF);
+
+	if (ImGui::Button("Set"))
+	{
+		SceneObjects& objects = InSceneSystemManager::GetInstance()->GetSceneObjects();
+		GameObject* go = objects.GetSceneObject(str);
+		if (go)
+			pTargetObj = go;
+	}
+
+}
+
+nlohmann::json CP_CameraMove::Save()
+{
+	auto data = Component::Save();
+
+	if (pTargetObj)
+		data["target"] = pTargetObj->GetName();
+
+	data["rotSpeed"] = rotateSpeed;
+	data["dis_Hori"] = distanceHori;
+	data["dis_Ver"] = distanceVer;
+
+	return data;
+}
+
+void CP_CameraMove::Load(const nlohmann::json& _data)
+{
+	// ターゲット名からオブジェクト取得
+	std::string targetObjName;
+	LoadJsonString("target", targetObjName, _data);
+	SceneObjects& sceneObjs = InSceneSystemManager::GetInstance()->GetSceneObjects();
+	pTargetObj = sceneObjs.GetSceneObject(targetObjName);
+
+	LoadJsonFloat("rotSpeed", rotateSpeed, _data);
+	LoadJsonFloat("dis_Hori", distanceHori, _data);
+	LoadJsonFloat("dis_Ver", distanceVer, _data);
 }

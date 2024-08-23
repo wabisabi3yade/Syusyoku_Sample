@@ -1,0 +1,143 @@
+{
+    "objects": [
+        {
+            "active": true,
+            "components": [
+                {
+                    "distance": 1000.0,
+                    "enable": true,
+                    "fov": 45.0,
+                    "isOrth": false,
+                    "name": "Camera",
+                    "viewSlot": 0
+                },
+                {
+                    "dis_Hori": 3.0,
+                    "dis_Ver": 0.0,
+                    "enable": true,
+                    "name": "CameraMove",
+                    "rotSpeed": 120.0,
+                    "target": "Player"
+                }
+            ],
+            "layer": 0,
+            "name": "MainCamera",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    -0.0,
+                    90.0000228881836,
+                    0.0
+                ],
+                "child": null,
+                "havePare": false,
+                "parent": "",
+                "pos": [
+                    3.0,
+                    0.0,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "name": "SpriteRenderer",
+                    "sprite": {
+                        "texName": "grass.jpg",
+                        "uvDivNum": [
+                            0.0,
+                            0.0
+                        ],
+                        "uvEnd": [
+                            1.0,
+                            1.0
+                        ],
+                        "uvStart": [
+                            0.0,
+                            0.0
+                        ]
+                    }
+                }
+            ],
+            "layer": 0,
+            "name": "Ground",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "child": null,
+                "havePare": false,
+                "parent": "",
+                "pos": [
+                    0.0,
+                    -2.0,
+                    0.0
+                ],
+                "scale": [
+                    100.0,
+                    1.0,
+                    53.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "AABB": false,
+                    "angleOffset": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "enable": true,
+                    "name": "BoxCollider",
+                    "posOffset": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            ],
+            "layer": 0,
+            "name": "Player",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "child": null,
+                "havePare": false,
+                "parent": "",
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        }
+    ]
+}

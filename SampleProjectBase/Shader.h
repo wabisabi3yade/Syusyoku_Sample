@@ -33,7 +33,7 @@ private:
 	
 protected:
 	/// @brief 名前
-	std::string name;
+	std::string shaderName;
 
 	/// @brief このシェーダーで利用するGPUに送るバッファの配列
 	std::vector<ID3D11Buffer*> pBuffers;
@@ -55,7 +55,7 @@ protected:
 	virtual void MakeBuffer(const char* _pData, u_int _dataSize);
 
 public:
-	Shader(Type _type) : type(_type), name("") {}
+	Shader(Type _type) : type(_type), shaderName("") {}
 	virtual ~Shader() {};
 
 	/// @brief csoからシェーダを作成
@@ -95,4 +95,7 @@ public:
 	/// @brief バッファの数を取得
 	/// @return バッファの数
 	u_int GetBufferNum();
+
+	// シェーダー名を取得
+	std::string GetShaderName() const;
 };

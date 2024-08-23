@@ -16,13 +16,12 @@ constexpr float ORIGIN_SCALE(0.3f);	// 原点表示のオブジェクトのスケール
 constexpr Color ORIGIN_COLOR(1.0f, 1.0f, 0.0f);	// 原点表示のオブジェクトの色
 
 CP_MeshRenderer::CP_MeshRenderer()
-	: pRenderMesh{nullptr}, isOriginDisplay(false)
+	: pRenderMesh{ nullptr }, isOriginDisplay(false)
 {
 }
 
-void CP_MeshRenderer::Init()
+void CP_MeshRenderer::Start()
 {
-	name = "Mesh_Renderer";
 }
 
 void CP_MeshRenderer::Draw()
@@ -31,21 +30,14 @@ void CP_MeshRenderer::Draw()
 
 	RenderParam& rendererParam = Direct3D11::GetInstance()->GetRenderer()->GetParameter();
 
+	// ワールド変換行列に必要なパラメータ
+	Vector3 position = GetTransform().GetPosition();
+	Vector3 scale = GetTransform().GetScale() * pRenderMesh->GetLoadOffsetScale();
+	Quaternion offsetRot = Quat::ToQuaternion(pRenderMesh->GetLoadOffsetAngles());
+	Quaternion rotation = Quat::Multiply(GetTransform().GetRotation(), offsetRot);
+
 	// メッシュ描画
-	float scaleTimes = pRenderMesh->GetScaleTimes();
-
-	// オフセットを足す
-	Vector3 pos = GetTransform().GetPosition() + WorldOffset(offsetPos);
-	
-	Quaternion offsetRot = DirectX::XMQuaternionRotationRollPitchYaw(
-		offsetAngles.x * Mathf::degToRad, 
-		offsetAngles.y * Mathf::degToRad,
-		offsetAngles.z * Mathf::degToRad
-	);
-
-	Quaternion rotation = Quat::Multiply(offsetRot, GetTransform().GetRotation());
-
-	DrawMesh(rendererParam.GetWVP(pos, GetTransform().GetScale(), rotation));
+	DrawMesh(rendererParam.GetWVP(position, scale, rotation));
 
 	// 原点表示
 	OriginDisplay();
@@ -75,28 +67,44 @@ void CP_MeshRenderer::SetPixelShader(const std::string& _psName)
 	pRenderMesh->SetPixelShader(_psName);
 }
 
-void CP_MeshRenderer::SetOffsetPos(const DirectX::SimpleMath::Vector3& _offset)
-{
-	offsetPos = _offset;
-}
 
 void CP_MeshRenderer::ImGuiSetting()
 {
-	ImGuiMethod::DragFloat3(offsetPos, "offset", 0.1f);
-	ImGuiMethod::DragFloat3(offsetAngles, "angles", 1.f);
-	
 	// ImGui開いたときだけ原点表示
 	isOriginDisplay = true;
+
+	constexpr u_int Buf = 256;
+	static char str[Buf] = "";
+
+	ImGui::InputText("name", str, Buf);
+
+	if (ImGui::Button("Set"))
+	{
+		pRenderMesh = AssetGetter::GetAsset<Mesh_Group>(str);
+	}
 }
 
-void CP_MeshRenderer::SetOffsetAngle(const DirectX::SimpleMath::Vector3& _offset)
-{
-	offsetAngles = _offset;
-}
 
 Mesh_Group* CP_MeshRenderer::GetRenderMesh()
 {
 	return pRenderMesh;
+}
+
+nlohmann::json CP_MeshRenderer::Save()
+{
+	auto data = CP_Renderer::Save();
+
+	if (pRenderMesh)
+		data["meshName"] = pRenderMesh->GetAssetName();
+
+	return data;
+}
+
+void CP_MeshRenderer::Load(const nlohmann::json& _data)
+{
+	CP_Renderer::Load(_data);
+
+	pRenderMesh = HashiTaku::LoadJsonAsset<Mesh_Group>("meshName", _data);
 }
 
 bool CP_MeshRenderer::IsCanDraw()
@@ -109,10 +117,6 @@ bool CP_MeshRenderer::IsCanDraw()
 void CP_MeshRenderer::DrawMesh(RenderParam::WVP _wvp)
 {
 	u_int meshNum = pRenderMesh->GetMeshNum();
-
-	// スケール倍率行列をかけて
-	Matrix scaleMtx = Matrix::CreateScale(pRenderMesh->GetScaleTimes());
-	_wvp.world = _wvp.world * scaleMtx;
 
 	for (u_int meshLoop = 0; meshLoop < meshNum; meshLoop++)
 	{

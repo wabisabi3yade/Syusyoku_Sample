@@ -114,9 +114,11 @@ void AssetLoader::MaterialLoad(Mesh_Group* _pMeshgather,
 		createMaterial->SetEmissive(ToColor(emission));
 		createMaterial->SetShiness(shiness);
 		createMaterial->SetAssetName(mtrlname);
+		createMaterial->SetIsntSave();
 
 		aiString path{};
 		std::unique_ptr<Texture> texture = std::make_unique<Texture>();
+		texture->SetIsntSave();
 
 		for (unsigned int t = 0; t < material->GetTextureCount(aiTextureType_DIFFUSE); t++)
 		{
@@ -142,7 +144,7 @@ void AssetLoader::MaterialLoad(Mesh_Group* _pMeshgather,
 				}
 				else // 外部テクスチャファイルの場合
 				{
-					std::string texname = texturedirectory + "/" + PathToFileName(texPath, true);
+					std::string texname = texturedirectory + "/" + PathToFileName(texPath);
 
 					texture = MakeTexture(texname);
 				}
@@ -229,7 +231,7 @@ bool AssetLoader::LoadEmbeddedTexture(Texture& _texture, const aiTexture& _aiTex
 	stbi_image_free(pixels);
 
 	// 名前設定
-	std::string texName = PathToFileName(_aiTex.mFilename.C_Str(), true);
+	std::string texName = PathToFileName(_aiTex.mFilename.C_Str());
 	_texture.SetAssetName(texName);
 
 	// 幅設定
@@ -305,7 +307,7 @@ std::unique_ptr<Texture> AssetLoader::MakeTexture(const std::string& _filePath)
 	pMakeTex->height = static_cast<u_int>(height);
 
 	// パスから名前取得する
-	std::string texName = PathToFileName(_filePath, true);
+	std::string texName = PathToFileName(_filePath);
 	pMakeTex->SetAssetName(texName);
 
 	return std::move(pMakeTex);
@@ -319,6 +321,7 @@ Texture* AssetLoader::TextureLoad(const std::string& _filePath)
 	if (pTexture == nullptr)
 		return nullptr;
 
+	pTexture->SetPathName(_filePath);
 	std::string texName = pTexture->GetAssetName();
 
 	// アセット管理クラスにセット
@@ -327,7 +330,7 @@ Texture* AssetLoader::TextureLoad(const std::string& _filePath)
 	return returnPtr;
 }
 
-Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, bool _isLeftHand, bool _isGetScale)
+Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, DirectX::SimpleMath::Vector3 _angles, bool _isRightHand, bool _isGetScale)
 {
 	// シーン情報構築
 	Assimp::Importer importer;
@@ -336,7 +339,8 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 
 	flag |= aiProcessPreset_TargetRealtime_MaxQuality;	// リアルタイム レンダリング用にデータを最適化するデフォルトの後処理構成。
 	flag |= aiProcess_PopulateArmatureData;				// 標準的なボーン,アーマチュアの設定
-	if (_isLeftHand)
+
+	if (_isRightHand)
 		flag |= aiProcess_ConvertToLeftHanded;	// 左手系変更オプションがまとまったもの
 
 
@@ -345,23 +349,24 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 		_modelPath.c_str(),
 		flag);			// 三角形化する
 
-
-
 	if (pScene == nullptr)
 	{
 		HASHI_DEBUG_LOG("読込失敗：" + _modelPath);
+		return nullptr;
 	}
 
-	assert(pScene != nullptr);
-
 	// 名前設定
-	std::string modelName = PathToFileName(_modelPath, false);
-	
+	std::string modelName = PathToFileName(_modelPath);
+
 	// メッシュのグループを作成する
 	// ここでボーン情報も読み込む
 	std::unique_ptr<Mesh_Group> pMeshGroup = CreateMeshGroup(pScene, modelName);
 
-	pMeshGroup->SetScaleTimes(_scale);
+	pMeshGroup->SetLoadOffsetScale(_scale);
+	pMeshGroup->SetLoadOffsetAngles(_angles);
+	pMeshGroup->SetIsRightHand(_isRightHand);
+	pMeshGroup->SetIsGetSize(_isGetScale);
+	pMeshGroup->SetPathName(_modelPath);
 
 	// 親パス名
 	std::string parentPath = GetParentPath(_modelPath);
@@ -379,7 +384,7 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 		std::unique_ptr<SingleMesh> pCreateMesh = std::make_unique<SingleMesh>();
 
 		aiMesh* pAimesh = pScene->mMeshes[m];
-	
+
 		// メッシュ名取得
 		std::string meshname = std::string(pAimesh->mName.C_Str());
 		pCreateMesh->SetName(meshname);
@@ -484,15 +489,15 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 	return pRetMeshGroup;
 }
 
-AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, const std::string& _boneName, bool _isLeftHand)
+AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, const std::string& _boneName, bool _isRightHand)
 {
 	Assimp::Importer importer;
 
 	int flag = 0;
-	
+
 	// 左手系に変換
-	if (_isLeftHand)
-		flag |= aiProcess_ConvertToLeftHanded;	
+	if (_isRightHand)
+		flag |= aiProcess_ConvertToLeftHanded;
 
 	auto pAiScene = importer.ReadFile(_animPath.c_str(), flag);
 	if (pAiScene == nullptr)
@@ -502,6 +507,11 @@ AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, const st
 	}
 
 	std::unique_ptr<AnimationData> pAnimData = std::make_unique<AnimationData>();
+
+	// ロード時のパラメータをセット
+	pAnimData->SetPathName(_animPath);
+	pAnimData->SetIsRightHand(_isRightHand);
+
 	const aiAnimation* aiAnimation = pAiScene->mAnimations[0];
 
 	// アニメーション対応させるボーンリストを取得する
@@ -511,6 +521,7 @@ AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, const st
 		HASHI_DEBUG_LOG(_boneName + "：ボーンがアセットにありませんでした");
 		return nullptr;
 	}
+	pAnimData->SetBoneListName(_boneName);
 
 	// ノードを作成する
 	for (u_int an_i = 0; an_i < aiAnimation->mNumChannels; an_i++)
@@ -525,7 +536,7 @@ AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, const st
 	pAnimData->SetTimePerKey(GetTimePerKey(aiAnimation));
 
 	// 名前をパス名から取得
-	std::string assetName = PathToFileName(_animPath, false);
+	std::string assetName = PathToFileName(_animPath);
 
 	// アセット管理にセット
 	AnimationData* pRetAnim = SendAsset<AnimationData>(assetName, std::move(pAnimData));
@@ -553,7 +564,7 @@ std::unique_ptr<Mesh_Group> AssetLoader::CreateMeshGroup(const aiScene* _pScene,
 	// ノードを生成する
 	std::unique_ptr<TreeNode> pRootNode = CreateNode(*_pScene->mRootNode, *pSkeletalMesh);
 	pSkeletalMesh->SetRootNode(std::move(pRootNode));
-	
+
 	return std::move(pSkeletalMesh);
 }
 
@@ -609,7 +620,7 @@ std::unique_ptr<TreeNode> AssetLoader::CreateNode(const aiNode& _aiChildNode, Sk
 		pCreateNode->SetTransformMtx(ToDirectXMatrix(_aiChildNode.mTransformation));
 	}*/
 	pCreateNode->SetTransformMtx(ToDirectXMatrix(_aiChildNode.mTransformation));
-	
+
 	// 対応したボーンを名前から取得する
 	Bone* pLinkBone = _skeletalMesh.GetBoneByName(_aiChildNode.mName.C_Str());
 	pCreateNode->SetBone(*pLinkBone);
@@ -617,7 +628,7 @@ std::unique_ptr<TreeNode> AssetLoader::CreateNode(const aiNode& _aiChildNode, Sk
 	// 再帰でノードを生成する
 	for (u_int n_i = 0; n_i < _aiChildNode.mNumChildren; n_i++)
 	{
-		std::unique_ptr<TreeNode> pChildNode = 
+		std::unique_ptr<TreeNode> pChildNode =
 			CreateNode(*_aiChildNode.mChildren[n_i], _skeletalMesh);
 
 		pCreateNode->AddChild(std::move(pChildNode));
@@ -638,7 +649,7 @@ void AssetLoader::LinkVertexToBone(const aiMesh* _pAiMesh, SingleMesh& _singleMe
 	{
 		const aiBone* pAiBone = _pAiMesh->mBones[bi];
 		const Bone* pBone = _skeletalMesh.GetBoneByName(pAiBone->mName.C_Str());
-		
+
 		assert(pBone != nullptr && "Boneがありません");
 
 		// ウェイト情報を取得する		
@@ -723,7 +734,7 @@ float AssetLoader::GetTimePerKey(const aiAnimation* _pAiAnim)
 {
 	double timePerKey_s = 0.0f;
 
-	if (_pAiAnim->mTicksPerSecond != 0) 
+	if (_pAiAnim->mTicksPerSecond != 0)
 	{
 		timePerKey_s = 1.0 / _pAiAnim->mTicksPerSecond;
 	}
@@ -735,14 +746,11 @@ float AssetLoader::GetTimePerKey(const aiAnimation* _pAiAnim)
 	return static_cast<float>(timePerKey_s);
 }
 
-std::string AssetLoader::PathToFileName(const std::string& _pathName, bool _isExtension)
+std::string AssetLoader::PathToFileName(const std::string& _pathName)
 {
 	fs::path fsPath = _pathName;
 
-	if (_isExtension)
-		return fsPath.filename().string();
-	else
-		return fsPath.stem().string();
+	return fsPath.filename().string();
 }
 
 std::string AssetLoader::GetParentPath(const std::string& _pathName)

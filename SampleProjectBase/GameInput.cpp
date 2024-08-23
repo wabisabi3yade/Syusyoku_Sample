@@ -30,14 +30,14 @@ bool GameInput::GetButtonDown(ButtonType _buttonType)
 {
 	u_int buttonNum = static_cast<u_int>(_buttonType);
 
-	return (c_buttonState[buttonNum] && !o_buttonState[buttonNum]);
+	return (c_buttonState[buttonNum] && !p_buttonState[buttonNum]);
 }
 
 bool GameInput::GetButtonUp(ButtonType _buttonType)
 {
 	u_int buttonNum = static_cast<u_int>(_buttonType);
 
-	return (!c_buttonState[buttonNum] && o_buttonState[buttonNum]);
+	return (!c_buttonState[buttonNum] && p_buttonState[buttonNum]);
 }
 
 DirectX::SimpleMath::Vector2 GameInput::GetValue(ValueType _valueType)
@@ -79,7 +79,7 @@ bool GameInput::IsGamePadConnect()
 void GameInput::ButtonUpdate()
 {
 	// 前フレームの状態を更新する
-	memcpy_s(o_buttonState, sizeof(o_buttonState), c_buttonState, sizeof(c_buttonState));
+	memcpy_s(p_buttonState, sizeof(p_buttonState), c_buttonState, sizeof(c_buttonState));
 
 	InputClass& input = MainApplication::GetInput();
 

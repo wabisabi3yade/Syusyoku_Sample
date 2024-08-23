@@ -31,6 +31,9 @@ class AnimationController : public Asset_Base
 	// ブレンドしている時間
 	float blendElapsedTime;
 
+	/// @brief 動かすボーン配列
+	BoneList* pBoneList;
+
 	/// @brief 再生するか
 	bool isPlay;
 
@@ -45,6 +48,8 @@ protected:
 	AnimationNode_Base* pCurrentAnimNode;
 
 public:
+	/// @brief コンストラクタ
+	/// @param _boneCnt ボーン数
 	AnimationController();
 	~AnimationController() {}
 
@@ -64,9 +69,13 @@ public:
 	/// @param _ratio 割合
 	void SetBlendRatio(float _ratio);
 
+	// 動かすボーン配列をセット
+	void SetBoneList(BoneList& _boneList);
+
 	/// @brief シングルノードを作成
-	/// @param _animName アニメーションの名前
-	void CreateSingleNode(const std::string& _animName);
+	/// @param _nodeName ノード名
+	/// @param _animName セットするアニメーション名
+	void CreateSingleNode(const std::string& _nodeName, const std::string& _animName);
 
 	/// @brief ブレンドノードを作成する
 	/// @param _animNames アニメーションの名前
@@ -94,8 +103,6 @@ private:
 	/// @brief アニメーションの更新処理
 	/// @param _boneList 更新ボーンリスト
 	void AnimatioUpdate(BoneList& _boneList);
-
-
 
 	/// @brief ループ再生できるか？
 	/// @return 再生できるフラグ

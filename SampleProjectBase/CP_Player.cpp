@@ -6,22 +6,35 @@
 
 using namespace DirectX::SimpleMath;
 
-void CP_Player::Init()
+CP_Player::CP_Player(const CP_Player& _other)
 {
-	name = "Player";
+	Copy(_other);
+}
 
-	// モデル関係
+CP_Player& CP_Player::operator=(const CP_Player& _other)
+{
+	Copy(_other);
+
+	return *this;
+}
+
+void CP_Player::Awake()
+{
+	/*gameObject->isSave = false;*/
+	//// モデル関係
 	CP_MeshRenderer* pMeshRenderer = gameObject->AddComponent<CP_MeshRenderer>();
-	pMeshRenderer->SetRenderMesh("Knight D Pelegrini");
+	pMeshRenderer->SetRenderMesh("Knight.fbx");
 	pMeshRenderer->SetVertexShader("VS_SkinAnimation");
 	pMeshRenderer->SetPixelShader("PS_Unlit");
-	pMeshRenderer->SetOffsetAngle(Vector3(0.f, 180.f, 0.f));
 
 	// アニメーション関係生成
 	CP_Animation* pAnimation = gameObject->AddComponent<CP_Animation>();
 	pAnimController = std::make_unique<PlayerAnimController>();
 	pAnimation->SetAnimationController(*pAnimController);
+}
 
+void CP_Player::Start()
+{
 	// アクションコントローラー作成
 	pActionController = std::make_unique<PlayerActionController>(*gameObject, *pAnimController);
 
@@ -51,4 +64,21 @@ void CP_Player::ImGuiSetting()
 	pActionController->ImGuiSetting();
 
 	ImGui::End();
+}
+
+nlohmann::json CP_Player::Save()
+{
+	auto data = Component::Save();
+
+	return data;
+}
+
+void CP_Player::Load(const nlohmann::json& _data)
+{
+	Component::Load(_data);
+}
+
+void CP_Player::Copy(const CP_Player& _other)
+{
+	if (this == &_other) return;
 }

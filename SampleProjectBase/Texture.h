@@ -1,8 +1,8 @@
 #pragma once
-#include "Asset_Base.h"
+#include "AssetPath_Base.h"
 
 /// @brief テクスチャクラス
-class Texture : public Asset_Base
+class Texture : public AssetPath_Base
 {
 	friend class AssetLoader;
 

@@ -2,6 +2,9 @@
 
 struct ImFont;
 
+/// @brief InputTextで使用するバッファ数
+constexpr u_int IM_INPUT_BUF(256);
+
 // imguiの処理をまとめたクラス(staticクラス)
 class ImGuiMethod
 {
@@ -63,6 +66,15 @@ private:
 	 /// @param _items 要素の全名前
 	 /// @return 変更したか？
 	 static bool ComboBox(const std::string& _caption, std::string& _currentItem, const std::vector<std::string>& _items);
+
+	 /// @brief テキスト入力
+	 /// @param _label ラベル
+	 /// @return テキスト入力した文字列
+	 static std::string InputText(const std::string& _label);
+
+	 /// @brief Vector3をテキスト
+	 /// @param _v 表示するテキスト
+	 static void Text(const DirectX::SimpleMath::Vector3& _v);
 
 	 /// @brief フォントの大きさを変える
 	 /// @param _size フォントの大きさ

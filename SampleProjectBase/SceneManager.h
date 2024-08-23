@@ -1,31 +1,39 @@
 #pragma once
 #include "Singleton_Base.h"
 
-class BroadScene_Base;
-class ChangeBroadScene;
-class SceneMoveInfo;
+#include "Scene.h"
 
 class SceneManager :public Singleton_Base<SceneManager>
 {
 	friend class Singleton_Base<SceneManager>;
 
-	static SceneManager* pInstance;	// インスタンス
-	BroadScene_Base* pNowBroadScene = nullptr;	// 今実行している大局シーン
-	ChangeBroadScene* pChaneBroad = nullptr;	// 大局シーンを遷移するクラス
-	SceneMoveInfo* pMoveInfo;	// シーン遷移情報
+	/// @brief シーンリスト
+	std::list<std::string> sceneList;
+
+	/// @brief 現在のシーン名
+	std::string nowSceneName;
+
+	/// @brief 現在再生しているシーン
+	std::unique_ptr<Scene> pNowScene;
 
 	SceneManager();
 	~SceneManager();
-
 	
 public:
 
 	// 実行関数
 	void Exec();
 
+	/// @brief シーンを変更する
+	/// @param _sceneName シーン名
+	void ChangeScene(const std::string& _sceneName);
+
 private:
 	/// @brief  準備
 	void Setup();
+
+	/// @brief 全シーン名を準備
+	void SetupSceneList();
 
 	/// @brief アセットの準備
 	void AssetSetup();
@@ -37,5 +45,14 @@ private:
 
 	// 解放処理
 	void Release();
+
+	/// @brief シーンを作成
+	/// @param _sceneName シーン名
+	void CreateScene(const std::string& _sceneName);
+
+	void ImGuiSetting();
+	void ImGuiChangeScene();
+	void ImGuiSave();
+	void ImGuiCreateScene();
 };
 

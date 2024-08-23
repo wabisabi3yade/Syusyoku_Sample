@@ -9,13 +9,11 @@
 // シーン関数
 #include "SF_Define.h"
 
-// Json
-#include "SaveJson.h"
-#include "LoadJson.h"
-#include "SaveJsonValue.h"
+// セーブ・ロード
+#include "ISaveLoad.h"
 
 // シーンで使用するオブジェクト全般の基底クラス
-class GameObject
+class GameObject : public ISaveLoad
 {
 private:
 	// アクティブ状態かどうか
@@ -36,11 +34,13 @@ private:
 	/// @brief アクティブ状態のコンポーネント
 	std::list<Component*> pActiveComponents;
 
-	// セーブをする変数リスト
-	//std::unique_ptr<SaveJsonValue> saveValues;	
+	/// @brief Start処理を行うコンポーネント
+	std::list<Component*> pStartComponents;
 public:
 	/// @brief トランスフォーム
 	Transform transform;	
+
+	bool isSave = true;
 
 	GameObject();
 	GameObject(const GameObject& _other);
@@ -55,32 +55,43 @@ public:
 	// 自身を削除
 	void Destroy();
 
+	/// @brief コンポーネントをセットするときの処理
+	/// @param _pSetComponent セットするコンポーネント
+	void SetComponent(std::unique_ptr<Component> _pSetComponent);
+
 	// コンポーネントをアタッチ
-	template<typename T> T* AddComponent();	
+	template<HashiTaku::ComponentConcept T> T* AddComponent();
+
+	// コンポーネントを削除する
+	void DeleteComponent(Component& _deleteComonent);
 
 	// コンポーネントを取得
-	template<typename T> T* GetComponent();	
+	template<HashiTaku::ComponentConcept T> T* GetComponent();
 
 	// アクティブ配列から外す・追加する
 	void RemoveActiveComponent(Component& _removeComonent);
 	void AddActiveComponent(Component& _addComonentComonent);
 
+	// Start配列に入れる
+
 	// ImGuiの設定
 	virtual void ImGuiSet();	
 
-	// Jsonファイルに書き込む
-	//void ToJsonBase(); 
-	
-	// Jsonファイルからロードする
-	//void FromJsonBase(const nlohmann::json& _jsonData);	
+	/// @brief セーブする
+	/// @param _sceneData セーブシーンデータ
+	nlohmann::json Save() override;
+
+	/// @brief ロードする
+	/// @param _sceneData ロードするシーンデータ 
+	void Load(const nlohmann::json& _sceneData) override;
 
 	void SetName(const std::string& _name);
 	void SetActive(bool _isActive);
 
-	const std::string& GetName() { return name; }const
+	const std::string& GetName() const { return name; }
 	bool GetIsActive() const { return isActive; }
-	const Tag& GetTag() { return tag; }
-	const Layer& GetLayer() { return layer; }
+	const Tag& GetTag() const { return tag; }
+	const Layer& GetLayer() const  { return layer; }
 
 private:
 	// アクティブ変更時処理
@@ -101,29 +112,31 @@ private:
 	/// @param _pCheckComponent 確認するコンポーネント
 	/// @return 存在したか？
 	bool IsExistActiveComponent(const Component& _pCheckComponent);
+
+	/// @brief Start配列に存在するか
+	/// @param _pCheckComponent 確認するコンポーネント
+	/// @return 存在したか？
+	bool IsExistStartComponent(const Component& _pCheckComponent);
+
+	/// @brief コンポーネントのロード処理
+	/// @param _componentData このオブジェクト全てのコンポーネントデータ
+	void LoadComponent(const nlohmann::json& _componentsData);
 };
 
-template<typename T>
+template<HashiTaku::ComponentConcept T>
 inline T* GameObject::AddComponent()
 {
 	// コンポーネントファクトリーから取得
-	std::unique_ptr<Component> createComp = ComponentFactory::Create<T>();
-	createComp->gameObject = this;
-
-	// 戻り値を取得
-	T& comp = static_cast<T&>(*createComp.get());
-
-	// リストに追加
-	pComponents.push_back(std::move(createComp));
-	pActiveComponents.push_back(&comp);
-
-	// 初期処理
-	comp.Init();	
+	std::unique_ptr<T> createComp = ComponentFactory::GetInstance()->Create<T>();
+	T& comp = *createComp;
+	
+	// コンポーネント追加処理
+	SetComponent(std::move(createComp));
 
 	return &comp;
 }
 
-template<typename T>
+template<HashiTaku::ComponentConcept T>
 inline T* GameObject::GetComponent()
 {
 	// 指定した型名と同じコンポーネントがあるか確認

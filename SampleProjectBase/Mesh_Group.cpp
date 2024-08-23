@@ -52,9 +52,14 @@ DirectX::SimpleMath::Vector3 Mesh_Group::GetSize() const
 	return size;
 }
 
-float Mesh_Group::GetScaleTimes() const
+float Mesh_Group::GetLoadOffsetScale() const
 {
-	return scaleTimes;
+	return loadScale;
+}
+
+DirectX::SimpleMath::Vector3 Mesh_Group::GetLoadOffsetAngles() const
+{
+	return loadOffsetAngles;
 }
 
 Mesh_Group::MeshType Mesh_Group::GetType() const
@@ -73,10 +78,25 @@ void Mesh_Group::SetSize(const DirectX::SimpleMath::Vector3& _size)
 	size = Vec3::Max(_size, 0.0f);
 }
 
-void Mesh_Group::SetScaleTimes(float _scaleTimes)
+void Mesh_Group::SetLoadOffsetScale(float _scaleTimes)
 {
 	assert(_scaleTimes > 0.0f);
-	scaleTimes = std::max(_scaleTimes, 0.0f);
+	loadScale = std::max(_scaleTimes, 0.0f);
+}
+
+void Mesh_Group::SetLoadOffsetAngles(const DirectX::SimpleMath::Vector3& _offsetAngles)
+{
+	loadOffsetAngles = _offsetAngles;
+}
+
+void Mesh_Group::SetIsRightHand(bool _isRightHand)
+{
+	isRightHand = _isRightHand;
+}
+
+void Mesh_Group::SetIsGetSize(bool _isGetSize)
+{
+	isGetSize = _isGetSize;
 }
 
 void Mesh_Group::SetVertexShader(const std::string& _vsName)
@@ -103,4 +123,16 @@ void Mesh_Group::SetPixelShader(const std::string& _psName)
 	{
 		m->SetPixelShader(*pPS);
 	}
+}
+
+nlohmann::json Mesh_Group::Save()
+{
+	auto data = AssetPath_Base::Save();
+
+	data["loadScale"] = loadScale;
+	HashiTaku::SaveJsonVector3("loadAngle", loadOffsetAngles, data);
+	data["getSize"] = isGetSize;
+	data["rightHand"] = isRightHand;
+
+	return data;
 }

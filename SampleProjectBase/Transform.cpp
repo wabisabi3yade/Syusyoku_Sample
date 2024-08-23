@@ -2,8 +2,11 @@
 #include "Transform.h"
 #include "NullTransform.h"
 
+#include "InSceneSystemManager.h"
+
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
+using namespace HashiTaku;
 
 Transform::Transform(bool _isInit)
 	: pParent(nullptr), scale(Vector3::One), localScale(Vector3::One), up(Vec3::Up), right(Vec3::Right), forward(Vec3::Forward), isHaveParent(false)
@@ -22,19 +25,22 @@ Transform::~Transform()
 void Transform::UpdateVector()
 {
 	// クォータニオンから回転行列を求める
-	Matrix rotateMatrix(Matrix::CreateFromQuaternion(rotation));
+	//Matrix rotateMatrix(Matrix::CreateFromQuaternion(rotation));
 
-	// 方向ベクトルを更新
-	right = Mtx::GetRightVector(rotateMatrix);
-	up = Mtx::GetUpVector(rotateMatrix);
-	forward = Mtx::GetForwardVector(rotateMatrix);
+	//// 方向ベクトルを更新
+	//right = Mtx::GetRightVector(rotateMatrix);
+	//up = Mtx::GetUpVector(rotateMatrix);
+	//forward = Mtx::GetForwardVector(rotateMatrix);
+
+	forward = XMVector3Rotate(Vec3::Forward, rotation);
+	right = XMVector3Rotate(Vec3::Right , rotation);
+	up = XMVector3Rotate(Vec3::Up, rotation);
 }
 
 void Transform::LookAt(const DirectX::SimpleMath::Vector3& _worldPos, const DirectX::SimpleMath::Vector3& _upVector)
 {
-	Quaternion q = Quaternion::CreateFromRotationMatrix(
-		Matrix::CreateBillboard(position, _worldPos, _upVector)
-	);
+	Vector3 vec = _worldPos - position;
+	Quaternion q = Quat::RotateToVector(vec);
 
 	SetRotation(q);
 }
@@ -43,6 +49,11 @@ void Transform::RemoveParent()
 {
 	pParent = new NullTransform();
 	isHaveParent = false;
+}
+
+void Transform::SetName(const std::string& _name)
+{
+	name = _name;
 }
 
 void Transform::SetParent(Transform& _parent)
@@ -131,9 +142,9 @@ void Transform::SetLocalPos(const DirectX::SimpleMath::Vector3& _localPos)
 {
 	localPosition = _localPos;
 	position = pParent->position;
-	position += pParent->Right() * localPosition.x;
-	position += pParent->Up() * localPosition.y;
-	position += pParent->Forward() * localPosition.z;
+	position += pParent->Right() * localPosition.x * pParent->scale.x;
+	position += pParent->Up() * localPosition.y * pParent->scale.y;
+	position += pParent->Forward() * localPosition.z * pParent->scale.z;
 
 	// 子トランスフォームに反映
 	for (auto& child : pChilds)
@@ -158,7 +169,7 @@ void Transform::SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAn
 	localRotation = Quat::ToQuaternion(localEularAngles);
 
 	eularAngles = pParent->eularAngles + localEularAngles;
-	rotation = Quat::Multiply(localRotation, pParent->rotation);
+	rotation = Quat::Multiply(pParent->rotation, localRotation);
 
 	// 子トランスフォームに反映
 	for (auto& child : pChilds)
@@ -221,9 +232,79 @@ DirectX::SimpleMath::Quaternion Transform::GetLocalRotation() const
 	return localRotation;
 }
 
+std::string Transform::GetName() const
+{
+	return name;
+}
+
 u_int Transform::GetChilidCnt() const
 {
 	return static_cast<u_int>(pChilds.size());
+}
+
+nlohmann::json Transform::Save()
+{
+	nlohmann::json transformData;
+
+	SaveJsonVector3("pos", position, transformData);
+	SaveJsonVector3("scale", scale, transformData);
+	SaveJsonVector3("angle", eularAngles, transformData);
+
+	transformData["havePare"] = isHaveParent;
+
+	// 親子関係は名前をセーブする
+	transformData["parent"] = pParent->GetName();
+
+	auto& childData = transformData["child"];
+	for (auto& child : pChilds)
+	{
+		childData.push_back(child->GetName());
+	}
+
+	return transformData;
+}
+
+void Transform::Load(const nlohmann::json& _transformData)
+{
+	Vector3 v;
+	LoadJsonVector3("pos", v, _transformData);
+	SetPosition(v);
+
+	LoadJsonVector3("scale", v, _transformData);
+	SetScale(v);
+
+	LoadJsonVector3("angle", v, _transformData);
+	SetEularAngles(v);
+
+	LoadJsonBoolean("havePare", isHaveParent, _transformData);
+
+	// 親子トランスフォーム取得
+	SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->GetSceneObjects();
+	if (isHaveParent && IsJsonContains(_transformData, "parent"))
+	{
+		std::string parentName;
+		LoadJsonString("parent", parentName, _transformData);
+		GameObject* go = sceneObjects.GetSceneObject(parentName);
+
+		if (go)
+		{
+			pParent = &go->transform;
+		}
+	}
+
+	if (IsJsonContains(_transformData, "child"))
+	{
+		const auto& childData = _transformData["child"];
+		u_int childNum = static_cast<u_int>(childData.size());
+		for (u_int c_i = 0; c_i < childNum; c_i++)
+		{
+			GameObject* go = sceneObjects.GetSceneObject(childData[c_i]);
+
+			if (!go) continue;
+			pChilds.push_back(&go->transform);
+		}
+	}
+	
 }
 
 void Transform::UpdateHierarchyPositions()

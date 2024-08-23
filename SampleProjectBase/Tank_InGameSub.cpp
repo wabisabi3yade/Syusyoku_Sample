@@ -25,20 +25,21 @@ Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveIn
 	{
 		std::string path;
 		float scale;
+		Vector3 rotation;
 		bool isLeftHand;
 		bool isGetScale;
 	};
 
 	std::vector<ModelData> SMPaths =
 	{
-		{"assets/model/spot/spot.fbx", 1.0f, true},
-		{"assets/model/knight/Knight D Pelegrini.fbx", 0.1f, true},
+		{"assets/model/spot/spot.fbx", 1.0f, Vector3(0,0.f, 0), true},
+		{"assets/model/knight/Knight D Pelegrini.fbx", 1.0f, Vector3(0,0.0f, 0),true},
 	};
 
 	std::vector<Mesh_Group*> pModels;
 	for (auto& a : SMPaths)
 	{
-		Mesh_Group* pSM = AssetLoader::ModelLoad(a.path, a.scale, a.isLeftHand);
+		Mesh_Group* pSM = AssetLoader::ModelLoad(a.path, a.scale, a.rotation, a.isLeftHand);
 		pModels.push_back(pSM);
 	};
 

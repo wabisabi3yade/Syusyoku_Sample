@@ -1,40 +1,23 @@
 #include "SceneManager.h"
-#include "BroadScene_Base.h"
-#include "ChangeBroadScene.h"
-#include "Test_ChangeSubScene.h"
-#include "Tank_ChangeSub.h"
-#include "SceneMoveInfo.h"
-
-#include "ShaderCollection.h"
-
-#include "InSceneSystemManager.h"
 
 #include "GameInput.h"
+#include "ComponentFactory.h"
 
 // アセット初期化
 #include "AssetSetter.h"
 #include "Geometory.h"
 #include "Material.h"
 
+namespace fs = std::filesystem;
 
-
-SceneManager* SceneManager::pInstance = nullptr;	// インスタンスの初期化
-
-SceneManager::SceneManager()
+SceneManager::SceneManager() : nowSceneName("")
 {
 	Setup();
-	
-	// 初期シーンの情報
-	int initSub = Tank_ChangeSub::Scene::InGame;
-	BroadType::Type initBroad = BroadType::Tank;
 
-	// シーン遷移情報を確保(初期シーン情報を引数に)
-	pMoveInfo = new SceneMoveInfo(initSub ,initBroad);
 
-	// 大局シーン変換クラスを確保
-	pChaneBroad = new ChangeBroadScene(pMoveInfo);
-	// 初期シーンに遷移する
-	pNowBroadScene = pChaneBroad->OnChangeBroad();
+	CreateScene("test");
+
+	ChangeScene("test");
 }
 
 SceneManager::~SceneManager()
@@ -47,8 +30,28 @@ void SceneManager::Setup()
 	// アセット関連
 	AssetSetup();
 
+	// コンポーネント初期化
+	ComponentFactory::GetInstance();
+
 	// イージング初期化
 	HashiTaku::Easing::Init();
+
+	// シーンリストを準備
+	SetupSceneList();
+}
+
+void SceneManager::SetupSceneList()
+{
+	std::string folderPath = "assets/data/scene";
+	
+	// シーンフォルダにあるシーンファイルを取得する
+	for (const auto& entry : fs::recursive_directory_iterator(folderPath))
+	{
+		if (!entry.is_regular_file() || entry.path().extension() != ".json") continue;
+
+		// ファイルのパスを出力
+		sceneList.push_back(entry.path().stem().string());
+	}
 }
 
 void SceneManager::AssetSetup()
@@ -62,22 +65,77 @@ void SceneManager::AssetSetup()
 
 void SceneManager::CheckChangeBroad()
 {
-	// 稼働状態終了じゃないなら処理は通らない
-	if (pMoveInfo->GetRunningState() != SceneRunningState::RUNNING_STATE::FINISH)
-		return;
 
-	// ↓稼働終了なら
-	pNowBroadScene = pChaneBroad->OnChangeBroad();
 }
 
 void SceneManager::Release()
 {
-	CLASS_DELETE(pChaneBroad);
-	CLASS_DELETE(pMoveInfo);
-
 	Geometory::Release();
-	InSceneSystemManager::Delete();
 	GameInput::Delete();
+	ComponentFactory::Delete();
+}
+
+void SceneManager::CreateScene(const std::string& _sceneName)
+{
+	auto itr = std::find(sceneList.begin(), sceneList.end(), _sceneName);
+
+	if (itr != sceneList.end())	// シーン名が重複していたら
+	{
+		HASHI_DEBUG_LOG(_sceneName + "既にシーン名が使われています");
+		return;
+	}
+
+	sceneList.push_back(_sceneName);
+}
+
+void SceneManager::ImGuiSetting()
+{
+#ifdef EDIT
+	ImGui::Begin("SceneList");
+
+	ImGuiSave();
+
+	ImGui::Dummy(ImVec2(0.0f, 10.0f));
+
+	ImGuiChangeScene();
+
+	ImGui::Dummy(ImVec2(0.0f, 20.0f));
+
+	ImGuiCreateScene();
+
+	ImGui::End();
+#endif // EDIT
+}
+
+void SceneManager::ImGuiChangeScene()
+{
+	ImGui::Text(TO_UTF8("シーン名 " + nowSceneName));
+
+	for (auto& name : sceneList)
+	{
+		if (ImGui::Button(name.c_str()))
+			ChangeScene(name);
+	}
+}
+
+void SceneManager::ImGuiSave()
+{
+	if (ImGui::Button("Save"))
+	{
+		pNowScene->Save();
+		HASHI_DEBUG_LOG(nowSceneName + " セーブしました");
+	}
+
+}
+
+void SceneManager::ImGuiCreateScene()
+{
+	constexpr u_int buf = 256;
+	static char input[buf];
+	ImGui::InputText("name", input, buf);
+
+	if (ImGui::Button("New Scene"))
+		CreateScene(input);
 }
 
 void SceneManager::Exec()
@@ -86,15 +144,40 @@ void SceneManager::Exec()
 	GameInput::GetInstance()->Update();
 
 	// 大局シーンの実行
-	pNowBroadScene->Exec();
+	pNowScene->Exec();
+
+	// シーン
+	ImGuiSetting();
 
 	// シーン遷移するかどうか確認
 	CheckChangeBroad();
+}
+
+void SceneManager::ChangeScene(const std::string& _sceneName)
+{
+	// 現在シーンなら処理しない
+	if (nowSceneName == _sceneName) return;
+
+	auto itr = std::find(sceneList.begin(), sceneList.end(), _sceneName);
+
+	if (itr == sceneList.end())	// シーン名がないなら
+	{
+		HASHI_DEBUG_LOG(_sceneName + "シーン名がありません");
+		return;
+	}
+
+	pNowScene.reset();
+
+	nowSceneName = _sceneName;
+	pNowScene = std::make_unique<Scene>(_sceneName);
+
+	HASHI_DEBUG_LOG(_sceneName + "へ移行");
 }
 
 void SceneManager::MaterialSetup()
 {
 	// Unlitマテリアル作成
 	std::unique_ptr<Material> pUnlit = std::make_unique<Material>();
+	pUnlit->SetIsntSave();
 	AssetSetter::SetAsset("M_Unlit", std::move(pUnlit));
 }

@@ -1,42 +1,46 @@
 #pragma once
-#include "GameObject.h"
 
-
-// jsonファイルにパラメータをセーブする
-class SaveJson
+namespace HashiTaku
 {
-	
-public:
-	/// <summary>
-	/// オブジェクトをセーブする
-	/// </summary>
-	/// <param name="_saveObject">セーブするオブジェクト</param>
-	/// <returns>成功フラグ</returns>
-	static bool SaveObject(GameObject& _saveObject);
-
-	// ゲームオブジェクトをJsonファイルから読み込む
-	static void LoadObject(GameObject& _gameObject, const nlohmann::json& _j);
-};
-
-
-namespace DirectX::SimpleMath
-{
-	// Vector型をそれぞれメンバ変数で保存するときに名前の後ろにつける名前
-	constexpr std::string JsonAddX() { return "_x"; }
-	constexpr std::string JsonAddY() { return "_y"; }
-	constexpr std::string JsonAddZ() { return "_z"; }
-	constexpr std::string JsonAddW() { return "_w"; }
-
-	// Vector型保存
-	static void SaveJsonVector2(const std::string _s, DirectX::SimpleMath::Vector2& _v,
+	// セーブ
+	void SaveJsonVector2(const std::string& _s, const DirectX::SimpleMath::Vector2& _v,
 		nlohmann::json& _j);
-	static void SaveJsonVector3(const std::string _s, DirectX::SimpleMath::Vector3& _v,
+	void SaveJsonVector3(const std::string& _s, const DirectX::SimpleMath::Vector3& _v,
 		nlohmann::json& _j);
-	static void SaveJsonVector4(const std::string _s, DirectX::SimpleMath::Vector4& _v,
+	void SaveJsonVector4(const std::string& _s, const DirectX::SimpleMath::Vector4& _v,
 		nlohmann::json& _j);
-	// Vector型読込
-	static void LoadVector2(const std::string _s, DirectX::SimpleMath::Vector2& _v, const nlohmann::json& _j);
-	static void LoadVector3(const std::string _s, DirectX::SimpleMath::Vector3& _v, const nlohmann::json& _j);
-	static void LoadVector4(const std::string _s, DirectX::SimpleMath::Vector4& _v, const nlohmann::json& _j);
 
+	// ロード
+	void LoadJsonBoolean(const std::string& _s, bool& _b, const nlohmann::json& _j);
+	void LoadJsonInteger(const std::string& _s, int& _i, const nlohmann::json& _j);
+	void LoadJsonUnsigned(const std::string& _s, u_int& _u, const nlohmann::json& _j);
+	void LoadJsonFloat(const std::string& _s, float& _f, const nlohmann::json& _j);
+	void LoadJsonString(const std::string& _s, std::string& _str, const nlohmann::json& _j);
+	void LoadJsonVector2(const std::string& _s, DirectX::SimpleMath::Vector2& _v, const nlohmann::json& _j);
+	void LoadJsonVector3(const std::string& _s, DirectX::SimpleMath::Vector3& _v, const nlohmann::json& _j);
+	void LoadJsonVector4(const std::string& _s, DirectX::SimpleMath::Vector4& _v, const nlohmann::json& _j);
+	void LoadJsonColor(const std::string& _s, DirectX::SimpleMath::Color& _c, const nlohmann::json& _j);
+	template<typename T> void LoadJsonEnum(const std::string& _s, T& _e, const nlohmann::json& _j);
+
+	/// @brief jsonデータにあるか確認する
+	/// @param _j jsonデータ
+	/// @param _elementStr 指定する文字列
+	/// @return 含まれているか？
+	bool IsJsonContains(const nlohmann::json& _j, const std::string& _elementStr);
+
+
+	template<typename T>
+	void LoadJsonEnum(const std::string& _s, T& _e, const nlohmann::json& _j)
+	{
+		if (!IsJsonContains(_j, _s))
+			return;
+
+		if (!_j[_s].is_number_integer())
+		{
+			HASHI_DEBUG_LOG(_s + "は列挙型ではありません");
+			return;
+		}
+
+		_e = static_cast<T>(_j[_s]);
+	}
 }

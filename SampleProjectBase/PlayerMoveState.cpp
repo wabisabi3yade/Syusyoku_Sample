@@ -8,7 +8,7 @@
 using namespace DirectX::SimpleMath;
 
 PlayerMoveState::PlayerMoveState(PlayerActionController& _controller)
-	: PlayerActState_Base(_controller), currentSpeed(0.0f), maxSpeed(10.0f), acceleration(15.0f), rotateSpeed(2.0f)
+	: PlayerActState_Base(_controller), currentSpeed(0.0f), maxSpeed(10.0f), acceleration(40.0f), rotateSpeed(7.0f)
 {
 }
 
@@ -34,12 +34,14 @@ void PlayerMoveState::ImGuiSetting()
 {
 	if (!ImGui::TreeNode("Move")) return;
 
-	std::string text = TO_UTF8("速度") + std::to_string(currentSpeed);
+	std::string text = TO_UTF8("speed") + std::to_string(currentSpeed);
 	ImGui::Text(text.c_str());
 
-	ImGui::DragFloat(TO_UTF8("加速度"), &acceleration, 0.1f);
+	ImGui::DragFloat("maxSpeed", &maxSpeed, 0.1f, 0.0f, 1000.0f);
 
-	ImGui::DragFloat(TO_UTF8("回転速度"), &rotateSpeed, 0.1f);
+	ImGui::DragFloat("acceleration", &acceleration, 0.1f);
+
+	ImGui::DragFloat("rotateSpeed", &rotateSpeed, 0.1f);
 
 	ImGui::TreePop();
 }
@@ -74,7 +76,6 @@ void PlayerMoveState::Move()
 		currentSpeed = 0.0f;
 	}
 
-
 	Vector3 moveSpeed = moveVector * currentSpeed;
 
 	// 移動
@@ -82,6 +83,7 @@ void PlayerMoveState::Move()
 	pos += moveSpeed * MainApplication::DeltaTime();
 	pPlayerObject->transform.SetPosition(pos);
 
+	// アニメーションのブレンド割合をセット
 	pAnimController->SetMoveSpeedRatio(currentSpeed / maxSpeed);
 }
 

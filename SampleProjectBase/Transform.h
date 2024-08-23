@@ -1,8 +1,13 @@
 #pragma once
+// セーブ・ロード
+#include "ISaveLoad.h"
 
 // 座標・回転・スケールをまとめたパラメータ
-class Transform
+class Transform : public ISaveLoad
 {
+	/// @brief ゲームオブジェクト名
+	std::string name;
+
 	/// @brief 親トランスフォーム
 	Transform* pParent;
 
@@ -43,6 +48,9 @@ public:
 	/// @brief 親トランスフォームを非設定にする
 	void RemoveParent();
 
+	// 名前をセット
+	void SetName(const std::string& _name);
+
 	/// @brief 親トランスフォームを設定する
 	/// @param _parent 親トランスフォームの参照
 	void SetParent(Transform& _parent);
@@ -79,8 +87,18 @@ public:
 	DirectX::SimpleMath::Vector3 Up()const { return up; }	// 上ベクトル
 	DirectX::SimpleMath::Vector3 Forward()const { return forward; }	// 正面ベクトル
 
+	std::string GetName() const;
+
 	//　子トランスフォームの数を取得
 	u_int GetChilidCnt() const;
+
+	/// @brief セーブする
+	/// @param _sceneData セーブシーンデータ
+	nlohmann::json Save() override;
+
+	/// @brief ロードする
+	/// @param _sceneData ロードするデータ 
+	void Load(const nlohmann::json& _transformData) override;
 
 private:
 	//  子トランスフォームパラメータを更新(再帰関数)

@@ -8,9 +8,9 @@ PlayerAnimController::PlayerAnimController()
 {
 	std::vector<std::string> animNames =
 	{
-		"Idle",
-		"WalkF",
-		"RunF"
+		"Idle.fbx",
+		"WalkF.fbx",
+		"RunF.fbx"
 	};
 
 	std::vector<float> ratios =
@@ -23,7 +23,7 @@ PlayerAnimController::PlayerAnimController()
 	CreateBlendNode(animNames, ratios, "Move");
 
 	// çUåÇ
-	CreateSingleNode("AttackN1");
+	CreateSingleNode("AttackN1", "AttackN1.fbx");
 
 	ChangeAnimationByState(AnimType::Move, false);
 }

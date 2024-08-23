@@ -81,6 +81,13 @@ public:
 
 	void ImGuiSetting();
 
+	/// @brief セーブする
+	/// @param _sceneData セーブデータ
+	nlohmann::json Save() override;
+
+	/// @brief ロードする
+	/// @param _sceneData ロードするデータ 
+	void Load(const nlohmann::json& _data) override;
 private:
 	/// @brief マテリアルのパラメータ初期化
 	void InitParameter();

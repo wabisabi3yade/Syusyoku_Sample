@@ -17,9 +17,6 @@ void InSceneSystemManager::Init()
 	pSceneObjects = std::make_unique<SceneObjects>();
 	pSceneLights = std::make_unique<SceneLights>();
 	pCollisionChecker = std::make_unique<CollisionChecker>();
-
-	// ƒƒCƒ“ƒJƒƒ‰‚ğì¬‚·‚é
-	CreateMainCamera();
 }
 
 CP_Camera& InSceneSystemManager::GetMainCamera()
@@ -37,8 +34,7 @@ SceneLights& InSceneSystemManager::GetSceneLights()
 	return *pSceneLights;
 }
 
-void InSceneSystemManager::CreateMainCamera()
+void InSceneSystemManager::SetCamera(CP_Camera& _camera)
 {
-	GameObject& cameraObject = ObjectFunc::CreateEmpty("MainCamera");
-	pMainCamera = cameraObject.AddComponent<CP_Camera>();
+	pMainCamera = &_camera;
 }

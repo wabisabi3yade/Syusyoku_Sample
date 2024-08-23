@@ -19,3 +19,22 @@ inline T* AssetGetter::GetAsset(const std::string& _assetName)
 {
 	return pAssetCollection->GetAsset<T>(_assetName);
 }
+
+namespace HashiTaku
+{
+	template<HashiTaku::AssetType T> T* LoadJsonAsset(const std::string& _s, const nlohmann::json& _j);
+
+	template<HashiTaku::AssetType T>
+	T* LoadJsonAsset(const std::string& _s, const nlohmann::json& _j)
+	{
+		if (!IsJsonContains(_j, _s)) return nullptr;
+
+		if (!_j[_s].is_string())
+		{
+			HASHI_DEBUG_LOG(_s + "‚Ístring‚Å‚Í‚ ‚è‚Ü‚¹‚ñ");
+			return nullptr;
+		}
+
+		return AssetGetter::GetAsset<T>(_j[_s]);
+	}
+}

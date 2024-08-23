@@ -49,7 +49,7 @@ private:
 
 	// èÛë‘
 	bool c_buttonState[static_cast<u_int>(ButtonType::Max_BoolNum)];
-	bool o_buttonState[static_cast<u_int>(ButtonType::Max_BoolNum)];
+	bool p_buttonState[static_cast<u_int>(ButtonType::Max_BoolNum)];
 
 	DirectX::SimpleMath::Vector2 c_valueState[static_cast<u_int>(ButtonType::Max_BoolNum)];
 

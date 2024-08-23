@@ -30,7 +30,7 @@ public:
 	bool UpdateCheck();
 
 	// フレームレート描画
-	void Draw();
+	void ImGuiDraw();
 
 	/// @brief 処理終了時に呼び出す
 	void ProcessEnd();

@@ -9,6 +9,10 @@ using namespace DirectX::SimpleMath;
 const Color CP_Collider::normalColor = { 1,1,1,0.8f };
 const Color CP_Collider::hitColor = { 1,0,0,1 };
 
+CP_Collider::CP_Collider(Type _type) : type(_type)
+{
+}
+
 CP_Collider::~CP_Collider()
 {
 	// 当たり判定チェッカーから削除する
@@ -16,7 +20,7 @@ CP_Collider::~CP_Collider()
 	colCheck.PopCollider(*this);
 }
 
-void CP_Collider::Init()
+void CP_Collider::Start()
 {
 	// シーン内の当たり判定チェッカーに追加する
 	CollisionChecker& colCheck = InSceneSystemManager::GetInstance()->GetCollisonChecker();

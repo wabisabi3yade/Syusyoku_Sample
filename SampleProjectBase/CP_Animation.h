@@ -1,5 +1,6 @@
 #pragma once
-#include "Component.h"
+#include "CloneComponent.h"
+
 #include "IAnimationObserver.h"
 
 // モデル
@@ -12,7 +13,7 @@ class AnimationController;
 constexpr u_int MAX_BONEMTX(400);	// シェーダーの渡すボーン行列の最大数
 
 /// @brief アニメーションコンポーネント
-class CP_Animation : public Component
+class CP_Animation : public Component, public CloneComponent<CP_Animation>
 {
 	// シェーダーに渡すボーン行列構造体
 	struct BoneCombMtricies
@@ -29,9 +30,12 @@ class CP_Animation : public Component
 	AnimationController* pAnimController;
 public:
 	CP_Animation();
+	CP_Animation(const CP_Animation& _other);
 	~CP_Animation() {}
 
-	void Init() override;
+	CP_Animation& operator=(const CP_Animation& _other);
+
+	void Awake() override;
 
 	void LateUpdate() override;
 
@@ -46,6 +50,9 @@ public:
 
 	// スケルタルメッシュを取得
 	SkeletalMesh& GetSkeletalMesh();
+
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
 private:
 	/// @brief 再生できる状態か？
 	/// @return 再生できるか
@@ -64,5 +71,7 @@ private:
 
 	/// @brief シェーダーのバッファを更新する
 	void UpdateBoneBuffer();
+
+	void Copy(const CP_Animation& _other);
 };
 

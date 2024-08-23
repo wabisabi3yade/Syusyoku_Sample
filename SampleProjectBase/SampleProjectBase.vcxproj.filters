@@ -232,9 +232,6 @@
     <Filter Include="ソース ファイル\System\Json\Save">
       <UniqueIdentifier>{e8e81301-115a-4a0a-93dd-3fa9d701854e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\InGame\Bullet">
-      <UniqueIdentifier>{dfebd937-7ad1-49d9-9a20-14cf68f37213}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Scene\InSceneSystem">
       <UniqueIdentifier>{b54ce796-f7aa-42ab-a133-8a4a2882bec4}</UniqueIdentifier>
     </Filter>
@@ -454,9 +451,6 @@
     <Filter Include="ソース ファイル\Animation\AnimNode\AnimationData\Channel">
       <UniqueIdentifier>{57f40450-fae2-4e11-b412-be9f6b0cc442}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Animation\AnimNode\Base">
-      <UniqueIdentifier>{914716c0-f649-4d87-944b-d8d45449ad5a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Animation\AnimNode\Blend">
       <UniqueIdentifier>{d0a695e2-7790-421a-bf72-b2df994ea1c4}</UniqueIdentifier>
     </Filter>
@@ -501,6 +495,27 @@
     </Filter>
     <Filter Include="ソース ファイル\Method\Observe">
       <UniqueIdentifier>{9c82779b-423c-4c8a-9678-f49bf3689f32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\NewScene">
+      <UniqueIdentifier>{3488b5cd-7fde-47f6-a2bf-4954d67b7489}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Weapon">
+      <UniqueIdentifier>{1bbb90cd-7de8-4a67-902c-e3d039dd90b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\SaveLoad">
+      <UniqueIdentifier>{c41bb637-2180-4783-83dc-6cd1d9c14167}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Clone">
+      <UniqueIdentifier>{9e9c26aa-1cbe-4a4c-a75f-068f62a5cdeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Player">
+      <UniqueIdentifier>{8f20992c-476d-48af-ab1a-565fb4cd2840}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimNode\Blend\Base">
+      <UniqueIdentifier>{914716c0-f649-4d87-944b-d8d45449ad5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Asset_Base\AssetSaveLoad">
+      <UniqueIdentifier>{e920b94b-d20d-453e-9d2a-5a37f71f5329}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -653,9 +668,6 @@
     <ClCompile Include="GamePad.cpp">
       <Filter>ソース ファイル\System\Application\Input\GamePad</Filter>
     </ClCompile>
-    <ClCompile Include="CP_PlayerMove.cpp">
-      <Filter>ソース ファイル\Object\Player\Component\PlayerMove</Filter>
-    </ClCompile>
     <ClCompile Include="InputClass.cpp">
       <Filter>ソース ファイル\System\Application\Input</Filter>
     </ClCompile>
@@ -688,12 +700,6 @@
     </ClCompile>
     <ClCompile Include="SaveJsonValue.cpp">
       <Filter>ソース ファイル\System\Json\SaveJsonValue</Filter>
-    </ClCompile>
-    <ClCompile Include="BulletMove.cpp">
-      <Filter>ソース ファイル\Component\InGame\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerInput.cpp">
-      <Filter>ソース ファイル\Object\Player\Component\PlayerInput</Filter>
     </ClCompile>
     <ClCompile Include="SF_GameObject.cpp">
       <Filter>ソース ファイル\Scene\SceneFunction\GameObject</Filter>
@@ -863,20 +869,14 @@
     <ClCompile Include="Easing.cpp">
       <Filter>ソース ファイル\Method\Interpolation\Ease</Filter>
     </ClCompile>
-    <ClCompile Include="CP_EaseTest.cpp">
-      <Filter>ソース ファイル\Component</Filter>
-    </ClCompile>
     <ClCompile Include="AnimationNode_Base.cpp">
-      <Filter>ソース ファイル\Animation\AnimNode\Base</Filter>
+      <Filter>ソース ファイル\Animation\AnimNode\Blend\Base</Filter>
     </ClCompile>
     <ClCompile Include="SingleAnimationNode.cpp">
       <Filter>ソース ファイル\Animation\AnimNode\Single</Filter>
     </ClCompile>
     <ClCompile Include="BlendAnimationNode.cpp">
       <Filter>ソース ファイル\Animation\AnimNode\Blend</Filter>
-    </ClCompile>
-    <ClCompile Include="CP_Player.cpp">
-      <Filter>ソース ファイル\Object\Player\Component</Filter>
     </ClCompile>
     <ClCompile Include="PlayerAnimController.cpp">
       <Filter>ソース ファイル\Object\Player\Animation</Filter>
@@ -905,8 +905,29 @@
     <ClCompile Include="PlayerAnimObserver.cpp">
       <Filter>ソース ファイル\Object\Player\Observer</Filter>
     </ClCompile>
-    <ClCompile Include="EaseFunction.cpp">
+    <ClCompile Include="CP_Weapon.cpp">
+      <Filter>ソース ファイル\Component\InGame\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_EaseTest.cpp">
+      <Filter>ソース ファイル\Component\InGame\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>ソース ファイル\Scene\NewScene</Filter>
+    </ClCompile>
+    <ClCompile Include="nSceneManager.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CloneComponent.cpp">
+      <Filter>ソース ファイル\Component\Clone</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Player.cpp">
+      <Filter>ソース ファイル\Component\InGame\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetPath_Base.cpp">
+      <Filter>ソース ファイル\Asset\Asset_Base</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetSaveLoad.cpp">
+      <Filter>ソース ファイル\Asset\Asset_Base\AssetSaveLoad</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1051,9 +1072,6 @@
     <ClInclude Include="GamePad.h">
       <Filter>ソース ファイル\System\Application\Input\GamePad</Filter>
     </ClInclude>
-    <ClInclude Include="CP_PlayerMove.h">
-      <Filter>ソース ファイル\Object\Player\Component\PlayerMove</Filter>
-    </ClInclude>
     <ClInclude Include="InputClass.h">
       <Filter>ソース ファイル\System\Application\Input</Filter>
     </ClInclude>
@@ -1086,12 +1104,6 @@
     </ClInclude>
     <ClInclude Include="SaveJson.h">
       <Filter>ソース ファイル\System\Json\Save</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletMove.h">
-      <Filter>ソース ファイル\Component\InGame\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerInput.h">
-      <Filter>ソース ファイル\Object\Player\Component\PlayerInput</Filter>
     </ClInclude>
     <ClInclude Include="SF_GameObject.h">
       <Filter>ソース ファイル\Scene\SceneFunction\GameObject</Filter>
@@ -1282,20 +1294,14 @@
     <ClInclude Include="EaseFunction.hpp">
       <Filter>ソース ファイル\Method\Interpolation\Ease\Function</Filter>
     </ClInclude>
-    <ClInclude Include="CP_EaseTest.h">
-      <Filter>ソース ファイル\Component</Filter>
-    </ClInclude>
     <ClInclude Include="AnimationNode_Base.h">
-      <Filter>ソース ファイル\Animation\AnimNode\Base</Filter>
+      <Filter>ソース ファイル\Animation\AnimNode\Blend\Base</Filter>
     </ClInclude>
     <ClInclude Include="SingleAnimationNode.h">
       <Filter>ソース ファイル\Animation\AnimNode\Single</Filter>
     </ClInclude>
     <ClInclude Include="BlendAnimationNode.h">
       <Filter>ソース ファイル\Animation\AnimNode\Blend</Filter>
-    </ClInclude>
-    <ClInclude Include="CP_Player.h">
-      <Filter>ソース ファイル\Object\Player\Component</Filter>
     </ClInclude>
     <ClInclude Include="PlayerAnimController.h">
       <Filter>ソース ファイル\Object\Player\Animation</Filter>
@@ -1323,6 +1329,39 @@
     </ClInclude>
     <ClInclude Include="PlayerAnimObserver.h">
       <Filter>ソース ファイル\Object\Player\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="NullTransform.h">
+      <Filter>ソース ファイル\System\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Weapon.h">
+      <Filter>ソース ファイル\Component\InGame\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_EaseTest.h">
+      <Filter>ソース ファイル\Component\InGame\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>ソース ファイル\Scene\NewScene</Filter>
+    </ClInclude>
+    <ClInclude Include="nSceneManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CloneComponent.h">
+      <Filter>ソース ファイル\Component\Clone</Filter>
+    </ClInclude>
+    <ClInclude Include="ISaveLoad.h">
+      <Filter>ソース ファイル\Method\SaveLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Player.h">
+      <Filter>ソース ファイル\Component\InGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetPath_Base.h">
+      <Filter>ソース ファイル\Asset\Asset_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetConcept.h">
+      <Filter>ソース ファイル\Asset\Asset_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetSaveLoad.h">
+      <Filter>ソース ファイル\Asset\Asset_Base\AssetSaveLoad</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

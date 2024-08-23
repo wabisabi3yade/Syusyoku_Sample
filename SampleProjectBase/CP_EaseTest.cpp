@@ -10,13 +10,10 @@ using enum EaseKind;
 
 CP_EaseTest::CP_EaseTest() : nowEase(InSine)
 {
-	name = "EaseTest";
 }
 
-void CP_EaseTest::Init()
+void CP_EaseTest::Start()
 {
-	Vector3 initPos = { 0.0f, 5.0f, 2.0f };
-	GetTransform().SetPosition(initPos);
 }
 
 void CP_EaseTest::Update()
@@ -71,4 +68,24 @@ void CP_EaseTest::ImGuiSetting()
 	ImGui::DragFloat("magnitude", &magnitude);
 	ImGui::DragFloat("time", &time, 0.1f);	
 	Easing::ImGuiSelect(nowEase);
+}
+
+nlohmann::json CP_EaseTest::Save()
+{
+	auto data = Component::Save();
+
+	data["magnitude"] = magnitude;
+	data["time"] = time;
+	data["nowEase"] = nowEase;
+
+	return data;
+}
+
+void CP_EaseTest::Load(const nlohmann::json& _data)
+{
+	Component::Load(_data);
+
+	HashiTaku::LoadJsonFloat("magnitude", magnitude, _data);
+	HashiTaku::LoadJsonFloat("time", time, _data);
+	HashiTaku::LoadJsonEnum<EaseKind>("nowEase", nowEase, _data);
 }

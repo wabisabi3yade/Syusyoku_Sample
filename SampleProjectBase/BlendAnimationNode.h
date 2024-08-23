@@ -73,6 +73,10 @@ private:
 	/// @param _boneList 更新するボーンリスト
 	void AnimationUpdate(float _playingRatio, BoneList& _boneList);
 
+	/// @brief 更新処理を行えるのか
+	/// @return 更新できる返す
+	bool IsCanUpdate();
+
 	/// @brief 現在の割合からブレンドすべきペアを探す
 	/// @return ブレンドすべき2つのブレンドデータ
 	BlendPair FindBlendPair();
@@ -107,5 +111,11 @@ private:
 	/// @param _bd2 データ2
 	/// @return  入れ替えるなら
 	static bool CompareBlendValue(const BlendData& _bd1, const BlendData& _bd2);
+
+	/// @brief アニメーションのトランスフォーム取得
+	/// @param _transforms 格納するボーントランスフォーム配列
+	/// @param _boneNum ボーンの数
+	/// @param _requestKeyNum 取得したいキー数
+	void GetAnimTransform(std::vector<BoneTransform>& _transforms, u_int _boneNum, u_int _requestKeyNum) const override;
 };
 

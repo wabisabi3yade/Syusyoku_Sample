@@ -7,8 +7,12 @@
 
 using namespace SceneFunction;
 
-// ï÷óòä÷êî êÈåæ 
-GameObject& AddSceneObject(std::unique_ptr<GameObject> _pAddObject);
+GameObject& SceneFunction::ObjectFunc::AddSceneObject(std::unique_ptr<GameObject> _pAddObject)
+{
+	SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->GetSceneObjects();
+
+	return *sceneObjects.SetObject(std::move(_pAddObject));
+}
 
 GameObject& ObjectFunc::Instantiate(const GameObject& _obj, const DirectX::SimpleMath::Vector3& _worldPos)
 {
@@ -24,7 +28,7 @@ GameObject& ObjectFunc::Instantiate(const GameObject& _obj, const DirectX::Simpl
 	return retuenObject;
 }
 
-GameObject& SceneFunction::ObjectFunc::CreateEmpty(std::string _objectName)
+GameObject& SceneFunction::ObjectFunc::CreateEmpty(const std::string& _objectName)
 {
 	std::unique_ptr<GameObject> pCreateObject = std::make_unique<GameObject>();
 	pCreateObject->SetName(_objectName);
@@ -33,11 +37,12 @@ GameObject& SceneFunction::ObjectFunc::CreateEmpty(std::string _objectName)
 	return AddSceneObject(std::move(pCreateObject));
 }
 
-// ï÷óòä÷êî íËã`
-
-GameObject& AddSceneObject(std::unique_ptr<GameObject> _pAddObject)
+void SceneFunction::ObjectFunc::DeleteObject(const std::string& _deleteName)
 {
-	SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->GetSceneObjects();
+	SceneObjects& sceneObjs = InSceneSystemManager::GetInstance()->GetSceneObjects();
 
-	return *sceneObjects.SetObject(std::move(_pAddObject));
+	GameObject* go =  sceneObjs.GetSceneObject(_deleteName);
+	if (!go) return;
+
+	go->Destroy();
 }
