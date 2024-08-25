@@ -81,4 +81,6 @@ void CP_Player::Load(const nlohmann::json& _data)
 void CP_Player::Copy(const CP_Player& _other)
 {
 	if (this == &_other) return;
+
+	Component::operator=(_other);
 }

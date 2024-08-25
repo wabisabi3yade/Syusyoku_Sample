@@ -14,6 +14,9 @@ class ComponentFactory : public Singleton_Base<ComponentFactory>
 	/// @brief コンポーネントリスト(クローン継承のみ)
 	std::unordered_map<std::string, std::unique_ptr<CloneComponentBase>> pComponents;
 public:
+	/// @brief 初期化処理
+	void Init();
+
 	/// @brief コンポーネント作成
 	/// @tparam T コンポーネントの型
 	/// @return コンポーネントのユニークポインタ
@@ -28,7 +31,7 @@ public:
 	/// @param _targetObject コンポーネント追加したいオブジェクト 
 	void CreateImGuiCombo(GameObject& _targetObject);
 private:
-	ComponentFactory();
+	ComponentFactory() {}
 	~ComponentFactory() {};
 
 	std::vector<std::string> GetComponentsName();

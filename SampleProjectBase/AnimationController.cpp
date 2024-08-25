@@ -28,15 +28,15 @@ void AnimationController::Update(BoneList& _boneList)
 	ProgressPlayTime();
 
 	// アニメーション更新
-	AnimatioUpdate(_boneList);
+	AnimatioUpdate();
 }
 
-void AnimationController::NormalUpdate(BoneList& _boneList)
+void AnimationController::NormalUpdate()
 {
-	pCurrentAnimNode->Update(playingRatio, _boneList);
+	pCurrentAnimNode->Update(playingRatio, *pBoneList);
 }
 
-void AnimationController::TransitionUpdate(BoneList& _boneList)
+void AnimationController::TransitionUpdate()
 {
 	blendElapsedTime += MainApplication::DeltaTime();
 
@@ -46,9 +46,9 @@ void AnimationController::TransitionUpdate(BoneList& _boneList)
 		InterpTransitionEnd();
 	}
 
-	for (u_int b_i = 0; b_i < _boneList.GetBoneCnt(); b_i++)
+	for (u_int b_i = 0; b_i < pBoneList->GetBoneCnt(); b_i++)
 	{
-		Bone& bone = _boneList.GetBone(b_i);
+		Bone& bone = pBoneList->GetBone(b_i);
 
 		BoneTransform transform;
 
@@ -135,7 +135,9 @@ void AnimationController::CreateSingleNode(const std::string& _nodeName, const s
 	if (IsHaveAnim(_nodeName))	return;
 
 	// アニメーションをセットし。ノードを配列に入れる
-	std::unique_ptr<SingleAnimationNode> pAnimNode = std::make_unique<SingleAnimationNode>(_nodeName);
+	std::unique_ptr<SingleAnimationNode> pAnimNode 
+		= std::make_unique<SingleAnimationNode>(_nodeName);
+
 	pAnimNode->SetAnimationData(_animName);
 	pAnimationNodes[_nodeName] = std::move(pAnimNode);
 
@@ -181,6 +183,20 @@ AnimationNode_Base* AnimationController::GetCurrentNode()
 	return pCurrentAnimNode;
 }
 
+AnimationNode_Base* AnimationController::GetNode(const std::string& _name)
+{
+	auto itr = pAnimationNodes.find(_name);
+
+	if (itr == pAnimationNodes.end())
+	{
+		HASHI_DEBUG_LOG(_name + "が見つかりませんでした");
+		return nullptr;
+	}
+		
+
+	return itr->second.get();
+}
+
 void AnimationController::ProgressPlayTime()
 {
 	// 各アニメーションの割合を進める速度
@@ -201,21 +217,12 @@ bool AnimationController::IsCanPlay()
 	return true;
 }
 
-void AnimationController::AnimatioUpdate(BoneList& _boneList)
+void AnimationController::AnimatioUpdate()
 {
 	if (isTransitioning)	// アニメーション遷移中なら
-		TransitionUpdate(_boneList);
+		TransitionUpdate();
 	else
-		NormalUpdate(_boneList);
-
-	// ボーンのキャッシュ取得のためパラメータを取得する
-	std::vector<BoneTransform> cacheTransforms;
-	for (u_int b_i = 0; b_i < _boneList.GetBoneCnt(); b_i++)
-	{
-		cacheTransforms.push_back(_boneList.GetBone(b_i).GetAnimationTransform());
-	}
-	// 慣性補間用のキャッシュを更新する
-	inertInterp->UpdateBoneCache(cacheTransforms);
+		NormalUpdate();
 }
 
 bool AnimationController::IsCanLoop()
@@ -232,6 +239,20 @@ bool AnimationController::IsCanLoop()
 	}
 
 	return true;
+}
+
+void AnimationController::CacheUpdate()
+{
+	// ボーンのキャッシュ取得のためパラメータを取得する
+	std::vector<BoneTransform> cacheTransforms;
+
+	for (u_int b_i = 0; b_i < pBoneList->GetBoneCnt(); b_i++)
+	{
+		cacheTransforms.push_back(pBoneList->GetBone(b_i).GetAnimationTransform());
+	}
+
+	// 慣性補間用のキャッシュを更新する
+	inertInterp->UpdateBoneCache(cacheTransforms);
 }
 
 void AnimationController::ImGuiTransition()
@@ -319,9 +340,11 @@ void AnimationController::InterpTransitionEnd()
 {
 	playingRatio = 0.0f;
 
-	pCurrentAnimNode = pNextAnimNode;
-	pNextAnimNode = nullptr;
-	isTransitioning = false;
+	pCurrentAnimNode = pNextAnimNode;	// 現在のアニメーションへ
+
+	pNextAnimNode = nullptr;	// 次のアニメーションを空白にする
+	
+	isTransitioning = false;	// 遷移終了
 }
 
 void AnimationController::SetBoneList(BoneList& _boneList)

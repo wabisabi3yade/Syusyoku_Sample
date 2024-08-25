@@ -22,6 +22,9 @@ D3D11_Renderer::D3D11_Renderer(HWND _hWnd)
 	bool isSuccess = Init(_hWnd);   // 初期化
 	if (!isSuccess)
 		HASHI_DEBUG_LOG("D3D11描画クラス初期化でエラー");
+
+	// フルスクリーンするか確認
+	CheckFullScreen(_hWnd);
 }
 
 RenderParam& D3D11_Renderer::GetParameter()
@@ -45,15 +48,6 @@ bool D3D11_Renderer::Init(HWND _hWnd)
 
 	isResult = InitBackBuffer();
 	if (!isResult) return false;
-
-	// フルスクリーンにするか
-#ifndef _DEBUG
-
-	bool isFullScreen = MessageBoxA(_hWnd, "フルスクリーンで起動しますか？", "就職作品",
-		MB_YESNO | MB_ICONQUESTION);
-	if (isFullScreen)
-		pSwapChain->SetFullscreenState(TRUE, NULL);
-#endif // _RELEASE
 
 	return true;
 }
@@ -157,7 +151,7 @@ bool D3D11_Renderer::InitBackBuffer()
 	txDesc.MiscFlags = 0;
 	hr = pD3DDevice->CreateTexture2D(&txDesc, NULL, &pDepthStencilTexture);
 	if (FAILED(hr))
-		return hr;
+		return false;
 
 	D3D11_DEPTH_STENCIL_VIEW_DESC dsDesc;
 	ZeroMemory(&dsDesc, sizeof(dsDesc));
@@ -211,12 +205,25 @@ bool D3D11_Renderer::InitBackBuffer()
 	{
 		rasterizer.CullMode = cull[rasIdx];
 		hr = pD3DDevice->CreateRasterizerState(&rasterizer, &pRasterizerStates[rasIdx]);
-		if (FAILED(hr)) 
-			return false; 
+		if (FAILED(hr))
+			return false;
 	}
 	SetCullingMode(D3D11_CULL_NONE);
 
 	return true;
+}
+
+void D3D11_Renderer::CheckFullScreen(HWND _hWnd)
+{
+	// フルスクリーンにするか
+#ifndef _DEBUG
+
+	int pushButton = MessageBoxA(_hWnd, "フルスクリーンで起動しますか？", "就職作品",
+		MB_YESNO | MB_ICONQUESTION);
+
+	if (pushButton == IDYES)
+		pSwapChain->SetFullscreenState(TRUE, NULL);
+#endif // _RELEASE
 }
 
 void D3D11_Renderer::Release()

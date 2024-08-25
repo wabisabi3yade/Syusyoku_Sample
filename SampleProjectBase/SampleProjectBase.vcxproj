@@ -19,6 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="PS_Line.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="PS_Lit.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
@@ -49,6 +55,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
+    <FxCompile Include="VS_Line.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="VS_Primitive.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
@@ -69,6 +81,9 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\ThirdParty\bullet\include\btBulletCollisionAll.cpp" />
+    <ClCompile Include="..\ThirdParty\bullet\include\btBulletDynamicsAll.cpp" />
+    <ClCompile Include="..\ThirdParty\bullet\include\btLinearMathAll.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\include\imgui.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_demo.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_draw.cpp" />
@@ -80,8 +95,12 @@
     <ClCompile Include="AnimationData.cpp" />
     <ClCompile Include="AssetPath_Base.cpp" />
     <ClCompile Include="AssetSaveLoad.cpp" />
+    <ClCompile Include="BulletDebugDraw.cpp" />
     <ClCompile Include="CloneComponent.cpp" />
+    <ClCompile Include="CP_RigidBody.cpp" />
     <ClCompile Include="CP_Weapon.cpp" />
+    <ClCompile Include="DX11BulletPhisics.cpp" />
+    <ClCompile Include="DXToBullet.cpp" />
     <ClCompile Include="IAnimationObserver.cpp" />
     <ClCompile Include="BlendAnimationNode.cpp" />
     <ClCompile Include="CP_Player.cpp" />
@@ -118,11 +137,8 @@
     <ClCompile Include="GameMode.cpp" />
     <ClCompile Include="Geometory.cpp" />
     <ClCompile Include="BlendState.cpp" />
-    <ClCompile Include="BroadScene_Base.cpp" />
     <ClCompile Include="CP_Camera.cpp" />
     <ClCompile Include="CP_CameraMove.cpp" />
-    <ClCompile Include="ChangeBroadScene.cpp" />
-    <ClCompile Include="ChangeSubScene.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="DebugCube.cpp" />
     <ClCompile Include="GamePad.cpp" />
@@ -162,11 +178,6 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StaticMesh.cpp" />
     <ClCompile Include="Tag.cpp" />
-    <ClCompile Include="Tank_BroadScene.cpp" />
-    <ClCompile Include="Tank_ChangeSub.cpp" />
-    <ClCompile Include="Tank_InGameSub.cpp" />
-    <ClCompile Include="Tank_ResultSub.cpp" />
-    <ClCompile Include="Tank_TitleSub.cpp" />
     <ClCompile Include="AssetLoader.cpp" />
     <ClCompile Include="PS_TexColor.cpp" />
     <ClCompile Include="TreeNode.cpp" />
@@ -184,13 +195,8 @@
     <ClCompile Include="AssetCollection.cpp" />
     <ClCompile Include="Sampler.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="SceneMoveInfo.cpp" />
-    <ClCompile Include="SceneRunningState.cpp" />
     <ClCompile Include="SetUpPerspectiveProj.cpp" />
     <ClCompile Include="SetUpViewTrans.cpp" />
-    <ClCompile Include="SubScene_Base.cpp" />
-    <ClCompile Include="Test_Broad.cpp" />
-    <ClCompile Include="Test_ChangeSubScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
@@ -201,6 +207,8 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\ThirdParty\bullet\include\btBulletCollisionCommon.h" />
+    <ClInclude Include="..\ThirdParty\bullet\include\btBulletDynamicsCommon.h" />
     <ClInclude Include="..\ThirdParty\imgui\include\imconfig.h" />
     <ClInclude Include="..\ThirdParty\imgui\include\imgui.h" />
     <ClInclude Include="..\ThirdParty\imgui\include\imgui_impl_dx11.h" />
@@ -214,8 +222,12 @@
     <ClInclude Include="AssetConcept.h" />
     <ClInclude Include="AssetPath_Base.h" />
     <ClInclude Include="AssetSaveLoad.h" />
+    <ClInclude Include="BulletDebugDraw.h" />
     <ClInclude Include="CloneComponent.h" />
+    <ClInclude Include="CP_RigidBody.h" />
     <ClInclude Include="CP_Weapon.h" />
+    <ClInclude Include="DX11BulletPhisics.h" />
+    <ClInclude Include="DXToBullet.h" />
     <ClInclude Include="IAnimationObserver.h" />
     <ClInclude Include="BlendAnimationNode.h" />
     <ClInclude Include="CP_Player.h" />
@@ -230,7 +242,6 @@
     <ClInclude Include="PlayerAttackState.h" />
     <ClInclude Include="PlayerMoveState.h" />
     <ClInclude Include="PlayerActState_Base.h" />
-    <ClInclude Include="Scene.h" />
     <ClInclude Include="SingleAnimationNode.h" />
     <ClInclude Include="AnimationNode_Base.h" />
     <ClInclude Include="Bone.h" />
@@ -255,14 +266,11 @@
     <ClInclude Include="GameMode.h" />
     <ClInclude Include="Geometory.h" />
     <ClInclude Include="BlendState.h" />
-    <ClInclude Include="BroadScene_Base.h" />
     <ClInclude Include="CP_Camera.h" />
     <ClInclude Include="CP_CameraMove.h" />
     <ClInclude Include="CbProjectionSet.h" />
     <ClInclude Include="CbTransformSet.h" />
     <ClInclude Include="CbViewSet.h" />
-    <ClInclude Include="ChangeBroadScene.h" />
-    <ClInclude Include="ChangeSubScene.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="DebugCube.h" />
     <ClInclude Include="GamePad.h" />
@@ -306,11 +314,6 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="StaticMesh.h" />
     <ClInclude Include="Tag.h" />
-    <ClInclude Include="Tank_BroadScene.h" />
-    <ClInclude Include="Tank_ChangeSub.h" />
-    <ClInclude Include="Tank_InGameSub.h" />
-    <ClInclude Include="Tank_ResultSub.h" />
-    <ClInclude Include="Tank_TitleSub.h" />
     <ClInclude Include="AssetLoader.h" />
     <ClInclude Include="PS_TexColor.h" />
     <ClInclude Include="TreeNode.h" />
@@ -328,14 +331,9 @@
     <ClInclude Include="AssetCollection.h" />
     <ClInclude Include="Sampler.h" />
     <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="SceneMoveInfo.h" />
-    <ClInclude Include="SceneRunningState.h" />
     <ClInclude Include="SetUpPerspectiveProj.h" />
     <ClInclude Include="SetUpViewTrans.h" />
     <ClInclude Include="Singleton_Base.h" />
-    <ClInclude Include="SubScene_Base.h" />
-    <ClInclude Include="Test_Broad.h" />
-    <ClInclude Include="Test_ChangeSubScene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vertex.h" />
@@ -456,21 +454,22 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BT_THREADSAFE=1;BT_USE_DOUBLE_PRECISION;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);BT_THREADSAFE=1;BT_USE_DOUBLE_PRECISION;BT_THREADSAFE=1;BT_USE_DOUBLE_PRECISION</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty/stb_image;$(SolutionDir)ThirdParty/directxtk/include;$(SolutionDir)ThirdParty/json/include;$(SolutionDir)ThirdParty/imgui/include;$(SolutionDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty/stb_image;$(SolutionDir)ThirdParty/directxtk/include;$(SolutionDir)ThirdParty/json/include;$(SolutionDir)ThirdParty/imgui/include;$(SolutionDir)ThirdParty/bullet/include;$(SolutionDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <AdditionalOptions>/wd26812 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty/assimp/x64/$(Configuration);$(SolutionDir)ThirdParty/directxtk/lib/x64/$(Configuration);$(SolutionDir)ThirdParty;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty/assimp/x64/$(Configuration);$(SolutionDir)ThirdParty/directxtk/lib/x64/$(Configuration);$(SolutionDir)ThirdParty/bullet/bin/$(Configuration);$(SolutionDir)ThirdParty;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
       <ObjectFileOutput>$(ProjectDir)Assets\Shader\%(Filename).cso</ObjectFileOutput>
@@ -490,14 +489,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BT_THREADSAFE=1;BT_USE_DOUBLE_PRECISION;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);BT_THREADSAFE=1;BT_USE_DOUBLE_PRECISION;BT_THREADSAFE=1;BT_USE_DOUBLE_PRECISION</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty/stb_image;$(SolutionDir)ThirdParty/directxtk/include;$(SolutionDir)ThirdParty/json/include;$(SolutionDir)ThirdParty/imgui/include;$(SolutionDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty/stb_image;$(SolutionDir)ThirdParty/directxtk/include;$(SolutionDir)ThirdParty/json/include;$(SolutionDir)ThirdParty/imgui/include;$(SolutionDir)ThirdParty/bullet/include;$(SolutionDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <AdditionalOptions>/wd26812 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -506,7 +505,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty/assimp/x64/$(Configuration);$(SolutionDir)ThirdParty/directxtk/lib/x64/$(Configuration);$(SolutionDir)ThirdParty;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty/assimp/x64/$(Configuration);$(SolutionDir)ThirdParty/directxtk/lib/x64/$(Configuration);$(SolutionDir)ThirdParty/bullet/bin/$(Configuration);$(SolutionDir)ThirdParty/bin/$(Configuration);$(SolutionDir)ThirdParty;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>

@@ -63,9 +63,10 @@ void CP_Animation::ImGuiSetting()
 
 	if (!isWindowOpen) return;
 
-	std::string name = "アニメーション" + pAnimController->GetAssetName();
+	std::string name = "アニメーション";
 	ImGui::Begin(TO_UTF8(name), &isWindowOpen);
 
+	if(pAnimController)
 	pAnimController->ImGuiSetting();
 
 	ImGui::End();

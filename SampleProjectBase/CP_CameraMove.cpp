@@ -42,6 +42,15 @@ void CP_CameraMove::LookUpdate()
 	GetTransform().LookAt(targetPos);
 }
 
+bool CP_CameraMove::IsCanUpdate()
+{
+#ifdef EDIT
+	if (pTargetObj == nullptr) return false;
+#endif // EDIT
+
+	return true;
+}
+
 
 CP_CameraMove::CP_CameraMove()
 	:pTargetObj(nullptr), pCamera(nullptr), rotateSpeed(120.f), centerAngle(0.0f), distanceHori(3.0f), distanceVer(1.5f)
@@ -58,6 +67,8 @@ void CP_CameraMove::Start()
 
 void CP_CameraMove::LateUpdate()
 {
+	if (!IsCanUpdate()) return;
+
 	UpdateVector();
 	Move();
 	LookUpdate();

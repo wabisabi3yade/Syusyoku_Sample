@@ -1,0 +1,132 @@
+{
+    "objects": [
+        {
+            "active": true,
+            "components": [
+                {
+                    "distance": 1000.0,
+                    "enable": true,
+                    "fov": 45.0,
+                    "isOrth": false,
+                    "name": "Camera",
+                    "viewSlot": 0
+                },
+                {
+                    "dis_Hori": 6.800000190734863,
+                    "dis_Ver": 3.0,
+                    "enable": true,
+                    "name": "CameraMove",
+                    "rotSpeed": 120.0,
+                    "target": "Player"
+                }
+            ],
+            "layer": 0,
+            "name": "Camera",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    23.805952072143555,
+                    -90.0000228881836,
+                    0.0
+                ],
+                "child": null,
+                "havePare": false,
+                "parent": "",
+                "pos": [
+                    6.800000190734863,
+                    3.0,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "name": "SpriteRenderer",
+                    "sprite": {
+                        "texName": "grass.jpg",
+                        "uvDivNum": [
+                            0.0,
+                            0.0
+                        ],
+                        "uvEnd": [
+                            1.0,
+                            1.0
+                        ],
+                        "uvStart": [
+                            0.0,
+                            0.0
+                        ]
+                    }
+                }
+            ],
+            "layer": 0,
+            "name": "Ground",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "child": null,
+                "havePare": false,
+                "parent": "",
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "scale": [
+                    98.0,
+                    1.0,
+                    98.9000015258789
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "meshName": "Knight.fbx",
+                    "name": "MeshRenderer"
+                },
+                {
+                    "enable": true,
+                    "name": "Animation"
+                }
+            ],
+            "layer": 0,
+            "name": "Player",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "child": null,
+                "havePare": false,
+                "parent": "",
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        }
+    ]
+}

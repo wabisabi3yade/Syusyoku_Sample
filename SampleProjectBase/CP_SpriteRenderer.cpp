@@ -71,7 +71,7 @@ CP_SpriteRenderer& CP_SpriteRenderer::operator=(const CP_SpriteRenderer& _other)
 	return *this;
 }
 
-void CP_SpriteRenderer::Start()
+void CP_SpriteRenderer::Awake()
 {
 	
 	// ƒ}ƒeƒŠƒAƒ‹‰Šú‰»

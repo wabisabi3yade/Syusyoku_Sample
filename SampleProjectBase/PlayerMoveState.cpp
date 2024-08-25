@@ -35,8 +35,16 @@ void PlayerMoveState::ImGuiSetting()
 	if (!ImGui::TreeNode("Move")) return;
 
 	std::string text = TO_UTF8("speed") + std::to_string(currentSpeed);
-	ImGui::Text(text.c_str());
+	ImGui::Text(text.c_str()); moveVector;
 
+	text = TO_UTF8("vec");
+	ImGui::Text(text.c_str()); ImGui::SameLine();
+	ImGuiMethod::Text(moveVector);
+
+	text = TO_UTF8("input x:") + std::to_string(InputValue().x);
+	ImGui::Text(text.c_str()); 
+	text = TO_UTF8("input y:") + std::to_string(InputValue().y);
+	ImGui::Text(text.c_str());
 	ImGui::DragFloat("maxSpeed", &maxSpeed, 0.1f, 0.0f, 1000.0f);
 
 	ImGui::DragFloat("acceleration", &acceleration, 0.1f);
@@ -57,8 +65,8 @@ void PlayerMoveState::Move()
 	Vector2 input = InputValue();
 
 	// ˆÚ“®•ûŒüŒˆ’è
-	moveVector.x = camRightVec.x * input.x;
-	moveVector.z = camForwardVec.z * input.y;
+	moveVector = camRightVec * input.x;
+	moveVector += camForwardVec * input.y;
 	moveVector.y = 0.0f;
 	moveVector.Normalize();
 

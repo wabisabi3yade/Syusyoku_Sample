@@ -20,7 +20,8 @@ void ShaderCollection::LoadVS()
 	{
 		"VS_Gouraud.cso",
 		"VS_Primitive.cso",
-		"VS_SkinAnimation.cso"
+		"VS_SkinAnimation.cso",
+		"VS_Line.cso"
 	};
 
 	// セットする名前
@@ -28,7 +29,8 @@ void ShaderCollection::LoadVS()
 	{
 		"VS_Gouraud",
 		"VS_Primitive",
-		"VS_SkinAnimation"
+		"VS_SkinAnimation",
+		"VS_Line"
 	};
 	defaultVS = vShaderNames[0];
 
@@ -43,6 +45,9 @@ void ShaderCollection::LoadVS()
 	pVsShaderList.push_back(std::move(pVShader));
 
 	pVShader = std::make_unique<VS_SkinnedAnimation>();
+	pVsShaderList.push_back(std::move(pVShader));
+
+	pVShader = std::make_unique<VertexShader>();
 	pVsShaderList.push_back(std::move(pVShader));
 
 	for (int vsCount = 0; vsCount < static_cast<int>(pVsShaderList.size()); vsCount++)
@@ -65,14 +70,16 @@ void ShaderCollection::LoadPS()
 	{
 		"PS_TexColor.cso",
 		"PS_Unlit.cso",
-		"PS_Primitive.cso"
+		"PS_Primitive.cso",
+		"PS_Line.cso"
 	};
 	// セットする名前
 	std::vector<std::string> pShaderNames
 	{
 		"PS_TexColor",
 		"PS_Unlit",
-		"PS_Primitive"
+		"PS_Primitive",
+		"PS_Line"
 	};
 	defaultPS = pShaderNames[0];
 
@@ -85,6 +92,9 @@ void ShaderCollection::LoadPS()
 
 	// アンリット
 	pPShader = std::make_unique<PS_Unlit>();
+	pPsShaderList.push_back(std::move(pPShader));
+
+	pPShader = std::make_unique<PixelShader>();
 	pPsShaderList.push_back(std::move(pPShader));
 
 	pPShader = std::make_unique<PixelShader>();

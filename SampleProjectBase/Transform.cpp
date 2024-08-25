@@ -25,16 +25,16 @@ Transform::~Transform()
 void Transform::UpdateVector()
 {
 	// クォータニオンから回転行列を求める
-	//Matrix rotateMatrix(Matrix::CreateFromQuaternion(rotation));
+	Matrix rotateMatrix(Matrix::CreateFromQuaternion(rotation));
 
-	//// 方向ベクトルを更新
-	//right = Mtx::GetRightVector(rotateMatrix);
-	//up = Mtx::GetUpVector(rotateMatrix);
-	//forward = Mtx::GetForwardVector(rotateMatrix);
+	// 方向ベクトルを更新
+	right = Mtx::GetRightVector(rotateMatrix);
+	up = Mtx::GetUpVector(rotateMatrix);
+	forward = Mtx::GetForwardVector(rotateMatrix);
 
-	forward = XMVector3Rotate(Vec3::Forward, rotation);
+	/*forward = XMVector3Rotate(Vec3::Forward, rotation);
 	right = XMVector3Rotate(Vec3::Right , rotation);
-	up = XMVector3Rotate(Vec3::Up, rotation);
+	up = XMVector3Rotate(Vec3::Up, rotation);*/
 }
 
 void Transform::LookAt(const DirectX::SimpleMath::Vector3& _worldPos, const DirectX::SimpleMath::Vector3& _upVector)

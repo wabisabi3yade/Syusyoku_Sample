@@ -42,5 +42,7 @@ private:
 	void UpdateVector();
 	void Move();
 	void LookUpdate();
+
+	bool IsCanUpdate();
 };
 

@@ -25,7 +25,7 @@ public:
 	CP_SpriteRenderer(const CP_SpriteRenderer& _other);
 	CP_SpriteRenderer& operator=(const CP_SpriteRenderer& _other);
 
-	void Start() override;
+	void Awake() override;
 
 	void Draw() override;
 

@@ -41,23 +41,22 @@
             "components": [
                 {
                     "AABB": false,
-                    "angleOffset": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
                     "enable": true,
+                    "length": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
                     "name": "BoxCollider",
                     "posOffset": [
                         0.0,
                         0.0,
                         0.0
-                    ],
-                    "size": [
-                        1.0,
-                        1.0,
-                        1.0
                     ]
+                },
+                {
+                    "enable": true,
+                    "name": "RigidBody"
                 }
             ],
             "layer": 0,
@@ -89,23 +88,22 @@
             "components": [
                 {
                     "AABB": false,
-                    "angleOffset": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
                     "enable": true,
+                    "length": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
                     "name": "BoxCollider",
                     "posOffset": [
                         0.0,
                         0.0,
                         0.0
-                    ],
-                    "size": [
-                        1.0,
-                        1.0,
-                        1.0
                     ]
+                },
+                {
+                    "enable": true,
+                    "name": "RigidBody"
                 }
             ],
             "layer": 0,
@@ -137,23 +135,22 @@
             "components": [
                 {
                     "AABB": false,
-                    "angleOffset": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
                     "enable": true,
+                    "length": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
                     "name": "BoxCollider",
                     "posOffset": [
                         0.0,
                         0.0,
                         0.0
-                    ],
-                    "size": [
-                        1.0,
-                        1.0,
-                        1.0
                     ]
+                },
+                {
+                    "enable": true,
+                    "name": "RigidBody"
                 }
             ],
             "layer": 0,

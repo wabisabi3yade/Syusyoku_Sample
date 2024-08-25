@@ -17,6 +17,11 @@ void AnimationNode_Base::SetNodeName(const std::string& _nodeName)
 	nodeName = _nodeName;
 }
 
+void AnimationNode_Base::SetIsLoop(bool _isLoop)
+{
+	isLoop = _isLoop;
+}
+
 std::string AnimationNode_Base::GetNodeName() const
 {
 	return nodeName;

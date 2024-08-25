@@ -75,12 +75,28 @@
             "loadScale": 0.009999999776482582,
             "pathName": "assets/model/knight/Knight.fbx",
             "rightHand": true
+        },
+        {
+            "assetName": "spot.fbx",
+            "getSize": false,
+            "loadAngle": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "loadScale": 0.10000000149011612,
+            "pathName": "assets/model/spot/spot.fbx",
+            "rightHand": true
         }
     ],
     "textures": [
         {
             "assetName": "an.jpg",
             "pathName": "assets/texture/an.jpg"
+        },
+        {
+            "assetName": "spot_texture.png",
+            "pathName": ""
         },
         {
             "assetName": "grass.jpg",

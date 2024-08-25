@@ -103,6 +103,17 @@ void Geometory::DrawSphere(bool _isWireFrame)
 	ResetParameter();
 }
 
+void Geometory::DrawLine(const DirectX::SimpleMath::Vector3& _start, const DirectX::SimpleMath::Vector3& _end)
+{
+	DrawSetup();
+
+	ID3D11DeviceContext* pDeviceContext =
+		Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
+
+	// トポロジー設定
+	pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+}
+
 void Geometory::MakeMaterial()
 {
 	// マテリアル作成

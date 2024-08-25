@@ -12,7 +12,7 @@ using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
 constexpr u_int TEX_DIFUSSE_SLOT(0);	// ディフューズテクスチャのスロット
-constexpr float ORIGIN_SCALE(0.3f);	// 原点表示のオブジェクトのスケール
+constexpr float ORIGIN_SCALE(0.15f);	// 原点表示のオブジェクトのスケール
 constexpr Color ORIGIN_COLOR(1.0f, 1.0f, 0.0f);	// 原点表示のオブジェクトの色
 
 CP_MeshRenderer::CP_MeshRenderer()

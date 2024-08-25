@@ -13,42 +13,49 @@ CP_Collider::CP_Collider(Type _type) : type(_type)
 {
 }
 
+CP_Collider::CP_Collider(const CP_Collider& _other)
+{
+	Copy(_other);
+}
+
 CP_Collider::~CP_Collider()
 {
-	// 当たり判定チェッカーから削除する
-	CollisionChecker& colCheck = InSceneSystemManager::GetInstance()->GetCollisonChecker();
-	colCheck.PopCollider(*this);
+}
+
+CP_Collider& CP_Collider::operator=(const CP_Collider& _other)
+{
+	Copy(_other);
+
+	return *this;
 }
 
 void CP_Collider::Start()
 {
-	// シーン内の当たり判定チェッカーに追加する
-	CollisionChecker& colCheck = InSceneSystemManager::GetInstance()->GetCollisonChecker();
-	colCheck.AddCollider(*this);
+	CreateRigidBody();
 }
 
-void CP_Collider::SetTagColor(const Tag& _tag)
+void CP_Collider::Copy(const CP_Collider& _other)
 {
-#ifdef EDIT
+	if (this == &_other) return;
 
-
-
-
-
-
-
-#endif // EDIT
+	Component::operator=(_other);
 }
 
-void CP_Collider::SetLayerColor(const Layer& _layer)
+void CP_Collider::CreateRigidBody()
 {
-#ifdef EDIT
-	
+	CP_RigidBody* pRb = gameObject->GetComponent<CP_RigidBody>();
 
+	if (!pRb)	// 無ければ
+	{
+		// 追加する
+		gameObject->AddComponent<CP_RigidBody>();
+	}
+}
 
+void CP_Collider::SendShapeToRb(btCollisionShape& _shape)
+{
+	CP_RigidBody* pRb = gameObject->GetComponent<CP_RigidBody>();
+	assert(pRb != nullptr && "CP_RigidBodyがnullです");
 
-
-
-
-#endif // EDIT
+	pRb->SetShape(_shape);
 }

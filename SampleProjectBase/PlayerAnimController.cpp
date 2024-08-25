@@ -24,6 +24,8 @@ PlayerAnimController::PlayerAnimController()
 
 	// UŒ‚
 	CreateSingleNode("AttackN1", "AttackN1.fbx");
+	AnimationNode_Base* pAttack = GetNode("AttackN1");
+	pAttack->SetIsLoop(false);
 
 	ChangeAnimationByState(AnimType::Move, false);
 }

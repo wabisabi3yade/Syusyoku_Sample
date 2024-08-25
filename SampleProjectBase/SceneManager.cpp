@@ -2,6 +2,7 @@
 
 #include "GameInput.h"
 #include "ComponentFactory.h"
+#include "DX11BulletPhisics.h"
 
 // アセット初期化
 #include "AssetSetter.h"
@@ -13,7 +14,6 @@ namespace fs = std::filesystem;
 SceneManager::SceneManager() : nowSceneName("")
 {
 	Setup();
-
 
 	CreateScene("test");
 
@@ -27,11 +27,14 @@ SceneManager::~SceneManager()
 
 void SceneManager::Setup()
 {
+	// Bullet物理エンジン初期化
+	DX11BulletPhisics::GetInstance()->Init();
+
 	// アセット関連
 	AssetSetup();
 
 	// コンポーネント初期化
-	ComponentFactory::GetInstance();
+	ComponentFactory::GetInstance()->Init();
 
 	// イージング初期化
 	HashiTaku::Easing::Init();
@@ -70,9 +73,11 @@ void SceneManager::CheckChangeBroad()
 
 void SceneManager::Release()
 {
-	Geometory::Release();
+	pNowScene.reset();
 	GameInput::Delete();
 	ComponentFactory::Delete();
+	Geometory::Release();
+	DX11BulletPhisics::Delete();
 }
 
 void SceneManager::CreateScene(const std::string& _sceneName)
@@ -140,17 +145,22 @@ void SceneManager::ImGuiCreateScene()
 
 void SceneManager::Exec()
 {
+	DX11BulletPhisics* pBulletPhisics = DX11BulletPhisics::GetInstance();
+
 	// ゲーム内入力更新
 	GameInput::GetInstance()->Update();
 
-	// 大局シーンの実行
+	// 物理空間のシミュレーションを更新
+	pBulletPhisics->Update();
+
+	// シーンの実行
 	pNowScene->Exec();
+
+	// 当たり判定描画
+	pBulletPhisics->Draw();
 
 	// シーン
 	ImGuiSetting();
-
-	// シーン遷移するかどうか確認
-	CheckChangeBroad();
 }
 
 void SceneManager::ChangeScene(const std::string& _sceneName)

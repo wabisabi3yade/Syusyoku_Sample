@@ -16,6 +16,7 @@ struct VS_OUT
     float3 normal : NORMAL0;
     float4 worldPos : POSITION0;
 };
+
 cbuffer WVP : register(b0)
 {
     float4x4 world;

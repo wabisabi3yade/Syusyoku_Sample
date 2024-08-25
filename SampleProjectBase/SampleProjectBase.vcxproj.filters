@@ -34,41 +34,8 @@
     <Filter Include="ソース ファイル\Scene\SceneManager">
       <UniqueIdentifier>{f9797062-9c55-4a6c-baed-e07a2277e087}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Scene\Test">
-      <UniqueIdentifier>{e4b6ed63-52b2-4a99-9528-c6086552660f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\Test\BroadScene">
-      <UniqueIdentifier>{bb122568-91e8-499c-a030-c25dce1677f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\Test\SubScene">
-      <UniqueIdentifier>{a80e53bb-2990-4524-abda-cf5fa1c94bce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\BroadScene">
-      <UniqueIdentifier>{ad402460-ec50-4210-a177-c1bc80af3852}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\BroadScene\BroadScane_Base">
-      <UniqueIdentifier>{0f654507-8770-4faa-9cbd-8b3b2c691e81}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\BroadScene\ChangeScene">
-      <UniqueIdentifier>{f721e346-9d6a-434a-bcb2-41103e4b8a18}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\SubScene">
-      <UniqueIdentifier>{43ee46ab-9faa-4d86-9b0b-234b5bbe5229}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\SubScene\SubScene_Base">
-      <UniqueIdentifier>{85f77007-a692-4725-a382-d9a0995088e8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\SubScene\ChangeScene">
-      <UniqueIdentifier>{84b06df8-0600-4031-90c8-29686042e611}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Scene\SceneMoveInfo">
       <UniqueIdentifier>{7ed6a9c7-5047-4dae-87fc-54f777f9a701}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\SceneMoveInfo\RunningState">
-      <UniqueIdentifier>{05aa3335-234a-486b-8b54-dd6f6cdaa1c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\Test\ChangeSub">
-      <UniqueIdentifier>{aec81818-b41f-433d-8562-cf6f5e640d44}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\System\pch">
       <UniqueIdentifier>{8c29c4da-c53b-415b-8ae0-a5554f701a24}</UniqueIdentifier>
@@ -102,27 +69,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Object\Tag">
       <UniqueIdentifier>{988b4f81-a66d-4eef-8758-f35438d16df4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\TankFire">
-      <UniqueIdentifier>{d4db0105-4185-4068-8f42-f57819645494}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\TankFire\ChangeSub">
-      <UniqueIdentifier>{58733c0a-0731-4438-9236-0be8e83cfd5b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\TankFire\SubScene">
-      <UniqueIdentifier>{e6273f7e-7454-4fe7-8739-0d37deeb5863}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\TankFire\BroadScene">
-      <UniqueIdentifier>{a5887d5e-dc54-4947-bffb-467f1f55c4a4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\TankFire\SubScene\InGame">
-      <UniqueIdentifier>{20231241-ed76-454f-af9b-1ce0d9e965a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\TankFire\SubScene\Title">
-      <UniqueIdentifier>{55b9c26e-8608-40e1-b899-9bf3507cef0c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\TankFire\SubScene\Result">
-      <UniqueIdentifier>{11db7113-88cb-4f3e-83ac-e139c9c32672}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\System\JISToUTF8">
       <UniqueIdentifier>{044f28fe-fa18-4027-b4b8-860014ccfae3}</UniqueIdentifier>
@@ -517,6 +463,24 @@
     <Filter Include="ソース ファイル\Asset\Asset_Base\AssetSaveLoad">
       <UniqueIdentifier>{e920b94b-d20d-453e-9d2a-5a37f71f5329}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Bullet">
+      <UniqueIdentifier>{7e975cb2-f733-4690-ab3c-d2922af551a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet\DXToBullet">
+      <UniqueIdentifier>{4254fa20-86b0-4af5-9173-e95190449434}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet\import">
+      <UniqueIdentifier>{52663022-face-4cfb-91c6-43d4b100c9bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet\PhysicsEngine">
+      <UniqueIdentifier>{a42daa8f-175c-4c8b-b507-028604f46bff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Collider\RigidBody">
+      <UniqueIdentifier>{95fb55dd-2a3d-43a3-8a7f-2f7991a7802c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet\DebugDraw">
+      <UniqueIdentifier>{11045193-0bd7-46a5-a305-506cfbcaff66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -545,6 +509,12 @@
     </FxCompile>
     <FxCompile Include="VS_SkinAnimation.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_Line.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_Line.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -581,35 +551,11 @@
     <ClCompile Include="Window.cpp">
       <Filter>ソース ファイル\System\Application\Window</Filter>
     </ClCompile>
-    <ClCompile Include="BroadScene_Base.cpp">
-      <Filter>ソース ファイル\Scene\BroadScene\BroadScane_Base</Filter>
-    </ClCompile>
-    <ClCompile Include="ChangeBroadScene.cpp">
-      <Filter>ソース ファイル\Scene\BroadScene\ChangeScene</Filter>
-    </ClCompile>
-    <ClCompile Include="ChangeSubScene.cpp">
-      <Filter>ソース ファイル\Scene\SubScene\ChangeScene</Filter>
-    </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>ソース ファイル\Scene\SceneManager</Filter>
     </ClCompile>
-    <ClCompile Include="SceneMoveInfo.cpp">
-      <Filter>ソース ファイル\Scene\SceneMoveInfo</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneRunningState.cpp">
-      <Filter>ソース ファイル\Scene\SceneMoveInfo\RunningState</Filter>
-    </ClCompile>
-    <ClCompile Include="SubScene_Base.cpp">
-      <Filter>ソース ファイル\Scene\SubScene\SubScene_Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Test_Broad.cpp">
-      <Filter>ソース ファイル\Scene\Test\BroadScene</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>ソース ファイル\System\pch</Filter>
-    </ClCompile>
-    <ClCompile Include="Test_ChangeSubScene.cpp">
-      <Filter>ソース ファイル\Scene\Test\ChangeSub</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>ソース ファイル\Graphics\Texture</Filter>
@@ -643,21 +589,6 @@
     </ClCompile>
     <ClCompile Include="Tag.cpp">
       <Filter>ソース ファイル\Object\Tag</Filter>
-    </ClCompile>
-    <ClCompile Include="Tank_ChangeSub.cpp">
-      <Filter>ソース ファイル\Scene\TankFire\ChangeSub</Filter>
-    </ClCompile>
-    <ClCompile Include="Tank_InGameSub.cpp">
-      <Filter>ソース ファイル\Scene\TankFire\SubScene\InGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Tank_ResultSub.cpp">
-      <Filter>ソース ファイル\Scene\TankFire\SubScene\Result</Filter>
-    </ClCompile>
-    <ClCompile Include="Tank_TitleSub.cpp">
-      <Filter>ソース ファイル\Scene\TankFire\SubScene\Title</Filter>
-    </ClCompile>
-    <ClCompile Include="Tank_BroadScene.cpp">
-      <Filter>ソース ファイル\Scene\TankFire\BroadScene</Filter>
     </ClCompile>
     <ClCompile Include="JISToUTF8.cpp">
       <Filter>ソース ファイル\System\JISToUTF8</Filter>
@@ -929,6 +860,27 @@
     <ClCompile Include="AssetSaveLoad.cpp">
       <Filter>ソース ファイル\Asset\Asset_Base\AssetSaveLoad</Filter>
     </ClCompile>
+    <ClCompile Include="..\ThirdParty\bullet\include\btBulletCollisionAll.cpp">
+      <Filter>ソース ファイル\Bullet\import</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\bullet\include\btBulletDynamicsAll.cpp">
+      <Filter>ソース ファイル\Bullet\import</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\bullet\include\btLinearMathAll.cpp">
+      <Filter>ソース ファイル\Bullet\import</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11BulletPhisics.cpp">
+      <Filter>ソース ファイル\Bullet\PhysicsEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_RigidBody.cpp">
+      <Filter>ソース ファイル\Component\Collider\RigidBody</Filter>
+    </ClCompile>
+    <ClCompile Include="DXToBullet.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletDebugDraw.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -985,35 +937,11 @@
     <ClInclude Include="Window.h">
       <Filter>ソース ファイル\System\Application\Window</Filter>
     </ClInclude>
-    <ClInclude Include="BroadScene_Base.h">
-      <Filter>ソース ファイル\Scene\BroadScene\BroadScane_Base</Filter>
-    </ClInclude>
-    <ClInclude Include="ChangeBroadScene.h">
-      <Filter>ソース ファイル\Scene\BroadScene\ChangeScene</Filter>
-    </ClInclude>
-    <ClInclude Include="ChangeSubScene.h">
-      <Filter>ソース ファイル\Scene\SubScene\ChangeScene</Filter>
-    </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>ソース ファイル\Scene\SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="SceneMoveInfo.h">
-      <Filter>ソース ファイル\Scene\SceneMoveInfo</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneRunningState.h">
-      <Filter>ソース ファイル\Scene\SceneMoveInfo\RunningState</Filter>
-    </ClInclude>
-    <ClInclude Include="SubScene_Base.h">
-      <Filter>ソース ファイル\Scene\SubScene\SubScene_Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Test_Broad.h">
-      <Filter>ソース ファイル\Scene\Test\BroadScene</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>ソース ファイル\System\pch</Filter>
-    </ClInclude>
-    <ClInclude Include="Test_ChangeSubScene.h">
-      <Filter>ソース ファイル\Scene\Test\ChangeSub</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>ソース ファイル\Graphics\Texture</Filter>
@@ -1047,21 +975,6 @@
     </ClInclude>
     <ClInclude Include="Tag.h">
       <Filter>ソース ファイル\Object\Tag</Filter>
-    </ClInclude>
-    <ClInclude Include="Tank_ChangeSub.h">
-      <Filter>ソース ファイル\Scene\TankFire\ChangeSub</Filter>
-    </ClInclude>
-    <ClInclude Include="Tank_InGameSub.h">
-      <Filter>ソース ファイル\Scene\TankFire\SubScene\InGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Tank_ResultSub.h">
-      <Filter>ソース ファイル\Scene\TankFire\SubScene\Result</Filter>
-    </ClInclude>
-    <ClInclude Include="Tank_TitleSub.h">
-      <Filter>ソース ファイル\Scene\TankFire\SubScene\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="Tank_BroadScene.h">
-      <Filter>ソース ファイル\Scene\TankFire\BroadScene</Filter>
     </ClInclude>
     <ClInclude Include="JISToUTF8.h">
       <Filter>ソース ファイル\System\JISToUTF8</Filter>
@@ -1339,9 +1252,6 @@
     <ClInclude Include="CP_EaseTest.h">
       <Filter>ソース ファイル\Component\InGame\Test</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>ソース ファイル\Scene\NewScene</Filter>
-    </ClInclude>
     <ClInclude Include="nSceneManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -1362,6 +1272,24 @@
     </ClInclude>
     <ClInclude Include="AssetSaveLoad.h">
       <Filter>ソース ファイル\Asset\Asset_Base\AssetSaveLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="DXToBullet.h">
+      <Filter>ソース ファイル\Bullet\DXToBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\bullet\include\btBulletCollisionCommon.h">
+      <Filter>ソース ファイル\Bullet\import</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\bullet\include\btBulletDynamicsCommon.h">
+      <Filter>ソース ファイル\Bullet\import</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11BulletPhisics.h">
+      <Filter>ソース ファイル\Bullet\PhysicsEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_RigidBody.h">
+      <Filter>ソース ファイル\Component\Collider\RigidBody</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletDebugDraw.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,38 +10,6 @@
 using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
 
-void GameObject::ActiveProcess()
-{
-	CollisionChecker& collisionChecker = InSceneSystemManager::GetInstance()->
-		GetCollisonChecker();
-
-	for (auto& c : pComponents)
-	{
-		// 当たり判定チェッククラスに追加
-		CP_Collider* col = dynamic_cast<CP_Collider*>(c.get());
-		if (col != nullptr)
-		{
-			collisionChecker.AddCollider(*col);	// 追加
-		}
-	}
-}
-
-void GameObject::NotActiveProcess()
-{
-	CollisionChecker& collisionChecker = InSceneSystemManager::GetInstance()->
-		GetCollisonChecker();
-
-	for (auto& c : pComponents)
-	{
-		// 当たり判定チェッククラスから削除
-		CP_Collider* col = dynamic_cast<CP_Collider*>(c.get());
-		if (col != nullptr)
-		{
-			collisionChecker.PopCollider(*col);	// 削除
-		}
-	}
-}
-
 GameObject& GameObject::Copy(const GameObject& _other)
 {
 	// 同じなら処理しない
@@ -55,7 +23,13 @@ GameObject& GameObject::Copy(const GameObject& _other)
 	layer = _other.layer;
 
 	// コンポーネントをコピー
-	std::list<std::unique_ptr<Component>> pComponents;
+	for (auto& comp : _other.pComponents)
+	{
+		CloneComponentBase* clone = dynamic_cast<CloneComponentBase*>(comp.get());
+
+		if (clone)
+			SetComponent(clone->Clone());
+	}
 
 	return *this;
 }
@@ -254,9 +228,9 @@ void GameObject::ImGuiSet()
 		ImGuiMethod::DragFloat3(v, "scale", 0.1f);
 		transform.SetLocalScale(v);
 
-	/*	v = transform.GetLocalEularAngles();
+		v = transform.GetLocalEularAngles();
 		ImGuiMethod::DragFloat3(v, "rot");
-		transform.SetLocalEularAngles(v);*/
+		transform.SetLocalEularAngles(v);
 
 		std::list<Component*> deleteComponents;
 
@@ -352,8 +326,5 @@ void GameObject::SetActive(bool _isActive)
 {
 	if (isActive == _isActive) return;	// 同じ状態に変えようとするなら終わる
 
-	if (_isActive)
-		ActiveProcess();	// アクティブ時の処理をする
-	else
-		NotActiveProcess();	// 非アクティブ時の処理をする
+	isActive = _isActive;
 }

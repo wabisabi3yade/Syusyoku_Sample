@@ -3,6 +3,32 @@
 
 #include "GameObject.h"
 
+void ComponentFactory::Init()
+{
+	// 当たり判定
+	ResistComponnent<CP_RigidBody>();
+	ResistComponnent<CP_BoxCollider>();
+	ResistComponnent<CP_SphereCollider>();
+
+	// 描画
+	ResistComponnent<CP_MeshRenderer>();
+	ResistComponnent<CP_SpriteRenderer>();
+
+	// アニメーション
+	ResistComponnent<CP_Animation>();
+	ResistComponnent<CP_Weapon>();
+
+	// カメラ
+	ResistComponnent<CP_Camera>();
+	ResistComponnent<CP_CameraMove>();
+
+	// プレイヤー
+	ResistComponnent<CP_Player>();
+
+	// その他
+	ResistComponnent<CP_EaseTest>();
+}
+
 std::unique_ptr<Component> ComponentFactory::CreateByName(const std::string& _componentName)
 {
 	auto itr = pComponents.find(_componentName);
@@ -29,31 +55,6 @@ void ComponentFactory::CreateImGuiCombo(GameObject& _targetObject)
 
 	ImGuiMethod::ComboBox("Component", compName, conponentsName);
 #endif // EDIT
-}
-
-ComponentFactory::ComponentFactory()
-{
-	// 当たり判定
-	ResistComponnent<CP_BoxCollider>();
-	ResistComponnent<CP_SphereCollider>();
-
-	// 描画
-	ResistComponnent<CP_MeshRenderer>();
-	ResistComponnent<CP_SpriteRenderer>();
-
-	// アニメーション
-	ResistComponnent<CP_Animation>();
-	ResistComponnent<CP_Weapon>();
-
-	// カメラ
-	ResistComponnent<CP_Camera>();
-	ResistComponnent<CP_CameraMove>();
-
-	// プレイヤー
-	ResistComponnent<CP_Player>();
-
-	// その他
-	ResistComponnent<CP_EaseTest>();
 }
 
 std::vector<std::string> ComponentFactory::GetComponentsName()

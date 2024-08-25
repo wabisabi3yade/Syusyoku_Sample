@@ -132,12 +132,30 @@ std::string ImGuiMethod::InputText(const std::string& _label)
 	return str;
 }
 
+void ImGuiMethod::Text(const DirectX::SimpleMath::Vector2& _v)
+{
+	ImGui::Text(std::string(
+		"x " + std::to_string(_v.x) +
+		"\ny " + std::to_string(_v.y)
+	).c_str());
+}
+
 void ImGuiMethod::Text(const Vector3& _v)
 {
 	ImGui::Text(std::string(
 		"x " + std::to_string(_v.x) +
 		"\ny " + std::to_string(_v.y) +
 		"\nz " + std::to_string(_v.z)
+	).c_str());
+}
+
+void ImGuiMethod::Text(const DirectX::SimpleMath::Quaternion& _q)
+{
+	ImGui::Text(std::string(
+		"x " + std::to_string(_q.x) +
+		"\ny " + std::to_string(_q.y) +
+		"\nz " + std::to_string(_q.z) + 
+		"\nw " + std::to_string(_q.w)
 	).c_str());
 }
 

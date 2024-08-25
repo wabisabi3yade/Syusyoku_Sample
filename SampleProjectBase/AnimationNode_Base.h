@@ -34,6 +34,8 @@ public:
 	// 再生中のときに表示
 	virtual void ImGuiPlaying();
 
+	virtual void Begin(float _playingRatio, BoneList& _boneList) {}
+
 	/// @brief 更新処理を行う
 	/// @param 再生割合
 	/// @param _boneList ボーンリスト
@@ -45,6 +47,9 @@ public:
 
 	// ノード名をセット
 	void SetNodeName(const std::string& _nodeName);
+
+	// ループするかセット
+	void SetIsLoop(bool _isLoop);
 
 	// ノード名取得
 	std::string GetNodeName() const;

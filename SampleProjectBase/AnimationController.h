@@ -92,6 +92,8 @@ public:
 	bool IsSetAnimation();
 
 	AnimationNode_Base* GetCurrentNode();
+
+	AnimationNode_Base* GetNode(const std::string& _name);
 private:
 	/// @brief 再生時間を進める
 	void ProgressPlayTime();
@@ -102,7 +104,7 @@ private:
 
 	/// @brief アニメーションの更新処理
 	/// @param _boneList 更新ボーンリスト
-	void AnimatioUpdate(BoneList& _boneList);
+	void AnimatioUpdate();
 
 	/// @brief ループ再生できるか？
 	/// @return 再生できるフラグ
@@ -110,11 +112,14 @@ private:
 
 	/// @brief 通常時、アニメーション
 	/// @param _boneList ボーンリスト
-	void NormalUpdate(BoneList& _boneList);
+	void NormalUpdate();
 
 	/// @brief 遷移時のアニメーション
 	/// @param _boneList ボーンリスト
-	void TransitionUpdate(BoneList& _boneList);
+	void TransitionUpdate();
+
+	/// @brief 慣性補間のキャッシュ更新
+	void CacheUpdate();
 
 	void ImGuiTransition();
 

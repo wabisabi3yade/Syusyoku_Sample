@@ -16,7 +16,6 @@ void InSceneSystemManager::Init()
 {
 	pSceneObjects = std::make_unique<SceneObjects>();
 	pSceneLights = std::make_unique<SceneLights>();
-	pCollisionChecker = std::make_unique<CollisionChecker>();
 }
 
 CP_Camera& InSceneSystemManager::GetMainCamera()

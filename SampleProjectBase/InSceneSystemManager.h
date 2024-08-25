@@ -22,9 +22,6 @@ class InSceneSystemManager : public Singleton_Base<InSceneSystemManager>
 	/// @brief シーンライティング
 	std::unique_ptr<SceneLights> pSceneLights;
 
-	/// @brief 衝突判定
-	std::unique_ptr<CollisionChecker> pCollisionChecker;
-
 	InSceneSystemManager() : pMainCamera(nullptr) {}
 	~InSceneSystemManager();
 
@@ -42,10 +39,6 @@ public:
 	/// @brief シーンのライティング配列を取得
 	/// @return ライティング配列の参照
 	SceneLights& GetSceneLights();
-
-	/// @brief シーンの衝突判定システムを取得
-	/// @return 衝突判定システムの参照
-	CollisionChecker& GetCollisonChecker() { return *pCollisionChecker; }
 
 	// カメラをセットする
 	void SetCamera(CP_Camera& _camera);

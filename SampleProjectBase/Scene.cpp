@@ -4,6 +4,8 @@
 #include "InSceneSystemManager.h"
 #include "ShaderCollection.h"
 
+
+
 Scene::Scene(const std::string& _name)
 {
 	pInSceneSystem = InSceneSystemManager::GetInstance();
@@ -23,10 +25,6 @@ Scene::~Scene()
 void Scene::Exec()
 {
 	SceneObjects& sceneObjects = pInSceneSystem->GetSceneObjects();
-	CollisionChecker& collisionChecker = pInSceneSystem->GetCollisonChecker();
-
-	// シーン内の当たり判定をチェックする
-	collisionChecker.CollisionCheck();
 
 	// シーン内の更新処理
 	sceneObjects.Update();

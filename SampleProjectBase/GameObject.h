@@ -72,8 +72,6 @@ public:
 	void RemoveActiveComponent(Component& _removeComonent);
 	void AddActiveComponent(Component& _addComonentComonent);
 
-	// Start配列に入れる
-
 	// ImGuiの設定
 	virtual void ImGuiSet();	
 
@@ -90,17 +88,10 @@ public:
 
 	const std::string& GetName() const { return name; }
 	bool GetIsActive() const { return isActive; }
-	const Tag& GetTag() const { return tag; }
-	const Layer& GetLayer() const  { return layer; }
+	Tag GetTag() const { return tag; }
+	Layer GetLayer() const  { return layer; }
 
 private:
-	// アクティブ変更時処理
-	void ActiveProcess();
-	void NotActiveProcess();
-
-	// Jsonからロード
-	virtual void FromJson(const nlohmann::json& _jsonData) {};
-
 	virtual GameObject& Copy(const GameObject& _other);
 
 	/// @brief 所持している配列にコンポーネントが存在するか
@@ -118,6 +109,11 @@ private:
 	/// @return 存在したか？
 	bool IsExistStartComponent(const Component& _pCheckComponent);
 
+	/// @brief コンポーネントを重複しているか
+	/// @tparam  コンポーネント
+	/// @return 重複しているか？
+	template<HashiTaku::ComponentConcept T> bool isDuplicateCompoent();
+
 	/// @brief コンポーネントのロード処理
 	/// @param _componentData このオブジェクト全てのコンポーネントデータ
 	void LoadComponent(const nlohmann::json& _componentsData);
@@ -126,6 +122,12 @@ private:
 template<HashiTaku::ComponentConcept T>
 inline T* GameObject::AddComponent()
 {
+	if (isDuplicateCompoent<T>())
+	{
+		HASHI_DEBUG_LOG("重複しているので作成しません");
+		return nullptr;
+	}
+
 	// コンポーネントファクトリーから取得
 	std::unique_ptr<T> createComp = ComponentFactory::GetInstance()->Create<T>();
 	T& comp = *createComp;
@@ -148,4 +150,17 @@ inline T* GameObject::GetComponent()
 	}
 
 	return nullptr;
+}
+
+template<HashiTaku::ComponentConcept T>
+inline bool GameObject::isDuplicateCompoent()
+{
+	// 指定した型名と同じコンポーネントがあるか確認
+	for (auto& comp : pComponents)
+	{
+		if (typeid(T) == typeid(*comp.get()))
+			return true;
+	}
+
+	return false;
 }

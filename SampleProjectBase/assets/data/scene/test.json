@@ -12,8 +12,8 @@
                     "viewSlot": 0
                 },
                 {
-                    "dis_Hori": 3.0,
-                    "dis_Ver": 0.0,
+                    "dis_Hori": 5.300000190734863,
+                    "dis_Ver": 2.299999952316284,
                     "enable": true,
                     "name": "CameraMove",
                     "rotSpeed": 120.0,
@@ -25,17 +25,17 @@
             "tag": 0,
             "transform": {
                 "angle": [
-                    -0.0,
-                    90.0000228881836,
+                    23.459033966064453,
+                    -90.00003051757813,
                     0.0
                 ],
                 "child": null,
                 "havePare": false,
                 "parent": "",
                 "pos": [
-                    3.0,
-                    0.0,
-                    0.0
+                    -5.119228363037109,
+                    2.299999952316284,
+                    -13.827184677124023
                 ],
                 "scale": [
                     1.0,
@@ -96,23 +96,22 @@
             "components": [
                 {
                     "AABB": false,
-                    "angleOffset": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
                     "enable": true,
-                    "name": "BoxCollider",
-                    "posOffset": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "size": [
+                    "length": [
                         1.0,
                         1.0,
                         1.0
+                    ],
+                    "name": "BoxCollider",
+                    "posOffset": [
+                        -1.6483650207519531,
+                        101.06310272216797,
+                        -1.0496501922607422
                     ]
+                },
+                {
+                    "enable": true,
+                    "name": "RigidBody"
                 }
             ],
             "layer": 0,
@@ -120,17 +119,17 @@
             "tag": 0,
             "transform": {
                 "angle": [
-                    0.0,
-                    0.0,
+                    -0.0,
+                    -49.93608093261719,
                     0.0
                 ],
                 "child": null,
                 "havePare": false,
                 "parent": "",
                 "pos": [
+                    -10.419228553771973,
                     0.0,
-                    0.0,
-                    0.0
+                    -13.827184677124023
                 ],
                 "scale": [
                     1.0,
