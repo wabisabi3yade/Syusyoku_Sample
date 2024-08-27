@@ -49,7 +49,7 @@ void InertInterpAnimation::UpdateBoneCache(std::vector<BoneTransform>& boneTrans
 	lastBoneCache.isEnable = true;
 }
 
-DirectX::SimpleMath::Vector3 InertInterpAnimation::CalcBlendPos(u_int _boneIdx, float _blendingTime)
+DirectX::SimpleMath::Vector3 InertInterpAnimation::CalcBlendPos(u_int _boneIdx, float _blendingTime, const DirectX::SimpleMath::Vector3& _currentValue)
 {
 	float blendValue = CalcBlend(positionTransition[_boneIdx], _blendingTime);
 
@@ -59,7 +59,7 @@ DirectX::SimpleMath::Vector3 InertInterpAnimation::CalcBlendPos(u_int _boneIdx, 
 	return blendPos;
 }
 
-DirectX::SimpleMath::Vector3 InertInterpAnimation::CalcBlendScale(u_int _boneIdx, float _blendingTime)
+DirectX::SimpleMath::Vector3 InertInterpAnimation::CalcBlendScale(u_int _boneIdx, float _blendingTime, const DirectX::SimpleMath::Vector3& _currentValue)
 {
 	float blendValue = CalcBlend(scaleTransition[_boneIdx], _blendingTime);
 
@@ -69,15 +69,12 @@ DirectX::SimpleMath::Vector3 InertInterpAnimation::CalcBlendScale(u_int _boneIdx
 	return blendScale;
 }
 
-DirectX::SimpleMath::Quaternion InertInterpAnimation::CalcBlendRot(u_int _boneIdx, float _blendingTime)
+DirectX::SimpleMath::Quaternion InertInterpAnimation::CalcBlendRot(u_int _boneIdx, float _blendingTime, const DirectX::SimpleMath::Quaternion& _currentValue)
 {
 	QuatTransition qT = rotationTransition[_boneIdx];
 	float blendValue = CalcBlend(qT, _blendingTime);
 
-	Quaternion q(qT.axis, blendValue);
-	q.Normalize();
-
-	/*q = q * lastBoneCache.transform[_boneIdx].rotation;*/
+	Quaternion q = Quaternion::CreateFromAxisAngle(qT.axis, blendValue);
 
 	return Quat::Multiply(q, changeTimeTransform[_boneIdx].rotation);
 }
@@ -135,16 +132,12 @@ void InertInterpAnimation::InitTransition(QuatTransition& _transition, const Dir
 	Quaternion invRequestPose;
 	_requestPose.Inverse(invRequestPose);
 
-	/*Quaternion q0 = _lastPose * invRequestPose;*/
 	Quaternion q0 = Quat::Multiply(_lastPose, invRequestPose);
 
 	Quat::ToAxisAngle(q0, _transition.axis, _transition.x0);
-
 	_transition.axis.Normalize();
+	_transition.x0 = Mathf::Repeat(_transition.x0 + Mathf::PI, Mathf::PI * 2.0f) - Mathf::PI;
 
-	_transition.x0 = Mathf::Repeat(_transition.x0 + + Mathf::PI, Mathf::PI * 2.0f) - Mathf::PI;
-
-	/*Quaternion qn1 = _secondLastPose * invRequestPose;*/
 	Quaternion qn1 = Quat::Multiply(_secondLastPose, invRequestPose);
 
 	float xn1 = Mathf::PI;
@@ -173,7 +166,7 @@ float InertInterpAnimation::CalcBlend(const TransitionBase& _transition, float _
 	float t_4 = t_1 * t_3;
 	float t_5 = t_1 * t_4;
 
-	return (_transition.A * t_5) + (_transition.B * t_4) + (_transition.C * t_3) + (0.5f * _transition.a0 * t_2) + (_transition.v0 * t_1) + (_transition.x0);
+	return (_transition.A * t_5) + (_transition.B * t_4) + (_transition.C * t_3) + (0.5f * _transition.a0 * t_2) + (_transition.v0 * t_1);
 }
 
 void InertInterpAnimation::CalcTransition(TransitionBase& _transition, float _blendTime)
@@ -197,20 +190,16 @@ void InertInterpAnimation::CalcTransition(TransitionBase& _transition, float _bl
 			_transition.t1 = _blendTime;
 		}
 
-		//// éûä‘ÇÃó›èÊÇåvéZ
-		//float t1_2 = _transition.t1 + _transition.t1;
-		//float t1_3 = t1_2 + _transition.t1;
-		//float t1_4 = t1_3 + _transition.t1;
+		// éûä‘ÇÃó›èÊÇåvéZ
+		float t1_2 = _transition.t1 * _transition.t1;
+		float t1_3 = t1_2 * _transition.t1;
+		float t1_4 = t1_3 * _transition.t1;
+		float t1_5 = t1_4 * _transition.t1;
 
-		//_transition.a0 = (-8.0f * _transition.v0 * _transition.t1 - 20.0f * _transition.x0) / t1_2;
-		//_transition.A = -(_transition.a0 * t1_2 + 6.0f * _transition.v0 * _transition.t1 + 12.0f * _transition.x0) / (2.0f * t1_4 * _transition.t1);
-		//_transition.B = (3.0f * _transition.a0 * t1_2 + 16.0f * _transition.v0 * _transition.t1 + 30.0f * _transition.x0) / (2.0f * t1_4);
-		//_transition.C = -(3.0f * _transition.a0 * t1_2 + 12.0f * _transition.v0 * _transition.t1 + 20.0f * _transition.x0) / (2.0f * t1_3);
+		_transition.a0 = ((-8.f * _transition.v0 * _transition.t1) + (-20.f * _transition.x0)) / t1_2;
 
-		_transition.a0 = ((-8.f * _transition.v0 * _transition.t1) + (-20.f * _transition.x0)) / pow(_transition.t1, 2.f);
-
-		_transition.A = -((1.f * _transition.a0 * _transition.t1 * _transition.t1) + (6.f * _transition.v0 * _transition.t1) + (12.f * _transition.x0)) / (2.f * pow(_transition.t1, 5.f));
-		_transition.B = ((3.f * _transition.a0 * _transition.t1 * _transition.t1) + (16.f * _transition.v0 * _transition.t1) + (30.f * _transition.x0)) / (2.f * pow(_transition.t1, 4.f));
-		_transition.C = -((3.f * _transition.a0 * _transition.t1 * _transition.t1) + (12.f * _transition.v0 * _transition.t1) + (20.f * _transition.x0)) / (2.f * pow(_transition.t1, 3.f));
+		_transition.A = -((1.f * _transition.a0 * _transition.t1 * _transition.t1) + (6.f * _transition.v0 * _transition.t1) + (12.f * _transition.x0)) / (2.f * t1_5);
+		_transition.B = ((3.f * _transition.a0 * t1_2) + (16.f * _transition.v0 * _transition.t1) + (30.f * _transition.x0)) / (2.f * t1_4);
+		_transition.C = -((3.f * _transition.a0 * t1_2) + (12.f * _transition.v0 * _transition.t1) + (20.f * _transition.x0)) / (2.f * t1_3);
 	}
 }

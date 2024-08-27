@@ -63,7 +63,15 @@ VS_OUT main(VS_IN vin)
     vout.pos = mul(vout.pos, proj);
 
     vout.uv = vin.uv;
-    vout.normal = mul(vout.normal, (float3x3) world);
+    
+    // ÉXÉPÅ[Éãê¨ï™ÇèúÇ≠
+    float3x3 rotationMatrix = (float3x3) world;
+    rotationMatrix[0] = normalize(rotationMatrix[0]);
+    rotationMatrix[1] = normalize(rotationMatrix[1]);
+    rotationMatrix[2] = normalize(rotationMatrix[2]);
+    
+    vout.normal = mul(vout.normal, rotationMatrix);
+    vout.normal = normalize(vout.normal);
     
     vout.color = vin.color;
     

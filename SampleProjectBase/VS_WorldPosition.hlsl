@@ -54,7 +54,13 @@ VS_OUTPUT main(VS_INPUT vin)
     output.pos = pos;
     output.uv = vin.uv;
     
-    output.normal = mul(vin.normal, (float3x3) world);
+    float3x3 rotationMatrix = (float3x3)world;
+    rotationMatrix[0] = normalize(rotationMatrix[0]);
+    rotationMatrix[1] = normalize(rotationMatrix[1]);
+    rotationMatrix[2] = normalize(rotationMatrix[2]);
+    
+    output.normal = mul(vin.normal, rotationMatrix);
+    output.normal = normalize(output.normal);
 
     return output;
 }

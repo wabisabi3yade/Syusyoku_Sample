@@ -4,6 +4,12 @@
 #include "InSceneSystemManager.h"
 #include "ShaderCollection.h"
 
+#include <PrimitiveBatch.h>
+#include <VertexTypes.h>
+
+using namespace DirectX;
+using namespace DirectX::SimpleMath;
+std::unique_ptr<DirectX::PrimitiveBatch<VertexPositionColor>> primitiveBatch;
 
 
 Scene::Scene(const std::string& _name)
@@ -15,6 +21,9 @@ Scene::Scene(const std::string& _name)
 
 	// ƒ[ƒh‚·‚é
 	Load();
+
+	ID3D11DeviceContext* pD = Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
+	primitiveBatch = std::make_unique<PrimitiveBatch<VertexPositionColor>>(pD);
 }
 
 Scene::~Scene()

@@ -57,11 +57,6 @@ float Mesh_Group::GetLoadOffsetScale() const
 	return loadScale;
 }
 
-DirectX::SimpleMath::Vector3 Mesh_Group::GetLoadOffsetAngles() const
-{
-	return loadOffsetAngles;
-}
-
 Mesh_Group::MeshType Mesh_Group::GetType() const
 {
 	return meshType;
@@ -84,9 +79,9 @@ void Mesh_Group::SetLoadOffsetScale(float _scaleTimes)
 	loadScale = std::max(_scaleTimes, 0.0f);
 }
 
-void Mesh_Group::SetLoadOffsetAngles(const DirectX::SimpleMath::Vector3& _offsetAngles)
+void Mesh_Group::SetLoadFlipY(bool _isLoadFlipY)
 {
-	loadOffsetAngles = _offsetAngles;
+	isLoadFlipY = _isLoadFlipY;
 }
 
 void Mesh_Group::SetIsRightHand(bool _isRightHand)
@@ -130,7 +125,7 @@ nlohmann::json Mesh_Group::Save()
 	auto data = AssetPath_Base::Save();
 
 	data["loadScale"] = loadScale;
-	HashiTaku::SaveJsonVector3("loadAngle", loadOffsetAngles, data);
+	data["flipY"] = isLoadFlipY;
 	data["getSize"] = isGetSize;
 	data["rightHand"] = isRightHand;
 

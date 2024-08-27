@@ -74,8 +74,8 @@ void AssetDisplay::DisplayModel()
 	static float scale = 1.0f;
 	ImGui::DragFloat("scale", &scale);
 
-	static Vector3 angles = Vector3::Zero;
-	ImGuiMethod::DragFloat3(angles, "angles");
+	static bool isFlipY = false;
+	ImGui::Checkbox("flipY", &isFlipY);
 
 	static bool isRight = false;
 	ImGui::Checkbox("rightHand", &isRight);
@@ -84,7 +84,7 @@ void AssetDisplay::DisplayModel()
 	ImGui::Checkbox("getSize", &getSize);
 
 	if (ImGui::Button("Load"))
-		AssetLoader::ModelLoad(str, scale, angles, isRight, getSize);
+		AssetLoader::ModelLoad(str, scale, isFlipY, isRight, getSize);
 
 	std::string name = ImGuiMethod::InputText("name");
 

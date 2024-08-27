@@ -119,8 +119,19 @@ bool CP_Animation::IsCanPlay()
 void CP_Animation::UpdateBoneCombMtx()
 {
 	TreeNode& pRootNode = pSkeletalMesh->GetRootNode();
+
+	Matrix scaleMatrix = Matrix::CreateScale(Vector3::One * pSkeletalMesh->GetLoadOffsetScale());
+
+	Matrix rotateMatrix = Matrix::CreateFromYawPitchRoll(
+		180.0f * Mathf::degToRad,
+		0,
+		0
+	);
+
+	Matrix offsetMatrix = scaleMatrix * rotateMatrix;
+
 	// ノードを辿って全体のコンビネーション行列を更新していく
-	UpdateNodeHierarchy(pRootNode, Matrix::Identity);
+	UpdateNodeHierarchy(pRootNode, offsetMatrix);
 }
 
 void CP_Animation::UpdateNodeHierarchy(TreeNode& _treeNode, const Matrix& _parentMtx)

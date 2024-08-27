@@ -70,6 +70,12 @@ namespace Vec3
 	/// @param _mtx ワールド行列
 	/// @return スケール値
 	DirectX::SimpleMath::Vector3 WorldMtxToScale(const DirectX::SimpleMath::Matrix& _mtx);
+
+	/// @brief 値を0から最大値までで正規化する
+	/// @param _v 正規化する値
+	/// @param _length 最大値
+	/// @return 正規化された値
+	Vector3 Repeat(const Vector3& _v, float _length);
 }
 
 namespace Vec4

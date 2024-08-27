@@ -49,6 +49,11 @@ static Color ToColor(const aiColor4D& _aiColor);
 /// @return DirectX行列
 static Matrix ToDirectXMatrix(const aiMatrix4x4& _aiMatrix);
 
+/// @brief DirectXをaiMatrixの行列に変換
+/// @param _dxMatrix DirectX行列
+/// @return aiMatrix
+static aiMatrix4x4 ToAssimpMatrix(const Matrix& _dxMatrix);
+
 void AssetLoader::MaterialLoad(Mesh_Group* _pMeshgather,
 	const aiScene* pScene, std::string texturedirectory)
 {
@@ -330,7 +335,7 @@ Texture* AssetLoader::TextureLoad(const std::string& _filePath)
 	return returnPtr;
 }
 
-Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, DirectX::SimpleMath::Vector3 _angles, bool _isRightHand, bool _isGetScale)
+Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, bool _isFlipY, bool _isRightHand, bool _isGetScale)
 {
 	// シーン情報構築
 	Assimp::Importer importer;
@@ -363,7 +368,7 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 	std::unique_ptr<Mesh_Group> pMeshGroup = CreateMeshGroup(pScene, modelName);
 
 	pMeshGroup->SetLoadOffsetScale(_scale);
-	pMeshGroup->SetLoadOffsetAngles(_angles);
+	pMeshGroup->SetLoadFlipY(_isFlipY);
 	pMeshGroup->SetIsRightHand(_isRightHand);
 	pMeshGroup->SetIsGetSize(_isGetScale);
 	pMeshGroup->SetPathName(_modelPath);
@@ -373,6 +378,11 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 
 	// マテリアル情報取得
 	MaterialLoad(pMeshGroup.get(), pScene, parentPath);
+
+	// Y軸反転のベクトル
+	int flipYVec = 1;
+	if (_isFlipY)
+		flipYVec = -1;
 
 	// メッシュの最大・最小座標
 	Vector3 modelMaxPos = Vector3::One * -10.0f;
@@ -405,6 +415,9 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 
 			// 座標(スケール値を反映する)
 			vertex.position = ToVector3(pAimesh->mVertices[vidx]);
+			vertex.position *= _scale;	// スケールを反映
+			vertex.position.x *= flipYVec;	// y軸反転
+			vertex.position.z *= flipYVec;
 
 			// 最大・最小を更新
 			if (_isGetScale)
@@ -413,7 +426,11 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 
 			// 法線あり？
 			if (pAimesh->HasNormals())
+			{
 				vertex.normal = ToVector3(pAimesh->mNormals[vidx]);
+				vertex.normal.x *= flipYVec;	// y軸反転
+				vertex.normal.z *= flipYVec;
+			}
 			else
 				vertex.normal = Vector3::Zero;
 
@@ -592,7 +609,13 @@ void AssetLoader::CreateBone(const aiScene* _pScene, SkeletalMesh& _skeletalMesh
 		pBone->SetBoneName(pAiBone->mName.C_Str());
 
 		// オフセット行列
-		pBone->SetOffeetMtx(ToDirectXMatrix(pAiBone->mOffsetMatrix));
+		Matrix a = Matrix::CreateScale(Vector3::One * 0.01f) * Matrix::CreateFromYawPitchRoll(
+			180.f * Mathf::degToRad,
+			0.0f,
+			0.0f
+		);
+
+		pBone->SetOffeetMtx(ToDirectXMatrix(pAiBone->mOffsetMatrix) * a);
 
 		HASHI_DEBUG_LOG(pBone->GetBoneName() + "：ロード完了");
 
@@ -813,4 +836,16 @@ Matrix ToDirectXMatrix(const aiMatrix4x4& _aiMatrix)
 	);
 
 	return dxMatrix;
+}
+
+aiMatrix4x4 ToAssimpMatrix(const Matrix& _dxMatrix)
+{
+	aiMatrix4x4 assimpMtx = aiMatrix4x4(
+		_dxMatrix._11, _dxMatrix._21, _dxMatrix._31, _dxMatrix._41,
+		_dxMatrix._12, _dxMatrix._22, _dxMatrix._32, _dxMatrix._42,
+		_dxMatrix._13, _dxMatrix._23, _dxMatrix._33, _dxMatrix._43,
+		_dxMatrix._14, _dxMatrix._24, _dxMatrix._34, _dxMatrix._44
+	);
+
+	return assimpMtx;
 }

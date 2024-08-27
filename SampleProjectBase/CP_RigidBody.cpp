@@ -8,10 +8,10 @@ using namespace HashiTaku;
 
 CP_RigidBody::CP_RigidBody()
 	: pShape(nullptr), mass(1.0f), isRigidBody(true), isSetShape(false)
-{	
+{
 }
 
-CP_RigidBody::CP_RigidBody(const CP_RigidBody& _other) 
+CP_RigidBody::CP_RigidBody(const CP_RigidBody& _other)
 	: pShape(nullptr), isSetShape(false)
 {
 	Copy(_other);
@@ -19,9 +19,7 @@ CP_RigidBody::CP_RigidBody(const CP_RigidBody& _other)
 
 CP_RigidBody::~CP_RigidBody()
 {
-	// ワールドから削除
-	if(pCollisionObject)
-	DX11BulletPhisics::GetInstance()->RemoveCollObj(*pCollisionObject);
+	RemoveCollObject();
 }
 
 CP_RigidBody& CP_RigidBody::operator=(const CP_RigidBody& _other)
@@ -112,6 +110,8 @@ void CP_RigidBody::RemoveShape()
 {
 	isSetShape = false;
 	pShape = nullptr;
+
+	RemoveCollObject();
 }
 
 void CP_RigidBody::Copy(const CP_RigidBody& _other)
@@ -135,6 +135,15 @@ void CP_RigidBody::SetRigidBody(bool _isRB)
 	CreateCollObject();
 }
 
+void CP_RigidBody::RemoveCollObject()
+{
+	// ワールドから削除
+	if (!pCollisionObject) return;
+
+	DX11BulletPhisics::GetInstance()->RemoveCollObj(*pCollisionObject);
+	pCollisionObject.reset();
+}
+
 void CP_RigidBody::CreateCollObject()
 {
 	if (!isSetShape)
@@ -142,7 +151,7 @@ void CP_RigidBody::CreateCollObject()
 		HASHI_DEBUG_LOG("先に形状を設定してください");
 		return;
 	}
-	if(pCollisionObject)
+	if (pCollisionObject)
 	{
 		// ワールドから削除
 		DX11BulletPhisics::GetInstance()->RemoveCollObj(*pCollisionObject);
@@ -165,7 +174,7 @@ void CP_RigidBody::CreateCollObject()
 void CP_RigidBody::CreateRB()
 {
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(
-		Bullet::ToBtScalar(mass), 
+		Bullet::ToBtScalar(mass),
 		pMotionState.get(),
 		pShape,
 		Bullet::ToBtVector3(inertia)

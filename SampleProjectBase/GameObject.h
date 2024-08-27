@@ -93,6 +93,7 @@ public:
 
 private:
 	virtual GameObject& Copy(const GameObject& _other);
+	void ImGuiSetParent();
 
 	/// @brief 所持している配列にコンポーネントが存在するか
 	/// @param _pCheckComponent 確認するコンポーネント

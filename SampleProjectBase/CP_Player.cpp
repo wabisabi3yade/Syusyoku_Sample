@@ -4,6 +4,8 @@
 #include "ComponentDefine.h"
 #include "GameObject.h"
 
+#include "SkeletalMesh.h"
+
 using namespace DirectX::SimpleMath;
 
 CP_Player::CP_Player(const CP_Player& _other)
@@ -20,7 +22,6 @@ CP_Player& CP_Player::operator=(const CP_Player& _other)
 
 void CP_Player::Awake()
 {
-	/*gameObject->isSave = false;*/
 	//// ƒ‚ƒfƒ‹ŠÖŒW
 	CP_MeshRenderer* pMeshRenderer = gameObject->AddComponent<CP_MeshRenderer>();
 	pMeshRenderer->SetRenderMesh("Knight.fbx");
@@ -31,6 +32,13 @@ void CP_Player::Awake()
 	CP_Animation* pAnimation = gameObject->AddComponent<CP_Animation>();
 	pAnimController = std::make_unique<PlayerAnimController>();
 	pAnimation->SetAnimationController(*pAnimController);
+
+	GameObject* pGo = &SceneFunction::ObjectFunc::CreateEmpty("Weapon");
+	CP_Weapon* pWeapon = pGo->AddComponent<CP_Weapon>();
+	SkeletalMesh* pSk = dynamic_cast<SkeletalMesh*>(pMeshRenderer->GetRenderMesh());
+	pWeapon->SetGrabBone(pSk->GetBoneByName("mixamorig:LeftHand"));
+
+	pGo->transform.SetParent(gameObject->transform);
 }
 
 void CP_Player::Start()

@@ -97,6 +97,7 @@
     <ClCompile Include="AssetSaveLoad.cpp" />
     <ClCompile Include="BulletDebugDraw.cpp" />
     <ClCompile Include="CloneComponent.cpp" />
+    <ClCompile Include="CP_BoxAnimation.cpp" />
     <ClCompile Include="CP_RigidBody.cpp" />
     <ClCompile Include="CP_Weapon.cpp" />
     <ClCompile Include="DX11BulletPhisics.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="AssetSaveLoad.h" />
     <ClInclude Include="BulletDebugDraw.h" />
     <ClInclude Include="CloneComponent.h" />
+    <ClInclude Include="CP_BoxAnimation.h" />
     <ClInclude Include="CP_RigidBody.h" />
     <ClInclude Include="CP_Weapon.h" />
     <ClInclude Include="DX11BulletPhisics.h" />

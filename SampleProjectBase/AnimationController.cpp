@@ -29,6 +29,9 @@ void AnimationController::Update(BoneList& _boneList)
 
 	// アニメーション更新
 	AnimatioUpdate();
+
+	// キャッシュ更新
+	CacheUpdate();
 }
 
 void AnimationController::NormalUpdate()
@@ -44,6 +47,7 @@ void AnimationController::TransitionUpdate()
 	{
 		// 遷移終了の処理
 		InterpTransitionEnd();
+		return;
 	}
 
 	for (u_int b_i = 0; b_i < pBoneList->GetBoneCnt(); b_i++)
@@ -52,9 +56,9 @@ void AnimationController::TransitionUpdate()
 
 		BoneTransform transform;
 
-		transform.position = inertInterp->CalcBlendPos(b_i, blendElapsedTime);
-		transform.scale = inertInterp->CalcBlendScale(b_i, blendElapsedTime);
-		transform.rotation = inertInterp->CalcBlendRot(b_i, blendElapsedTime);
+		transform.position = inertInterp->CalcBlendPos(b_i, blendElapsedTime, bone.GetAnimationTransform().position);
+		transform.scale = inertInterp->CalcBlendScale(b_i, blendElapsedTime, bone.GetAnimationTransform().scale);
+		transform.rotation = inertInterp->CalcBlendRot(b_i, blendElapsedTime, bone.GetAnimationTransform().rotation);
 
 		bone.SetAnimTransform(transform);
 	}
@@ -223,6 +227,8 @@ void AnimationController::AnimatioUpdate()
 		TransitionUpdate();
 	else
 		NormalUpdate();
+
+	
 }
 
 bool AnimationController::IsCanLoop()

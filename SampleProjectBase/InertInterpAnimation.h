@@ -70,9 +70,9 @@ public:
 	void UpdateBoneCache(std::vector<BoneTransform>& boneTransforms);
 
 	// 各パラメータのブレンド値を計算する
-	DirectX::SimpleMath::Vector3 CalcBlendPos(u_int _boneIdx, float _blendingTime);
-	DirectX::SimpleMath::Vector3 CalcBlendScale(u_int _boneIdx, float _blendingTime);
-	DirectX::SimpleMath::Quaternion CalcBlendRot(u_int _boneIdx, float _blendingTime);
+	DirectX::SimpleMath::Vector3 CalcBlendPos(u_int _boneIdx, float _blendingTime, const DirectX::SimpleMath::Vector3& _currentValue);
+	DirectX::SimpleMath::Vector3 CalcBlendScale(u_int _boneIdx, float _blendingTime, const DirectX::SimpleMath::Vector3& _currentValue);
+	DirectX::SimpleMath::Quaternion CalcBlendRot(u_int _boneIdx, float _blendingTime, const DirectX::SimpleMath::Quaternion& _currentValue);
 private:
 
 	/// @brief 座標の初期計算

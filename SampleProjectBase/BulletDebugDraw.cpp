@@ -91,6 +91,17 @@ void BulletDebugDraw::Draw()
 
     pVertexBuf->SetGPU();
 
+    // デバイスコンテキスト取得
+    ID3D11DeviceContext* pDevicecontext =
+        Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
+
+    //auto& Buffer = pVertexBuf->GetBuffer();
+
+    //// 頂点バッファをセットする
+    //unsigned int stride = sizeof(LineVertex);
+    //unsigned  offset = 0;
+    //pDevicecontext->IASetVertexBuffers(0, 1, &Buffer, &stride, &offset);
+
     // ラインの描画
     pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
     pContext->Draw(lineCnt, 0);

@@ -24,3 +24,4 @@
 
 // ƒeƒXƒg
 #include "CP_EaseTest.h"
+#include "CP_BoxAnimation.h"

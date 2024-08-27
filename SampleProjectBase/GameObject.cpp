@@ -34,6 +34,22 @@ GameObject& GameObject::Copy(const GameObject& _other)
 	return *this;
 }
 
+void GameObject::ImGuiSetParent()
+{
+	const u_int buf = 256;
+	static char str[buf] = "\0";
+
+	ImGui::InputText("parent", str, buf);
+	if (ImGui::Button("Set Parent"))
+	{
+		SceneObjects& sObj = InSceneSystemManager::GetInstance()->GetSceneObjects();
+		GameObject* parentObj = sObj.GetSceneObject(str);
+
+		if (!parentObj) return;
+		transform.SetParent(parentObj->transform);
+	}
+}
+
 bool GameObject::IsExistComponent(const Component& _pCheckComponent)
 {
 	auto itr = std::find_if(pComponents.begin(), pComponents.end(), [&](const std::unique_ptr<Component>& comp)
@@ -219,6 +235,8 @@ void GameObject::ImGuiSet()
 	if (ImGui::TreeNode(name.c_str()))	// –¼‘OTree
 	{
 		ImGui::Checkbox("isActive", &isActive);
+
+		ImGuiSetParent();
 
 		Vector3 v = transform.GetLocalPosition();
 		ImGuiMethod::DragFloat3(v, "pos", 0.1f);

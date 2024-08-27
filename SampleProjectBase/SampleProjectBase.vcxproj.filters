@@ -481,6 +481,9 @@
     <Filter Include="ソース ファイル\Bullet\DebugDraw">
       <UniqueIdentifier>{11045193-0bd7-46a5-a305-506cfbcaff66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Component\Test">
+      <UniqueIdentifier>{f2bac984-4244-4f58-8221-3bccd12f183d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -879,6 +882,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="BulletDebugDraw.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_BoxAnimation.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1289,6 +1295,9 @@
       <Filter>ソース ファイル\Component\Collider\RigidBody</Filter>
     </ClInclude>
     <ClInclude Include="BulletDebugDraw.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_BoxAnimation.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

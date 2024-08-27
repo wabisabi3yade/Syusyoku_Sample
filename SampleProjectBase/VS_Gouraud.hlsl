@@ -115,9 +115,14 @@ VS_OUTPUT main(VS_IN vin)
 
 	// 頂点シェーダーで陰の計算
     float3 N = vin.normal;
-	// 計算前に手を加える
-    N = mul(N, (float3x3) world);
-    output.normal = N;
+    
+    float3x3 rotationMatrix = (float3x3) world;
+    rotationMatrix[0] = normalize(rotationMatrix[0]);
+    rotationMatrix[1] = normalize(rotationMatrix[1]);
+    rotationMatrix[2] = normalize(rotationMatrix[2]);
+    
+    N = mul(N, rotationMatrix);
+    output.normal = normalize(N);
     
 	// マテリアル色
     output.color = material.diffuse;

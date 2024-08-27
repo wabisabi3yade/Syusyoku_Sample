@@ -30,14 +30,8 @@ void CP_MeshRenderer::Draw()
 
 	RenderParam& rendererParam = Direct3D11::GetInstance()->GetRenderer()->GetParameter();
 
-	// ワールド変換行列に必要なパラメータ
-	Vector3 position = GetTransform().GetPosition();
-	Vector3 scale = GetTransform().GetScale() * pRenderMesh->GetLoadOffsetScale();
-	Quaternion offsetRot = Quat::ToQuaternion(pRenderMesh->GetLoadOffsetAngles());
-	Quaternion rotation = Quat::Multiply(GetTransform().GetRotation(), offsetRot);
-
 	// メッシュ描画
-	DrawMesh(rendererParam.GetWVP(position, scale, rotation));
+	DrawMesh(rendererParam.GetWVP(GetTransform()));
 
 	// 原点表示
 	OriginDisplay();
@@ -114,7 +108,7 @@ bool CP_MeshRenderer::IsCanDraw()
 	return true;
 }
 
-void CP_MeshRenderer::DrawMesh(RenderParam::WVP _wvp)
+void CP_MeshRenderer::DrawMesh(RenderParam::WVP& _wvp)
 {
 	u_int meshNum = pRenderMesh->GetMeshNum();
 

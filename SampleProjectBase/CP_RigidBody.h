@@ -76,6 +76,9 @@ private:
 	/// @param _isRB 剛体か？
 	void SetRigidBody(bool _isRB);
 
+	/// @brief 衝突オブジェクトを解放し、物理空間から外す
+	void RemoveCollObject();
+
 	/// @brief 衝突オブジェクト作成
 	void CreateCollObject();
 
