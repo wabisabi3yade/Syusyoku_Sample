@@ -14,8 +14,8 @@ PlayerMoveState::PlayerMoveState(PlayerActionController& _controller)
 
 void PlayerMoveState::Init()
 {
-	using enum PlayerAnimController::AnimType;
-	ChangeAnimation((u_int)Move);
+	/*using enum PlayerAnimController::AnimType;
+	ChangeAnimation((u_int)Move);*/
 }
 
 void PlayerMoveState::Update()
@@ -87,9 +87,9 @@ void PlayerMoveState::Move()
 	Vector3 moveSpeed = moveVector * currentSpeed;
 
 	// 移動
-	Vector3 pos = pPlayerObject->transform.GetPosition();
+	Vector3 pos = pPlayerObject->GetTransform().GetPosition();
 	pos += moveSpeed * MainApplication::DeltaTime();
-	pPlayerObject->transform.SetPosition(pos);
+	pPlayerObject->GetTransform().SetPosition(pos);
 
 	// アニメーションのブレンド割合をセット
 	pAnimController->SetMoveSpeedRatio(currentSpeed / maxSpeed);
@@ -103,9 +103,9 @@ void PlayerMoveState::Rotation()
 	Quaternion targetRotation = Quat::RotateToVector(moveVector);
 
 	// 現在の回転量を球面線形補間で向けていく。
-	Quaternion rotation = pPlayerObject->transform.GetRotation();
+	Quaternion rotation = pPlayerObject->GetTransform().GetRotation();
 	rotation = Quaternion::Slerp(rotation, targetRotation, rotateSpeed * MainApplication::DeltaTime());
-	pPlayerObject->transform.SetRotation(rotation);
+	pPlayerObject->GetTransform().SetRotation(rotation);
 }
 
 Vector2 PlayerMoveState::InputValue()

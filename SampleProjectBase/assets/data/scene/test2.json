@@ -22,17 +22,60 @@
                     0.0
                 ],
                 "child": null,
-                "havePare": false,
-                "parent": "",
                 "pos": [
                     0.0,
                     2.0,
-                    -5.0
+                    -47.5
                 ],
                 "scale": [
                     1.0,
                     1.0,
                     1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "name": "SpriteRenderer",
+                    "sprite": {
+                        "texName": "an.jpg",
+                        "uvDivNum": [
+                            0.0,
+                            0.0
+                        ],
+                        "uvEnd": [
+                            1.0,
+                            1.0
+                        ],
+                        "uvStart": [
+                            0.0,
+                            0.0
+                        ]
+                    }
+                }
+            ],
+            "layer": 0,
+            "name": "a",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    -90.0,
+                    0.0,
+                    0.0
+                ],
+                "child": null,
+                "pos": [
+                    0.0,
+                    0.0,
+                    12.800000190734863
+                ],
+                "scale": [
+                    16.0,
+                    1.0,
+                    9.0
                 ]
             }
         },
@@ -69,8 +112,6 @@
                     0.0
                 ],
                 "child": null,
-                "havePare": false,
-                "parent": "",
                 "pos": [
                     0.0,
                     2.0,
@@ -116,8 +157,6 @@
                     0.0
                 ],
                 "child": null,
-                "havePare": false,
-                "parent": "",
                 "pos": [
                     2.0,
                     2.0,
@@ -163,12 +202,45 @@
                     0.0
                 ],
                 "child": null,
-                "havePare": false,
-                "parent": "",
                 "pos": [
                     0.0,
                     0.0,
                     0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "meshName": "TestBone.fbx",
+                    "name": "MeshRenderer"
+                },
+                {
+                    "enable": true,
+                    "name": "Animation"
+                }
+            ],
+            "layer": 0,
+            "name": "aaa",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "child": null,
+                "pos": [
+                    0.0,
+                    1.0,
+                    -42.599998474121094
                 ],
                 "scale": [
                     1.0,

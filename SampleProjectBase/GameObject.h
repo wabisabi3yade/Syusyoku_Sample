@@ -28,26 +28,29 @@ private:
 	// レイヤー
 	Layer layer;	
 
+	/// @brief トランスフォーム
+	std::unique_ptr<Transform> pTransform;
+
 	// コンポーネントリスト
 	std::list<std::unique_ptr<Component>> pComponents;
 
 	/// @brief アクティブ状態のコンポーネント
 	std::list<Component*> pActiveComponents;
 
+	/// @brief Awake処理を行うコンポーネント
+	std::list<Component*> pAwakeComponents;
+
 	/// @brief Start処理を行うコンポーネント
 	std::list<Component*> pStartComponents;
 public:
-	/// @brief トランスフォーム
-	Transform transform;	
-
-	bool isSave = true;
-
 	GameObject();
 	GameObject(const GameObject& _other);
 	GameObject& operator=(const GameObject& _other);
-	virtual ~GameObject() {};
+	~GameObject() {};
 
 	// 更新処理
+	void AwakeBase();
+	void StartBase();
 	void UpdateBase();	
 	void LateUpdateBase();
 	void DrawBase();
@@ -86,6 +89,8 @@ public:
 	void SetName(const std::string& _name);
 	void SetActive(bool _isActive);
 
+
+	Transform& GetTransform();
 	const std::string& GetName() const { return name; }
 	bool GetIsActive() const { return isActive; }
 	Tag GetTag() const { return tag; }
@@ -105,6 +110,11 @@ private:
 	/// @return 存在したか？
 	bool IsExistActiveComponent(const Component& _pCheckComponent);
 
+	/// @brief Awake配列に存在するか
+	/// @param _pCheckComponent 確認するコンポーネント
+	/// @return 存在したか？
+	bool IsExistAwakeComponent(const Component& _pCheckComponent);
+
 	/// @brief Start配列に存在するか
 	/// @param _pCheckComponent 確認するコンポーネント
 	/// @return 存在したか？
@@ -123,12 +133,6 @@ private:
 template<HashiTaku::ComponentConcept T>
 inline T* GameObject::AddComponent()
 {
-	if (isDuplicateCompoent<T>())
-	{
-		HASHI_DEBUG_LOG("重複しているので作成しません");
-		return nullptr;
-	}
-
 	// コンポーネントファクトリーから取得
 	std::unique_ptr<T> createComp = ComponentFactory::GetInstance()->Create<T>();
 	T& comp = *createComp;
@@ -145,7 +149,7 @@ inline T* GameObject::GetComponent()
 	// 指定した型名と同じコンポーネントがあるか確認
 	for (auto& comp : pComponents)
 	{
-		if (typeid(T) != typeid(*comp.get())) continue;
+		if (typeid(T) != typeid(*comp)) continue;
 		T* retPtr = static_cast<T*>(comp.get());	
 		return retPtr; 
 	}
@@ -159,9 +163,9 @@ inline bool GameObject::isDuplicateCompoent()
 	// 指定した型名と同じコンポーネントがあるか確認
 	for (auto& comp : pComponents)
 	{
-		if (typeid(T) == typeid(*comp.get()))
+		if (typeid(T) == typeid(*comp))
 			return true;
 	}
 
-	return false;
+	return true;
 }

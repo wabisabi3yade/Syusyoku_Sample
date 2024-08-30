@@ -28,7 +28,7 @@ CP_Animation& CP_Animation::operator=(const CP_Animation& _other)
 	return *this;
 }
 
-void CP_Animation::Awake()
+void CP_Animation::Start()
 {
 	// レンダラーに設定しているスケルタルメッシュを取得
 	CP_MeshRenderer* pMR = gameObject->GetComponent<CP_MeshRenderer>();
@@ -44,7 +44,7 @@ void CP_Animation::LateUpdate()
 {
 	if (!IsCanPlay()) return;
 
-	//// アニメーション行列を更新
+	// アニメーション行列を更新
 	UpdateAnimationMtx();
 
 	// コンビネーション行列を更新
@@ -66,8 +66,8 @@ void CP_Animation::ImGuiSetting()
 	std::string name = "アニメーション";
 	ImGui::Begin(TO_UTF8(name), &isWindowOpen);
 
-	if(pAnimController)
-	pAnimController->ImGuiSetting();
+	if (pAnimController)
+		pAnimController->ImGuiSetting();
 
 	ImGui::End();
 }
@@ -120,18 +120,16 @@ void CP_Animation::UpdateBoneCombMtx()
 {
 	TreeNode& pRootNode = pSkeletalMesh->GetRootNode();
 
-	Matrix scaleMatrix = Matrix::CreateScale(Vector3::One * pSkeletalMesh->GetLoadOffsetScale());
+	Matrix m = Matrix::CreateScale(Vector3::One * 0.01f) *
+		Matrix::CreateFromYawPitchRoll(
+			180.f * Mathf::degToRad,
+			0,
+			0
+		);
 
-	Matrix rotateMatrix = Matrix::CreateFromYawPitchRoll(
-		180.0f * Mathf::degToRad,
-		0,
-		0
-	);
-
-	Matrix offsetMatrix = scaleMatrix * rotateMatrix;
 
 	// ノードを辿って全体のコンビネーション行列を更新していく
-	UpdateNodeHierarchy(pRootNode, offsetMatrix);
+	UpdateNodeHierarchy(pRootNode, m/*Matrix::Identity*/);
 }
 
 void CP_Animation::UpdateNodeHierarchy(TreeNode& _treeNode, const Matrix& _parentMtx)
@@ -139,6 +137,10 @@ void CP_Animation::UpdateNodeHierarchy(TreeNode& _treeNode, const Matrix& _paren
 	Matrix nodeMatrix = Matrix::Identity;
 
 	/*Matrix nodeMatrix = _treeNode.GetTransformMtx();*/
+	/*Matrix rotationY = DirectX::XMMatrixRotationZ(DirectX::XM_PI);
+	Matrix scaleZ = DirectX::XMMatrixScaling(1.0f, 1.0f, -1.0f);*/
+	Matrix mi = nodeMatrix;
+
 
 	// 対応したボーンがあるなら
 	if (_treeNode.HasBone())
@@ -147,12 +149,26 @@ void CP_Animation::UpdateNodeHierarchy(TreeNode& _treeNode, const Matrix& _paren
 
 		// コンビネーション行列を求める
 		pBone.CreateCombMtx(_parentMtx);
-		nodeMatrix = pBone.GetAnimMtx();
+		mi = pBone.GetAnimMtx();
 	}
 
-	// ワールド変換の行列を更新させる
-	Matrix toWorldMtx = nodeMatrix * _parentMtx;
+	Matrix toWorldMtx = mi * _parentMtx;
 
+	//if (_treeNode.GetName().find("AssimpFbx$_PreRotation") != std::string::npos)
+	//{
+	//	Matrix rotationY = DirectX::XMMatrixRotationY(DirectX::XM_PI);
+	//	Matrix scaleZ = DirectX::XMMatrixScaling(1.0f, 1.0f, -1.0f);
+	//	nodeMatrix = rotationY */* scaleZ * */nodeMatrix;
+
+	//	Matrix toWorldMtx = /*nodeMatrix **/ _parentMtx;
+	//}
+	/*else
+	{
+
+		Matrix toWorldMtx = nodeMatrix * _parentMtx;
+	}*/
+
+	
 	// 再帰的にボーンを更新していく
 	for (u_int c_i = 0; c_i < _treeNode.GetChildNum(); c_i++)
 	{

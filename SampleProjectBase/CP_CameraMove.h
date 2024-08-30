@@ -6,7 +6,7 @@ class CP_Camera;
 class CP_CameraMove : public Component,  public CloneComponent<CP_CameraMove>
 {
 	/// @brief ’Ç]‘ÎÛ
-	const GameObject* pTargetObj;
+	GameObject* pTargetObj;
 
 	/// @brief ƒJƒƒ‰
 	CP_Camera* pCamera;

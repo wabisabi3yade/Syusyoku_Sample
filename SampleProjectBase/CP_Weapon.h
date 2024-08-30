@@ -24,11 +24,17 @@ class CP_Weapon : public Component , public CloneComponent<CP_Weapon>
 	/// @brief ロード時の角度
 	DirectX::SimpleMath::Vector3 loadMeshAngles;
 
+	DirectX::SimpleMath::Vector3 pos;
+	DirectX::SimpleMath::Vector3 scale;
+	DirectX::SimpleMath::Quaternion rot;
+
 	/// @brief ロード時のスケール
 	float loadMeshScale;
 public:
 	CP_Weapon();
 	~CP_Weapon() {}
+
+	void Init() override;
 
 	void Start() override;
 
@@ -46,7 +52,7 @@ public:
 
 	/// @brief スケルタルメッシュから情報を取得する
 	/// @param _skeletalMesh 反映するスケルタルメッシュ
-	void SetSkeletalMeshData(const SkeletalMesh& _skeletalMesh);
+	void SetSkeletalMeshData(SkeletalMesh& _skeletalMesh);
 
 	// ボーン名取得
 	std::string GetGrabBoneName() const;
@@ -62,5 +68,7 @@ private:
 	/// @brief 更新できる状態か確認
 	/// @return 更新できるか？
 	bool IsCanUpdate();
+
+	void SetBoneFromParent();
 };
 

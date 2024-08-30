@@ -80,13 +80,13 @@ void Shader::UpdateSubResource(u_int _slot, void* _pData)
 	ID3D11DeviceContext* pDeviceContext = Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
 
 	pDeviceContext->UpdateSubresource(
-			pBuffers[_slot],		// 更新対象のリソース
-			0,	// サブリソース(定数バッファは0)
-			nullptr, // 送る対象範囲（全体を送るのでnullptr）
-			_pData,	// 送る情報
-			0,	// 行ピッチ
-			0	// 深度バッファピッチ
-		);
+		pBuffers[_slot],		// 更新対象のリソース
+		0,	// サブリソース(定数バッファは0)
+		nullptr, // 送る対象範囲（全体を送るのでnullptr）
+		_pData,	// 送る情報
+		0,	// 行ピッチ
+		0	// 深度バッファピッチ
+	);
 }
 
 void Shader::Map(u_int _slot, void* _pData, size_t _dataSize)
@@ -113,13 +113,7 @@ void Shader::Map(u_int _slot, void* _pData, size_t _dataSize)
 
 void Shader::SetTexture(u_int _slot, Texture* _texture)
 {
-#ifdef EDIT
-	if (_texture == nullptr)
-	{
-		HASHI_DEBUG_LOG("テクスチャが設定されていません");
-		return;
-	}
-#endif // EDIT
+	if (_texture == nullptr) return;
 
 	if (_slot >= pTextures.size()) return;	// スロット番号がテクスチャ配列上限より上なら
 

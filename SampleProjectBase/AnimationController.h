@@ -63,7 +63,7 @@ public:
 	/// @brief アニメーション遷移する
 	/// @param _animName アニメーション名
 	/// @param  _isInterp 補間するか？
-	void ChangeAnimation(const std::string& _animName, bool _isInterp = true);
+	void ChangeAnimationStart(const std::string& _animName, float _targetAnimRatio = 0.0f, bool _isInterp = true);
 
 	/// @brief ブレンド割合をセット
 	/// @param _ratio 割合
@@ -82,6 +82,13 @@ public:
 	/// @param _ratiosブレンド割合
 	/// @param _nodeName ノード名
 	void CreateBlendNode(const std::vector<std::string>& _animNames, const std::vector<float>& _ratios, const std::string& _nodeName);
+
+	/// @brief アニメーション遷移の矢印を作成する
+	/// @param _fromNodeName 遷移元アニメーション
+	/// @param _toNodeName 遷移先アニメーション
+	/// @param _targetAnimRatio ターゲットのアニメーション割合
+	/// @param _condition 遷移条件
+	void CreateTransitionArrow(const std::string& _fromNodeName, const std::string& _toNodeName, float _targetAnimRatio, std::function<bool()> _condition);
 
 	/// @brief アニメーションを除外
 	/// @param _animName アニメーションの名前
@@ -121,9 +128,11 @@ private:
 	/// @brief 慣性補間のキャッシュ更新
 	void CacheUpdate();
 
-	void ImGuiTransition();
+	/// @brief 遷移するか確認する
+	void TranstionCheck();
 
-	void ImGuiImportAnim();
+	/// @brief アニメーションを変更する
+	void ChangeAnimation();
 
 	/// @brief アニメーションを持ってるか返す
 	/// @param _animName アニメーションの名前
@@ -132,10 +141,14 @@ private:
 
 	/// @brief 遷移開始する
 	/// @param _animName アニメーション名
-	void InterpTransitionStart(const std::string& _animName);
+	/// @param_targetAnimRatio 遷移先のアニメーション割合
+	void InterpTransitionStart(const std::string& _animName, float _targetAnimRatio);
 
 	/// @brief 遷移終了した時の処理
 	void InterpTransitionEnd();
+
+	void ImGuiTransition();
+	void ImGuiImportAnim();
 
 protected:
 	/// @brief アニメーション終了時処理

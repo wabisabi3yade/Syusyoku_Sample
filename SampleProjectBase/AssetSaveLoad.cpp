@@ -191,6 +191,7 @@ void AssetSaveLoader::LoadAsset(const nlohmann::json& _loadData)
 		LoadJsonString("assetName", assetName, asset);
 
 		Asset_Base* pAsset = pAssetCollection->GetAsset<AnimationData>(assetName);
+	
 		pAsset->Load(asset);
 	}
 }

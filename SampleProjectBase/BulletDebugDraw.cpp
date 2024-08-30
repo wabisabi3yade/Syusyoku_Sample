@@ -24,9 +24,13 @@ void BulletDebugDraw::drawLine(const btVector3& _from, const btVector3& _to, con
     DX::Vector3 start(Bullet::ToDXVector3(_from));
     DX::Vector3 end(Bullet::ToDXVector3(_to));
     DX::Vector3 lineColor(
-        Bullet::ToDxScalar(_color.x()), 
+       /* Bullet::ToDxScalar(_color.x()), 
         Bullet::ToDxScalar(_color.y()),
-        Bullet::ToDxScalar(_color.z())
+        Bullet::ToDxScalar(_color.z())*/
+
+        Bullet::ToDxScalar(0),
+        Bullet::ToDxScalar(0),
+        Bullet::ToDxScalar(0)
     );
 
     // ラインを描画するためのデータをバッファに追加
@@ -68,13 +72,35 @@ void BulletDebugDraw::Draw()
 {
     if (lines.empty()) return;
 
-    VertexBuffer* pVertexBuf = new VertexBuffer();
+    Microsoft::WRL::ComPtr<ID3D11Buffer> pBuffer;
 
     u_int lineCnt = static_cast<u_int>(lines.size());
     u_int allSize = sizeof(LineVertex) * lineCnt;
 
-    pVertexBuf->CreateBuffer(allSize, 0, lines.data());
-    
+    auto pDevice = Direct3D11::GetInstance()->GetRenderer()->GetDevice();
+
+    D3D11_BUFFER_DESC desc;
+
+    // 頂点バッファの初期化設定
+    desc.ByteWidth = allSize;
+    desc.Usage = D3D11_USAGE_DEFAULT;
+    desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+    desc.CPUAccessFlags = 0;
+    desc.MiscFlags = 0;
+    desc.StructureByteStride = 0;
+
+    D3D11_SUBRESOURCE_DATA data;
+
+    // 初期化時に設定するバッファデータ
+    data.pSysMem = lines.data();
+    data.SysMemPitch = 0;
+    data.SysMemSlicePitch = 0;
+
+    // 頂点バッファの生成
+    HRESULT hr = pDevice->CreateBuffer(&desc, &data, &pBuffer);
+
+    if (FAILED(hr)) return;
+
     D3D11_Renderer* pRenderer = Direct3D11::GetInstance()->GetRenderer();
     ID3D11DeviceContext* pContext = pRenderer->GetDeviceContext();
 
@@ -89,24 +115,20 @@ void BulletDebugDraw::Draw()
     pVxShader->SetGPU();
     pPxShader->SetGPU();
 
-    pVertexBuf->SetGPU();
+    pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 
     // デバイスコンテキスト取得
     ID3D11DeviceContext* pDevicecontext =
         Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
 
-    //auto& Buffer = pVertexBuf->GetBuffer();
-
-    //// 頂点バッファをセットする
-    //unsigned int stride = sizeof(LineVertex);
-    //unsigned  offset = 0;
-    //pDevicecontext->IASetVertexBuffers(0, 1, &Buffer, &stride, &offset);
+    // 頂点バッファをセットする
+    unsigned int stride = sizeof(LineVertex);
+    unsigned  offset = 0;
+    pDevicecontext->IASetVertexBuffers(0, 1, pBuffer.GetAddressOf(), &stride, &offset);
 
     // ラインの描画
-    pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
     pContext->Draw(lineCnt, 0);
 
     // 解放
-    delete pVertexBuf;
     lines.clear();
 }

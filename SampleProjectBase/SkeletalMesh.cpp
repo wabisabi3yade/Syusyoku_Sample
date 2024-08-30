@@ -41,6 +41,18 @@ void BoneList::SetBoneList(std::vector<std::unique_ptr<Bone>> _setList)
 	pBones = std::move(_setList);
 }
 
+BoneList::BoneList(const BoneList& _other)
+{
+	Copy(_other);
+}
+
+BoneList& BoneList::operator=(const BoneList& _other)
+{
+	Copy(_other);
+
+	return *this;
+}
+
 Bone* BoneList::FindBone(u_int _boneIdx)
 {
 	assert(_boneIdx < GetBoneCnt() && "ƒ{[ƒ“ID‚ª‘å‚«‚·‚¬‚Ü‚·");
@@ -89,4 +101,15 @@ u_int BoneList::GetIndex(const std::string& _boneName) const
 u_int BoneList::GetBoneCnt() const
 {
 	return static_cast<u_int>(pBones.size());
+}
+
+void BoneList::Copy(const BoneList& _other)
+{
+	if (this == &_other) return;
+
+	for (const auto& otherBone : _other.pBones)
+	{
+		std::unique_ptr<Bone> create = std::make_unique<Bone>(*otherBone.get());
+		pBones.push_back(std::move(create));
+	}
 }

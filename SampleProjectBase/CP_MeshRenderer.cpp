@@ -30,8 +30,19 @@ void CP_MeshRenderer::Draw()
 
 	RenderParam& rendererParam = Direct3D11::GetInstance()->GetRenderer()->GetParameter();
 
+	Transform& transform = GetTransform();
+
+	Vector3 pos = transform.GetPosition();
+	Vector3 scale = transform.GetScale()/* * pRenderMesh->GetLoadOffsetScale()*/;
+	Quaternion offsetRot = Quaternion::CreateFromYawPitchRoll(
+		pRenderMesh->GetLoadOffsetAngles().y * Mathf::degToRad, 
+		pRenderMesh->GetLoadOffsetAngles().x * Mathf::degToRad,
+		pRenderMesh->GetLoadOffsetAngles().z * Mathf::degToRad
+		);
+	Quaternion rotation = /*Quat::Multiply(*/transform.GetRotation()/*, offsetRot)*/;
+
 	// メッシュ描画
-	DrawMesh(rendererParam.GetWVP(GetTransform()));
+	DrawMesh(rendererParam.GetWVP(pos, scale, rotation));
 
 	// 原点表示
 	OriginDisplay();

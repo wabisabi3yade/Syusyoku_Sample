@@ -93,6 +93,7 @@
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_widgets.cpp" />
     <ClCompile Include="AnimationController.cpp" />
     <ClCompile Include="AnimationData.cpp" />
+    <ClCompile Include="AnimTransitionArrow.cpp" />
     <ClCompile Include="AssetPath_Base.cpp" />
     <ClCompile Include="AssetSaveLoad.cpp" />
     <ClCompile Include="BulletDebugDraw.cpp" />
@@ -106,6 +107,7 @@
     <ClCompile Include="BlendAnimationNode.cpp" />
     <ClCompile Include="CP_Player.cpp" />
     <ClCompile Include="GameInput.cpp" />
+    <ClCompile Include="IImGuiUser.cpp" />
     <ClCompile Include="IObserever.cpp" />
     <ClCompile Include="nSceneManager.cpp" />
     <ClCompile Include="PlayerAnimController.cpp" />
@@ -220,6 +222,7 @@
     <ClInclude Include="..\ThirdParty\imgui\include\imstb_truetype.h" />
     <ClInclude Include="AnimationController.h" />
     <ClInclude Include="AnimationData.h" />
+    <ClInclude Include="AnimTransitionArrow.h" />
     <ClInclude Include="AssetConcept.h" />
     <ClInclude Include="AssetPath_Base.h" />
     <ClInclude Include="AssetSaveLoad.h" />
@@ -234,6 +237,7 @@
     <ClInclude Include="BlendAnimationNode.h" />
     <ClInclude Include="CP_Player.h" />
     <ClInclude Include="GameInput.h" />
+    <ClInclude Include="IImGuiUser.h" />
     <ClInclude Include="IObserever.h" />
     <ClInclude Include="ISaveLoad.h" />
     <ClInclude Include="nSceneManager.h" />
@@ -244,6 +248,7 @@
     <ClInclude Include="PlayerAttackState.h" />
     <ClInclude Include="PlayerMoveState.h" />
     <ClInclude Include="PlayerActState_Base.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="SingleAnimationNode.h" />
     <ClInclude Include="AnimationNode_Base.h" />
     <ClInclude Include="Bone.h" />

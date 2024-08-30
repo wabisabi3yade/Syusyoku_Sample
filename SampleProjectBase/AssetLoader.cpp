@@ -379,11 +379,6 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 	// マテリアル情報取得
 	MaterialLoad(pMeshGroup.get(), pScene, parentPath);
 
-	// Y軸反転のベクトル
-	int flipYVec = 1;
-	if (_isFlipY)
-		flipYVec = -1;
-
 	// メッシュの最大・最小座標
 	Vector3 modelMaxPos = Vector3::One * -10.0f;
 	Vector3 modelMinPos = Vector3::One * 10.0f;
@@ -415,9 +410,6 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 
 			// 座標(スケール値を反映する)
 			vertex.position = ToVector3(pAimesh->mVertices[vidx]);
-			vertex.position *= _scale;	// スケールを反映
-			vertex.position.x *= flipYVec;	// y軸反転
-			vertex.position.z *= flipYVec;
 
 			// 最大・最小を更新
 			if (_isGetScale)
@@ -428,8 +420,6 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 			if (pAimesh->HasNormals())
 			{
 				vertex.normal = ToVector3(pAimesh->mNormals[vidx]);
-				vertex.normal.x *= flipYVec;	// y軸反転
-				vertex.normal.z *= flipYVec;
 			}
 			else
 				vertex.normal = Vector3::Zero;
@@ -609,13 +599,7 @@ void AssetLoader::CreateBone(const aiScene* _pScene, SkeletalMesh& _skeletalMesh
 		pBone->SetBoneName(pAiBone->mName.C_Str());
 
 		// オフセット行列
-		Matrix a = Matrix::CreateScale(Vector3::One * 0.01f) * Matrix::CreateFromYawPitchRoll(
-			180.f * Mathf::degToRad,
-			0.0f,
-			0.0f
-		);
-
-		pBone->SetOffeetMtx(ToDirectXMatrix(pAiBone->mOffsetMatrix) * a);
+		pBone->SetOffeetMtx(ToDirectXMatrix(pAiBone->mOffsetMatrix));
 
 		HASHI_DEBUG_LOG(pBone->GetBoneName() + "：ロード完了");
 
@@ -638,10 +622,11 @@ std::unique_ptr<TreeNode> AssetLoader::CreateNode(const aiNode& _aiChildNode, Sk
 	// パラメータセット
 	pCreateNode->SetNodeName(_aiChildNode.mName.C_Str());
 
-	/*if (pCreateNode->GetName().find("AssimpFbx") == std::string::npos)
-	{
-		pCreateNode->SetTransformMtx(ToDirectXMatrix(_aiChildNode.mTransformation));
-	}*/
+	//if (pCreateNode->GetName().find("AssimpFbx") == std::string::npos)
+	//{
+	//	pCreateNode->SetTransformMtx(Matrix::Identity);
+	//}
+	//else
 	pCreateNode->SetTransformMtx(ToDirectXMatrix(_aiChildNode.mTransformation));
 
 	// 対応したボーンを名前から取得する

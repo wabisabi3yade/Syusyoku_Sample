@@ -18,6 +18,25 @@ SceneObjects::~SceneObjects()
 
 void SceneObjects::Update()
 {
+	for (auto itr = objList.begin(); itr != objList.end(); itr++)
+	{
+		itr->second->AwakeBase();
+	}
+
+	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
+	{
+		itr->second->AwakeBase();
+	}
+
+	for (auto itr = objList.begin(); itr != objList.end(); itr++)
+	{
+		itr->second->StartBase();
+	}
+
+	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
+	{
+		itr->second->StartBase();
+	}
 
 	for (auto itr = objList.begin(); itr != objList.end(); itr++)
 	{
@@ -29,10 +48,6 @@ void SceneObjects::Update()
 		itr->second->UpdateBase();
 	}
 
-}
-
-void SceneObjects::LateUpdate()
-{
 	for (auto itr = objList.begin(); itr != objList.end(); itr++)
 	{
 		itr->second->LateUpdateBase();
@@ -42,6 +57,7 @@ void SceneObjects::LateUpdate()
 	{
 		itr->second->LateUpdateBase();
 	}
+
 }
 
 void SceneObjects::Draw()
@@ -164,7 +180,7 @@ GameObject* SceneObjects::GetSceneObject(const std::string& _objectName)
 		// それでもなかったら
 		if (itr == uiList.end())
 		{
-			std::string message = "リスト内に名前のオブジェクトがありませんでした" + _objectName;
+			std::string message = _objectName + "リスト内に名前のオブジェクトがありませんでした";
 			HASHI_DEBUG_LOG(message);
 			return nullptr;
 		}
@@ -179,15 +195,13 @@ nlohmann::json SceneObjects::SaveObject()
 
 	for (auto& obj : objList)
 	{
-		if (obj.second->isSave)
-			objectData.push_back(obj.second->Save());
+		objectData.push_back(obj.second->Save());
 	}
 
 
 	for (auto& ui : uiList)
 	{
-		if (ui.second->isSave)
-			objectData.push_back(ui.second->Save());
+		objectData.push_back(ui.second->Save());
 	}
 
 	return objectData;

@@ -49,7 +49,7 @@ void InertInterpAnimation::UpdateBoneCache(std::vector<BoneTransform>& boneTrans
 	lastBoneCache.isEnable = true;
 }
 
-DirectX::SimpleMath::Vector3 InertInterpAnimation::CalcBlendPos(u_int _boneIdx, float _blendingTime, const DirectX::SimpleMath::Vector3& _currentValue)
+DirectX::SimpleMath::Vector3 InertInterpAnimation::CalcBlendPos(u_int _boneIdx, float _blendingTime)
 {
 	float blendValue = CalcBlend(positionTransition[_boneIdx], _blendingTime);
 
@@ -59,7 +59,7 @@ DirectX::SimpleMath::Vector3 InertInterpAnimation::CalcBlendPos(u_int _boneIdx, 
 	return blendPos;
 }
 
-DirectX::SimpleMath::Vector3 InertInterpAnimation::CalcBlendScale(u_int _boneIdx, float _blendingTime, const DirectX::SimpleMath::Vector3& _currentValue)
+DirectX::SimpleMath::Vector3 InertInterpAnimation::CalcBlendScale(u_int _boneIdx, float _blendingTime)
 {
 	float blendValue = CalcBlend(scaleTransition[_boneIdx], _blendingTime);
 
@@ -69,7 +69,7 @@ DirectX::SimpleMath::Vector3 InertInterpAnimation::CalcBlendScale(u_int _boneIdx
 	return blendScale;
 }
 
-DirectX::SimpleMath::Quaternion InertInterpAnimation::CalcBlendRot(u_int _boneIdx, float _blendingTime, const DirectX::SimpleMath::Quaternion& _currentValue)
+DirectX::SimpleMath::Quaternion InertInterpAnimation::CalcBlendRot(u_int _boneIdx, float _blendingTime)
 {
 	QuatTransition qT = rotationTransition[_boneIdx];
 	float blendValue = CalcBlend(qT, _blendingTime);
@@ -92,6 +92,7 @@ void InertInterpAnimation::BoneInitTransition(u_int _boneIdx, const std::vector<
 	// ƒXƒP[ƒ‹
 	InitTransition(scaleTransition[_boneIdx], requestTransform.scale, last.scale, secondLast.scale, _blendTime);
 
+	// ‰ñ“]
 	InitTransition(rotationTransition[_boneIdx], requestTransform.rotation, last.rotation, secondLast.rotation, _blendTime);
 
 }

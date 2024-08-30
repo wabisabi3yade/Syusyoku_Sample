@@ -4,50 +4,6 @@
             "active": true,
             "components": [
                 {
-                    "distance": 1000.0,
-                    "enable": true,
-                    "fov": 45.0,
-                    "isOrth": false,
-                    "name": "Camera",
-                    "viewSlot": 0
-                },
-                {
-                    "dis_Hori": 5.300000190734863,
-                    "dis_Ver": 2.299999952316284,
-                    "enable": true,
-                    "name": "CameraMove",
-                    "rotSpeed": 120.0,
-                    "target": "Player"
-                }
-            ],
-            "layer": 0,
-            "name": "MainCamera",
-            "tag": 0,
-            "transform": {
-                "angle": [
-                    23.459033966064453,
-                    -90.00003051757813,
-                    0.0
-                ],
-                "child": null,
-                "havePare": false,
-                "parent": "",
-                "pos": [
-                    -5.119228363037109,
-                    2.299999952316284,
-                    -13.827184677124023
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
                     "enable": true,
                     "name": "SpriteRenderer",
                     "sprite": {
@@ -77,17 +33,15 @@
                     0.0
                 ],
                 "child": null,
-                "havePare": false,
-                "parent": "",
                 "pos": [
                     0.0,
                     -2.0,
                     0.0
                 ],
                 "scale": [
-                    100.0,
+                    300.0,
                     1.0,
-                    53.0
+                    300.0
                 ]
             }
         },
@@ -95,23 +49,59 @@
             "active": true,
             "components": [
                 {
-                    "AABB": false,
+                    "distance": 1000.0,
                     "enable": true,
-                    "length": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "name": "BoxCollider",
-                    "posOffset": [
-                        -1.6483650207519531,
-                        101.06310272216797,
-                        -1.0496501922607422
-                    ]
+                    "fov": 45.0,
+                    "isOrth": false,
+                    "name": "Camera",
+                    "viewSlot": 0
+                },
+                {
+                    "dis_Hori": 6.0,
+                    "dis_Ver": 3.0,
+                    "enable": true,
+                    "name": "CameraMove",
+                    "rotSpeed": 120.0,
+                    "target": "Player"
+                }
+            ],
+            "layer": 0,
+            "name": "Camera",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "child": null,
+                "pos": [
+                    0.0,
+                    1.899999976158142,
+                    -6.699999809265137
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "meshName": "Knight.fbx",
+                    "name": "MeshRenderer"
                 },
                 {
                     "enable": true,
-                    "name": "RigidBody"
+                    "name": "Animation"
+                },
+                {
+                    "enable": true,
+                    "name": "Player"
                 }
             ],
             "layer": 0,
@@ -119,17 +109,15 @@
             "tag": 0,
             "transform": {
                 "angle": [
-                    -0.0,
-                    -49.93608093261719,
+                    0.0,
+                    0.0,
                     0.0
                 ],
                 "child": null,
-                "havePare": false,
-                "parent": "",
                 "pos": [
-                    -10.419228553771973,
                     0.0,
-                    -13.827184677124023
+                    0.0,
+                    0.0
                 ],
                 "scale": [
                     1.0,

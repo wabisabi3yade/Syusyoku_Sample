@@ -13,15 +13,15 @@
             "rightHand": true
         },
         {
-            "assetName": "Reaction.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/Reaction.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "WalkF.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/WalkF.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "Reaction.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/Reaction.fbx",
             "rightHand": true
         },
         {
@@ -78,6 +78,14 @@
             "getSize": true,
             "loadScale": 0.009999999776482582,
             "pathName": "assets/model/knight/Knight.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "TestBone.fbx",
+            "flipY": true,
+            "getSize": false,
+            "loadScale": 1.0,
+            "pathName": "assets/model/TestBone.fbx",
             "rightHand": true
         }
     ],

@@ -11,8 +11,8 @@ PlayerAttackState::PlayerAttackState(PlayerActionController& _pController)
 
 void PlayerAttackState::Init()
 {
-	using enum PlayerAnimController::AnimType;
-	ChangeAnimation((u_int)Attack);
+	/*using enum PlayerAnimController::AnimType;
+	ChangeAnimation((u_int)Attack);*/
 }
 
 void PlayerAttackState::Update()

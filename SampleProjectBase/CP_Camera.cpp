@@ -17,15 +17,8 @@ CP_Camera::CP_Camera() :fov(DEFAULT_FOV), distance(DEFAULT_DISTANCE), viewPortSl
 {	
 }
 
-void CP_Camera::Awake()
+void CP_Camera::Init()
 {
-	Vector3 initPos = { 0.0f, 2.0f, -5.0f };
-	GetTransform().SetPosition(initPos);
-
-	//GetTransform().position.y = 200.0f;
-	//GetTransform().position.z = 400.0f;
-	GetTransform().SetEularAngles(Vector3(10.0f, 0.0f, 0.0f));
-
 	// ƒƒCƒ“ƒJƒƒ‰‚ÉÝ’è‚·‚é
 	InSceneSystemManager::GetInstance()->SetCamera(*this);
 
@@ -34,12 +27,15 @@ void CP_Camera::Awake()
 
 void CP_Camera::LateUpdate()
 {
-	UpdateViewMatrix();
-
 	if (isOrthographic)
 		UpdateOrthographic();
 	else
 		UpdatePerspective();
+}
+
+void CP_Camera::Draw()
+{
+	UpdateViewMatrix();
 }
 
 void CP_Camera::ImGuiSetting()

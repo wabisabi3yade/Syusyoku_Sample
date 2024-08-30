@@ -4,7 +4,7 @@
 class GameObject;
 
 // ゲームのサブシステムとなるコンポーネントの基底クラス
-class Component : public ISaveLoad
+class Component : public ISaveLoad, public HashiTaku::IImGuiUser
 {
 	friend class GameObject;
 	
@@ -14,18 +14,23 @@ class Component : public ISaveLoad
 	// 活動状態
 	bool isEnable;
 
+	/// @brief Awake処理を行ったかどうか？
+	bool isAlreadyAwake;
+
 	/// @brief Start処理を行ったかどうか？
 	bool isAlreadyStart;
 protected:
+
 	// このコンポーネントの所持オブジェクト
 	GameObject* gameObject;
-
 public:
-	Component() : name(""), isEnable(true), isAlreadyStart(false), gameObject(nullptr) {}
+	Component() : name(""), isEnable(true), isAlreadyAwake(false), isAlreadyStart(false), gameObject(nullptr) {}
 	virtual ~Component(){};
 
-	/// @brief 作成時に呼ばれる処理
-	virtual void Awake() {}
+	virtual void Init() {};
+
+	/// @brief 外部からで呼び出すAwake処理
+	void AwakeBase();
 
 	/// @brief 外部からで呼び出すStart処理
 	void StartBase();
@@ -38,9 +43,6 @@ public:
 
 	// 描画処理
 	virtual void Draw() {};
-
-	// ImGuiでパラメータを変える処理
-	virtual void ImGuiSetting() {};
 
 	/// @brief 活動状態を切り替える
 	void TransitionEnable();
@@ -64,6 +66,9 @@ public:
 	// 活動フラグ取得
 	bool GetIsEnable() const;
 
+	// Awake処理行ったか取得
+	bool GetIsAlreadyAwake() const;
+
 	// Start処理行ったか取得
 	bool GetIsAlreadyStart() const;
 
@@ -76,7 +81,12 @@ public:
 	virtual void Load(const nlohmann::json& _sceneData) override;
 	
 protected:
+	/// @brief 作成時に呼ばれる処理
+	virtual void Awake() {}
 
 	// 1フレーム目で行う処理
 	virtual void Start() {};
+
+	// ImGuiでパラメータを変える処理
+	void ImGuiSetting() override {};
 };

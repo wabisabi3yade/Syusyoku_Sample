@@ -66,11 +66,6 @@ void SceneManager::AssetSetup()
 	Geometory::Init();
 }
 
-void SceneManager::CheckChangeBroad()
-{
-
-}
-
 void SceneManager::Release()
 {
 	pNowScene.reset();
@@ -95,10 +90,9 @@ void SceneManager::CreateScene(const std::string& _sceneName)
 
 void SceneManager::ImGuiSetting()
 {
-#ifdef EDIT
 	ImGui::Begin("SceneList");
 
-	ImGuiSave();
+	pNowScene->ImGuiCall();
 
 	ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
@@ -109,7 +103,6 @@ void SceneManager::ImGuiSetting()
 	ImGuiCreateScene();
 
 	ImGui::End();
-#endif // EDIT
 }
 
 void SceneManager::ImGuiChangeScene()
@@ -121,16 +114,6 @@ void SceneManager::ImGuiChangeScene()
 		if (ImGui::Button(name.c_str()))
 			ChangeScene(name);
 	}
-}
-
-void SceneManager::ImGuiSave()
-{
-	if (ImGui::Button("Save"))
-	{
-		pNowScene->Save();
-		HASHI_DEBUG_LOG(nowSceneName + " セーブしました");
-	}
-
 }
 
 void SceneManager::ImGuiCreateScene()
@@ -159,8 +142,7 @@ void SceneManager::Exec()
 	// 当たり判定描画
 	pBulletPhisics->Draw();
 
-	// シーン
-	ImGuiSetting();
+	ImGuiCall();
 }
 
 void SceneManager::ChangeScene(const std::string& _sceneName)

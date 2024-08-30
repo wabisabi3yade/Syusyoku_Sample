@@ -2,11 +2,13 @@
 // セーブ・ロード
 #include "ISaveLoad.h"
 
+class GameObject;
+
 // 座標・回転・スケールをまとめたパラメータ
 class Transform : public ISaveLoad
 {
-	/// @brief ゲームオブジェクト名
-	std::string name;
+	/// @brief トランスフォームを持つオブジェクト
+	GameObject* pGameObject;
 
 	/// @brief 親トランスフォーム
 	Transform* pParent;
@@ -36,8 +38,11 @@ protected:
 	bool isHaveParent;
 
 public:
-	Transform(bool _isInit = true);
+	Transform(GameObject* _pGameObject, bool _isInit = true);
+	Transform(const Transform& _other);
 	virtual ~Transform();
+
+	Transform& operator=(const Transform& _other);
 
 	// 方向ベクトルを更新する
 	void UpdateVector();
@@ -45,11 +50,12 @@ public:
 	// その座標にオブジェクトを向ける
 	void LookAt(const DirectX::SimpleMath::Vector3& _worldPos, const DirectX::SimpleMath::Vector3& _upVector = DirectX::SimpleMath::Vector3::Up);
 
-	/// @brief 親トランスフォームを非設定にする
-	void RemoveParent();
+	/// @brief 親子関係を解除する
+	void RemoveParentChild();
 
-	// 名前をセット
-	void SetName(const std::string& _name);
+	/// @brief 子トランスフォームを解除する
+	/// @param _removeTransform 解除するトランスフォーム
+	void RemoveChild(Transform& _removeTransform);
 
 	/// @brief 親トランスフォームを設定する
 	/// @param _parent 親トランスフォームの参照
@@ -71,6 +77,8 @@ public:
 	virtual void SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles);
 	virtual void SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quaternion);
 
+	virtual void SetGameObject(GameObject& _go);
+
 	// ワールド
 	DirectX::SimpleMath::Vector3 GetPosition() const;
 	DirectX::SimpleMath::Vector3 GetScale() const;
@@ -87,7 +95,10 @@ public:
 	DirectX::SimpleMath::Vector3 Up()const { return up; }	// 上ベクトル
 	DirectX::SimpleMath::Vector3 Forward()const { return forward; }	// 正面ベクトル
 
-	std::string GetName() const;
+	GameObject& GetGameObject();
+
+	// 親トランスフォームを取得
+	Transform* GetParent();
 
 	//　子トランスフォームの数を取得
 	u_int GetChilidCnt() const;
@@ -101,6 +112,8 @@ public:
 	void Load(const nlohmann::json& _transformData) override;
 
 private:
+	void Copy(const Transform& _other);
+
 	//  子トランスフォームパラメータを更新(再帰関数)
 	// 座標
 	void UpdateHierarchyPositions();

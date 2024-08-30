@@ -391,12 +391,6 @@
     <Filter Include="ソース ファイル\Animation\AnimNode\Single">
       <UniqueIdentifier>{9eb5cc6a-89a5-466e-bed5-e5c9c2baf463}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Animation\AnimNode\AnimationData">
-      <UniqueIdentifier>{e36a3d30-c6cd-4c11-9242-337369ae187b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Animation\AnimNode\AnimationData\Channel">
-      <UniqueIdentifier>{57f40450-fae2-4e11-b412-be9f6b0cc442}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Animation\AnimNode\Blend">
       <UniqueIdentifier>{d0a695e2-7790-421a-bf72-b2df994ea1c4}</UniqueIdentifier>
     </Filter>
@@ -457,9 +451,6 @@
     <Filter Include="ソース ファイル\Component\InGame\Player">
       <UniqueIdentifier>{8f20992c-476d-48af-ab1a-565fb4cd2840}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Animation\AnimNode\Blend\Base">
-      <UniqueIdentifier>{914716c0-f649-4d87-944b-d8d45449ad5a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Asset\Asset_Base\AssetSaveLoad">
       <UniqueIdentifier>{e920b94b-d20d-453e-9d2a-5a37f71f5329}</UniqueIdentifier>
     </Filter>
@@ -483,6 +474,21 @@
     </Filter>
     <Filter Include="ソース ファイル\Component\Test">
       <UniqueIdentifier>{f2bac984-4244-4f58-8221-3bccd12f183d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\ImGui\Interface">
+      <UniqueIdentifier>{64aa98e0-1abe-41e9-ae1b-894e2166dc66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimTransitionArrow">
+      <UniqueIdentifier>{1ea9a2ba-7aa3-42c6-b471-735411e3b752}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationData">
+      <UniqueIdentifier>{e36a3d30-c6cd-4c11-9242-337369ae187b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\Channel">
+      <UniqueIdentifier>{57f40450-fae2-4e11-b412-be9f6b0cc442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimNode\Base">
+      <UniqueIdentifier>{914716c0-f649-4d87-944b-d8d45449ad5a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -777,13 +783,13 @@
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\Bone</Filter>
     </ClCompile>
     <ClCompile Include="AnimationData.cpp">
-      <Filter>ソース ファイル\Animation\AnimNode\AnimationData</Filter>
+      <Filter>ソース ファイル\Animation\AnimationData</Filter>
     </ClCompile>
     <ClCompile Include="TreeNode.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode</Filter>
     </ClCompile>
     <ClCompile Include="AnimationChannel.cpp">
-      <Filter>ソース ファイル\Animation\AnimNode\AnimationData\Channel</Filter>
+      <Filter>ソース ファイル\Animation\Channel</Filter>
     </ClCompile>
     <ClCompile Include="VS_SkinnedAnimation.cpp">
       <Filter>ソース ファイル\Graphics\Shader\Vertex\SkinAnimation</Filter>
@@ -804,7 +810,7 @@
       <Filter>ソース ファイル\Method\Interpolation\Ease</Filter>
     </ClCompile>
     <ClCompile Include="AnimationNode_Base.cpp">
-      <Filter>ソース ファイル\Animation\AnimNode\Blend\Base</Filter>
+      <Filter>ソース ファイル\Animation\AnimNode\Base</Filter>
     </ClCompile>
     <ClCompile Include="SingleAnimationNode.cpp">
       <Filter>ソース ファイル\Animation\AnimNode\Single</Filter>
@@ -887,6 +893,12 @@
     <ClCompile Include="CP_BoxAnimation.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="IImGuiUser.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimTransitionArrow.cpp">
+      <Filter>ソース ファイル\Animation\AnimTransitionArrow</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -921,9 +933,6 @@
     </ClInclude>
     <ClInclude Include="IGetRenderPara.h">
       <Filter>ソース ファイル\System\Application\DirectX3D11\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="MainApplication.h">
-      <Filter>ソース ファイル\System\Application\MainApplication</Filter>
     </ClInclude>
     <ClInclude Include="MessageError.h">
       <Filter>ソース ファイル\System\MessageError</Filter>
@@ -1184,13 +1193,13 @@
       <Filter>ソース ファイル\Graphics\Vertex</Filter>
     </ClInclude>
     <ClInclude Include="AnimationData.h">
-      <Filter>ソース ファイル\Animation\AnimNode\AnimationData</Filter>
+      <Filter>ソース ファイル\Animation\AnimationData</Filter>
     </ClInclude>
     <ClInclude Include="TreeNode.h">
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode</Filter>
     </ClInclude>
     <ClInclude Include="AnimationChannel.h">
-      <Filter>ソース ファイル\Animation\AnimNode\AnimationData\Channel</Filter>
+      <Filter>ソース ファイル\Animation\Channel</Filter>
     </ClInclude>
     <ClInclude Include="VS_SkinnedAnimation.h">
       <Filter>ソース ファイル\Graphics\Shader\Vertex\SkinAnimation</Filter>
@@ -1214,7 +1223,7 @@
       <Filter>ソース ファイル\Method\Interpolation\Ease\Function</Filter>
     </ClInclude>
     <ClInclude Include="AnimationNode_Base.h">
-      <Filter>ソース ファイル\Animation\AnimNode\Blend\Base</Filter>
+      <Filter>ソース ファイル\Animation\AnimNode\Base</Filter>
     </ClInclude>
     <ClInclude Include="SingleAnimationNode.h">
       <Filter>ソース ファイル\Animation\AnimNode\Single</Filter>
@@ -1299,6 +1308,18 @@
     </ClInclude>
     <ClInclude Include="CP_BoxAnimation.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApplication.h">
+      <Filter>ソース ファイル\System\Application\MainApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="IImGuiUser.h">
+      <Filter>ソース ファイル\System\ImGui\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>ソース ファイル\Scene\NewScene</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimTransitionArrow.h">
+      <Filter>ソース ファイル\Animation\AnimTransitionArrow</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

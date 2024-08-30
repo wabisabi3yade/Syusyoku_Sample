@@ -3,7 +3,7 @@
 
 #include "Scene.h"
 
-class SceneManager :public Singleton_Base<SceneManager>
+class SceneManager : public Singleton_Base<SceneManager>, public HashiTaku::IImGuiUser
 {
 	friend class Singleton_Base<SceneManager>;
 
@@ -41,8 +41,6 @@ private:
 	/// @brief マテリアルの準備
 	void MaterialSetup();
 
-	void CheckChangeBroad();	// シーンを遷移するか確認する
-
 	// 解放処理
 	void Release();
 
@@ -50,9 +48,8 @@ private:
 	/// @param _sceneName シーン名
 	void CreateScene(const std::string& _sceneName);
 
-	void ImGuiSetting();
+	void ImGuiSetting() override;
 	void ImGuiChangeScene();
-	void ImGuiSave();
 	void ImGuiCreateScene();
 };
 

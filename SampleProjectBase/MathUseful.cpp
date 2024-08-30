@@ -63,11 +63,9 @@ DirectX::SimpleMath::Vector3 Vec3::WorldMtxToScale(const DirectX::SimpleMath::Ma
 {
 	Vector3 scale;
 
-	scale.x = sqrt(_mtx.m[0][0] * _mtx.m[0][0] + _mtx.m[0][1] * _mtx.m[0][1] + _mtx.m[0][2] * _mtx.m[0][2]);
-
-	scale.y = sqrt(_mtx.m[1][0] * _mtx.m[1][0] + _mtx.m[1][1] * _mtx.m[1][1] + _mtx.m[1][2] * _mtx.m[1][2]);
-
-	scale.z = sqrt(_mtx.m[2][0] * _mtx.m[2][0] + _mtx.m[2][1] * _mtx.m[2][1] + _mtx.m[2][2] * _mtx.m[2][2]);
+	scale.x = Vector3(_mtx._11, _mtx._12, _mtx._13).Length();
+	scale.y = Vector3(_mtx._21, _mtx._22, _mtx._23).Length();
+	scale.z = Vector3(_mtx._31, _mtx._32, _mtx._33).Length();
 
 	return scale;
 }

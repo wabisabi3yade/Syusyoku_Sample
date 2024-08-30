@@ -14,6 +14,11 @@ CP_Weapon::CP_Weapon() : grabBoneName(""), pGrabBone(nullptr), pMeshRenderer(nul
 {
 }
 
+void CP_Weapon::Init()
+{
+	grabBoneName = "mixamorig:RightHand";
+}
+
 void CP_Weapon::Start()
 {
 }
@@ -27,16 +32,15 @@ void CP_Weapon::LateUpdate()
 
 void CP_Weapon::Draw()
 {
-	Geometory::SetPosition(GetTransform().GetPosition());
-	Geometory::SetScale(GetTransform().GetScale());
-	Geometory::SetRotation(GetTransform().GetEularAngles());
+	Geometory::SetPosition(GetTransform().GetPosition() + pos);
+	Geometory::SetScale(Vector3::One * 0.1f);
+	Geometory::SetRotation(rot.ToEuler());
 	Geometory::DrawCube();
 }
 
 void CP_Weapon::ImGuiSetting()
 {
-	if (pGrabBone)
-		ImGui::Text(pGrabBone->GetBoneName().c_str());
+	ImGui::Text(grabBoneName.c_str());
 	ImGuiMethod::DragFloat3(offsetPosition, "offset", 0.01f);
 	ImGuiMethod::DragFloat3(offsetAngles, "angle");
 
@@ -60,11 +64,18 @@ void CP_Weapon::SetGrabBoneName(const std::string& _grabName)
 		Bone* pBone = static_cast<SkeletalMesh*>(pMesh)->GetBoneByName(grabBoneName);
 		SetGrabBone(pBone);
 	}
-
 }
 
-void CP_Weapon::SetSkeletalMeshData(const SkeletalMesh& _skeletalMesh)
+void CP_Weapon::SetSkeletalMeshData(SkeletalMesh& _skeletalMesh)
 {
+	loadMeshScale = _skeletalMesh.GetLoadOffsetScale();
+	loadMeshAngles = _skeletalMesh.GetLoadOffsetAngles();
+
+	Bone* pBone = _skeletalMesh.GetBoneByName(grabBoneName);
+	if (pBone)
+	{
+		pGrabBone = pBone;
+	}
 }
 
 std::string CP_Weapon::GetGrabBoneName() const
@@ -76,8 +87,7 @@ nlohmann::json CP_Weapon::Save()
 {
 	auto data = Component::Save();
 
-	if (pGrabBone)
-		data["grabName"] = pGrabBone->GetBoneName();
+	data["grabName"] = grabBoneName;
 
 	HashiTaku::SaveJsonVector3("offsetPos", offsetPosition, data);
 	HashiTaku::SaveJsonVector3("offsetAngles", offsetAngles, data);
@@ -91,8 +101,6 @@ void CP_Weapon::Load(const nlohmann::json& _data)
 
 	std::string grabBoneName;
 	HashiTaku::LoadJsonString("grabName", grabBoneName, _data);
-	if(grabBoneName != "")
-
 
 	HashiTaku::LoadJsonVector3("offsetPos", offsetPosition, _data);
 	HashiTaku::LoadJsonVector3("offsetAngles", offsetAngles, _data);
@@ -111,47 +119,40 @@ void CP_Weapon::UpdateTransform()
 
 	// ボーン行列からトランスフォームを求める
 	Vector3 bonePos = {
-		boneMtx.m[3][0] * 0.01f,
-		boneMtx.m[3][1] * 0.01f,
-		boneMtx.m[3][2] * 0.01f
+		boneMtx._41,
+		boneMtx._42,
+		-boneMtx._43
 	};
 
-	t.SetLocalPos(bonePos + offsetPosition);
+	//t.SetLocalPos((bonePos /** loadMeshScale*/) + offsetPosition);
+	pos = bonePos + offsetPosition;
+	scale = Vec3::WorldMtxToScale(boneMtx);
 
 	Vector3 s = Vec3::WorldMtxToScale(boneMtx);
+
 	Matrix rotateMtx = Matrix(
-		boneMtx.m[0][0] / s.x, boneMtx.m[0][1] / s.x, boneMtx.m[0][2] / s.x, 0.0f,
-		boneMtx.m[1][0] / s.y, boneMtx.m[1][1] / s.y, boneMtx.m[1][2] / s.y, 0.0f,
-		boneMtx.m[2][0] / s.z, boneMtx.m[2][1] / s.z, boneMtx.m[2][2] / s.z, 0.0f,
+		boneMtx._11 / s.x, boneMtx._12 / s.x, boneMtx._13 / s.x, 0.0f,
+		boneMtx._21 / s.y, boneMtx._22 / s.y, boneMtx._23 / s.y, 0.0f,
+		boneMtx._31 / s.z, boneMtx._32 / s.z, boneMtx._33 / s.z, 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
 
 	Quaternion q = Quaternion::CreateFromRotationMatrix(rotateMtx);
-	q = Quat::Multiply(q, Quat::ToQuaternion(Vector3(0.0f, 180.f, 0.0f)));
-
-	t.SetLocalRotation(Quat::Multiply(q, Quat::ToQuaternion(offsetAngles)));
+	/*t.SetLocalRotation(Quat::Multiply(q, Quat::ToQuaternion(offsetAngles)));*/
+	//rot = Quat::Multiply(q, Quat::ToQuaternion(offsetAngles));
 }
 
 void CP_Weapon::ImGuiSetBone()
 {
 	static char str[IM_INPUT_BUF];
-	ImGui::InputText("boneName", str, IM_INPUT_BUF);
-	if (ImGui::Button("Set"))
+	if (ImGui::InputText("boneName", str, IM_INPUT_BUF, ImGuiInputTextFlags_EnterReturnsTrue))
 	{
-		CP_MeshRenderer* pMR = gameObject->GetComponent<CP_MeshRenderer>();
-		if (!pMR) return;
+		grabBoneName = str;
+	}
 
-		SkeletalMesh* pSk = dynamic_cast<SkeletalMesh*>(pMR->GetRenderMesh());
-		if (!pSk) return;
-
-		Bone* pBone = pSk->GetBoneByName(str);
-		if (!pBone)
-		{
-			HASHI_DEBUG_LOG(std::string(str) + " ボーンを見つけられません");
-			return;
-		}
-
-		SetGrabBone(pBone);
+	if (ImGui::Button("Update"))
+	{
+		SetBoneFromParent();
 	}
 }
 
@@ -160,4 +161,19 @@ bool CP_Weapon::IsCanUpdate()
 	if (!pGrabBone) return false;
 
 	return true;
+}
+
+void CP_Weapon::SetBoneFromParent()
+{
+	Transform& pParent = GetTransform()/*.GetParent()*/;
+
+	/*if (!pParent) return;*/
+
+	CP_MeshRenderer* pMr = pParent.GetGameObject().GetComponent<CP_MeshRenderer>();
+	if (!pMr) return;
+
+	SkeletalMesh* pSk = dynamic_cast<SkeletalMesh*>(pMr->GetRenderMesh());
+	if (!pSk) return;
+
+	SetSkeletalMeshData(*pSk);
 }

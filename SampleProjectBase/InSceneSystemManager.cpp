@@ -8,12 +8,23 @@ using namespace SceneFunction;
 
 InSceneSystemManager::~InSceneSystemManager()
 {
-	// シーンオブジェクトだけ先に解放する
 	pSceneObjects.reset();
 }
 
 void InSceneSystemManager::Init()
 {
+	pSceneObjects = std::make_unique<SceneObjects>();
+	pSceneLights = std::make_unique<SceneLights>();
+}
+
+void InSceneSystemManager::Reset()
+{
+	pMainCamera = nullptr;
+
+	// シーンオブジェクトだけ先に解放する
+	pSceneObjects.reset();
+	pSceneLights.reset();
+
 	pSceneObjects = std::make_unique<SceneObjects>();
 	pSceneLights = std::make_unique<SceneLights>();
 }

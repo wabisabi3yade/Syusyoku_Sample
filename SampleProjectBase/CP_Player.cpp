@@ -23,26 +23,18 @@ CP_Player& CP_Player::operator=(const CP_Player& _other)
 void CP_Player::Awake()
 {
 	//// モデル関係
-	CP_MeshRenderer* pMeshRenderer = gameObject->AddComponent<CP_MeshRenderer>();
-	pMeshRenderer->SetRenderMesh("Knight.fbx");
+	CP_MeshRenderer* pMeshRenderer = gameObject->GetComponent<CP_MeshRenderer>();
 	pMeshRenderer->SetVertexShader("VS_SkinAnimation");
 	pMeshRenderer->SetPixelShader("PS_Unlit");
-
-	// アニメーション関係生成
-	CP_Animation* pAnimation = gameObject->AddComponent<CP_Animation>();
-	pAnimController = std::make_unique<PlayerAnimController>();
-	pAnimation->SetAnimationController(*pAnimController);
-
-	GameObject* pGo = &SceneFunction::ObjectFunc::CreateEmpty("Weapon");
-	CP_Weapon* pWeapon = pGo->AddComponent<CP_Weapon>();
-	SkeletalMesh* pSk = dynamic_cast<SkeletalMesh*>(pMeshRenderer->GetRenderMesh());
-	pWeapon->SetGrabBone(pSk->GetBoneByName("mixamorig:LeftHand"));
-
-	pGo->transform.SetParent(gameObject->transform);
 }
 
 void CP_Player::Start()
 {
+	// アニメーション関係生成
+	CP_Animation* pAnimation = gameObject->GetComponent<CP_Animation>();
+	pAnimController = std::make_unique<PlayerAnimController>();
+	pAnimation->SetAnimationController(*pAnimController);
+
 	// アクションコントローラー作成
 	pActionController = std::make_unique<PlayerActionController>(*gameObject, *pAnimController);
 

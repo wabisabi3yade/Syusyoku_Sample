@@ -28,6 +28,9 @@ class InSceneSystemManager : public Singleton_Base<InSceneSystemManager>
 public:
 	void Init();
 
+	/// @brief 変数を解放して、新しく生成する
+	void Reset();
+
 	/// @brief  メインカメラを取得
 	/// @return 
 	CP_Camera& GetMainCamera();

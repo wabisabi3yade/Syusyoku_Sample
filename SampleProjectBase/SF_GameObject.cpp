@@ -20,7 +20,7 @@ GameObject& ObjectFunc::Instantiate(const GameObject& _obj, const DirectX::Simpl
 	std::unique_ptr<GameObject> pCreateObject = std::make_unique<GameObject>(_obj);
 
 	// 初期座標設定
-	pCreateObject->transform.SetPosition(_worldPos);
+	pCreateObject->GetTransform().SetPosition(_worldPos);
 
 	// シーンオブジェクトに追加
 	GameObject& retuenObject = AddSceneObject(std::move(pCreateObject));

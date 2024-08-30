@@ -27,9 +27,6 @@ public:
 	// 更新処理
 	void Update();
 
-	// Updateのあとの更新処理
-	void LateUpdate();	
-
 	// 描画処理
 	void Draw();	
 

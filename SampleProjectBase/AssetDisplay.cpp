@@ -5,6 +5,8 @@
 #include "AssetCollection.h"
 #include "AssetLoader.h"
 
+#include "SkeletalMesh.h"
+
 class Texture;
 class Mesh_Group;
 
@@ -141,10 +143,24 @@ void AssetDisplay::DisplayBoneList()
 	if (!ImGui::TreeNode(TO_UTF8("スケルトン"))) return;
 
 	AssetList& boneAssets = pAssetCollection->GetAssetList<BoneList>();
-	Display(boneAssets);
+
+	for (auto& a : boneAssets)
+	{
+		if (!ImGui::TreeNode(a.second->GetAssetName().c_str()))
+			continue;
+		
+		BoneList& boneList = static_cast<BoneList&>(*a.second);
+		// ボーンの名前表示
+		for (u_int b_i = 0; b_i < boneList.GetBoneCnt(); b_i++)
+		{
+			std::string boneName = boneList.GetBone(b_i).GetBoneName();
+			ImGui::Text(boneName.c_str());
+		}
+
+		ImGui::TreePop();
+	}
 
 	std::string name = ImGuiMethod::InputText("name");
-
 	if (ImGui::Button("Delete"))
 		pAssetCollection->DeleteAsset<BoneList>(name);
 
