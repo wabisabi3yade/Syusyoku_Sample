@@ -4,7 +4,7 @@
 
 Transform& Component::GetTransform() const
 {
-    return gameObject->transform;
+    return gameObject->GetTransform();
 }
 
 bool Component::GetIsEnable() const
@@ -12,9 +12,20 @@ bool Component::GetIsEnable() const
     return isEnable;
 }
 
+bool Component::GetIsAlreadyAwake() const
+{
+    return isAlreadyAwake;
+}
+
 bool Component::GetIsAlreadyStart() const
 {
     return isAlreadyStart;
+}
+
+void Component::AwakeBase()
+{
+    Awake();
+    isAlreadyAwake = true;
 }
 
 void Component::StartBase()

@@ -12,7 +12,7 @@ using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
 constexpr u_int TEX_DIFUSSE_SLOT(0);	// ディフューズテクスチャのスロット
-constexpr float ORIGIN_SCALE(0.3f);	// 原点表示のオブジェクトのスケール
+constexpr float ORIGIN_SCALE(0.15f);	// 原点表示のオブジェクトのスケール
 constexpr Color ORIGIN_COLOR(1.0f, 1.0f, 0.0f);	// 原点表示のオブジェクトの色
 
 CP_MeshRenderer::CP_MeshRenderer()
@@ -30,14 +30,19 @@ void CP_MeshRenderer::Draw()
 
 	RenderParam& rendererParam = Direct3D11::GetInstance()->GetRenderer()->GetParameter();
 
-	// ワールド変換行列に必要なパラメータ
-	Vector3 position = GetTransform().GetPosition();
-	Vector3 scale = GetTransform().GetScale() * pRenderMesh->GetLoadOffsetScale();
-	Quaternion offsetRot = Quat::ToQuaternion(pRenderMesh->GetLoadOffsetAngles());
-	Quaternion rotation = Quat::Multiply(GetTransform().GetRotation(), offsetRot);
+	Transform& transform = GetTransform();
+
+	Vector3 pos = transform.GetPosition();
+	Vector3 scale = transform.GetScale()/* * pRenderMesh->GetLoadOffsetScale()*/;
+	Quaternion offsetRot = Quaternion::CreateFromYawPitchRoll(
+		pRenderMesh->GetLoadOffsetAngles().y * Mathf::degToRad, 
+		pRenderMesh->GetLoadOffsetAngles().x * Mathf::degToRad,
+		pRenderMesh->GetLoadOffsetAngles().z * Mathf::degToRad
+		);
+	Quaternion rotation = /*Quat::Multiply(*/transform.GetRotation()/*, offsetRot)*/;
 
 	// メッシュ描画
-	DrawMesh(rendererParam.GetWVP(position, scale, rotation));
+	DrawMesh(rendererParam.GetWVP(pos, scale, rotation));
 
 	// 原点表示
 	OriginDisplay();
@@ -114,7 +119,7 @@ bool CP_MeshRenderer::IsCanDraw()
 	return true;
 }
 
-void CP_MeshRenderer::DrawMesh(RenderParam::WVP _wvp)
+void CP_MeshRenderer::DrawMesh(RenderParam::WVP& _wvp)
 {
 	u_int meshNum = pRenderMesh->GetMeshNum();
 

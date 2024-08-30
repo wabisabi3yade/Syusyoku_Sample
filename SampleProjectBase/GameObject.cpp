@@ -10,54 +10,44 @@
 using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
 
-void GameObject::ActiveProcess()
-{
-	CollisionChecker& collisionChecker = InSceneSystemManager::GetInstance()->
-		GetCollisonChecker();
-
-	for (auto& c : pComponents)
-	{
-		// 当たり判定チェッククラスに追加
-		CP_Collider* col = dynamic_cast<CP_Collider*>(c.get());
-		if (col != nullptr)
-		{
-			collisionChecker.AddCollider(*col);	// 追加
-		}
-	}
-}
-
-void GameObject::NotActiveProcess()
-{
-	CollisionChecker& collisionChecker = InSceneSystemManager::GetInstance()->
-		GetCollisonChecker();
-
-	for (auto& c : pComponents)
-	{
-		// 当たり判定チェッククラスから削除
-		CP_Collider* col = dynamic_cast<CP_Collider*>(c.get());
-		if (col != nullptr)
-		{
-			collisionChecker.PopCollider(*col);	// 削除
-		}
-	}
-}
-
 GameObject& GameObject::Copy(const GameObject& _other)
 {
 	// 同じなら処理しない
 	if (this == &_other) return *this;
 
 	// パラメータ代入
-	transform = _other.transform;
+	pTransform = std::make_unique<Transform>(*_other.pTransform);
 	isActive = _other.isActive;
 	name = _other.name;
 	tag = _other.tag;
 	layer = _other.layer;
 
 	// コンポーネントをコピー
-	std::list<std::unique_ptr<Component>> pComponents;
+	for (auto& comp : _other.pComponents)
+	{
+		CloneComponentBase* clone = dynamic_cast<CloneComponentBase*>(comp.get());
+
+		if (clone)
+			SetComponent(clone->Clone());
+	}
 
 	return *this;
+}
+
+void GameObject::ImGuiSetParent()
+{
+	const u_int buf = 256;
+	static char str[buf] = "\0";
+
+	ImGui::InputText("parent", str, buf);
+	if (ImGui::Button("Set Parent"))
+	{
+		SceneObjects& sObj = InSceneSystemManager::GetInstance()->GetSceneObjects();
+		GameObject* parentObj = sObj.GetSceneObject(str);
+
+		if (!parentObj) return;
+		pTransform->SetParent(parentObj->GetTransform());
+	}
 }
 
 bool GameObject::IsExistComponent(const Component& _pCheckComponent)
@@ -80,6 +70,18 @@ bool GameObject::IsExistActiveComponent(const Component& _pCheckComponent)
 		});
 
 	if (itr != pActiveComponents.end()) return true;
+
+	return false;
+}
+
+bool GameObject::IsExistAwakeComponent(const Component& _pCheckComponent)
+{
+	auto itr = std::find_if(pAwakeComponents.begin(), pAwakeComponents.end(), [&](Component* comp)
+		{
+			return comp == &_pCheckComponent;
+		});
+
+	if (itr != pAwakeComponents.end()) return true;
 
 	return false;
 }
@@ -124,6 +126,7 @@ void GameObject::LoadComponent(const nlohmann::json& _componentData)
 
 GameObject::GameObject() : isActive(true), name("")
 {
+	pTransform = std::make_unique<Transform>(this);
 }
 
 GameObject::GameObject(const GameObject& _other)
@@ -136,7 +139,19 @@ GameObject& GameObject::operator=(const GameObject& _other)
 	return Copy(_other);
 }
 
-void GameObject::UpdateBase()
+void GameObject::AwakeBase()
+{
+	if (!isActive) return;
+
+	// Awake
+	for (auto& comp : pAwakeComponents)
+	{
+		comp->AwakeBase();
+	}
+	pAwakeComponents.clear();
+}
+
+void GameObject::StartBase()
 {
 	if (!isActive) return;
 
@@ -146,6 +161,11 @@ void GameObject::UpdateBase()
 		comp->StartBase();
 	}
 	pStartComponents.clear();
+}
+
+void GameObject::UpdateBase()
+{
+	if (!isActive) return;
 
 	// Update
 	for (auto& comp : pActiveComponents)
@@ -169,7 +189,7 @@ void GameObject::DrawBase()
 	if (!isActive) return;
 
 	// 方向ベクトルを更新する
-	transform.UpdateVector();
+	pTransform->UpdateVector();
 
 	for (auto& itr : pActiveComponents)
 	{
@@ -179,9 +199,13 @@ void GameObject::DrawBase()
 
 void GameObject::Destroy()
 {
+	// 親子関係を解消する
+	pTransform->RemoveParentChild();
+
 	// シーンオブジェクトから自身を削除する
 	SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->
 		GetSceneObjects();
+
 	sceneObjects.DeleteObj(*this);
 }
 
@@ -197,10 +221,11 @@ void GameObject::SetComponent(std::unique_ptr<Component> _pSetComponent)
 	// リストに追加
 	pComponents.push_back(std::move(_pSetComponent));
 	pActiveComponents.push_back(&comp);
+	pAwakeComponents.push_back(&comp);
 	pStartComponents.push_back(&comp);
 
 	// 初期処理
-	comp.Awake();
+	comp.Init();
 }
 
 void GameObject::DeleteComponent(Component& _deleteComonent)
@@ -211,6 +236,7 @@ void GameObject::DeleteComponent(Component& _deleteComonent)
 		});
 
 	pActiveComponents.remove(&_deleteComonent);
+	pAwakeComponents.remove(&_deleteComonent);
 	pStartComponents.remove(&_deleteComonent);
 }
 
@@ -219,9 +245,16 @@ void GameObject::RemoveActiveComponent(Component& _removeComonent)
 	// アクティブから外す
 	pActiveComponents.remove(&_removeComonent);
 
-	// Start処理がまだならスタート配列からも外す
-	if (!_removeComonent.GetIsAlreadyStart())
+	// Awake処理がまだなら
+	if (_removeComonent.GetIsAlreadyAwake())
+		pActiveComponents.remove(&_removeComonent);
+
+	// Start処理がまだなら
+	if (_removeComonent.GetIsAlreadyStart())
 		pStartComponents.remove(&_removeComonent);
+
+
+
 }
 
 void GameObject::AddActiveComponent(Component& _addComonent)
@@ -233,10 +266,16 @@ void GameObject::AddActiveComponent(Component& _addComonent)
 		return;
 	}
 
-	if (!IsExistActiveComponent(_addComonent))	// アクティブになかったら
+	// アクティブになかったら	// アクティブになかったら
+	if (!IsExistActiveComponent(_addComonent))
 		pActiveComponents.push_back(&_addComonent);
 
-	if (!IsExistStartComponent(_addComonent))	// Startになかったら
+	// Awakeになかったら
+	if (!_addComonent.GetIsAlreadyAwake() && !IsExistAwakeComponent(_addComonent))
+		pAwakeComponents.push_back(&_addComonent);
+
+	// Startになかったら
+	if (!_addComonent.GetIsAlreadyStart() && !IsExistStartComponent(_addComonent))
 		pStartComponents.push_back(&_addComonent);
 }
 
@@ -246,17 +285,19 @@ void GameObject::ImGuiSet()
 	{
 		ImGui::Checkbox("isActive", &isActive);
 
-		Vector3 v = transform.GetLocalPosition();
+		ImGuiSetParent();
+
+		Vector3 v = pTransform->GetLocalPosition();
 		ImGuiMethod::DragFloat3(v, "pos", 0.1f);
-		transform.SetLocalPos(v);
+		pTransform->SetLocalPos(v);
 
-		v = transform.GetLocalScale();
+		v = pTransform->GetLocalScale();
 		ImGuiMethod::DragFloat3(v, "scale", 0.1f);
-		transform.SetLocalScale(v);
+		pTransform->SetLocalScale(v);
 
-	/*	v = transform.GetLocalEularAngles();
+		v = pTransform->GetLocalEularAngles();
 		ImGuiMethod::DragFloat3(v, "rot");
-		transform.SetLocalEularAngles(v);*/
+		pTransform->SetLocalEularAngles(v);
 
 		std::list<Component*> deleteComponents;
 
@@ -280,7 +321,7 @@ void GameObject::ImGuiSet()
 			if (ImGui::Button("Delete"))
 				deleteComponents.push_back(itr->get());
 
-			(*itr)->ImGuiSetting();
+			(*itr)->ImGuiCall();
 			ImGui::TreePop();
 		}
 
@@ -307,7 +348,7 @@ nlohmann::json GameObject::Save()
 	objectData["name"] = name;
 	objectData["tag"] = tag.GetType();
 	objectData["layer"] = layer.GetType();
-	objectData["transform"] = transform.Save();
+	objectData["transform"] = pTransform->Save();
 
 	auto& componentData = objectData["components"];
 	// コンポーネントのセーブ
@@ -333,7 +374,7 @@ void GameObject::Load(const nlohmann::json& _data)
 	layer.SetType(layerType);
 
 	if (IsJsonContains(_data, "transform"))
-		transform.Load(_data["transform"]);
+		pTransform->Load(_data["transform"]);
 
 	if (IsJsonContains(_data, "components"))
 	{
@@ -344,16 +385,17 @@ void GameObject::Load(const nlohmann::json& _data)
 
 void GameObject::SetName(const std::string& _name)
 {
-	if (_name == "") return;
+	if (_name == "") return;	// 名前がないなら
 	name = _name;
 }
 
 void GameObject::SetActive(bool _isActive)
 {
 	if (isActive == _isActive) return;	// 同じ状態に変えようとするなら終わる
+	isActive = _isActive;
+}
 
-	if (_isActive)
-		ActiveProcess();	// アクティブ時の処理をする
-	else
-		NotActiveProcess();	// 非アクティブ時の処理をする
+Transform& GameObject::GetTransform()
+{
+	return *pTransform;
 }

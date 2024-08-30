@@ -17,7 +17,10 @@ class BoneList : public Asset_Base
 
 public:
 	BoneList() {}
+	BoneList(const BoneList& _other);
 	~BoneList() {}
+
+	BoneList& operator=(const BoneList& _other);
 
 	/// @brief ボーンIDからボーンを取得する
 	/// @param _boneIdx ボーンID
@@ -39,6 +42,9 @@ public:
 
 	// ボーンの数を返す 
 	u_int GetBoneCnt() const;
+
+private:
+	void Copy(const BoneList& _other);
 };
 
 // スケルタルメッシュクラス

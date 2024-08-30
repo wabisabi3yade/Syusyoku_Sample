@@ -24,64 +24,72 @@ private:
 
 	ImGuiMethod() {}
 	~ImGuiMethod() {};
- public:
-	 /// <summary>
-	 /// ImGuiの初期化処理
-	 /// </summary>
-	 /// <returns>初期化の成功状態</returns>
-	 static void Initialize(HWND _hwnd, ID3D11Device* _pDevice, ID3D11DeviceContext* _pDeviceContext);
+public:
+	/// <summary>
+	/// ImGuiの初期化処理
+	/// </summary>
+	/// <returns>初期化の成功状態</returns>
+	static void Initialize(HWND _hwnd, ID3D11Device* _pDevice, ID3D11DeviceContext* _pDeviceContext);
 
-	 /// <summary>
-	 /// フレーム更新処理
-	 /// </summary>
-	 static void NewFrame();
+	/// <summary>
+	/// フレーム更新処理
+	/// </summary>
+	static void NewFrame();
 
-	 /// @brief	フレーム終了処理
-	 static void EndFrame();
+	/// @brief	フレーム終了処理
+	static void EndFrame();
 
-	 /// <summary>
-	 /// 描画処理
-	 /// </summary>
-	 static void Draw();
+	/// <summary>
+	/// 描画処理
+	/// </summary>
+	static void Draw();
 
-	 /// <summary>
-	 /// 終了処理
-	 /// </summary>
-	 static void Terminal();
-	 
-	 /// @brief DragFloat3でVector3に対応させた関数
-	 /// @param _vector3 Vector3
-	 /// @param _name 変数名
-	 /// @param _speed 速度
-	 static void DragFloat3(DirectX::SimpleMath::Vector3& _vector3, const std::string& _name, float _speed = 1.0f);
-	 
-	 /// @brief ColorEdit4でColorに対応させた関数
-	 /// @param _color Color
-	 /// @param _name 変数名
-	 static void ColorEdit4(DirectX::SimpleMath::Color& _color, const std::string& _name);
+	/// <summary>
+	/// 終了処理
+	/// </summary>
+	static void Terminal();
 
-	 /// @brief コンボボックス作成
-	 /// @param _caption キャプション
-	 /// @param _currentItem 現在選択中の名前
-	 /// @param _items 要素の全名前
-	 /// @return 変更したか？
-	 static bool ComboBox(const std::string& _caption, std::string& _currentItem, const std::vector<std::string>& _items);
+	/// @brief DragFloat3でVector3に対応させた関数
+	/// @param _vector3 Vector3
+	/// @param _name 変数名
+	/// @param _speed 速度
+	static void DragFloat3(DirectX::SimpleMath::Vector3& _vector3, const std::string& _name, float _speed = 1.0f);
 
-	 /// @brief テキスト入力
-	 /// @param _label ラベル
-	 /// @return テキスト入力した文字列
-	 static std::string InputText(const std::string& _label);
+	/// @brief ColorEdit4でColorに対応させた関数
+	/// @param _color Color
+	/// @param _name 変数名
+	static void ColorEdit4(DirectX::SimpleMath::Color& _color, const std::string& _name);
 
-	 /// @brief Vector3をテキスト
-	 /// @param _v 表示するテキスト
-	 static void Text(const DirectX::SimpleMath::Vector3& _v);
+	/// @brief コンボボックス作成
+	/// @param _caption キャプション
+	/// @param _currentItem 現在選択中の名前
+	/// @param _items 要素の全名前
+	/// @return 変更したか？
+	static bool ComboBox(const std::string& _caption, std::string& _currentItem, const std::vector<std::string>& _items);
 
-	 /// @brief フォントの大きさを変える
-	 /// @param _size フォントの大きさ
-	 static void SetFontSize(FontSize _size);
+	/// @brief テキスト入力
+	/// @param _label ラベル
+	/// @return テキスト入力した文字列
+	static std::string InputText(const std::string& _label);
 
-	 /// @brief フォントの大きさを戻す
-	 static void PopFontSize();
+	/// @brief Vector2をテキスト
+    /// @param _v 表示するテキスト
+	static void Text(const DirectX::SimpleMath::Vector2& _v);
+
+	/// @brief Vector3をテキスト
+	/// @param _v 表示するテキスト
+	static void Text(const DirectX::SimpleMath::Vector3& _v);
+
+	/// @brief Quaternionをテキスト
+	/// @param _q 表示するテキスト
+	static void Text(const DirectX::SimpleMath::Quaternion& _q);
+
+	/// @brief フォントの大きさを変える
+	/// @param _size フォントの大きさ
+	static void SetFontSize(FontSize _size);
+
+	/// @brief フォントの大きさを戻す
+	static void PopFontSize();
 private:
 
 	/// @brief フォントを読み込む

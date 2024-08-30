@@ -84,9 +84,12 @@ void Mesh_Group::SetLoadOffsetScale(float _scaleTimes)
 	loadScale = std::max(_scaleTimes, 0.0f);
 }
 
-void Mesh_Group::SetLoadOffsetAngles(const DirectX::SimpleMath::Vector3& _offsetAngles)
+void Mesh_Group::SetLoadFlipY(bool _isLoadFlipY)
 {
-	loadOffsetAngles = _offsetAngles;
+	isFlipY = _isLoadFlipY;
+
+	if (_isLoadFlipY)
+		loadOffsetAngles.y = Mathf::roundDeg * 0.5f;
 }
 
 void Mesh_Group::SetIsRightHand(bool _isRightHand)
@@ -130,7 +133,7 @@ nlohmann::json Mesh_Group::Save()
 	auto data = AssetPath_Base::Save();
 
 	data["loadScale"] = loadScale;
-	HashiTaku::SaveJsonVector3("loadAngle", loadOffsetAngles, data);
+	data["flipY"] = isFlipY;
 	data["getSize"] = isGetSize;
 	data["rightHand"] = isRightHand;
 

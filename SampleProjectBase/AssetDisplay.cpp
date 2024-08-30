@@ -5,6 +5,8 @@
 #include "AssetCollection.h"
 #include "AssetLoader.h"
 
+#include "SkeletalMesh.h"
+
 class Texture;
 class Mesh_Group;
 
@@ -74,8 +76,8 @@ void AssetDisplay::DisplayModel()
 	static float scale = 1.0f;
 	ImGui::DragFloat("scale", &scale);
 
-	static Vector3 angles = Vector3::Zero;
-	ImGuiMethod::DragFloat3(angles, "angles");
+	static bool isFlipY = false;
+	ImGui::Checkbox("flipY", &isFlipY);
 
 	static bool isRight = false;
 	ImGui::Checkbox("rightHand", &isRight);
@@ -84,7 +86,7 @@ void AssetDisplay::DisplayModel()
 	ImGui::Checkbox("getSize", &getSize);
 
 	if (ImGui::Button("Load"))
-		AssetLoader::ModelLoad(str, scale, angles, isRight, getSize);
+		AssetLoader::ModelLoad(str, scale, isFlipY, isRight, getSize);
 
 	std::string name = ImGuiMethod::InputText("name");
 
@@ -141,10 +143,24 @@ void AssetDisplay::DisplayBoneList()
 	if (!ImGui::TreeNode(TO_UTF8("スケルトン"))) return;
 
 	AssetList& boneAssets = pAssetCollection->GetAssetList<BoneList>();
-	Display(boneAssets);
+
+	for (auto& a : boneAssets)
+	{
+		if (!ImGui::TreeNode(a.second->GetAssetName().c_str()))
+			continue;
+		
+		BoneList& boneList = static_cast<BoneList&>(*a.second);
+		// ボーンの名前表示
+		for (u_int b_i = 0; b_i < boneList.GetBoneCnt(); b_i++)
+		{
+			std::string boneName = boneList.GetBone(b_i).GetBoneName();
+			ImGui::Text(boneName.c_str());
+		}
+
+		ImGui::TreePop();
+	}
 
 	std::string name = ImGuiMethod::InputText("name");
-
 	if (ImGui::Button("Delete"))
 		pAssetCollection->DeleteAsset<BoneList>(name);
 

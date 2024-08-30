@@ -3,6 +3,7 @@
 // コンポーネントのヘッダー宣言ヘッダー
 
 // 当たり判定
+#include "CP_RigidBody.h"
 #include "CP_BoxCollider.h"
 #include "CP_SphereCollider.h"
 
@@ -23,3 +24,4 @@
 
 // テスト
 #include "CP_EaseTest.h"
+#include "CP_BoxAnimation.h"

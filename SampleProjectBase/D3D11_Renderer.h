@@ -42,13 +42,6 @@ private:
 	std::unique_ptr<RenderParam> pRenderParam;	// 描画に必要な情報(定数バッファなど)
 	std::unique_ptr<BlendState> pBlendState;	// ブレンドステート（半透明処理）のクラス
 	std::unique_ptr<Sampler> pSampler;	// サンプラー
-
-	bool Init(HWND _hWnd);  // 初期化
-	bool InitDeviceAndSwapChain(HWND _hWnd);    // デバイスとスワップチェインの作成
-	bool InitBackBuffer();  // バックバッファの初期化
-
-	void Release(); // 解放処理
-
 public:
 	D3D11_Renderer(HWND _hWnd);
 	~D3D11_Renderer();
@@ -66,5 +59,16 @@ public:
 	// ビューポートを取得（どのビューポートを指定）
 	const D3D11_VIEWPORT& GetViewPort(u_int _slot) { return viewPorts[_slot]; }
 	u_int GetViewPortNum() { return static_cast<u_int>(viewPorts.size()); }
+
+private:
+	bool Init(HWND _hWnd);  // 初期化
+	bool InitDeviceAndSwapChain(HWND _hWnd);    // デバイスとスワップチェインの作成
+	bool InitBackBuffer();  // バックバッファの初期化
+
+	/// @brief フルスクリーンにするか確認ん
+	/// @param _hWnd ハンドル
+	void CheckFullScreen(HWND _hWnd);
+
+	void Release(); // 解放処理
 };
 

@@ -25,14 +25,14 @@ public:
 	/// @param _transform 座標
 	/// @param _scaleTimes スケール倍率
 	/// @return wvp行列
-	const WVP& GetWVP(const Transform& _transform);
+	WVP& GetWVP(const Transform& _transform);
 
 	/// @brief WVP変換行列を作成して渡す
 	/// @param _position 座標
 	/// @param _scale 大きさ
 	/// @param _rotation 回転量
 	/// @return wvp行列
-	const WVP& GetWVP(const DirectX::SimpleMath::Vector3& _position, const DirectX::SimpleMath::Vector3& _scale, const DirectX::SimpleMath::Quaternion& _rotation);
+	WVP& GetWVP(const DirectX::SimpleMath::Vector3& _position, const DirectX::SimpleMath::Vector3& _scale, const DirectX::SimpleMath::Quaternion& _rotation);
 
 	/// @brief ビュー変換行列をセット
 	/// @param _view ビュー変換行列

@@ -13,7 +13,7 @@
 #define NOMINMAX
 
 // ImGuiを表示する定義
-#define EDIT_DISPLAY
+//#define EDIT_DISPLAY
 #if defined(_DEBUG) || defined(EDIT_DISPLAY)
 #define EDIT
 #endif
@@ -48,6 +48,7 @@
 #include "MathUseful.h"	// 自作数学便利関数
 #include "ImGuiMethod.h"	// ImGui便利関数
 #include "ImGuiDebugLog.h"	// デバッグログ
+#include "IImGuiUser.h"	// ImGuiを使用するクラスのインターフェース
 #include "Transform.h"	// 座標・回転・スケールのクラス
 #include "MainApplication.h"
 #include "Direct3D11.h"	// 自前のDirectX11クラス

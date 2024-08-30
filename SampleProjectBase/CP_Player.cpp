@@ -4,6 +4,8 @@
 #include "ComponentDefine.h"
 #include "GameObject.h"
 
+#include "SkeletalMesh.h"
+
 using namespace DirectX::SimpleMath;
 
 CP_Player::CP_Player(const CP_Player& _other)
@@ -20,21 +22,19 @@ CP_Player& CP_Player::operator=(const CP_Player& _other)
 
 void CP_Player::Awake()
 {
-	/*gameObject->isSave = false;*/
 	//// モデル関係
-	CP_MeshRenderer* pMeshRenderer = gameObject->AddComponent<CP_MeshRenderer>();
-	pMeshRenderer->SetRenderMesh("Knight.fbx");
+	CP_MeshRenderer* pMeshRenderer = gameObject->GetComponent<CP_MeshRenderer>();
 	pMeshRenderer->SetVertexShader("VS_SkinAnimation");
 	pMeshRenderer->SetPixelShader("PS_Unlit");
-
-	// アニメーション関係生成
-	CP_Animation* pAnimation = gameObject->AddComponent<CP_Animation>();
-	pAnimController = std::make_unique<PlayerAnimController>();
-	pAnimation->SetAnimationController(*pAnimController);
 }
 
 void CP_Player::Start()
 {
+	// アニメーション関係生成
+	CP_Animation* pAnimation = gameObject->GetComponent<CP_Animation>();
+	pAnimController = std::make_unique<PlayerAnimController>();
+	pAnimation->SetAnimationController(*pAnimController);
+
 	// アクションコントローラー作成
 	pActionController = std::make_unique<PlayerActionController>(*gameObject, *pAnimController);
 
@@ -81,4 +81,6 @@ void CP_Player::Load(const nlohmann::json& _data)
 void CP_Player::Copy(const CP_Player& _other)
 {
 	if (this == &_other) return;
+
+	Component::operator=(_other);
 }

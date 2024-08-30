@@ -1,6 +1,9 @@
 #pragma once
 #include "CloneComponent.h"
 
+#include <btBulletDynamicsCommon.h>
+#include "DXToBullet.h"
+
 class Tag;
 class Layer;
 
@@ -18,9 +21,8 @@ public :
 protected:
     Type type;  // タイプ
 
-    // 今フレーム・前フレームで当たった判定
-    std::list<CP_Collider*> hitColliders;
-    std::list<CP_Collider*> o_hitColliders; 
+    /// @brief コリジョンの形状
+    std::unique_ptr<btCollisionShape> pCollisionShape;
 
     // 当たってない・当たってるときの当たり判定の色
     static const DirectX::SimpleMath::Color normalColor;
@@ -29,20 +31,25 @@ protected:
 public:
     CP_Collider() : type(Type::Num) {}
     CP_Collider(Type _type);
+    CP_Collider(const CP_Collider& _other);
     virtual ~CP_Collider();
 
-    void Start() override;   
+    CP_Collider& operator=(const CP_Collider& _other);
 
-    // 判定に当たったコライダー追加
-    void SetHitCollider(CP_Collider& _hitCollider) { hitColliders.push_back(&_hitCollider); }
+    // 種類を取得
+    Type GetType()const { return type; }   
 
-    // 判定をリセット
-    void ResetColliders() { hitColliders.clear(); } 
+private:
+    void Copy(const CP_Collider& _other);
 
-    Type GetType()const { return type; }    // 種類を取得
-public:
-    // 色を変えるタグ・レイヤーを設定
-    void SetTagColor(const Tag& _tag); 
-    void SetLayerColor(const Layer& _layer);
+    /// @brief RigidBodyコンポーネントを作成する
+    void CreateRigidBody();
+
+protected:
+    void Start() override;
+
+    /// @brief RigidBpdyコンポーネントに形状を送る
+    /// @param _shape 形状
+    void SendShapeToRb(btCollisionShape& _shape);
 };
 

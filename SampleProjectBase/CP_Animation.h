@@ -35,7 +35,7 @@ public:
 
 	CP_Animation& operator=(const CP_Animation& _other);
 
-	void Awake() override;
+	void Start() override;
 
 	void LateUpdate() override;
 

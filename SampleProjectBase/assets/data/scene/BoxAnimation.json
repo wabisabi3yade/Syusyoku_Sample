@@ -1,0 +1,123 @@
+{
+    "objects": [
+        {
+            "active": true,
+            "components": [
+                {
+                    "distance": 1000.0,
+                    "enable": true,
+                    "fov": 45.0,
+                    "isOrth": false,
+                    "name": "Camera",
+                    "viewSlot": 0
+                }
+            ],
+            "layer": 0,
+            "name": "Camera",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    10.0,
+                    0.0,
+                    0.0
+                ],
+                "child": null,
+                "pos": [
+                    0.8999999761581421,
+                    2.299999952316284,
+                    -1.2000000476837158
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "name": "SpriteRenderer",
+                    "sprite": {
+                        "texName": "an.jpg",
+                        "uvDivNum": [
+                            0.0,
+                            0.0
+                        ],
+                        "uvEnd": [
+                            1.0,
+                            1.0
+                        ],
+                        "uvStart": [
+                            0.0,
+                            0.0
+                        ]
+                    }
+                }
+            ],
+            "layer": 0,
+            "name": "Ground",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "child": null,
+                "pos": [
+                    0.0,
+                    0.0,
+                    1.2000000476837158
+                ],
+                "scale": [
+                    11.899999618530273,
+                    1.0,
+                    12.199999809265137
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "Request": [
+                        25.0,
+                        -55.0,
+                        34.0
+                    ],
+                    "Vec": [
+                        100.0,
+                        100.0,
+                        100.0
+                    ],
+                    "enable": true,
+                    "name": "BoxAnimation"
+                }
+            ],
+            "layer": 0,
+            "name": "BoxTest",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    357.5958557128906,
+                    191.10096740722656,
+                    348.878662109375
+                ],
+                "child": null,
+                "pos": [
+                    0.0,
+                    1.600000023841858,
+                    2.799999952316284
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        }
+    ]
+}

@@ -28,26 +28,29 @@ private:
 	// レイヤー
 	Layer layer;	
 
+	/// @brief トランスフォーム
+	std::unique_ptr<Transform> pTransform;
+
 	// コンポーネントリスト
 	std::list<std::unique_ptr<Component>> pComponents;
 
 	/// @brief アクティブ状態のコンポーネント
 	std::list<Component*> pActiveComponents;
 
+	/// @brief Awake処理を行うコンポーネント
+	std::list<Component*> pAwakeComponents;
+
 	/// @brief Start処理を行うコンポーネント
 	std::list<Component*> pStartComponents;
 public:
-	/// @brief トランスフォーム
-	Transform transform;	
-
-	bool isSave = true;
-
 	GameObject();
 	GameObject(const GameObject& _other);
 	GameObject& operator=(const GameObject& _other);
-	virtual ~GameObject() {};
+	~GameObject() {};
 
 	// 更新処理
+	void AwakeBase();
+	void StartBase();
 	void UpdateBase();	
 	void LateUpdateBase();
 	void DrawBase();
@@ -72,8 +75,6 @@ public:
 	void RemoveActiveComponent(Component& _removeComonent);
 	void AddActiveComponent(Component& _addComonentComonent);
 
-	// Start配列に入れる
-
 	// ImGuiの設定
 	virtual void ImGuiSet();	
 
@@ -88,20 +89,16 @@ public:
 	void SetName(const std::string& _name);
 	void SetActive(bool _isActive);
 
+
+	Transform& GetTransform();
 	const std::string& GetName() const { return name; }
 	bool GetIsActive() const { return isActive; }
-	const Tag& GetTag() const { return tag; }
-	const Layer& GetLayer() const  { return layer; }
+	Tag GetTag() const { return tag; }
+	Layer GetLayer() const  { return layer; }
 
 private:
-	// アクティブ変更時処理
-	void ActiveProcess();
-	void NotActiveProcess();
-
-	// Jsonからロード
-	virtual void FromJson(const nlohmann::json& _jsonData) {};
-
 	virtual GameObject& Copy(const GameObject& _other);
+	void ImGuiSetParent();
 
 	/// @brief 所持している配列にコンポーネントが存在するか
 	/// @param _pCheckComponent 確認するコンポーネント
@@ -113,10 +110,20 @@ private:
 	/// @return 存在したか？
 	bool IsExistActiveComponent(const Component& _pCheckComponent);
 
+	/// @brief Awake配列に存在するか
+	/// @param _pCheckComponent 確認するコンポーネント
+	/// @return 存在したか？
+	bool IsExistAwakeComponent(const Component& _pCheckComponent);
+
 	/// @brief Start配列に存在するか
 	/// @param _pCheckComponent 確認するコンポーネント
 	/// @return 存在したか？
 	bool IsExistStartComponent(const Component& _pCheckComponent);
+
+	/// @brief コンポーネントを重複しているか
+	/// @tparam  コンポーネント
+	/// @return 重複しているか？
+	template<HashiTaku::ComponentConcept T> bool isDuplicateCompoent();
 
 	/// @brief コンポーネントのロード処理
 	/// @param _componentData このオブジェクト全てのコンポーネントデータ
@@ -142,10 +149,23 @@ inline T* GameObject::GetComponent()
 	// 指定した型名と同じコンポーネントがあるか確認
 	for (auto& comp : pComponents)
 	{
-		if (typeid(T) != typeid(*comp.get())) continue;
+		if (typeid(T) != typeid(*comp)) continue;
 		T* retPtr = static_cast<T*>(comp.get());	
 		return retPtr; 
 	}
 
 	return nullptr;
+}
+
+template<HashiTaku::ComponentConcept T>
+inline bool GameObject::isDuplicateCompoent()
+{
+	// 指定した型名と同じコンポーネントがあるか確認
+	for (auto& comp : pComponents)
+	{
+		if (typeid(T) == typeid(*comp))
+			return true;
+	}
+
+	return true;
 }

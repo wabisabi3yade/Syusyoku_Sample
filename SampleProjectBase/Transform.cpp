@@ -8,11 +8,19 @@ using namespace DirectX;
 using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
 
-Transform::Transform(bool _isInit)
+Transform::Transform(GameObject* _pGameObject, bool _isInit)
 	: pParent(nullptr), scale(Vector3::One), localScale(Vector3::One), up(Vec3::Up), right(Vec3::Right), forward(Vec3::Forward), isHaveParent(false)
 {
 	if (_isInit)
 		pParent = new NullTransform();
+
+	pGameObject = _pGameObject;
+}
+
+Transform::Transform(const Transform& _other)
+	: pParent(nullptr), scale(Vector3::One), localScale(Vector3::One), up(Vec3::Up), right(Vec3::Right), forward(Vec3::Forward), isHaveParent(false)
+{
+	Copy(_other);
 }
 
 Transform::~Transform()
@@ -22,19 +30,26 @@ Transform::~Transform()
 		CLASS_DELETE(pParent);
 }
 
+Transform& Transform::operator=(const Transform& _other)
+{
+	Copy(_other);
+
+	return *this;
+}
+
 void Transform::UpdateVector()
 {
 	// クォータニオンから回転行列を求める
-	//Matrix rotateMatrix(Matrix::CreateFromQuaternion(rotation));
+	Matrix rotateMatrix(Matrix::CreateFromQuaternion(rotation));
 
-	//// 方向ベクトルを更新
-	//right = Mtx::GetRightVector(rotateMatrix);
-	//up = Mtx::GetUpVector(rotateMatrix);
-	//forward = Mtx::GetForwardVector(rotateMatrix);
+	// 方向ベクトルを更新
+	right = Mtx::GetRightVector(rotateMatrix);
+	up = Mtx::GetUpVector(rotateMatrix);
+	forward = Mtx::GetForwardVector(rotateMatrix);
 
-	forward = XMVector3Rotate(Vec3::Forward, rotation);
+	/*forward = XMVector3Rotate(Vec3::Forward, rotation);
 	right = XMVector3Rotate(Vec3::Right , rotation);
-	up = XMVector3Rotate(Vec3::Up, rotation);
+	up = XMVector3Rotate(Vec3::Up, rotation);*/
 }
 
 void Transform::LookAt(const DirectX::SimpleMath::Vector3& _worldPos, const DirectX::SimpleMath::Vector3& _upVector)
@@ -45,15 +60,9 @@ void Transform::LookAt(const DirectX::SimpleMath::Vector3& _worldPos, const Dire
 	SetRotation(q);
 }
 
-void Transform::RemoveParent()
+void Transform::RemoveChild(Transform& _removeTransform)
 {
-	pParent = new NullTransform();
-	isHaveParent = false;
-}
-
-void Transform::SetName(const std::string& _name)
-{
-	name = _name;
+	pChilds.remove(&_removeTransform);
 }
 
 void Transform::SetParent(Transform& _parent)
@@ -191,6 +200,10 @@ void Transform::SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quatern
 		child->UpdateHierarchyRotations();
 }
 
+void Transform::SetGameObject(GameObject& _go)
+{
+	pGameObject = &_go;
+}
 
 DirectX::SimpleMath::Vector3 Transform::GetPosition() const
 {
@@ -232,9 +245,17 @@ DirectX::SimpleMath::Quaternion Transform::GetLocalRotation() const
 	return localRotation;
 }
 
-std::string Transform::GetName() const
+GameObject& Transform::GetGameObject()
 {
-	return name;
+	return *pGameObject;
+}
+
+Transform* Transform::GetParent()
+{
+	if (!isHaveParent)
+		return nullptr;
+
+	return pParent;
 }
 
 u_int Transform::GetChilidCnt() const
@@ -250,15 +271,14 @@ nlohmann::json Transform::Save()
 	SaveJsonVector3("scale", scale, transformData);
 	SaveJsonVector3("angle", eularAngles, transformData);
 
-	transformData["havePare"] = isHaveParent;
-
 	// 親子関係は名前をセーブする
-	transformData["parent"] = pParent->GetName();
+	if (isHaveParent)
+		transformData["parent"] = pParent->GetGameObject().GetName();
 
 	auto& childData = transformData["child"];
 	for (auto& child : pChilds)
 	{
-		childData.push_back(child->GetName());
+		childData.push_back(child->GetGameObject().GetName());
 	}
 
 	return transformData;
@@ -276,19 +296,19 @@ void Transform::Load(const nlohmann::json& _transformData)
 	LoadJsonVector3("angle", v, _transformData);
 	SetEularAngles(v);
 
-	LoadJsonBoolean("havePare", isHaveParent, _transformData);
-
 	// 親子トランスフォーム取得
 	SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->GetSceneObjects();
-	if (isHaveParent && IsJsonContains(_transformData, "parent"))
+	if (IsJsonContains(_transformData, "parent"))
 	{
 		std::string parentName;
 		LoadJsonString("parent", parentName, _transformData);
-		GameObject* go = sceneObjects.GetSceneObject(parentName);
 
-		if (go)
+		if (parentName != "")
 		{
-			pParent = &go->transform;
+			GameObject* go = sceneObjects.GetSceneObject(parentName);
+
+			if (go)
+				SetParent(go->GetTransform());
 		}
 	}
 
@@ -301,10 +321,19 @@ void Transform::Load(const nlohmann::json& _transformData)
 			GameObject* go = sceneObjects.GetSceneObject(childData[c_i]);
 
 			if (!go) continue;
-			pChilds.push_back(&go->transform);
+			SetChild(go->GetTransform());
 		}
 	}
-	
+
+}
+
+void Transform::Copy(const Transform& _other)
+{
+	if (this == &_other) return;
+
+	position = _other.position;
+	scale = _other.scale;
+	rotation = _other.rotation;
 }
 
 void Transform::UpdateHierarchyPositions()
@@ -336,4 +365,15 @@ void Transform::UpdateHierarchyRotations()
 	// 再帰で呼び出す
 	for (auto& child : pChilds)
 		child->UpdateHierarchyRotations();
+}
+
+void Transform::RemoveParentChild()
+{
+	if (pParent)
+		pParent->RemoveChild(*this);
+
+	for (auto& child : pChilds)
+	{
+		child->pGameObject->Destroy();
+	}
 }

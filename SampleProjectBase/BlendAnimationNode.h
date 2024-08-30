@@ -115,7 +115,7 @@ private:
 	/// @brief アニメーションのトランスフォーム取得
 	/// @param _transforms 格納するボーントランスフォーム配列
 	/// @param _boneNum ボーンの数
-	/// @param _requestKeyNum 取得したいキー数
-	void GetAnimTransform(std::vector<BoneTransform>& _transforms, u_int _boneNum, u_int _requestKeyNum) const override;
+	/// @param _requestRatio 取得する指定のアニメーション割合
+	void GetAnimTransform(std::vector<BoneTransform>& _transforms, u_int _boneNum, float _requestRatio) const override;
 };
 

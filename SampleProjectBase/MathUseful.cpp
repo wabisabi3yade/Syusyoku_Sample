@@ -63,13 +63,20 @@ DirectX::SimpleMath::Vector3 Vec3::WorldMtxToScale(const DirectX::SimpleMath::Ma
 {
 	Vector3 scale;
 
-	scale.x = sqrt(_mtx.m[0][0] * _mtx.m[0][0] + _mtx.m[0][1] * _mtx.m[0][1] + _mtx.m[0][2] * _mtx.m[0][2]);
-
-	scale.y = sqrt(_mtx.m[1][0] * _mtx.m[1][0] + _mtx.m[1][1] * _mtx.m[1][1] + _mtx.m[1][2] * _mtx.m[1][2]);
-
-	scale.z = sqrt(_mtx.m[2][0] * _mtx.m[2][0] + _mtx.m[2][1] * _mtx.m[2][1] + _mtx.m[2][2] * _mtx.m[2][2]);
+	scale.x = Vector3(_mtx._11, _mtx._12, _mtx._13).Length();
+	scale.y = Vector3(_mtx._21, _mtx._22, _mtx._23).Length();
+	scale.z = Vector3(_mtx._31, _mtx._32, _mtx._33).Length();
 
 	return scale;
+}
+
+Vector3 Vec3::Repeat(const Vector3& _v, float _length)
+{
+	return Vector3(
+		Mathf::Repeat(_v.x, _length), 
+		Mathf::Repeat(_v.y, _length),
+		Mathf::Repeat(_v.z, _length)
+		);
 }
 
 DirectX::SimpleMath::Vector4 Vec4::Max(const DirectX::SimpleMath::Vector4& _v4, float _floatVal)
@@ -88,29 +95,24 @@ void Quat::ToAxisAngle(const DirectX::SimpleMath::Quaternion& _q, DirectX::Simpl
 	_angle = 2.0f * std::acos(_q.w);
 
 	// sin(ƒÆ/2) ‚ÌŒvŽZ
-	float sinHalfAngle = std::sqrt(1.0f - _q.w * _q.w);
+	float sinHalfAngle = 1.0f - _q.w * _q.w;
 
-	if (sinHalfAngle < Mathf::smallValue)
+	if (sinHalfAngle <= Mathf::epsilon)
 	{
 		// ‰ñ“]Šp“x‚ª”ñí‚É¬‚³‚¢ê‡AŽ²‚Í”CˆÓ‚Ì•ûŒü‚É‚È‚è“¾‚é
 		_axis = { 1.0f, 0.0f, 0.0f }; // —á‚¦‚ÎAxŽ²‚ðŽg—p
 	}
 	else
 	{
+		float sqrtHalfAngle = sqrt(sinHalfAngle);
 		// ‰ñ“]Ž²‚ÌŒvŽZ
-		_axis = { _q.x / sinHalfAngle, _q.y / sinHalfAngle, _q.z / sinHalfAngle };
+		_axis = { _q.x / sqrtHalfAngle, _q.y / sqrtHalfAngle, _q.z / sqrtHalfAngle };
 	}
-
-	_axis.Normalize();
 }
 
 Quaternion Quat::Multiply(const Quaternion& _q1, const Quaternion& _q2)
 {
-	Quaternion q1, q2;
-	_q1.Normalize(q1);
-	_q2.Normalize(q2);
-
-	Quaternion result = Quaternion::Concatenate(q1, q2);
+	Quaternion result = Quaternion::Concatenate(_q1, _q2);
 	result.Normalize();
 
 	return result;
@@ -148,27 +150,30 @@ Quaternion Quat::RotateToVector(const Vector3& _vector, const Vector3& _up)
 
 Vector3 Quat::ToEulerAngles(const Quaternion& _q)
 {
-	auto sx = -(2 * _q.y * _q.z - 2 * _q.x * _q.w);
+	Quaternion q = _q;
 
-	Vector3 v;
+	//auto sx = -(2 * _q.y * _q.z - 2 * _q.x * _q.w);
 
-	v.x = asinf(sx);
+	//Vector3 v;
 
-	bool unlocked = cos(v.x) != 0.0f;
+	//v.x = asinf(sx);
 
-	if (unlocked)
-	{
-		v.y = std::atanf((2 * _q.x * _q.z + 2 * _q.y * _q.w) / (2 * _q.w * _q.w + 2 * _q.z * _q.z - 1));
+	//bool unlocked = cos(v.x) != 0.0f;
 
-		v.z = std::atanf((2 * _q.x * _q.y + 2 * _q.z * _q.w) / (2 * _q.w * _q.w + 2 * _q.y * _q.y - 1));
-	}
-	else
-	{
-		v.y = std::atanf(-(2 * _q.x * _q.z - 2 * _q.z * _q.w) / (2 * _q.w * _q.w + 2 * _q.y * _q.y - 1));
-		v.z = 0.0f;
-	}
+	//if (unlocked)
+	//{
+	//	v.y = std::atanf((2 * _q.x * _q.z + 2 * _q.y * _q.w) / (2 * _q.w * _q.w + 2 * _q.z * _q.z - 1));
 
-	return v * Mathf::radToDeg;
+	//	v.z = std::atanf((2 * _q.x * _q.y + 2 * _q.z * _q.w) / (2 * _q.w * _q.w + 2 * _q.y * _q.y - 1));
+	//}
+	//else
+	//{
+	//	v.y = std::atanf(-(2 * _q.x * _q.z - 2 * _q.z * _q.w) / (2 * _q.w * _q.w + 2 * _q.y * _q.y - 1));
+	//	v.z = 0.0f;
+	//}
+
+	///*return v * Mathf::radToDeg;*/
+	return _q.ToEuler() * Mathf::radToDeg;
 }
 
 Quaternion Quat::ToQuaternion(const Vector3& _degrees)

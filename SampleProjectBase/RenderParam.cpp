@@ -6,12 +6,12 @@
 using namespace DirectX;
 using namespace SimpleMath;
 
-const RenderParam::WVP& RenderParam::GetWVP(const Transform& _transform)
+RenderParam::WVP& RenderParam::GetWVP(const Transform& _transform)
 {
 	return GetWVP(_transform.GetPosition(), _transform.GetScale(), _transform.GetRotation());
 }
 
-const RenderParam::WVP& RenderParam::GetWVP(const Vector3& _position, const Vector3& _scale, const Quaternion& _rotation)
+RenderParam::WVP& RenderParam::GetWVP(const Vector3& _position, const Vector3& _scale, const Quaternion& _rotation)
 {
 	// •ÏŠ·s—ñ‚ğì¬
 	// ˆÚ“®s—ñ

@@ -55,8 +55,7 @@ void CP_SpriteRenderer::DrawSetup()
 
 CP_SpriteRenderer::CP_SpriteRenderer()
 {
-	// スプライト作成
-	pSprite = std::make_unique<Sprite>();
+
 }
 
 CP_SpriteRenderer::CP_SpriteRenderer(const CP_SpriteRenderer& _other)
@@ -71,9 +70,11 @@ CP_SpriteRenderer& CP_SpriteRenderer::operator=(const CP_SpriteRenderer& _other)
 	return *this;
 }
 
-void CP_SpriteRenderer::Start()
+void CP_SpriteRenderer::Init()
 {
-	
+	// スプライト作成
+	pSprite = std::make_unique<Sprite>();
+
 	// マテリアル初期化
 	MaterialSetup();
 }

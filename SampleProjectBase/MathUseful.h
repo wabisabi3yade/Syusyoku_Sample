@@ -12,6 +12,7 @@ namespace Mathf
 	constexpr float epsilon = std::numeric_limits<float>::epsilon();	// 最小正数
 	constexpr float smallValue = 0.000001f;	// 小さい値
 	constexpr float PI = std::numbers::pi_v<float>;	// π
+	constexpr float gravity = -9.80665f;	// 重力加速度(m/s^2)
 
 	/// @brief 値を0から最大値までで正規化する
 	/// @param _t 正規化する値
@@ -69,6 +70,12 @@ namespace Vec3
 	/// @param _mtx ワールド行列
 	/// @return スケール値
 	DirectX::SimpleMath::Vector3 WorldMtxToScale(const DirectX::SimpleMath::Matrix& _mtx);
+
+	/// @brief 値を0から最大値までで正規化する
+	/// @param _v 正規化する値
+	/// @param _length 最大値
+	/// @return 正規化された値
+	Vector3 Repeat(const Vector3& _v, float _length);
 }
 
 namespace Vec4

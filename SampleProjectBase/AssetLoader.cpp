@@ -49,6 +49,11 @@ static Color ToColor(const aiColor4D& _aiColor);
 /// @return DirectX行列
 static Matrix ToDirectXMatrix(const aiMatrix4x4& _aiMatrix);
 
+/// @brief DirectXをaiMatrixの行列に変換
+/// @param _dxMatrix DirectX行列
+/// @return aiMatrix
+static aiMatrix4x4 ToAssimpMatrix(const Matrix& _dxMatrix);
+
 void AssetLoader::MaterialLoad(Mesh_Group* _pMeshgather,
 	const aiScene* pScene, std::string texturedirectory)
 {
@@ -330,7 +335,7 @@ Texture* AssetLoader::TextureLoad(const std::string& _filePath)
 	return returnPtr;
 }
 
-Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, DirectX::SimpleMath::Vector3 _angles, bool _isRightHand, bool _isGetScale)
+Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, bool _isFlipY, bool _isRightHand, bool _isGetScale)
 {
 	// シーン情報構築
 	Assimp::Importer importer;
@@ -363,7 +368,7 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 	std::unique_ptr<Mesh_Group> pMeshGroup = CreateMeshGroup(pScene, modelName);
 
 	pMeshGroup->SetLoadOffsetScale(_scale);
-	pMeshGroup->SetLoadOffsetAngles(_angles);
+	pMeshGroup->SetLoadFlipY(_isFlipY);
 	pMeshGroup->SetIsRightHand(_isRightHand);
 	pMeshGroup->SetIsGetSize(_isGetScale);
 	pMeshGroup->SetPathName(_modelPath);
@@ -413,7 +418,9 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 
 			// 法線あり？
 			if (pAimesh->HasNormals())
+			{
 				vertex.normal = ToVector3(pAimesh->mNormals[vidx]);
+			}
 			else
 				vertex.normal = Vector3::Zero;
 
@@ -615,10 +622,11 @@ std::unique_ptr<TreeNode> AssetLoader::CreateNode(const aiNode& _aiChildNode, Sk
 	// パラメータセット
 	pCreateNode->SetNodeName(_aiChildNode.mName.C_Str());
 
-	/*if (pCreateNode->GetName().find("AssimpFbx") == std::string::npos)
-	{
-		pCreateNode->SetTransformMtx(ToDirectXMatrix(_aiChildNode.mTransformation));
-	}*/
+	//if (pCreateNode->GetName().find("AssimpFbx") == std::string::npos)
+	//{
+	//	pCreateNode->SetTransformMtx(Matrix::Identity);
+	//}
+	//else
 	pCreateNode->SetTransformMtx(ToDirectXMatrix(_aiChildNode.mTransformation));
 
 	// 対応したボーンを名前から取得する
@@ -813,4 +821,16 @@ Matrix ToDirectXMatrix(const aiMatrix4x4& _aiMatrix)
 	);
 
 	return dxMatrix;
+}
+
+aiMatrix4x4 ToAssimpMatrix(const Matrix& _dxMatrix)
+{
+	aiMatrix4x4 assimpMtx = aiMatrix4x4(
+		_dxMatrix._11, _dxMatrix._21, _dxMatrix._31, _dxMatrix._41,
+		_dxMatrix._12, _dxMatrix._22, _dxMatrix._32, _dxMatrix._42,
+		_dxMatrix._13, _dxMatrix._23, _dxMatrix._33, _dxMatrix._43,
+		_dxMatrix._14, _dxMatrix._24, _dxMatrix._34, _dxMatrix._44
+	);
+
+	return assimpMtx;
 }

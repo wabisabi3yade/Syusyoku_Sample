@@ -172,6 +172,17 @@ DirectX::SimpleMath::Vector3 AnimationData::GetPositionByRatio(u_int _boneId, fl
 	return lerpedPos;
 }
 
+BoneTransform AnimationData::GetTransformByRatio(u_int _boneId, float _playingRatio) const
+{
+	BoneTransform retTransform;
+
+	retTransform.position = GetPositionByRatio(_boneId, _playingRatio);
+	retTransform.scale = GetScaleByRatio(_boneId, _playingRatio);
+	retTransform.rotation = GetQuaternionByRatio(_boneId, _playingRatio);
+
+	return retTransform;
+}
+
 DirectX::SimpleMath::Vector3 AnimationData::GetScaleByKey(u_int _boneId, u_int _playingKey) const
 {
 	const AnimationChannel* channel = FindChannel(_boneId);
@@ -212,17 +223,6 @@ DirectX::SimpleMath::Vector3 AnimationData::GetPositioneByKey(u_int _boneId, u_i
 	}
 
 	return channel->GetPosKey(_playingKey).parameter;
-}
-
-BoneTransform AnimationData::GetTransformByRatio(u_int _boneId, float _playingTime) const
-{
-	BoneTransform retTransform;
-
-	retTransform.position = GetPositionByRatio(_boneId, _playingTime);
-	retTransform.scale = GetScaleByRatio(_boneId, _playingTime);
-	retTransform.rotation = GetQuaternionByRatio(_boneId, _playingTime);
-
-	return retTransform;
 }
 
 BoneTransform AnimationData::GetTransformByKey(u_int _boneId, u_int _playingKey) const

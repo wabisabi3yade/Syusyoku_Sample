@@ -46,7 +46,7 @@ private:
 	bool IsCanDraw();
 
 	/// @brief メッシュを描画
-	void DrawMesh(RenderParam::WVP _wvp);
+	void DrawMesh(RenderParam::WVP& _wvp);
 
 	/// @brief マテリアルの準備
 	/// @param _wvp wvp行列

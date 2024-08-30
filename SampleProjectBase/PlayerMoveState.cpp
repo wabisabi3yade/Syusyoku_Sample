@@ -14,8 +14,8 @@ PlayerMoveState::PlayerMoveState(PlayerActionController& _controller)
 
 void PlayerMoveState::Init()
 {
-	using enum PlayerAnimController::AnimType;
-	ChangeAnimation((u_int)Move);
+	/*using enum PlayerAnimController::AnimType;
+	ChangeAnimation((u_int)Move);*/
 }
 
 void PlayerMoveState::Update()
@@ -35,8 +35,16 @@ void PlayerMoveState::ImGuiSetting()
 	if (!ImGui::TreeNode("Move")) return;
 
 	std::string text = TO_UTF8("speed") + std::to_string(currentSpeed);
-	ImGui::Text(text.c_str());
+	ImGui::Text(text.c_str()); moveVector;
 
+	text = TO_UTF8("vec");
+	ImGui::Text(text.c_str()); ImGui::SameLine();
+	ImGuiMethod::Text(moveVector);
+
+	text = TO_UTF8("input x:") + std::to_string(InputValue().x);
+	ImGui::Text(text.c_str()); 
+	text = TO_UTF8("input y:") + std::to_string(InputValue().y);
+	ImGui::Text(text.c_str());
 	ImGui::DragFloat("maxSpeed", &maxSpeed, 0.1f, 0.0f, 1000.0f);
 
 	ImGui::DragFloat("acceleration", &acceleration, 0.1f);
@@ -57,8 +65,8 @@ void PlayerMoveState::Move()
 	Vector2 input = InputValue();
 
 	// 移動方向決定
-	moveVector.x = camRightVec.x * input.x;
-	moveVector.z = camForwardVec.z * input.y;
+	moveVector = camRightVec * input.x;
+	moveVector += camForwardVec * input.y;
 	moveVector.y = 0.0f;
 	moveVector.Normalize();
 
@@ -79,9 +87,9 @@ void PlayerMoveState::Move()
 	Vector3 moveSpeed = moveVector * currentSpeed;
 
 	// 移動
-	Vector3 pos = pPlayerObject->transform.GetPosition();
+	Vector3 pos = pPlayerObject->GetTransform().GetPosition();
 	pos += moveSpeed * MainApplication::DeltaTime();
-	pPlayerObject->transform.SetPosition(pos);
+	pPlayerObject->GetTransform().SetPosition(pos);
 
 	// アニメーションのブレンド割合をセット
 	pAnimController->SetMoveSpeedRatio(currentSpeed / maxSpeed);
@@ -95,9 +103,9 @@ void PlayerMoveState::Rotation()
 	Quaternion targetRotation = Quat::RotateToVector(moveVector);
 
 	// 現在の回転量を球面線形補間で向けていく。
-	Quaternion rotation = pPlayerObject->transform.GetRotation();
+	Quaternion rotation = pPlayerObject->GetTransform().GetRotation();
 	rotation = Quaternion::Slerp(rotation, targetRotation, rotateSpeed * MainApplication::DeltaTime());
-	pPlayerObject->transform.SetRotation(rotation);
+	pPlayerObject->GetTransform().SetRotation(rotation);
 }
 
 Vector2 PlayerMoveState::InputValue()

@@ -24,7 +24,7 @@ void CP_CameraMove::Move()
 	
 	Transform& transform = GetTransform();
 	Vector3 position = transform.GetPosition();
-	Vector3 targetPos = pTargetObj->transform.GetPosition();
+	Vector3 targetPos = pTargetObj->GetTransform().GetPosition();
 
 	float centerRad = centerAngle * Mathf::degToRad;
 
@@ -37,9 +37,18 @@ void CP_CameraMove::Move()
 
 void CP_CameraMove::LookUpdate()
 {
-	Vector3 targetPos = pTargetObj->transform.GetPosition();
+	Vector3 targetPos = pTargetObj->GetTransform().GetPosition();
 
 	GetTransform().LookAt(targetPos);
+}
+
+bool CP_CameraMove::IsCanUpdate()
+{
+#ifdef EDIT
+	if (pTargetObj == nullptr) return false;
+#endif // EDIT
+
+	return true;
 }
 
 
@@ -58,6 +67,8 @@ void CP_CameraMove::Start()
 
 void CP_CameraMove::LateUpdate()
 {
+	if (!IsCanUpdate()) return;
+
 	UpdateVector();
 	Move();
 	LookUpdate();

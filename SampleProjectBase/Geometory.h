@@ -69,6 +69,11 @@ public:
 
 	static void DrawSphere(bool _isWireFrame = false);	// 球描画
 
+	/// @brief 線描画
+	/// @param _start 始点 
+	/// @param _end 終点
+	static void DrawLine(const DirectX::SimpleMath::Vector3& _start, const DirectX::SimpleMath::Vector3& _end);
+
 private:
 	/// @brief マテリアルを作成
 	static void MakeMaterial();

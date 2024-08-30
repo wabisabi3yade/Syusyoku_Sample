@@ -4,12 +4,19 @@
 #include "InSceneSystemManager.h"
 #include "ShaderCollection.h"
 
-Scene::Scene(const std::string& _name)
+using namespace DirectX;
+using namespace DirectX::SimpleMath;
+
+Scene::Scene(const std::string& _name) : isPlay(true)
 {
 	pInSceneSystem = InSceneSystemManager::GetInstance();
 	pInSceneSystem->Init();
 
 	sceneName = _name;
+
+	// ImGui使用するなら
+	if (HashiTaku::IImGuiUser::GetIsImGuiUse())
+		isPlay = false;
 
 	// ロードする
 	Load();
@@ -23,16 +30,12 @@ Scene::~Scene()
 void Scene::Exec()
 {
 	SceneObjects& sceneObjects = pInSceneSystem->GetSceneObjects();
-	CollisionChecker& collisionChecker = pInSceneSystem->GetCollisonChecker();
 
-	// シーン内の当たり判定をチェックする
-	collisionChecker.CollisionCheck();
-
-	// シーン内の更新処理
-	sceneObjects.Update();
-
-	// Updateの後に行う更新処理(カメラに処理とか)
-	sceneObjects.LateUpdate();
+	if (IsUpdatePlay())	// 再生中なら
+	{
+		// シーン内の更新処理
+		sceneObjects.Update();
+	}
 
 	// ImGui編集
 	sceneObjects.ImGuiSetting();
@@ -42,6 +45,14 @@ void Scene::Exec()
 
 	// シーン内の描画処理
 	sceneObjects.Draw();
+}
+
+void Scene::ImGuiSetting()
+{
+	if (isPlay)
+		ImGuiPlaying();
+	else
+		ImGuiStop();
 }
 
 void Scene::Save()
@@ -58,6 +69,13 @@ void Scene::Save()
 	auto str = sceneData.dump(4);
 	auto len = str.length();
 	f.write(str.c_str(), len);
+
+	HASHI_DEBUG_LOG(sceneName + " セーブしました");
+}
+
+bool Scene::GetIsUpdatePlay() const
+{
+	return isPlay;
 }
 
 void Scene::Load()
@@ -75,7 +93,7 @@ void Scene::Load()
 
 	// シーンオブジェクトをロード
 	const nlohmann::json& sceneObjData = sceneData["objects"];
-	InSceneSystemManager::GetInstance()->GetSceneObjects().LoadObject(sceneObjData);
+	pInSceneSystem->GetSceneObjects().LoadObject(sceneObjData);
 
 	HASHI_DEBUG_LOG(sceneName + " ロード完了");
 }
@@ -113,4 +131,48 @@ std::string Scene::SaveFilePath()
 	fileName += ".json";	// 拡張子
 
 	return fileName;
+}
+
+bool Scene::IsUpdatePlay()
+{
+#ifdef EDIT
+	if (!isPlay) return false;
+#endif // EDIT
+
+	return true;
+}
+
+void Scene::ImGuiPlaying()
+{
+	if (ImGui::Button("Stop"))
+		PlayStop();
+}
+
+void Scene::ImGuiStop()
+{
+	if (ImGui::Button("Play"))
+		PlayStart();
+
+	// 以下再生中は表示しない
+	if (ImGui::Button("Save"))
+	{
+		Save();
+	}
+}
+
+void Scene::PlayStart()
+{
+	isPlay = true;
+
+	// シーン再生前にセーブする
+	Save();
+}
+
+void Scene::PlayStop()
+{
+	isPlay = false;
+
+	// 新しくシーンの中を生成する
+	InSceneSystemManager::GetInstance()->Reset();
+	Load();
 }

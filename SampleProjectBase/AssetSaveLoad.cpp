@@ -126,8 +126,8 @@ void AssetSaveLoader::CreateMesh(const nlohmann::json& _loadData)
 		float scale = 1.0f;
 		LoadJsonFloat("loadScale", scale, data);
 
-		Vector3 angles;
-		LoadJsonVector3("loadAngle", angles, data);
+		bool isFlipY = false;
+		LoadJsonBoolean("flipY", isFlipY, data);
 
 		bool isGetSize = false;
 		LoadJsonBoolean("getSize", isGetSize, data);
@@ -135,7 +135,7 @@ void AssetSaveLoader::CreateMesh(const nlohmann::json& _loadData)
 		bool isRightHand = false;
 		LoadJsonBoolean("rightHand", isRightHand, data);
 
-		AssetLoader::ModelLoad(path, scale, angles, isRightHand, isGetSize);
+		AssetLoader::ModelLoad(path, scale, true , isRightHand, isGetSize);
 	}
 }
 
@@ -191,6 +191,7 @@ void AssetSaveLoader::LoadAsset(const nlohmann::json& _loadData)
 		LoadJsonString("assetName", assetName, asset);
 
 		Asset_Base* pAsset = pAssetCollection->GetAsset<AnimationData>(assetName);
+	
 		pAsset->Load(asset);
 	}
 }

@@ -35,6 +35,9 @@ public:
 	void SetMoveSpeedRatio(float _speedRatio);
 
 private:
+	/// @brief 初期処理
+	void Init();
+
 	/// @brief アニメーション終了処理
 	void OnAnimationFinish() override;
 };

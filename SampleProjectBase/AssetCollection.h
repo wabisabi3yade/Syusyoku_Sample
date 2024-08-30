@@ -18,14 +18,6 @@ class AssetDisplay;
 class AssetSetter;
 class AssetSaveLoader;
 
-/*
-	命名規則　この後に_モデル名を入力(UE5に則る)
-	テクスチャ：T
-	スケルタルメッシュ：SK
-	スタティックメッシュ：SM
-	マテリアル：M
-*/
-
 // アセットの管理配列
 using AssetList = std::unordered_map<std::string, std::unique_ptr<Asset_Base>>;
 

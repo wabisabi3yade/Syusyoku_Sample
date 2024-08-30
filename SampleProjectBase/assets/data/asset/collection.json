@@ -65,15 +65,27 @@
     ],
     "models": [
         {
+            "assetName": "spot.fbx",
+            "flipY": true,
+            "getSize": false,
+            "loadScale": 0.10000000149011612,
+            "pathName": "assets/model/spot/spot.fbx",
+            "rightHand": true
+        },
+        {
             "assetName": "Knight.fbx",
+            "flipY": true,
             "getSize": true,
-            "loadAngle": [
-                0.0,
-                180.0,
-                0.0
-            ],
             "loadScale": 0.009999999776482582,
             "pathName": "assets/model/knight/Knight.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "TestBone.fbx",
+            "flipY": true,
+            "getSize": false,
+            "loadScale": 1.0,
+            "pathName": "assets/model/TestBone.fbx",
             "rightHand": true
         }
     ],
@@ -81,6 +93,10 @@
         {
             "assetName": "an.jpg",
             "pathName": "assets/texture/an.jpg"
+        },
+        {
+            "assetName": "spot_texture.png",
+            "pathName": ""
         },
         {
             "assetName": "grass.jpg",

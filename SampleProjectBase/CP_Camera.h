@@ -22,9 +22,11 @@ public:
 	CP_Camera();
 	~CP_Camera() {}
 
-	void Awake() override;
+	void Init() override;
 
 	void LateUpdate() override;
+
+	void Draw() override;
 
 	void ImGuiSetting() override;
 

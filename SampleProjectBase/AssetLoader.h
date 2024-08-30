@@ -73,12 +73,11 @@ public:
 	/// @brief  モデルをロードしてアセット管理に追加
 	/// @param _modelPath モデルのパス名
 	/// @param _scale ロードするときのスケール値
-	/// @param _angles ロードするときの回転角度(deg)
+	/// @param _isFlipY 回転する
 	/// @param _isRightHand 右手系か？
 	/// @param _isGetScale モデルのスケールを取得するか？
 	/// @return ロードしたメッシュ
-	static Mesh_Group* ModelLoad(const std::string& _modelPath, float _scale, DirectX::SimpleMath::Vector3 _angles, bool _isRightHand,
-		bool _isGetScale = true);
+	static Mesh_Group* ModelLoad(const std::string& _modelPath, float _scale, bool _isFlipY, bool _isRightHand, bool _isGetScale = true);
 
 	/// @brief アニメーションをロードしてアセット管理に追加
 	/// @param _animPath アニメーションのパス

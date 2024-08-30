@@ -44,11 +44,6 @@ void PlayerActionController::TransitionState(State _nextState)
 	pCurrentState->Init();
 }
 
-//void PlayerActionController::TransitionAnimation(const std::string& _nextName)
-//{
-//	pAnimController->ChangeAnimation(_nextName);
-//}
-
 void PlayerActionController::ImGuiSetting()
 {
 	if (!ImGui::TreeNode("Action")) return;

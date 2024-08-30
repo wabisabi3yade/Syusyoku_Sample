@@ -2,6 +2,7 @@
 
 #include "GameInput.h"
 #include "ComponentFactory.h"
+#include "DX11BulletPhisics.h"
 
 // アセット初期化
 #include "AssetSetter.h"
@@ -13,7 +14,6 @@ namespace fs = std::filesystem;
 SceneManager::SceneManager() : nowSceneName("")
 {
 	Setup();
-
 
 	CreateScene("test");
 
@@ -27,11 +27,14 @@ SceneManager::~SceneManager()
 
 void SceneManager::Setup()
 {
+	// Bullet物理エンジン初期化
+	DX11BulletPhisics::GetInstance()->Init();
+
 	// アセット関連
 	AssetSetup();
 
 	// コンポーネント初期化
-	ComponentFactory::GetInstance();
+	ComponentFactory::GetInstance()->Init();
 
 	// イージング初期化
 	HashiTaku::Easing::Init();
@@ -63,16 +66,13 @@ void SceneManager::AssetSetup()
 	Geometory::Init();
 }
 
-void SceneManager::CheckChangeBroad()
-{
-
-}
-
 void SceneManager::Release()
 {
-	Geometory::Release();
+	pNowScene.reset();
 	GameInput::Delete();
 	ComponentFactory::Delete();
+	Geometory::Release();
+	DX11BulletPhisics::Delete();
 }
 
 void SceneManager::CreateScene(const std::string& _sceneName)
@@ -90,10 +90,9 @@ void SceneManager::CreateScene(const std::string& _sceneName)
 
 void SceneManager::ImGuiSetting()
 {
-#ifdef EDIT
 	ImGui::Begin("SceneList");
 
-	ImGuiSave();
+	pNowScene->ImGuiCall();
 
 	ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
@@ -104,7 +103,6 @@ void SceneManager::ImGuiSetting()
 	ImGuiCreateScene();
 
 	ImGui::End();
-#endif // EDIT
 }
 
 void SceneManager::ImGuiChangeScene()
@@ -116,16 +114,6 @@ void SceneManager::ImGuiChangeScene()
 		if (ImGui::Button(name.c_str()))
 			ChangeScene(name);
 	}
-}
-
-void SceneManager::ImGuiSave()
-{
-	if (ImGui::Button("Save"))
-	{
-		pNowScene->Save();
-		HASHI_DEBUG_LOG(nowSceneName + " セーブしました");
-	}
-
 }
 
 void SceneManager::ImGuiCreateScene()
@@ -140,17 +128,21 @@ void SceneManager::ImGuiCreateScene()
 
 void SceneManager::Exec()
 {
+	DX11BulletPhisics* pBulletPhisics = DX11BulletPhisics::GetInstance();
+
 	// ゲーム内入力更新
 	GameInput::GetInstance()->Update();
 
-	// 大局シーンの実行
+	// 物理空間のシミュレーションを更新
+	pBulletPhisics->Update();
+
+	// シーンの実行
 	pNowScene->Exec();
 
-	// シーン
-	ImGuiSetting();
+	// 当たり判定描画
+	pBulletPhisics->Draw();
 
-	// シーン遷移するかどうか確認
-	CheckChangeBroad();
+	ImGuiCall();
 }
 
 void SceneManager::ChangeScene(const std::string& _sceneName)

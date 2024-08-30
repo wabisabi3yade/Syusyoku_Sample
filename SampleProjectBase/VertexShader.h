@@ -21,7 +21,6 @@ public:
 	void SetGPU() override;
 
 	void OnceUpdateBuffer() override {}
-
 private:
 
 	/// @brief 頂点シェーダー作成

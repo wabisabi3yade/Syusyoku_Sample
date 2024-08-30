@@ -34,8 +34,11 @@ private:
 	/// @brief ロード時、スケール倍率
 	float loadScale;
 
-	/// @brief ロード時、回転角度
+	/// @brief ロード時オフセット角度
 	DirectX::SimpleMath::Vector3 loadOffsetAngles;
+
+	/// @brief ロード時Y軸反転したか？
+	bool isFlipY;
 
 	/// @brief メッシュの種類
 	MeshType meshType;
@@ -46,11 +49,11 @@ private:
 	/// @brief 右手系のモデルか？
 	bool isRightHand;
 public:
-	Mesh_Group() : meshType(MeshType::None), loadScale(1.0f), isGetSize(false), isRightHand(false) {}
+	Mesh_Group() : meshType(MeshType::None), loadScale(1.0f), isFlipY(false), isGetSize(false), isRightHand(false) {}
 
 	/// @brief コンストラクタ
 	/// @param _meshType メッシュの種類
-	Mesh_Group(MeshType _meshType) : meshType(_meshType), loadScale(1.0f), isGetSize(false), isRightHand(false) {}
+	Mesh_Group(MeshType _meshType) : meshType(_meshType), loadScale(1.0f), isFlipY(false), isGetSize(false), isRightHand(false) {}
 	virtual ~Mesh_Group() {}
 
 	/// @brief メッシュを追加
@@ -88,12 +91,10 @@ public:
 	/// @return サイズ
 	DirectX::SimpleMath::Vector3 GetSize() const;
 
-	/// @brief ロード時のスケール倍率を取得する
-	/// @return スケール倍率
+	// ロード時のスケール倍率を取得する
 	float GetLoadOffsetScale() const;
 
-	/// @brief ロード時のオフセット角度を取得する
-	/// @return オフセット角度
+	/// ロード時のオフセット角度を取得する
 	DirectX::SimpleMath::Vector3 GetLoadOffsetAngles() const;
 
 	/// @brief メッシュ群の種類を取得
@@ -112,9 +113,9 @@ public:
 	/// @param _scaleTimes スケール倍率
 	void SetLoadOffsetScale(float _scaleTimes);
 
-	/// @brief オフセット角度をセット
-	/// @param _scaleTimes オフセット角度
-	void SetLoadOffsetAngles(const DirectX::SimpleMath::Vector3& _offsetAngles);
+	/// @brief Y軸反転したかをセット
+	/// @param  _isLoadFlipY Y軸反転したか？
+	void SetLoadFlipY(bool _isLoadFlipY);
 
 	// 右手系かどうかセット
 	void SetIsRightHand(bool _isRightHand); 
