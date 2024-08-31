@@ -25,8 +25,4 @@ void PlayerAttackState::Terminal()
 
 void PlayerAttackState::TransitionCheck()
 {
-	using enum PlayerActionController::State;
-	u_int stateNum = static_cast<u_int>(Move);
-
-	ButtonChangeState(GameInput::ButtonType::Player_Attack, stateNum);
 }

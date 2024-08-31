@@ -3,13 +3,8 @@
 
 #include "AnimationNode_Base.h"
 
-//AnimTransitionArrow::AnimTransitionArrow()
-//	: pFromNode(nullptr), pToNode(nullptr)
-//{
-//}
-
-AnimTransitionArrow::AnimTransitionArrow(AnimationNode_Base& _pFromNode, AnimationNode_Base& _pToNode, float _transTargetRatio, std::function<bool()> _condition)
-	: pFromNode(&_pFromNode), pToNode(&_pToNode), condition(_condition), transTargetRatio(_transTargetRatio)
+AnimTransitionArrow::AnimTransitionArrow(AnimationNode_Base& _pFromNode, AnimationNode_Base& _pToNode, float _transTargetRatio, float _transitionTime, std::function<bool()> _condition)
+	: pFromNode(&_pFromNode), pToNode(&_pToNode), condition(_condition), transTargetRatio(_transTargetRatio), transitionTime(_transitionTime)
 {
 }
 
@@ -40,10 +35,16 @@ float AnimTransitionArrow::GetTargetRatio() const
 	return transTargetRatio;
 }
 
+float AnimTransitionArrow::GetTransitionTime() const
+{
+	return transitionTime;
+}
+
 void AnimTransitionArrow::ImGuiSetting()
 {
 	std::string text = "->" + pToNode->GetNodeName();
 	ImGui::Text(text.c_str());
 	ImGui::SameLine();
-	ImGui::DragFloat("transRatio", &transTargetRatio, 0.1f, 0.0f, 1.0f);
+	ImGui::DragFloat("transRatio", &transTargetRatio, 0.01f, 0.0f, 1.0f);
+	ImGui::DragFloat("transitionTime", &transitionTime, 0.01f, 0.0f, 10.0f);
 }
