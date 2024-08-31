@@ -67,7 +67,7 @@ void CP_Animation::ImGuiSetting()
 	ImGui::Begin(TO_UTF8(name), &isWindowOpen);
 
 	if (pAnimController)
-		pAnimController->ImGuiSetting();
+		pAnimController->ImGuiCall();
 
 	ImGui::End();
 }

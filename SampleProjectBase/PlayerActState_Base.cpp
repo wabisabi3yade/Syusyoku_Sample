@@ -22,7 +22,7 @@ void PlayerActState_Base::ButtonChangeState(GameInput::ButtonType _buttonType, u
 
 void PlayerActState_Base::ChangeAnimation(u_int _animState)
 {
-	pAnimController->ChangeAnimationByState(
+	pAnimController->SetStartAnimation(
 		static_cast<PlayerAnimController::AnimType>(_animState)
 	);
 }

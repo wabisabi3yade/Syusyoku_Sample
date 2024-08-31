@@ -10,6 +10,7 @@
 std::vector<std::string> g_stateNames =
 {
 	"Move",
+	"Jump",
 	"Action",
 };
 

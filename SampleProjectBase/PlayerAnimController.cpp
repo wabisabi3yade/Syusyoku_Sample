@@ -7,32 +7,18 @@
 #include "GameInput.h"
 
 PlayerAnimController::PlayerAnimController()
+	: nowState(AnimType::Move)
 {
 	Init();
 }
 
-void PlayerAnimController::ChangeAnimationByState(AnimType _type, bool _isIneterp)
+void PlayerAnimController::SetStartAnimation(AnimType _type)
 {
+	assert(_type < AnimType::MaxNum);
+
 	nowState = _type;
-
-	using enum AnimType;
-	switch (_type)
-	{
-	case Move:
-		AnimationController::ChangeAnimationStart("Move", 0.0f, _isIneterp);
-		break;
-
-	case Jump:
-		AnimationController::ChangeAnimationStart("Jump", 0.0f, _isIneterp);
-		break;
-
-	case Attack:
-		AnimationController::ChangeAnimationStart("AttackN1", 0.0f, _isIneterp);
-		break;
-
-	default:
-		break;
-	}
+	std::string nodeName = animTypeNodeNames[_type];
+	AnimationController::ChangeAnimation(nodeName, 0.0f, false);
 }
 
 void PlayerAnimController::SetMoveSpeedRatio(float _speedRatio)
@@ -46,44 +32,107 @@ void PlayerAnimController::SetMoveSpeedRatio(float _speedRatio)
 
 void PlayerAnimController::Init()
 {
+	// ノード作成
+	InitCreateNode();
+
+	InitTransitionArrow();
+
+	// 初期アニメーションセット
+	SetStartAnimation(AnimType::Move);
+}
+
+void PlayerAnimController::InitCreateNode()
+{
+	// Move
 	std::vector<std::string> animNames =
 	{
 		"Idle.fbx",
 		"WalkF.fbx",
 		"RunF.fbx"
 	};
-
 	std::vector<float> ratios =
 	{
 		0.0f,
 		0.5f,
 		1.0f
 	};
+	std::string moveNodeName = "Move";
+	CreateBlendNode(animNames, ratios, moveNodeName);
 
-	CreateBlendNode(animNames, ratios, "Move");
-
-	// 攻撃
-	CreateSingleNode("AttackN1", "AttackN1.fbx");
-	AnimationNode_Base* pAttack = GetNode("AttackN1");
+	// AttackN1
+	std::string attackNodeName = "AttackN1";
+	CreateSingleNode(attackNodeName, "AttackN1.fbx");
+	AnimationNode_Base* pAttack = GetNode(attackNodeName);
 	pAttack->SetIsLoop(false);
 
-	ChangeAnimationByState(AnimType::Move, false);
+	// 名前と列挙型対応
+	using enum AnimType;
+	LinkAnimTypeNodeName(Move, moveNodeName);
+	LinkAnimTypeNodeName(Attack, attackNodeName);
+}
 
-	CreateTransitionArrow("Move", "AttackN1", 0.5f, []()
+void PlayerAnimController::InitTransitionArrow()
+{
+	using enum AnimType;
+
+	// Move
+	CreateTransitionArrow(animTypeNodeNames[Move], animTypeNodeNames[Attack], 0.0f, 0.2f,
+		[]()
 		{
 			return GameInput::GetInstance()->GetButtonDown(GameInput::ButtonType::Player_Attack);
 		});
 
-	CreateTransitionArrow("AttackN1", "Move", 0.2f, [pAttack]()
+	// Attack
+	AnimationNode_Base* pAttackNode = GetNode(animTypeNodeNames[Attack]);
+	CreateTransitionArrow(animTypeNodeNames[Attack], animTypeNodeNames[Move], 0.1f, 0.2f, [pAttackNode]()
 		{
-			return pAttack->GetIsFinish();
+			return pAttackNode->GetIsFinish();
 		});
+}
+
+void PlayerAnimController::LinkAnimTypeNodeName(AnimType _animType, const std::string& _nodeName)
+{
+	animTypeNodeNames[_animType] = _nodeName;
 }
 
 void PlayerAnimController::OnAnimationFinish()
 {
 	AnimationController::OnAnimationFinish();
 
-	u_int stateNum = static_cast<u_int>(nowState);
-	NotifyFinish(stateNum);
+	// 終了したノード名から列挙型を取得
+	AnimType finType = FindAnimType(pCurrentAnimNode->GetNodeName());
+
+	// 登録しているオブザーバーに送信
+	NotifyFinish(static_cast<u_int>(finType));
+}
+
+void PlayerAnimController::ChangeAnimation(const std::string& _animName, float _targetAnimRatio, bool _isInterp)
+{
+	AnimationController::ChangeAnimation(_animName, _targetAnimRatio, _isInterp);
+
+	nowState = FindAnimType(pCurrentAnimNode->GetNodeName());
+}
+
+PlayerAnimController::AnimType PlayerAnimController::FindAnimType(const std::string& _nodeName)
+{
+	// 終了したノード名から列挙型を取得
+	AnimType findType = AnimType::MaxNum;
+	for (auto& link : animTypeNodeNames)
+	{
+		if (link.second == _nodeName)
+		{
+			findType = link.first;
+			break;
+		}
+	}
+	assert(findType != AnimType::MaxNum && "ノード名から列挙型を探せませんでした");
+
+	return findType;
+}
+
+void PlayerAnimController::ImGuiSetting()
+{
+	AnimationController::ImGuiSetting();
+
+	ImGui::Text(std::string("AnimationState:" + animTypeNodeNames[nowState]).c_str());
 }

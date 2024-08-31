@@ -55,8 +55,13 @@ class InertInterpAnimation
 	/// @brief 遷移したときのトランスフォーム
 	std::vector<BoneTransform> changeTimeTransform;
 
+	/// @brief 遷移経過時間
+	float transitionElapsedTime;
+
+	/// @brief 遷移する時間
+	float transitionTime;
 public:
-	InertInterpAnimation() {}
+	InertInterpAnimation();
 	~InertInterpAnimation() {}
 
 	/// @brief 遷移時の計算をする
@@ -73,6 +78,20 @@ public:
 	DirectX::SimpleMath::Vector3 CalcBlendPos(u_int _boneIdx, float _blendingTime);
 	DirectX::SimpleMath::Vector3 CalcBlendScale(u_int _boneIdx, float _blendingTime);
 	DirectX::SimpleMath::Quaternion CalcBlendRot(u_int _boneIdx, float _blendingTime);
+
+	/// @brief 遷移の経過時間を進める
+	/// @return 経過時間
+	float ProgressTransitionTime();
+
+	/// @brief 遷移が終了しているか取得する
+	/// @return 遷移終了しているか？
+	bool GetIsTransitionEnd();
+	
+	// 遷移経過時間を取得する
+	float GetTransElapsedTime() const;
+
+	// 遷移時間を取得 
+	float GetTransitionTime() const;
 private:
 
 	/// @brief 座標の初期計算

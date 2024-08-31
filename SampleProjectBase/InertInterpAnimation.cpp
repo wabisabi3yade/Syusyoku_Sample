@@ -7,12 +7,19 @@
 
 using namespace DirectX::SimpleMath;
 
+InertInterpAnimation::InertInterpAnimation()
+	: transitionElapsedTime(0.0f), transitionTime(0.0f)
+{
+}
+
 bool InertInterpAnimation::Calculate(const std::vector<BoneTransform>& _nextAnimation, float _blendTime)
 {
 	// ƒLƒƒƒbƒVƒ…‚ª‚È‚¢‚È‚ç
 	if (!secondLastBoneCache.isEnable) return false;
 
 	// ‰Šú‰»
+	transitionElapsedTime = 0.0f;
+	transitionTime = _blendTime;
 	positionTransition.clear();
 	scaleTransition.clear();
 	rotationTransition.clear();
@@ -77,6 +84,28 @@ DirectX::SimpleMath::Quaternion InertInterpAnimation::CalcBlendRot(u_int _boneId
 	Quaternion q = Quaternion::CreateFromAxisAngle(qT.axis, blendValue);
 
 	return Quat::Multiply(q, changeTimeTransform[_boneIdx].rotation);
+}
+
+float InertInterpAnimation::ProgressTransitionTime()
+{
+	transitionElapsedTime += MainApplication::DeltaTime();
+
+	return transitionElapsedTime;
+}
+
+bool InertInterpAnimation::GetIsTransitionEnd()
+{
+	return transitionElapsedTime >= transitionTime;
+}
+
+float InertInterpAnimation::GetTransElapsedTime() const
+{
+	return transitionElapsedTime;
+}
+
+float InertInterpAnimation::GetTransitionTime() const
+{
+	return transitionTime;
 }
 
 void InertInterpAnimation::BoneInitTransition(u_int _boneIdx, const std::vector<BoneTransform>& _requestData, float _blendTime)

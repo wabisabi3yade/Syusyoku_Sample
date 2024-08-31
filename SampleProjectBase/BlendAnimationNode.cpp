@@ -27,7 +27,9 @@ void BlendAnimationNode::ImGuiPlaying()
 
 	ImGui::DragFloat("smoothTime", &ratioSmoothTime, 0.01f, 0.0f, 2.0f);
 
-	ImGui::DragFloat("target", &targetBlendRatio, 0.01f, 0.0f, 1.0f);
+	float target = targetBlendRatio;
+	ImGui::DragFloat("target", &target, 0.01f, 0.0f, 1.0f);
+	SetTargetBlendRatio(target);
 
 	for (auto& data : blendDatas)
 	{

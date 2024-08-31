@@ -11,25 +11,16 @@
 class BoneList;
 
 /// @brief アニメーション遷移を管理するクラス
-class AnimationController : public Asset_Base
+class AnimationController : public Asset_Base, public HashiTaku::IImGuiUser
 {
-	/// @brief 遷移先のアニメーション
-	AnimationNode_Base* pNextAnimNode;
-
 	/// @brief 慣性補間
-	std::unique_ptr<InertInterpAnimation> inertInterp;
+	std::unique_ptr<InertInterpAnimation> pInertInterp;
 
 	/// @brief 再生割合
 	float playingRatio;
 
 	/// @brief 再生速度
 	float playSpeed;
-
-	// 仮
-	float blendTime = 0.5f;
-
-	// ブレンドしている時間
-	float blendElapsedTime;
 
 	/// @brief 動かすボーン配列
 	BoneList* pBoneList;
@@ -43,6 +34,9 @@ class AnimationController : public Asset_Base
 protected:
 	/// @brief アニメーションノード配列
 	std::unordered_map<std::string, std::unique_ptr<AnimationNode_Base>> pAnimationNodes;
+
+	/// @brief 前のアニメーション
+	AnimationNode_Base* pPrevAnimNode;
 
 	/// @brief 再生中のアニメーション
 	AnimationNode_Base* pCurrentAnimNode;
@@ -58,12 +52,10 @@ public:
 	/// @param _playingTime 再生時間
 	void Update(BoneList& _boneList);
 
-	void ImGuiSetting();
-
 	/// @brief アニメーション遷移する
 	/// @param _animName アニメーション名
-	/// @param  _isInterp 補間するか？
-	void ChangeAnimationStart(const std::string& _animName, float _targetAnimRatio = 0.0f, bool _isInterp = true);
+	/// @param _transitionTime 遷移時間(0.0fなら遷移しない)
+	virtual void ChangeAnimation(const std::string& _animName, float _targetAnimRatio, float _transitionTime);
 
 	/// @brief ブレンド割合をセット
 	/// @param _ratio 割合
@@ -87,8 +79,9 @@ public:
 	/// @param _fromNodeName 遷移元アニメーション
 	/// @param _toNodeName 遷移先アニメーション
 	/// @param _targetAnimRatio ターゲットのアニメーション割合
+	/// @param  _transitionTime 遷移時間
 	/// @param _condition 遷移条件
-	void CreateTransitionArrow(const std::string& _fromNodeName, const std::string& _toNodeName, float _targetAnimRatio, std::function<bool()> _condition);
+	void CreateTransitionArrow(const std::string& _fromNodeName, const std::string& _toNodeName, float _targetAnimRatio, float _transitionTime, std::function<bool()> _condition);
 
 	/// @brief アニメーションを除外
 	/// @param _animName アニメーションの名前
@@ -131,18 +124,15 @@ private:
 	/// @brief 遷移するか確認する
 	void TranstionCheck();
 
-	/// @brief アニメーションを変更する
-	void ChangeAnimation();
-
 	/// @brief アニメーションを持ってるか返す
 	/// @param _animName アニメーションの名前
 	/// @return アニメーションがあるか？
 	bool IsHaveAnim(const std::string& _animName);
 
 	/// @brief 遷移開始する
-	/// @param _animName アニメーション名
 	/// @param_targetAnimRatio 遷移先のアニメーション割合
-	void InterpTransitionStart(const std::string& _animName, float _targetAnimRatio);
+	/// @param _transitionTime 遷移時間
+	void InterpTransitionStart(float _targetAnimRatio, float _transitionTime);
 
 	/// @brief 遷移終了した時の処理
 	void InterpTransitionEnd();
@@ -151,7 +141,12 @@ private:
 	void ImGuiImportAnim();
 
 protected:
+	void ImGuiSetting() override;
+
 	/// @brief アニメーション終了時処理
 	virtual void OnAnimationFinish();
+
+	/// @brief アニメーションを変更完了
+	void OnChangeAnimComplete();
 };
 
