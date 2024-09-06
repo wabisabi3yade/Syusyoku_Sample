@@ -98,7 +98,7 @@ void AssetSaveLoader::CreateTexture(const nlohmann::json& _loadData)
 	{
 		std::string path;
 		LoadJsonString("pathName", path, data);
-		
+
 		AssetLoader::TextureLoad(path);
 	}
 }
@@ -135,7 +135,7 @@ void AssetSaveLoader::CreateMesh(const nlohmann::json& _loadData)
 		bool isRightHand = false;
 		LoadJsonBoolean("rightHand", isRightHand, data);
 
-		AssetLoader::ModelLoad(path, scale, true , isRightHand, isGetSize);
+		AssetLoader::ModelLoad(path, scale, true, isRightHand, isGetSize);
 	}
 }
 
@@ -164,7 +164,9 @@ void AssetSaveLoader::LoadAsset(const nlohmann::json& _loadData)
 		LoadJsonString("assetName", assetName, asset);
 
 		Asset_Base* pAsset = pAssetCollection->GetAsset<Texture>(assetName);
-		pAsset->Load(asset);
+
+		if (pAsset)
+			pAsset->Load(asset);
 	}
 
 	for (const auto& asset : _loadData[MAT_ELEMENT])
@@ -173,7 +175,9 @@ void AssetSaveLoader::LoadAsset(const nlohmann::json& _loadData)
 		LoadJsonString("assetName", assetName, asset);
 
 		Asset_Base* pAsset = pAssetCollection->GetAsset<Material>(assetName);
-		pAsset->Load(asset);
+
+		if (pAsset)
+			pAsset->Load(asset);
 	}
 
 	for (const auto& asset : _loadData[MOD_ELEMENT])
@@ -182,7 +186,9 @@ void AssetSaveLoader::LoadAsset(const nlohmann::json& _loadData)
 		LoadJsonString("assetName", assetName, asset);
 
 		Asset_Base* pAsset = pAssetCollection->GetAsset<Mesh_Group>(assetName);
-		pAsset->Load(asset);
+
+		if (pAsset)
+			pAsset->Load(asset);
 	}
 
 	for (const auto& asset : _loadData[ANIM_ELEMENT])
@@ -191,8 +197,9 @@ void AssetSaveLoader::LoadAsset(const nlohmann::json& _loadData)
 		LoadJsonString("assetName", assetName, asset);
 
 		Asset_Base* pAsset = pAssetCollection->GetAsset<AnimationData>(assetName);
-	
-		pAsset->Load(asset);
+
+		if (pAsset)
+			pAsset->Load(asset);
 	}
 }
 

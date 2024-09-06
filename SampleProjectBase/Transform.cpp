@@ -88,7 +88,7 @@ void Transform::SetChild(Transform& _child)
 
 	// ローカルパラメータに反映
 	Vector3 diffPos = _child.position - position;
-	_child.SetLocalPos(diffPos);
+	_child.SetLocalPosition(diffPos);
 
 	Vector3 diffScale = _child.scale / scale;
 	_child.SetLocalScale(diffScale);
@@ -147,7 +147,7 @@ void Transform::SetRotation(const DirectX::SimpleMath::Quaternion& _quaternion)
 }
 
 
-void Transform::SetLocalPos(const DirectX::SimpleMath::Vector3& _localPos)
+void Transform::SetLocalPosition(const DirectX::SimpleMath::Vector3& _localPos)
 {
 	localPosition = _localPos;
 	position = pParent->position;

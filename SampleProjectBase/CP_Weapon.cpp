@@ -21,6 +21,7 @@ void CP_Weapon::Init()
 
 void CP_Weapon::Start()
 {
+	SetBoneFromParent();
 }
 
 void CP_Weapon::LateUpdate()
@@ -32,10 +33,6 @@ void CP_Weapon::LateUpdate()
 
 void CP_Weapon::Draw()
 {
-	Geometory::SetPosition(GetTransform().GetPosition() + pos);
-	Geometory::SetScale(Vector3::One * 0.1f);
-	Geometory::SetRotation(rot.ToEuler());
-	Geometory::DrawCube();
 }
 
 void CP_Weapon::ImGuiSetting()
@@ -114,19 +111,17 @@ void CP_Weapon::UpdateTransform()
 		return;
 	}
 
-	const Matrix& boneMtx = pGrabBone->GetCombMtx();
+	const Matrix& boneMtx = pGrabBone->GetGlobalMtx();
 	Transform& t = GetTransform();
 
 	// ボーン行列からトランスフォームを求める
 	Vector3 bonePos = {
 		boneMtx._41,
 		boneMtx._42,
-		-boneMtx._43
+		boneMtx._43
 	};
 
-	//t.SetLocalPos((bonePos /** loadMeshScale*/) + offsetPosition);
-	pos = bonePos + offsetPosition;
-	scale = Vec3::WorldMtxToScale(boneMtx);
+	t.SetLocalPosition(bonePos + offsetPosition);
 
 	Vector3 s = Vec3::WorldMtxToScale(boneMtx);
 
@@ -137,9 +132,9 @@ void CP_Weapon::UpdateTransform()
 		0.0f, 0.0f, 0.0f, 1.0f
 	);
 
-	Quaternion q = Quaternion::CreateFromRotationMatrix(rotateMtx);
-	/*t.SetLocalRotation(Quat::Multiply(q, Quat::ToQuaternion(offsetAngles)));*/
-	//rot = Quat::Multiply(q, Quat::ToQuaternion(offsetAngles));
+	Quaternion rot = Quaternion::CreateFromRotationMatrix(rotateMtx);
+	rot = Quat::Multiply(rot, Quat::ToQuaternion(offsetAngles));
+	t.SetLocalRotation(Quat::Multiply(rot, Quat::ToQuaternion(offsetAngles)));
 }
 
 void CP_Weapon::ImGuiSetBone()
@@ -165,11 +160,11 @@ bool CP_Weapon::IsCanUpdate()
 
 void CP_Weapon::SetBoneFromParent()
 {
-	Transform& pParent = GetTransform()/*.GetParent()*/;
+	Transform* pParent = GetTransform().GetParent();
 
-	/*if (!pParent) return;*/
+	if (!pParent) return;
 
-	CP_MeshRenderer* pMr = pParent.GetGameObject().GetComponent<CP_MeshRenderer>();
+	CP_MeshRenderer* pMr = pParent->GetGameObject().GetComponent<CP_MeshRenderer>();
 	if (!pMr) return;
 
 	SkeletalMesh* pSk = dynamic_cast<SkeletalMesh*>(pMr->GetRenderMesh());

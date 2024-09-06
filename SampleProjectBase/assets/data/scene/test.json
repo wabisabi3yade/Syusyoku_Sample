@@ -57,7 +57,7 @@
                     "viewSlot": 0
                 },
                 {
-                    "dis_Hori": 6.0,
+                    "dis_Hori": 9.0,
                     "dis_Ver": 3.0,
                     "enable": true,
                     "name": "CameraMove",
@@ -71,14 +71,14 @@
             "transform": {
                 "angle": [
                     0.0,
-                    0.0,
+                    -88.0,
                     0.0
                 ],
                 "child": null,
                 "pos": [
-                    0.0,
-                    1.899999976158142,
-                    -6.699999809265137
+                    9.600000381469727,
+                    1.7999999523162842,
+                    -0.20000000298023224
                 ],
                 "scale": [
                     1.0,
@@ -113,7 +113,9 @@
                     0.0,
                     0.0
                 ],
-                "child": null,
+                "child": [
+                    "Weapon"
+                ],
                 "pos": [
                     0.0,
                     0.0,
@@ -123,6 +125,82 @@
                     1.0,
                     1.0,
                     1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "grabName": "mixamorig:RightHand",
+                    "name": "Weapon",
+                    "offsetAngles": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "offsetPos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            ],
+            "layer": 0,
+            "name": "Weapon",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "child": [
+                    "Weapon_Model"
+                ],
+                "parent": "Player",
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "scale": [
+                    0.20000000298023224,
+                    0.20000000298023224,
+                    0.20000000298023224
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "meshName": "Sword.fbx",
+                    "name": "MeshRenderer"
+                }
+            ],
+            "layer": 0,
+            "name": "Weapon_Model",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "child": null,
+                "parent": "Weapon",
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "scale": [
+                    0.20000000298023224,
+                    0.20000000298023224,
+                    0.20000000298023224
                 ]
             }
         }

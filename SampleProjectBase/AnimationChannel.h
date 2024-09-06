@@ -91,29 +91,19 @@ public:
 	/// @return ボーンのクォータニオン
 	const AnimKey_Q& GetQuatKey(u_int _keyNum) const;
 
-	///// @brief 再生時間から座標を取得する
-	///// @param _playingTime 再生時間
-	///// @return ボーンの座標
-	//DirectX::SimpleMath::Vector3 GetPosition(float _playingTime) const;
-
-	///// @brief 再生時間からスケールを取得する
-	///// @param _playingTime 再生時間
-	///// @return ボーンのスケール
-	//DirectX::SimpleMath::Vector3 GetScaling(float _playingTime) const;
-
-	///// @brief 再生時間からクォータニオンを取得する
-	///// @param _playingTime 再生時間
-	///// @return ボーンのクォータニオン
-	//DirectX::SimpleMath::Quaternion GetQuaternion(float _playingTime) const;
-
 	// 各キーの数を取得する
-	u_int GetPosKeyCnt() const;
-	u_int GetScaleKeyCnt() const;
-	u_int GetQuatKeyCnt() const;
+	int GetPosKeyCnt() const;
+	int GetScaleKeyCnt() const;
+	int GetQuatKeyCnt() const;
 
 	// 対応ボーンのIDを取得
 	u_int GetBodeIdx() const;
 
 	// 名前を取得
 	std::string GetName();
+
+	// 各キーの進めた数を取得する
+	u_int GetNextPosKey(u_int _currentKeyNum, int _progressNum = 1) const;
+	u_int GetNextScaleKey(u_int _currentKeyNum, int _progressNum = 1) const;
+	u_int GetNextQuatKey(u_int _currentKeyNum, int _progressNum = 1) const;
 };

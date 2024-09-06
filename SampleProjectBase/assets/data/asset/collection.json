@@ -81,19 +81,15 @@
             "rightHand": true
         },
         {
-            "assetName": "TestBone.fbx",
+            "assetName": "Sword.fbx",
             "flipY": true,
-            "getSize": false,
-            "loadScale": 1.0,
-            "pathName": "assets/model/TestBone.fbx",
+            "getSize": true,
+            "loadScale": 0.5,
+            "pathName": "assets/model/sword/Sword.fbx",
             "rightHand": true
         }
     ],
     "textures": [
-        {
-            "assetName": "an.jpg",
-            "pathName": "assets/texture/an.jpg"
-        },
         {
             "assetName": "spot_texture.png",
             "pathName": ""

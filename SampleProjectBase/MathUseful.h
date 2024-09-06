@@ -141,5 +141,5 @@ namespace Mtx
 	/// @param _up è„
 	/// @param _forward ëO
 	/// @return âÒì]çsóÒ
-	Matrix RotateMatrixByVecdtor(const Vector3& _right, const Vector3& _up, const Vector3& _forward);
+	Matrix RotateMatrixByVector(const Vector3& _right, const Vector3& _up, const Vector3& _forward);
 }

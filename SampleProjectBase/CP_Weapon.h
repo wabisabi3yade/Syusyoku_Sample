@@ -24,10 +24,6 @@ class CP_Weapon : public Component , public CloneComponent<CP_Weapon>
 	/// @brief ロード時の角度
 	DirectX::SimpleMath::Vector3 loadMeshAngles;
 
-	DirectX::SimpleMath::Vector3 pos;
-	DirectX::SimpleMath::Vector3 scale;
-	DirectX::SimpleMath::Quaternion rot;
-
 	/// @brief ロード時のスケール
 	float loadMeshScale;
 public:

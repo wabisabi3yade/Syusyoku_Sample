@@ -7,7 +7,7 @@ struct BoneTransform;
 
 /// @brief アニメーションのデータクラス
 class AnimationData : public AssetPath_Base
-{ 
+{
 private:
 	/// @brief アニメーションノードリスト
 	std::vector<std::unique_ptr<AnimationChannel>> pAnimChannels;

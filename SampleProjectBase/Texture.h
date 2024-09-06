@@ -6,6 +6,7 @@ class Texture : public AssetPath_Base
 {
 	friend class AssetLoader;
 
+protected:
 	/// @brief テクスチャ、バッファなどのリソースをシェーダーで参照可能な形式
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> pSRV;
 
@@ -15,6 +16,15 @@ class Texture : public AssetPath_Base
 public:
 	Texture() : width(0), height(0) {}
 	~Texture() {}
+
+	// SRVをセット
+	void SetSRV(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> _pSRV);
+
+	// 横幅をセット
+	void SetWidth(u_int _width);
+
+	// 縦幅をセット
+	void SetHeight(u_int _height);
 
 	/// @brief SRVの参照を取得
 	/// @return SRVの参照

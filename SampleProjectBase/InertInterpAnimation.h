@@ -1,11 +1,13 @@
 #pragma once
+#include "IAnimInterpolate.h"
+
 #include "Bone.h"
 
 class AnimationData;
 class SingleAnimationNode;
 
 /// @brief  慣性補間で行う
-class InertInterpAnimation
+class InertInterpAnimation : public IAnimInterpolate
 {
 	/// @brief フレームごとのボーンのキャッシュ
 	struct BoneCache
@@ -88,10 +90,10 @@ public:
 	bool GetIsTransitionEnd();
 	
 	// 遷移経過時間を取得する
-	float GetTransElapsedTime() const;
+	float GetElapsedTime() const override;
 
 	// 遷移時間を取得 
-	float GetTransitionTime() const;
+	float GetTransitionTime() const override;
 private:
 
 	/// @brief 座標の初期計算

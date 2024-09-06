@@ -18,7 +18,7 @@ void PlayerAnimController::SetStartAnimation(AnimType _type)
 
 	nowState = _type;
 	std::string nodeName = animTypeNodeNames[_type];
-	AnimationController::ChangeAnimation(nodeName, 0.0f, false);
+	AnimationController::ChangeAnimation(nodeName, nullptr);
 }
 
 void PlayerAnimController::SetMoveSpeedRatio(float _speedRatio)
@@ -108,7 +108,7 @@ void PlayerAnimController::OnAnimationFinish()
 
 void PlayerAnimController::ChangeAnimation(const std::string& _animName, float _targetAnimRatio, bool _isInterp)
 {
-	AnimationController::ChangeAnimation(_animName, _targetAnimRatio, _isInterp);
+	AnimationController::ChangeAnimation(_animName, nullptr);
 
 	nowState = FindAnimType(pCurrentAnimNode->GetNodeName());
 }

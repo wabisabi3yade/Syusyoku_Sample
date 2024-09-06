@@ -8,6 +8,11 @@ void Bone::CreateCombMtx(const DirectX::SimpleMath::Matrix& _parentMtx)
 	combinationMatrix = offsetMatrix * GetAnimMtx() * _parentMtx;
 }
 
+void Bone::CreateGlobalMtx(const DirectX::SimpleMath::Matrix& _parentMtx)
+{
+	globalMatrix = GetAnimMtx() * _parentMtx;
+}
+
 void Bone::SetBoneName(const std::string& _boneName)
 {
 	boneName = _boneName;
@@ -52,6 +57,11 @@ DirectX::SimpleMath::Matrix Bone::GetAnimMtx() const
 const DirectX::SimpleMath::Matrix& Bone::GetOffsetMtx() const
 {
 	return offsetMatrix;
+}
+
+const DirectX::SimpleMath::Matrix& Bone::GetGlobalMtx() const
+{
+	return globalMatrix;
 }
 
 BoneTransform Bone::GetAnimationTransform() const

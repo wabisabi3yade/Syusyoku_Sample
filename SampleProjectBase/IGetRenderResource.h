@@ -10,6 +10,8 @@ public :
 	virtual RenderParam& GetParameter() = 0;
 	// デバイスを取得
 	virtual ID3D11Device* GetDevice()const = 0;
-	// デバイスコンテキストえお取得
+	// デバイスコンテキストを取得
 	virtual ID3D11DeviceContext* GetDeviceContext() = 0;
+	//	スワップチェインを取得
+	virtual IDXGISwapChain* GetSwapChain() = 0;
 };

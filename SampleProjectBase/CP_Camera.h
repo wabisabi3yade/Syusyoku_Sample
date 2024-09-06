@@ -51,6 +51,9 @@ public:
 	void Load(const nlohmann::json& _data);
 
 private:
+	/// @brief 投影行列を更新する
+	void UpdateProjection();
+
 	/// @brief 透視投影行列を更新
 	void UpdatePerspective();
 

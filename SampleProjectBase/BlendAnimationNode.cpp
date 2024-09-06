@@ -55,6 +55,15 @@ void BlendAnimationNode::ImGuiPlaying()
 	ImGui::End();
 }
 
+void BlendAnimationNode::Begin()
+{
+	AnimationNode_Base::Begin();
+
+	targetBlendRatio = 0.0f;
+	curBlendRatio = 0.0f;
+	changeBlendRatio = 0.0f;
+}
+
 void BlendAnimationNode::Update(float _playingRatio, BoneList& _boneList)
 {
 	if (!IsCanUpdate()) return;
@@ -96,7 +105,7 @@ void BlendAnimationNode::SetTargetBlendRatio(float _ratio)
 	// 移動時間をリセットする
 	curRatioSmoothTime = 0.0f;
 	// 変更時の求める
-    changeBlendRatio = curBlendRatio;
+	changeBlendRatio = curBlendRatio;
 }
 
 void BlendAnimationNode::SetAnimationRatio(float _ratio, const std::string& _animName)
@@ -284,14 +293,10 @@ bool BlendAnimationNode::CompareBlendValue(const BlendData& _bd1, const BlendDat
 	return _bd1.ratio > _bd2.ratio;
 }
 
-void BlendAnimationNode::GetAnimTransform(std::vector<BoneTransform>& _transforms, u_int _boneNum, float _requestRatio) const
+void BlendAnimationNode::GetAnimTransform(BoneTransform& _outTransform, u_int _boneId, float _requestRatio) const
 {
-	_transforms.resize(_boneNum);
+	// 現段階は最初の割合だけ
+	const AnimationData* pAnimationData = blendDatas.begin()->pAnimation;
+	_outTransform = pAnimationData->GetTransformByRatio(_boneId, _requestRatio);
 
-	for (u_int b_i = 0; b_i < _boneNum; b_i++)
-	{
-		// 現段階は最初の割合だけ
-		const AnimationData* pAnimationData = blendDatas.begin()->pAnimation;
-		_transforms[b_i] = pAnimationData->GetTransformByRatio(b_i, _requestRatio);
-	}
 }

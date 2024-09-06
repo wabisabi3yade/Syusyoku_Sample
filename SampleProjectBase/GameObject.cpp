@@ -289,7 +289,7 @@ void GameObject::ImGuiSet()
 
 		Vector3 v = pTransform->GetLocalPosition();
 		ImGuiMethod::DragFloat3(v, "pos", 0.1f);
-		pTransform->SetLocalPos(v);
+		pTransform->SetLocalPosition(v);
 
 		v = pTransform->GetLocalScale();
 		ImGuiMethod::DragFloat3(v, "scale", 0.1f);

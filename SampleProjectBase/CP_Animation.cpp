@@ -12,6 +12,8 @@
 
 using namespace DirectX::SimpleMath;
 
+Vector3 g_rootOffset;
+
 CP_Animation::CP_Animation() : pSkeletalMesh(nullptr), pAnimController(nullptr)
 {
 }
@@ -118,6 +120,13 @@ bool CP_Animation::IsCanPlay()
 
 void CP_Animation::UpdateBoneCombMtx()
 {
+	
+	ImGui::Begin("RootNode");
+
+	ImGuiMethod::DragFloat3(g_rootOffset, "rootNode", 0.1f);
+
+	ImGui::End();
+
 	TreeNode& pRootNode = pSkeletalMesh->GetRootNode();
 
 	Matrix m = Matrix::CreateScale(Vector3::One * 0.01f) *
@@ -127,47 +136,30 @@ void CP_Animation::UpdateBoneCombMtx()
 			0
 		);
 
+	Matrix transformMtx = pRootNode.GetTransformMtx();
 
 	// ノードを辿って全体のコンビネーション行列を更新していく
-	UpdateNodeHierarchy(pRootNode, m/*Matrix::Identity*/);
+	UpdateNodeHierarchy(pRootNode, m);
 }
 
 void CP_Animation::UpdateNodeHierarchy(TreeNode& _treeNode, const Matrix& _parentMtx)
 {
 	Matrix nodeMatrix = Matrix::Identity;
 
-	/*Matrix nodeMatrix = _treeNode.GetTransformMtx();*/
-	/*Matrix rotationY = DirectX::XMMatrixRotationZ(DirectX::XM_PI);
-	Matrix scaleZ = DirectX::XMMatrixScaling(1.0f, 1.0f, -1.0f);*/
-	Matrix mi = nodeMatrix;
-
-
 	// 対応したボーンがあるなら
 	if (_treeNode.HasBone())
 	{
 		Bone& pBone = _treeNode.GetBone();
 
+		nodeMatrix = pBone.GetAnimMtx();
+
+		pBone.CreateGlobalMtx(_parentMtx);
+
 		// コンビネーション行列を求める
 		pBone.CreateCombMtx(_parentMtx);
-		mi = pBone.GetAnimMtx();
 	}
 
-	Matrix toWorldMtx = mi * _parentMtx;
-
-	//if (_treeNode.GetName().find("AssimpFbx$_PreRotation") != std::string::npos)
-	//{
-	//	Matrix rotationY = DirectX::XMMatrixRotationY(DirectX::XM_PI);
-	//	Matrix scaleZ = DirectX::XMMatrixScaling(1.0f, 1.0f, -1.0f);
-	//	nodeMatrix = rotationY */* scaleZ * */nodeMatrix;
-
-	//	Matrix toWorldMtx = /*nodeMatrix **/ _parentMtx;
-	//}
-	/*else
-	{
-
-		Matrix toWorldMtx = nodeMatrix * _parentMtx;
-	}*/
-
+	Matrix toWorldMtx = nodeMatrix * _parentMtx;
 	
 	// 再帰的にボーンを更新していく
 	for (u_int c_i = 0; c_i < _treeNode.GetChildNum(); c_i++)

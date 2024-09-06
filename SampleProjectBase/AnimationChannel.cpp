@@ -34,7 +34,7 @@ u_int AnimationChannel::FindPrevPosKey(float _playingRatio) const
 	float posKeyNum = GetPosKeyByRatio(_playingRatio);
 
 	// 再生時間から前のキーを探す
-	for (u_int k_i = 0; k_i < GetPosKeyCnt() - 1; k_i++)
+	for (u_int k_i = 0; k_i < static_cast<u_int>(GetPosKeyCnt()) - 1; k_i++)
 	{
 		float keyNum = positionKeys[k_i + 1].startKeyNum;
 		if (posKeyNum < keyNum)
@@ -54,7 +54,7 @@ u_int AnimationChannel::FindPrevScaleKey(float _playingRatio)const
 	float scaleKeyNum = GetScaleKeyByRatio(_playingRatio);
 
 	// 再生時間から前のキーを探す
-	for (u_int k_i = 0; k_i < GetScaleKeyCnt() - 1; k_i++)
+	for (u_int k_i = 0; k_i < static_cast<u_int>(GetScaleKeyCnt()) - 1; k_i++)
 	{
 		float keyNum = scaleKeys[k_i + 1].startKeyNum;
 		if (scaleKeyNum < keyNum)
@@ -74,7 +74,7 @@ u_int AnimationChannel::FindPrevQuatKey(float _playingRatio) const
 	float quatKeyNum = GetQuatKeyByRatio(_playingRatio);
 
 	// 再生時間から前のキーを探す
-	for (u_int k_i = 0; k_i < GetQuatKeyCnt() - 1; k_i++)
+	for (u_int k_i = 0; k_i < static_cast<u_int>(GetQuatKeyCnt()) - 1; k_i++)
 	{
 		float keyNum = quaternionKeys[k_i + 1].startKeyNum;
 		if (quatKeyNum < keyNum)
@@ -112,17 +112,17 @@ const AnimKey_Q& AnimationChannel::GetQuatKey(u_int _keyNum) const
 	return quaternionKeys[_keyNum];
 }
 
-u_int AnimationChannel::GetPosKeyCnt() const
+int AnimationChannel::GetPosKeyCnt() const
 {
 	return static_cast<u_int>(positionKeys.size());
 }
 
-u_int AnimationChannel::GetScaleKeyCnt() const
+int AnimationChannel::GetScaleKeyCnt() const
 {
 	return static_cast<u_int>(scaleKeys.size());
 }
 
-u_int AnimationChannel::GetQuatKeyCnt() const
+int AnimationChannel::GetQuatKeyCnt() const
 {
 	return static_cast<u_int>(quaternionKeys.size());
 }
@@ -135,6 +135,64 @@ u_int AnimationChannel::GetBodeIdx() const
 std::string AnimationChannel::GetName()
 {
 	return channelName;
+}
+
+u_int AnimationChannel::GetNextPosKey(u_int _currentKeyNum, int _progressNum) const
+{
+	int calcKeyNum = _currentKeyNum + _progressNum;
+	int b = _currentKeyNum + _progressNum;
+	u_int a = GetPosKeyCnt();
+	if (calcKeyNum > GetPosKeyCnt() - 1)	// 最大数を超えているなら
+	{
+		calcKeyNum -= GetPosKeyCnt();
+	}
+	else if (calcKeyNum < 0)	// 0未満なら
+	{
+		calcKeyNum += GetPosKeyCnt();
+	}
+
+	if (calcKeyNum > GetPosKeyCnt())
+	{
+		return calcKeyNum;
+	}
+	if (calcKeyNum < 0)
+	{
+		return calcKeyNum;
+	}
+
+	return calcKeyNum;
+}
+
+u_int AnimationChannel::GetNextScaleKey(u_int _currentKeyNum, int _progressNum) const
+{
+	int calcKeyNum = _currentKeyNum + _progressNum;
+
+	if (calcKeyNum > GetScaleKeyCnt() - 1)	// 最大数を超えているなら
+	{
+		calcKeyNum -= GetScaleKeyCnt();
+	}
+	else if (calcKeyNum < 0)	// 0未満なら
+	{
+		calcKeyNum += GetScaleKeyCnt();
+	}
+
+	return calcKeyNum;
+}
+
+u_int AnimationChannel::GetNextQuatKey(u_int _currentKeyNum, int _progressNum) const
+{
+	int calcKeyNum = _currentKeyNum + _progressNum;
+
+	if (calcKeyNum > GetQuatKeyCnt() - 1)	// 最大数を超えているなら
+	{
+		calcKeyNum -= GetQuatKeyCnt();
+	}
+	else if (calcKeyNum < 0)	// 0未満なら
+	{
+		calcKeyNum += GetQuatKeyCnt();
+	}
+
+	return calcKeyNum;
 }
 
 float AnimationChannel::GetPosKeyByRatio(float _playingRatio) const

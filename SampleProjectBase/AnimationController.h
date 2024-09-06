@@ -2,7 +2,9 @@
 #include "Asset_Base.h"
 
 #include"AnimationNode_Base.h"
-// 慣性補間
+
+// クロスフェード・慣性補間
+#include "CrossFadeAnimation.h"
 #include "InertInterpAnimation.h"
 // vector配列で使用するためinclude
 #include "Bone.h"
@@ -13,17 +15,23 @@ class BoneList;
 /// @brief アニメーション遷移を管理するクラス
 class AnimationController : public Asset_Base, public HashiTaku::IImGuiUser
 {
+	/// @brief クロスフェード
+	std::unique_ptr<CrossFadeAnimation> pCrossFadeInterp;
+
 	/// @brief 慣性補間
 	std::unique_ptr<InertInterpAnimation> pInertInterp;
+
+	/// @brief 動かすボーン配列
+	BoneList* pBoneList;
+
+	/// @brief 今遷移で使用している矢印(nullptrなら遷移していない)
+	const AnimTransitionArrow* pCurTransArrow;
 
 	/// @brief 再生割合
 	float playingRatio;
 
 	/// @brief 再生速度
 	float playSpeed;
-
-	/// @brief 動かすボーン配列
-	BoneList* pBoneList;
 
 	/// @brief 再生するか
 	bool isPlay;
@@ -54,8 +62,8 @@ public:
 
 	/// @brief アニメーション遷移する
 	/// @param _animName アニメーション名
-	/// @param _transitionTime 遷移時間(0.0fなら遷移しない)
-	virtual void ChangeAnimation(const std::string& _animName, float _targetAnimRatio, float _transitionTime);
+	/// @param _transitionArrow 今回使用する遷移矢印
+	virtual void ChangeAnimation(const std::string& _animName, const AnimTransitionArrow* _transitionArrow);
 
 	/// @brief ブレンド割合をセット
 	/// @param _ratio 割合
@@ -103,7 +111,6 @@ private:
 	bool IsCanPlay();
 
 	/// @brief アニメーションの更新処理
-	/// @param _boneList 更新ボーンリスト
 	void AnimatioUpdate();
 
 	/// @brief ループ再生できるか？
@@ -111,12 +118,13 @@ private:
 	bool IsCanLoop();
 
 	/// @brief 通常時、アニメーション
-	/// @param _boneList ボーンリスト
 	void NormalUpdate();
 
-	/// @brief 遷移時のアニメーション
-	/// @param _boneList ボーンリスト
-	void TransitionUpdate();
+	/// @brief クロスフェード補間時のアニメーション
+	void CrossFadeUpdate();
+
+	/// @brief 慣性補間遷移時のアニメーション
+	void InertInterpUpdate();
 
 	/// @brief 慣性補間のキャッシュ更新
 	void CacheUpdate();
@@ -129,13 +137,23 @@ private:
 	/// @return アニメーションがあるか？
 	bool IsHaveAnim(const std::string& _animName);
 
-	/// @brief 遷移開始する
+	/// @brief 共通した遷移開始処理
+	void OnTransitionStart();
+
+	/// @brief クロスフェード補間を開始
+	/// @param _changePlayRatio 変更時の遷移元のアニメーション割合
+	/// @param _targetAnimRatio 遷移終了時の遷移先のアニメーション割合
+	/// @param _transitionTime 遷移時間
+	/// @param _easeKind 遷移のイージング
+	void CrossFadeStart(float _changePlayRatio, float _targetAnimRatio, float _transitionTime, HashiTaku::EaseKind _easeKind);
+
+	/// @brief 慣性補間開始する
 	/// @param_targetAnimRatio 遷移先のアニメーション割合
 	/// @param _transitionTime 遷移時間
 	void InterpTransitionStart(float _targetAnimRatio, float _transitionTime);
 
 	/// @brief 遷移終了した時の処理
-	void InterpTransitionEnd();
+	void OnTransitionEnd();
 
 	void ImGuiTransition();
 	void ImGuiImportAnim();
