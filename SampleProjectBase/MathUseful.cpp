@@ -140,7 +140,7 @@ Quaternion Quat::RotateToVector(const Vector3& _vector, const Vector3& _up)
 	up.Normalize();
 
 	// 回転行列
-	Matrix rotate = Mtx::RotateMatrixByVecdtor(right, up, forward);
+	Matrix rotate = Mtx::RotateMatrixByVector(right, up, forward);
 
 	// クォータニオン生成	
 	Quaternion quaternion = Quaternion::CreateFromRotationMatrix(rotate);
@@ -150,29 +150,6 @@ Quaternion Quat::RotateToVector(const Vector3& _vector, const Vector3& _up)
 
 Vector3 Quat::ToEulerAngles(const Quaternion& _q)
 {
-	Quaternion q = _q;
-
-	//auto sx = -(2 * _q.y * _q.z - 2 * _q.x * _q.w);
-
-	//Vector3 v;
-
-	//v.x = asinf(sx);
-
-	//bool unlocked = cos(v.x) != 0.0f;
-
-	//if (unlocked)
-	//{
-	//	v.y = std::atanf((2 * _q.x * _q.z + 2 * _q.y * _q.w) / (2 * _q.w * _q.w + 2 * _q.z * _q.z - 1));
-
-	//	v.z = std::atanf((2 * _q.x * _q.y + 2 * _q.z * _q.w) / (2 * _q.w * _q.w + 2 * _q.y * _q.y - 1));
-	//}
-	//else
-	//{
-	//	v.y = std::atanf(-(2 * _q.x * _q.z - 2 * _q.z * _q.w) / (2 * _q.w * _q.w + 2 * _q.y * _q.y - 1));
-	//	v.z = 0.0f;
-	//}
-
-	///*return v * Mathf::radToDeg;*/
 	return _q.ToEuler() * Mathf::radToDeg;
 }
 
@@ -236,7 +213,7 @@ Vector3 Mtx::GetForwardVector(const Matrix& _matrix)
 	return forward;
 }
 
-Matrix Mtx::RotateMatrixByVecdtor(const Vector3& _right, const Vector3& _up, const Vector3& _forward)
+Matrix Mtx::RotateMatrixByVector(const Vector3& _right, const Vector3& _up, const Vector3& _forward)
 {
 	Matrix rotation =
 		Matrix(_right.x, _right.y, _right.z, 0.0f,

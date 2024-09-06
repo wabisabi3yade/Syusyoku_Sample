@@ -33,6 +33,11 @@ RenderParam& D3D11_Renderer::GetParameter()
 	return *ptr;
 }
 
+IDXGISwapChain* D3D11_Renderer::GetSwapChain()
+{
+	return pSwapChain.Get();
+}
+
 bool D3D11_Renderer::Init(HWND _hWnd)
 {
 	bool isResult; // ‰Šú‰»¬Œ÷‚µ‚½‚©

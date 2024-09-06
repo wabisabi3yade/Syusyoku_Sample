@@ -35,10 +35,10 @@ void CP_MeshRenderer::Draw()
 	Vector3 pos = transform.GetPosition();
 	Vector3 scale = transform.GetScale()/* * pRenderMesh->GetLoadOffsetScale()*/;
 	Quaternion offsetRot = Quaternion::CreateFromYawPitchRoll(
-		pRenderMesh->GetLoadOffsetAngles().y * Mathf::degToRad, 
+		pRenderMesh->GetLoadOffsetAngles().y * Mathf::degToRad,
 		pRenderMesh->GetLoadOffsetAngles().x * Mathf::degToRad,
 		pRenderMesh->GetLoadOffsetAngles().z * Mathf::degToRad
-		);
+	);
 	Quaternion rotation = /*Quat::Multiply(*/transform.GetRotation()/*, offsetRot)*/;
 
 	// メッシュ描画
@@ -46,6 +46,29 @@ void CP_MeshRenderer::Draw()
 
 	// 原点表示
 	OriginDisplay();
+
+	Matrix mtx[3];
+	mtx[0] = Matrix::Identity;
+	mtx[0] = mtx[0] * Matrix::CreateScale(scale);
+
+	Matrix LMat[3];
+	LMat[0] = mtx[0];
+	SceneLights& sceneLight = InSceneSystemManager::GetInstance()->GetSceneLights();
+	SceneLightsParam& lightParam = sceneLight.GetLightsParam();
+	Vector3 lightPos = lightParam.dirParam.base.position;
+	Vector3 lightDir = lightParam.dirParam.direction;
+
+	LMat[1] = DirectX::XMMatrixLookAtLH(
+		DirectX::XMVectorSet(lightPos.x, lightPos.y, lightPos.z, 0.0f),
+		DirectX::XMVectorSet(lightPos.x + lightDir.x, lightPos.y + lightDir.y, lightPos.z + lightDir.z, 0.0f),
+		DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)
+	);
+	LMat[1].Transpose(LMat[1]);
+
+	LMat[2] = DirectX::XMMatrixOrthographicLH(5.0f, 5.0f, 0.1f, 100.0f);
+	LMat[2].Transpose(LMat[2]);
+
+	Color color = { 1.0f,1.0f,1.0f,1.0f };
 }
 
 void CP_MeshRenderer::SetRenderMesh(Mesh_Group& _renderMesh)

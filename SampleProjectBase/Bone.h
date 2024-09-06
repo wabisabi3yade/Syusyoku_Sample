@@ -20,6 +20,9 @@ class Bone
 	/// @brief ボーンオフセット行列
 	DirectX::SimpleMath::Matrix offsetMatrix;
 
+	/// @brief ボーンの姿勢行列
+	DirectX::SimpleMath::Matrix globalMatrix;
+
 	/// @brief アニメーションのトランスフォーム
 	BoneTransform animationTransform;
 
@@ -33,6 +36,10 @@ public:
 	/// @brief コンビネーション行列を作成
 	/// @param _parentMtx 親ノードまでのローカルトランスフォーム
 	void CreateCombMtx(const DirectX::SimpleMath::Matrix& _parentMtx);
+
+	/// @brief 
+	/// @param _parentMtx 親ノードまでのローカルトランスフォーム
+	void CreateGlobalMtx(const DirectX::SimpleMath::Matrix& _parentMtx);
 
 	// 名前セット
 	void SetBoneName(const std::string& _boneName);
@@ -53,6 +60,7 @@ public:
 	const DirectX::SimpleMath::Matrix& GetCombMtx() const;
 	DirectX::SimpleMath::Matrix GetAnimMtx() const;
 	const DirectX::SimpleMath::Matrix& GetOffsetMtx() const;
+	const DirectX::SimpleMath::Matrix& GetGlobalMtx() const;
 
 	// トランスフォームを取得
 	BoneTransform GetAnimationTransform() const;

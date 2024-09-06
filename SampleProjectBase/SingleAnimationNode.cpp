@@ -59,13 +59,9 @@ const AnimationData& SingleAnimationNode::GetAnimationData() const
 	return *pAnimationData;
 }
 
-void SingleAnimationNode::GetAnimTransform(std::vector<BoneTransform>& _transforms, u_int _boneNum, float _requestRatio) const
+void SingleAnimationNode::GetAnimTransform(BoneTransform& _outTransform, u_int _boneId, float _requestRatio) const
 {
-	_transforms.resize(_boneNum);
-	for (u_int b_i = 0; b_i < _boneNum; b_i++)
-	{
-		_transforms[b_i] = pAnimationData->GetTransformByRatio(b_i, _requestRatio);
-	}
+	_outTransform = pAnimationData->GetTransformByRatio(_boneId, _requestRatio);
 }
 
 

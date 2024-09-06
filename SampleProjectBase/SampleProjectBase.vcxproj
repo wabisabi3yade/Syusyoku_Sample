@@ -31,6 +31,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
     </FxCompile>
+    <FxCompile Include="PS_Shadow.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="PS_TexNotEnable.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
@@ -55,6 +61,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
+    <FxCompile Include="PS_WriteDepth.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="VS_Line.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
@@ -70,6 +82,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="VS_SkinAnimation.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="VS_SpriteShadow.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
@@ -96,17 +114,21 @@
     <ClCompile Include="AnimTransitionArrow.cpp" />
     <ClCompile Include="AssetPath_Base.cpp" />
     <ClCompile Include="AssetSaveLoad.cpp" />
+    <ClCompile Include="CatmulSplineInterp.cpp" />
     <ClCompile Include="BulletDebugDraw.cpp" />
     <ClCompile Include="CloneComponent.cpp" />
     <ClCompile Include="CP_BoxAnimation.cpp" />
     <ClCompile Include="CP_RigidBody.cpp" />
     <ClCompile Include="CP_Weapon.cpp" />
+    <ClCompile Include="CrossFadeAnimation.cpp" />
+    <ClCompile Include="DepthStencil.cpp" />
     <ClCompile Include="DX11BulletPhisics.cpp" />
     <ClCompile Include="DXToBullet.cpp" />
     <ClCompile Include="IAnimationObserver.cpp" />
     <ClCompile Include="BlendAnimationNode.cpp" />
     <ClCompile Include="CP_Player.cpp" />
     <ClCompile Include="GameInput.cpp" />
+    <ClCompile Include="IAnimInterpolate.cpp" />
     <ClCompile Include="IImGuiUser.cpp" />
     <ClCompile Include="IObserever.cpp" />
     <ClCompile Include="nSceneManager.cpp" />
@@ -116,6 +138,7 @@
     <ClCompile Include="PlayerAttackState.cpp" />
     <ClCompile Include="PlayerMoveState.cpp" />
     <ClCompile Include="PlayerActState_Base.cpp" />
+    <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SingleAnimationNode.cpp" />
     <ClCompile Include="AnimationNode_Base.cpp" />
@@ -226,18 +249,23 @@
     <ClInclude Include="AssetConcept.h" />
     <ClInclude Include="AssetPath_Base.h" />
     <ClInclude Include="AssetSaveLoad.h" />
+    <ClInclude Include="CatmulSplineInterp.h" />
     <ClInclude Include="BulletDebugDraw.h" />
     <ClInclude Include="CloneComponent.h" />
     <ClInclude Include="CP_BoxAnimation.h" />
     <ClInclude Include="CP_RigidBody.h" />
     <ClInclude Include="CP_Weapon.h" />
+    <ClInclude Include="CrossFadeAnimation.h" />
+    <ClInclude Include="DepthStencil.h" />
     <ClInclude Include="DX11BulletPhisics.h" />
     <ClInclude Include="DXToBullet.h" />
     <ClInclude Include="IAnimationObserver.h" />
     <ClInclude Include="BlendAnimationNode.h" />
     <ClInclude Include="CP_Player.h" />
     <ClInclude Include="GameInput.h" />
+    <ClInclude Include="IAnimInterpolate.h" />
     <ClInclude Include="IImGuiUser.h" />
+    <ClInclude Include="InterpolateKind.h" />
     <ClInclude Include="IObserever.h" />
     <ClInclude Include="ISaveLoad.h" />
     <ClInclude Include="nSceneManager.h" />
@@ -248,6 +276,7 @@
     <ClInclude Include="PlayerAttackState.h" />
     <ClInclude Include="PlayerMoveState.h" />
     <ClInclude Include="PlayerActState_Base.h" />
+    <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SingleAnimationNode.h" />
     <ClInclude Include="AnimationNode_Base.h" />
@@ -275,9 +304,6 @@
     <ClInclude Include="BlendState.h" />
     <ClInclude Include="CP_Camera.h" />
     <ClInclude Include="CP_CameraMove.h" />
-    <ClInclude Include="CbProjectionSet.h" />
-    <ClInclude Include="CbTransformSet.h" />
-    <ClInclude Include="CbViewSet.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="DebugCube.h" />
     <ClInclude Include="GamePad.h" />

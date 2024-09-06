@@ -47,6 +47,8 @@ public:
 
 	void ImGuiPlaying() override;
 
+	void Begin() override;
+
 	/// @brief 更新処理を行う
 	/// @param _playingRatio 再生の割合
 	/// @param _boneList ボーンリスト
@@ -113,9 +115,9 @@ private:
 	static bool CompareBlendValue(const BlendData& _bd1, const BlendData& _bd2);
 
 	/// @brief アニメーションのトランスフォーム取得
-	/// @param _transforms 格納するボーントランスフォーム配列
-	/// @param _boneNum ボーンの数
+	/// @param _outTransform 格納するボーントランスフォーム
+	/// @param _boneId ボーンのID
 	/// @param _requestRatio 取得する指定のアニメーション割合
-	void GetAnimTransform(std::vector<BoneTransform>& _transforms, u_int _boneNum, float _requestRatio) const override;
+	void GetAnimTransform(BoneTransform& _outTransform, u_int _boneId, float _requestRatio) const override;
 };
 

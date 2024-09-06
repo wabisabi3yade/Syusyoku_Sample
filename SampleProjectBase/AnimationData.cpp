@@ -3,6 +3,8 @@
 
 #include "SkeletalMesh.h"
 
+#include "CatmulSplineInterp.h"
+
 using namespace DirectX::SimpleMath;
 
 void AnimationData::AddAnimationChannel(std::unique_ptr<AnimationChannel> _pAnimNode)
@@ -115,10 +117,7 @@ DirectX::SimpleMath::Quaternion AnimationData::GetQuaternionByRatio(u_int _boneI
 	}
 
 	u_int prevKeyNum = channel->FindPrevQuatKey(_playingRatio);
-	u_int nextKeyNum = prevKeyNum + 1;
-
-	if (nextKeyNum >= channel->GetQuatKeyCnt())
-		nextKeyNum = 0;
+	u_int nextKeyNum = channel->GetNextQuatKey(prevKeyNum);
 
 	const AnimKey_Q& prevKey = channel->GetQuatKey(prevKeyNum);
 	const AnimKey_Q& nextKey = channel->GetQuatKey(nextKeyNum);
@@ -131,10 +130,18 @@ DirectX::SimpleMath::Quaternion AnimationData::GetQuaternionByRatio(u_int _boneI
 	// 割合
 	float ratio = (playingKeyNum - prevKey.startKeyNum) / deltaKeyNum;
 
-	// 球面線形補間
-	Quaternion slerpedQuat = Quaternion::Slerp(prevKey.parameter, nextKey.parameter, ratio);
+	/*u_int prevprevKeyNum = channel->GetNextQuatKey(prevKeyNum, -1);
+	u_int nextnextKeyNum = channel->GetNextQuatKey(prevKeyNum, 2);
 
-	return slerpedQuat;
+	const AnimKey_Q& prevprevKey = channel->GetQuatKey(prevprevKeyNum);
+	const AnimKey_Q& nextnextKey = channel->GetQuatKey(nextnextKeyNum);
+
+	Quaternion calcQuat = CatmulSplineInterp::CalcQuaternion(prevKey.parameter, nextKey.parameter, prevprevKey.parameter, nextnextKey.parameter, ratio);*/
+
+	// 球面線形補間
+	Quaternion calcQuat = Quaternion::Slerp(prevKey.parameter, nextKey.parameter, ratio);
+
+	return calcQuat;
 }
 
 DirectX::SimpleMath::Vector3 AnimationData::GetPositionByRatio(u_int _boneId, float _playingRatio) const
@@ -150,10 +157,7 @@ DirectX::SimpleMath::Vector3 AnimationData::GetPositionByRatio(u_int _boneId, fl
 	}
 
 	u_int prevKeyNum = channel->FindPrevPosKey(_playingRatio);
-	u_int nextKeyNum = prevKeyNum + 1;
-
-	if (nextKeyNum >= channel->GetPosKeyCnt())
-		nextKeyNum = 0;
+	u_int nextKeyNum = channel->GetNextPosKey(prevKeyNum);
 
 	const AnimKey_V3& prevKey = channel->GetPosKey(prevKeyNum);
 	const AnimKey_V3& nextKey = channel->GetPosKey(nextKeyNum);
@@ -166,10 +170,18 @@ DirectX::SimpleMath::Vector3 AnimationData::GetPositionByRatio(u_int _boneId, fl
 	// 割合
 	float ratio = (playingKeyNum - prevKey.startKeyNum ) / deltaKeyNum;
 
-	// 線形補間
-	Vector3 lerpedPos = Vector3::Lerp(prevKey.parameter, nextKey.parameter, ratio);
+	/*u_int prevprevKeyNum = channel->GetNextPosKey(prevKeyNum, -1);
+	u_int nextnextKeyNum = channel->GetNextPosKey(prevKeyNum, 2);
 
-	return lerpedPos;
+	const AnimKey_V3& prevprevKey = channel->GetPosKey(prevprevKeyNum);
+	const AnimKey_V3& nextnextKey = channel->GetPosKey(nextnextKeyNum);
+
+	Vector3 calcPos = CatmulSplineInterp::CalcVector3(prevKey.parameter, nextKey.parameter, prevprevKey.parameter, nextnextKey.parameter, ratio);*/
+
+	//// 線形補間
+	Vector3 calcPos = Vector3::Lerp(prevKey.parameter, nextKey.parameter, ratio);
+
+	return calcPos;
 }
 
 BoneTransform AnimationData::GetTransformByRatio(u_int _boneId, float _playingRatio) const

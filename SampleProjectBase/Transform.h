@@ -72,7 +72,7 @@ public:
 	virtual void SetRotation(const DirectX::SimpleMath::Quaternion& _quaternion);
 
 	// ÉçÅ[ÉJÉã
-	virtual void SetLocalPos(const DirectX::SimpleMath::Vector3& _position);
+	virtual void SetLocalPosition(const DirectX::SimpleMath::Vector3& _position);
 	virtual void SetLocalScale(const DirectX::SimpleMath::Vector3& _scale);
 	virtual void SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles);
 	virtual void SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quaternion);

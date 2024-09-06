@@ -98,7 +98,7 @@ bool InertInterpAnimation::GetIsTransitionEnd()
 	return transitionElapsedTime >= transitionTime;
 }
 
-float InertInterpAnimation::GetTransElapsedTime() const
+float InertInterpAnimation::GetElapsedTime() const
 {
 	return transitionElapsedTime;
 }

@@ -56,6 +56,7 @@ public:
 	RenderParam& GetParameter() override;
 	ID3D11Device* GetDevice()const override { return pD3DDevice.Get(); }
 	ID3D11DeviceContext* GetDeviceContext() override { return pDeviceContext.Get(); }
+	IDXGISwapChain* GetSwapChain() override;
 	// ビューポートを取得（どのビューポートを指定）
 	const D3D11_VIEWPORT& GetViewPort(u_int _slot) { return viewPorts[_slot]; }
 	u_int GetViewPortNum() { return static_cast<u_int>(viewPorts.size()); }

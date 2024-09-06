@@ -27,10 +27,7 @@ void CP_Camera::Init()
 
 void CP_Camera::LateUpdate()
 {
-	if (isOrthographic)
-		UpdateOrthographic();
-	else
-		UpdatePerspective();
+	UpdateProjection();
 }
 
 void CP_Camera::Draw()
@@ -47,7 +44,7 @@ void CP_Camera::ImGuiSetting()
 	ImGui::Text("Forward");
 	ImGuiMethod::Text(GetTransform().Forward());
 
-	ImGui::DragFloat("fov", &fov, 1.0f, 15.0f, 180.0f);
+	ImGui::DragFloat("fov", &fov, 1.0f, 15.0f, 110.0f);
 	ImGui::DragFloat("distance", &distance, 1.0f, 0.1f, 2000.0f);
 }
 
@@ -112,6 +109,14 @@ void CP_Camera::Load(const nlohmann::json& _data)
 	LoadJsonUnsigned("viewSlot", viewPortSlot, _data);
 }
 
+void CP_Camera::UpdateProjection()
+{
+	if (isOrthographic)
+		UpdateOrthographic();
+	else
+		UpdatePerspective();
+}
+
 void CP_Camera::UpdatePerspective()
 {
 	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
@@ -126,7 +131,7 @@ void CP_Camera::UpdatePerspective()
 
 	// ビュー変換行列を作成する
 	Matrix mat = DirectX::XMMatrixPerspectiveFovLH(
-		fov,
+		fov * Mathf::degToRad,
 		screenWidth / screenHeight,   // アスペクト比
 		nearZ,	// 描画最近
 		farZ);	// 描画最遠

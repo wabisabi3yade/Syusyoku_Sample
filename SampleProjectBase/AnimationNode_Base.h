@@ -45,7 +45,7 @@ public:
 	virtual void ImGuiPlaying();
 
 	/// @brief アニメーション開始時に行う処理
-	void Begin();
+	virtual void Begin();
 
 	/// @brief 更新処理を呼び出す
 	virtual void UpdateCall(float _playingRatio, BoneList& _boneList);
@@ -87,10 +87,10 @@ public:
 	bool GetIsFinish() const;
 
 	/// @brief アニメーションのトランスフォーム取得
-	/// @param _transforms 格納するボーントランスフォーム配列
-	/// @param _boneNum ボーンの数
+	/// @param _outTransform 格納するボーントランスフォーム
+	/// @param _boneId ボーンのID
 	/// @param _requestRatio 取得する指定のアニメーション割合
-	virtual void GetAnimTransform(std::vector<BoneTransform>& _transforms, u_int _boneNum, float _requestRatio) const = 0;
+	virtual void GetAnimTransform(BoneTransform& _outTransform, u_int _boneId, float _requestRatio) const = 0;
 protected:
 	/// @brief 更新処理を行う
 	/// @param 再生割合
