@@ -210,11 +210,12 @@ nlohmann::json SceneObjects::SaveObject()
 void SceneObjects::LoadObject(const nlohmann::json& _objectsData)
 {
 	// オブジェクトを作成する
-	for (const auto& d : _objectsData)
+	for (const auto& data : _objectsData)
 	{
 		std::string objectName;
-		HashiTaku::LoadJsonString("name", objectName, d);
-		SceneFunction::ObjectFunc::CreateEmpty(objectName);
+		HashiTaku::LoadJsonString("name", objectName, data);
+		GameObject& go = SceneFunction::ObjectFunc::CreateEmpty(objectName);
+		go.Load(data);
 	}
 
 	// オブジェクトをロード
@@ -224,8 +225,7 @@ void SceneObjects::LoadObject(const nlohmann::json& _objectsData)
 		HashiTaku::LoadJsonString("name", objectName, data);
 		GameObject* go = GetSceneObject(objectName);
 
-		if (go)
-			go->Load(data);
+		go->LateLode(data);
 	}
 }
 

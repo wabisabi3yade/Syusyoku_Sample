@@ -120,26 +120,17 @@ bool CP_Animation::IsCanPlay()
 
 void CP_Animation::UpdateBoneCombMtx()
 {
-	
-	ImGui::Begin("RootNode");
-
-	ImGuiMethod::DragFloat3(g_rootOffset, "rootNode", 0.1f);
-
-	ImGui::End();
-
 	TreeNode& pRootNode = pSkeletalMesh->GetRootNode();
 
-	Matrix m = Matrix::CreateScale(Vector3::One * 0.01f) *
-		Matrix::CreateFromYawPitchRoll(
-			180.f * Mathf::degToRad,
-			0,
-			0
-		);
+	Vector3 loadScales = Vector3::One * pSkeletalMesh->GetLoadOffsetScale();
+	Vector3 loadAngles = pSkeletalMesh->GetLoadOffsetAngles();
+	Matrix loadOffsetMatrix = 
+		Matrix::CreateScale(Vector3::One * pSkeletalMesh->GetLoadOffsetScale()) * Mtx::CreateRoratateMtx(loadAngles);
 
 	Matrix transformMtx = pRootNode.GetTransformMtx();
 
 	// ノードを辿って全体のコンビネーション行列を更新していく
-	UpdateNodeHierarchy(pRootNode, m);
+	UpdateNodeHierarchy(pRootNode, loadOffsetMatrix);
 }
 
 void CP_Animation::UpdateNodeHierarchy(TreeNode& _treeNode, const Matrix& _parentMtx)

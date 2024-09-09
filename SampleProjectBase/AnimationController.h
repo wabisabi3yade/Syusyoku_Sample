@@ -89,7 +89,8 @@ public:
 	/// @param _targetAnimRatio ターゲットのアニメーション割合
 	/// @param  _transitionTime 遷移時間
 	/// @param _condition 遷移条件
-	void CreateTransitionArrow(const std::string& _fromNodeName, const std::string& _toNodeName, float _targetAnimRatio, float _transitionTime, std::function<bool()> _condition);
+	/// @return 作成した矢印
+	AnimTransitionArrow* CreateTransitionArrow(const std::string& _fromNodeName, const std::string& _toNodeName, float _targetAnimRatio, float _transitionTime, std::function<bool()> _condition);
 
 	/// @brief アニメーションを除外
 	/// @param _animName アニメーションの名前

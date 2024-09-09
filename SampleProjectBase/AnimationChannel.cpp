@@ -34,7 +34,7 @@ u_int AnimationChannel::FindPrevPosKey(float _playingRatio) const
 	float posKeyNum = GetPosKeyByRatio(_playingRatio);
 
 	// 再生時間から前のキーを探す
-	for (u_int k_i = 0; k_i < static_cast<u_int>(GetPosKeyCnt()) - 1; k_i++)
+	for (u_int k_i = 0; k_i < GetPosKeyCnt() - 1; k_i++)
 	{
 		float keyNum = positionKeys[k_i + 1].startKeyNum;
 		if (posKeyNum < keyNum)
@@ -54,7 +54,7 @@ u_int AnimationChannel::FindPrevScaleKey(float _playingRatio)const
 	float scaleKeyNum = GetScaleKeyByRatio(_playingRatio);
 
 	// 再生時間から前のキーを探す
-	for (u_int k_i = 0; k_i < static_cast<u_int>(GetScaleKeyCnt()) - 1; k_i++)
+	for (u_int k_i = 0; k_i < GetScaleKeyCnt() - 1; k_i++)
 	{
 		float keyNum = scaleKeys[k_i + 1].startKeyNum;
 		if (scaleKeyNum < keyNum)
@@ -74,7 +74,7 @@ u_int AnimationChannel::FindPrevQuatKey(float _playingRatio) const
 	float quatKeyNum = GetQuatKeyByRatio(_playingRatio);
 
 	// 再生時間から前のキーを探す
-	for (u_int k_i = 0; k_i < static_cast<u_int>(GetQuatKeyCnt()) - 1; k_i++)
+	for (u_int k_i = 0; k_i < GetQuatKeyCnt() - 1; k_i++)
 	{
 		float keyNum = quaternionKeys[k_i + 1].startKeyNum;
 		if (quatKeyNum < keyNum)
@@ -112,17 +112,17 @@ const AnimKey_Q& AnimationChannel::GetQuatKey(u_int _keyNum) const
 	return quaternionKeys[_keyNum];
 }
 
-int AnimationChannel::GetPosKeyCnt() const
+u_int AnimationChannel::GetPosKeyCnt() const
 {
 	return static_cast<u_int>(positionKeys.size());
 }
 
-int AnimationChannel::GetScaleKeyCnt() const
+u_int AnimationChannel::GetScaleKeyCnt() const
 {
 	return static_cast<u_int>(scaleKeys.size());
 }
 
-int AnimationChannel::GetQuatKeyCnt() const
+u_int AnimationChannel::GetQuatKeyCnt() const
 {
 	return static_cast<u_int>(quaternionKeys.size());
 }
@@ -140,24 +140,15 @@ std::string AnimationChannel::GetName()
 u_int AnimationChannel::GetNextPosKey(u_int _currentKeyNum, int _progressNum) const
 {
 	int calcKeyNum = _currentKeyNum + _progressNum;
-	int b = _currentKeyNum + _progressNum;
-	u_int a = GetPosKeyCnt();
-	if (calcKeyNum > GetPosKeyCnt() - 1)	// 最大数を超えているなら
+	int intKeyCnt = static_cast<int>(GetPosKeyCnt());
+
+	if (calcKeyNum > intKeyCnt - 1)	// 最大数を超えているなら
 	{
-		calcKeyNum -= GetPosKeyCnt();
+		calcKeyNum -= intKeyCnt;
 	}
 	else if (calcKeyNum < 0)	// 0未満なら
 	{
-		calcKeyNum += GetPosKeyCnt();
-	}
-
-	if (calcKeyNum > GetPosKeyCnt())
-	{
-		return calcKeyNum;
-	}
-	if (calcKeyNum < 0)
-	{
-		return calcKeyNum;
+		calcKeyNum += intKeyCnt;
 	}
 
 	return calcKeyNum;
@@ -166,14 +157,15 @@ u_int AnimationChannel::GetNextPosKey(u_int _currentKeyNum, int _progressNum) co
 u_int AnimationChannel::GetNextScaleKey(u_int _currentKeyNum, int _progressNum) const
 {
 	int calcKeyNum = _currentKeyNum + _progressNum;
+	int intKeyCnt = static_cast<int>(GetScaleKeyCnt());
 
-	if (calcKeyNum > GetScaleKeyCnt() - 1)	// 最大数を超えているなら
+	if (calcKeyNum > intKeyCnt - 1)	// 最大数を超えているなら
 	{
-		calcKeyNum -= GetScaleKeyCnt();
+		calcKeyNum -= intKeyCnt;
 	}
 	else if (calcKeyNum < 0)	// 0未満なら
 	{
-		calcKeyNum += GetScaleKeyCnt();
+		calcKeyNum += intKeyCnt;
 	}
 
 	return calcKeyNum;
@@ -182,14 +174,15 @@ u_int AnimationChannel::GetNextScaleKey(u_int _currentKeyNum, int _progressNum) 
 u_int AnimationChannel::GetNextQuatKey(u_int _currentKeyNum, int _progressNum) const
 {
 	int calcKeyNum = _currentKeyNum + _progressNum;
+	int intKeyCnt = static_cast<int>(GetQuatKeyCnt());
 
-	if (calcKeyNum > GetQuatKeyCnt() - 1)	// 最大数を超えているなら
+	if (calcKeyNum > intKeyCnt - 1)	// 最大数を超えているなら
 	{
-		calcKeyNum -= GetQuatKeyCnt();
+		calcKeyNum -= intKeyCnt;
 	}
 	else if (calcKeyNum < 0)	// 0未満なら
 	{
-		calcKeyNum += GetQuatKeyCnt();
+		calcKeyNum += intKeyCnt;
 	}
 
 	return calcKeyNum;

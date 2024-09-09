@@ -92,9 +92,9 @@ public:
 	const AnimKey_Q& GetQuatKey(u_int _keyNum) const;
 
 	// 各キーの数を取得する
-	int GetPosKeyCnt() const;
-	int GetScaleKeyCnt() const;
-	int GetQuatKeyCnt() const;
+	u_int GetPosKeyCnt() const;
+	u_int GetScaleKeyCnt() const;
+	u_int GetQuatKeyCnt() const;
 
 	// 対応ボーンのIDを取得
 	u_int GetBodeIdx() const;

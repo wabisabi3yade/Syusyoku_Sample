@@ -82,8 +82,9 @@ public:
 	DirectX::SimpleMath::Quaternion CalcBlendRot(u_int _boneIdx, float _blendingTime);
 
 	/// @brief 遷移の経過時間を進める
+	/// @param _playSpeed 再生速度
 	/// @return 経過時間
-	float ProgressTransitionTime();
+	float ProgressTransitionTime(float _playSpeed);
 
 	/// @brief 遷移が終了しているか取得する
 	/// @return 遷移終了しているか？
