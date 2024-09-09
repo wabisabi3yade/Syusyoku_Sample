@@ -26,6 +26,9 @@ class CP_Weapon : public Component , public CloneComponent<CP_Weapon>
 
 	/// @brief ロード時のスケール
 	float loadMeshScale;
+
+	/// @brief ボーン座標を表示する
+	bool isDisplayPos;
 public:
 	CP_Weapon();
 	~CP_Weapon() {}

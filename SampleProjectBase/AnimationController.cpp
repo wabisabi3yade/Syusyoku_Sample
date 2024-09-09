@@ -55,7 +55,7 @@ void AnimationController::CrossFadeUpdate()
 void AnimationController::InertInterpUpdate()
 {
 	// 遷移の時間を進める
-	float transElapsedTime = pInertInterp->ProgressTransitionTime();
+	float transElapsedTime = pInertInterp->ProgressTransitionTime(playSpeed);
 
 	if (pInertInterp->GetIsTransitionEnd())	// ブレンド時間過ぎたら
 	{
@@ -218,28 +218,32 @@ void AnimationController::CreateBlendNode(const std::vector<std::string>& _animN
 	pAnimationNodes[_nodeName] = std::move(pCreateBlend);
 }
 
-void AnimationController::CreateTransitionArrow(const std::string& _fromNodeName, const std::string& _toNodeName, float _targetAnimRatio, float _transitionTime, std::function<bool()> _condition)
+AnimTransitionArrow* AnimationController::CreateTransitionArrow(const std::string& _fromNodeName, const std::string& _toNodeName, float _targetAnimRatio, float _transitionTime, std::function<bool()> _condition)
 {
 	AnimationNode_Base* fromNode = GetNode(_fromNodeName);
 	if (!fromNode)
 	{
 		HASHI_DEBUG_LOG(_fromNodeName + " 遷移元ノードが見つかりませんでした");
-		return;
+		return nullptr;
 	}
 
 	AnimationNode_Base* toNode = GetNode(_toNodeName);
 	if (!toNode)
 	{
 		HASHI_DEBUG_LOG(_toNodeName + " 遷移先ノードが見つかりませんでした");
-		return;
+		return nullptr;
 	}
 
-	if (fromNode == toNode) return;	// 自分自身につなげていたら
+	if (fromNode == toNode) return nullptr;	// 自分自身につなげていたら
 
 	// 矢印作成して追加
 	std::unique_ptr<AnimTransitionArrow> pTransitionArrow
 		= std::make_unique<AnimTransitionArrow>(*fromNode, *toNode, _targetAnimRatio, _transitionTime, _condition);
+	AnimTransitionArrow* pRetArrow = pTransitionArrow.get();
+
 	fromNode->AddTransitionArrow(std::move(pTransitionArrow));
+
+	return pRetArrow;
 }
 
 void AnimationController::RemoveAnimation(const std::string& _animName)

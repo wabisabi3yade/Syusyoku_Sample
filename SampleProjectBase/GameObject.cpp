@@ -376,12 +376,20 @@ void GameObject::Load(const nlohmann::json& _data)
 	if (IsJsonContains(_data, "transform"))
 		pTransform->Load(_data["transform"]);
 
+}
+
+void GameObject::LateLode(const nlohmann::json& _data)
+{
+	if (IsJsonContains(_data, "transform"))
+		pTransform->LoadChildTransform(_data["transform"]);
+
 	if (IsJsonContains(_data, "components"))
 	{
 		const auto& componentsData = _data["components"];
 		LoadComponent(componentsData);
 	}
 }
+
 
 void GameObject::SetName(const std::string& _name)
 {

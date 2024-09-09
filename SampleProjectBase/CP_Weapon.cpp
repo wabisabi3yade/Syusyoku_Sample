@@ -10,7 +10,7 @@
 
 using namespace DirectX::SimpleMath;
 
-CP_Weapon::CP_Weapon() : grabBoneName(""), pGrabBone(nullptr), pMeshRenderer(nullptr), loadMeshScale(0.0f)
+CP_Weapon::CP_Weapon() : grabBoneName(""), pGrabBone(nullptr), pMeshRenderer(nullptr), loadMeshScale(0.0f), isDisplayPos(false)
 {
 }
 
@@ -33,14 +33,22 @@ void CP_Weapon::LateUpdate()
 
 void CP_Weapon::Draw()
 {
+#ifdef EDIT
+	if (isDisplayPos)
+	{
+		Geometory::SetPosition(GetTransform().GetPosition());
+		Geometory::SetScale(Vector3::One * 0.2f);
+		Geometory::DrawSphere();
+	}
+#endif // EDIT
 }
 
 void CP_Weapon::ImGuiSetting()
 {
+	ImGui::Checkbox("display", &isDisplayPos);
 	ImGui::Text(grabBoneName.c_str());
 	ImGuiMethod::DragFloat3(offsetPosition, "offset", 0.01f);
 	ImGuiMethod::DragFloat3(offsetAngles, "angle");
-
 	ImGuiSetBone();
 }
 
@@ -133,8 +141,8 @@ void CP_Weapon::UpdateTransform()
 	);
 
 	Quaternion rot = Quaternion::CreateFromRotationMatrix(rotateMtx);
-	rot = Quat::Multiply(rot, Quat::ToQuaternion(offsetAngles));
-	t.SetLocalRotation(Quat::Multiply(rot, Quat::ToQuaternion(offsetAngles)));
+	rot = Quat::Multiply(Quat::ToQuaternion(offsetAngles), rot);
+	t.SetLocalRotation(rot);
 }
 
 void CP_Weapon::ImGuiSetBone()

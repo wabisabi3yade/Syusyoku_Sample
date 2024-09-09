@@ -6,6 +6,8 @@
 
 #include "GameInput.h"
 
+using namespace HashiTaku;
+
 PlayerAnimController::PlayerAnimController()
 	: nowState(AnimType::Move)
 {
@@ -76,18 +78,22 @@ void PlayerAnimController::InitTransitionArrow()
 	using enum AnimType;
 
 	// Move
-	CreateTransitionArrow(animTypeNodeNames[Move], animTypeNodeNames[Attack], 0.0f, 0.2f,
+	AnimTransitionArrow* pMoveToAtk = CreateTransitionArrow(animTypeNodeNames[Move], animTypeNodeNames[Attack], 0.2f, 0.2f,
 		[]()
 		{
 			return GameInput::GetInstance()->GetButtonDown(GameInput::ButtonType::Player_Attack);
 		});
+	pMoveToAtk->SetEaseKind(EaseKind::OutBack);
+
 
 	// Attack
 	AnimationNode_Base* pAttackNode = GetNode(animTypeNodeNames[Attack]);
-	CreateTransitionArrow(animTypeNodeNames[Attack], animTypeNodeNames[Move], 0.1f, 0.2f, [pAttackNode]()
+	AnimTransitionArrow* pAtkToMove = CreateTransitionArrow(animTypeNodeNames[Attack], animTypeNodeNames[Move], 0.1f, 0.2f, [pAttackNode]()
 		{
 			return pAttackNode->GetIsFinish();
 		});
+
+	pAtkToMove->SeInterpolateKind(HashiTaku::AnimInterpolateKind::Inertialization);
 }
 
 void PlayerAnimController::LinkAnimTypeNodeName(AnimType _animType, const std::string& _nodeName)

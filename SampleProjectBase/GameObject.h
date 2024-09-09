@@ -86,6 +86,10 @@ public:
 	/// @param _sceneData ロードするシーンデータ 
 	void Load(const nlohmann::json& _sceneData) override;
 
+	/// @brief オブジェクト関係をロードする(シーン内のオブジェクトが必要)
+	/// @param _sceneData ロードするシーンデータ 
+	void LateLode(const nlohmann::json& _sceneData);
+
 	void SetName(const std::string& _name);
 	void SetActive(bool _isActive);
 

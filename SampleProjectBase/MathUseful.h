@@ -101,10 +101,10 @@ namespace Quat
 	Quaternion Multiply(const Quaternion& _q1, const Quaternion& _q2);
 
 	/// @brief クォータニオンの差分を求める
-	/// @param _origin 元の回転から
-	/// @param _target ここまで
+	/// @param _sub 引き算
+	/// @param _origin 元
 	/// @return 差分
-	Quaternion RotationDifference(const Quaternion& _origin, const Quaternion& _target);
+	Quaternion RotationDifference(const Quaternion& _sub, const Quaternion& _origin);
 
 	/// @brief ターゲットの方向に向けるクォータニオンを生成する
 	/// @param _vector 向けたいベクトル
@@ -142,4 +142,9 @@ namespace Mtx
 	/// @param _forward 前
 	/// @return 回転行列
 	Matrix RotateMatrixByVector(const Vector3& _right, const Vector3& _up, const Vector3& _forward);
+
+	/// @brief 角度から回転行列を求める
+	/// @param _degrees 角度(deg) 
+	/// @return 回転行列
+	Matrix CreateRoratateMtx(const Vector3& _degrees);
 }

@@ -112,18 +112,18 @@ void Quat::ToAxisAngle(const DirectX::SimpleMath::Quaternion& _q, DirectX::Simpl
 
 Quaternion Quat::Multiply(const Quaternion& _q1, const Quaternion& _q2)
 {
-	Quaternion result = Quaternion::Concatenate(_q1, _q2);
+	Quaternion result = _q1 * _q2;
 	result.Normalize();
 
 	return result;
 }
 
-Quaternion Quat::RotationDifference(const Quaternion& _origin, const Quaternion& _target)
+Quaternion Quat::RotationDifference(const Quaternion& _sub, const Quaternion& _origin)
 {
-	Quaternion invOrigin;
-	_origin.Inverse(invOrigin);
+	Quaternion invTarget;
+	_sub.Inverse(invTarget);
 
-	return Quat::Multiply(_target, invOrigin);
+	return Quat::Multiply(invTarget, _origin);
 }
 
 Quaternion Quat::RotateToVector(const Vector3& _vector, const Vector3& _up)
@@ -222,6 +222,15 @@ Matrix Mtx::RotateMatrixByVector(const Vector3& _right, const Vector3& _up, cons
 			0.0f, 0.0f, 0.0f, 1.0f);
 
 	return rotation;
+}
+
+Matrix Mtx::CreateRoratateMtx(const Vector3& _degrees)
+{
+	return Matrix::CreateFromYawPitchRoll(
+		_degrees.y * Mathf::degToRad,
+		_degrees.x * Mathf::degToRad,
+		_degrees.z * Mathf::degToRad
+		);
 }
 
 Vector2 Vec2::Abs(const Vector2& _v)

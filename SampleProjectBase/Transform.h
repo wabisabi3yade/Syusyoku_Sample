@@ -108,8 +108,12 @@ public:
 	nlohmann::json Save() override;
 
 	/// @brief ロードする
-	/// @param _sceneData ロードするデータ 
+	/// @param  _transformData ロードするデータ 
 	void Load(const nlohmann::json& _transformData) override;
+
+	/// @brief 親子関係をロードする
+	/// @param  _transformData ロードするデータ 
+	void LoadChildTransform(const nlohmann::json& _transformData);
 
 private:
 	void Copy(const Transform& _other);

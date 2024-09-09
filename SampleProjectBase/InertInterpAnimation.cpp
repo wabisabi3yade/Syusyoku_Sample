@@ -86,9 +86,9 @@ DirectX::SimpleMath::Quaternion InertInterpAnimation::CalcBlendRot(u_int _boneId
 	return Quat::Multiply(q, changeTimeTransform[_boneIdx].rotation);
 }
 
-float InertInterpAnimation::ProgressTransitionTime()
+float InertInterpAnimation::ProgressTransitionTime(float _playSpeed)
 {
-	transitionElapsedTime += MainApplication::DeltaTime();
+	transitionElapsedTime += MainApplication::DeltaTime() * _playSpeed;
 
 	return transitionElapsedTime;
 }
