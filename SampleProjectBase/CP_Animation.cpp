@@ -124,13 +124,13 @@ void CP_Animation::UpdateBoneCombMtx()
 
 	Vector3 loadScales = Vector3::One * pSkeletalMesh->GetLoadOffsetScale();
 	Vector3 loadAngles = pSkeletalMesh->GetLoadOffsetAngles();
-	Matrix loadOffsetMatrix = 
+	offsetMtx = 
 		Matrix::CreateScale(Vector3::One * pSkeletalMesh->GetLoadOffsetScale()) * Mtx::CreateRoratateMtx(loadAngles);
 
 	Matrix transformMtx = pRootNode.GetTransformMtx();
 
 	// ノードを辿って全体のコンビネーション行列を更新していく
-	UpdateNodeHierarchy(pRootNode, loadOffsetMatrix);
+	UpdateNodeHierarchy(pRootNode, Matrix::Identity);
 }
 
 void CP_Animation::UpdateNodeHierarchy(TreeNode& _treeNode, const Matrix& _parentMtx)
@@ -144,7 +144,8 @@ void CP_Animation::UpdateNodeHierarchy(TreeNode& _treeNode, const Matrix& _paren
 
 		nodeMatrix = pBone.GetAnimMtx();
 
-		pBone.CreateGlobalMtx(_parentMtx);
+		// ローカル空間内のボーン座標を求める
+		pBone.CreateGlobalMtx(_parentMtx, offsetMtx);
 
 		// コンビネーション行列を求める
 		pBone.CreateCombMtx(_parentMtx);

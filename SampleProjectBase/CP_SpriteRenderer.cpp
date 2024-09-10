@@ -33,6 +33,7 @@ void CP_SpriteRenderer::DrawSetup()
 
 	// ワールド変換行列の座標にモデルの座標を入れる
 	RenderParam::WVP wvp = renderer.GetParameter().GetWVP(GetTransform());
+	wvp.world = wvp.world.Transpose();
 
 	// シェーダーの設定
 	VertexShader& pVs = pMaterial->GetVertexShader();

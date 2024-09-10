@@ -33,8 +33,6 @@ RenderParam::WVP& RenderParam::GetWVP(const Vector3& _position, const Vector3& _
 
 	Matrix worldMtx = s * r * t;	// ƒ[ƒ‹ƒh•ÏŠ·s—ñ‚ğì¬
 
-	worldMtx = worldMtx.Transpose();
-
 	wvp.world = worldMtx;
 
 	return wvp;

@@ -49,7 +49,10 @@ void AnimationController::CrossFadeUpdate()
 	pCrossFadeInterp->Update(*pBoneList, playSpeed);
 
 	if (pCrossFadeInterp->GetIsTransitionEnd())
+	{
+		playingRatio = pCrossFadeInterp->GetToRatio();
 		OnTransitionEnd();
+	}
 }
 
 void AnimationController::InertInterpUpdate()
@@ -150,9 +153,6 @@ void AnimationController::ChangeAnimation(const std::string& _animName, const An
 	float targetAnimRatio = pCurTransArrow->GetTargetRatio();
 	float transitionTime = pCurTransArrow->GetTransitionTime();
 	EaseKind ease = pCurTransArrow->GetEaseKind();
-
-	// 再生開始したときにターゲットの割合から始める
-	playingRatio = pCurTransArrow->GetTargetRatio();
 
 	// 補間開始
 	switch (pCurTransArrow->GetInterpolateKind())
@@ -382,30 +382,15 @@ void AnimationController::OnTransitionStart()
 
 void AnimationController::CrossFadeStart(float _changePlayRatio, float _targetAnimRatio, float _transitionTime, HashiTaku::EaseKind _easeKind)
 {
-	// ターゲットの割合と遷移時間から開始時の遷移先の割合を計算
-	float toAnimTime = pCurrentAnimNode->GetAnimationTime();	// 全体時間
-	float toTargetTime = toAnimTime * _targetAnimRatio;	//目標の時間
-	float toStartTime = toTargetTime - _transitionTime;	//　開始時の時間
-
-	if (toStartTime < 0.0f)	// 開始時間が0秒より前なら
-	{
-		HASHI_DEBUG_LOG("クロスフェードで遷移先の開始時間が0より前です");
-		toStartTime = 0.0f;
-
-		// 遷移先の割合が変化するので変更する
-		playingRatio = _transitionTime / toAnimTime;
-		playingRatio = std::min(playingRatio, 1.0f);
-	}
-	// 開始時の割合を求める
-	float toStartRatio = toStartTime / toAnimTime;
-
-	pCrossFadeInterp->Begin(*pPrevAnimNode, *pCurrentAnimNode, _transitionTime, _changePlayRatio, toStartRatio, _easeKind);
+	pCrossFadeInterp->Begin(*pPrevAnimNode, *pCurrentAnimNode, _transitionTime, _changePlayRatio, _targetAnimRatio, _easeKind);
 
 	OnTransitionStart();
 }
 
 void AnimationController::InterpTransitionStart(float _targetAnimRatio, float _transitionTime)
 {
+	playingRatio = _targetAnimRatio;
+
 	u_int boneCnt = pBoneList->GetBoneCnt();
 	std::vector<BoneTransform> requestPose(boneCnt);
 

@@ -147,4 +147,10 @@ namespace Mtx
 	/// @param _degrees Šp“x(deg) 
 	/// @return ‰ñ“]s—ñ
 	Matrix CreateRoratateMtx(const Vector3& _degrees);
+
+	/// @brief Vector3‚ÆŠ|‚¯Z‚ğ‚·‚é
+	/// @param _mtx s—ñ
+	/// @param _v Vector3
+	/// @return ŒvZ‚µ‚½Vector3
+	Vector3 MultiplyVector3(const Matrix& _mtx, const Vector3& _v);
 }

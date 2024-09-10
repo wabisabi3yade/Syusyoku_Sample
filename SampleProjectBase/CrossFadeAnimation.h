@@ -64,6 +64,9 @@ public:
 
 	// ‘JˆÚŠÔ‚ğæ“¾ 
 	float GetTransitionTime() const override;
+
+	// ‘JˆÚæ‚ÌŠ„‡‚ğ‹‚ß‚é 
+	float GetToRatio() const;
 private:
 
 	/// @brief ‘JˆÚŠÔ‚ği‚ß‚é
