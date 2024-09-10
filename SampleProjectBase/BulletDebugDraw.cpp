@@ -110,6 +110,8 @@ void BulletDebugDraw::Draw()
         DX::Quaternion::Identity
         );
 
+    wvp.world.Transpose(wvp.world);
+
     pVxShader->UpdateSubResource(0, &wvp);
 
     pVxShader->SetGPU();

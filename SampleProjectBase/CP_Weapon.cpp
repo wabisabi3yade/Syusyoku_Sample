@@ -38,7 +38,8 @@ void CP_Weapon::Draw()
 	{
 		Geometory::SetPosition(GetTransform().GetPosition());
 		Geometory::SetScale(Vector3::One * 0.2f);
-		Geometory::DrawSphere();
+		Geometory::SetRotation(GetTransform().GetEularAngles());
+		Geometory::DrawCube();
 	}
 #endif // EDIT
 }

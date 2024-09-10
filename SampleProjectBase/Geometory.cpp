@@ -31,6 +31,7 @@ void Geometory::DrawSetup()
 	// ワールド変換行列の座標にモデルの座標を入れる
 	Quaternion q = Quat::ToQuaternion(eularAngle);
 	RenderParam::WVP wvp = renderer.GetParameter().GetWVP(position, scale, q);
+	wvp.world = wvp.world.Transpose();
 
 	// シェーダーの設定
 	VertexShader& pVs = pMaterial->GetVertexShader();

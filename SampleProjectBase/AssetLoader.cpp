@@ -383,6 +383,12 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 	Vector3 modelMaxPos = Vector3::One * -10.0f;
 	Vector3 modelMinPos = Vector3::One * 10.0f;
 
+	Matrix rotateMtx = Matrix::CreateFromYawPitchRoll(180.0f * Mathf::degToRad, 0, 0);
+
+	Matrix offsetMtx =
+		Matrix::CreateScale(Vector3::One * _scale)
+		* rotateMtx;
+
 	// メッシュ分ループ
 	for (unsigned int m = 0; m < pScene->mNumMeshes; m++)
 	{

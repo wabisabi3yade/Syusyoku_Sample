@@ -45,9 +45,12 @@ private:
 	/// @return 描画できるか？
 	bool IsCanDraw();
 
+	/// @brief ロード時のオフセット行列計算
+	/// @return ロード行列
+	DirectX::SimpleMath::Matrix CalcLoadMtx();
+
 	/// @brief メッシュを描画
 	void DrawMesh(RenderParam::WVP& _wvp);
-
 
 	void DrawShadow();
 

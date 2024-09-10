@@ -28,6 +28,9 @@ class CP_Animation : public Component, public CloneComponent<CP_Animation>
 
 	/// @brief アニメーションコントローラー
 	AnimationController* pAnimController;
+
+	/// @brief モデルのオフセット行列
+	DirectX::SimpleMath::Matrix offsetMtx;
 public:
 	CP_Animation();
 	CP_Animation(const CP_Animation& _other);

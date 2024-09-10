@@ -233,6 +233,11 @@ Matrix Mtx::CreateRoratateMtx(const Vector3& _degrees)
 		);
 }
 
+Vector3 Mtx::MultiplyVector3(const Matrix& _mtx, const Vector3& _v)
+{
+	return XMVector3Transform(_v, _mtx);
+}
+
 Vector2 Vec2::Abs(const Vector2& _v)
 {
 	Vector2 retV;

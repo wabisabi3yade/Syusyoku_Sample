@@ -37,9 +37,10 @@ public:
 	/// @param _parentMtx 親ノードまでのローカルトランスフォーム
 	void CreateCombMtx(const DirectX::SimpleMath::Matrix& _parentMtx);
 
-	/// @brief 
+	/// @brief ローカル空間でのボーン座標
 	/// @param _parentMtx 親ノードまでのローカルトランスフォーム
-	void CreateGlobalMtx(const DirectX::SimpleMath::Matrix& _parentMtx);
+	/// @param _offsetMtx オフセット行列
+	void CreateGlobalMtx(const DirectX::SimpleMath::Matrix& _parentMtx, const DirectX::SimpleMath::Matrix& _offsetMtx);
 
 	// 名前セット
 	void SetBoneName(const std::string& _boneName);

@@ -66,6 +66,11 @@ float CrossFadeAnimation::GetTransitionTime() const
 	return transitionTime;
 }
 
+float CrossFadeAnimation::GetToRatio() const
+{
+	return curToRatio;
+}
+
 void CrossFadeAnimation::ProgressTime(float _deltaTime)
 {
 	// ‘JˆÚŠÔ‚ğ’´‚¦‚È‚¢‚æ‚¤‚ÉAŠÔ‚ği‚ß‚é

@@ -31,23 +31,19 @@ void CP_MeshRenderer::Draw()
 	RenderParam& rendererParam = Direct3D11::GetInstance()->GetRenderer()->GetParameter();
 
 	Transform& transform = GetTransform();
+	auto& wvp = rendererParam.GetWVP(transform);
 
-	Vector3 pos = transform.GetPosition();
-	Vector3 scale = transform.GetScale()/* * pRenderMesh->GetLoadOffsetScale()*/;
-	Quaternion offsetRot = Quaternion::CreateFromYawPitchRoll(
-		pRenderMesh->GetLoadOffsetAngles().y * Mathf::degToRad,
-		pRenderMesh->GetLoadOffsetAngles().x * Mathf::degToRad,
-		pRenderMesh->GetLoadOffsetAngles().z * Mathf::degToRad
-	);
-	Quaternion rotation = /*Quat::Multiply(*/transform.GetRotation()/*, offsetRot)*/;
+	wvp.world = CalcLoadMtx() * wvp.world;
+	wvp.world = wvp.world.Transpose();
 
 	// ƒƒbƒVƒ…•`‰æ
-	DrawMesh(rendererParam.GetWVP(pos, scale, rotation));
+	DrawMesh(wvp);
 
 	// Œ´“_•\Ž¦
 	OriginDisplay();
 
-	Matrix mtx[3];
+	// ‰e•`‰æ
+	/*Matrix mtx[3];
 	mtx[0] = Matrix::Identity;
 	mtx[0] = mtx[0] * Matrix::CreateScale(scale);
 
@@ -68,7 +64,7 @@ void CP_MeshRenderer::Draw()
 	LMat[2] = DirectX::XMMatrixOrthographicLH(5.0f, 5.0f, 0.1f, 100.0f);
 	LMat[2].Transpose(LMat[2]);
 
-	Color color = { 1.0f,1.0f,1.0f,1.0f };
+	Color color = { 1.0f,1.0f,1.0f,1.0f };*/
 }
 
 void CP_MeshRenderer::SetRenderMesh(Mesh_Group& _renderMesh)
@@ -142,6 +138,15 @@ bool CP_MeshRenderer::IsCanDraw()
 	return true;
 }
 
+DirectX::SimpleMath::Matrix CP_MeshRenderer::CalcLoadMtx()
+{
+	float loadScale = pRenderMesh->GetLoadOffsetScale();
+	Vector3 loadAngles = pRenderMesh->GetLoadOffsetAngles() * Mathf::degToRad;
+
+	return Matrix::CreateScale(Vector3::One * loadScale) * 
+		Matrix::CreateFromYawPitchRoll(loadAngles.y, loadAngles.x, loadAngles.z);
+}
+
 void CP_MeshRenderer::DrawMesh(RenderParam::WVP& _wvp)
 {
 	u_int meshNum = pRenderMesh->GetMeshNum();
@@ -188,6 +193,7 @@ void CP_MeshRenderer::ShaderSetup(Shader& _shader, RenderParam::WVP& _wvp, Mater
 	u_int bufferNum = _shader.GetBufferNum();
 
 	using enum Shader::BufferType;
+
 	for (u_int bufLoop = 0; bufLoop < bufferNum; bufLoop++)
 	{
 		switch (_shader.GetBufferType(bufLoop))
