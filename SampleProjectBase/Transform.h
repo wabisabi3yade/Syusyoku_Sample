@@ -125,4 +125,7 @@ private:
 	void UpdateHierarchyScales();
 	// 回転
 	void UpdateHierarchyRotations();
+
+	// 各パラメータを変更するときに、RigidBody側に伝える
+	void SetRigidBodyTransform();
 };

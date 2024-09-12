@@ -10,6 +10,11 @@
 using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
 
+CP_RigidBody* GameObject::GetRigidBody() const
+{
+	return pRigidBody;
+}
+
 GameObject& GameObject::Copy(const GameObject& _other)
 {
 	// ìØÇ∂Ç»ÇÁèàóùÇµÇ»Ç¢
@@ -124,7 +129,7 @@ void GameObject::LoadComponent(const nlohmann::json& _componentData)
 	}
 }
 
-GameObject::GameObject() : isActive(true), name("")
+GameObject::GameObject() : isActive(true), isHasRigidBody(false), name(""), pRigidBody(nullptr)
 {
 	pTransform = std::make_unique<Transform>(this);
 }
@@ -139,52 +144,58 @@ GameObject& GameObject::operator=(const GameObject& _other)
 	return Copy(_other);
 }
 
-void GameObject::AwakeBase()
+GameObject::~GameObject()
+{
+	for (auto& pComp : pComponents)
+		pComp->OnDestroy();
+}
+
+void GameObject::AwakeCall()
 {
 	if (!isActive) return;
 
 	// Awake
 	for (auto& comp : pAwakeComponents)
 	{
-		comp->AwakeBase();
+		comp->AwakeCall();
 	}
 	pAwakeComponents.clear();
 }
 
-void GameObject::StartBase()
+void GameObject::StartCall()
 {
 	if (!isActive) return;
 
 	// Start
 	for (auto& comp : pStartComponents)
 	{
-		comp->StartBase();
+		comp->StartCall();
 	}
 	pStartComponents.clear();
 }
 
-void GameObject::UpdateBase()
+void GameObject::UpdateCall()
 {
 	if (!isActive) return;
 
 	// Update
 	for (auto& comp : pActiveComponents)
 	{
-		comp->Update();
+		comp->UpdateCall();
 	}
 }
 
-void GameObject::LateUpdateBase()
+void GameObject::LateUpdateCall()
 {
 	if (!isActive) return;
 
 	for (auto& itr : pActiveComponents)
 	{
-		itr->LateUpdate();
+		itr->LateUpdateCall();
 	}
 }
 
-void GameObject::DrawBase()
+void GameObject::DrawCall()
 {
 	if (!isActive) return;
 
@@ -193,8 +204,15 @@ void GameObject::DrawBase()
 
 	for (auto& itr : pActiveComponents)
 	{
-		itr->Draw();
+		itr->DrawCall();
 	}
+}
+
+void GameObject::MatchRBToDxTransform()
+{
+	if (!isHasRigidBody) return;
+
+	pRigidBody->SetTransformBtToDx();
 }
 
 void GameObject::Destroy()
@@ -238,6 +256,9 @@ void GameObject::DeleteComponent(Component& _deleteComonent)
 	pActiveComponents.remove(&_deleteComonent);
 	pAwakeComponents.remove(&_deleteComonent);
 	pStartComponents.remove(&_deleteComonent);
+
+	// çÌèúÇ≥ÇÍÇΩÇ∆Ç´ÇÃèàóù
+	_deleteComonent.OnDestroy();
 }
 
 void GameObject::RemoveActiveComponent(Component& _removeComonent)
@@ -252,9 +273,6 @@ void GameObject::RemoveActiveComponent(Component& _removeComonent)
 	// StartèàóùÇ™Ç‹ÇæÇ»ÇÁ
 	if (_removeComonent.GetIsAlreadyStart())
 		pStartComponents.remove(&_removeComonent);
-
-
-
 }
 
 void GameObject::AddActiveComponent(Component& _addComonent)
@@ -279,7 +297,29 @@ void GameObject::AddActiveComponent(Component& _addComonent)
 		pStartComponents.push_back(&_addComonent);
 }
 
-void GameObject::ImGuiSet()
+void GameObject::OnActiveTrue()
+{
+	for (auto& pComp : pComponents)
+	{
+		bool isEnable = pComp->GetIsEnable();
+
+		if (isEnable)
+			pComp->OnEnableTrueCall();
+	}
+}
+
+void GameObject::OnActiveFalse()
+{
+	for (auto& pComp : pComponents)
+	{
+		bool isEnable = pComp->GetIsEnable();
+
+		if (isEnable)
+			pComp->OnEnableFalseCall();
+	}
+}
+
+void GameObject::ImGuiSetting()
 {
 	if (ImGui::TreeNode(name.c_str()))	// ñºëOTree
 	{
@@ -288,16 +328,16 @@ void GameObject::ImGuiSet()
 		ImGuiSetParent();
 
 		Vector3 v = pTransform->GetLocalPosition();
-		ImGuiMethod::DragFloat3(v, "pos", 0.1f);
-		pTransform->SetLocalPosition(v);
+		if (ImGuiMethod::DragFloat3(v, "pos", 0.1f))
+			pTransform->SetLocalPosition(v);
 
 		v = pTransform->GetLocalScale();
-		ImGuiMethod::DragFloat3(v, "scale", 0.1f);
-		pTransform->SetLocalScale(v);
+		if (ImGuiMethod::DragFloat3(v, "scale", 0.1f))
+			pTransform->SetLocalScale(v);
 
 		v = pTransform->GetLocalEularAngles();
-		ImGuiMethod::DragFloat3(v, "rot");
-		pTransform->SetLocalEularAngles(v);
+		if (ImGuiMethod::DragFloat3(v, "rot"))
+			pTransform->SetLocalEularAngles(v);
 
 		std::list<Component*> deleteComponents;
 
@@ -375,7 +415,6 @@ void GameObject::Load(const nlohmann::json& _data)
 
 	if (IsJsonContains(_data, "transform"))
 		pTransform->Load(_data["transform"]);
-
 }
 
 void GameObject::LateLode(const nlohmann::json& _data)
@@ -390,7 +429,6 @@ void GameObject::LateLode(const nlohmann::json& _data)
 	}
 }
 
-
 void GameObject::SetName(const std::string& _name)
 {
 	if (_name == "") return;	// ñºëOÇ™Ç»Ç¢Ç»ÇÁ
@@ -401,9 +439,25 @@ void GameObject::SetActive(bool _isActive)
 {
 	if (isActive == _isActive) return;	// ìØÇ∂èÛë‘Ç…ïœÇ¶ÇÊÇ§Ç∆Ç∑ÇÈÇ»ÇÁèIÇÌÇÈ
 	isActive = _isActive;
+
+}
+
+void GameObject::SetRigidBody(bool _isRigidBody)
+{
+	isHasRigidBody = _isRigidBody;
+
+	if (isHasRigidBody)
+		pRigidBody = GetComponent<CP_RigidBody>();
+	else
+		pRigidBody = nullptr;
 }
 
 Transform& GameObject::GetTransform()
 {
 	return *pTransform;
+}
+
+bool GameObject::GetHasRigidBody() const
+{
+	return isHasRigidBody;
 }

@@ -33,6 +33,9 @@ public:
 	// 更新をしているか取得
 	bool GetIsUpdatePlay() const;
 private:
+	/// @brief 再生中だけ更新処理
+	void PlayOnlyUpdate();
+
 	void ImGuiSetting() override;
 
 	void Load();

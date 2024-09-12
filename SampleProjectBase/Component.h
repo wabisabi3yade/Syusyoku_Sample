@@ -29,23 +29,26 @@ public:
 
 	virtual void Init() {};
 
-	/// @brief 外部からで呼び出すAwake処理
-	void AwakeBase();
+	/// @brief 外部から呼び出すAwake処理
+	void AwakeCall();
 
-	/// @brief 外部からで呼び出すStart処理
-	void StartBase();
+	/// @brief 外部から呼び出すStart処理
+	void StartCall();
 
-	// 毎フレーム更新処理
-	virtual void Update() {};	
+	/// @brief 外部から呼び出すUpdate処理
+	void UpdateCall();
 
-	// Updateの後に行う更新処理
-	virtual void LateUpdate() {};
+	/// @brief 外部から呼び出すLateUpdate処理
+	void LateUpdateCall();
 
-	// 描画処理
-	virtual void Draw() {};
+	/// @brief 外部から呼び出すDraw処理
+	void DrawCall();
 
 	/// @brief 活動状態を切り替える
 	void TransitionEnable();
+
+	/// @brief 削除されたときに処理する
+	virtual void OnDestroy();
 
 	/// @brief 名前をセットする
 	/// @param _name 名前
@@ -73,20 +76,39 @@ public:
 	bool GetIsAlreadyStart() const;
 
 	/// @brief セーブする
-	/// @param _sceneData セーブシーンデータ
+	/// @param _data セーブシーンデータ
 	virtual nlohmann::json Save() override;
 
 	/// @brief ロードする
-	/// @param _sceneData ロードするシーンデータ 
-	virtual void Load(const nlohmann::json& _sceneData) override;
+	/// @param _data ロードするシーンデータ 
+	virtual void Load(const nlohmann::json& _data) override;
 	
+private:
+	/// @brief 活動状態をtrueに変更したときの処理
+	void OnEnableTrueCall();
+
+	/// @brief 活動状態をfalseに変更したときの処理
+	void OnEnableFalseCall();
 protected:
 	/// @brief 作成時に呼ばれる処理
 	virtual void Awake() {}
 
-	// 1フレーム目で行う処理
+	/// @brief 1フレーム目で行う処理
 	virtual void Start() {};
 
-	// ImGuiでパラメータを変える処理
+	/// @brief 毎フレーム更新処理
+	virtual void Update() {};
+
+	/// @brief Updateの後に行う更新処理
+	virtual void LateUpdate() {};
+
+	/// @brief 描画処理
+	virtual void Draw() {};
+
+	/// @brief ImGuiでパラメータを変える処理
 	void ImGuiSetting() override {};
+
+	// 活動状態を切り替える時の処理
+	virtual void OnEnableTrue() {}
+	virtual void OnEnableFalse() {}
 };

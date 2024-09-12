@@ -60,14 +60,9 @@ void ImGuiMethod::Terminal()
 	ImGui::DestroyContext();
 }
 
-void ImGuiMethod::DragFloat3(Vector3& _vector3, const std::string& _name, float _speed)
+bool ImGuiMethod::DragFloat3(Vector3& _vector3, const std::string& _name, float _speed)
 {
-	static float f[3];
-	f[0] = _vector3.x;
-	f[1] = _vector3.y;
-	f[2] = _vector3.z;
-	ImGui::DragFloat3(TO_UTF8(_name), f, _speed);
-	_vector3 = { f[0], f[1], f[2] };	// ç¿ïW
+	return ImGui::DragFloat3(TO_UTF8(_name), &_vector3.x, _speed);
 }
 
 void ImGuiMethod::ColorEdit4(DirectX::SimpleMath::Color& _color, const std::string& _name)

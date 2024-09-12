@@ -13,20 +13,11 @@
 #include "ISaveLoad.h"
 
 // シーンで使用するオブジェクト全般の基底クラス
-class GameObject : public ISaveLoad
+class GameObject : public ISaveLoad, public HashiTaku::IImGuiUser
 {
 private:
-	// アクティブ状態かどうか
-	bool isActive;	
-
 	// このオブジェクトの名前
 	std::string name;	
-
-	// タグ
-	Tag tag;
-
-	// レイヤー
-	Layer layer;	
 
 	/// @brief トランスフォーム
 	std::unique_ptr<Transform> pTransform;
@@ -42,18 +33,36 @@ private:
 
 	/// @brief Start処理を行うコンポーネント
 	std::list<Component*> pStartComponents;
+
+	// タグ
+	Tag tag;
+
+	// レイヤー
+	Layer layer;
+
+	// アクティブ状態かどうか
+	bool isActive;
+
+	/// @brief RigidBodyを所持しているか
+	bool isHasRigidBody;
+
+	/// @brief RigidBodyコンポーネント
+	CP_RigidBody* pRigidBody;
 public:
 	GameObject();
 	GameObject(const GameObject& _other);
 	GameObject& operator=(const GameObject& _other);
-	~GameObject() {};
+	~GameObject();
 
 	// 更新処理
-	void AwakeBase();
-	void StartBase();
-	void UpdateBase();	
-	void LateUpdateBase();
-	void DrawBase();
+	void AwakeCall();
+	void StartCall();
+	void UpdateCall();	
+	void LateUpdateCall();
+	void DrawCall();
+
+	/// @brief 物理シミュレーションで更新されたパラメータをトランスフォームに設定
+	void MatchRBToDxTransform();
 
 	// 自身を削除
 	void Destroy();
@@ -75,9 +84,6 @@ public:
 	void RemoveActiveComponent(Component& _removeComonent);
 	void AddActiveComponent(Component& _addComonentComonent);
 
-	// ImGuiの設定
-	virtual void ImGuiSet();	
-
 	/// @brief セーブする
 	/// @param _sceneData セーブシーンデータ
 	nlohmann::json Save() override;
@@ -92,16 +98,22 @@ public:
 
 	void SetName(const std::string& _name);
 	void SetActive(bool _isActive);
-
+	void SetRigidBody(bool _isRigidBody);
 
 	Transform& GetTransform();
 	const std::string& GetName() const { return name; }
 	bool GetIsActive() const { return isActive; }
+	bool GetHasRigidBody() const;
 	Tag GetTag() const { return tag; }
 	Layer GetLayer() const  { return layer; }
-
+	CP_RigidBody* GetRigidBody() const;
 private:
 	virtual GameObject& Copy(const GameObject& _other);
+
+	// アクティブ状態を切り替えた時に起こす処理
+	void OnActiveTrue();
+	void OnActiveFalse();
+
 	void ImGuiSetParent();
 
 	/// @brief 所持している配列にコンポーネントが存在するか
@@ -132,6 +144,9 @@ private:
 	/// @brief コンポーネントのロード処理
 	/// @param _componentData このオブジェクト全てのコンポーネントデータ
 	void LoadComponent(const nlohmann::json& _componentsData);
+
+	// ImGuiの設定
+	void ImGuiSetting() override;
 };
 
 template<HashiTaku::ComponentConcept T>
@@ -154,6 +169,7 @@ inline T* GameObject::GetComponent()
 	for (auto& comp : pComponents)
 	{
 		if (typeid(T) != typeid(*comp)) continue;
+
 		T* retPtr = static_cast<T*>(comp.get());	
 		return retPtr; 
 	}
@@ -171,5 +187,5 @@ inline bool GameObject::isDuplicateCompoent()
 			return true;
 	}
 
-	return true;
+	return false;
 }

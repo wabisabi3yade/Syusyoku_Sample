@@ -75,6 +75,17 @@ void SceneManager::Release()
 	DX11BulletPhisics::Delete();
 }
 
+void SceneManager::OtherDraw()
+{
+	DX11BulletPhisics* pBulletPhisics = DX11BulletPhisics::GetInstance();
+
+	// 当たり判定描画
+	pBulletPhisics->Draw();
+
+	// 線描画
+	Geometory::DrawLine();
+}
+
 void SceneManager::CreateScene(const std::string& _sceneName)
 {
 	auto itr = std::find(sceneList.begin(), sceneList.end(), _sceneName);
@@ -128,19 +139,14 @@ void SceneManager::ImGuiCreateScene()
 
 void SceneManager::Exec()
 {
-	DX11BulletPhisics* pBulletPhisics = DX11BulletPhisics::GetInstance();
-
 	// ゲーム内入力更新
 	GameInput::GetInstance()->Update();
-
-	// 物理空間のシミュレーションを更新
-	pBulletPhisics->Update();
 
 	// シーンの実行
 	pNowScene->Exec();
 
-	// 当たり判定描画
-	pBulletPhisics->Draw();
+	// オブジェクト以外描画
+	OtherDraw();
 
 	ImGuiCall();
 }

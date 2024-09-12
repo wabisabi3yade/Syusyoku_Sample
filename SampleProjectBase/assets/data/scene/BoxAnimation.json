@@ -1,7 +1,7 @@
 {
     "objects": [
         {
-            "active": true,
+            "active": false,
             "components": [
                 {
                     "enable": true,
@@ -68,9 +68,9 @@
                 ],
                 "child": null,
                 "pos": [
-                    0.8999999761581421,
-                    2.299999952316284,
-                    -1.2000000476837158
+                    0.0,
+                    3.0,
+                    -20.700000762939453
                 ],
                 "scale": [
                     1.0,
@@ -111,6 +111,160 @@
                     0.0,
                     1.600000023841858,
                     2.799999952316284
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "isGravity": false,
+                    "isRigid": true,
+                    "mass": 1.0,
+                    "name": "RigidBody"
+                },
+                {
+                    "angles": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "center": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "enable": true,
+                    "name": "SphereCollider",
+                    "radius": 3.259999990463257
+                }
+            ],
+            "layer": 0,
+            "name": "SphereCol",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "child": null,
+                "pos": [
+                    0.0,
+                    7.800000190734863,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "isGravity": true,
+                    "isRigid": true,
+                    "mass": 1.0,
+                    "name": "RigidBody"
+                },
+                {
+                    "AABB": false,
+                    "angles": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "center": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "enable": true,
+                    "length": [
+                        0.800000011920929,
+                        1.100000023841858,
+                        2.799999952316284
+                    ],
+                    "name": "BoxCollider"
+                }
+            ],
+            "layer": 0,
+            "name": "Collider",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "child": null,
+                "pos": [
+                    0.0,
+                    2.4000000953674316,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "isGravity": false,
+                    "isRigid": true,
+                    "mass": 1.0,
+                    "name": "RigidBody"
+                },
+                {
+                    "AABB": false,
+                    "angles": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "center": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "enable": true,
+                    "length": [
+                        8.899999618530273,
+                        2.700000047683716,
+                        10.899999618530273
+                    ],
+                    "name": "BoxCollider"
+                }
+            ],
+            "layer": 0,
+            "name": "Ground1",
+            "tag": 0,
+            "transform": {
+                "angle": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "child": null,
+                "pos": [
+                    0.0,
+                    -3.5,
+                    0.0
                 ],
                 "scale": [
                     1.0,

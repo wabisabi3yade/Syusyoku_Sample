@@ -16,48 +16,64 @@ SceneObjects::~SceneObjects()
 	uiList.clear();
 }
 
+void SceneObjects::Awake()
+{
+	for (auto itr = objList.begin(); itr != objList.end(); itr++)
+	{
+		itr->second->AwakeCall();
+	}
+
+	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
+	{
+		itr->second->AwakeCall();
+	}
+}
+
+void SceneObjects::Start()
+{
+	for (auto itr = objList.begin(); itr != objList.end(); itr++)
+	{
+		itr->second->StartCall();
+	}
+
+	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
+	{
+		itr->second->StartCall();
+	}
+}
+
 void SceneObjects::Update()
 {
 	for (auto itr = objList.begin(); itr != objList.end(); itr++)
 	{
-		itr->second->AwakeBase();
+		itr->second->UpdateCall();
 	}
 
 	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
 	{
-		itr->second->AwakeBase();
+		itr->second->UpdateCall();
 	}
+}
 
+void SceneObjects::LateUpdate()
+{
 	for (auto itr = objList.begin(); itr != objList.end(); itr++)
 	{
-		itr->second->StartBase();
+		itr->second->LateUpdateCall();
 	}
 
 	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
 	{
-		itr->second->StartBase();
+		itr->second->LateUpdateCall();
 	}
+}
 
+void SceneObjects::UpdateRigidBody()
+{
 	for (auto itr = objList.begin(); itr != objList.end(); itr++)
 	{
-		itr->second->UpdateBase();
+		itr->second->AwakeCall();
 	}
-
-	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
-	{
-		itr->second->UpdateBase();
-	}
-
-	for (auto itr = objList.begin(); itr != objList.end(); itr++)
-	{
-		itr->second->LateUpdateBase();
-	}
-
-	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
-	{
-		itr->second->LateUpdateBase();
-	}
-
 }
 
 void SceneObjects::Draw()
@@ -65,7 +81,7 @@ void SceneObjects::Draw()
 	// 3D空間上のオブジェクト描画
 	for (auto itr = objList.begin(); itr != objList.end(); itr++)
 	{
-		itr->second->DrawBase();
+		itr->second->DrawCall();
 	}
 
 
@@ -77,7 +93,7 @@ void SceneObjects::Draw()
 	// 2D空間（UI）のオブジェクト
 	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
 	{
-		itr->second->DrawBase();
+		itr->second->DrawCall();
 	}
 }
 
@@ -89,12 +105,12 @@ void SceneObjects::ImGuiSetting()
 
 	for (auto itr = objList.begin(); itr != objList.end(); itr++)
 	{
-		itr->second->ImGuiSet();
+		itr->second->ImGuiCall();
 	}
 
 	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
 	{
-		itr->second->ImGuiSet();
+		itr->second->ImGuiCall();
 	}
 
 	ImGui::Dummy(ImVec2(0, 10));

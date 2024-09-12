@@ -44,6 +44,9 @@ private:
 	// 解放処理
 	void Release();
 
+	/// @brief シーンオブジェクト以外の描画 
+	void OtherDraw();
+
 	/// @brief シーンを作成
 	/// @param _sceneName シーン名
 	void CreateScene(const std::string& _sceneName);

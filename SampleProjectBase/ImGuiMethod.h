@@ -53,7 +53,8 @@ public:
 	/// @param _vector3 Vector3
 	/// @param _name •Ï”–¼
 	/// @param _speed ‘¬“x
-	static void DragFloat3(DirectX::SimpleMath::Vector3& _vector3, const std::string& _name, float _speed = 1.0f);
+	/// @return •ÏX‚µ‚½‚©H
+	static bool DragFloat3(DirectX::SimpleMath::Vector3& _vector3, const std::string& _name, float _speed = 1.0f);
 
 	/// @brief ColorEdit4‚ÅColor‚É‘Î‰‚³‚¹‚½ŠÖ”
 	/// @param _color Color

@@ -24,11 +24,23 @@ public:
 	SceneObjects();
 	~SceneObjects();
 
-	// 更新処理
+	/// @brief オブジェクトAwake処理
+	void Awake();
+
+	/// @brief オブジェクトStart処理
+	void Start();
+
+	/// @brief オブジェクトUpdate処理
 	void Update();
 
-	// 描画処理
-	void Draw();	
+	/// @brief オブジェクトLateUpdate処理
+	void LateUpdate();
+
+	/// @brief オブジェクトDraw処理
+	void Draw();
+
+	/// @brief Scene内のRigidBodyを更新する
+	void UpdateRigidBody();
 
 	void ImGuiSetting();
 

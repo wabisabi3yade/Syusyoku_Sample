@@ -2,12 +2,16 @@
 #include "CP_RigidBody.h"
 
 #include "DX11BulletPhisics.h"
+#include "InSceneSystemManager.h"
+#include "GameObject.h"
 
 namespace DX = DirectX::SimpleMath;
 using namespace HashiTaku;
 
+constexpr float DEFAULT_MERGIN(0.04f);	// デフォルトのコリジョン形状マージン
+
 CP_RigidBody::CP_RigidBody()
-	: pShape(nullptr), mass(1.0f), isRigidBody(true), isSetShape(false)
+	: pShape(nullptr), mass(1.0f), isRigidbody(true), isGravity(true), isSetShape(false)
 {
 }
 
@@ -17,11 +21,6 @@ CP_RigidBody::CP_RigidBody(const CP_RigidBody& _other)
 	Copy(_other);
 }
 
-CP_RigidBody::~CP_RigidBody()
-{
-	RemoveCollObject();
-}
-
 CP_RigidBody& CP_RigidBody::operator=(const CP_RigidBody& _other)
 {
 	Copy(_other);
@@ -29,17 +28,17 @@ CP_RigidBody& CP_RigidBody::operator=(const CP_RigidBody& _other)
 	return *this;
 }
 
-void CP_RigidBody::Awake()
+void CP_RigidBody::Init()
 {
 	btTransform bulletTransform;
 	ToBtTransform(bulletTransform);
 	pMotionState = std::make_unique<btDefaultMotionState>(bulletTransform);
-}
 
-void CP_RigidBody::LateUpdate()
-{
-	// RigidBodyのトランスフォームを更新する
-	UpdateBtTransform();
+	// ゲームオブジェクトに伝える
+	gameObject->SetRigidBody(true);
+
+	// シーン内のRigidBody管理に追加
+	InSceneSystemManager::GetInstance()->AddRigidBody(*this);
 }
 
 void CP_RigidBody::ImGuiSetting()
@@ -52,11 +51,49 @@ void CP_RigidBody::ImGuiSetting()
 
 	ImGuiMethod::Text(pos);
 	ImGuiMethod::Text(Quat::ToEulerAngles(quaternion));
+
+	float changeMass = mass;
+	if (ImGui::DragFloat("mass", &changeMass, 0.1f, 0.0f, 500.0f))
+		SetMass(changeMass);
+
+	bool changeGravity = isGravity;
+	if (ImGui::Checkbox("gravity", &changeGravity))
+		SetIsGravity(changeGravity);
+}
+
+void CP_RigidBody::OnDestroy()
+{
+	RemoveCollObject();
+
+	// ゲームオブジェクトに伝える
+	if (gameObject)
+		gameObject->SetRigidBody(false);
+
+	InSceneSystemManager::GetInstance()->RemoveRigidBody(*this);
 }
 
 void CP_RigidBody::Start()
 {
-	CreateCollObject();
+	SetMass(mass);
+	SetIsGravity(isGravity);
+}
+
+void CP_RigidBody::OnEnableTrue()
+{
+	// ワールドから削除
+	if (pCollisionObject)
+		DX11BulletPhisics::GetInstance()->AddCollObj(*pCollisionObject);
+
+	InSceneSystemManager::GetInstance()->AddRigidBody(*this);
+}
+
+void CP_RigidBody::OnEnableFalse()
+{
+	// ワールドから削除
+	if (pCollisionObject)
+		DX11BulletPhisics::GetInstance()->RemoveCollObj(*pCollisionObject);
+
+	InSceneSystemManager::GetInstance()->RemoveRigidBody(*this);
 }
 
 void CP_RigidBody::ToBtTransform(btTransform& _btTransform)
@@ -86,32 +123,66 @@ void CP_RigidBody::SetMass(float _mass)
 	}
 	else
 		inertia = DX::Vector3::Zero;
+
+	if (isRigidbody)	// 剛体だったら
+	{
+		btRigidBody* pRigidBody = static_cast<btRigidBody*>(pCollisionObject.get());
+
+		pRigidBody->setMassProps(mass, Bullet::ToBtVector3(inertia));
+		pRigidBody->updateInertiaTensor();
+	}
 }
 
 void CP_RigidBody::SetShape(btCollisionShape& _shape)
 {
 	isSetShape = true;
 	pShape = &_shape;
-
+	pShape->setMargin(DEFAULT_MERGIN);
 	CreateCollObject();
-}
-
-void CP_RigidBody::SetCollOffsetPos(const DirectX::SimpleMath::Vector3& _offsetPos)
-{
-	collOffsetPos = _offsetPos;
-}
-
-void CP_RigidBody::SetCollAngles(const DirectX::SimpleMath::Vector3& _offsetAngles)
-{
-	collOffsetAngle = _offsetAngles;
 }
 
 void CP_RigidBody::RemoveShape()
 {
 	isSetShape = false;
 	pShape = nullptr;
-
 	RemoveCollObject();
+}
+
+void CP_RigidBody::SetTransformDxToBt(const Transform& _dxTransform)
+{
+	if (!isSetShape) return;
+
+	btTransform& bullettTransform = pCollisionObject->getWorldTransform();
+	bullettTransform.setIdentity();
+	bullettTransform.setOrigin(Bullet::ToBtVector3(_dxTransform.GetPosition()));
+	bullettTransform.setRotation(Bullet::ToBtQuaeternion(_dxTransform.GetRotation()));
+}
+
+void CP_RigidBody::SetTransformBtToDx()
+{
+	if (!isSetShape) return;
+	Transform& dxTransform = GetTransform();
+
+	btTransform& bullettTransform = pCollisionObject->getWorldTransform();
+	dxTransform.SetPosition(Bullet::ToDXVector3(bullettTransform.getOrigin()));
+	dxTransform.SetRotation(Bullet::ToDXQuaternion(bullettTransform.getRotation()));
+}
+
+nlohmann::json CP_RigidBody::Save()
+{
+	auto data = Component::Save();
+	data["mass"] = mass;
+	data["isRigid"] = isRigidbody;
+	data["isGravity"] = isGravity;
+	return data;
+}
+
+void CP_RigidBody::Load(const nlohmann::json& _data)
+{
+	Component::Load(_data);
+	LoadJsonFloat("mass", mass, _data);
+	LoadJsonBoolean("isRigid", isRigidbody, _data);
+	LoadJsonBoolean("isGravity", isGravity, _data);
 }
 
 void CP_RigidBody::Copy(const CP_RigidBody& _other)
@@ -119,20 +190,41 @@ void CP_RigidBody::Copy(const CP_RigidBody& _other)
 	if (this == &_other) return;
 
 	Component::operator=(_other);
-
 	mass = _other.mass;
-	isRigidBody = _other.isRigidBody;
+	SetIsRigidbody(_other.isRigidbody);
+	SetIsGravity(_other.isGravity);
+
 }
 
-void CP_RigidBody::SetRigidBody(bool _isRB)
+void CP_RigidBody::SetIsRigidbody(bool _isRB)
 {
 	// 変更前と同じなら
-	if (isRigidBody == _isRB) return;
+	if (isRigidbody == _isRB) return;
 
-	isRigidBody = _isRB;
+	isRigidbody = _isRB;
+	CreateCollObject();	// 当たり判定を作成しなおす
+}
 
-	// 当たり判定を作成しなおす
-	CreateCollObject();
+void CP_RigidBody::SetIsGravity(bool _isGravity)
+{
+	if (!isSetShape) return;
+	isGravity = _isGravity;
+
+	if (!isRigidbody) return;
+	btRigidBody* btRb = static_cast<btRigidBody*>(pCollisionObject.get());
+	btRb->activate();
+
+	if (isGravity)
+	{
+		DX::Vector3 gravityVal = DX11BulletPhisics::GetInstance()->GetGravityValue();
+		btRb->setGravity(Bullet::ToBtVector3(gravityVal));
+	}
+	else
+	{
+		btRb->setGravity(btVector3(0, 0, 0));
+		btRb->setLinearVelocity(btVector3(0, 0, 0));
+		btRb->setAngularVelocity(btVector3(0, 0, 0));
+	}
 }
 
 void CP_RigidBody::RemoveCollObject()
@@ -157,7 +249,7 @@ void CP_RigidBody::CreateCollObject()
 		DX11BulletPhisics::GetInstance()->RemoveCollObj(*pCollisionObject);
 	}
 
-	if (isRigidBody)	// 剛体へ
+	if (isRigidbody)	// 剛体へ
 	{
 		CreateRB();
 
@@ -181,19 +273,30 @@ void CP_RigidBody::CreateRB()
 	);
 
 	pCollisionObject = std::make_unique<btRigidBody>(rbInfo);
+
+	// 初速度を0にする
+	btRigidBody* btRb = static_cast<btRigidBody*>(pCollisionObject.get());
+	btRb->setLinearVelocity(btVector3(0, 0, 0));
+	btRb->setAngularVelocity(btVector3(0, 0, 0));
 }
 
 void CP_RigidBody::CreateGhost()
 {
 }
 
-void CP_RigidBody::UpdateBtTransform()
+void CP_RigidBody::CollisionSetTransform()
 {
 	if (!isSetShape) return;
 
 	btTransform bulletTransform;
 	ToBtTransform(bulletTransform);
-
 	pCollisionObject->setWorldTransform(bulletTransform);
 	pMotionState->setWorldTransform(bulletTransform);
+}
+
+btRigidBody* CP_RigidBody::CastRigidBody()
+{
+	if (!isRigidbody || !isSetShape) return nullptr;
+
+	return static_cast<btRigidBody*>(pCollisionObject.get());
 }
