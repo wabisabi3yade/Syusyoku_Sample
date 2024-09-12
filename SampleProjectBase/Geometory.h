@@ -3,6 +3,8 @@
 // 描画
 class StaticMesh;
 class Material;
+class VertexShader;
+class PixelShader;
 
 // 当たり判定の描画などを手軽にするクラス(デバッグ用)
 class Geometory
@@ -15,6 +17,13 @@ public:
 		Cube,	// 立方体
 		WireCube,	// ワイヤー立方体
 		Sphere	// 球
+	};
+
+	/// @brief 線描画パラメータ
+	struct LineVertex
+	{
+		DirectX::SimpleMath::Vector3 position;	// 座標
+		DirectX::SimpleMath::Color color;	// 色
 	};
 private:
 	// Material
@@ -35,14 +44,15 @@ private:
 	// 基本図形
 	static std::vector<StaticMesh*> pGeometory;
 
+	/// @brief 描画する線リスト
+	static std::vector<LineVertex> lines;
+
+	/// @brief 線描画のシェーダー
+	static VertexShader* pLineVs;
+	static PixelShader* pLinePs;
+
 	Geometory() {};
-	~Geometory() {};
-
-	// 描画準備
-	static void DrawSetup();
-
-	// 描画
-	static void Draw(StaticMesh& _staticMesh);
+	~Geometory() {};	
 public:
 	static void Init();	// 初期化
 	static void Release();
@@ -69,10 +79,10 @@ public:
 
 	static void DrawSphere(bool _isWireFrame = false);	// 球描画
 
+	static void AddLine(const DirectX::SimpleMath::Vector3& _start, const DirectX::SimpleMath::Vector3& _end, const DirectX::SimpleMath::Color& _color);
+
 	/// @brief 線描画
-	/// @param _start 始点 
-	/// @param _end 終点
-	static void DrawLine(const DirectX::SimpleMath::Vector3& _start, const DirectX::SimpleMath::Vector3& _end);
+	static void DrawLine();
 
 private:
 	/// @brief マテリアルを作成
@@ -81,6 +91,15 @@ private:
 	/// @brief 一般的なメッシュを作成
 	static void MakeGeometory();
 
+	/// @brief シェーダーを取得
+	static void GetShader();
+
 	/// @brief パラメータをリセット
 	static void ResetParameter();
+
+	/// @brief 描画準備
+	static void DrawSetup();
+
+	/// @brief 描画
+	static void Draw(StaticMesh& _staticMesh);
 };

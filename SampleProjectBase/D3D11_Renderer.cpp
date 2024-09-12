@@ -277,7 +277,8 @@ void D3D11_Renderer::SetUpDraw()
 	// 描画先のキャンバスと使用する深度バッファを指定する
 	pDeviceContext->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView.Get());
 
-	float color[] = { 175.0f / 255.0f, 223.0f / 255.0f, 228.0f / 255.0f, 0.0f };
+	float color[] = {0.0f ,0.0f ,0.0f, 0.0f};
+
 	// 塗りつぶし
 	pDeviceContext->ClearRenderTargetView(pRenderTargetView, color);
 

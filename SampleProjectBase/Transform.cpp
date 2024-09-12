@@ -3,6 +3,8 @@
 
 #include "InSceneSystemManager.h"
 
+#include "GameObject.h"
+
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
@@ -100,6 +102,9 @@ void Transform::SetPosition(const DirectX::SimpleMath::Vector3& _pos)
 	// 子トランスフォームに反映
 	for (auto& child : pChilds)
 		child->UpdateHierarchyPositions();
+
+	// RigidBodyと同期させる
+	SetRigidBodyTransform();
 }
 
 void Transform::SetScale(const DirectX::SimpleMath::Vector3& _scale)
@@ -110,6 +115,9 @@ void Transform::SetScale(const DirectX::SimpleMath::Vector3& _scale)
 	// 子トランスフォームに反映
 	for (auto& child : pChilds)
 		child->UpdateHierarchyScales();
+
+	// RigidBodyと同期させる
+	SetRigidBodyTransform();
 }
 
 void Transform::SetEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
@@ -124,6 +132,9 @@ void Transform::SetEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
 	// 子トランスフォームに反映
 	for (auto& child : pChilds)
 		child->UpdateHierarchyRotations();
+
+	// RigidBodyと同期させる
+	SetRigidBodyTransform();
 }
 
 void Transform::SetRotation(const DirectX::SimpleMath::Quaternion& _quaternion)
@@ -137,6 +148,9 @@ void Transform::SetRotation(const DirectX::SimpleMath::Quaternion& _quaternion)
 	// 子トランスフォームに反映
 	for (auto& child : pChilds)
 		child->UpdateHierarchyRotations();
+
+	// RigidBodyと同期させる
+	SetRigidBodyTransform();
 }
 
 
@@ -151,6 +165,9 @@ void Transform::SetLocalPosition(const DirectX::SimpleMath::Vector3& _localPos)
 	// 子トランスフォームに反映
 	for (auto& child : pChilds)
 		child->UpdateHierarchyPositions();
+
+	// RigidBodyと同期させる
+	SetRigidBodyTransform();
 }
 
 void Transform::SetLocalScale(const DirectX::SimpleMath::Vector3& _scale)
@@ -161,6 +178,9 @@ void Transform::SetLocalScale(const DirectX::SimpleMath::Vector3& _scale)
 	// 子トランスフォームに反映
 	for (auto& child : pChilds)
 		child->UpdateHierarchyScales();
+
+	// RigidBodyと同期させる
+	SetRigidBodyTransform();
 }
 
 void Transform::SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
@@ -176,6 +196,9 @@ void Transform::SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAn
 	// 子トランスフォームに反映
 	for (auto& child : pChilds)
 		child->UpdateHierarchyRotations();
+
+	// RigidBodyと同期させる
+	SetRigidBodyTransform();
 }
 
 void Transform::SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quaternion)
@@ -191,6 +214,9 @@ void Transform::SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quatern
 	// 子トランスフォームに反映
 	for (auto& child : pChilds)
 		child->UpdateHierarchyRotations();
+
+	// RigidBodyと同期させる
+	SetRigidBodyTransform();
 }
 
 void Transform::SetGameObject(GameObject& _go)
@@ -343,6 +369,16 @@ void Transform::UpdateHierarchyRotations()
 	// 再帰で呼び出す
 	for (auto& child : pChilds)
 		child->UpdateHierarchyRotations();
+}
+
+void Transform::SetRigidBodyTransform()
+{
+	if (!pGameObject->GetHasRigidBody()) return;
+
+	CP_RigidBody* pRb = pGameObject->GetRigidBody();
+	assert(pRb && "RigidBodyがありません");
+
+	pRb->SetTransformDxToBt(*this);
 }
 
 void Transform::RemoveParentChild()

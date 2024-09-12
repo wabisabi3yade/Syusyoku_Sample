@@ -27,6 +27,9 @@ class DX11BulletPhisics : public Singleton_Base<DX11BulletPhisics>
 
 	/// @brief 最大サブステップ数
 	u_int maxSubSteps;
+
+	/// @brief 重力値
+	DirectX::SimpleMath::Vector3 gravityValue;
 public:
 	/// @brief Bullet初期化
 	void Init();
@@ -47,6 +50,9 @@ public:
 
 	// 衝突オブジェクトをチェック
 	u_int GetCollObjCnt() const;
+
+	// 重力値を取得する
+	DirectX::SimpleMath::Vector3 GetGravityValue() const;
 private:
 	DX11BulletPhisics();
 	~DX11BulletPhisics() {}

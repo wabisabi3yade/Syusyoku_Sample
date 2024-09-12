@@ -3,6 +3,7 @@
 
 #include "InSceneSystemManager.h"
 #include "ShaderCollection.h"
+#include "DX11BulletPhisics.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -31,11 +32,8 @@ void Scene::Exec()
 {
 	SceneObjects& sceneObjects = pInSceneSystem->GetSceneObjects();
 
-	if (IsUpdatePlay())	// 再生中なら
-	{
-		// シーン内の更新処理
-		sceneObjects.Update();
-	}
+	// 再生中のみの更新
+	PlayOnlyUpdate();
 
 	// ImGui編集
 	sceneObjects.ImGuiSetting();
@@ -45,6 +43,28 @@ void Scene::Exec()
 
 	// シーン内の描画処理
 	sceneObjects.Draw();
+}
+
+void Scene::PlayOnlyUpdate()
+{
+	if (!IsUpdatePlay()) return;	// 再生中なら
+
+	SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->GetSceneObjects();
+
+	// BulletのトランスフォームをDxに合わせる
+	pInSceneSystem->UpdateTransformBtToDx();
+
+	sceneObjects.Awake();
+
+	sceneObjects.Start();
+
+	// 物理シミュレーションを進める
+	DX11BulletPhisics::GetInstance()->Update();
+
+	// シーン内の更新処理
+	sceneObjects.Update();
+
+	sceneObjects.LateUpdate();
 }
 
 void Scene::ImGuiSetting()

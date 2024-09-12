@@ -22,16 +22,31 @@ bool Component::GetIsAlreadyStart() const
     return isAlreadyStart;
 }
 
-void Component::AwakeBase()
+void Component::AwakeCall()
 {
     Awake();
     isAlreadyAwake = true;
 }
 
-void Component::StartBase()
+void Component::StartCall()
 {
     Start();
     isAlreadyStart = true;
+}
+
+void Component::UpdateCall()
+{
+    Update();
+}
+
+void Component::LateUpdateCall()
+{
+    LateUpdate();
+}
+
+void Component::DrawCall()
+{
+    Draw();
 }
 
 void Component::TransitionEnable()
@@ -39,9 +54,13 @@ void Component::TransitionEnable()
     isEnable = !isEnable;
 
     if (isEnable)   // Šˆ“®ó‘Ô‚É‚È‚Á‚½‚ç‚È‚ç
-        gameObject->AddActiveComponent(*this);
+        OnEnableTrueCall();
     else
-        gameObject->RemoveActiveComponent(*this);
+        OnEnableFalseCall();
+}
+
+void Component::OnDestroy()
+{
 }
 
 nlohmann::json Component::Save()
@@ -61,6 +80,18 @@ void Component::Load(const nlohmann::json& _componentData)
 
 }
 
+void Component::OnEnableTrueCall()
+{
+    OnEnableTrue();
+    gameObject->AddActiveComponent(*this);
+}
+
+void Component::OnEnableFalseCall()
+{
+    OnEnableFalse();
+    gameObject->RemoveActiveComponent(*this);
+}
+
 void Component::SetName(const std::string& _name)
 {
     name = _name;
@@ -71,9 +102,9 @@ void Component::SetEnable(bool _enable)
     isEnable = _enable;
 
     if (isEnable)   // Šˆ“®ó‘Ô‚É‚È‚Á‚½‚ç‚È‚ç
-        gameObject->AddActiveComponent(*this);
+        OnEnableTrueCall();
     else
-        gameObject->RemoveActiveComponent(*this);
+        OnEnableFalseCall();
 }
 
 std::string Component::GetName() const

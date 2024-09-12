@@ -1,7 +1,7 @@
 struct VS_INPUT
 {
     float3 pos : POSITION; // 頂点座標（モデル座標系）
-    float3 color : COLOR0; // 頂点色
+    float4 color : COLOR0; // 頂点色
 };
 
 // ピクセルシェーダーに渡す
@@ -24,11 +24,12 @@ VS_OUTPUT main(VS_INPUT vin)
 {
     VS_OUTPUT vout;
     
-    vout.pos = float4(vin.pos, 0.0f);
+    vout.pos = float4(vin.pos, 1.0f);
+    vout.pos = mul(vout.pos, world);
     vout.pos = mul(vout.pos, view);
     vout.pos = mul(vout.pos, proj);
     
-    vout.color = float4(vin.color, 1.0f);
+    vout.color = vin.color;
     
 	return vout;
 }

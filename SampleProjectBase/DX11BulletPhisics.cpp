@@ -1,13 +1,16 @@
 #include "pch.h"
 #include "DX11BulletPhisics.h"
 
-#include "MainApplication.h"
-
 using namespace HashiTaku;
 
 constexpr u_int DEFAULT_MAX_SUBSTEPS(10);	// デフォルト最大サブステップ数
 
-DX11BulletPhisics::DX11BulletPhisics() : maxSubSteps(DEFAULT_MAX_SUBSTEPS)
+DirectX::SimpleMath::Vector3 DX11BulletPhisics::GetGravityValue() const
+{
+	return gravityValue;
+}
+
+DX11BulletPhisics::DX11BulletPhisics() : maxSubSteps(DEFAULT_MAX_SUBSTEPS), gravityValue(0.0f, Mathf::gravity, 0.0f)
 {
 }
 
@@ -44,7 +47,7 @@ void DX11BulletPhisics::Init()
 	pDebugDraw = std::make_unique<BulletDebugDraw>();
 
 	// 重力設定
-	pDynamicsWorld->setGravity(Bullet::ToBtVector3({ 0.0f, Mathf::gravity, 0.0f }));
+	pDynamicsWorld->setGravity(Bullet::ToBtVector3(gravityValue));
 
 	// デバッグ描画クラスセット
 	pDynamicsWorld->setDebugDrawer(pDebugDraw.get());
@@ -63,9 +66,6 @@ void DX11BulletPhisics::Draw()
 {
 	// デバッグ描画を呼び出す
 	pDynamicsWorld->debugDrawWorld();
-
-	// デバッグ描画を処理
-	pDebugDraw->Draw();
 }
 
 void DX11BulletPhisics::AddCollObj(btCollisionObject& _collObj)

@@ -22,6 +22,9 @@ Vector3 Geometory::position = Vector3::Zero;
 Vector3 Geometory::scale = Vector3::One;
 Vector3 Geometory::eularAngle = Vector3::Zero;
 Color Geometory::color = Color(1.0f, 1.0f, 1.0f, 1.0f);
+std::vector<Geometory::LineVertex>  Geometory::lines;
+VertexShader* Geometory::pLineVs = nullptr;
+PixelShader* Geometory::pLinePs = nullptr;
 
 void Geometory::DrawSetup()
 {
@@ -72,6 +75,9 @@ void Geometory::Init()
 
 	// キューブを作成
 	MakeGeometory();
+
+	// シェーダー取得
+	GetShader();
 }
 
 void Geometory::Release()
@@ -104,15 +110,58 @@ void Geometory::DrawSphere(bool _isWireFrame)
 	ResetParameter();
 }
 
-void Geometory::DrawLine(const DirectX::SimpleMath::Vector3& _start, const DirectX::SimpleMath::Vector3& _end)
+void Geometory::AddLine(const DirectX::SimpleMath::Vector3& _start, const DirectX::SimpleMath::Vector3& _end, const DirectX::SimpleMath::Color& _color)
 {
-	DrawSetup();
+	LineVertex line;
+	line.position = _start;
+	line.color = _color;
+	lines.push_back(line);
 
-	ID3D11DeviceContext* pDeviceContext =
-		Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
+	line.position = _end;
+	lines.push_back(line);
+}
+
+void Geometory::DrawLine()
+{
+	if (lines.size() <= 0) return;
+
+	D3D11_Renderer* pRenderer = Direct3D11::GetInstance()->GetRenderer();
+	ID3D11Device* pDevice = pRenderer->GetDevice();
+	ID3D11DeviceContext* pDeviceContext = pRenderer->GetDeviceContext();
 
 	// トポロジー設定
 	pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+
+	// 頂点バッファ作成
+	u_int vertexCnt = static_cast<int>(lines.size());
+	D3D11_BUFFER_DESC bufferDesc = {};
+	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	bufferDesc.ByteWidth = sizeof(LineVertex) * vertexCnt;
+	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bufferDesc.CPUAccessFlags = 0;
+	D3D11_SUBRESOURCE_DATA initData = {};
+	initData.pSysMem = lines.data();
+	ID3D11Buffer* pVertexBuffer = nullptr;
+	pDevice->CreateBuffer(&bufferDesc, &initData, &pVertexBuffer);
+
+	// ワールド変換行列の座標にモデルの座標を入れる
+	RenderParam::WVP wvp = pRenderer->GetParameter().GetWVP(Vector3::Zero, Vector3::One, Quaternion::Identity);
+	wvp.world = wvp.world.Transpose();
+
+	// シェーダーの設定
+	pLineVs->UpdateSubResource(0, &wvp);
+	pLineVs->SetGPU();
+	pLinePs->SetGPU();
+
+	// バッファを送る
+	UINT stride = sizeof(LineVertex);
+	UINT offset = 0;
+	pDeviceContext->IASetVertexBuffers(0, 1, &pVertexBuffer, &stride, &offset);
+
+	// 実際の描画
+	pDeviceContext->Draw(vertexCnt, 0);
+
+	lines.clear();
 }
 
 void Geometory::MakeMaterial()
@@ -158,6 +207,15 @@ void Geometory::MakeGeometory()
 		// アセット管理にセット
 		pGeometory.push_back(AssetSetter::SetAsset(names[loop], std::move(pSM)));
 	}
+}
+
+void Geometory::GetShader()
+{
+	ShaderCollection* shCol = ShaderCollection::GetInstance();
+	pLineVs = shCol->GetVertexShader("VS_Line");
+	pLinePs = shCol->GetPixelShader("PS_Line");
+
+	assert(pLineVs && pLinePs && "線描画のシェーダーを正常に取得できません");
 }
 
 void Geometory::ResetParameter()

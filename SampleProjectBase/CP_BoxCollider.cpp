@@ -14,41 +14,41 @@ CP_BoxCollider::CP_BoxCollider()
 {
 }
 
-void CP_BoxCollider::Start()
+void CP_BoxCollider::Init()
 {
-	CP_Collider::Start();
-
-	// モデルのサイズから判定の大きさを決める
-	SizeFromModelSize();
-
-	CreateBoxShape();
+	CP_Collider::Init();
 }
 
-void CP_BoxCollider::CreateBoxShape()
+void CP_BoxCollider::CreateShape()
 {
 	// ボックス形状作成
 	Vector3 wide = length / 2;
 	pCollisionShape = std::make_unique<btBoxShape>(Bullet::ToBtVector3(wide));
-
-	SendShapeToRb(*pCollisionShape);
 }
 
 void CP_BoxCollider::LateUpdate()
 {
-	PosUpdate();
+	CP_Collider::LateUpdate();
 	LengthUpdate();
 }
 
 void CP_BoxCollider::ImGuiSetting()
 {
+	CP_Collider::ImGuiSetting();
+
 	ImGui::Checkbox("AABB", &isAABB);
-	ImGuiMethod::DragFloat3(posOffset, "posOffset");
-	ImGuiMethod::DragFloat3(length, "length");
+
+	Vector3 p_Length = length;
+	ImGuiMethod::DragFloat3(length, "length", 0.1f);
+
+	if (length != p_Length)
+		SetLength(length);
 }
 
-DirectX::SimpleMath::Vector3 CP_BoxCollider::GetCenterPos() const
+void CP_BoxCollider::SetLength(const DirectX::SimpleMath::Vector3& _length)
 {
-	return centerPos;
+	length = _length;
+	SetShape();
 }
 
 DirectX::SimpleMath::Vector3 CP_BoxCollider::GetLength() const
@@ -60,7 +60,6 @@ nlohmann::json CP_BoxCollider::Save()
 {
 	auto data = CP_Collider::Save();
 
-	HashiTaku::SaveJsonVector3("posOffset", posOffset, data);
 	HashiTaku::SaveJsonVector3("length", length, data);
 	data["AABB"] = isAABB;
 
@@ -70,9 +69,11 @@ nlohmann::json CP_BoxCollider::Save()
 void CP_BoxCollider::Load(const nlohmann::json& _data)
 {
 	CP_Collider::Load(_data);
+	
+	Vector3 loadLength;
+	HashiTaku::LoadJsonVector3("length", loadLength, _data);
+	SetLength(loadLength);
 
-	HashiTaku::LoadJsonVector3("posOffset", posOffset, _data);
-	HashiTaku::LoadJsonVector3("length", length, _data);
 	HashiTaku::LoadJsonBoolean("AABB", isAABB, _data);
 }
 
@@ -94,17 +95,7 @@ void CP_BoxCollider::SizeFromModelSize()
 	if (modelSize.x <= Mathf::epsilon) return;
 
 	length = modelSize;
-	posOffset = pModel->GetCenterPosition();
-}
-
-void CP_BoxCollider::PosUpdate()
-{
-	Transform& t = GetTransform();
-
-	centerPos = t.GetPosition();
-	centerPos += t.Up() * posOffset.y * t.GetScale().y;
-	centerPos += t.Right() * posOffset.x * t.GetScale().x;
-	centerPos += t.Forward() * posOffset.z * t.GetScale().z;
+	centerOffset = pModel->GetCenterPosition();
 }
 
 void CP_BoxCollider::LengthUpdate()

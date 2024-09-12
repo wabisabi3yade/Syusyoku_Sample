@@ -19,5 +19,10 @@ public:
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
+
+private:
+	void CreateShape() override;
+	/// @brief ”¼Œa‚ğƒZƒbƒg
+	void SetRadius(float _radius);
 };
 

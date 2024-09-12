@@ -8,16 +8,6 @@
 class BulletDebugDraw : public btIDebugDraw
 {
 private:
-    /// @brief 当たり判定の頂点
-    struct LineVertex 
-    {
-        DirectX::SimpleMath::Vector3 position;
-        DirectX::SimpleMath::Vector3 color;
-    };
-
-    /// @brief 当たり判定の頂点リスト
-    std::vector<LineVertex> lines;
-
     // 描画するシェーダー
     VertexShader* pVxShader;
     PixelShader* pPxShader;
@@ -36,8 +26,5 @@ public:
     void draw3dText(const btVector3& _location, const char* _textString) override;
     virtual void setDebugMode(int _debugMode) override;
     virtual int getDebugMode() const override;
-
-    /// @brief 当たり判定描画
-    void Draw();
 };
 
