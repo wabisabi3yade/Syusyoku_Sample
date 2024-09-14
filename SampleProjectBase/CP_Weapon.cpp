@@ -48,8 +48,6 @@ void CP_Weapon::ImGuiSetting()
 {
 	ImGui::Checkbox("display", &isDisplayPos);
 	ImGui::Text(grabBoneName.c_str());
-	ImGuiMethod::DragFloat3(offsetPosition, "offset", 0.01f);
-	ImGuiMethod::DragFloat3(offsetAngles, "angle");
 	ImGuiSetBone();
 }
 
@@ -95,9 +93,6 @@ nlohmann::json CP_Weapon::Save()
 
 	data["grabName"] = grabBoneName;
 
-	HashiTaku::SaveJsonVector3("offsetPos", offsetPosition, data);
-	HashiTaku::SaveJsonVector3("offsetAngles", offsetAngles, data);
-
 	return data;
 }
 
@@ -107,9 +102,6 @@ void CP_Weapon::Load(const nlohmann::json& _data)
 
 	std::string grabBoneName;
 	HashiTaku::LoadJsonString("grabName", grabBoneName, _data);
-
-	HashiTaku::LoadJsonVector3("offsetPos", offsetPosition, _data);
-	HashiTaku::LoadJsonVector3("offsetAngles", offsetAngles, _data);
 }
 
 void CP_Weapon::UpdateTransform()
@@ -129,8 +121,7 @@ void CP_Weapon::UpdateTransform()
 		boneMtx._42,
 		boneMtx._43
 	};
-
-	t.SetLocalPosition(bonePos + offsetPosition);
+	t.SetLocalPosition(bonePos);
 
 	Vector3 s = Vec3::WorldMtxToScale(boneMtx);
 
@@ -142,7 +133,6 @@ void CP_Weapon::UpdateTransform()
 	);
 
 	Quaternion rot = Quaternion::CreateFromRotationMatrix(rotateMtx);
-	rot = Quat::Multiply(Quat::ToQuaternion(offsetAngles), rot);
 	t.SetLocalRotation(rot);
 }
 

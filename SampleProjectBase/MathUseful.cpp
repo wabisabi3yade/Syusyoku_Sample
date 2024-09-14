@@ -73,10 +73,10 @@ DirectX::SimpleMath::Vector3 Vec3::WorldMtxToScale(const DirectX::SimpleMath::Ma
 Vector3 Vec3::Repeat(const Vector3& _v, float _length)
 {
 	return Vector3(
-		Mathf::Repeat(_v.x, _length), 
+		Mathf::Repeat(_v.x, _length),
 		Mathf::Repeat(_v.y, _length),
 		Mathf::Repeat(_v.z, _length)
-		);
+	);
 }
 
 DirectX::SimpleMath::Vector4 Vec4::Max(const DirectX::SimpleMath::Vector4& _v4, float _floatVal)
@@ -112,18 +112,18 @@ void Quat::ToAxisAngle(const DirectX::SimpleMath::Quaternion& _q, DirectX::Simpl
 
 Quaternion Quat::Multiply(const Quaternion& _q1, const Quaternion& _q2)
 {
-	Quaternion result = _q1 * _q2;
+	Quaternion result = _q2 * _q1;
 	result.Normalize();
 
 	return result;
 }
 
-Quaternion Quat::RotationDifference(const Quaternion& _sub, const Quaternion& _origin)
+Quaternion Quat::RotationDifference(const Quaternion& _origin, const Quaternion& _sub)
 {
-	Quaternion invTarget;
-	_sub.Inverse(invTarget);
+	Quaternion invSub;
+	_sub.Inverse(invSub);
 
-	return Quat::Multiply(invTarget, _origin);
+	return Quat::Multiply(invSub, _origin);
 }
 
 Quaternion Quat::RotateToVector(const Vector3& _vector, const Vector3& _up)
@@ -230,7 +230,7 @@ Matrix Mtx::CreateRoratateMtx(const Vector3& _degrees)
 		_degrees.y * Mathf::degToRad,
 		_degrees.x * Mathf::degToRad,
 		_degrees.z * Mathf::degToRad
-		);
+	);
 }
 
 Vector3 Mtx::MultiplyVector3(const Matrix& _mtx, const Vector3& _v)

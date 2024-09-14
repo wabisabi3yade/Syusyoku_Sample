@@ -27,6 +27,9 @@ class CP_RigidBody : public Component, public CloneComponent<CP_RigidBody>
 	/// @brief 重力を受けるか？
 	bool isGravity;
 
+	/// @brief 物理計算を行うか？
+	bool isKinematic;
+
 	/// @brief 形状がセットされているか？
 	bool isSetShape;
 public:
@@ -36,6 +39,7 @@ public:
 	CP_RigidBody& operator=(const CP_RigidBody& _other);
 
 	void Init() override;
+	void Update() override;
 	void ImGuiSetting() override;
 	void OnDestroy() override;
 
@@ -52,7 +56,7 @@ public:
 
 	/// @brief DxからBtのトランスフォームに合わせる
 	/// @param _dxTransform dxのトランスフォーム
-	void SetTransformDxToBt(const Transform& _dxTransform);
+	void SetTransformDxToBt();
 
 	/// @brief  BtからDxのトランスフォームに合わせる
 	void SetTransformBtToDx();
@@ -102,5 +106,8 @@ private:
 	/// @brief 衝突オブジェクトをbtRigidBodyに変換
 	/// @return cast変換したポインタ
 	btRigidBody* CastRigidBody();
+
+	/// @brief 物理シミュレーションに衝突オブジェクトを追加する
+	void AddCollisionToWorld();
 };
 

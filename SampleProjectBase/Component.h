@@ -8,11 +8,8 @@ class Component : public ISaveLoad, public HashiTaku::IImGuiUser
 {
 	friend class GameObject;
 	
-	// 名前
+	/// @brief 名前
 	std::string name;
-
-	// 活動状態
-	bool isEnable;
 
 	/// @brief Awake処理を行ったかどうか？
 	bool isAlreadyAwake;
@@ -20,8 +17,10 @@ class Component : public ISaveLoad, public HashiTaku::IImGuiUser
 	/// @brief Start処理を行ったかどうか？
 	bool isAlreadyStart;
 protected:
+	/// @brief 活動状態
+	bool isEnable;
 
-	// このコンポーネントの所持オブジェクト
+	/// @brief このコンポーネントの所持オブジェクト
 	GameObject* gameObject;
 public:
 	Component() : name(""), isEnable(true), isAlreadyAwake(false), isAlreadyStart(false), gameObject(nullptr) {}
@@ -111,4 +110,8 @@ protected:
 	// 活動状態を切り替える時の処理
 	virtual void OnEnableTrue() {}
 	virtual void OnEnableFalse() {}
+
+	/// @brief ゲームオブジェクトとコンポーネントの活動状態を取得
+	/// @return どちらも活動しているか？
+	bool GetIsActive();
 };

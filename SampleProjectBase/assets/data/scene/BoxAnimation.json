@@ -27,16 +27,17 @@
             "name": "Ground",
             "tag": 0,
             "transform": {
-                "angle": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
                 "child": null,
                 "pos": [
                     0.0,
                     0.0,
                     1.2000000476837158
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
                 ],
                 "scale": [
                     11.899999618530273,
@@ -61,16 +62,17 @@
             "name": "Camera",
             "tag": 0,
             "transform": {
-                "angle": [
-                    10.0,
-                    0.0,
-                    0.0
-                ],
                 "child": null,
                 "pos": [
+                    -11.5,
+                    0.4000000059604645,
+                    -8.300000190734863
+                ],
+                "rotation": [
                     0.0,
-                    3.0,
-                    -20.700000762939453
+                    0.5591931343078613,
+                    0.0,
+                    0.8290374279022217
                 ],
                 "scale": [
                     1.0,
@@ -80,7 +82,7 @@
             }
         },
         {
-            "active": true,
+            "active": false,
             "components": [
                 {
                     "Request": [
@@ -101,16 +103,17 @@
             "name": "BoxTest",
             "tag": 0,
             "transform": {
-                "angle": [
-                    357.5958557128906,
-                    191.10096740722656,
-                    348.878662109375
-                ],
                 "child": null,
                 "pos": [
                     0.0,
                     1.600000023841858,
                     2.799999952316284
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
                 ],
                 "scale": [
                     1.0,
@@ -121,44 +124,22 @@
         },
         {
             "active": true,
-            "components": [
-                {
-                    "enable": true,
-                    "isGravity": false,
-                    "isRigid": true,
-                    "mass": 1.0,
-                    "name": "RigidBody"
-                },
-                {
-                    "angles": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "center": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "enable": true,
-                    "name": "SphereCollider",
-                    "radius": 3.259999990463257
-                }
-            ],
+            "components": null,
             "layer": 0,
             "name": "SphereCol",
             "tag": 0,
             "transform": {
-                "angle": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
                 "child": null,
                 "pos": [
                     0.0,
                     7.800000190734863,
                     0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
                 ],
                 "scale": [
                     1.0,
@@ -174,7 +155,7 @@
                     "enable": true,
                     "isGravity": true,
                     "isRigid": true,
-                    "mass": 1.0,
+                    "mass": 1.899999976158142,
                     "name": "RigidBody"
                 },
                 {
@@ -191,9 +172,9 @@
                     ],
                     "enable": true,
                     "length": [
-                        0.800000011920929,
-                        1.100000023841858,
-                        2.799999952316284
+                        1.0,
+                        1.0,
+                        1.0
                     ],
                     "name": "BoxCollider"
                 }
@@ -202,16 +183,17 @@
             "name": "Collider",
             "tag": 0,
             "transform": {
-                "angle": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
                 "child": null,
                 "pos": [
                     0.0,
-                    2.4000000953674316,
+                    5.599999904632568,
                     0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
                 ],
                 "scale": [
                     1.0,
@@ -227,7 +209,7 @@
                     "enable": true,
                     "isGravity": false,
                     "isRigid": true,
-                    "mass": 1.0,
+                    "mass": 2.4000000953674316,
                     "name": "RigidBody"
                 },
                 {
@@ -244,9 +226,9 @@
                     ],
                     "enable": true,
                     "length": [
-                        8.899999618530273,
-                        2.700000047683716,
-                        10.899999618530273
+                        1.0,
+                        1.0,
+                        1.0
                     ],
                     "name": "BoxCollider"
                 }
@@ -255,16 +237,17 @@
             "name": "Ground1",
             "tag": 0,
             "transform": {
-                "angle": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
                 "child": null,
                 "pos": [
                     0.0,
-                    -3.5,
+                    -4.599999904632568,
                     0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.008726539090275764,
+                    0.0,
+                    0.9999619126319885
                 ],
                 "scale": [
                     1.0,

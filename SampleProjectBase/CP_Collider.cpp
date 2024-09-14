@@ -28,10 +28,10 @@ CP_Collider& CP_Collider::operator=(const CP_Collider& _other)
 
 void CP_Collider::Init()
 {
-	pCompound = std::make_unique<btCompoundShape>();
+	//pCompound = std::make_unique<btCompoundShape>();
 
 	SetShape();
-	SendShapeToRb();
+	/*SendShapeToRb();*/
 }
 
 void CP_Collider::OnDestroy()
@@ -111,8 +111,14 @@ void CP_Collider::OnEnableFalse()
 
 void CP_Collider::SetShape()
 {
+	//if (pCollisionShape)
+	//	pCompound->removeChildShape(pCollisionShape.get());
+
 	if (pCollisionShape)
-		pCompound->removeChildShape(pCollisionShape.get());
+	{
+		CP_RigidBody* pRb = gameObject->GetComponent<CP_RigidBody>();
+		pRb->RemoveShape();
+	}
 
 	CreateShape();
 
@@ -121,7 +127,9 @@ void CP_Collider::SetShape()
 	offsetTransform.setOrigin(Bullet::ToBtVector3(centerOffset));
 	offsetTransform.setRotation(Bullet::ToBtQuaeternion(Quat::ToQuaternion(angleOffset)));
 
-	pCompound->addChildShape(offsetTransform, pCollisionShape.get());
+
+	SendShapeToRb();
+	/*pCompound->addChildShape(offsetTransform, pCollisionShape.get());*/
 }
 
 void CP_Collider::SendShapeToRb()
@@ -133,5 +141,5 @@ void CP_Collider::SendShapeToRb()
 		return;
 	}
 
-	pRb->SetShape(*pCompound.get());
+	pRb->SetShape(/**pCompound*/*pCollisionShape);
 }

@@ -30,15 +30,14 @@ CP_RigidBody& CP_RigidBody::operator=(const CP_RigidBody& _other)
 
 void CP_RigidBody::Init()
 {
-	btTransform bulletTransform;
-	ToBtTransform(bulletTransform);
-	pMotionState = std::make_unique<btDefaultMotionState>(bulletTransform);
-
 	// ゲームオブジェクトに伝える
 	gameObject->SetRigidBody(true);
-
 	// シーン内のRigidBody管理に追加
 	InSceneSystemManager::GetInstance()->AddRigidBody(*this);
+}
+
+void CP_RigidBody::Update()
+{
 }
 
 void CP_RigidBody::ImGuiSetting()
@@ -80,10 +79,9 @@ void CP_RigidBody::Start()
 
 void CP_RigidBody::OnEnableTrue()
 {
-	// ワールドから削除
-	if (pCollisionObject)
-		DX11BulletPhisics::GetInstance()->AddCollObj(*pCollisionObject);
-
+	// ワールドに追加
+	AddCollisionToWorld();
+	gameObject->SetRigidBody(true);
 	InSceneSystemManager::GetInstance()->AddRigidBody(*this);
 }
 
@@ -93,6 +91,7 @@ void CP_RigidBody::OnEnableFalse()
 	if (pCollisionObject)
 		DX11BulletPhisics::GetInstance()->RemoveCollObj(*pCollisionObject);
 
+	gameObject->SetRigidBody(false);
 	InSceneSystemManager::GetInstance()->RemoveRigidBody(*this);
 }
 
@@ -148,14 +147,12 @@ void CP_RigidBody::RemoveShape()
 	RemoveCollObject();
 }
 
-void CP_RigidBody::SetTransformDxToBt(const Transform& _dxTransform)
+void CP_RigidBody::SetTransformDxToBt()
 {
 	if (!isSetShape) return;
 
 	btTransform& bullettTransform = pCollisionObject->getWorldTransform();
-	bullettTransform.setIdentity();
-	bullettTransform.setOrigin(Bullet::ToBtVector3(_dxTransform.GetPosition()));
-	bullettTransform.setRotation(Bullet::ToBtQuaeternion(_dxTransform.GetRotation()));
+	ToBtTransform(bullettTransform);
 }
 
 void CP_RigidBody::SetTransformBtToDx()
@@ -259,12 +256,16 @@ void CP_RigidBody::CreateCollObject()
 		CreateGhost();
 	}
 
-	// 物理ワールドに追加
-	DX11BulletPhisics::GetInstance()->AddCollObj(*pCollisionObject);
+	// ワールドに当たり判定を追加
+	AddCollisionToWorld();
 }
 
 void CP_RigidBody::CreateRB()
 {
+	btTransform bulletTrans;
+	ToBtTransform(bulletTrans);
+	pMotionState = std::make_unique<btDefaultMotionState>(bulletTrans);
+
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(
 		Bullet::ToBtScalar(mass),
 		pMotionState.get(),
@@ -282,6 +283,7 @@ void CP_RigidBody::CreateRB()
 
 void CP_RigidBody::CreateGhost()
 {
+	
 }
 
 void CP_RigidBody::CollisionSetTransform()
@@ -291,7 +293,6 @@ void CP_RigidBody::CollisionSetTransform()
 	btTransform bulletTransform;
 	ToBtTransform(bulletTransform);
 	pCollisionObject->setWorldTransform(bulletTransform);
-	pMotionState->setWorldTransform(bulletTransform);
 }
 
 btRigidBody* CP_RigidBody::CastRigidBody()
@@ -299,4 +300,13 @@ btRigidBody* CP_RigidBody::CastRigidBody()
 	if (!isRigidbody || !isSetShape) return nullptr;
 
 	return static_cast<btRigidBody*>(pCollisionObject.get());
+}
+
+void CP_RigidBody::AddCollisionToWorld()
+{
+	// ゲームオブジェクトのレイヤーをIDとする
+	int groupId = static_cast<int>(gameObject->GetLayer().GetType());
+
+	if(GetIsActive() && pCollisionObject)
+		DX11BulletPhisics::GetInstance()->AddCollObj(*pCollisionObject, groupId);
 }

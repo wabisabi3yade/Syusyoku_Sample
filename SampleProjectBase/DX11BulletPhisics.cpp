@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "DX11BulletPhisics.h"
 
+
 using namespace HashiTaku;
 
 constexpr u_int DEFAULT_MAX_SUBSTEPS(10);	// デフォルト最大サブステップ数
@@ -60,6 +61,30 @@ void DX11BulletPhisics::Update()
 		Bullet::ToBtScalar(MainApplication::DeltaTime()),
 		maxSubSteps
 	);
+
+	// 衝突オブジェクトの数を取得
+	int numManifolds = pDynamicsWorld->getDispatcher()->getNumManifolds();
+	for (int i = 0; i < numManifolds; i++) {
+		btPersistentManifold* contactManifold = pDynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
+		const btCollisionObject* objA = contactManifold->getBody0();
+		const btCollisionObject* objB = contactManifold->getBody1();
+
+		int numContacts = contactManifold->getNumContacts();
+		for (int j = 0; j < numContacts; j++) {
+			btManifoldPoint& pt = contactManifold->getContactPoint(j);
+
+			if (pt.getDistance() < 0.0f) {
+				const btVector3& ptA = pt.getPositionWorldOnA();
+				const btVector3& ptB = pt.getPositionWorldOnB();
+				const btVector3& normalOnB = pt.m_normalWorldOnB;
+
+				std::cout << "Collision detected between objects!" << std::endl;
+				std::cout << "Contact point A: " << ptA.getX() << ", " << ptA.getY() << ", " << ptA.getZ() << std::endl;
+				std::cout << "Contact point B: " << ptB.getX() << ", " << ptB.getY() << ", " << ptB.getZ() << std::endl;
+				std::cout << "Collision normal: " << normalOnB.getX() << ", " << normalOnB.getY() << ", " << normalOnB.getZ() << std::endl;
+			}
+		}
+	}
 }
 
 void DX11BulletPhisics::Draw()
@@ -68,7 +93,7 @@ void DX11BulletPhisics::Draw()
 	pDynamicsWorld->debugDrawWorld();
 }
 
-void DX11BulletPhisics::AddCollObj(btCollisionObject& _collObj)
+void DX11BulletPhisics::AddCollObj(btCollisionObject& _collObj, int _groupId)
 {
 	// ワールド空間内になかったら処理しない
 	if (IsExistCollObjInWorld(_collObj))
@@ -80,10 +105,10 @@ void DX11BulletPhisics::AddCollObj(btCollisionObject& _collObj)
 	btRigidBody* rb = dynamic_cast<btRigidBody*>(&_collObj);
 
 	if (rb)	// 剛体なら
-		pDynamicsWorld->addRigidBody(rb);
+		pDynamicsWorld->addRigidBody(rb, 0x01, 0x01);
 
 	else
-		pDynamicsWorld->addCollisionObject(&_collObj);
+		pDynamicsWorld->addCollisionObject(&_collObj, 0x01, 0x01);
 }
 
 void DX11BulletPhisics::RemoveCollObj(btCollisionObject& _collObj)

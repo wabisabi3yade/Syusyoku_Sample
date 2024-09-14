@@ -42,7 +42,8 @@ public:
 
 	/// @brief 物理空間に衝突オブジェクトを追加する
 	/// @param _collObj 追加する衝突オブジェクト
-	void AddCollObj(btCollisionObject& _collObj);
+	/// @param _groupId 追加する当たり判定のグループ
+	void AddCollObj(btCollisionObject& _collObj, int _groupId);
 
 	/// @brief 物理空間に衝突オブジェクトを削除する
 	/// @param _collObj 削除する衝突オブジェクト

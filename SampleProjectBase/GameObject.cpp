@@ -124,8 +124,12 @@ void GameObject::LoadComponent(const nlohmann::json& _componentData)
 
 		Component& comp = *pCreateComp;
 		SetComponent(std::move(pCreateComp));
-
 		comp.Load(compData);
+
+		if (!comp.GetIsEnable())	// 活動状態でないなら
+		{
+			RemoveActiveComponent(comp);
+		}
 	}
 }
 
@@ -238,9 +242,11 @@ void GameObject::SetComponent(std::unique_ptr<Component> _pSetComponent)
 
 	// リストに追加
 	pComponents.push_back(std::move(_pSetComponent));
+
 	pActiveComponents.push_back(&comp);
 	pAwakeComponents.push_back(&comp);
 	pStartComponents.push_back(&comp);
+
 
 	// 初期処理
 	comp.Init();
@@ -248,17 +254,17 @@ void GameObject::SetComponent(std::unique_ptr<Component> _pSetComponent)
 
 void GameObject::DeleteComponent(Component& _deleteComonent)
 {
-	pComponents.remove_if([&](std::unique_ptr<Component>& pComp)
-		{
-			return pComp.get() == &_deleteComonent;
-		});
+	// 削除されたときの処理
+	_deleteComonent.OnDestroy();
 
 	pActiveComponents.remove(&_deleteComonent);
 	pAwakeComponents.remove(&_deleteComonent);
 	pStartComponents.remove(&_deleteComonent);
 
-	// 削除されたときの処理
-	_deleteComonent.OnDestroy();
+	pComponents.remove_if([&](std::unique_ptr<Component>& pComp)
+		{
+			return pComp.get() == &_deleteComonent;
+		});
 }
 
 void GameObject::RemoveActiveComponent(Component& _removeComonent)
@@ -268,7 +274,7 @@ void GameObject::RemoveActiveComponent(Component& _removeComonent)
 
 	// Awake処理がまだなら
 	if (_removeComonent.GetIsAlreadyAwake())
-		pActiveComponents.remove(&_removeComonent);
+		pAwakeComponents.remove(&_removeComonent);
 
 	// Start処理がまだなら
 	if (_removeComonent.GetIsAlreadyStart())
@@ -323,7 +329,9 @@ void GameObject::ImGuiSetting()
 {
 	if (ImGui::TreeNode(name.c_str()))	// 名前Tree
 	{
-		ImGui::Checkbox("isActive", &isActive);
+		bool changeActive = isActive;
+		if (ImGui::Checkbox("isActive", &changeActive))
+			SetActive(changeActive);
 
 		ImGuiSetParent();
 
@@ -403,7 +411,9 @@ nlohmann::json GameObject::Save()
 
 void GameObject::Load(const nlohmann::json& _data)
 {
-	LoadJsonBoolean("active", isActive, _data);
+	bool loadActive = true;
+	LoadJsonBoolean("active", loadActive, _data);
+	SetActive(loadActive);
 
 	Tag::Type tagType;
 	LoadJsonEnum<Tag::Type>("tag", tagType, _data);
@@ -440,6 +450,11 @@ void GameObject::SetActive(bool _isActive)
 	if (isActive == _isActive) return;	// 同じ状態に変えようとするなら終わる
 	isActive = _isActive;
 
+	// それそれに変更した時の処理
+	if (isActive)
+		OnActiveTrue();
+	else
+		OnActiveFalse();
 }
 
 void GameObject::SetRigidBody(bool _isRigidBody)

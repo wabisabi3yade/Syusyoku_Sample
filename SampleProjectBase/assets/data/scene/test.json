@@ -4,51 +4,6 @@
             "active": true,
             "components": [
                 {
-                    "enable": true,
-                    "name": "SpriteRenderer",
-                    "sprite": {
-                        "texName": "grass.jpg",
-                        "uvDivNum": [
-                            0.0,
-                            0.0
-                        ],
-                        "uvEnd": [
-                            1.0,
-                            1.0
-                        ],
-                        "uvStart": [
-                            0.0,
-                            0.0
-                        ]
-                    }
-                }
-            ],
-            "layer": 0,
-            "name": "Ground",
-            "tag": 0,
-            "transform": {
-                "angle": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "child": null,
-                "pos": [
-                    0.0,
-                    -2.0,
-                    0.0
-                ],
-                "scale": [
-                    300.0,
-                    1.0,
-                    300.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
                     "distance": 1000.0,
                     "enable": true,
                     "fov": 45.0,
@@ -69,16 +24,17 @@
             "name": "Camera",
             "tag": 0,
             "transform": {
-                "angle": [
-                    0.0,
-                    5.0,
-                    0.0
-                ],
                 "child": null,
                 "pos": [
                     0.0,
                     1.2999999523162842,
                     -7.800000190734863
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
                 ],
                 "scale": [
                     1.0,
@@ -108,11 +64,6 @@
             "name": "Player",
             "tag": 0,
             "transform": {
-                "angle": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
                 "child": [
                     "Weapon"
                 ],
@@ -120,6 +71,57 @@
                     0.0,
                     0.0,
                     0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "name": "SpriteRenderer",
+                    "sprite": {
+                        "uvDivNum": [
+                            0.0,
+                            0.0
+                        ],
+                        "uvEnd": [
+                            1.0,
+                            1.0
+                        ],
+                        "uvStart": [
+                            0.0,
+                            0.0
+                        ]
+                    }
+                }
+            ],
+            "layer": 0,
+            "name": "Mago",
+            "tag": 0,
+            "transform": {
+                "child": null,
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.6894044280052185,
+                    -0.24413146078586578,
+                    0.6428796052932739,
+                    -0.22765609622001648
                 ],
                 "scale": [
                     1.0,
@@ -134,28 +136,13 @@
                 {
                     "enable": true,
                     "grabName": "mixamorig:RightHand",
-                    "name": "Weapon",
-                    "offsetAngles": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "offsetPos": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ]
+                    "name": "Weapon"
                 }
             ],
             "layer": 0,
             "name": "Weapon",
             "tag": 0,
             "transform": {
-                "angle": [
-                    -0.0,
-                    0.0,
-                    0.0
-                ],
                 "child": [
                     "Weapon_Model"
                 ],
@@ -163,6 +150,12 @@
                     -0.10000000149011612,
                     0.8999999761581421,
                     -0.20000000298023224
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
                 ],
                 "scale": [
                     0.20000000298023224,
@@ -184,21 +177,78 @@
             "name": "Weapon_Model",
             "tag": 0,
             "transform": {
-                "angle": [
-                    -0.0,
-                    1.1210387714598537e-44,
-                    1.6815581571897805e-44
-                ],
                 "child": null,
                 "pos": [
-                    0.28220000863075256,
-                    1.0199999809265137,
-                    -0.060000017285346985
+                    0.11540000885725021,
+                    1.0465999841690063,
+                    -0.1658385843038559
+                ],
+                "rotation": [
+                    0.6179381012916565,
+                    0.5692495107650757,
+                    -0.4772270619869232,
+                    -0.25760790705680847
                 ],
                 "scale": [
                     0.20000000298023224,
                     0.20000000298023224,
                     0.20000000298023224
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": null,
+            "layer": 0,
+            "name": "Child",
+            "tag": 0,
+            "transform": {
+                "child": [
+                    "Mago"
+                ],
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": null,
+            "layer": 0,
+            "name": "Parent",
+            "tag": 0,
+            "transform": {
+                "child": [
+                    "Child"
+                ],
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
                 ]
             }
         }

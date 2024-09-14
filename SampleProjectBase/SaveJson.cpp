@@ -136,6 +136,23 @@ void HashiTaku::LoadJsonVector4(const std::string& _s, DirectX::SimpleMath::Vect
 	_v.w = _j[_s][3];
 }
 
+void HashiTaku::LoadJsonQuaternion(const std::string& _s, DirectX::SimpleMath::Quaternion& _v, const nlohmann::json& _j)
+{
+	if (!IsJsonContains(_j, _s))
+		return;
+
+	if (!_j[_s].is_array())
+	{
+		HASHI_DEBUG_LOG(_s + "‚Í”z—ñ‚Å‚Í‚ ‚è‚Ü‚¹‚ñ");
+		return;
+	}
+
+	_v.x = _j[_s][0];
+	_v.y = _j[_s][1];
+	_v.z = _j[_s][2];
+	_v.w = _j[_s][3];
+}
+
 void HashiTaku::LoadJsonColor(const std::string& _s, DirectX::SimpleMath::Color& _c, const nlohmann::json& _j)
 {
 	if (!IsJsonContains(_j, _s))
