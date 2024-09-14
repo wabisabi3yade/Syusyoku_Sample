@@ -78,7 +78,5 @@ protected:
 
     /// @brief RigidBpdyコンポーネントに形状を送る
     void SendShapeToRb();
-
-    
 };
 

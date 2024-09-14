@@ -15,12 +15,6 @@ class CP_Weapon : public Component , public CloneComponent<CP_Weapon>
 
 	const CP_MeshRenderer* pMeshRenderer;
 
-	/// @brief 持つボーンの座標
-	DirectX::SimpleMath::Vector3 offsetPosition;
-
-	/// @brief 持つボーンの回転
-	DirectX::SimpleMath::Vector3 offsetAngles;
-
 	/// @brief ロード時の角度
 	DirectX::SimpleMath::Vector3 loadMeshAngles;
 

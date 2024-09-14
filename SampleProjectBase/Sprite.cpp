@@ -71,7 +71,8 @@ nlohmann::json Sprite::Save()
 {
 	nlohmann::json data;
 
-	data["texName"] = pTexture->GetAssetName();
+	if (pTexture)
+		data["texName"] = pTexture->GetAssetName();
 	SaveJsonVector2("uvStart", uvStart, data);
 	SaveJsonVector2("uvEnd", uvEnd, data);
 	SaveJsonVector2("uvDivNum", uvDivideNum, data);

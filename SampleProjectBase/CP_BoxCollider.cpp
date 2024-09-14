@@ -22,8 +22,7 @@ void CP_BoxCollider::Init()
 void CP_BoxCollider::CreateShape()
 {
 	// ボックス形状作成
-	Vector3 wide = length / 2;
-	pCollisionShape = std::make_unique<btBoxShape>(Bullet::ToBtVector3(wide));
+	pCollisionShape = std::make_unique<btBoxShape>(Bullet::ToBtVector3(length * 0.5f));
 }
 
 void CP_BoxCollider::LateUpdate()

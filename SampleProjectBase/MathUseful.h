@@ -101,10 +101,10 @@ namespace Quat
 	Quaternion Multiply(const Quaternion& _q1, const Quaternion& _q2);
 
 	/// @brief クォータニオンの差分を求める
-	/// @param _sub 引き算
 	/// @param _origin 元
+	/// @param _sub 引き算
 	/// @return 差分
-	Quaternion RotationDifference(const Quaternion& _sub, const Quaternion& _origin);
+	Quaternion RotationDifference(const Quaternion& _origin, const Quaternion& _sub);
 
 	/// @brief ターゲットの方向に向けるクォータニオンを生成する
 	/// @param _vector 向けたいベクトル

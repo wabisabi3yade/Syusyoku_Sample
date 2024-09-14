@@ -90,7 +90,7 @@ void Transform::SetChild(Transform& _child)
 	Vector3 diffScale = _child.scale / scale;
 	_child.SetLocalScale(diffScale);
 
-	Quaternion diffRot = Quat::RotationDifference(pParent->GetRotation(), _child.GetRotation());
+	Quaternion diffRot = Quat::RotationDifference(_child.GetRotation(), pParent->GetRotation());
 	_child.SetLocalRotation(diffRot);
 }
 
@@ -127,9 +127,9 @@ void Transform::SetEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
 
 	// クォータニオンに反映させる
 	rotation = Quat::ToQuaternion(eularAngles);
-	localRotation = Quat::RotationDifference(pParent->GetRotation(), rotation);
+	localRotation = Quat::RotationDifference(rotation, pParent->GetRotation());
 
-	// 子トランスフォームに反映
+	//// 子トランスフォームに反映
 	for (auto& child : pChilds)
 		child->UpdateHierarchyRotations();
 
@@ -143,7 +143,7 @@ void Transform::SetRotation(const DirectX::SimpleMath::Quaternion& _quaternion)
 	localRotation = Quat::RotationDifference(rotation, pParent->GetRotation());
 
 	eularAngles = Quat::ToEulerAngles(rotation);
-	localEularAngles = eularAngles - pParent->eularAngles;
+	localEularAngles = eularAngles - pParent->GetEularAngles();
 
 	// 子トランスフォームに反映
 	for (auto& child : pChilds)
@@ -186,12 +186,11 @@ void Transform::SetLocalScale(const DirectX::SimpleMath::Vector3& _scale)
 void Transform::SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
 {
 	localEularAngles = _eularAngles;
-
 	// クォータニオンに反映させる
 	localRotation = Quat::ToQuaternion(localEularAngles);
 
 	eularAngles = pParent->eularAngles + localEularAngles;
-	rotation = Quat::Multiply(localRotation, pParent->GetRotation());
+	rotation = Quat::Multiply(pParent->GetRotation(), localRotation);
 
 	// 子トランスフォームに反映
 	for (auto& child : pChilds)
@@ -205,11 +204,9 @@ void Transform::SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quatern
 {
 	localRotation = _quaternion;
 
-	// 角度に反映させる
-	localEularAngles = Quat::ToEulerAngles(localRotation);
-
-	rotation = Quat::Multiply(localRotation, pParent->GetRotation());
-	eularAngles = rotation.ToEuler();
+	rotation = Quat::Multiply(pParent->GetRotation(), localRotation);
+	eularAngles = Quat::ToEulerAngles(rotation);
+	localEularAngles = eularAngles - pParent->GetEularAngles();
 
 	// 子トランスフォームに反映
 	for (auto& child : pChilds)
@@ -288,7 +285,7 @@ nlohmann::json Transform::Save()
 
 	SaveJsonVector3("pos", position, transformData);
 	SaveJsonVector3("scale", scale, transformData);
-	SaveJsonVector3("angle", eularAngles, transformData);
+	SaveJsonVector4("rotation", rotation, transformData);
 
 	auto& childData = transformData["child"];
 	for (auto& child : pChilds)
@@ -308,8 +305,9 @@ void Transform::Load(const nlohmann::json& _transformData)
 	LoadJsonVector3("scale", v, _transformData);
 	SetScale(v);
 
-	LoadJsonVector3("angle", v, _transformData);
-	SetEularAngles(v);
+	Quaternion rot = Quaternion::Identity;
+	LoadJsonQuaternion("rotation", rot, _transformData);
+	SetRotation(rot);
 }
 
 void Transform::LoadChildTransform(const nlohmann::json& _transformData)
@@ -363,8 +361,10 @@ void Transform::UpdateHierarchyScales()
 
 void Transform::UpdateHierarchyRotations()
 {
-	rotation = Quat::Multiply(localRotation, pParent->GetRotation());
-	eularAngles = pParent->eularAngles + localEularAngles;
+	std::string name = pGameObject->GetName();
+
+	rotation = Quat::Multiply(pParent->GetRotation(), localRotation);
+	eularAngles = Quat::ToEulerAngles(rotation);
 
 	// 再帰で呼び出す
 	for (auto& child : pChilds)
@@ -378,7 +378,7 @@ void Transform::SetRigidBodyTransform()
 	CP_RigidBody* pRb = pGameObject->GetRigidBody();
 	assert(pRb && "RigidBodyがありません");
 
-	pRb->SetTransformDxToBt(*this);
+	pRb->SetTransformDxToBt();
 }
 
 void Transform::RemoveParentChild()

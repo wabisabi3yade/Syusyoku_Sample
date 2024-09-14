@@ -92,6 +92,11 @@ void Component::OnEnableFalseCall()
     gameObject->RemoveActiveComponent(*this);
 }
 
+bool Component::GetIsActive()
+{
+    return gameObject->GetIsActive() && isEnable;
+}
+
 void Component::SetName(const std::string& _name)
 {
     name = _name;
@@ -99,6 +104,8 @@ void Component::SetName(const std::string& _name)
 
 void Component::SetEnable(bool _enable)
 {
+    if (isEnable == _enable) return;
+
     isEnable = _enable;
 
     if (isEnable)   // Šˆ“®ó‘Ô‚É‚È‚Á‚½‚ç‚È‚ç
