@@ -21,11 +21,14 @@ Scene::Scene(const std::string& _name) : isPlay(true)
 
 	// ロードする
 	Load();
+
+	/*test = new BulletTest();*/
 }
 
 Scene::~Scene()
 {
 	InSceneSystemManager::Delete();
+	/*delete test;*/
 }
 
 void Scene::Exec()
@@ -54,17 +57,21 @@ void Scene::PlayOnlyUpdate()
 	// BulletのトランスフォームをDxに合わせる
 	pInSceneSystem->UpdateTransformBtToDx();
 
+	// 開始処理
 	sceneObjects.Awake();
-
 	sceneObjects.Start();
 
 	// 物理シミュレーションを進める
 	DX11BulletPhisics::GetInstance()->Update();
 
+	/*test->Update();*/
+
 	// シーン内の更新処理
 	sceneObjects.Update();
-
 	sceneObjects.LateUpdate();
+
+	// 衝突オブジェクトのコールバック
+	/*DX11BulletPhisics::GetInstance()->CollisionCallBack();*/
 }
 
 void Scene::ImGuiSetting()

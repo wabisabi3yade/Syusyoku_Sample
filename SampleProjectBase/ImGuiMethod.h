@@ -61,12 +61,21 @@ public:
 	/// @param _name 変数名
 	static void ColorEdit4(DirectX::SimpleMath::Color& _color, const std::string& _name);
 
-	/// @brief コンボボックス作成
+
+	/// @brief map配列用コンボボックス作成
 	/// @param _caption キャプション
 	/// @param _currentItem 現在選択中の名前
 	/// @param _items 要素の全名前
 	/// @return 変更したか？
-	static bool ComboBox(const std::string& _caption, std::string& _currentItem, const std::vector<std::string>& _items);
+	static bool ComboBox(const std::string& _caption, std::string& _currentItem, std::vector<const std::string*> _items);
+
+	/// @brief enum用コンボボックス作成
+	/// @param _caption キャプション
+	/// @param _enumId enumの数字
+	/// @param _items 列挙型の名前
+	/// @return 変更したか？
+	static bool ComboBox(const std::string& _caption, u_int& _enumId, const std::vector<std::string>& _items);
+
 
 	/// @brief テキスト入力
 	/// @param _label ラベル

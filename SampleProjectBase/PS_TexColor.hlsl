@@ -11,21 +11,16 @@ struct PS_IN
 };
 
 // マテリアル
-struct Material
+struct TexEnable
 {
-    float4 diffuse; // 色
-    float4 ambient; // 環境光
-    float4 specular; // 鏡面反射
-    float4 emissive; // 自発光
-    float shininess; // 光沢
     int isTextureEnable; // テクスチャ使用
-    float2 dummy;
+    float3 dummy;
 };
 
 
-cbuffer BufMaterial : register(b0)
+cbuffer BufTexEnable : register(b0)
 {
-    Material material;
+    TexEnable texEnable;
 }
 
 float4 main(PS_IN pin) : SV_TARGET
@@ -33,7 +28,7 @@ float4 main(PS_IN pin) : SV_TARGET
     float4 color = pin.color;
     
     // テクスチャが使用されているなら
-    if (material.isTextureEnable != 0)
+    if (texEnable.isTextureEnable != 0)
     {
         color *= myTexture.Sample(mySampler, pin.uv);
     }

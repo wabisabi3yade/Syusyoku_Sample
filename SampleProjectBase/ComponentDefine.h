@@ -10,6 +10,7 @@
 // 描画
 #include "CP_MeshRenderer.h"
 #include "CP_SpriteRenderer.h"
+#include "CP_SkyBox.h"
 
 // アニメーション
 #include "CP_Animation.h"

@@ -64,9 +64,7 @@ HashiTaku::AnimInterpolateKind AnimTransitionArrow::GetInterpolateKind() const
 
 void AnimTransitionArrow::ImGuiSetting()
 {
-	std::string text = "->" + pToNode->GetNodeName();
-	ImGui::Text(text.c_str());
-	ImGui::SameLine();
+	if (!ImGui::TreeNode(pToNode->GetNodeName().c_str())) return;
 	ImGui::DragFloat("transRatio", &transTargetRatio, 0.01f, 0.0f, 1.0f);
 	ImGui::DragFloat("transitionTime", &transitionTime, 0.01f, 0.0f, 10.0f);
 
@@ -81,4 +79,6 @@ void AnimTransitionArrow::ImGuiSetting()
 	id = static_cast<int>(AnimInterpolateKind::Inertialization);
 	ImGui::RadioButton("Inertialization", &selectTransition, id);
 	interpolateKind = static_cast<AnimInterpolateKind>(selectTransition);
+
+	ImGui::TreePop();
 }

@@ -27,4 +27,7 @@ public:
 	/// @param _boneId ボーンのID
 	/// @param _requestRatio 取得する指定のアニメーション割合
 	void GetAnimTransform(BoneTransform& _outTransform, u_int _boneId, float _requestRatio) const override;
+
+private:
+	void ImGuiSetting() override;
 };

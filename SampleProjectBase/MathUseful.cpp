@@ -79,6 +79,13 @@ Vector3 Vec3::Repeat(const Vector3& _v, float _length)
 	);
 }
 
+std::string Vec3::ToStr(const Vector3& _v)
+{
+	return "x:" + std::to_string(_v.x)
+		+ " y:" + std::to_string(_v.y)
+		+ " z:" + std::to_string(_v.z);
+}
+
 DirectX::SimpleMath::Vector4 Vec4::Max(const DirectX::SimpleMath::Vector4& _v4, float _floatVal)
 {
 	Vector4 retV4;
@@ -167,6 +174,14 @@ Quaternion Quat::ToQuaternion(const Vector3& _degrees)
 	return q;
 }
 
+std::string Quat::ToStr(const Quaternion& _q)
+{
+	return "x:" + std::to_string(_q.x)
+		+ " y:" + std::to_string(_q.y)
+		+ " z:" + std::to_string(_q.z)
+		+ " w:" + std::to_string(_q.w);
+}
+
 float Mathf::Repeat(float _t, float _length)
 {
 	float f = fmod(_t, _length);
@@ -246,4 +261,10 @@ Vector2 Vec2::Abs(const Vector2& _v)
 	retV.y = abs(_v.y);
 
 	return retV;
+}
+
+std::string Vec2::ToStr(const Vector2& _v)
+{
+	return "x:" + std::to_string(_v.x)
+		+ " y:" + std::to_string(_v.y);
 }

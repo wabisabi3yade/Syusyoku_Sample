@@ -64,4 +64,9 @@ void SingleAnimationNode::GetAnimTransform(BoneTransform& _outTransform, u_int _
 	_outTransform = pAnimationData->GetTransformByRatio(_boneId, _requestRatio);
 }
 
+void SingleAnimationNode::ImGuiSetting()
+{
+	AnimationNode_Base::ImGuiSetting();
+}
+
 

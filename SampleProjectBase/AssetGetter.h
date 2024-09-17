@@ -10,21 +10,30 @@ class AssetGetter : private AssetContacter
 	~AssetGetter() {}
 public:
 
-	template<HashiTaku::AssetType T>
+	template<HashiTaku::AssetConcept T>
 	static T* GetAsset(const std::string& _assetName);
+
+	template<HashiTaku::AssetConcept T>
+	static bool CheckImport(const std::string& _assetName);
 };
 
-template<HashiTaku::AssetType T>
+template<HashiTaku::AssetConcept T>
 inline T* AssetGetter::GetAsset(const std::string& _assetName)
 {
 	return pAssetCollection->GetAsset<T>(_assetName);
 }
 
+template<HashiTaku::AssetConcept T>
+inline bool AssetGetter::CheckImport(const std::string& _assetName)
+{
+	return pAssetCollection->CheckImport<T>(_assetName);
+}
+
 namespace HashiTaku
 {
-	template<HashiTaku::AssetType T> T* LoadJsonAsset(const std::string& _s, const nlohmann::json& _j);
+	template<HashiTaku::AssetConcept T> T* LoadJsonAsset(const std::string& _s, const nlohmann::json& _j);
 
-	template<HashiTaku::AssetType T>
+	template<HashiTaku::AssetConcept T>
 	T* LoadJsonAsset(const std::string& _s, const nlohmann::json& _j)
 	{
 		if (!IsJsonContains(_j, _s)) return nullptr;

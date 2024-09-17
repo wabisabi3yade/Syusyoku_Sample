@@ -34,7 +34,7 @@ private:
 	ComponentFactory() {}
 	~ComponentFactory() {};
 
-	std::vector<std::string> GetComponentsName();
+	std::vector<const std::string*> GetComponentsName();
 
 	template<HashiTaku::ComponentConcept T> void ResistComponnent();
 

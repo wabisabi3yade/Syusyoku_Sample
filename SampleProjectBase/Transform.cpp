@@ -60,6 +60,7 @@ void Transform::LookAt(const DirectX::SimpleMath::Vector3& _worldPos, const Dire
 void Transform::RemoveChild(Transform& _removeTransform)
 {
 	pChilds.remove(&_removeTransform);
+	_removeTransform.RemoveParent();
 }
 
 void Transform::SetParent(Transform& _parent)
@@ -84,7 +85,7 @@ void Transform::SetChild(Transform& _child)
 	_child.isHaveParent = true;
 
 	// ローカルパラメータに反映
-	Vector3 diffPos = (_child.position - position) / GetScale() ;
+	Vector3 diffPos = (_child.position - position) / GetScale();
 	_child.SetLocalPosition(diffPos);
 
 	Vector3 diffScale = _child.scale / scale;
@@ -103,8 +104,8 @@ void Transform::SetPosition(const DirectX::SimpleMath::Vector3& _pos)
 	for (auto& child : pChilds)
 		child->UpdateHierarchyPositions();
 
-	// RigidBodyと同期させる
-	SetRigidBodyTransform();
+	// オブジェクト側に変更したことを伝える
+	pGameObject->OnChangeTransform();
 }
 
 void Transform::SetScale(const DirectX::SimpleMath::Vector3& _scale)
@@ -116,8 +117,8 @@ void Transform::SetScale(const DirectX::SimpleMath::Vector3& _scale)
 	for (auto& child : pChilds)
 		child->UpdateHierarchyScales();
 
-	// RigidBodyと同期させる
-	SetRigidBodyTransform();
+	// オブジェクト側に変更したことを伝える
+	pGameObject->OnChangeTransform();
 }
 
 void Transform::SetEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
@@ -133,8 +134,8 @@ void Transform::SetEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
 	for (auto& child : pChilds)
 		child->UpdateHierarchyRotations();
 
-	// RigidBodyと同期させる
-	SetRigidBodyTransform();
+	// オブジェクト側に変更したことを伝える
+	pGameObject->OnChangeTransform();
 }
 
 void Transform::SetRotation(const DirectX::SimpleMath::Quaternion& _quaternion)
@@ -149,8 +150,8 @@ void Transform::SetRotation(const DirectX::SimpleMath::Quaternion& _quaternion)
 	for (auto& child : pChilds)
 		child->UpdateHierarchyRotations();
 
-	// RigidBodyと同期させる
-	SetRigidBodyTransform();
+	// オブジェクト側に変更したことを伝える
+	pGameObject->OnChangeTransform();
 }
 
 
@@ -166,8 +167,8 @@ void Transform::SetLocalPosition(const DirectX::SimpleMath::Vector3& _localPos)
 	for (auto& child : pChilds)
 		child->UpdateHierarchyPositions();
 
-	// RigidBodyと同期させる
-	SetRigidBodyTransform();
+	// オブジェクト側に変更したことを伝える
+	pGameObject->OnChangeTransform();
 }
 
 void Transform::SetLocalScale(const DirectX::SimpleMath::Vector3& _scale)
@@ -179,8 +180,8 @@ void Transform::SetLocalScale(const DirectX::SimpleMath::Vector3& _scale)
 	for (auto& child : pChilds)
 		child->UpdateHierarchyScales();
 
-	// RigidBodyと同期させる
-	SetRigidBodyTransform();
+	// オブジェクト側に変更したことを伝える
+	pGameObject->OnChangeTransform();
 }
 
 void Transform::SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
@@ -196,8 +197,8 @@ void Transform::SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAn
 	for (auto& child : pChilds)
 		child->UpdateHierarchyRotations();
 
-	// RigidBodyと同期させる
-	SetRigidBodyTransform();
+	// オブジェクト側に変更したことを伝える
+	pGameObject->OnChangeTransform();
 }
 
 void Transform::SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quaternion)
@@ -212,8 +213,8 @@ void Transform::SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quatern
 	for (auto& child : pChilds)
 		child->UpdateHierarchyRotations();
 
-	// RigidBodyと同期させる
-	SetRigidBodyTransform();
+	// オブジェクト側に変更したことを伝える
+	pGameObject->OnChangeTransform();
 }
 
 void Transform::SetGameObject(GameObject& _go)
@@ -274,7 +275,18 @@ Transform* Transform::GetParent()
 	return pParent;
 }
 
-u_int Transform::GetChilidCnt() const
+Transform* Transform::GetChild(u_int _childIdx)
+{
+	if (_childIdx >= GetChildCnt()) return nullptr;
+
+	auto itr = pChilds.begin();
+	for (u_int i = 0; i < _childIdx; i++)
+		itr++;
+
+	return (*itr);
+}
+
+u_int Transform::GetChildCnt() const
 {
 	return static_cast<u_int>(pChilds.size());
 }
@@ -371,23 +383,8 @@ void Transform::UpdateHierarchyRotations()
 		child->UpdateHierarchyRotations();
 }
 
-void Transform::SetRigidBodyTransform()
+void Transform::RemoveParent()
 {
-	if (!pGameObject->GetHasRigidBody()) return;
-
-	CP_RigidBody* pRb = pGameObject->GetRigidBody();
-	assert(pRb && "RigidBodyがありません");
-
-	pRb->SetTransformDxToBt();
-}
-
-void Transform::RemoveParentChild()
-{
-	if (pParent)
-		pParent->RemoveChild(*this);
-
-	for (auto& child : pChilds)
-	{
-		child->pGameObject->Destroy();
-	}
+	pParent = new NullTransform();
+	isHaveParent = false;
 }

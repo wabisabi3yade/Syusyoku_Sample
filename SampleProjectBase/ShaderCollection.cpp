@@ -21,7 +21,8 @@ void ShaderCollection::LoadVS()
 		"VS_Gouraud.cso",
 		"VS_Primitive.cso",
 		"VS_SkinAnimation.cso",
-		"VS_Line.cso"
+		"VS_Line.cso",
+		"VS_Sprite.cso"
 	};
 
 	// セットする名前
@@ -30,7 +31,8 @@ void ShaderCollection::LoadVS()
 		"VS_Gouraud",
 		"VS_Primitive",
 		"VS_SkinAnimation",
-		"VS_Line"
+		"VS_Line",
+		"VS_Sprite"
 	};
 	defaultVS = vShaderNames[0];
 
@@ -45,6 +47,9 @@ void ShaderCollection::LoadVS()
 	pVsShaderList.push_back(std::move(pVShader));
 
 	pVShader = std::make_unique<VS_SkinnedAnimation>();
+	pVsShaderList.push_back(std::move(pVShader));
+
+	pVShader = std::make_unique<VertexShader>();
 	pVsShaderList.push_back(std::move(pVShader));
 
 	pVShader = std::make_unique<VertexShader>();

@@ -64,15 +64,15 @@
             "transform": {
                 "child": null,
                 "pos": [
-                    -11.5,
-                    0.4000000059604645,
-                    -8.300000190734863
+                    0.0,
+                    1.399999976158142,
+                    -44.70000076293945
                 ],
                 "rotation": [
                     0.0,
-                    0.5591931343078613,
                     0.0,
-                    0.8290374279022217
+                    0.0,
+                    1.0
                 ],
                 "scale": [
                     1.0,
@@ -124,42 +124,15 @@
         },
         {
             "active": true,
-            "components": null,
-            "layer": 0,
-            "name": "SphereCol",
-            "tag": 0,
-            "transform": {
-                "child": null,
-                "pos": [
-                    0.0,
-                    7.800000190734863,
-                    0.0
-                ],
-                "rotation": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "active": true,
             "components": [
                 {
                     "enable": true,
                     "isGravity": true,
-                    "isRigid": true,
-                    "mass": 1.899999976158142,
+                    "isRigid": false,
+                    "mass": 1.0,
                     "name": "RigidBody"
                 },
                 {
-                    "AABB": false,
                     "angles": [
                         0.0,
                         0.0,
@@ -171,22 +144,18 @@
                         0.0
                     ],
                     "enable": true,
-                    "length": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "name": "BoxCollider"
+                    "name": "SphereCollider",
+                    "radius": 13.920000076293945
                 }
             ],
             "layer": 0,
-            "name": "Collider",
+            "name": "SphereCol",
             "tag": 0,
             "transform": {
                 "child": null,
                 "pos": [
                     0.0,
-                    5.599999904632568,
+                    12.899999618530273,
                     0.0
                 ],
                 "rotation": [
@@ -208,8 +177,8 @@
                 {
                     "enable": true,
                     "isGravity": false,
-                    "isRigid": true,
-                    "mass": 2.4000000953674316,
+                    "isRigid": false,
+                    "mass": 0.0,
                     "name": "RigidBody"
                 },
                 {
@@ -226,9 +195,9 @@
                     ],
                     "enable": true,
                     "length": [
-                        1.0,
-                        1.0,
-                        1.0
+                        50.0,
+                        50.0,
+                        50.0
                     ],
                     "name": "BoxCollider"
                 }
@@ -240,14 +209,14 @@
                 "child": null,
                 "pos": [
                     0.0,
-                    -4.599999904632568,
+                    -30.100000381469727,
                     0.0
                 ],
                 "rotation": [
                     0.0,
-                    0.008726539090275764,
+                    0.3987492322921753,
                     0.0,
-                    0.9999619126319885
+                    0.9170600175857544
                 ],
                 "scale": [
                     1.0,

@@ -4,7 +4,7 @@
 
 using namespace HashiTaku;
 
-constexpr u_int DEFAULT_MAX_SUBSTEPS(10);	// デフォルト最大サブステップ数
+constexpr int  DEFAULT_MAX_SUBSTEPS(10);	// デフォルト最大サブステップ数
 
 DirectX::SimpleMath::Vector3 DX11BulletPhisics::GetGravityValue() const
 {
@@ -35,9 +35,9 @@ bool DX11BulletPhisics::IsExistCollObjInWorld(btCollisionObject& _checkCollObj)
 void DX11BulletPhisics::Init()
 {
 	// インスタンス作成
-	pBroadphase = std::make_unique<btDbvtBroadphase>();
 	pCollisionConfiguration = std::make_unique<btDefaultCollisionConfiguration>();
 	pDispatcher = std::make_unique<btCollisionDispatcher>(pCollisionConfiguration.get());
+	pBroadphase = std::make_unique<btDbvtBroadphase>();
 	pSolver = std::make_unique<btSequentialImpulseConstraintSolver>();
 	pDynamicsWorld = std::make_unique<btDiscreteDynamicsWorld>(
 		pDispatcher.get(),
@@ -52,6 +52,8 @@ void DX11BulletPhisics::Init()
 
 	// デバッグ描画クラスセット
 	pDynamicsWorld->setDebugDrawer(pDebugDraw.get());
+
+	pContactCallBack = std::make_unique<BulletContactCallBack>();
 }
 
 void DX11BulletPhisics::Update()
@@ -61,7 +63,10 @@ void DX11BulletPhisics::Update()
 		Bullet::ToBtScalar(MainApplication::DeltaTime()),
 		maxSubSteps
 	);
+}
 
+void DX11BulletPhisics::CollisionCallBack()
+{
 	// 衝突オブジェクトの数を取得
 	int numManifolds = pDynamicsWorld->getDispatcher()->getNumManifolds();
 	for (int i = 0; i < numManifolds; i++) {
@@ -85,6 +90,14 @@ void DX11BulletPhisics::Update()
 			}
 		}
 	}
+
+	const btCollisionObjectArray& collisionObjects = pDynamicsWorld->getCollisionObjectArray();
+	u_int collisionCnt = pDynamicsWorld->getNumCollisionObjects();
+	for (u_int c_i = 0; c_i < collisionCnt; c_i++)
+	{
+		btCollisionObject* obj = collisionObjects[c_i];
+		pDynamicsWorld->contactTest(obj, *pContactCallBack);
+	}
 }
 
 void DX11BulletPhisics::Draw()
@@ -102,13 +115,13 @@ void DX11BulletPhisics::AddCollObj(btCollisionObject& _collObj, int _groupId)
 		return;
 	}
 
-	btRigidBody* rb = dynamic_cast<btRigidBody*>(&_collObj);
+	btRigidBody* rb = btRigidBody::upcast(&_collObj);
 
 	if (rb)	// 剛体なら
-		pDynamicsWorld->addRigidBody(rb, 0x01, 0x01);
+		pDynamicsWorld->addRigidBody(rb);
 
 	else
-		pDynamicsWorld->addCollisionObject(&_collObj, 0x01, 0x01);
+		pDynamicsWorld->addCollisionObject(&_collObj);
 }
 
 void DX11BulletPhisics::RemoveCollObj(btCollisionObject& _collObj)

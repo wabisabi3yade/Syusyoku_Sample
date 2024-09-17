@@ -11,6 +11,9 @@ class CP_CameraMove : public Component,  public CloneComponent<CP_CameraMove>
 	/// @brief カメラ
 	CP_Camera* pCamera;
 
+	/// @brief 注視点のオフセット
+	DirectX::SimpleMath::Vector3 offsetTarget;
+
 	/// @brief カメラの移動速度	
 	float rotateSpeed;
 

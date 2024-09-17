@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BulletDebugDraw.h"
+#include "BulletContactCallBack.h"
 
 /// @brief DX11でBulletPhisicsを使用時、変数と関数を管理するクラス
 class DX11BulletPhisics : public Singleton_Base<DX11BulletPhisics>
@@ -30,12 +31,18 @@ class DX11BulletPhisics : public Singleton_Base<DX11BulletPhisics>
 
 	/// @brief 重力値
 	DirectX::SimpleMath::Vector3 gravityValue;
+
+	/// @brief コールバックを呼び出すクラス
+	std::unique_ptr<BulletContactCallBack> pContactCallBack;
 public:
 	/// @brief Bullet初期化
 	void Init();
 
 	/// @brief 更新処理
 	void Update();
+
+	/// @brief 当たっているオブジェクトのコールバックを呼び出す
+	void CollisionCallBack();
 
 	/// @brief 描画処理
 	void Draw();

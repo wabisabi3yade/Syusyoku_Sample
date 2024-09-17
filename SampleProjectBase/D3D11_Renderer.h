@@ -30,6 +30,10 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> pDepthStencilTexture;
 	// 深度バッファ
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> pDepthStencilView;
+	// 深度バッファ用テクスチャ
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> pDisableDepthStencilTexture;
+	// 深度バッファ(深度なし)
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> pDisableDepthStencilView;
 	// ラスタライザ
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> pRasterizerStates[RASTERIZE_NUM];
 
@@ -51,6 +55,8 @@ public:
 	void Swap();    //バックバッファをフロントバッファ(画面)へ表示
 
 	void SetCullingMode(D3D11_CULL_MODE _cullMode);
+
+	void SeStencil(bool _isStencil);
 
 	// 描画の情報を取得
 	RenderParam& GetParameter() override;

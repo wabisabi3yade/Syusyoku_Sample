@@ -6,7 +6,7 @@
 class BoneList;
 
 /// @brief アニメーションノードに基底クラス
-class AnimationNode_Base
+class AnimationNode_Base : public HashiTaku::IImGuiUser
 {
 public:
 	// ノードの種類
@@ -99,5 +99,7 @@ protected:
 
 	// 再生時間をセットする
 	void SetAnimationTime(float _time);
+
+	void ImGuiSetting() override;
 };
 

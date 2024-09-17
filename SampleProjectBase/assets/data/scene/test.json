@@ -4,7 +4,7 @@
             "active": true,
             "components": [
                 {
-                    "distance": 1000.0,
+                    "distance": 467.0,
                     "enable": true,
                     "fov": 45.0,
                     "isOrth": false,
@@ -16,6 +16,11 @@
                     "dis_Ver": 3.0,
                     "enable": true,
                     "name": "CameraMove",
+                    "offsetTarget": [
+                        0.0,
+                        2.0,
+                        0.0
+                    ],
                     "rotSpeed": 120.0,
                     "target": "Player"
                 }
@@ -26,9 +31,55 @@
             "transform": {
                 "child": null,
                 "pos": [
+                    15.300000190734863,
+                    3.5,
+                    -7.5
+                ],
+                "rotation": [
+                    0.12052760273218155,
+                    -0.4951326549053192,
+                    0.0695863887667656,
+                    0.857598066329956
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "name": "SpriteRenderer",
+                    "sprite": {
+                        "texName": "grass.jpg",
+                        "uvDivNum": [
+                            0.0,
+                            0.0
+                        ],
+                        "uvEnd": [
+                            1.0,
+                            1.0
+                        ],
+                        "uvStart": [
+                            0.0,
+                            0.0
+                        ]
+                    }
+                }
+            ],
+            "layer": 0,
+            "name": "Ground",
+            "tag": 0,
+            "transform": {
+                "child": null,
+                "pos": [
                     0.0,
-                    1.2999999523162842,
-                    -7.800000190734863
+                    0.0,
+                    0.0
                 ],
                 "rotation": [
                     0.0,
@@ -37,9 +88,9 @@
                     1.0
                 ],
                 "scale": [
+                    500.0,
                     1.0,
-                    1.0,
-                    0.699999988079071
+                    500.0
                 ]
             }
         },
@@ -77,51 +128,6 @@
                     0.0,
                     0.0,
                     1.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "enable": true,
-                    "name": "SpriteRenderer",
-                    "sprite": {
-                        "uvDivNum": [
-                            0.0,
-                            0.0
-                        ],
-                        "uvEnd": [
-                            1.0,
-                            1.0
-                        ],
-                        "uvStart": [
-                            0.0,
-                            0.0
-                        ]
-                    }
-                }
-            ],
-            "layer": 0,
-            "name": "Mago",
-            "tag": 0,
-            "transform": {
-                "child": null,
-                "pos": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "rotation": [
-                    0.6894044280052185,
-                    -0.24413146078586578,
-                    0.6428796052932739,
-                    -0.22765609622001648
                 ],
                 "scale": [
                     1.0,
@@ -198,42 +204,23 @@
         },
         {
             "active": true,
-            "components": null,
+            "components": [
+                {
+                    "X_Left": "sky_Day_l.png",
+                    "X_Right": "sky_Day_r.png",
+                    "Y_Bottom": "sky_Day_d.png",
+                    "Y_Top": "sky_Day_u.png",
+                    "Z_Back": "sky_Day_b.png",
+                    "Z_Front": "sky_Day_f.png",
+                    "enable": true,
+                    "name": "SkyBox"
+                }
+            ],
             "layer": 0,
-            "name": "Child",
+            "name": "SkyBox",
             "tag": 0,
             "transform": {
-                "child": [
-                    "Mago"
-                ],
-                "pos": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "rotation": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": null,
-            "layer": 0,
-            "name": "Parent",
-            "tag": 0,
-            "transform": {
-                "child": [
-                    "Child"
-                ],
+                "child": null,
                 "pos": [
                     0.0,
                     0.0,

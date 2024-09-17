@@ -8,5 +8,5 @@ namespace HashiTaku
 {
 	// コンセプトで取得できるリソースの型を指定
 	template<typename T>
-	concept AssetType = std::is_base_of_v<Asset_Base, T>;
+	concept AssetConcept = std::is_base_of_v<Asset_Base, T>;
 }

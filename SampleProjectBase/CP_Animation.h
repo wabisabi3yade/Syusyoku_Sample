@@ -40,7 +40,7 @@ public:
 
 	void Start() override;
 
-	void LateUpdate() override;
+	void Update() override;
 
 	void ImGuiSetting() override;
 

@@ -83,22 +83,21 @@ void AnimationController::InertInterpUpdate()
 
 void AnimationController::ImGuiSetting()
 {
-	ImGui::Text(TO_UTF8(std::string("再生割合 " + std::to_string(playingRatio))));
-
-	if (IsSetAnimation())
-	{
-		std::string timeStr = std::to_string(playingRatio * pCurrentAnimNode->GetAnimationTime());
-		ImGui::Text(TO_UTF8("再生時間 " + timeStr));
-	}
-
 	ImGui::Checkbox("Play", &isPlay);
+	ImGui::SliderFloat("Ratio", &playingRatio, 0.0f, 1.0f);
 	ImGui::DragFloat("PlaySpeed", &playSpeed, 0.1f);
-
-	ImGuiImportAnim();
-
-	if (IsSetAnimation())
+		
+	if (IsSetAnimation())	// 再生中ノード
 	{
 		pCurrentAnimNode->ImGuiPlaying();
+	}
+
+	for (auto& pNode : pAnimationNodes)	// 全ノード
+	{
+		if (!ImGui::TreeNode(pNode.second->GetNodeName().c_str())) continue;
+
+		pNode.second->ImGuiCall();
+		ImGui::TreePop();
 	}
 
 	for (auto& a : pAnimationNodes)	// ボタンでアニメーション変える
@@ -109,12 +108,6 @@ void AnimationController::ImGuiSetting()
 			ChangeAnimation(animName, nullptr);	// アニメーション変更
 		}
 	}
-
-	ImGui::Text(TO_UTF8("遷移情報"));
-
-	if (isTransitioning)
-		ImGuiTransition();
-
 }
 
 void AnimationController::ChangeAnimation(const std::string& _animName, const AnimTransitionArrow* _transitionArrow)

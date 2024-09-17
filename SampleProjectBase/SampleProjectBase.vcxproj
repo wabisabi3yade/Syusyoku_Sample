@@ -87,6 +87,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
+    <FxCompile Include="VS_Sprite.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="VS_SpriteShadow.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
@@ -109,30 +115,43 @@
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_impl_win32.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_tables.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_widgets.cpp" />
+    <ClCompile Include="ANE_DebugLog.cpp" />
+    <ClCompile Include="AnimationNotifyFactory.cpp" />
+    <ClCompile Include="ANS_DebugLog.cpp" />
     <ClCompile Include="AnimationController.cpp" />
     <ClCompile Include="AnimationData.cpp" />
+    <ClCompile Include="AnimationNotifyEvent.cpp" />
+    <ClCompile Include="AnimationNotifyState.cpp" />
+    <ClCompile Include="AnimationTrack.cpp" />
     <ClCompile Include="AnimTransitionArrow.cpp" />
     <ClCompile Include="AssetPath_Base.cpp" />
     <ClCompile Include="AssetSaveLoad.cpp" />
     <ClCompile Include="BulletContactCallBack.cpp" />
+    <ClCompile Include="BulletTest.cpp" />
     <ClCompile Include="CatmulSplineInterp.cpp" />
     <ClCompile Include="BulletDebugDraw.cpp" />
     <ClCompile Include="CloneComponent.cpp" />
+    <ClCompile Include="CP_AnimationNotify.cpp" />
     <ClCompile Include="CP_BoxAnimation.cpp" />
+    <ClCompile Include="CP_NotifyTest.cpp" />
     <ClCompile Include="CP_RigidBody.cpp" />
+    <ClCompile Include="CP_SkyBox.cpp" />
     <ClCompile Include="CP_Weapon.cpp" />
     <ClCompile Include="CrossFadeAnimation.cpp" />
     <ClCompile Include="DepthStencil.cpp" />
     <ClCompile Include="DX11BulletPhisics.cpp" />
     <ClCompile Include="DXToBullet.cpp" />
+    <ClCompile Include="AnimationNotify_Base.cpp" />
     <ClCompile Include="IAnimationObserver.cpp" />
     <ClCompile Include="BlendAnimationNode.cpp" />
     <ClCompile Include="CP_Player.cpp" />
     <ClCompile Include="GameInput.cpp" />
     <ClCompile Include="IAnimInterpolate.cpp" />
+    <ClCompile Include="IAssetCreater.cpp" />
+    <ClCompile Include="IClassNameGetter.cpp" />
     <ClCompile Include="IImGuiUser.cpp" />
     <ClCompile Include="IObserever.cpp" />
-    <ClCompile Include="nSceneManager.cpp" />
+    <ClCompile Include="MaterialCreater.cpp" />
     <ClCompile Include="PlayerAnimController.cpp" />
     <ClCompile Include="PlayerActionController.cpp" />
     <ClCompile Include="PlayerAnimObserver.cpp" />
@@ -203,6 +222,7 @@
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpriteDrawer.cpp" />
     <ClCompile Include="StaticMesh.cpp" />
     <ClCompile Include="Tag.cpp" />
     <ClCompile Include="AssetLoader.cpp" />
@@ -244,33 +264,48 @@
     <ClInclude Include="..\ThirdParty\imgui\include\imstb_rectpack.h" />
     <ClInclude Include="..\ThirdParty\imgui\include\imstb_textedit.h" />
     <ClInclude Include="..\ThirdParty\imgui\include\imstb_truetype.h" />
+    <ClInclude Include="ANE_DebugLog.h" />
+    <ClInclude Include="AnimationNotifyFactory.h" />
+    <ClInclude Include="AnimNotifyDefine.h" />
+    <ClInclude Include="ANS_DebugLog.h" />
     <ClInclude Include="AnimationController.h" />
     <ClInclude Include="AnimationData.h" />
+    <ClInclude Include="AnimationNotifyEvent.h" />
+    <ClInclude Include="AnimationNotifyState.h" />
+    <ClInclude Include="AnimationTrack.h" />
     <ClInclude Include="AnimTransitionArrow.h" />
     <ClInclude Include="AssetConcept.h" />
     <ClInclude Include="AssetPath_Base.h" />
     <ClInclude Include="AssetSaveLoad.h" />
     <ClInclude Include="BulletContactCallBack.h" />
+    <ClInclude Include="BulletTest.h" />
     <ClInclude Include="CatmulSplineInterp.h" />
     <ClInclude Include="BulletDebugDraw.h" />
     <ClInclude Include="CloneComponent.h" />
+    <ClInclude Include="CP_AnimationNotify.h" />
     <ClInclude Include="CP_BoxAnimation.h" />
+    <ClInclude Include="CP_NotifyTest.h" />
     <ClInclude Include="CP_RigidBody.h" />
+    <ClInclude Include="CP_SkyBox.h" />
     <ClInclude Include="CP_Weapon.h" />
     <ClInclude Include="CrossFadeAnimation.h" />
     <ClInclude Include="DepthStencil.h" />
     <ClInclude Include="DX11BulletPhisics.h" />
     <ClInclude Include="DXToBullet.h" />
+    <ClInclude Include="AnimationNotify_Base.h" />
     <ClInclude Include="IAnimationObserver.h" />
     <ClInclude Include="BlendAnimationNode.h" />
     <ClInclude Include="CP_Player.h" />
     <ClInclude Include="GameInput.h" />
     <ClInclude Include="IAnimInterpolate.h" />
+    <ClInclude Include="IAssetCreater.h" />
+    <ClInclude Include="IClassNameGetter.h" />
     <ClInclude Include="IImGuiUser.h" />
+    <ClInclude Include="AnimNotifyRespawner.h" />
     <ClInclude Include="InterpolateKind.h" />
     <ClInclude Include="IObserever.h" />
     <ClInclude Include="ISaveLoad.h" />
-    <ClInclude Include="nSceneManager.h" />
+    <ClInclude Include="MaterialCreater.h" />
     <ClInclude Include="NullTransform.h" />
     <ClInclude Include="PlayerAnimController.h" />
     <ClInclude Include="PlayerActionController.h" />
@@ -347,6 +382,7 @@
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="SpriteDrawer.h" />
     <ClInclude Include="StaticMesh.h" />
     <ClInclude Include="Tag.h" />
     <ClInclude Include="AssetLoader.h" />

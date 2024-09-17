@@ -42,12 +42,6 @@ private:
 
 	// アクティブ状態かどうか
 	bool isActive;
-
-	/// @brief RigidBodyを所持しているか
-	bool isHasRigidBody;
-
-	/// @brief RigidBodyコンポーネント
-	CP_RigidBody* pRigidBody;
 public:
 	GameObject();
 	GameObject(const GameObject& _other);
@@ -61,11 +55,11 @@ public:
 	void LateUpdateCall();
 	void DrawCall();
 
-	/// @brief 物理シミュレーションで更新されたパラメータをトランスフォームに設定
-	void MatchRBToDxTransform();
-
 	// 自身を削除
 	void Destroy();
+
+	/// @brief トランスフォームが変更した時のコールバック
+	void OnChangeTransform();
 
 	/// @brief コンポーネントをセットするときの処理
 	/// @param _pSetComponent セットするコンポーネント
@@ -98,15 +92,12 @@ public:
 
 	void SetName(const std::string& _name);
 	void SetActive(bool _isActive);
-	void SetRigidBody(bool _isRigidBody);
 
 	Transform& GetTransform();
 	const std::string& GetName() const { return name; }
 	bool GetIsActive() const { return isActive; }
-	bool GetHasRigidBody() const;
 	Tag GetTag() const { return tag; }
 	Layer GetLayer() const  { return layer; }
-	CP_RigidBody* GetRigidBody() const;
 private:
 	virtual GameObject& Copy(const GameObject& _other);
 

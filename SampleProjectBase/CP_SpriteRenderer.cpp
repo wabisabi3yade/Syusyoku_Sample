@@ -28,6 +28,12 @@ void CP_SpriteRenderer::MaterialSetup()
 
 void CP_SpriteRenderer::DrawSetup()
 {
+	struct TexEnable
+	{
+		int isTexEnable;
+		float dummy[3];
+	};
+
 	// ƒŒƒ“ƒ_ƒ‰[Žæ“¾
 	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
 
@@ -47,7 +53,9 @@ void CP_SpriteRenderer::DrawSetup()
 	pVs.UpdateSubResource(0, &wvp);
 	pVs.UpdateSubResource(1, &materialParam);
 
-	pPs.UpdateSubResource(0, &materialParam);
+	TexEnable texEnable;
+	texEnable.isTexEnable = materialParam.isTextureEnable;
+	pPs.UpdateSubResource(0, &texEnable);
 	pPs.SetTexture(0, pTex);
 
 	pVs.SetGPU();

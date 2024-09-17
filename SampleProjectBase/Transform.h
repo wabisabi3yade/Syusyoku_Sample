@@ -50,8 +50,8 @@ public:
 	// その座標にオブジェクトを向ける
 	void LookAt(const DirectX::SimpleMath::Vector3& _worldPos, const DirectX::SimpleMath::Vector3& _upVector = DirectX::SimpleMath::Vector3::Up);
 
-	/// @brief 親子関係を解除する
-	void RemoveParentChild();
+	/// @brief 親トランスフォームを解除する
+	void RemoveParent();
 
 	/// @brief 子トランスフォームを解除する
 	/// @param _removeTransform 解除するトランスフォーム
@@ -100,8 +100,13 @@ public:
 	// 親トランスフォームを取得
 	Transform* GetParent();
 
+	/// @brief 子トランスフォームを取得
+	/// @param _childIdx 子供ID
+	/// @return 子トランスフォーム
+	Transform* GetChild(u_int _childIdx);
+
 	//　子トランスフォームの数を取得
-	u_int GetChilidCnt() const;
+	u_int GetChildCnt() const;
 
 	/// @brief セーブする
 	/// @param _sceneData セーブシーンデータ
@@ -125,7 +130,4 @@ private:
 	void UpdateHierarchyScales();
 	// 回転
 	void UpdateHierarchyRotations();
-
-	// 各パラメータを変更するときに、RigidBody側に伝える
-	void SetRigidBodyTransform();
 };

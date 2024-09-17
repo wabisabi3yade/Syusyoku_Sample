@@ -117,7 +117,8 @@ void CP_Collider::SetShape()
 	if (pCollisionShape)
 	{
 		CP_RigidBody* pRb = gameObject->GetComponent<CP_RigidBody>();
-		pRb->RemoveShape();
+		if (pRb)
+			pRb->RemoveShape();
 	}
 
 	CreateShape();
