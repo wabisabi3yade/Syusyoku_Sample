@@ -6,6 +6,8 @@ class BulletContactCallBack : public btCollisionWorld::ContactResultCallback
 
 
 public:
+    BulletContactCallBack() {}
+    ~BulletContactCallBack() {}
 
     /// @brief 衝突コールバック
     /// @param cp 衝突点の情報（座標など）

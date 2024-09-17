@@ -38,6 +38,7 @@ void CP_CameraMove::Move()
 void CP_CameraMove::LookUpdate()
 {
 	Vector3 targetPos = pTargetObj->GetTransform().GetPosition();
+	targetPos += offsetTarget;
 
 	GetTransform().LookAt(targetPos);
 }
@@ -77,6 +78,7 @@ void CP_CameraMove::LateUpdate()
 void CP_CameraMove::ImGuiSetting()
 {
 	ImGui::DragFloat("rotSpeed", &rotateSpeed);
+	ImGuiMethod::DragFloat3(offsetTarget, "offsetTarget", 0.1f);
 	ImGui::DragFloat("dis_Hori", &distanceHori, 0.1f);
 	ImGui::DragFloat("dis_Veri", &distanceVer, 0.1f);
 
@@ -106,6 +108,7 @@ nlohmann::json CP_CameraMove::Save()
 		data["target"] = pTargetObj->GetName();
 
 	data["rotSpeed"] = rotateSpeed;
+	SaveJsonVector3("offsetTarget", offsetTarget, data);
 	data["dis_Hori"] = distanceHori;
 	data["dis_Ver"] = distanceVer;
 
@@ -120,6 +123,7 @@ void CP_CameraMove::Load(const nlohmann::json& _data)
 	SceneObjects& sceneObjs = InSceneSystemManager::GetInstance()->GetSceneObjects();
 	pTargetObj = sceneObjs.GetSceneObject(targetObjName);
 
+	LoadJsonVector3("offsetTarget", offsetTarget, _data);
 	LoadJsonFloat("rotSpeed", rotateSpeed, _data);
 	LoadJsonFloat("dis_Hori", distanceHori, _data);
 	LoadJsonFloat("dis_Ver", distanceVer, _data);

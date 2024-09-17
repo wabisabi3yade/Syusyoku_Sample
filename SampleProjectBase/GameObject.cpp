@@ -10,11 +10,6 @@
 using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
 
-CP_RigidBody* GameObject::GetRigidBody() const
-{
-	return pRigidBody;
-}
-
 GameObject& GameObject::Copy(const GameObject& _other)
 {
 	// 同じなら処理しない
@@ -133,7 +128,7 @@ void GameObject::LoadComponent(const nlohmann::json& _componentData)
 	}
 }
 
-GameObject::GameObject() : isActive(true), isHasRigidBody(false), name(""), pRigidBody(nullptr)
+GameObject::GameObject() : isActive(true), name("")
 {
 	pTransform = std::make_unique<Transform>(this);
 }
@@ -212,23 +207,32 @@ void GameObject::DrawCall()
 	}
 }
 
-void GameObject::MatchRBToDxTransform()
-{
-	if (!isHasRigidBody) return;
-
-	pRigidBody->SetTransformBtToDx();
-}
-
 void GameObject::Destroy()
 {
-	// 親子関係を解消する
-	pTransform->RemoveParentChild();
+	// 削除する子トランスフォームリスト
+	std::vector<Transform*> deleteChilds;
+	for (u_int c_i = 0; c_i < pTransform->GetChildCnt(); c_i++)
+	{
+		deleteChilds.push_back(pTransform->GetChild(c_i));
+	}
+
+	// 子トランスフォームも削除
+	for (u_int c_i = 0; c_i < static_cast<u_int>(deleteChilds.size()); c_i++)
+	{
+		deleteChilds[c_i]->GetGameObject().Destroy();
+	}
 
 	// シーンオブジェクトから自身を削除する
 	SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->
 		GetSceneObjects();
 
 	sceneObjects.DeleteObj(*this);
+}
+
+void GameObject::OnChangeTransform()
+{
+	for (auto& pComp : pComponents)
+		pComp->OnChangeTransform();
 }
 
 void GameObject::SetComponent(std::unique_ptr<Component> _pSetComponent)
@@ -455,16 +459,13 @@ void GameObject::SetActive(bool _isActive)
 		OnActiveTrue();
 	else
 		OnActiveFalse();
-}
 
-void GameObject::SetRigidBody(bool _isRigidBody)
-{
-	isHasRigidBody = _isRigidBody;
-
-	if (isHasRigidBody)
-		pRigidBody = GetComponent<CP_RigidBody>();
-	else
-		pRigidBody = nullptr;
+	// 子オブジェクトも適用する
+	for (u_int c_i = 0; c_i < pTransform->GetChildCnt(); c_i++)
+	{
+		Transform* pChild = pTransform->GetChild(c_i);
+		pChild->GetGameObject().SetActive(_isActive);
+	}
 }
 
 Transform& GameObject::GetTransform()
@@ -472,7 +473,3 @@ Transform& GameObject::GetTransform()
 	return *pTransform;
 }
 
-bool GameObject::GetHasRigidBody() const
-{
-	return isHasRigidBody;
-}

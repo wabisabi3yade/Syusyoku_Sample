@@ -6,15 +6,6 @@ cbuffer WVP : register(b0)
     matrix projection;
 };
 
-struct Material
-{
-    float4 diffuse; // 色
-    float4 ambient; // 環境光
-    float4 specular; // 鏡面反射
-    float4 emissive; // 自発光
-    float shininess; // 光沢
-};
-
 struct VS_INPUT
 {
     float3 pos : POSITION; // 頂点座標（モデル座標系）
@@ -52,8 +43,9 @@ VS_OUTPUT main(VS_INPUT vin)
     pos = mul(pos, view);
     pos = mul(pos, projection);
     output.pos = pos;
+    output.color = vin.color;
     output.uv = vin.uv;
-    
+
     float3x3 rotationMatrix = (float3x3)world;
     rotationMatrix[0] = normalize(rotationMatrix[0]);
     rotationMatrix[1] = normalize(rotationMatrix[1]);

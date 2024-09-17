@@ -3,20 +3,6 @@
 
 void AnimationNode_Base::ImGuiPlaying()
 {
-	std::string text = "名前：";
-	text += nodeName;
-	ImGui::Text(TO_UTF8(text));
-
-	ImGui::Checkbox("isLoop", &isLoop);
-
-	ImGui::DragFloat("animationTime", &animationTime, 0.1f, 0.0f, 100.0f);
-
-	ImGui::Text(TO_UTF8("遷移先"));
-	// 遷移先のアニメーション
-	for (auto& arrow : pFromArrows)
-	{
-		arrow->ImGuiCall();
-	}
 }
 
 void AnimationNode_Base::Begin()
@@ -95,4 +81,17 @@ bool AnimationNode_Base::GetIsFinish() const
 void AnimationNode_Base::SetAnimationTime(float _time)
 {
 	animationTime = std::max(_time, 0.0f);
+}
+
+void AnimationNode_Base::ImGuiSetting()
+{
+	ImGui::Checkbox("isLoop", &isLoop);
+	ImGui::DragFloat("animationTime", &animationTime, 0.01f, 0.0f, 100.0f);
+
+	ImGui::Text(TO_UTF8("Transition"));
+	// 遷移先のアニメーション
+	for (auto& arrow : pFromArrows)
+	{
+		arrow->ImGuiCall();
+	}
 }

@@ -59,10 +59,6 @@ void Component::TransitionEnable()
         OnEnableFalseCall();
 }
 
-void Component::OnDestroy()
-{
-}
-
 nlohmann::json Component::Save()
 {
     nlohmann::json componentData;

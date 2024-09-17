@@ -39,6 +39,9 @@ public:
 	/// @brief 平行投影に変更
 	void SetOrthographic();
 
+	// fovセット
+	void SetFov(float _setFov);
+
 	// ビューポート番号をセット
 	void SetViewportSlot(u_int _slot);
 

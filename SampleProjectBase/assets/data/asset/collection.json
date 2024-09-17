@@ -61,6 +61,36 @@
             ],
             "pixelShader": "PS_TexColor",
             "vertexShader": "VS_Gouraud"
+        },
+        {
+            "assetName": "M_SkyBox",
+            "m_ambient": [
+                0.20000000298023224,
+                0.20000000298023224,
+                0.20000000298023224,
+                1.0
+            ],
+            "m_diffuse": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "m_emissive": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "m_shiness": 0.0,
+            "m_specular": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "pixelShader": "PS_TexColor",
+            "vertexShader": "VS_Sprite"
         }
     ],
     "models": [
@@ -97,6 +127,30 @@
         {
             "assetName": "grass.jpg",
             "pathName": "assets/texture/grass.jpg"
+        },
+        {
+            "assetName": "sky_Day_u.png",
+            "pathName": "assets/texture/skyBox/sky_Day_u.png"
+        },
+        {
+            "assetName": "sky_Day_r.png",
+            "pathName": "assets/texture/skyBox/sky_Day_r.png"
+        },
+        {
+            "assetName": "sky_Day_b.png",
+            "pathName": "assets/texture/skyBox/sky_Day_b.png"
+        },
+        {
+            "assetName": "sky_Day_d.png",
+            "pathName": "assets/texture/skyBox/sky_Day_d.png"
+        },
+        {
+            "assetName": "sky_Day_l.png",
+            "pathName": "assets/texture/skyBox/sky_Day_l.png"
+        },
+        {
+            "assetName": "sky_Day_f.png",
+            "pathName": "assets/texture/skyBox/sky_Day_f.png"
         }
     ]
 }

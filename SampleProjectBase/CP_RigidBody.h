@@ -21,8 +21,8 @@ class CP_RigidBody : public Component, public CloneComponent<CP_RigidBody>
 	/// @brief 質量(0.0なら静的オブジェクト)
 	float mass;
 
-	/// @brief 剛体か？
-	bool isRigidbody;
+	/// @brief 接触なしか？
+	bool isTrigger;
 
 	/// @brief 重力を受けるか？
 	bool isGravity;
@@ -32,6 +32,9 @@ class CP_RigidBody : public Component, public CloneComponent<CP_RigidBody>
 
 	/// @brief 形状がセットされているか？
 	bool isSetShape;
+
+	/// @brief 既に当たり判定は追加しているか？
+	bool isAlreadySendCol;
 public:
 	CP_RigidBody();
 	CP_RigidBody(const CP_RigidBody& _other);
@@ -42,6 +45,7 @@ public:
 	void Update() override;
 	void ImGuiSetting() override;
 	void OnDestroy() override;
+	void OnChangeTransform() override;
 
 	/// @brief 質量をセットし、再計算
 	/// @param _mass 質量
@@ -82,7 +86,7 @@ private:
 
 	/// @brief 剛体かどうセット
 	/// @param _isRB 剛体か？
-	void SetIsRigidbody(bool _isRB);
+	void SetIsTrigger(bool _isRB);
 
 	/// @brief 重力を受けるかセット
 	/// @param _isGravity 重力を受けるか？
@@ -100,8 +104,6 @@ private:
 	/// @brief Ghostを作成
 	void CreateGhost();
 
-	/// @brief 形状と剛体の座標を合わせる
-	void CollisionSetTransform();
 
 	/// @brief 衝突オブジェクトをbtRigidBodyに変換
 	/// @return cast変換したポインタ
@@ -109,5 +111,11 @@ private:
 
 	/// @brief 物理シミュレーションに衝突オブジェクトを追加する
 	void AddCollisionToWorld();
+
+	/// @brief Bullet側のTransformをセット
+	void SetBulletTransform(const btTransform& _set);
+	
+	/// @brief Bullet側のTransformを取得
+	void GetBulletTransform(btTransform& _get);
 };
 

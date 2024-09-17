@@ -13,6 +13,7 @@ void ComponentFactory::Init()
 	// 描画
 	ResistComponnent<CP_MeshRenderer>();
 	ResistComponnent<CP_SpriteRenderer>();
+	ResistComponnent<CP_SkyBox>();
 
 	// アニメーション
 	ResistComponnent<CP_Animation>();
@@ -47,7 +48,7 @@ void ComponentFactory::CreateImGuiCombo(GameObject& _targetObject)
 {
 #ifdef EDIT
 	static std::string compName = "";
-	static std::vector<std::string> conponentsName = GetComponentsName();
+	std::vector<const std::string*> conponentsName = GetComponentsName();
 
 	if (ImGui::Button("Add"))
 	{
@@ -58,13 +59,13 @@ void ComponentFactory::CreateImGuiCombo(GameObject& _targetObject)
 #endif // EDIT
 }
 
-std::vector<std::string> ComponentFactory::GetComponentsName()
+std::vector<const std::string*> ComponentFactory::GetComponentsName()
 {
-	std::vector<std::string> s;
+	std::vector<const std::string*> s;
 
 	for (auto& itr : pComponents)
 	{
-		s.push_back(itr.first);
+		s.push_back(&itr.first);
 	}
 
 	return s;

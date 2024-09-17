@@ -37,11 +37,9 @@ void CP_BoxCollider::ImGuiSetting()
 
 	ImGui::Checkbox("AABB", &isAABB);
 
-	Vector3 p_Length = length;
-	ImGuiMethod::DragFloat3(length, "length", 0.1f);
-
-	if (length != p_Length)
-		SetLength(length);
+	Vector3 changeFloat = length;
+	if (ImGuiMethod::DragFloat3(changeFloat, "length", 0.01f))
+		SetLength(changeFloat);
 }
 
 void CP_BoxCollider::SetLength(const DirectX::SimpleMath::Vector3& _length)

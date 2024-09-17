@@ -16,12 +16,17 @@ float HashiTaku::Easing::EaseValue(float _ratio, EaseKind _easeType)
 
 void HashiTaku::Easing::ImGuiSelect(EaseKind& _nowEase)
 {
-	std::string curEaseName = easeNames[static_cast<u_int>(_nowEase)];
+#ifdef EDIT
+	std::string nowEaseName = "nowEase:" + easeNames[static_cast<u_int>(_nowEase)];
+	ImGui::Text(nowEaseName.c_str());
 
-	bool isEaseChange = ImGuiMethod::ComboBox(TO_UTF8("イージング"), curEaseName, easeNames);
+	static u_int easeId = 0;
 
-	if (isEaseChange)
-		_nowEase = StrToEase(curEaseName);
+	if (ImGuiMethod::ComboBox("Easing", easeId, easeNames))
+	{
+		_nowEase = static_cast<EaseKind>(easeId);
+	}
+#endif // EDIT
 }
 
 void HashiTaku::Easing::Init()

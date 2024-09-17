@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="リソース ファイル">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -51,9 +47,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Object">
       <UniqueIdentifier>{55c4fa45-2e89-43b4-91f6-f99c07eb6859}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Camera">
-      <UniqueIdentifier>{6a26953d-a672-405b-952f-60d285febe89}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\System\ImGui">
       <UniqueIdentifier>{3a4f88db-e57c-4ce8-9c11-57982a744aca}</UniqueIdentifier>
@@ -240,9 +233,6 @@
     </Filter>
     <Filter Include="ソース ファイル\System\Prototype">
       <UniqueIdentifier>{8b44edf1-50c2-4f9c-b724-f1e67abf683a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\template">
-      <UniqueIdentifier>{3413918b-02ea-4457-9d59-ea33c05fc5e5}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Component\Factory">
       <UniqueIdentifier>{59c4033c-957f-4e5b-bd6b-1be4ed5e0fbc}</UniqueIdentifier>
@@ -508,6 +498,64 @@
     <Filter Include="ソース ファイル\Bullet\PhysicsEngine">
       <UniqueIdentifier>{a42daa8f-175c-4c8b-b507-028604f46bff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Graphics\Sprite\Drawer">
+      <UniqueIdentifier>{f78a12b9-8f83-4cd7-9a90-ea95740bfd77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Creater">
+      <UniqueIdentifier>{44856d4f-ce3f-41e6-abd2-d33017fe20c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Creater\Material">
+      <UniqueIdentifier>{e6f51b7a-e972-4329-b590-ab33c6425c28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\SkyBox">
+      <UniqueIdentifier>{5197527b-98a8-4fc6-968c-8e9157f342c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet\Test">
+      <UniqueIdentifier>{a5aeacce-e9bc-4e92-b0f4-45f4a32d28cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify">
+      <UniqueIdentifier>{1b855690-063d-4417-ab64-ac10706e0312}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event">
+      <UniqueIdentifier>{f9754356-d852-4070-b0e8-13b9694105d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\State">
+      <UniqueIdentifier>{36bcc241-e81b-40e3-a9e6-ef31c64e4aad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\AnimationNotify">
+      <UniqueIdentifier>{b86c4aaf-8c67-49f0-bbb7-07a35572fe75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationTrack">
+      <UniqueIdentifier>{8ea5adef-6d5d-44f9-913e-8db23e1808ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\IAnimationNotify">
+      <UniqueIdentifier>{a22e08c0-d965-436f-8b63-e3e75d37df5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\DebugLog">
+      <UniqueIdentifier>{c1fa6d37-0e8c-494c-ba50-a8db6113738f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\State\DebugLog">
+      <UniqueIdentifier>{69aba161-90c1-40a7-933a-39554802c8ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\Respawner">
+      <UniqueIdentifier>{c4bc0c3d-e09a-45d6-a04d-5e082bb2202e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\AnimationNotifyFactory">
+      <UniqueIdentifier>{0f45c75f-2e3f-4310-badf-c70f29235b0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Camera">
+      <UniqueIdentifier>{6a26953d-a672-405b-952f-60d285febe89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\IClassNameGetter">
+      <UniqueIdentifier>{a7f0cabf-f61d-4f9b-8be0-75d4abfe72a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\template">
+      <UniqueIdentifier>{3413918b-02ea-4457-9d59-ea33c05fc5e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -552,16 +600,16 @@
     <FxCompile Include="VS_SpriteShadow.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
     </FxCompile>
+    <FxCompile Include="VS_Sprite.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="BlendState.cpp">
       <Filter>ソース ファイル\System\Application\Render\BlendState</Filter>
     </ClCompile>
     <ClCompile Include="CP_Camera.cpp">
-      <Filter>ソース ファイル\Object\Camera</Filter>
+      <Filter>ソース ファイル\Component\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Direct3D11.cpp">
       <Filter>ソース ファイル\System\Application\DirectX3D11</Filter>
@@ -881,9 +929,6 @@
     <ClCompile Include="Scene.cpp">
       <Filter>ソース ファイル\Scene\NewScene</Filter>
     </ClCompile>
-    <ClCompile Include="nSceneManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="CloneComponent.cpp">
       <Filter>ソース ファイル\Component\Clone</Filter>
     </ClCompile>
@@ -911,9 +956,6 @@
     <ClCompile Include="CP_RigidBody.cpp">
       <Filter>ソース ファイル\Component\Collider\RigidBody</Filter>
     </ClCompile>
-    <ClCompile Include="CP_BoxAnimation.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="AnimTransitionArrow.cpp">
       <Filter>ソース ファイル\Animation\AnimTransitionArrow</Filter>
     </ClCompile>
@@ -932,9 +974,6 @@
     <ClCompile Include="CrossFadeAnimation.cpp">
       <Filter>ソース ファイル\Animation\Interpolate\CrossFade</Filter>
     </ClCompile>
-    <ClCompile Include="IAnimInterpolate.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="DepthStencil.cpp">
       <Filter>ソース ファイル\Graphics\DepthStencil</Filter>
     </ClCompile>
@@ -943,6 +982,60 @@
     </ClCompile>
     <ClCompile Include="BulletContactCallBack.cpp">
       <Filter>ソース ファイル\Bullet\Callback</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteDrawer.cpp">
+      <Filter>ソース ファイル\Graphics\Sprite\Drawer</Filter>
+    </ClCompile>
+    <ClCompile Include="IAssetCreater.cpp">
+      <Filter>ソース ファイル\Asset\Creater</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_SkyBox.cpp">
+      <Filter>ソース ファイル\Component\SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_BoxAnimation.cpp">
+      <Filter>ソース ファイル\Component\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="IAnimInterpolate.cpp">
+      <Filter>ソース ファイル\Animation\Interpolate\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialCreater.cpp">
+      <Filter>ソース ファイル\Asset\Creater\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletTest.cpp">
+      <Filter>ソース ファイル\Bullet\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationNotifyEvent.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationNotifyState.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_AnimationNotify.cpp">
+      <Filter>ソース ファイル\Component\AnimationNotify</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationTrack.cpp">
+      <Filter>ソース ファイル\Animation\AnimationTrack</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationNotify_Base.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\IAnimationNotify</Filter>
+    </ClCompile>
+    <ClCompile Include="ANS_DebugLog.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\State\DebugLog</Filter>
+    </ClCompile>
+    <ClCompile Include="ANE_DebugLog.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\DebugLog</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationNotifyFactory.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\AnimationNotifyFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="IClassNameGetter.cpp">
+      <Filter>ソース ファイル\Method\IClassNameGetter</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_NotifyTest.cpp">
+      <Filter>ソース ファイル\Component\Test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -953,7 +1046,7 @@
       <Filter>ソース ファイル\System\Application\Render\BlendState</Filter>
     </ClInclude>
     <ClInclude Include="CP_Camera.h">
-      <Filter>ソース ファイル\Object\Camera</Filter>
+      <Filter>ソース ファイル\Component\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Direct3D11.h">
       <Filter>ソース ファイル\System\Application\DirectX3D11</Filter>
@@ -1303,9 +1396,6 @@
     <ClInclude Include="CP_EaseTest.h">
       <Filter>ソース ファイル\Component\InGame\Test</Filter>
     </ClInclude>
-    <ClInclude Include="nSceneManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="CloneComponent.h">
       <Filter>ソース ファイル\Component\Clone</Filter>
     </ClInclude>
@@ -1338,9 +1428,6 @@
     </ClInclude>
     <ClInclude Include="CP_RigidBody.h">
       <Filter>ソース ファイル\Component\Collider\RigidBody</Filter>
-    </ClInclude>
-    <ClInclude Include="CP_BoxAnimation.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="MainApplication.h">
       <Filter>ソース ファイル\System\Application\MainApplication</Filter>
@@ -1377,6 +1464,60 @@
     </ClInclude>
     <ClInclude Include="BulletContactCallBack.h">
       <Filter>ソース ファイル\Bullet\Callback</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteDrawer.h">
+      <Filter>ソース ファイル\Graphics\Sprite\Drawer</Filter>
+    </ClInclude>
+    <ClInclude Include="IAssetCreater.h">
+      <Filter>ソース ファイル\Asset\Creater</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_SkyBox.h">
+      <Filter>ソース ファイル\Component\SkyBox</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_BoxAnimation.h">
+      <Filter>ソース ファイル\Component\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialCreater.h">
+      <Filter>ソース ファイル\Asset\Creater\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletTest.h">
+      <Filter>ソース ファイル\Bullet\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationNotifyEvent.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationNotifyState.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_AnimationNotify.h">
+      <Filter>ソース ファイル\Component\AnimationNotify</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationTrack.h">
+      <Filter>ソース ファイル\Animation\AnimationTrack</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationNotify_Base.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\IAnimationNotify</Filter>
+    </ClInclude>
+    <ClInclude Include="ANS_DebugLog.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\State\DebugLog</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimNotifyRespawner.h">
+      <Filter>ソース ファイル\Method\Respawner</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationNotifyFactory.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\AnimationNotifyFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="ANE_DebugLog.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\DebugLog</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimNotifyDefine.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify</Filter>
+    </ClInclude>
+    <ClInclude Include="IClassNameGetter.h">
+      <Filter>ソース ファイル\Method\IClassNameGetter</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_NotifyTest.h">
+      <Filter>ソース ファイル\Component\Test</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -167,6 +167,34 @@ bool D3D11_Renderer::InitBackBuffer()
 	if (FAILED(hr))
 		return false;
 
+	// 深度ステンシルバッファを作成
+	// ※深度バッファ（Zバッファ）→奥行を判定して前後関係を正しく描画できる
+	D3D11_TEXTURE2D_DESC d_txDesc;
+	ZeroMemory(&d_txDesc, sizeof(d_txDesc));
+	d_txDesc.Width = screenWidth;
+	d_txDesc.Height = screenHeight;
+	d_txDesc.MipLevels = 1;
+	d_txDesc.ArraySize = 1;
+	d_txDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	d_txDesc.SampleDesc.Count = 1;
+	d_txDesc.SampleDesc.Quality = 0;
+	d_txDesc.Usage = D3D11_USAGE_DEFAULT;
+	d_txDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	d_txDesc.CPUAccessFlags = 0;
+	d_txDesc.MiscFlags = 0;
+	hr = pD3DDevice->CreateTexture2D(&d_txDesc, NULL, &pDisableDepthStencilTexture);
+	if (FAILED(hr))
+		return false;
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC d_dsDesc;
+	ZeroMemory(&d_dsDesc, sizeof(d_dsDesc));
+	d_dsDesc.Format = d_txDesc.Format;
+	d_dsDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	d_dsDesc.Texture2D.MipSlice = 0;
+	hr = pD3DDevice->CreateDepthStencilView(pDisableDepthStencilTexture.Get(), &d_dsDesc, &pDisableDepthStencilView);
+	if (FAILED(hr))
+		return false;
+
 	// ビューポートの設定
 	D3D11_VIEWPORT viewport;
 	viewport.TopLeftX = 0.0f;    // ビューポート領域の左上X座標。
@@ -268,6 +296,10 @@ void D3D11_Renderer::SetCullingMode(D3D11_CULL_MODE _cullMode)
 	case D3D11_CULL_BACK: pDeviceContext->RSSetState(pRasterizerStates[2].Get()); break;
 	default: assert(!"カリングモードが不正です");
 	}
+}
+
+void D3D11_Renderer::SeStencil(bool _isStencil)
+{
 }
 
 void D3D11_Renderer::SetUpDraw()

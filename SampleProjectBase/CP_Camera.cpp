@@ -27,7 +27,7 @@ void CP_Camera::Init()
 
 void CP_Camera::LateUpdate()
 {
-	UpdateProjection();
+	/*UpdateProjection();*/
 }
 
 void CP_Camera::Draw()
@@ -44,8 +44,15 @@ void CP_Camera::ImGuiSetting()
 	ImGui::Text("Forward");
 	ImGuiMethod::Text(GetTransform().Forward());
 
-	ImGui::DragFloat("fov", &fov, 1.0f, 15.0f, 110.0f);
-	ImGui::DragFloat("distance", &distance, 1.0f, 0.1f, 2000.0f);
+	bool isChangeFov = false;
+	bool isChangeDis = false;
+	isChangeFov = ImGui::DragFloat("fov", &fov, 1.0f, 15.0f, 110.0f);
+	isChangeDis = ImGui::DragFloat("distance", &distance, 1.0f, 0.1f, 2000.0f);
+
+	if (isChangeFov || isChangeDis)
+	{
+		UpdatePerspective();
+	}
 }
 
 void CP_Camera::UpdateViewMatrix()
@@ -80,6 +87,12 @@ void CP_Camera::SetOrthographic()
 {
 	isOrthographic = true;
 	UpdateOrthographic();
+}
+
+void CP_Camera::SetFov(float _setFov)
+{
+	fov = _setFov;
+	UpdatePerspective();
 }
 
 void CP_Camera::SetViewportSlot(u_int _slot)

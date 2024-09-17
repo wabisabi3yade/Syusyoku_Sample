@@ -1,4 +1,5 @@
 #pragma once
+#include "BulletTest.h"
 
 class InSceneSystemManager;
 
@@ -10,6 +11,8 @@ class Scene : public HashiTaku::IImGuiUser
 
 	/// @brief シーン内システムマネジャー
 	InSceneSystemManager* pInSceneSystem;
+
+	BulletTest* test;
 
 	/// @brief シーン再生するか？
 	bool isPlay;

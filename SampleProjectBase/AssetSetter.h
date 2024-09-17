@@ -17,13 +17,13 @@ public:
     /// @param _assetName 名前
     /// @param _pAsse アセットのユニークポインタ
     /// @return アセットのポインタ
-    template<HashiTaku::AssetType T> static T* SetAsset(const std::string& _assetName, std::unique_ptr<T> _pAsset);
+    template<HashiTaku::AssetConcept T> static T* SetAsset(const std::string& _assetName, std::unique_ptr<T> _pAsset);
 
     /// @brief アセットがあるか確認
     /// @tparam T アセットの型
     /// @param _assetName 名前
     /// @return あるフラグ
-    template<HashiTaku::AssetType T> static bool CheckImport(const std::string& _assetName);
+    template<HashiTaku::AssetConcept T> static bool CheckImport(const std::string& _assetName);
 
 private:
 
@@ -39,7 +39,7 @@ private:
 /// @param _assetName 名前
 /// @param _pAsse アセットのユニークポインタ
 /// @return アセットのポインタ
-template<HashiTaku::AssetType T>
+template<HashiTaku::AssetConcept T>
 inline T* AssetSetter::SetAsset(const std::string& _assetName, std::unique_ptr<T> _pAsset)
 {
     if (_assetName == "")
@@ -61,7 +61,7 @@ inline T* AssetSetter::SetAsset(const std::string& _assetName, std::unique_ptr<T
     return pReturnAsset;
 }
 
-template<HashiTaku::AssetType T>
+template<HashiTaku::AssetConcept T>
 inline bool AssetSetter::CheckImport(const std::string& _assetName)
 {
     return pAssetCollection->CheckImport<T>(_assetName);

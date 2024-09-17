@@ -15,7 +15,7 @@ void CP_SphereCollider::ImGuiSetting()
 	CP_Collider::ImGuiSetting();
 
 	float changeRadius = radius;
-	if (ImGui::DragFloat("radius", &changeRadius, 0.01f, 0.0f, 1000.0f));
+	if (ImGui::DragFloat("radius", &changeRadius, 0.01f, 0.0f, 1000.0f))
 		SetRadius(changeRadius);
 }
 

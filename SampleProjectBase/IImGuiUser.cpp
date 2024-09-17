@@ -11,7 +11,7 @@ void HashiTaku::IImGuiUser::ImGuiCall()
 	//if (isDisplay) ImGuiSetting();
 
 #ifdef EDIT
-	if (isDisplay) ImGuiSetting();
+	ImGuiSetting();
 #endif // EDIT
 }
 

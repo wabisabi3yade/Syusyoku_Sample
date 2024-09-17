@@ -28,6 +28,11 @@ namespace Vec2
 	/// @param _v 変数
 	/// @return 絶対値
 	Vector2 Abs(const Vector2& _v);
+
+	/// @brief 文字列に変換する
+	/// @param _v Vector2
+	/// @return 文字列
+	std::string ToStr(const Vector2& _v);
 }
 
 namespace Vec3
@@ -76,6 +81,11 @@ namespace Vec3
 	/// @param _length 最大値
 	/// @return 正規化された値
 	Vector3 Repeat(const Vector3& _v, float _length);
+
+	/// @brief 文字列に変換する
+	/// @param _v Vector3
+	/// @return 文字列
+	std::string ToStr(const Vector3& _v);
 }
 
 namespace Vec4
@@ -121,6 +131,11 @@ namespace Quat
 	/// @param _degrees 回転角度(deg)
 	/// @return クォータニオン
 	Quaternion ToQuaternion(const Vector3& _degrees);
+
+	/// @brief 文字列に変換する
+	/// @param _v Quaternion
+	/// @return 文字列
+	std::string ToStr(const Quaternion& _q);
 }
 
 namespace Mtx

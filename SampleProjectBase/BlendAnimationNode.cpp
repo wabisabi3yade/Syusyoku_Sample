@@ -16,43 +16,15 @@ BlendAnimationNode::BlendAnimationNode(std::string _nodeName) : AnimationNode_Ba
 
 void BlendAnimationNode::ImGuiPlaying()
 {
-	ImGui::Begin(TO_UTF8("ブレンドアニメーション"));
-
 	AnimationNode_Base::ImGuiPlaying();
 
 	std::string text = "現在のブレンド: " + std::to_string(curBlendRatio);
 	ImGui::Text(TO_UTF8(text));
 
-	ImGui::Text(std::to_string(curRatioSmoothTime).c_str());
-
-	ImGui::DragFloat("smoothTime", &ratioSmoothTime, 0.01f, 0.0f, 2.0f);
-
+	// ターゲット
 	float target = targetBlendRatio;
-	ImGui::DragFloat("target", &target, 0.01f, 0.0f, 1.0f);
-	SetTargetBlendRatio(target);
-
-	for (auto& data : blendDatas)
-	{
-		std::string animName = data.pAnimation->GetAssetName();
-		if (!ImGui::TreeNode(animName.c_str())) continue;
-		;
-		ImGui::DragFloat(TO_UTF8("ブレンド"), &data.ratio, 0.01f, 0.0f, 1.0f);
-
-		ImGui::TreePop();
-	}
-
-	if (ImGui::TreeNode("Import"))
-	{
-		static char animName[256] = "";
-		ImGui::InputText("AnimName", animName, 256);
-
-		if (ImGui::Button("Set"))
-			SetAnimationData(animName);
-
-		ImGui::TreePop();
-	}
-
-	ImGui::End();
+	if (ImGui::SliderFloat("target", &target, 0.0f, 1.0f))
+		SetTargetBlendRatio(target);
 }
 
 void BlendAnimationNode::Begin()
@@ -219,9 +191,9 @@ void BlendAnimationNode::BlendUpdateAnimation(BlendPair& _blendPair, float _play
 {
 	float deltaRatio = _blendPair.nextData->ratio - _blendPair.prevData->ratio;
 
-	if (deltaRatio == 0.0f)	// ブレンド値に差がない場合
+	if (abs(deltaRatio) < Mathf::epsilon)	// ブレンド値に差がない場合
 	{
-		deltaRatio += Mathf::smallValue; // 0徐算しないようにする
+		deltaRatio = Mathf::smallValue; // 0徐算しないようにする
 	}
 
 	// アニメーションの重み割合
@@ -299,4 +271,28 @@ void BlendAnimationNode::GetAnimTransform(BoneTransform& _outTransform, u_int _b
 	const AnimationData* pAnimationData = blendDatas.begin()->pAnimation;
 	_outTransform = pAnimationData->GetTransformByRatio(_boneId, _requestRatio);
 
+}
+
+void BlendAnimationNode::ImGuiSetting()
+{
+	AnimationNode_Base::ImGuiSetting();
+	ImGui::DragFloat("smoothTime", &ratioSmoothTime, 0.01f, 0.0f, 10.0f);
+	HashiTaku::Easing::ImGuiSelect(ratioMoveEase);
+
+	ImGui::Text("Blend");
+	for (auto& data : blendDatas)
+	{
+		std::string animName = data.pAnimation->GetAssetName();
+		if (!ImGui::TreeNodeEx(animName.c_str(), ImGuiTreeNodeFlags_Framed)) continue;
+
+		ImGui::SliderFloat(TO_UTF8("ブレンド"), &data.ratio, 0.0f, 1.0f);
+
+		ImGui::TreePop();
+	}
+
+	static char addAnimName[IM_INPUT_BUF] = "";
+	ImGui::InputText("addAnim", addAnimName, IM_INPUT_BUF);
+	ImGui::SameLine();
+	if (ImGui::Button("Set"))
+		SetAnimationData(addAnimName);
 }

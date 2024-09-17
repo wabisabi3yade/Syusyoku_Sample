@@ -47,7 +47,10 @@ public:
 	void TransitionEnable();
 
 	/// @brief 削除されたときに処理する
-	virtual void OnDestroy();
+	virtual void OnDestroy() {}
+
+	/// @brief トランスフォームのパラメータが変更した時の処理
+	virtual void OnChangeTransform() {}
 
 	/// @brief 名前をセットする
 	/// @param _name 名前
@@ -76,11 +79,11 @@ public:
 
 	/// @brief セーブする
 	/// @param _data セーブシーンデータ
-	virtual nlohmann::json Save() override;
+	nlohmann::json Save() override;
 
 	/// @brief ロードする
 	/// @param _data ロードするシーンデータ 
-	virtual void Load(const nlohmann::json& _data) override;
+	void Load(const nlohmann::json& _data) override;
 	
 private:
 	/// @brief 活動状態をtrueに変更したときの処理

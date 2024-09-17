@@ -42,7 +42,7 @@ void CP_Animation::Start()
 	}
 }
 
-void CP_Animation::LateUpdate()
+void CP_Animation::Update()
 {
 	if (!IsCanPlay()) return;
 

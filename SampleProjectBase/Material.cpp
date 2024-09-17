@@ -134,12 +134,16 @@ void Material::Load(const nlohmann::json& _data)
 	pNormalTexture = LoadJsonAsset<Texture>("normalTex", _data);
 
 	ShaderCollection* shCol = ShaderCollection::GetInstance();
-	std::string shaderName;
+	std::string shaderName = "";
 	LoadJsonString("vertexShader", shaderName, _data);
-	pVertexShader = shCol->GetVertexShader(shaderName);
+	VertexShader* pLoadVS = shCol->GetVertexShader(shaderName);
+	if (pLoadVS)
+		pVertexShader = pLoadVS;
 
 	LoadJsonString("pixelShader", shaderName, _data);
-	pPixelShader = shCol->GetPixelShader(shaderName);
+	PixelShader* pLoadPs = shCol->GetPixelShader(shaderName);
+	if (pLoadPs)
+		pPixelShader = pLoadPs;
 
 	if (pDiffuseTexture)	// テクスチャあるなら
 		parameter.isTextureEnable = 1;
@@ -153,7 +157,7 @@ void Material::InitParameter()
 	parameter.specular = Color(1.0f, 1.0f, 1.0f, 1.0f);
 	parameter.emissive = Color(1.0f, 1.0f, 1.0f, 1.0f);
 	parameter.shiness = 0.0f;
-	parameter.isTextureEnable = 0;
+	parameter.isTextureEnable = FALSE;
 }
 
 void Material::ShaderSetup(Shader& _shader, RenderParam::WVP& _wvp)
