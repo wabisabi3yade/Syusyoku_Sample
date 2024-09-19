@@ -546,15 +546,15 @@
     <Filter Include="ソース ファイル\Component\Camera">
       <UniqueIdentifier>{6a26953d-a672-405b-952f-60d285febe89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Method\IClassNameGetter">
-      <UniqueIdentifier>{a7f0cabf-f61d-4f9b-8be0-75d4abfe72a1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
     <Filter Include="ヘッダー ファイル\template">
       <UniqueIdentifier>{3413918b-02ea-4457-9d59-ea33c05fc5e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\TypeName">
+      <UniqueIdentifier>{a7f0cabf-f61d-4f9b-8be0-75d4abfe72a1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1029,7 +1029,7 @@
       <Filter>ソース ファイル\Animation\AnimationNotify\AnimationNotifyFactory</Filter>
     </ClCompile>
     <ClCompile Include="IClassNameGetter.cpp">
-      <Filter>ソース ファイル\Method\IClassNameGetter</Filter>
+      <Filter>ソース ファイル\Method\TypeName</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>ヘッダー ファイル</Filter>
@@ -1514,7 +1514,7 @@
       <Filter>ソース ファイル\Animation\AnimationNotify</Filter>
     </ClInclude>
     <ClInclude Include="IClassNameGetter.h">
-      <Filter>ソース ファイル\Method\IClassNameGetter</Filter>
+      <Filter>ソース ファイル\Method\TypeName</Filter>
     </ClInclude>
     <ClInclude Include="CP_NotifyTest.h">
       <Filter>ソース ファイル\Component\Test</Filter>

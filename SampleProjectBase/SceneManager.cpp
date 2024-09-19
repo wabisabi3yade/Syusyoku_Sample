@@ -3,6 +3,7 @@
 #include "GameInput.h"
 #include "ComponentFactory.h"
 #include "DX11BulletPhisics.h"
+#include "AnimationNotifyFactory.h"
 
 // アセット初期化
 #include "AssetSetter.h"
@@ -71,6 +72,7 @@ void SceneManager::Release()
 	pNowScene.reset();
 	GameInput::Delete();
 	ComponentFactory::Delete();
+	AnimationNotifyFactory::Delete();
 	Geometory::Release();
 	DX11BulletPhisics::Delete();
 }

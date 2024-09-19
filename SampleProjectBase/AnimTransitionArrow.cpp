@@ -64,7 +64,7 @@ HashiTaku::AnimInterpolateKind AnimTransitionArrow::GetInterpolateKind() const
 
 void AnimTransitionArrow::ImGuiSetting()
 {
-	if (!ImGui::TreeNode(pToNode->GetNodeName().c_str())) return;
+	if (!ImGuiMethod::TreeNode(pToNode->GetNodeName().c_str())) return;
 	ImGui::DragFloat("transRatio", &transTargetRatio, 0.01f, 0.0f, 1.0f);
 	ImGui::DragFloat("transitionTime", &transitionTime, 0.01f, 0.0f, 10.0f);
 

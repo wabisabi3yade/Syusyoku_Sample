@@ -5,7 +5,7 @@ struct PointLParameter
 {
 	LightParameter base;
 	float range{5.0f};
-	float dummy1, dummy2, dummy3;
+	float dummy[3] = {};
 };
 
 // ポイントライト

@@ -36,7 +36,7 @@ bool VariableFrameRate::UpdateCheck()
 
 void VariableFrameRate::ImGuiDraw()
 {
-	if (ImGui::TreeNode("FPS Counter"))
+	if (ImGuiMethod::TreeNode("FPS Counter"))
 	{
 		float fps = static_cast<float>(1.0f / (deltaTime_ms * 0.001f));
 

@@ -23,7 +23,7 @@ public:
 	/// @brief コンボボックスで作成する
 	/// @brief Factoryで
 	/// @return 作成するボタンをおされたら返す
-	std::unique_ptr<AnimationNotify_Base> ImGuiCombo();
+	bool ImGuiCombo(std::unique_ptr<AnimationNotify_Base>& _pCreateNotify);
 private:
 	AnimationNotifyFactory();
 	~AnimationNotifyFactory() {}
@@ -37,7 +37,7 @@ private:
 template<HashiTaku::AnimNotifyConcept T>
 inline void AnimationNotifyFactory::ResisterNotify()
 {
-	std::string notifyName = typeid(T).name();
+	std::string notifyName = TYPENAME_ROUGH(T);
 	std::unique_ptr<AnimNotifyRespawner_Base> pRespawner = std::make_unique<AnimNotifyRespawner<T>>();
 
 	animNotifyList[notifyName] = std::move(pRespawner);

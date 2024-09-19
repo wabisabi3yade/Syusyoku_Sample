@@ -7,12 +7,16 @@ class ANS_DebugLog : public AnimationNotifyState
 
 	u_int selectId;
 
-	char* inputString;
+	char inputString[IM_INPUT_BUF];
 public:
 	ANS_DebugLog();
-	~ANS_DebugLog() {}
+	~ANS_DebugLog() {};
 
-	std::string ClassNameToStr() override;
+	// 型名を取得する
+	std::string GetTypeName() const override;
+
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
 private:
 	/// @brief イベント開始処理
 	void Begin() override;

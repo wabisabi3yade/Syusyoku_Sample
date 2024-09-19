@@ -76,11 +76,14 @@ public:
 	/// @return 変更したか？
 	static bool ComboBox(const std::string& _caption, u_int& _enumId, const std::vector<std::string>& _items);
 
+	/// @brief ツリーノード
+	/// @return ノードが開かれているか？
+	static bool TreeNode(const std::string& _caption);
 
-	/// @brief テキスト入力
-	/// @param _label ラベル
-	/// @return テキスト入力した文字列
-	static std::string InputText(const std::string& _label);
+	/// @brief クリックすると、テキスト入力できる関数
+	/// @param _text 変更したいテキスト
+	/// @param _id 複数並べたいときに同調しないID
+	static void EditableText(std::string& _text, u_int _id = 0);
 
 	/// @brief Vector2をテキスト
     /// @param _v 表示するテキスト

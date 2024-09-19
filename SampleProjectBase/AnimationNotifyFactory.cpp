@@ -2,27 +2,23 @@
 #include "AnimationNotifyFactory.h"
 #include "AnimNotifyDefine.h"
 
-std::unique_ptr<AnimationNotify_Base> AnimationNotifyFactory::ImGuiCombo()
+bool AnimationNotifyFactory::ImGuiCombo(std::unique_ptr<AnimationNotify_Base>& _pCreateNotify)
 {
 #ifdef EDIT
 	std::vector<const std::string*> nameList = GetNotifyNames();
-	if (nameList.empty()) return nullptr;
-
-	std::unique_ptr<AnimationNotify_Base> pCreateNotify;
+	if (nameList.empty()) return false;
 
 	if (ImGui::Button("+"))
 	{
-		pCreateNotify = Create(selectName);
-
+		_pCreateNotify = Create(selectName);
+		return true;
 	}
 	
 	ImGui::SameLine();
 	ImGuiMethod::ComboBox("AddNotify", selectName, nameList);
-
-	return std::move(pCreateNotify);
 #endif // EDIT
 
-	return nullptr;
+	return false;
 }
 
 AnimationNotifyFactory::AnimationNotifyFactory()
@@ -40,7 +36,9 @@ std::unique_ptr<AnimationNotify_Base> AnimationNotifyFactory::Create(const std::
 	}
 #endif // _DEBUG
 
-	return animNotifyList[_notifyName]->Create();
+	std::unique_ptr<AnimationNotify_Base> pCreate = animNotifyList[_notifyName]->Create();
+	pCreate->SetNotifyName(_notifyName);
+	return std::move(pCreate);
 }
 
 std::vector<const std::string*> AnimationNotifyFactory::GetNotifyNames() const

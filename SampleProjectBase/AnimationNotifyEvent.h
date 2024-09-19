@@ -15,9 +15,14 @@ public:
 	// イベントの割合をセット
 	void SetEventRatio(float _ratio);
 
-	virtual std::string ClassNameToStr() override = 0;
+	virtual std::string GetTypeName() const override = 0;
+
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
 protected:
 	/// @brief イベント起動時処理
 	virtual void OnEvent() = 0;
+
+	void ImGuiSetting() override;
 };
 

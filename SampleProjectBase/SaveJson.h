@@ -11,6 +11,7 @@ namespace HashiTaku
 		nlohmann::json& _j);
 
 	// ÉçÅ[Éh
+	void LoadJsonData(const std::string& _s, nlohmann::json& _d, const nlohmann::json& _j);
 	void LoadJsonBoolean(const std::string& _s, bool& _b, const nlohmann::json& _j);
 	void LoadJsonInteger(const std::string& _s, int& _i, const nlohmann::json& _j);
 	void LoadJsonUnsigned(const std::string& _s, u_int& _u, const nlohmann::json& _j);

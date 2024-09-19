@@ -73,7 +73,6 @@ void Component::Load(const nlohmann::json& _componentData)
     bool loadEnable;
     HashiTaku::LoadJsonBoolean("enable", loadEnable, _componentData);
     SetEnable(loadEnable);
-
 }
 
 void Component::OnEnableTrueCall()

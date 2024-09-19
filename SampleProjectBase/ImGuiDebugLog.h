@@ -22,17 +22,13 @@ class ImGuiDebugLog
 	// 今フレームでデバッグログに表示するリスト
 	static std::list<Message> displayList;
 
-	ImGuiDebugLog() {};
-	~ImGuiDebugLog() { Terminal(); };
+	
 public:
-
-	/// <summary>
-	/// デバッグログに追加する
-	/// </summary>
-	/// <param name="_debugMessage">デバッグで表示するメッセージ</param>
-	static void Add(const std::string& _debugMessage);
-
-	///
+	
+	/// @brief デバッグログに追加する
+	/// @param _debugMessage デバッグメッセージ
+	/// @param _pathName 書き込んだファイル名
+	/// @param _lineNum 書き込んだ行数
 	static void Add(const std::string& _debugMessage, const std::string& _pathName, u_int _lineNum);
 
 	/// <summary>
@@ -44,5 +40,11 @@ public:
 	/// 終了処理
 	/// </summary>
 	static void Terminal();
+
+private:
+	ImGuiDebugLog() {};
+	~ImGuiDebugLog() { Terminal(); };
+
+	static void ClearMessage();
 };
 

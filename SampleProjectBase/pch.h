@@ -38,6 +38,7 @@
 #include <SimpleMath.h>	// DirectXTKの数学系
 #pragma comment(lib, "DirectXTK.lib")	// DirectXTKライブラリ
 #include <nlohmann/json.hpp>	// json書き出し
+
 // ImGui
 #define IMGUI_DEFINE_MATH_OPERATORS
 #include <imgui.h>
@@ -45,6 +46,7 @@
 #include <imgui_impl_dx11.h>
 
 // 自前クラス
+#include "IClassNameGetter.h"
 #include "MathUseful.h"	// 自作数学便利関数
 #include "ImGuiMethod.h"	// ImGui便利関数
 #include "ImGuiDebugLog.h"	// デバッグログ

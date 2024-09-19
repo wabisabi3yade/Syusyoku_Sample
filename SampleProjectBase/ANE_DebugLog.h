@@ -13,7 +13,12 @@ public:
 	// メッセージをセット
 	void SetMessage(const std::string& _message);
 
-	std::string ClassNameToStr() override;
+	std::string GetTypeName() const override;
+
+	void ImGuiSetting() override;
+
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
 private:
 	void OnEvent() override;
 };

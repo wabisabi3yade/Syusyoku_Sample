@@ -2,7 +2,7 @@
 #include "AnimationNotifyState.h"
 
 AnimationNotifyState::AnimationNotifyState()
-	:startEventRatio(0.0f), endEventRatio(1.0f)
+	: startEventRatio(0.0f), endEventRatio(1.0f)
 {
 }
 
@@ -10,7 +10,7 @@ void AnimationNotifyState::Update(const float _lastPlayingRatio, const float _cu
 {
 	if (_isLoop)
 	{
-		if (_lastPlayingRatio < startEventRatio)
+		if (_lastPlayingRatio > startEventRatio)
 		{
 			Begin();
 			End();
@@ -43,4 +43,26 @@ void AnimationNotifyState::SetEndRatio(float _endRatio)
 {
 	// äJénÇÊÇËÇ‡êÊÇ…ÇÕíuÇ©Ç»Ç¢
 	endEventRatio = std::clamp(_endRatio, startEventRatio, 1.0f);
+}
+
+nlohmann::json AnimationNotifyState::Save()
+{
+	auto data = AnimationNotify_Base::Save();
+	data["start"] = startEventRatio;
+	data["end"] = endEventRatio;
+	return data;
+}
+
+void AnimationNotifyState::Load(const nlohmann::json& _data)
+{
+	AnimationNotify_Base::Load(_data);
+	HashiTaku::LoadJsonFloat("start", startEventRatio, _data);
+	HashiTaku::LoadJsonFloat("end", endEventRatio, _data);
+}
+
+void AnimationNotifyState::ImGuiSetting()
+{
+	AnimationNotify_Base::ImGuiSetting();
+
+	ImGui::DragFloatRange2("event", &startEventRatio, &endEventRatio, 0.01f, 0.0f, 1.0f);
 }

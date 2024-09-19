@@ -2,14 +2,16 @@
 #include "IClassNameGetter.h"
 
 /// @brief アニメーションの通知インターフェース
-class AnimationNotify_Base : public HashiTaku::IImGuiUser, public IClassNameGetter
+class AnimationNotify_Base : public HashiTaku::IImGuiUser, public ISaveLoad
 {
 	/// @brief 活動状態
 	bool isActive;
 
+	/// @brief イベントの名前
+	std::string notifyName;
 public:
 	AnimationNotify_Base();
-	~AnimationNotify_Base() {}
+	virtual ~AnimationNotify_Base() {}
 
 	/// @brief アニメーションの通知の更新
 	/// @param _lastPlayingRatio アニメーションの前回の再生割合
@@ -20,10 +22,21 @@ public:
 	// 活動状態をセット
 	void SetIsActive(bool _isActive);
 
+	// イベント名を取得
+	void SetNotifyName(const std::string& _notifyName);
+
 	// 活動状態を取得
 	bool GetIsActive() const;
 
-	virtual std::string ClassNameToStr() override = 0;
+	// イベント名取得
+	std::string GetNotifyName() const;
+
+	// 型名を取得する
+	virtual std::string GetTypeName() const = 0;
+
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
+
 protected:
 	void ImGuiSetting() override;
 };
