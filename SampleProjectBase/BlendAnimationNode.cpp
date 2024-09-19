@@ -283,7 +283,7 @@ void BlendAnimationNode::ImGuiSetting()
 	for (auto& data : blendDatas)
 	{
 		std::string animName = data.pAnimation->GetAssetName();
-		if (!ImGui::TreeNodeEx(animName.c_str(), ImGuiTreeNodeFlags_Framed)) continue;
+		if (!ImGuiMethod::TreeNode(animName.c_str())) continue;
 
 		ImGui::SliderFloat(TO_UTF8("ƒuƒŒƒ“ƒh"), &data.ratio, 0.0f, 1.0f);
 

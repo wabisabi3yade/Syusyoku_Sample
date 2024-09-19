@@ -4,7 +4,7 @@
 void GamePad::DebugInput()
 {
 	std::string inputName;
-	if (ImGui::TreeNode(ShiftJisToUtf8("コントローラー入力").c_str()))
+	if (ImGuiMethod::TreeNode(TO_UTF8("コントローラー入力")))
 	{
 		for (int idx = 0; idx < Button::Button_Num; idx++)
 		{

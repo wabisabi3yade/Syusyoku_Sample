@@ -32,7 +32,7 @@ void PlayerMoveState::Terminal()
 
 void PlayerMoveState::ImGuiSetting()
 {
-	if (!ImGui::TreeNode("Move")) return;
+	if (!ImGuiMethod::TreeNode("Move")) return;
 
 	std::string text = TO_UTF8("speed") + std::to_string(currentSpeed);
 	ImGui::Text(text.c_str()); moveVector;

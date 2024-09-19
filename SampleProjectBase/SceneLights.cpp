@@ -52,7 +52,7 @@ void SceneLights::ImGuiDisplay()
 void SceneLights::ImGuiDirection()
 {
 #ifdef EDIT
-	if (ImGui::TreeNode(TO_UTF8("ディレクションライト")))
+	if (ImGuiMethod::TreeNode(TO_UTF8("ディレクションライト")))
 	{
 		// 表示
 		bool isDisplay = pDirection->GetDisplay();
@@ -87,14 +87,14 @@ void SceneLights::ImGuiDirection()
 void SceneLights::ImGuiPoint()
 {
 #ifdef EDIT
-	if (ImGui::TreeNode(TO_UTF8("ポイントライト")))
+	if (ImGuiMethod::TreeNode(TO_UTF8("ポイントライト")))
 	{
 		u_int lightCnt = 1;
 		for (auto& pPointL : pPointLights)	// シーン内のポイントライト
 		{
 			std::string idxStr = std::to_string(lightCnt);
 
-			if (ImGui::TreeNode(idxStr.c_str()))
+			if (ImGuiMethod::TreeNode(idxStr.c_str()))
 			{
 				// 表示
 				bool isDisplay = pPointL->GetDisplay();
@@ -128,14 +128,14 @@ void SceneLights::ImGuiPoint()
 void SceneLights::ImGuiSpot()
 {
 #ifdef EDIT
-	if (ImGui::TreeNode(TO_UTF8("スポットライト")))
+	if (ImGuiMethod::TreeNode(TO_UTF8("スポットライト")))
 	{
 		u_int lightCnt = 1;
 		for (auto& pSpotL : pSpotLights)	// シーン内のポイントライト
 		{
 			std::string idxStr = std::to_string(lightCnt);
 
-			if (ImGui::TreeNode(idxStr.c_str()))
+			if (ImGuiMethod::TreeNode(idxStr.c_str()))
 			{
 				// 表示
 				bool isDisplay = pSpotL->GetDisplay();

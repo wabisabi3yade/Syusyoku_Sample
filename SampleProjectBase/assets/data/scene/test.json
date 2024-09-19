@@ -141,6 +141,52 @@
             "components": [
                 {
                     "enable": true,
+                    "name": "NotifyTest",
+                    "notifys": [
+                        {
+                            "notify": {
+                                "bMessage": "Begin",
+                                "eMessage": "End",
+                                "end": 0.6499999761581421,
+                                "isActive": true,
+                                "notifyName": "ANS_DebugLog",
+                                "start": 0.5799999833106995,
+                                "tMessage": "Tick"
+                            },
+                            "typeName": "ANS_DebugLog"
+                        }
+                    ],
+                    "speed": 1.0
+                }
+            ],
+            "layer": 0,
+            "name": "NotifyTest",
+            "tag": 0,
+            "transform": {
+                "child": null,
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
                     "grabName": "mixamorig:RightHand",
                     "name": "Weapon"
                 }

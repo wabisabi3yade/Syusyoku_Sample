@@ -12,11 +12,11 @@ class Mesh_Group;
 
 using namespace DirectX::SimpleMath;
 
-constexpr u_int BUFFER_NUM(256);
+char AssetDisplay::inputText[IM_INPUT_BUF] = {};
 
 void AssetDisplay::Draw()
 {
-	if (ImGui::TreeNode(ShiftJisToUtf8("アセット").c_str()))
+	if (ImGuiMethod::TreeNode(TO_UTF8("アセット")))
 	{
 		DisplayTexture();
 
@@ -44,34 +44,31 @@ void AssetDisplay::Display(const std::unordered_map<std::string, std::unique_ptr
 void AssetDisplay::DisplayTexture()
 {
 	// アセットを表示
-	if (!ImGui::TreeNode(TO_UTF8("テクスチャ"))) return;
+	if (!ImGuiMethod::TreeNode(TO_UTF8("テクスチャ"))) return;
 
 	AssetList& Tassets = pAssetCollection->GetAssetList<Texture>();
 	Display(Tassets);
-
-	static char str[BUFFER_NUM] = "";
-	ImGui::InputText("path", str, BUFFER_NUM);
+;
+	ImGui::InputText("path", inputText, IM_INPUT_BUF);
 
 	if (ImGui::Button("Load"))
-		AssetLoader::TextureLoad(str);
+		AssetLoader::TextureLoad(inputText);
 
-	std::string name = ImGuiMethod::InputText("name");
-
+	DeleteInputAsset();
 	if (ImGui::Button("Delete"))
-		pAssetCollection->DeleteAsset<Texture>(name);
+		pAssetCollection->DeleteAsset<Texture>(inputText);
 
 	ImGui::TreePop();
 }
 
 void AssetDisplay::DisplayModel()
 {
-	if (!ImGui::TreeNode(TO_UTF8("メッシュ"))) return;
+	if (!ImGuiMethod::TreeNode(TO_UTF8("メッシュ"))) return;
 
 	AssetList& assets = pAssetCollection->GetAssetList<Mesh_Group>();
 	Display(assets);
 
-	static char str[BUFFER_NUM] = "";
-	ImGui::InputText("path", str, BUFFER_NUM);
+	ImGui::InputText("path", inputText, IM_INPUT_BUF);
 
 	static float scale = 1.0f;
 	ImGui::DragFloat("scale", &scale);
@@ -86,43 +83,43 @@ void AssetDisplay::DisplayModel()
 	ImGui::Checkbox("getSize", &getSize);
 
 	if (ImGui::Button("Load"))
-		AssetLoader::ModelLoad(str, scale, isFlipY, isRight, getSize);
+		AssetLoader::ModelLoad(inputText, scale, isFlipY, isRight, getSize);
 
-	std::string name = ImGuiMethod::InputText("name");
+	ImGui::InputText("name", inputText, IM_INPUT_BUF);
 
+	DeleteInputAsset();
 	if (ImGui::Button("Delete"))
-		pAssetCollection->DeleteAsset<Mesh_Group>(name);
+		pAssetCollection->DeleteAsset<Mesh_Group>(inputText);
 
 	ImGui::TreePop();
 }
 
 void AssetDisplay::DisplayMaterial()
 {
-	if (!ImGui::TreeNode(TO_UTF8("マテリアル"))) return;
+	if (!ImGuiMethod::TreeNode(TO_UTF8("マテリアル"))) return;
 
 	AssetList& assets = pAssetCollection->GetAssetList<Material>();
 	Display(assets);
 
-	std::string name = ImGuiMethod::InputText("name");
-
+	DeleteInputAsset();
 	if (ImGui::Button("Delete"))
-		pAssetCollection->DeleteAsset<Material>(name);
+		pAssetCollection->DeleteAsset<Material>(inputText);
 
 	ImGui::TreePop();
 }
 
 void AssetDisplay::DisplayAnimation()
 {
-	if (!ImGui::TreeNode(TO_UTF8("アニメーション"))) return;
+	if (!ImGuiMethod::TreeNode(TO_UTF8("アニメーション"))) return;
 
 	AssetList& assets = pAssetCollection->GetAssetList<AnimationData>();
 	Display(assets);
 
-	static char animation[BUFFER_NUM] = "";
-	ImGui::InputText("path", animation, BUFFER_NUM);
+	static char animation[IM_INPUT_BUF] = "";
+	ImGui::InputText("path", animation, IM_INPUT_BUF);
 
-	static char boneList[BUFFER_NUM] = "";
-	ImGui::InputText("boneList", boneList, BUFFER_NUM);
+	static char boneList[IM_INPUT_BUF] = "";
+	ImGui::InputText("boneList", boneList, IM_INPUT_BUF);
 
 	static bool isRight = false;
 	ImGui::Checkbox("rightHand", &isRight);
@@ -130,23 +127,21 @@ void AssetDisplay::DisplayAnimation()
 	if (ImGui::Button("Load"))
 		AssetLoader::AnimationLoad(animation, boneList, isRight);
 
-	std::string name = ImGuiMethod::InputText("name");
-
+	DeleteInputAsset();
 	if (ImGui::Button("Delete"))
-		pAssetCollection->DeleteAsset<AnimationData>(name);
-
+		pAssetCollection->DeleteAsset<AnimationData>(inputText);
 	ImGui::TreePop();
 }
 
 void AssetDisplay::DisplayBoneList()
 {
-	if (!ImGui::TreeNode(TO_UTF8("スケルトン"))) return;
+	if (!ImGuiMethod::TreeNode(TO_UTF8("スケルトン"))) return;
 
 	AssetList& boneAssets = pAssetCollection->GetAssetList<BoneList>();
 
 	for (auto& a : boneAssets)
 	{
-		if (!ImGui::TreeNode(a.second->GetAssetName().c_str()))
+		if (!ImGuiMethod::TreeNode(a.second->GetAssetName().c_str()))
 			continue;
 		
 		BoneList& boneList = static_cast<BoneList&>(*a.second);
@@ -160,15 +155,15 @@ void AssetDisplay::DisplayBoneList()
 		ImGui::TreePop();
 	}
 
-	std::string name = ImGuiMethod::InputText("name");
+	DeleteInputAsset();
 	if (ImGui::Button("Delete"))
-		pAssetCollection->DeleteAsset<BoneList>(name);
+		pAssetCollection->DeleteAsset<BoneList>(inputText);
 
 	ImGui::TreePop();
 }
 
-template<class T>
-void DeleteAsset()
+void AssetDisplay::DeleteInputAsset()
 {
-	
+	ImGui::InputText("name", inputText, IM_INPUT_BUF);
+	ImGui::SameLine();
 }

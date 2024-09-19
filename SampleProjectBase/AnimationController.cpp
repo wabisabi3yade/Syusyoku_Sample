@@ -94,7 +94,7 @@ void AnimationController::ImGuiSetting()
 
 	for (auto& pNode : pAnimationNodes)	// 全ノード
 	{
-		if (!ImGui::TreeNode(pNode.second->GetNodeName().c_str())) continue;
+		if (!ImGuiMethod::TreeNode(pNode.second->GetNodeName())) continue;
 
 		pNode.second->ImGuiCall();
 		ImGui::TreePop();
@@ -440,7 +440,7 @@ void AnimationController::ImGuiTransition()
 
 void AnimationController::ImGuiImportAnim()
 {
-	if (!ImGui::TreeNode("Import")) return;
+	if (!ImGuiMethod::TreeNode("Import")) return;
 
 	// シングルノード
 	static char singleStr[256] = "";

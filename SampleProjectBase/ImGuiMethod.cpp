@@ -127,30 +127,39 @@ bool ImGuiMethod::ComboBox(const std::string& _caption, u_int& _enumId, const st
 	return changed;
 }
 
-//// コンボボックス　　サンプル
-
-	//std::string currentName = "";
-	//if (pCurrentAnimation != nullptr)
-	//	currentName = pCurrentAnimation->GetName();
-	//std::vector<std::string> animNames;
-	//for (auto& anim : pHaveAnimations)
-	//{
-	//	animNames.push_back(anim->GetName());
-	//}
-	//bool isChange = ImGuiMethod::ComboBox(TO_UTF8("アニメーション"), currentName, animNames);
-	//if (isChange)
-	//{
-	//	PlayAnimation(currentName);
-	//}
-
-std::string ImGuiMethod::InputText(const std::string& _label)
+bool ImGuiMethod::TreeNode(const std::string& _caption)
 {
-	constexpr u_int BufferNum = 256;
-	static char str[BufferNum] = "";
+	return ImGui::TreeNodeEx(_caption.c_str(), ImGuiTreeNodeFlags_Framed);
+}
 
-	ImGui::InputText(_label.c_str(), str, BufferNum);
+void ImGuiMethod::EditableText(std::string& text, u_int _id)
+{
+	static bool isEditing = false;  // 編集モードかどうか
+	static char buffer[IM_INPUT_BUF];        // テキスト編集用のバッファ
 
-	return str;
+	if (isEditing) {
+		// テキスト入力フィールド
+		std::string caption = "##editableText" + std::to_string(_id);
+		if (ImGui::InputText(caption.c_str(), buffer, IM_ARRAYSIZE(buffer), ImGuiInputTextFlags_EnterReturnsTrue)) {
+			// Enterキーが押されたら編集を終了し、テキストを更新
+			text = std::string(buffer);
+			isEditing = false;  // 編集モードを終了
+		}
+		if (ImGui::IsItemDeactivated()) {
+			// フォーカスが外れたら編集モードを終了
+			isEditing = false;
+		}
+	}
+	else {
+		// 編集モードでない場合はラベルとして表示
+		ImGui::Text("%s", text.c_str());
+		if (ImGui::IsItemClicked()) {
+			// クリックされたら編集モードに切り替え
+			isEditing = true;
+			// 現在のテキストをバッファにコピー
+			strcpy_s(buffer, text.c_str());
+		}
+	}
 }
 
 void ImGuiMethod::Text(const DirectX::SimpleMath::Vector2& _v)

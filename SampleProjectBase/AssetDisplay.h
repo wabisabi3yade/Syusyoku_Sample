@@ -6,6 +6,8 @@ class AssetDisplay : private AssetContacter
 {
 	AssetDisplay() {}
 	~AssetDisplay() {}
+
+	static char inputText[IM_INPUT_BUF];
 public:
 
 	/// @brief アセットの中身を描画
@@ -18,4 +20,5 @@ private:
 	static void DisplayMaterial();
 	static void DisplayAnimation();
 	static void DisplayBoneList();
+	static void DeleteInputAsset();
 };

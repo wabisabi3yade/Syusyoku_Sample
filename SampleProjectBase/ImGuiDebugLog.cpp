@@ -6,35 +6,6 @@ std::list<ImGuiDebugLog::Message> ImGuiDebugLog::displayList = {};
 constexpr u_int MAX_DISPLAY = (1000); // デバッグログ表示最大数
 
 namespace fs = std::filesystem;
-void ImGuiDebugLog::Add(const std::string& _debugMessage)
-{
-#ifdef EDIT
-	std::string s =  ShiftJisToUtf8(_debugMessage);	// UTF-8に変換
-
-	// リストの中に既に同じメッセージがあるなら
-	// それを下に持ってくるようにする
-	auto itr = std::find_if(displayList.begin(), displayList.end(), [&](Message check)
-		{
-			return check.dubugMessage == s;	// 既にあるのか
-		});
-
-	if (itr != displayList.end())	// 既にあったら
-	{
-		itr->writeNum++;	// 書き込み回数を1増やす
-		// 末尾に移動する
-		displayList.splice(displayList.end(), displayList, itr);
-		
-	}
-	else	// ないなら
-	{
-		// リストに追加する
-		Message m;
-		m.writeNum = 1;
-		m.dubugMessage = s;
-		displayList.push_back(m);
-	}
-#endif
-}
 
 void ImGuiDebugLog::Add(const std::string& _debugMessage, const std::string& _pathName, u_int _lineNum)
 {
@@ -79,11 +50,8 @@ void ImGuiDebugLog::Add(const std::string& _debugMessage, const std::string& _pa
 void ImGuiDebugLog::DisplayMessage()
 {
 #ifdef EDIT
-	using Font = ImGuiMethod::FontSize;
 
-	ImGuiMethod::SetFontSize(Font::Small);
-
-	ImGui::Begin(ShiftJisToUtf8("デバッグログ").c_str());
+	ImGui::Begin(TO_UTF8("デバッグログ"));
 
 	// リスト内のメッセージを表示させる
 	for (auto d : displayList)
@@ -97,11 +65,12 @@ void ImGuiDebugLog::DisplayMessage()
 		ImGui::Text(debugText.c_str());
 	}
 
+	if (ImGui::Button("clear"))
+		ClearMessage();
+
 	// スクロールを最新のメッセージに合わせる
 	if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
 		ImGui::SetScrollHereY(1.0f);
-
-	ImGuiMethod::PopFontSize();
 
 	ImGui::End();
 #endif
@@ -114,4 +83,9 @@ void ImGuiDebugLog::Terminal()
 	displayList.clear();
 	
 #endif
+}
+
+void ImGuiDebugLog::ClearMessage()
+{
+	displayList.clear();
 }

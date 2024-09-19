@@ -11,7 +11,7 @@ class AnimationNotifyState : public AnimationNotify_Base
 	float endEventRatio;
 public:
 	AnimationNotifyState();
-	~AnimationNotifyState() {}
+	virtual ~AnimationNotifyState() {}
 
 	void Update(const float _lastPlayingRatio, const float _curPlayingRatio, bool _isLoop) override;
 
@@ -21,7 +21,10 @@ public:
 	// 終了時のイベント割合をセットする
 	void SetEndRatio(float _endRatio);
 
-	virtual std::string ClassNameToStr() override = 0;
+	virtual std::string GetTypeName() const override = 0;
+
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
 protected:
 	/// @brief イベント開始処理
 	virtual void Begin() = 0;
@@ -31,5 +34,7 @@ protected:
 
 	/// @brief イベント終了処理
 	virtual void End() = 0;
+
+	void ImGuiSetting() override;
 };
 

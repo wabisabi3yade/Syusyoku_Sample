@@ -11,9 +11,29 @@ void ANE_DebugLog::SetMessage(const std::string& _message)
 	displayMessage = _message;
 }
 
-std::string ANE_DebugLog::ClassNameToStr()
+std::string ANE_DebugLog::GetTypeName() const
 {
-	return typeid(ANE_DebugLog).name();
+	return TYPENAME_ROUGH(ANE_DebugLog);
+}
+
+void ANE_DebugLog::ImGuiSetting()
+{
+	AnimationNotifyEvent::ImGuiSetting();
+
+	ImGuiMethod::EditableText(displayMessage);
+}
+
+nlohmann::json ANE_DebugLog::Save()
+{
+	auto data = AnimationNotifyEvent::Save();
+	data["message"] = displayMessage;
+	return data;
+}
+
+void ANE_DebugLog::Load(const nlohmann::json& _data)
+{
+	AnimationNotifyEvent::Load(_data);
+	HashiTaku::LoadJsonString("message", displayMessage, _data);
 }
 
 void ANE_DebugLog::OnEvent()

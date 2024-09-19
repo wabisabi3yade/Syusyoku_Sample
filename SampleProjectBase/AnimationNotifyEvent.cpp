@@ -6,6 +6,25 @@ void AnimationNotifyEvent::SetEventRatio(float _addRatio)
 	_addRatio = std::clamp(_addRatio, 0.0f, 1.0f);	
 }
 
+nlohmann::json AnimationNotifyEvent::Save()
+{
+	auto data = AnimationNotify_Base::Save();
+	data["eventRatio"] = eventRatio;
+	return data;
+}
+
+void AnimationNotifyEvent::Load(const nlohmann::json& _data)
+{
+	AnimationNotify_Base::Load(_data);
+	HashiTaku::LoadJsonFloat("eventRatio", eventRatio, _data);
+}
+
+void AnimationNotifyEvent::ImGuiSetting()
+{
+	AnimationNotify_Base::ImGuiSetting();
+	ImGui::SliderFloat("event", &eventRatio, 0.0f, 1.0f);
+}
+
 AnimationNotifyEvent::AnimationNotifyEvent() : eventRatio(0.0f)
 {
 }
@@ -14,7 +33,7 @@ void AnimationNotifyEvent::Update(const float _lastPlayingRatio, const float _cu
 {
 	if (_isLoop)
 	{
-		if (eventRatio > _lastPlayingRatio)
+		if (eventRatio > _lastPlayingRatio || eventRatio < _curPlayingRatio)
 			OnEvent();
 	}
 	else

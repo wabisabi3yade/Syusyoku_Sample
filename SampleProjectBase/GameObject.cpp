@@ -331,7 +331,7 @@ void GameObject::OnActiveFalse()
 
 void GameObject::ImGuiSetting()
 {
-	if (ImGui::TreeNode(name.c_str()))	// –¼‘OTree
+	if (ImGuiMethod::TreeNode(name.c_str()))	// –¼‘OTree
 	{
 		bool changeActive = isActive;
 		if (ImGui::Checkbox("isActive", &changeActive))
@@ -355,7 +355,7 @@ void GameObject::ImGuiSetting()
 
 		for (auto itr = pComponents.begin(); itr != pComponents.end(); itr++)
 		{
-			if (!ImGui::TreeNode((*itr)->GetName().c_str())) continue;
+			if (!ImGuiMethod::TreeNode((*itr)->GetName().c_str())) continue;
 
 			std::string text = "isEnable ";
 			std::string status = "true";

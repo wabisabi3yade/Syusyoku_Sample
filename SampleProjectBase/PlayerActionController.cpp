@@ -47,7 +47,7 @@ void PlayerActionController::TransitionState(State _nextState)
 
 void PlayerActionController::ImGuiSetting()
 {
-	if (!ImGui::TreeNode("Action")) return;
+	if (!ImGuiMethod::TreeNode("Action")) return;
 
 	u_int stateNum = static_cast<u_int>(nowState);
 	std::string text = "NowState:" + g_stateNames[stateNum];

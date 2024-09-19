@@ -23,6 +23,19 @@ void HashiTaku::SaveJsonVector4(const std::string& _s, const DirectX::SimpleMath
 	_j[_s][3] = _v.w;
 }
 
+void HashiTaku::LoadJsonData(const std::string& _s, nlohmann::json& _d, const nlohmann::json& _j)
+{
+	if (!IsJsonContains(_j, _s)) return;
+
+	if (!_j[_s].is_object())
+	{
+		HASHI_DEBUG_LOG(_s + "‚ÍjsonŒ`Ž®‚Å‚Í‚ ‚è‚Ü‚¹‚ñ");
+		return;
+	}
+
+	_d = _j[_s];
+}
+
 void HashiTaku::LoadJsonBoolean(const std::string& _s, bool& _b, const nlohmann::json& _j)
 {
 	if (!IsJsonContains(_j, _s)) return;
