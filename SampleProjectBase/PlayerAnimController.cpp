@@ -9,7 +9,7 @@
 using namespace HashiTaku;
 
 PlayerAnimController::PlayerAnimController()
-	: nowState(AnimType::Move)
+	: AnimationController(AnimConType::Player), nowState(AnimType::Move)
 {
 	Init();
 }

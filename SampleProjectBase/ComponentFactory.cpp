@@ -18,6 +18,7 @@ void ComponentFactory::Init()
 	// アニメーション
 	ResistComponnent<CP_Animation>();
 	ResistComponnent<CP_Weapon>();
+	ResistComponnent<CP_AnimationNotify>();
 
 	// カメラ
 	ResistComponnent<CP_Camera>();
@@ -34,15 +35,17 @@ void ComponentFactory::Init()
 
 std::unique_ptr<Component> ComponentFactory::CreateByName(const std::string& _componentName)
 {
-	auto itr = pComponents.find(_componentName);
+	auto itr = pComponents1.find(_componentName);
 
-	if (itr == pComponents.end())
+	if (itr == pComponents1.end())
 	{
 		HASHI_DEBUG_LOG(_componentName + "はリストにありません");
 		return nullptr;
 	}
 
-	return itr->second->Clone();
+	auto create = itr->second->Create();
+	create->SetName(_componentName);
+	return std::move(create);
 }
 
 void ComponentFactory::CreateImGuiCombo(GameObject& _targetObject)
@@ -64,7 +67,7 @@ std::vector<const std::string*> ComponentFactory::GetComponentsName()
 {
 	std::vector<const std::string*> s;
 
-	for (auto& itr : pComponents)
+	for (auto& itr : pComponents1)
 	{
 		s.push_back(&itr.first);
 	}

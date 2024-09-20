@@ -1037,6 +1037,9 @@
     <ClCompile Include="CP_NotifyTest.cpp">
       <Filter>ソース ファイル\Component\Test</Filter>
     </ClCompile>
+    <ClCompile Include="ComponentRespawner.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -1518,6 +1521,15 @@
     </ClInclude>
     <ClInclude Include="CP_NotifyTest.h">
       <Filter>ソース ファイル\Component\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentRespawner.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentConcept.h">
+      <Filter>ソース ファイル\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimConntrollerType.h">
+      <Filter>ソース ファイル\Animation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

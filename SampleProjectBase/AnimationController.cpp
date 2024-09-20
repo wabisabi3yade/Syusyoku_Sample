@@ -15,8 +15,8 @@
 using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
 
-AnimationController::AnimationController()
-	: pCurrentAnimNode(nullptr), pPrevAnimNode(nullptr), pCurTransArrow(nullptr), playingRatio(0.0f), playSpeed(1.0f), pBoneList(nullptr), isPlay(true), isTransitioning(false)
+AnimationController::AnimationController(AnimConType _setType)
+	: pCurrentAnimNode(nullptr), pPrevAnimNode(nullptr), pCurTransArrow(nullptr), controllerType(_setType), playingRatio(0.0f), playSpeed(1.0f), pBoneList(nullptr), isPlay(true), isTransitioning(false)
 {
 	pCrossFadeInterp = std::make_unique<CrossFadeAnimation>();
 	pInertInterp = std::make_unique<InertInterpAnimation>();
@@ -268,6 +268,34 @@ AnimationNode_Base* AnimationController::GetNode(const std::string& _name)
 
 
 	return itr->second.get();
+}
+
+AnimConType AnimationController::GetControllerType() const
+{
+	return controllerType;
+}
+
+float AnimationController::GetPlayingRatio() const
+{
+	return playingRatio;
+}
+
+bool AnimationController::GetIsPlay() const
+{
+	return isPlay;
+}
+
+nlohmann::json AnimationController::Save()
+{
+	auto data = Asset_Base::Save();
+	data["type"] = controllerType;
+	data["playSpeed"] = playSpeed;
+	return data;
+}
+
+void AnimationController::Load(const nlohmann::json& _data)
+{
+	Asset_Base::Load(_data);
 }
 
 void AnimationController::ProgressPlayTime()

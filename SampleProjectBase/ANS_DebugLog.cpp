@@ -56,6 +56,6 @@ void ANS_DebugLog::ImGuiSetting()
 
 	for (u_int i = 0; i < 3; i++)
 	{
-		ImGuiMethod::EditableText(message[i], i);
+		ImGuiMethod::EditableText(message[i], isEditing[i], i);
 	}
 }

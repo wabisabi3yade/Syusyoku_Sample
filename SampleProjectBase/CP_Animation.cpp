@@ -77,17 +77,22 @@ void CP_Animation::ImGuiSetting()
 void CP_Animation::SetSkeletalMesh(SkeletalMesh& _skeletalMesh)
 {
 	pSkeletalMesh = &_skeletalMesh;
+	pAnimController->SetBoneList(pSkeletalMesh->GetBoneList());
 }
 
 void CP_Animation::SetAnimationController(AnimationController& _controller)
 {
 	pAnimController = &_controller;
-	pAnimController->SetBoneList(pSkeletalMesh->GetBoneList());
 }
 
 SkeletalMesh& CP_Animation::GetSkeletalMesh()
 {
 	return *pSkeletalMesh;
+}
+
+AnimationController* CP_Animation::GetAnimationController()
+{
+	return pAnimController;
 }
 
 nlohmann::json CP_Animation::Save()

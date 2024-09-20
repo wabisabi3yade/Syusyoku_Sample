@@ -1,7 +1,7 @@
 #pragma once
 #include "Asset_Base.h"
-
 #include"AnimationNode_Base.h"
+#include "AnimConntrollerType.h"
 
 // クロスフェード・慣性補間
 #include "CrossFadeAnimation.h"
@@ -15,6 +15,13 @@ class BoneList;
 /// @brief アニメーション遷移を管理するクラス
 class AnimationController : public Asset_Base, public HashiTaku::IImGuiUser
 {
+	/// @brief アニメーションノード関連の情報
+	struct AnimNodeInfo
+	{
+		std::unique_ptr<AnimationNode_Base> pAnimNode;	// アニメーションノード
+		std::list<std::unique_ptr<AnimTransitionArrow>> pTransArrows; // 遷移元となっている矢印
+	};
+
 	/// @brief クロスフェード
 	std::unique_ptr<CrossFadeAnimation> pCrossFadeInterp;
 
@@ -26,6 +33,9 @@ class AnimationController : public Asset_Base, public HashiTaku::IImGuiUser
 
 	/// @brief 今遷移で使用している矢印(nullptrなら遷移していない)
 	const AnimTransitionArrow* pCurTransArrow;
+
+	/// @brief アニメーションコントローラータイプ
+	AnimConType controllerType;
 
 	/// @brief 再生割合
 	float playingRatio;
@@ -43,6 +53,9 @@ protected:
 	/// @brief アニメーションノード配列
 	std::unordered_map<std::string, std::unique_ptr<AnimationNode_Base>> pAnimationNodes;
 
+	/// @brief アニメーションノード関連の情報リスト
+	std::list<AnimNodeInfo> animaNodeInfos;
+
 	/// @brief 前のアニメーション
 	AnimationNode_Base* pPrevAnimNode;
 
@@ -51,8 +64,8 @@ protected:
 
 public:
 	/// @brief コンストラクタ
-	/// @param _boneCnt ボーン数
-	AnimationController();
+	/// @param _setType コントローラーの種類
+	AnimationController(AnimConType _setType = AnimConType::Default);
 	~AnimationController() {}
 
 	/// @brief ボーンのアニメーションを更新する
@@ -103,6 +116,17 @@ public:
 	AnimationNode_Base* GetCurrentNode();
 
 	AnimationNode_Base* GetNode(const std::string& _name);
+
+	AnimConType GetControllerType() const;
+
+	// 現在の再生割合を取得
+	float GetPlayingRatio() const;
+
+	// 再生しているか取得
+	bool GetIsPlay() const;
+
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
 private:
 	/// @brief 再生時間を進める
 	void ProgressPlayTime();

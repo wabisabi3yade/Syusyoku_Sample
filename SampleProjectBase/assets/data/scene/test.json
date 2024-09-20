@@ -109,6 +109,10 @@
                 {
                     "enable": true,
                     "name": "Player"
+                },
+                {
+                    "enable": true,
+                    "name": "AnimationNotify"
                 }
             ],
             "layer": 0,
@@ -137,7 +141,7 @@
             }
         },
         {
-            "active": true,
+            "active": false,
             "components": [
                 {
                     "enable": true,

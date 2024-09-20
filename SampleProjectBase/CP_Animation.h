@@ -54,6 +54,8 @@ public:
 	// スケルタルメッシュを取得
 	SkeletalMesh& GetSkeletalMesh();
 
+	AnimationController* GetAnimationController();
+
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
 private:

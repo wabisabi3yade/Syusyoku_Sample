@@ -6,6 +6,11 @@ class ANE_DebugLog : public AnimationNotifyEvent
 	/// @brief 表示メッセージ
 	std::string displayMessage;
 
+#ifdef EDIT
+	/// @brief 編集中かどうか？
+	bool isEditing{ false };
+#endif // EDIT
+
 public:
 	ANE_DebugLog();
 	~ANE_DebugLog() {}

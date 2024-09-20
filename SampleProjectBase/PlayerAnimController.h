@@ -21,7 +21,6 @@ private:
 	float speedRatio;
 
 	AnimType nowState;
-
 public:
 	PlayerAnimController();
 	~PlayerAnimController() {}
@@ -56,7 +55,6 @@ private:
 	/// @param _animName アニメーション名
 	/// @param  _isInterp 補間するか？
 	virtual void ChangeAnimation(const std::string& _animName, float _targetAnimRatio = 0.0f, bool _isInterp = true);
-
 
 	/// @brief 名前から列挙型を探す
 	/// @param _nodeName ノード名

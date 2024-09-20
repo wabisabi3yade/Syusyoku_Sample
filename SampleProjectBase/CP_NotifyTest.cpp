@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "CP_NotifyTest.h"
 
-#include "AnimationNotifyFactory.h"
-
 CP_NotifyTest::CP_NotifyTest(const CP_NotifyTest& _other)
 {
 	Copy(_other);
@@ -13,6 +11,11 @@ CP_NotifyTest& CP_NotifyTest::operator=(const CP_NotifyTest& _other)
 	Copy(_other);
 
 	return *this;
+}
+
+void CP_NotifyTest::Init()
+{
+	pFactory = std::make_unique<AnimationNotifyFactory>();
 }
 
 void CP_NotifyTest::Update()
@@ -61,7 +64,7 @@ void CP_NotifyTest::ImGuiSetting()
 	}
 
 	std::unique_ptr<AnimationNotify_Base> pCreate;
-	if (AnimationNotifyFactory::GetInstance()->ImGuiCombo(pCreate))
+	if (pFactory->ImGuiCombo(pCreate))
 	{
 		pNotifys.push_back(std::move(pCreate));
 	}
@@ -91,7 +94,6 @@ void CP_NotifyTest::Load(const nlohmann::json& _data)
 {
 	Component::Load(_data);
 
-	AnimationNotifyFactory* pFactory = AnimationNotifyFactory::GetInstance();
 	auto& notifyData = _data["notifys"];
 	for (auto& nData : notifyData)
 	{

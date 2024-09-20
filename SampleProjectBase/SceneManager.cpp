@@ -72,7 +72,6 @@ void SceneManager::Release()
 	pNowScene.reset();
 	GameInput::Delete();
 	ComponentFactory::Delete();
-	AnimationNotifyFactory::Delete();
 	Geometory::Release();
 	DX11BulletPhisics::Delete();
 }
