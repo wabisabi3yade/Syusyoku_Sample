@@ -1,10 +1,8 @@
 #pragma once
 #include "AnimNotifyRespawner.h"
 
-class AnimationNotifyFactory : public Singleton_Base<AnimationNotifyFactory>
+class AnimationNotifyFactory
 {
-	friend class Singleton_Base<AnimationNotifyFactory>;
-
 	/// @brief 全てのアニメーション通知クラスリスト
 	std::unordered_map<std::string, std::unique_ptr<AnimNotifyRespawner_Base>> animNotifyList;
 
@@ -14,6 +12,8 @@ class AnimationNotifyFactory : public Singleton_Base<AnimationNotifyFactory>
 #endif
 
 public:
+	AnimationNotifyFactory();
+	~AnimationNotifyFactory() {}
 
 	/// @brief 通知クラスを生成し、返す
 	/// @param _notifyName 通知イベントクラス名
@@ -25,9 +25,6 @@ public:
 	/// @return 作成するボタンをおされたら返す
 	bool ImGuiCombo(std::unique_ptr<AnimationNotify_Base>& _pCreateNotify);
 private:
-	AnimationNotifyFactory();
-	~AnimationNotifyFactory() {}
-
 	void Init();
 	template<HashiTaku::AnimNotifyConcept T> void ResisterNotify();
 

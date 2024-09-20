@@ -8,6 +8,8 @@ class ANS_DebugLog : public AnimationNotifyState
 	u_int selectId;
 
 	char inputString[IM_INPUT_BUF];
+
+	bool isEditing[3] = { false };
 public:
 	ANS_DebugLog();
 	~ANS_DebugLog() {};

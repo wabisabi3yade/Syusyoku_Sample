@@ -131,6 +131,7 @@
     <ClCompile Include="CatmulSplineInterp.cpp" />
     <ClCompile Include="BulletDebugDraw.cpp" />
     <ClCompile Include="CloneComponent.cpp" />
+    <ClCompile Include="ComponentRespawner.cpp" />
     <ClCompile Include="CP_AnimationNotify.cpp" />
     <ClCompile Include="CP_BoxAnimation.cpp" />
     <ClCompile Include="CP_NotifyTest.cpp" />
@@ -266,6 +267,7 @@
     <ClInclude Include="..\ThirdParty\imgui\include\imstb_truetype.h" />
     <ClInclude Include="ANE_DebugLog.h" />
     <ClInclude Include="AnimationNotifyFactory.h" />
+    <ClInclude Include="AnimConntrollerType.h" />
     <ClInclude Include="AnimNotifyDefine.h" />
     <ClInclude Include="ANS_DebugLog.h" />
     <ClInclude Include="AnimationController.h" />
@@ -282,6 +284,8 @@
     <ClInclude Include="CatmulSplineInterp.h" />
     <ClInclude Include="BulletDebugDraw.h" />
     <ClInclude Include="CloneComponent.h" />
+    <ClInclude Include="ComponentConcept.h" />
+    <ClInclude Include="ComponentRespawner.h" />
     <ClInclude Include="CP_AnimationNotify.h" />
     <ClInclude Include="CP_BoxAnimation.h" />
     <ClInclude Include="CP_NotifyTest.h" />

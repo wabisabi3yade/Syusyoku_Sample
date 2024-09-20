@@ -132,30 +132,30 @@ bool ImGuiMethod::TreeNode(const std::string& _caption)
 	return ImGui::TreeNodeEx(_caption.c_str(), ImGuiTreeNodeFlags_Framed);
 }
 
-void ImGuiMethod::EditableText(std::string& text, u_int _id)
+void ImGuiMethod::EditableText(std::string& text, bool& _isEditing, u_int _id)
 {
-	static bool isEditing = false;  // 編集モードかどうか
 	static char buffer[IM_INPUT_BUF];        // テキスト編集用のバッファ
 
-	if (isEditing) {
+	if (_isEditing) {
 		// テキスト入力フィールド
 		std::string caption = "##editableText" + std::to_string(_id);
 		if (ImGui::InputText(caption.c_str(), buffer, IM_ARRAYSIZE(buffer), ImGuiInputTextFlags_EnterReturnsTrue)) {
 			// Enterキーが押されたら編集を終了し、テキストを更新
 			text = std::string(buffer);
-			isEditing = false;  // 編集モードを終了
+			_isEditing = false;  // 編集モードを終了
 		}
 		if (ImGui::IsItemDeactivated()) {
 			// フォーカスが外れたら編集モードを終了
-			isEditing = false;
+			_isEditing = false;
 		}
 	}
 	else {
 		// 編集モードでない場合はラベルとして表示
-		ImGui::Text("%s", text.c_str());
+		ImVec4 color = ImVec4(0.0f, 1.0f, 0.0f, 1.0f);
+		ImGui::TextColored(color, text.c_str());
 		if (ImGui::IsItemClicked()) {
 			// クリックされたら編集モードに切り替え
-			isEditing = true;
+			_isEditing = true;
 			// 現在のテキストをバッファにコピー
 			strcpy_s(buffer, text.c_str());
 		}

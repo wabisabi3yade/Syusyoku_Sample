@@ -1,10 +1,13 @@
 #pragma once
-#include "CloneComponent.h"
+#include "Component.h"
 #include "AnimationNotify_Base.h"
+#include "AnimationNotifyFactory.h"
 
-class CP_NotifyTest : public Component, public CloneComponent<CP_NotifyTest>
+class CP_NotifyTest : public Component
 {
 	std::list<std::unique_ptr<AnimationNotify_Base>> pNotifys;
+
+	std::unique_ptr<AnimationNotifyFactory> pFactory;
 
 	float lastRatio{ -Mathf::smallValue };
 	float curRatio{ 0.0f };
@@ -15,6 +18,7 @@ public:
 	~CP_NotifyTest() {}
 	CP_NotifyTest& operator=(const CP_NotifyTest& _other);
 
+	void Init() override;
 	void Update();
 	void ImGuiSetting() override;
 

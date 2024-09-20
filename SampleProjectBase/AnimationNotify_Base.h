@@ -1,5 +1,6 @@
 #pragma once
-#include "IClassNameGetter.h"
+
+class GameObject;
 
 /// @brief アニメーションの通知インターフェース
 class AnimationNotify_Base : public HashiTaku::IImGuiUser, public ISaveLoad
@@ -9,9 +10,18 @@ class AnimationNotify_Base : public HashiTaku::IImGuiUser, public ISaveLoad
 
 	/// @brief イベントの名前
 	std::string notifyName;
+
+	/// @brief 
+	GameObject* pGameObject;
+#ifdef EDIT
+	bool isEditing{ false };
+#endif // EDIT
+
 public:
 	AnimationNotify_Base();
 	virtual ~AnimationNotify_Base() {}
+
+	void Init(GameObject& _pGameObject);
 
 	/// @brief アニメーションの通知の更新
 	/// @param _lastPlayingRatio アニメーションの前回の再生割合

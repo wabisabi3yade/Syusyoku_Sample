@@ -2,8 +2,13 @@
 #include "AnimationNotify_Base.h"
 
 AnimationNotify_Base::AnimationNotify_Base()
-	: isActive(true), notifyName("a")
+	: isActive(true), notifyName(""), pGameObject(nullptr)
 {
+}
+
+void AnimationNotify_Base::Init(GameObject& _pGameObject)
+{
+	pGameObject = &_pGameObject;
 }
 
 void AnimationNotify_Base::SetIsActive(bool _isActive)
@@ -43,5 +48,5 @@ void AnimationNotify_Base::Load(const nlohmann::json& _data)
 void AnimationNotify_Base::ImGuiSetting()
 {
 	ImGui::Checkbox("isActive", &isActive);
-	/*ImGuiMethod::EditableText(notifyName);*/
+	ImGuiMethod::EditableText(notifyName, isEditing);
 }

@@ -14,6 +14,7 @@
 
 // アニメーション
 #include "CP_Animation.h"
+#include "CP_AnimationNotify.h"
 
 // カメラ
 #include "CP_Camera.h"

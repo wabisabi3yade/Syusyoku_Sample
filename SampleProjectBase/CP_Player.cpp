@@ -22,18 +22,18 @@ CP_Player& CP_Player::operator=(const CP_Player& _other)
 
 void CP_Player::Awake()
 {
-	//// モデル関係
-	CP_MeshRenderer* pMeshRenderer = gameObject->GetComponent<CP_MeshRenderer>();
-	pMeshRenderer->SetVertexShader("VS_SkinAnimation");
-	pMeshRenderer->SetPixelShader("PS_Unlit");
+	////// モデル関係
+	//CP_MeshRenderer* pMeshRenderer = gameObject->GetComponent<CP_MeshRenderer>();
+	//pMeshRenderer->SetVertexShader("VS_SkinAnimation");
+	//pMeshRenderer->SetPixelShader("PS_Unlit");
 }
 
 void CP_Player::Start()
 {
 	// アニメーション関係生成
-	CP_Animation* pAnimation = gameObject->GetComponent<CP_Animation>();
-	pAnimController = std::make_unique<PlayerAnimController>();
-	pAnimation->SetAnimationController(*pAnimController);
+	//CP_Animation* pAnimation = gameObject->GetComponent<CP_Animation>();
+	//pAnimController = std::make_unique<PlayerAnimController>();
+	//pAnimation->SetAnimationController(*pAnimController);
 
 	// アクションコントローラー作成
 	pActionController = std::make_unique<PlayerActionController>(*gameObject, *pAnimController);

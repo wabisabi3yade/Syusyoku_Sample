@@ -23,10 +23,3 @@ public:
         return std::make_unique<T>(static_cast<const T&>(*this));
     }
 };
-
-namespace HashiTaku
-{
-    // クローンコンポーネントをを継承しているかのコンセプト
-    template <typename T>
-    concept ComponentConcept = std::is_base_of_v<CloneComponent<T>, T>;
-}

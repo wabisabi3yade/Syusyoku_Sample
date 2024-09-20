@@ -1,11 +1,11 @@
 #pragma once
-#include "CloneComponent.h"
+#include "Component.h"
 
 #include "PlayerAnimController.h"
 #include "PlayerActionController.h"
 #include "PlayerAnimObserver.h"
 
-class CP_Player : public Component, public CloneComponent<CP_Player>
+class CP_Player : public Component
 {
 	std::unique_ptr<PlayerAnimController> pAnimController;
 

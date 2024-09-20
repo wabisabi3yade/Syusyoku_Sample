@@ -82,8 +82,9 @@ public:
 
 	/// @brief クリックすると、テキスト入力できる関数
 	/// @param _text 変更したいテキスト
+	/// @param _isEditing 編集中かどうか
 	/// @param _id 複数並べたいときに同調しないID
-	static void EditableText(std::string& _text, u_int _id = 0);
+	static void EditableText(std::string& _text, bool& _isEditing, u_int _id = 0);
 
 	/// @brief Vector2をテキスト
     /// @param _v 表示するテキスト

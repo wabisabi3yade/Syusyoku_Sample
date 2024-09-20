@@ -3,6 +3,7 @@
 
 // コンポーネントヘッダー
 #include "ComponentDefine.h"
+#include "ComponentRespawner.h"
 
 class GameObject;
 
@@ -11,8 +12,7 @@ class ComponentFactory : public Singleton_Base<ComponentFactory>
 {
 	friend class Singleton_Base<ComponentFactory>;
 
-	/// @brief コンポーネントリスト(クローン継承のみ)
-	std::unordered_map<std::string, std::unique_ptr<CloneComponentBase>> pComponents;
+	std::unordered_map<std::string, std::unique_ptr<ComponentRespawner_Base>> pComponents1;
 public:
 	/// @brief 初期化処理
 	void Init();
@@ -62,12 +62,7 @@ inline void ComponentFactory::ResistComponnent()
 	std::string name = GetComponentName<T>();
 	HASHI_DEBUG_LOG(name + " 作成");
 
-	std::unique_ptr<T> pComponent = std::make_unique<T>();
-
-	Component& comp = *pComponent;
-	comp.SetName(name);
-
-	pComponents[name] = std::move(pComponent);
+	pComponents1[name] = std::make_unique<ComponentRespawner<T>>();
 }
 
 template<HashiTaku::ComponentConcept T>

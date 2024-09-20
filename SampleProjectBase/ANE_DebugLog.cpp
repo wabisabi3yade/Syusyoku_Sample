@@ -18,9 +18,10 @@ std::string ANE_DebugLog::GetTypeName() const
 
 void ANE_DebugLog::ImGuiSetting()
 {
+#ifdef  EDIT
 	AnimationNotifyEvent::ImGuiSetting();
-
-	ImGuiMethod::EditableText(displayMessage);
+	ImGuiMethod::EditableText(displayMessage, isEditing);
+#endif //  EDIT
 }
 
 nlohmann::json ANE_DebugLog::Save()
