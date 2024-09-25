@@ -52,7 +52,7 @@ public:
 	/// @brief 更新処理を行う
 	/// @param _playingRatio 再生の割合
 	/// @param _boneList ボーンリスト
-	void Update(float _playingRatio, BoneList& _boneList) override;
+	void Update(BoneList& _boneList) override;
 
 	/// @brief アニメーションを追加する
 	/// @param _animData アニメーションデータ
@@ -66,14 +66,16 @@ public:
 	/// @param _ratio 割合
 	/// @param _animName 変更するアニメーション
 	void SetAnimationRatio(float _ratio, const std::string& _animName);
+
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
 private:
 	/// @brief 現在のブレンド値を移動する
 	void MoveCurBlend();
 
 	/// @brief アニメーションの更新処理
-	/// @param _playingRatio 再生割合
 	/// @param _boneList 更新するボーンリスト
-	void AnimationUpdate(float _playingRatio, BoneList& _boneList);
+	void AnimationUpdate(BoneList& _boneList);
 
 	/// @brief 更新処理を行えるのか
 	/// @return 更新できる返す
@@ -87,13 +89,13 @@ private:
 	/// @param _boneList ボーン配列
 	/// @param _playingRatio 再生割合
 	/// @param _boneList ボーン配列
-	void SingleUpdateAnimation(BlendData& _animationData, float _playingRatio, BoneList& _boneList);
+	void SingleUpdateAnimation(BlendData& _animationData, BoneList& _boneList);
 
 	/// @brief ブレンドアニメーション更新
 	/// @param _blendPair ブレンドする2つのデータ
 	/// @param _playingRatio 再生割合
 	/// @param _boneList ボーン配列
-	void BlendUpdateAnimation(BlendPair& _blendPair, float _playingRatio, BoneList& _boneList);
+	void BlendUpdateAnimation(BlendPair& _blendPair, BoneList& _boneList);
 
 	/// @brief ブレンドデータをアニメーション名から探す
 	/// @param _animName アニメーション名
@@ -114,6 +116,11 @@ private:
 	/// @return  入れ替えるなら
 	static bool CompareBlendValue(const BlendData& _bd1, const BlendData& _bd2);
 
+	/// @brief 現在のアニメーションのトランスフォーム取得
+	/// @param _outTransform 格納するボーントランスフォーム
+	/// @param _boneId ボーンのID
+	void GetCurAnimTransform(BoneTransform& _outTransform, u_int _boneId) const override;
+
 	/// @brief アニメーションのトランスフォーム取得
 	/// @param _outTransform 格納するボーントランスフォーム
 	/// @param _boneId ボーンのID
@@ -122,5 +129,11 @@ private:
 
 private:
 	void ImGuiSetting() override;
+
+	// ブレンドデータをセーブする
+	nlohmann::json SaveBlendData(BlendData& _blendData);
+
+	// ブレンドデータをロードする
+	void LoadBlendData(const nlohmann::json& _blendData);
 };
 

@@ -8,8 +8,7 @@
 
 using namespace HashiTaku;
 
-PlayerAnimController::PlayerAnimController()
-	: AnimationController(AnimConType::Player), nowState(AnimType::Move)
+PlayerAnimController::PlayerAnimController() : nowState(AnimType::Move)
 {
 	Init();
 }
@@ -20,7 +19,7 @@ void PlayerAnimController::SetStartAnimation(AnimType _type)
 
 	nowState = _type;
 	std::string nodeName = animTypeNodeNames[_type];
-	AnimationController::ChangeAnimation(nodeName, nullptr);
+	AnimationController::SetDefaultNode(nodeName);
 }
 
 void PlayerAnimController::SetMoveSpeedRatio(float _speedRatio)
@@ -64,7 +63,7 @@ void PlayerAnimController::InitCreateNode()
 	// AttackN1
 	std::string attackNodeName = "AttackN1";
 	CreateSingleNode(attackNodeName, "AttackN1.fbx");
-	AnimationNode_Base* pAttack = GetNode(attackNodeName);
+	AnimationNode_Base* pAttack = GetNodeInfo(attackNodeName)->pAnimNode.get();
 	pAttack->SetIsLoop(false);
 
 	// 名前と列挙型対応
@@ -87,7 +86,7 @@ void PlayerAnimController::InitTransitionArrow()
 
 
 	// Attack
-	AnimationNode_Base* pAttackNode = GetNode(animTypeNodeNames[Attack]);
+	AnimationNode_Base* pAttackNode = GetNodeInfo(animTypeNodeNames[Attack])->pAnimNode.get();
 	AnimTransitionArrow* pAtkToMove = CreateTransitionArrow(animTypeNodeNames[Attack], animTypeNodeNames[Move], 0.1f, 0.2f, [pAttackNode]()
 		{
 			return pAttackNode->GetIsFinish();
@@ -106,7 +105,7 @@ void PlayerAnimController::OnAnimationFinish()
 	AnimationController::OnAnimationFinish();
 
 	// 終了したノード名から列挙型を取得
-	AnimType finType = FindAnimType(pCurrentAnimNode->GetNodeName());
+	AnimType finType = FindAnimType(pCurrentNodeInfo->pAnimNode->GetNodeName());
 
 	// 登録しているオブザーバーに送信
 	NotifyFinish(static_cast<u_int>(finType));
@@ -114,9 +113,8 @@ void PlayerAnimController::OnAnimationFinish()
 
 void PlayerAnimController::ChangeAnimation(const std::string& _animName, float _targetAnimRatio, bool _isInterp)
 {
-	AnimationController::ChangeAnimation(_animName, nullptr);
-
-	nowState = FindAnimType(pCurrentAnimNode->GetNodeName());
+	AnimationController::ChangeAnimation(_animName);
+	nowState = FindAnimType(pCurrentNodeInfo->pAnimNode->GetNodeName());
 }
 
 PlayerAnimController::AnimType PlayerAnimController::FindAnimType(const std::string& _nodeName)

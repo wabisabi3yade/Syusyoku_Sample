@@ -16,8 +16,10 @@ void SingleAnimationNode::ImGuiPlaying()
 }
 
 
-void SingleAnimationNode::Update(float _playingRatio, BoneList& _boneList)
+void SingleAnimationNode::Update(BoneList& _boneList)
 {
+	float playingRatio = GetCurPlayRatio();
+
 	//ボーン数ループ
 	for (unsigned int b_i = 0; b_i < _boneList.GetBoneCnt(); b_i++)
 	{
@@ -27,13 +29,13 @@ void SingleAnimationNode::Update(float _playingRatio, BoneList& _boneList)
 
 		// 再生時間から各パラメータを取得
 		// スケール
-		transform.scale = pAnimationData->GetScaleByRatio(b_i, _playingRatio);
+		transform.scale = pAnimationData->GetScaleByRatio(b_i, playingRatio);
 
 		//クォータニオン
-		transform.rotation = pAnimationData->GetQuaternionByRatio(b_i, _playingRatio);
+		transform.rotation = pAnimationData->GetQuaternionByRatio(b_i, playingRatio);
 
 		// 座標
-		transform.position = pAnimationData->GetPositionByRatio(b_i, _playingRatio);
+		transform.position = pAnimationData->GetPositionByRatio(b_i, playingRatio);
 
 		bone.SetAnimTransform(transform);
 	}
@@ -59,14 +61,44 @@ const AnimationData& SingleAnimationNode::GetAnimationData() const
 	return *pAnimationData;
 }
 
+void SingleAnimationNode::GetCurAnimTransform(BoneTransform& _outTransform, u_int _boneId) const
+{
+	GetAnimTransform(_outTransform, _boneId, GetCurPlayRatio());
+}
+
 void SingleAnimationNode::GetAnimTransform(BoneTransform& _outTransform, u_int _boneId, float _requestRatio) const
 {
 	_outTransform = pAnimationData->GetTransformByRatio(_boneId, _requestRatio);
 }
 
+nlohmann::json SingleAnimationNode::Save()
+{
+	auto data = AnimationNode_Base::Save();
+	if (pAnimationData)
+		data["animName"] = pAnimationData->GetAssetName();
+	return data;
+}
+
+void SingleAnimationNode::Load(const nlohmann::json& _data)
+{
+	AnimationNode_Base::Load(_data);
+	pAnimationData = HashiTaku::LoadJsonAsset<AnimationData>("animName", _data);
+}
+
 void SingleAnimationNode::ImGuiSetting()
 {
 	AnimationNode_Base::ImGuiSetting();
+
+	std::string animName;
+	if (pAnimationData)
+	{
+		animName = pAnimationData->GetAssetName();
+	}
+
+	if (AssetGetter::ImGuiGetCombobox<AnimationData>("animation", animName))
+	{
+		SetAnimationData(animName);
+	}
 }
 
 

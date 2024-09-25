@@ -2,7 +2,7 @@
 #include "ISaveLoad.h"
 
 // アセットの基底クラス
-class Asset_Base : public ISaveLoad
+class Asset_Base : public HashiTaku::ISaveLoad
 {
 	/// @brief アセットの名前
 	std::string assetName;

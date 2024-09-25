@@ -2,6 +2,7 @@
 #include "Asset_Base.h"
 #include"AnimationNode_Base.h"
 #include "AnimConntrollerType.h"
+#include "AnimationParameters.h"
 
 // クロスフェード・慣性補間
 #include "CrossFadeAnimation.h"
@@ -22,11 +23,17 @@ class AnimationController : public Asset_Base, public HashiTaku::IImGuiUser
 		std::list<std::unique_ptr<AnimTransitionArrow>> pTransArrows; // 遷移元となっている矢印
 	};
 
-	/// @brief クロスフェード
-	std::unique_ptr<CrossFadeAnimation> pCrossFadeInterp;
+	/// @brief アニメーションノード関連の情報リスト
+	std::list<std::unique_ptr<AnimNodeInfo>> animNodeInfos;
 
-	/// @brief 慣性補間
-	std::unique_ptr<InertInterpAnimation> pInertInterp;
+	/// @brief パラメータリスト
+	std::unique_ptr<AnimationParameters> pAnimParameters;
+
+	/// @brief 前のアニメーション
+	AnimationNode_Base* pPrevAnimNode;
+
+	/// @brief 最初に始めるノード情報
+	AnimNodeInfo* pDefaultNodeInfo;
 
 	/// @brief 動かすボーン配列
 	BoneList* pBoneList;
@@ -34,11 +41,11 @@ class AnimationController : public Asset_Base, public HashiTaku::IImGuiUser
 	/// @brief 今遷移で使用している矢印(nullptrなら遷移していない)
 	const AnimTransitionArrow* pCurTransArrow;
 
-	/// @brief アニメーションコントローラータイプ
-	AnimConType controllerType;
+	/// @brief クロスフェード
+	std::unique_ptr<CrossFadeAnimation> pCrossFadeInterp;
 
-	/// @brief 再生割合
-	float playingRatio;
+	/// @brief 慣性補間
+	std::unique_ptr<InertInterpAnimation> pInertInterp;
 
 	/// @brief 再生速度
 	float playSpeed;
@@ -50,23 +57,20 @@ class AnimationController : public Asset_Base, public HashiTaku::IImGuiUser
 	bool isTransitioning;
 
 protected:
-	/// @brief アニメーションノード配列
-	std::unordered_map<std::string, std::unique_ptr<AnimationNode_Base>> pAnimationNodes;
-
-	/// @brief アニメーションノード関連の情報リスト
-	std::list<AnimNodeInfo> animaNodeInfos;
-
-	/// @brief 前のアニメーション
-	AnimationNode_Base* pPrevAnimNode;
-
-	/// @brief 再生中のアニメーション
-	AnimationNode_Base* pCurrentAnimNode;
+	/// @brief 現在のノード情報
+	AnimNodeInfo* pCurrentNodeInfo;
 
 public:
 	/// @brief コンストラクタ
 	/// @param _setType コントローラーの種類
-	AnimationController(AnimConType _setType = AnimConType::Default);
+	AnimationController();
 	~AnimationController() {}
+	AnimationController(const AnimationController& _other);
+	
+	AnimationController& operator=(const AnimationController& _other);
+
+	/// @brief 開始処理
+	void Begin(BoneList& _boneList);
 
 	/// @brief ボーンのアニメーションを更新する
 	/// @param _boneList ボーンリスト
@@ -76,7 +80,9 @@ public:
 	/// @brief アニメーション遷移する
 	/// @param _animName アニメーション名
 	/// @param _transitionArrow 今回使用する遷移矢印
-	virtual void ChangeAnimation(const std::string& _animName, const AnimTransitionArrow* _transitionArrow);
+	virtual void ChangeAnimation(const std::string& _animName);
+
+	virtual void ChangeAnimation(const AnimTransitionArrow& _transitionArrow);
 
 	/// @brief ブレンド割合をセット
 	/// @param _ratio 割合
@@ -84,6 +90,10 @@ public:
 
 	// 動かすボーン配列をセット
 	void SetBoneList(BoneList& _boneList);
+
+	/// @brief 開始時のデフォルトノードをセットする
+	/// @param _nodeName ノード名
+	void SetDefaultNode(const std::string& _nodeName);
 
 	/// @brief シングルノードを作成
 	/// @param _nodeName ノード名
@@ -107,20 +117,27 @@ public:
 
 	/// @brief アニメーションを除外
 	/// @param _animName アニメーションの名前
-	void RemoveAnimation(const std::string& _animName);
+	void RemoveNode(const std::string& _animName);
 
 	/// @brief アニメーションがセットされているか返す
 	/// @return アニメーションがセットされているか？
 	bool IsSetAnimation();
 
+	// 現在のノードを取得する
 	AnimationNode_Base* GetCurrentNode();
+	
+	// 名前からノード情報を取得 
+	AnimNodeInfo* GetNodeInfo(const std::string& _name);
 
-	AnimationNode_Base* GetNode(const std::string& _name);
-
-	AnimConType GetControllerType() const;
+	// ノードからノード情報を取得する
+	AnimNodeInfo* GetNodeInfo(const AnimationNode_Base& _node);
 
 	// 現在の再生割合を取得
 	float GetPlayingRatio() const;
+
+	/// @brief ノードの数を取得
+	/// @return ノード数
+	void GetNodeArray(std::list<const AnimationNode_Base*>& _animNodeArray) const;
 
 	// 再生しているか取得
 	bool GetIsPlay() const;
@@ -128,9 +145,6 @@ public:
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
 private:
-	/// @brief 再生時間を進める
-	void ProgressPlayTime();
-
 	/// @brief 再生できる状態か？
 	/// @return 再生できるか
 	bool IsCanPlay();
@@ -157,20 +171,23 @@ private:
 	/// @brief 遷移するか確認する
 	void TranstionCheck();
 
-	/// @brief アニメーションを持ってるか返す
-	/// @param _animName アニメーションの名前
-	/// @return アニメーションがあるか？
-	bool IsHaveAnim(const std::string& _animName);
-
 	/// @brief 共通した遷移開始処理
 	void OnTransitionStart();
 
+	/// @brief 名前のノードを既にあるか確認する
+	/// @param _nodeName 確認する名前
+	/// @return ノードを持っているか？
+	bool IsHaveNode(const std::string& _nodeName);
+
+	/// @brief ノード名を重複しないような名前に変換
+	/// @param _nodename ノード名
+	void NotDuplicateNodeName(std::string& _nodename);
+
 	/// @brief クロスフェード補間を開始
-	/// @param _changePlayRatio 変更時の遷移元のアニメーション割合
 	/// @param _targetAnimRatio 遷移終了時の遷移先のアニメーション割合
 	/// @param _transitionTime 遷移時間
 	/// @param _easeKind 遷移のイージング
-	void CrossFadeStart(float _changePlayRatio, float _targetAnimRatio, float _transitionTime, HashiTaku::EaseKind _easeKind);
+	void CrossFadeStart(float _targetAnimRatio, float _transitionTime, HashiTaku::EaseKind _easeKind);
 
 	/// @brief 慣性補間開始する
 	/// @param_targetAnimRatio 遷移先のアニメーション割合
@@ -180,9 +197,24 @@ private:
 	/// @brief 遷移終了した時の処理
 	void OnTransitionEnd();
 
-	void ImGuiTransition();
-	void ImGuiImportAnim();
+	/// @brief ノードタイプから新しくノードを作成する
+	/// @param _nodeType ノードの種類
+	/// @param _nodeName ノード名
+	/// @return 作成したノード情報
+	AnimNodeInfo* CreateNodeInfoByType(AnimationNode_Base::NodeType _nodeType, const std::string& _nodeName = "Default");
 
+	void Copy(const AnimationController& _other);
+	void CopyNodes(const AnimationController& _other);
+
+	void ImGuiTransition();
+	void ImGuiCreateNode();
+	void ImGuiTransArrow(AnimNodeInfo& _nodeInfo);
+	void ImGuiCreateAnimParameter();
+
+	// ノード情報をセーブする
+	nlohmann::json SaveNodeInfo(AnimNodeInfo& _nodeInfo);
+	// ノード情報をロードする
+	void LoadNodeInfo(const nlohmann::json& _nodeInfoData);
 protected:
 	void ImGuiSetting() override;
 
@@ -192,4 +224,3 @@ protected:
 	/// @brief アニメーションを変更完了
 	void OnChangeAnimComplete();
 };
-

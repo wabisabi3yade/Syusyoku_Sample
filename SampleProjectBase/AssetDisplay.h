@@ -20,5 +20,6 @@ private:
 	static void DisplayMaterial();
 	static void DisplayAnimation();
 	static void DisplayBoneList();
+	static void DisplayAnimationController();
 	static void DeleteInputAsset();
 };

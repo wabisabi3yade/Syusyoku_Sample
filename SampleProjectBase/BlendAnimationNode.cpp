@@ -2,12 +2,12 @@
 #include "BlendAnimationNode.h"
 
 #include "AssetGetter.h"
-
 #include "SkeletalMesh.h"
 
 constexpr float DUPLICATE_PLUS(0.01f);	// ブレンド値が重複したときの＋値
 
 using namespace DirectX::SimpleMath;
+using namespace HashiTaku;
 
 BlendAnimationNode::BlendAnimationNode(std::string _nodeName) : AnimationNode_Base(_nodeName, NodeType::Blend)
 {
@@ -36,7 +36,7 @@ void BlendAnimationNode::Begin()
 	changeBlendRatio = 0.0f;
 }
 
-void BlendAnimationNode::Update(float _playingRatio, BoneList& _boneList)
+void BlendAnimationNode::Update(BoneList& _boneList)
 {
 	if (!IsCanUpdate()) return;
 
@@ -44,7 +44,7 @@ void BlendAnimationNode::Update(float _playingRatio, BoneList& _boneList)
 	MoveCurBlend();
 
 	// アニメーションをブレンドする
-	AnimationUpdate(_playingRatio, _boneList);
+	AnimationUpdate(_boneList);
 }
 
 void BlendAnimationNode::SetAnimationData(const std::string& _animName)
@@ -52,15 +52,10 @@ void BlendAnimationNode::SetAnimationData(const std::string& _animName)
 	BlendData createData;
 
 	AnimationData* pData = AssetGetter::GetAsset<AnimationData>(_animName);
-	if (!pData)
-	{
-		HASHI_DEBUG_LOG(_animName + ":がありませんでした");
-		return;
-	}
+	if (!pData) return;
 
 	createData.pAnimation = pData;
 	createData.ratio = 0.0f;
-
 	blendDatas.push_back(createData);
 }
 
@@ -89,6 +84,28 @@ void BlendAnimationNode::SetAnimationRatio(float _ratio, const std::string& _ani
 	SetRatio(findBlend->ratio, _ratio);
 }
 
+nlohmann::json BlendAnimationNode::Save()
+{
+	auto data = AnimationNode_Base::Save();
+
+	for (auto& b : blendDatas)	// 各ブレンドデータをセーブ
+		data["blendData"].push_back(SaveBlendData(b));
+	data["smoothTime"] = ratioSmoothTime;
+	data["moveEase"] = ratioMoveEase;
+	return data;
+}
+
+void BlendAnimationNode::Load(const nlohmann::json& _data)
+{
+	AnimationNode_Base::Load(_data);
+
+	nlohmann::json blendSaveDatas;
+	LoadJsonDataArray("blendData", blendSaveDatas, _data);
+	for (auto& d : blendSaveDatas)	// ブレンドデータをロードする
+		LoadBlendData(d);
+
+}
+
 void BlendAnimationNode::MoveCurBlend()
 {
 	// 割合移動時間
@@ -109,15 +126,15 @@ void BlendAnimationNode::MoveCurBlend()
 	curBlendRatio = changeBlendRatio + subRatio * easeValue;
 }
 
-void BlendAnimationNode::AnimationUpdate(float _playingRatio, BoneList& _boneList)
+void BlendAnimationNode::AnimationUpdate(BoneList& _boneList)
 {
 	// ブレンドする2つのアニメーションを探す
 	BlendPair blendPair = FindBlendPair();
 
 	if (blendPair.nextData == nullptr)	// 考慮するアニメーションが一つだけ
-		SingleUpdateAnimation(*blendPair.prevData, _playingRatio, _boneList);
+		SingleUpdateAnimation(*blendPair.prevData, _boneList);
 	else
-		BlendUpdateAnimation(blendPair, _playingRatio, _boneList);
+		BlendUpdateAnimation(blendPair, _boneList);
 }
 
 bool BlendAnimationNode::IsCanUpdate()
@@ -162,9 +179,11 @@ BlendAnimationNode::BlendPair BlendAnimationNode::FindBlendPair()
 	return blendPair;
 }
 
-void BlendAnimationNode::SingleUpdateAnimation(BlendData& _animationData, float _playingRatio, BoneList& _boneList)
+void BlendAnimationNode::SingleUpdateAnimation(BlendData& _animationData, BoneList& _boneList)
 {
 	const AnimationData& animData = *_animationData.pAnimation;
+
+	float playingRatio = GetCurPlayRatio();
 
 	//ボーン数ループ
 	for (unsigned int b_i = 0; b_i < _boneList.GetBoneCnt(); b_i++)
@@ -175,21 +194,22 @@ void BlendAnimationNode::SingleUpdateAnimation(BlendData& _animationData, float 
 
 		// 再生時間から各パラメータを取得
 		// スケール
-		transform.scale = animData.GetScaleByRatio(b_i, _playingRatio);
+		transform.scale = animData.GetScaleByRatio(b_i, playingRatio);
 
 		//クォータニオン
-		transform.rotation = animData.GetQuaternionByRatio(b_i, _playingRatio);
+		transform.rotation = animData.GetQuaternionByRatio(b_i, playingRatio);
 
 		// 座標
-		transform.position = animData.GetPositionByRatio(b_i, _playingRatio);
+		transform.position = animData.GetPositionByRatio(b_i, playingRatio);
 
 		bone.SetAnimTransform(transform);
 	}
 }
 
-void BlendAnimationNode::BlendUpdateAnimation(BlendPair& _blendPair, float _playingRatio, BoneList& _boneList)
+void BlendAnimationNode::BlendUpdateAnimation(BlendPair& _blendPair, BoneList& _boneList)
 {
 	float deltaRatio = _blendPair.nextData->ratio - _blendPair.prevData->ratio;
+	float playingRatio = GetCurPlayRatio();
 
 	if (abs(deltaRatio) < Mathf::epsilon)	// ブレンド値に差がない場合
 	{
@@ -205,10 +225,10 @@ void BlendAnimationNode::BlendUpdateAnimation(BlendPair& _blendPair, float _play
 	for (u_int b_i = 0; b_i < _boneList.GetBoneCnt(); b_i++)
 	{
 		BoneTransform p_Transform;	// 前のアニメーション
-		p_Transform = p_pAnimData->GetTransformByRatio(b_i, _playingRatio);
+		p_Transform = p_pAnimData->GetTransformByRatio(b_i, playingRatio);
 
 		BoneTransform n_Transform;	// 後のアニメーション
-		n_Transform = n_pAnimData->GetTransformByRatio(b_i, _playingRatio);
+		n_Transform = n_pAnimData->GetTransformByRatio(b_i, playingRatio);
 
 		BoneTransform blendTransform;
 		// 座標
@@ -265,6 +285,11 @@ bool BlendAnimationNode::CompareBlendValue(const BlendData& _bd1, const BlendDat
 	return _bd1.ratio > _bd2.ratio;
 }
 
+void BlendAnimationNode::GetCurAnimTransform(BoneTransform& _outTransform, u_int _boneId) const
+{
+	GetAnimTransform(_outTransform, _boneId, GetCurPlayRatio());
+}
+
 void BlendAnimationNode::GetAnimTransform(BoneTransform& _outTransform, u_int _boneId, float _requestRatio) const
 {
 	// 現段階は最初の割合だけ
@@ -276,23 +301,40 @@ void BlendAnimationNode::GetAnimTransform(BoneTransform& _outTransform, u_int _b
 void BlendAnimationNode::ImGuiSetting()
 {
 	AnimationNode_Base::ImGuiSetting();
+
+	ImGui::Text(std::to_string(curBlendRatio).c_str());
 	ImGui::DragFloat("smoothTime", &ratioSmoothTime, 0.01f, 0.0f, 10.0f);
 	HashiTaku::Easing::ImGuiSelect(ratioMoveEase);
-
-	ImGui::Text("Blend");
 	for (auto& data : blendDatas)
 	{
 		std::string animName = data.pAnimation->GetAssetName();
 		if (!ImGuiMethod::TreeNode(animName.c_str())) continue;
-
 		ImGui::SliderFloat(TO_UTF8("ブレンド"), &data.ratio, 0.0f, 1.0f);
-
 		ImGui::TreePop();
 	}
 
-	static char addAnimName[IM_INPUT_BUF] = "";
-	ImGui::InputText("addAnim", addAnimName, IM_INPUT_BUF);
-	ImGui::SameLine();
-	if (ImGui::Button("Set"))
-		SetAnimationData(addAnimName);
+	static std::string str;
+	AssetGetter::ImGuiGetCombobox<AnimationData>("AddAnimation", str);
+	if (ImGui::Button("Add Blend"))
+		SetAnimationData(str);
 }
+
+nlohmann::json BlendAnimationNode::SaveBlendData(BlendData& _blendData)
+{
+	nlohmann::json saveData;
+	saveData["animName"] = _blendData.pAnimation->GetAssetName();
+	saveData["ratio"] = _blendData.ratio;
+	return saveData;
+}
+
+void BlendAnimationNode::LoadBlendData(const nlohmann::json& _blendData)
+{
+	BlendData loadBlend;
+
+	loadBlend.pAnimation = LoadJsonAsset<AnimationData>("animName", _blendData);
+	if (!loadBlend.pAnimation) return;
+
+	LoadJsonFloat("ratio", loadBlend.ratio, _blendData);
+	blendDatas.push_back(std::move(loadBlend));
+}
+

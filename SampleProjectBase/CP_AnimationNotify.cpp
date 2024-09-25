@@ -3,7 +3,7 @@
 #include "GameObject.h"
 
 CP_AnimationNotify::CP_AnimationNotify()
-	: pAnimation(nullptr), curRatio(0.0f), lastRatio(-Mathf::smallValue), isLoop(false)
+	: pAnimController(nullptr), curRatio(0.0f), lastRatio(-Mathf::smallValue), isLoop(false)
 {
 }
 
@@ -12,22 +12,31 @@ void CP_AnimationNotify::ImGuiSetting()
 	ImGui::SliderFloat("current", &curRatio, 0.0f, 1.0f);
 	ImGui::Text(std::to_string(lastRatio).c_str());
 
+	ImGuiGroupSetting();
+
 	if (ImGui::Button("Update"))
 		UpdateNotifyGroups();
 }
 
 void CP_AnimationNotify::Init()
 {
-	/*UpdateNotifyGroups();*/
+#ifdef EDIT
+	pFactory = std::make_unique<AnimationNotifyFactory>();
+#endif // EDIT
 }
 
 void CP_AnimationNotify::Start()
 {
-	pAnimation = gameObject->GetComponent<CP_Animation>();
-	if (pAnimation == nullptr)
+	CP_Animation* pAnim = gameObject->GetComponent<CP_PlayerAnimation>();
+	
+	if (pAnimController == nullptr)
 	{
 		HASHI_DEBUG_LOG(gameObject->GetName() + "にAnimationコンポーネントがついていません");
 		SetEnable(false);
+	}
+	else
+	{
+		UpdateNotifyGroups();	// アニメーションと同期させる
 	}
 }
 
@@ -55,8 +64,7 @@ bool CP_AnimationNotify::IsCanUpdate()
 #ifdef EDIT
 	if (!pAnimController) return false;
 #endif // EDIT
-	//if (!pAnimController->GetIsPlay()) return;	// 再生中じゃないなら
-	if (!pAnimation->GetIsEnable()) return false;
+	if (!pAnimController->GetIsPlay()) return false;	// 再生中じゃないなら
 
 	return true;
 }
@@ -65,6 +73,7 @@ void CP_AnimationNotify::UpdateRatio()
 {
 	AnimationController* pAnimController = GetAnimController();
 	curRatio = pAnimController->GetPlayingRatio();
+	isLoop = false;
 
 	if (curRatio < lastRatio)
 		isLoop = true;
@@ -78,20 +87,28 @@ void CP_AnimationNotify::NotifyUpdate()
 	}
 }
 
+void CP_AnimationNotify::LinkCurGroup()
+{
+	AnimationNode_Base* pCurConNode = pAnimController->GetCurrentNode();
+	if (pCurrentGroup->pAnimNode != pCurConNode)	// 現在のイベント通知のノードと違うなら
+	{
+		UpdateCurGroup();	// 現在のノードを更新する
+	}
+}
+
 void CP_AnimationNotify::UpdateCurGroup()
 {
 	AnimationNode_Base* pControllerCur = GetAnimController()->GetCurrentNode();
-	if (pCurrentGroup->pAnimNode == pControllerCur) return;	// 同じなら
 
-	// グループ内から探す
+	// 現在のノードのイベント通知を探す
 	auto itr = std::find_if(notifyGroups.begin(), notifyGroups.end(),
-		[&](const NotifyGroup& _group)
+		[&](const std::unique_ptr<NotifyGroup>& _group)
 		{
-			return pControllerCur == _group.pAnimNode;
+			return pControllerCur == _group->pAnimNode;
 		});
 
 	assert(itr != notifyGroups.end() && "対応グループが見つかりません");
-	pCurrentGroup = &(*itr);
+	pCurrentGroup = (*itr).get();
 }
 
 void CP_AnimationNotify::UpdateLastRatio()
@@ -101,10 +118,42 @@ void CP_AnimationNotify::UpdateLastRatio()
 
 void CP_AnimationNotify::UpdateNotifyGroups()
 {
-	if (!pAnimation)
-		pAnimation = gameObject->GetComponent<CP_Animation>();
-
 	AnimationController* pAnimController = GetAnimController();
+	if (!pAnimController) return;
+
+	// コントローラー内にあるノードに更新する
+	// 元々あるものはそのまま、コントローラー内にない通知イベントは削除
+	std::list<const AnimationNode_Base*> pCreateNodes;
+	pAnimController->GetNodeArray(pCreateNodes);
+
+	// すでにある通知イベントは新規作成しない
+	for (auto& notify : notifyGroups)
+	{
+		bool isDelete = true;
+		for (auto& pNode : pCreateNodes)
+		{
+			// あるなら
+			if (pNode == notify->pAnimNode)
+			{
+				isDelete = false;
+				pCreateNodes.remove(pNode);	// 作成するリストからも削除
+				break;
+			}
+		}
+
+		if (isDelete)	// コントローラー内にないなら
+		{
+			notifyGroups.remove(notify);	// 削除
+		}
+	}
+
+
+	for (auto& pNode : pCreateNodes)	// 新しく生成するノード
+	{
+		std::unique_ptr<NotifyGroup> pNewGroup = std::make_unique<NotifyGroup>();
+		pNewGroup->pAnimNode = pNode;
+		notifyGroups.push_back(std::move(pNewGroup));
+	}
 }
 
 void CP_AnimationNotify::CreateNotify(NotifyGroup& _addGroup, const std::string& _typeName)
@@ -118,7 +167,14 @@ void CP_AnimationNotify::CreateNotify(NotifyGroup& _addGroup, const std::string&
 
 AnimationController* CP_AnimationNotify::GetAnimController()
 {
-	AnimationController* pAnimController = pAnimation->GetAnimationController();
+	CP_Animation* pAnim = gameObject->GetComponent<CP_PlayerAnimation>();
+	if (!pAnim)
+	{
+		HASHI_DEBUG_LOG("Animationコンポーネントがありません");
+		return nullptr;
+	}
+
+	pAnimController = pAnim->GetAnimationController();
 	assert(pAnimController && "AnimationControllerがありません");
 
 	return pAnimController;
@@ -126,17 +182,30 @@ AnimationController* CP_AnimationNotify::GetAnimController()
 
 void CP_AnimationNotify::ImGuiGroupSetting()
 {
+#ifdef EDIT
 	for (auto& group : notifyGroups)
 	{
-		std::string nodeName = group.pAnimNode->GetNodeName();
+		std::string nodeName = group->pAnimNode->GetNodeName();
 		if (!ImGuiMethod::TreeNode(nodeName.c_str())) continue;
-		for (auto& n : group.pNotifys)
+
+		// イベント通知の編集
+		for (auto& n : group->pNotifys)
 		{
 			std::string notifyName = n->GetNotifyName();
 			if (!ImGuiMethod::TreeNode(notifyName.c_str())) continue;
 			n->ImGuiCall();
 			ImGui::TreePop();
 		}
+
+		// 新しく生成
+		std::unique_ptr<AnimationNotify_Base> pNotify;
+		if (pFactory->ImGuiCombo(pNotify))
+		{
+			group->pNotifys.push_back(std::move(pNotify));
+		}
+
 		ImGui::TreePop();
 	}
+
+#endif // EDIT
 }

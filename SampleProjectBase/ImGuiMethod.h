@@ -67,7 +67,7 @@ public:
 	/// @param _currentItem 現在選択中の名前
 	/// @param _items 要素の全名前
 	/// @return 変更したか？
-	static bool ComboBox(const std::string& _caption, std::string& _currentItem, std::vector<const std::string*> _items);
+	static bool ComboBox(const std::string& _caption, std::string& _currentItem, const std::vector<const std::string*>& _items);
 
 	/// @brief enum用コンボボックス作成
 	/// @param _caption キャプション
@@ -75,16 +75,18 @@ public:
 	/// @param _items 列挙型の名前
 	/// @return 変更したか？
 	static bool ComboBox(const std::string& _caption, u_int& _enumId, const std::vector<std::string>& _items);
+	static bool ComboBox(const std::string& _caption, std::string& _currentItem, const std::vector<std::string>& _items);
 
 	/// @brief ツリーノード
 	/// @return ノードが開かれているか？
 	static bool TreeNode(const std::string& _caption);
 
-	/// @brief クリックすると、テキスト入力できる関数
+	/// @brief クリックすると、テキスト入力できる
+	/// @param _caption キャプション
 	/// @param _text 変更したいテキスト
 	/// @param _isEditing 編集中かどうか
-	/// @param _id 複数並べたいときに同調しないID
-	static void EditableText(std::string& _text, bool& _isEditing, u_int _id = 0);
+	/// @return ノードが開かれているか？
+	static bool EditableText(const std::string& _caption, std::string & _text, bool& _isEditing);
 
 	/// @brief Vector2をテキスト
     /// @param _v 表示するテキスト
@@ -97,6 +99,9 @@ public:
 	/// @brief Quaternionをテキスト
 	/// @param _q 表示するテキスト
 	static void Text(const DirectX::SimpleMath::Quaternion& _q);
+
+	// ランダムなユニークIDをセット
+	static void PushRandID();
 
 	/// @brief フォントの大きさを変える
 	/// @param _size フォントの大きさ

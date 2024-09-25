@@ -7,7 +7,7 @@
 
 class CP_Player : public Component
 {
-	std::unique_ptr<PlayerAnimController> pAnimController;
+	PlayerAnimController* pAnimController;
 
 	/// @brief アクションコントローラー
 	std::unique_ptr<PlayerActionController> pActionController;

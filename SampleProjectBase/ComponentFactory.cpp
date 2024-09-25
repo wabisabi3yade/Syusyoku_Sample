@@ -26,6 +26,7 @@ void ComponentFactory::Init()
 
 	// ƒvƒŒƒCƒ„[
 	ResistComponnent<CP_Player>();
+	ResistComponnent<CP_PlayerAnimation>();
 
 	// ‚»‚Ì‘¼
 	ResistComponnent<CP_EaseTest>();

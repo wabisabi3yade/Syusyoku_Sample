@@ -26,27 +26,30 @@ class CP_Animation : public Component, public CloneComponent<CP_Animation>
 	/// @brief スケルタルメッシュ
 	SkeletalMesh* pSkeletalMesh;
 
+	/// @brief モデルのオフセット行列
+	DirectX::SimpleMath::Matrix offsetMtx;
+
+protected:
 	/// @brief アニメーションコントローラー
 	AnimationController* pAnimController;
 
-	/// @brief モデルのオフセット行列
-	DirectX::SimpleMath::Matrix offsetMtx;
 public:
 	CP_Animation();
 	CP_Animation(const CP_Animation& _other);
-	~CP_Animation() {}
+	virtual ~CP_Animation() {}
 
 	CP_Animation& operator=(const CP_Animation& _other);
 
-	void Start() override;
+	void Init() override {}
+
+	void Awake() override;
 
 	void Update() override;
 
 	void ImGuiSetting() override;
 
-	/// @brief スケルタルメッシュをセット
-	/// @param _skeletalMesh 
-	void SetSkeletalMesh(SkeletalMesh& _skeletalMesh);
+	/// @brief Rendererからスケルタルメッシュをセット 
+	void SetupSkeletalMesh();
 
 	// アニメーションコントローラーをセット
 	void SetAnimationController(AnimationController& _controller);
@@ -59,6 +62,9 @@ public:
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
 private:
+	/// @brief アニメーションコントローラーの準備
+	void SetupAnimCon();
+
 	/// @brief 再生できる状態か？
 	/// @return 再生できるか
 	bool IsCanPlay();

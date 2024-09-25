@@ -4,6 +4,7 @@
 #include "InSceneSystemManager.h"
 #include "ShaderCollection.h"
 #include "DX11BulletPhisics.h"
+#include "AssetSaveLoad.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -98,6 +99,8 @@ void Scene::Save()
 	f.write(str.c_str(), len);
 
 	HASHI_DEBUG_LOG(sceneName + " セーブしました");
+
+	AssetSaveLoader::Save();	// アセットセーブ
 }
 
 bool Scene::GetIsUpdatePlay() const
@@ -171,12 +174,15 @@ bool Scene::IsUpdatePlay()
 
 void Scene::ImGuiPlaying()
 {
+#ifdef EDIT
 	if (ImGui::Button("Stop"))
 		PlayStop();
+#endif // EDIT
 }
 
 void Scene::ImGuiStop()
 {
+#ifdef EDIT
 	if (ImGui::Button("Play"))
 		PlayStart();
 
@@ -185,6 +191,7 @@ void Scene::ImGuiStop()
 	{
 		Save();
 	}
+#endif // EDIT
 }
 
 void Scene::PlayStart()

@@ -10,6 +10,7 @@ class StaticMesh;
 class Material;
 class AnimationData;
 class BoneList;
+class AnimationController;
 
 // アセット管理にアクセスするクラス
 class AssetLoader;
@@ -47,6 +48,9 @@ class AssetCollection
 
 	/// @brief ボーンのアセットリスト
 	AssetList boneAssets;
+
+	/// @brief アニメーションコントローラー
+	AssetList animControllerAssets;
 
 	/// @brief アセットを追加する
 	/// @tparam T アセットの型名
@@ -181,6 +185,9 @@ inline AssetList& AssetCollection::GetAssetList()
 
 	else if constexpr (std::is_same<T, BoneList>::value)
 		return boneAssets;
+
+	else if constexpr (std::is_same<T, AnimationController>::value)
+		return animControllerAssets;
 
 	assert(!"アセット配列取得で不正な型名です");
 	return textureAssets;

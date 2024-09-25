@@ -22,6 +22,7 @@
 
 // プレイヤー
 #include "CP_Player.h"
+#include "CP_PlayerAnimation.h"
 #include "CP_Weapon.h"
 
 // テスト

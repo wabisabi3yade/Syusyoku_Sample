@@ -23,164 +23,184 @@ void HashiTaku::SaveJsonVector4(const std::string& _s, const DirectX::SimpleMath
 	_j[_s][3] = _v.w;
 }
 
-void HashiTaku::LoadJsonData(const std::string& _s, nlohmann::json& _d, const nlohmann::json& _j)
+bool HashiTaku::LoadJsonData(const std::string& _s, nlohmann::json& _d, const nlohmann::json& _j)
 {
-	if (!IsJsonContains(_j, _s)) return;
+	if (!IsJsonContains(_j, _s)) return false;
 
 	if (!_j[_s].is_object())
 	{
-		HASHI_DEBUG_LOG(_s + "はjson形式ではありません");
-		return;
+		HASHI_DEBUG_LOG(_s + "はjsonオブジェクトではありません");
+		return false;
 	}
 
 	_d = _j[_s];
+	return true;
 }
 
-void HashiTaku::LoadJsonBoolean(const std::string& _s, bool& _b, const nlohmann::json& _j)
+bool HashiTaku::LoadJsonDataArray(const std::string& _s, nlohmann::json& _d, const nlohmann::json& _j)
 {
-	if (!IsJsonContains(_j, _s)) return;
+	if (!IsJsonContains(_j, _s)) return false;
+
+	if (!_j[_s].is_array())
+	{
+		HASHI_DEBUG_LOG(_s + "はjson配列ではありません");
+		return false;
+	}
+
+	_d = _j[_s];
+	return true;
+}
+
+bool HashiTaku::LoadJsonBoolean(const std::string& _s, bool& _b, const nlohmann::json& _j)
+{
+	if (!IsJsonContains(_j, _s)) return false;
 
 	if (!_j[_s].is_boolean())
 	{
 		HASHI_DEBUG_LOG(_s + "はboolではありません");
-		return;
+		return false;
 	}
 
 	_b = _j[_s];
+	return true;
 }
 
-void HashiTaku::LoadJsonInteger(const std::string& _s, int& _i, const nlohmann::json& _j)
+bool HashiTaku::LoadJsonInteger(const std::string& _s, int& _i, const nlohmann::json& _j)
 {
-	if (!IsJsonContains(_j, _s)) return;
+	if (!IsJsonContains(_j, _s)) return false;
 
 	if (!_j[_s].is_number_integer())
 	{
 		HASHI_DEBUG_LOG(_s + "はintではありません");
-		return;
+		return false;
 	}
 
 	_i = _j[_s];
+	return true;
 }
 
-void HashiTaku::LoadJsonUnsigned(const std::string& _s, u_int& _u, const nlohmann::json& _j)
+bool HashiTaku::LoadJsonUnsigned(const std::string& _s, u_int& _u, const nlohmann::json& _j)
 {
-	if (!IsJsonContains(_j, _s)) return;
+	if (!IsJsonContains(_j, _s)) return false;
 
 	if (!_j[_s].is_number_unsigned())
 	{
 		HASHI_DEBUG_LOG(_s + "はu_intではありません");
-		return;
+		return false;
 	}
 
 	_u = _j[_s];
+	return true;
 }
 
-void HashiTaku::LoadJsonFloat(const std::string& _s, float& _f, const nlohmann::json& _j)
+bool HashiTaku::LoadJsonFloat(const std::string& _s, float& _f, const nlohmann::json& _j)
 {
-	if (!IsJsonContains(_j, _s)) return;
+	if (!IsJsonContains(_j, _s)) return false;
 
 	if (!_j[_s].is_number_float())
 	{
 		HASHI_DEBUG_LOG(_s + "はfloatではありません");
-		return;
+		return false;
 	}
 
 	_f = _j[_s];
+	return true;
 }
 
-void HashiTaku::LoadJsonString(const std::string& _s, std::string& _str, const nlohmann::json& _j)
+bool HashiTaku::LoadJsonString(const std::string& _s, std::string& _str, const nlohmann::json& _j)
 {
-	if (!IsJsonContains(_j, _s)) return;
+	if (!IsJsonContains(_j, _s)) return false;
 
 	if (!_j[_s].is_string())
 	{
 		HASHI_DEBUG_LOG(_s + "はstringではありません");
-		return;
+		return false;
 	}
 
 	_str = _j[_s].get<std::string>();
+	return true;
 }
 
-void HashiTaku::LoadJsonVector2(const std::string& _s, DirectX::SimpleMath::Vector2& _v, const nlohmann::json& _j)
+bool HashiTaku::LoadJsonVector2(const std::string& _s, DirectX::SimpleMath::Vector2& _v, const nlohmann::json& _j)
 {
-	if (!IsJsonContains(_j, _s))
-		return;
+	if (!IsJsonContains(_j, _s)) return false;
 
 	if (!_j[_s].is_array())
 	{
 		HASHI_DEBUG_LOG(_s + "は配列ではありません");
-		return;
+		return false;
 	}
 
 	_v.x = _j[_s][0];
 	_v.y = _j[_s][1];
+	return true;
 }
 
-void HashiTaku::LoadJsonVector3(const std::string& _s, DirectX::SimpleMath::Vector3& _v, const nlohmann::json& _j)
+bool HashiTaku::LoadJsonVector3(const std::string& _s, DirectX::SimpleMath::Vector3& _v, const nlohmann::json& _j)
 {
-	if (!IsJsonContains(_j, _s))
-		return;
+	if (!IsJsonContains(_j, _s)) return false;
 
 	if (!_j[_s].is_array())
 	{
 		HASHI_DEBUG_LOG(_s + "は配列ではありません");
-		return;
-	}
-
-	_v.x = _j[_s][0];
-	_v.y = _j[_s][1];
-	_v.z = _j[_s][2];
-}
-
-void HashiTaku::LoadJsonVector4(const std::string& _s, DirectX::SimpleMath::Vector4& _v, const nlohmann::json& _j)
-{
-	if (!IsJsonContains(_j, _s))
-		return;
-
-	if (!_j[_s].is_array())
-	{
-		HASHI_DEBUG_LOG(_s + "は配列ではありません");
-		return;
+		return false;
 	}
 
 	_v.x = _j[_s][0];
 	_v.y = _j[_s][1];
 	_v.z = _j[_s][2];
-	_v.w = _j[_s][3];
+	return true;
 }
 
-void HashiTaku::LoadJsonQuaternion(const std::string& _s, DirectX::SimpleMath::Quaternion& _v, const nlohmann::json& _j)
+bool HashiTaku::LoadJsonVector4(const std::string& _s, DirectX::SimpleMath::Vector4& _v, const nlohmann::json& _j)
 {
-	if (!IsJsonContains(_j, _s))
-		return;
+	if (!IsJsonContains(_j, _s)) return false;
 
 	if (!_j[_s].is_array())
 	{
 		HASHI_DEBUG_LOG(_s + "は配列ではありません");
-		return;
+		return false;
 	}
 
 	_v.x = _j[_s][0];
 	_v.y = _j[_s][1];
 	_v.z = _j[_s][2];
 	_v.w = _j[_s][3];
+	return true;
 }
 
-void HashiTaku::LoadJsonColor(const std::string& _s, DirectX::SimpleMath::Color& _c, const nlohmann::json& _j)
+bool HashiTaku::LoadJsonQuaternion(const std::string& _s, DirectX::SimpleMath::Quaternion& _v, const nlohmann::json& _j)
 {
-	if (!IsJsonContains(_j, _s))
-		return;
+	if (!IsJsonContains(_j, _s)) return false;
 
 	if (!_j[_s].is_array())
 	{
 		HASHI_DEBUG_LOG(_s + "は配列ではありません");
-		return;
+		return false;
+	}
+
+	_v.x = _j[_s][0];
+	_v.y = _j[_s][1];
+	_v.z = _j[_s][2];
+	_v.w = _j[_s][3];
+	return true;
+}
+
+bool HashiTaku::LoadJsonColor(const std::string& _s, DirectX::SimpleMath::Color& _c, const nlohmann::json& _j)
+{
+	if (!IsJsonContains(_j, _s)) return false;
+
+	if (!_j[_s].is_array())
+	{
+		HASHI_DEBUG_LOG(_s + "は配列ではありません");
+		return false;
 	}
 
 	_c.x = _j[_s][0];
 	_c.y = _j[_s][1];
 	_c.z = _j[_s][2];
 	_c.w = _j[_s][3];
+	return true;
 }
 
 bool HashiTaku::IsJsonContains(const nlohmann::json& _j, const std::string& _elementStr)

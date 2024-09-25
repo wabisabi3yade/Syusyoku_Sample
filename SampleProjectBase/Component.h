@@ -4,7 +4,7 @@
 class GameObject;
 
 // ゲームのサブシステムとなるコンポーネントの基底クラス
-class Component : public ISaveLoad, public HashiTaku::IImGuiUser
+class Component : public HashiTaku::ISaveLoad, public HashiTaku::IImGuiUser
 {
 	friend class GameObject;
 	

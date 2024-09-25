@@ -1,9 +1,10 @@
 #include "pch.h"
 #include "AssetDisplay.h"
 
-// アセット管理
-#include "AssetCollection.h"
+// アセット機能
 #include "AssetLoader.h"
+#include "MaterialCreater.h"
+#include "AnimControllerCreater.h"
 
 #include "SkeletalMesh.h"
 
@@ -16,17 +17,14 @@ char AssetDisplay::inputText[IM_INPUT_BUF] = {};
 
 void AssetDisplay::Draw()
 {
-	if (ImGuiMethod::TreeNode(TO_UTF8("アセット")))
+	if (ImGuiMethod::TreeNode("Asset"))
 	{
 		DisplayTexture();
-
 		DisplayModel();
-
 		DisplayMaterial();
-
 		DisplayAnimation();
-
 		DisplayBoneList();
+		DisplayAnimationController();
 
 		ImGui::TreePop();
 	}
@@ -44,7 +42,7 @@ void AssetDisplay::Display(const std::unordered_map<std::string, std::unique_ptr
 void AssetDisplay::DisplayTexture()
 {
 	// アセットを表示
-	if (!ImGuiMethod::TreeNode(TO_UTF8("テクスチャ"))) return;
+	if (!ImGuiMethod::TreeNode("Texture")) return;
 
 	AssetList& Tassets = pAssetCollection->GetAssetList<Texture>();
 	Display(Tassets);
@@ -63,7 +61,7 @@ void AssetDisplay::DisplayTexture()
 
 void AssetDisplay::DisplayModel()
 {
-	if (!ImGuiMethod::TreeNode(TO_UTF8("メッシュ"))) return;
+	if (!ImGuiMethod::TreeNode("Mesh")) return;
 
 	AssetList& assets = pAssetCollection->GetAssetList<Mesh_Group>();
 	Display(assets);
@@ -96,7 +94,7 @@ void AssetDisplay::DisplayModel()
 
 void AssetDisplay::DisplayMaterial()
 {
-	if (!ImGuiMethod::TreeNode(TO_UTF8("マテリアル"))) return;
+	if (!ImGuiMethod::TreeNode("Material")) return;
 
 	AssetList& assets = pAssetCollection->GetAssetList<Material>();
 	Display(assets);
@@ -110,7 +108,7 @@ void AssetDisplay::DisplayMaterial()
 
 void AssetDisplay::DisplayAnimation()
 {
-	if (!ImGuiMethod::TreeNode(TO_UTF8("アニメーション"))) return;
+	if (!ImGuiMethod::TreeNode("AnimationData")) return;
 
 	AssetList& assets = pAssetCollection->GetAssetList<AnimationData>();
 	Display(assets);
@@ -135,16 +133,16 @@ void AssetDisplay::DisplayAnimation()
 
 void AssetDisplay::DisplayBoneList()
 {
-	if (!ImGuiMethod::TreeNode(TO_UTF8("スケルトン"))) return;
+	if (!ImGuiMethod::TreeNode("Skeleton")) return;
 
 	AssetList& boneAssets = pAssetCollection->GetAssetList<BoneList>();
 
-	for (auto& a : boneAssets)
+	for (auto& asset : boneAssets)
 	{
-		if (!ImGuiMethod::TreeNode(a.second->GetAssetName().c_str()))
+		if (!ImGuiMethod::TreeNode(asset.second->GetAssetName().c_str()))
 			continue;
 		
-		BoneList& boneList = static_cast<BoneList&>(*a.second);
+		BoneList& boneList = static_cast<BoneList&>(*asset.second);
 		// ボーンの名前表示
 		for (u_int b_i = 0; b_i < boneList.GetBoneCnt(); b_i++)
 		{
@@ -158,6 +156,28 @@ void AssetDisplay::DisplayBoneList()
 	DeleteInputAsset();
 	if (ImGui::Button("Delete"))
 		pAssetCollection->DeleteAsset<BoneList>(inputText);
+
+	ImGui::TreePop();
+}
+
+void AssetDisplay::DisplayAnimationController()
+{
+	if (!ImGuiMethod::TreeNode("AnimationController")) return;
+	std::unique_ptr<AnimControllerCreater> pAnimConCreate = std::make_unique<AnimControllerCreater>();
+
+	AssetList& animConList = pAssetCollection->GetAssetList<AnimationController>();
+	Display(animConList);
+	
+	ImGui::InputText("assetName", inputText, IM_INPUT_BUF);
+	
+	if (ImGui::Button("Create"))
+	{
+		pAnimConCreate->CraeteAsset(inputText);
+	}
+
+	DeleteInputAsset();
+	if (ImGui::Button("Delete"))
+		pAssetCollection->DeleteAsset<AnimationController>(inputText);
 
 	ImGui::TreePop();
 }

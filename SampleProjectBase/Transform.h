@@ -5,7 +5,7 @@
 class GameObject;
 
 // 座標・回転・スケールをまとめたパラメータ
-class Transform : public ISaveLoad
+class Transform : public HashiTaku::ISaveLoad
 {
 	/// @brief トランスフォームを持つオブジェクト
 	GameObject* pGameObject;
