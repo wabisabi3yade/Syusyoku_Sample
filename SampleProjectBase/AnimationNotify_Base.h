@@ -3,7 +3,7 @@
 class GameObject;
 
 /// @brief アニメーションの通知インターフェース
-class AnimationNotify_Base : public HashiTaku::IImGuiUser, public ISaveLoad
+class AnimationNotify_Base : public HashiTaku::IImGuiUser, public  HashiTaku::ISaveLoad
 {
 	/// @brief 活動状態
 	bool isActive;

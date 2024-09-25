@@ -9,15 +9,17 @@
 #include "StaticMesh.h"
 #include "SkeletalMesh.h"
 #include "AnimationData.h"
+#include "AnimControllerCreater.h"
 
 using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
 
-const std::string ASSET_ELEMENT = "assets";
-const std::string TEX_ELEMENT = "textures";
-const std::string MOD_ELEMENT = "models";
-const std::string MAT_ELEMENT = "materials";
-const std::string ANIM_ELEMENT = "animations";
+constexpr auto ASSET_ELEMENT = "assets";
+constexpr auto TEX_ELEMENT = "textures";
+constexpr auto MOD_ELEMENT = "models";
+constexpr auto MAT_ELEMENT = "materials";
+constexpr auto ANIM_ELEMENT = "animations";
+constexpr auto ANIMCON_ELEMENT = "animController";
 
 void AssetSaveLoader::Save()
 {
@@ -54,6 +56,13 @@ void AssetSaveLoader::Save()
 			animData.push_back(anim.second->Save());
 	}
 
+	auto& animConData = assetData[ANIMCON_ELEMENT];
+	for (auto& animCon : pAssetCollection->animControllerAssets)
+	{
+		if (animCon.second->GetIsSave())
+			animConData.push_back(animCon.second->Save());
+	}
+
 	std::ofstream f(SaveFilePath());
 
 	auto str = assetData.dump(4);
@@ -88,12 +97,17 @@ void AssetSaveLoader::Load()
 	// アニメーション
 	CreateAnimaton(loadData);
 
+	//// アニメーションコントローラー
+	CreateAnimController(loadData);
+
 	// アセットをロードする
 	LoadAsset(loadData);
 }
 
 void AssetSaveLoader::CreateTexture(const nlohmann::json& _loadData)
 {
+	if (!IsJsonContains(_loadData, TEX_ELEMENT)) return;
+
 	for (auto& data : _loadData[TEX_ELEMENT])
 	{
 		std::string path;
@@ -105,6 +119,8 @@ void AssetSaveLoader::CreateTexture(const nlohmann::json& _loadData)
 
 void AssetSaveLoader::CreateMaterial(const nlohmann::json& _loadData)
 {
+	if (!IsJsonContains(_loadData, MAT_ELEMENT)) return;
+
 	// 名前を取得し、アセット生成
 	for (auto& data : _loadData[MAT_ELEMENT])
 	{
@@ -118,6 +134,8 @@ void AssetSaveLoader::CreateMaterial(const nlohmann::json& _loadData)
 
 void AssetSaveLoader::CreateMesh(const nlohmann::json& _loadData)
 {
+	if (!IsJsonContains(_loadData, MOD_ELEMENT)) return;
+
 	for (auto& data : _loadData[MOD_ELEMENT])
 	{
 		std::string path;
@@ -141,6 +159,8 @@ void AssetSaveLoader::CreateMesh(const nlohmann::json& _loadData)
 
 void AssetSaveLoader::CreateAnimaton(const nlohmann::json& _loadData)
 {
+	if (!IsJsonContains(_loadData, ANIM_ELEMENT)) return;
+
 	for (auto& data : _loadData[ANIM_ELEMENT])
 	{
 		std::string path;
@@ -156,50 +176,96 @@ void AssetSaveLoader::CreateAnimaton(const nlohmann::json& _loadData)
 	}
 }
 
+void AssetSaveLoader::CreateAnimController(const nlohmann::json& _loadData)
+{
+	if (!IsJsonContains(_loadData, ANIMCON_ELEMENT)) return;
+
+	AnimControllerCreater animConCreater;
+
+	// 名前を取得し、アセット生成
+	for (auto& data : _loadData[ANIMCON_ELEMENT])
+	{
+		std::unique_ptr<AnimationController> pCreate;
+;
+		std::string name;
+		LoadJsonString("assetName", name, data);
+
+		animConCreater.CraeteAsset(name);
+	}
+}
+
 void AssetSaveLoader::LoadAsset(const nlohmann::json& _loadData)
 {
-	for (const auto& asset : _loadData[TEX_ELEMENT])
+	nlohmann::json assetDatas;
+
+	if (LoadJsonDataArray(TEX_ELEMENT, assetDatas, _loadData))
 	{
-		std::string assetName;
-		LoadJsonString("assetName", assetName, asset);
+		for (const auto& asset : assetDatas)
+		{
+			std::string assetName;
+			LoadJsonString("assetName", assetName, asset);
 
-		Asset_Base* pAsset = pAssetCollection->GetAsset<Texture>(assetName);
+			Asset_Base* pAsset = pAssetCollection->GetAsset<Texture>(assetName);
 
-		if (pAsset)
-			pAsset->Load(asset);
+			if (pAsset)
+				pAsset->Load(asset);
+		}
+	}
+	
+	if (LoadJsonDataArray(MAT_ELEMENT, assetDatas, _loadData))
+	{
+		for (const auto& asset : assetDatas)
+		{
+			std::string assetName;
+			LoadJsonString("assetName", assetName, asset);
+
+			Asset_Base* pAsset = pAssetCollection->GetAsset<Material>(assetName);
+
+			if (pAsset)
+				pAsset->Load(asset);
+		}
 	}
 
-	for (const auto& asset : _loadData[MAT_ELEMENT])
+	if (LoadJsonDataArray(MOD_ELEMENT, assetDatas, _loadData))
 	{
-		std::string assetName;
-		LoadJsonString("assetName", assetName, asset);
+		for (const auto& asset : assetDatas)
+		{
+			std::string assetName;
+			LoadJsonString("assetName", assetName, asset);
 
-		Asset_Base* pAsset = pAssetCollection->GetAsset<Material>(assetName);
+			Asset_Base* pAsset = pAssetCollection->GetAsset<Mesh_Group>(assetName);
 
-		if (pAsset)
-			pAsset->Load(asset);
+			if (pAsset)
+				pAsset->Load(asset);
+		}
 	}
 
-	for (const auto& asset : _loadData[MOD_ELEMENT])
+	if (LoadJsonDataArray(ANIM_ELEMENT, assetDatas, _loadData))
 	{
-		std::string assetName;
-		LoadJsonString("assetName", assetName, asset);
+		for (const auto& asset : assetDatas)
+		{
+			std::string assetName;
+			LoadJsonString("assetName", assetName, asset);
 
-		Asset_Base* pAsset = pAssetCollection->GetAsset<Mesh_Group>(assetName);
+			Asset_Base* pAsset = pAssetCollection->GetAsset<AnimationData>(assetName);
 
-		if (pAsset)
-			pAsset->Load(asset);
+			if (pAsset)
+				pAsset->Load(asset);
+		}
 	}
 
-	for (const auto& asset : _loadData[ANIM_ELEMENT])
+	if (LoadJsonDataArray(ANIMCON_ELEMENT, assetDatas, _loadData))
 	{
-		std::string assetName;
-		LoadJsonString("assetName", assetName, asset);
+		for (const auto& asset : assetDatas)
+		{
+			std::string assetName;
+			LoadJsonString("assetName", assetName, asset);
 
-		Asset_Base* pAsset = pAssetCollection->GetAsset<AnimationData>(assetName);
+			Asset_Base* pAsset = pAssetCollection->GetAsset<AnimationController>(assetName);
 
-		if (pAsset)
-			pAsset->Load(asset);
+			if (pAsset)
+				pAsset->Load(asset);
+		}
 	}
 }
 

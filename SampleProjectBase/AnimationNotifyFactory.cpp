@@ -4,7 +4,8 @@
 
 bool AnimationNotifyFactory::ImGuiCombo(std::unique_ptr<AnimationNotify_Base>& _pCreateNotify)
 {
-#ifdef EDIT
+	static std::string selectName;
+
 	std::vector<const std::string*> nameList = GetNotifyNames();
 	if (nameList.empty()) return false;
 
@@ -16,7 +17,6 @@ bool AnimationNotifyFactory::ImGuiCombo(std::unique_ptr<AnimationNotify_Base>& _
 	
 	ImGui::SameLine();
 	ImGuiMethod::ComboBox("AddNotify", selectName, nameList);
-#endif // EDIT
 
 	return false;
 }

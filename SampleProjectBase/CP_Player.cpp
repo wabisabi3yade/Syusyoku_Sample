@@ -22,27 +22,24 @@ CP_Player& CP_Player::operator=(const CP_Player& _other)
 
 void CP_Player::Awake()
 {
-	////// モデル関係
-	//CP_MeshRenderer* pMeshRenderer = gameObject->GetComponent<CP_MeshRenderer>();
-	//pMeshRenderer->SetVertexShader("VS_SkinAnimation");
-	//pMeshRenderer->SetPixelShader("PS_Unlit");
+	//// モデル関係
+	CP_MeshRenderer* pMeshRenderer = gameObject->GetComponent<CP_MeshRenderer>();
+	pMeshRenderer->SetVertexShader("VS_SkinAnimation");
+	pMeshRenderer->SetPixelShader("PS_Unlit");
 }
 
 void CP_Player::Start()
 {
-	// アニメーション関係生成
-	//CP_Animation* pAnimation = gameObject->GetComponent<CP_Animation>();
-	//pAnimController = std::make_unique<PlayerAnimController>();
-	//pAnimation->SetAnimationController(*pAnimController);
+	//アニメーション関係生成
+	CP_Animation* pAnimation = gameObject->GetComponent<CP_Animation>();
+	pAnimController = static_cast<PlayerAnimController*>(pAnimation->GetAnimationController());
 
 	// アクションコントローラー作成
 	pActionController = std::make_unique<PlayerActionController>(*gameObject, *pAnimController);
-
 	// アニメーションオブザーバー作成
 	pAnimObserver = std::make_unique<PlayerAnimObserver>(*pActionController);
-
-	// サブジェクトに渡す
-	pAnimController->AddObserver(*pAnimObserver);
+	//// サブジェクトに渡す
+	//pAnimController->AddObserver(*pAnimObserver);
 }
 
 void CP_Player::Update()

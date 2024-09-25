@@ -16,18 +16,18 @@ class CP_AnimationNotify : public Component
 	/// @brief 通知イベントと対象となるアニメーションノード
 	struct NotifyGroup
 	{
-		AnimationNode_Base* pAnimNode;
+		const AnimationNode_Base* pAnimNode;
 		std::list<std::unique_ptr<AnimationNotify_Base>> pNotifys;
 	};
 
 	/// @brief 通知イベントグループリスト
-	std::list<NotifyGroup> notifyGroups;
+	std::list<std::unique_ptr<NotifyGroup>> notifyGroups;
 
 	/// @brief 現在の通知グループ
 	NotifyGroup* pCurrentGroup;
 
 	/// @brief アニメーションコンポーネント
-	CP_Animation* pAnimation;	
+	AnimationController* pAnimController;	
 
 	/// @brief 現在のアニメーション割合
 	float curRatio;
@@ -47,6 +47,7 @@ public:
 	~CP_AnimationNotify() {}
 
 	void ImGuiSetting() override;
+
 private:
 	void Init() override;
 	void Start() override;
@@ -61,6 +62,9 @@ private:
 
 	/// @brief イベント通知を更新する
 	void NotifyUpdate();
+	
+	/// @brief 現在のアニメーションとイベント通知を同期させる
+	void LinkCurGroup();
 	
 	/// @brief コントローラーとノードを更新する
 	void UpdateCurGroup();
@@ -82,4 +86,3 @@ private:
 	// グループごとの編集
 	void ImGuiGroupSetting();
 };
-

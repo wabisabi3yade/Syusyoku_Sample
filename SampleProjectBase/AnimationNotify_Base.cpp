@@ -47,6 +47,8 @@ void AnimationNotify_Base::Load(const nlohmann::json& _data)
 
 void AnimationNotify_Base::ImGuiSetting()
 {
+#ifdef EDIT
 	ImGui::Checkbox("isActive", &isActive);
 	ImGuiMethod::EditableText(notifyName, isEditing);
+#endif // EDIT
 }

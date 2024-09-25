@@ -107,6 +107,8 @@ void MainApplication::Init(HINSTANCE _hInst)
 
 	ShaderSetup();
 
+	HashiTaku::Random::Init();
+
 	AssetSysytemSetup();
 
 	ImuiSetup();

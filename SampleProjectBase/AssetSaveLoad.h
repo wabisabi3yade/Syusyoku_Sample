@@ -26,6 +26,7 @@ private:
 	static void CreateMesh(const nlohmann::json& _loadData);
 	static void CreateMaterial(const nlohmann::json& _loadData);
 	static void CreateAnimaton(const nlohmann::json& _loadData);
+	static void CreateAnimController(const nlohmann::json& _loadData);
 
 	// アセットをロード
 	static void LoadAsset(const nlohmann::json& _loadData);

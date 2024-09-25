@@ -7,7 +7,7 @@
 class Material;
 
 // 四角形ポリゴンにテクスチャを貼って表示するクラス
-class Sprite : public ISaveLoad
+class Sprite : public HashiTaku::ISaveLoad
 {
 	/// @brief テクスチャ
 	Texture* pTexture;

@@ -2,28 +2,34 @@
 #include "AnimTransitionArrow.h"
 
 #include "AnimationNode_Base.h"
+#include "TransConditionCreater.h"
 
 using namespace HashiTaku;
 
-AnimTransitionArrow::AnimTransitionArrow(AnimationNode_Base& _pFromNode, AnimationNode_Base& _pToNode, float _transTargetRatio, float _transitionTime, std::function<bool()> _condition, EaseKind _easeKind)
-	: pFromNode(&_pFromNode), pToNode(&_pToNode), transTargetRatio(_transTargetRatio), transitionTime(_transitionTime), condition(_condition), easeKind(_easeKind), interpolateKind(AnimInterpolateKind::CrossFade)
+AnimTransitionArrow::AnimTransitionArrow(AnimationNode_Base& _fromNode, AnimationNode_Base& _toNode)
+	: pFromNode(&_fromNode), pToNode(&_toNode), transTargetRatio(0.0f), transitionTime(0.2f), easeKind(HashiTaku::EaseKind::Linear), interpolateKind(AnimInterpolateKind::CrossFade)
 {
 }
 
 bool AnimTransitionArrow::CheckTransition()
 {
-	return condition ? condition() : false;
+	return false;
 }
 
-void AnimTransitionArrow::SetCondition(std::function<bool()> _condition)
+void AnimTransitionArrow::AddCondition(conditionValType& _val)
 {
-	if (!_condition)
-	{
-		HASHI_DEBUG_LOG("セットした条件が空です");
-		return;
-	}
+	// 遷移条件を変数から作成し、追加
+	conditionList.push_back(TransConditionCreater::Create(_val));
+}
 
-	condition = _condition;
+void AnimTransitionArrow::SetTransTargetRatio(float _transTargetRatio)
+{
+	transTargetRatio = _transTargetRatio;
+}
+
+void AnimTransitionArrow::SetTransitonTime(float _transTime)
+{
+	transitionTime = _transTime;
 }
 
 void AnimTransitionArrow::SetEaseKind(HashiTaku::EaseKind _easeKind)
@@ -36,7 +42,7 @@ void AnimTransitionArrow::SeInterpolateKind(HashiTaku::AnimInterpolateKind _inte
 	interpolateKind = _interpolateKind;
 }
 
-AnimationNode_Base& AnimTransitionArrow::GetToNode()
+AnimationNode_Base& AnimTransitionArrow::GetToNode() const
 {
 	assert(pToNode != nullptr && "遷移先のノードが設定されていません");
 	return *pToNode;
@@ -60,6 +66,15 @@ HashiTaku::EaseKind AnimTransitionArrow::GetEaseKind() const
 HashiTaku::AnimInterpolateKind AnimTransitionArrow::GetInterpolateKind() const
 {
 	return interpolateKind;
+}
+
+nlohmann::json AnimTransitionArrow::Save()
+{
+	return nlohmann::json();
+}
+
+void AnimTransitionArrow::Load(const nlohmann::json& _data)
+{
 }
 
 void AnimTransitionArrow::ImGuiSetting()

@@ -4,7 +4,6 @@
 void HashiTaku::AnimationSubject::AddObserver(IAnimationObserver& _addObserver)
 {
 	auto itr = std::find(pObservers.begin(), pObservers.end(), &_addObserver);
-
 	if (itr != pObservers.end()) return;
 
 	pObservers.push_back(&_addObserver);

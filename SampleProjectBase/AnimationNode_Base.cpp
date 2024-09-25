@@ -1,8 +1,37 @@
 #include "pch.h"
 #include "AnimationNode_Base.h"
 
+using namespace HashiTaku;
+
+#ifdef EDIT
+std::vector<std::string> AnimationNode_Base::edit_nodeTypeStrings =
+{
+		"Single",
+		"Blend"
+};
+#endif // EDIT
+
+
+AnimationNode_Base::AnimationNode_Base(std::string _nodeName, NodeType _type)
+	: nodeName(_nodeName), nodeType(_type), curPlayingRatio(0.0f), animationTime(0.0f), isLoop(true), isFinish(false)
+{
+}
+
+AnimationNode_Base::AnimationNode_Base(const AnimationNode_Base& _other)
+{
+	Copy(_other);
+}
+
+AnimationNode_Base& AnimationNode_Base::operator=(const AnimationNode_Base& _other)
+{
+	Copy(_other);
+
+	return *this;
+}
+
 void AnimationNode_Base::ImGuiPlaying()
 {
+	ImGui::SliderFloat("PlayRatio", &curPlayingRatio, 0.0f, 1.0f);
 }
 
 void AnimationNode_Base::Begin()
@@ -10,24 +39,14 @@ void AnimationNode_Base::Begin()
 	isFinish = false;
 }
 
-void AnimationNode_Base::UpdateCall(float _playingRatio, BoneList& _boneList)
+void AnimationNode_Base::UpdateCall(BoneList& _boneList)
 {
-	Update(_playingRatio, _boneList);
+	Update(_boneList);
 }
 
-AnimTransitionArrow* AnimationNode_Base::CheckTransition()
+void AnimationNode_Base::SetCurPlayRatio(float _playingRatio)
 {
-	// 同タイミングで複数の条件が達成した場合、登録順になる
-
-	// 条件達成している確認
-	for (auto& arrow : pFromArrows)
-	{
-		if (!arrow->CheckTransition()) continue;
-
-		return arrow.get();
-	}
-
-	return nullptr;
+	curPlayingRatio = _playingRatio;
 }
 
 void AnimationNode_Base::SetNodeName(const std::string& _nodeName)
@@ -48,11 +67,6 @@ void AnimationNode_Base::SetFinish()
 	isFinish = true;
 }
 
-void AnimationNode_Base::AddTransitionArrow(std::unique_ptr<AnimTransitionArrow> _setArrow)
-{
-	pFromArrows.push_back(std::move(_setArrow));
-}
-
 std::string AnimationNode_Base::GetNodeName() const
 {
 	return nodeName;
@@ -61,6 +75,11 @@ std::string AnimationNode_Base::GetNodeName() const
 AnimationNode_Base::NodeType AnimationNode_Base::GetNodeType() const
 {
 	return nodeType;
+}
+
+float AnimationNode_Base::GetCurPlayRatio() const
+{
+	return curPlayingRatio;
 }
 
 float AnimationNode_Base::GetAnimationTime() const
@@ -78,6 +97,50 @@ bool AnimationNode_Base::GetIsFinish() const
 	return isFinish;
 }
 
+nlohmann::json AnimationNode_Base::Save()
+{
+	// ノード名とタイプはコントローラーで管理
+	nlohmann::json nodeData;
+	nodeData["animTime"] = animationTime;
+	nodeData["isLoop"] = isLoop;
+	return nodeData;
+}
+
+void AnimationNode_Base::Load(const nlohmann::json& _data)
+{
+	LoadJsonFloat("animTime", animationTime, _data);
+	LoadJsonBoolean("isLoop", isLoop, _data);
+}
+
+void AnimationNode_Base::ProgressPlayRatio(float _playSpeed)
+{
+	float progressRatioSpeed = 1.0f / animationTime;
+
+	// 時間を進める
+	curPlayingRatio += progressRatioSpeed * _playSpeed * MainApplication::DeltaTime();
+
+	if (IsCanLoop())	// ループできるなら
+		curPlayingRatio -= 1.0f;
+}
+
+bool AnimationNode_Base::IsCanLoop()
+{
+	// アニメーションの全体時間を超えていないなら
+	if (curPlayingRatio < 1.0f) return false;
+	if (!isLoop)
+	{
+		SetFinish();	// 終了処理
+	}
+
+	return true;
+}
+
+void AnimationNode_Base::Copy(const AnimationNode_Base& _other)
+{
+	if (this == &_other) return;
+
+}
+
 void AnimationNode_Base::SetAnimationTime(float _time)
 {
 	animationTime = std::max(_time, 0.0f);
@@ -85,13 +148,12 @@ void AnimationNode_Base::SetAnimationTime(float _time)
 
 void AnimationNode_Base::ImGuiSetting()
 {
+#ifdef EDIT
+	std::vector<std::string>& ntStrings = AnimationNode_Base::edit_nodeTypeStrings;
+	const std::string& typeStr = ntStrings[static_cast<u_int>(nodeType)];
+	ImGui::Text(typeStr.c_str());
+#endif // EDIT
+
 	ImGui::Checkbox("isLoop", &isLoop);
 	ImGui::DragFloat("animationTime", &animationTime, 0.01f, 0.0f, 100.0f);
-
-	ImGui::Text(TO_UTF8("Transition"));
-	// 遷移先のアニメーション
-	for (auto& arrow : pFromArrows)
-	{
-		arrow->ImGuiCall();
-	}
 }

@@ -21,12 +21,14 @@
 // インクルードファイル /////////////////
 #include <iostream>	// std使うために
 #include <fstream>
+#include <random>	// 乱数
 #include <algorithm>
 #include <string>
 #include <unordered_map>	// 順番を気にしないmap配列
 #include <typeinfo>	// 型名を取得
 #include <filesystem>	// パス名
 #include <vector>	// 動的配列
+#include <variant>	// variant型
 #include <numbers>	// 数学
 #include <limits>
 #include <d3d11.h>	// DX11の機能
@@ -53,4 +55,5 @@
 #include "IImGuiUser.h"	// ImGuiを使用するクラスのインターフェース
 #include "Transform.h"	// 座標・回転・スケールのクラス
 #include "MainApplication.h"
+#include "HashiTaku_Random.h"	// 乱数クラス
 #include "Direct3D11.h"	// 自前のDirectX11クラス

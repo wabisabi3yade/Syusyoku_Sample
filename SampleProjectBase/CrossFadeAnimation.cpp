@@ -9,19 +9,17 @@ using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
 
 CrossFadeAnimation::CrossFadeAnimation()
-	: pFromNode(nullptr), pToNode(nullptr), transitionWeight(0.0f), transitionTime(0.0f), elapsedTime(0.0f), curFromRatio(0.0f), curToRatio(0.0f), easeKind(HashiTaku::EaseKind::InOutCubic)
+	: pFromNode(nullptr), pToNode(nullptr), transitionWeight(0.0f), transitionTime(0.0f), elapsedTime(0.0f), easeKind(HashiTaku::EaseKind::InOutCubic)
 {
 }
 
-void CrossFadeAnimation::Begin(AnimationNode_Base& _fromNode, AnimationNode_Base& _toNode, float _transitionTime, float _fromStartRatio, float _toStartRatio, HashiTaku::EaseKind _easeKind)
+void CrossFadeAnimation::Begin(AnimationNode_Base& _fromNode, AnimationNode_Base& _toNode, float _transitionTime, HashiTaku::EaseKind _easeKind)
 {
 	pFromNode = &_fromNode;
 	pToNode = &_toNode;
 
 	elapsedTime = 0.0f;
 	transitionTime = _transitionTime;
-	curFromRatio = _fromStartRatio;
-	curToRatio = _toStartRatio;
 	easeKind = _easeKind;
 }
 
@@ -39,18 +37,6 @@ void CrossFadeAnimation::Interpolate(const BoneTransform& _fromTransforms, const
 	_outTransforms.rotation = Quaternion::Slerp(_fromTransforms.rotation, _toTransforms.rotation, transitionWeight);
 }
 
-void CrossFadeAnimation::SetFromCurRatio(float _fromRatio)
-{
-	curFromRatio = _fromRatio;
-	curFromRatio = std::clamp(curFromRatio, 0.0f, 1.0f);
-}
-
-void CrossFadeAnimation::SetToCurRatio(float _toRatio)
-{
-	curToRatio = _toRatio;
-	curToRatio = std::clamp(curToRatio, 0.0f, 1.0f);
-}
-
 bool CrossFadeAnimation::GetIsTransitionEnd() const
 {
 	return transitionWeight >= 1.0f;
@@ -64,11 +50,6 @@ float CrossFadeAnimation::GetElapsedTime() const
 float CrossFadeAnimation::GetTransitionTime() const
 {
 	return transitionTime;
-}
-
-float CrossFadeAnimation::GetToRatio() const
-{
-	return curToRatio;
 }
 
 void CrossFadeAnimation::ProgressTime(float _deltaTime)
@@ -90,40 +71,20 @@ void CrossFadeAnimation::Update(BoneList& _updateBones, float _playSpeed)
 	ProgressTime(deltaTime);
 
 	// 割合を進める
-	float fromTime = pFromNode->GetAnimationTime() * curFromRatio;
-	fromTime += deltaTime;
-	curFromRatio = fromTime / pFromNode->GetAnimationTime();
-
-	if (curFromRatio > 1.0f)	// 割合が1超えたら
-	{
-		if (pFromNode->GetIsLoop())
-			curFromRatio -= 1.0f;
-		else
-			curFromRatio = 1.0f;
-	}
+	pFromNode->ProgressPlayRatio(_playSpeed);
 
 	// 割合を進める
-	float toTime = pToNode->GetAnimationTime() * curToRatio;
-	toTime += deltaTime;
-	curToRatio = toTime / pToNode->GetAnimationTime();
-
-	if (curToRatio > 1.0f)	// 割合が1超えたら
-	{
-		if (pToNode->GetIsLoop())
-			curToRatio -= 1.0f;
-		else
-			curToRatio = 1.0f;
-	}
+	pToNode->ProgressPlayRatio(_playSpeed);
 
 	// 補間したトランスフォームをボーンに適用させる
 	u_int boneCnt = _updateBones.GetBoneCnt();
 	for (u_int b_i = 0; b_i < boneCnt; b_i++)
 	{
 		BoneTransform fromTransform;
-		pFromNode->GetAnimTransform(fromTransform, b_i, curFromRatio);
+		pFromNode->GetCurAnimTransform(fromTransform, b_i);
 
 		BoneTransform toTransform;
-		pToNode->GetAnimTransform(toTransform, b_i, curToRatio);
+		pToNode->GetCurAnimTransform(toTransform, b_i);
 
 		BoneTransform interpTransform;
 		Interpolate(fromTransform, toTransform, interpTransform);

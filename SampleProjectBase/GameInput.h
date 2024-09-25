@@ -53,7 +53,6 @@ private:
 
 	DirectX::SimpleMath::Vector2 c_valueState[static_cast<u_int>(ButtonType::Max_BoolNum)];
 
-
 	GameInput();
 	~GameInput() {}
 public:

@@ -13,7 +13,7 @@
 #include "ISaveLoad.h"
 
 // シーンで使用するオブジェクト全般の基底クラス
-class GameObject : public ISaveLoad, public HashiTaku::IImGuiUser
+class GameObject : public HashiTaku::ISaveLoad, public HashiTaku::IImGuiUser
 {
 private:
 	// このオブジェクトの名前

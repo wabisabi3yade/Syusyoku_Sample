@@ -30,16 +30,13 @@ CP_Animation& CP_Animation::operator=(const CP_Animation& _other)
 	return *this;
 }
 
-void CP_Animation::Start()
+void CP_Animation::Awake()
 {
-	// レンダラーに設定しているスケルタルメッシュを取得
-	CP_MeshRenderer* pMR = gameObject->GetComponent<CP_MeshRenderer>();
-	SkeletalMesh* pSetMesh = dynamic_cast<SkeletalMesh*>(pMR->GetRenderMesh());
+	// スケルタルメッシュ準備
+	SetupSkeletalMesh();
 
-	if (pSetMesh != nullptr)
-	{
-		SetSkeletalMesh(*pSetMesh);
-	}
+	// アニメーションコントローラー準備
+	SetupAnimCon();
 }
 
 void CP_Animation::Update()
@@ -60,24 +57,38 @@ void CP_Animation::ImGuiSetting()
 {
 	static bool isWindowOpen = true;
 
-	if (ImGui::Button(TO_UTF8("ウィンドウ")))
-		isWindowOpen = true;
+	// コントローラー名取得
+	std::string controllerName;
+	if (pAnimController)
+		controllerName = pAnimController->GetAssetName();
 
-	if (!isWindowOpen) return;
+	// コントローラー名表示
+	std::string text = "controllerName:";
+	text += controllerName;
+	ImGui::Text(text.c_str());
 
-	std::string name = "アニメーション";
-	ImGui::Begin(TO_UTF8(name), &isWindowOpen);
+	// コントローラー変更
+	if (AssetGetter::ImGuiGetCombobox<AnimationController>("animationController", controllerName))
+	{
+		AnimationController* pGetAnimCon = AssetGetter::GetAsset<AnimationController>(controllerName);
+		if (pGetAnimCon)
+			SetAnimationController(*pGetAnimCon);
+	}
 
+	ImGui::Begin("Animation", &isWindowOpen);
 	if (pAnimController)
 		pAnimController->ImGuiCall();
-
 	ImGui::End();
 }
 
-void CP_Animation::SetSkeletalMesh(SkeletalMesh& _skeletalMesh)
+void CP_Animation::SetupSkeletalMesh()
 {
-	pSkeletalMesh = &_skeletalMesh;
-	pAnimController->SetBoneList(pSkeletalMesh->GetBoneList());
+	// レンダラーに設定しているスケルタルメッシュを取得
+	CP_MeshRenderer* pMR = gameObject->GetComponent<CP_MeshRenderer>();
+	SkeletalMesh* pSetMesh = dynamic_cast<SkeletalMesh*>(pMR->GetRenderMesh());
+
+	if (pSetMesh)	// スケルタルメッシュがあるなら
+		pSkeletalMesh = pSetMesh;
 }
 
 void CP_Animation::SetAnimationController(AnimationController& _controller)
@@ -99,12 +110,31 @@ nlohmann::json CP_Animation::Save()
 {
 	auto data = Component::Save();
 
+	if (pAnimController)
+	{
+		data["animConName"] = pAnimController->GetAssetName();
+	}
+
 	return data;
 }
 
 void CP_Animation::Load(const nlohmann::json& _data)
 {
 	Component::Load(_data);
+
+	std::string animConName = "";
+	if (HashiTaku::LoadJsonString("animConName", animConName, _data))
+	{
+		AnimationController* pLoadController = AssetGetter::GetAsset<AnimationController>(animConName);
+		if (pLoadController)
+			SetAnimationController(*pLoadController);
+	}
+}
+
+void CP_Animation::SetupAnimCon()
+{
+	if (pSkeletalMesh)
+		pAnimController->Begin(pSkeletalMesh->GetBoneList());
 }
 
 void CP_Animation::UpdateAnimationMtx()
@@ -129,7 +159,7 @@ void CP_Animation::UpdateBoneCombMtx()
 
 	Vector3 loadScales = Vector3::One * pSkeletalMesh->GetLoadOffsetScale();
 	Vector3 loadAngles = pSkeletalMesh->GetLoadOffsetAngles();
-	offsetMtx = 
+	offsetMtx =
 		Matrix::CreateScale(Vector3::One * pSkeletalMesh->GetLoadOffsetScale()) * Mtx::CreateRoratateMtx(loadAngles);
 
 	Matrix transformMtx = pRootNode.GetTransformMtx();
@@ -157,7 +187,7 @@ void CP_Animation::UpdateNodeHierarchy(TreeNode& _treeNode, const Matrix& _paren
 	}
 
 	Matrix toWorldMtx = nodeMatrix * _parentMtx;
-	
+
 	// 再帰的にボーンを更新していく
 	for (u_int c_i = 0; c_i < _treeNode.GetChildNum(); c_i++)
 	{
@@ -196,5 +226,5 @@ void CP_Animation::Copy(const CP_Animation& _other)
 	Component::operator=(_other);
 
 	pSkeletalMesh = _other.pSkeletalMesh;
-	pAnimController = _other.pAnimController;
+	/*pAnimController = _other.pAnimController;*/
 }

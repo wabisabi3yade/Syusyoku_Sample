@@ -4,7 +4,7 @@
 #ifdef EDIT
 #define HASHI_DEBUG_LOG(message) ImGuiDebugLog::Add(message, std::string(__FILE__) , __LINE__)
 #else
-#define HASHI_DEBUG_LOG(message) ((void)0)
+#define HASHI_DEBUG_LOG(message) 
 #endif
 
 
@@ -21,10 +21,7 @@ class ImGuiDebugLog
 
 	// 今フレームでデバッグログに表示するリスト
 	static std::list<Message> displayList;
-
-	
 public:
-	
 	/// @brief デバッグログに追加する
 	/// @param _debugMessage デバッグメッセージ
 	/// @param _pathName 書き込んだファイル名

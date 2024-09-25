@@ -1,16 +1,11 @@
 #pragma once
 #include "AnimNotifyRespawner.h"
+#include "AnimNotifyConcept.h"
 
 class AnimationNotifyFactory
 {
 	/// @brief 全てのアニメーション通知クラスリスト
 	std::unordered_map<std::string, std::unique_ptr<AnimNotifyRespawner_Base>> animNotifyList;
-
-#ifdef EDIT
-	// 選択中の名前
-	std::string selectName;	
-#endif
-
 public:
 	AnimationNotifyFactory();
 	~AnimationNotifyFactory() {}

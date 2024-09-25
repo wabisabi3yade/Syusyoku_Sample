@@ -117,6 +117,8 @@
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_widgets.cpp" />
     <ClCompile Include="ANE_DebugLog.cpp" />
     <ClCompile Include="AnimationNotifyFactory.cpp" />
+    <ClCompile Include="AnimationParameters.cpp" />
+    <ClCompile Include="AnimControllerCreater.cpp" />
     <ClCompile Include="ANS_DebugLog.cpp" />
     <ClCompile Include="AnimationController.cpp" />
     <ClCompile Include="AnimationData.cpp" />
@@ -126,8 +128,10 @@
     <ClCompile Include="AnimTransitionArrow.cpp" />
     <ClCompile Include="AssetPath_Base.cpp" />
     <ClCompile Include="AssetSaveLoad.cpp" />
+    <ClCompile Include="BoolTransCondition.cpp" />
     <ClCompile Include="BulletContactCallBack.cpp" />
     <ClCompile Include="BulletTest.cpp" />
+    <ClCompile Include="ButtonTransArrow.cpp" />
     <ClCompile Include="CatmulSplineInterp.cpp" />
     <ClCompile Include="BulletDebugDraw.cpp" />
     <ClCompile Include="CloneComponent.cpp" />
@@ -135,6 +139,7 @@
     <ClCompile Include="CP_AnimationNotify.cpp" />
     <ClCompile Include="CP_BoxAnimation.cpp" />
     <ClCompile Include="CP_NotifyTest.cpp" />
+    <ClCompile Include="CP_PlayerAnimation.cpp" />
     <ClCompile Include="CP_RigidBody.cpp" />
     <ClCompile Include="CP_SkyBox.cpp" />
     <ClCompile Include="CP_Weapon.cpp" />
@@ -143,6 +148,7 @@
     <ClCompile Include="DX11BulletPhisics.cpp" />
     <ClCompile Include="DXToBullet.cpp" />
     <ClCompile Include="AnimationNotify_Base.cpp" />
+    <ClCompile Include="FloatTransCondition.cpp" />
     <ClCompile Include="IAnimationObserver.cpp" />
     <ClCompile Include="BlendAnimationNode.cpp" />
     <ClCompile Include="CP_Player.cpp" />
@@ -151,6 +157,8 @@
     <ClCompile Include="IAssetCreater.cpp" />
     <ClCompile Include="IClassNameGetter.cpp" />
     <ClCompile Include="IImGuiUser.cpp" />
+    <ClCompile Include="ImGuiGameInput.cpp" />
+    <ClCompile Include="IntTransCondition.cpp" />
     <ClCompile Include="IObserever.cpp" />
     <ClCompile Include="MaterialCreater.cpp" />
     <ClCompile Include="PlayerAnimController.cpp" />
@@ -159,6 +167,7 @@
     <ClCompile Include="PlayerAttackState.cpp" />
     <ClCompile Include="PlayerMoveState.cpp" />
     <ClCompile Include="PlayerActState_Base.cpp" />
+    <ClCompile Include="HashiTaku_Random.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SingleAnimationNode.cpp" />
@@ -228,6 +237,8 @@
     <ClCompile Include="Tag.cpp" />
     <ClCompile Include="AssetLoader.cpp" />
     <ClCompile Include="PS_TexColor.cpp" />
+    <ClCompile Include="TransConditionCreater.cpp" />
+    <ClCompile Include="TransCondition_Base.cpp" />
     <ClCompile Include="TreeNode.cpp" />
     <ClCompile Include="VariableFrameRate.cpp" />
     <ClCompile Include="ImGuiMethod.cpp" />
@@ -267,7 +278,10 @@
     <ClInclude Include="..\ThirdParty\imgui\include\imstb_truetype.h" />
     <ClInclude Include="ANE_DebugLog.h" />
     <ClInclude Include="AnimationNotifyFactory.h" />
+    <ClInclude Include="AnimationParameters.h" />
     <ClInclude Include="AnimConntrollerType.h" />
+    <ClInclude Include="AnimControllerCreater.h" />
+    <ClInclude Include="AnimNotifyConcept.h" />
     <ClInclude Include="AnimNotifyDefine.h" />
     <ClInclude Include="ANS_DebugLog.h" />
     <ClInclude Include="AnimationController.h" />
@@ -279,8 +293,10 @@
     <ClInclude Include="AssetConcept.h" />
     <ClInclude Include="AssetPath_Base.h" />
     <ClInclude Include="AssetSaveLoad.h" />
+    <ClInclude Include="BoolTransCondition.h" />
     <ClInclude Include="BulletContactCallBack.h" />
     <ClInclude Include="BulletTest.h" />
+    <ClInclude Include="ButtonTransArrow.h" />
     <ClInclude Include="CatmulSplineInterp.h" />
     <ClInclude Include="BulletDebugDraw.h" />
     <ClInclude Include="CloneComponent.h" />
@@ -289,6 +305,7 @@
     <ClInclude Include="CP_AnimationNotify.h" />
     <ClInclude Include="CP_BoxAnimation.h" />
     <ClInclude Include="CP_NotifyTest.h" />
+    <ClInclude Include="CP_PlayerAnimation.h" />
     <ClInclude Include="CP_RigidBody.h" />
     <ClInclude Include="CP_SkyBox.h" />
     <ClInclude Include="CP_Weapon.h" />
@@ -297,6 +314,7 @@
     <ClInclude Include="DX11BulletPhisics.h" />
     <ClInclude Include="DXToBullet.h" />
     <ClInclude Include="AnimationNotify_Base.h" />
+    <ClInclude Include="FloatTransCondition.h" />
     <ClInclude Include="IAnimationObserver.h" />
     <ClInclude Include="BlendAnimationNode.h" />
     <ClInclude Include="CP_Player.h" />
@@ -306,7 +324,9 @@
     <ClInclude Include="IClassNameGetter.h" />
     <ClInclude Include="IImGuiUser.h" />
     <ClInclude Include="AnimNotifyRespawner.h" />
+    <ClInclude Include="ImGuiGameInput.h" />
     <ClInclude Include="InterpolateKind.h" />
+    <ClInclude Include="IntTransCondition.h" />
     <ClInclude Include="IObserever.h" />
     <ClInclude Include="ISaveLoad.h" />
     <ClInclude Include="MaterialCreater.h" />
@@ -317,7 +337,9 @@
     <ClInclude Include="PlayerAttackState.h" />
     <ClInclude Include="PlayerMoveState.h" />
     <ClInclude Include="PlayerActState_Base.h" />
+    <ClInclude Include="HashiTaku_Random.h" />
     <ClInclude Include="RenderTarget.h" />
+    <ClInclude Include="resource1.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SingleAnimationNode.h" />
     <ClInclude Include="AnimationNode_Base.h" />
@@ -391,6 +413,8 @@
     <ClInclude Include="Tag.h" />
     <ClInclude Include="AssetLoader.h" />
     <ClInclude Include="PS_TexColor.h" />
+    <ClInclude Include="TransConditionCreater.h" />
+    <ClInclude Include="TransCondition_Base.h" />
     <ClInclude Include="TreeNode.h" />
     <ClInclude Include="VariableFrameRate.h" />
     <ClInclude Include="IGetRenderPara.h" />
@@ -418,6 +442,10 @@
     <ClInclude Include="VS_Gouraud.h" />
     <ClInclude Include="VS_SkinnedAnimation.h" />
     <ClInclude Include="Window.h" />
+    <ClInclude Include="AnimationParameterType.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SampleProjectBase.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
