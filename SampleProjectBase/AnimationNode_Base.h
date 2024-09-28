@@ -30,6 +30,9 @@ private:
 	/// @brief 現在の再生時間
 	float curPlayingRatio;
 
+	/// @brief ノードの再生速度(1.0は等速)
+	float playSpeed;
+
 	/// @brief アニメーションの時間
 	float animationTime;
 
@@ -113,6 +116,9 @@ private:
 	bool IsCanLoop();
 
 	void Copy(const AnimationNode_Base& _other);
+
+	// ノードのパラメーター設定
+	void ImGuiSetParameter();
 protected:
 	/// @brief 更新処理を行う
 	/// @param _boneList ボーンリスト

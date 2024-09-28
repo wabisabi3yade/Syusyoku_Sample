@@ -24,7 +24,7 @@ namespace HashiTaku
 	bool LoadJsonVector4(const std::string& _s, DirectX::SimpleMath::Vector4& _v, const nlohmann::json& _j);
 	bool LoadJsonQuaternion(const std::string& _s, DirectX::SimpleMath::Quaternion& _v, const nlohmann::json& _j);
 	bool LoadJsonColor(const std::string& _s, DirectX::SimpleMath::Color& _c, const nlohmann::json& _j);
-	template<typename T> void LoadJsonEnum(const std::string& _s, T& _e, const nlohmann::json& _j);
+	template<typename T> bool LoadJsonEnum(const std::string& _s, T& _e, const nlohmann::json& _j);
 
 	/// @brief jsonデータにあるか確認する
 	/// @param _j jsonデータ
@@ -33,17 +33,18 @@ namespace HashiTaku
 	bool IsJsonContains(const nlohmann::json& _j, const std::string& _elementStr);
 
 	template<typename T>
-	void LoadJsonEnum(const std::string& _s, T& _e, const nlohmann::json& _j)
+	bool LoadJsonEnum(const std::string& _s, T& _e, const nlohmann::json& _j)
 	{
 		if (!IsJsonContains(_j, _s))
-			return;
+			return false;
 
 		if (!_j[_s].is_number_integer())
 		{
-			/*HASHI_DEBUG_LOG("は列挙型ではありません");*/
-			return;
+			HASHI_DEBUG_LOG("は列挙型ではありません");
+			return false;
 		}
 
 		_e = static_cast<T>(_j[_s]);
+		return true;
 	}
 }

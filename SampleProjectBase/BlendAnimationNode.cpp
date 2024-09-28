@@ -302,14 +302,13 @@ void BlendAnimationNode::ImGuiSetting()
 {
 	AnimationNode_Base::ImGuiSetting();
 
-	ImGui::Text(std::to_string(curBlendRatio).c_str());
-	ImGui::DragFloat("smoothTime", &ratioSmoothTime, 0.01f, 0.0f, 10.0f);
+	ImGui::DragFloat("RatioSmoothTime", &ratioSmoothTime, 0.01f, 0.0f, 10.0f);
 	HashiTaku::Easing::ImGuiSelect(ratioMoveEase);
 	for (auto& data : blendDatas)
 	{
 		std::string animName = data.pAnimation->GetAssetName();
 		if (!ImGuiMethod::TreeNode(animName.c_str())) continue;
-		ImGui::SliderFloat(TO_UTF8("ƒuƒŒƒ“ƒh"), &data.ratio, 0.0f, 1.0f);
+		ImGui::SliderFloat("Blend", &data.ratio, 0.0f, 1.0f);
 		ImGui::TreePop();
 	}
 

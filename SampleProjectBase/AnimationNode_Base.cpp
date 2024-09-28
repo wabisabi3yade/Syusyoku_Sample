@@ -11,9 +11,8 @@ std::vector<std::string> AnimationNode_Base::edit_nodeTypeStrings =
 };
 #endif // EDIT
 
-
 AnimationNode_Base::AnimationNode_Base(std::string _nodeName, NodeType _type)
-	: nodeName(_nodeName), nodeType(_type), curPlayingRatio(0.0f), animationTime(0.0f), isLoop(true), isFinish(false)
+	: nodeName(_nodeName), nodeType(_type), curPlayingRatio(0.0f), playSpeed(1.0f), animationTime(0.0f), isLoop(true), isFinish(false)
 {
 }
 
@@ -31,7 +30,10 @@ AnimationNode_Base& AnimationNode_Base::operator=(const AnimationNode_Base& _oth
 
 void AnimationNode_Base::ImGuiPlaying()
 {
+#ifdef EDIT
+	ImGui::Text(std::string("NodeName:" + nodeName).c_str());
 	ImGui::SliderFloat("PlayRatio", &curPlayingRatio, 0.0f, 1.0f);
+#endif // EDIT
 }
 
 void AnimationNode_Base::Begin()
@@ -141,6 +143,23 @@ void AnimationNode_Base::Copy(const AnimationNode_Base& _other)
 
 }
 
+void AnimationNode_Base::ImGuiSetParameter()
+{
+#ifdef EDIT
+	std::vector<std::string>& ntStrings = AnimationNode_Base::edit_nodeTypeStrings;
+	const std::string& typeStr = ntStrings[static_cast<u_int>(nodeType)];
+	ImGui::Text(std::string("NodeType:" + typeStr).c_str());	// ノードタイプ
+
+	ImGui::Checkbox("IsLoop", &isLoop);
+
+	ImGuiMethod::PushItemWidth();
+	ImGui::DragFloat("Speed", &playSpeed, 1.0f, 0.0f, 100.0f);
+	ImGui::PopItemWidth();
+
+	ImGui::Text("AnimationTime:%f", animationTime);
+#endif // EDIT
+}
+
 void AnimationNode_Base::SetAnimationTime(float _time)
 {
 	animationTime = std::max(_time, 0.0f);
@@ -148,12 +167,5 @@ void AnimationNode_Base::SetAnimationTime(float _time)
 
 void AnimationNode_Base::ImGuiSetting()
 {
-#ifdef EDIT
-	std::vector<std::string>& ntStrings = AnimationNode_Base::edit_nodeTypeStrings;
-	const std::string& typeStr = ntStrings[static_cast<u_int>(nodeType)];
-	ImGui::Text(typeStr.c_str());
-#endif // EDIT
-
-	ImGui::Checkbox("isLoop", &isLoop);
-	ImGui::DragFloat("animationTime", &animationTime, 0.01f, 0.0f, 100.0f);
+	ImGuiSetParameter();
 }

@@ -5,16 +5,13 @@
 class PlayerAttackState : public PlayerActState_Base
 {
 public:
-	PlayerAttackState(PlayerActionController& _pController);
+	PlayerAttackState();
 	~PlayerAttackState() {}
 
-	void Init() override;
-
-	void Terminal() override;
-
 private:
+	void OnStart() override;
 	void Update() override;
+	void OnEnd() override;
 
-	void TransitionCheck() override;
+	void ImGuiSetting() override;
 };
-

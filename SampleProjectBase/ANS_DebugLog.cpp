@@ -56,8 +56,8 @@ void ANS_DebugLog::ImGuiSetting()
 
 	for (u_int i = 0; i < 3; i++)
 	{
-		ImGuiMethod::PushRandID();
-		ImGuiMethod::EditableText("", message[i], isEditing[i]);
+		ImGui::PushID(i);
+		ImGuiMethod::EditableText("##ansDebug", message[i], isEditing[i]);
 		ImGui::PopID();
 	}
 }

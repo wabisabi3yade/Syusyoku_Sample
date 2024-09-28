@@ -49,6 +49,6 @@ void AnimationNotify_Base::ImGuiSetting()
 {
 #ifdef EDIT
 	ImGui::Checkbox("isActive", &isActive);
-	ImGuiMethod::EditableText(notifyName, isEditing);
+	ImGuiMethod::EditableText("##anb", notifyName, isEditing);
 #endif // EDIT
 }

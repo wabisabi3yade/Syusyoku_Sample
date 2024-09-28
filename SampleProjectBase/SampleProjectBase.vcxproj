@@ -161,6 +161,7 @@
     <ClCompile Include="IntTransCondition.cpp" />
     <ClCompile Include="IObserever.cpp" />
     <ClCompile Include="MaterialCreater.cpp" />
+    <ClCompile Include="PlayerActChangeObserver.cpp" />
     <ClCompile Include="PlayerAnimController.cpp" />
     <ClCompile Include="PlayerActionController.cpp" />
     <ClCompile Include="PlayerAnimObserver.cpp" />
@@ -331,6 +332,7 @@
     <ClInclude Include="ISaveLoad.h" />
     <ClInclude Include="MaterialCreater.h" />
     <ClInclude Include="NullTransform.h" />
+    <ClInclude Include="PlayerActChangeObserver.h" />
     <ClInclude Include="PlayerAnimController.h" />
     <ClInclude Include="PlayerActionController.h" />
     <ClInclude Include="PlayerAnimObserver.h" />

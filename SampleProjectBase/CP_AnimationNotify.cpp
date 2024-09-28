@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CP_AnimationNotify.h"
 #include "GameObject.h"
+#include "AnimationController.h"
 
 CP_AnimationNotify::CP_AnimationNotify()
 	: pAnimController(nullptr), curRatio(0.0f), lastRatio(-Mathf::smallValue), isLoop(false)

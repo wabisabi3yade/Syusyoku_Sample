@@ -109,11 +109,8 @@ public:
 	/// @brief アニメーション遷移の矢印を作成する
 	/// @param _fromNodeName 遷移元アニメーション
 	/// @param _toNodeName 遷移先アニメーション
-	/// @param _targetAnimRatio ターゲットのアニメーション割合
-	/// @param  _transitionTime 遷移時間
-	/// @param _condition 遷移条件
 	/// @return 作成した矢印
-	AnimTransitionArrow* CreateTransitionArrow(const std::string& _fromNodeName, const std::string& _toNodeName, float _targetAnimRatio, float _transitionTime, std::function<bool()> _condition);
+	AnimTransitionArrow* CreateTransitionArrow(const std::string& _fromNodeName, const std::string& _toNodeName);
 
 	/// @brief アニメーションを除外
 	/// @param _animName アニメーションの名前
@@ -206,15 +203,29 @@ private:
 	void Copy(const AnimationController& _other);
 	void CopyNodes(const AnimationController& _other);
 
+	// ノード関係
+	void ImGuiNode(const std::vector<std::string>& _nodeNames);
+
+	// 遷移矢印
+	void ImGuiTransArrow(AnimNodeInfo& _nodeInfo, const std::vector<std::string>& _nodeNames);
+
+	// デフォルトノード設定
+	void ImGuiSetDefaultNode(const std::vector<std::string>& _nodeNames);
+
+	// 遷移情報表示
 	void ImGuiTransition();
+
+	// ノード作成
 	void ImGuiCreateNode();
-	void ImGuiTransArrow(AnimNodeInfo& _nodeInfo);
-	void ImGuiCreateAnimParameter();
 
 	// ノード情報をセーブする
 	nlohmann::json SaveNodeInfo(AnimNodeInfo& _nodeInfo);
+
 	// ノード情報をロードする
 	void LoadNodeInfo(const nlohmann::json& _nodeInfoData);
+
+	// 遷移矢印をロードする
+	void LoadTransArrow(const nlohmann::json& _nodeInfoData);
 protected:
 	void ImGuiSetting() override;
 

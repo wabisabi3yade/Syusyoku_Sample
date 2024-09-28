@@ -4,49 +4,62 @@
 #include "PlayerActionController.h"
 #include "PlayerAnimController.h"
 
-void PlayerActState_Base::ButtonChangeState(GameInput::ButtonType _buttonType, u_int _nextState)
+PlayerActState_Base::PlayerActState_Base(StateType _stateType)
+	: pPlayerObject(nullptr), pAnimController(nullptr), stateType(_stateType)
 {
-	using enum PlayerActionController::State;
-
-	assert(_nextState < static_cast<u_int>(MaxNum) && "範囲外です");
-
-	GameInput* input = GameInput::GetInstance();
-
-	PlayerActionController::State next = static_cast<PlayerActionController::State>(_nextState);
-
-	if (input->GetButtonDown(_buttonType))
-	{
-		pActionController->TransitionState(next);
-	}
+	changeStateSubject = std::make_unique<HashiTaku::Subject<int>>();
 }
 
-void PlayerActState_Base::ChangeAnimation(u_int _animState)
+void PlayerActState_Base::Init(GameObject& _gameObject, HashiTaku::IObserver<int>& _changeObserver)
 {
-	pAnimController->SetStartAnimation(
-		static_cast<PlayerAnimController::AnimType>(_animState)
-	);
+	pPlayerObject = &_gameObject;
+	changeStateSubject->AddObserver(_changeObserver);
 }
 
-PlayerActState_Base::PlayerActState_Base(PlayerActionController& _pController)
-	: pActionController(&_pController), pPlayerObject(nullptr), pAnimController(nullptr)
+void PlayerActState_Base::OnStartCall()
 {
+	OnStart();
 }
 
-void PlayerActState_Base::UpdateBase()
+void PlayerActState_Base::UpdateCall()
 {
 	// 各アクション更新
 	Update();
-
-	// 遷移チェック
-	TransitionCheck();
 }
 
-void PlayerActState_Base::SetPlayerObject(GameObject& _playerObj)
+void PlayerActState_Base::OnEndCall()
 {
-	pPlayerObject = &_playerObj;
+	OnEnd();
 }
 
-void PlayerActState_Base::SetAnimController(PlayerAnimController& _pController)
+void PlayerActState_Base::SetAnimController(AnimationController& _pController)
 {
 	pAnimController = &_pController;
+}
+
+std::string PlayerActState_Base::StateTypeToStr(StateType _stateType)
+{
+	using enum StateType;
+	switch (_stateType)
+	{
+	case Move: return "Move";
+
+	case Jump: return "Jump";
+
+	case Attack: return "Attack";
+
+	default: break;
+	}
+
+	return std::string();
+}
+
+PlayerActState_Base::StateType PlayerActState_Base::GetActStateType() const
+{
+	return stateType;
+}
+
+void PlayerActState_Base::ChangeState(StateType _changeState)
+{
+	changeStateSubject->NotifyAll(static_cast<int>(_changeState));
 }

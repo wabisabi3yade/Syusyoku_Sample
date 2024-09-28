@@ -1,13 +1,15 @@
 #pragma once
 #include "Component.h"
 
-#include "PlayerAnimController.h"
 #include "PlayerActionController.h"
 #include "PlayerAnimObserver.h"
 
+class AnimationController;
+
 class CP_Player : public Component
 {
-	PlayerAnimController* pAnimController;
+	/// @brief アニメーションコントローラー
+	AnimationController* pAnimController;
 
 	/// @brief アクションコントローラー
 	std::unique_ptr<PlayerActionController> pActionController;
@@ -15,11 +17,13 @@ class CP_Player : public Component
 	/// @brief アニメーションオブザーバー
 	std::unique_ptr<PlayerAnimObserver> pAnimObserver;
 public:
-	CP_Player() {}
+	CP_Player();
 	CP_Player(const CP_Player& _other);
 	~CP_Player() {}
 
 	CP_Player& operator=(const CP_Player& _other);
+
+	void Init() override;
 
 	void Awake() override;
 

@@ -20,9 +20,7 @@ void ANE_DebugLog::ImGuiSetting()
 {
 #ifdef  EDIT
 	AnimationNotifyEvent::ImGuiSetting();
-	ImGuiMethod::PushRandID();
-	ImGuiMethod::EditableText("", displayMessage, isEditing);
-	ImGui::PopID();
+	ImGuiMethod::EditableText("##aneDebug", displayMessage, isEditing);
 #endif //  EDIT
 }
 

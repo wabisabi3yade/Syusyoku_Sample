@@ -4,25 +4,23 @@
 #include "PlayerActionController.h"
 #include "PlayerAnimController.h"
 
-PlayerAttackState::PlayerAttackState(PlayerActionController& _pController) 
-	: PlayerActState_Base(_pController)
+PlayerAttackState::PlayerAttackState()
+	: PlayerActState_Base(StateType::Attack)
 {
 }
 
-void PlayerAttackState::Init()
+void PlayerAttackState::OnStart()
 {
-	/*using enum PlayerAnimController::AnimType;
-	ChangeAnimation((u_int)Attack);*/
 }
 
 void PlayerAttackState::Update()
 {
 }
 
-void PlayerAttackState::Terminal()
+void PlayerAttackState::OnEnd()
 {
 }
 
-void PlayerAttackState::TransitionCheck()
+void PlayerAttackState::ImGuiSetting()
 {
 }

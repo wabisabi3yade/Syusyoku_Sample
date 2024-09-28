@@ -330,23 +330,8 @@
     <Filter Include="ソース ファイル\Object\Player\Component\PlayerInput">
       <UniqueIdentifier>{3ead3f7f-0159-4fa0-bb22-adcd1bbdcafa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Move">
-      <UniqueIdentifier>{734f0100-f685-4552-a879-1602de240990}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Move\PlayerState">
-      <UniqueIdentifier>{30b7385e-e266-4a05-8e63-0b4ecc32555c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Move\Controller">
-      <UniqueIdentifier>{8007b5fd-3163-4427-92a4-a7ace58b8af8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Move\PlayerState\Move">
-      <UniqueIdentifier>{10a12211-e7fc-402b-94f0-347b6af8ff71}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Game">
       <UniqueIdentifier>{ec24e437-56cb-46e1-a163-c0afcf9d909f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Move\PlayerState\Attack">
-      <UniqueIdentifier>{524a883d-d5ba-414d-86a7-c8dd375fabee}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Object\Player\Observer">
       <UniqueIdentifier>{4e6d4fd8-ad0a-4ca2-b4e8-3368ea14ea38}</UniqueIdentifier>
@@ -594,6 +579,27 @@
     </Filter>
     <Filter Include="ソース ファイル\Animation\AnimationPameters">
       <UniqueIdentifier>{d78781e3-3f17-4ca1-a572-6cc82b233ef0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action">
+      <UniqueIdentifier>{734f0100-f685-4552-a879-1602de240990}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState">
+      <UniqueIdentifier>{30b7385e-e266-4a05-8e63-0b4ecc32555c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Move">
+      <UniqueIdentifier>{10a12211-e7fc-402b-94f0-347b6af8ff71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Attack">
+      <UniqueIdentifier>{524a883d-d5ba-414d-86a7-c8dd375fabee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\Controller">
+      <UniqueIdentifier>{8007b5fd-3163-4427-92a4-a7ace58b8af8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\Observer">
+      <UniqueIdentifier>{3c7cea81-6190-47bc-ba54-8d1a1f6f3797}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationPameters\Parameter">
+      <UniqueIdentifier>{9a97dbbc-c0de-4204-8434-bd558440cec2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -936,19 +942,19 @@
       <Filter>ソース ファイル\Object\Player\Animation</Filter>
     </ClCompile>
     <ClCompile Include="PlayerActState_Base.cpp">
-      <Filter>ソース ファイル\Object\Player\Move\PlayerState</Filter>
+      <Filter>ソース ファイル\Object\Player\Action\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerActionController.cpp">
-      <Filter>ソース ファイル\Object\Player\Move\Controller</Filter>
+      <Filter>ソース ファイル\Object\Player\Action\Controller</Filter>
     </ClCompile>
     <ClCompile Include="PlayerMoveState.cpp">
-      <Filter>ソース ファイル\Object\Player\Move\PlayerState\Move</Filter>
+      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Move</Filter>
     </ClCompile>
     <ClCompile Include="GameInput.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
     <ClCompile Include="PlayerAttackState.cpp">
-      <Filter>ソース ファイル\Object\Player\Move\PlayerState\Attack</Filter>
+      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Attack</Filter>
     </ClCompile>
     <ClCompile Include="IObserever.cpp">
       <Filter>ソース ファイル\Method\Observe</Filter>
@@ -1111,6 +1117,9 @@
     </ClCompile>
     <ClCompile Include="AnimationParameters.cpp">
       <Filter>ソース ファイル\Animation\AnimationPameters</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerActChangeObserver.cpp">
+      <Filter>ソース ファイル\Object\Player\Action\Observer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1439,19 +1448,19 @@
       <Filter>ソース ファイル\Object\Player\Animation</Filter>
     </ClInclude>
     <ClInclude Include="PlayerActState_Base.h">
-      <Filter>ソース ファイル\Object\Player\Move\PlayerState</Filter>
+      <Filter>ソース ファイル\Object\Player\Action\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerActionController.h">
-      <Filter>ソース ファイル\Object\Player\Move\Controller</Filter>
+      <Filter>ソース ファイル\Object\Player\Action\Controller</Filter>
     </ClInclude>
     <ClInclude Include="PlayerMoveState.h">
-      <Filter>ソース ファイル\Object\Player\Move\PlayerState\Move</Filter>
+      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Move</Filter>
     </ClInclude>
     <ClInclude Include="GameInput.h">
       <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
     <ClInclude Include="PlayerAttackState.h">
-      <Filter>ソース ファイル\Object\Player\Move\PlayerState\Attack</Filter>
+      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Attack</Filter>
     </ClInclude>
     <ClInclude Include="IObserever.h">
       <Filter>ソース ファイル\Method\Observe</Filter>
@@ -1644,6 +1653,9 @@
     </ClInclude>
     <ClInclude Include="AnimConntrollerType.h">
       <Filter>ソース ファイル\Animation\AnimationController</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerActChangeObserver.h">
+      <Filter>ソース ファイル\Object\Player\Action\Observer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

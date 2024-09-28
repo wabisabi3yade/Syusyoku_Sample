@@ -8,6 +8,11 @@
 
 using namespace DirectX::SimpleMath;
 
+CP_Player::CP_Player()
+	: pAnimController(nullptr)
+{
+}
+
 CP_Player::CP_Player(const CP_Player& _other)
 {
 	Copy(_other);
@@ -18,6 +23,12 @@ CP_Player& CP_Player::operator=(const CP_Player& _other)
 	Copy(_other);
 
 	return *this;
+}
+
+void CP_Player::Init()
+{
+	// アクションコントローラー作成
+	pActionController = std::make_unique<PlayerActionController>(*gameObject);
 }
 
 void CP_Player::Awake()
@@ -32,14 +43,10 @@ void CP_Player::Start()
 {
 	//アニメーション関係生成
 	CP_Animation* pAnimation = gameObject->GetComponent<CP_Animation>();
-	pAnimController = static_cast<PlayerAnimController*>(pAnimation->GetAnimationController());
+	pAnimController = pAnimation->GetAnimationController();
 
-	// アクションコントローラー作成
-	pActionController = std::make_unique<PlayerActionController>(*gameObject, *pAnimController);
-	// アニメーションオブザーバー作成
-	pAnimObserver = std::make_unique<PlayerAnimObserver>(*pActionController);
-	//// サブジェクトに渡す
-	//pAnimController->AddObserver(*pAnimObserver);
+	// アクションコントローラー開始処理
+	pActionController->Begin(*pAnimController);
 }
 
 void CP_Player::Update()
