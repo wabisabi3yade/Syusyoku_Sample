@@ -10,8 +10,8 @@ std::vector<std::string> FloatTransCondition::judgeTypeStrings =
 };
 #endif // EDIT
 
-FloatTransCondition::FloatTransCondition(float& _parameter)
-	: pParameter(&_parameter), compareVal(0.0f), judgeType(JudgeType::Greater)
+FloatTransCondition::FloatTransCondition(const float& _parameter, const std::string& _parameterName)
+	: TransCondition_Base(_parameterName, HashiTaku::AnimParam::TypeKind::Float), pParameter(&_parameter), compareVal(0.0f), judgeType(JudgeType::Greater)
 {
 }
 
@@ -42,16 +42,37 @@ bool FloatTransCondition::IsCondition() const
 	return isAchieve;
 }
 
+nlohmann::json FloatTransCondition::Save()
+{
+	nlohmann::json data;
+	data["fCompare"] = compareVal;
+	data["fJudgeType"] = judgeType;
+	return data;
+}
+
+void FloatTransCondition::Load(const nlohmann::json& _data)
+{
+	HashiTaku::LoadJsonFloat("fCompare", compareVal, _data);
+	HashiTaku::LoadJsonEnum<JudgeType>("fJudgeType", judgeType, _data);
+}
+
 void FloatTransCondition::ImGuiSetting()
 {
 #ifdef EDIT
-	ImGui::DragFloat("compare", &compareVal, 0.1f);
-	
+	TransCondition_Base::ImGuiSetting();
+	ImGui::SameLine();
+
+	ImGuiMethod::PushItemWidth();
+
 	// É^ÉCÉvÇïœä∑Ç∑ÇÈ
 	u_int id = static_cast<u_int>(judgeType);
-	ImGuiMethod::PushRandID();
-	ImGuiMethod::ComboBox("", id, judgeTypeStrings);
-	ImGui::PopID();
+	ImGuiMethod::ComboBox("##floatTrans", id, judgeTypeStrings);
 	judgeType = static_cast<JudgeType>(id);
+	ImGui::SameLine();
+
+	// î‰äríËêî
+	ImGui::DragFloat("##compare", &compareVal, 0.1f);
+
+	ImGui::PopItemWidth();
 #endif // EDIT
 }

@@ -1,14 +1,54 @@
 {
     "animController": [
         {
+            "animParameter": [
+                {
+                    "name": "isGround",
+                    "type": 0,
+                    "value": false
+                },
+                {
+                    "name": "speed",
+                    "type": 2,
+                    "value": 0.0
+                }
+            ],
             "assetName": "ANC_Player",
+            "defaultNode": "Move",
             "nodeInfoData": [
                 {
                     "animNode": {
-                        "animTime": 0.0,
+                        "animTime": 1.0,
+                        "blendData": [
+                            {
+                                "animName": "Idle.fbx",
+                                "ratio": 0.0
+                            },
+                            {
+                                "animName": "WalkF.fbx",
+                                "ratio": 0.49799999594688416
+                            },
+                            {
+                                "animName": "RunF.fbx",
+                                "ratio": 1.0
+                            }
+                        ],
+                        "isLoop": true,
+                        "moveEase": 8,
+                        "smoothTime": 1.0
+                    },
+                    "arrowDataList": null,
+                    "nodeName": "Move",
+                    "nodeType": 1
+                },
+                {
+                    "animNode": {
+                        "animName": "AttackN1.fbx",
+                        "animTime": 1.5,
                         "isLoop": true
                     },
-                    "nodeName": "l",
+                    "arrowDataList": null,
+                    "nodeName": "Attack1",
                     "nodeType": 0
                 }
             ],
@@ -29,15 +69,15 @@
             "rightHand": true
         },
         {
-            "assetName": "WalkF.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/WalkF.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "Reaction.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/Reaction.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "WalkF.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/WalkF.fbx",
             "rightHand": true
         },
         {
@@ -137,20 +177,20 @@
             "pathName": "assets/texture/skyBox/sky_Day_u.png"
         },
         {
-            "assetName": "sky_Day_b.png",
-            "pathName": "assets/texture/skyBox/sky_Day_b.png"
-        },
-        {
             "assetName": "sky_Day_r.png",
             "pathName": "assets/texture/skyBox/sky_Day_r.png"
         },
         {
-            "assetName": "sky_Day_l.png",
-            "pathName": "assets/texture/skyBox/sky_Day_l.png"
+            "assetName": "sky_Day_b.png",
+            "pathName": "assets/texture/skyBox/sky_Day_b.png"
         },
         {
             "assetName": "sky_Day_d.png",
             "pathName": "assets/texture/skyBox/sky_Day_d.png"
+        },
+        {
+            "assetName": "sky_Day_l.png",
+            "pathName": "assets/texture/skyBox/sky_Day_l.png"
         },
         {
             "assetName": "sky_Day_f.png",

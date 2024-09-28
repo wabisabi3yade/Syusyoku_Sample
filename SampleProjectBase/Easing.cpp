@@ -17,10 +17,7 @@ float HashiTaku::Easing::EaseValue(float _ratio, EaseKind _easeType)
 void HashiTaku::Easing::ImGuiSelect(EaseKind& _nowEase)
 {
 #ifdef EDIT
-	std::string nowEaseName = "nowEase:" + easeNames[static_cast<u_int>(_nowEase)];
-	ImGui::Text(nowEaseName.c_str());
-
-	static u_int easeId = 0;
+	u_int easeId = static_cast<u_int>(_nowEase);
 
 	if (ImGuiMethod::ComboBox("Easing", easeId, easeNames))
 	{

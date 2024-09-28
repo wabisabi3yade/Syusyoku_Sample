@@ -7,26 +7,27 @@
 
 using namespace DirectX::SimpleMath;
 
-PlayerMoveState::PlayerMoveState(PlayerActionController& _controller)
-	: PlayerActState_Base(_controller), currentSpeed(0.0f), maxSpeed(10.0f), acceleration(40.0f), rotateSpeed(7.0f)
+PlayerMoveState::PlayerMoveState()
+	: PlayerActState_Base(StateType::Move), currentSpeed(0.0f), maxSpeed(10.0f), acceleration(40.0f), rotateSpeed(7.0f)
 {
 }
 
-void PlayerMoveState::Init()
+void PlayerMoveState::OnStart()
 {
-	/*using enum PlayerAnimController::AnimType;
-	ChangeAnimation((u_int)Move);*/
+	
 }
 
 void PlayerMoveState::Update()
 {
 	Move();
 
-
 	Rotation();
+
+	if (GameInput::GetInstance()->GetButton(GameInput::ButtonType::Player_Attack))
+		ChangeState(StateType::Attack);
 }
 
-void PlayerMoveState::Terminal()
+void PlayerMoveState::OnEnd()
 {
 }
 
@@ -92,7 +93,7 @@ void PlayerMoveState::Move()
 	pPlayerObject->GetTransform().SetPosition(pos);
 
 	// アニメーションのブレンド割合をセット
-	pAnimController->SetMoveSpeedRatio(currentSpeed / maxSpeed);
+	//pAnimController->SetMoveSpeedRatio(currentSpeed / maxSpeed);
 }
 
 void PlayerMoveState::Rotation()
@@ -121,12 +122,4 @@ bool PlayerMoveState::IsMoveInput()
 		return false;
 
 	return true;
-}
-
-void PlayerMoveState::TransitionCheck()
-{
-	using enum PlayerActionController::State;
-	u_int stateNum = static_cast<u_int>(Attack);
-
-	ButtonChangeState(GameInput::ButtonType::Player_Attack, stateNum);
 }

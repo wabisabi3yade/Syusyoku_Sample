@@ -5,20 +5,22 @@
 #include "IntTransCondition.h"
 #include "FloatTransCondition.h"
 
-std::unique_ptr<TransCondition_Base> TransConditionCreater::Create(conditionValType& _parameter)
+using namespace HashiTaku;
+
+std::unique_ptr<TransCondition_Base> TransConditionCreater::Create(const AnimParam::conditionValType& _parameterValue, const std::string& _parameterName)
 {
 	std::unique_ptr<TransCondition_Base> pCondition;
 
 	// •Ï”‚ÌŒ^–¼‚©‚çì¬‚·‚éğŒƒNƒ‰ƒX‚ğ•ÏX‚·‚é
 
-	if (bool* pBool = std::get_if<bool>(&_parameter))	// bool
-		pCondition = std::make_unique<BoolTransCondition>(*pBool);
+	if (const bool* pBool = std::get_if<bool>(&_parameterValue))	// bool
+		pCondition = std::make_unique<BoolTransCondition>(*pBool, _parameterName);
 
-	else if (int* pInt = std::get_if<int>(&_parameter))	// int
-		pCondition = std::make_unique<IntTransCondition>(*pInt);
+	else if (const int* pInt = std::get_if<int>(&_parameterValue))	// int
+		pCondition = std::make_unique<IntTransCondition>(*pInt, _parameterName);
 
-	else if (float *pFloat = std::get_if<float>(&_parameter))	// float
-		pCondition = std::make_unique<FloatTransCondition>(*pFloat);
+	else if (const float *pFloat = std::get_if<float>(&_parameterValue))	// float
+		pCondition = std::make_unique<FloatTransCondition>(*pFloat, _parameterName);
 
 	return std::move(pCondition);
 }

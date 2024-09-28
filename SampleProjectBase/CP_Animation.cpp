@@ -1,14 +1,10 @@
 #include "pch.h"
 #include "CP_Animation.h"
-
 #include "GameObject.h"
-
-// メッシュ
 #include "SkeletalMesh.h"
 #include "CP_MeshRenderer.h"
-
-// アセット取得
 #include "AssetGetter.h"
+#include "AnimationController.h"
 
 using namespace DirectX::SimpleMath;
 

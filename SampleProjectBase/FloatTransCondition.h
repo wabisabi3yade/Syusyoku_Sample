@@ -19,7 +19,7 @@ public:
 #endif // EDIT
 private:
 	/// @brief 遷移条件で参照するfloat変数
-	float* pParameter;
+	const float* pParameter;
 
 	/// @brief 比較する値
 	float compareVal;
@@ -27,10 +27,13 @@ private:
 	/// @brief 判別タイプ
 	JudgeType judgeType;
 public:
-	FloatTransCondition(float& _parameter);
+	FloatTransCondition(const float& _parameter, const std::string& _parameterName);
 	~FloatTransCondition() {}
 
 	bool IsCondition()const override;
+
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
 private:
 
 	void ImGuiSetting() override;

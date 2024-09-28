@@ -101,7 +101,16 @@ public:
 	static void Text(const DirectX::SimpleMath::Quaternion& _q);
 
 	// ランダムなユニークIDをセット
-	static void PushRandID();
+	//static void PushRandID();
+
+	/// @brief 行の空白を挿入する(小サイズ)
+	static void LineSpaceSmall();
+
+	/// @brief 行の空白を挿入する(中サイズ)
+	static void LineSpaceMid();
+
+	/// @brief 入力フィールドのサイズを調整する
+	static void PushItemWidth();
 
 	/// @brief フォントの大きさを変える
 	/// @param _size フォントの大きさ

@@ -7,53 +7,63 @@
 
 #include "PlayerAnimController.h"
 
-std::vector<std::string> g_stateNames =
+PlayerActionController::PlayerActionController(GameObject & _pPlayerObject) 
+	: pCurrentState(nullptr), pAnimController(nullptr), pPlayerObject(&_pPlayerObject)
 {
-	"Move",
-	"Jump",
-	"Action",
-};
-
-PlayerActionController::PlayerActionController(GameObject & _pPlayerObject, PlayerAnimController& _animController) 
-	: pCurrentState(nullptr), pAnimController(&_animController), pPlayerObject(&_pPlayerObject)
-{
-	using enum State;
+	// 状態遷移オブザーバー生成
+	pStateChangeObserver = std::make_unique<PlayerActChangeObserver>("StateChangeObserver", *this);
 
 	// 行動クラスを生成
+	using enum PlayerActState_Base::StateType;
 	CreateState<PlayerMoveState>(Move);
 	CreateState<PlayerAttackState>(Attack);
 
-	pCurrentState = pActions[Move].get();
-	nowState = Move;
+	// デフォルト状態をセット
+	DefaultState(PlayerActState_Base::StateType::Move);
+}
+void PlayerActionController::Begin(AnimationController& _animationController)
+{
+	// アニメーションコントローラーを各ステートに渡す
+	pAnimController = &_animationController;
+	for (auto& actState : pActions)
+	{
+		actState.second->SetAnimController(_animationController);
+	}	
 }
 
 void PlayerActionController::Update()
 {
-	pCurrentState->UpdateBase();
+	pCurrentState->UpdateCall();
 }
 
-void PlayerActionController::TransitionState(State _nextState)
+void PlayerActionController::ChangeState(PlayerActState_Base::StateType _nextState)
 {
 	// 変更前アクション終了処理
-	pCurrentState->Terminal();
+	pCurrentState->OnEndCall();
 
 	// 指定した状態に遷移
-	nowState = _nextState;
 	pCurrentState = pActions[_nextState].get();
 
 	// 変更後アクション初期処理
-	pCurrentState->Init();
+	pCurrentState->OnStartCall();
+
+	HASHI_DEBUG_LOG(PlayerActState_Base::StateTypeToStr(_nextState) + "に遷移");
+}
+
+void PlayerActionController::DefaultState(PlayerActState_Base::StateType _defaultState)
+{
+	pCurrentState = pActions[_defaultState].get();
 }
 
 void PlayerActionController::ImGuiSetting()
 {
 	if (!ImGuiMethod::TreeNode("Action")) return;
 
-	u_int stateNum = static_cast<u_int>(nowState);
-	std::string text = "NowState:" + g_stateNames[stateNum];
+	std::string text = "NowState:" + PlayerActState_Base::StateTypeToStr(pCurrentState->GetActStateType());
 	ImGui::Text(text.c_str());
 
-	pCurrentState->ImGuiSetting();
+	for (auto& pAct : pActions)	// 各アクションの調整
+		pAct.second->ImGuiCall();
 
 	ImGui::TreePop();
 }

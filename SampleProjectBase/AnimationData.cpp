@@ -230,7 +230,7 @@ DirectX::SimpleMath::Vector3 AnimationData::GetPositioneByKey(u_int _boneId, u_i
 	if (!channel) return Vector3::Zero;
 	if (_playingKey > channel->GetPosKeyCnt() - 1)
 	{
-		HASHI_DEBUG_LOG("指定したキーが最大数を超えています")
+		HASHI_DEBUG_LOG("指定したキーが最大数を超えています");
 		_playingKey = channel->GetPosKeyCnt();
 	}
 

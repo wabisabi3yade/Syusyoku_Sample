@@ -19,19 +19,13 @@ class PlayerMoveState : public PlayerActState_Base
 	/// @brief ‰ñ“]‘¬“x
 	float rotateSpeed;
 public:
-	PlayerMoveState(PlayerActionController& _controller);
+	PlayerMoveState();
 	~PlayerMoveState() {}
 
-	void Init() override;
-
-	void Terminal() override;
-
-	void ImGuiSetting() override;
-
 private:
+	void OnStart() override;
 	void Update() override;
-
-	void TransitionCheck() override;
+	void OnEnd() override;
 
 	/// @brief ˆÚ“®
 	void Move();
@@ -44,5 +38,7 @@ private:
 
 	/// @brief ˆÚ“®“ü—Í‚³‚ê‚Ä‚¢‚é‚©
 	bool IsMoveInput();
+
+	void ImGuiSetting() override;
 };
 

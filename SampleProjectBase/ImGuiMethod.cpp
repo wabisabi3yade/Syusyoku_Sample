@@ -3,11 +3,11 @@
 
 // テキストサイズ
 constexpr float FONT_SIZES[static_cast<u_int>(ImGuiMethod::FontSize::Num)] = { 16.0f, 50.0f, 20.0f };
-
-
 constexpr int UNIQUE_ID_MIN(-2000000000);	// ユニークIDの最小値
 constexpr int UNIQUE_ID_MAX(2000000000);	// ユニークIDの最大値
-
+constexpr float LINESPACE_HEIGHT_S(5.0f);	// 行スペースの高さ(小)
+constexpr float LINESPACE_HEIGHT_M(10.0f);	// 行スペースの高さ(中)
+constexpr float BOX_SIZE(100.0f);	// 入力フィールドのサイズ
 // static変数初期化
 ImFont* ImGuiMethod::pFonts[static_cast<u_int>(FontSize::Num)] = {};
 
@@ -253,12 +253,27 @@ void ImGuiMethod::Text(const DirectX::SimpleMath::Quaternion& _q)
 #endif // EDIT
 }
 
-void ImGuiMethod::PushRandID()
+//void ImGuiMethod::PushRandID()
+//{
+//#ifdef EDIT
+//	// 乱数でIDセット
+//	ImGui::PushID(HashiTaku::Random::RangeInt<int>(UNIQUE_ID_MIN, UNIQUE_ID_MAX));
+//#endif // EDIT
+//}
+
+void ImGuiMethod::LineSpaceSmall()
 {
-#ifdef EDIT
-	// 乱数でIDセット
-	ImGui::PushID(HashiTaku::Random::RangeInt<int>(UNIQUE_ID_MIN, UNIQUE_ID_MAX));
-#endif // EDIT
+	ImGui::Dummy(ImVec2(0.0f, LINESPACE_HEIGHT_S));
+}
+
+void ImGuiMethod::LineSpaceMid()
+{
+	ImGui::Dummy(ImVec2(0.0f, LINESPACE_HEIGHT_M));
+}
+
+void ImGuiMethod::PushItemWidth()
+{
+	ImGui::PushItemWidth(BOX_SIZE);
 }
 
 void ImGuiMethod::SetFontSize(FontSize _size)

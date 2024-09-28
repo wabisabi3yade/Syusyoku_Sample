@@ -18,7 +18,7 @@ using namespace HashiTaku;
 AnimationController::AnimationController()
 	: pCurrentNodeInfo(nullptr), pPrevAnimNode(nullptr), pDefaultNodeInfo(nullptr), pCurTransArrow(nullptr), playSpeed(1.0f), pBoneList(nullptr), isPlay(true), isTransitioning(false)
 {
-	pAnimParameters = std::unique_ptr<AnimationParameters>();
+	pAnimParameters = std::make_unique<AnimationParameters>();
 	pCrossFadeInterp = std::make_unique<CrossFadeAnimation>();
 	pInertInterp = std::make_unique<InertInterpAnimation>();
 }
@@ -210,7 +210,7 @@ void AnimationController::CreateBlendNode(const std::vector<std::string>& _animN
 	animNodeInfos.push_back(std::move(createInfo));
 }
 
-AnimTransitionArrow* AnimationController::CreateTransitionArrow(const std::string& _fromNodeName, const std::string& _toNodeName, float _targetAnimRatio, float _transitionTime, std::function<bool()> _condition)
+AnimTransitionArrow* AnimationController::CreateTransitionArrow(const std::string& _fromNodeName, const std::string& _toNodeName)
 {
 	AnimNodeInfo* fromNodeInfo = GetNodeInfo(_fromNodeName);
 	if (!fromNodeInfo)
@@ -226,14 +226,16 @@ AnimTransitionArrow* AnimationController::CreateTransitionArrow(const std::strin
 		return nullptr;
 	}
 
-	if (fromNodeInfo == toNodeInfo) return nullptr;	// 自分自身につなげていたら
+	if (fromNodeInfo == toNodeInfo)	// 自分自身につなげていたら
+	{
+		HASHI_DEBUG_LOG("遷移元と先が同じノードです");
+		return nullptr;
+	}
 
 	// 矢印作成して追加
 	AnimationNode_Base* pFromNode = fromNodeInfo->pAnimNode.get();
 	AnimationNode_Base* pToNode = toNodeInfo->pAnimNode.get();
-	std::unique_ptr<AnimTransitionArrow> pTransitionArrow = std::make_unique<AnimTransitionArrow>(*pFromNode, *pToNode);
-	pTransitionArrow->SetTransTargetRatio(_targetAnimRatio);
-	pTransitionArrow->SetTransitonTime(_transitionTime);
+	std::unique_ptr<AnimTransitionArrow> pTransitionArrow = std::make_unique<AnimTransitionArrow>(*pFromNode, *pToNode, *pAnimParameters);
 
 	AnimTransitionArrow* pRetArrow = pTransitionArrow.get();
 	fromNodeInfo->pTransArrows.push_back(std::move(pTransitionArrow));
@@ -331,6 +333,7 @@ nlohmann::json AnimationController::Save()
 	if (pDefaultNodeInfo)
 		data["defaultNode"] = pDefaultNodeInfo->pAnimNode->GetNodeName();
 
+	data["animParameter"] = pAnimParameters->Save();	// パラメーター
 	return data;
 }
 
@@ -339,6 +342,13 @@ void AnimationController::Load(const nlohmann::json& _data)
 	Asset_Base::Load(_data);
 	LoadJsonFloat("playSpeed", playSpeed, _data);
 
+	// パラメーター
+	nlohmann::json paramsData;	
+	if (LoadJsonDataArray("animParameter", paramsData, _data))
+	{
+		pAnimParameters->Load(paramsData);
+	}
+
 	// ノード情報をロードする
 	nlohmann::json nodeInfoDatas;
 	if (LoadJsonDataArray("nodeInfoData", nodeInfoDatas, _data))
@@ -346,6 +356,11 @@ void AnimationController::Load(const nlohmann::json& _data)
 		for (auto& nd : nodeInfoDatas)
 		{
 			LoadNodeInfo(nd);
+		}
+
+		for (auto& nd : nodeInfoDatas)
+		{
+			LoadTransArrow(nd);
 		}
 	}
 
@@ -511,8 +526,14 @@ nlohmann::json AnimationController::SaveNodeInfo(AnimNodeInfo& _nodeInfo)
 	nodeInfoData["nodeType"] = _nodeInfo.pAnimNode->GetNodeType();
 	nodeInfoData["animNode"] = _nodeInfo.pAnimNode->Save();
 
-	/*for (auto& pArrow : _nodeInfo.pTransArrows)
-		nodeInfoData["arrow"] = pArrow->Save();*/
+	auto& arrowDataList = nodeInfoData["arrowDataList"];
+	for (auto& pArrow : _nodeInfo.pTransArrows)
+	{
+		nlohmann::json arrowData;
+		arrowData["arrowParam"] = pArrow->Save();
+		arrowData["toName"] = pArrow->GetToNode().GetNodeName();
+		arrowDataList.push_back(arrowData);
+	}
 
 	return nodeInfoData;
 }
@@ -528,71 +549,31 @@ void AnimationController::LoadNodeInfo(const nlohmann::json& _nodeInfoData)
 	nlohmann::json nodeData;	// ノード種ごとのロード
 	LoadJsonData("animNode", nodeData, _nodeInfoData);
 	pCreateNodeInfo->pAnimNode->Load(nodeData);
-
-	// ↓矢印作成かく
 }
 
-void AnimationController::ImGuiSetting()
+void AnimationController::LoadTransArrow(const nlohmann::json& _nodeInfoData)
 {
-	ImGui::Checkbox("Play", &isPlay);
-	ImGui::DragFloat("PlaySpeed", &playSpeed, 0.1f);
-
-	if (IsSetAnimation())	// 再生中ノード
+	// 矢印作成
+	nlohmann::json arrowDataList;
+	HashiTaku::LoadJsonDataArray("arrowDataList", arrowDataList, _nodeInfoData);
+	for (auto& arrowData : arrowDataList)
 	{
-		pCurrentNodeInfo->pAnimNode->ImGuiPlaying();
-	}
+		std::string toNodeName;	// 遷移先
+		HashiTaku::LoadJsonString("toName", toNodeName, arrowData);
 
-	auto nodeItr = animNodeInfos.begin();
-	while (nodeItr != animNodeInfos.end())	// 全ノード
-	{
-		AnimationNode_Base& animNode = *(*nodeItr)->pAnimNode;
-		bool isDelete = false;
+		std::string fromName;	// 遷移元
+		HashiTaku::LoadJsonString("nodeName", fromName, _nodeInfoData);
 
-		if (ImGuiMethod::TreeNode(animNode.GetNodeName()))
+		// 矢印を作成
+		if (AnimTransitionArrow* pTransArrow = CreateTransitionArrow(fromName, toNodeName))
 		{
-			animNode.ImGuiCall();	// ノード
-			ImGuiTransArrow(*(*nodeItr));	// 矢印
-			isDelete = ImGui::Button("Delete");	// 削除
-			ImGui::TreePop();
-		}
-
-		// ノード情報削除
-		if (isDelete)
-			nodeItr = animNodeInfos.erase(nodeItr);
-		else
-			nodeItr++;
-	}
-
-	// コンボボックスでデフォルトノード設定
-	if (!animNodeInfos.empty())
-	{
-		std::vector<std::string> nodeNames;
-		for (auto& ni : animNodeInfos)
-		{
-			nodeNames.push_back(ni->pAnimNode->GetNodeName());
-		}
-
-		std::string curDefaultName;
-		if (pDefaultNodeInfo)
-			curDefaultName = pDefaultNodeInfo->pAnimNode->GetNodeName();
-		if (ImGuiMethod::ComboBox("DefaultNode", curDefaultName, nodeNames))
-		{
-			pDefaultNodeInfo = GetNodeInfo(curDefaultName);
+			nlohmann::json arrowParamData;	// 矢印のパラメータ
+			if (HashiTaku::LoadJsonData("arrowParam", arrowParamData, arrowData))
+				pTransArrow->Load(arrowParamData);
 		}
 	}
-
-	// ノード追加
-	ImGuiCreateNode();
-
-	//for (auto& a : animNodeInfos)	// ボタンでアニメーション変える
-	//{
-	//	std::string name = a->pAnimNode->GetNodeName();
-	//	if (ImGui::Button(name.c_str()))
-	//	{
-	//		ChangeAnimation(name);	// アニメーション変更
-	//	}
-	//}
 }
+
 
 AnimationController::AnimNodeInfo* AnimationController::CreateNodeInfoByType(AnimationNode_Base::NodeType _nodeType, const std::string& _nodeName)
 {
@@ -641,8 +622,87 @@ void AnimationController::CopyNodes(const AnimationController& _other)
 	}
 }
 
+void AnimationController::ImGuiSetting()
+{
+	ImGui::Checkbox("Play", &isPlay);
+	ImGui::DragFloat("PlaySpeed", &playSpeed, 0.1f);
+
+	if (IsSetAnimation() && ImGuiMethod::TreeNode("Play Node"))
+	{
+		pCurrentNodeInfo->pAnimNode->ImGuiPlaying();
+		ImGui::TreePop();
+	}
+
+	std::vector<std::string> nodeNames;	// 全ノード名を取得しておく
+	for (auto& ni : animNodeInfos)
+		nodeNames.push_back(ni->pAnimNode->GetNodeName());
+
+	if (ImGuiMethod::TreeNode("All Node"))
+	{
+		ImGuiNode(nodeNames);	// 所持ノード
+		ImGuiCreateNode();	// ノード追加
+		ImGui::TreePop();
+	}
+
+	// パラメータ
+	if (ImGuiMethod::TreeNode("Parameter"))
+	{
+		pAnimParameters->ImGuiCall();
+		ImGui::TreePop();
+	}
+}
+
+
+void AnimationController::ImGuiNode(const std::vector<std::string>& _nodeNames)
+{
+#ifdef EDIT
+	auto nodeItr = animNodeInfos.begin();
+	while (nodeItr != animNodeInfos.end())	// 全ノード
+	{
+		AnimationNode_Base& animNode = *(*nodeItr)->pAnimNode;
+		bool isDelete = false;
+
+		if (ImGuiMethod::TreeNode(animNode.GetNodeName()))
+		{
+			isDelete = ImGui::Button("Delete");	// 削除
+			animNode.ImGuiCall();	// ノード
+			ImGuiMethod::LineSpaceMid();
+
+			// 矢印
+			ImGui::Text("Arrow");
+			ImGuiTransArrow(*(*nodeItr), _nodeNames);
+			ImGui::TreePop();
+		}
+
+		// ノード情報削除
+		if (isDelete)
+			nodeItr = animNodeInfos.erase(nodeItr);
+		else
+			nodeItr++;
+	}
+#endif // EDIT
+}
+
+void AnimationController::ImGuiSetDefaultNode(const std::vector<std::string>& _nodeNames)
+{
+#ifdef EDIT
+	// コンボボックスでデフォルトノード設定
+	if (animNodeInfos.empty()) return;
+
+	std::string curDefaultName;
+	if (pDefaultNodeInfo)
+		curDefaultName = pDefaultNodeInfo->pAnimNode->GetNodeName();
+
+	if (ImGuiMethod::ComboBox("DefaultNode", curDefaultName, _nodeNames))
+	{
+		pDefaultNodeInfo = GetNodeInfo(curDefaultName);
+	}
+#endif // EDIT
+}
+
 void AnimationController::ImGuiTransition()
 {
+#ifdef EDIT
 	AnimationNode_Base* pCurNode = pCurrentNodeInfo->pAnimNode.get();
 	IAnimInterpolate* interpolate = pCrossFadeInterp.get();
 	if (pCurTransArrow->GetInterpolateKind() == AnimInterpolateKind::Inertialization)
@@ -658,10 +718,12 @@ void AnimationController::ImGuiTransition()
 
 	text = "ブレンド時間" + std::to_string(interpolate->GetTransitionTime()) + "(s)";
 	ImGui::Text(TO_UTF8(text));
+#endif // EDIT
 }
 
 void AnimationController::ImGuiCreateNode()
 {
+#ifdef EDIT
 	ImGui::Text("CreateNode");
 
 	// ノード名
@@ -671,36 +733,55 @@ void AnimationController::ImGuiCreateNode()
 	// ノードタイプ
 	static u_int selectId = 0;
 
-	if (ImGui::Button("Create"))
-	{
-		CreateNodeInfoByType(static_cast<AnimationNode_Base::NodeType>(selectId), input);
-	}
-	ImGui::SameLine();
 	std::vector<std::string> typeNames =
 	{
 		"Single",
 		"Blend"
 	};
 	ImGuiMethod::ComboBox("NodeType", selectId, typeNames);
+	ImGui::SameLine();
+
+	if (ImGui::Button("+"))
+	{
+		CreateNodeInfoByType(static_cast<AnimationNode_Base::NodeType>(selectId), input);
+	}
+#endif // EDIT
 }
 
-void AnimationController::ImGuiTransArrow(AnimNodeInfo& _nodeInfo)
+void AnimationController::ImGuiTransArrow(AnimNodeInfo& _nodeInfo, const std::vector<std::string>& _nodeNames)
 {
+#ifdef EDIT
+	static u_int selectId = 0;
+
+	// 所持している矢印パラメータ
 	auto itr = _nodeInfo.pTransArrows.begin();
 	while (itr != _nodeInfo.pTransArrows.end())
 	{
+		bool isDelete = false;
 		std::string toNodeName = (*itr)->GetToNode().GetNodeName();
-		if (ImGuiMethod::TreeNode(toNodeName))
+
+		std::string treeCaption = "To " + toNodeName;
+		if (ImGuiMethod::TreeNode(treeCaption.c_str()))
 		{
 			(*itr)->ImGuiCall();
+			isDelete = ImGui::Button("X");	// 削除ボタン
 			ImGui::TreePop();
 		}
-		itr++;
+
+		if (isDelete)
+			itr = _nodeInfo.pTransArrows.erase(itr);
+		else
+			itr++;
 	}
 
-}
-
-void AnimationController::ImGuiCreateAnimParameter()
-{
-	
+	// 新たに矢印を作成する
+	ImGui::Text("CreateArrow");
+	ImGuiMethod::ComboBox("ToNode", selectId, _nodeNames);
+	ImGui::SameLine();
+	if (ImGui::Button("+"))	// 作成
+	{
+		std::string fromName = _nodeInfo.pAnimNode->GetNodeName();
+		CreateTransitionArrow(fromName, _nodeNames[selectId]);
+	}
+#endif // EDIT
 }

@@ -76,23 +76,23 @@ void PlayerAnimController::InitTransitionArrow()
 {
 	using enum AnimType;
 
-	// Move
-	AnimTransitionArrow* pMoveToAtk = CreateTransitionArrow(animTypeNodeNames[Move], animTypeNodeNames[Attack], 0.2f, 0.2f,
-		[]()
-		{
-			return GameInput::GetInstance()->GetButtonDown(GameInput::ButtonType::Player_Attack);
-		});
-	pMoveToAtk->SetEaseKind(EaseKind::OutBack);
+	//// Move
+	//AnimTransitionArrow* pMoveToAtk = CreateTransitionArrow(animTypeNodeNames[Move], animTypeNodeNames[Attack], 0.2f, 0.2f,
+	//	[]()
+	//	{
+	//		return GameInput::GetInstance()->GetButtonDown(GameInput::ButtonType::Player_Attack);
+	//	});
+	//pMoveToAtk->SetEaseKind(EaseKind::OutBack);
 
 
-	// Attack
-	AnimationNode_Base* pAttackNode = GetNodeInfo(animTypeNodeNames[Attack])->pAnimNode.get();
-	AnimTransitionArrow* pAtkToMove = CreateTransitionArrow(animTypeNodeNames[Attack], animTypeNodeNames[Move], 0.1f, 0.2f, [pAttackNode]()
-		{
-			return pAttackNode->GetIsFinish();
-		});
+	//// Attack
+	//AnimationNode_Base* pAttackNode = GetNodeInfo(animTypeNodeNames[Attack])->pAnimNode.get();
+	//AnimTransitionArrow* pAtkToMove = CreateTransitionArrow(animTypeNodeNames[Attack], animTypeNodeNames[Move], 0.1f, 0.2f, [pAttackNode]()
+	//	{
+	//		return pAttackNode->GetIsFinish();
+	//	});
 
-	pAtkToMove->SeInterpolateKind(HashiTaku::AnimInterpolateKind::Inertialization);
+	//pAtkToMove->SeInterpolateKind(HashiTaku::AnimInterpolateKind::Inertialization);
 }
 
 void PlayerAnimController::LinkAnimTypeNodeName(AnimType _animType, const std::string& _nodeName)

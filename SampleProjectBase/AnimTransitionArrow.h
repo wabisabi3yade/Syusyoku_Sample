@@ -17,6 +17,9 @@ class AnimTransitionArrow : public HashiTaku::IImGuiUser, public HashiTaku::ISav
 	/// @brief	遷移先アニメノード
 	AnimationNode_Base* pToNode;
 
+	/// @brief コントローラー内変数
+	AnimationParameters* pAnimParameters;
+
 	/// @brief 遷移先のアニメーションの指定割合
 	float transTargetRatio;
 
@@ -24,23 +27,31 @@ class AnimTransitionArrow : public HashiTaku::IImGuiUser, public HashiTaku::ISav
 	float transitionTime;
 
 	/// @brief 遷移をすすめるときに利用するイージング
-	HashiTaku::EaseKind easeKind;
+	HashiTaku::EaseKind transitiionEase;
 
 	/// @brief アニメーション間で使用する補間方法
 	HashiTaku::AnimInterpolateKind interpolateKind;
+
+#ifdef EDIT
+	// 選択中の名前
+	std::string selectParamName;
+#endif
 public:
 	/// @brief コンストラクタ
 	/// @param _fromNode 遷移前
 	/// @param _toNode 遷移先
-	AnimTransitionArrow(AnimationNode_Base& _fromNode, AnimationNode_Base& _toNode);
+	/// @param _animParameters コントローラー内変数
+	AnimTransitionArrow(AnimationNode_Base& _fromNode, AnimationNode_Base& _toNode, AnimationParameters& _animParameters);
 	virtual ~AnimTransitionArrow() {}
 
 	/// @brief 遷移条件を達成しているか確認
 	/// @return 達成しているか？
 	bool CheckTransition();
 
-	/// @brief 矢印に条件を追加
-	void AddCondition(conditionValType& _val);
+	/// @brief 矢印に遷移条件を作成
+	/// @param _val 参照するパラメータ値
+	/// @param _name パラメータ名
+	void AddCondition(const HashiTaku::AnimParam::conditionValType& _val, const std::string& _name);
 
 	// 遷移終了時の遷移先のアニメーション割合をセット
 	void SetTransTargetRatio(float _transTargetRatio);
@@ -76,7 +87,15 @@ public:
 	/// @brief ロードする
 	/// @param _data ロードするデータ 
 	void Load(const nlohmann::json& _data) override;
+
+private:
+	// ImGuiで補間の種類を編集
+	void ImGuiSetInterpolate();
+
+	// 遷移条件を編集
+	void ImGuiSetCondistion();
+
 protected:
-	void ImGuiSetting() /*override*/;
+	void ImGuiSetting() override;
 };
 

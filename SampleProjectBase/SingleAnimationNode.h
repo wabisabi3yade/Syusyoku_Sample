@@ -11,8 +11,6 @@ public:
 
 	~SingleAnimationNode() {}
 
-	void ImGuiPlaying() override;
-
 	void Update(BoneList& _boneList) override;
 
 	/// @brief アニメーション
@@ -35,6 +33,9 @@ public:
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
+
+	// 再生時に表示する
+	void ImGuiPlaying() override;
 private:
 	void ImGuiSetting() override;
 };
