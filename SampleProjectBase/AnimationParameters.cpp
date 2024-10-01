@@ -1,12 +1,66 @@
 #include "pch.h"
 #include "AnimationParameters.h"
 
+#include "AnimParamRemoveObserver.h"
+
 using namespace HashiTaku::AnimParam;
+
+AnimationParameters::AnimationParameters()
+{
+	pAnimParamSubject = std::make_unique<HashiTaku::Subject<NotificationData>>();
+}
+
+void AnimationParameters::RenameParameter(const std::string& _prevName, std::string _changeName)
+{
+	// 名前からイテレータを取得
+	auto deleteItr = animParameters.find(_prevName);
+	if (deleteItr == animParameters.end()) return;
+
+	// 一旦保存
+	auto tmpValue = std::move(deleteItr->second);
+	
+	// 新しく追加
+	NotDuplicateParamName(_changeName);
+	animParameters[_changeName] = tmpValue;
+
+	// 通知する
+	NotificationData data;
+	data.eventType = AnimParamObseveEvent::Rename;
+	data.pDeleteName = &_prevName;
+	data.pAfterName = &_changeName;
+	pAnimParamSubject->NotifyAll(data);
+
+	// 削除する
+	auto newItr = animParameters.erase(deleteItr);
+}
+
+void AnimationParameters::RemoveParameter(const std::string& _paramNames)
+{
+	if (!animParameters.contains(_paramNames)) return;
+
+	// オブザーバーへ削除するパラメータ名を通知
+	NotificationData data;
+	data.eventType = AnimParamObseveEvent::Remove;
+	data.pDeleteName = &_paramNames;
+	pAnimParamSubject->NotifyAll(data);
+
+	// トリガー型ならリセット配列から削除
+	if (TriggerType* pTrigger = std::get_if<TriggerType>(&animParameters[_paramNames]))
+		pResetTriggers.remove(pTrigger);
+
+	animParameters.erase(_paramNames);
+}
+
+void AnimationParameters::ResetTrigger()
+{
+	for (auto& pTrigger : pResetTriggers)
+		pTrigger->ResetTrigger();
+}
 
 void AnimationParameters::SetBool(const std::string& _paramName, bool _isBool)
 {
 #ifdef EDIT
-	if(!CheckBool(_paramName)) return;
+	if (!CheckBool(_paramName)) return;
 #endif // EDIT
 
 	animParameters[_paramName] = _isBool;
@@ -15,7 +69,7 @@ void AnimationParameters::SetBool(const std::string& _paramName, bool _isBool)
 void AnimationParameters::SetInt(const std::string& _paramName, int _intVal)
 {
 #ifdef EDIT
-	if (CheckInt(_paramName)) return;
+	if (!CheckInt(_paramName)) return;
 #endif // EDIT
 
 	animParameters[_paramName] = _intVal;
@@ -24,10 +78,21 @@ void AnimationParameters::SetInt(const std::string& _paramName, int _intVal)
 void AnimationParameters::SetFloat(const std::string& _paramName, float _floatVal)
 {
 #ifdef EDIT
-	if (CheckFloat(_paramName)) return;
+	if (!CheckFloat(_paramName)) return;
 #endif // EDIT
 
 	animParameters[_paramName] = _floatVal;
+}
+
+void AnimationParameters::SetTrigger(const std::string& _paramName)
+{
+#ifdef EDIT
+	if (!CheckTrigger(_paramName)) return;
+#endif // EDIT
+
+	// トリガーをtrueにする
+	TriggerType* t = std::get_if<TriggerType>(&animParameters[_paramName]);
+	t->SetIsTrigger();
 }
 
 bool AnimationParameters::GetBool(const std::string& _paramName)
@@ -57,7 +122,18 @@ float AnimationParameters::GetFloat(const std::string& _paramName)
 	return std::get<float>(animParameters[_paramName]);
 }
 
-void AnimationParameters::GetNameList(std::vector<const std::string*>& _nameList)
+bool AnimationParameters::GetTrigger(const std::string& _paramName)
+{
+#ifdef EDIT
+	if (!CheckTrigger(_paramName)) return false;
+#endif // EDIT
+
+	// 状態を取得
+	TriggerType* t = std::get_if<TriggerType>(&animParameters[_paramName]);
+	return t->GetIsTrigger();
+}
+
+void AnimationParameters::GetNameList(std::vector<const std::string*>& _nameList) const
 {
 	for (auto& param : animParameters)
 	{
@@ -65,9 +141,19 @@ void AnimationParameters::GetNameList(std::vector<const std::string*>& _nameList
 	}
 }
 
+void AnimationParameters::GetFloatNameList(std::vector<const std::string*>& _nameList) const
+{
+	for (auto& param : animParameters)
+	{
+		// float型なら
+		if (std::holds_alternative<float>(param.second))
+			_nameList.push_back(&param.first);
+	}
+}
+
 const conditionValType* AnimationParameters::GetValueAddress(const std::string& _name) const
 {
-	if(!animParameters.contains(_name)) return nullptr;
+	if (!animParameters.contains(_name)) return nullptr;
 
 	auto itr = animParameters.find(_name);
 	return &itr->second;
@@ -81,23 +167,14 @@ const std::string* AnimationParameters::GetNameAddress(const std::string& _name)
 	return &itr->first;
 }
 
-const std::string* AnimationParameters::GetBeginNameAddres() const
-{
-	if (animParameters.empty()) return nullptr;
-
-	return &animParameters.begin()->first;
-}
-
-const conditionValType* AnimationParameters::GetBeginValueAddres() const
-{
-	if (animParameters.empty()) return nullptr;
-
-	return &animParameters.begin()->second;
-}
-
 u_int AnimationParameters::GetParameterCnt() const
 {
 	return static_cast<u_int>(animParameters.size());
+}
+
+HashiTaku::Subject<HashiTaku::AnimParam::NotificationData>& AnimationParameters::GetParamRemoveSubject()
+{
+	return *pAnimParamSubject;
 }
 
 nlohmann::json AnimationParameters::Save()
@@ -108,7 +185,7 @@ nlohmann::json AnimationParameters::Save()
 	{
 		nlohmann::json parameterData;
 		parameterData["name"] = param.first;
-		
+
 		TypeKind type = GetType(param.second);
 		parameterData["type"] = type;
 
@@ -123,6 +200,10 @@ nlohmann::json AnimationParameters::Save()
 			break;
 		case TypeKind::Float:
 			parameterData[element] = std::get<float>(param.second);
+			break;
+		case TypeKind::Trigger:
+			break;
+		default:
 			break;
 		}
 
@@ -151,20 +232,30 @@ void AnimationParameters::Load(const nlohmann::json& _data)
 			bool isBool = false; HashiTaku::LoadJsonBoolean(element, isBool, paramData);
 			value = isBool;
 		}
-			break;
+		break;
 
 		case TypeKind::Int:
 		{
 			int intVal = 0;  HashiTaku::LoadJsonInteger(element, intVal, paramData);
 			value = intVal;
 		}
-			break;
+		break;
 
 		case TypeKind::Float:
 		{
 			float floatVal = 0.0f;  HashiTaku::LoadJsonFloat(element, floatVal, paramData);
 			value = floatVal;
 		}
+		break;
+
+		case TypeKind::Trigger:
+		{
+			TriggerType t;
+			value = t;
+		}
+
+		break;
+		default:
 			break;
 		}
 
@@ -237,6 +328,23 @@ bool AnimationParameters::CheckFloat(const std::string& _name)
 	return true;
 }
 
+bool AnimationParameters::CheckTrigger(const std::string& _name)
+{
+	// 不正な値を参照していないかチェック
+	if (!animParameters.contains(_name))
+	{
+		HASHI_DEBUG_LOG(_name + "が見つかりませんでした");
+		return false;
+	}
+	conditionValType getVal = animParameters[_name];
+	if (!std::holds_alternative<TriggerType>(getVal))
+	{
+		HASHI_DEBUG_LOG(_name + "はトリガー型ではありません");
+		return false;
+	}
+	return true;
+}
+
 TypeKind AnimationParameters::GetType(const conditionValType& _parameter)
 {
 	TypeKind retType = TypeKind::Bool;
@@ -245,6 +353,8 @@ TypeKind AnimationParameters::GetType(const conditionValType& _parameter)
 		retType = TypeKind::Int;
 	else if (std::holds_alternative<float>(_parameter))
 		retType = TypeKind::Float;
+	else if (std::holds_alternative<TriggerType>(_parameter))
+		retType = TypeKind::Trigger;
 
 	return retType;
 }
@@ -263,7 +373,8 @@ void AnimationParameters::ImGuiAddParam()
 	{
 		"Bool",
 		"Int",
-		"Float"
+		"Float",
+		"Trigger"
 	};
 	static u_int selectId = 0;
 
@@ -284,6 +395,10 @@ void AnimationParameters::ImGuiAddParam()
 		case TypeKind::Float:
 			AddParameter<float>();
 			break;
+		case TypeKind::Trigger:
+			AddParameter<TriggerType>();
+			break;
+
 		default:
 			assert(!"不正なパラメータタイプ");
 			break;
@@ -295,31 +410,30 @@ void AnimationParameters::ImGuiAddParam()
 void AnimationParameters::ImGuiDisplay()
 {
 #ifdef EDIT
+
 	// 名前表示(変更)
-	int idx = 0;
 	auto itr = animParameters.begin();
 	while (itr != animParameters.end())
 	{
 		ImGuiMethod::LineSpaceSmall();
+
 		bool isDelete = false;
-		// 変数名を変更
-		char buf[IM_INPUT_BUF];
+		char buf[IM_INPUT_BUF];	// 変数名を変更
 		strncpy_s(buf, itr->first.c_str(), sizeof(buf));
+
 		ImGui::PushID(itr->first.c_str());
-		if (ImGui::InputText("##param", buf, IM_INPUT_BUF, ImGuiInputTextFlags_EnterReturnsTrue))	// 変更されたら
+		if (ImGui::InputText("##param", buf, IM_INPUT_BUF, ImGuiInputTextFlags_EnterReturnsTrue))	// 入力フィールド
 		{
 			// 元の名前を削除して、新しく追加する
 			isDelete = true;
-			std::string newKey = buf;
-			conditionValType newParam = itr->second;
-			NotDuplicateParamName(newKey);
-
-			animParameters[newKey] = newParam;	// 追加
+			RenameParameter(itr->first, buf);
 		}
+
 		ImGui::SameLine();
 		// パラメータ操作
 		if (bool* pBool = std::get_if<bool>(&itr->second))	// bool
 			ImGui::Checkbox("##bool", pBool);
+
 		else if (int* pInt = std::get_if<int>(&itr->second))// int
 		{
 			ImGuiMethod::PushItemWidth();
@@ -337,11 +451,13 @@ void AnimationParameters::ImGuiDisplay()
 			isDelete = true;
 
 		ImGui::PopID();
-
-		idx++;
 		if (isDelete)
 		{
-			itr = animParameters.erase(itr);
+			std::string deleteKey = itr->first;
+			auto deleteItr = animParameters.find(deleteKey);
+			itr = std::next(deleteItr);
+
+			RemoveParameter(deleteKey);
 		}
 		else
 			itr++;

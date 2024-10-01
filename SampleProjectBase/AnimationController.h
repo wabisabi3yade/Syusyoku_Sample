@@ -3,6 +3,7 @@
 #include"AnimationNode_Base.h"
 #include "AnimConntrollerType.h"
 #include "AnimationParameters.h"
+#include "AnimTransitionArrow.h"
 
 // クロスフェード・慣性補間
 #include "CrossFadeAnimation.h"
@@ -77,23 +78,13 @@ public:
 	/// @param _playingTime 再生時間
 	void Update(BoneList& _boneList);
 
-	/// @brief アニメーション遷移する
+	/// @brief アニメーション遷移する(デバッグ用）
 	/// @param _animName アニメーション名
-	/// @param _transitionArrow 今回使用する遷移矢印
 	virtual void ChangeAnimation(const std::string& _animName);
 
+	/// @brief アニメーション遷移する
+	/// @param _transitionArrow 今回使用する遷移矢印
 	virtual void ChangeAnimation(const AnimTransitionArrow& _transitionArrow);
-
-	/// @brief ブレンド割合をセット
-	/// @param _ratio 割合
-	void SetBlendRatio(float _ratio);
-
-	// 動かすボーン配列をセット
-	void SetBoneList(BoneList& _boneList);
-
-	/// @brief 開始時のデフォルトノードをセットする
-	/// @param _nodeName ノード名
-	void SetDefaultNode(const std::string& _nodeName);
 
 	/// @brief シングルノードを作成
 	/// @param _nodeName ノード名
@@ -119,6 +110,55 @@ public:
 	/// @brief アニメーションがセットされているか返す
 	/// @return アニメーションがセットされているか？
 	bool IsSetAnimation();
+
+	/// @brief ブレンド割合をセット
+	/// @param _ratio 割合
+	void SetBlendRatio(float _ratio);
+
+	// 動かすボーン配列をセット
+	void SetBoneList(BoneList& _boneList);
+
+	/// @brief 開始時のデフォルトノードをセットする
+	/// @param _nodeName ノード名
+	void SetDefaultNode(const std::string& _nodeName);
+
+	/// @brief 指定したbool変数に値をセット
+	/// @param _paramName パラメーター名
+	/// @param _isBool セットする値
+	void SetBool(const std::string& _paramName, bool _isBool);
+
+	/// @brief 指定したint変数に値をセット
+	/// @param _paramName パラメーター名
+	/// @param _intVall セットする値
+	void SetInt(const std::string& _paramName, int _intVal);
+
+	/// @brief 指定したfloat変数に値をセット
+	/// @param _paramName パラメーター名
+	/// @param _floatVal セットする値
+	void SetFloat(const std::string& _paramName, float _floatVal);
+
+	/// @brief 指定したトリガー変数に値をセット
+	/// @param _paramName パラメーター名
+	void SetTrigger(const std::string& _paramName);
+
+	/// @brief 指定したbool変数に値を取得
+	/// @param _paramName パラメーター名
+	/// @return 取得する値
+	bool GetBool(const std::string& _paramName);
+
+	/// @brief 指定したint変数に値を取得
+	/// @param _paramName パラメーター名
+	/// @return 取得する値
+	int GetInt(const std::string& _paramName);
+
+	/// @brief 指定したfloat変数に値を取得
+	/// @param _paramName パラメーター名
+	/// @return 取得する値
+	float GetFloat(const std::string& _paramName);
+
+	/// @brief 指定したトリガー変数に値を取得
+	/// @return 取得する値
+	bool GetTrigger(const std::string& _paramName);
 
 	// 現在のノードを取得する
 	AnimationNode_Base* GetCurrentNode();

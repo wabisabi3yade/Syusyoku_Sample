@@ -4,6 +4,7 @@
 #include "BoolTransCondition.h"
 #include "IntTransCondition.h"
 #include "FloatTransCondition.h"
+#include "TriggerTransCondition.h"
 
 using namespace HashiTaku;
 
@@ -21,6 +22,9 @@ std::unique_ptr<TransCondition_Base> TransConditionCreater::Create(const AnimPar
 
 	else if (const float *pFloat = std::get_if<float>(&_parameterValue))	// float
 		pCondition = std::make_unique<FloatTransCondition>(*pFloat, _parameterName);
+
+	else if (const TriggerType* pTrigger = std::get_if<TriggerType>(&_parameterValue))	// float
+		pCondition = std::make_unique<TriggerTransCondition>(*pTrigger, _parameterName);
 
 	return std::move(pCondition);
 }

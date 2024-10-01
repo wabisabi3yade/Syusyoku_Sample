@@ -1,8 +1,6 @@
 #pragma once
 #include "AnimationData.h"
 
-#include "AnimTransitionArrow.h"
-
 class BoneList;
 
 /// @brief アニメーションノードに基底クラス
@@ -30,8 +28,11 @@ private:
 	/// @brief 現在の再生時間
 	float curPlayingRatio;
 
-	/// @brief ノードの再生速度(1.0は等速)
-	float playSpeed;
+	/// @brief 現在の再生時間
+	float lastPlayingRatio;
+
+	/// @brief ノードの再生速度倍率(1.0は等速)
+	float playNodeSpeedTimes;
 
 	/// @brief アニメーションの時間
 	float animationTime;
@@ -86,6 +87,9 @@ public:
 	// 現在の再生割合を取得
 	float GetCurPlayRatio() const;
 
+	/// @brief 1フレーム前の再生割合を取得
+	float GetLastPlayRatio() const;
+
 	// 再生時間を取得
 	float GetAnimationTime() const;
 
@@ -106,6 +110,10 @@ public:
 	/// @param _boneId ボーンのID
 	/// @param _requestRatio 取得する指定のアニメーション割合
 	virtual void GetAnimTransform(BoneTransform& _outTransform, u_int _boneId, float _requestRatio) const = 0;
+
+	/// @brief 再生速度倍率を求める
+	/// @return 再生速度倍率
+	float GetPlaySpeedTimes() const;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

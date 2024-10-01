@@ -12,7 +12,7 @@ std::vector<std::string> AnimationNode_Base::edit_nodeTypeStrings =
 #endif // EDIT
 
 AnimationNode_Base::AnimationNode_Base(std::string _nodeName, NodeType _type)
-	: nodeName(_nodeName), nodeType(_type), curPlayingRatio(0.0f), playSpeed(1.0f), animationTime(0.0f), isLoop(true), isFinish(false)
+	: nodeName(_nodeName), nodeType(_type), curPlayingRatio(0.0f), lastPlayingRatio(0.0f), playNodeSpeedTimes(1.0f), animationTime(0.0f), isLoop(true), isFinish(false)
 {
 }
 
@@ -39,6 +39,9 @@ void AnimationNode_Base::ImGuiPlaying()
 void AnimationNode_Base::Begin()
 {
 	isFinish = false;
+
+	// 1フレーム前を現在の少し前に設定しておく
+	lastPlayingRatio = curPlayingRatio - Mathf::smallValue;
 }
 
 void AnimationNode_Base::UpdateCall(BoneList& _boneList)
@@ -84,6 +87,11 @@ float AnimationNode_Base::GetCurPlayRatio() const
 	return curPlayingRatio;
 }
 
+float AnimationNode_Base::GetLastPlayRatio() const
+{
+	return lastPlayingRatio;
+}
+
 float AnimationNode_Base::GetAnimationTime() const
 {
 	return animationTime;
@@ -97,6 +105,11 @@ bool AnimationNode_Base::GetIsLoop() const
 bool AnimationNode_Base::GetIsFinish() const
 {
 	return isFinish;
+}
+
+float AnimationNode_Base::GetPlaySpeedTimes() const
+{
+	return playNodeSpeedTimes;
 }
 
 nlohmann::json AnimationNode_Base::Save()
@@ -114,12 +127,14 @@ void AnimationNode_Base::Load(const nlohmann::json& _data)
 	LoadJsonBoolean("isLoop", isLoop, _data);
 }
 
-void AnimationNode_Base::ProgressPlayRatio(float _playSpeed)
+void AnimationNode_Base::ProgressPlayRatio(float _controllerSpeed)
 {
-	float progressRatioSpeed = 1.0f / animationTime;
+	// 1フレーム前の再生割合を更新
+	lastPlayingRatio = curPlayingRatio;
 
 	// 時間を進める
-	curPlayingRatio += progressRatioSpeed * _playSpeed * MainApplication::DeltaTime();
+	float progressRatioSpeed = 1.0f / animationTime;
+	curPlayingRatio += progressRatioSpeed * _controllerSpeed * playNodeSpeedTimes *MainApplication::DeltaTime();
 
 	if (IsCanLoop())	// ループできるなら
 		curPlayingRatio -= 1.0f;
@@ -153,7 +168,7 @@ void AnimationNode_Base::ImGuiSetParameter()
 	ImGui::Checkbox("IsLoop", &isLoop);
 
 	ImGuiMethod::PushItemWidth();
-	ImGui::DragFloat("Speed", &playSpeed, 1.0f, 0.0f, 100.0f);
+	ImGui::DragFloat("Speed", &playNodeSpeedTimes, 1.0f, 0.0f, 100.0f);
 	ImGui::PopItemWidth();
 
 	ImGui::Text("AnimationTime:%f", animationTime);

@@ -4,7 +4,8 @@
 #include "GameInput.h"
 #include "IObserever.h"
 
-class PlayerActionController;
+#include "AnimationController.h"
+
 class AnimationController;
 class GameObject;
 
