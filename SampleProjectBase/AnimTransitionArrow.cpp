@@ -2,21 +2,38 @@
 #include "AnimTransitionArrow.h"
 #include "AnimationNode_Base.h"
 #include "TransConditionCreater.h"
+#include "AnimParamRemoveObserver.h"
 
 using namespace HashiTaku;
 
 AnimTransitionArrow::AnimTransitionArrow(AnimationNode_Base& _fromNode, AnimationNode_Base& _toNode, AnimationParameters& _animParameters)
-	: pFromNode(&_fromNode), pToNode(&_toNode), pAnimParameters(&_animParameters), transTargetRatio(0.0f), transitionTime(0.2f), transitiionEase(HashiTaku::EaseKind::Linear), interpolateKind(AnimInterpolateKind::CrossFade)
+	: pFromNode(&_fromNode), pToNode(&_toNode), pAnimParameters(&_animParameters), exitRatio(1.0f), transTargetRatio(0.0f), transitionTime(0.2f), transitiionEase(HashiTaku::EaseKind::Linear), interpolateKind(AnimInterpolateKind::CrossFade),
+	isHaveExitTime(false)
 {
+	// アニメーションパラメータ削除オブザーバーを作成、サブジェクトに追加する
+	pRemoveParamObserver = std::make_unique<HashiTaku::AnimParam::AnimParamObserver>(*this, "Arrow_RemoveParam");
+	pAnimParameters->GetParamRemoveSubject().AddObserver(*pRemoveParamObserver);
 }
 
-bool AnimTransitionArrow::CheckTransition()
+bool AnimTransitionArrow::CheckTransition(float _curPlayRatio, float _lastPlayRatio)
 {
-	for (auto& pCondition : conditionList)	// 全ての条件が達成しているなら
-	{
+	for (auto& pCondition : conditionList)
+		// 全ての条件が達成しているなら
 		if (!pCondition->IsCondition())	return false;
-	}
 
+	// 条件があるかフラグ
+	bool isHaveCondition = !conditionList.empty();
+
+	if (isHaveExitTime)	// 遷移開始時間をもっているなら
+	{
+		if (!(exitRatio > _curPlayRatio && exitRatio < _lastPlayRatio))	// 遷移開始割合を超えていないなら
+			return false;
+	}
+	else if (!isHaveCondition)	// 条件が一つもなく、遷移開始時間が設定されていないなら遷移しない
+	{
+		return false;
+	}
+		
 	return true;
 }
 
@@ -26,6 +43,34 @@ void AnimTransitionArrow::AddCondition(const AnimParam::conditionValType& _val, 
 	if (std::unique_ptr<TransCondition_Base> pCon = TransConditionCreater::Create(_val, _name))
 	{
 		conditionList.push_back(std::move(pCon));
+	}
+}
+
+void AnimTransitionArrow::RemoveCondition(const std::string& _condParamName)
+{
+	// 名前を探して削除する
+	for (auto itr = conditionList.begin(); itr != conditionList.end();)
+	{
+		if (_condParamName == (*itr)->GetReferenceParamName())
+		{
+			itr = conditionList.erase(itr);
+		}
+		else
+			itr++;
+	}
+}
+
+void AnimTransitionArrow::ReNameCondition(const std::string& _prevName, const std::string& _afterName)
+{
+	// 以前の名前のアドレスを新しい名前のアドレスに変える
+	if (const std::string* pAddres = pAnimParameters->GetNameAddress(_afterName))
+	{
+		for (auto& pCond : conditionList)
+		{
+			if (_prevName == pCond->GetReferenceParamName())
+				pCond->SetReferenceParamName(*pAddres);
+
+		}
 	}
 }
 
@@ -94,6 +139,8 @@ nlohmann::json AnimTransitionArrow::Save()
 	data["conditionList"] = conditionDataList;
 
 	data["transTime"] = transitionTime;
+	data["isHaveExit"] = isHaveExitTime;
+	data["exitRatio"] = exitRatio;
 	data["targetRatio"] = transTargetRatio;
 	data["transEase"] = transTargetRatio;
 	data["interpolate"] = interpolateKind;
@@ -130,9 +177,29 @@ void AnimTransitionArrow::Load(const nlohmann::json& _data)
 	}
 	
 	HashiTaku::LoadJsonFloat("transTime", transitionTime, _data);
+	HashiTaku::LoadJsonBoolean("isHaveExit", isHaveExitTime, _data);
+	HashiTaku::LoadJsonFloat("exitRatio", exitRatio, _data);
 	HashiTaku::LoadJsonFloat("targetRatio", transTargetRatio, _data);
 	HashiTaku::LoadJsonEnum<HashiTaku::EaseKind>("transEase", transitiionEase, _data);
 	HashiTaku::LoadJsonEnum<HashiTaku::AnimInterpolateKind>("interpolate", interpolateKind, _data);
+}
+
+void AnimTransitionArrow::AcceptAnimParamData(const HashiTaku::AnimParam::NotificationData& _notifyData)
+{
+	using enum HashiTaku::AnimParam::AnimParamObseveEvent;
+	
+	switch (_notifyData.eventType)
+	{
+	case Remove:
+		RemoveCondition(*_notifyData.pDeleteName);
+		break;
+
+	case Rename:
+		break;
+
+	default:
+		break;
+	}
 }
 
 void AnimTransitionArrow::ImGuiSetInterpolate()
@@ -157,9 +224,17 @@ void AnimTransitionArrow::ImGuiSetInterpolate()
 void AnimTransitionArrow::ImGuiSetCondistion()
 {
 #ifdef EDIT
-	for (auto& pCondtion : conditionList)	// リスト内の遷移条件
+
+	for (auto condItr = conditionList.begin(); condItr != conditionList.end();)	// リスト内の遷移条件
 	{
-		pCondtion->ImGuiCall();
+		(*condItr)->ImGuiCall();
+		ImGui::SameLine();
+		bool isDelete = ImGui::Button("X");
+
+		if(isDelete)
+			condItr = conditionList.erase(condItr);
+		else
+			condItr++;
 	}
 	ImGuiMethod::LineSpaceMid();
 
@@ -188,9 +263,13 @@ void AnimTransitionArrow::ImGuiSetCondistion()
 
 void AnimTransitionArrow::ImGuiSetting()
 {
-	ImGui::DragFloat("transRatio", &transTargetRatio, 0.01f, 0.0f, 1.0f);	// 遷移先割合
-	ImGui::DragFloat("transitionTime", &transitionTime, 0.01f, 0.0f, 10.0f);	// 遷移時間
+	ImGuiMethod::PushItemWidth();
+	ImGui::DragFloat("TransitionTime", &transitionTime, 0.01f, 0.0f, 10.0f);	// 遷移時間
+	ImGui::Checkbox("HasExitTime", &isHaveExitTime);	// exitフラグ
+	ImGui::DragFloat("ExitRatio", &exitRatio, 0.01f, 0.0f, 1.0f);	// 遷移先割合
+	ImGui::DragFloat("TargetRatio", &transTargetRatio, 0.01f, 0.0f, 1.0f);	// 遷移先割合
 	HashiTaku::Easing::ImGuiSelect(transitiionEase);	// 遷移イージング
+	ImGui::PopItemWidth();
 
 	// アニメーション遷移種類
 	ImGuiSetInterpolate();

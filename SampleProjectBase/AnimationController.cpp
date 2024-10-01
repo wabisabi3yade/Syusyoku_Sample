@@ -192,7 +192,7 @@ void AnimationController::CreateBlendNode(const std::vector<std::string>& _animN
 {
 	assert(_animNames.size() == _ratios.size() && "名前と割合の要素数が違います");
 
-	std::unique_ptr<BlendAnimationNode> pCreateBlend = std::make_unique<BlendAnimationNode>(_nodeName);
+	std::unique_ptr<BlendAnimationNode> pCreateBlend = std::make_unique<BlendAnimationNode>(*pAnimParameters, _nodeName);
 
 	u_int maxNum = static_cast<u_int>(_animNames.size());
 
@@ -420,11 +420,17 @@ void AnimationController::CacheUpdate()
 void AnimationController::TranstionCheck()
 {
 	AnimTransitionArrow* pTransArrow = nullptr;
+	float curPlayRatio = pCurrentNodeInfo->pAnimNode->GetCurPlayRatio();
+	float lastPlayRatio = pCurrentNodeInfo->pAnimNode->GetLastPlayRatio();
+
 	for (auto& pArrow : pCurrentNodeInfo->pTransArrows)
 	{
-		if (!pArrow->CheckTransition()) return;
+		if (!pArrow->CheckTransition(curPlayRatio, lastPlayRatio)) return;
 		pTransArrow = pArrow.get();
 	}
+
+	// トリガー変数をリセットする
+	pAnimParameters->ResetTrigger();
 
 	if (!pTransArrow) return;	// 遷移しないなら終わる
 
@@ -514,6 +520,46 @@ void AnimationController::SetDefaultNode(const std::string& _nodeName)
 	pDefaultNodeInfo = GetNodeInfo(_nodeName);
 }
 
+void AnimationController::SetBool(const std::string& _paramName, bool _isBool)
+{
+	pAnimParameters->SetBool(_paramName, _isBool);
+}
+
+void AnimationController::SetInt(const std::string& _paramName, int _intVal)
+{
+	pAnimParameters->SetInt(_paramName, _intVal);
+}
+
+void AnimationController::SetFloat(const std::string& _paramName, float _floatVal)
+{
+	pAnimParameters->SetFloat(_paramName, _floatVal);
+}
+
+void AnimationController::SetTrigger(const std::string& _paramName)
+{
+	pAnimParameters->SetTrigger(_paramName);
+}
+
+bool AnimationController::GetBool(const std::string& _paramName)
+{
+	return pAnimParameters->GetBool(_paramName);
+}
+
+int AnimationController::GetInt(const std::string& _paramName)
+{
+	return pAnimParameters->GetInt(_paramName);
+}
+
+float AnimationController::GetFloat(const std::string& _paramName)
+{
+	return pAnimParameters->GetFloat(_paramName);
+}
+
+bool AnimationController::GetTrigger(const std::string& _paramName)
+{
+	return pAnimParameters->GetTrigger(_paramName);
+}
+
 void AnimationController::OnAnimationFinish()
 {
 	isPlay = false;
@@ -593,7 +639,7 @@ AnimationController::AnimNodeInfo* AnimationController::CreateNodeInfoByType(Ani
 		break;
 
 	case Blend:
-		pAnimNodeInfo->pAnimNode = std::make_unique<BlendAnimationNode>(_nodeName);
+		pAnimNodeInfo->pAnimNode = std::make_unique<BlendAnimationNode>(*pAnimParameters, _nodeName);
 		break;
 
 	default:

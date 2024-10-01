@@ -1,15 +1,20 @@
 #pragma once
 #include "AnimationNode_Base.h"
 
+class AnimationParameters;
+
 /// @brief 2つ以上のアニメーションをブレンドされているノード
 class BlendAnimationNode : public AnimationNode_Base
 {
+	/// @brief ブレンドで対応している軸数
+	static constexpr int axisCnt = 2;
 public:
 	// ブレンドに使用するデータ
 	struct BlendData
 	{
 		const AnimationData* pAnimation{ nullptr }; // アニメーションデータ
-		float ratio{ 0.0f };	// ブレンドの割合(0.0～1.0)
+		float ratioX{ 0.0f };	// X軸ブレンドの割合、1軸のみ時使用
+		float ratioY{ 0.0f };	// Y軸ブレンドの割合
 	};
 
 private:
@@ -23,11 +28,17 @@ private:
 	/// @brief  ブレンドするアニメーションデータ
 	std::list<BlendData> blendDatas;
 
+	/// @brief アニメーションパラメータのポインタ
+	const AnimationParameters* pAnimParameters;
+
 	/// @brief 現在の割合
 	float curBlendRatio{ 0.0f };
 
 	/// @brief ターゲット割合
 	float targetBlendRatio{ 0.0f };
+
+	/// @brief ターゲット割合とする変数のポインタ
+	std::array<float*, axisCnt> targetBlendRatios;
 
 	/// @brief ターゲット割合決定時の割合
 	float changeBlendRatio{ 0.0f };
@@ -41,8 +52,7 @@ private:
 	/// @brief ターゲットの割合へ移動イージング
 	HashiTaku::EaseKind ratioMoveEase{ HashiTaku::EaseKind::OutCubic };
 public:
-	BlendAnimationNode(std::string _nodeName);
-
+	BlendAnimationNode(const AnimationParameters& _animParams, std::string _nodeName);
 	~BlendAnimationNode() {}
 
 	void ImGuiPlaying() override;
@@ -129,6 +139,9 @@ private:
 
 private:
 	void ImGuiSetting() override;
+
+	// ブレンドのターゲット変数を変更する
+	void ImGuiChangeTargetParam();
 
 	// ブレンドデータをセーブする
 	nlohmann::json SaveBlendData(BlendData& _blendData);

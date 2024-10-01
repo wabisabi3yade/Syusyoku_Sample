@@ -8,6 +8,11 @@
                     "value": false
                 },
                 {
+                    "name": "state",
+                    "type": 1,
+                    "value": 0
+                },
+                {
                     "name": "speed",
                     "type": 2,
                     "value": 0.0
@@ -37,7 +42,29 @@
                         "moveEase": 8,
                         "smoothTime": 1.0
                     },
-                    "arrowDataList": null,
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 1,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "Attack1"
+                        }
+                    ],
                     "nodeName": "Move",
                     "nodeType": 1
                 },
@@ -47,7 +74,20 @@
                         "animTime": 1.5,
                         "isLoop": true
                     },
-                    "arrowDataList": null,
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 0.9100000262260437,
+                                "interpolate": 0,
+                                "isHaveExit": true,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 1.0
+                            },
+                            "toName": "Move"
+                        }
+                    ],
                     "nodeName": "Attack1",
                     "nodeType": 0
                 }
@@ -69,15 +109,15 @@
             "rightHand": true
         },
         {
-            "assetName": "Reaction.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/Reaction.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "WalkF.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/WalkF.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "Reaction.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/Reaction.fbx",
             "rightHand": true
         },
         {
@@ -177,20 +217,20 @@
             "pathName": "assets/texture/skyBox/sky_Day_u.png"
         },
         {
-            "assetName": "sky_Day_r.png",
-            "pathName": "assets/texture/skyBox/sky_Day_r.png"
-        },
-        {
             "assetName": "sky_Day_b.png",
             "pathName": "assets/texture/skyBox/sky_Day_b.png"
         },
         {
-            "assetName": "sky_Day_d.png",
-            "pathName": "assets/texture/skyBox/sky_Day_d.png"
+            "assetName": "sky_Day_r.png",
+            "pathName": "assets/texture/skyBox/sky_Day_r.png"
         },
         {
             "assetName": "sky_Day_l.png",
             "pathName": "assets/texture/skyBox/sky_Day_l.png"
+        },
+        {
+            "assetName": "sky_Day_d.png",
+            "pathName": "assets/texture/skyBox/sky_Day_d.png"
         },
         {
             "assetName": "sky_Day_f.png",

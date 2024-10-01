@@ -6,6 +6,11 @@ TransCondition_Base::TransCondition_Base(const std::string& _parameterName, Hash
 {
 }
 
+void TransCondition_Base::SetReferenceParamName(const std::string& _paramRefarenceName)
+{
+	pParameterName = &_paramRefarenceName;
+}
+
 const std::string& TransCondition_Base::GetReferenceParamName() const
 {
 	return *pParameterName;

@@ -24,7 +24,11 @@ void PlayerMoveState::Update()
 	Rotation();
 
 	if (GameInput::GetInstance()->GetButton(GameInput::ButtonType::Player_Attack))
-		ChangeState(StateType::Attack);
+	{
+		/*ChangeState(StateType::Attack);*/
+		pAnimController->SetInt("state", 1);
+	}
+		
 }
 
 void PlayerMoveState::OnEnd()

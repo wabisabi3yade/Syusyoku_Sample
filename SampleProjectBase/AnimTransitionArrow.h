@@ -2,14 +2,25 @@
 #include "TransCondition_Base.h"
 #include "InterpolateKind.h"
 #include "AnimationParameters.h"
+#include "AnimParamRemoveObserver.h"
 
 class AnimationNode_Base;
+namespace HashiTaku
+{
+	namespace AnimParam
+	{
+		struct NotificationData;
+	}
+}
 
 /// @brief アニメーション遷移の条件等を設定する矢印
-class AnimTransitionArrow : public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
+class AnimTransitionArrow : public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad, public HashiTaku::AnimParam::IAnimParamRelater
 {
 	/// @brief 遷移条件を格納するリスト
 	std::list<std::unique_ptr<TransCondition_Base>> conditionList;
+
+	/// @brief パラメータ削除時の通知受け取り
+	std::unique_ptr<HashiTaku::AnimParam::AnimParamObserver> pRemoveParamObserver;
 
 	/// @brief	遷移元アニメノード
 	AnimationNode_Base* pFromNode;
@@ -20,17 +31,23 @@ class AnimTransitionArrow : public HashiTaku::IImGuiUser, public HashiTaku::ISav
 	/// @brief コントローラー内変数
 	AnimationParameters* pAnimParameters;
 
+	/// @brief 遷移をすすめるときに利用するイージング
+	HashiTaku::EaseKind transitiionEase;
+
+	/// @brief アニメーション間で使用する補間方法
+	HashiTaku::AnimInterpolateKind interpolateKind;
+
+	/// @brief 遷移開始割合
+	float exitRatio;
+
 	/// @brief 遷移先のアニメーションの指定割合
 	float transTargetRatio;
 
 	/// @brief 遷移時間
 	float transitionTime;
 
-	/// @brief 遷移をすすめるときに利用するイージング
-	HashiTaku::EaseKind transitiionEase;
-
-	/// @brief アニメーション間で使用する補間方法
-	HashiTaku::AnimInterpolateKind interpolateKind;
+	/// @brief 遷移開始時間でしか開始しないようにする
+	bool isHaveExitTime;
 
 #ifdef EDIT
 	// 選択中の名前
@@ -45,13 +62,24 @@ public:
 	virtual ~AnimTransitionArrow() {}
 
 	/// @brief 遷移条件を達成しているか確認
+	/// @param _curPlayRatio 現在の再生割合
+	/// @param _lastPlayRatio 1フレーム前の再生割合
 	/// @return 達成しているか？
-	bool CheckTransition();
+	bool CheckTransition(float _curPlayRatio, float _lastPlayRatio);
 
 	/// @brief 矢印に遷移条件を作成
 	/// @param _val 参照するパラメータ値
 	/// @param _name パラメータ名
 	void AddCondition(const HashiTaku::AnimParam::conditionValType& _val, const std::string& _name);
+
+	/// @brief パラメータ名から遷移条件を削除する
+	/// @param _condParamName 遷移条件が参照しているパラメータ名
+	void RemoveCondition(const std::string& _condParamName);
+
+	/// @brief 条件が参照している名前を変える
+	/// @param _prevName 前の名前
+	/// @param _afterName 変更後の名前
+	void ReNameCondition(const std::string& _prevName, const std::string& _afterName);
 
 	// 遷移終了時の遷移先のアニメーション割合をセット
 	void SetTransTargetRatio(float _transTargetRatio);
@@ -88,6 +116,7 @@ public:
 	/// @param _data ロードするデータ 
 	void Load(const nlohmann::json& _data) override;
 
+	void AcceptAnimParamData(const HashiTaku::AnimParam::NotificationData& _notifyData);
 private:
 	// ImGuiで補間の種類を編集
 	void ImGuiSetInterpolate();

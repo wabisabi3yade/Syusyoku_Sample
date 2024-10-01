@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "BlendAnimationNode.h"
+#include "AnimationParameters.h"
 
 #include "AssetGetter.h"
 #include "SkeletalMesh.h"
@@ -9,11 +10,15 @@ constexpr float DUPLICATE_PLUS(0.01f);	// ブレンド値が重複したときの＋値
 using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
 
-BlendAnimationNode::BlendAnimationNode(std::string _nodeName) : AnimationNode_Base(_nodeName, NodeType::Blend)
+BlendAnimationNode::BlendAnimationNode(const AnimationParameters& _animParams, std::string _nodeName)
+	: AnimationNode_Base(_nodeName, NodeType::Blend), pAnimParameters(&_animParams)
 {
+	// 初期化
+	for (u_int a_i = 0; a_i < axisCnt; a_i++)
+		targetBlendRatios[a_i] = nullptr;
+
 	SetAnimationTime(1.0f);
 }
-
 void BlendAnimationNode::ImGuiPlaying()
 {
 	AnimationNode_Base::ImGuiPlaying();
@@ -55,7 +60,7 @@ void BlendAnimationNode::SetAnimationData(const std::string& _animName)
 	if (!pData) return;
 
 	createData.pAnimation = pData;
-	createData.ratio = 0.0f;
+	createData.ratioX = 0.0f;
 	blendDatas.push_back(createData);
 }
 
@@ -63,9 +68,7 @@ void BlendAnimationNode::SetTargetBlendRatio(float _ratio)
 {
 	// 同じ割合をセットするなら処理しない
 	if (abs(_ratio - targetBlendRatio) <= Mathf::epsilon)
-	{
 		return;
-	}
 
 	SetRatio(targetBlendRatio, _ratio);
 
@@ -81,7 +84,7 @@ void BlendAnimationNode::SetAnimationRatio(float _ratio, const std::string& _ani
 	// 見つからなかったら
 	if (findBlend == nullptr) return;
 
-	SetRatio(findBlend->ratio, _ratio);
+	SetRatio(findBlend->ratioX, _ratio);
 }
 
 nlohmann::json BlendAnimationNode::Save()
@@ -103,7 +106,6 @@ void BlendAnimationNode::Load(const nlohmann::json& _data)
 	LoadJsonDataArray("blendData", blendSaveDatas, _data);
 	for (auto& d : blendSaveDatas)	// ブレンドデータをロードする
 		LoadBlendData(d);
-
 }
 
 void BlendAnimationNode::MoveCurBlend()
@@ -152,12 +154,12 @@ BlendAnimationNode::BlendPair BlendAnimationNode::FindBlendPair()
 	auto minItr = blendDatas.begin();
 	auto maxItr = std::prev(blendDatas.end());
 
-	if (curBlendRatio <= minItr->ratio) // 最小値より小さい
+	if (curBlendRatio <= minItr->ratioX) // 最小値より小さい
 	{
 		blendPair.prevData = &(*minItr);
 		return blendPair;
 	}
-	else if (curBlendRatio >= maxItr->ratio) // 最大値より大きい
+	else if (curBlendRatio >= maxItr->ratioX) // 最大値より大きい
 	{
 		blendPair.prevData = &(*maxItr);
 		return blendPair;
@@ -168,7 +170,7 @@ BlendAnimationNode::BlendPair BlendAnimationNode::FindBlendPair()
 	for (auto itr = blendDatas.begin(); itr != std::prev(blendDatas.end()); itr++)
 	{
 		auto nextItr = std::next(itr);
-		if (curBlendRatio > nextItr->ratio) continue;
+		if (curBlendRatio > nextItr->ratioX) continue;
 
 		// 見つけたら
 		blendPair.prevData = &(*itr);
@@ -208,7 +210,7 @@ void BlendAnimationNode::SingleUpdateAnimation(BlendData& _animationData, BoneLi
 
 void BlendAnimationNode::BlendUpdateAnimation(BlendPair& _blendPair, BoneList& _boneList)
 {
-	float deltaRatio = _blendPair.nextData->ratio - _blendPair.prevData->ratio;
+	float deltaRatio = _blendPair.nextData->ratioX - _blendPair.prevData->ratioX;
 	float playingRatio = GetCurPlayRatio();
 
 	if (abs(deltaRatio) < Mathf::epsilon)	// ブレンド値に差がない場合
@@ -217,7 +219,7 @@ void BlendAnimationNode::BlendUpdateAnimation(BlendPair& _blendPair, BoneList& _
 	}
 
 	// アニメーションの重み割合
-	float weightRatio = (curBlendRatio - _blendPair.prevData->ratio) / deltaRatio;
+	float weightRatio = (curBlendRatio - _blendPair.prevData->ratioX) / deltaRatio;
 
 	const AnimationData* p_pAnimData = _blendPair.prevData->pAnimation;
 	const AnimationData* n_pAnimData = _blendPair.nextData->pAnimation;
@@ -282,7 +284,7 @@ void BlendAnimationNode::SortBlendValue()
 
 bool BlendAnimationNode::CompareBlendValue(const BlendData& _bd1, const BlendData& _bd2)
 {
-	return _bd1.ratio > _bd2.ratio;
+	return _bd1.ratioX > _bd2.ratioX;
 }
 
 void BlendAnimationNode::GetCurAnimTransform(BoneTransform& _outTransform, u_int _boneId) const
@@ -308,7 +310,7 @@ void BlendAnimationNode::ImGuiSetting()
 	{
 		std::string animName = data.pAnimation->GetAssetName();
 		if (!ImGuiMethod::TreeNode(animName.c_str())) continue;
-		ImGui::SliderFloat("Blend", &data.ratio, 0.0f, 1.0f);
+		ImGui::SliderFloat("Blend", &data.ratioX, 0.0f, 1.0f);
 		ImGui::TreePop();
 	}
 
@@ -318,11 +320,20 @@ void BlendAnimationNode::ImGuiSetting()
 		SetAnimationData(str);
 }
 
+void BlendAnimationNode::ImGuiChangeTargetParam()
+{
+	// float型変数のみのパラメータ名を取得
+	std::vector<const std::string*> pAnimParams;
+	pAnimParameters->GetFloatNameList(pAnimParams);
+
+
+}
+
 nlohmann::json BlendAnimationNode::SaveBlendData(BlendData& _blendData)
 {
 	nlohmann::json saveData;
 	saveData["animName"] = _blendData.pAnimation->GetAssetName();
-	saveData["ratio"] = _blendData.ratio;
+	saveData["ratio"] = _blendData.ratioX;
 	return saveData;
 }
 
@@ -333,7 +344,7 @@ void BlendAnimationNode::LoadBlendData(const nlohmann::json& _blendData)
 	loadBlend.pAnimation = LoadJsonAsset<AnimationData>("animName", _blendData);
 	if (!loadBlend.pAnimation) return;
 
-	LoadJsonFloat("ratio", loadBlend.ratio, _blendData);
+	LoadJsonFloat("ratio", loadBlend.ratioX, _blendData);
 	blendDatas.push_back(std::move(loadBlend));
 }
 

@@ -13,7 +13,7 @@ namespace HashiTaku
 		virtual ~IObserver() {}
 
 		/// @brief 通知がきたときの処理
-		virtual void Update(T _value) = 0;
+		virtual void Update(const T& _value) = 0;
 
 		std::string GetObserverName() const;
 	};
@@ -39,7 +39,7 @@ namespace HashiTaku
 		void RemoveObserver(IObserver<T>& _observer);
 
 		/// @brief オブザーバーに通知する
-		void NotifyAll(T _value);
+		void NotifyAll(const T& _value);
 	};
 
 	template<typename T>
@@ -65,7 +65,7 @@ namespace HashiTaku
 	}
 
 	template<typename T>
-	inline void Subject<T>::NotifyAll(T _value)
+	inline void Subject<T>::NotifyAll(const T& _value)
 	{
 		for (auto& o : pObservers)
 			o->Update(_value);

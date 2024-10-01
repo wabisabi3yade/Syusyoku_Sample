@@ -3,7 +3,7 @@
 
 std::list<ImGuiDebugLog::Message> ImGuiDebugLog::displayList = {};
 
-constexpr u_int MAX_DISPLAY = (1000); // デバッグログ表示最大数
+constexpr u_int MAX_DISPLAY = (100); // デバッグログ表示最大数
 
 namespace fs = std::filesystem;
 
@@ -12,7 +12,7 @@ void ImGuiDebugLog::Add(const std::string& _debugMessage, const std::string& _pa
 #ifdef EDIT
 
 	// UTF-8に変換
-	std::string u8Message = TO_UTF8(_debugMessage);	
+	std::string u8Message = TO_UTF8(_debugMessage);
 
 	// エラーが出たファイル名を取得
 	fs::path filePath = _pathName;
@@ -22,7 +22,7 @@ void ImGuiDebugLog::Add(const std::string& _debugMessage, const std::string& _pa
 	// それを下に持ってくるようにする
 	auto itr = std::find_if(displayList.begin(), displayList.end(), [&](Message check)
 		{
-			return (check.dubugMessage == u8Message && check.fileName == fileName && 
+			return (check.dubugMessage == u8Message && check.fileName == fileName &&
 				check.lineNum == _lineNum);	// 既にあるのか
 		});
 
@@ -41,6 +41,9 @@ void ImGuiDebugLog::Add(const std::string& _debugMessage, const std::string& _pa
 		m.fileName = fileName;
 		m.lineNum = _lineNum;
 		displayList.push_back(m);
+
+		if (static_cast<u_int>(displayList.size()) > MAX_DISPLAY)
+			displayList.erase(displayList.begin());
 	}
 
 #endif
@@ -55,10 +58,10 @@ void ImGuiDebugLog::DisplayMessage()
 
 	// リスト内のメッセージを表示させる
 	for (auto d : displayList)
-	{	
+	{
 		std::string debugText;
 
-		debugText = d.fileName +  " " + std::to_string(d.lineNum) + " ";
+		debugText = d.fileName + " " + std::to_string(d.lineNum) + " ";
 
 		// 内容　+ 何回呼び出されたのか
 		debugText += d.dubugMessage + "\t[" + std::to_string(d.writeNum) + "]";
@@ -81,7 +84,7 @@ void ImGuiDebugLog::Terminal()
 #ifdef _DEBUG
 	// 終了処理
 	displayList.clear();
-	
+
 #endif
 }
 

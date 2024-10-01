@@ -19,6 +19,10 @@ public:
 	/// @return 遷移条件満たしているか？
 	virtual bool IsCondition() const = 0;
 
+	/// @brief 名前の参照をセットする
+	/// @param _paramRefarenceName 
+	void SetReferenceParamName(const std::string& _paramRefarenceName);
+
 	/// @brief 参照しているパラメータ名を取得する
 	/// @return 参照しているパラメータ名
 	const std::string& GetReferenceParamName() const;

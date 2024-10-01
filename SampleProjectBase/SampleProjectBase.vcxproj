@@ -119,6 +119,8 @@
     <ClCompile Include="AnimationNotifyFactory.cpp" />
     <ClCompile Include="AnimationParameters.cpp" />
     <ClCompile Include="AnimControllerCreater.cpp" />
+    <ClCompile Include="AnimControllPlayer.cpp" />
+    <ClCompile Include="AnimParamRemoveObserver.cpp" />
     <ClCompile Include="ANS_DebugLog.cpp" />
     <ClCompile Include="AnimationController.cpp" />
     <ClCompile Include="AnimationData.cpp" />
@@ -161,6 +163,7 @@
     <ClCompile Include="IntTransCondition.cpp" />
     <ClCompile Include="IObserever.cpp" />
     <ClCompile Include="MaterialCreater.cpp" />
+    <ClCompile Include="AnimNodePlayer_Base.cpp" />
     <ClCompile Include="PlayerActChangeObserver.cpp" />
     <ClCompile Include="PlayerAnimController.cpp" />
     <ClCompile Include="PlayerActionController.cpp" />
@@ -229,6 +232,7 @@
     <ClCompile Include="SF_Light.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderCollection.cpp" />
+    <ClCompile Include="AnimSingleNodePlayer.cpp" />
     <ClCompile Include="SkeletalMesh.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SpotLight.cpp" />
@@ -241,6 +245,8 @@
     <ClCompile Include="TransConditionCreater.cpp" />
     <ClCompile Include="TransCondition_Base.cpp" />
     <ClCompile Include="TreeNode.cpp" />
+    <ClCompile Include="TriggerTransCondition.cpp" />
+    <ClCompile Include="TriggerType.cpp" />
     <ClCompile Include="VariableFrameRate.cpp" />
     <ClCompile Include="ImGuiMethod.cpp" />
     <ClCompile Include="main.cpp" />
@@ -282,8 +288,10 @@
     <ClInclude Include="AnimationParameters.h" />
     <ClInclude Include="AnimConntrollerType.h" />
     <ClInclude Include="AnimControllerCreater.h" />
+    <ClInclude Include="AnimControllPlayer.h" />
     <ClInclude Include="AnimNotifyConcept.h" />
     <ClInclude Include="AnimNotifyDefine.h" />
+    <ClInclude Include="AnimParamRemoveObserver.h" />
     <ClInclude Include="ANS_DebugLog.h" />
     <ClInclude Include="AnimationController.h" />
     <ClInclude Include="AnimationData.h" />
@@ -331,6 +339,7 @@
     <ClInclude Include="IObserever.h" />
     <ClInclude Include="ISaveLoad.h" />
     <ClInclude Include="MaterialCreater.h" />
+    <ClInclude Include="AnimNodePlayer_Base.h" />
     <ClInclude Include="NullTransform.h" />
     <ClInclude Include="PlayerActChangeObserver.h" />
     <ClInclude Include="PlayerAnimController.h" />
@@ -406,6 +415,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderCollection.h" />
     <ClInclude Include="ShaderDefine.h" />
+    <ClInclude Include="AnimSingleNodePlayer.h" />
     <ClInclude Include="SkeletalMesh.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SpotLight.h" />
@@ -418,6 +428,8 @@
     <ClInclude Include="TransConditionCreater.h" />
     <ClInclude Include="TransCondition_Base.h" />
     <ClInclude Include="TreeNode.h" />
+    <ClInclude Include="TriggerTransCondition.h" />
+    <ClInclude Include="TriggerType.h" />
     <ClInclude Include="VariableFrameRate.h" />
     <ClInclude Include="IGetRenderPara.h" />
     <ClInclude Include="IGetRenderResource.h" />

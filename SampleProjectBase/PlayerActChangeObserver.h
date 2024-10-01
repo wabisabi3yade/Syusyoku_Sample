@@ -14,6 +14,6 @@ public:
 	PlayerActChangeObserver(const std::string& _observerName, PlayerActionController& _actionController);
 	~PlayerActChangeObserver() {}
 
-	void Update(int _changeType);
+	void Update(const int& _changeType);
 };
 
