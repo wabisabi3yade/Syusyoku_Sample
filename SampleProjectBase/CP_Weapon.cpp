@@ -114,25 +114,14 @@ void CP_Weapon::UpdateTransform()
 
 	const Matrix& boneMtx = pGrabBone->GetGlobalMtx();
 	Transform& t = GetTransform();
+	Vector3 pos;
+	Vector3 scale;
+	Quaternion rot;
 
-	// ボーン行列からトランスフォームを求める
-	Vector3 bonePos = {
-		boneMtx._41,
-		boneMtx._42,
-		boneMtx._43
-	};
-	t.SetLocalPosition(bonePos);
+	// ボーン行列から座標と回転量を求める
+	Mtx::GetTransformFromWldMtx(boneMtx, pos, scale, rot);
 
-	Vector3 s = Vec3::WorldMtxToScale(boneMtx);
-
-	Matrix rotateMtx = Matrix(
-		boneMtx._11 / s.x, boneMtx._12 / s.x, boneMtx._13 / s.x, 0.0f,
-		boneMtx._21 / s.y, boneMtx._22 / s.y, boneMtx._23 / s.y, 0.0f,
-		boneMtx._31 / s.z, boneMtx._32 / s.z, boneMtx._33 / s.z, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
-	);
-
-	Quaternion rot = Quaternion::CreateFromRotationMatrix(rotateMtx);
+	t.SetLocalPosition(pos);
 	t.SetLocalRotation(rot);
 }
 

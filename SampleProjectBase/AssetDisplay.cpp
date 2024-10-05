@@ -46,7 +46,7 @@ void AssetDisplay::DisplayTexture()
 
 	AssetList& Tassets = pAssetCollection->GetAssetList<Texture>();
 	Display(Tassets);
-;
+	;
 	ImGui::InputText("path", inputText, IM_INPUT_BUF);
 
 	if (ImGui::Button("Load"))
@@ -141,7 +141,7 @@ void AssetDisplay::DisplayBoneList()
 	{
 		if (!ImGuiMethod::TreeNode(asset.second->GetAssetName().c_str()))
 			continue;
-		
+
 		BoneList& boneList = static_cast<BoneList&>(*asset.second);
 		// ボーンの名前表示
 		for (u_int b_i = 0; b_i < boneList.GetBoneCnt(); b_i++)
@@ -166,10 +166,24 @@ void AssetDisplay::DisplayAnimationController()
 	std::unique_ptr<AnimControllerCreater> pAnimConCreate = std::make_unique<AnimControllerCreater>();
 
 	AssetList& animConList = pAssetCollection->GetAssetList<AnimationController>();
-	Display(animConList);
-	
+
+	// アニメーションコントローラ編集
+	for (auto& asset : animConList)
+	{
+		std::string assetName = asset.second->GetAssetName();
+		if (ImGuiMethod::TreeNode(assetName))
+		{
+			AnimationController& animCon = static_cast<AnimationController&>(*asset.second);
+			ImGui::Begin(assetName.c_str());
+			animCon.ImGuiCall();
+			ImGui::End();
+			ImGui::TreePop();
+		}
+	}
+		
+
 	ImGui::InputText("assetName", inputText, IM_INPUT_BUF);
-	
+
 	if (ImGui::Button("Create"))
 	{
 		pAnimConCreate->CraeteAsset(inputText);

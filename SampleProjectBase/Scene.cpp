@@ -16,14 +16,13 @@ Scene::Scene(const std::string& _name) : isPlay(true)
 
 	sceneName = _name;
 
-	// ImGui使用するなら
-	if (HashiTaku::IImGuiUser::GetIsImGuiUse())
-		isPlay = false;
+	// 編集するときの処理
+#ifdef EDIT
+	OnEditProcess();
+#endif // EDIT
 
 	// ロードする
 	Load();
-
-	/*test = new BulletTest();*/
 }
 
 Scene::~Scene()
@@ -106,6 +105,11 @@ void Scene::Save()
 bool Scene::GetIsUpdatePlay() const
 {
 	return isPlay;
+}
+
+void Scene::OnEditProcess()
+{
+	isPlay = false;
 }
 
 void Scene::Load()

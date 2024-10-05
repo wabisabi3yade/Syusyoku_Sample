@@ -92,13 +92,17 @@ private:	// 便利関数
 	/// @brief スタティックかスケルタルを判断して作成する
 	/// @param _pScene シーン情報
 	/// @param _assetName アセット名
+	/// @param _loadScale ロード時のスケール
+	/// @param _loadAngles ロード時のオフセット角度
 	/// @return 作成したメッシュ群
-	static std::unique_ptr<Mesh_Group> CreateMeshGroup(const aiScene* _pScene, const std::string& _assetName);
+	static std::unique_ptr<Mesh_Group> CreateMeshGroup(const aiScene* _pScene, const std::string& _assetName, float _loadScale, const DirectX::SimpleMath::Vector3& _loadAngles);
 
 	/// @brief ボーンを生成する
 	/// @param _pScene シーン情報
 	/// @param _skeletalMesh 情報いれるスケルタルメッシュ
-	static void CreateBone(const aiScene* _pScene, SkeletalMesh& _skeletalMesh);
+	/// @param _loadScale ロード時のスケール
+	/// @param _loadAngles ロード時のオフセット角度
+	static void CreateBone(const aiScene* _pScene, SkeletalMesh& _skeletalMesh, float _loadScale, const DirectX::SimpleMath::Vector3& _loadAngles);
 
 	/// @brief ノードを生成する再帰関数
 	/// @param _aiChildNode 子ノード

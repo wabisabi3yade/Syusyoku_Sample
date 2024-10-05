@@ -5,9 +5,23 @@
 
 using namespace HashiTaku::AnimParam;
 
+constexpr float PARAM_EDIT_SPEED(0.001f);	// 編集で移動するパラメータ速度
+
 AnimationParameters::AnimationParameters()
 {
 	pAnimParamSubject = std::make_unique<HashiTaku::Subject<NotificationData>>();
+}
+
+AnimationParameters::AnimationParameters(const AnimationParameters& _other)
+{
+	Copy(_other);
+}
+
+AnimationParameters& AnimationParameters::operator=(const AnimationParameters& _other)
+{
+	Copy(_other);
+
+	return *this;
 }
 
 void AnimationParameters::RenameParameter(const std::string& _prevName, std::string _changeName)
@@ -31,7 +45,7 @@ void AnimationParameters::RenameParameter(const std::string& _prevName, std::str
 	pAnimParamSubject->NotifyAll(data);
 
 	// 削除する
-	auto newItr = animParameters.erase(deleteItr);
+	animParameters.erase(deleteItr);
 }
 
 void AnimationParameters::RemoveParameter(const std::string& _paramNames)
@@ -46,14 +60,14 @@ void AnimationParameters::RemoveParameter(const std::string& _paramNames)
 
 	// トリガー型ならリセット配列から削除
 	if (TriggerType* pTrigger = std::get_if<TriggerType>(&animParameters[_paramNames]))
-		pResetTriggers.remove(pTrigger);
+		resetTriggers.remove(pTrigger);
 
 	animParameters.erase(_paramNames);
 }
 
 void AnimationParameters::ResetTrigger()
 {
-	for (auto& pTrigger : pResetTriggers)
+	for (auto& pTrigger : resetTriggers)
 		pTrigger->ResetTrigger();
 }
 
@@ -359,6 +373,20 @@ TypeKind AnimationParameters::GetType(const conditionValType& _parameter)
 	return retType;
 }
 
+void AnimationParameters::Copy(const AnimationParameters& _other)
+{
+	if (this == &_other) return;
+
+	// パラメータコピー
+	animParameters = _other.animParameters;
+	for (auto& param : animParameters)
+	{
+		// トリガーはリストに
+		if (TriggerType* pTrigger = std::get_if<TriggerType>(&param.second))
+			resetTriggers.push_back(pTrigger);
+	}
+}
+
 void AnimationParameters::ImGuiSetting()
 {
 	ImGui::Text("Parameter");
@@ -410,23 +438,25 @@ void AnimationParameters::ImGuiAddParam()
 void AnimationParameters::ImGuiDisplay()
 {
 #ifdef EDIT
-
-	// 名前表示(変更)
-	auto itr = animParameters.begin();
+	decltype(animParameters)::iterator itr = animParameters.begin();
 	while (itr != animParameters.end())
 	{
 		ImGuiMethod::LineSpaceSmall();
 
 		bool isDelete = false;
+		std::string name = itr->first;
 		char buf[IM_INPUT_BUF];	// 変数名を変更
-		strncpy_s(buf, itr->first.c_str(), sizeof(buf));
+		strncpy_s(buf, name.c_str(), sizeof(buf));
 
 		ImGui::PushID(itr->first.c_str());
 		if (ImGui::InputText("##param", buf, IM_INPUT_BUF, ImGuiInputTextFlags_EnterReturnsTrue))	// 入力フィールド
 		{
 			// 元の名前を削除して、新しく追加する
 			isDelete = true;
-			RenameParameter(itr->first, buf);
+			itr = std::next(itr);
+			RenameParameter(name, buf);
+			ImGui::PopID();
+			continue;
 		}
 
 		ImGui::SameLine();
@@ -443,14 +473,13 @@ void AnimationParameters::ImGuiDisplay()
 		else if (float* pFloat = std::get_if<float>(&itr->second))	// float
 		{
 			ImGuiMethod::PushItemWidth();
-			ImGui::DragFloat("##float", pFloat);
+			ImGui::DragFloat("##float", pFloat, PARAM_EDIT_SPEED);
 			ImGui::PopItemWidth();
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("X"))	// 削除
 			isDelete = true;
 
-		ImGui::PopID();
 		if (isDelete)
 		{
 			std::string deleteKey = itr->first;
@@ -461,6 +490,8 @@ void AnimationParameters::ImGuiDisplay()
 		}
 		else
 			itr++;
+
+		ImGui::PopID();
 	}
 
 #endif // EDIT

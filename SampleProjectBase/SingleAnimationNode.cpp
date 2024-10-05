@@ -28,9 +28,6 @@ void SingleAnimationNode::Update(BoneList& _boneList)
 		BoneTransform transform;
 
 		// 再生時間から各パラメータを取得
-		// スケール
-		transform.scale = pAnimationData->GetScaleByRatio(b_i, playingRatio);
-
 		//クォータニオン
 		transform.rotation = pAnimationData->GetQuaternionByRatio(b_i, playingRatio);
 
@@ -61,14 +58,14 @@ const AnimationData& SingleAnimationNode::GetAnimationData() const
 	return *pAnimationData;
 }
 
-void SingleAnimationNode::GetCurAnimTransform(BoneTransform& _outTransform, u_int _boneId) const
-{
-	GetAnimTransform(_outTransform, _boneId, GetCurPlayRatio());
-}
-
 void SingleAnimationNode::GetAnimTransform(BoneTransform& _outTransform, u_int _boneId, float _requestRatio) const
 {
-	_outTransform = pAnimationData->GetTransformByRatio(_boneId, _requestRatio);
+	pAnimationData->GetTransformByRatio(_boneId, _requestRatio, _outTransform);
+}
+
+const DirectX::SimpleMath::Vector3& SingleAnimationNode::GetRootMotionPosSpeed() const
+{
+	return pAnimationData->GetRootMotionPosSpeedPerSec();
 }
 
 nlohmann::json SingleAnimationNode::Save()

@@ -2,10 +2,9 @@
 #include "PlayerActState_Base.h"
 
 #include "PlayerActionController.h"
-#include "PlayerAnimController.h"
 
 PlayerActState_Base::PlayerActState_Base(StateType _stateType)
-	: pPlayerObject(nullptr), pAnimController(nullptr), stateType(_stateType)
+	: pPlayerObject(nullptr), pAnimation(nullptr), stateType(_stateType)
 {
 	changeStateSubject = std::make_unique<HashiTaku::Subject<int>>();
 }
@@ -32,9 +31,9 @@ void PlayerActState_Base::OnEndCall()
 	OnEnd();
 }
 
-void PlayerActState_Base::SetAnimController(AnimationController& _pController)
+void PlayerActState_Base::SetAnimation(CP_Animation& _pAnimation)
 {
-	pAnimController = &_pController;
+	pAnimation = &_pAnimation;
 }
 
 std::string PlayerActState_Base::StateTypeToStr(StateType _stateType)

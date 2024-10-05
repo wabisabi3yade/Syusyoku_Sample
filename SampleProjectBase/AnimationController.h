@@ -17,6 +17,7 @@ class BoneList;
 /// @brief アニメーション遷移を管理するクラス
 class AnimationController : public Asset_Base, public HashiTaku::IImGuiUser
 {
+public:
 	/// @brief アニメーションノード関連の情報
 	struct AnimNodeInfo
 	{
@@ -24,6 +25,7 @@ class AnimationController : public Asset_Base, public HashiTaku::IImGuiUser
 		std::list<std::unique_ptr<AnimTransitionArrow>> pTransArrows; // 遷移元となっている矢印
 	};
 
+private:
 	/// @brief アニメーションノード関連の情報リスト
 	std::list<std::unique_ptr<AnimNodeInfo>> animNodeInfos;
 
@@ -91,12 +93,6 @@ public:
 	/// @param _animName セットするアニメーション名
 	void CreateSingleNode(const std::string& _nodeName, const std::string& _animName);
 
-	/// @brief ブレンドノードを作成する
-	/// @param _animNames アニメーションの名前
-	/// @param _ratiosブレンド割合
-	/// @param _nodeName ノード名
-	void CreateBlendNode(const std::vector<std::string>& _animNames, const std::vector<float>& _ratios, const std::string& _nodeName);
-
 	/// @brief アニメーション遷移の矢印を作成する
 	/// @param _fromNodeName 遷移元アニメーション
 	/// @param _toNodeName 遷移先アニメーション
@@ -162,6 +158,10 @@ public:
 
 	// 現在のノードを取得する
 	AnimationNode_Base* GetCurrentNode();
+
+	/// @brief デフォルトノード情報を取得
+	/// @return デフォルトノード情報
+	const AnimationController::AnimNodeInfo* GetDefaultNode() const;
 	
 	// 名前からノード情報を取得 
 	AnimNodeInfo* GetNodeInfo(const std::string& _name);
@@ -175,6 +175,10 @@ public:
 	/// @brief ノードの数を取得
 	/// @return ノード数
 	void GetNodeArray(std::list<const AnimationNode_Base*>& _animNodeArray) const;
+
+	/// @brief アニメーションのパラメータを取得
+	/// @return アニメーションのパラメータ
+	const AnimationParameters& GetAnimationParameters() const;
 
 	// 再生しているか取得
 	bool GetIsPlay() const;

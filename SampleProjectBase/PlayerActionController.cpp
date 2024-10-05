@@ -5,10 +5,8 @@
 #include "PlayerMoveState.h"
 #include "PlayerAttackState.h"
 
-#include "PlayerAnimController.h"
-
 PlayerActionController::PlayerActionController(GameObject & _pPlayerObject) 
-	: pCurrentState(nullptr), pAnimController(nullptr), pPlayerObject(&_pPlayerObject)
+	: pCurrentState(nullptr), pAnimation(nullptr), pPlayerObject(&_pPlayerObject)
 {
 	// 状態遷移オブザーバー生成
 	pStateChangeObserver = std::make_unique<PlayerActChangeObserver>("StateChangeObserver", *this);
@@ -21,13 +19,13 @@ PlayerActionController::PlayerActionController(GameObject & _pPlayerObject)
 	// デフォルト状態をセット
 	DefaultState(PlayerActState_Base::StateType::Move);
 }
-void PlayerActionController::Begin(AnimationController& _animationController)
+void PlayerActionController::Begin(CP_Animation& _animationController)
 {
 	// アニメーションコントローラーを各ステートに渡す
-	pAnimController = &_animationController;
+	pAnimation = &_animationController;
 	for (auto& actState : pActions)
 	{
-		actState.second->SetAnimController(_animationController);
+		actState.second->SetAnimation(_animationController);
 	}	
 }
 

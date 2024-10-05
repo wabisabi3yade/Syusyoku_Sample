@@ -5,7 +5,7 @@ void Asset_Base::SetAssetName(const std::string& _name)
 	assetName = _name;
 }
 
-std::string Asset_Base::GetAssetName() const
+const std::string& Asset_Base::GetAssetName() const
 {
 	return assetName;
 }

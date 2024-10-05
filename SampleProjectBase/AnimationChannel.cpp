@@ -27,6 +27,21 @@ void AnimationChannel::AddQuatKey(float _startKeyNum, const DirectX::SimpleMath:
 	quaternionKeys.push_back(addQuatKey);
 }
 
+void AnimationChannel::ResetKeys()
+{
+	AnimKey_V3 v3 = positionKeys[0];
+	positionKeys.clear();
+	positionKeys.push_back(v3);
+
+	v3 = scaleKeys[0];
+	scaleKeys.clear();
+	scaleKeys.push_back(v3);
+
+	AnimKey_Q q = quaternionKeys[0];
+	quaternionKeys.clear();
+	quaternionKeys.push_back(q);
+}
+
 u_int AnimationChannel::FindPrevPosKey(float _playingRatio) const
 {
 	u_int prevKeyNum = GetPosKeyCnt() - 1;
@@ -214,78 +229,3 @@ float AnimationChannel::GetQuatKeyByRatio(float _playingRatio) const
 
 	return maxKeyNum * _playingRatio;
 }
-
-//DirectX::SimpleMath::Vector3 AnimationChannel::CalcInterpolatedPosition(u_int _prevKeyNum, float _playingTime) const
-//{
-//	// 次のキーの数
-//	u_int nextKeyNum = _prevKeyNum + 1;
-//
-//	float nextTime = 0.0f;
-//
-//	if (nextKeyNum >= GetPosKeyCnt())	// キー数を超えているなら
-//	{
-//		nextKeyNum = 0;
-//		//nextTime = アニメーションの全体時間を書く
-//	}
-//
-//	AnimKey_V3 prevKey = positionKeys[_prevKeyNum];
-//	AnimKey_V3 nextKey = positionKeys[nextKeyNum];
-//
-//	float deltaTime =  nextTime - prevKey.startTime;
-//	float ratio = (_playingTime - prevKey.startTime) / deltaTime;
-//
-//	assert(ratio >= 0.0f && ratio <= 1.0f);
-//
-//	// 線形補間した値を返す
-//	return Vector3::Lerp(prevKey.parameter, nextKey.parameter, ratio);
-//}
-//
-//DirectX::SimpleMath::Vector3 AnimationChannel::CalcInterpolatedScale(u_int _prevKeyNum, float _playingTime) const
-//{
-//	// 次のキーの数
-//	u_int nextKeyNum = _prevKeyNum + 1;
-//
-//	float nextTime = 0.0f;
-//
-//	if (nextKeyNum >= GetScaleKeyCnt())	// キー数を超えているなら
-//	{
-//		nextKeyNum = 0;
-//		//nextTime = アニメーションの全体時間を書く
-//	}
-//
-//	AnimKey_V3 prevKey = scaleKeys[_prevKeyNum];
-//	AnimKey_V3 nextKey = scaleKeys[nextKeyNum];
-//
-//	float deltaTime = nextTime - prevKey.startTime;
-//	float ratio = (_playingTime - prevKey.startTime) / deltaTime;
-//
-//	assert(ratio >= 0.0f && ratio <= 1.0f);
-//
-//	// 線形補間した値を返す
-//	return Vector3::Lerp(prevKey.parameter, nextKey.parameter, ratio);
-//}
-//
-//DirectX::SimpleMath::Quaternion AnimationChannel::CalcInterpolatedQuaternion(u_int _prevKeyNum, float _playingTime) const
-//{
-//	// 次のキーの数
-//	u_int nextKeyNum = _prevKeyNum + 1;
-//
-//	float nextTime = 0.0f;
-//
-//	if (nextKeyNum >= GetQuatKeyCnt())	// キー数を超えているなら
-//	{
-//		nextKeyNum = 0;
-//		//nextTime = アニメーションの全体時間を書く
-//	}
-//
-//	AnimKey_Q prevKey = quaternionKeys[_prevKeyNum];
-//	AnimKey_Q nextKey = quaternionKeys[nextKeyNum];
-//
-//	float deltaTime = nextTime - prevKey.startTime;
-//	float ratio = (_playingTime - prevKey.startTime) / deltaTime;
-//
-//	assert(ratio >= 0.0f && ratio <= 1.0f);
-//
-//	// 線形補間した値を返す
-//	return Quaternion::Slerp(prevKey.parameter, nextKey.parameter, ratio);
-//}

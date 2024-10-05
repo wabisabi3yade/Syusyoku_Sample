@@ -41,6 +41,11 @@ void BoneList::SetBoneList(std::vector<std::unique_ptr<Bone>> _setList)
 	pBones = std::move(_setList);
 }
 
+
+BoneList::BoneList() : loadScale(1.0f)
+{
+}
+
 BoneList::BoneList(const BoneList& _other)
 {
 	Copy(_other);
@@ -101,6 +106,21 @@ u_int BoneList::GetIndex(const std::string& _boneName) const
 u_int BoneList::GetBoneCnt() const
 {
 	return static_cast<u_int>(pBones.size());
+}
+
+u_int BoneList::GetRootBoneId() const
+{
+	return 0;
+}
+
+float BoneList::GetLoadScale() const
+{
+	return loadScale;
+}
+
+const DirectX::SimpleMath::Quaternion& BoneList::GetLoadRotation() const
+{
+	return loadOffsetRotation;
 }
 
 void BoneList::Copy(const BoneList& _other)

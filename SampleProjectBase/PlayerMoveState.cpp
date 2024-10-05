@@ -23,10 +23,11 @@ void PlayerMoveState::Update()
 
 	Rotation();
 
+	// アタックStateに遷移
 	if (GameInput::GetInstance()->GetButton(GameInput::ButtonType::Player_Attack))
 	{
-		/*ChangeState(StateType::Attack);*/
-		pAnimController->SetInt("state", 1);
+		ChangeState(StateType::Attack);
+		pAnimation->SetTrigger(ATTACKTRIGGER_PARAMNAME);
 	}
 		
 }
@@ -97,7 +98,7 @@ void PlayerMoveState::Move()
 	pPlayerObject->GetTransform().SetPosition(pos);
 
 	// アニメーションのブレンド割合をセット
-	//pAnimController->SetMoveSpeedRatio(currentSpeed / maxSpeed);
+	pAnimation->SetFloat(SPEEDRATIO_PARAMNAME, currentSpeed / maxSpeed);
 }
 
 void PlayerMoveState::Rotation()

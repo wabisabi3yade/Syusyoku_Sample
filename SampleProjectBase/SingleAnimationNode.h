@@ -20,16 +20,15 @@ public:
 	// アニメーションデータを取得する
 	const AnimationData& GetAnimationData() const;
 
-	/// @brief 現在のアニメーションのトランスフォーム取得
-	/// @param _outTransform 格納するボーントランスフォーム
-	/// @param _boneId ボーンのID
-	void GetCurAnimTransform(BoneTransform& _outTransform, u_int _boneId) const override;
-
 	/// @brief アニメーションのトランスフォーム取得
 	/// @param _outTransform 格納するボーントランスフォーム
 	/// @param _boneId ボーンのID
 	/// @param _requestRatio 取得する指定のアニメーション割合
 	void GetAnimTransform(BoneTransform& _outTransform, u_int _boneId, float _requestRatio) const override;
+
+	/// @brief ルートモーションの移動速度を取得する
+	/// @return ルートモーションの移動速度
+	const DirectX::SimpleMath::Vector3& GetRootMotionPosSpeed() const;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

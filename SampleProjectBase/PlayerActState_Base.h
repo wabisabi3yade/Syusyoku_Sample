@@ -6,7 +6,7 @@
 
 #include "AnimationController.h"
 
-class AnimationController;
+class CP_Animation;
 class GameObject;
 
 /// @brief プレイヤーの行動ステート基底クラス
@@ -30,11 +30,10 @@ private:
 	StateType stateType;
 protected:
 	/// @brief アニメーション管理
-	AnimationController* pAnimController;
+	CP_Animation* pAnimation;
 
 	/// @brief  プレイヤーオブジェクト
 	GameObject* pPlayerObject;
-
 public:
 	PlayerActState_Base(StateType _stateType);
 	virtual ~PlayerActState_Base() {}
@@ -53,8 +52,8 @@ public:
 	/// @brief  終了処理呼び出し
 	void OnEndCall();
 
-	// アニメーション管理をセットする
-	void SetAnimController(AnimationController& _pController);
+	// アニメーションをセットする
+	void SetAnimation(CP_Animation& _pAnimation);
 
 	/// @brief アクション状態列挙型を文字列に変換
 	/// @param _stateType 文字列に変換したいアクション状態
@@ -80,5 +79,13 @@ protected:
 
 	/// @brief ImGui処理
 	virtual void ImGuiSetting() {}
+
+protected:
+	// アニメーションコントローラ内のプレイヤー名
+	constexpr static auto SPEEDRATIO_PARAMNAME = "speed";	// 移動速度
+	constexpr static auto ATTACKTRIGGER_PARAMNAME = "attackTrigger";	// 攻撃トリガー
+
+
+
 };
 

@@ -28,6 +28,33 @@ const AnimationChannel* AnimationData::FindChannel(u_int _boneIdx) const
 	return (*itr).get();
 }
 
+void AnimationData::CalcRootMotion(u_int _rootBoneId)
+{
+	rootBoneId = _rootBoneId;
+
+	// 配列内のルートモーションにあたるチャンネルを探す
+	AnimationChannel* pFind = pAnimChannels[0].get();
+	for (auto& c : pAnimChannels)
+	{
+		if (rootBoneId == c->GetBodeIdx())
+		{
+			pFind = c.get();
+			break;
+		}
+	}
+
+	// ルートモーションチャンネルにコピー
+	pRootMotionChannels = std::make_unique<AnimationChannel>(*pFind);
+	// 元々のルートモーションチャンネルの移動量0にする
+	/*pFind->ResetKeys();*/
+
+	// 秒速の移動速度を求める
+	Vector3 startPos = GetRootMotionPos(0.0f);
+	Vector3 endPos = GetRootMotionPos(1.0f);
+	Vector3 moveDistance = endPos - startPos;
+	rootMovePosPerSec = moveDistance / animationTime_s;
+}
+
 void AnimationData::SetBoneListName(const std::string& _boneListName)
 {
 	boneListName = _boneListName;
@@ -168,7 +195,7 @@ DirectX::SimpleMath::Vector3 AnimationData::GetPositionByRatio(u_int _boneId, fl
 	float playingKeyNum = channel->GetPosKeyByRatio(_playingRatio);
 
 	// 割合
-	float ratio = (playingKeyNum - prevKey.startKeyNum ) / deltaKeyNum;
+	float ratio = (playingKeyNum - prevKey.startKeyNum) / deltaKeyNum;
 
 	/*u_int prevprevKeyNum = channel->GetNextPosKey(prevKeyNum, -1);
 	u_int nextnextKeyNum = channel->GetNextPosKey(prevKeyNum, 2);
@@ -184,15 +211,11 @@ DirectX::SimpleMath::Vector3 AnimationData::GetPositionByRatio(u_int _boneId, fl
 	return calcPos;
 }
 
-BoneTransform AnimationData::GetTransformByRatio(u_int _boneId, float _playingRatio) const
+void AnimationData::GetTransformByRatio(u_int _boneId, float _playingRatio, BoneTransform& _outTransform) const
 {
-	BoneTransform retTransform;
-
-	retTransform.position = GetPositionByRatio(_boneId, _playingRatio);
-	retTransform.scale = GetScaleByRatio(_boneId, _playingRatio);
-	retTransform.rotation = GetQuaternionByRatio(_boneId, _playingRatio);
-
-	return retTransform;
+	_outTransform.position = GetPositionByRatio(_boneId, _playingRatio);
+	_outTransform.scale = GetScaleByRatio(_boneId, _playingRatio);
+	_outTransform.rotation = GetQuaternionByRatio(_boneId, _playingRatio);
 }
 
 DirectX::SimpleMath::Vector3 AnimationData::GetScaleByKey(u_int _boneId, u_int _playingKey) const
@@ -246,6 +269,65 @@ BoneTransform AnimationData::GetTransformByKey(u_int _boneId, u_int _playingKey)
 	boneTransform.rotation = GetQuaternioneByKey(_boneId, _playingKey);
 
 	return boneTransform;
+}
+
+const DirectX::SimpleMath::Vector3& AnimationData::GetRootMotionPosSpeedPerSec() const
+{
+	return rootMovePosPerSec;
+}
+
+DirectX::SimpleMath::Vector3 AnimationData::GetRootMotionPos(float _ratio) const
+{
+	if (pRootMotionChannels->GetPosKeyCnt() == 1)	// 1つだと補間しない
+	{
+		return pRootMotionChannels->GetPosKey(0).parameter;
+	}
+
+	u_int prevKeyNum = pRootMotionChannels->FindPrevPosKey(_ratio);
+	u_int nextKeyNum = pRootMotionChannels->GetNextPosKey(prevKeyNum);
+
+	const AnimKey_V3& prevKey = pRootMotionChannels->GetPosKey(prevKeyNum);
+	const AnimKey_V3& nextKey = pRootMotionChannels->GetPosKey(nextKeyNum);
+
+	float deltaKeyNum = nextKey.startKeyNum - prevKey.startKeyNum;
+
+	// 割合からキー数を取得
+	float playingKeyNum = pRootMotionChannels->GetPosKeyByRatio(_ratio);
+
+	// 割合
+	float ratio = (playingKeyNum - prevKey.startKeyNum) / deltaKeyNum;
+
+	//// 線形補間
+	Vector3 calcPos = Vector3::Lerp(prevKey.parameter, nextKey.parameter, ratio);
+
+	return calcPos;
+}
+
+DirectX::SimpleMath::Quaternion AnimationData::GetRootMotionRot(float _ratio) const
+{
+	if (pRootMotionChannels->GetQuatKeyCnt() == 1)	// 1つだと補間しない
+	{
+		return pRootMotionChannels->GetQuatKey(0).parameter;
+	}
+
+	u_int prevKeyNum = pRootMotionChannels->FindPrevQuatKey(_ratio);
+	u_int nextKeyNum = pRootMotionChannels->GetNextQuatKey(prevKeyNum);
+
+	const AnimKey_Q& prevKey = pRootMotionChannels->GetQuatKey(prevKeyNum);
+	const AnimKey_Q& nextKey = pRootMotionChannels->GetQuatKey(nextKeyNum);
+
+	float deltaKeyNum = nextKey.startKeyNum - prevKey.startKeyNum;
+
+	// 割合からキー数を取得
+	float playingKeyNum = pRootMotionChannels->GetQuatKeyByRatio(_ratio);
+
+	// 割合
+	float ratio = (playingKeyNum - prevKey.startKeyNum) / deltaKeyNum;
+
+	// 球面線形補間
+	Quaternion calcQuat = Quaternion::Slerp(prevKey.parameter, nextKey.parameter, ratio);
+
+	return calcQuat;
 }
 
 float AnimationData::GetAnimationTime() const

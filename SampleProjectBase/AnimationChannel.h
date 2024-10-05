@@ -50,6 +50,9 @@ public:
 	/// @param _quaternion クォータニオン
 	void AddQuatKey(float _startKeyNum, const DirectX::SimpleMath::Quaternion& _quaternion);
 
+	/// @brief ルートノードのとき移動パラメータをリセットする
+	void ResetKeys();
+
 	// 割合から前のキー数を探す
 	u_int FindPrevPosKey(float _playingRatio) const;
 	u_int FindPrevScaleKey(float _playingRatio) const;

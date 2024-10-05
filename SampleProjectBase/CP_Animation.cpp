@@ -8,7 +8,7 @@
 
 using namespace DirectX::SimpleMath;
 
-Vector3 g_rootOffset;
+CP_Animation::BoneCombMtricies CP_Animation::boneComb;
 
 CP_Animation::CP_Animation() : pSkeletalMesh(nullptr), pAnimController(nullptr)
 {
@@ -51,15 +51,11 @@ void CP_Animation::Update()
 
 void CP_Animation::ImGuiSetting()
 {
-	static bool isWindowOpen = true;
-
-	// コントローラー名取得
-	std::string controllerName;
-	if (pAnimController)
-		controllerName = pAnimController->GetAssetName();
-
 	// コントローラー名表示
 	std::string text = "controllerName:";
+	std::string controllerName = "Null";
+	if (pAnimController)
+		controllerName = pAnimController->GetAssetName();
 	text += controllerName;
 	ImGui::Text(text.c_str());
 
@@ -71,20 +67,86 @@ void CP_Animation::ImGuiSetting()
 			SetAnimationController(*pGetAnimCon);
 	}
 
-	ImGui::Begin("Animation", &isWindowOpen);
-	if (pAnimController)
-		pAnimController->ImGuiCall();
-	ImGui::End();
+	// コントローラー再生
+	if (pAnimConPlayer)
+		pAnimConPlayer->ImGuiCall();
+}
+
+void CP_Animation::SetBool(const std::string& _paramName, bool _isBool)
+{
+#ifdef EDIT
+	// コピーアニメーションパラメータがあるか確認
+	if (!IsExistCopyAnimParameter()) return;
+#endif // EDIT
+
+	pAnimConPlayer->GetCopyAnimParameters().SetBool(_paramName, _isBool);
+}
+
+void CP_Animation::SetInt(const std::string& _paramName, int _intVal)
+{
+#ifdef EDIT
+	// コピーアニメーションパラメータがあるか確認
+	if (!IsExistCopyAnimParameter()) return;
+#endif // EDIT
+
+	pAnimConPlayer->GetCopyAnimParameters().SetInt(_paramName, _intVal);
+}
+
+void CP_Animation::SetFloat(const std::string& _paramName, float _floatVal)
+{
+#ifdef EDIT
+	// コピーアニメーションパラメータがあるか確認
+	if (!IsExistCopyAnimParameter()) return;
+#endif // EDIT
+
+	pAnimConPlayer->GetCopyAnimParameters().SetFloat(_paramName, _floatVal);
+}
+
+void CP_Animation::SetTrigger(const std::string& _paramName)
+{
+#ifdef EDIT
+	// コピーアニメーションパラメータがあるか確認
+	if (!IsExistCopyAnimParameter()) return;
+#endif // EDIT
+
+	pAnimConPlayer->GetCopyAnimParameters().SetTrigger(_paramName);
+}
+
+bool CP_Animation::GetBool(const std::string& _paramName)
+{
+#ifdef EDIT
+	// コピーアニメーションパラメータがあるか確認
+	if (!IsExistCopyAnimParameter()) return false;
+#endif // EDIT
+
+	return pAnimConPlayer->GetCopyAnimParameters().GetBool(_paramName);
+}
+
+int CP_Animation::GetInt(const std::string& _paramName)
+{
+#ifdef EDIT
+	// コピーアニメーションパラメータがあるか確認
+	if (!IsExistCopyAnimParameter()) return 0;
+#endif // EDIT
+
+	return pAnimConPlayer->GetCopyAnimParameters().GetInt(_paramName);
+}
+
+float CP_Animation::GetFloat(const std::string& _paramName)
+{
+#ifdef EDIT
+	// コピーアニメーションパラメータがあるか確認
+	if (!IsExistCopyAnimParameter()) return 0.0f;
+#endif // EDIT
+
+	return pAnimConPlayer->GetCopyAnimParameters().GetFloat(_paramName);
 }
 
 void CP_Animation::SetupSkeletalMesh()
 {
 	// レンダラーに設定しているスケルタルメッシュを取得
 	CP_MeshRenderer* pMR = gameObject->GetComponent<CP_MeshRenderer>();
-	SkeletalMesh* pSetMesh = dynamic_cast<SkeletalMesh*>(pMR->GetRenderMesh());
-
-	if (pSetMesh)	// スケルタルメッシュがあるなら
-		pSkeletalMesh = pSetMesh;
+	pSkeletalMesh = dynamic_cast<SkeletalMesh*>(pMR->GetRenderMesh());
 }
 
 void CP_Animation::SetAnimationController(AnimationController& _controller)
@@ -129,14 +191,15 @@ void CP_Animation::Load(const nlohmann::json& _data)
 
 void CP_Animation::SetupAnimCon()
 {
-	if (pSkeletalMesh)
-		pAnimController->Begin(pSkeletalMesh->GetBoneList());
+	if (!pSkeletalMesh) return;
+
+	pAnimConPlayer = std::make_unique<AnimControllPlayer>(*pAnimController, pSkeletalMesh->GetBoneList(), GetTransform());
 }
 
 void CP_Animation::UpdateAnimationMtx()
 {
-	// アニメーションコントローラーで更新する
-	pAnimController->Update(pSkeletalMesh->GetBoneList());
+	// アニメーションプレイヤーで更新する
+	pAnimConPlayer->Update();
 }
 
 bool CP_Animation::IsCanPlay()
@@ -149,16 +212,20 @@ bool CP_Animation::IsCanPlay()
 	return true;
 }
 
+bool CP_Animation::IsExistCopyAnimParameter()
+{
+	if (!pAnimConPlayer)
+	{
+		HASHI_DEBUG_LOG("シーンを開始後呼び出してください");
+		return false;
+	}
+
+	return true;
+}
+
 void CP_Animation::UpdateBoneCombMtx()
 {
 	TreeNode& pRootNode = pSkeletalMesh->GetRootNode();
-
-	Vector3 loadScales = Vector3::One * pSkeletalMesh->GetLoadOffsetScale();
-	Vector3 loadAngles = pSkeletalMesh->GetLoadOffsetAngles();
-	offsetMtx =
-		Matrix::CreateScale(Vector3::One * pSkeletalMesh->GetLoadOffsetScale()) * Mtx::CreateRoratateMtx(loadAngles);
-
-	Matrix transformMtx = pRootNode.GetTransformMtx();
 
 	// ノードを辿って全体のコンビネーション行列を更新していく
 	UpdateNodeHierarchy(pRootNode, Matrix::Identity);
@@ -222,5 +289,6 @@ void CP_Animation::Copy(const CP_Animation& _other)
 	Component::operator=(_other);
 
 	pSkeletalMesh = _other.pSkeletalMesh;
-	/*pAnimController = _other.pAnimController;*/
+	offsetMtx = _other.offsetMtx;
+	pAnimController = _other.pAnimController;
 }

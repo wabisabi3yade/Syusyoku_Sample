@@ -9,11 +9,20 @@ struct BoneTransform;
 class AnimationData : public AssetPath_Base
 {
 private:
-	/// @brief アニメーションノードリスト
+	/// @brief アニメーションチャンネルリスト
 	std::vector<std::unique_ptr<AnimationChannel>> pAnimChannels;
+
+	/// @brief ルートモーションのアニメーションチャンネル
+	std::unique_ptr<AnimationChannel> pRootMotionChannels;
 
 	/// @brief 対応ボーンリスト名
 	std::string boneListName;
+
+	/// @brief ルートモーションで移動する移動速度
+	DirectX::SimpleMath::Vector3 rootMovePosPerSec;
+
+	/// @brief ルートボーンのインデックス(-1は設定なし)
+	u_int rootBoneId;
 
 	/// @brief アニメーションの時間(s)
 	float animationTime_s;
@@ -24,7 +33,7 @@ private:
 	/// @brief 右手系か？
 	bool isRightHand;
 public:
-	AnimationData() : animationTime_s(0.0f), timePerKey_s(0.0f), isRightHand(false) {}
+	AnimationData() : animationTime_s(0.0f), timePerKey_s(0.0f), rootBoneId(-1), isRightHand(false) {}
 	~AnimationData() {}
 
 	/// @brief アニメーションノードを追加する
@@ -35,6 +44,9 @@ public:
 	/// @param _boneIdx ボーンID
 	/// @return アニメーションチャンネル
 	const AnimationChannel* FindChannel(u_int _boneIdx) const;
+
+	/// @brief ルートモーション関係のパラメータを求める
+	void CalcRootMotion(u_int _rootBoneId);
 
 	// ボーンリスト名をセット
 	void SetBoneListName(const std::string& _boneListName);
@@ -82,8 +94,8 @@ public:
 	/// @brief トランスフォーム取得
 	/// @param _boneId ボーンID
 	/// @param _playingRatio 再生割合
-	/// @return ボーンのトランスフォーム
-	BoneTransform GetTransformByRatio(u_int _boneId, float _playingRatio) const;
+	/// @param _outTransform 結果ボーントランスフォーム
+	void GetTransformByRatio(u_int _boneId, float _playingRatio, BoneTransform& _outTransform) const;
 
 	/// @brief スケールを求める
 	/// @param _boneId ボーンID
@@ -108,6 +120,20 @@ public:
 	/// @param _requestKey 取得するキー
 	/// @return ボーンのトランスフォーム
 	BoneTransform GetTransformByKey(u_int _boneId, u_int _playingKey) const;
+	
+	/// @brief ルートモーションの移動速度を求める(秒
+	/// @return ルートモーションの移動速度
+	const DirectX::SimpleMath::Vector3& GetRootMotionPosSpeedPerSec() const;
+	
+	/// @brief ルートモーションの移動座標を割合から取得する
+	/// @param _ratio 取得したい割合
+	/// @return ルートモーションでの移動座標
+	DirectX::SimpleMath::Vector3 GetRootMotionPos(float _ratio) const;
+
+	/// @brief ルートモーションの回転量を割合から取得する
+	/// @param _ratio 取得したい割合
+	/// @return ルートモーションでの移動座標
+	DirectX::SimpleMath::Quaternion GetRootMotionRot(float _ratio) const;
 
 	// アニメーション全体の時間を取得
 	float GetAnimationTime() const;
