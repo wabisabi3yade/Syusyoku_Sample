@@ -9,7 +9,7 @@
 using namespace DirectX::SimpleMath;
 
 CP_Player::CP_Player()
-	: pAnimController(nullptr)
+	: pAnimation(nullptr)
 {
 }
 
@@ -43,10 +43,9 @@ void CP_Player::Start()
 {
 	//アニメーション関係生成
 	CP_Animation* pAnimation = gameObject->GetComponent<CP_Animation>();
-	pAnimController = pAnimation->GetAnimationController();
 
 	// アクションコントローラー開始処理
-	pActionController->Begin(*pAnimController);
+	pActionController->Begin(*pAnimation);
 }
 
 void CP_Player::Update()

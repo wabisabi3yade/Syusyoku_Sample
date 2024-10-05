@@ -7,94 +7,50 @@
 
 constexpr float DUPLICATE_PLUS(0.01f);	// ブレンド値が重複したときの＋値
 
+constexpr short X_AXIS_IDX(0);	// X軸をあらわすのインデックス番号
+constexpr short Y_AXIS_IDX(1);	// Y軸をあらわすのインデックス番号
+constexpr short TWOAXIS_MAXBLEND_NUM(4);	// 2軸でのブレンドをするときの最大のアニメーション数
+
 using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
+
 
 BlendAnimationNode::BlendAnimationNode(const AnimationParameters& _animParams, std::string _nodeName)
 	: AnimationNode_Base(_nodeName, NodeType::Blend), pAnimParameters(&_animParams)
 {
-	// 初期化
-	for (u_int a_i = 0; a_i < axisCnt; a_i++)
-		targetBlendRatios[a_i] = nullptr;
-
 	SetAnimationTime(1.0f);
-}
-void BlendAnimationNode::ImGuiPlaying()
-{
-	AnimationNode_Base::ImGuiPlaying();
-
-	std::string text = "現在のブレンド: " + std::to_string(curBlendRatio);
-	ImGui::Text(TO_UTF8(text));
-
-	// ターゲット
-	float target = targetBlendRatio;
-	if (ImGui::SliderFloat("target", &target, 0.0f, 1.0f))
-		SetTargetBlendRatio(target);
-}
-
-void BlendAnimationNode::Begin()
-{
-	AnimationNode_Base::Begin();
-
-	targetBlendRatio = 0.0f;
-	curBlendRatio = 0.0f;
-	changeBlendRatio = 0.0f;
-}
-
-void BlendAnimationNode::Update(BoneList& _boneList)
-{
-	if (!IsCanUpdate()) return;
-
-	// ブレンド値をターゲットに近づける
-	MoveCurBlend();
-
-	// アニメーションをブレンドする
-	AnimationUpdate(_boneList);
 }
 
 void BlendAnimationNode::SetAnimationData(const std::string& _animName)
 {
-	BlendData createData;
+	AnimPointData createData;
 
 	AnimationData* pData = AssetGetter::GetAsset<AnimationData>(_animName);
 	if (!pData) return;
 
 	createData.pAnimation = pData;
-	createData.ratioX = 0.0f;
-	blendDatas.push_back(createData);
+	animationPoints.push_back(createData);
 }
 
-void BlendAnimationNode::SetTargetBlendRatio(float _ratio)
+const std::string& BlendAnimationNode::GetTargetParamName(u_int _axisIdx) const
 {
-	// 同じ割合をセットするなら処理しない
-	if (abs(_ratio - targetBlendRatio) <= Mathf::epsilon)
-		return;
+	assert(GetAxisCnt() > _axisIdx && "軸番号が大きすぎます");
 
-	SetRatio(targetBlendRatio, _ratio);
-
-	// 移動時間をリセットする
-	curRatioSmoothTime = 0.0f;
-	// 変更時の求める
-	changeBlendRatio = curBlendRatio;
-}
-
-void BlendAnimationNode::SetAnimationRatio(float _ratio, const std::string& _animName)
-{
-	BlendData* findBlend = FindBlendData(_animName);
-	// 見つからなかったら
-	if (findBlend == nullptr) return;
-
-	SetRatio(findBlend->ratioX, _ratio);
+	return axisParameters[_axisIdx].targetParamName;
 }
 
 nlohmann::json BlendAnimationNode::Save()
 {
 	auto data = AnimationNode_Base::Save();
 
-	for (auto& b : blendDatas)	// 各ブレンドデータをセーブ
-		data["blendData"].push_back(SaveBlendData(b));
-	data["smoothTime"] = ratioSmoothTime;
-	data["moveEase"] = ratioMoveEase;
+	// 軸のパラメータを保存
+	for (auto& a : axisParameters)
+		data["axisParam"].push_back(SaveAxisParameter(a));
+
+	// 各アニメーションをセーブ
+	for (auto& b : animationPoints)
+		data["blendPoint"].push_back(SaveBlendPoint(b));
+
 	return data;
 }
 
@@ -103,215 +59,235 @@ void BlendAnimationNode::Load(const nlohmann::json& _data)
 	AnimationNode_Base::Load(_data);
 
 	nlohmann::json blendSaveDatas;
-	LoadJsonDataArray("blendData", blendSaveDatas, _data);
-	for (auto& d : blendSaveDatas)	// ブレンドデータをロードする
-		LoadBlendData(d);
+	if (LoadJsonDataArray("axisParam", blendSaveDatas, _data))
+		for (auto& d : blendSaveDatas)	// 軸パラメータをロードする
+			LoadAxisParameter(d);
+
+	if (LoadJsonDataArray("blendPoint", blendSaveDatas, _data))
+		for (auto& d : blendSaveDatas)	// ブレンドポイントをロードする
+			LoadBlendPoint(d);
 }
 
-void BlendAnimationNode::MoveCurBlend()
+bool BlendAnimationNode::CompareBlendDistance(const PointToDistance& _a, const PointToDistance& _b)
 {
-	// 割合移動時間
-	if (ratioSmoothTime < Mathf::epsilon)
-	{
-		curBlendRatio = targetBlendRatio;
-		return;
-	}
-
-	curRatioSmoothTime += MainApplication::DeltaTime();
-	curRatioSmoothTime = std::min(curRatioSmoothTime, ratioSmoothTime);
-
-	float easeValue = HashiTaku::Easing::EaseValue(curRatioSmoothTime / ratioSmoothTime, ratioMoveEase);
-
-	float subRatio = targetBlendRatio - changeBlendRatio;
-
-	// イージングで割合を移動する
-	curBlendRatio = changeBlendRatio + subRatio * easeValue;
+	return _a.distance < _b.distance;
 }
 
-void BlendAnimationNode::AnimationUpdate(BoneList& _boneList)
+bool BlendAnimationNode::CompareBlendvalue(const AnimPointData& _a, const AnimPointData& _b)
 {
-	// ブレンドする2つのアニメーションを探す
-	BlendPair blendPair = FindBlendPair();
-
-	if (blendPair.nextData == nullptr)	// 考慮するアニメーションが一つだけ
-		SingleUpdateAnimation(*blendPair.prevData, _boneList);
-	else
-		BlendUpdateAnimation(blendPair, _boneList);
+	return _a.blendValue.x < _b.blendValue.x;
 }
 
-bool BlendAnimationNode::IsCanUpdate()
-{
-	if (static_cast<u_int>(blendDatas.size()) == 0) return false;
 
-	return true;
-}
-
-BlendAnimationNode::BlendPair BlendAnimationNode::FindBlendPair()
+void BlendAnimationNode::FindBlendingDataSingleAxis(float _blendValue, std::vector<BlendAnimationNode::BlendingData>& _outData) const
 {
-	BlendPair blendPair{};
+	BlendingData blendingData;
 
 	// 以下の条件のとき、考慮するアニメーションは一つだけ
-	auto minItr = blendDatas.begin();
-	auto maxItr = std::prev(blendDatas.end());
+	auto minItr = animationPoints.begin();
+	auto maxItr = std::prev(animationPoints.end());
 
-	if (curBlendRatio <= minItr->ratioX) // 最小値より小さい
+	if (_blendValue <= minItr->blendValue.x) // 最小値より小さい
 	{
-		blendPair.prevData = &(*minItr);
-		return blendPair;
+		blendingData.pAnimation = (*minItr).pAnimation;
+		blendingData.blendWeight = 1.0f;
+		_outData.push_back(blendingData);
+
+		return;
 	}
-	else if (curBlendRatio >= maxItr->ratioX) // 最大値より大きい
+	else if (_blendValue >= maxItr->blendValue.x) // 最大値より大きい
 	{
-		blendPair.prevData = &(*maxItr);
-		return blendPair;
+		blendingData.pAnimation = (*maxItr).pAnimation;
+		blendingData.blendWeight = 1.0f;
+		_outData.push_back(blendingData);
+
+		return;
 	}
 
 
 	// 現在の割合より大きい割合をデータの中から探す
-	for (auto itr = blendDatas.begin(); itr != std::prev(blendDatas.end()); itr++)
+	for (auto prevItr = animationPoints.begin(); prevItr != std::prev(animationPoints.end()); prevItr++)
 	{
-		auto nextItr = std::next(itr);
-		if (curBlendRatio > nextItr->ratioX) continue;
-
+		auto nextItr = std::next(prevItr);
+		if (_blendValue > nextItr->blendValue.x) continue;
 		// 見つけたら
-		blendPair.prevData = &(*itr);
-		blendPair.nextData = &(*nextItr);
+
+		//　前
+		blendingData.pAnimation = (*prevItr).pAnimation;
+		// ブレンド値の割合を求める
+		float blendDistance = (*nextItr).blendValue.x - (*prevItr).blendValue.x;
+		float prevBlendRatio = (_blendValue - (*prevItr).blendValue.x) / blendDistance;
+		blendingData.blendWeight = 1.0f - prevBlendRatio;
+		_outData.push_back(blendingData);
+
+		// 後
+		blendingData.pAnimation = (*nextItr).pAnimation;
+		blendingData.blendWeight = prevBlendRatio;
+		_outData.push_back(blendingData);
 
 		break;
 	}
-	return blendPair;
 }
 
-void BlendAnimationNode::SingleUpdateAnimation(BlendData& _animationData, BoneList& _boneList)
+void BlendAnimationNode::FindBlendPairTwoAxis(DirectX::SimpleMath::Vector2 _blendValues, std::vector<BlendingData>& _outData) const
 {
-	const AnimationData& animData = *_animationData.pAnimation;
+	// 今は4点以下は処理しない
+	if (GetAnimPointCnt() < TWOAXIS_MAXBLEND_NUM) return;
 
-	float playingRatio = GetCurPlayRatio();
+	using namespace DirectX::SimpleMath;
+	std::list<PointToDistance> pointData;
 
-	//ボーン数ループ
-	for (unsigned int b_i = 0; b_i < _boneList.GetBoneCnt(); b_i++)
+	//　ポイントとの距離を求める
+	for (auto& p : animationPoints)
 	{
-		Bone& bone = _boneList.GetBone(b_i);
+		PointToDistance pd;
+		pd.point = &p;
+		pd.distance = Vector2::Distance(_blendValues, p.blendValue);
 
-		BoneTransform transform;
-
-		// 再生時間から各パラメータを取得
-		// スケール
-		transform.scale = animData.GetScaleByRatio(b_i, playingRatio);
-
-		//クォータニオン
-		transform.rotation = animData.GetQuaternionByRatio(b_i, playingRatio);
-
-		// 座標
-		transform.position = animData.GetPositionByRatio(b_i, playingRatio);
-
-		bone.SetAnimTransform(transform);
-	}
-}
-
-void BlendAnimationNode::BlendUpdateAnimation(BlendPair& _blendPair, BoneList& _boneList)
-{
-	float deltaRatio = _blendPair.nextData->ratioX - _blendPair.prevData->ratioX;
-	float playingRatio = GetCurPlayRatio();
-
-	if (abs(deltaRatio) < Mathf::epsilon)	// ブレンド値に差がない場合
-	{
-		deltaRatio = Mathf::smallValue; // 0徐算しないようにする
-	}
-
-	// アニメーションの重み割合
-	float weightRatio = (curBlendRatio - _blendPair.prevData->ratioX) / deltaRatio;
-
-	const AnimationData* p_pAnimData = _blendPair.prevData->pAnimation;
-	const AnimationData* n_pAnimData = _blendPair.nextData->pAnimation;
-
-	for (u_int b_i = 0; b_i < _boneList.GetBoneCnt(); b_i++)
-	{
-		BoneTransform p_Transform;	// 前のアニメーション
-		p_Transform = p_pAnimData->GetTransformByRatio(b_i, playingRatio);
-
-		BoneTransform n_Transform;	// 後のアニメーション
-		n_Transform = n_pAnimData->GetTransformByRatio(b_i, playingRatio);
-
-		BoneTransform blendTransform;
-		// 座標
-		blendTransform.position = Vector3::Lerp(p_Transform.position, n_Transform.position, weightRatio);
-
-		// スケール
-		blendTransform.scale = Vector3::Lerp(p_Transform.scale, n_Transform.scale, weightRatio);
-
-		// 回転量
-		blendTransform.rotation = Quaternion::Slerp(p_Transform.rotation, n_Transform.rotation, weightRatio);
-
-		// トランスフォームをセット
-		Bone& bone = _boneList.GetBone(b_i);
-		bone.SetAnimTransform(blendTransform);
-	}
-}
-
-BlendAnimationNode::BlendData* BlendAnimationNode::FindBlendData(const std::string& _animName)
-{
-	// 名前から探す
-	auto itr = std::find_if(blendDatas.begin(), blendDatas.end(), [&](BlendData& data)
+		if (pd.distance <= Mathf::epsilon)	// 距離が0.0なら
 		{
-			return data.pAnimation->GetAssetName() == _animName;
-		});
+			BlendingData bd;
+			bd.pAnimation = p.pAnimation;
+			bd.blendWeight = 1.0f;
+			_outData.push_back(bd);
+			return;
+		}
 
-	if (itr == blendDatas.end())
-	{
-		HASHI_DEBUG_LOG("アニメーション名が見つかりませんでした");
-		return nullptr;
+		pointData.push_back(std::move(pd));
 	}
 
-	return &(*itr);
+	// 距離を昇順に並べる
+	pointData.sort(CompareBlendDistance);
+
+	auto itr = pointData.begin();
+	float sumWeight = 0.0f;	// 合計のウェイト
+	for (u_int p_i = 0; p_i < TWOAXIS_MAXBLEND_NUM; p_i++)
+	{
+		/*sumDistance += (*itr).distance;*/
+
+		// ブレンドするリストに追加する
+		BlendingData bd;
+		bd.pAnimation = (*itr).point->pAnimation;
+
+		// 重みを求める
+		bd.blendWeight = 1.0f / (*itr).distance;
+		sumWeight += bd.blendWeight;
+
+		_outData.push_back(std::move(bd));
+
+		itr++;
+	}
+
+	//itr = pointData.begin();
+	//
+	//for (u_int p_i = 0; p_i < TWOAXIS_MAXBLEND_NUM; p_i++)
+	//{
+	//	// ブレンドするリストに追加する
+	//	BlendingData bd;
+	//	bd.pAnimation = (*itr).point->pAnimation;
+
+	//	// 重みを求める
+	//	bd.blendWeight = (*itr).distance / sumDistance;
+	//	bd.blendWeight = 1.0f - bd.blendWeight;
+	//	_outData.push_back(std::move(bd));
+
+	//	itr++;
+	//}
+
+	// ウェイトを0.0～1.0に正規化する
+	for (auto& bd : _outData)
+	{
+		bd.blendWeight /= sumWeight;
+	}
+	
 }
 
-void BlendAnimationNode::SetRatio(float& _ratio, float _setRatio)
+void BlendAnimationNode::SortBlendPoint()
 {
-#ifdef EDIT
-	if (_setRatio < 0.0f || _setRatio > 1.0f)
-		HASHI_DEBUG_LOG("0.0～1.0の範囲で代入してください");
-#endif //  EDIT
-
-	// 範囲内に制限
-	_ratio = std::min(_setRatio, 1.0f);
-	_ratio = std::max(_ratio, 0.0f);
+	animationPoints.sort(CompareBlendvalue);
 }
 
-void BlendAnimationNode::SortBlendValue()
+void BlendAnimationNode::AddAxisParam()
 {
-	blendDatas.sort(CompareBlendValue);
+	if (GetAxisCnt() >= MAX_AXIS_CNT) return;
+
+	// 軸を増やす
+	AxisParameter addAxisParam;
+	axisParameters.push_back(addAxisParam);
 }
 
-bool BlendAnimationNode::CompareBlendValue(const BlendData& _bd1, const BlendData& _bd2)
+void BlendAnimationNode::RemoveAxisParam()
 {
-	return _bd1.ratioX > _bd2.ratioX;
+	if (GetAxisCnt() <= MIN_AXIS_CNT) return;
+
+	// 軸を減らす
+	axisParameters.pop_back();
 }
 
-void BlendAnimationNode::GetCurAnimTransform(BoneTransform& _outTransform, u_int _boneId) const
+float BlendAnimationNode::GetBlendMoveTime(u_int _axisIdx) const
 {
-	GetAnimTransform(_outTransform, _boneId, GetCurPlayRatio());
+	assert(GetAxisCnt() > _axisIdx && "軸番号が大きすぎます");
+
+	return axisParameters[_axisIdx].blendMoveTime;
 }
 
-void BlendAnimationNode::GetAnimTransform(BoneTransform& _outTransform, u_int _boneId, float _requestRatio) const
+HashiTaku::EaseKind BlendAnimationNode::GetBlendMoveEasing(u_int _axisIdx) const
 {
-	// 現段階は最初の割合だけ
-	const AnimationData* pAnimationData = blendDatas.begin()->pAnimation;
-	_outTransform = pAnimationData->GetTransformByRatio(_boneId, _requestRatio);
+	assert(GetAxisCnt() > _axisIdx && "軸番号が大きすぎます");
 
+	return axisParameters[_axisIdx].blendMoveEase;
+}
+
+u_int BlendAnimationNode::GetAxisCnt() const
+{
+	return static_cast<u_int>(axisParameters.size());
+}
+
+u_int BlendAnimationNode::GetAnimPointCnt() const
+{
+	return static_cast<u_int>(animationPoints.size());
 }
 
 void BlendAnimationNode::ImGuiSetting()
 {
 	AnimationNode_Base::ImGuiSetting();
 
-	ImGui::DragFloat("RatioSmoothTime", &ratioSmoothTime, 0.01f, 0.0f, 10.0f);
-	HashiTaku::Easing::ImGuiSelect(ratioMoveEase);
-	for (auto& data : blendDatas)
+	ImGuiAxisParam();
+
+	ImGuiMethod::LineSpaceSmall();
+
+	for (auto itr = animationPoints.begin(); itr != animationPoints.end();)
 	{
-		std::string animName = data.pAnimation->GetAssetName();
-		if (!ImGuiMethod::TreeNode(animName.c_str())) continue;
-		ImGui::SliderFloat("Blend", &data.ratioX, 0.0f, 1.0f);
-		ImGui::TreePop();
+		AnimPointData& animPoint = (*itr);
+		const std::string& animName = animPoint.pAnimation->GetAssetName();
+		bool isDelete = false;
+
+		if (ImGuiMethod::TreeNode(animName.c_str()))
+		{
+			isDelete = ImGui::Button("X");
+
+			const float speed = 0.01f;
+			float min = axisParameters[X_AXIS_IDX].minRangeValue;
+			float max = axisParameters[X_AXIS_IDX].maxRangeValue;
+			if (ImGui::DragFloat("Blend", &animPoint.blendValue.x, speed, min, max))
+			{
+				SortBlendPoint();	// 並ぶ変える
+			}
+
+			if (GetAxisCnt() == 2)	// 2軸なら
+			{
+				min = axisParameters[Y_AXIS_IDX].minRangeValue;
+				max = axisParameters[Y_AXIS_IDX].maxRangeValue;
+				ImGui::DragFloat("##BlendY", &animPoint.blendValue.y, speed, min, max);
+			}
+
+			ImGui::TreePop();
+		}
+
+		if (isDelete)
+			itr = animationPoints.erase(itr);
+		else
+			itr++;
 	}
 
 	static std::string str;
@@ -320,31 +296,88 @@ void BlendAnimationNode::ImGuiSetting()
 		SetAnimationData(str);
 }
 
+void BlendAnimationNode::ImGuiAxisParam()
+{
+#ifdef EDIT
+	for (u_int a_i = 0; a_i < GetAxisCnt(); a_i++)
+	{
+		const char* treeCaption = "Axis X";
+		if (a_i == Y_AXIS_IDX)
+			treeCaption = "Axis Y";
+
+		if (ImGuiMethod::TreeNode(treeCaption))
+		{
+			AxisParameter& axisParam = axisParameters[a_i];
+
+			// 参照するパラメータ名を変更する
+			std::vector<const std::string*> animFloatParams;
+			pAnimParameters->GetFloatNameList(animFloatParams);
+			ImGuiMethod::ComboBox("Parameter", axisParam.targetParamName, animFloatParams);
+
+			// ブレンド時間
+			ImGui::DragFloat("BlendMoveTime", &axisParam.blendMoveTime, 0.01f, 0.0f, 100.0f);
+			// ブレンドイージング
+			HashiTaku::Easing::ImGuiSelect(axisParam.blendMoveEase);
+			ImGui::TreePop();
+		}
+	}
+
+	// 軸を追加・削除
+	if (ImGui::Button("+"))
+		AddAxisParam();
+	ImGui::SameLine();
+	if (ImGui::Button("-"))
+		RemoveAxisParam();
+
+#endif // EDIT
+}
+
 void BlendAnimationNode::ImGuiChangeTargetParam()
 {
+#ifdef EDIT
 	// float型変数のみのパラメータ名を取得
 	std::vector<const std::string*> pAnimParams;
 	pAnimParameters->GetFloatNameList(pAnimParams);
-
-
+#endif // EDIT
 }
 
-nlohmann::json BlendAnimationNode::SaveBlendData(BlendData& _blendData)
+nlohmann::json BlendAnimationNode::SaveAxisParameter(const AxisParameter& _axisParam)
 {
 	nlohmann::json saveData;
-	saveData["animName"] = _blendData.pAnimation->GetAssetName();
-	saveData["ratio"] = _blendData.ratioX;
+
+	saveData["name"] = _axisParam.targetParamName;
+	saveData["time"] = _axisParam.blendMoveTime;
+	saveData["ease"] = _axisParam.blendMoveEase;
+
 	return saveData;
 }
 
-void BlendAnimationNode::LoadBlendData(const nlohmann::json& _blendData)
+nlohmann::json BlendAnimationNode::SaveBlendPoint(const AnimPointData& _blendPoint)
 {
-	BlendData loadBlend;
+	nlohmann::json saveData;
+	saveData["animName"] = _blendPoint.pAnimation->GetAssetName();
+	HashiTaku::SaveJsonVector2("blendValue", _blendPoint.blendValue, saveData);
+	return saveData;
+}
+
+void BlendAnimationNode::LoadAxisParameter(const nlohmann::json& _blendData)
+{
+	AxisParameter create;
+	HashiTaku::LoadJsonString("name", create.targetParamName, _blendData);
+	HashiTaku::LoadJsonFloat("time", create.blendMoveTime, _blendData);
+	HashiTaku::LoadJsonEnum<HashiTaku::EaseKind>("ease", create.blendMoveEase, _blendData);
+
+	axisParameters.push_back(create);
+}
+
+void BlendAnimationNode::LoadBlendPoint(const nlohmann::json& _blendData)
+{
+	AnimPointData loadBlend;
 
 	loadBlend.pAnimation = LoadJsonAsset<AnimationData>("animName", _blendData);
 	if (!loadBlend.pAnimation) return;
 
-	LoadJsonFloat("ratio", loadBlend.ratioX, _blendData);
-	blendDatas.push_back(std::move(loadBlend));
+	LoadJsonVector2("blendValue", loadBlend.blendValue, _blendData);
+	animationPoints.push_back(std::move(loadBlend));
 }
 

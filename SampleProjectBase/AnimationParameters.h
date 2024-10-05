@@ -18,13 +18,15 @@ class AnimationParameters : public HashiTaku::IImGuiUser, public HashiTaku::ISav
 	std::unordered_map<std::string, HashiTaku::AnimParam::conditionValType> animParameters;
 
 	/// @brief トリガーの状態をリセットための配列
-	std::list<TriggerType*> pResetTriggers;
+	std::list<TriggerType*> resetTriggers;
 
 	/// @brief パラメータ削除時の通知サブジェクト
 	std::unique_ptr<HashiTaku::Subject<HashiTaku::AnimParam::NotificationData>> pAnimParamSubject;
 public:
 	AnimationParameters();
 	~AnimationParameters() {}
+	AnimationParameters(const AnimationParameters& _other);
+	AnimationParameters& operator=(const AnimationParameters& _other);
 
 	/// @brief パラメータを追加する
 	/// @tparam T パラメータの型
@@ -39,7 +41,6 @@ public:
 
 	/// @brief パラメータを削除する
 	/// @param _paramNames パラメータ名
-	/// @return 削除したマップ配列の次のイテレータ
 	void RemoveParameter(const std::string& _paramNames);
 
 	/// @brief トリガーの状態をリセットする
@@ -146,6 +147,8 @@ private:
 	/// @return 判別タイプ
 	HashiTaku::AnimParam::TypeKind GetType(const HashiTaku::AnimParam::conditionValType& _parameter);
 
+	void Copy(const AnimationParameters& _other);
+
 	void ImGuiSetting() override;
 	// ImGuiでパラメータを新規に追加する
 	void ImGuiAddParam();
@@ -181,5 +184,5 @@ inline void AnimationParameters::AddParameter(std::string _paramNames)
 
 	// トリガー型ならリセット配列に追加
 	if (TriggerType* pTrigger = std::get_if<TriggerType>(&animParameters[_paramNames]))
-		pResetTriggers.push_back(pTrigger);
+		resetTriggers.push_back(pTrigger);
 }

@@ -22,7 +22,7 @@ public:
 
 	/// @brief 名前を取得する
 	/// @return アセットの名前
-	std::string GetAssetName() const;
+	const std::string& GetAssetName() const;
 
 	// セーブするか取得
 	bool GetIsSave() const;

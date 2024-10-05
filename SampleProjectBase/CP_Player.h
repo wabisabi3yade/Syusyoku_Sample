@@ -4,12 +4,13 @@
 #include "PlayerActionController.h"
 #include "PlayerAnimObserver.h"
 
+class CP_Animation;
 class AnimationController;
 
 class CP_Player : public Component
 {
 	/// @brief アニメーションコントローラー
-	AnimationController* pAnimController;
+	CP_Animation* pAnimation;
 
 	/// @brief アクションコントローラー
 	std::unique_ptr<PlayerActionController> pActionController;

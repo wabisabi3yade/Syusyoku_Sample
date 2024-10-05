@@ -1,19 +1,15 @@
 #pragma once
-#include "CloneComponent.h"
-
+#include "Component.h"
 #include "IAnimationObserver.h"
+#include "AnimControllPlayer.h"
 
 // モデル
-class SkeletalMesh;
-class Bone;
 class TreeNode;
-
-class AnimationController;
 
 constexpr u_int MAX_BONEMTX(400);	// シェーダーの渡すボーン行列の最大数
 
 /// @brief アニメーションコンポーネント
-class CP_Animation : public Component, public CloneComponent<CP_Animation>
+class CP_Animation : public Component
 {
 	// シェーダーに渡すボーン行列構造体
 	struct BoneCombMtricies
@@ -21,7 +17,7 @@ class CP_Animation : public Component, public CloneComponent<CP_Animation>
 		DirectX::SimpleMath::Matrix matrix[MAX_BONEMTX];
 	};
 
-	BoneCombMtricies boneComb;
+	static BoneCombMtricies boneComb;
 
 	/// @brief スケルタルメッシュ
 	SkeletalMesh* pSkeletalMesh;
@@ -29,10 +25,11 @@ class CP_Animation : public Component, public CloneComponent<CP_Animation>
 	/// @brief モデルのオフセット行列
 	DirectX::SimpleMath::Matrix offsetMtx;
 
-protected:
 	/// @brief アニメーションコントローラー
 	AnimationController* pAnimController;
 
+	/// @brief アニメーションコントローラ再生機能
+	std::unique_ptr<AnimControllPlayer> pAnimConPlayer;
 public:
 	CP_Animation();
 	CP_Animation(const CP_Animation& _other);
@@ -46,7 +43,39 @@ public:
 
 	void Update() override;
 
-	void ImGuiSetting() override;
+	/// @brief 指定したbool変数に値をセット
+	/// @param _paramName パラメーター名
+	/// @param _isBool セットする値
+	void SetBool(const std::string& _paramName, bool _isBool);
+
+	/// @brief 指定したint変数に値をセット
+	/// @param _paramName パラメーター名
+	/// @param _intVall セットする値
+	void SetInt(const std::string& _paramName, int _intVal);
+
+	/// @brief 指定したfloat変数に値をセット
+	/// @param _paramName パラメーター名
+	/// @param _floatVal セットする値
+	void SetFloat(const std::string& _paramName, float _floatVal);
+
+	/// @brief 指定したトリガー変数をtrueにする
+	/// @param _paramName パラメーター名
+	void SetTrigger(const std::string& _paramName);
+
+	/// @brief 指定したbool変数に値を取得
+	/// @param _paramName パラメーター名
+	/// @param _isBool 取得する値
+	bool GetBool(const std::string& _paramName);
+
+	/// @brief 指定したint変数に値を取得
+	/// @param _paramName パラメーター名
+	/// @param _intVall 取得する値
+	int GetInt(const std::string& _paramName);
+
+	/// @brief 指定したfloat変数に値を取得
+	/// @param _paramName パラメーター名
+	/// @param _floatVal 取得する値
+	float GetFloat(const std::string& _paramName);
 
 	/// @brief Rendererからスケルタルメッシュをセット 
 	void SetupSkeletalMesh();
@@ -69,6 +98,10 @@ private:
 	/// @return 再生できるか
 	bool IsCanPlay();
 
+	/// @brief コピーされたパラメータが存在しているか
+	/// @return 存在している
+	bool IsExistCopyAnimParameter();
+
 	/// @brief ボーンコンビネーション行列を更新
 	void UpdateBoneCombMtx();
 
@@ -84,5 +117,7 @@ private:
 	void UpdateBoneBuffer();
 
 	void Copy(const CP_Animation& _other);
+
+	void ImGuiSetting() override;
 };
 

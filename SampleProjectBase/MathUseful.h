@@ -163,6 +163,13 @@ namespace Mtx
 	/// @return 回転行列
 	Matrix CreateRoratateMtx(const Vector3& _degrees);
 
+	/// @brief ワールド行列から座標・スケール・回転量を取得
+	/// @param _worldMtx ワールド行列
+	/// @param _pos 移動座標
+	/// @param _scele スケール
+	/// @param _rot 回転量		
+	void GetTransformFromWldMtx(const Matrix& _worldMtx, Vector3& _pos, Vector3& _scele, Quaternion& _rot);
+
 	/// @brief Vector3と掛け算をする
 	/// @param _mtx 行列
 	/// @param _v Vector3

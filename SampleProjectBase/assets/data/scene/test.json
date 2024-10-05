@@ -4,54 +4,6 @@
             "active": true,
             "components": [
                 {
-                    "distance": 467.0,
-                    "enable": true,
-                    "fov": 45.0,
-                    "isOrth": false,
-                    "name": "Camera",
-                    "viewSlot": 0
-                },
-                {
-                    "dis_Hori": 9.0,
-                    "dis_Ver": 3.0,
-                    "enable": true,
-                    "name": "CameraMove",
-                    "offsetTarget": [
-                        0.0,
-                        2.0,
-                        0.0
-                    ],
-                    "rotSpeed": 120.0,
-                    "target": "Player"
-                }
-            ],
-            "layer": 0,
-            "name": "Camera",
-            "tag": 0,
-            "transform": {
-                "child": null,
-                "pos": [
-                    15.300000190734863,
-                    3.5,
-                    -7.5
-                ],
-                "rotation": [
-                    0.12052760273218155,
-                    -0.4951326549053192,
-                    0.0695863887667656,
-                    0.857598066329956
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
                     "enable": true,
                     "name": "SpriteRenderer",
                     "sprite": {
@@ -98,37 +50,42 @@
             "active": true,
             "components": [
                 {
+                    "distance": 467.0,
                     "enable": true,
-                    "meshName": "Knight.fbx",
-                    "name": "MeshRenderer"
+                    "fov": 45.0,
+                    "isOrth": false,
+                    "name": "Camera",
+                    "viewSlot": 0
                 },
                 {
+                    "dis_Hori": 9.0,
+                    "dis_Ver": 3.0,
                     "enable": true,
-                    "name": "Player"
-                },
-                {
-                    "animConName": "ANC_Player",
-                    "enable": true,
-                    "name": "Animation"
+                    "name": "CameraMove",
+                    "offsetTarget": [
+                        0.0,
+                        2.0,
+                        0.0
+                    ],
+                    "rotSpeed": 120.0,
+                    "target": "Player"
                 }
             ],
             "layer": 0,
-            "name": "Player",
+            "name": "Camera",
             "tag": 0,
             "transform": {
-                "child": [
-                    "Weapon"
-                ],
+                "child": null,
                 "pos": [
-                    0.0,
-                    0.0,
-                    0.0
+                    15.300000190734863,
+                    3.5,
+                    -7.5
                 ],
                 "rotation": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
+                    0.12052760273218155,
+                    -0.4951326549053192,
+                    0.0695863887667656,
+                    0.857598066329956
                 ],
                 "scale": [
                     1.0,
@@ -165,6 +122,49 @@
             "tag": 0,
             "transform": {
                 "child": null,
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "meshName": "Knight.fbx",
+                    "name": "MeshRenderer"
+                },
+                {
+                    "enable": true,
+                    "name": "Player"
+                },
+                {
+                    "animConName": "ANC_Player",
+                    "enable": true,
+                    "name": "Animation"
+                }
+            ],
+            "layer": 0,
+            "name": "Player",
+            "tag": 0,
+            "transform": {
+                "child": [
+                    "Weapon"
+                ],
                 "pos": [
                     0.0,
                     0.0,

@@ -363,9 +363,13 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 	// 名前設定
 	std::string modelName = PathToFileName(_modelPath);
 
+	Vector3 loadAngles;
+	if (_isFlipY)
+		loadAngles.y = 180.0f;
+
 	// メッシュのグループを作成する
 	// ここでボーン情報も読み込む
-	std::unique_ptr<Mesh_Group> pMeshGroup = CreateMeshGroup(pScene, modelName);
+	std::unique_ptr<Mesh_Group> pMeshGroup = CreateMeshGroup(pScene, modelName, _scale, loadAngles);
 
 	pMeshGroup->SetLoadOffsetScale(_scale);
 	pMeshGroup->SetLoadFlipY(_isFlipY);
@@ -382,12 +386,6 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 	// メッシュの最大・最小座標
 	Vector3 modelMaxPos = Vector3::One * -10.0f;
 	Vector3 modelMinPos = Vector3::One * 10.0f;
-
-	Matrix rotateMtx = Matrix::CreateFromYawPitchRoll(180.0f * Mathf::degToRad, 0, 0);
-
-	Matrix offsetMtx =
-		Matrix::CreateScale(Vector3::One * _scale)
-		* rotateMtx;
 
 	// メッシュ分ループ
 	for (unsigned int m = 0; m < pScene->mNumMeshes; m++)
@@ -547,6 +545,7 @@ AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, const st
 
 	pAnimData->SetAnimationTime(GetAnimationTime(aiAnimation));
 	pAnimData->SetTimePerKey(GetTimePerKey(aiAnimation));
+	pAnimData->CalcRootMotion(pBoneList->GetRootBoneId());
 
 	// 名前をパス名から取得
 	std::string assetName = PathToFileName(_animPath);
@@ -557,7 +556,7 @@ AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, const st
 	return pRetAnim;
 }
 
-std::unique_ptr<Mesh_Group> AssetLoader::CreateMeshGroup(const aiScene* _pScene, const std::string& _assetName)
+std::unique_ptr<Mesh_Group> AssetLoader::CreateMeshGroup(const aiScene* _pScene, const std::string& _assetName, float _loadScale, const DirectX::SimpleMath::Vector3& _loadAngles)
 {
 	// ボーンがなかったら
 	if (_pScene->mMeshes[0]->mNumBones == 0)
@@ -572,7 +571,7 @@ std::unique_ptr<Mesh_Group> AssetLoader::CreateMeshGroup(const aiScene* _pScene,
 	pSkeletalMesh->SetAssetName(_assetName);
 
 	// ボーンを生成する
-	CreateBone(_pScene, *pSkeletalMesh);
+	CreateBone(_pScene, *pSkeletalMesh, _loadScale, _loadAngles);
 
 	// ノードを生成する
 	std::unique_ptr<TreeNode> pRootNode = CreateNode(*_pScene->mRootNode, *pSkeletalMesh);
@@ -581,7 +580,7 @@ std::unique_ptr<Mesh_Group> AssetLoader::CreateMeshGroup(const aiScene* _pScene,
 	return std::move(pSkeletalMesh);
 }
 
-void AssetLoader::CreateBone(const aiScene* _pScene, SkeletalMesh& _skeletalMesh)
+void AssetLoader::CreateBone(const aiScene* _pScene, SkeletalMesh& _skeletalMesh, float _loadScale, const DirectX::SimpleMath::Vector3& _loadOffsetAngles)
 {
 	std::unique_ptr<BoneList> pCreateBones = std::make_unique<BoneList>();
 	std::vector<std::unique_ptr<Bone>> pBones;
@@ -613,6 +612,8 @@ void AssetLoader::CreateBone(const aiScene* _pScene, SkeletalMesh& _skeletalMesh
 	}
 
 	pCreateBones->SetBoneList(std::move(pBones));
+	pCreateBones->loadScale = _loadScale;
+	pCreateBones->loadOffsetRotation = Quat::ToQuaternion(_loadOffsetAngles);
 
 	std::string boneName = _skeletalMesh.GetAssetName();
 	BoneList* pRetBones = SendAsset<BoneList>(boneName, std::move(pCreateBones));

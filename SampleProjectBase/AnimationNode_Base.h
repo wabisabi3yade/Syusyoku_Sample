@@ -42,6 +42,15 @@ private:
 
 	/// @brief アニメーション終了しているか？
 	bool isFinish;
+
+	/// @brief 移動座標のルートモーションを適用するか(XZ座標)
+	bool isRootMotionPosXZ;
+
+	/// @brief 移動座標のルートモーションを適用するか(Y座標)
+	bool isRootMotionPosY;
+
+	/// @brief 回転量のルートモーションを適用するか
+	bool isRootMotionRot;
 public:
 	AnimationNode_Base(std::string _nodeName, NodeType _type);
 	virtual ~AnimationNode_Base() {}
@@ -100,16 +109,23 @@ public:
 	// アニメーション終了フラグを取得する
 	bool GetIsFinish() const;
 
-	/// @brief 現在のアニメーションのトランスフォーム取得
-	/// @param _outTransform 格納するボーントランスフォーム
-	/// @param _boneId ボーンのID
-	virtual void GetCurAnimTransform(BoneTransform& _outTransform, u_int _boneId) const = 0;
+	/// @brief XZ軸をルートモーションで移動するか？
+	/// @return 移動するか？
+	bool GetIsRootMotionXZ() const;
+
+	/// @brief Y軸をルートモーションで移動するか？
+	/// @return 移動するか？
+	bool GetIsRootMotionY() const;
+
+	/// @brief ルートモーションで回転するか？
+	/// @return 回転するか？
+	bool GetIsRootMotionRot() const;
 
 	/// @brief アニメーションのトランスフォーム取得
 	/// @param _outTransform 格納するボーントランスフォーム
 	/// @param _boneId ボーンのID
 	/// @param _requestRatio 取得する指定のアニメーション割合
-	virtual void GetAnimTransform(BoneTransform& _outTransform, u_int _boneId, float _requestRatio) const = 0;
+	virtual void GetAnimTransform(BoneTransform& _outTransform, u_int _boneId, float _requestRatio) const {};
 
 	/// @brief 再生速度倍率を求める
 	/// @return 再生速度倍率
@@ -130,7 +146,7 @@ private:
 protected:
 	/// @brief 更新処理を行う
 	/// @param _boneList ボーンリスト
-	virtual void Update(BoneList& _boneList) = 0;
+	virtual void Update(BoneList& _boneList) {};
 
 	// 再生時間をセットする
 	void SetAnimationTime(float _time);

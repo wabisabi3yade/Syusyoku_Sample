@@ -36,6 +36,9 @@ public:
 	// 更新をしているか取得
 	bool GetIsUpdatePlay() const;
 private:
+	/// @brief 編集する時の処理
+	void OnEditProcess();
+
 	/// @brief 再生中だけ更新処理
 	void PlayOnlyUpdate();
 

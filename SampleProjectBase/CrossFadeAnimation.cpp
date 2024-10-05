@@ -81,10 +81,10 @@ void CrossFadeAnimation::Update(BoneList& _updateBones, float _playSpeed)
 	for (u_int b_i = 0; b_i < boneCnt; b_i++)
 	{
 		BoneTransform fromTransform;
-		pFromNode->GetCurAnimTransform(fromTransform, b_i);
+	/*	pFromNode->GetCurAnimTransform(fromTransform, b_i);*/
 
 		BoneTransform toTransform;
-		pToNode->GetCurAnimTransform(toTransform, b_i);
+		/*pToNode->GetCurAnimTransform(toTransform, b_i);*/
 
 		BoneTransform interpTransform;
 		Interpolate(fromTransform, toTransform, interpTransform);

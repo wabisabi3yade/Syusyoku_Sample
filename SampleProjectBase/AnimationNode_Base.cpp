@@ -12,7 +12,7 @@ std::vector<std::string> AnimationNode_Base::edit_nodeTypeStrings =
 #endif // EDIT
 
 AnimationNode_Base::AnimationNode_Base(std::string _nodeName, NodeType _type)
-	: nodeName(_nodeName), nodeType(_type), curPlayingRatio(0.0f), lastPlayingRatio(0.0f), playNodeSpeedTimes(1.0f), animationTime(0.0f), isLoop(true), isFinish(false)
+	: nodeName(_nodeName), nodeType(_type), curPlayingRatio(0.0f), lastPlayingRatio(0.0f), playNodeSpeedTimes(1.0f), animationTime(0.0f), isLoop(true), isFinish(false), isRootMotionPosXZ(false), isRootMotionPosY(false), isRootMotionRot(false)
 {
 }
 
@@ -107,6 +107,21 @@ bool AnimationNode_Base::GetIsFinish() const
 	return isFinish;
 }
 
+bool AnimationNode_Base::GetIsRootMotionXZ() const
+{
+	return isRootMotionPosXZ;
+}
+
+bool AnimationNode_Base::GetIsRootMotionY() const
+{
+	return isRootMotionPosY;
+}
+
+bool AnimationNode_Base::GetIsRootMotionRot() const
+{
+	return isRootMotionRot;
+}
+
 float AnimationNode_Base::GetPlaySpeedTimes() const
 {
 	return playNodeSpeedTimes;
@@ -166,9 +181,13 @@ void AnimationNode_Base::ImGuiSetParameter()
 	ImGui::Text(std::string("NodeType:" + typeStr).c_str());	// ノードタイプ
 
 	ImGui::Checkbox("IsLoop", &isLoop);
+	ImGui::Text("RootMotion");
+	ImGui::Checkbox("XZ", &isRootMotionPosXZ); ImGui::SameLine();
+	ImGui::Checkbox("Y", &isRootMotionPosY); ImGui::SameLine();
+	ImGui::Checkbox("Rot", &isRootMotionRot);
 
 	ImGuiMethod::PushItemWidth();
-	ImGui::DragFloat("Speed", &playNodeSpeedTimes, 1.0f, 0.0f, 100.0f);
+	ImGui::DragFloat("Speed", &playNodeSpeedTimes, 0.01f, 0.0f, 100.0f);
 	ImGui::PopItemWidth();
 
 	ImGui::Text("AnimationTime:%f", animationTime);

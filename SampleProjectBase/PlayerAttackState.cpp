@@ -2,7 +2,6 @@
 #include "PlayerAttackState.h"
 
 #include "PlayerActionController.h"
-#include "PlayerAnimController.h"
 
 PlayerAttackState::PlayerAttackState()
 	: PlayerActState_Base(StateType::Attack)

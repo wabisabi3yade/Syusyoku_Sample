@@ -130,6 +130,7 @@
     <ClCompile Include="AnimTransitionArrow.cpp" />
     <ClCompile Include="AssetPath_Base.cpp" />
     <ClCompile Include="AssetSaveLoad.cpp" />
+    <ClCompile Include="BlendNodePlayer.cpp" />
     <ClCompile Include="BoolTransCondition.cpp" />
     <ClCompile Include="BulletContactCallBack.cpp" />
     <ClCompile Include="BulletTest.cpp" />
@@ -138,6 +139,7 @@
     <ClCompile Include="BulletDebugDraw.cpp" />
     <ClCompile Include="CloneComponent.cpp" />
     <ClCompile Include="ComponentRespawner.cpp" />
+    <ClCompile Include="CopyAnimationParameters.cpp" />
     <ClCompile Include="CP_AnimationNotify.cpp" />
     <ClCompile Include="CP_BoxAnimation.cpp" />
     <ClCompile Include="CP_NotifyTest.cpp" />
@@ -164,8 +166,8 @@
     <ClCompile Include="IObserever.cpp" />
     <ClCompile Include="MaterialCreater.cpp" />
     <ClCompile Include="AnimNodePlayer_Base.cpp" />
+    <ClCompile Include="OriginAnimationParameters.cpp" />
     <ClCompile Include="PlayerActChangeObserver.cpp" />
-    <ClCompile Include="PlayerAnimController.cpp" />
     <ClCompile Include="PlayerActionController.cpp" />
     <ClCompile Include="PlayerAnimObserver.cpp" />
     <ClCompile Include="PlayerAttackState.cpp" />
@@ -302,6 +304,7 @@
     <ClInclude Include="AssetConcept.h" />
     <ClInclude Include="AssetPath_Base.h" />
     <ClInclude Include="AssetSaveLoad.h" />
+    <ClInclude Include="BlendNodePlayer.h" />
     <ClInclude Include="BoolTransCondition.h" />
     <ClInclude Include="BulletContactCallBack.h" />
     <ClInclude Include="BulletTest.h" />
@@ -311,6 +314,7 @@
     <ClInclude Include="CloneComponent.h" />
     <ClInclude Include="ComponentConcept.h" />
     <ClInclude Include="ComponentRespawner.h" />
+    <ClInclude Include="CopyAnimationParameters.h" />
     <ClInclude Include="CP_AnimationNotify.h" />
     <ClInclude Include="CP_BoxAnimation.h" />
     <ClInclude Include="CP_NotifyTest.h" />
@@ -341,8 +345,8 @@
     <ClInclude Include="MaterialCreater.h" />
     <ClInclude Include="AnimNodePlayer_Base.h" />
     <ClInclude Include="NullTransform.h" />
+    <ClInclude Include="OriginAnimationParameters.h" />
     <ClInclude Include="PlayerActChangeObserver.h" />
-    <ClInclude Include="PlayerAnimController.h" />
     <ClInclude Include="PlayerActionController.h" />
     <ClInclude Include="PlayerAnimObserver.h" />
     <ClInclude Include="PlayerAttackState.h" />

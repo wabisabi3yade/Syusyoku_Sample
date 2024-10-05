@@ -170,8 +170,6 @@ void AnimationController::SetBlendRatio(float _ratio)
 	if (currentNode.GetNodeType() != Blend) return;
 
 	BlendAnimationNode& pBlend = static_cast<BlendAnimationNode&>(currentNode);
-
-	pBlend.SetTargetBlendRatio(_ratio);
 }
 
 void AnimationController::CreateSingleNode(const std::string& _nodeName, const std::string& _animName)
@@ -185,29 +183,6 @@ void AnimationController::CreateSingleNode(const std::string& _nodeName, const s
 	pCreateInfo->pAnimNode->SetAnimationData(_animName);
 
 	animNodeInfos.push_back(std::move(pCreateInfo));
-}
-
-void AnimationController::CreateBlendNode(const std::vector<std::string>& _animNames,
-	const std::vector<float>& _ratios, const std::string& _nodeName)
-{
-	assert(_animNames.size() == _ratios.size() && "名前と割合の要素数が違います");
-
-	std::unique_ptr<BlendAnimationNode> pCreateBlend = std::make_unique<BlendAnimationNode>(*pAnimParameters, _nodeName);
-
-	u_int maxNum = static_cast<u_int>(_animNames.size());
-
-	// ブレンドアニメーションにアニメーションを追加する
-	for (u_int n_i = 0; n_i < maxNum; n_i++)
-	{
-		pCreateBlend->SetAnimationData(_animNames[n_i]);
-
-		// ブレンド割合をセット
-		pCreateBlend->SetAnimationRatio(_ratios[n_i], _animNames[n_i]);
-	}
-
-	std::unique_ptr<AnimNodeInfo> createInfo = std::make_unique<AnimNodeInfo>();
-	createInfo->pAnimNode = std::move(pCreateBlend);
-	animNodeInfos.push_back(std::move(createInfo));
 }
 
 AnimTransitionArrow* AnimationController::CreateTransitionArrow(const std::string& _fromNodeName, const std::string& _toNodeName)
@@ -245,19 +220,23 @@ AnimTransitionArrow* AnimationController::CreateTransitionArrow(const std::strin
 
 void AnimationController::RemoveNode(const std::string& _nodeName)
 {
-	if (!GetNodeInfo(_nodeName)) return;	// なかったら処理しない
-
 	AnimNodeInfo* pDelete = GetNodeInfo(_nodeName);
 	if (!pDelete) return;
 
-	auto itr = std::find_if(animNodeInfos.begin(), animNodeInfos.end(),
-		[&](const std::unique_ptr<AnimNodeInfo>& _nodeInfo)
+	// 遷移先が削除ノードならその矢印も消す
+	for (auto& pNodeInfo : animNodeInfos)
+	{
+		std::erase_if(pNodeInfo->pTransArrows, [&](const std::unique_ptr<AnimTransitionArrow>& arrow)
+			{
+				return  pDelete->pAnimNode.get() == &arrow->GetToNode();
+			});
+	}
+
+	// ノードを削除する
+	auto itr = std::erase_if(animNodeInfos,	[&](const std::unique_ptr<AnimNodeInfo>& _nodeInfo)
 		{
 			return pDelete == _nodeInfo.get();
 		});
-
-	if (itr != animNodeInfos.end())
-		animNodeInfos.remove(*itr);
 }
 
 bool AnimationController::IsSetAnimation()
@@ -268,6 +247,11 @@ bool AnimationController::IsSetAnimation()
 AnimationNode_Base* AnimationController::GetCurrentNode()
 {
 	return pCurrentNodeInfo->pAnimNode.get();
+}
+
+const AnimationController::AnimNodeInfo* AnimationController::GetDefaultNode() const
+{
+	return pDefaultNodeInfo;
 }
 
 AnimationController::AnimNodeInfo* AnimationController::GetNodeInfo(const std::string& _name)
@@ -313,6 +297,11 @@ void AnimationController::GetNodeArray(std::list<const AnimationNode_Base*>& _an
 	}
 }
 
+const AnimationParameters& AnimationController::GetAnimationParameters() const
+{
+	return *pAnimParameters;
+}
+
 bool AnimationController::GetIsPlay() const
 {
 	return isPlay;
@@ -343,7 +332,7 @@ void AnimationController::Load(const nlohmann::json& _data)
 	LoadJsonFloat("playSpeed", playSpeed, _data);
 
 	// パラメーター
-	nlohmann::json paramsData;	
+	nlohmann::json paramsData;
 	if (LoadJsonDataArray("animParameter", paramsData, _data))
 	{
 		pAnimParameters->Load(paramsData);
@@ -683,6 +672,9 @@ void AnimationController::ImGuiSetting()
 	for (auto& ni : animNodeInfos)
 		nodeNames.push_back(ni->pAnimNode->GetNodeName());
 
+	// デフォルトノード設定
+	ImGuiSetDefaultNode(nodeNames);
+
 	if (ImGuiMethod::TreeNode("All Node"))
 	{
 		ImGuiNode(nodeNames);	// 所持ノード
@@ -708,7 +700,8 @@ void AnimationController::ImGuiNode(const std::vector<std::string>& _nodeNames)
 		AnimationNode_Base& animNode = *(*nodeItr)->pAnimNode;
 		bool isDelete = false;
 
-		if (ImGuiMethod::TreeNode(animNode.GetNodeName()))
+		std::string nodeName = animNode.GetNodeName();
+		if (ImGuiMethod::TreeNode(nodeName))
 		{
 			isDelete = ImGui::Button("Delete");	// 削除
 			animNode.ImGuiCall();	// ノード
@@ -722,7 +715,10 @@ void AnimationController::ImGuiNode(const std::vector<std::string>& _nodeNames)
 
 		// ノード情報削除
 		if (isDelete)
-			nodeItr = animNodeInfos.erase(nodeItr);
+		{
+			nodeItr = std::next(nodeItr);
+			RemoveNode(nodeName);
+		}
 		else
 			nodeItr++;
 	}
@@ -809,8 +805,8 @@ void AnimationController::ImGuiTransArrow(AnimNodeInfo& _nodeInfo, const std::ve
 		std::string treeCaption = "To " + toNodeName;
 		if (ImGuiMethod::TreeNode(treeCaption.c_str()))
 		{
-			(*itr)->ImGuiCall();
 			isDelete = ImGui::Button("X");	// 削除ボタン
+			(*itr)->ImGuiCall();
 			ImGui::TreePop();
 		}
 
@@ -824,7 +820,7 @@ void AnimationController::ImGuiTransArrow(AnimNodeInfo& _nodeInfo, const std::ve
 	ImGui::Text("CreateArrow");
 	ImGuiMethod::ComboBox("ToNode", selectId, _nodeNames);
 	ImGui::SameLine();
-	if (ImGui::Button("+"))	// 作成
+	if (ImGui::Button("+##TransArrow"))	// 作成
 	{
 		std::string fromName = _nodeInfo.pAnimNode->GetNodeName();
 		CreateTransitionArrow(fromName, _nodeNames[selectId]);

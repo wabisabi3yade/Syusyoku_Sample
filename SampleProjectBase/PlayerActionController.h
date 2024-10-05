@@ -2,7 +2,7 @@
 #include "PlayerActState_Base.h"
 #include "PlayerActChangeObserver.h"
 
-class AnimationController;
+class CP_Animation;
 
 /// @brief プレイヤーの動きコントローラー
 class PlayerActionController
@@ -18,7 +18,7 @@ private:
 	PlayerActState_Base* pCurrentState;
 
 	/// @brief アニメーションのコントローラー
-	AnimationController* pAnimController;
+	CP_Animation* pAnimation;
 
 	/// @brief プレイヤーのオブジェクト
 	GameObject* pPlayerObject;
@@ -27,8 +27,8 @@ public:
 	~PlayerActionController() {}
 
 	/// @brief 開始処理
-	/// @param _animationController アニメーションコントローラー
-	void Begin(AnimationController& _animationController);
+	/// @param _animationController アニメーション
+	void Begin(CP_Animation& _animation);
 
 	/// @brief 現在の更新処理
 	void Update();

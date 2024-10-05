@@ -248,6 +248,26 @@ Matrix Mtx::CreateRoratateMtx(const Vector3& _degrees)
 	);
 }
 
+void Mtx::GetTransformFromWldMtx(const Matrix& _worldMtx, Vector3& _pos, Vector3& _scele, Quaternion& _rot)
+{
+	// 行列からトランスフォームを求める
+	_pos = {
+		_worldMtx._41,
+		_worldMtx._42,
+		_worldMtx._43
+	};
+
+	_scele = Vec3::WorldMtxToScale(_worldMtx);
+
+	Matrix rotateMtx = Matrix(
+		_worldMtx._11 / _scele.x, _worldMtx._12 / _scele.x, _worldMtx._13 / _scele.x, 0.0f,
+		_worldMtx._21 / _scele.y, _worldMtx._22 / _scele.y, _worldMtx._23 / _scele.y, 0.0f,
+		_worldMtx._31 / _scele.z, _worldMtx._32 / _scele.z, _worldMtx._33 / _scele.z, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+	_rot = Quaternion::CreateFromRotationMatrix(rotateMtx);
+}
+
 Vector3 Mtx::MultiplyVector3(const Matrix& _mtx, const Vector3& _v)
 {
 	return XMVector3Transform(_v, _mtx);
