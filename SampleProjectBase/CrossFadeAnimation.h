@@ -1,7 +1,7 @@
 #pragma once
 #include "IAnimInterpolate.h"
 
-class AnimationNode_Base;
+class AnimNodePlayer_Base;
 class BoneList;
 struct BoneTransform;
 
@@ -9,10 +9,12 @@ struct BoneTransform;
 class CrossFadeAnimation : public IAnimInterpolate
 {
 	/// @brief 遷移元アニメーション
-	AnimationNode_Base* pFromNode;
+	AnimNodePlayer_Base* pFromNodePlayer;
 
 	/// @brief 遷移先アニメーション
-	AnimationNode_Base* pToNode;
+	AnimNodePlayer_Base* pToNodePlayer;
+
+	BoneList* pBoneList;
 
 	/// @brief 遷移のウェイト
 	float transitionWeight;
@@ -32,16 +34,16 @@ public:
 	/// @brief 開始処理
 	/// @param _fromNode 遷移元アニメーションノード
 	/// @param _toNode 遷移先アニメーションノード
+	/// @param _updateBones　更新するボーンリスト 
 	/// @param  _transitionTime 遷移時間 
 	/// @param _fromStartRatio 遷移開始時の遷移元のアニメーション割合
 	/// @param _toStartRatio 遷移開始時の遷移先のアニメーション割合
 	/// @param _easeKind ウエイトを変化させるときのイージング
-	void Begin(AnimationNode_Base& _fromNode, AnimationNode_Base& _toNode, float _transitionTime, HashiTaku::EaseKind _easeKind);
+	void Begin(AnimNodePlayer_Base& _fromNode, AnimNodePlayer_Base& _toNode, BoneList& _updateBones, float _transitionTime, HashiTaku::EaseKind _easeKind);
 
 	/// @brief 更新処理
-	/// @param _updateBones　更新するボーンリスト 
 	/// @param _playSpeed アニメーション全体速度
-	void Update(BoneList& _updateBones, float _playSpeed);
+	void Update(float _playSpeed);
 
 	/// @brief 遷移時間を進める
 	/// @param _deltaTime 再生速度を考慮した経過時間
@@ -56,6 +58,10 @@ public:
 
 	// 遷移時間を取得 
 	float GetTransitionTime() const override;
+
+	/// @brief 遷移ウェイトを取得
+	/// @return 遷移ウェイト
+	float GetTransitionWeight() const;
 private:
 	/// @brief トランジションによる補間処理
 	/// @param _fromTransforms 遷移元のトランスフォーム

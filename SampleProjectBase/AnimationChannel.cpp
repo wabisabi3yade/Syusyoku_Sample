@@ -32,14 +32,6 @@ void AnimationChannel::ResetKeys()
 	AnimKey_V3 v3 = positionKeys[0];
 	positionKeys.clear();
 	positionKeys.push_back(v3);
-
-	v3 = scaleKeys[0];
-	scaleKeys.clear();
-	scaleKeys.push_back(v3);
-
-	AnimKey_Q q = quaternionKeys[0];
-	quaternionKeys.clear();
-	quaternionKeys.push_back(q);
 }
 
 u_int AnimationChannel::FindPrevPosKey(float _playingRatio) const

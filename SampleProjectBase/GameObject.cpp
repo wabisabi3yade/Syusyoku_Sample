@@ -231,7 +231,7 @@ void GameObject::Destroy()
 
 void GameObject::OnChangeTransform()
 {
-	for (auto& pComp : pComponents)
+	for (auto& pComp : pActiveComponents)
 		pComp->OnChangeTransform();
 }
 

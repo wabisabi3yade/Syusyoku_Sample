@@ -14,16 +14,16 @@
 // ボーン
 class BoneList;
 
+/// @brief アニメーションノード関連の情報
+struct AnimNodeInfo
+{
+	std::unique_ptr<AnimationNode_Base> pAnimNode;	// アニメーションノード
+	std::list<std::unique_ptr<AnimTransitionArrow>> pTransArrows; // 遷移元となっている矢印
+};
+
 /// @brief アニメーション遷移を管理するクラス
 class AnimationController : public Asset_Base, public HashiTaku::IImGuiUser
-{
-public:
-	/// @brief アニメーションノード関連の情報
-	struct AnimNodeInfo
-	{
-		std::unique_ptr<AnimationNode_Base> pAnimNode;	// アニメーションノード
-		std::list<std::unique_ptr<AnimTransitionArrow>> pTransArrows; // 遷移元となっている矢印
-	};
+{	
 
 private:
 	/// @brief アニメーションノード関連の情報リスト
@@ -72,21 +72,10 @@ public:
 	
 	AnimationController& operator=(const AnimationController& _other);
 
-	/// @brief 開始処理
-	void Begin(BoneList& _boneList);
-
 	/// @brief ボーンのアニメーションを更新する
 	/// @param _boneList ボーンリスト
 	/// @param _playingTime 再生時間
 	void Update(BoneList& _boneList);
-
-	/// @brief アニメーション遷移する(デバッグ用）
-	/// @param _animName アニメーション名
-	virtual void ChangeAnimation(const std::string& _animName);
-
-	/// @brief アニメーション遷移する
-	/// @param _transitionArrow 今回使用する遷移矢印
-	virtual void ChangeAnimation(const AnimTransitionArrow& _transitionArrow);
 
 	/// @brief シングルノードを作成
 	/// @param _nodeName ノード名
@@ -161,13 +150,13 @@ public:
 
 	/// @brief デフォルトノード情報を取得
 	/// @return デフォルトノード情報
-	const AnimationController::AnimNodeInfo* GetDefaultNode() const;
+	AnimNodeInfo* GetDefaultNode() const;
 	
 	// 名前からノード情報を取得 
-	AnimNodeInfo* GetNodeInfo(const std::string& _name);
+	AnimNodeInfo* GetNodeInfo(const std::string& _name) const;
 
 	// ノードからノード情報を取得する
-	AnimNodeInfo* GetNodeInfo(const AnimationNode_Base& _node);
+	const AnimNodeInfo* GetNodeInfo(const AnimationNode_Base& _node) const;
 
 	// 現在の再生割合を取得
 	float GetPlayingRatio() const;

@@ -41,6 +41,8 @@ std::string PlayerActState_Base::StateTypeToStr(StateType _stateType)
 	using enum StateType;
 	switch (_stateType)
 	{
+	case Idle: return "Idle";
+
 	case Move: return "Move";
 
 	case Jump: return "Jump";
@@ -56,6 +58,15 @@ std::string PlayerActState_Base::StateTypeToStr(StateType _stateType)
 PlayerActState_Base::StateType PlayerActState_Base::GetActStateType() const
 {
 	return stateType;
+}
+
+nlohmann::json PlayerActState_Base::Save()
+{
+	return nlohmann::json();
+}
+
+void PlayerActState_Base::Load(const nlohmann::json& _data)
+{
 }
 
 void PlayerActState_Base::ChangeState(StateType _changeState)

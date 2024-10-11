@@ -5,12 +5,17 @@
                 {
                     "name": "VelocityX",
                     "type": 2,
-                    "value": 0.5
+                    "value": 0.5339999794960022
+                },
+                {
+                    "name": "state",
+                    "type": 1,
+                    "value": 0
                 },
                 {
                     "name": "speed",
                     "type": 2,
-                    "value": 1.0
+                    "value": 0.5699999928474426
                 },
                 {
                     "name": "AttackTrigger",
@@ -19,11 +24,11 @@
                 {
                     "name": "VelocityY",
                     "type": 2,
-                    "value": 0.5
+                    "value": 0.1420000046491623
                 }
             ],
             "assetName": "ANC_Player",
-            "defaultNode": "TestRoot",
+            "defaultNode": "Attack3",
             "nodeInfoData": [
                 {
                     "animNode": {
@@ -70,20 +75,172 @@
                                 ]
                             }
                         ],
-                        "isLoop": true
+                        "isLoop": true,
+                        "isRMR": false,
+                        "isRMXZ": false,
+                        "isRMY": false
                     },
                     "arrowDataList": null,
+                    "nodeName": "TargetMove",
+                    "nodeType": 1
+                },
+                {
+                    "animNode": {
+                        "animName": "knight_Idle1.fbx",
+                        "animTime": 2.5333333015441895,
+                        "isLoop": true,
+                        "isRMR": false,
+                        "isRMXZ": false,
+                        "isRMY": false
+                    },
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 25,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "TargetMove"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "fCompare": 0.10000000149011612,
+                                            "fJudgeType": 0
+                                        },
+                                        "paramName": "speed",
+                                        "typeKind": 2
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.18000000715255737
+                            },
+                            "toName": "Move"
+                        }
+                    ],
+                    "nodeName": "Idle",
+                    "nodeType": 0
+                },
+                {
+                    "animNode": {
+                        "animTime": 1.0,
+                        "axisParam": [
+                            {
+                                "ease": 0,
+                                "name": "speed",
+                                "time": 0.0
+                            }
+                        ],
+                        "blendPoint": [
+                            {
+                                "animName": "knight_Idle1.fbx",
+                                "blendValue": [
+                                    0.0,
+                                    0.0
+                                ]
+                            },
+                            {
+                                "animName": "knight_Walk_F.fbx",
+                                "blendValue": [
+                                    0.4000000059604645,
+                                    0.0
+                                ]
+                            },
+                            {
+                                "animName": "knight_Run_F.fbx",
+                                "blendValue": [
+                                    1.0,
+                                    0.0
+                                ]
+                            }
+                        ],
+                        "isLoop": true,
+                        "isRMR": false,
+                        "isRMXZ": false,
+                        "isRMY": false
+                    },
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "fCompare": 0.0,
+                                            "fJudgeType": 2
+                                        },
+                                        "paramName": "speed",
+                                        "typeKind": 2
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 3.3499999046325684
+                            },
+                            "toName": "Idle"
+                        }
+                    ],
                     "nodeName": "Move",
                     "nodeType": 1
                 },
                 {
                     "animNode": {
-                        "animName": "knight_Run_F.fbx",
-                        "animTime": 0.699999988079071,
-                        "isLoop": true
+                        "animName": "knight_SlashAttack1.fbx",
+                        "animTime": 1.5,
+                        "isLoop": true,
+                        "isRMR": false,
+                        "isRMXZ": true,
+                        "isRMY": true
                     },
                     "arrowDataList": null,
-                    "nodeName": "TestRoot",
+                    "nodeName": "Attack1",
+                    "nodeType": 0
+                },
+                {
+                    "animNode": {
+                        "animName": "knight_RollAttack.fbx",
+                        "animTime": 1.7333333492279053,
+                        "isLoop": true,
+                        "isRMR": false,
+                        "isRMXZ": true,
+                        "isRMY": false
+                    },
+                    "arrowDataList": null,
+                    "nodeName": "Attack2",
+                    "nodeType": 0
+                },
+                {
+                    "animNode": {
+                        "animName": "knight_JumpAttack.fbx",
+                        "animTime": 2.3333332538604736,
+                        "isLoop": true,
+                        "isRMR": false,
+                        "isRMXZ": true,
+                        "isRMY": true
+                    },
+                    "arrowDataList": null,
+                    "nodeName": "Attack3",
                     "nodeType": 0
                 }
             ],
@@ -91,12 +248,6 @@
         }
     ],
     "animations": [
-        {
-            "assetName": "knight_StrafeWalk_R.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_StrafeWalk_R.fbx",
-            "rightHand": true
-        },
         {
             "assetName": "knight_Idle1.fbx",
             "boneListName": "Knight.fbx",
@@ -107,6 +258,12 @@
             "assetName": "knight_StrafeRun_R.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_StrafeRun_R.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_StrafeWalk_R.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_StrafeWalk_R.fbx",
             "rightHand": true
         },
         {
@@ -122,15 +279,15 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_StrafeWalk_L.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_StrafeWalk_L.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_StrafeRun_L.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_StrafeRun_L.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_StrafeWalk_L.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_StrafeWalk_L.fbx",
             "rightHand": true
         },
         {
@@ -143,6 +300,24 @@
             "assetName": "knight_Walk_F.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_Walk_F.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_JumpAttack.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_JumpAttack.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_SlashAttack1.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_SlashAttack1.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_RollAttack.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_RollAttack.fbx",
             "rightHand": true
         }
     ],
@@ -236,20 +411,24 @@
             "pathName": "assets/texture/skyBox/sky_Day_u.png"
         },
         {
-            "assetName": "sky_Day_b.png",
-            "pathName": "assets/texture/skyBox/sky_Day_b.png"
-        },
-        {
             "assetName": "sky_Day_r.png",
             "pathName": "assets/texture/skyBox/sky_Day_r.png"
         },
         {
-            "assetName": "sky_Day_l.png",
-            "pathName": "assets/texture/skyBox/sky_Day_l.png"
+            "assetName": "sky_Day_b.png",
+            "pathName": "assets/texture/skyBox/sky_Day_b.png"
+        },
+        {
+            "assetName": "ground.png",
+            "pathName": "assets/texture/ground.png"
         },
         {
             "assetName": "sky_Day_d.png",
             "pathName": "assets/texture/skyBox/sky_Day_d.png"
+        },
+        {
+            "assetName": "sky_Day_l.png",
+            "pathName": "assets/texture/skyBox/sky_Day_l.png"
         },
         {
             "assetName": "sky_Day_f.png",

@@ -16,7 +16,7 @@ class CP_Weapon : public Component , public CloneComponent<CP_Weapon>
 	const CP_MeshRenderer* pMeshRenderer;
 
 	/// @brief ロード時の角度
-	DirectX::SimpleMath::Vector3 loadMeshAngles;
+	DirectX::SimpleMath::Quaternion loadMeshRot;
 
 	/// @brief ロード時のスケール
 	float loadMeshScale;

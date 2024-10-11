@@ -18,19 +18,16 @@ public:
 	static std::vector<std::string> judgeTypeStrings;
 #endif // EDIT
 private:
-	/// @brief 遷移条件で参照するfloat変数
-	const float* pParameter;
-
 	/// @brief 比較する値
 	float compareVal;
 
 	/// @brief 判別タイプ
 	JudgeType judgeType;
 public:
-	FloatTransCondition(const float& _parameter, const std::string& _parameterName);
+	FloatTransCondition(const std::string& _parameterName);
 	~FloatTransCondition() {}
 
-	bool IsCondition()const override;
+	bool IsCondition(HashiTaku::AnimParam::conditionValType _checkValue)const override;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

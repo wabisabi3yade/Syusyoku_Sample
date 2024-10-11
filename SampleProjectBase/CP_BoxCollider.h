@@ -1,7 +1,7 @@
 #pragma once
 #include "CP_Collider.h"
 
-class CP_BoxCollider : public CP_Collider, public CloneComponent<CP_BoxCollider>
+class CP_BoxCollider : public CP_Collider
 {
 	/// @brief 長さ
 	DirectX::SimpleMath::Vector3 length;
@@ -34,5 +34,9 @@ private:
 
 	/// @brief 長さ更新
 	void LengthUpdate();
+
+	/// @brief ワールド座標に計算
+	/// @param ワールド座標での長さ
+	void CalcWorldLength(DirectX::SimpleMath::Vector3& _out);
 };
 

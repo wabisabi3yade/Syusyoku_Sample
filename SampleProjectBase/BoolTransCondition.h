@@ -16,16 +16,13 @@ class BoolTransCondition : public TransCondition_Base
 	static std::vector<std::string> judgeTypeStrings;
 #endif
 private:
-	// @brief 遷移条件で参照するbool変数
-	const bool* pParameter;
-
 	/// @brief 判別タイプ
 	JudgeType judgeType;
 public:
-	BoolTransCondition(const bool& _parameter, const std::string& _parameterName);
+	BoolTransCondition(const std::string& _parameterName);
 	~BoolTransCondition() {}
 
-	bool IsCondition()const override;
+	bool IsCondition(HashiTaku::AnimParam::conditionValType _checkValue)const override;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

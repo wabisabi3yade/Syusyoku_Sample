@@ -40,6 +40,7 @@ void SceneLights::UpdateParameter()
 
 void SceneLights::ImGuiDisplay()
 {
+#ifdef EDIT
 	ImGui::Begin(TO_UTF8("ÉVÅ[ÉìÅ@åıåπ"));
 
 	ImGuiDirection();
@@ -47,6 +48,7 @@ void SceneLights::ImGuiDisplay()
 	ImGuiSpot();
 
 	ImGui::End();
+#endif // EDIT
 }
 
 void SceneLights::ImGuiDirection()

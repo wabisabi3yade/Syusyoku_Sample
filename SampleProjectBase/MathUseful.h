@@ -19,6 +19,13 @@ namespace Mathf
 	/// @param _length 最大値
 	/// @return 正規化された値
 	float Repeat(float _t, float _length);
+
+	/// @brief 割合による線形補間
+	/// @param _from 元
+	/// @param _to 先
+	/// @param _ratio 割合 
+	/// @return 計算値
+	float Lerp(float _from, float _to, float _ratio);
 }
 
 namespace Vec2

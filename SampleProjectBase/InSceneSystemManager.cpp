@@ -49,7 +49,7 @@ void InSceneSystemManager::SetCamera(CP_Camera& _camera)
 	pMainCamera = &_camera;
 }
 
-void InSceneSystemManager::AddRigidBody(CP_RigidBody& _setRb)
+void InSceneSystemManager::AddRigidBody(CP_RigidBody2& _setRb)
 {
 #ifdef _DEBUG
 	auto itr = std::find(pSceneRbs.begin(), pSceneRbs.end(), &_setRb);
@@ -63,7 +63,7 @@ void InSceneSystemManager::AddRigidBody(CP_RigidBody& _setRb)
 	pSceneRbs.push_back(&_setRb);
 }
 
-void InSceneSystemManager::RemoveRigidBody(CP_RigidBody& _removetRb)
+void InSceneSystemManager::RemoveRigidBody(CP_RigidBody2& _removetRb)
 {
 	pSceneRbs.remove(&_removetRb);
 }
@@ -71,5 +71,5 @@ void InSceneSystemManager::RemoveRigidBody(CP_RigidBody& _removetRb)
 void InSceneSystemManager::UpdateTransformBtToDx()
 {
 	for (auto& pRb : pSceneRbs)
-		pRb->SetTransformBtToDx();
+		pRb->SetToDXTransform();
 }

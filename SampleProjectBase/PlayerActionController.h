@@ -5,11 +5,11 @@
 class CP_Animation;
 
 /// @brief プレイヤーの動きコントローラー
-class PlayerActionController
+class PlayerActionController : HashiTaku::IImGuiUser, HashiTaku::ISaveLoad
 {
 private:
 	/// @brief プレイヤーの行動状態リスト
-	std::unordered_map<PlayerActState_Base::StateType, std::unique_ptr<PlayerActState_Base>> pActions;
+	std::unordered_map<PlayerActState_Base::StateType, std::unique_ptr<PlayerActState_Base>> actionList;
 
 	/// @brief ステートから変更した時に通知を受け取るオブザーバー
 	std::unique_ptr<PlayerActChangeObserver> pStateChangeObserver;
@@ -41,20 +41,25 @@ public:
 	/// @param _defaultState 初期状態のステート
 	void DefaultState(PlayerActState_Base::StateType _defaultState);
 
-	void ImGuiSetting();
-
+	void ImGuiSetting() override;
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
 private:
 	/// @brief 新しくStateを生成
 	/// @tparam T 対応している行動クラス
-	/// @param _state 生成する状態
-	template <class T> void CreateState(PlayerActState_Base::StateType _state);
+	template <class T> void CreateState();
+
+private:
+	// アニメーションコントローラ内のプレイヤー名
+	constexpr static auto STATE_PARAMNAME = "state";	// アニメーションの状態変数
 };
 
 template<class T>
-inline void PlayerActionController::CreateState(PlayerActState_Base::StateType _state)
+inline void PlayerActionController::CreateState()
 {
 	std::unique_ptr<PlayerActState_Base> createState = std::make_unique<T>();
 	createState->Init(*pPlayerObject, *pStateChangeObserver);
 
-	pActions[_state] = std::move(createState);
+	PlayerActState_Base::StateType state = createState->GetActStateType();
+	actionList[state] = std::move(createState);
 }

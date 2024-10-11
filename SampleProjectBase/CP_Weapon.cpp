@@ -73,7 +73,7 @@ void CP_Weapon::SetGrabBoneName(const std::string& _grabName)
 void CP_Weapon::SetSkeletalMeshData(SkeletalMesh& _skeletalMesh)
 {
 	loadMeshScale = _skeletalMesh.GetLoadOffsetScale();
-	loadMeshAngles = _skeletalMesh.GetLoadOffsetAngles();
+	loadMeshRot = Quat::ToQuaternion(_skeletalMesh.GetLoadOffsetAngles());
 
 	Bone* pBone = _skeletalMesh.GetBoneByName(grabBoneName);
 	if (pBone)
@@ -121,8 +121,11 @@ void CP_Weapon::UpdateTransform()
 	// ボーン行列から座標と回転量を求める
 	Mtx::GetTransformFromWldMtx(boneMtx, pos, scale, rot);
 
+	pos *= loadMeshScale;
+	pos = Vector3::Transform(pos, Matrix::CreateFromQuaternion(loadMeshRot));
+
 	t.SetLocalPosition(pos);
-	t.SetLocalRotation(rot);
+	t.SetLocalRotation(Quat::Multiply(rot, loadMeshRot));
 }
 
 void CP_Weapon::ImGuiSetBone()

@@ -72,6 +72,7 @@ void CP_Player::ImGuiSetting()
 nlohmann::json CP_Player::Save()
 {
 	auto data = Component::Save();
+	data["actionController"] = pActionController->Save();
 
 	return data;
 }
@@ -79,6 +80,10 @@ nlohmann::json CP_Player::Save()
 void CP_Player::Load(const nlohmann::json& _data)
 {
 	Component::Load(_data);
+
+	nlohmann::json actionControllerData;
+	if (HashiTaku::LoadJsonData("actionController", actionControllerData, _data))
+		pActionController->Load(actionControllerData);
 }
 
 void CP_Player::Copy(const CP_Player& _other)

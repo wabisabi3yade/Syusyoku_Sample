@@ -4,6 +4,37 @@
             "active": true,
             "components": [
                 {
+                    "enable": true,
+                    "name": "RigidBody2"
+                }
+            ],
+            "layer": 0,
+            "name": "coll",
+            "tag": 0,
+            "transform": {
+                "child": null,
+                "pos": [
+                    0.0,
+                    4.199999809265137,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
                     "distance": 1000.0,
                     "enable": true,
                     "fov": 45.0,
@@ -16,16 +47,17 @@
             "name": "MainCamera",
             "tag": 0,
             "transform": {
-                "angle": [
-                    10.0,
-                    0.0,
-                    0.0
-                ],
                 "child": null,
                 "pos": [
                     0.0,
-                    2.0,
-                    -47.5
+                    10.699999809265137,
+                    -74.19999694824219
+                ],
+                "rotation": [
+                    0.05233598127961159,
+                    0.0,
+                    0.0,
+                    0.9986295104026794
                 ],
                 "scale": [
                     1.0,
@@ -41,7 +73,7 @@
                     "enable": true,
                     "name": "SpriteRenderer",
                     "sprite": {
-                        "texName": "an.jpg",
+                        "texName": "ground.png",
                         "uvDivNum": [
                             0.0,
                             0.0
@@ -55,197 +87,32 @@
                             0.0
                         ]
                     }
-                }
-            ],
-            "layer": 0,
-            "name": "a",
-            "tag": 0,
-            "transform": {
-                "angle": [
-                    -90.0,
-                    0.0,
-                    0.0
-                ],
-                "child": null,
-                "pos": [
-                    0.0,
-                    0.0,
-                    12.800000190734863
-                ],
-                "scale": [
-                    16.0,
-                    1.0,
-                    9.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "AABB": false,
-                    "enable": true,
-                    "length": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "name": "BoxCollider",
-                    "posOffset": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ]
                 },
                 {
                     "enable": true,
-                    "name": "RigidBody"
+                    "name": "RigidBody2"
                 }
             ],
             "layer": 0,
-            "name": "Collider1",
+            "name": "Arena",
             "tag": 0,
             "transform": {
-                "angle": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
                 "child": null,
                 "pos": [
                     0.0,
-                    2.0,
+                    -10.399999618530273,
                     0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
                 ],
                 "scale": [
+                    100.0,
                     1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "AABB": false,
-                    "enable": true,
-                    "length": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "name": "BoxCollider",
-                    "posOffset": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ]
-                },
-                {
-                    "enable": true,
-                    "name": "RigidBody"
-                }
-            ],
-            "layer": 0,
-            "name": "Collider2",
-            "tag": 0,
-            "transform": {
-                "angle": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "child": null,
-                "pos": [
-                    2.0,
-                    2.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "AABB": false,
-                    "enable": true,
-                    "length": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "name": "BoxCollider",
-                    "posOffset": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ]
-                },
-                {
-                    "enable": true,
-                    "name": "RigidBody"
-                }
-            ],
-            "layer": 0,
-            "name": "Collider3",
-            "tag": 0,
-            "transform": {
-                "angle": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "child": null,
-                "pos": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "enable": true,
-                    "meshName": "TestBone.fbx",
-                    "name": "MeshRenderer"
-                },
-                {
-                    "enable": true,
-                    "name": "Animation"
-                }
-            ],
-            "layer": 0,
-            "name": "aaa",
-            "tag": 0,
-            "transform": {
-                "angle": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "child": null,
-                "pos": [
-                    0.0,
-                    1.0,
-                    -42.599998474121094
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
+                    100.0
                 ]
             }
         }

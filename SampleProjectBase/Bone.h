@@ -48,8 +48,9 @@ public:
 	// 行列セット
 	void SetOffeetMtx(const DirectX::SimpleMath::Matrix& _offsetMatrix);
 
-	// アニメーションのトランスフォームをセット
-	void SetAnimTransform(const BoneTransform& _transform);
+	/// @brief ボーンのアニメーショントランスフォームの参照を取得
+	/// @return アニメーショントランスフォームの参照
+	BoneTransform& GetRefelenceAnimTransform();
 
 	// インデックスセット
 	void SetIndex(u_int _idx);

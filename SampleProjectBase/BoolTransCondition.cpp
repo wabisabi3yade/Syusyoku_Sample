@@ -9,24 +9,27 @@ std::vector<std::string> BoolTransCondition::judgeTypeStrings =
 };
 #endif // EDIT
 
-BoolTransCondition::BoolTransCondition(const bool& _parameter, const std::string& _parameterName)
-	: TransCondition_Base(_parameterName, HashiTaku::AnimParam::TypeKind::Bool), pParameter(&_parameter), judgeType(JudgeType::True)
+BoolTransCondition::BoolTransCondition(const std::string& _parameterName)
+	: TransCondition_Base(_parameterName, HashiTaku::AnimParam::TypeKind::Bool), judgeType(JudgeType::True)
 {
 }
 
-bool BoolTransCondition::IsCondition() const
+bool BoolTransCondition::IsCondition(HashiTaku::AnimParam::conditionValType _checkValue) const
 {
+	bool* pIsCheckBool = std::get_if<bool>(&_checkValue);
+	assert(pIsCheckBool && "boolå^Ç≈Ç†ÇËÇ‹ÇπÇÒ");
+
 	// èåèíBê¨ÉtÉâÉO
 	bool isAchieve = false;
 
 	switch (judgeType)
 	{
 	case JudgeType::True:
-		isAchieve = *pParameter == true;
+		isAchieve = *pIsCheckBool == true;
 		break;
 
 	case JudgeType::False:
-		isAchieve = *pParameter == false;
+		isAchieve = *pIsCheckBool == false;
 		break;
 
 	default:

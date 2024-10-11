@@ -6,9 +6,12 @@
 void ComponentFactory::Init()
 {
 	// “–‚½‚è”»’è
-	ResistComponnent<CP_RigidBody>();
+	//ResistComponnent<CP_RigidBody>();
+	ResistComponnent<CP_RigidBody2>();
 	ResistComponnent<CP_BoxCollider>();
 	ResistComponnent<CP_SphereCollider>();
+	ResistComponnent<CP_TestCollider>();
+
 
 	// •`‰æ
 	ResistComponnent<CP_MeshRenderer>();
@@ -26,7 +29,6 @@ void ComponentFactory::Init()
 
 	// ƒvƒŒƒCƒ„[
 	ResistComponnent<CP_Player>();
-	ResistComponnent<CP_PlayerAnimation>();
 
 	// ‚»‚Ì‘¼
 	ResistComponnent<CP_EaseTest>();

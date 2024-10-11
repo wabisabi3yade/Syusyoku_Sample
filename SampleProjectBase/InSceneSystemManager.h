@@ -11,7 +11,7 @@ class InSceneSystemManager : public Singleton_Base<InSceneSystemManager>
 	friend class Singleton_Base<InSceneSystemManager>;
 
 	/// @brief シーン内のRigidBody
-	std::list<CP_RigidBody*> pSceneRbs;
+	std::list<CP_RigidBody2*> pSceneRbs;
 
 	/// @brief メインカメラ
 	CP_Camera* pMainCamera;
@@ -48,11 +48,11 @@ public:
 
 	/// @brief RigidBodyを追加する 
 	/// @param _setRb 追加するRigidBody
-	void AddRigidBody(CP_RigidBody& _setRb);
+	void AddRigidBody(CP_RigidBody2& _setRb);
 
 	/// @brief RigidBodyを除外する 
 	/// @param _removetRb 除外するRigidBody
-	void RemoveRigidBody(CP_RigidBody& _removetRb);
+	void RemoveRigidBody(CP_RigidBody2& _removetRb);
 
 	/// @brief BtTransformをDxに更新する
 	void UpdateTransformBtToDx();
