@@ -154,6 +154,11 @@ void CP_Animation::SetAnimationController(AnimationController& _controller)
 	pAnimController = &_controller;
 }
 
+void CP_Animation::SetCurPlayerSpeed(float _setSpeed)
+{
+	pAnimConPlayer->GetCurNodePlayer().SetPlaySpeedTimes(_setSpeed);
+}
+
 SkeletalMesh& CP_Animation::GetSkeletalMesh()
 {
 	return *pSkeletalMesh;
@@ -162,6 +167,19 @@ SkeletalMesh& CP_Animation::GetSkeletalMesh()
 AnimationController* CP_Animation::GetAnimationController()
 {
 	return pAnimController;
+}
+
+const DirectX::SimpleMath::Vector3& CP_Animation::GetMotionPosSpeedPerSec() const
+{
+#ifdef EDIT
+	if (!pAnimConPlayer)
+	{
+		HASHI_DEBUG_LOG("アニメーション再生が作成されていません");
+		return Vector3::Zero;
+	}
+#endif // EDIT
+
+	return pAnimConPlayer->GetCurNodePlayer().GetRootMotionSpeed();
 }
 
 nlohmann::json CP_Animation::Save()
@@ -227,8 +245,16 @@ void CP_Animation::UpdateBoneCombMtx()
 {
 	TreeNode& pRootNode = pSkeletalMesh->GetRootNode();
 
+	// ルートポジション座標を引いて、メッシュを移動させないようにする(y座標は反映しない)
+	Vector3 rootPos;
+	pAnimConPlayer->GetCurrentRootPos(rootPos);
+	rootPos.y = 0.0f;
+	rootPos *= -1.0f;
+	Matrix posMtx = Matrix::CreateTranslation(rootPos);
+
+
 	// ノードを辿って全体のコンビネーション行列を更新していく
-	UpdateNodeHierarchy(pRootNode, Matrix::Identity);
+	UpdateNodeHierarchy(pRootNode, posMtx);
 }
 
 void CP_Animation::UpdateNodeHierarchy(TreeNode& _treeNode, const Matrix& _parentMtx)

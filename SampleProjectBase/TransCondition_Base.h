@@ -1,7 +1,7 @@
 #pragma once
 #include "AnimationParameterType.h"
 
-/// @brief 変数を参照し、遷移条件を変更したり達成しているか確認するクラス
+/// @brief 遷移条件を変更したり達成しているか確認するクラス
 class TransCondition_Base : public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
 {
 	/// @brief 参照している変数の型名
@@ -15,9 +15,10 @@ public:
 	TransCondition_Base(const std::string& _parameterName, HashiTaku::AnimParam::TypeKind _typeKind);
 	virtual ~TransCondition_Base() {}
 
-	/// @brief 遷移条件を満たしているか確認
+	/// @brief 遷移条件を満たしているか
+	/// @param _checkValue 確認する値
 	/// @return 遷移条件満たしているか？
-	virtual bool IsCondition() const = 0;
+	virtual bool IsCondition(HashiTaku::AnimParam::conditionValType _checkValue) const = 0;
 
 	/// @brief 名前の参照をセットする
 	/// @param _paramRefarenceName 

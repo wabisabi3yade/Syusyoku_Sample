@@ -159,10 +159,10 @@ inline T* GameObject::GetComponent()
 	// 指定した型名と同じコンポーネントがあるか確認
 	for (auto& comp : pComponents)
 	{
-		if (typeid(T) != typeid(*comp)) continue;
-
-		T* retPtr = static_cast<T*>(comp.get());	
-		return retPtr; 
+		if (T* getPtr = dynamic_cast<T*>(comp.get()))
+		{
+			return getPtr;
+		}
 	}
 
 	return nullptr;

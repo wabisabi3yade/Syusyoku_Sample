@@ -7,14 +7,37 @@
 
 using namespace DirectX::SimpleMath;
 
+constexpr float IDLE_ANIM_PLAYSPEED(1.0f);
+
 PlayerMoveState::PlayerMoveState()
-	: PlayerActState_Base(StateType::Move), currentSpeed(0.0f), maxSpeed(10.0f), acceleration(40.0f), rotateSpeed(7.0f)
+	: PlayerActState_Base(StateType::Move), currentSpeed(0.0f), maxSpeed(10.0f), acceleration(40.0f), rotateSpeed(7.0f), decadeSpeedTimes(0.98f)
 {
+	pCamera = &InSceneSystemManager::GetInstance()->GetMainCamera();
+}
+
+nlohmann::json PlayerMoveState::Save()
+{
+	auto data =  PlayerActState_Base::Save();
+	data["maxSpeed"] = maxSpeed;
+	data["acceleration"] = acceleration;
+	data["decade"] = decadeSpeedTimes;
+	data["rotateSpeed"] = rotateSpeed;
+	return data;
+}
+
+void PlayerMoveState::Load(const nlohmann::json& _data)
+{
+	using namespace HashiTaku;
+
+	LoadJsonFloat("maxSpeed", maxSpeed, _data);
+	LoadJsonFloat("acceleration", acceleration, _data);
+	LoadJsonFloat("decade", decadeSpeedTimes, _data);
+	LoadJsonFloat("rotateSpeed", rotateSpeed, _data);
 }
 
 void PlayerMoveState::OnStart()
 {
-	
+
 }
 
 void PlayerMoveState::Update()
@@ -29,11 +52,18 @@ void PlayerMoveState::Update()
 		ChangeState(StateType::Attack);
 		pAnimation->SetTrigger(ATTACKTRIGGER_PARAMNAME);
 	}
-		
+
 }
 
 void PlayerMoveState::OnEnd()
 {
+}
+
+bool PlayerMoveState::IsRunning()
+{
+	if (currentSpeed > Mathf::epsilon)  return true;
+
+	return false;
 }
 
 void PlayerMoveState::ImGuiSetting()
@@ -41,20 +71,10 @@ void PlayerMoveState::ImGuiSetting()
 	if (!ImGuiMethod::TreeNode("Move")) return;
 
 	std::string text = TO_UTF8("speed") + std::to_string(currentSpeed);
-	ImGui::Text(text.c_str()); moveVector;
-
-	text = TO_UTF8("vec");
-	ImGui::Text(text.c_str()); ImGui::SameLine();
-	ImGuiMethod::Text(moveVector);
-
-	text = TO_UTF8("input x:") + std::to_string(InputValue().x);
-	ImGui::Text(text.c_str()); 
-	text = TO_UTF8("input y:") + std::to_string(InputValue().y);
 	ImGui::Text(text.c_str());
 	ImGui::DragFloat("maxSpeed", &maxSpeed, 0.1f, 0.0f, 1000.0f);
-
 	ImGui::DragFloat("acceleration", &acceleration, 0.1f);
-
+	ImGui::DragFloat("decadeTimes", &decadeSpeedTimes, 0.01f, 0.0f, 1.0f);
 	ImGui::DragFloat("rotateSpeed", &rotateSpeed, 0.1f);
 
 	ImGui::TreePop();
@@ -64,41 +84,73 @@ void PlayerMoveState::Move()
 {
 	float deltaTime = MainApplication::DeltaTime();
 
-	CP_Camera& camera = InSceneSystemManager::GetInstance()->GetMainCamera();
-	Vector3 camForwardVec = camera.GetTransform().Forward();
-	Vector3 camRightVec = camera.GetTransform().Right();
-
+	Vector3 camForwardVec = pCamera->GetTransform().Forward();
+	Vector3 camRightVec = pCamera->GetTransform().Right();
 	Vector2 input = InputValue();
 
-	// 移動方向決定
+	//Vector2 inputNo = input;
+	//inputNo.Normalize();
+	//HASHI_DEBUG_LOG(std::to_string(inputNo.x) + " " + std::to_string(inputNo.y));
+
+	//float mag = input.Length();
+	//float magNo = inputNo.Length();
+
+	//if (magNo < Mathf::epsilon)
+	//	magNo = Mathf::epsilon;
+
+	//float ratio = mag / magNo;
+	//
+
+	// 移動方向・移動量決定
 	moveVector = camRightVec * input.x;
 	moveVector += camForwardVec * input.y;
 	moveVector.y = 0.0f;
-	moveVector.Normalize();
 
-	// 速度決定
-	if (IsMoveInput())	// 入力されていたら
-	{
-		currentSpeed += acceleration * deltaTime;
+	Vector3 moveSpeed = moveVector * maxSpeed;
+	currentSpeed = moveSpeed.Length();
 
-		if (currentSpeed > maxSpeed)
-			currentSpeed = maxSpeed;
+	//float curMax = Mathf::Lerp(0.0f, maxSpeed, input.Length());
 
-	}
-	else
-	{
-		currentSpeed = 0.0f;
-	}
-
-	Vector3 moveSpeed = moveVector * currentSpeed;
+	//if (currentSpeed <= curMax)
+	//{
+	//	currentSpeed += acceleration * deltaTime;
+	//	currentSpeed = std::min(currentSpeed, curMax);
+	//}
+	//else
+	//{
+	//	currentSpeed *= decadeSpeedTimes;
+	//}
 
 	// 移動
 	Vector3 pos = pPlayerObject->GetTransform().GetPosition();
-	pos += moveSpeed * MainApplication::DeltaTime();
+	pos += moveVector * maxSpeed * MainApplication::DeltaTime();
 	pPlayerObject->GetTransform().SetPosition(pos);
 
 	// アニメーションのブレンド割合をセット
 	pAnimation->SetFloat(SPEEDRATIO_PARAMNAME, currentSpeed / maxSpeed);
+
+	// ルートモーションと移動速度から移動速度の再生速度を調整する
+	/*if (IsRunning())
+	{
+		float rootMotion = abs(pAnimation->GetMotionPosSpeedPerSec().z);
+
+		if (rootMotion < Mathf::epsilon)
+			rootMotion = Mathf::epsilon;
+
+		float animPlaySpeed = currentSpeed / rootMotion;
+
+		pAnimation->SetCurPlayerSpeed(animPlaySpeed);
+	}
+	else
+	{
+		pAnimation->SetCurPlayerSpeed(IDLE_ANIM_PLAYSPEED);
+	}*/
+
+}
+
+DirectX::SimpleMath::Vector3 PlayerMoveState::MoveVector()
+{
+	return moveVector;
 }
 
 void PlayerMoveState::Rotation()

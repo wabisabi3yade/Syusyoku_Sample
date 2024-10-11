@@ -83,10 +83,18 @@ public:
 	// アニメーションコントローラーをセット
 	void SetAnimationController(AnimationController& _controller);
 
+	/// @brief プレイヤーの再生速度をセットする
+	/// @param _setSpeed スピードをセット
+	void SetCurPlayerSpeed(float _setSpeed);
+
 	// スケルタルメッシュを取得
 	SkeletalMesh& GetSkeletalMesh();
 
 	AnimationController* GetAnimationController();
+
+	/// @brief 現在再生しているアニメーションのルートモーションの座標移動速度を渡す
+	/// @return 座標移動速度(s)
+	const DirectX::SimpleMath::Vector3& GetMotionPosSpeedPerSec() const;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

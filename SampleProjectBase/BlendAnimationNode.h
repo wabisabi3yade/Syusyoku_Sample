@@ -90,9 +90,17 @@ public:
 	/// @return 移動イージング
 	HashiTaku::EaseKind GetBlendMoveEasing(u_int _axisIdx) const;
 
+	void CalcRootMotionSpeed(const std::vector<BlendingData>& _blendData, DirectX::SimpleMath::Vector3& _outPos) const;
+
 	/// @brief 軸の数を取得（最大2）
 	/// @return 軸の数
 	u_int GetAxisCnt() const;
+
+	/// @brief ルートモーションの座標を取得
+	/// @param _ratio 割合
+	/// @param _blendDatas ブレンドデータ 
+	/// @param _outPos 結果
+	void GetRootMotionPos(float _ratio, const std::vector<BlendingData>& _blendDatas, DirectX::SimpleMath::Vector3& _outPos) const;
 
 	/// @brief X軸のみのときのブレンドペア探索
 	/// @param _blendValue ブレンド値
@@ -133,6 +141,9 @@ private:
 	u_int GetAnimPointCnt() const;
 
 	void ImGuiSetting() override;
+
+	/// @brief ブレンド内のアニメーション
+	void ImGuiAnimationInBlend();
 
 	// 軸ごとの軸パラメータを調整
 	void ImGuiAxisParam();

@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "PlayerActionController.h"
+#include "CP_Animation.h"
 
-// 各アクション状態
+#include "PlayerIdleState.h"
 #include "PlayerMoveState.h"
 #include "PlayerAttackState.h"
 
@@ -12,9 +13,9 @@ PlayerActionController::PlayerActionController(GameObject & _pPlayerObject)
 	pStateChangeObserver = std::make_unique<PlayerActChangeObserver>("StateChangeObserver", *this);
 
 	// 行動クラスを生成
-	using enum PlayerActState_Base::StateType;
-	CreateState<PlayerMoveState>(Move);
-	CreateState<PlayerAttackState>(Attack);
+	CreateState<PlayerIdleState>();
+	CreateState<PlayerMoveState>();
+	CreateState<PlayerAttackState>();
 
 	// デフォルト状態をセット
 	DefaultState(PlayerActState_Base::StateType::Move);
@@ -23,7 +24,7 @@ void PlayerActionController::Begin(CP_Animation& _animationController)
 {
 	// アニメーションコントローラーを各ステートに渡す
 	pAnimation = &_animationController;
-	for (auto& actState : pActions)
+	for (auto& actState : actionList)
 	{
 		actState.second->SetAnimation(_animationController);
 	}	
@@ -40,7 +41,10 @@ void PlayerActionController::ChangeState(PlayerActState_Base::StateType _nextSta
 	pCurrentState->OnEndCall();
 
 	// 指定した状態に遷移
-	pCurrentState = pActions[_nextState].get();
+	pCurrentState = actionList[_nextState].get();
+
+	// アニメーション変数の状態も変更する
+	pAnimation->SetInt(STATE_PARAMNAME, static_cast<int>(_nextState));
 
 	// 変更後アクション初期処理
 	pCurrentState->OnStartCall();
@@ -50,7 +54,7 @@ void PlayerActionController::ChangeState(PlayerActState_Base::StateType _nextSta
 
 void PlayerActionController::DefaultState(PlayerActState_Base::StateType _defaultState)
 {
-	pCurrentState = pActions[_defaultState].get();
+	pCurrentState = actionList[_defaultState].get();
 }
 
 void PlayerActionController::ImGuiSetting()
@@ -60,8 +64,45 @@ void PlayerActionController::ImGuiSetting()
 	std::string text = "NowState:" + PlayerActState_Base::StateTypeToStr(pCurrentState->GetActStateType());
 	ImGui::Text(text.c_str());
 
-	for (auto& pAct : pActions)	// 各アクションの調整
+	for (auto& pAct : actionList)	// 各アクションの調整
 		pAct.second->ImGuiCall();
 
 	ImGui::TreePop();
+}
+
+nlohmann::json PlayerActionController::Save()
+{
+	nlohmann::json data;
+
+	for (auto& act : actionList)
+	{
+		nlohmann::json actData;
+		actData["type"] = act.first;
+		actData["data"] = act.second->Save();
+		data["actData"].push_back(actData);
+	}
+
+	return data;
+}
+
+void PlayerActionController::Load(const nlohmann::json& _data)
+{
+	using namespace HashiTaku;
+	nlohmann::json actDataList;
+	if (LoadJsonDataArray("actData", actDataList, _data))
+	{
+		for (auto& actData : actDataList)
+		{
+			PlayerActState_Base::StateType state;
+			if (!LoadJsonEnum<PlayerActState_Base::StateType>("type", state, actData))
+				continue;
+
+
+			nlohmann::json actParam;
+			if (!LoadJsonData("data", actParam, actData))
+				continue;
+
+			actionList[state]->Load(actParam);
+		}
+	}
 }

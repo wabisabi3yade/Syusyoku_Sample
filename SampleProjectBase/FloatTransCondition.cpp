@@ -10,28 +10,31 @@ std::vector<std::string> FloatTransCondition::judgeTypeStrings =
 };
 #endif // EDIT
 
-FloatTransCondition::FloatTransCondition(const float& _parameter, const std::string& _parameterName)
-	: TransCondition_Base(_parameterName, HashiTaku::AnimParam::TypeKind::Float), pParameter(&_parameter), compareVal(0.0f), judgeType(JudgeType::Greater)
+FloatTransCondition::FloatTransCondition(const std::string& _parameterName)
+	: TransCondition_Base(_parameterName, HashiTaku::AnimParam::TypeKind::Float), compareVal(0.0f), judgeType(JudgeType::Greater)
 {
 }
 
-bool FloatTransCondition::IsCondition() const
+bool FloatTransCondition::IsCondition(HashiTaku::AnimParam::conditionValType _checkValue) const
 {
+	float* pFloatVal = std::get_if<float>(&_checkValue);
+	assert(pFloatVal && "floatŒ^‚Å‚ ‚è‚Ü‚¹‚ñ");
+
 	// ðŒ’B¬ƒtƒ‰ƒO
 	bool isAchieve = false;
 
 	switch (judgeType)
 	{
 	case JudgeType::Greater:
-		isAchieve = *pParameter > compareVal;
+		isAchieve = *pFloatVal > compareVal;
 		break;
 
 	case JudgeType::Less:
-		isAchieve = *pParameter < compareVal;
+		isAchieve = *pFloatVal < compareVal;
 		break;
 
 	case JudgeType::Equal:
-		isAchieve = abs(*pParameter - compareVal) <= Mathf::epsilon;
+		isAchieve = abs(*pFloatVal - compareVal) <= Mathf::epsilon;
 		break;
 
 	default:

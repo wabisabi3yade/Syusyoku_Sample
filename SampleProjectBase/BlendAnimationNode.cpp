@@ -178,22 +178,6 @@ void BlendAnimationNode::FindBlendPairTwoAxis(DirectX::SimpleMath::Vector2 _blen
 		itr++;
 	}
 
-	//itr = pointData.begin();
-	//
-	//for (u_int p_i = 0; p_i < TWOAXIS_MAXBLEND_NUM; p_i++)
-	//{
-	//	// ブレンドするリストに追加する
-	//	BlendingData bd;
-	//	bd.pAnimation = (*itr).point->pAnimation;
-
-	//	// 重みを求める
-	//	bd.blendWeight = (*itr).distance / sumDistance;
-	//	bd.blendWeight = 1.0f - bd.blendWeight;
-	//	_outData.push_back(std::move(bd));
-
-	//	itr++;
-	//}
-
 	// ウェイトを0.0～1.0に正規化する
 	for (auto& bd : _outData)
 	{
@@ -238,9 +222,30 @@ HashiTaku::EaseKind BlendAnimationNode::GetBlendMoveEasing(u_int _axisIdx) const
 	return axisParameters[_axisIdx].blendMoveEase;
 }
 
+void BlendAnimationNode::CalcRootMotionSpeed(const std::vector<BlendingData>& _blendDatas, DirectX::SimpleMath::Vector3& _outPos) const
+{
+	using namespace DirectX::SimpleMath;
+	_outPos = Vector3::Zero;
+	for (auto& anim : _blendDatas)
+	{
+		_outPos += anim.pAnimation->GetRootMotionPosSpeedPerSec() * anim.blendWeight;
+	}
+
+}
+
 u_int BlendAnimationNode::GetAxisCnt() const
 {
 	return static_cast<u_int>(axisParameters.size());
+}
+
+void BlendAnimationNode::GetRootMotionPos(float _ratio, const std::vector<BlendingData>& _blendDatas, DirectX::SimpleMath::Vector3& _outPos) const
+{
+	using namespace DirectX::SimpleMath;
+	for (auto& anim : _blendDatas)
+	{
+		Vector3 rootPos =  anim.pAnimation->GetRootMotionPos(_ratio);
+		_outPos += rootPos * anim.blendWeight;
+	}
 }
 
 u_int BlendAnimationNode::GetAnimPointCnt() const
@@ -255,6 +260,19 @@ void BlendAnimationNode::ImGuiSetting()
 	ImGuiAxisParam();
 
 	ImGuiMethod::LineSpaceSmall();
+
+	ImGuiAnimationInBlend();
+
+	static std::string str;
+	AssetGetter::ImGuiGetCombobox<AnimationData>("AddAnimation", str);
+
+	if (ImGui::Button("Add Blend"))
+		SetAnimationData(str);
+}
+
+void BlendAnimationNode::ImGuiAnimationInBlend()
+{
+	if (GetAxisCnt() == 0) return;
 
 	for (auto itr = animationPoints.begin(); itr != animationPoints.end();)
 	{
@@ -289,11 +307,6 @@ void BlendAnimationNode::ImGuiSetting()
 		else
 			itr++;
 	}
-
-	static std::string str;
-	AssetGetter::ImGuiGetCombobox<AnimationData>("AddAnimation", str);
-	if (ImGui::Button("Add Blend"))
-		SetAnimationData(str);
 }
 
 void BlendAnimationNode::ImGuiAxisParam()

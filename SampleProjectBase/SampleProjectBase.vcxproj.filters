@@ -610,15 +610,6 @@
     <Filter Include="ソース ファイル\Animation\AnimControllPlayer">
       <UniqueIdentifier>{ab57e764-1dbf-4659-85a1-5a916a4070a8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Animation\AnimControllPlayer\NodePlayer_Base">
-      <UniqueIdentifier>{dd7e13e3-1f18-4fd0-815b-ed488aa6e0d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Animation\AnimControllPlayer\SingleNodePlayer">
-      <UniqueIdentifier>{82916ae5-3002-42ac-969d-5aaa78fb7480}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Animation\AnimControllPlayer\BlendNodePlayer">
-      <UniqueIdentifier>{2a0ae525-0c0c-49da-a03e-b8f2757f771d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Animation\AnimationPameters\Base">
       <UniqueIdentifier>{ad716e0c-6bd2-43ad-9827-db15a97867e0}</UniqueIdentifier>
     </Filter>
@@ -627,6 +618,33 @@
     </Filter>
     <Filter Include="ソース ファイル\Animation\AnimationPameters\Copy">
       <UniqueIdentifier>{607275a5-2cc3-4b3b-91a7-098c765fdf6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Idle">
+      <UniqueIdentifier>{a089199f-2d9b-4703-8356-fe11a5e3c6fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\TransionChecker">
+      <UniqueIdentifier>{406f6f80-8f12-4688-8ee7-c21a47cc0319}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimControllPlayer\NodePlayer">
+      <UniqueIdentifier>{6b69ad4a-22bc-49ef-8162-56de7deea6b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimControllPlayer\NodePlayer\BlendNodePlayer">
+      <UniqueIdentifier>{2a0ae525-0c0c-49da-a03e-b8f2757f771d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimControllPlayer\NodePlayer\NodePlayer_Base">
+      <UniqueIdentifier>{dd7e13e3-1f18-4fd0-815b-ed488aa6e0d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimControllPlayer\NodePlayer\SingleNodePlayer">
+      <UniqueIdentifier>{82916ae5-3002-42ac-969d-5aaa78fb7480}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimControllPlayer\TransitionChecker">
+      <UniqueIdentifier>{f371e2fa-8810-4801-8f37-ee608d7a3298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Collider\Test">
+      <UniqueIdentifier>{6774cb9a-dd42-43a1-a66b-0b1c0f8117fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Collider\RigidBody\RigidBody2">
+      <UniqueIdentifier>{4bd581c2-135d-4d9b-bcd5-7ea3de2cf6db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1155,13 +1173,10 @@
       <Filter>ソース ファイル\Animation\AnimControllPlayer</Filter>
     </ClCompile>
     <ClCompile Include="AnimSingleNodePlayer.cpp">
-      <Filter>ソース ファイル\Animation\AnimControllPlayer\SingleNodePlayer</Filter>
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\SingleNodePlayer</Filter>
     </ClCompile>
     <ClCompile Include="AnimNodePlayer_Base.cpp">
-      <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer_Base</Filter>
-    </ClCompile>
-    <ClCompile Include="BlendNodePlayer.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\NodePlayer_Base</Filter>
     </ClCompile>
     <ClCompile Include="AnimationParameters.cpp">
       <Filter>ソース ファイル\Animation\AnimationPameters\Base</Filter>
@@ -1171,6 +1186,24 @@
     </ClCompile>
     <ClCompile Include="OriginAnimationParameters.cpp">
       <Filter>ソース ファイル\Animation\AnimationPameters\Origin</Filter>
+    </ClCompile>
+    <ClCompile Include="BlendNodePlayer.cpp">
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\BlendNodePlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerIdleState.cpp">
+      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimTransitionChecker.cpp">
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\TransitionChecker</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_TestCollider.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_RigidBody2.cpp">
+      <Filter>ソース ファイル\Component\Collider\RigidBody\RigidBody2</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_BoxCollider2.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1715,13 +1748,10 @@
       <Filter>ソース ファイル\Animation\AnimControllPlayer</Filter>
     </ClInclude>
     <ClInclude Include="AnimSingleNodePlayer.h">
-      <Filter>ソース ファイル\Animation\AnimControllPlayer\SingleNodePlayer</Filter>
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\SingleNodePlayer</Filter>
     </ClInclude>
     <ClInclude Include="AnimNodePlayer_Base.h">
-      <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer_Base</Filter>
-    </ClInclude>
-    <ClInclude Include="BlendNodePlayer.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\NodePlayer_Base</Filter>
     </ClInclude>
     <ClInclude Include="AnimationParameters.h">
       <Filter>ソース ファイル\Animation\AnimationPameters\Base</Filter>
@@ -1731,6 +1761,24 @@
     </ClInclude>
     <ClInclude Include="OriginAnimationParameters.h">
       <Filter>ソース ファイル\Animation\AnimationPameters\Origin</Filter>
+    </ClInclude>
+    <ClInclude Include="BlendNodePlayer.h">
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\BlendNodePlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerIdleState.h">
+      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimTransitionChecker.h">
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\TransitionChecker</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_TestCollider.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_RigidBody2.h">
+      <Filter>ソース ファイル\Component\Collider\RigidBody\RigidBody2</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_BoxCollider2.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

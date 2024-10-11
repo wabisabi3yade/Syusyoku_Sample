@@ -23,9 +23,9 @@ void Bone::SetOffeetMtx(const DirectX::SimpleMath::Matrix& _offsetMatrix)
 	offsetMatrix = _offsetMatrix;
 }
 
-void Bone::SetAnimTransform(const BoneTransform& _transform)
+BoneTransform& Bone::GetRefelenceAnimTransform()
 {
-	animationTransform = _transform;
+	return animationTransform;
 }
 
 void Bone::SetIndex(u_int _idx)

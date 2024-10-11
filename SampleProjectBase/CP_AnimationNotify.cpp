@@ -28,7 +28,7 @@ void CP_AnimationNotify::Init()
 
 void CP_AnimationNotify::Start()
 {
-	CP_Animation* pAnim = gameObject->GetComponent<CP_PlayerAnimation>();
+	CP_Animation* pAnim = gameObject->GetComponent<CP_Animation>();
 	
 	if (pAnimController == nullptr)
 	{
@@ -168,7 +168,7 @@ void CP_AnimationNotify::CreateNotify(NotifyGroup& _addGroup, const std::string&
 
 AnimationController* CP_AnimationNotify::GetAnimController()
 {
-	CP_Animation* pAnim = gameObject->GetComponent<CP_PlayerAnimation>();
+	CP_Animation* pAnim = gameObject->GetComponent<CP_Animation>();
 	if (!pAnim)
 	{
 		HASHI_DEBUG_LOG("Animationコンポーネントがありません");

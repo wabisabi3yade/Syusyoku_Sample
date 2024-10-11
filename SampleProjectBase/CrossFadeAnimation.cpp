@@ -2,22 +2,22 @@
 #include "CrossFadeAnimation.h"
 
 #include "Bone.h"
-#include "AnimationNode_Base.h"
+#include "AnimNodePlayer_Base.h"
 #include "SkeletalMesh.h"
 
 using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
 
 CrossFadeAnimation::CrossFadeAnimation()
-	: pFromNode(nullptr), pToNode(nullptr), transitionWeight(0.0f), transitionTime(0.0f), elapsedTime(0.0f), easeKind(HashiTaku::EaseKind::InOutCubic)
+	: pFromNodePlayer(nullptr), pToNodePlayer(nullptr), pBoneList(nullptr), transitionWeight(0.0f), transitionTime(0.0f), elapsedTime(0.0f), easeKind(HashiTaku::EaseKind::InOutCubic)
 {
 }
 
-void CrossFadeAnimation::Begin(AnimationNode_Base& _fromNode, AnimationNode_Base& _toNode, float _transitionTime, HashiTaku::EaseKind _easeKind)
+void CrossFadeAnimation::Begin(AnimNodePlayer_Base& _fromNode, AnimNodePlayer_Base& _toNode, BoneList& _updateBones, float _transitionTime, HashiTaku::EaseKind _easeKind)
 {
-	pFromNode = &_fromNode;
-	pToNode = &_toNode;
-
+	pFromNodePlayer = &_fromNode;
+	pToNodePlayer = &_toNode;
+	pBoneList = &_updateBones;
 	elapsedTime = 0.0f;
 	transitionTime = _transitionTime;
 	easeKind = _easeKind;
@@ -52,6 +52,11 @@ float CrossFadeAnimation::GetTransitionTime() const
 	return transitionTime;
 }
 
+float CrossFadeAnimation::GetTransitionWeight() const
+{
+	return transitionWeight;
+}
+
 void CrossFadeAnimation::ProgressTime(float _deltaTime)
 {
 	// 遷移時間を超えないように、時間を進める
@@ -61,35 +66,31 @@ void CrossFadeAnimation::ProgressTime(float _deltaTime)
 	// 遷移割合をイージングを考慮した値で求める
 	float ratio = elapsedTime / transitionTime;
 	transitionWeight = Easing::EaseValue(ratio, easeKind);
+
+	HASHI_DEBUG_LOG(std::to_string(transitionWeight));
 }
 
-void CrossFadeAnimation::Update(BoneList& _updateBones, float _playSpeed)
+void CrossFadeAnimation::Update(float _playSpeed)
 {
 	// アニメーション再生の速度を考慮する
 	float deltaTime = MainApplication::DeltaTime() * _playSpeed;
 
 	ProgressTime(deltaTime);
 
-	// 割合を進める
-	pFromNode->ProgressPlayRatio(_playSpeed);
+	// 更新処理
+	std::vector<BoneTransform> fromBoneTransforms;
+	pFromNodePlayer->UpdateCall(fromBoneTransforms, _playSpeed);
 
-	// 割合を進める
-	pToNode->ProgressPlayRatio(_playSpeed);
+	std::vector<BoneTransform> toBoneTransforms;
+	pToNodePlayer->UpdateCall(toBoneTransforms, _playSpeed);
 
 	// 補間したトランスフォームをボーンに適用させる
-	u_int boneCnt = _updateBones.GetBoneCnt();
+	u_int boneCnt = pBoneList->GetBoneCnt();
 	for (u_int b_i = 0; b_i < boneCnt; b_i++)
 	{
-		BoneTransform fromTransform;
-	/*	pFromNode->GetCurAnimTransform(fromTransform, b_i);*/
-
-		BoneTransform toTransform;
-		/*pToNode->GetCurAnimTransform(toTransform, b_i);*/
+		Bone& bone = pBoneList->GetBone(b_i);
 
 		BoneTransform interpTransform;
-		Interpolate(fromTransform, toTransform, interpTransform);
-
-		Bone& bone = _updateBones.GetBone(b_i);
-		bone.SetAnimTransform(interpTransform);
+		Interpolate(fromBoneTransforms[b_i], toBoneTransforms[b_i], bone.GetRefelenceAnimTransform());
 	}
 }

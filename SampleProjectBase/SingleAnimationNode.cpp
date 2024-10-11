@@ -20,22 +20,22 @@ void SingleAnimationNode::Update(BoneList& _boneList)
 {
 	float playingRatio = GetCurPlayRatio();
 
-	//ボーン数ループ
-	for (unsigned int b_i = 0; b_i < _boneList.GetBoneCnt(); b_i++)
-	{
-		Bone& bone = _boneList.GetBone(b_i);
+	////ボーン数ループ
+	//for (unsigned int b_i = 0; b_i < _boneList.GetBoneCnt(); b_i++)
+	//{
+	//	Bone& bone = _boneList.GetBone(b_i);
 
-		BoneTransform transform;
+	//	BoneTransform transform;
 
-		// 再生時間から各パラメータを取得
-		//クォータニオン
-		transform.rotation = pAnimationData->GetQuaternionByRatio(b_i, playingRatio);
+	//	// 再生時間から各パラメータを取得
+	//	//クォータニオン
+	//	transform.rotation = pAnimationData->GetQuaternionByRatio(b_i, playingRatio);
 
-		// 座標
-		transform.position = pAnimationData->GetPositionByRatio(b_i, playingRatio);
+	//	// 座標
+	//	transform.position = pAnimationData->GetPositionByRatio(b_i, playingRatio);
 
-		bone.SetAnimTransform(transform);
-	}
+	//	bone.SetAnimTransform(transform);
+	//}
 }
 
 void SingleAnimationNode::SetAnimationData(const std::string& _animName)
@@ -49,7 +49,6 @@ void SingleAnimationNode::SetAnimationData(const std::string& _animName)
 	}
 
 	pAnimationData = pData;
-
 	SetAnimationTime(pAnimationData->GetAnimationTime());
 }
 

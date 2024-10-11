@@ -1,7 +1,7 @@
 #pragma once
 #include "CP_Collider.h"
 
-class CP_SphereCollider : public CP_Collider, public CloneComponent<CP_SphereCollider>
+class CP_SphereCollider : public CP_Collider
 {
 	// ”¼Œa
 	float radius;	

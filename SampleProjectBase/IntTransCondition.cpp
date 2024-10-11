@@ -12,32 +12,35 @@ std::vector<std::string> IntTransCondition::judgeTypeStrings =
 #endif // EDIT
 
 
-IntTransCondition::IntTransCondition(const int& _parameter, const std::string& _parameterName)
-	: TransCondition_Base(_parameterName, HashiTaku::AnimParam::TypeKind::Int), pParameter(&_parameter), compareVal(0), judgeType(JudgeType::Greater)
+IntTransCondition::IntTransCondition(const std::string& _parameterName)
+	: TransCondition_Base(_parameterName, HashiTaku::AnimParam::TypeKind::Int), compareVal(0), judgeType(JudgeType::Greater)
 {
 }
 
-bool IntTransCondition::IsCondition() const
+bool IntTransCondition::IsCondition(HashiTaku::AnimParam::conditionValType _checkValue) const
 {
+	int* pIntVal = std::get_if<int>(&_checkValue);
+	assert(pIntVal && "intŒ^‚Å‚ ‚è‚Ü‚¹‚ñ");
+
 	// ðŒ’B¬ƒtƒ‰ƒO
 	bool isAchieve = false;
 
 	switch (judgeType)
 	{
 	case JudgeType::Greater:
-		isAchieve = *pParameter > compareVal;
+		isAchieve = *pIntVal > compareVal;
 		break;
 
 	case JudgeType::Less:
-		isAchieve = *pParameter < compareVal;
+		isAchieve = *pIntVal < compareVal;
 		break;
 
 	case JudgeType::Equal:
-		isAchieve = *pParameter == compareVal;
+		isAchieve = *pIntVal == compareVal;
 		break;
 
 	case JudgeType::NotEqual:
-		isAchieve = *pParameter != compareVal;
+		isAchieve = *pIntVal != compareVal;
 		break;
 
 	default:

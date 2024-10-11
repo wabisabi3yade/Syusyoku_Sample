@@ -20,7 +20,7 @@ class AnimBlendNodePlayer : public AnimNodePlayer_Base
 		float curBlendValue{ 0.0f };
 
 		/// @brief 変更した瞬間のブレンド値
-		float changeBlendValue { 0.0f };
+		float changeBlendValue{ 0.0f };
 
 		/// @brief 現在のブレンド移動時間
 		float curBlendMoveTime{ 0.0f };
@@ -29,7 +29,11 @@ class AnimBlendNodePlayer : public AnimNodePlayer_Base
 	/// @brief ブレンドで対応している軸数
 	static constexpr int MAX_AXIS_CNT = 2;
 
+	/// @brief 再生に関する軸ごとのパラメータ
 	std::vector<AxisPlayParameter> axisPlayParameters;
+
+	/// @brief 現在のアニメーションのブレンド割合リスト
+	std::vector<BlendAnimationNode::BlendingData> blendingAnimData;
 
 	/// @brief アニメーションパラメータリスト
 	const AnimationParameters* pAnimParameters;
@@ -45,7 +49,7 @@ private:
 	void Init();
 
 	/// @brief ブレンドアニメーションの更新処理
-	void Update() override;
+	void Update(std::vector<BoneTransform>& _outTransforms) override;
 
 	/// @brief 更新できるか確認
 	/// @return 更新できるか？
@@ -55,32 +59,37 @@ private:
 	void MoveCurrentBlend();
 
 	/// @brief アニメーション更新処理
-	void AnimationUpdate();
+	void AnimationUpdate(std::vector<BoneTransform>& _outTransforms);
 
 	/// @brief 1つのみのアニメーションブレンド処理
-	/// @param _blendingData ブレンドデータ
-	void SingleAnimationUpdate(const std::vector<BlendAnimationNode::BlendingData>& _blendingData);
+	void SingleAnimationUpdate(std::vector<BoneTransform>& _outTransforms);
 
 	/// @brief 1つのみのアニメーションブレンド処理
-	/// @param _blendingData ブレンドデータ
-	void TwoAnimationUpdate(const std::vector<BlendAnimationNode::BlendingData>& _blendingData);
-	
+	void TwoAnimationUpdate(std::vector<BoneTransform>& _outTransforms);
+
 	/// @brief 1つのみのアニメーションブレンド処理
-	/// @param _blendingData ブレンドデータ
-	void SquareAnimationUpdate(const std::vector<BlendAnimationNode::BlendingData>& _blendingData);
+	void SquareAnimationUpdate(std::vector<BoneTransform>& _outTransforms);
 
 	/// @brief 現在の軸数を取得
 	/// @return 軸数
 	u_int GetBlendAxisCnt() const;
 
+	/// @brief ルートモーションの座標移動速度を計算する
+	/// @param _controllerSpeed コントローラー速度
+	void CalcRootMotionPosSpeed(float _controllerSpeed) override;
+
 	/// @brief ルートモーションを取得する（内部で必要な計算を行う）
 	/// @param 現在の再生割合
 	/// @return 現在の割合のルートモーション座標
-	DirectX::SimpleMath::Vector3 GetRootMotionPos(float _ratio) override;
+	DirectX::SimpleMath::Vector3 GetRootMotionPos(float _ratio, bool _isLoadScaling = true) const override;
 
 	/// @brief ルートモーションを取得する（内部で必要な計算を行う）
 	/// @param 現在の再生割合
 	/// @return 現在の割合のルートモーション回転量
-	DirectX::SimpleMath::Quaternion GetRootMotionRot(float _ratio) override;
+	DirectX::SimpleMath::Quaternion GetRootMotionRot(float _ratio, bool _isLoadScaling = true) const override;
+
+	void ImGuiSetting() override;
+	// ImGuiで軸のパラメータを表示
+	void ImGuiAxisParameer(const AxisPlayParameter& _axis);
 };
 

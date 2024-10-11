@@ -10,13 +10,15 @@ class CP_Animation;
 class GameObject;
 
 /// @brief プレイヤーの行動ステート基底クラス
-class PlayerActState_Base : public HashiTaku::IImGuiUser
+class PlayerActState_Base : public HashiTaku::IImGuiUser, HashiTaku::ISaveLoad
 {
 public:
 	// プレイヤーの行動状態
 	enum class StateType
 	{
+		Idle,
 		Move,
+		TargetMove,
 		Jump,
 		Attack,
 		MaxNum
@@ -63,6 +65,13 @@ public:
 	// ステートタイプを取得
 	StateType GetActStateType() const;
 
+	/// @brief セーブする
+	/// @return セーブデータ
+	nlohmann::json Save() override;
+
+	/// @brief ロードする
+	/// @param _data ロードするデータ 
+	void Load(const nlohmann::json& _data) override;
 protected:
 	/// @brief 各状態の開始処理
 	virtual void OnStart() = 0;
@@ -84,8 +93,5 @@ protected:
 	// アニメーションコントローラ内のプレイヤー名
 	constexpr static auto SPEEDRATIO_PARAMNAME = "speed";	// 移動速度
 	constexpr static auto ATTACKTRIGGER_PARAMNAME = "attackTrigger";	// 攻撃トリガー
-
-
-
 };
 

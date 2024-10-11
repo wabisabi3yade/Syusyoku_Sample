@@ -22,13 +22,17 @@ void CP_BoxCollider::Init()
 void CP_BoxCollider::CreateShape()
 {
 	// ボックス形状作成
-	pCollisionShape = std::make_unique<btBoxShape>(Bullet::ToBtVector3(length * 0.5f));
+	Vector3 worldLength;
+	CalcWorldLength(worldLength);
+
+	btVector3 btLength;
+	btLength.setValue(worldLength.x, worldLength.y, worldLength.z);
+	pCollisionShape = std::make_unique<btBoxShape>(btLength);
 }
 
 void CP_BoxCollider::LateUpdate()
 {
 	CP_Collider::LateUpdate();
-	LengthUpdate();
 }
 
 void CP_BoxCollider::ImGuiSetting()
@@ -45,7 +49,8 @@ void CP_BoxCollider::ImGuiSetting()
 void CP_BoxCollider::SetLength(const DirectX::SimpleMath::Vector3& _length)
 {
 	length = _length;
-	SetShape();
+
+	SettingShape();
 }
 
 DirectX::SimpleMath::Vector3 CP_BoxCollider::GetLength() const
@@ -58,6 +63,7 @@ nlohmann::json CP_BoxCollider::Save()
 	auto data = CP_Collider::Save();
 
 	HashiTaku::SaveJsonVector3("length", length, data);
+
 	data["AABB"] = isAABB;
 
 	return data;
@@ -68,8 +74,8 @@ void CP_BoxCollider::Load(const nlohmann::json& _data)
 	CP_Collider::Load(_data);
 	
 	Vector3 loadLength;
-	HashiTaku::LoadJsonVector3("length", loadLength, _data);
-	SetLength(loadLength);
+	if(HashiTaku::LoadJsonVector3("length", loadLength, _data))
+		SetLength(loadLength);
 
 	HashiTaku::LoadJsonBoolean("AABB", isAABB, _data);
 }
@@ -97,4 +103,9 @@ void CP_BoxCollider::SizeFromModelSize()
 
 void CP_BoxCollider::LengthUpdate()
 {
+}
+
+void CP_BoxCollider::CalcWorldLength(DirectX::SimpleMath::Vector3& _out)
+{
+	_out = GetTransform().GetLocalScale() * length;
 }

@@ -43,16 +43,11 @@ void AnimationData::CalcRootMotion(u_int _rootBoneId)
 		}
 	}
 
-	// ルートモーションチャンネルにコピー
-	pRootMotionChannels = std::make_unique<AnimationChannel>(*pFind);
-	// 元々のルートモーションチャンネルの移動量0にする
-	/*pFind->ResetKeys();*/
-
 	// 秒速の移動速度を求める
 	Vector3 startPos = GetRootMotionPos(0.0f);
 	Vector3 endPos = GetRootMotionPos(1.0f);
 	Vector3 moveDistance = endPos - startPos;
-	rootMovePosPerSec = moveDistance / animationTime_s;
+	rootMovePosPerSec = Vec3::Abs(moveDistance / animationTime_s);
 }
 
 void AnimationData::SetBoneListName(const std::string& _boneListName)
@@ -278,21 +273,23 @@ const DirectX::SimpleMath::Vector3& AnimationData::GetRootMotionPosSpeedPerSec()
 
 DirectX::SimpleMath::Vector3 AnimationData::GetRootMotionPos(float _ratio) const
 {
-	if (pRootMotionChannels->GetPosKeyCnt() == 1)	// 1つだと補間しない
+	const AnimationChannel* pRootChannel = FindChannel(rootBoneId);
+
+	if (pRootChannel->GetPosKeyCnt() == 1)	// 1つだと補間しない
 	{
-		return pRootMotionChannels->GetPosKey(0).parameter;
+		return pRootChannel->GetPosKey(0).parameter;
 	}
 
-	u_int prevKeyNum = pRootMotionChannels->FindPrevPosKey(_ratio);
-	u_int nextKeyNum = pRootMotionChannels->GetNextPosKey(prevKeyNum);
+	u_int prevKeyNum = pRootChannel->FindPrevPosKey(_ratio);
+	u_int nextKeyNum = pRootChannel->GetNextPosKey(prevKeyNum);
 
-	const AnimKey_V3& prevKey = pRootMotionChannels->GetPosKey(prevKeyNum);
-	const AnimKey_V3& nextKey = pRootMotionChannels->GetPosKey(nextKeyNum);
+	const AnimKey_V3& prevKey = pRootChannel->GetPosKey(prevKeyNum);
+	const AnimKey_V3& nextKey = pRootChannel->GetPosKey(nextKeyNum);
 
 	float deltaKeyNum = nextKey.startKeyNum - prevKey.startKeyNum;
 
 	// 割合からキー数を取得
-	float playingKeyNum = pRootMotionChannels->GetPosKeyByRatio(_ratio);
+	float playingKeyNum = pRootChannel->GetPosKeyByRatio(_ratio);
 
 	// 割合
 	float ratio = (playingKeyNum - prevKey.startKeyNum) / deltaKeyNum;
@@ -305,21 +302,23 @@ DirectX::SimpleMath::Vector3 AnimationData::GetRootMotionPos(float _ratio) const
 
 DirectX::SimpleMath::Quaternion AnimationData::GetRootMotionRot(float _ratio) const
 {
-	if (pRootMotionChannels->GetQuatKeyCnt() == 1)	// 1つだと補間しない
+	const AnimationChannel* pRootChannel = FindChannel(rootBoneId);
+
+	if (pRootChannel->GetQuatKeyCnt() == 1)	// 1つだと補間しない
 	{
-		return pRootMotionChannels->GetQuatKey(0).parameter;
+		return pRootChannel->GetQuatKey(0).parameter;
 	}
 
-	u_int prevKeyNum = pRootMotionChannels->FindPrevQuatKey(_ratio);
-	u_int nextKeyNum = pRootMotionChannels->GetNextQuatKey(prevKeyNum);
+	u_int prevKeyNum = pRootChannel->FindPrevQuatKey(_ratio);
+	u_int nextKeyNum = pRootChannel->GetNextQuatKey(prevKeyNum);
 
-	const AnimKey_Q& prevKey = pRootMotionChannels->GetQuatKey(prevKeyNum);
-	const AnimKey_Q& nextKey = pRootMotionChannels->GetQuatKey(nextKeyNum);
+	const AnimKey_Q& prevKey = pRootChannel->GetQuatKey(prevKeyNum);
+	const AnimKey_Q& nextKey = pRootChannel->GetQuatKey(nextKeyNum);
 
 	float deltaKeyNum = nextKey.startKeyNum - prevKey.startKeyNum;
 
 	// 割合からキー数を取得
-	float playingKeyNum = pRootMotionChannels->GetQuatKeyByRatio(_ratio);
+	float playingKeyNum = pRootChannel->GetQuatKeyByRatio(_ratio);
 
 	// 割合
 	float ratio = (playingKeyNum - prevKey.startKeyNum) / deltaKeyNum;

@@ -4,13 +4,11 @@
 /// @brief ƒgƒŠƒK[Œ^•Ï”‚ğŒ©‚ÄA‘JˆÚğŒ’B¬‚µ‚Ä‚¢‚é‚©
 class TriggerTransCondition : public TransCondition_Base
 {
-	const TriggerType* pParameter;
-
 public:
-	TriggerTransCondition(const TriggerType& _parameter, const std::string& _parameterName);
+	TriggerTransCondition(const std::string& _parameterName);
 	~TriggerTransCondition() {}
 
-	bool IsCondition()const override;
+	bool IsCondition(HashiTaku::AnimParam::conditionValType _checkValue)const override;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

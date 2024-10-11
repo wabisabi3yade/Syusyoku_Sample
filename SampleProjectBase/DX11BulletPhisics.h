@@ -34,6 +34,8 @@ class DX11BulletPhisics : public Singleton_Base<DX11BulletPhisics>
 
 	/// @brief コールバックを呼び出すクラス
 	std::unique_ptr<BulletContactCallBack> pContactCallBack;
+
+	bool isGizmo;
 public:
 	/// @brief Bullet初期化
 	void Init();
@@ -55,6 +57,8 @@ public:
 	/// @brief 物理空間に衝突オブジェクトを削除する
 	/// @param _collObj 削除する衝突オブジェクト
 	void RemoveCollObj(btCollisionObject& _collObj);
+
+	void SetGizmo(bool _setBool);
 
 	// 衝突オブジェクトをチェック
 	u_int GetCollObjCnt() const;

@@ -4,11 +4,8 @@
 
 #include "InSceneSystemManager.h"
 
-using namespace DirectX::SimpleMath;
+namespace DX = DirectX::SimpleMath;
 using namespace HashiTaku;
-
-const Color CP_Collider::normalColor = { 1,1,1,0.8f };
-const Color CP_Collider::hitColor = { 1,0,0,1 };
 
 CP_Collider::CP_Collider(Type _type) : type(_type)
 {
@@ -28,43 +25,54 @@ CP_Collider& CP_Collider::operator=(const CP_Collider& _other)
 
 void CP_Collider::Init()
 {
-	//pCompound = std::make_unique<btCompoundShape>();
+	pCompound = std::make_unique<btCompoundShape>();
 
-	SetShape();
-	/*SendShapeToRb();*/
+	CreateShape();
+
+	AddToCompound();
+
+	SendShapeToRb();
 }
 
 void CP_Collider::OnDestroy()
 {
-	RemoveShapeOfRb();
+	RemoveShapeFromRb();
 }
 
 void CP_Collider::SetCenterOffset(const DirectX::SimpleMath::Vector3& _offset)
 {
 	centerOffset = _offset;
-	SetShape();
+	RemoveFromCompound();
+	AddToCompound();
 }
 
 void CP_Collider::SetAngleOffset(const DirectX::SimpleMath::Vector3& _offset)
 {
 	angleOffset = _offset;
-	SetShape();
+	RemoveFromCompound();
+	AddToCompound();
+}
+
+btCollisionShape& CP_Collider::GetColliderShape()
+{
+	return *pCompound;
 }
 
 void CP_Collider::ImGuiSetting()
 {
 	if (ImGui::Button("Set Shape"))
-		SendShapeToRb();
+		SettingShape();
 
-	Vector3 p_centerPos = centerOffset;
-	Vector3 p_offsetAngles = angleOffset;
+	bool isChange = false;
+	bool isAngChange = false;
+	isChange = ImGuiMethod::DragFloat3(centerOffset, "center", 0.1f);
+	isAngChange = ImGuiMethod::DragFloat3(angleOffset, "angles");
 
-	ImGuiMethod::DragFloat3(centerOffset, "center", 0.1f);
-	ImGuiMethod::DragFloat3(angleOffset, "angles");
-
-	// •ÏX‚µ‚Ä‚¢‚é‚È‚ç
-	if (centerOffset != p_centerPos || angleOffset != p_offsetAngles)
-		SetShape();
+	if (isChange || isAngChange)
+	{
+		RemoveFromCompound();
+		AddToCompound();
+	}
 }
 
 nlohmann::json CP_Collider::Save()
@@ -92,55 +100,78 @@ void CP_Collider::Copy(const CP_Collider& _other)
 	Component::operator=(_other);
 }
 
-void CP_Collider::RemoveShapeOfRb()
+void CP_Collider::RemoveShapeFromRb()
 {
 	if (!gameObject) return;
 
-	CP_RigidBody* pRb = gameObject->GetComponent<CP_RigidBody>();
+	CP_RigidBody2* pRb = gameObject->GetComponent<CP_RigidBody2>();
 	if (pRb)
-		pRb->RemoveShape();
+		pRb->RemoveColliderShape(*this);
 }
 
 void CP_Collider::OnEnableTrue()
 {
+	SendShapeToRb();
 }
 
 void CP_Collider::OnEnableFalse()
 {
+	RemoveShapeFromRb();
 }
 
-void CP_Collider::SetShape()
+void CP_Collider::OnChangeTransform()
 {
-	//if (pCollisionShape)
-	//	pCompound->removeChildShape(pCollisionShape.get());
+	RemoveFromCompound();
+	AddToCompound();
+}
 
-	if (pCollisionShape)
-	{
-		CP_RigidBody* pRb = gameObject->GetComponent<CP_RigidBody>();
-		if (pRb)
-			pRb->RemoveShape();
-	}
+void CP_Collider::SettingShape()
+{
+	RemoveFromCompound();
 
 	CreateShape();
 
-	btTransform offsetTransform;
-	offsetTransform.setIdentity();
-	offsetTransform.setOrigin(Bullet::ToBtVector3(centerOffset));
-	offsetTransform.setRotation(Bullet::ToBtQuaeternion(Quat::ToQuaternion(angleOffset)));
-
-
-	SendShapeToRb();
-	/*pCompound->addChildShape(offsetTransform, pCollisionShape.get());*/
+	AddToCompound();
 }
 
 void CP_Collider::SendShapeToRb()
 {
-	CP_RigidBody* pRb = gameObject->GetComponent<CP_RigidBody>();
+	CP_RigidBody2* pRb = gameObject->GetComponent<CP_RigidBody2>();
 	if (!pRb)
 	{
 		HASHI_DEBUG_LOG("RigidBody‚ª‚ ‚è‚Ü‚¹‚ñ");
 		return;
 	}
 
-	pRb->SetShape(/**pCompound*/*pCollisionShape);
+	pRb->SetColliderShape(*this);
+}
+
+void CP_Collider::RemoveFromCompound()
+{
+	if (pCollisionShape)
+		pCompound->removeChildShape(pCollisionShape.get());
+}
+
+void CP_Collider::AddToCompound()
+{
+	using namespace DirectX::SimpleMath;
+
+	if (pCollisionShape)
+	{
+		btTransform btTrans;
+		btTrans.setIdentity();
+
+		Transform& transform = GetTransform();
+		Vector3 worldOffset = GetTransform().GetScale() * centerOffset;
+		btTrans.setOrigin(Bullet::ToBtVector3(worldOffset));
+
+		Vector3 worldAngles = transform.GetEularAngles() + angleOffset;
+		btTrans.setRotation(Bullet::ToBtQuaeternion(Quat::ToQuaternion(worldAngles)));
+
+		pCompound->addChildShape(btTrans , pCollisionShape.get());
+	}
+	else
+	{
+		HASHI_DEBUG_LOG("Œ`ó‚ğæ‚Éì¬‚µ‚Ä‚­‚¾‚³‚¢");
+	}
 }

@@ -19,18 +19,15 @@ public:
 	static std::vector<std::string> judgeTypeStrings;
 #endif
 private:
-	/// @brief ‘JˆÚğŒ‚ÅQÆ‚·‚éint•Ï”
-	const int* pParameter;
-
 	/// @brief ”äŠr‚·‚é’l
 	int compareVal;
 
 	JudgeType judgeType;
 public:
-	IntTransCondition(const int& _parameter, const std::string& _parameterName);
+	IntTransCondition(const std::string& _parameterName);
 	~IntTransCondition() {}
 
-	bool IsCondition() const override;
+	bool IsCondition(HashiTaku::AnimParam::conditionValType _checkValue) const override;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

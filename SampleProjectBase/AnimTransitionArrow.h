@@ -47,7 +47,7 @@ class AnimTransitionArrow : public HashiTaku::IImGuiUser, public HashiTaku::ISav
 	float transitionTime;
 
 	/// @brief 遷移開始時間でしか開始しないようにする
-	bool isHaveExitTime;
+	bool isHasExitRatio;
 
 #ifdef EDIT
 	// 選択中の名前
@@ -60,12 +60,6 @@ public:
 	/// @param _animParameters コントローラー内変数
 	AnimTransitionArrow(AnimationNode_Base& _fromNode, AnimationNode_Base& _toNode, AnimationParameters& _animParameters);
 	virtual ~AnimTransitionArrow() {}
-
-	/// @brief 遷移条件を達成しているか確認
-	/// @param _curPlayRatio 現在の再生割合
-	/// @param _lastPlayRatio 1フレーム前の再生割合
-	/// @return 達成しているか？
-	bool CheckTransition(float _curPlayRatio, float _lastPlayRatio);
 
 	/// @brief 矢印に遷移条件を作成
 	/// @param _val 参照するパラメータ値
@@ -96,11 +90,25 @@ public:
 	// 遷移先のノードを取得する
 	AnimationNode_Base& GetToNode() const;
 
-	// 遷移先のアニメーション割合を取得
+	/// @brief 遷移先の開始割合を取得
+	/// @return 遷移先の開始割合
 	float GetTargetRatio() const;
 
 	// 遷移時間を取得
 	float GetTransitionTime() const;
+
+	/// @brief 遷移元の終了割合を取得
+	/// @return 遷移元の終了割合
+	float GetExitRatio() const;
+
+	/// @brief 遷移終了時間を持っているか取得
+	/// @return 遷移終了時間もっているか？
+	bool GetIsHasExit() const;
+
+
+	/// @brief 条件リストを取得
+	/// @return 条件リスト
+	const std::list<std::unique_ptr<TransCondition_Base>>& GetConditionList() const;
 
 	// イージングの種類を取得
 	HashiTaku::EaseKind GetEaseKind() const;

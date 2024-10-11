@@ -1,5 +1,5 @@
 #pragma once
-#include "CloneComponent.h"
+#include "Component.h"
 
 #include <btBulletDynamicsCommon.h>
 #include "DXToBullet.h"
@@ -32,14 +32,11 @@ protected:
 
     /// @brief 角度オフセット
     DirectX::SimpleMath::Vector3 angleOffset;
-
-    // 当たってない・当たってるときの当たり判定の色
-    static const DirectX::SimpleMath::Color normalColor;
-    static const DirectX::SimpleMath::Color hitColor;
     
 public:
     CP_Collider() : type(Type::Num) {}
     CP_Collider(Type _type);
+    virtual ~CP_Collider() {}
     CP_Collider(const CP_Collider& _other);
 
     CP_Collider& operator=(const CP_Collider& _other);
@@ -50,6 +47,10 @@ public:
     void SetCenterOffset(const DirectX::SimpleMath::Vector3& _offset);
 
     void SetAngleOffset(const DirectX::SimpleMath::Vector3& _offset);
+
+    /// @brief 衝突形状取得
+    /// @return 衝突形状
+    btCollisionShape& GetColliderShape();
 
     // 種類を取得
     Type GetType()const { return type; }   
@@ -67,16 +68,22 @@ private:
     void Copy(const CP_Collider& _other);
 
     /// @brief RigidBodyの形状をとる
-    void RemoveShapeOfRb();
+    void RemoveShapeFromRb();
 
 protected:
     void OnEnableTrue() override;
     void OnEnableFalse() override;
 
-    void SetShape();
+    void OnChangeTransform() override;
+
+    void SettingShape();
     virtual void CreateShape() = 0;
 
     /// @brief RigidBpdyコンポーネントに形状を送る
     void SendShapeToRb();
+
+    void RemoveFromCompound();
+
+    void AddToCompound();
 };
 

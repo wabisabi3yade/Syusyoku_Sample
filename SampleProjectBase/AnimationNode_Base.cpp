@@ -12,7 +12,7 @@ std::vector<std::string> AnimationNode_Base::edit_nodeTypeStrings =
 #endif // EDIT
 
 AnimationNode_Base::AnimationNode_Base(std::string _nodeName, NodeType _type)
-	: nodeName(_nodeName), nodeType(_type), curPlayingRatio(0.0f), lastPlayingRatio(0.0f), playNodeSpeedTimes(1.0f), animationTime(0.0f), isLoop(true), isFinish(false), isRootMotionPosXZ(false), isRootMotionPosY(false), isRootMotionRot(false)
+	: nodeName(_nodeName), nodeType(_type), curPlayingRatio(0.0f), lastPlayingRatio(0.0f), playNodeSpeedTimes(1.0f), animationTime(1.0f), isLoop(true), isFinish(false), isRootMotionPosXZ(false), isRootMotionPosY(false), isRootMotionRot(false)
 {
 }
 
@@ -72,7 +72,7 @@ void AnimationNode_Base::SetFinish()
 	isFinish = true;
 }
 
-std::string AnimationNode_Base::GetNodeName() const
+const std::string& AnimationNode_Base::GetNodeName() const
 {
 	return nodeName;
 }
@@ -133,6 +133,9 @@ nlohmann::json AnimationNode_Base::Save()
 	nlohmann::json nodeData;
 	nodeData["animTime"] = animationTime;
 	nodeData["isLoop"] = isLoop;
+	nodeData["isRMXZ"] = isRootMotionPosXZ;
+	nodeData["isRMY"] = isRootMotionPosY;
+	nodeData["isRMR"] = isRootMotionRot;
 	return nodeData;
 }
 
@@ -140,6 +143,9 @@ void AnimationNode_Base::Load(const nlohmann::json& _data)
 {
 	LoadJsonFloat("animTime", animationTime, _data);
 	LoadJsonBoolean("isLoop", isLoop, _data);
+	LoadJsonBoolean("isRMXZ", isRootMotionPosXZ, _data);
+	LoadJsonBoolean("isRMY", isRootMotionPosY, _data);
+	LoadJsonBoolean("isRMR", isRootMotionRot, _data);
 }
 
 void AnimationNode_Base::ProgressPlayRatio(float _controllerSpeed)
@@ -176,6 +182,14 @@ void AnimationNode_Base::Copy(const AnimationNode_Base& _other)
 void AnimationNode_Base::ImGuiSetParameter()
 {
 #ifdef EDIT
+	char buf[IM_INPUT_BUF];	// 変数名を変更
+	strncpy_s(buf, nodeName.c_str(), sizeof(buf));
+
+	if (ImGui::InputText("##name", buf, IM_INPUT_BUF, ImGuiInputTextFlags_EnterReturnsTrue))
+	{
+		nodeName = buf;
+	}
+
 	std::vector<std::string>& ntStrings = AnimationNode_Base::edit_nodeTypeStrings;
 	const std::string& typeStr = ntStrings[static_cast<u_int>(nodeType)];
 	ImGui::Text(std::string("NodeType:" + typeStr).c_str());	// ノードタイプ

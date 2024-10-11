@@ -142,10 +142,13 @@
     <ClCompile Include="CopyAnimationParameters.cpp" />
     <ClCompile Include="CP_AnimationNotify.cpp" />
     <ClCompile Include="CP_BoxAnimation.cpp" />
+    <ClCompile Include="CP_BoxCollider2.cpp" />
     <ClCompile Include="CP_NotifyTest.cpp" />
     <ClCompile Include="CP_PlayerAnimation.cpp" />
     <ClCompile Include="CP_RigidBody.cpp" />
+    <ClCompile Include="CP_RigidBody2.cpp" />
     <ClCompile Include="CP_SkyBox.cpp" />
+    <ClCompile Include="CP_TestCollider.cpp" />
     <ClCompile Include="CP_Weapon.cpp" />
     <ClCompile Include="CrossFadeAnimation.cpp" />
     <ClCompile Include="DepthStencil.cpp" />
@@ -171,6 +174,7 @@
     <ClCompile Include="PlayerActionController.cpp" />
     <ClCompile Include="PlayerAnimObserver.cpp" />
     <ClCompile Include="PlayerAttackState.cpp" />
+    <ClCompile Include="PlayerIdleState.cpp" />
     <ClCompile Include="PlayerMoveState.cpp" />
     <ClCompile Include="PlayerActState_Base.cpp" />
     <ClCompile Include="HashiTaku_Random.cpp" />
@@ -246,6 +250,7 @@
     <ClCompile Include="PS_TexColor.cpp" />
     <ClCompile Include="TransConditionCreater.cpp" />
     <ClCompile Include="TransCondition_Base.cpp" />
+    <ClCompile Include="AnimTransitionChecker.cpp" />
     <ClCompile Include="TreeNode.cpp" />
     <ClCompile Include="TriggerTransCondition.cpp" />
     <ClCompile Include="TriggerType.cpp" />
@@ -317,10 +322,13 @@
     <ClInclude Include="CopyAnimationParameters.h" />
     <ClInclude Include="CP_AnimationNotify.h" />
     <ClInclude Include="CP_BoxAnimation.h" />
+    <ClInclude Include="CP_BoxCollider2.h" />
     <ClInclude Include="CP_NotifyTest.h" />
     <ClInclude Include="CP_PlayerAnimation.h" />
     <ClInclude Include="CP_RigidBody.h" />
+    <ClInclude Include="CP_RigidBody2.h" />
     <ClInclude Include="CP_SkyBox.h" />
+    <ClInclude Include="CP_TestCollider.h" />
     <ClInclude Include="CP_Weapon.h" />
     <ClInclude Include="CrossFadeAnimation.h" />
     <ClInclude Include="DepthStencil.h" />
@@ -350,6 +358,7 @@
     <ClInclude Include="PlayerActionController.h" />
     <ClInclude Include="PlayerAnimObserver.h" />
     <ClInclude Include="PlayerAttackState.h" />
+    <ClInclude Include="PlayerIdleState.h" />
     <ClInclude Include="PlayerMoveState.h" />
     <ClInclude Include="PlayerActState_Base.h" />
     <ClInclude Include="HashiTaku_Random.h" />
@@ -431,6 +440,7 @@
     <ClInclude Include="PS_TexColor.h" />
     <ClInclude Include="TransConditionCreater.h" />
     <ClInclude Include="TransCondition_Base.h" />
+    <ClInclude Include="AnimTransitionChecker.h" />
     <ClInclude Include="TreeNode.h" />
     <ClInclude Include="TriggerTransCondition.h" />
     <ClInclude Include="TriggerType.h" />

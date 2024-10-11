@@ -8,34 +8,33 @@ using namespace HashiTaku;
 
 AnimTransitionArrow::AnimTransitionArrow(AnimationNode_Base& _fromNode, AnimationNode_Base& _toNode, AnimationParameters& _animParameters)
 	: pFromNode(&_fromNode), pToNode(&_toNode), pAnimParameters(&_animParameters), exitRatio(1.0f), transTargetRatio(0.0f), transitionTime(0.2f), transitiionEase(HashiTaku::EaseKind::Linear), interpolateKind(AnimInterpolateKind::CrossFade),
-	isHaveExitTime(false)
+	isHasExitRatio(false)
 {
 	// アニメーションパラメータ削除オブザーバーを作成、サブジェクトに追加する
 	pRemoveParamObserver = std::make_unique<HashiTaku::AnimParam::AnimParamObserver>(*this, "Arrow_RemoveParam");
 	pAnimParameters->GetParamRemoveSubject().AddObserver(*pRemoveParamObserver);
 }
 
-bool AnimTransitionArrow::CheckTransition(float _curPlayRatio, float _lastPlayRatio)
-{
-	for (auto& pCondition : conditionList)
-		// 全ての条件が達成しているなら
-		if (!pCondition->IsCondition())	return false;
+//{
+//	for (auto& pCondition : conditionList)
+//		// 全ての条件が達成しているなら
+//		if (!pCondition->IsCondition())	return false;
+//
+//	// 条件があるかフラグ
+//	bool isHaveCondition = !conditionList.empty();
+//
+//	if (isHaveExitTime)	// 遷移開始時間をもっているなら
+//	{
+//		if (!(exitRatio > _curPlayRatio && exitRatio < _lastPlayRatio))	// 遷移開始割合を超えていないなら
+//			return false;
+//	}
+//	else if (!isHaveCondition)	// 条件が一つもなく、遷移開始時間が設定されていないなら遷移しない
+//	{
+//		return false;
+//	}
+//		
+//	return true;
 
-	// 条件があるかフラグ
-	bool isHaveCondition = !conditionList.empty();
-
-	if (isHaveExitTime)	// 遷移開始時間をもっているなら
-	{
-		if (!(exitRatio > _curPlayRatio && exitRatio < _lastPlayRatio))	// 遷移開始割合を超えていないなら
-			return false;
-	}
-	else if (!isHaveCondition)	// 条件が一つもなく、遷移開始時間が設定されていないなら遷移しない
-	{
-		return false;
-	}
-		
-	return true;
-}
 
 void AnimTransitionArrow::AddCondition(const AnimParam::conditionValType& _val, const std::string& _name)
 {
@@ -110,6 +109,21 @@ float AnimTransitionArrow::GetTransitionTime() const
 	return transitionTime;
 }
 
+float AnimTransitionArrow::GetExitRatio() const
+{
+	return exitRatio;
+}
+
+bool AnimTransitionArrow::GetIsHasExit() const
+{
+	return isHasExitRatio;
+}
+
+const std::list<std::unique_ptr<TransCondition_Base>>& AnimTransitionArrow::GetConditionList() const
+{
+	return conditionList;
+}
+
 HashiTaku::EaseKind AnimTransitionArrow::GetEaseKind() const
 {
 	return transitiionEase;
@@ -139,7 +153,7 @@ nlohmann::json AnimTransitionArrow::Save()
 	data["conditionList"] = conditionDataList;
 
 	data["transTime"] = transitionTime;
-	data["isHaveExit"] = isHaveExitTime;
+	data["isHaveExit"] = isHasExitRatio;
 	data["exitRatio"] = exitRatio;
 	data["targetRatio"] = transTargetRatio;
 	data["transEase"] = transTargetRatio;
@@ -177,7 +191,7 @@ void AnimTransitionArrow::Load(const nlohmann::json& _data)
 	}
 	
 	HashiTaku::LoadJsonFloat("transTime", transitionTime, _data);
-	HashiTaku::LoadJsonBoolean("isHaveExit", isHaveExitTime, _data);
+	HashiTaku::LoadJsonBoolean("isHaveExit", isHasExitRatio, _data);
 	HashiTaku::LoadJsonFloat("exitRatio", exitRatio, _data);
 	HashiTaku::LoadJsonFloat("targetRatio", transTargetRatio, _data);
 	HashiTaku::LoadJsonEnum<HashiTaku::EaseKind>("transEase", transitiionEase, _data);
@@ -265,7 +279,7 @@ void AnimTransitionArrow::ImGuiSetting()
 {
 	ImGuiMethod::PushItemWidth();
 	ImGui::DragFloat("TransitionTime", &transitionTime, 0.01f, 0.0f, 10.0f);	// 遷移時間
-	ImGui::Checkbox("HasExitTime", &isHaveExitTime);	// exitフラグ
+	ImGui::Checkbox("HasExitTime", &isHasExitRatio);	// exitフラグ
 	ImGui::DragFloat("ExitRatio", &exitRatio, 0.01f, 0.0f, 1.0f);	// 遷移先割合
 	ImGui::DragFloat("TargetRatio", &transTargetRatio, 0.01f, 0.0f, 1.0f);	// 遷移先割合
 	HashiTaku::Easing::ImGuiSelect(transitiionEase);	// 遷移イージング

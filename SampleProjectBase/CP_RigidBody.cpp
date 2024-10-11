@@ -33,7 +33,7 @@ CP_RigidBody& CP_RigidBody::operator=(const CP_RigidBody& _other)
 void CP_RigidBody::Init()
 {
 	// シーン内のRigidBody管理に追加
-	InSceneSystemManager::GetInstance()->AddRigidBody(*this);
+	//InSceneSystemManager::GetInstance()->AddRigidBody(*this);
 }
 
 void CP_RigidBody::Update()
@@ -68,7 +68,7 @@ void CP_RigidBody::OnDestroy()
 {
 	RemoveCollObject();
 
-	InSceneSystemManager::GetInstance()->RemoveRigidBody(*this);
+	//InSceneSystemManager::GetInstance()->RemoveRigidBody(*this);
 }
 
 void CP_RigidBody::OnChangeTransform()
@@ -86,7 +86,7 @@ void CP_RigidBody::OnEnableTrue()
 {
 	// ワールドに追加
 	AddCollisionToWorld();
-	InSceneSystemManager::GetInstance()->AddRigidBody(*this);
+	//InSceneSystemManager::GetInstance()->AddRigidBody(*this);
 }
 
 void CP_RigidBody::OnEnableFalse()
@@ -95,7 +95,7 @@ void CP_RigidBody::OnEnableFalse()
 	if (pCollisionObject)
 		DX11BulletPhisics::GetInstance()->RemoveCollObj(*pCollisionObject);
 
-	InSceneSystemManager::GetInstance()->RemoveRigidBody(*this);
+	//InSceneSystemManager::GetInstance()->RemoveRigidBody(*this);
 }
 
 void CP_RigidBody::ToBtTransform(btTransform& _btTransform)
@@ -163,7 +163,7 @@ void CP_RigidBody::SetTransformDxToBt()
 void CP_RigidBody::SetTransformBtToDx()
 {
 	if (!isSetShape) return;
-	
+
 	btTransform bulletTransform;
 	GetBulletTransform(bulletTransform);
 
@@ -217,17 +217,14 @@ void CP_RigidBody::SetIsGravity(bool _isGravity)
 	btRigidBody* btRb = static_cast<btRigidBody*>(pCollisionObject.get());
 	btRb->activate();
 
-	if (isGravity)
-	{
-		DX::Vector3 gravityVal = DX11BulletPhisics::GetInstance()->GetGravityValue();
-		btRb->setGravity(Bullet::ToBtVector3(gravityVal));
-	}
-	else
-	{
-		btRb->setGravity(btVector3(0, 0, 0));
-		btRb->setLinearVelocity(btVector3(0, 0, 0));
-		btRb->setAngularVelocity(btVector3(0, 0, 0));
-	}
+	/*DX::Vector3 gravityVal = DX11BulletPhisics::GetInstance()->GetGravityValue();
+	btRb->setGravity(Bullet::ToBtVector3(gravityVal));*/
+/*else
+{
+	btRb->setGravity(btVector3(0, 0, 0));
+	btRb->setLinearVelocity(btVector3(0, 0, 0));
+	btRb->setAngularVelocity(btVector3(0, 0, 0));
+}*/
 }
 
 void CP_RigidBody::RemoveCollObject()
@@ -322,7 +319,7 @@ void CP_RigidBody::SetBulletTransform(const btTransform& _set)
 {
 	pCollisionObject->setWorldTransform(_set);
 
-	if(!isTrigger)
+	if (!isTrigger)
 	{
 		pMotionState->setWorldTransform(_set);
 	}

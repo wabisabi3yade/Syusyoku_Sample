@@ -192,6 +192,13 @@ float Mathf::Repeat(float _t, float _length)
 	return f;
 }
 
+float Mathf::Lerp(float _from, float _to, float _ratio)
+{
+	_ratio = std::clamp(_ratio, 0.0f, 1.0f);
+	float sub = _to - _from;
+	return _from + sub * _ratio;
+}
+
 Vector3 Mtx::GetRightVector(const Matrix& _matrix)
 {
 	Vector3 right;

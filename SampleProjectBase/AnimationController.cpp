@@ -33,15 +33,15 @@ AnimationController& AnimationController::operator=(const AnimationController& _
 	Copy(_other);
 	return *this;
 }
-
-void AnimationController::Begin(BoneList& _boneList)
-{
-	// デフォルトノードを現在のノードのセット
-	pCurrentNodeInfo = pDefaultNodeInfo;
-
-	// ボーンリストをセット
-	pBoneList = &_boneList;
-}
+//
+//void AnimationController::Begin(BoneList& _boneList)
+//{
+//	// デフォルトノードを現在のノードのセット
+//	pCurrentNodeInfo = pDefaultNodeInfo;
+//
+//	// ボーンリストをセット
+//	pBoneList = &_boneList;
+//}
 
 void AnimationController::Update(BoneList& _boneList)
 {
@@ -68,7 +68,7 @@ void AnimationController::NormalUpdate()
 
 void AnimationController::CrossFadeUpdate()
 {
-	pCrossFadeInterp->Update(*pBoneList, playSpeed);
+	/*pCrossFadeInterp->Update(*pBoneList, playSpeed);*/
 
 	if (pCrossFadeInterp->GetIsTransitionEnd())
 	{
@@ -98,67 +98,67 @@ void AnimationController::InertInterpUpdate()
 		transform.scale = pInertInterp->CalcBlendScale(b_i, transElapsedTime);
 		transform.rotation = pInertInterp->CalcBlendRot(b_i, transElapsedTime);
 
-		bone.SetAnimTransform(transform);
+		/*bone.SetAnimTransform(transform);*/
 	}
 }
 
-void AnimationController::ChangeAnimation(const std::string& _animName)
-{
-	AnimNodeInfo* pNextNodeInfo = GetNodeInfo(_animName);
-	if (!pNextNodeInfo)	// アニメーションがなかったら
-	{
-		HASHI_DEBUG_LOG(_animName + "は取得できませんでした");
-		return;
-	}
+//void AnimationController::ChangeAnimation(const std::string& _animName)
+//{
+//	AnimNodeInfo* pNextNodeInfo = GetNodeInfo(_animName);
+//	if (!pNextNodeInfo)	// アニメーションがなかったら
+//	{
+//		HASHI_DEBUG_LOG(_animName + "は取得できませんでした");
+//		return;
+//	}
+//
+//	// 再生開始する
+//	isPlay = true;
+//
+//	// 更新する
+//	pPrevAnimNode = pCurrentNodeInfo->pAnimNode.get();
+//	pCurrentNodeInfo = GetNodeInfo(_animName);
+//
+//	// 開始処理
+//	pCurrentNodeInfo->pAnimNode->Begin();
+//	pCurrentNodeInfo->pAnimNode->SetCurPlayRatio(0.0f);
+//
+//	OnChangeAnimComplete();
+//}
 
-	// 再生開始する
-	isPlay = true;
-
-	// 更新する
-	pPrevAnimNode = pCurrentNodeInfo->pAnimNode.get();
-	pCurrentNodeInfo = GetNodeInfo(_animName);
-
-	// 開始処理
-	pCurrentNodeInfo->pAnimNode->Begin();
-	pCurrentNodeInfo->pAnimNode->SetCurPlayRatio(0.0f);
-
-	OnChangeAnimComplete();
-}
-
-void AnimationController::ChangeAnimation(const AnimTransitionArrow& _transitionArrow)
-{
-	// 再生開始する
-	isPlay = true;
-
-	// 更新する
-	pPrevAnimNode = pPrevAnimNode = pCurrentNodeInfo->pAnimNode.get();
-	pCurrentNodeInfo = GetNodeInfo(_transitionArrow.GetToNode());
-
-	// 開始処理
-	pCurrentNodeInfo->pAnimNode->Begin();
-
-	// 遷移矢印をセットする
-	pCurTransArrow = &_transitionArrow;
-	float targetAnimRatio = pCurTransArrow->GetTargetRatio();
-	float transitionTime = pCurTransArrow->GetTransitionTime();
-	EaseKind ease = pCurTransArrow->GetEaseKind();
-
-	// 補間開始
-	switch (pCurTransArrow->GetInterpolateKind())
-	{
-	case AnimInterpolateKind::CrossFade:
-		CrossFadeStart(targetAnimRatio, transitionTime, ease);
-		break;
-
-	case AnimInterpolateKind::Inertialization:
-		InterpTransitionStart(targetAnimRatio, transitionTime);
-		break;
-
-	default:
-		assert(!"アニメーション間の補間の種類指定が正常でないです");
-		break;
-	}
-}
+//void AnimationController::ChangeAnimation(const AnimTransitionArrow& _transitionArrow)
+//{
+//	// 再生開始する
+//	isPlay = true;
+//
+//	// 更新する
+//	pPrevAnimNode = pPrevAnimNode = pCurrentNodeInfo->pAnimNode.get();
+//	pCurrentNodeInfo = GetNodeInfo(_transitionArrow.GetToNode());
+//
+//	// 開始処理
+//	pCurrentNodeInfo->pAnimNode->Begin();
+//
+//	// 遷移矢印をセットする
+//	pCurTransArrow = &_transitionArrow;
+//	float targetAnimRatio = pCurTransArrow->GetTargetRatio();
+//	float transitionTime = pCurTransArrow->GetTransitionTime();
+//	EaseKind ease = pCurTransArrow->GetEaseKind();
+//
+//	// 補間開始
+//	switch (pCurTransArrow->GetInterpolateKind())
+//	{
+//	case AnimInterpolateKind::CrossFade:
+//		CrossFadeStart(targetAnimRatio, transitionTime, ease);
+//		break;
+//
+//	case AnimInterpolateKind::Inertialization:
+//		InterpTransitionStart(targetAnimRatio, transitionTime);
+//		break;
+//
+//	default:
+//		assert(!"アニメーション間の補間の種類指定が正常でないです");
+//		break;
+//	}
+//}
 
 
 void AnimationController::SetBlendRatio(float _ratio)
@@ -194,7 +194,7 @@ AnimTransitionArrow* AnimationController::CreateTransitionArrow(const std::strin
 		return nullptr;
 	}
 
-	AnimNodeInfo* toNodeInfo = GetNodeInfo(_toNodeName);
+	const AnimNodeInfo* toNodeInfo = GetNodeInfo(_toNodeName);
 	if (!toNodeInfo)
 	{
 		HASHI_DEBUG_LOG(_toNodeName + " 遷移先ノードが見つかりませんでした");
@@ -220,7 +220,7 @@ AnimTransitionArrow* AnimationController::CreateTransitionArrow(const std::strin
 
 void AnimationController::RemoveNode(const std::string& _nodeName)
 {
-	AnimNodeInfo* pDelete = GetNodeInfo(_nodeName);
+	const AnimNodeInfo* pDelete = GetNodeInfo(_nodeName);
 	if (!pDelete) return;
 
 	// 遷移先が削除ノードならその矢印も消す
@@ -249,12 +249,12 @@ AnimationNode_Base* AnimationController::GetCurrentNode()
 	return pCurrentNodeInfo->pAnimNode.get();
 }
 
-const AnimationController::AnimNodeInfo* AnimationController::GetDefaultNode() const
+AnimNodeInfo* AnimationController::GetDefaultNode() const
 {
 	return pDefaultNodeInfo;
 }
 
-AnimationController::AnimNodeInfo* AnimationController::GetNodeInfo(const std::string& _name)
+AnimNodeInfo* AnimationController::GetNodeInfo(const std::string& _name) const
 {
 	auto itr = std::find_if(animNodeInfos.begin(), animNodeInfos.end(),
 		[&](const std::unique_ptr<AnimNodeInfo>& _nodeInfo)
@@ -271,7 +271,7 @@ AnimationController::AnimNodeInfo* AnimationController::GetNodeInfo(const std::s
 	return (*itr).get();
 }
 
-AnimationController::AnimNodeInfo* AnimationController::GetNodeInfo(const AnimationNode_Base& _node)
+const AnimNodeInfo* AnimationController::GetNodeInfo(const AnimationNode_Base& _node) const
 {
 	auto itr = std::find_if(animNodeInfos.begin(), animNodeInfos.end(),
 		[&](const std::unique_ptr<AnimNodeInfo>& _animInfo)
@@ -414,7 +414,7 @@ void AnimationController::TranstionCheck()
 
 	for (auto& pArrow : pCurrentNodeInfo->pTransArrows)
 	{
-		if (!pArrow->CheckTransition(curPlayRatio, lastPlayRatio)) return;
+		/*if (!pArrow->CheckTransition(curPlayRatio, lastPlayRatio)) return;*/
 		pTransArrow = pArrow.get();
 	}
 
@@ -423,7 +423,7 @@ void AnimationController::TranstionCheck()
 
 	if (!pTransArrow) return;	// 遷移しないなら終わる
 
-	ChangeAnimation(*pTransArrow);
+	/*ChangeAnimation(*pTransArrow);*/
 }
 
 void AnimationController::OnChangeAnimComplete()
@@ -464,7 +464,7 @@ void AnimationController::CrossFadeStart(float _targetAnimRatio, float _transiti
 	AnimationNode_Base* pCurNode = pCurrentNodeInfo->pAnimNode.get();
 	pCurNode->SetCurPlayRatio(_targetAnimRatio);
 
-	pCrossFadeInterp->Begin(*pPrevAnimNode, *pCurNode, _transitionTime, _easeKind);
+	/*pCrossFadeInterp->Begin(*pPrevAnimNode, *pCurNode, _transitionTime, _easeKind);*/
 
 	OnTransitionStart();
 }
@@ -610,7 +610,7 @@ void AnimationController::LoadTransArrow(const nlohmann::json& _nodeInfoData)
 }
 
 
-AnimationController::AnimNodeInfo* AnimationController::CreateNodeInfoByType(AnimationNode_Base::NodeType _nodeType, const std::string& _nodeName)
+AnimNodeInfo* AnimationController::CreateNodeInfoByType(AnimationNode_Base::NodeType _nodeType, const std::string& _nodeName)
 {
 	if (_nodeName.empty()) return nullptr;	// 名前入力してないなら終了
 
@@ -659,9 +659,6 @@ void AnimationController::CopyNodes(const AnimationController& _other)
 
 void AnimationController::ImGuiSetting()
 {
-	ImGui::Checkbox("Play", &isPlay);
-	ImGui::DragFloat("PlaySpeed", &playSpeed, 0.1f);
-
 	if (IsSetAnimation() && ImGuiMethod::TreeNode("Play Node"))
 	{
 		pCurrentNodeInfo->pAnimNode->ImGuiPlaying();

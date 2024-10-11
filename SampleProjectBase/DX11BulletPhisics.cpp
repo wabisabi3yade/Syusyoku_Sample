@@ -118,10 +118,16 @@ void DX11BulletPhisics::AddCollObj(btCollisionObject& _collObj, int _groupId)
 	btRigidBody* rb = btRigidBody::upcast(&_collObj);
 
 	if (rb)	// 剛体なら
+	{
+		rb->setGravity(Bullet::ToBtVector3(gravityValue));
 		pDynamicsWorld->addRigidBody(rb);
+	}
+		
 
 	else
 		pDynamicsWorld->addCollisionObject(&_collObj);
+
+	HASHI_DEBUG_LOG("コライダーセット　現在" + std::to_string(pDynamicsWorld->getNumCollisionObjects()));
 }
 
 void DX11BulletPhisics::RemoveCollObj(btCollisionObject& _collObj)
@@ -133,13 +139,20 @@ void DX11BulletPhisics::RemoveCollObj(btCollisionObject& _collObj)
 		return;
 	}
 
-	btRigidBody* rb = dynamic_cast<btRigidBody*>(&_collObj);
+	btRigidBody* rb = btRigidBody::upcast(&_collObj);
 
 	if (rb)	// 剛体なら
 		pDynamicsWorld->removeRigidBody(rb);
 
 	else
 		pDynamicsWorld->removeCollisionObject(&_collObj);
+
+	HASHI_DEBUG_LOG("コライダー削除　現在" + std::to_string(pDynamicsWorld->getNumCollisionObjects()));
+}
+
+void DX11BulletPhisics::SetGizmo(bool _setBool)
+{
+	isGizmo = _setBool;
 }
 
 u_int DX11BulletPhisics::GetCollObjCnt() const

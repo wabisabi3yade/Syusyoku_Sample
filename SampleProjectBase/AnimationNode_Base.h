@@ -88,7 +88,7 @@ public:
 	void SetFinish();
 
 	// ノード名取得
-	std::string GetNodeName() const;
+	const std::string& GetNodeName() const;
 
 	// ノードの種類を取得
 	NodeType GetNodeType() const;
@@ -152,5 +152,6 @@ protected:
 	void SetAnimationTime(float _time);
 
 	void ImGuiSetting() override;
+
 };
 

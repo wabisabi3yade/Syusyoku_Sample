@@ -4,8 +4,10 @@
 
 // 当たり判定
 #include "CP_RigidBody.h"
+#include "CP_RigidBody2.h"
 #include "CP_BoxCollider.h"
 #include "CP_SphereCollider.h"
+#include "CP_TestCollider.h"
 
 // 描画
 #include "CP_MeshRenderer.h"
@@ -22,7 +24,6 @@
 
 // プレイヤー
 #include "CP_Player.h"
-#include "CP_PlayerAnimation.h"
 #include "CP_Weapon.h"
 
 // テスト
