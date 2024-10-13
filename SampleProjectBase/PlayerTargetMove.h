@@ -1,10 +1,7 @@
 #pragma once
 #include "PlayerActState_Base.h"
 
-class CP_Camera;
-
-/// @brief プレイヤー移動処理
-class PlayerMoveState : public PlayerActState_Base
+class PlayerTargetMove : public PlayerActState_Base
 {
 	/// @brief 移動方向
 	DirectX::SimpleMath::Vector3 moveVector;
@@ -20,12 +17,9 @@ class PlayerMoveState : public PlayerActState_Base
 
 	/// @brief 減速率
 	float decadeSpeedTimes;
-
-	/// @brief 回転速度
-	float rotateSpeed;
 public:
-	PlayerMoveState();
-	~PlayerMoveState() {}
+	PlayerTargetMove();
+	~PlayerTargetMove() {}
 
 	/// @brief セーブする
 	/// @return セーブデータ
@@ -42,18 +36,11 @@ private:
 	/// @brief 移動
 	void Move();
 
-	DirectX::SimpleMath::Vector3 MoveVector();
-
-	/// @brief 回転させる
-	void Rotation();
-
-	/// @brief 移動入力されているか
-	bool IsMoveInput();
-
 	/// @brief 走っているか取得
 	/// @return 走っているか？
 	bool IsRunning();
 
 	void ImGuiSetting() override;
+
 };
 

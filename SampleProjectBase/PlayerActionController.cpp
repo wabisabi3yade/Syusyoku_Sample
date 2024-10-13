@@ -4,6 +4,7 @@
 
 #include "PlayerIdleState.h"
 #include "PlayerMoveState.h"
+#include "PlayerTargetMove.h"
 #include "PlayerAttackState.h"
 
 PlayerActionController::PlayerActionController(GameObject & _pPlayerObject) 
@@ -13,8 +14,8 @@ PlayerActionController::PlayerActionController(GameObject & _pPlayerObject)
 	pStateChangeObserver = std::make_unique<PlayerActChangeObserver>("StateChangeObserver", *this);
 
 	// 行動クラスを生成
-	CreateState<PlayerIdleState>();
 	CreateState<PlayerMoveState>();
+	CreateState<PlayerTargetMove>();
 	CreateState<PlayerAttackState>();
 
 	// デフォルト状態をセット

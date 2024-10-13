@@ -27,7 +27,7 @@ void CP_BoxCollider::CreateShape()
 
 	btVector3 btLength;
 	btLength.setValue(worldLength.x, worldLength.y, worldLength.z);
-	pCollisionShape = std::make_unique<btBoxShape>(btLength);
+	pCollisionShape = std::make_unique<btBoxShape>(btLength * 0.5);
 }
 
 void CP_BoxCollider::LateUpdate()

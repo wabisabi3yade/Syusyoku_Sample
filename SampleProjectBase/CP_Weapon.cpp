@@ -121,11 +121,9 @@ void CP_Weapon::UpdateTransform()
 	// ボーン行列から座標と回転量を求める
 	Mtx::GetTransformFromWldMtx(boneMtx, pos, scale, rot);
 
-	pos *= loadMeshScale;
-	pos = Vector3::Transform(pos, Matrix::CreateFromQuaternion(loadMeshRot));
-
 	t.SetLocalPosition(pos);
-	t.SetLocalRotation(Quat::Multiply(rot, loadMeshRot));
+
+	t.SetLocalRotation(rot);
 }
 
 void CP_Weapon::ImGuiSetBone()

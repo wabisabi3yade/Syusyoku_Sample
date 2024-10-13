@@ -119,7 +119,7 @@ void Quat::ToAxisAngle(const DirectX::SimpleMath::Quaternion& _q, DirectX::Simpl
 
 Quaternion Quat::Multiply(const Quaternion& _q1, const Quaternion& _q2)
 {
-	Quaternion result = _q2 * _q1;
+	Quaternion result = _q1 * _q2;
 	result.Normalize();
 
 	return result;
@@ -130,7 +130,7 @@ Quaternion Quat::RotationDifference(const Quaternion& _origin, const Quaternion&
 	Quaternion invSub;
 	_sub.Inverse(invSub);
 
-	return Quat::Multiply(invSub, _origin);
+	return Quat::Multiply(_origin, invSub);
 }
 
 Quaternion Quat::RotateToVector(const Vector3& _vector, const Vector3& _up)

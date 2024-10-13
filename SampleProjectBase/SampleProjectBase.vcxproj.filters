@@ -646,6 +646,9 @@
     <Filter Include="ソース ファイル\Component\Collider\RigidBody\RigidBody2">
       <UniqueIdentifier>{4bd581c2-135d-4d9b-bcd5-7ea3de2cf6db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Target">
+      <UniqueIdentifier>{f8125145-3108-4eff-b3aa-c7c99e0ece36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1204,6 +1207,9 @@
     </ClCompile>
     <ClCompile Include="CP_BoxCollider2.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerTargetMove.cpp">
+      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Target</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1779,6 +1785,9 @@
     </ClInclude>
     <ClInclude Include="CP_BoxCollider2.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerTargetMove.h">
+      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Target</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

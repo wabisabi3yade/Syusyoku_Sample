@@ -17,43 +17,7 @@ CP_RigidBody2::CP_RigidBody2()
 
 void CP_RigidBody2::Init()
 {
-	/*SetColliderShape(ShapeType::Box);*/
 	FindSetCollider();
-
-	//p = new btBoxShape(btVector3(1.0f / 2, 1.0f / 2, 1.0f / 2));
-	//btScalar mass = 1.0f;
-
-	//if (!isa)
-	//{
-	//	mass = 0.0f;
-	//}
-
-	//// 移動するオブジェクトかどうか
-	//bool is_dynamic = (mass != 0.0f);
-
-	//// 慣性モーメント
-	//btVector3 inertia(0, 0, 0);
-	//if (is_dynamic) {
-	//	p->calculateLocalInertia(mass, inertia);
-	//}
-
-	//// 剛体操作
-	//// 剛体位置の設定/取得など
-
-	//btTransform transform;
-	//transform.setIdentity();  // 単位行列（回転をリセット）
-
-	//std::unique_ptr<CollPair> pPair = std::make_unique<CollPair>();
-	//pPair->pMotionState = std::make_unique<btDefaultMotionState>(transform);
-
-	//// 剛体作成
-	//btRigidBody::btRigidBodyConstructionInfo rb_info(mass, pPair->pMotionState.get(), p, inertia);
-	//pPair->pCollisionObject = std::make_unique<btRigidBody>(rb_info);
-
-	//// 物理ワールドに追加
-	//DX11BulletPhisics::GetInstance()->AddCollObj(*pPair->pCollisionObject, 0);
-
-	//colliders.push_back(std::move(pPair));
 }
 
 void CP_RigidBody2::Start()

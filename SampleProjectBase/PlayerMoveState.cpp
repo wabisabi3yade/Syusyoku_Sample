@@ -12,7 +12,6 @@ constexpr float IDLE_ANIM_PLAYSPEED(1.0f);
 PlayerMoveState::PlayerMoveState()
 	: PlayerActState_Base(StateType::Move), currentSpeed(0.0f), maxSpeed(10.0f), acceleration(40.0f), rotateSpeed(7.0f), decadeSpeedTimes(0.98f)
 {
-	pCamera = &InSceneSystemManager::GetInstance()->GetMainCamera();
 }
 
 nlohmann::json PlayerMoveState::Save()
@@ -47,10 +46,14 @@ void PlayerMoveState::Update()
 	Rotation();
 
 	// アタックStateに遷移
-	if (GameInput::GetInstance()->GetButton(GameInput::ButtonType::Player_Attack))
+	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
 	{
 		ChangeState(StateType::Attack);
 		pAnimation->SetTrigger(ATTACKTRIGGER_PARAMNAME);
+	}
+	else if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_RockOn))
+	{
+		ChangeState(StateType::TargetMove);
 	}
 
 }
@@ -88,38 +91,19 @@ void PlayerMoveState::Move()
 	Vector3 camRightVec = pCamera->GetTransform().Right();
 	Vector2 input = InputValue();
 
-	//Vector2 inputNo = input;
-	//inputNo.Normalize();
-	//HASHI_DEBUG_LOG(std::to_string(inputNo.x) + " " + std::to_string(inputNo.y));
-
-	//float mag = input.Length();
-	//float magNo = inputNo.Length();
-
-	//if (magNo < Mathf::epsilon)
-	//	magNo = Mathf::epsilon;
-
-	//float ratio = mag / magNo;
-	//
+	float mag = input.Length();
+	HASHI_DEBUG_LOG(std::to_string(mag));
 
 	// 移動方向・移動量決定
 	moveVector = camRightVec * input.x;
 	moveVector += camForwardVec * input.y;
 	moveVector.y = 0.0f;
+	/*moveVector.Normalize();*/
 
-	Vector3 moveSpeed = moveVector * maxSpeed;
+	Vector3 moveSpeed = moveVector * mag * maxSpeed;
 	currentSpeed = moveSpeed.Length();
 
-	//float curMax = Mathf::Lerp(0.0f, maxSpeed, input.Length());
 
-	//if (currentSpeed <= curMax)
-	//{
-	//	currentSpeed += acceleration * deltaTime;
-	//	currentSpeed = std::min(currentSpeed, curMax);
-	//}
-	//else
-	//{
-	//	currentSpeed *= decadeSpeedTimes;
-	//}
 
 	// 移動
 	Vector3 pos = pPlayerObject->GetTransform().GetPosition();
@@ -130,7 +114,7 @@ void PlayerMoveState::Move()
 	pAnimation->SetFloat(SPEEDRATIO_PARAMNAME, currentSpeed / maxSpeed);
 
 	// ルートモーションと移動速度から移動速度の再生速度を調整する
-	/*if (IsRunning())
+	if (IsRunning())
 	{
 		float rootMotion = abs(pAnimation->GetMotionPosSpeedPerSec().z);
 
@@ -144,7 +128,7 @@ void PlayerMoveState::Move()
 	else
 	{
 		pAnimation->SetCurPlayerSpeed(IDLE_ANIM_PLAYSPEED);
-	}*/
+	}
 
 }
 
@@ -164,12 +148,6 @@ void PlayerMoveState::Rotation()
 	Quaternion rotation = pPlayerObject->GetTransform().GetRotation();
 	rotation = Quaternion::Slerp(rotation, targetRotation, rotateSpeed * MainApplication::DeltaTime());
 	pPlayerObject->GetTransform().SetRotation(rotation);
-}
-
-Vector2 PlayerMoveState::InputValue()
-{
-	GameInput* input = GameInput::GetInstance();
-	return input->GetValue(GameInput::ValueType::Player_Move);
 }
 
 bool PlayerMoveState::IsMoveInput()

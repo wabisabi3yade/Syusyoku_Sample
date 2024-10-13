@@ -77,6 +77,8 @@ public:
 	virtual void SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles);
 	virtual void SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quaternion);
 
+	virtual void SetLoadPosition(const DirectX::SimpleMath::Vector3& _position);
+
 	virtual void SetGameObject(GameObject& _go);
 
 	// ÉèÅ[ÉãÉh

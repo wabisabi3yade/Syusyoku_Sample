@@ -60,7 +60,7 @@ void BoolTransCondition::ImGuiSetting()
 	ImGuiMethod::PushItemWidth();
 	// ƒ^ƒCƒv‚ð•ÏŠ·‚·‚é
 	u_int id = static_cast<u_int>(judgeType);
-	ImGuiMethod::ComboBox("##boolTrans", id, judgeTypeStrings);
+	ImGuiMethod::ComboBox("##compare_bool", id, judgeTypeStrings);
 	judgeType = static_cast<JudgeType>(id);
 	ImGui::PopItemWidth();
 #endif // EDIT

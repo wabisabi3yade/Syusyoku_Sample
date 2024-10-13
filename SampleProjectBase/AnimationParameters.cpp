@@ -438,6 +438,7 @@ void AnimationParameters::ImGuiAddParam()
 void AnimationParameters::ImGuiDisplay()
 {
 #ifdef EDIT
+	u_int id = 0;
 	decltype(animParameters)::iterator itr = animParameters.begin();
 	while (itr != animParameters.end())
 	{

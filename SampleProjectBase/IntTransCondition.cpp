@@ -78,7 +78,7 @@ void IntTransCondition::ImGuiSetting()
 	judgeType = static_cast<JudgeType>(id);
 	ImGui::SameLine();
 	// ”äŠr’è”
-	ImGui::DragInt("##compare", &compareVal);
+	ImGui::DragInt("##compare_Int", &compareVal);
 	ImGui::PopItemWidth();
 #endif
 }

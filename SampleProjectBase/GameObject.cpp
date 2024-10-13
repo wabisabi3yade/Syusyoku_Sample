@@ -426,15 +426,15 @@ void GameObject::Load(const nlohmann::json& _data)
 	Layer::Type layerType;
 	LoadJsonEnum<Layer::Type>("layer", layerType, _data);
 	layer.SetType(layerType);
-
-	if (IsJsonContains(_data, "transform"))
-		pTransform->Load(_data["transform"]);
 }
 
 void GameObject::LateLode(const nlohmann::json& _data)
 {
 	if (IsJsonContains(_data, "transform"))
+	{
 		pTransform->LoadChildTransform(_data["transform"]);
+		pTransform->Load(_data["transform"]);
+	}
 
 	if (IsJsonContains(_data, "components"))
 	{

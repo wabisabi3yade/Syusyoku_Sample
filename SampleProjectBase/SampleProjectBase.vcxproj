@@ -170,6 +170,7 @@
     <ClCompile Include="MaterialCreater.cpp" />
     <ClCompile Include="AnimNodePlayer_Base.cpp" />
     <ClCompile Include="OriginAnimationParameters.cpp" />
+    <ClCompile Include="PlayerTargetMove.cpp" />
     <ClCompile Include="PlayerActChangeObserver.cpp" />
     <ClCompile Include="PlayerActionController.cpp" />
     <ClCompile Include="PlayerAnimObserver.cpp" />
@@ -354,6 +355,7 @@
     <ClInclude Include="AnimNodePlayer_Base.h" />
     <ClInclude Include="NullTransform.h" />
     <ClInclude Include="OriginAnimationParameters.h" />
+    <ClInclude Include="PlayerTargetMove.h" />
     <ClInclude Include="PlayerActChangeObserver.h" />
     <ClInclude Include="PlayerActionController.h" />
     <ClInclude Include="PlayerAnimObserver.h" />
