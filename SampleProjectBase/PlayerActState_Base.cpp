@@ -1,12 +1,18 @@
 #include "pch.h"
 #include "PlayerActState_Base.h"
-
 #include "PlayerActionController.h"
+#include "InSceneSystemManager.h"
+
+CP_Camera* PlayerActState_Base::pCamera = nullptr;
 
 PlayerActState_Base::PlayerActState_Base(StateType _stateType)
-	: pPlayerObject(nullptr), pAnimation(nullptr), stateType(_stateType)
+	: pPlayerObject(nullptr), pAnimation(nullptr), stateType(_stateType), pPlayerInput(nullptr)
 {
 	changeStateSubject = std::make_unique<HashiTaku::Subject<int>>();
+
+	pPlayerInput = GameInput::GetInstance();
+
+	pCamera = &InSceneSystemManager::GetInstance()->GetMainCamera();
 }
 
 void PlayerActState_Base::Init(GameObject& _gameObject, HashiTaku::IObserver<int>& _changeObserver)
@@ -45,6 +51,8 @@ std::string PlayerActState_Base::StateTypeToStr(StateType _stateType)
 
 	case Move: return "Move";
 
+	case TargetMove: return "TragetMove";
+
 	case Jump: return "Jump";
 
 	case Attack: return "Attack";
@@ -72,4 +80,9 @@ void PlayerActState_Base::Load(const nlohmann::json& _data)
 void PlayerActState_Base::ChangeState(StateType _changeState)
 {
 	changeStateSubject->NotifyAll(static_cast<int>(_changeState));
+}
+
+DirectX::SimpleMath::Vector2 PlayerActState_Base::InputValue()
+{
+	return pPlayerInput->GetValue(GameInput::ValueType::Player_Move);
 }

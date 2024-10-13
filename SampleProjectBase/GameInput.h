@@ -10,6 +10,7 @@ public:
 	{
 		Player_Attack,
 		Player_Jump,
+		Player_RockOn,
 		Max_BoolNum
 	};
 

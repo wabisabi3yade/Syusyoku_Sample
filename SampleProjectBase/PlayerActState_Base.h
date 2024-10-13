@@ -3,6 +3,7 @@
 // ゲーム内入力
 #include "GameInput.h"
 #include "IObserever.h"
+#include "CP_Camera.h"
 
 #include "AnimationController.h"
 
@@ -36,6 +37,10 @@ protected:
 
 	/// @brief  プレイヤーオブジェクト
 	GameObject* pPlayerObject;
+
+	GameInput* pPlayerInput;
+
+	static CP_Camera* pCamera;
 public:
 	PlayerActState_Base(StateType _stateType);
 	virtual ~PlayerActState_Base() {}
@@ -86,6 +91,9 @@ protected:
 	/// @param _changeSate 遷移先の状態
 	void ChangeState(StateType _changeState);
 
+	/// @brief	入力値を返す
+	DirectX::SimpleMath::Vector2 InputValue();
+
 	/// @brief ImGui処理
 	virtual void ImGuiSetting() {}
 
@@ -93,5 +101,7 @@ protected:
 	// アニメーションコントローラ内のプレイヤー名
 	constexpr static auto SPEEDRATIO_PARAMNAME = "speed";	// 移動速度
 	constexpr static auto ATTACKTRIGGER_PARAMNAME = "attackTrigger";	// 攻撃トリガー
+	constexpr static auto MOVEAXIS_X_PARAMNAME = "AxisX";	// 移動速度
+	constexpr static auto MOVEAXIS_Y_PARAMNAME = "AxisY";	// 攻撃トリガー
 };
 

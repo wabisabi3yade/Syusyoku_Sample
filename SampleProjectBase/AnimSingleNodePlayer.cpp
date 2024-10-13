@@ -46,11 +46,11 @@ DirectX::SimpleMath::Quaternion AnimSingleNodePlayer::GetRootMotionRot(float _ra
 {
 	using namespace DirectX::SimpleMath;
 	const SingleAnimationNode& singleNode = static_cast<const SingleAnimationNode&>(*pPlayAnimNode);
-	DirectX::SimpleMath::Quaternion rootMotionRot = singleNode.GetAnimationData().GetRootMotionRot(_ratio);
+	DirectX::SimpleMath::Quaternion rootMotionRot; //= singleNode.GetAnimationData().GetRootMotionRot(_ratio);
 
 	// ƒ[ƒhŽž‚Ì‰ñ“]—Ê‚ðŠ|‚¯‚é
-	if (_isLoadScaling)
-		rootMotionRot = Quat::Multiply(rootMotionRot, pBoneList->GetLoadRotation());
+	//if (_isLoadScaling)
+	//	rootMotionRot = Quat::Multiply(rootMotionRot, pBoneList->GetLoadRotation());
 
 	return rootMotionRot;
 }

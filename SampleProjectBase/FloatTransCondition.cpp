@@ -74,7 +74,7 @@ void FloatTransCondition::ImGuiSetting()
 	ImGui::SameLine();
 
 	// î‰äríËêî
-	ImGui::DragFloat("##compare", &compareVal, 0.1f);
+	ImGui::DragFloat("##compare_Float", &compareVal, 0.1f);
 
 	ImGui::PopItemWidth();
 #endif // EDIT

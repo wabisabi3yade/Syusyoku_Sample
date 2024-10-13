@@ -253,6 +253,11 @@ void CP_Animation::UpdateBoneCombMtx()
 	Matrix posMtx = Matrix::CreateTranslation(rootPos);
 
 
+	Vector3 loadScales = Vector3::One * pSkeletalMesh->GetLoadOffsetScale();
+	Vector3 loadAngles = pSkeletalMesh->GetLoadOffsetAngles();
+	offsetMtx = 
+		Matrix::CreateScale(Vector3::One * loadScales) * Mtx::CreateRoratateMtx(loadAngles);
+
 	// ノードを辿って全体のコンビネーション行列を更新していく
 	UpdateNodeHierarchy(pRootNode, posMtx);
 }

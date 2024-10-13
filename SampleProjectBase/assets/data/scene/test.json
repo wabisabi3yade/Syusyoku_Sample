@@ -4,6 +4,54 @@
             "active": true,
             "components": [
                 {
+                    "distance": 467.0,
+                    "enable": true,
+                    "fov": 45.0,
+                    "isOrth": false,
+                    "name": "Camera",
+                    "viewSlot": 0
+                },
+                {
+                    "dis_Hori": 9.0,
+                    "dis_Ver": 3.0,
+                    "enable": true,
+                    "name": "CameraMove",
+                    "offsetTarget": [
+                        0.0,
+                        2.0,
+                        0.0
+                    ],
+                    "rotSpeed": 120.0,
+                    "target": "Player"
+                }
+            ],
+            "layer": 0,
+            "name": "Camera",
+            "tag": 0,
+            "transform": {
+                "child": null,
+                "pos": [
+                    -0.30000001192092896,
+                    25.0,
+                    -82.30000305175781
+                ],
+                "rotation": [
+                    0.16504767537117004,
+                    -6.396311813539057e-10,
+                    3.822283378696056e-09,
+                    0.9862855672836304
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
                     "enable": true,
                     "name": "SpriteRenderer",
                     "sprite": {
@@ -30,19 +78,19 @@
                 {
                     "AABB": false,
                     "angles": [
-                        1.0,
-                        28.0,
+                        0.0,
+                        0.0,
                         0.0
                     ],
                     "center": [
                         0.0,
-                        0.0,
+                        -0.10000000149011612,
                         0.0
                     ],
                     "enable": true,
                     "length": [
                         1.0,
-                        0.550000011920929,
+                        0.20000000298023224,
                         1.0
                     ],
                     "name": "BoxCollider"
@@ -75,42 +123,87 @@
             "active": true,
             "components": [
                 {
-                    "distance": 467.0,
                     "enable": true,
-                    "fov": 45.0,
-                    "isOrth": false,
-                    "name": "Camera",
-                    "viewSlot": 0
+                    "meshName": "Knight.fbx",
+                    "name": "MeshRenderer"
                 },
                 {
-                    "dis_Hori": 9.0,
-                    "dis_Ver": 3.0,
+                    "actionController": {
+                        "actData": [
+                            {
+                                "data": {
+                                    "acceleration": 25.899999618530273,
+                                    "decade": 0.5,
+                                    "maxSpeed": 8.300000190734863,
+                                    "rotateSpeed": 7.0
+                                },
+                                "type": 1
+                            },
+                            {
+                                "data": {
+                                    "acceleration": 40.0,
+                                    "decade": 0.9800000190734863,
+                                    "maxSpeed": 10.0
+                                },
+                                "type": 2
+                            },
+                            {
+                                "data": null,
+                                "type": 4
+                            }
+                        ]
+                    },
                     "enable": true,
-                    "name": "CameraMove",
-                    "offsetTarget": [
+                    "name": "Player"
+                },
+                {
+                    "animConName": "ANC_Player",
+                    "enable": true,
+                    "name": "Animation"
+                },
+                {
+                    "enable": true,
+                    "mass": 1.0,
+                    "name": "RigidBody2"
+                },
+                {
+                    "AABB": false,
+                    "angles": [
                         0.0,
-                        2.0,
+                        0.0,
                         0.0
                     ],
-                    "rotSpeed": 120.0,
-                    "target": "Player"
+                    "center": [
+                        0.0,
+                        0.949999988079071,
+                        0.0
+                    ],
+                    "enable": true,
+                    "length": [
+                        0.75,
+                        2.0199999809265137,
+                        1.0
+                    ],
+                    "name": "BoxCollider"
                 }
             ],
             "layer": 0,
-            "name": "Camera",
+            "name": "Player",
             "tag": 0,
             "transform": {
-                "child": null,
+                "child": [
+                    "Weapon"
+                ],
                 "pos": [
-                    -6.5,
-                    1.5,
+                    0.0,
+                    1.100000023841858,
                     0.0
                 ],
                 "rotation": [
-                    2.667667864386658e-09,
-                    0.6883547902107239,
-                    2.8111339922531897e-09,
-                    0.7253742218017578
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
                 ],
                 "scale": [
                     1.0,
@@ -170,95 +263,6 @@
             "components": [
                 {
                     "enable": true,
-                    "meshName": "Knight.fbx",
-                    "name": "MeshRenderer"
-                },
-                {
-                    "actionController": {
-                        "actData": [
-                            {
-                                "data": null,
-                                "type": 0
-                            },
-                            {
-                                "data": {
-                                    "acceleration": 25.899999618530273,
-                                    "decade": 0.5,
-                                    "maxSpeed": 10.0,
-                                    "rotateSpeed": 7.0
-                                },
-                                "type": 1
-                            },
-                            {
-                                "data": null,
-                                "type": 4
-                            }
-                        ]
-                    },
-                    "enable": true,
-                    "name": "Player"
-                },
-                {
-                    "animConName": "ANC_Player",
-                    "enable": true,
-                    "name": "Animation"
-                },
-                {
-                    "enable": true,
-                    "mass": 1.0,
-                    "name": "RigidBody2"
-                },
-                {
-                    "AABB": false,
-                    "angles": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "center": [
-                        0.0,
-                        1.0,
-                        0.0
-                    ],
-                    "enable": true,
-                    "length": [
-                        0.6200000047683716,
-                        1.0099999904632568,
-                        1.0
-                    ],
-                    "name": "BoxCollider"
-                }
-            ],
-            "layer": 0,
-            "name": "Player",
-            "tag": 0,
-            "transform": {
-                "child": [
-                    "Weapon"
-                ],
-                "pos": [
-                    0.0,
-                    1.4240000247955322,
-                    0.0
-                ],
-                "rotation": [
-                    0.0,
-                    0.9426416754722595,
-                    0.0,
-                    0.3338063359260559
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "enable": true,
                     "grabName": "mixamorig:RightHand",
                     "name": "Weapon"
                 }
@@ -271,20 +275,20 @@
                     "Weapon_Model"
                 ],
                 "pos": [
-                    0.319663405418396,
-                    2.684000015258789,
-                    0.23030976951122284
+                    0.0,
+                    1.100000023841858,
+                    0.0
                 ],
                 "rotation": [
                     0.0,
-                    -0.8240711688995361,
                     0.0,
-                    0.5664864182472229
+                    0.0,
+                    1.0
                 ],
                 "scale": [
-                    0.20000000298023224,
-                    0.20000000298023224,
-                    0.20000000298023224
+                    1.0,
+                    1.0,
+                    1.0
                 ]
             }
         },
@@ -303,15 +307,15 @@
             "transform": {
                 "child": null,
                 "pos": [
-                    0.045201897621154785,
-                    2.889240026473999,
-                    0.052292197942733765
+                    0.30000001192092896,
+                    1.1800000667572021,
+                    0.05000000074505806
                 ],
                 "rotation": [
-                    -0.748458743095398,
-                    -0.541824996471405,
-                    -0.22226646542549133,
-                    -0.31117990612983704
+                    0.14997103810310364,
+                    -0.768643856048584,
+                    -0.14714299142360687,
+                    0.6041889190673828
                 ],
                 "scale": [
                     0.20000000298023224,

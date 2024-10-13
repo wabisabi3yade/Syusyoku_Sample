@@ -3,11 +3,6 @@
         {
             "animParameter": [
                 {
-                    "name": "VelocityX",
-                    "type": 2,
-                    "value": 0.5339999794960022
-                },
-                {
                     "name": "state",
                     "type": 1,
                     "value": 0
@@ -15,20 +10,25 @@
                 {
                     "name": "speed",
                     "type": 2,
-                    "value": 0.5699999928474426
+                    "value": 0.0
                 },
                 {
                     "name": "AttackTrigger",
                     "type": 3
                 },
                 {
-                    "name": "VelocityY",
+                    "name": "AxisX",
                     "type": 2,
-                    "value": 0.1420000046491623
+                    "value": 0.0
+                },
+                {
+                    "name": "AxisY",
+                    "type": 2,
+                    "value": 0.0
                 }
             ],
             "assetName": "ANC_Player",
-            "defaultNode": "Attack3",
+            "defaultNode": "Idle",
             "nodeInfoData": [
                 {
                     "animNode": {
@@ -36,13 +36,13 @@
                         "axisParam": [
                             {
                                 "ease": 8,
-                                "name": "VelocityX",
-                                "time": 0.0
+                                "name": "AxisX",
+                                "time": 0.4000000059604645
                             },
                             {
                                 "ease": 8,
-                                "name": "VelocityY",
-                                "time": 0.0
+                                "name": "AxisY",
+                                "time": 0.4000000059604645
                             }
                         ],
                         "blendPoint": [
@@ -80,7 +80,58 @@
                         "isRMXZ": false,
                         "isRMY": false
                     },
-                    "arrowDataList": null,
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 1,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": {
+                                            "fCompare": 0.10000000149011612,
+                                            "fJudgeType": 0
+                                        },
+                                        "paramName": "speed",
+                                        "typeKind": 2
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "Move"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "fCompare": 0.10000000149011612,
+                                            "fJudgeType": 1
+                                        },
+                                        "paramName": "speed",
+                                        "typeKind": 2
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "Idle"
+                        }
+                    ],
                     "nodeName": "TargetMove",
                     "nodeType": 1
                 },
@@ -99,11 +150,19 @@
                                 "conditionList": [
                                     {
                                         "condition": {
-                                            "iCompare": 25,
+                                            "iCompare": 2,
                                             "iJudgeType": 2
                                         },
                                         "paramName": "state",
                                         "typeKind": 1
+                                    },
+                                    {
+                                        "condition": {
+                                            "fCompare": 0.4000000059604645,
+                                            "fJudgeType": 0
+                                        },
+                                        "paramName": "speed",
+                                        "typeKind": 2
                                     }
                                 ],
                                 "exitRatio": 1.0,
@@ -111,7 +170,7 @@
                                 "isHaveExit": false,
                                 "targetRatio": 0.0,
                                 "transEase": 0.0,
-                                "transTime": 0.20000000298023224
+                                "transTime": 0.5600000023841858
                             },
                             "toName": "TargetMove"
                         },
@@ -120,7 +179,7 @@
                                 "conditionList": [
                                     {
                                         "condition": {
-                                            "fCompare": 0.10000000149011612,
+                                            "fCompare": 0.0,
                                             "fJudgeType": 0
                                         },
                                         "paramName": "speed",
@@ -135,6 +194,27 @@
                                 "transTime": 0.18000000715255737
                             },
                             "toName": "Move"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 21,
+                                            "iJudgeType": 0
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "Attack1"
                         }
                     ],
                     "nodeName": "Idle",
@@ -145,9 +225,9 @@
                         "animTime": 1.0,
                         "axisParam": [
                             {
-                                "ease": 0,
+                                "ease": 8,
                                 "name": "speed",
-                                "time": 0.0
+                                "time": 0.36000001430511475
                             }
                         ],
                         "blendPoint": [
@@ -161,7 +241,7 @@
                             {
                                 "animName": "knight_Walk_F.fbx",
                                 "blendValue": [
-                                    0.4000000059604645,
+                                    0.20000000298023224,
                                     0.0
                                 ]
                             },
@@ -196,9 +276,30 @@
                                 "isHaveExit": false,
                                 "targetRatio": 0.0,
                                 "transEase": 0.0,
-                                "transTime": 3.3499999046325684
+                                "transTime": 0.10999999940395355
                             },
                             "toName": "Idle"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 2,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "TargetMove"
                         }
                     ],
                     "nodeName": "Move",
@@ -236,8 +337,8 @@
                         "animTime": 2.3333332538604736,
                         "isLoop": true,
                         "isRMR": false,
-                        "isRMXZ": true,
-                        "isRMY": true
+                        "isRMXZ": false,
+                        "isRMY": false
                     },
                     "arrowDataList": null,
                     "nodeName": "Attack3",
@@ -249,6 +350,12 @@
     ],
     "animations": [
         {
+            "assetName": "knight_StrafeWalk_R.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_StrafeWalk_R.fbx",
+            "rightHand": true
+        },
+        {
             "assetName": "knight_Idle1.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_Idle1.fbx",
@@ -258,12 +365,6 @@
             "assetName": "knight_StrafeRun_R.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_StrafeRun_R.fbx",
-            "rightHand": true
-        },
-        {
-            "assetName": "knight_StrafeWalk_R.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_StrafeWalk_R.fbx",
             "rightHand": true
         },
         {
@@ -279,15 +380,15 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_StrafeRun_L.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_StrafeRun_L.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_StrafeWalk_L.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_StrafeWalk_L.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_StrafeRun_L.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_StrafeRun_L.fbx",
             "rightHand": true
         },
         {
@@ -411,24 +512,24 @@
             "pathName": "assets/texture/skyBox/sky_Day_u.png"
         },
         {
-            "assetName": "sky_Day_r.png",
-            "pathName": "assets/texture/skyBox/sky_Day_r.png"
+            "assetName": "ground.png",
+            "pathName": "assets/texture/ground.png"
         },
         {
             "assetName": "sky_Day_b.png",
             "pathName": "assets/texture/skyBox/sky_Day_b.png"
         },
         {
-            "assetName": "ground.png",
-            "pathName": "assets/texture/ground.png"
-        },
-        {
-            "assetName": "sky_Day_d.png",
-            "pathName": "assets/texture/skyBox/sky_Day_d.png"
+            "assetName": "sky_Day_r.png",
+            "pathName": "assets/texture/skyBox/sky_Day_r.png"
         },
         {
             "assetName": "sky_Day_l.png",
             "pathName": "assets/texture/skyBox/sky_Day_l.png"
+        },
+        {
+            "assetName": "sky_Day_d.png",
+            "pathName": "assets/texture/skyBox/sky_Day_d.png"
         },
         {
             "assetName": "sky_Day_f.png",

@@ -51,6 +51,7 @@ void GameInput::DefaultSetting()
 	using enum GamePad::Button;
 	buttonLinks[static_cast<u_int>(Player_Attack)] = { Sankaku, DIK_RETURN };
 	buttonLinks[static_cast<u_int>(Player_Jump)] = { Shikaku, DIK_SPACE };
+	buttonLinks[static_cast<u_int>(Player_RockOn)] = { R1, DIK_LSHIFT };
 }
 
 void GameInput::InitValueSettings()
