@@ -333,12 +333,6 @@ void Transform::Load(const nlohmann::json& _transformData)
 	LoadJsonVector3("pos", v, _transformData);
 	SetPosition(v);
 
-	if (pGameObject->GetName() == "Weapon_Model")
-	{
-		v = { 0.3f, 0.08f, 0.05f };
-		SetLocalPosition(v);
-	}
-
 	LoadJsonVector3("scale", v, _transformData);
 	SetScale(v);
 }

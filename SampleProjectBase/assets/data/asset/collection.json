@@ -346,6 +346,92 @@
                 }
             ],
             "playSpeed": 1.0
+        },
+        {
+            "animParameter": [
+                {
+                    "name": "new Parameter",
+                    "type": 2,
+                    "value": 0.0
+                },
+                {
+                    "name": "new Parameter1",
+                    "type": 2,
+                    "value": 0.0
+                }
+            ],
+            "assetName": "ANC_Test",
+            "defaultNode": "F",
+            "nodeInfoData": [
+                {
+                    "animNode": {
+                        "animTime": 1.0,
+                        "axisParam": [
+                            {
+                                "ease": 8,
+                                "name": "new Parameter",
+                                "time": 0.0
+                            },
+                            {
+                                "ease": 8,
+                                "name": "new Parameter1",
+                                "time": 0.0
+                            }
+                        ],
+                        "blendPoint": [
+                            {
+                                "animName": "knight_StrafeRun_L.fbx",
+                                "blendValue": [
+                                    0.0,
+                                    0.5
+                                ]
+                            },
+                            {
+                                "animName": "knight_Run_B.fbx",
+                                "blendValue": [
+                                    0.5,
+                                    0.0
+                                ]
+                            },
+                            {
+                                "animName": "knight_Run_F.fbx",
+                                "blendValue": [
+                                    0.5,
+                                    1.0
+                                ]
+                            },
+                            {
+                                "animName": "knight_StrafeRun_R.fbx",
+                                "blendValue": [
+                                    1.0,
+                                    0.5
+                                ]
+                            }
+                        ],
+                        "isLoop": true,
+                        "isRMR": false,
+                        "isRMXZ": false,
+                        "isRMY": false
+                    },
+                    "arrowDataList": null,
+                    "nodeName": "Target",
+                    "nodeType": 1
+                },
+                {
+                    "animNode": {
+                        "animName": "knight_Run_F.fbx",
+                        "animTime": 0.699999988079071,
+                        "isLoop": true,
+                        "isRMR": false,
+                        "isRMXZ": false,
+                        "isRMY": false
+                    },
+                    "arrowDataList": null,
+                    "nodeName": "F",
+                    "nodeType": 0
+                }
+            ],
+            "playSpeed": 1.0
         }
     ],
     "animations": [

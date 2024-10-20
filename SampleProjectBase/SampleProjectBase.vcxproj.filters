@@ -649,6 +649,12 @@
     <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Target">
       <UniqueIdentifier>{f8125145-3108-4eff-b3aa-c7c99e0ece36}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Base">
+      <UniqueIdentifier>{492cca82-3a6e-47dd-bd72-21b904e2eaee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\SystemDraw">
+      <UniqueIdentifier>{67933a3e-6739-46f8-bc0a-99cbcc12782e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -986,9 +992,6 @@
     <ClCompile Include="BlendAnimationNode.cpp">
       <Filter>ソース ファイル\Animation\AnimNode\Blend</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerActState_Base.cpp">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerActionController.cpp">
       <Filter>ソース ファイル\Object\Player\Action\Controller</Filter>
     </ClCompile>
@@ -1130,17 +1133,11 @@
     <ClCompile Include="ButtonTransArrow.cpp">
       <Filter>ソース ファイル\Animation\AnimTransitionArrow\Button</Filter>
     </ClCompile>
-    <ClCompile Include="ImGuiGameInput.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ComponentRespawner.cpp">
       <Filter>ソース ファイル\Component\Respawner</Filter>
     </ClCompile>
     <ClCompile Include="AnimControllerCreater.cpp">
       <Filter>ソース ファイル\Animation\AnimationController\Creater</Filter>
-    </ClCompile>
-    <ClCompile Include="CP_PlayerAnimation.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="TransCondition_Base.cpp">
       <Filter>ソース ファイル\Animation\TransCondition\Base</Filter>
@@ -1199,17 +1196,20 @@
     <ClCompile Include="AnimTransitionChecker.cpp">
       <Filter>ソース ファイル\Animation\AnimControllPlayer\TransitionChecker</Filter>
     </ClCompile>
-    <ClCompile Include="CP_TestCollider.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="CP_RigidBody2.cpp">
       <Filter>ソース ファイル\Component\Collider\RigidBody\RigidBody2</Filter>
     </ClCompile>
-    <ClCompile Include="CP_BoxCollider2.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerTargetMove.cpp">
       <Filter>ソース ファイル\Object\Player\Action\PlayerState\Target</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerActState_Base.cpp">
+      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="AppSystemDraw.cpp">
+      <Filter>ソース ファイル\System\SystemDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_TestCollider.cpp">
+      <Filter>ソース ファイル\Component\Collider\Test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1534,9 +1534,6 @@
     <ClInclude Include="BlendAnimationNode.h">
       <Filter>ソース ファイル\Animation\AnimNode\Blend</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerActState_Base.h">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerActionController.h">
       <Filter>ソース ファイル\Object\Player\Action\Controller</Filter>
     </ClInclude>
@@ -1705,9 +1702,6 @@
     <ClInclude Include="AnimControllerCreater.h">
       <Filter>ソース ファイル\Animation\AnimationController\Creater</Filter>
     </ClInclude>
-    <ClInclude Include="CP_PlayerAnimation.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="AnimNotifyConcept.h">
       <Filter>ソース ファイル\Animation\AnimationNotify</Filter>
     </ClInclude>
@@ -1777,17 +1771,20 @@
     <ClInclude Include="AnimTransitionChecker.h">
       <Filter>ソース ファイル\Animation\AnimControllPlayer\TransitionChecker</Filter>
     </ClInclude>
-    <ClInclude Include="CP_TestCollider.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="CP_RigidBody2.h">
       <Filter>ソース ファイル\Component\Collider\RigidBody\RigidBody2</Filter>
     </ClInclude>
-    <ClInclude Include="CP_BoxCollider2.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerTargetMove.h">
       <Filter>ソース ファイル\Object\Player\Action\PlayerState\Target</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerActState_Base.h">
+      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="AppSystemDraw.h">
+      <Filter>ソース ファイル\System\SystemDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_TestCollider.h">
+      <Filter>ソース ファイル\Component\Collider\Test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

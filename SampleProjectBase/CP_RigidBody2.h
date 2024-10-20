@@ -18,12 +18,12 @@ class CP_RigidBody2 : public Component
 	struct CollPair
 	{
 		/// @brief 衝突オブジェクト
-		std::unique_ptr<btRigidBody> pCollisionObject;
+		std::unique_ptr<btCollisionObject> pCollisionObject;
 		/// @brief 剛体操作
 		std::unique_ptr<btDefaultMotionState> pMotionState;
 		/// @brief コリジョン形状
 		/*std::unique_ptr<btCollisionShape> pColliderShape;*/
-		CP_Collider* pCollider{ nullptr };
+		CP_Collider* pColliderComp{ nullptr };
 		/// @brief 慣性モーメント
 		DirectX::SimpleMath::Vector3 inertia;
 	};
@@ -36,31 +36,44 @@ class CP_RigidBody2 : public Component
 	/// @brief 常に計算させる
 	bool isAwake;
 
+	/// @brief すり抜けるか？
 	bool isTrigger;
 public:
 	CP_RigidBody2();
 	~CP_RigidBody2() {}
 
+	// コンポーネント共通関数
 	void Init() override;
-
 	void Start() override;
-
 	void OnDestroy() override;
-
 	void OnChangeTransform() override;
-
 	void OnEnableTrue() override;
 	void OnEnableFalse() override;
 
+	/// @brief コライダーをセットする
+	/// @param _setCollider セットするコライダーコンポーネント
 	void SetColliderShape(CP_Collider& _setCollider);
-	void SetColliderShape(ShapeType _shapeType);
-
+	
+	/// @brief コライダーを削除する
+	/// @param _removeCollider 
 	void RemoveColliderShape(CP_Collider& _removeCollider);
 
+	/// @brief 質量をセットする
+	/// @param _mass 
 	void SetMass(float _mass);
+
+	/// @brief 静的オブジェクトに遷移しないようにするかセットする
+	/// @param _isAwake 静的オブジェクトに遷移しないようにするか？
 	void SetIsAwake(bool _isAwake);
 
+	/// @brief 実態を持たないように（ghostObject）にするかセットする
+	/// @param _isTrigger  実態を持たないようにするか？
+	void SetIsTrigger(bool _isTrigger);
+
+	/// @brief DXからBulletにトランスフォームを代入する
 	void SetToBtTransform();
+
+	/// @brief BulletからDXにトランスフォームを代入する
 	void SetToDXTransform();
 
 	void ImGuiSetting() override;
@@ -79,5 +92,12 @@ private:
 
 	/// @brief ゲームオブジェクトからコライダーを探してセットする
 	void FindSetCollider();
+
+	/// @brief btRigidBody型に変換する
+	/// @return btRigidBpdy参照
+	btRigidBody& CastRigidBody();
+
+	/// @brief 再度コライダーを作り直す（RigidBodyからGhpstObjectにしたいときとか）
+	void ReCreateCollider();
 };
 

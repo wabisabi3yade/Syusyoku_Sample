@@ -15,6 +15,8 @@ private:
     /// @brief 描画設定
     int debugMode;
 
+    /// @brief 当たり判定可視化するか？
+    bool isDisplay;
 public:
     BulletDebugDraw();
     ~BulletDebugDraw() {}
@@ -26,5 +28,13 @@ public:
     void draw3dText(const btVector3& _location, const char* _textString) override;
     virtual void setDebugMode(int _debugMode) override;
     virtual int getDebugMode() const override;
+
+    /// @brief 当たり判定可視化するか？
+    /// @param _isDisplay 表示させるフラグ
+    void SetIsDisplay(bool _isDisplay);
+
+    /// @brief 表示させるか取得
+    /// @return 表示させるか？
+    bool GetIsDisplay() const;
 };
 

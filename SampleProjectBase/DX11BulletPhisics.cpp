@@ -6,6 +6,11 @@ using namespace HashiTaku;
 
 constexpr int  DEFAULT_MAX_SUBSTEPS(10);	// デフォルト最大サブステップ数
 
+bool DX11BulletPhisics::GetDisplay() const
+{
+	return pDebugDraw->GetIsDisplay();
+}
+
 DirectX::SimpleMath::Vector3 DX11BulletPhisics::GetGravityValue() const
 {
 	return gravityValue;
@@ -19,13 +24,13 @@ bool DX11BulletPhisics::IsExistCollObjInWorld(btCollisionObject& _checkCollObj)
 {
 	u_int numCollisionObjects = pDynamicsWorld->getNumCollisionObjects();
 
-	for (u_int i = 0; i < numCollisionObjects; i++) 
+	for (u_int i = 0; i < numCollisionObjects; i++)
 	{
 		btCollisionObject* obj = pDynamicsWorld->getCollisionObjectArray()[i];
 
 		if (obj == &_checkCollObj)	// あったら
 		{
-			return true; 
+			return true;
 		}
 	}
 
@@ -102,6 +107,8 @@ void DX11BulletPhisics::CollisionCallBack()
 
 void DX11BulletPhisics::Draw()
 {
+	if (!pDebugDraw->GetIsDisplay()) return;
+
 	// デバッグ描画を呼び出す
 	pDynamicsWorld->debugDrawWorld();
 }
@@ -122,8 +129,6 @@ void DX11BulletPhisics::AddCollObj(btCollisionObject& _collObj, int _groupId)
 		rb->setGravity(Bullet::ToBtVector3(gravityValue));
 		pDynamicsWorld->addRigidBody(rb);
 	}
-		
-
 	else
 		pDynamicsWorld->addCollisionObject(&_collObj);
 
@@ -150,9 +155,9 @@ void DX11BulletPhisics::RemoveCollObj(btCollisionObject& _collObj)
 	HASHI_DEBUG_LOG("コライダー削除　現在" + std::to_string(pDynamicsWorld->getNumCollisionObjects()));
 }
 
-void DX11BulletPhisics::SetGizmo(bool _setBool)
+void DX11BulletPhisics::SetDisplay(bool _setBool)
 {
-	isGizmo = _setBool;
+	pDebugDraw->SetIsDisplay(_setBool);
 }
 
 u_int DX11BulletPhisics::GetCollObjCnt() const

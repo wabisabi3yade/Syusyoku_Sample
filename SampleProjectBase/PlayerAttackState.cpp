@@ -23,3 +23,14 @@ void PlayerAttackState::OnEnd()
 void PlayerAttackState::ImGuiSetting()
 {
 }
+
+nlohmann::json PlayerAttackState::Save()
+{
+	auto data = PlayerActState_Base::Save();
+	return data;
+}
+
+void PlayerAttackState::Load(const nlohmann::json& _data)
+{
+	PlayerActState_Base::Load(_data);
+}

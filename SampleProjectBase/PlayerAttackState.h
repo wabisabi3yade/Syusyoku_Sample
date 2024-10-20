@@ -14,4 +14,7 @@ private:
 	void OnEnd() override;
 
 	void ImGuiSetting() override;
+
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
 };

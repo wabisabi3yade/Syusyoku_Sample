@@ -1,7 +1,7 @@
 #pragma once
 
 // 可変フレームレートの秒数を計算するクラス
-class VariableFrameRate
+class VariableFrameRate : public HashiTaku::IImGuiUser
 {
 private:
 	long long microSecondsPerFrame;	// 1フレームごとのマイクロ秒
@@ -29,9 +29,6 @@ public:
 	// 対応したfpsにするために次のループまで待つ関数
 	bool UpdateCheck();
 
-	// フレームレート描画
-	void ImGuiDraw();
-
 	/// @brief 処理終了時に呼び出す
 	void ProcessEnd();
 
@@ -39,9 +36,11 @@ public:
 	float GetDeltaTime()const { return static_cast<float>(deltaTime_ms * 0.001f); }
 
 private:
-
 	/// @brief 現在時間を取得する
 	/// @return 現在時間（0.1ns/単位）
 	long long GetNowTime();
+
+	// フレームレート描画
+	void ImGuiSetting() override;
 };
 
