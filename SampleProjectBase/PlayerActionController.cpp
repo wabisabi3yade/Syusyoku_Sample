@@ -14,6 +14,7 @@ PlayerActionController::PlayerActionController(GameObject & _pPlayerObject)
 	pStateChangeObserver = std::make_unique<PlayerActChangeObserver>("StateChangeObserver", *this);
 
 	// s“®ƒNƒ‰ƒX‚ğ¶¬
+	CreateState<PlayerIdleState>();
 	CreateState<PlayerMoveState>();
 	CreateState<PlayerTargetMove>();
 	CreateState<PlayerAttackState>();
@@ -102,6 +103,10 @@ void PlayerActionController::Load(const nlohmann::json& _data)
 			nlohmann::json actParam;
 			if (!LoadJsonData("data", actParam, actData))
 				continue;
+			else
+			{
+				int i = 0;
+			}
 
 			actionList[state]->Load(actParam);
 		}

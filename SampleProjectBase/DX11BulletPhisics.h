@@ -34,8 +34,6 @@ class DX11BulletPhisics : public Singleton_Base<DX11BulletPhisics>
 
 	/// @brief コールバックを呼び出すクラス
 	std::unique_ptr<BulletContactCallBack> pContactCallBack;
-
-	bool isGizmo;
 public:
 	/// @brief Bullet初期化
 	void Init();
@@ -58,10 +56,16 @@ public:
 	/// @param _collObj 削除する衝突オブジェクト
 	void RemoveCollObj(btCollisionObject& _collObj);
 
-	void SetGizmo(bool _setBool);
+	/// @brief 表示させるかセットする
+	/// @param _setBool 表示させるかフラグ
+	void SetDisplay(bool _setBool);
 
 	// 衝突オブジェクトをチェック
 	u_int GetCollObjCnt() const;
+
+	/// @brief 表示させるか取得
+	/// @return 表示させるか？ 
+	bool GetDisplay() const;
 
 	// 重力値を取得する
 	DirectX::SimpleMath::Vector3 GetGravityValue() const;

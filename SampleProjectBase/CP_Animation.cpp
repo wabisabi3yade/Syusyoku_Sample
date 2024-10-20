@@ -252,7 +252,6 @@ void CP_Animation::UpdateBoneCombMtx()
 	rootPos *= -1.0f;
 	Matrix posMtx = Matrix::CreateTranslation(rootPos);
 
-
 	Vector3 loadScales = Vector3::One * pSkeletalMesh->GetLoadOffsetScale();
 	Vector3 loadAngles = pSkeletalMesh->GetLoadOffsetAngles();
 	offsetMtx = 

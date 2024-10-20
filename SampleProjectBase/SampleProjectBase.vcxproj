@@ -142,9 +142,7 @@
     <ClCompile Include="CopyAnimationParameters.cpp" />
     <ClCompile Include="CP_AnimationNotify.cpp" />
     <ClCompile Include="CP_BoxAnimation.cpp" />
-    <ClCompile Include="CP_BoxCollider2.cpp" />
     <ClCompile Include="CP_NotifyTest.cpp" />
-    <ClCompile Include="CP_PlayerAnimation.cpp" />
     <ClCompile Include="CP_RigidBody.cpp" />
     <ClCompile Include="CP_RigidBody2.cpp" />
     <ClCompile Include="CP_SkyBox.cpp" />
@@ -164,7 +162,6 @@
     <ClCompile Include="IAssetCreater.cpp" />
     <ClCompile Include="IClassNameGetter.cpp" />
     <ClCompile Include="IImGuiUser.cpp" />
-    <ClCompile Include="ImGuiGameInput.cpp" />
     <ClCompile Include="IntTransCondition.cpp" />
     <ClCompile Include="IObserever.cpp" />
     <ClCompile Include="MaterialCreater.cpp" />
@@ -246,6 +243,7 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteDrawer.cpp" />
     <ClCompile Include="StaticMesh.cpp" />
+    <ClCompile Include="AppSystemDraw.cpp" />
     <ClCompile Include="Tag.cpp" />
     <ClCompile Include="AssetLoader.cpp" />
     <ClCompile Include="PS_TexColor.cpp" />
@@ -323,9 +321,7 @@
     <ClInclude Include="CopyAnimationParameters.h" />
     <ClInclude Include="CP_AnimationNotify.h" />
     <ClInclude Include="CP_BoxAnimation.h" />
-    <ClInclude Include="CP_BoxCollider2.h" />
     <ClInclude Include="CP_NotifyTest.h" />
-    <ClInclude Include="CP_PlayerAnimation.h" />
     <ClInclude Include="CP_RigidBody.h" />
     <ClInclude Include="CP_RigidBody2.h" />
     <ClInclude Include="CP_SkyBox.h" />
@@ -437,6 +433,7 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteDrawer.h" />
     <ClInclude Include="StaticMesh.h" />
+    <ClInclude Include="AppSystemDraw.h" />
     <ClInclude Include="Tag.h" />
     <ClInclude Include="AssetLoader.h" />
     <ClInclude Include="PS_TexColor.h" />

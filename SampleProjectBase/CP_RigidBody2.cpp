@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CP_RigidBody2.h"
+#include <BulletCollision/CollisionDispatch/btGhostObject.h>
 #include "CP_Collider.h"
 #include "InSceneSystemManager.h"
 
@@ -57,9 +58,7 @@ void CP_RigidBody2::SetColliderShape(CP_Collider& _setCollider)
 
 	//追加する
 	collider = std::make_unique<CollPair>();
-	collider->pCollider = &_setCollider;
-
-	bool isDynamic = mass > Mathf::epsilon;
+	collider->pColliderComp = &_setCollider;
 
 	// DX側に合わせる
 	Transform& transform = GetTransform();
@@ -70,6 +69,19 @@ void CP_RigidBody2::SetColliderShape(CP_Collider& _setCollider)
 	bulletTrans.setOrigin(origin);
 	bulletTrans.setRotation(rot);
 
+	//if (isTrigger)	// ghostなら
+	//{
+	//	collider->pCollisionObject = std::make_unique<btGhostObject>();
+	//	collider->pCollisionObject->setWorldTransform(bulletTrans);
+	//	collider->pCollisionObject->setCollisionShape(&collider->pColliderComp->GetColliderShape());
+	//	DX11BulletPhisics::GetInstance()->AddCollObj(*collider->pCollisionObject, 0);
+	//	InSceneSystemManager::GetInstance()->AddRigidBody(*this);
+	//	return;
+	//}
+
+	bool isDynamic = mass > Mathf::epsilon;
+
+	// 慣性を計算する
 	collider->inertia = DX::Vector3::Zero;
 	if (isDynamic)
 	{
@@ -81,66 +93,22 @@ void CP_RigidBody2::SetColliderShape(CP_Collider& _setCollider)
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(
 		Bullet::ToBtScalar(mass),
 		collider->pMotionState.get(),
-		&collider->pCollider->GetColliderShape(),
+		&collider->pColliderComp->GetColliderShape(),
 		Bullet::ToBtVector3(collider->inertia));
 	collider->pCollisionObject = std::make_unique<btRigidBody>(rbInfo);
+
+	if (isAwake)	// 常に計算するならスリーブ状態にしない
+		collider->pCollisionObject->setActivationState(DISABLE_DEACTIVATION);
 
 	// ワールドに追加
 	DX11BulletPhisics::GetInstance()->AddCollObj(*collider->pCollisionObject, 0);
 	InSceneSystemManager::GetInstance()->AddRigidBody(*this);
 }
 
-void CP_RigidBody2::SetColliderShape(ShapeType _shapeType)
-{
-	//	if (collider)
-	//	{
-	//		DX11BulletPhisics::GetInstance()->RemoveCollObj(*collider->pCollisionObject);
-	//	}
-	//
-	//	//追加する
-	//	collider = std::make_unique<CollPair>();
-	//
-	//	switch (_shapeType)
-	//	{
-	//	case CP_RigidBody2::Box:
-	//		collider->pColliderShape = std::make_unique<btBoxShape>(btVector3(1.0f, 1.0f, 1.0f));
-	//		break;
-	//	case CP_RigidBody2::Sphere:
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//
-	//	bool isDynamic = mass > Mathf::epsilon;
-	//
-	//	btTransform bulletTrans;
-	//	bulletTrans.setIdentity();
-	//
-	//	collider->inertia = DX::Vector3::Zero;
-	//	if (isDynamic)
-	//	{
-	//		btVector3 btInertia;
-	//		collider->inertia = Bullet::ToDXVector3(btInertia);
-	//	}
-	//	collider->pMotionState = std::make_unique<btDefaultMotionState>(bulletTrans);
-	//
-	//	btRigidBody::btRigidBodyConstructionInfo rbInfo(
-	//		Bullet::ToBtScalar(mass),
-	//		collider->pMotionState.get(),
-	//		collider->pColliderShape.get(),
-	//		Bullet::ToBtVector3(collider->inertia));
-	//	collider->pCollisionObject = std::make_unique<btRigidBody>(rbInfo);
-	//
-	//	// ワールドに追加
-	//	DX11BulletPhisics::GetInstance()->AddCollObj(*collider->pCollisionObject, 0);
-	//
-	//	SetToBtTransform();
-}
-
 void CP_RigidBody2::RemoveColliderShape(CP_Collider& _removeCollider)
 {
 	if (!collider) return;
-	if (collider->pCollider != &_removeCollider) return;
+	if (collider->pColliderComp != &_removeCollider) return;
 
 	DX11BulletPhisics::GetInstance()->RemoveCollObj(*collider->pCollisionObject);
 	collider.reset();
@@ -150,7 +118,7 @@ void CP_RigidBody2::SetMass(float _mass)
 {
 	mass = _mass;
 
-	if (!collider) return;
+	if (!collider || isTrigger) return;
 
 	bool isDynamic = mass >= Mathf::epsilon;
 
@@ -166,13 +134,30 @@ void CP_RigidBody2::SetMass(float _mass)
 		collider->inertia = Bullet::ToDXVector3(localInertia);
 	}
 
-	collider->pCollisionObject->setMassProps(mass, Bullet::ToBtVector3(collider->inertia));
-	collider->pCollisionObject->updateInertiaTensor();
+	btRigidBody& rigid = CastRigidBody();
+
+	rigid.setMassProps(mass, Bullet::ToBtVector3(collider->inertia));
+	rigid.updateInertiaTensor();
 }
 
 void CP_RigidBody2::SetIsAwake(bool _isAwake)
 {
 	isAwake = _isAwake;
+
+	if (!collider) return;
+
+	// Awake状態に剛体を合わせる
+	if (isAwake)
+		collider->pCollisionObject->setActivationState(DISABLE_DEACTIVATION);
+	else
+		collider->pCollisionObject->setActivationState(ACTIVE_TAG);
+}
+
+void CP_RigidBody2::SetIsTrigger(bool _isTrigger)
+{
+	isTrigger = _isTrigger;
+
+	//ReCreateCollider();
 }
 
 void CP_RigidBody2::SetToBtTransform()
@@ -188,8 +173,16 @@ void CP_RigidBody2::SetToBtTransform()
 	trans.setOrigin(origin);
 	trans.setRotation(rot);
 
-	collider->pMotionState->setWorldTransform(trans);
-	collider->pCollisionObject->setMotionState(collider->pMotionState.get());
+	//if (isTrigger)	// ghostオブジェクトなら
+	//{
+	//	collider->pCollisionObject->setWorldTransform(trans);
+	//}
+	//else	// rigidBodyなら
+	//{
+		btRigidBody& rigid = CastRigidBody();
+		collider->pMotionState->setWorldTransform(trans);
+		rigid.setMotionState(collider->pMotionState.get());
+	//}
 }
 
 void CP_RigidBody2::SetToDXTransform()
@@ -200,7 +193,6 @@ void CP_RigidBody2::SetToDXTransform()
 	Transform& dxTransform = GetTransform();
 	dxTransform.SetPosition(Bullet::ToDXVector3(bulletTransform.getOrigin()));
 	dxTransform.SetRotation(Bullet::ToDXQuaternion(bulletTransform.getRotation()));
-
 }
 
 void CP_RigidBody2::ImGuiSetting()
@@ -208,39 +200,48 @@ void CP_RigidBody2::ImGuiSetting()
 	if (ImGui::Button("SetShape"))
 		FindSetCollider();
 
-
+	// 質量
 	float imMass = mass;
 	if (ImGui::DragFloat("mass", &imMass, 0.01f, 0.0f, 1000.0f))
-	{
 		SetMass(imMass);
-	}
 
-	bool isImAwake = isAwake;
-	if (ImGui::Checkbox("IsAwake", &isAwake))
-	{
+	// 静的オブジェクトにしない
+	bool isImBool = isAwake;
+	if (ImGui::Checkbox("IsAwake", &isImBool))
+		SetIsAwake(isImBool);
 
-	}
+	isImBool = isTrigger;
+	if (ImGui::Checkbox("IsTrigger", &isImBool))
+		SetIsTrigger(isImBool);
 }
 
 nlohmann::json CP_RigidBody2::Save()
 {
 	auto data = Component::Save();
 	data["mass"] = mass;
+	data["isAwake"] = isAwake;
+	data["isTrigger"] = isTrigger;
 	return data;
 }
 
 void CP_RigidBody2::Load(const nlohmann::json& _data)
 {
 	Component::Load(_data);
-	float loadMass = 1.0f;
-	if (LoadJsonFloat("mass", loadMass, _data))
-		SetMass(loadMass);
 
+	LoadJsonFloat("mass", mass, _data);
+	LoadJsonBoolean("isAwake", isAwake, _data);
+	LoadJsonBoolean("isTrigger", isTrigger, _data);
+
+	ReCreateCollider();
 }
 
 void CP_RigidBody2::GetBtTransform(btTransform& _btTrans)
 {
-	if (collider)
+	if (!collider) return;
+
+	if (isTrigger)
+		_btTrans = collider->pCollisionObject->getWorldTransform();
+	else
 		collider->pMotionState->getWorldTransform(_btTrans);
 }
 
@@ -250,4 +251,25 @@ void CP_RigidBody2::FindSetCollider()
 	if (!pCol) return;
 
 	SetColliderShape(*pCol);
+}
+
+btRigidBody& CP_RigidBody2::CastRigidBody()
+{
+	assert(collider && "コライダーが作成されていません");
+	assert(!isTrigger && "RigidBodyではありません");
+
+	return static_cast<btRigidBody&>(*collider->pCollisionObject);
+}
+
+void CP_RigidBody2::ReCreateCollider()
+{
+	if (!collider) return;
+
+	CP_Collider& colliderComp = *collider->pColliderComp;
+
+	// 既にあるならワールドから削除する
+	RemoveColliderShape(colliderComp);
+
+	// 現在のパラメータで作り直す
+	SetColliderShape(colliderComp);
 }

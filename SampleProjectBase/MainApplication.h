@@ -4,6 +4,7 @@
 #include "Window.h"
 #include "InputClass.h"
 #include "VariableFrameRate.h"
+#include "AppSystemDraw.h"
 
 class SceneManager;
 class Direct3D11;
@@ -29,6 +30,9 @@ class MainApplication
 
 	/// @brief アセットの管理
 	static std::unique_ptr<AssetCollection> pAssetCollection;
+
+	/// @brief アプリケーションで使用する描画
+	static std::unique_ptr<AppSystemDraw> pAppSystemDraw;
 
 	/// @brief アプリケーション終了
 	static bool isEscapeDisplay;

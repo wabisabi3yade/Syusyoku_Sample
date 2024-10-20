@@ -10,8 +10,10 @@ namespace DX = DirectX::SimpleMath;
 
 using namespace HashiTaku;
 
+constexpr float CONTACT_DRAW_LENGTH(0.5f);	// ÚG“_‚ğ•`‰æ‚·‚é‚Æ‚«‚Ìü‚Ì’·‚³
+
 BulletDebugDraw::BulletDebugDraw()
-	: debugMode(DBG_DrawWireframe), pVxShader(nullptr), pPxShader(nullptr)
+	: debugMode(DBG_DrawWireframe), pVxShader(nullptr), pPxShader(nullptr), isDisplay(false)
 {
 	ShaderCollection* shCol = ShaderCollection::GetInstance();
 
@@ -64,4 +66,14 @@ void BulletDebugDraw::setDebugMode(int _debugMode)
 int BulletDebugDraw::getDebugMode() const
 {
 	return debugMode;
+}
+
+void BulletDebugDraw::SetIsDisplay(bool _isDisplay)
+{
+	isDisplay = _isDisplay;
+}
+
+bool BulletDebugDraw::GetIsDisplay() const
+{
+	return isDisplay;
 }

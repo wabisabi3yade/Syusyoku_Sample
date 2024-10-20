@@ -4,6 +4,7 @@
 #include "SceneManager.h"
 #include "AssetCollection.h"
 #include "ShaderCollection.h"
+#include "DX11BulletPhisics.h"
 
 // Asset関連
 #include "AssetContacter.h"
@@ -19,6 +20,7 @@ SceneManager* MainApplication::pSceneManager = nullptr;
 std::unique_ptr<VariableFrameRate> MainApplication::pVariableFps = nullptr;
 std::unique_ptr<InputClass> MainApplication::pInput = nullptr;
 std::unique_ptr<AssetCollection> MainApplication::pAssetCollection = nullptr;
+std::unique_ptr<AppSystemDraw> MainApplication::pAppSystemDraw = nullptr;
 bool MainApplication::isEscapeDisplay = false;
 
 void MainApplication::Release()
@@ -82,15 +84,9 @@ bool MainApplication::EscapeCheck()
 
 void MainApplication::SystemDraw()
 {
-#ifdef EDIT
+	pAppSystemDraw->ImGuiCall();
 
-	ImGui::Begin(ShiftJisToUtf8("システム").c_str());
-	AssetDisplay::Draw();
-	pVariableFps->ImGuiDraw();
-	ImGui::End();
-	
 	ImGuiMethod::Draw();
-#endif // EDIT
 }
 
 void MainApplication::Init(HINSTANCE _hInst)
@@ -114,6 +110,8 @@ void MainApplication::Init(HINSTANCE _hInst)
 	ImuiSetup();
 
 	SceneManagerSetup();
+
+	pAppSystemDraw = std::make_unique<AppSystemDraw>(*pVariableFps, *DX11BulletPhisics::GetInstance());
 }
 
 void MainApplication::GameLoop()
