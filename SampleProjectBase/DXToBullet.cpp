@@ -21,8 +21,8 @@ btQuaternion HashiTaku::Bullet::ToBtQuaeternion(const DX::Quaternion& _dxQuatern
 {
 	return btQuaternion(
 		ToBtScalar(-_dxQuaternion.x),
-		ToBtScalar(_dxQuaternion.y),
-		ToBtScalar(-_dxQuaternion.z),
+		ToBtScalar(-_dxQuaternion.y),
+		ToBtScalar(_dxQuaternion.z),
 		ToBtScalar(_dxQuaternion.w)
 	);
 }
@@ -45,8 +45,8 @@ DX::Quaternion HashiTaku::Bullet::ToDXQuaternion(const btQuaternion& _btQuaterni
 {
 	return DX::Quaternion(
 		ToDxScalar(-_btQuaternion.getX()),
-		ToDxScalar(_btQuaternion.getY()),
-		ToDxScalar(-_btQuaternion.getZ()),
+		ToDxScalar(-_btQuaternion.getY()),
+		ToDxScalar(_btQuaternion.getZ()),
 		ToDxScalar(_btQuaternion.getW())
 	);
 }

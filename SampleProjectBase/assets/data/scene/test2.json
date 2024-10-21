@@ -4,18 +4,41 @@
             "active": true,
             "components": [
                 {
+                    "AABB": false,
+                    "angles": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "center": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
                     "enable": true,
-                    "name": "RigidBody2"
+                    "length": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "name": "BoxCollider"
+                },
+                {
+                    "enable": true,
+                    "isAwake": false,
+                    "isTrigger": false,
+                    "mass": 1.0,
+                    "name": "RigidBody"
                 }
             ],
             "layer": 0,
-            "name": "coll",
+            "name": "a1",
             "tag": 0,
             "transform": {
                 "child": null,
                 "pos": [
-                    0.0,
-                    4.199999809265137,
+                    -0.5,
+                    6.300000190734863,
                     0.0
                 ],
                 "rotation": [
@@ -70,6 +93,53 @@
             "active": true,
             "components": [
                 {
+                    "AABB": false,
+                    "angles": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "center": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "enable": true,
+                    "length": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "name": "BoxCollider"
+                }
+            ],
+            "layer": 0,
+            "name": "coll",
+            "tag": 0,
+            "transform": {
+                "child": null,
+                "pos": [
+                    0.0,
+                    3.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
                     "enable": true,
                     "name": "SpriteRenderer",
                     "sprite": {
@@ -89,8 +159,31 @@
                     }
                 },
                 {
+                    "AABB": false,
+                    "angles": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "center": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
                     "enable": true,
-                    "name": "RigidBody2"
+                    "length": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "name": "BoxCollider"
+                },
+                {
+                    "enable": true,
+                    "isAwake": false,
+                    "isTrigger": false,
+                    "mass": 0.0,
+                    "name": "RigidBody"
                 }
             ],
             "layer": 0,
@@ -100,7 +193,7 @@
                 "child": null,
                 "pos": [
                     0.0,
-                    -10.399999618530273,
+                    -10.699999809265137,
                     0.0
                 ],
                 "rotation": [
@@ -113,6 +206,128 @@
                     100.0,
                     1.0,
                     100.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "AABB": false,
+                    "angles": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "center": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "enable": true,
+                    "length": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "name": "BoxCollider"
+                },
+                {
+                    "enable": true,
+                    "isAwake": false,
+                    "isTrigger": false,
+                    "mass": 1.0,
+                    "name": "RigidBody"
+                }
+            ],
+            "layer": 0,
+            "name": "a",
+            "tag": 0,
+            "transform": {
+                "child": null,
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "isAwake": false,
+                    "isTrigger": false,
+                    "mass": 1.0,
+                    "name": "RigidBody"
+                }
+            ],
+            "layer": 0,
+            "name": "a2",
+            "tag": 0,
+            "transform": {
+                "child": null,
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "isAwake": false,
+                    "isTrigger": false,
+                    "mass": 1.0,
+                    "name": "RigidBody"
+                }
+            ],
+            "layer": 0,
+            "name": "a3",
+            "tag": 0,
+            "transform": {
+                "child": null,
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
                 ]
             }
         }

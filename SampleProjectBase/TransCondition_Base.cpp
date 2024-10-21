@@ -13,8 +13,7 @@ void TransCondition_Base::SetReferenceParamName(const std::string& _paramRefaren
 
 const std::string& TransCondition_Base::GetReferenceParamName() const
 {
-	if (!pParameterName)
-		return "";
+	assert(pParameterName && "パラメータ名のアドレスがありません");
 
 	return *pParameterName;
 }

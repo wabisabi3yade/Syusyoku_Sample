@@ -4,7 +4,6 @@
 
 // “–‚½‚è”»’è
 #include "CP_RigidBody.h"
-#include "CP_RigidBody2.h"
 #include "CP_BoxCollider.h"
 #include "CP_SphereCollider.h"
 #include "CP_TestCollider.h"

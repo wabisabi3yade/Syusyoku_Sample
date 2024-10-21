@@ -138,13 +138,13 @@
     <ClCompile Include="CatmulSplineInterp.cpp" />
     <ClCompile Include="BulletDebugDraw.cpp" />
     <ClCompile Include="CloneComponent.cpp" />
+    <ClCompile Include="CollisionTypeJudge.cpp" />
     <ClCompile Include="ComponentRespawner.cpp" />
     <ClCompile Include="CopyAnimationParameters.cpp" />
     <ClCompile Include="CP_AnimationNotify.cpp" />
     <ClCompile Include="CP_BoxAnimation.cpp" />
     <ClCompile Include="CP_NotifyTest.cpp" />
     <ClCompile Include="CP_RigidBody.cpp" />
-    <ClCompile Include="CP_RigidBody2.cpp" />
     <ClCompile Include="CP_SkyBox.cpp" />
     <ClCompile Include="CP_TestCollider.cpp" />
     <ClCompile Include="CP_Weapon.cpp" />
@@ -316,6 +316,8 @@
     <ClInclude Include="CatmulSplineInterp.h" />
     <ClInclude Include="BulletDebugDraw.h" />
     <ClInclude Include="CloneComponent.h" />
+    <ClInclude Include="CollisionInfo.h" />
+    <ClInclude Include="CollisionTypeJudge.h" />
     <ClInclude Include="ComponentConcept.h" />
     <ClInclude Include="ComponentRespawner.h" />
     <ClInclude Include="CopyAnimationParameters.h" />
@@ -323,7 +325,6 @@
     <ClInclude Include="CP_BoxAnimation.h" />
     <ClInclude Include="CP_NotifyTest.h" />
     <ClInclude Include="CP_RigidBody.h" />
-    <ClInclude Include="CP_RigidBody2.h" />
     <ClInclude Include="CP_SkyBox.h" />
     <ClInclude Include="CP_TestCollider.h" />
     <ClInclude Include="CP_Weapon.h" />

@@ -50,10 +50,10 @@ void CP_BoxCollider::SetLength(const DirectX::SimpleMath::Vector3& _length)
 {
 	length = _length;
 
-	SettingShape();
+	RecreateShape();
 }
 
-DirectX::SimpleMath::Vector3 CP_BoxCollider::GetLength() const
+const DirectX::SimpleMath::Vector3& CP_BoxCollider::GetLength() const
 {
 	return length;
 }
@@ -107,5 +107,5 @@ void CP_BoxCollider::LengthUpdate()
 
 void CP_BoxCollider::CalcWorldLength(DirectX::SimpleMath::Vector3& _out)
 {
-	_out = GetTransform().GetLocalScale() * length;
+	_out = GetTransform().GetScale() * length;
 }

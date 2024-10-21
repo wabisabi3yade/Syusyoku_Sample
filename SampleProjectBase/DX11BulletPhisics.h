@@ -2,11 +2,20 @@
 
 #include "BulletDebugDraw.h"
 #include "BulletContactCallBack.h"
+#include <BulletCollision/CollisionDispatch/btGhostObject.h>
+
+class CP_RigidBody;
 
 /// @brief DX11でBulletPhisicsを使用時、変数と関数を管理するクラス
 class DX11BulletPhisics : public Singleton_Base<DX11BulletPhisics>
 {
 	friend class Singleton_Base<DX11BulletPhisics>;
+
+	/// @brief シーン内のRigidBodyオブジェクト(剛体のみ)
+	std::list<CP_RigidBody*> sceneRigidbodys;
+
+	/// @brief シーン内のGhostObject
+	std::list<CP_RigidBody*> sceneGhostObjects;
 
 	/// @brief 衝突検出の動作を設定
 	std::unique_ptr<btDefaultCollisionConfiguration> pCollisionConfiguration;
@@ -23,17 +32,20 @@ class DX11BulletPhisics : public Singleton_Base<DX11BulletPhisics>
 	/// @brief 物理シミュレーション全体を管理する
 	std::unique_ptr<btDiscreteDynamicsWorld> pDynamicsWorld; 
 
+	/// @brief GhostObjectのラップ検知を効率化するクラス
+	std::unique_ptr<btGhostPairCallback> pGhostPairCallback;
+
 	/// @brief デバッグ描画
 	std::unique_ptr<BulletDebugDraw> pDebugDraw;
+
+	/// @brief コールバックを呼び出すクラス
+	std::unique_ptr<BulletContactCallBack> pContactCallBack;
 
 	/// @brief 最大サブステップ数
 	u_int maxSubSteps;
 
 	/// @brief 重力値
 	DirectX::SimpleMath::Vector3 gravityValue;
-
-	/// @brief コールバックを呼び出すクラス
-	std::unique_ptr<BulletContactCallBack> pContactCallBack;
 public:
 	/// @brief Bullet初期化
 	void Init();
@@ -48,13 +60,19 @@ public:
 	void Draw();
 
 	/// @brief 物理空間に衝突オブジェクトを追加する
-	/// @param _collObj 追加する衝突オブジェクト
+	/// @param _rigidBodyCp 追加するRigidBodyコンポーネント
 	/// @param _groupId 追加する当たり判定のグループ
-	void AddCollObj(btCollisionObject& _collObj, int _groupId);
+	void AddCollObj(CP_RigidBody& _rigidBodyCp, int _groupId);
 
 	/// @brief 物理空間に衝突オブジェクトを削除する
-	/// @param _collObj 削除する衝突オブジェクト
-	void RemoveCollObj(btCollisionObject& _collObj);
+	/// @param _rigidBodyCp 削除するRigidBodyコンポーネント
+	void RemoveCollObj(CP_RigidBody& _rigidBodyCp);
+
+	/// @brief シーン内衝突オブジェクトの座標をDxに更新させる(Bt→Dx)
+	void UpdateTransformBtToDx();
+
+	/// @brief シーン内衝突オブジェクトの座標を更新する(Dx→Bt)
+	void UpdateTransformDxToBt();
 
 	/// @brief 表示させるかセットする
 	/// @param _setBool 表示させるかフラグ
@@ -77,5 +95,8 @@ private:
 	/// @param _checkCollObj チェックする衝突オブジェクト
 	/// @return ワールド空間内にあるか？
 	bool IsExistCollObjInWorld(btCollisionObject& _checkCollObj);
+
+	/// @brief 衝突終了があれば終了更新処理を行う
+	void UpdateColExit();
 };
 

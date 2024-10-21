@@ -61,7 +61,7 @@ btCollisionShape& CP_Collider::GetColliderShape()
 void CP_Collider::ImGuiSetting()
 {
 	if (ImGui::Button("Set Shape"))
-		SettingShape();
+		RecreateShape();
 
 	bool isChange = false;
 	bool isAngChange = false;
@@ -104,7 +104,7 @@ void CP_Collider::RemoveShapeFromRb()
 {
 	if (!gameObject) return;
 
-	CP_RigidBody2* pRb = gameObject->GetComponent<CP_RigidBody2>();
+	CP_RigidBody* pRb = gameObject->GetComponent<CP_RigidBody>();
 	if (pRb)
 		pRb->RemoveColliderShape(*this);
 }
@@ -119,24 +119,26 @@ void CP_Collider::OnEnableFalse()
 	RemoveShapeFromRb();
 }
 
-void CP_Collider::OnChangeTransform()
+void CP_Collider::OnChangeScale()
 {
-	RemoveFromCompound();
-	AddToCompound();
+	RecreateShape();
 }
 
-void CP_Collider::SettingShape()
+void CP_Collider::RecreateShape()
 {
+	// コリジョン形状を一旦削除
 	RemoveFromCompound();
 
+	// 形状をもう一度作成
 	CreateShape();
 
+	// コンパウンドに追加
 	AddToCompound();
 }
 
 void CP_Collider::SendShapeToRb()
 {
-	CP_RigidBody2* pRb = gameObject->GetComponent<CP_RigidBody2>();
+	CP_RigidBody* pRb = gameObject->GetComponent<CP_RigidBody>();
 	if (!pRb)
 	{
 		HASHI_DEBUG_LOG("RigidBodyがありません");

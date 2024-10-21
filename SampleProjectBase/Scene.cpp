@@ -33,12 +33,16 @@ Scene::~Scene()
 void Scene::Exec()
 {
 	SceneObjects& sceneObjects = pInSceneSystem->GetSceneObjects();
+	DX11BulletPhisics* pBulletEngine = DX11BulletPhisics::GetInstance();
 
 	// 再生中のみの更新
 	PlayOnlyUpdate();
 
 	// ImGui編集
 	sceneObjects.ImGuiSetting();
+
+	// Dxのトランスフォームを Bulletに合わせる
+	pBulletEngine->UpdateTransformDxToBt();
 
 	// 描画前準備
 	DrawSetup();
@@ -52,23 +56,18 @@ void Scene::PlayOnlyUpdate()
 	if (!IsUpdatePlay()) return;	// 再生中なら
 
 	SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->GetSceneObjects();
+	DX11BulletPhisics* pBulletEngine = DX11BulletPhisics::GetInstance();
 
 	// 開始処理
 	sceneObjects.Awake();
 	sceneObjects.Start();
 
 	// 物理シミュレーションを進める
-	DX11BulletPhisics::GetInstance()->Update();
-
-	// BulletのトランスフォームをDxに合わせる
-	pInSceneSystem->UpdateTransformBtToDx();
+	pBulletEngine->Update();
 
 	// シーン内の更新処理
 	sceneObjects.Update();
 	sceneObjects.LateUpdate();
-
-	// 衝突オブジェクトのコールバック
-	DX11BulletPhisics::GetInstance()->CollisionCallBack();
 }
 
 void Scene::ImGuiSetting()

@@ -7,7 +7,7 @@ void ComponentFactory::Init()
 {
 	// “–‚½‚è”»’è
 	//ResistComponnent<CP_RigidBody>();
-	ResistComponnent<CP_RigidBody2>();
+	ResistComponnent<CP_RigidBody>();
 	ResistComponnent<CP_BoxCollider>();
 	ResistComponnent<CP_SphereCollider>();
 	ResistComponnent<CP_TestCollider>();

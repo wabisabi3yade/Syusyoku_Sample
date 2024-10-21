@@ -46,7 +46,7 @@ void BulletDebugDraw::drawContactPoint(const btVector3& _pointOnB, const btVecto
 	drawLine(_pointOnB, to, _color);
 
 	// オプションで、接触点に点を描画する
-	drawLine(_pointOnB, _pointOnB + btVector3(0.1f, 0.1f, 0.1f), _color);
+	//drawLine(_pointOnB, _pointOnB + btVector3(0.1f, 0.1f, 0.1f), _color);
 }
 
 void BulletDebugDraw::reportErrorWarning(const char* _warningString)

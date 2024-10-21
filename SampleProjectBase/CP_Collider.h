@@ -41,11 +41,16 @@ public:
 
     CP_Collider& operator=(const CP_Collider& _other);
 
+    // コンポーネント共通関数
     void Init() override;
     void OnDestroy() override;
 
+    /// @brief コリジョンの中心座標オフセットをセット
+    /// @param _offset オフセット座標
     void SetCenterOffset(const DirectX::SimpleMath::Vector3& _offset);
 
+    /// @brief コリジョンの角度オフセットをセット
+    /// @param _offset オフセット角度
     void SetAngleOffset(const DirectX::SimpleMath::Vector3& _offset);
 
     /// @brief 衝突形状取得
@@ -57,13 +62,8 @@ public:
 
     void ImGuiSetting() override;
 
-    /// @brief セーブする
-     /// @param _data セーブシーンデータ
     virtual nlohmann::json Save() override;
-    /// @brief ロードする
-    /// @param _data ロードするシーンデータ 
     virtual void Load(const nlohmann::json& _data) override;
-
 private:
     void Copy(const CP_Collider& _other);
 
@@ -71,19 +71,24 @@ private:
     void RemoveShapeFromRb();
 
 protected:
+    // コンポーネント共通関数
     void OnEnableTrue() override;
     void OnEnableFalse() override;
+    void OnChangeScale() override;
 
-    void OnChangeTransform() override;
+    /// @brief 形状を作成し直し、コンパウンドに追加
+    void RecreateShape();
 
-    void SettingShape();
+    /// @brief 各コリジョン形状を作成する
     virtual void CreateShape() = 0;
 
     /// @brief RigidBpdyコンポーネントに形状を送る
     void SendShapeToRb();
 
+    /// @brief コンパウンドから形状を削除
     void RemoveFromCompound();
 
+    /// @brief コンパウンドに形状を追加
     void AddToCompound();
 };
 

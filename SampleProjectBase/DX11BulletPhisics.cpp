@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "DX11BulletPhisics.h"
-
+#include "CP_RigidBody.h"
+#include "CollisionInfo.h"
+#include "GameObject.h"
 
 using namespace HashiTaku;
 
@@ -37,6 +39,51 @@ bool DX11BulletPhisics::IsExistCollObjInWorld(btCollisionObject& _checkCollObj)
 	return false;
 }
 
+void DX11BulletPhisics::UpdateColExit()
+{
+	// Exitの処理をする
+
+	// 剛体から
+	for (auto& pRb : sceneRigidbodys)
+	{
+		// 衝突終了したRbコンポーネントを取得
+		std::vector<const CP_RigidBody*> exitRbCps;
+		CollisionTypeJudge& colJudge = pRb->GetColTypeJudge();
+		colJudge.GetExitObjectList(exitRbCps);
+
+		// 終了したRbコンポーネントをOnCollisionExitに渡す
+		for (auto& pExitRb : exitRbCps)
+		{
+			Bullet::CollisionInfo otherColInfo;
+			otherColInfo.pRigidBodyCp = pExitRb;
+			pRb->GetGameObject().OnCollisionExit(otherColInfo);
+		}
+
+		// 次フレームの為に更新しておく
+		colJudge.SetupForNextFrame();
+	}
+
+	// Ghost
+	for (auto& pGhost : sceneGhostObjects)
+	{
+		// 衝突終了したRbコンポーネントを取得
+		std::vector<const CP_RigidBody*> exitRbCps;
+		CollisionTypeJudge& colJudge = pGhost->GetColTypeJudge();
+		colJudge.GetExitObjectList(exitRbCps);
+
+		// 終了したRbコンポーネントをOnCollisionExitに渡す
+		for (auto& pExitRb : exitRbCps)
+		{
+			HashiTaku::Bullet::CollisionInfo otherColInfo;
+			otherColInfo.pRigidBodyCp = pExitRb;
+			pGhost->GetGameObject().OnCollisionExit(otherColInfo);
+		}
+
+		// 次フレームの為に更新しておく
+		colJudge.SetupForNextFrame();
+	}
+}
+
 void DX11BulletPhisics::Init()
 {
 	// インスタンス作成
@@ -50,7 +97,9 @@ void DX11BulletPhisics::Init()
 		pSolver.get(),
 		pCollisionConfiguration.get()
 	);
+	pGhostPairCallback = std::make_unique<btGhostPairCallback>();
 	pDebugDraw = std::make_unique<BulletDebugDraw>();
+	pContactCallBack = std::make_unique<BulletContactCallBack>();
 
 	// 重力設定
 	pDynamicsWorld->setGravity(Bullet::ToBtVector3(gravityValue));
@@ -58,7 +107,8 @@ void DX11BulletPhisics::Init()
 	// デバッグ描画クラスセット
 	pDynamicsWorld->setDebugDrawer(pDebugDraw.get());
 
-	pContactCallBack = std::make_unique<BulletContactCallBack>();
+	// Ghostラップ検知をセット
+	pDynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(pGhostPairCallback.get());
 }
 
 void DX11BulletPhisics::Update()
@@ -68,41 +118,27 @@ void DX11BulletPhisics::Update()
 		Bullet::ToBtScalar(MainApplication::DeltaTime()),
 		maxSubSteps
 	);
+
+	// シミュレーションで進めたBulletのトランスフォームにDx側を合わせる
+	UpdateTransformBtToDx();
+
+	// コリジョンの衝突判定を通知する
+	CollisionCallBack();
 }
 
 void DX11BulletPhisics::CollisionCallBack()
 {
-	// 衝突オブジェクトの数を取得
-	int numManifolds = pDynamicsWorld->getDispatcher()->getNumManifolds();
-	for (int i = 0; i < numManifolds; i++) {
-		btPersistentManifold* contactManifold = pDynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
-		const btCollisionObject* objA = contactManifold->getBody0();
-		const btCollisionObject* objB = contactManifold->getBody1();
-
-		int numContacts = contactManifold->getNumContacts();
-		for (int j = 0; j < numContacts; j++) {
-			btManifoldPoint& pt = contactManifold->getContactPoint(j);
-
-			if (pt.getDistance() < 0.0f) {
-				const btVector3& ptA = pt.getPositionWorldOnA();
-				const btVector3& ptB = pt.getPositionWorldOnB();
-				const btVector3& normalOnB = pt.m_normalWorldOnB;
-
-				std::cout << "Collision detected between objects!" << std::endl;
-				std::cout << "Contact point A: " << ptA.getX() << ", " << ptA.getY() << ", " << ptA.getZ() << std::endl;
-				std::cout << "Contact point B: " << ptB.getX() << ", " << ptB.getY() << ", " << ptB.getZ() << std::endl;
-				std::cout << "Collision normal: " << normalOnB.getX() << ", " << normalOnB.getY() << ", " << normalOnB.getZ() << std::endl;
-			}
-		}
-	}
-
+	// ワールド空間内の判定を処理
 	const btCollisionObjectArray& collisionObjects = pDynamicsWorld->getCollisionObjectArray();
 	u_int collisionCnt = pDynamicsWorld->getNumCollisionObjects();
 	for (u_int c_i = 0; c_i < collisionCnt; c_i++)
 	{
-		btCollisionObject* obj = collisionObjects[c_i];
-		pDynamicsWorld->contactTest(obj, *pContactCallBack);
+		btCollisionObject& collObj = *collisionObjects[c_i];
+		pDynamicsWorld->contactTest(&collObj, *pContactCallBack);
 	}
+
+	// 衝突終了の処理
+	UpdateColExit();
 }
 
 void DX11BulletPhisics::Draw()
@@ -113,46 +149,78 @@ void DX11BulletPhisics::Draw()
 	pDynamicsWorld->debugDrawWorld();
 }
 
-void DX11BulletPhisics::AddCollObj(btCollisionObject& _collObj, int _groupId)
+void DX11BulletPhisics::AddCollObj(CP_RigidBody& _rigidBodyCp, int _groupId)
 {
 	// ワールド空間内になかったら処理しない
-	if (IsExistCollObjInWorld(_collObj))
+	btCollisionObject* pColObj = &_rigidBodyCp.GetCollisionObject();
+	if (IsExistCollObjInWorld(*pColObj))
 	{
 		HASHI_DEBUG_LOG("ワールド空間内にコリジョンが既にあります");
 		return;
 	}
 
-	btRigidBody* rb = btRigidBody::upcast(&_collObj);
-
+	btRigidBody* rb = btRigidBody::upcast(pColObj);
 	if (rb)	// 剛体なら
 	{
-		rb->setGravity(Bullet::ToBtVector3(gravityValue));
+		// ワールドに追加
 		pDynamicsWorld->addRigidBody(rb);
+		// 剛体リストに追加
+		sceneRigidbodys.push_back(&_rigidBodyCp);
 	}
 	else
-		pDynamicsWorld->addCollisionObject(&_collObj);
+	{
+		// ワールドに追加
+		pDynamicsWorld->addCollisionObject(pColObj);
+		// GhostObjectリストに追加
+		sceneGhostObjects.push_back(&_rigidBodyCp);
+	}
 
 	HASHI_DEBUG_LOG("コライダーセット　現在" + std::to_string(pDynamicsWorld->getNumCollisionObjects()));
 }
 
-void DX11BulletPhisics::RemoveCollObj(btCollisionObject& _collObj)
+void DX11BulletPhisics::RemoveCollObj(CP_RigidBody& _rigidBodyCp)
 {
 	// ワールド空間内になかったら処理しない
-	if (!IsExistCollObjInWorld(_collObj))
+	btCollisionObject* pColObj = &_rigidBodyCp.GetCollisionObject();
+	if (!IsExistCollObjInWorld(*pColObj))
 	{
-		HASHI_DEBUG_LOG("ワールド空間内にコリジョンがありません");
+		HASHI_DEBUG_LOG("ワールド空間内に指定したコリジョンがありません");
 		return;
 	}
 
-	btRigidBody* rb = btRigidBody::upcast(&_collObj);
+	btRigidBody* rb = btRigidBody::upcast(pColObj);
 
 	if (rb)	// 剛体なら
+	{
+		// ワールドから削除する
 		pDynamicsWorld->removeRigidBody(rb);
-
+		sceneRigidbodys.remove(&_rigidBodyCp);
+	}
 	else
-		pDynamicsWorld->removeCollisionObject(&_collObj);
+	{
+		pDynamicsWorld->removeCollisionObject(pColObj);
+		sceneGhostObjects.remove(&_rigidBodyCp);
+	}
 
 	HASHI_DEBUG_LOG("コライダー削除　現在" + std::to_string(pDynamicsWorld->getNumCollisionObjects()));
+}
+
+void DX11BulletPhisics::UpdateTransformBtToDx()
+{
+	// 剛体のみ更新する
+	for (auto& pRbCp : sceneRigidbodys)
+		pRbCp->SetToDXTransform();
+}
+
+void DX11BulletPhisics::UpdateTransformDxToBt()
+{
+	// 衝突オブジェクト全て更新する
+
+	for (auto& pRbCp : sceneRigidbodys)
+		pRbCp->SetToBtTransform();
+
+	for (auto& pRbCp : sceneGhostObjects)
+		pRbCp->SetToBtTransform();
 }
 
 void DX11BulletPhisics::SetDisplay(bool _setBool)

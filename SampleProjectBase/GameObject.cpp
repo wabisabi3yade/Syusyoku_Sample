@@ -207,6 +207,24 @@ void GameObject::DrawCall()
 	}
 }
 
+void GameObject::OnCollisionEnter(const HashiTaku::Bullet::CollisionInfo& _otherColInfo)
+{
+	for (auto& pActive : pActiveComponents)
+		pActive->OnCollisionEnter(_otherColInfo);
+}
+
+void GameObject::OnCollisionStay(const HashiTaku::Bullet::CollisionInfo& _otherColInfo)
+{
+	for (auto& pActive : pActiveComponents)
+		pActive->OnCollisionStay(_otherColInfo);
+}
+
+void GameObject::OnCollisionExit(const HashiTaku::Bullet::CollisionInfo& _otherColInfo)
+{
+	for (auto& pActive : pActiveComponents)
+		pActive->OnCollisionExit(_otherColInfo);
+}
+
 void GameObject::Destroy()
 {
 	// 削除する子トランスフォームリスト
@@ -229,10 +247,22 @@ void GameObject::Destroy()
 	sceneObjects.DeleteObj(*this);
 }
 
-void GameObject::OnChangeTransform()
+void GameObject::OnChangePosition()
 {
 	for (auto& pComp : pActiveComponents)
-		pComp->OnChangeTransform();
+		pComp->OnChangePosition();
+}
+
+void GameObject::OnChangeScale()
+{
+	for (auto& pComp : pActiveComponents)
+		pComp->OnChangeScale();
+}
+
+void GameObject::OnChangeRotation()
+{
+	for (auto& pComp : pActiveComponents)
+		pComp->OnChangeRotation();
 }
 
 void GameObject::SetComponent(std::unique_ptr<Component> _pSetComponent)
@@ -351,35 +381,28 @@ void GameObject::ImGuiSetting()
 		if (ImGuiMethod::DragFloat3(v, "rot"))
 			pTransform->SetLocalEularAngles(v);
 
-		std::list<Component*> deleteComponents;
-
-		for (auto itr = pComponents.begin(); itr != pComponents.end(); itr++)
+		for (auto cpItr = pComponents.begin(); cpItr != pComponents.end();)
 		{
-			if (!ImGuiMethod::TreeNode((*itr)->GetName().c_str())) continue;
+			bool isDelete = false;	// コンポーネント削除フラグ
 
-			std::string text = "isEnable ";
-			std::string status = "true";
-			if (!(*itr)->GetIsEnable())
-				status = "false";
+			if (ImGuiMethod::TreeNode((*cpItr)->GetName().c_str()))
+			{
+				// 削除ボタン
+				isDelete = ImGui::Button("Delete");
+				// コンポーネント内の編集
+					(*cpItr)->ImGuiSettingCall();
 
-			text += status;
+				ImGui::TreePop();
+			}
 
-			ImGui::Text(text.c_str());
-			ImGui::SameLine();
-
-			if (ImGui::Button("Change"))
-				(*itr)->TransitionEnable();
-
-			if (ImGui::Button("Delete"))
-				deleteComponents.push_back(itr->get());
-
-			(*itr)->ImGuiCall();
-			ImGui::TreePop();
-		}
-
-		for (auto itr = deleteComponents.begin(); itr != deleteComponents.end(); itr++)
-		{
-			DeleteComponent(*(*itr));
+			if (isDelete)	// 削除するなら
+			{
+				const auto& nextItr = std::next(cpItr);
+				DeleteComponent(*(*cpItr));
+				cpItr = nextItr;
+			}
+			else
+				cpItr++;
 		}
 
 		ImGui::Dummy(ImVec2(0, 10));

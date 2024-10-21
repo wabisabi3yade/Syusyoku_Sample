@@ -13,11 +13,13 @@ public:
 	CP_BoxCollider();
 	~CP_BoxCollider() {}
 
-	void ImGuiSetting() override;
-
+	/// @brief 長さをセットする
+	/// @param _length 
 	void SetLength(const DirectX::SimpleMath::Vector3& _length);
 
-	DirectX::SimpleMath::Vector3 GetLength()const;
+	/// @brief 長さを取得する
+	/// @return ボックスの長さ
+	const DirectX::SimpleMath::Vector3& GetLength()const;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
@@ -38,5 +40,7 @@ private:
 	/// @brief ワールド座標に計算
 	/// @param ワールド座標での長さ
 	void CalcWorldLength(DirectX::SimpleMath::Vector3& _out);
+
+	void ImGuiSetting() override;
 };
 
