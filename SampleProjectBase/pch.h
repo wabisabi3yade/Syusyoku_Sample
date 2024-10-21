@@ -25,6 +25,7 @@
 #include <algorithm>
 #include <string>
 #include <unordered_map>	// 順番を気にしないmap配列
+#include <unordered_set>	// 同一キーが格納できない配列
 #include <typeinfo>	// 型名を取得
 #include <filesystem>	// パス名
 #include <vector>	// 動的配列

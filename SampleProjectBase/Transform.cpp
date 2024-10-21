@@ -105,7 +105,7 @@ void Transform::SetPosition(const DirectX::SimpleMath::Vector3& _pos)
 		child->UpdateHierarchyPositions();
 
 	// オブジェクト側に変更したことを伝える
-	pGameObject->OnChangeTransform();
+	pGameObject->OnChangePosition();
 }
 
 void Transform::SetScale(const DirectX::SimpleMath::Vector3& _scale)
@@ -118,7 +118,7 @@ void Transform::SetScale(const DirectX::SimpleMath::Vector3& _scale)
 		child->UpdateHierarchyScales();
 
 	// オブジェクト側に変更したことを伝える
-	pGameObject->OnChangeTransform();
+	pGameObject->OnChangeScale();
 }
 
 void Transform::SetEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
@@ -137,7 +137,7 @@ void Transform::SetEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
 		child->UpdateHierarchyRotations();
 
 	// オブジェクト側に変更したことを伝える
-	pGameObject->OnChangeTransform();
+	pGameObject->OnChangeRotation();
 }
 
 void Transform::SetRotation(const DirectX::SimpleMath::Quaternion& _quaternion)
@@ -155,7 +155,7 @@ void Transform::SetRotation(const DirectX::SimpleMath::Quaternion& _quaternion)
 		child->UpdateHierarchyRotations();
 
 	// オブジェクト側に変更したことを伝える
-	pGameObject->OnChangeTransform();
+	pGameObject->OnChangeRotation();
 }
 
 
@@ -172,7 +172,7 @@ void Transform::SetLocalPosition(const DirectX::SimpleMath::Vector3& _localPos)
 		child->UpdateHierarchyPositions();
 
 	// オブジェクト側に変更したことを伝える
-	pGameObject->OnChangeTransform();
+	pGameObject->OnChangePosition();
 }
 
 void Transform::SetLocalScale(const DirectX::SimpleMath::Vector3& _scale)
@@ -185,7 +185,7 @@ void Transform::SetLocalScale(const DirectX::SimpleMath::Vector3& _scale)
 		child->UpdateHierarchyScales();
 
 	// オブジェクト側に変更したことを伝える
-	pGameObject->OnChangeTransform();
+	pGameObject->OnChangeScale();
 }
 
 void Transform::SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
@@ -202,7 +202,7 @@ void Transform::SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAn
 		child->UpdateHierarchyRotations();
 
 	// オブジェクト側に変更したことを伝える
-	pGameObject->OnChangeTransform();
+	pGameObject->OnChangeRotation();
 }
 
 void Transform::SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quaternion)
@@ -218,22 +218,7 @@ void Transform::SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quatern
 		child->UpdateHierarchyRotations();
 
 	// オブジェクト側に変更したことを伝える
-	pGameObject->OnChangeTransform();
-}
-
-void Transform::SetLoadPosition(const DirectX::SimpleMath::Vector3& _position)
-{
-	localPosition = _position;
-	position = pParent->position;
-	position += pParent->Right() * localPosition.x * pParent->scale.x;
-	position += pParent->Up() * localPosition.y * pParent->scale.y;
-	position += pParent->Forward() * localPosition.z * pParent->scale.z;
-}
-
-
-void Transform::SetGameObject(GameObject& _go)
-{
-	pGameObject = &_go;
+	pGameObject->OnChangeRotation();
 }
 
 DirectX::SimpleMath::Vector3 Transform::GetPosition() const

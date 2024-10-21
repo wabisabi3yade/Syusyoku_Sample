@@ -49,16 +49,6 @@ void Component::DrawCall()
     Draw();
 }
 
-void Component::TransitionEnable()
-{
-    isEnable = !isEnable;
-
-    if (isEnable)   // Šˆ“®ó‘Ô‚É‚È‚Á‚½‚ç‚È‚ç
-        OnEnableTrueCall();
-    else
-        OnEnableFalseCall();
-}
-
 nlohmann::json Component::Save()
 {
     nlohmann::json componentData;
@@ -85,6 +75,23 @@ void Component::OnEnableFalseCall()
 {
     OnEnableFalse();
     gameObject->RemoveActiveComponent(*this);
+}
+
+void Component::ImGuiSettingCall()
+{
+#ifdef EDIT
+
+    if (ImGui::Checkbox("isEnable", &isEnable))
+    {
+        if (isEnable)
+            OnEnableTrue();
+        else
+            OnEnableFalse();
+    }
+
+    ImGuiCall();
+
+#endif // EDIT
 }
 
 bool Component::GetIsActive()

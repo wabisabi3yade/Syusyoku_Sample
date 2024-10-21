@@ -3,6 +3,14 @@
 
 class GameObject;
 
+namespace HashiTaku
+{
+	namespace Bullet
+	{
+		struct CollisionInfo;
+	}
+}
+
 // ゲームのサブシステムとなるコンポーネントの基底クラス
 class Component : public HashiTaku::ISaveLoad, public HashiTaku::IImGuiUser
 {
@@ -28,29 +36,36 @@ public:
 
 	virtual void Init() {};
 
-	/// @brief 外部から呼び出すAwake処理
+	/// @brief 外部から呼び出すAwake処理呼び出し
 	void AwakeCall();
 
-	/// @brief 外部から呼び出すStart処理
+	/// @brief 外部から呼び出すStart処理呼び出し
 	void StartCall();
 
-	/// @brief 外部から呼び出すUpdate処理
+	/// @brief 外部から呼び出すUpdate処理呼び出し
 	void UpdateCall();
 
-	/// @brief 外部から呼び出すLateUpdate処理
+	/// @brief 外部から呼び出すLateUpdate処理呼び出し
 	void LateUpdateCall();
 
-	/// @brief 外部から呼び出すDraw処理
+	/// @brief 外部から呼び出すDraw処理呼び出し
 	void DrawCall();
-
-	/// @brief 活動状態を切り替える
-	void TransitionEnable();
 
 	/// @brief 削除されたときに処理する
 	virtual void OnDestroy() {}
+	/// @brief トランスフォームの移動座標が変更した時の処理
+	virtual void OnChangePosition() {}
+	/// @brief トランスフォームのスケール値が変更した時の処理
+	virtual void OnChangeScale() {}
+	/// @brief トランスフォームの回転角度が変更した時の処理
+	virtual void OnChangeRotation() {}
 
-	/// @brief トランスフォームのパラメータが変更した時の処理
-	virtual void OnChangeTransform() {}
+	/// @brief 衝突開始時の処理呼び出し
+	virtual void OnCollisionEnter(const HashiTaku::Bullet::CollisionInfo& _otherColInfo) {}
+	/// @brief 衝突中の処理呼び出し
+	virtual void OnCollisionStay(const HashiTaku::Bullet::CollisionInfo& _otherColInfo) {}
+	/// @brief 衝突終了時の処理呼び出し
+	virtual void OnCollisionExit(const HashiTaku::Bullet::CollisionInfo& _otherColInfo) {}
 
 	/// @brief 名前をセットする
 	/// @param _name 名前
@@ -76,6 +91,9 @@ public:
 
 	// Start処理行ったか取得
 	bool GetIsAlreadyStart() const;
+
+	/// @brief ImGuiでパラメータを変える処理
+	void ImGuiSettingCall();
 
 	/// @brief セーブする
 	/// @param _data セーブシーンデータ
@@ -106,9 +124,6 @@ protected:
 
 	/// @brief 描画処理
 	virtual void Draw() {};
-
-	/// @brief ImGuiでパラメータを変える処理
-	void ImGuiSetting() override {};
 
 	// 活動状態を切り替える時の処理
 	virtual void OnEnableTrue() {}

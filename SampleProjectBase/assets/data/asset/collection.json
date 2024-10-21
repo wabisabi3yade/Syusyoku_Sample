@@ -436,12 +436,6 @@
     ],
     "animations": [
         {
-            "assetName": "knight_StrafeWalk_R.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_StrafeWalk_R.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_Idle1.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_Idle1.fbx",
@@ -451,6 +445,12 @@
             "assetName": "knight_StrafeRun_R.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_StrafeRun_R.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_StrafeWalk_R.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_StrafeWalk_R.fbx",
             "rightHand": true
         },
         {
@@ -466,15 +466,15 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_StrafeWalk_L.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_StrafeWalk_L.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_StrafeRun_L.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_StrafeRun_L.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_StrafeWalk_L.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_StrafeWalk_L.fbx",
             "rightHand": true
         },
         {
@@ -598,24 +598,24 @@
             "pathName": "assets/texture/skyBox/sky_Day_u.png"
         },
         {
-            "assetName": "ground.png",
-            "pathName": "assets/texture/ground.png"
+            "assetName": "sky_Day_r.png",
+            "pathName": "assets/texture/skyBox/sky_Day_r.png"
         },
         {
             "assetName": "sky_Day_b.png",
             "pathName": "assets/texture/skyBox/sky_Day_b.png"
         },
         {
-            "assetName": "sky_Day_r.png",
-            "pathName": "assets/texture/skyBox/sky_Day_r.png"
-        },
-        {
-            "assetName": "sky_Day_l.png",
-            "pathName": "assets/texture/skyBox/sky_Day_l.png"
+            "assetName": "ground.png",
+            "pathName": "assets/texture/ground.png"
         },
         {
             "assetName": "sky_Day_d.png",
             "pathName": "assets/texture/skyBox/sky_Day_d.png"
+        },
+        {
+            "assetName": "sky_Day_l.png",
+            "pathName": "assets/texture/skyBox/sky_Day_l.png"
         },
         {
             "assetName": "sky_Day_f.png",

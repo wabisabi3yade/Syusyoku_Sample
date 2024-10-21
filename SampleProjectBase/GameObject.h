@@ -2,15 +2,14 @@
 
 // メンバ変数
 #include "Tag.h"
-
 // コンポーネント生成
 #include "ComponentFactory.h"
-
 // シーン関数
 #include "SF_Define.h"
-
 // セーブ・ロード
 #include "ISaveLoad.h"
+
+#include "CollisionInfo.h"
 
 // シーンで使用するオブジェクト全般の基底クラス
 class GameObject : public HashiTaku::ISaveLoad, public HashiTaku::IImGuiUser
@@ -21,6 +20,9 @@ private:
 
 	/// @brief トランスフォーム
 	std::unique_ptr<Transform> pTransform;
+
+	/// @brief 
+	std::unique_ptr<CollisionTypeJudge> pCollisionJudge;
 
 	// コンポーネントリスト
 	std::list<std::unique_ptr<Component>> pComponents;
@@ -48,18 +50,33 @@ public:
 	GameObject& operator=(const GameObject& _other);
 	~GameObject();
 
-	// 更新処理
+	/// @brief 必ず最初に呼び出される処理
 	void AwakeCall();
+	/// @brief Awakeの次に呼び出される処理
 	void StartCall();
+	/// @brief 毎フレーム更新する処理
 	void UpdateCall();	
+	/// @brief Updateよりも後に更新される処理
 	void LateUpdateCall();
+	/// @brief 描画処理
 	void DrawCall();
 
-	// 自身を削除
+	/// @brief 衝突開始時の処理
+	void OnCollisionEnter(const HashiTaku::Bullet::CollisionInfo& _otherColInfo);
+	/// @brief 衝突中の処理
+	void OnCollisionStay(const HashiTaku::Bullet::CollisionInfo& _otherColInfo);
+	/// @brief 衝突終了時の処理
+	void OnCollisionExit(const HashiTaku::Bullet::CollisionInfo& _otherColInfo);
+
+	/// @brief 自身を削除
 	void Destroy();
 
-	/// @brief トランスフォームが変更した時のコールバック
-	void OnChangeTransform();
+	/// @brief 移動座標が変更した時のコールバック
+	void OnChangePosition();
+	/// @brief 移動座標が変更した時のコールバック
+	void OnChangeScale();
+	/// @brief 移動座標が変更した時のコールバック
+	void OnChangeRotation();
 
 	/// @brief コンポーネントをセットするときの処理
 	/// @param _pSetComponent セットするコンポーネント

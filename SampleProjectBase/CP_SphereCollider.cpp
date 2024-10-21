@@ -48,5 +48,5 @@ void CP_SphereCollider::CreateShape()
 void CP_SphereCollider::SetRadius(float _radius)
 {
 	radius = _radius;
-	SettingShape();
+	RecreateShape();
 }

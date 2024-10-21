@@ -92,13 +92,12 @@ void PlayerMoveState::Move()
 	Vector2 input = InputValue();
 
 	float mag = input.Length();
-	HASHI_DEBUG_LOG(std::to_string(mag));
 
 	// ˆÚ“®•ûŒüEˆÚ“®—ÊŒˆ’è
 	moveVector = camRightVec * input.x;
 	moveVector += camForwardVec * input.y;
 	moveVector.y = 0.0f;
-	/*moveVector.Normalize();*/
+	moveVector.Normalize();
 
 	Vector3 moveSpeed = moveVector * mag * maxSpeed;
 	currentSpeed = moveSpeed.Length();

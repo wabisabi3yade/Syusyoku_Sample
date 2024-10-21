@@ -8,7 +8,7 @@ CP_TestCollider::CP_TestCollider() : isGra(true), hei(0.0f)
 
 CP_TestCollider::~CP_TestCollider()
 {
-	DX11BulletPhisics::GetInstance()->RemoveCollObj(*rigid);
+	//DX11BulletPhisics::GetInstance()->RemoveCollObj(*rigid);
 
 	CLASS_DELETE(shape);
 	CLASS_DELETE(mot);
@@ -52,7 +52,7 @@ void CP_TestCollider::Start()
 	rigid = new btRigidBody(rb_info);
 
 	// •¨—ƒ[ƒ‹ƒh‚É’Ç‰Á
-	DX11BulletPhisics::GetInstance()->AddCollObj(*rigid, 0);
+	//DX11BulletPhisics::GetInstance()->AddCollObj(*rigid, 0);
 }
 
 void CP_TestCollider::SetIsGravity(bool a)

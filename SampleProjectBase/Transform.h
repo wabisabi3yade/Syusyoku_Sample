@@ -27,6 +27,7 @@ class Transform : public HashiTaku::ISaveLoad
 	DirectX::SimpleMath::Vector3 eularAngles;	// 回転角度
 	DirectX::SimpleMath::Quaternion rotation;	// クォータニオン
 
+
 	// ローカル
 	DirectX::SimpleMath::Vector3 localPosition;	// 座標
 	DirectX::SimpleMath::Vector3 localScale;	// スケール
@@ -76,10 +77,6 @@ public:
 	virtual void SetLocalScale(const DirectX::SimpleMath::Vector3& _scale);
 	virtual void SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles);
 	virtual void SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quaternion);
-
-	virtual void SetLoadPosition(const DirectX::SimpleMath::Vector3& _position);
-
-	virtual void SetGameObject(GameObject& _go);
 
 	// ワールド
 	DirectX::SimpleMath::Vector3 GetPosition() const;

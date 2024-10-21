@@ -23,13 +23,6 @@
                     }
                 },
                 {
-                    "enable": true,
-                    "isAwake": false,
-                    "isTrigger": false,
-                    "mass": 0.0,
-                    "name": "RigidBody2"
-                },
-                {
                     "AABB": false,
                     "angles": [
                         0.0,
@@ -48,6 +41,18 @@
                         1.0
                     ],
                     "name": "BoxCollider"
+                },
+                {
+                    "enable": true,
+                    "isAwake": false,
+                    "isFreezeRot": [
+                        false,
+                        false,
+                        false
+                    ],
+                    "isTrigger": false,
+                    "mass": 0.0,
+                    "name": "RigidBody"
                 }
             ],
             "layer": 0,
@@ -209,16 +214,9 @@
                     "name": "Player"
                 },
                 {
-                    "animConName": "ANC_Test",
+                    "animConName": "ANC_Player",
                     "enable": true,
                     "name": "Animation"
-                },
-                {
-                    "enable": true,
-                    "isAwake": false,
-                    "isTrigger": false,
-                    "mass": 1.0,
-                    "name": "RigidBody2"
                 },
                 {
                     "AABB": false,
@@ -239,6 +237,18 @@
                         1.0
                     ],
                     "name": "BoxCollider"
+                },
+                {
+                    "enable": true,
+                    "isAwake": true,
+                    "isFreezeRot": [
+                        true,
+                        false,
+                        true
+                    ],
+                    "isTrigger": false,
+                    "mass": 1.0,
+                    "name": "RigidBody"
                 }
             ],
             "layer": 0,
@@ -250,7 +260,7 @@
                 ],
                 "pos": [
                     0.0,
-                    1.600000023841858,
+                    10.699999809265137,
                     0.0
                 ],
                 "rotation": [
@@ -284,7 +294,7 @@
                 ],
                 "pos": [
                     0.0,
-                    1.600000023841858,
+                    10.699999809265137,
                     0.0
                 ],
                 "rotation": [
@@ -316,14 +326,14 @@
                 "child": null,
                 "pos": [
                     0.30000001192092896,
-                    1.6799999475479126,
+                    10.779999732971191,
                     0.05000000074505806
                 ],
                 "rotation": [
                     0.14997103810310364,
-                    -0.768643856048584,
-                    -0.14714299142360687,
-                    0.6041889190673828
+                    -0.7686439156532288,
+                    -0.14714297652244568,
+                    0.6041889786720276
                 ],
                 "scale": [
                     0.20000000298023224,

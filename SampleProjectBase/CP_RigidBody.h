@@ -1,70 +1,98 @@
 #pragma once
-#include "CloneComponent.h"
-
+#include "Component.h"
 #include "DX11BulletPhisics.h"
+#include "CollisionTypeJudge.h"
 
-/// @brief 重さや剛体かなどのパラメータ保持コンポーネント
-class CP_RigidBody : public Component, public CloneComponent<CP_RigidBody>
+class CP_Collider;
+
+class CP_RigidBody : public Component
 {
-	/// @brief 衝突オブジェクト(RigidBody, Ghost)
-	std::unique_ptr<btCollisionObject> pCollisionObject;
+	/// @brief 当たり判定形状タイプ
+	enum ShapeType
+	{
+		Box,
+		Sphere,
+		Num
+	};
 
-	/// @brief 剛体操作
-	std::unique_ptr<btDefaultMotionState> pMotionState;
+	/// @brief 衝突オブジェクトと、コリジョン形状のペア
+	struct CollPair
+	{
+		/// @brief 衝突オブジェクト
+		std::unique_ptr<btCollisionObject> pCollisionObject;
+		/// @brief 剛体操作
+		std::unique_ptr<btDefaultMotionState> pMotionState;
+		// 衝突のタイミングを判断する関数
+		std::unique_ptr<CollisionTypeJudge> pColTypeJudge;
+		// 衝突形状
+		CP_Collider* pColliderComp{ nullptr };
+		/// @brief 慣性モーメント
+		btVector3 inertia;
+	};
 
-	/// @brief 当たり判定の形状
-	btCollisionShape* pShape;
+	/// @brief 衝突パラメータ(nullptrなら判定がない)
+	std::unique_ptr<CollPair> collider;
 
-	/// @brief 慣性モーメント
-	DirectX::SimpleMath::Vector3 inertia;
-
-	/// @brief 質量(0.0なら静的オブジェクト)
+	/// @brief 質量
 	float mass;
 
-	/// @brief 接触なしか？
+	/// @brief 常に計算させる
+	bool isAwaking;
+
+	/// @brief すり抜けるか？
 	bool isTrigger;
 
-	/// @brief 重力を受けるか？
-	bool isGravity;
+	/// @brief 軸の数
+	static constexpr short AXIS_CNT = 3;
 
-	/// @brief 物理計算を行うか？
-	bool isKinematic;
-
-	/// @brief 形状がセットされているか？
-	bool isSetShape;
-
-	/// @brief 既に当たり判定は追加しているか？
-	bool isAlreadySendCol;
+	/// @brief 固定したい回転軸フラグ
+	std::array<bool, AXIS_CNT> isFreezeRotation;
 public:
 	CP_RigidBody();
-	CP_RigidBody(const CP_RigidBody& _other);
+	~CP_RigidBody() {}
 
-	CP_RigidBody& operator=(const CP_RigidBody& _other);
-
+	// コンポーネント共通関数
 	void Init() override;
-	void Update() override;
-	void ImGuiSetting() override;
 	void OnDestroy() override;
-	void OnChangeTransform() override;
+	void OnEnableTrue() override;
+	void OnEnableFalse() override;
 
-	/// @brief 質量をセットし、再計算
-	/// @param _mass 質量
+	/// @brief コライダーをセットする
+	/// @param _setCollider セットするコライダーコンポーネント
+	void SetColliderShape(CP_Collider& _setCollider);
+	
+	/// @brief コライダーを削除する
+	/// @param _removeCollider 
+	void RemoveColliderShape(CP_Collider& _removeCollider);
+
+	/// @brief 質量をセットする
+	/// @param _mass 
 	void SetMass(float _mass);
 
-	/// @brief 当たり判定の形状をセット
-	/// @param _shape 形状
-	void SetShape(btCollisionShape& _shape);
+	/// @brief 静的オブジェクトに遷移しないようにするかセットする
+	/// @param _isAwake 静的オブジェクトに遷移しないようにするか？
+	void SetIsAwake(bool _isAwake);
 
-	/// @brief 形状を削除する
-	void RemoveShape();
+	/// @brief 実態を持たないように（ghostObject）にするかセットする
+	/// @param _isTrigger  実態を持たないようにするか？
+	void SetIsTrigger(bool _isTrigger);
 
-	/// @brief DxからBtのトランスフォームに合わせる
-	/// @param _dxTransform dxのトランスフォーム
-	void SetTransformDxToBt();
+	/// @brief DXからBulletにトランスフォームを代入する
+	void SetToBtTransform();
 
-	/// @brief  BtからDxのトランスフォームに合わせる
-	void SetTransformBtToDx();
-	
+	/// @brief BulletからDXにトランスフォームを代入する
+	void SetToDXTransform();
+
+	/// @brief 衝突オブジェクトを取得する
+	/// @param _outObject 結果オブジェクト
+	btCollisionObject& GetCollisionObject();
+
+	/// @brief 衝突タイプ判定を取得
+	/// @return 衝突タイプ判定クラス変数
+	CollisionTypeJudge& GetColTypeJudge() const;
+
+	void ImGuiSetting() override;
+
 	/// @brief セーブする
 	/// @param _data セーブシーンデータ
 	nlohmann::json Save() override;
@@ -73,49 +101,36 @@ public:
 	/// @param _data ロードするシーンデータ 
 	void Load(const nlohmann::json& _data) override;
 private:
-	void Copy(const CP_RigidBody& _other);
+	void UpdateFreezeRotation();
 
-	void Start() override;
+	/// @brief ゲームオブジェクトからコライダーを探してセットする
+	void FindSetCollider();
 
-	void OnEnableTrue() override;
-	void OnEnableFalse() override;
+	/// @brief 剛体を作成する
+	void CreateRigidBody();
 
-	/// @brief BulletのTransformに変換する
-	/// @param _btTransform 格納するBullet Transform
-	void ToBtTransform(btTransform& _btTransform);
-
-	/// @brief 剛体かどうセット
-	/// @param _isRB 剛体か？
-	void SetIsTrigger(bool _isRB);
-
-	/// @brief 重力を受けるかセット
-	/// @param _isGravity 重力を受けるか？
-	void SetIsGravity(bool _isGravity);
-
-	/// @brief 衝突オブジェクトを解放し、物理空間から外す
-	void RemoveCollObject();
-
-	/// @brief 衝突オブジェクト作成
-	void CreateCollObject();
-
-	/// @brief 剛体を作成
-	void CreateRB();
-
-	/// @brief Ghostを作成
+	/// @brief GohstObjectを作成する
 	void CreateGhost();
 
+	/// @brief 剛体でもGhostでも共通に起きる処理
+	void CommonCreateColObj();
 
-	/// @brief 衝突オブジェクトをbtRigidBodyに変換
-	/// @return cast変換したポインタ
-	btRigidBody* CastRigidBody();
+	/// @brief btRigidBody型に変換する
+	/// @return btRigidBpdy参照
+	btRigidBody& CastRigidBody();
 
-	/// @brief 物理シミュレーションに衝突オブジェクトを追加する
-	void AddCollisionToWorld();
+	/// @brief DxからBulletのトランスフォームを取得する
+	/// @param _outBtTransform DxからBulletのTransformを取得
+	void CastDxToBtTransform(btTransform& _outBtTransform);
 
-	/// @brief Bullet側のTransformをセット
-	void SetBulletTransform(const btTransform& _set);
-	
-	/// @brief Bullet側のTransformを取得
-	void GetBulletTransform(btTransform& _get);
+	/// @brief 再度コライダーを作り直す（RigidBodyからGhpstObjectにしたいときとか）
+	void ReCreateCollider();
+
+	/// @brief BulletのTransformを取得する
+	/// @param _btTrans 結果
+	void GetBtTransform(btTransform& _btTrans);
+
+	// ImGuiで回転固定に関する編集
+	void ImGuiFreezeRot();
 };
 

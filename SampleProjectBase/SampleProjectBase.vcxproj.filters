@@ -643,9 +643,6 @@
     <Filter Include="ソース ファイル\Component\Collider\Test">
       <UniqueIdentifier>{6774cb9a-dd42-43a1-a66b-0b1c0f8117fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\Collider\RigidBody\RigidBody2">
-      <UniqueIdentifier>{4bd581c2-135d-4d9b-bcd5-7ea3de2cf6db}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Target">
       <UniqueIdentifier>{f8125145-3108-4eff-b3aa-c7c99e0ece36}</UniqueIdentifier>
     </Filter>
@@ -654,6 +651,24 @@
     </Filter>
     <Filter Include="ソース ファイル\System\SystemDraw">
       <UniqueIdentifier>{67933a3e-6739-46f8-bc0a-99cbcc12782e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet\CollisionObject">
+      <UniqueIdentifier>{d901bc85-19a8-4f14-bf32-ee07a27321cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet\CollisionObject\RigidBody">
+      <UniqueIdentifier>{d8aee226-f0a9-4e25-89b6-0b94d1b52083}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet\CollisionObject\GhostObject">
+      <UniqueIdentifier>{263c6a30-d9bb-41da-9cb5-98129267f0a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet\CollisionObject\Base">
+      <UniqueIdentifier>{cd05e6a9-bf43-415d-8f04-d27294299ab5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\CollisionTypeJudge">
+      <UniqueIdentifier>{13f0554e-7b52-4850-a7dc-fd4ef58f66df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet\CollisionInfo">
+      <UniqueIdentifier>{c0486cea-d8a8-466f-8a36-1798c02af0bf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1046,9 +1061,6 @@
     <ClCompile Include="DX11BulletPhisics.cpp">
       <Filter>ソース ファイル\Bullet\PhysicsEngine</Filter>
     </ClCompile>
-    <ClCompile Include="CP_RigidBody.cpp">
-      <Filter>ソース ファイル\Component\Collider\RigidBody</Filter>
-    </ClCompile>
     <ClCompile Include="AnimTransitionArrow.cpp">
       <Filter>ソース ファイル\Animation\AnimTransitionArrow</Filter>
     </ClCompile>
@@ -1196,9 +1208,6 @@
     <ClCompile Include="AnimTransitionChecker.cpp">
       <Filter>ソース ファイル\Animation\AnimControllPlayer\TransitionChecker</Filter>
     </ClCompile>
-    <ClCompile Include="CP_RigidBody2.cpp">
-      <Filter>ソース ファイル\Component\Collider\RigidBody\RigidBody2</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerTargetMove.cpp">
       <Filter>ソース ファイル\Object\Player\Action\PlayerState\Target</Filter>
     </ClCompile>
@@ -1210,6 +1219,12 @@
     </ClCompile>
     <ClCompile Include="CP_TestCollider.cpp">
       <Filter>ソース ファイル\Component\Collider\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_RigidBody.cpp">
+      <Filter>ソース ファイル\Component\Collider\RigidBody</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionTypeJudge.cpp">
+      <Filter>ソース ファイル\Object\CollisionTypeJudge</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1594,9 +1609,6 @@
     <ClInclude Include="DX11BulletPhisics.h">
       <Filter>ソース ファイル\Bullet\PhysicsEngine</Filter>
     </ClInclude>
-    <ClInclude Include="CP_RigidBody.h">
-      <Filter>ソース ファイル\Component\Collider\RigidBody</Filter>
-    </ClInclude>
     <ClInclude Include="MainApplication.h">
       <Filter>ソース ファイル\System\Application\MainApplication</Filter>
     </ClInclude>
@@ -1771,9 +1783,6 @@
     <ClInclude Include="AnimTransitionChecker.h">
       <Filter>ソース ファイル\Animation\AnimControllPlayer\TransitionChecker</Filter>
     </ClInclude>
-    <ClInclude Include="CP_RigidBody2.h">
-      <Filter>ソース ファイル\Component\Collider\RigidBody\RigidBody2</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerTargetMove.h">
       <Filter>ソース ファイル\Object\Player\Action\PlayerState\Target</Filter>
     </ClInclude>
@@ -1785,6 +1794,15 @@
     </ClInclude>
     <ClInclude Include="CP_TestCollider.h">
       <Filter>ソース ファイル\Component\Collider\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_RigidBody.h">
+      <Filter>ソース ファイル\Component\Collider\RigidBody</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionTypeJudge.h">
+      <Filter>ソース ファイル\Object\CollisionTypeJudge</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionInfo.h">
+      <Filter>ソース ファイル\Bullet\CollisionInfo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
