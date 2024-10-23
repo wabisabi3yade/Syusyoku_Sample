@@ -22,7 +22,8 @@ void ShaderCollection::LoadVS()
 		"VS_Primitive.cso",
 		"VS_SkinAnimation.cso",
 		"VS_Line.cso",
-		"VS_Sprite.cso"
+		"VS_Sprite.cso",
+		"VS_UI.cso"
 	};
 
 	// セットする名前
@@ -32,7 +33,8 @@ void ShaderCollection::LoadVS()
 		"VS_Primitive",
 		"VS_SkinAnimation",
 		"VS_Line",
-		"VS_Sprite"
+		"VS_Sprite",
+		"VS_UI"
 	};
 	defaultVS = vShaderNames[0];
 
@@ -47,6 +49,9 @@ void ShaderCollection::LoadVS()
 	pVsShaderList.push_back(std::move(pVShader));
 
 	pVShader = std::make_unique<VS_SkinnedAnimation>();
+	pVsShaderList.push_back(std::move(pVShader));
+
+	pVShader = std::make_unique<VertexShader>();
 	pVsShaderList.push_back(std::move(pVShader));
 
 	pVShader = std::make_unique<VertexShader>();
@@ -76,7 +81,8 @@ void ShaderCollection::LoadPS()
 		"PS_TexColor.cso",
 		"PS_Unlit.cso",
 		"PS_Primitive.cso",
-		"PS_Line.cso"
+		"PS_Line.cso",
+		"PS_UI.cso"
 	};
 	// セットする名前
 	std::vector<std::string> pShaderNames
@@ -84,7 +90,8 @@ void ShaderCollection::LoadPS()
 		"PS_TexColor",
 		"PS_Unlit",
 		"PS_Primitive",
-		"PS_Line"
+		"PS_Line",
+		"PS_UI"
 	};
 	defaultPS = pShaderNames[0];
 
@@ -97,6 +104,9 @@ void ShaderCollection::LoadPS()
 
 	// アンリット
 	pPShader = std::make_unique<PS_Unlit>();
+	pPsShaderList.push_back(std::move(pPShader));
+
+	pPShader = std::make_unique<PixelShader>();
 	pPsShaderList.push_back(std::move(pPShader));
 
 	pPShader = std::make_unique<PixelShader>();
@@ -141,11 +151,13 @@ VertexShader* ShaderCollection::GetVertexShader(const std::string& _shaderName)
 	}
 
 	VertexShader* retPtr = dynamic_cast<VertexShader*>(itr->second.get());
+#ifdef EDIT
 	if (retPtr == nullptr)
 	{
 		HASHI_DEBUG_LOG(_shaderName + "指定したシェーダー名は頂点シェーダーではありません");
 		return nullptr;
 	}
+#endif
 
 	return retPtr;
 }

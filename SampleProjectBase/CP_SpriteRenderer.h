@@ -6,7 +6,7 @@
 #include "Material.h"
 
 // スプライトを描画するコンポーネント
-class CP_SpriteRenderer : public CP_Renderer, public CloneComponent<CP_SpriteRenderer>
+class CP_SpriteRenderer : public CP_Renderer
 {
 	// スプライト
 	std::unique_ptr<Sprite> pSprite;

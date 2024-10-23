@@ -170,12 +170,12 @@ void CP_SkyBox::FaceTransform(FaceKind _facePlace, DirectX::SimpleMath::Vector3&
 	switch (_facePlace)
 	{
 	case CP_SkyBox::FaceKind::X_Right:
-		faceVec.x = 1.0f;
-		_outAngles.y = CENTER_ANGLE;
-		break;
-	case CP_SkyBox::FaceKind::X_Left:
 		faceVec.x = -1.0f;
 		_outAngles.y = -CENTER_ANGLE;
+		break;
+	case CP_SkyBox::FaceKind::X_Left:
+		faceVec.x = 1.0f;
+		_outAngles.y = CENTER_ANGLE;
 		break;
 	case CP_SkyBox::FaceKind::Y_Top:
 		faceVec.y = 1.0f;

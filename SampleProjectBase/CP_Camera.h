@@ -20,15 +20,12 @@ class CP_Camera : public Component, public CloneComponent<CP_Camera>
 	u_int viewPortSlot;
 public:
 	CP_Camera();
-	~CP_Camera() {}
+	~CP_Camera() {};
 
 	void Init() override;
-
 	void LateUpdate() override;
-
 	void Draw() override;
-
-	void ImGuiSetting() override;
+	void OnDestroy() override;
 
 	/// @brief ビュー変換行列
 	void UpdateViewMatrix();	
@@ -44,6 +41,8 @@ public:
 
 	// ビューポート番号をセット
 	void SetViewportSlot(u_int _slot);
+
+	void ImGuiSetting() override;
 
 	/// @brief セーブする
 	/// @param _sceneData セーブデータ
@@ -64,3 +63,41 @@ private:
 	void UpdateOrthographic();
 };
 
+/// @brief CP_CameraのNullオブジェクト
+class CP_CameraNull : public CP_Camera
+{
+public:
+	CP_CameraNull() {}
+	~CP_CameraNull() {}
+
+	void Init() override {}
+
+	void LateUpdate() override {}
+
+	void Draw() override {}
+
+	void ImGuiSetting() override {}
+
+	/// @brief ビュー変換行列
+	void UpdateViewMatrix() {}
+
+	/// @brief 透視投影に変更
+	void SetPerspective() {}
+
+	/// @brief 平行投影に変更
+	void SetOrthographic() {}
+
+	// fovセット
+	void SetFov(float _setFov) {}
+
+	// ビューポート番号をセット
+	void SetViewportSlot(u_int _slot) {}
+
+	/// @brief セーブする
+	/// @param _sceneData セーブデータ
+	nlohmann::json Save() { return nlohmann::json(); }
+
+	/// @brief ロードする
+	/// @param _sceneData ロードするデータ 
+	void Load(const nlohmann::json& _data) {}
+};

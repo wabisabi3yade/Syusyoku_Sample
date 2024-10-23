@@ -38,3 +38,8 @@ RenderParam::WVP& RenderParam::GetWVP(const Vector3& _position, const Vector3& _
 	return wvp;
 }
 
+const DirectX::SimpleMath::Matrix& RenderParam::GetProjectionMatrix() const
+{
+	return wvp.projection;
+}
+

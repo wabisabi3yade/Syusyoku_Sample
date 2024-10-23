@@ -5,7 +5,7 @@
 #include "Mesh_Group.h"
 
 // メッシュ描画コンポーネント
-class CP_MeshRenderer : public CP_Renderer, public CloneComponent<CP_MeshRenderer>
+class CP_MeshRenderer : public CP_Renderer
 {
 	/// @brief 描画するメッシュ群
 	Mesh_Group* pRenderMesh{ nullptr };

@@ -34,6 +34,10 @@ public:
 	/// @return wvp行列
 	WVP& GetWVP(const DirectX::SimpleMath::Vector3& _position, const DirectX::SimpleMath::Vector3& _scale, const DirectX::SimpleMath::Quaternion& _rotation);
 
+	/// @brief 現在の投影行列を取得
+	/// @return 投影行列
+	const DirectX::SimpleMath::Matrix& GetProjectionMatrix() const;
+
 	/// @brief ビュー変換行列をセット
 	/// @param _view ビュー変換行列
 	void SetView(const DirectX::SimpleMath::Matrix& _view) { wvp.view = _view; }

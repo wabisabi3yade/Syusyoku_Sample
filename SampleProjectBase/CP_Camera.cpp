@@ -35,6 +35,12 @@ void CP_Camera::Draw()
 	UpdateViewMatrix();
 }
 
+void CP_Camera::OnDestroy()
+{
+	// メインカメラから外す
+	InSceneSystemManager::GetInstance()->DeleteCamera(*this);
+}
+
 void CP_Camera::ImGuiSetting()
 {
 	ImGui::Text("Right");
@@ -163,6 +169,7 @@ void CP_Camera::UpdateOrthographic()
 	const D3D11_VIEWPORT& viewport = renderer.GetViewPort(viewPortSlot);
 	float screenWidth = viewport.Width;
 	float screenHeight = viewport.Height;
+
 	// 正投影行列を作成する
 	Matrix mat = DirectX::XMMatrixOrthographicOffCenterLH(
 		0.0f,	// 左上

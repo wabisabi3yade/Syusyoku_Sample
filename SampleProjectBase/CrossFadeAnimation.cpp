@@ -66,8 +66,6 @@ void CrossFadeAnimation::ProgressTime(float _deltaTime)
 	// 遷移割合をイージングを考慮した値で求める
 	float ratio = elapsedTime / transitionTime;
 	transitionWeight = Easing::EaseValue(ratio, easeKind);
-
-	HASHI_DEBUG_LOG(std::to_string(transitionWeight));
 }
 
 void CrossFadeAnimation::Update(float _playSpeed)

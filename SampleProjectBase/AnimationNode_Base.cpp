@@ -200,7 +200,7 @@ void AnimationNode_Base::ImGuiSetParameter()
 	ImGui::Checkbox("Y", &isRootMotionPosY); ImGui::SameLine();
 	ImGui::Checkbox("Rot", &isRootMotionRot);
 
-	ImGuiMethod::PushItemWidth();
+	ImGuiMethod::PushItemSmallWidth();
 	ImGui::DragFloat("Speed", &playNodeSpeedTimes, 0.01f, 0.0f, 100.0f);
 	ImGui::PopItemWidth();
 

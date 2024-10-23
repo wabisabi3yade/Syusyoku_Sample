@@ -7,7 +7,7 @@
 namespace DX = DirectX::SimpleMath;
 using namespace HashiTaku;
 
-CP_Collider::CP_Collider(Type _type) : type(_type)
+CP_Collider::CP_Collider(ShapeType _type) : type(_type)
 {
 }
 

@@ -110,7 +110,7 @@ public:
 	static void LineSpaceMid();
 
 	/// @brief 入力フィールドのサイズを調整する
-	static void PushItemWidth();
+	static void PushItemSmallWidth();
 
 	/// @brief フォントの大きさを変える
 	/// @param _size フォントの大きさ

@@ -277,7 +277,7 @@ void AnimTransitionArrow::ImGuiSetCondistion()
 
 void AnimTransitionArrow::ImGuiSetting()
 {
-	ImGuiMethod::PushItemWidth();
+	ImGuiMethod::PushItemSmallWidth();
 	ImGui::DragFloat("TransitionTime", &transitionTime, 0.01f, 0.0f, 10.0f);	// ‘JˆÚŠÔ
 	ImGui::Checkbox("HasExitTime", &isHasExitRatio);	// exitƒtƒ‰ƒO
 	ImGui::DragFloat("ExitRatio", &exitRatio, 0.01f, 0.0f, 1.0f);	// ‘JˆÚæŠ„‡

@@ -170,6 +170,11 @@ namespace Mtx
 	/// @return 回転行列
 	Matrix CreateRoratateMtx(const Vector3& _degrees);
 
+	/// @brief トランスフォームから行列を作成する
+	/// @param _transform トランスフォーム
+	/// @param _outtMatrix 結果行列
+	void CreateTransformMatrix(const Vector3& _pos, const Vector3& _scale, const Quaternion& _rotation, Matrix& _outMatrix);
+
 	/// @brief ワールド行列から座標・スケール・回転量を取得
 	/// @param _worldMtx ワールド行列
 	/// @param _pos 移動座標

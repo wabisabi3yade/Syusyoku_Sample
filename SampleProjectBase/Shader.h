@@ -81,7 +81,7 @@ public:
 	/// @brief シェーダーに送るための配列に追加
 	/// @param _slot スロットの番号
 	/// @param _pTexture テクスチャ
-	void SetTexture(u_int _slot, Texture* _pTexture);
+	void SetTexture(u_int _slot, const Texture* _pTexture);
 
 	/// @brief シェーダに名前をつける
 	/// @param _name 名前

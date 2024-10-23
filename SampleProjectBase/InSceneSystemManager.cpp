@@ -9,18 +9,32 @@ using namespace SceneFunction;
 InSceneSystemManager::~InSceneSystemManager()
 {
 	pSceneObjects.reset();
+
+	if (isNullCamera)	// nullカメラなら
+		CLASS_DELETE(pMainCamera);
 }
 
 void InSceneSystemManager::Init()
 {
+	// シーンオブジェクトを作成
 	pSceneObjects = std::make_unique<SceneObjects>();
+
+	// シーン光源作成
 	pSceneLights = std::make_unique<SceneLights>();
+
+	// Nullオブジェクトを作成
+	pMainCamera = new CP_CameraNull();
+	isNullCamera = true;
 }
 
 void InSceneSystemManager::Reset()
 {
-	pMainCamera = nullptr;
-
+	if (!isNullCamera)
+	{
+		pMainCamera = new CP_CameraNull();
+		isNullCamera = true;
+	}
+		
 	// シーンオブジェクトだけ先に解放する
 	pSceneObjects.reset();
 	pSceneLights.reset();
@@ -46,5 +60,18 @@ SceneLights& InSceneSystemManager::GetSceneLights()
 
 void InSceneSystemManager::SetCamera(CP_Camera& _camera)
 {
+	if (isNullCamera)	// nullオブジェクトを持っているなら
+		CLASS_DELETE(pMainCamera);
+
 	pMainCamera = &_camera;
+	isNullCamera = false;
+}
+
+void InSceneSystemManager::DeleteCamera(CP_Camera& _camera)
+{
+	if (pMainCamera != &_camera) return;
+
+	// nullカメラオブジェクトを作成
+	pMainCamera = new CP_CameraNull();
+	isNullCamera = true;
 }

@@ -244,7 +244,7 @@ void GameObject::Destroy()
 	SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->
 		GetSceneObjects();
 
-	sceneObjects.DeleteObj(*this);
+	sceneObjects.DeleteGameObject(*this);
 }
 
 void GameObject::OnChangePosition()
@@ -361,58 +361,69 @@ void GameObject::OnActiveFalse()
 
 void GameObject::ImGuiSetting()
 {
-	if (ImGuiMethod::TreeNode(name.c_str()))	// 名前Tree
+	ImGuiMethod::PushItemSmallWidth();
+	// タグ設定
+	Tag::Type curTag = tag.GetType();
+	if (Tag::ImGuiComboBox(curTag))
+		SetTag(curTag);
+
+	ImGui::SameLine();
+
+	// レイヤー設定
+	Layer::Type curLayer = layer.GetType();
+	if (Layer::ImGuiComboBox(curLayer))
+		SetLayer(curLayer);
+
+	ImGui::PopItemWidth();
+
+	// 親オブジェクトを設定
+	ImGuiSetParent();
+
+	bool changeActive = isActive;
+	if (ImGui::Checkbox("isActive", &changeActive))
+		SetActive(changeActive);
+
+	Vector3 v = pTransform->GetLocalPosition();
+	if (ImGuiMethod::DragFloat3(v, "pos", 0.1f))
+		pTransform->SetLocalPosition(v);
+
+	v = pTransform->GetLocalScale();
+	if (ImGuiMethod::DragFloat3(v, "scale", 0.1f))
+		pTransform->SetLocalScale(v);
+
+	v = pTransform->GetLocalEularAngles();
+	if (ImGuiMethod::DragFloat3(v, "rot"))
+		pTransform->SetLocalEularAngles(v);
+
+	for (auto cpItr = pComponents.begin(); cpItr != pComponents.end();)
 	{
-		bool changeActive = isActive;
-		if (ImGui::Checkbox("isActive", &changeActive))
-			SetActive(changeActive);
+		bool isDelete = false;	// コンポーネント削除フラグ
 
-		ImGuiSetParent();
-
-		Vector3 v = pTransform->GetLocalPosition();
-		if (ImGuiMethod::DragFloat3(v, "pos", 0.1f))
-			pTransform->SetLocalPosition(v);
-
-		v = pTransform->GetLocalScale();
-		if (ImGuiMethod::DragFloat3(v, "scale", 0.1f))
-			pTransform->SetLocalScale(v);
-
-		v = pTransform->GetLocalEularAngles();
-		if (ImGuiMethod::DragFloat3(v, "rot"))
-			pTransform->SetLocalEularAngles(v);
-
-		for (auto cpItr = pComponents.begin(); cpItr != pComponents.end();)
+		if (ImGuiMethod::TreeNode((*cpItr)->GetName().c_str()))
 		{
-			bool isDelete = false;	// コンポーネント削除フラグ
+			// 削除ボタン
+			isDelete = ImGui::Button("Delete");
+			// コンポーネント内の編集
+			(*cpItr)->ImGuiSettingCall();
 
-			if (ImGuiMethod::TreeNode((*cpItr)->GetName().c_str()))
-			{
-				// 削除ボタン
-				isDelete = ImGui::Button("Delete");
-				// コンポーネント内の編集
-					(*cpItr)->ImGuiSettingCall();
-
-				ImGui::TreePop();
-			}
-
-			if (isDelete)	// 削除するなら
-			{
-				const auto& nextItr = std::next(cpItr);
-				DeleteComponent(*(*cpItr));
-				cpItr = nextItr;
-			}
-			else
-				cpItr++;
+			ImGui::TreePop();
 		}
 
-		ImGui::Dummy(ImVec2(0, 10));
-
-		// コンポーネント追加
-		ComponentFactory* compFactory = ComponentFactory::GetInstance();
-		compFactory->CreateImGuiCombo(*this);
-
-		ImGui::TreePop();
+		if (isDelete)	// 削除するなら
+		{
+			const auto& nextItr = std::next(cpItr);
+			DeleteComponent(*(*cpItr));
+			cpItr = nextItr;
+		}
+		else
+			cpItr++;
 	}
+
+	ImGui::Dummy(ImVec2(0, 10));
+
+	// コンポーネント追加
+	ComponentFactory* compFactory = ComponentFactory::GetInstance();
+	compFactory->CreateImGuiCombo(*this);
 }
 
 nlohmann::json GameObject::Save()
@@ -444,11 +455,11 @@ void GameObject::Load(const nlohmann::json& _data)
 
 	Tag::Type tagType;
 	LoadJsonEnum<Tag::Type>("tag", tagType, _data);
-	tag.SetType(tagType);
+	SetTag(tagType);
 
 	Layer::Type layerType;
 	LoadJsonEnum<Layer::Type>("layer", layerType, _data);
-	layer.SetType(layerType);
+	SetLayer(layerType);
 }
 
 void GameObject::LateLode(const nlohmann::json& _data)
@@ -468,7 +479,7 @@ void GameObject::LateLode(const nlohmann::json& _data)
 
 void GameObject::SetName(const std::string& _name)
 {
-	if (_name == "") return;	// 名前がないなら
+	if (_name.empty()) return;	// 名前がないなら
 	name = _name;
 }
 
@@ -491,8 +502,45 @@ void GameObject::SetActive(bool _isActive)
 	}
 }
 
+void GameObject::SetTag(Tag::Type _setType)
+{
+	tag.SetType(_setType);
+}
+
+void GameObject::SetLayer(Layer::Type _setType)
+{
+	// 同じレイヤーなら終わる
+	if (layer.GetType() == _setType) return;
+
+	// レイヤーを変更
+	layer.SetType(_setType);
+
+	SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->GetSceneObjects();
+	sceneObjects.MoveListToList(*this);
+}
+
 Transform& GameObject::GetTransform()
 {
 	return *pTransform;
+}
+
+const std::string& GameObject::GetName() const
+{
+	return name;
+}
+
+bool GameObject::GetIsActive() const
+{
+	return isActive;
+}
+
+Tag::Type GameObject::GetTag() const
+{
+	return tag.GetType();
+}
+
+Layer::Type GameObject::GetLayer() const
+{
+	return layer.GetType();
 }
 

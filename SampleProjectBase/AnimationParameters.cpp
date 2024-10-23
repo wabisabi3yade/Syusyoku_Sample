@@ -467,13 +467,13 @@ void AnimationParameters::ImGuiDisplay()
 
 		else if (int* pInt = std::get_if<int>(&itr->second))// int
 		{
-			ImGuiMethod::PushItemWidth();
+			ImGuiMethod::PushItemSmallWidth();
 			ImGui::DragInt("##int", pInt);
 			ImGui::PopItemWidth();
 		}
 		else if (float* pFloat = std::get_if<float>(&itr->second))	// float
 		{
-			ImGuiMethod::PushItemWidth();
+			ImGuiMethod::PushItemSmallWidth();
 			ImGui::DragFloat("##float", pFloat, PARAM_EDIT_SPEED);
 			ImGui::PopItemWidth();
 		}

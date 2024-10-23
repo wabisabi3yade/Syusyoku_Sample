@@ -19,17 +19,21 @@ class InSceneSystemManager : public Singleton_Base<InSceneSystemManager>
 	/// @brief シーンライティング
 	std::unique_ptr<SceneLights> pSceneLights;
 
-	InSceneSystemManager() : pMainCamera(nullptr) {}
+	/// @brief カメラがNullObjectかどうか
+	bool isNullCamera;
+
+	InSceneSystemManager() : pMainCamera(nullptr), isNullCamera(true) {}
 	~InSceneSystemManager();
 
 public:
+	/// @brief 初期化処理
 	void Init();
 
 	/// @brief 変数を解放して、新しく生成する
 	void Reset();
 
 	/// @brief  メインカメラを取得
-	/// @return 
+	/// @return カメラの取得
 	CP_Camera& GetMainCamera();
 
 	/// @brief シーンのオブジェクト配列を取得
@@ -42,5 +46,9 @@ public:
 
 	// カメラをセットする
 	void SetCamera(CP_Camera& _camera);
+
+	/// @brief カメラを削除する
+	/// @param _camera 削除するカメラ
+	void DeleteCamera(CP_Camera& _camera);
 };
 
