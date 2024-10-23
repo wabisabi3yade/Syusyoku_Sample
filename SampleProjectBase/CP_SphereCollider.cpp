@@ -19,9 +19,9 @@ void CP_SphereCollider::ImGuiSetting()
 		SetRadius(changeRadius);
 }
 
-DirectX::SimpleMath::Vector3 CP_SphereCollider::GetCenterPos() const
+float CP_SphereCollider::GetRadius() const
 {
-	return GetTransform().GetPosition() + posOffset;
+	return radius;
 }
 
 nlohmann::json CP_SphereCollider::Save()
@@ -42,11 +42,25 @@ void CP_SphereCollider::Load(const nlohmann::json& _data)
 
 void CP_SphereCollider::CreateShape()
 {
-	pCollisionShape = std::make_unique<btSphereShape>(Bullet::ToBtScalar(radius));
+	float worldRadius = 1.0f;
+	ApplyObjectScale(worldRadius);
+	pCollisionShape = std::make_unique<btSphereShape>(Bullet::ToBtScalar(worldRadius));
 }
 
 void CP_SphereCollider::SetRadius(float _radius)
 {
 	radius = _radius;
 	RecreateShape();
+}
+
+void CP_SphereCollider::ApplyObjectScale(float& _outRadius)
+{
+	// スケール値で3軸の中の一番大きい値を掛ける
+	Transform& transform = GetTransform();
+	Vector3 scale = transform.GetScale();
+	float maxVal = scale.x;
+	maxVal = std::max(maxVal, scale.y);
+	maxVal = std::max(maxVal, scale.z);
+
+	_outRadius = radius * maxVal;
 }

@@ -1,8 +1,7 @@
 #include "pch.h"
 #include "SceneObjects.h"
-#include <string>
-
 #include "SF_Define.h"
+#include "InSceneSystemManager.h"
 
 typedef std::unordered_map<std::string, std::unique_ptr<GameObject>> ObjectList;
 
@@ -18,118 +17,166 @@ SceneObjects::~SceneObjects()
 
 void SceneObjects::Awake()
 {
-	for (auto itr = objList.begin(); itr != objList.end(); itr++)
+	for (auto& obj : objList)
 	{
-		itr->second->AwakeCall();
+		obj.second->AwakeCall();
 	}
 
-	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
+	for (auto& ui : uiList)
 	{
-		itr->second->AwakeCall();
+		ui.second->AwakeCall();
 	}
 }
 
 void SceneObjects::Start()
 {
-	for (auto itr = objList.begin(); itr != objList.end(); itr++)
+	for (auto& obj : objList)
 	{
-		itr->second->StartCall();
+		obj.second->StartCall();
 	}
 
-	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
+	for (auto& ui : uiList)
 	{
-		itr->second->StartCall();
+		ui.second->StartCall();
 	}
 }
 
 void SceneObjects::Update()
 {
-	for (auto itr = objList.begin(); itr != objList.end(); itr++)
+	for (auto& obj : objList)
 	{
-		itr->second->UpdateCall();
+		obj.second->UpdateCall();
 	}
 
-	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
+	for (auto& ui : uiList)
 	{
-		itr->second->UpdateCall();
+		ui.second->UpdateCall();
 	}
 }
 
 void SceneObjects::LateUpdate()
 {
-	for (auto itr = objList.begin(); itr != objList.end(); itr++)
+	for (auto& obj : objList)
 	{
-		itr->second->LateUpdateCall();
+		obj.second->LateUpdateCall();
 	}
 
-	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
+	for (auto& ui : uiList)
 	{
-		itr->second->LateUpdateCall();
-	}
-}
-
-void SceneObjects::UpdateRigidBody()
-{
-	for (auto itr = objList.begin(); itr != objList.end(); itr++)
-	{
-		itr->second->AwakeCall();
+		ui.second->LateUpdateCall();
 	}
 }
 
 void SceneObjects::Draw()
 {
 	// 3D空間上のオブジェクト描画
-	for (auto itr = objList.begin(); itr != objList.end(); itr++)
+	for (auto& obj : objList)
 	{
-		itr->second->DrawCall();
+		obj.second->DrawCall();
 	}
 
-
-	// ↓平行投影をさせる //
-
-
-	//------------------//
-
+	UIDrawSetup();
+	
 	// 2D空間（UI）のオブジェクト
-	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
+	for (auto& ui : uiList)
 	{
-		itr->second->DrawCall();
+		ui.second->DrawCall();
 	}
+
+	// 透視投影に戻す
+	UIDrawEnd();
+}
+
+void SceneObjects::MoveToUIList(GameObject& _gameObject)
+{
+	// UIじゃないなら
+	if (!IsUI(_gameObject)) return;
+
+	// オブジェクトから取り出す
+	std::string objectName;
+	std::unique_ptr<GameObject> takeoutObj;
+	if (!TakeOutObject(_gameObject, objectName, takeoutObj, objList)) return;
+
+	// UIリストに追加する
+	uiList[objectName] = std::move(takeoutObj);
+}
+
+void SceneObjects::MoveToObjList(GameObject& _gameObject)
+{
+	// UIなら
+	if (IsUI(_gameObject)) return;
+
+	// オブジェクトから取り出す
+	std::string objectName;
+	std::unique_ptr<GameObject> takeoutObj;
+	if (!TakeOutObject(_gameObject, objectName, takeoutObj, uiList)) return;
+
+	// UIリストに追加する
+	objList[objectName] = std::move(takeoutObj);
 }
 
 void SceneObjects::ImGuiSetting()
 {
-#ifdef EDIT
+	ImGui::Begin("SceneObjects");
 
-	ImGui::Begin(ShiftJisToUtf8("シーンオブジェクト").c_str());
-
-	for (auto itr = objList.begin(); itr != objList.end(); itr++)
+	// オブジェクト
+	for (auto itr = objList.begin(); itr != objList.end();)
 	{
-		itr->second->ImGuiCall();
+		bool isDelete = false;
+
+		const std::string& objName = itr->second->GetName();
+		if (ImGuiMethod::TreeNode(objName))
+		{
+			isDelete = ImGui::Button("Delete");
+			itr->second->ImGuiCall();
+			ImGui::TreePop();
+		}
+
+		if (isDelete)
+		{
+			auto nextItr = std::next(itr);
+			DeleteGameObject(*(itr->second));
+			itr = nextItr;
+		}
+		else
+			itr++;
 	}
 
-	for (auto itr = uiList.begin(); itr != uiList.end(); itr++)
+	// UI
+	for (auto itr = uiList.begin(); itr != uiList.end();)
 	{
-		itr->second->ImGuiCall();
+		bool isDelete = false;
+
+		const std::string& objName = itr->second->GetName();
+		if (ImGuiMethod::TreeNode(objName))
+		{
+			isDelete = ImGui::Button("Delete");
+			itr->second->ImGuiCall();
+			ImGui::TreePop();
+		}
+
+		if (isDelete)
+		{
+			auto nextItr = std::next(itr);
+			DeleteGameObject(*(itr->second));
+			itr = nextItr;
+		}
+		else
+			itr++;
 	}
 
 	ImGui::Dummy(ImVec2(0, 10));
-	constexpr u_int buf = 256;
 
 	// 生成
-	static char createObjName[buf];
-	ImGui::InputText("createName", createObjName, buf);
+	static char createObjName[IM_INPUT_BUF];
+	ImGui::InputText("createName", createObjName, IM_INPUT_BUF);
 	if (ImGui::Button("new Object") && createObjName[0] != '\0')
 		SceneFunction::ObjectFunc::CreateEmpty(createObjName);
 
-	// 削除
-	static char deleteObjName[buf];
-	ImGui::InputText("deleteName", deleteObjName, buf);
-	if (ImGui::Button("delete"))
-		SceneFunction::ObjectFunc::DeleteObject(deleteObjName);
-
 	ImGui::End();
-#endif // EDIT
+
+	// リスト間移動をする
+	MoveList();
 }
 
 GameObject* SceneObjects::SetObject(std::unique_ptr<GameObject> _objPtr)
@@ -157,7 +204,7 @@ GameObject* SceneObjects::SetObject(std::unique_ptr<GameObject> _objPtr)
 	return retPtr;
 }
 
-void SceneObjects::DeleteObj(GameObject& _deleteObj)
+void SceneObjects::DeleteGameObject(GameObject& _deleteObj)
 {
 	// 配列内に同じアドレスを探す
 	for (auto itr = objList.begin(); itr != objList.end(); itr++)
@@ -180,6 +227,12 @@ void SceneObjects::DeleteObj(GameObject& _deleteObj)
 	}
 
 	HASHI_DEBUG_LOG(_deleteObj.GetName() + "はシーン内にありません");
+}
+
+void SceneObjects::MoveListToList(GameObject& _targetObj)
+{
+	// 移動配列に追加する
+	tmpMoveList.push_back(&_targetObj);
 }
 
 GameObject* SceneObjects::GetSceneObject(const std::string& _objectName)
@@ -252,7 +305,7 @@ void SceneObjects::CheckEmptyName(GameObject& _gameObject)
 	_gameObject.SetName("Empty");
 }
 
-void SceneObjects::CheckDuplicationName(GameObject& _gameObject, Objects& _objects)
+void SceneObjects::CheckDuplicationName(GameObject& _gameObject, SceneObjectList& _objects)
 {
 	std::string objName = _gameObject.GetName();
 
@@ -284,9 +337,69 @@ void SceneObjects::CheckDuplicationName(GameObject& _gameObject, Objects& _objec
 	_gameObject.SetName(setName);
 }
 
+bool SceneObjects::TakeOutObject(const GameObject& _targetObject, std::string& _objectName, std::unique_ptr<GameObject>& _outObject, SceneObjectList& _objectList)
+{
+	// 同じアドレスを探索していく
+	for (auto itr = _objectList.begin(); itr != _objectList.end(); itr++)
+	{
+		if (&_targetObject == itr->second.get())
+		{
+			// アドレスと名前を渡す
+			_objectName = itr->first;
+			_outObject = std::move(itr->second);
+
+			// 削除する
+			_objectList.erase(itr);
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool SceneObjects::IsUI(GameObject& _gameObject)
 {
-	Layer::Type layer = _gameObject.GetLayer().GetType();
+	Layer::Type layer = _gameObject.GetLayer();
 	return layer == Layer::Type::UI ? true : false;
+}
+
+void SceneObjects::UIDrawSetup()
+{
+	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
+	CP_Camera& camera = InSceneSystemManager::GetInstance()->GetMainCamera();
+
+	// UI描画のため平行投影に切り替え
+	camera.SetOrthographic();
+
+	// 深度バッファをリセットする
+	renderer.GetDeviceContext()->ClearDepthStencilView(
+		renderer.GetDepthStencil(),
+		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 
+		1.0f, 
+		0
+	);
+}
+
+void SceneObjects::UIDrawEnd()
+{
+	CP_Camera& camera = InSceneSystemManager::GetInstance()->GetMainCamera();
+	camera.SetPerspective();
+}
+
+void SceneObjects::MoveList()
+{
+	if (tmpMoveList.empty()) return;
+
+	// 一時移動配列に入っているオブジェクトを移動させる
+	for (auto& pObj : tmpMoveList)
+	{
+		if (pObj->GetLayer() == Layer::Type::UI)
+			MoveToUIList(*pObj);
+		else
+			MoveToObjList(*pObj);
+	}
+
+	tmpMoveList.clear();
 }
 

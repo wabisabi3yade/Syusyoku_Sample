@@ -10,7 +10,7 @@ using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
 
 CP_BoxCollider::CP_BoxCollider()
-	: CP_Collider(CP_Collider::Type::Box), length(Vector3::One)
+	: CP_Collider(CP_Collider::ShapeType::Box), length(Vector3::One)
 {
 }
 
@@ -28,11 +28,6 @@ void CP_BoxCollider::CreateShape()
 	btVector3 btLength;
 	btLength.setValue(worldLength.x, worldLength.y, worldLength.z);
 	pCollisionShape = std::make_unique<btBoxShape>(btLength * 0.5);
-}
-
-void CP_BoxCollider::LateUpdate()
-{
-	CP_Collider::LateUpdate();
 }
 
 void CP_BoxCollider::ImGuiSetting()

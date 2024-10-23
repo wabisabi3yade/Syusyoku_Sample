@@ -132,4 +132,6 @@ protected:
 	/// @brief ゲームオブジェクトとコンポーネントの活動状態を取得
 	/// @return どちらも活動しているか？
 	bool GetIsActive();
+
+	void ImGuiSetting() override {}
 };

@@ -7,10 +7,10 @@ public:
 	enum Type	// タグの種類
 	{
 		Default,	// デフォルト
-		MainCamera,	
-		Player,
-		Enemy,
-		Ground,
+		MainCamera,	// カメラ
+		Player,	// プレイヤー
+		Enemy,	// 敵
+		Ground,	// 地面
 		Num
 	};
 
@@ -25,6 +25,11 @@ public:
 	// 代入・取得
 	void SetType(Type _type) { if (type >= Num)return; type = _type; }
 	Type GetType()const { return type; }
+
+	/// @brief コンボボックスによる変更
+	/// @param _curType 変更したい変数
+	/// @return 変更したかどうか
+	static bool ImGuiComboBox(Type& _curType);
 };
 
 // ゲームオブジェクトのレイヤークラス
@@ -50,4 +55,9 @@ public:
 	// 代入・取得
 	void SetType(Type _type) { if (type >= Num)return; type = _type; }
 	Type GetType()const { return type; }
+
+	/// @brief コンボボックスによる変更
+	/// @param _curType 変更したい変数
+	/// @return 変更したかどうか
+	static bool ImGuiComboBox(Type& _curType);
 };

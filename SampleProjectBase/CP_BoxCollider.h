@@ -26,7 +26,6 @@ public:
 
 private:
 	void Init();
-	void LateUpdate() override;
 
 	/// @brief ボックスの形状を作成
 	void CreateShape() override;

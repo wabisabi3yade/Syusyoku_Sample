@@ -38,6 +38,11 @@ IDXGISwapChain* D3D11_Renderer::GetSwapChain()
 	return pSwapChain.Get();
 }
 
+ID3D11DepthStencilView* D3D11_Renderer::GetDepthStencil()
+{
+	return pDepthStencilView.Get();
+}
+
 bool D3D11_Renderer::Init(HWND _hWnd)
 {
 	bool isResult; // ‰Šú‰»¬Œ÷‚µ‚½‚©
@@ -241,7 +246,7 @@ bool D3D11_Renderer::InitBackBuffer()
 		if (FAILED(hr))
 			return false;
 	}
-	SetCullingMode(D3D11_CULL_NONE);
+	SetCullingMode(D3D11_CULL_BACK);
 
 	return true;
 }

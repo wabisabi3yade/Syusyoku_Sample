@@ -15,7 +15,7 @@
 class GameObject : public HashiTaku::ISaveLoad, public HashiTaku::IImGuiUser
 {
 private:
-	// このオブジェクトの名前
+	/// @brief このオブジェクトの名前
 	std::string name;	
 
 	/// @brief トランスフォーム
@@ -36,13 +36,13 @@ private:
 	/// @brief Start処理を行うコンポーネント
 	std::list<Component*> pStartComponents;
 
-	// タグ
+	/// @brief タグ
 	Tag tag;
 
-	// レイヤー
+	/// @brief レイヤー
 	Layer layer;
 
-	// アクティブ状態かどうか
+	/// @brief アクティブ状態かどうか
 	bool isActive;
 public:
 	GameObject();
@@ -82,17 +82,19 @@ public:
 	/// @param _pSetComponent セットするコンポーネント
 	void SetComponent(std::unique_ptr<Component> _pSetComponent);
 
-	// コンポーネントをアタッチ
+	/// @brief コンポーネントをアタッチ
 	template<HashiTaku::ComponentConcept T> T* AddComponent();
 
-	// コンポーネントを削除する
+	/// @brief コンポーネントを削除する
 	void DeleteComponent(Component& _deleteComonent);
 
-	// コンポーネントを取得
+	/// @brief/ コンポーネントを取得
 	template<HashiTaku::ComponentConcept T> T* GetComponent();
 
-	// アクティブ配列から外す・追加する
+	/// @brief アクティブ配列から外す・追加する
 	void RemoveActiveComponent(Component& _removeComonent);
+
+	/// @brief 活動状態リストに追加
 	void AddActiveComponent(Component& _addComonentComonent);
 
 	/// @brief セーブする
@@ -107,22 +109,49 @@ public:
 	/// @param _sceneData ロードするシーンデータ 
 	void LateLode(const nlohmann::json& _sceneData);
 
+	/// @brief オブジェクト名をセット
+	/// @param _name オブジェクト名
 	void SetName(const std::string& _name);
+
+	/// @brief 活動状態をセット
+	/// @param _isActive セットしたい活動状態
 	void SetActive(bool _isActive);
 
+	/// @brief タグをセット
+	/// @param _setType セットしたいタグの種類
+	void SetTag(Tag::Type _setType);
+
+	/// @brief レイヤーをセット
+	/// @param _setType セットしたいレイヤーの種類
+	void SetLayer(Layer::Type _setType);
+
+	/// @brief トランスフォームを取得
+	/// @return トランスフォームの参照
 	Transform& GetTransform();
-	const std::string& GetName() const { return name; }
-	bool GetIsActive() const { return isActive; }
-	Tag GetTag() const { return tag; }
-	Layer GetLayer() const  { return layer; }
+
+	/// @brief オブジェクト名を取得
+	/// @return オブジェクト名
+	const std::string& GetName() const;
+
+	/// @brief 活動状態を取得
+	/// @return 活動状態
+	bool GetIsActive() const;
+	
+	/// @brief タグの種類を取得
+	/// @return タグの種類
+	Tag::Type GetTag() const;
+
+	/// @brief レイヤーの種類を取得
+	/// @return レイヤーの種類
+	Layer::Type GetLayer() const;
 private:
 	virtual GameObject& Copy(const GameObject& _other);
 
-	// アクティブ状態を切り替えた時に起こす処理
+	/// @brief アクティブ状態を切り替えた時に起こす処理
 	void OnActiveTrue();
-	void OnActiveFalse();
 
-	void ImGuiSetParent();
+	/// @brief 非アクティブ状態を切り替えた時に起こす処理
+	void OnActiveFalse();
 
 	/// @brief 所持している配列にコンポーネントが存在するか
 	/// @param _pCheckComponent 確認するコンポーネント
@@ -155,6 +184,9 @@ private:
 
 	// ImGuiの設定
 	void ImGuiSetting() override;
+
+	// ImGuiで親状態の設定
+	void ImGuiSetParent();
 };
 
 template<HashiTaku::ComponentConcept T>

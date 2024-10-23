@@ -11,15 +11,16 @@ class Layer;
 class CP_Collider : public Component
 {
 public :
-    enum Type   // 当たり判定の種類
+    enum ShapeType   // 形状の種類
     {
         Box,    // ボックス
         Sphere, // 球
+        Capsule,    // カプセル
         Num
     };
 
 protected:
-    Type type;  // タイプ
+    ShapeType type;  // タイプ
 
     /// @brief 中心座標と角度のオフセットを設定するための親コリジョン
     std::unique_ptr<btCompoundShape> pCompound;
@@ -34,8 +35,8 @@ protected:
     DirectX::SimpleMath::Vector3 angleOffset;
     
 public:
-    CP_Collider() : type(Type::Num) {}
-    CP_Collider(Type _type);
+    CP_Collider() : type(ShapeType::Num) {}
+    CP_Collider(ShapeType _type);
     virtual ~CP_Collider() {}
     CP_Collider(const CP_Collider& _other);
 
@@ -58,7 +59,7 @@ public:
     btCollisionShape& GetColliderShape();
 
     // 種類を取得
-    Type GetType()const { return type; }   
+    ShapeType GetType()const { return type; }   
 
     void ImGuiSetting() override;
 

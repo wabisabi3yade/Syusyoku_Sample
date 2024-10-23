@@ -71,7 +71,7 @@ void IntTransCondition::ImGuiSetting()
 	TransCondition_Base::ImGuiSetting();
 	ImGui::SameLine();
 
-	ImGuiMethod::PushItemWidth();
+	ImGuiMethod::PushItemSmallWidth();
 	// ƒ^ƒCƒv‚ð•ÏŠ·‚·‚é
 	u_int id = static_cast<u_int>(judgeType);
 	ImGuiMethod::ComboBox("##intTrans", id, judgeTypeStrings);

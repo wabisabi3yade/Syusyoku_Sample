@@ -39,7 +39,7 @@ void Scene::Exec()
 	PlayOnlyUpdate();
 
 	// ImGui編集
-	sceneObjects.ImGuiSetting();
+	sceneObjects.ImGuiCall();
 
 	// Dxのトランスフォームを Bulletに合わせる
 	pBulletEngine->UpdateTransformDxToBt();

@@ -111,7 +111,7 @@ void Shader::Map(u_int _slot, void* _pData, size_t _dataSize)
 	}
 }
 
-void Shader::SetTexture(u_int _slot, Texture* _texture)
+void Shader::SetTexture(u_int _slot, const Texture* _texture)
 {
 	if (_texture == nullptr) return;
 

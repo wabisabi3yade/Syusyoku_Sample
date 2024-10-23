@@ -271,7 +271,7 @@ void ImGuiMethod::LineSpaceMid()
 	ImGui::Dummy(ImVec2(0.0f, LINESPACE_HEIGHT_M));
 }
 
-void ImGuiMethod::PushItemWidth()
+void ImGuiMethod::PushItemSmallWidth()
 {
 	ImGui::PushItemWidth(BOX_SIZE);
 }

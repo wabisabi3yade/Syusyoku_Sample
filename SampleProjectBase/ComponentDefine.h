@@ -6,11 +6,12 @@
 #include "CP_RigidBody.h"
 #include "CP_BoxCollider.h"
 #include "CP_SphereCollider.h"
-#include "CP_TestCollider.h"
+#include "CP_CapsuleCollider.h"
 
 // 描画
 #include "CP_MeshRenderer.h"
 #include "CP_SpriteRenderer.h"
+#include "CP_UIRenderer.h"
 #include "CP_SkyBox.h"
 
 // アニメーション

@@ -221,42 +221,42 @@ void Transform::SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quatern
 	pGameObject->OnChangeRotation();
 }
 
-DirectX::SimpleMath::Vector3 Transform::GetPosition() const
+const DirectX::SimpleMath::Vector3& Transform::GetPosition() const
 {
 	return position;
 }
 
-DirectX::SimpleMath::Vector3 Transform::GetScale() const
+const DirectX::SimpleMath::Vector3& Transform::GetScale() const
 {
 	return scale;
 }
 
-DirectX::SimpleMath::Vector3 Transform::GetEularAngles() const
+const DirectX::SimpleMath::Vector3& Transform::GetEularAngles() const
 {
 	return eularAngles;
 }
 
-DirectX::SimpleMath::Quaternion Transform::GetRotation() const
+const DirectX::SimpleMath::Quaternion& Transform::GetRotation() const
 {
 	return rotation;
 }
 
-DirectX::SimpleMath::Vector3 Transform::GetLocalPosition() const
+const DirectX::SimpleMath::Vector3& Transform::GetLocalPosition() const
 {
 	return localPosition;
 }
 
-DirectX::SimpleMath::Vector3 Transform::GetLocalScale() const
+const DirectX::SimpleMath::Vector3& Transform::GetLocalScale() const
 {
 	return localScale;
 }
 
-DirectX::SimpleMath::Vector3 Transform::GetLocalEularAngles() const
+const DirectX::SimpleMath::Vector3& Transform::GetLocalEularAngles() const
 {
 	return localEularAngles;
 }
 
-DirectX::SimpleMath::Quaternion Transform::GetLocalRotation() const
+const DirectX::SimpleMath::Quaternion& Transform::GetLocalRotation() const
 {
 	return localRotation;
 }

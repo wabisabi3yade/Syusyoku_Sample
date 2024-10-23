@@ -57,7 +57,7 @@ void BoolTransCondition::ImGuiSetting()
 #ifdef EDIT
 	TransCondition_Base::ImGuiSetting();
 	ImGui::SameLine();
-	ImGuiMethod::PushItemWidth();
+	ImGuiMethod::PushItemSmallWidth();
 	// ƒ^ƒCƒv‚ð•ÏŠ·‚·‚é
 	u_int id = static_cast<u_int>(judgeType);
 	ImGuiMethod::ComboBox("##compare_bool", id, judgeTypeStrings);

@@ -6,16 +6,16 @@
 void ComponentFactory::Init()
 {
 	// 当たり判定
-	//ResistComponnent<CP_RigidBody>();
 	ResistComponnent<CP_RigidBody>();
 	ResistComponnent<CP_BoxCollider>();
 	ResistComponnent<CP_SphereCollider>();
-	ResistComponnent<CP_TestCollider>();
+	ResistComponnent<CP_CapsuleCollider>();
 
 
 	// 描画
 	ResistComponnent<CP_MeshRenderer>();
 	ResistComponnent<CP_SpriteRenderer>();
+	ResistComponnent<CP_UIRenderer>();
 	ResistComponnent<CP_SkyBox>();
 
 	// アニメーション

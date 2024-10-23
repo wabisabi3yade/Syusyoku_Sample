@@ -79,20 +79,20 @@ public:
 	virtual void SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quaternion);
 
 	// ワールド
-	DirectX::SimpleMath::Vector3 GetPosition() const;
-	DirectX::SimpleMath::Vector3 GetScale() const;
-	DirectX::SimpleMath::Vector3 GetEularAngles() const;
-	DirectX::SimpleMath::Quaternion GetRotation() const;
+	const DirectX::SimpleMath::Vector3& GetPosition() const;
+	const DirectX::SimpleMath::Vector3& GetScale() const;
+	const DirectX::SimpleMath::Vector3& GetEularAngles() const;
+	const DirectX::SimpleMath::Quaternion& GetRotation() const;
 
 	// ローカル
-	DirectX::SimpleMath::Vector3 GetLocalPosition() const;
-	DirectX::SimpleMath::Vector3 GetLocalScale() const;
-	DirectX::SimpleMath::Vector3 GetLocalEularAngles() const;
-	DirectX::SimpleMath::Quaternion GetLocalRotation() const;
+	const DirectX::SimpleMath::Vector3& GetLocalPosition() const;
+	const DirectX::SimpleMath::Vector3& GetLocalScale() const;
+	const DirectX::SimpleMath::Vector3& GetLocalEularAngles() const;
+	const DirectX::SimpleMath::Quaternion& GetLocalRotation() const;
 
-	DirectX::SimpleMath::Vector3 Right()const { return right; }	// 右ベクトル
-	DirectX::SimpleMath::Vector3 Up()const { return up; }	// 上ベクトル
-	DirectX::SimpleMath::Vector3 Forward()const { return forward; }	// 正面ベクトル
+	const DirectX::SimpleMath::Vector3& Right()const { return right; }	// 右ベクトル
+	const DirectX::SimpleMath::Vector3& Up()const { return up; }	// 上ベクトル
+	const DirectX::SimpleMath::Vector3& Forward()const { return forward; }	// 正面ベクトル
 
 	GameObject& GetGameObject();
 

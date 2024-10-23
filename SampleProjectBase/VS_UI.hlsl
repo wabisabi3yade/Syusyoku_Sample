@@ -1,8 +1,7 @@
-// Slot0 座標変換
-cbuffer WVP : register(b0)
+// Slot0 投影行列
+cbuffer Projection : register(b0)
 {
-    matrix world;
-    matrix view;
+    // 投影行列
     matrix projection;
 };
 
@@ -27,18 +26,12 @@ struct VS_OUTPUT
 VS_OUTPUT main(VS_INPUT vin)
 {
     VS_OUTPUT output;
-
-    // 各行列を計算する
-    float4 pos = float4(vin.pos, 1.0);
-     // ワールド座標
-    pos = mul(pos, world);    
-     // スクリーン座標
-    pos = mul(pos, view);
-    // プロジェクション座標
-    pos = mul(pos, projection);
-    output.pos = pos;
+    
+    output.pos = float4(vin.pos.xyz, 1.0f);
+    output.pos = mul(output.pos, projection);
+    
     output.color = vin.color;
-    output.uv = vin.uv;  
-
-    return output;
+    output.uv = vin.uv;
+    
+	return output;
 }

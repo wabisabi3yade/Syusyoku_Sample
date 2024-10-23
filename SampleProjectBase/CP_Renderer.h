@@ -1,5 +1,5 @@
 #pragma once
-#include "CloneComponent.h"
+#include "Component.h"
 
 // ƒƒbƒVƒ…
 class SingleMesh;
