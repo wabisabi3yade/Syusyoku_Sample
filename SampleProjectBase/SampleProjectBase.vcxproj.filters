@@ -670,11 +670,17 @@
     <Filter Include="ソース ファイル\Component\Collider\Capsule">
       <UniqueIdentifier>{04d960d7-cbdb-4f20-8a03-46cfe52a63ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\Renderer\UI">
-      <UniqueIdentifier>{da3fbc61-0f64-450e-8914-6fb9e62fe7f6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\Mesh\2D">
       <UniqueIdentifier>{1d7ee4ec-717a-42b7-90ae-b3101ba64030}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\UI">
+      <UniqueIdentifier>{c0288711-4bcc-43c4-b00d-d0e2dd11c2d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\UI\Renderer">
+      <UniqueIdentifier>{da3fbc61-0f64-450e-8914-6fb9e62fe7f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\UI\Slider">
+      <UniqueIdentifier>{259f007e-cc8f-4406-9da3-c91615ee613c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1241,11 +1247,14 @@
     <ClCompile Include="CP_CapsuleCollider.cpp">
       <Filter>ソース ファイル\Component\Collider\Capsule</Filter>
     </ClCompile>
-    <ClCompile Include="CP_UIRenderer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Polygon2D.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_UIRenderer.cpp">
+      <Filter>ソース ファイル\Component\UI\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_UISlider.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1828,11 +1837,14 @@
     <ClInclude Include="CP_CapsuleCollider.h">
       <Filter>ソース ファイル\Component\Collider\Capsule</Filter>
     </ClInclude>
-    <ClInclude Include="CP_UIRenderer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Polygon2D.h">
       <Filter>ソース ファイル\Graphics\Mesh\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_UIRenderer.h">
+      <Filter>ソース ファイル\Component\UI\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_UISlider.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

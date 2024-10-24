@@ -124,7 +124,7 @@ void Transform::SetScale(const DirectX::SimpleMath::Vector3& _scale)
 void Transform::SetEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
 {
 	eularAngles = _eularAngles;
-	localEularAngles = eularAngles - pParent->eularAngles;
+	localEularAngles = eularAngles - pParent->GetEularAngles();
 
 	// クォータニオンに反映させる
 	rotation = Quat::ToQuaternion(eularAngles);
@@ -194,7 +194,7 @@ void Transform::SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAn
 	// クォータニオンに反映させる
 	localRotation = Quat::ToQuaternion(localEularAngles);
 
-	eularAngles = pParent->eularAngles + localEularAngles;
+	eularAngles = pParent->GetEularAngles() + localEularAngles;
 	rotation = Quat::Multiply(localRotation, pParent->GetRotation());
 
 	// 子トランスフォームに反映
@@ -357,6 +357,9 @@ void Transform::UpdateHierarchyPositions()
 	position += pParent->Up() * localPosition.y * pParent->scale.y;
 	position += pParent->Forward() * localPosition.z * pParent->scale.z;
 
+	// オブジェクト側に変更したことを伝える
+	pGameObject->OnChangePosition();
+
 	// 再帰で呼び出す
 	for (auto& child : pChilds)
 		child->UpdateHierarchyPositions();
@@ -365,6 +368,9 @@ void Transform::UpdateHierarchyPositions()
 void Transform::UpdateHierarchyScales()
 {
 	scale = pParent->scale * localScale;
+
+	// オブジェクト側に変更したことを伝える
+	pGameObject->OnChangeScale();
 
 	// 再帰で呼び出す
 	for (auto& child : pChilds)
@@ -377,6 +383,9 @@ void Transform::UpdateHierarchyRotations()
 
 	rotation = Quat::Multiply(localRotation, pParent->GetRotation());
 	eularAngles = Quat::ToEulerAngles(rotation);
+
+	// オブジェクト側に変更したことを伝える
+	pGameObject->OnChangeRotation();
 
 	// 再帰で呼び出す
 	for (auto& child : pChilds)

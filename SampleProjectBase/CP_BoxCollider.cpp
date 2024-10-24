@@ -65,9 +65,9 @@ nlohmann::json CP_BoxCollider::Save()
 }
 
 void CP_BoxCollider::Load(const nlohmann::json& _data)
-{
+{	
 	CP_Collider::Load(_data);
-	
+
 	Vector3 loadLength;
 	if(HashiTaku::LoadJsonVector3("length", loadLength, _data))
 		SetLength(loadLength);

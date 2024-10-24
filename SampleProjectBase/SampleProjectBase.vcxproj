@@ -161,6 +161,7 @@
     <ClCompile Include="CP_SkyBox.cpp" />
     <ClCompile Include="CP_TestCollider.cpp" />
     <ClCompile Include="CP_UIRenderer.cpp" />
+    <ClCompile Include="CP_UISlider.cpp" />
     <ClCompile Include="CP_Weapon.cpp" />
     <ClCompile Include="CrossFadeAnimation.cpp" />
     <ClCompile Include="DepthStencil.cpp" />
@@ -344,6 +345,7 @@
     <ClInclude Include="CP_SkyBox.h" />
     <ClInclude Include="CP_TestCollider.h" />
     <ClInclude Include="CP_UIRenderer.h" />
+    <ClInclude Include="CP_UISlider.h" />
     <ClInclude Include="CP_Weapon.h" />
     <ClInclude Include="CrossFadeAnimation.h" />
     <ClInclude Include="DepthStencil.h" />

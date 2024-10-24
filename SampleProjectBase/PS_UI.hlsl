@@ -24,7 +24,7 @@ cbuffer BufTexEnable : register(b0)
 float4 main(PS_IN pin) : SV_TARGET
 {
     float4 color = pin.color;
-    
+ 
     // テクスチャが使用されているなら
     if (texEnable.isTextureEnable != 0)
     {

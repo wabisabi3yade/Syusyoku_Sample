@@ -36,6 +36,11 @@ public:
 	/// @param _setTexture セットするテクスチャ
 	void SetTexture(const Texture& _setTexture);
 
+	/// @brief UV座標をセット
+	/// @param _startUV 開始UV
+	/// @param _endUV 終点UV
+	void SetUV(const DirectX::SimpleMath::Vector2& _startUV, const DirectX::SimpleMath::Vector2& _endUV);
+
 	/// @brief セーブする
 	/// @param _data セーブシーンデータ
 	nlohmann::json Save() override;

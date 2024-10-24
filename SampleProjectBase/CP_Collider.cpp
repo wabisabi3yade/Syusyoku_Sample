@@ -7,7 +7,7 @@
 namespace DX = DirectX::SimpleMath;
 using namespace HashiTaku;
 
-CP_Collider::CP_Collider(ShapeType _type) : type(_type)
+CP_Collider::CP_Collider(ShapeType _type) : type(_type), isCreateCompound(false)
 {
 }
 
@@ -26,6 +26,7 @@ CP_Collider& CP_Collider::operator=(const CP_Collider& _other)
 void CP_Collider::Init()
 {
 	pCompound = std::make_unique<btCompoundShape>();
+	isCreateCompound = true;
 
 	CreateShape();
 
@@ -56,6 +57,16 @@ void CP_Collider::SetAngleOffset(const DirectX::SimpleMath::Vector3& _offset)
 btCollisionShape& CP_Collider::GetColliderShape()
 {
 	return *pCompound;
+}
+
+CP_Collider::ShapeType CP_Collider::GetType() const
+{
+	return type;
+}
+
+bool CP_Collider::GetIsCreateCompound() const
+{
+	return isCreateCompound;
 }
 
 void CP_Collider::ImGuiSetting()
@@ -91,6 +102,8 @@ void CP_Collider::Load(const nlohmann::json& _data)
 
 	LoadJsonVector3("center", centerOffset, _data);
 	LoadJsonVector3("angles", angleOffset, _data);
+
+	// RecreateShapeは各派生コライダーに描く
 }
 
 void CP_Collider::Copy(const CP_Collider& _other)
@@ -166,9 +179,7 @@ void CP_Collider::AddToCompound()
 		Transform& transform = GetTransform();
 		Vector3 worldOffset = GetTransform().GetScale() * centerOffset;
 		btTrans.setOrigin(Bullet::ToBtVector3(worldOffset));
-
-		Vector3 worldAngles = transform.GetEularAngles() + angleOffset;
-		btTrans.setRotation(Bullet::ToBtQuaeternion(Quat::ToQuaternion(worldAngles)));
+		btTrans.setRotation(Bullet::ToBtQuaeternion(Quat::ToQuaternion(angleOffset)));
 
 		pCompound->addChildShape(btTrans , pCollisionShape.get());
 	}

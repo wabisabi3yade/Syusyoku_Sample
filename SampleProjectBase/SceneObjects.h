@@ -98,4 +98,9 @@ private:
 	void MoveToObjList(GameObject& _gameObject);
 
 	void ImGuiSetting() override;
+
+	/// @brief ゲームオブジェクトのImGUi表示
+	/// @param _gameObject 表示するゲームオブジェクト
+	/// @return deleteしたか
+	bool ImGuiSettingObject(GameObject& _gameObject);
 };

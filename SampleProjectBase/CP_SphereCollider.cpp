@@ -36,8 +36,8 @@ void CP_SphereCollider::Load(const nlohmann::json& _data)
 {
 	CP_Collider::Load(_data);
 
-	HashiTaku::LoadJsonFloat("radius", radius, _data);
-	SetRadius(radius);
+	if (HashiTaku::LoadJsonFloat("radius", radius, _data))
+		SetRadius(radius);
 }
 
 void CP_SphereCollider::CreateShape()

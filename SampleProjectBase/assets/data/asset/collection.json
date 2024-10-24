@@ -590,6 +590,10 @@
     ],
     "textures": [
         {
+            "assetName": "UI_hpFrame.png",
+            "pathName": "assets/texture/UI/UI_hpFrame.png"
+        },
+        {
             "assetName": "grass.jpg",
             "pathName": "assets/texture/grass.jpg"
         },
@@ -620,6 +624,18 @@
         {
             "assetName": "sky_Day_f.png",
             "pathName": "assets/texture/skyBox/sky_Day_f.png"
+        },
+        {
+            "assetName": "UI_target_red.png",
+            "pathName": "assets/texture/UI/UI_target_red.png"
+        },
+        {
+            "assetName": "UI_hpLine_green.png",
+            "pathName": "assets/texture/UI/UI_hpLine_green.png"
+        },
+        {
+            "assetName": "UI_hpLine_red.png",
+            "pathName": "assets/texture/UI/UI_hpLine_red.png"
         }
     ]
 }

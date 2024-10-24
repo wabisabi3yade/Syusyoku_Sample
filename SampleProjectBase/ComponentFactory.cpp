@@ -15,7 +15,6 @@ void ComponentFactory::Init()
 	// 描画
 	ResistComponnent<CP_MeshRenderer>();
 	ResistComponnent<CP_SpriteRenderer>();
-	ResistComponnent<CP_UIRenderer>();
 	ResistComponnent<CP_SkyBox>();
 
 	// アニメーション
@@ -29,6 +28,10 @@ void ComponentFactory::Init()
 
 	// プレイヤー
 	ResistComponnent<CP_Player>();
+
+	// UI
+	ResistComponnent<CP_UIRenderer>();
+	ResistComponnent<CP_UISlider>();
 
 	// その他
 	ResistComponnent<CP_EaseTest>();
