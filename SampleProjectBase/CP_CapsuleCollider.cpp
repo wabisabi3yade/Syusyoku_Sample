@@ -20,6 +20,27 @@ void CP_CapsuleCollider::SetHeight(float _setHeight)
 	RecreateShape();
 }
 
+nlohmann::json CP_CapsuleCollider::Save()
+{
+	auto data = CP_Collider::Save();
+
+	data["radius"] = radius;
+	data["height"] = height;
+
+	return data;
+}
+
+void CP_CapsuleCollider::Load(const nlohmann::json& _data)
+{
+	CP_Collider::Load(_data);
+	
+	if (HashiTaku::LoadJsonFloat("radius", radius, _data) &&
+		HashiTaku::LoadJsonFloat("height", height, _data))
+	{
+		RecreateShape();
+	}
+}
+
 void CP_CapsuleCollider::CreateShape()
 {
 	using namespace HashiTaku::Bullet;

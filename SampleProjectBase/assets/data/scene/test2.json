@@ -26,6 +26,11 @@
                 {
                     "enable": true,
                     "isAwake": false,
+                    "isFreezeRot": [
+                        false,
+                        false,
+                        false
+                    ],
                     "isTrigger": false,
                     "mass": 1.0,
                     "name": "RigidBody"
@@ -111,6 +116,18 @@
                         1.0
                     ],
                     "name": "BoxCollider"
+                },
+                {
+                    "enable": true,
+                    "isAwake": false,
+                    "isFreezeRot": [
+                        false,
+                        false,
+                        false
+                    ],
+                    "isTrigger": false,
+                    "mass": 1.0,
+                    "name": "RigidBody"
                 }
             ],
             "layer": 0,
@@ -181,6 +198,11 @@
                 {
                     "enable": true,
                     "isAwake": false,
+                    "isFreezeRot": [
+                        false,
+                        false,
+                        false
+                    ],
                     "isTrigger": false,
                     "mass": 0.0,
                     "name": "RigidBody"
@@ -235,6 +257,11 @@
                 {
                     "enable": true,
                     "isAwake": false,
+                    "isFreezeRot": [
+                        false,
+                        false,
+                        false
+                    ],
                     "isTrigger": false,
                     "mass": 1.0,
                     "name": "RigidBody"
@@ -269,6 +296,11 @@
                 {
                     "enable": true,
                     "isAwake": false,
+                    "isFreezeRot": [
+                        false,
+                        false,
+                        false
+                    ],
                     "isTrigger": false,
                     "mass": 1.0,
                     "name": "RigidBody"
@@ -302,20 +334,17 @@
             "components": [
                 {
                     "enable": true,
-                    "isAwake": false,
-                    "isTrigger": false,
-                    "mass": 1.0,
-                    "name": "RigidBody"
+                    "name": "UIRenderer"
                 }
             ],
-            "layer": 0,
+            "layer": 2,
             "name": "a3",
             "tag": 0,
             "transform": {
                 "child": null,
                 "pos": [
-                    0.0,
-                    0.0,
+                    158.3000030517578,
+                    191.89999389648438,
                     0.0
                 ],
                 "rotation": [
@@ -325,8 +354,8 @@
                     1.0
                 ],
                 "scale": [
-                    1.0,
-                    1.0,
+                    100.0,
+                    100.0,
                     1.0
                 ]
             }

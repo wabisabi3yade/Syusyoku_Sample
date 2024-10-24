@@ -263,6 +263,7 @@ void CP_RigidBody::FindSetCollider()
 {
 	CP_Collider* pCol = GetGameObject().GetComponent<CP_Collider>();
 	if (!pCol) return;
+	if (!pCol->GetIsCreateCompound()) return;
 
 	SetColliderShape(*pCol);
 }
@@ -308,8 +309,10 @@ void CP_RigidBody::CreateGhost()
 
 	// ˆÊ’uİ’è
 	createGhost->setWorldTransform(bulletTrans);
-	collider->pCollisionObject = std::move(createGhost);
+	createGhost->setCollisionFlags(createGhost->getCollisionFlags()
+		| btCollisionObject::CF_NO_CONTACT_RESPONSE);
 
+	collider->pCollisionObject = std::move(createGhost);
 	// ‹¤’Êˆ—
 	CommonCreateColObj();
 }

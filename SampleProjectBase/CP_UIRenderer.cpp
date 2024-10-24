@@ -13,6 +13,8 @@ constexpr auto PS_NAME("PS_UI");	// ピクセルシェーダー名
 
 CP_UIRenderer::CP_UIRenderer() : pTexture(nullptr)
 {
+	// 2Dポリゴン作成
+	pPolygon = std::make_unique<Polygon2D>();
 }
 
 void CP_UIRenderer::Init()
@@ -29,9 +31,6 @@ void CP_UIRenderer::Init()
 
 		isSetShader = true;
 	}
-
-	// 2Dポリゴン作成
-	pPolygon = std::make_unique<Polygon2D>();
 
 	// UIに変更する
 	gameObject->SetLayer(Layer::Type::UI);
@@ -57,14 +56,32 @@ void CP_UIRenderer::SetTexture(const Texture& _setTexture)
 	pTexture = &_setTexture;
 }
 
+void CP_UIRenderer::SetUV(const DirectX::SimpleMath::Vector2& _startUV, const DirectX::SimpleMath::Vector2& _endUV)
+{
+	pPolygon->SetUV(_startUV, _endUV);
+}
+
 nlohmann::json CP_UIRenderer::Save()
 {
-	return Component::Save();
+	auto data = CP_Renderer::Save();
+
+	if (pTexture)
+		data["image"] = pTexture->GetAssetName();
+
+	return data;
 }
 
 void CP_UIRenderer::Load(const nlohmann::json& _data)
 {
+	CP_Renderer::Load(_data);
+
 	ReCreatePolygon();
+
+	std::string texName;
+	if (HashiTaku::LoadJsonString("image", texName, _data))
+	{
+		pTexture = AssetGetter::GetAsset<Texture>(texName);
+	}
 }
 
 void CP_UIRenderer::Draw()
@@ -109,9 +126,8 @@ void CP_UIRenderer::ReCreatePolygon()
 	using namespace DirectX::SimpleMath;
 	const Transform& t = GetTransform();
 
-	Vector2 p = Vector2(t.GetPosition().x, t.GetPosition().y);
 	Vector2 s = Vector2(t.GetScale().x, t.GetScale().y);
-	pPolygon->MakePolygon(p, s, t.GetEularAngles());
+	pPolygon->MakePolygon(t.GetPosition(), s, t.GetEularAngles());
 }
 
 void CP_UIRenderer::ImGuiSetting()

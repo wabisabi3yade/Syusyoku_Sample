@@ -102,7 +102,9 @@ void GameObject::LoadComponent(const nlohmann::json& _componentData)
 {
 	ComponentFactory* compFactory = ComponentFactory::GetInstance();
 
-	// コンポーネントのセーブ
+	// ロード処理を後で行う為に、コンポーネントとロードデータをペアにする
+	std::unordered_map<Component*, const nlohmann::json*> componentLoadList;
+
 	for (auto& compData : _componentData)
 	{
 		// 名前からコンポーネントセット
@@ -117,14 +119,30 @@ void GameObject::LoadComponent(const nlohmann::json& _componentData)
 			continue;
 		}
 
+		pCreateComp->gameObject = this;
+
 		Component& comp = *pCreateComp;
-		SetComponent(std::move(pCreateComp));
-		comp.Load(compData);
+		// リストに追加
+		pComponents.push_back(std::move(pCreateComp));
+
+		pActiveComponents.push_back(&comp);
+		pAwakeComponents.push_back(&comp);
+		pStartComponents.push_back(&comp);
 
 		if (!comp.GetIsEnable())	// 活動状態でないなら
 		{
 			RemoveActiveComponent(comp);
 		}
+
+		// ペアを作成
+		componentLoadList[&comp] = &compData;
+	}
+
+	// 初期処理とロードを行う
+	for(auto& compPair : componentLoadList)
+	{
+		compPair.first->Init();
+		compPair.first->Load(*compPair.second);
 	}
 }
 

@@ -246,7 +246,7 @@ bool D3D11_Renderer::InitBackBuffer()
 		if (FAILED(hr))
 			return false;
 	}
-	SetCullingMode(D3D11_CULL_BACK);
+	SetCullingMode(D3D11_CULL_NONE);
 
 	return true;
 }

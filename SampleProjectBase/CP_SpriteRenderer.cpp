@@ -64,7 +64,6 @@ void CP_SpriteRenderer::DrawSetup()
 
 CP_SpriteRenderer::CP_SpriteRenderer()
 {
-
 }
 
 CP_SpriteRenderer::CP_SpriteRenderer(const CP_SpriteRenderer& _other)

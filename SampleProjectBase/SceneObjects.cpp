@@ -120,49 +120,25 @@ void SceneObjects::ImGuiSetting()
 	ImGui::Begin("SceneObjects");
 
 	// オブジェクト
-	for (auto itr = objList.begin(); itr != objList.end();)
+	for (auto& obj : objList)
 	{
-		bool isDelete = false;
+		// 親オブジェクトがあるなら
+		if (obj.second->GetTransform().GetParent()) continue;
 
-		const std::string& objName = itr->second->GetName();
-		if (ImGuiMethod::TreeNode(objName))
-		{
-			isDelete = ImGui::Button("Delete");
-			itr->second->ImGuiCall();
-			ImGui::TreePop();
-		}
+		bool isDelete = ImGuiSettingObject(*obj.second);
 
-		if (isDelete)
-		{
-			auto nextItr = std::next(itr);
-			DeleteGameObject(*(itr->second));
-			itr = nextItr;
-		}
-		else
-			itr++;
+		if (isDelete) break;
 	}
 
-	// UI
-	for (auto itr = uiList.begin(); itr != uiList.end();)
+	// オブジェクト
+	for (auto& ui : uiList)
 	{
-		bool isDelete = false;
+		// 親オブジェクトがないなら
+		if (ui.second->GetTransform().GetParent()) continue;
 
-		const std::string& objName = itr->second->GetName();
-		if (ImGuiMethod::TreeNode(objName))
-		{
-			isDelete = ImGui::Button("Delete");
-			itr->second->ImGuiCall();
-			ImGui::TreePop();
-		}
+		bool isDelete = ImGuiSettingObject(*ui.second);
 
-		if (isDelete)
-		{
-			auto nextItr = std::next(itr);
-			DeleteGameObject(*(itr->second));
-			itr = nextItr;
-		}
-		else
-			itr++;
+		if (isDelete) break;
 	}
 
 	ImGui::Dummy(ImVec2(0, 10));
@@ -177,6 +153,39 @@ void SceneObjects::ImGuiSetting()
 
 	// リスト間移動をする
 	MoveList();
+}
+
+bool SceneObjects::ImGuiSettingObject(GameObject& _gameObject)
+{
+	bool isDelete = false;
+
+	const std::string& objName = _gameObject.GetName();
+	if (ImGuiMethod::TreeNode(objName))
+	{
+		isDelete = ImGui::Button("Delete");
+		_gameObject.ImGuiCall();
+		ImGui::TreePop();
+	}
+
+	if (isDelete)
+	{
+		_gameObject.Destroy();
+		return true;
+	}
+
+	// 子オブジェクトを表示
+	Transform& t = _gameObject.GetTransform();
+	ImGui::Indent();
+	for (u_int c_i = 0; c_i < t.GetChildCnt(); c_i++)
+	{
+		isDelete = ImGuiSettingObject(t.GetChild(c_i)->GetGameObject());
+
+		if (isDelete)
+			return true;
+	}
+	ImGui::Unindent();
+
+	return false;
 }
 
 GameObject* SceneObjects::SetObject(std::unique_ptr<GameObject> _objPtr)

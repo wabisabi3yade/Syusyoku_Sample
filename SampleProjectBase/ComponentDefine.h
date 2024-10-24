@@ -11,7 +11,6 @@
 // 描画
 #include "CP_MeshRenderer.h"
 #include "CP_SpriteRenderer.h"
-#include "CP_UIRenderer.h"
 #include "CP_SkyBox.h"
 
 // アニメーション
@@ -25,6 +24,10 @@
 // プレイヤー
 #include "CP_Player.h"
 #include "CP_Weapon.h"
+
+// UI
+#include "CP_UIRenderer.h"
+#include "CP_UISlider.h"
 
 // テスト
 #include "CP_EaseTest.h"

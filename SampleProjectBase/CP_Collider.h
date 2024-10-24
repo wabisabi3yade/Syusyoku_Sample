@@ -19,6 +19,10 @@ public :
         Num
     };
 
+private:
+    /// @brief 既に形状は作成されたか？
+    bool isCreateCompound;
+
 protected:
     ShapeType type;  // タイプ
 
@@ -35,7 +39,7 @@ protected:
     DirectX::SimpleMath::Vector3 angleOffset;
     
 public:
-    CP_Collider() : type(ShapeType::Num) {}
+    CP_Collider() : type(ShapeType::Num), isCreateCompound(false) {}
     CP_Collider(ShapeType _type);
     virtual ~CP_Collider() {}
     CP_Collider(const CP_Collider& _other);
@@ -59,7 +63,9 @@ public:
     btCollisionShape& GetColliderShape();
 
     // 種類を取得
-    ShapeType GetType()const { return type; }   
+    ShapeType GetType()const;
+
+    bool GetIsCreateCompound() const;
 
     void ImGuiSetting() override;
 
