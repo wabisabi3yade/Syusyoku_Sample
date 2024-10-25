@@ -23,7 +23,7 @@ private:
 	std::vector<std::unique_ptr<SingleMesh>> pMeshes;
 
 	/// @brief マテリアル配列
-	std::vector<Material*> pMaterials;
+	std::vector<Material*> materials;
 
 	/// @brief 中心座標
 	DirectX::SimpleMath::Vector3 centerPos;
@@ -130,4 +130,8 @@ public:
 	/// @brief セーブする
 	/// @param _sceneData セーブデータ
 	nlohmann::json Save() override;
+
+	/// @brief ロードする
+	/// @param _sceneData ロードするデータ 
+	void Load(const nlohmann::json& _data) override;
 };

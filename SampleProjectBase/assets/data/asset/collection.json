@@ -28,7 +28,7 @@
                 }
             ],
             "assetName": "ANC_Player",
-            "defaultNode": "Idle",
+            "defaultNode": "Attack2",
             "nodeInfoData": [
                 {
                     "animNode": {
@@ -337,7 +337,7 @@
                         "animTime": 2.3333332538604736,
                         "isLoop": true,
                         "isRMR": false,
-                        "isRMXZ": false,
+                        "isRMXZ": true,
                         "isRMY": false
                     },
                     "arrowDataList": null,
@@ -576,6 +576,9 @@
             "flipY": true,
             "getSize": true,
             "loadScale": 0.009999999776482582,
+            "matDiffuse": [
+                "Knight_diffuse.png"
+            ],
             "pathName": "assets/model/knight/Knight.fbx",
             "rightHand": true
         },
@@ -584,7 +587,23 @@
             "flipY": true,
             "getSize": true,
             "loadScale": 0.5,
+            "matDiffuse": [
+                "null",
+                "null",
+                "null"
+            ],
             "pathName": "assets/model/sword/Sword.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "shield1.fbx",
+            "flipY": true,
+            "getSize": false,
+            "loadScale": 1.0,
+            "matDiffuse": [
+                "Albedo_Shields.png"
+            ],
+            "pathName": "assets/model/shield/shield1.fbx",
             "rightHand": true
         }
     ],
@@ -636,6 +655,10 @@
         {
             "assetName": "UI_hpLine_red.png",
             "pathName": "assets/texture/UI/UI_hpLine_red.png"
+        },
+        {
+            "assetName": "Albedo_Shields.png",
+            "pathName": "assets/model/shield/Albedo_Shields.png"
         }
     ]
 }

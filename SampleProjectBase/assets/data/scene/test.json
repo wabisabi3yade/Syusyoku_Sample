@@ -4,6 +4,54 @@
             "active": true,
             "components": [
                 {
+                    "distance": 1000.0,
+                    "enable": true,
+                    "fov": 45.0,
+                    "isOrth": false,
+                    "name": "Camera",
+                    "viewSlot": 0
+                },
+                {
+                    "dis_Hori": 9.0,
+                    "dis_Ver": 3.0,
+                    "enable": true,
+                    "name": "CameraMove",
+                    "offsetTarget": [
+                        0.0,
+                        2.0,
+                        0.0
+                    ],
+                    "rotSpeed": 120.0,
+                    "target": "Player"
+                }
+            ],
+            "layer": 1,
+            "name": "Camera",
+            "tag": 1,
+            "transform": {
+                "child": null,
+                "pos": [
+                    0.8999999761581421,
+                    4.199999809265137,
+                    -14.0
+                ],
+                "rotation": [
+                    0.2838424742221832,
+                    0.00991202425211668,
+                    -0.033462416380643845,
+                    0.9582356214523315
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
                     "enable": true,
                     "name": "SpriteRenderer",
                     "sprite": {
@@ -75,54 +123,6 @@
                     100.0,
                     1.0,
                     100.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "distance": 1000.0,
-                    "enable": true,
-                    "fov": 45.0,
-                    "isOrth": false,
-                    "name": "Camera",
-                    "viewSlot": 0
-                },
-                {
-                    "dis_Hori": 9.0,
-                    "dis_Ver": 3.0,
-                    "enable": true,
-                    "name": "CameraMove",
-                    "offsetTarget": [
-                        0.0,
-                        2.0,
-                        0.0
-                    ],
-                    "rotSpeed": 120.0,
-                    "target": "Player"
-                }
-            ],
-            "layer": 1,
-            "name": "Camera",
-            "tag": 1,
-            "transform": {
-                "child": null,
-                "pos": [
-                    0.8999999761581421,
-                    2.200000047683716,
-                    -12.5
-                ],
-                "rotation": [
-                    0.2838424742221832,
-                    0.00991202425211668,
-                    -0.033462416380643845,
-                    0.9582356214523315
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
                 ]
             }
         },
@@ -210,11 +210,12 @@
             "tag": 2,
             "transform": {
                 "child": [
-                    "Weapon"
+                    "Weapon",
+                    "Shield"
                 ],
                 "pos": [
                     0.0,
-                    1.100000023841858,
+                    1.2000000476837158,
                     -9.699999809265137
                 ],
                 "rotation": [
@@ -294,7 +295,7 @@
                 ],
                 "pos": [
                     0.0,
-                    1.100000023841858,
+                    1.2000000476837158,
                     -9.699999809265137
                 ],
                 "rotation": [
@@ -353,9 +354,9 @@
             "transform": {
                 "child": null,
                 "pos": [
-                    0.30000001192092896,
-                    1.1799999475479126,
-                    -9.649999618530273
+                    0.30321624875068665,
+                    1.2799999713897705,
+                    -9.676337242126465
                 ],
                 "rotation": [
                     0.14341001212596893,
@@ -399,6 +400,66 @@
                     0.0,
                     0.0,
                     1.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "meshName": "shield1.fbx",
+                    "name": "MeshRenderer"
+                }
+            ],
+            "layer": 0,
+            "name": "Shield_Mesh",
+            "tag": 0,
+            "transform": {
+                "child": null,
+                "pos": [
+                    0.07311268150806427,
+                    2.3234052658081055,
+                    -9.77309513092041
+                ],
+                "rotation": [
+                    -0.1333017498254776,
+                    -0.22185127437114716,
+                    0.49748876690864563,
+                    0.8279598951339722
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": null,
+            "layer": 0,
+            "name": "Shield",
+            "tag": 0,
+            "transform": {
+                "child": [
+                    "Shield_Mesh"
+                ],
+                "pos": [
+                    0.0,
+                    2.3000001907348633,
+                    -9.699999809265137
+                ],
+                "rotation": [
+                    -0.1333017498254776,
+                    -0.22185127437114716,
+                    0.49748876690864563,
+                    0.8279598951339722
                 ],
                 "scale": [
                     1.0,

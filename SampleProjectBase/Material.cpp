@@ -85,13 +85,20 @@ void Material::SetPixelShader(PixelShader& _psShader)
 
 void Material::ImGuiSetting()
 {
-#ifdef EDIT
+	// テクスチャ
+	std::string texName;
+	if (pDiffuseTexture)
+		texName = pDiffuseTexture->GetAssetName();
+	if (AssetGetter::ImGuiGetCombobox<Texture>("Diffuse", texName))
+	{
+		pDiffuseTexture = AssetGetter::GetAsset<Texture>(texName);
+	}
+
 	ImGuiMethod::ColorEdit4(parameter.diffuse, "diffuse");
 	ImGuiMethod::ColorEdit4(parameter.ambient, "ambient");
 	ImGuiMethod::ColorEdit4(parameter.specular, "specular");
 	ImGuiMethod::ColorEdit4(parameter.emissive, "emmisive");
 	ImGui::DragFloat("shiness", &parameter.shiness);
-#endif
 }
 
 nlohmann::json Material::Save()

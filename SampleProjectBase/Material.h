@@ -27,7 +27,7 @@ struct MaterialParameter
 };
 
 // モデルの表面データ
-class Material : public Asset_Base
+class Material : public Asset_Base, public HashiTaku::IImGuiUser
 {
 	/// @brief パラメータ
 	MaterialParameter parameter;
@@ -79,14 +79,7 @@ public:
 	Texture* GetDiffuseTexture()const { return pDiffuseTexture; }
 	Texture* GetNormalTexture()const { return pNormalTexture; }
 
-	void ImGuiSetting();
-
-	/// @brief セーブする
-	/// @param _sceneData セーブデータ
 	nlohmann::json Save() override;
-
-	/// @brief ロードする
-	/// @param _sceneData ロードするデータ 
 	void Load(const nlohmann::json& _data) override;
 private:
 	/// @brief マテリアルのパラメータ初期化
@@ -94,4 +87,6 @@ private:
 
 	/// @brief シェーダーの準備
 	void ShaderSetup(Shader& _shader, RenderParam::WVP& _wvp);
+
+	void ImGuiSetting() override;
 };
