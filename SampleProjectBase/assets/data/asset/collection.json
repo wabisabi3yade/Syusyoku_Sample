@@ -576,6 +576,9 @@
             "flipY": true,
             "getSize": true,
             "loadScale": 0.009999999776482582,
+            "matDiffuse": [
+                "Knight_diffuse.png"
+            ],
             "pathName": "assets/model/knight/Knight.fbx",
             "rightHand": true
         },
@@ -584,6 +587,11 @@
             "flipY": true,
             "getSize": true,
             "loadScale": 0.5,
+            "matDiffuse": [
+                "null",
+                "null",
+                "null"
+            ],
             "pathName": "assets/model/sword/Sword.fbx",
             "rightHand": true
         },
@@ -592,6 +600,9 @@
             "flipY": true,
             "getSize": false,
             "loadScale": 1.0,
+            "matDiffuse": [
+                "Albedo_Shields.png"
+            ],
             "pathName": "assets/model/shield/shield1.fbx",
             "rightHand": true
         }

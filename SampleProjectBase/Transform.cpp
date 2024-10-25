@@ -59,7 +59,7 @@ void Transform::LookAt(const DirectX::SimpleMath::Vector3& _worldPos, const Dire
 
 void Transform::RemoveChild(Transform& _removeTransform)
 {
-	pChilds.remove(&_removeTransform);
+	childTransforms.remove(&_removeTransform);
 	_removeTransform.RemoveParent();
 }
 
@@ -70,13 +70,13 @@ void Transform::SetParent(Transform& _parent)
 
 void Transform::SetChild(Transform& _child)
 {
-	if (std::find(pChilds.begin(), pChilds.end(), &_child) != pChilds.end())
+	if (std::find(childTransforms.begin(), childTransforms.end(), &_child) != childTransforms.end())
 	{
 		HASHI_DEBUG_LOG("既に子オブジェクトです");
 		return;
 	}
 
-	pChilds.push_back(&_child);
+	childTransforms.push_back(&_child);
 
 	if (!_child.isHaveParent)	// 親トランスフォームがnullなら
 		CLASS_DELETE(_child.pParent);
@@ -98,10 +98,21 @@ void Transform::SetChild(Transform& _child)
 void Transform::SetPosition(const DirectX::SimpleMath::Vector3& _pos)
 {
 	position = _pos;
-	localPosition = position - pParent->position;
 
+	// 親オブジェクトの方向を適用する前の座標
+	Vector3 sub = position - pParent->GetPosition();
+	Quaternion rot = pParent->GetRotation(); Quaternion invRot;
+	rot.Inverse(invRot);
+	localPosition = Vector3::Transform(sub, invRot);
+
+	// スケール値を考慮する
+	localPosition.x /= pParent->GetScale().x;
+	localPosition.y /= pParent->GetScale().y;
+	localPosition.z /= pParent->GetScale().z;
+
+	/*localPosition = position - pParent->position;*/
 	// 子トランスフォームに反映
-	for (auto& child : pChilds)
+	for (auto& child : childTransforms)
 		child->UpdateHierarchyPositions();
 
 	// オブジェクト側に変更したことを伝える
@@ -114,7 +125,7 @@ void Transform::SetScale(const DirectX::SimpleMath::Vector3& _scale)
 	localScale = scale / pParent->scale;
 
 	// 子トランスフォームに反映
-	for (auto& child : pChilds)
+	for (auto& child : childTransforms)
 		child->UpdateHierarchyScales();
 
 	// オブジェクト側に変更したことを伝える
@@ -132,8 +143,10 @@ void Transform::SetEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
 	a = XMQuaternionInverse(a);
 	localRotation = DirectX::XMQuaternionMultiply(rotation, a);
 
+	UpdateVector();
+
 	//// 子トランスフォームに反映
-	for (auto& child : pChilds)
+	for (auto& child : childTransforms)
 		child->UpdateHierarchyRotations();
 
 	// オブジェクト側に変更したことを伝える
@@ -150,8 +163,10 @@ void Transform::SetRotation(const DirectX::SimpleMath::Quaternion& _quaternion)
 	eularAngles = Quat::ToEulerAngles(rotation);
 	localEularAngles = eularAngles - pParent->GetEularAngles();
 
+	UpdateVector();
+
 	// 子トランスフォームに反映
-	for (auto& child : pChilds)
+	for (auto& child : childTransforms)
 		child->UpdateHierarchyRotations();
 
 	// オブジェクト側に変更したことを伝える
@@ -168,7 +183,7 @@ void Transform::SetLocalPosition(const DirectX::SimpleMath::Vector3& _localPos)
 	position += pParent->Forward() * localPosition.z * pParent->scale.z;
 
 	// 子トランスフォームに反映
-	for (auto& child : pChilds)
+	for (auto& child : childTransforms)
 		child->UpdateHierarchyPositions();
 
 	// オブジェクト側に変更したことを伝える
@@ -181,7 +196,7 @@ void Transform::SetLocalScale(const DirectX::SimpleMath::Vector3& _scale)
 	scale = pParent->scale * localScale;
 
 	// 子トランスフォームに反映
-	for (auto& child : pChilds)
+	for (auto& child : childTransforms)
 		child->UpdateHierarchyScales();
 
 	// オブジェクト側に変更したことを伝える
@@ -197,8 +212,10 @@ void Transform::SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAn
 	eularAngles = pParent->GetEularAngles() + localEularAngles;
 	rotation = Quat::Multiply(localRotation, pParent->GetRotation());
 
+	UpdateVector();
+
 	// 子トランスフォームに反映
-	for (auto& child : pChilds)
+	for (auto& child : childTransforms)
 		child->UpdateHierarchyRotations();
 
 	// オブジェクト側に変更したことを伝える
@@ -213,8 +230,10 @@ void Transform::SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quatern
 	eularAngles = Quat::ToEulerAngles(rotation);
 	localEularAngles = eularAngles - pParent->GetEularAngles();
 
+	UpdateVector();
+
 	// 子トランスフォームに反映
-	for (auto& child : pChilds)
+	for (auto& child : childTransforms)
 		child->UpdateHierarchyRotations();
 
 	// オブジェクト側に変更したことを伝える
@@ -241,6 +260,11 @@ const DirectX::SimpleMath::Quaternion& Transform::GetRotation() const
 	return rotation;
 }
 
+const DirectX::SimpleMath::Matrix& Transform::GetWorldMatrix() const
+{
+	return worldMatrix;
+}
+
 const DirectX::SimpleMath::Vector3& Transform::GetLocalPosition() const
 {
 	return localPosition;
@@ -261,6 +285,11 @@ const DirectX::SimpleMath::Quaternion& Transform::GetLocalRotation() const
 	return localRotation;
 }
 
+const DirectX::SimpleMath::Matrix& Transform::GetLocalMatrix() const
+{
+	return localMatrix;
+}
+
 GameObject& Transform::GetGameObject()
 {
 	return *pGameObject;
@@ -278,7 +307,7 @@ Transform* Transform::GetChild(u_int _childIdx)
 {
 	if (_childIdx >= GetChildCnt()) return nullptr;
 
-	auto itr = pChilds.begin();
+	auto itr = childTransforms.begin();
 	for (u_int i = 0; i < _childIdx; i++)
 		itr++;
 
@@ -287,7 +316,7 @@ Transform* Transform::GetChild(u_int _childIdx)
 
 u_int Transform::GetChildCnt() const
 {
-	return static_cast<u_int>(pChilds.size());
+	return static_cast<u_int>(childTransforms.size());
 }
 
 nlohmann::json Transform::Save()
@@ -299,7 +328,7 @@ nlohmann::json Transform::Save()
 	rotation.Normalize();
 	SaveJsonVector4("rotation", rotation, transformData);
 	auto& childData = transformData["child"];
-	for (auto& child : pChilds)
+	for (auto& child : childTransforms)
 	{
 		childData.push_back(child->GetGameObject().GetName());
 	}
@@ -361,7 +390,7 @@ void Transform::UpdateHierarchyPositions()
 	pGameObject->OnChangePosition();
 
 	// 再帰で呼び出す
-	for (auto& child : pChilds)
+	for (auto& child : childTransforms)
 		child->UpdateHierarchyPositions();
 }
 
@@ -373,7 +402,7 @@ void Transform::UpdateHierarchyScales()
 	pGameObject->OnChangeScale();
 
 	// 再帰で呼び出す
-	for (auto& child : pChilds)
+	for (auto& child : childTransforms)
 		child->UpdateHierarchyScales();
 }
 
@@ -388,8 +417,23 @@ void Transform::UpdateHierarchyRotations()
 	pGameObject->OnChangeRotation();
 
 	// 再帰で呼び出す
-	for (auto& child : pChilds)
+	for (auto& child : childTransforms)
 		child->UpdateHierarchyRotations();
+}
+
+void Transform::UpdateWorldMatrix(const DirectX::SimpleMath::Matrix& _parentWorldMtx)
+{
+	//// ワールド行列を更新
+	//worldMatrix = localMatrix * _parentWorldMtx;
+
+	//Mtx::GetTransformFromWldMtx(worldMatrix, position, scale, rotation);
+	//eularAngles = rotation.ToEuler() * Mathf::radToDeg;
+
+	//// 子オブジェクトにも反映させる
+	//for (auto& c : childTransforms)
+	//{
+	//	c->UpdateWorldMatrix(worldMatrix);
+	//}
 }
 
 void Transform::RemoveParent()

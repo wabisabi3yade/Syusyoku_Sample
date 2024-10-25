@@ -139,7 +139,13 @@ nlohmann::json Mesh_Group::Save()
 	// マテリアルのDiffuseテクスチャの名前をセーブ
 	for (auto& mat : materials)
 	{
-		data["matDiffuse"].push_back(mat->GetDiffuseTexture()->GetAssetName());
+		std::string diffTexName = "null";
+		if (Texture* pTex = mat->GetDiffuseTexture())
+		{
+			diffTexName = pTex->GetAssetName();
+		}
+
+		data["matDiffuse"].push_back(diffTexName);
 	}
 
 	return data;
@@ -149,19 +155,21 @@ void Mesh_Group::Load(const nlohmann::json& _data)
 {
 	using namespace HashiTaku;
 
-	//// マテリアルのテクスチャをロード
-	//nlohmann::json matDatas;
-	//bool isData = LoadJsonDataArray("matDiffuse", matDatas, _data);
-	//if (isData)
-	//{
-	//	u_int idx = 0;
-	//	for (auto& pMat : materials)
-	//	{
-	//		std::string diffuseTex = matDatas["diffuseName"][idx];
-	//		if (Texture* pLoadTex = AssetGetter::GetAsset<Texture>(diffuseTex))
-	//			pMat->SetDiffuseTexture(*pLoadTex);
+	// マテリアルのテクスチャをロード
+	nlohmann::json matDatas;
+	bool isData = LoadJsonDataArray("matDiffuse", matDatas, _data);
+	if (isData)
+	{
+		u_int idx = 0;
+		for (auto& pMat : materials)
+		{
+			std::string diffuseTex = matDatas[idx];
+			if (diffuseTex == "null") continue;
 
-	//		idx++;
-	//	}
-	//}	
+			if (Texture* pLoadTex = AssetGetter::GetAsset<Texture>(diffuseTex))
+				pMat->SetDiffuseTexture(*pLoadTex);
+
+			idx++;
+		}
+	}	
 }

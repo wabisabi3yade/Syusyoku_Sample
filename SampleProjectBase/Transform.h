@@ -7,6 +7,12 @@ class GameObject;
 // 座標・回転・スケールをまとめたパラメータ
 class Transform : public HashiTaku::ISaveLoad
 {
+	/// @brief ワールド空間トランスフォーム行列
+	DirectX::SimpleMath::Matrix worldMatrix;
+
+	/// @brief ローカル空間トランスフォーム行列
+	DirectX::SimpleMath::Matrix localMatrix;
+
 	/// @brief トランスフォームを持つオブジェクト
 	GameObject* pGameObject;
 
@@ -14,7 +20,7 @@ class Transform : public HashiTaku::ISaveLoad
 	Transform* pParent;
 
 	/// @brief 子トランスフォーム
-	std::list<Transform*> pChilds;
+	std::list<Transform*> childTransforms;
 
 	// 各方向の単位ベクトル
 	DirectX::SimpleMath::Vector3 up;	// 上
@@ -83,12 +89,16 @@ public:
 	const DirectX::SimpleMath::Vector3& GetScale() const;
 	const DirectX::SimpleMath::Vector3& GetEularAngles() const;
 	const DirectX::SimpleMath::Quaternion& GetRotation() const;
+	const DirectX::SimpleMath::Matrix& GetWorldMatrix() const;
 
 	// ローカル
 	const DirectX::SimpleMath::Vector3& GetLocalPosition() const;
 	const DirectX::SimpleMath::Vector3& GetLocalScale() const;
 	const DirectX::SimpleMath::Vector3& GetLocalEularAngles() const;
 	const DirectX::SimpleMath::Quaternion& GetLocalRotation() const;
+	const DirectX::SimpleMath::Matrix& GetLocalMatrix() const;
+
+	
 
 	const DirectX::SimpleMath::Vector3& Right()const { return right; }	// 右ベクトル
 	const DirectX::SimpleMath::Vector3& Up()const { return up; }	// 上ベクトル
@@ -129,4 +139,8 @@ private:
 	void UpdateHierarchyScales();
 	// 回転
 	void UpdateHierarchyRotations();
+
+	/// @brief 自身のワールド行列を更新する
+	/// @param _parentWorldMtx 親のワールド行列
+	void UpdateWorldMatrix(const DirectX::SimpleMath::Matrix& _parentWorldMtx);
 };
