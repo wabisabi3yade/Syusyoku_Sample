@@ -97,14 +97,13 @@ void CP_MeshRenderer::ImGuiSetting()
 	// ImGuiŠJ‚¢‚½‚Æ‚«‚¾‚¯Œ´“_•\Ž¦
 	isOriginDisplay = true;
 
-	constexpr u_int Buf = 256;
-	static char str[Buf] = "";
+	std::string meshName;
+	if (pRenderMesh)
+		meshName = pRenderMesh->GetAssetName();
 
-	ImGui::InputText("name", str, Buf);
-
-	if (ImGui::Button("Set"))
+	if (AssetGetter::ImGuiGetCombobox<Mesh_Group>("model", meshName))
 	{
-		pRenderMesh = AssetGetter::GetAsset<Mesh_Group>(str);
+		pRenderMesh = AssetGetter::GetAsset<Mesh_Group>(meshName);
 	}
 }
 

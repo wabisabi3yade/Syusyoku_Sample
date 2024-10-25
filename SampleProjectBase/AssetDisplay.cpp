@@ -17,6 +17,8 @@ char AssetDisplay::inputText[IM_INPUT_BUF] = {};
 
 void AssetDisplay::Draw()
 {
+#ifdef EDIT
+
 	if (ImGuiMethod::TreeNode("Asset"))
 	{
 		DisplayTexture();
@@ -28,6 +30,8 @@ void AssetDisplay::Draw()
 
 		ImGui::TreePop();
 	}
+
+#endif // EDIT
 }
 
 void AssetDisplay::Display(const std::unordered_map<std::string, std::unique_ptr<Asset_Base>>& _assets)
@@ -97,7 +101,25 @@ void AssetDisplay::DisplayMaterial()
 	if (!ImGuiMethod::TreeNode("Material")) return;
 
 	AssetList& assets = pAssetCollection->GetAssetList<Material>();
-	Display(assets);
+	for (auto& asset : assets)
+	{
+		if (ImGuiMethod::TreeNode(asset.second->GetAssetName()))
+		{
+			Material* pMat = static_cast<Material*>(asset.second.get());
+
+			pMat->ImGuiCall();
+
+			ImGui::TreePop();
+		}
+	}
+
+	static char createMat[IM_INPUT_BUF];
+	ImGui::InputText("##createMat", createMat, IM_INPUT_BUF);
+
+	if (ImGui::Button("Create"))
+	{
+		MaterialCreater::CraeteAsset(createMat);
+	}
 
 	DeleteInputAsset();
 	if (ImGui::Button("Delete"))

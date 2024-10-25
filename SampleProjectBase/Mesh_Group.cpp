@@ -1,10 +1,9 @@
 #include "pch.h"
 #include "Mesh_Group.h"
-
 #include "Material.h"
-
-// シェーダー管理
 #include "ShaderCollection.h"
+#include "AssetGetter.h"
+
 
 void Mesh_Group::AddMesh(std::unique_ptr<SingleMesh> _pMesh)
 {
@@ -13,7 +12,7 @@ void Mesh_Group::AddMesh(std::unique_ptr<SingleMesh> _pMesh)
 
 void Mesh_Group::AddMaterial(Material* _pMaterial)
 {
-	pMaterials.push_back(_pMaterial);
+	materials.push_back(_pMaterial);
 }
 
 SingleMesh* Mesh_Group::GetMesh(u_int _meshIdx) const
@@ -32,14 +31,14 @@ u_int Mesh_Group::GetMeshNum()
 Material* Mesh_Group::GetMaterial(u_int _materialIdx)
 {
 	// 指定したメッシュが範囲超えたら
-	if (_materialIdx + 1 > static_cast<u_int>(pMaterials.size())) return nullptr;
+	if (_materialIdx + 1 > static_cast<u_int>(materials.size())) return nullptr;
 
-	return pMaterials[_materialIdx];
+	return materials[_materialIdx];
 }
 
 u_int Mesh_Group::GetMaterialNum()
 {
-	return static_cast<u_int>(pMaterials.size());
+	return static_cast<u_int>(materials.size());
 }
 
 DirectX::SimpleMath::Vector3 Mesh_Group::GetCenterPosition() const
@@ -109,7 +108,7 @@ void Mesh_Group::SetVertexShader(const std::string& _vsName)
 		return;
 
 	// マテリアルすべてに反映させる
-	for (auto m : pMaterials)
+	for (auto m : materials)
 	{
 		m->SetVertexShader(*pVS);
 	}
@@ -122,7 +121,7 @@ void Mesh_Group::SetPixelShader(const std::string& _psName)
 		return;
 
 	// マテリアルすべてに反映させる
-	for (auto m : pMaterials)
+	for (auto m : materials)
 	{
 		m->SetPixelShader(*pPS);
 	}
@@ -137,5 +136,32 @@ nlohmann::json Mesh_Group::Save()
 	data["getSize"] = isGetSize;
 	data["rightHand"] = isRightHand;
 
+	// マテリアルのDiffuseテクスチャの名前をセーブ
+	for (auto& mat : materials)
+	{
+		data["matDiffuse"].push_back(mat->GetDiffuseTexture()->GetAssetName());
+	}
+
 	return data;
+}
+
+void Mesh_Group::Load(const nlohmann::json& _data)
+{
+	using namespace HashiTaku;
+
+	//// マテリアルのテクスチャをロード
+	//nlohmann::json matDatas;
+	//bool isData = LoadJsonDataArray("matDiffuse", matDatas, _data);
+	//if (isData)
+	//{
+	//	u_int idx = 0;
+	//	for (auto& pMat : materials)
+	//	{
+	//		std::string diffuseTex = matDatas["diffuseName"][idx];
+	//		if (Texture* pLoadTex = AssetGetter::GetAsset<Texture>(diffuseTex))
+	//			pMat->SetDiffuseTexture(*pLoadTex);
+
+	//		idx++;
+	//	}
+	//}	
 }

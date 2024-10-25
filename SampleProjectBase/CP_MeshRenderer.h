@@ -10,6 +10,9 @@ class CP_MeshRenderer : public CP_Renderer
 	/// @brief 描画するメッシュ群
 	Mesh_Group* pRenderMesh{ nullptr };
 
+	/// @brief 描画時に使用するマテリアル(無ければメッシュ側のマテリアルで描画)
+	std::vector<Material*> pRenderMaterial;
+
 	/// @brief オブジェクトの原点を表示するか
 	bool isOriginDisplay;
 public:
@@ -19,8 +22,6 @@ public:
 	void Start();
 
 	void Draw() override;
-
-	void ImGuiSetting() override;
 
 	/// @brief 描画するメッシュをセット
 	/// @param _renderMesh メッシュ群
@@ -52,7 +53,7 @@ private:
 	/// @brief メッシュを描画
 	void DrawMesh(RenderParam::WVP& _wvp);
 
-	void DrawShadow();
+	//void DrawShadow();
 
 	/// @brief マテリアルの準備
 	/// @param _wvp wvp行列
@@ -71,5 +72,7 @@ private:
 
 	/// @brief 原点表示
 	void OriginDisplay();
+
+	void ImGuiSetting() override;
 };
 
