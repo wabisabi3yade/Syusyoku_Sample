@@ -4,65 +4,6 @@
             "active": true,
             "components": [
                 {
-                    "AABB": false,
-                    "angles": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "center": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "enable": true,
-                    "length": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "name": "BoxCollider"
-                },
-                {
-                    "enable": true,
-                    "isAwake": false,
-                    "isFreezeRot": [
-                        false,
-                        false,
-                        false
-                    ],
-                    "isTrigger": false,
-                    "mass": 1.0,
-                    "name": "RigidBody"
-                }
-            ],
-            "layer": 0,
-            "name": "a1",
-            "tag": 0,
-            "transform": {
-                "child": null,
-                "pos": [
-                    -0.5,
-                    6.300000190734863,
-                    0.0
-                ],
-                "rotation": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
                     "distance": 1000.0,
                     "enable": true,
                     "fov": 45.0,
@@ -78,14 +19,14 @@
                 "child": null,
                 "pos": [
                     0.0,
-                    10.699999809265137,
-                    -74.19999694824219
+                    1.2999999523162842,
+                    -7.0
                 ],
                 "rotation": [
-                    0.05233598127961159,
                     0.0,
                     0.0,
-                    0.9986295104026794
+                    0.0,
+                    1.0
                 ],
                 "scale": [
                     1.0,
@@ -98,253 +39,19 @@
             "active": true,
             "components": [
                 {
-                    "AABB": false,
-                    "angles": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "center": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
                     "enable": true,
-                    "length": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "name": "BoxCollider"
-                },
-                {
-                    "enable": true,
-                    "isAwake": false,
-                    "isFreezeRot": [
-                        false,
-                        false,
-                        false
-                    ],
-                    "isTrigger": false,
-                    "mass": 1.0,
-                    "name": "RigidBody"
+                    "meshName": "Knight.fbx",
+                    "name": "MeshRenderer"
                 }
             ],
             "layer": 0,
-            "name": "coll",
-            "tag": 0,
-            "transform": {
-                "child": null,
-                "pos": [
-                    0.0,
-                    3.0,
-                    0.0
-                ],
-                "rotation": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "enable": true,
-                    "name": "SpriteRenderer",
-                    "sprite": {
-                        "texName": "ground.png",
-                        "uvDivNum": [
-                            0.0,
-                            0.0
-                        ],
-                        "uvEnd": [
-                            1.0,
-                            1.0
-                        ],
-                        "uvStart": [
-                            0.0,
-                            0.0
-                        ]
-                    }
-                },
-                {
-                    "AABB": false,
-                    "angles": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "center": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "enable": true,
-                    "length": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "name": "BoxCollider"
-                },
-                {
-                    "enable": true,
-                    "isAwake": false,
-                    "isFreezeRot": [
-                        false,
-                        false,
-                        false
-                    ],
-                    "isTrigger": false,
-                    "mass": 0.0,
-                    "name": "RigidBody"
-                }
-            ],
-            "layer": 0,
-            "name": "Arena",
-            "tag": 0,
-            "transform": {
-                "child": null,
-                "pos": [
-                    0.0,
-                    -10.699999809265137,
-                    0.0
-                ],
-                "rotation": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "scale": [
-                    100.0,
-                    1.0,
-                    100.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "AABB": false,
-                    "angles": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "center": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "enable": true,
-                    "length": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "name": "BoxCollider"
-                },
-                {
-                    "enable": true,
-                    "isAwake": false,
-                    "isFreezeRot": [
-                        false,
-                        false,
-                        false
-                    ],
-                    "isTrigger": false,
-                    "mass": 1.0,
-                    "name": "RigidBody"
-                }
-            ],
-            "layer": 0,
-            "name": "a",
-            "tag": 0,
-            "transform": {
-                "child": null,
-                "pos": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "rotation": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "enable": true,
-                    "isAwake": false,
-                    "isFreezeRot": [
-                        false,
-                        false,
-                        false
-                    ],
-                    "isTrigger": false,
-                    "mass": 1.0,
-                    "name": "RigidBody"
-                }
-            ],
-            "layer": 0,
-            "name": "a2",
-            "tag": 0,
-            "transform": {
-                "child": null,
-                "pos": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "rotation": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "enable": true,
-                    "name": "UIRenderer"
-                }
-            ],
-            "layer": 2,
             "name": "a3",
             "tag": 0,
             "transform": {
                 "child": null,
                 "pos": [
-                    158.3000030517578,
-                    191.89999389648438,
+                    -0.10000000149011612,
+                    0.0,
                     0.0
                 ],
                 "rotation": [
@@ -354,8 +61,8 @@
                     1.0
                 ],
                 "scale": [
-                    100.0,
-                    100.0,
+                    0.8999999761581421,
+                    1.0,
                     1.0
                 ]
             }

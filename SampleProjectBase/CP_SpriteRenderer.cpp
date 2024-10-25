@@ -38,7 +38,8 @@ void CP_SpriteRenderer::DrawSetup()
 	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
 
 	// ワールド変換行列の座標にモデルの座標を入れる
-	RenderParam::WVP wvp = renderer.GetParameter().GetWVP(GetTransform());
+	RenderParam::WVP wvp = renderer.GetParameter().GetWVP();
+	wvp.world = GetTransform().GetWorldMatrix();
 	wvp.world = wvp.world.Transpose();
 
 	// シェーダーの設定
@@ -98,16 +99,14 @@ void CP_SpriteRenderer::Draw()
 
 void CP_SpriteRenderer::ImGuiSetting()
 {
-	const u_int Buf = 256;
-	static char str[Buf];
-	ImGui::InputText("texture", str, Buf);
+	std::string texName;
+	if (pSprite->GetIsTexEnable())
+		texName = pSprite->GetTexture()->GetAssetName();
 
-	if (ImGui::Button("Set"))
+	if (AssetGetter::ImGuiGetCombobox<Texture>("texture", texName))
 	{
-		Texture* pTex = AssetGetter::GetAsset<Texture>(str);
-
-		if (pTex)
-			pSprite->SetTexture(*pTex);
+		Texture* pTex = AssetGetter::GetAsset<Texture>(texName);
+		pSprite->SetTexture(*pTex);
 	}
 }
 

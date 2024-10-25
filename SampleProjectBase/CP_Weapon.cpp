@@ -16,7 +16,6 @@ CP_Weapon::CP_Weapon() : grabBoneName(""), pGrabBone(nullptr), pMeshRenderer(nul
 
 void CP_Weapon::Init()
 {
-	grabBoneName = "mixamorig:RightHand";
 }
 
 void CP_Weapon::Start()
@@ -99,8 +98,6 @@ nlohmann::json CP_Weapon::Save()
 void CP_Weapon::Load(const nlohmann::json& _data)
 {
 	Component::Load(_data);
-
-	std::string grabBoneName;
 	HashiTaku::LoadJsonString("grabName", grabBoneName, _data);
 }
 
