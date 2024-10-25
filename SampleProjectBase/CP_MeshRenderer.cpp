@@ -31,9 +31,9 @@ void CP_MeshRenderer::Draw()
 	RenderParam& rendererParam = Direct3D11::GetInstance()->GetRenderer()->GetParameter();
 
 	Transform& transform = GetTransform();
-	auto& wvp = rendererParam.GetWVP(transform);
+	auto& wvp = rendererParam.GetWVP();
 
-	wvp.world = CalcLoadMtx() * wvp.world;
+	wvp.world = CalcLoadMtx() * transform.GetWorldMatrix();
 	wvp.world = wvp.world.Transpose();
 
 	// ƒƒbƒVƒ…•`‰æ

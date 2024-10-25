@@ -261,7 +261,7 @@ void Mtx::CreateTransformMatrix(const Vector3& _pos, const Vector3& _scale, cons
 	Matrix posMtx = Matrix::CreateTranslation(_pos);
 
 	// ÉXÉPÅ[Éã
-	Matrix scaleMtx = Matrix::CreateTranslation(_scale);
+	Matrix scaleMtx = Matrix::CreateScale(_scale);
 
 	// âÒì]ó 
 	Matrix rotMtx = Matrix::CreateFromQuaternion(_rotation);

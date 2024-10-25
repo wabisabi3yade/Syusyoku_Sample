@@ -28,7 +28,7 @@
                 }
             ],
             "assetName": "ANC_Player",
-            "defaultNode": "Attack2",
+            "defaultNode": "Idle",
             "nodeInfoData": [
                 {
                     "animNode": {

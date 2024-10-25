@@ -21,6 +21,8 @@ public:
 	RenderParam() {}
 	~RenderParam() {}
 
+	WVP& GetWVP();
+
 	/// @brief WVP変換行列を作成して渡す
 	/// @param _transform 座標
 	/// @param _scaleTimes スケール倍率

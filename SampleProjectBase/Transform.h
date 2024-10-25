@@ -132,15 +132,12 @@ public:
 private:
 	void Copy(const Transform& _other);
 
-	//  子トランスフォームパラメータを更新(再帰関数)
-	// 座標
-	void UpdateHierarchyPositions();
-	// スケール
-	void UpdateHierarchyScales();
-	// 回転
-	void UpdateHierarchyRotations();
-
 	/// @brief 自身のワールド行列を更新する
 	/// @param _parentWorldMtx 親のワールド行列
 	void UpdateWorldMatrix(const DirectX::SimpleMath::Matrix& _parentWorldMtx);
+
+	/// @brief 現在のローカルパラメータからローカル行列を更新
+	void UpdateLocalMatrix();
+
+	void UpdateLocalMatrixFromWorld();
 };
