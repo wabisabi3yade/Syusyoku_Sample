@@ -6,7 +6,7 @@
 
 using namespace DirectX::SimpleMath;
 
-constexpr u_int DIFFUSETEX_SLOT(0);
+constexpr u_int DIFFUSETEX_SLOT(0); // ディフューズテクスチャのスロット番号
 
 Material::Material() : pDiffuseTexture(nullptr), pNormalTexture(nullptr), pVertexShader(nullptr),
 pPixelShader(nullptr)

@@ -155,21 +155,21 @@ void Mesh_Group::Load(const nlohmann::json& _data)
 {
 	using namespace HashiTaku;
 
-	// マテリアルのテクスチャをロード
-	nlohmann::json matDatas;
-	bool isData = LoadJsonDataArray("matDiffuse", matDatas, _data);
-	if (isData)
-	{
-		u_int idx = 0;
-		for (auto& pMat : materials)
-		{
-			std::string diffuseTex = matDatas[idx];
-			if (diffuseTex == "null") continue;
+	//// マテリアルのテクスチャをロード
+	//nlohmann::json matDatas;
+	//bool isData = LoadJsonDataArray("matDiffuse", matDatas, _data);
+	//if (isData)
+	//{
+	//	u_int idx = 0;
+	//	for (auto& pMat : materials)
+	//	{
+	//		std::string diffuseTex = matDatas[idx];
+	//		if (diffuseTex == "null") continue;
 
-			if (Texture* pLoadTex = AssetGetter::GetAsset<Texture>(diffuseTex))
-				pMat->SetDiffuseTexture(*pLoadTex);
+	//		if (Texture* pLoadTex = AssetGetter::GetAsset<Texture>(diffuseTex))
+	//			pMat->SetDiffuseTexture(*pLoadTex);
 
-			idx++;
-		}
-	}	
+	//		idx++;
+	//	}
+	//}	
 }

@@ -18,25 +18,27 @@ public:
 	~Texture() {}
 
 	// SRVをセット
-	void SetSRV(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> _pSRV);
+	virtual void SetSRV(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> _pSRV);
 
 	// 横幅をセット
-	void SetWidth(u_int _width);
+	virtual void SetWidth(u_int _width);
 
 	// 縦幅をセット
-	void SetHeight(u_int _height);
+	virtual void SetHeight(u_int _height);
 
 	/// @brief SRVの参照を取得
 	/// @return SRVの参照
-	ID3D11ShaderResourceView& GetSRV()const { return *pSRV.Get(); }
+	virtual ID3D11ShaderResourceView& GetSRV()const { return *pSRV.Get(); }
 
 	/// @brief 幅を取得
 	/// @return 画像の横幅(px)
-	u_int GetWidth()const { return width; }
+	virtual u_int GetWidth()const { return width; }
 
 	/// @brief 高さを取得
 	/// @return 画像の高さ(px)
-	u_int GetHeight()const { return height; }
+	virtual u_int GetHeight()const { return height; }
+
+	virtual bool GetIsSetSRV() const;
 };
 
 /// @brief テクスチャのNullオブジェクトクラス
@@ -46,11 +48,22 @@ public:
 	NullTexture() {}
 	~NullTexture() {}
 
+	// SRVをセット
+	void SetSRV(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> _pSRV) override {}
+
+	// 横幅をセット
+	void SetWidth(u_int _width) override {}
+
+	// 縦幅をセット
+	void SetHeight(u_int _height) override {}
+
 	/// @brief 幅を取得
 	/// @return 画像の横幅(px)
-	u_int GetWidth()const { return 0; }
+	u_int GetWidth()const override { return 0; }
 
 	/// @brief 高さを取得
 	/// @return 画像の高さ(px)
-	u_int GetHeight()const { return 0; }
+	u_int GetHeight()const override { return 0; }
+
+	bool GetIsSetSRV() const override { return false; }
 };

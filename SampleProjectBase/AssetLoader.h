@@ -52,7 +52,7 @@ class AssetLoader : private AssetContacter
 	/// @param _pMeshgather メッシュ
 	/// @param pScene シーン
 	/// @param texturedirectory 読み込むモデルまでのパス名
-	static void MaterialLoad(Mesh_Group* _pMeshgather, const aiScene* pScene, std::string texturedirectory);
+	static void MaterialLoad(Mesh_Group* _pMeshgather, const aiScene* pScene, const std::string& _texturedirectory);
 
 	/// @brief モデルの内部テクスチャを読み込むクラス
 	/// @param _texture 情報を入れるテクスチャの参照
@@ -141,6 +141,11 @@ private:	// 便利関数
 	/// @param _pathName パス名
 	/// @return 親パス名
 	static std::string GetParentPath(const std::string& _pathName);
+
+	/// @brief 拡張子無しのファイル名を取得する
+	/// @param _pathName パス名
+	/// @return 拡張しなしファイル名
+	static std::string GetPathNameNotExt(const std::string& _pathName);
 
 	/// @brief 最大・最小サイズを更新
 	/// @param _vertexPos 頂点座標

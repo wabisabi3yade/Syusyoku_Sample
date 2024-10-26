@@ -55,18 +55,18 @@ static Matrix ToDirectXMatrix(const aiMatrix4x4& _aiMatrix);
 static aiMatrix4x4 ToAssimpMatrix(const Matrix& _dxMatrix);
 
 void AssetLoader::MaterialLoad(Mesh_Group* _pMeshgather,
-	const aiScene* pScene, std::string texturedirectory)
+	const aiScene* _pScene, const std::string& _texturedirectory)
 {
 	// マテリアル数文ループ
-	for (unsigned int m = 0; m < pScene->mNumMaterials; m++)
+	for (unsigned int m = 0; m < _pScene->mNumMaterials; m++)
 	{
-		aiMaterial* material = pScene->mMaterials[m];
+		aiMaterial* material = _pScene->mMaterials[m];
 
 		// マテリアル名取得
 		std::string mtrlname = material->GetName().C_Str();
 		if (mtrlname.length() <= 0)
 		{
-			mtrlname = "M_" + std::string(pScene->mMeshes[m]->mName.C_Str());
+			mtrlname = "M_" + std::string(_pScene->mMeshes[m]->mName.C_Str());
 		}
 
 		// マテリアル情報
@@ -134,7 +134,7 @@ void AssetLoader::MaterialLoad(Mesh_Group* _pMeshgather,
 				std::string texPath = path.C_Str();
 
 				// 内蔵テクスチャかどうかを判断する
-				if (auto aiTex = pScene->GetEmbeddedTexture(path.C_Str()))
+				if (auto aiTex = _pScene->GetEmbeddedTexture(path.C_Str()))
 				{
 					// 内蔵テクスチャの場合
 					bool sts = LoadEmbeddedTexture(
@@ -149,7 +149,7 @@ void AssetLoader::MaterialLoad(Mesh_Group* _pMeshgather,
 				}
 				else // 外部テクスチャファイルの場合
 				{
-					std::string texname = texturedirectory + "/" + PathToFileName(texPath);
+					std::string texname = _texturedirectory + "/" + PathToFileName(texPath);
 
 					texture = MakeTexture(texname);
 				}
@@ -162,12 +162,28 @@ void AssetLoader::MaterialLoad(Mesh_Group* _pMeshgather,
 			}
 		}
 
+		// 同じ階層の同じ名前の画像を取得する
+		if (!texture->GetIsSetSRV())
+		{
+			// 拡張しなしのパス名
+			std::string meshNameNotExt = _texturedirectory + "/" + GetPathNameNotExt(_pMeshgather->GetAssetName());
+
+			// png形式で見る
+			texture = MakeTexture(meshNameNotExt + ".png");
+
+			// jpg形式
+			if (!texture->GetIsSetSRV())
+				texture = MakeTexture(meshNameNotExt + ".jpg");
+		}
+
 		// テクスチャを管理にセット
-		std::string texName = texture->GetAssetName();
-		Texture* pTex = SendAsset(texName, std::move(texture));
-
-		createMaterial->SetDiffuseTexture(*pTex);
-
+		if (texture->GetIsSetSRV())
+		{
+			std::string texName = texture->GetAssetName();
+			Texture* pTex = SendAsset(texName, std::move(texture));
+			createMaterial->SetDiffuseTexture(*pTex);
+		}
+	
 		// 管理クラスにセットする
 		Material* materialPtr =
 			SendAsset<Material>(mtrlname, std::move(createMaterial));
@@ -248,7 +264,7 @@ bool AssetLoader::LoadEmbeddedTexture(Texture& _texture, const aiTexture& _aiTex
 
 std::unique_ptr<Texture> AssetLoader::MakeTexture(const std::string& _filePath)
 {
-	std::unique_ptr<Texture> pMakeTex = std::make_unique<NullTexture>();
+	std::unique_ptr<Texture> pMakeTex = std::make_unique<Texture>();
 
 	bool sts = true;
 	unsigned char* pixels;
@@ -772,6 +788,12 @@ std::string AssetLoader::GetParentPath(const std::string& _pathName)
 {
 	fs::path fsPath = _pathName;
 	return fsPath.parent_path().string();
+}
+
+std::string AssetLoader::GetPathNameNotExt(const std::string& _pathName)
+{
+	fs::path fsPath = _pathName;
+	return fsPath.stem().string();
 }
 
 void AssetLoader::UpdateSize(const DirectX::SimpleMath::Vector3& _vertexPos, DirectX::SimpleMath::Vector3& _max, DirectX::SimpleMath::Vector3& _min)

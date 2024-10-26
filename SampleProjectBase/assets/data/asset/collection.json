@@ -583,27 +583,25 @@
             "rightHand": true
         },
         {
-            "assetName": "Sword.fbx",
-            "flipY": true,
-            "getSize": true,
-            "loadScale": 0.5,
-            "matDiffuse": [
-                "null",
-                "null",
-                "null"
-            ],
-            "pathName": "assets/model/sword/Sword.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "shield1.fbx",
             "flipY": true,
             "getSize": false,
             "loadScale": 1.0,
             "matDiffuse": [
-                "Albedo_Shields.png"
+                "shield1.png"
             ],
             "pathName": "assets/model/shield/shield1.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "Knight_Sword.fbx",
+            "flipY": true,
+            "getSize": false,
+            "loadScale": 0.009999999776482582,
+            "matDiffuse": [
+                "FarbPalette256x256.png"
+            ],
+            "pathName": "assets/model/sword/Knight_Sword.fbx",
             "rightHand": true
         }
     ],
@@ -657,8 +655,12 @@
             "pathName": "assets/texture/UI/UI_hpLine_red.png"
         },
         {
-            "assetName": "Albedo_Shields.png",
-            "pathName": "assets/model/shield/Albedo_Shields.png"
+            "assetName": "shield1.png",
+            "pathName": ""
+        },
+        {
+            "assetName": "FarbPalette256x256.png",
+            "pathName": ""
         }
     ]
 }

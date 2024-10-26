@@ -258,16 +258,18 @@ Matrix Mtx::CreateRoratateMtx(const Vector3& _degrees)
 void Mtx::CreateTransformMatrix(const Vector3& _pos, const Vector3& _scale, const Quaternion& _rotation, Matrix& _outMatrix)
 {
 	// 座標移動
-	Matrix posMtx = Matrix::CreateTranslation(_pos);
+	Matrix transformMtx = Matrix::CreateTranslation(_pos);
 
 	// スケール
 	Matrix scaleMtx = Matrix::CreateScale(_scale);
 
 	// 回転量
-	Matrix rotMtx = Matrix::CreateFromQuaternion(_rotation);
+	Quaternion normalize;
+	_rotation.Normalize(normalize);
+	Matrix rotMtx = Matrix::CreateFromQuaternion(normalize);
 
 	// SRT
-	_outMatrix = scaleMtx * rotMtx * posMtx;
+	_outMatrix = scaleMtx * rotMtx * transformMtx;
 }
 
 void Mtx::GetTransformFromWldMtx(const Matrix& _worldMtx, Vector3& _pos, Vector3& _scele, Quaternion& _rot)

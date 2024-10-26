@@ -4,6 +4,54 @@
             "active": true,
             "components": [
                 {
+                    "distance": 1000.0,
+                    "enable": true,
+                    "fov": 45.0,
+                    "isOrth": false,
+                    "name": "Camera",
+                    "viewSlot": 0
+                },
+                {
+                    "dis_Hori": 9.0,
+                    "dis_Ver": 3.0,
+                    "enable": true,
+                    "name": "CameraMove",
+                    "offsetTarget": [
+                        0.0,
+                        2.0,
+                        0.0
+                    ],
+                    "rotSpeed": 120.0,
+                    "target": "Player"
+                }
+            ],
+            "layer": 1,
+            "name": "Camera",
+            "tag": 1,
+            "transform": {
+                "child": null,
+                "pos": [
+                    6.400000095367432,
+                    2.9000000953674316,
+                    -9.899999618530273
+                ],
+                "rotation": [
+                    0.1592845767736435,
+                    -0.6094026565551758,
+                    0.12216972559690475,
+                    0.7670276761054993
+                ],
+                "scale": [
+                    0.9999997019767761,
+                    0.9999998211860657,
+                    0.999999463558197
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
                     "enable": true,
                     "name": "SpriteRenderer",
                     "sprite": {
@@ -75,100 +123,6 @@
                     100.0,
                     1.0,
                     100.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "distance": 1000.0,
-                    "enable": true,
-                    "fov": 45.0,
-                    "isOrth": false,
-                    "name": "Camera",
-                    "viewSlot": 0
-                },
-                {
-                    "dis_Hori": 9.0,
-                    "dis_Ver": 3.0,
-                    "enable": true,
-                    "name": "CameraMove",
-                    "offsetTarget": [
-                        0.0,
-                        2.0,
-                        0.0
-                    ],
-                    "rotSpeed": 120.0,
-                    "target": "Player"
-                }
-            ],
-            "layer": 1,
-            "name": "Camera",
-            "tag": 1,
-            "transform": {
-                "child": null,
-                "pos": [
-                    0.8999999761581421,
-                    4.199999809265137,
-                    -14.0
-                ],
-                "rotation": [
-                    0.2838424742221832,
-                    0.00991202425211668,
-                    -0.033462416380643845,
-                    0.9582356214523315
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "active": false,
-            "components": [
-                {
-                    "enable": true,
-                    "name": "NotifyTest",
-                    "notifys": [
-                        {
-                            "notify": {
-                                "bMessage": "Begin",
-                                "eMessage": "End",
-                                "end": 0.6499999761581421,
-                                "isActive": true,
-                                "notifyName": "ANS_DebugLog",
-                                "start": 0.5799999833106995,
-                                "tMessage": "Tick"
-                            },
-                            "typeName": "ANS_DebugLog"
-                        }
-                    ],
-                    "speed": 1.0
-                }
-            ],
-            "layer": 0,
-            "name": "NotifyTest",
-            "tag": 0,
-            "transform": {
-                "child": null,
-                "pos": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "rotation": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
                 ]
             }
         },
@@ -278,31 +232,43 @@
             }
         },
         {
-            "active": true,
+            "active": false,
             "components": [
                 {
                     "enable": true,
-                    "grabName": "mixamorig:RightHand",
-                    "name": "Weapon"
+                    "name": "NotifyTest",
+                    "notifys": [
+                        {
+                            "notify": {
+                                "bMessage": "Begin",
+                                "eMessage": "End",
+                                "end": 0.6499999761581421,
+                                "isActive": true,
+                                "notifyName": "ANS_DebugLog",
+                                "start": 0.5799999833106995,
+                                "tMessage": "Tick"
+                            },
+                            "typeName": "ANS_DebugLog"
+                        }
+                    ],
+                    "speed": 1.0
                 }
             ],
             "layer": 0,
-            "name": "Weapon",
+            "name": "NotifyTest",
             "tag": 0,
             "transform": {
-                "child": [
-                    "Weapon_Model"
-                ],
+                "child": null,
                 "pos": [
                     0.0,
-                    1.2000000476837158,
-                    -9.699999809265137
+                    0.0,
+                    0.0
                 ],
                 "rotation": [
-                    -0.0,
-                    0.04361940547823906,
-                    -0.0,
-                    0.9990482330322266
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
                 ],
                 "scale": [
                     1.0,
@@ -350,7 +316,41 @@
             "components": [
                 {
                     "enable": true,
-                    "meshName": "Sword.fbx",
+                    "grabName": "mixamorig:RightHand",
+                    "name": "Weapon"
+                }
+            ],
+            "layer": 0,
+            "name": "Weapon",
+            "tag": 0,
+            "transform": {
+                "child": [
+                    "Weapon_Model"
+                ],
+                "pos": [
+                    0.0,
+                    1.2000000476837158,
+                    -9.699999809265137
+                ],
+                "rotation": [
+                    -0.0,
+                    0.04361940547823906,
+                    -0.0,
+                    0.9990482330322266
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "meshName": "Knight_Sword.fbx",
                     "name": "MeshRenderer"
                 },
                 {
@@ -367,19 +367,19 @@
                 },
                 {
                     "angles": [
-                        92.0,
-                        -1.0,
+                        0.0,
+                        0.0,
                         0.0
                     ],
                     "center": [
-                        0.30000001192092896,
-                        0.20000000298023224,
-                        -1.7000000476837158
+                        0.0,
+                        0.5,
+                        0.0
                     ],
                     "enable": true,
-                    "height": 4.099999904632568,
+                    "height": 1.4299999475479126,
                     "name": "CapsuleCollider",
-                    "radius": 0.5600000023841858
+                    "radius": 0.28999999165534973
                 }
             ],
             "layer": 0,
@@ -388,20 +388,20 @@
             "transform": {
                 "child": null,
                 "pos": [
-                    0.0,
-                    1.2000000476837158,
-                    -9.699999809265137
+                    0.1992390751838684,
+                    1.350000023841858,
+                    -9.717430114746094
                 ],
                 "rotation": [
-                    -0.14340996742248535,
-                    0.7415580153465271,
-                    0.1535446047782898,
-                    -0.6371414661407471
+                    0.14162667095661163,
+                    0.19435754418373108,
+                    -0.6248884797096252,
+                    0.7427524924278259
                 ],
                 "scale": [
-                    0.2000000774860382,
-                    0.20000000298023224,
-                    0.2000000774860382
+                    1.2000001668930054,
+                    1.2000004053115845,
+                    1.2000001668930054
                 ]
             }
         },

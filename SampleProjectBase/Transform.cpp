@@ -185,7 +185,6 @@ void Transform::SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAn
 	// クォータニオンに反映させる
 	localRotation = Quat::ToQuaternion(localEularAngles);
 
-	UpdateVector();
 	UpdateLocalMatrix();
 	UpdateWorldMatrix(pParent->GetWorldMatrix());
 
@@ -378,7 +377,7 @@ void Transform::UpdateLocalMatrixFromWorld()
 
 	// パラメータに反映する
 	Mtx::GetTransformFromWldMtx(localMatrix, localPosition, localScale, localRotation);
-	localEularAngles = localRotation.ToEuler();
+	localEularAngles = localRotation.ToEuler() * Mathf::radToDeg;
 }
 
 void Transform::RemoveParent()

@@ -15,3 +15,8 @@ void Texture::SetHeight(u_int _height)
 {
 	height = _height;
 }
+
+bool Texture::GetIsSetSRV() const
+{
+	return pSRV != nullptr;
+}
