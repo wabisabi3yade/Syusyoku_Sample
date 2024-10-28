@@ -46,6 +46,11 @@ public:
 	/// @brief トリガーの状態をリセットする
 	void ResetTrigger();
 
+	/// @brief パラメータがあるか取得
+	/// @param _parameterName パラメータ名
+	/// @return パラメータがあるか？
+	bool IsContain(const std::string& _parameterName) const;
+
 	/// @brief 指定したbool変数に値をセット
 	/// @param _paramName パラメーター名
 	/// @param _isBool セットする値
@@ -102,6 +107,11 @@ public:
 	/// @param _name 探索するの名前
 	/// @return パラメータ名のアドレスのアドレス(ないならnullptr)
 	const std::string* GetNameAddress(const std::string& _name) const;
+
+	/// @brief 指定したパラメータの型を取得する
+	/// @param _parameterName 取得したいパラメータ名
+	/// @return パラメータの型
+	HashiTaku::AnimParam::TypeKind GetParameterType(const std::string& _parameterName) const;
 
 	// パラメータの個数を取得
 	u_int GetParameterCnt() const;

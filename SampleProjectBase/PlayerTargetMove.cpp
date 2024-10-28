@@ -7,7 +7,7 @@
 constexpr float IDLE_ANIM_PLAYSPEED(1.0f);
 
 PlayerTargetMove::PlayerTargetMove()
-	: PlayerActState_Base(PlayerActState_Base::StateType::TargetMove), currentSpeed(0.0f), maxSpeed(10.0f), acceleration(40.0f), decadeSpeedTimes(0.98f)
+	:currentSpeed(0.0f), maxSpeed(10.0f), acceleration(40.0f), decadeSpeedTimes(0.98f)
 {
 }
 

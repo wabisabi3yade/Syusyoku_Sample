@@ -17,7 +17,8 @@ namespace HashiTaku
 			Bool,
 			Int,
 			Float,
-			Trigger
+			Trigger,
+			None
 		};
 	}
 }

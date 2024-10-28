@@ -2,13 +2,17 @@
 #include "AnimationNotify_Base.h"
 
 AnimationNotify_Base::AnimationNotify_Base()
-	: isActive(true), notifyName(""), pGameObject(nullptr)
+	: isActive(true), notifyName(""), notifyType(NotifyType::None)
 {
 }
 
-void AnimationNotify_Base::Init(GameObject& _pGameObject)
+AnimationNotify_Base::AnimationNotify_Base(NotifyType _notifyType)
+	: isActive(true), notifyName(""), notifyType(_notifyType)
 {
-	pGameObject = &_pGameObject;
+}
+
+void AnimationNotify_Base::Init()
+{
 }
 
 void AnimationNotify_Base::SetIsActive(bool _isActive)
@@ -21,6 +25,29 @@ void AnimationNotify_Base::SetNotifyName(const std::string& _notifyName)
 	notifyName = _notifyName;
 }
 
+std::string AnimationNotify_Base::GetTypeToStr(NotifyType _notifyType)
+{
+	switch (_notifyType)
+	{
+	case AnimationNotify_Base::NotifyType::ANE_DebugLog:
+		return "ANE_DebugLog";
+		break;
+	case AnimationNotify_Base::NotifyType::ANS_DebugLog:
+		return "ANS_DebugLog";
+		break;
+	case AnimationNotify_Base::NotifyType::ANE_ChangeParameter:
+		return "ANE_ChangeParameter";
+		break;
+	case AnimationNotify_Base::NotifyType::ANS_ChangeParameter:
+		return "ANS_ChangeParameter";
+		break;
+	default:
+		break;
+	}
+
+	return "";
+}
+
 bool AnimationNotify_Base::GetIsActive() const
 {
 	return isActive;
@@ -29,6 +56,11 @@ bool AnimationNotify_Base::GetIsActive() const
 std::string AnimationNotify_Base::GetNotifyName() const
 {
 	return notifyName;
+}
+
+AnimationNotify_Base::NotifyType AnimationNotify_Base::GetNotifyType() const
+{
+	return notifyType;
 }
 
 nlohmann::json AnimationNotify_Base::Save()

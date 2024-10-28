@@ -33,7 +33,7 @@ void CP_UIRenderer::Init()
 	}
 
 	// UI‚É•ÏX‚·‚é
-	gameObject->SetLayer(Layer::Type::UI);
+	gameObject->SetLayer(HashiTaku::Layer::Type::UI);
 }
 
 void CP_UIRenderer::OnChangeScale()

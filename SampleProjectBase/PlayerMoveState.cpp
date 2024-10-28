@@ -10,7 +10,7 @@ using namespace DirectX::SimpleMath;
 constexpr float IDLE_ANIM_PLAYSPEED(1.0f);
 
 PlayerMoveState::PlayerMoveState()
-	: PlayerActState_Base(StateType::Move), currentSpeed(0.0f), maxSpeed(10.0f), acceleration(40.0f), rotateSpeed(7.0f), decadeSpeedTimes(0.98f)
+	: currentSpeed(0.0f), maxSpeed(10.0f), acceleration(40.0f), rotateSpeed(7.0f), decadeSpeedTimes(0.98f)
 {
 }
 
@@ -48,7 +48,7 @@ void PlayerMoveState::Update()
 	// アタックStateに遷移
 	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
 	{
-		ChangeState(StateType::Attack);
+		ChangeState(StateType::NormalAttack1);
 		pAnimation->SetTrigger(ATTACKTRIGGER_PARAMNAME);
 	}
 	else if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_RockOn))
@@ -102,8 +102,6 @@ void PlayerMoveState::Move()
 	Vector3 moveSpeed = moveVector * mag * maxSpeed;
 	currentSpeed = moveSpeed.Length();
 
-
-
 	// 移動
 	Vector3 pos = pPlayerObject->GetTransform().GetPosition();
 	pos += moveVector * maxSpeed * MainApplication::DeltaTime();
@@ -117,12 +115,13 @@ void PlayerMoveState::Move()
 	{
 		float rootMotion = abs(pAnimation->GetMotionPosSpeedPerSec().z);
 
-		if (rootMotion < Mathf::epsilon)
-			rootMotion = Mathf::epsilon;
+		if (rootMotion > Mathf::epsilon)
+		{
 
-		float animPlaySpeed = currentSpeed / rootMotion;
+			float animPlaySpeed = currentSpeed / rootMotion;
 
-		pAnimation->SetCurPlayerSpeed(animPlaySpeed);
+			pAnimation->SetCurPlayerSpeed(animPlaySpeed);
+		}
 	}
 	else
 	{

@@ -5,18 +5,19 @@
 
 CP_Camera* PlayerActState_Base::pCamera = nullptr;
 
-PlayerActState_Base::PlayerActState_Base(StateType _stateType)
-	: pPlayerObject(nullptr), pAnimation(nullptr), stateType(_stateType), pPlayerInput(nullptr)
+PlayerActState_Base::PlayerActState_Base()
+	: pPlayerObject(nullptr), pAnimation(nullptr), stateType(StateType::None), pPlayerInput(nullptr)
 {
-	changeStateSubject = std::make_unique<HashiTaku::Subject<int>>();
+	changeStateSubject = std::make_unique<StateChangeSubject>();
 
 	pPlayerInput = GameInput::GetInstance();
 
 	pCamera = &InSceneSystemManager::GetInstance()->GetMainCamera();
 }
 
-void PlayerActState_Base::Init(GameObject& _gameObject, HashiTaku::IObserver<int>& _changeObserver)
+void PlayerActState_Base::Init(StateType _stateType, GameObject& _gameObject, StateChangeObserver& _changeObserver)
 {
+	stateType = _stateType;
 	pPlayerObject = &_gameObject;
 	changeStateSubject->AddObserver(_changeObserver);
 }
@@ -55,7 +56,7 @@ std::string PlayerActState_Base::StateTypeToStr(StateType _stateType)
 
 	case Jump: return "Jump";
 
-	case Attack: return "Attack";
+	case NormalAttack1: return "Attack";
 
 	default: break;
 	}
@@ -77,9 +78,9 @@ void PlayerActState_Base::Load(const nlohmann::json& _data)
 {
 }
 
-void PlayerActState_Base::ChangeState(StateType _changeState)
+void PlayerActState_Base::ChangeState(StateType _nextState)
 {
-	changeStateSubject->NotifyAll(static_cast<int>(_changeState));
+	changeStateSubject->NotifyAll(static_cast<int>(_nextState));
 }
 
 DirectX::SimpleMath::Vector2 PlayerActState_Base::InputValue()

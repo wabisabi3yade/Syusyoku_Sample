@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "AnimationNotifyState.h"
 
-AnimationNotifyState::AnimationNotifyState()
-	: startEventRatio(0.0f), endEventRatio(1.0f)
+AnimationNotifyState::AnimationNotifyState(NotifyType _notifyType)
+	: AnimationNotify_Base(_notifyType), startEventRatio(0.0f), endEventRatio(1.0f)
 {
 }
 

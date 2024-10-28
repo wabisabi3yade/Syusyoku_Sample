@@ -84,9 +84,9 @@ void Component::ImGuiSettingCall()
     if (ImGui::Checkbox("isEnable", &isEnable))
     {
         if (isEnable)
-            OnEnableTrue();
+            OnEnableTrueCall();
         else
-            OnEnableFalse();
+            OnEnableFalseCall();
     }
 
     ImGuiCall();

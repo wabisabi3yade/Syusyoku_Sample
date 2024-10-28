@@ -19,6 +19,7 @@ AnimationController::AnimationController()
 	: pCurrentNodeInfo(nullptr), pPrevAnimNode(nullptr), pDefaultNodeInfo(nullptr), pCurTransArrow(nullptr), playSpeed(1.0f), pBoneList(nullptr), isPlay(true), isTransitioning(false)
 {
 	pAnimParameters = std::make_unique<AnimationParameters>();
+	pNotifyFactory = std::make_unique<AnimationNotifyFactory>(*pAnimParameters);
 	pCrossFadeInterp = std::make_unique<CrossFadeAnimation>();
 	pInertInterp = std::make_unique<InertInterpAnimation>();
 }
@@ -213,7 +214,7 @@ AnimTransitionArrow* AnimationController::CreateTransitionArrow(const std::strin
 	std::unique_ptr<AnimTransitionArrow> pTransitionArrow = std::make_unique<AnimTransitionArrow>(*pFromNode, *pToNode, *pAnimParameters);
 
 	AnimTransitionArrow* pRetArrow = pTransitionArrow.get();
-	fromNodeInfo->pTransArrows.push_back(std::move(pTransitionArrow));
+	fromNodeInfo->transitionArrows.push_back(std::move(pTransitionArrow));
 
 	return pRetArrow;
 }
@@ -226,14 +227,14 @@ void AnimationController::RemoveNode(const std::string& _nodeName)
 	// 遷移先が削除ノードならその矢印も消す
 	for (auto& pNodeInfo : animNodeInfos)
 	{
-		std::erase_if(pNodeInfo->pTransArrows, [&](const std::unique_ptr<AnimTransitionArrow>& arrow)
+		std::erase_if(pNodeInfo->transitionArrows, [&](const std::unique_ptr<AnimTransitionArrow>& arrow)
 			{
 				return  pDelete->pAnimNode.get() == &arrow->GetToNode();
 			});
 	}
 
 	// ノードを削除する
-	auto itr = std::erase_if(animNodeInfos,	[&](const std::unique_ptr<AnimNodeInfo>& _nodeInfo)
+	auto itr = std::erase_if(animNodeInfos, [&](const std::unique_ptr<AnimNodeInfo>& _nodeInfo)
 		{
 			return pDelete == _nodeInfo.get();
 		});
@@ -342,17 +343,21 @@ void AnimationController::Load(const nlohmann::json& _data)
 	nlohmann::json nodeInfoDatas;
 	if (LoadJsonDataArray("nodeInfoData", nodeInfoDatas, _data))
 	{
+		// 先にノードを作成
 		for (auto& nd : nodeInfoDatas)
 		{
 			LoadNodeInfo(nd);
 		}
 
+		// 後でイベント・矢印を作成
 		for (auto& nd : nodeInfoDatas)
 		{
+			LoadNotify(nd);
 			LoadTransArrow(nd);
 		}
 	}
 
+	// デフォルトノードをロード
 	std::string defaultNodeName = "";
 	if (LoadJsonString("defaultNode", defaultNodeName, _data))
 	{
@@ -412,7 +417,7 @@ void AnimationController::TranstionCheck()
 	float curPlayRatio = pCurrentNodeInfo->pAnimNode->GetCurPlayRatio();
 	float lastPlayRatio = pCurrentNodeInfo->pAnimNode->GetLastPlayRatio();
 
-	for (auto& pArrow : pCurrentNodeInfo->pTransArrows)
+	for (auto& pArrow : pCurrentNodeInfo->transitionArrows)
 	{
 		/*if (!pArrow->CheckTransition(curPlayRatio, lastPlayRatio)) return;*/
 		pTransArrow = pArrow.get();
@@ -554,6 +559,36 @@ void AnimationController::OnAnimationFinish()
 	isPlay = false;
 }
 
+void AnimationController::ImGuiAnimNotify(AnimNodeInfo& _nodeInfo)
+{
+#ifdef  EDIT
+	// 編集
+	for (auto& notify : _nodeInfo.notifyList)
+	{
+		if (ImGuiMethod::TreeNode(notify->GetNotifyName()))
+		{
+			if (ImGui::Button("X"))	// 削除
+			{
+				_nodeInfo.notifyList.remove(notify);
+				ImGui::TreePop();
+				return;
+			}
+
+			// 編集
+			notify->ImGuiCall();
+			ImGui::TreePop();
+		}
+	}
+
+	// 追加
+	// 生成クラス側でイベント作成
+	std::unique_ptr<AnimationNotify_Base> pNotify;
+	if(pNotifyFactory->ImGuiCombo(pNotify))
+		_nodeInfo.notifyList.push_back(std::move(pNotify));
+
+#endif //  EDIT
+}
+
 nlohmann::json AnimationController::SaveNodeInfo(AnimNodeInfo& _nodeInfo)
 {
 	nlohmann::json nodeInfoData;
@@ -561,8 +596,19 @@ nlohmann::json AnimationController::SaveNodeInfo(AnimNodeInfo& _nodeInfo)
 	nodeInfoData["nodeType"] = _nodeInfo.pAnimNode->GetNodeType();
 	nodeInfoData["animNode"] = _nodeInfo.pAnimNode->Save();
 
+	// 通知イベント
+	auto& notifyDataList =  nodeInfoData["notifyList"];
+	for (auto& pNotify : _nodeInfo.notifyList)
+	{
+		nlohmann::json notifyData;
+		notifyData["notifyParam"] = pNotify->Save();
+		notifyData["notifyType"] = pNotify->GetNotifyType();
+		notifyDataList.push_back(notifyData);
+	}
+
+	// 遷移矢印
 	auto& arrowDataList = nodeInfoData["arrowDataList"];
-	for (auto& pArrow : _nodeInfo.pTransArrows)
+	for (auto& pArrow : _nodeInfo.transitionArrows)
 	{
 		nlohmann::json arrowData;
 		arrowData["arrowParam"] = pArrow->Save();
@@ -584,6 +630,42 @@ void AnimationController::LoadNodeInfo(const nlohmann::json& _nodeInfoData)
 	nlohmann::json nodeData;	// ノード種ごとのロード
 	LoadJsonData("animNode", nodeData, _nodeInfoData);
 	pCreateNodeInfo->pAnimNode->Load(nodeData);
+}
+
+void AnimationController::LoadNotify(const nlohmann::json& _nodeInfoData)
+{
+	// 通知イベントリストを取得
+	nlohmann::json notifyDataList;
+	if (!LoadJsonDataArray("notifyList", notifyDataList, _nodeInfoData))
+		return;
+
+	// ノード情報取得
+	std::string nodeName;
+	if (!LoadJsonString("nodeName", nodeName, _nodeInfoData))
+		return;
+
+	AnimNodeInfo* pNodeInfo = GetNodeInfo(nodeName);
+	if (!pNodeInfo) return;
+
+	for (auto& notifyData : notifyDataList)
+	{
+		// 通知イベントの種類
+		AnimationNotify_Base::NotifyType loadType;
+		if (!LoadJsonEnum<AnimationNotify_Base::NotifyType>("notifyType", loadType, notifyData))
+			continue;
+
+		// 通知イベントのパラメータ
+		nlohmann::json notifyParamData;
+		if (!LoadJsonData("notifyParam", notifyParamData, notifyData))
+			continue;
+
+		// 作成
+		std::unique_ptr<AnimationNotify_Base> pLoadNotify =  pNotifyFactory->Create(loadType);
+		pLoadNotify->Load(notifyParamData);
+
+		// 追加
+		pNodeInfo->notifyList.push_back(std::move(pLoadNotify));
+	}
 }
 
 void AnimationController::LoadTransArrow(const nlohmann::json& _nodeInfoData)
@@ -704,6 +786,11 @@ void AnimationController::ImGuiNode(const std::vector<std::string>& _nodeNames)
 			animNode.ImGuiCall();	// ノード
 			ImGuiMethod::LineSpaceMid();
 
+			// 通知イベント
+			ImGui::Text("Notify");
+			ImGuiAnimNotify(*(*nodeItr));
+			ImGuiMethod::LineSpaceMid();
+
 			// 矢印
 			ImGui::Text("Arrow");
 			ImGuiTransArrow(*(*nodeItr), _nodeNames);
@@ -793,8 +880,8 @@ void AnimationController::ImGuiTransArrow(AnimNodeInfo& _nodeInfo, const std::ve
 	static u_int selectId = 0;
 
 	// 所持している矢印パラメータ
-	auto itr = _nodeInfo.pTransArrows.begin();
-	while (itr != _nodeInfo.pTransArrows.end())
+	auto itr = _nodeInfo.transitionArrows.begin();
+	while (itr != _nodeInfo.transitionArrows.end())
 	{
 		bool isDelete = false;
 		std::string toNodeName = (*itr)->GetToNode().GetNodeName();
@@ -808,7 +895,7 @@ void AnimationController::ImGuiTransArrow(AnimNodeInfo& _nodeInfo, const std::ve
 		}
 
 		if (isDelete)
-			itr = _nodeInfo.pTransArrows.erase(itr);
+			itr = _nodeInfo.transitionArrows.erase(itr);
 		else
 			itr++;
 	}

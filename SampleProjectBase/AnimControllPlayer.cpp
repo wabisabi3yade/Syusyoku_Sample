@@ -52,10 +52,17 @@ void AnimControllPlayer::PlayInit()
 
 void AnimControllPlayer::SetDefault()
 {
-	const AnimNodeInfo& pDefaultNodeInfo = *pAnimController->GetDefaultNode();
-	ChangeNodePlayer(*pDefaultNodeInfo.pAnimNode);
+	// デフォルトノードを取得
+	const AnimNodeInfo& defaultNodeInfo = *pAnimController->GetDefaultNode();
 
-	const auto& transArrows = pDefaultNodeInfo.pTransArrows;
+	// ノード再生を変更
+	ChangeNodePlayer(*defaultNodeInfo.pAnimNode);
+	// 通知イベントをコピーする
+	const AnimNotifyList& originNotifys = defaultNodeInfo.notifyList;
+	pCurNodePlayer->CopyNotifys(originNotifys, *pCopyAnimParameters);
+
+	// 遷移条件確認クラスを作成
+	const auto& transArrows = defaultNodeInfo.transitionArrows;
 	pTransChecker = std::make_unique<AnimTransitionChecker>(*pCopyAnimParameters, transArrows);
 }
 
@@ -98,7 +105,6 @@ void AnimControllPlayer::ChangeNodePlayer(const AnimationNode_Base& _changeNode)
 	}
 
 }
-
 
 void AnimControllPlayer::NodePlayUpdate()
 {
@@ -176,11 +182,15 @@ void AnimControllPlayer::OnChangeAnimation(const AnimTransitionArrow& _changeArr
 	const AnimationNode_Base& nextAnimation = _changeArrow.GetToNode();
 	ChangeNodePlayer(nextAnimation);
 
+	// 通知イベントをコピーする
+	const AnimNotifyList& originNotifys = pAnimController->GetNodeInfo(nextAnimation)->notifyList;
+	pCurNodePlayer->CopyNotifys(originNotifys, *pCopyAnimParameters);
+
 	HashiTaku::AnimInterpolateKind interpolate = _changeArrow.GetInterpolateKind();
 
 	// 新しく遷移チェッカーを作成する
 	const AnimNodeInfo& nodeInfo = *pAnimController->GetNodeInfo(nextAnimation);
-	const auto& transArrowList = nodeInfo.pTransArrows;
+	const auto& transArrowList = nodeInfo.transitionArrows;
 	pTransChecker = std::make_unique<AnimTransitionChecker>(*pCopyAnimParameters, transArrowList);
 
 	// 遷移ステートに変更

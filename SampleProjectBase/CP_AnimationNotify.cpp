@@ -22,7 +22,7 @@ void CP_AnimationNotify::ImGuiSetting()
 void CP_AnimationNotify::Init()
 {
 #ifdef EDIT
-	pFactory = std::make_unique<AnimationNotifyFactory>();
+	//pFactory = std::make_unique<AnimationNotifyFactory>();
 #endif // EDIT
 }
 
@@ -160,9 +160,9 @@ void CP_AnimationNotify::UpdateNotifyGroups()
 void CP_AnimationNotify::CreateNotify(NotifyGroup& _addGroup, const std::string& _typeName)
 {
 #ifdef EDIT
-	std::unique_ptr<AnimationNotify_Base> pCreate = pFactory->Create(_typeName);
-	pCreate->Init(*gameObject);
-	_addGroup.pNotifys.push_back(std::move(pCreate));
+	//std::unique_ptr<AnimationNotify_Base> pCreate = pFactory->Create(_typeName);
+	//pCreate->Init();
+	//_addGroup.pNotifys.push_back(std::move(pCreate));
 #endif // EDIT
 }
 

@@ -2,7 +2,7 @@
 #include "ANE_DebugLog.h"
 
 ANE_DebugLog::ANE_DebugLog()
-	: displayMessage("Default")
+	: AnimationNotifyEvent(NotifyType::ANE_DebugLog), displayMessage("Default")
 {
 }
 
@@ -11,17 +11,17 @@ void ANE_DebugLog::SetMessage(const std::string& _message)
 	displayMessage = _message;
 }
 
-std::string ANE_DebugLog::GetTypeName() const
-{
-	return TYPENAME_ROUGH(ANE_DebugLog);
-}
-
 void ANE_DebugLog::ImGuiSetting()
 {
 #ifdef  EDIT
 	AnimationNotifyEvent::ImGuiSetting();
 	ImGuiMethod::EditableText("##aneDebug", displayMessage, isEditing);
 #endif //  EDIT
+}
+
+std::unique_ptr<AnimationNotify_Base> ANE_DebugLog::Clone()
+{
+	return std::make_unique<ANE_DebugLog>(*this);
 }
 
 nlohmann::json ANE_DebugLog::Save()

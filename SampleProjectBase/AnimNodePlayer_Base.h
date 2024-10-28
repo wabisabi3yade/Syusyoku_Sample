@@ -2,6 +2,9 @@
 #include "SkeletalMesh.h"
 
 #include "AnimationNode_Base.h"
+#include "AnimationNotify_Base.h"
+
+class AnimationParameters;
 
 /// @brief ノード再生の基底クラス
 class AnimNodePlayer_Base : public HashiTaku::IImGuiUser
@@ -13,10 +16,16 @@ class AnimNodePlayer_Base : public HashiTaku::IImGuiUser
 	float lastPlayRatio;
 
 	/// @brief ノードの再生速度
-	float playNodeSpeedTimes;
+	float playerSpeedTimes;
+
+	/// @brief 計算した全てを考慮した再生速度
+	float allPlaySpeed;
 
 	/// @brief ループしたタイミングか？
 	bool isJustLoop;
+
+	/// @brief アニメーションコントローラ内の通知イベントからコピーしてきた通知イベントリスト
+	std::list<std::unique_ptr<AnimationNotify_Base>> copyNotifys;
 protected:
 	/// @brief ルートモーションによる座標移動速度
 	DirectX::SimpleMath::Vector3 rootMotionPosSpeedPerSec;
@@ -36,8 +45,17 @@ protected:
 	/// @brief ルートモーション時に移動するオブジェクトのトランスフォーム
 	Transform* pObjectTransform;
 public:
+	/// @brief コンストラクタ
+	/// @param _playNode 再生ノード
+	/// @param _boneList ボーン配列
+	/// @param _transform トランスフォーム
 	AnimNodePlayer_Base(const AnimationNode_Base& _playNode, BoneList& _boneList, Transform& _transform);
 	virtual ~AnimNodePlayer_Base(){}
+
+	/// @brief 通知イベントをコピーする
+	/// @param _notifyList コピー元の通知イベントリスト
+	/// @param _animationParameters アニメーションコントローラ
+	void CopyNotifys(const std::list<std::unique_ptr<AnimationNotify_Base>>& _notifyList, AnimationParameters& _animationParameters);
 
 	/// @brief 更新処理呼び出し
 	/// @param _controllerPlaySpeed コントローラー自体の再生速度
@@ -47,6 +65,9 @@ public:
 	/// @param _controllerPlaySpeed コントローラー自体の再生速度
 	void ProgressPlayRatio(float _controllerPlaySpeed);
 
+	/// @brief 変更前終了処理
+	void OnTerminal();
+
 	/// @brief 現在の再生割合をセット
 	/// @param 再生割合
 	void SetCurPlayRatio(float _playRatio);
@@ -54,11 +75,6 @@ public:
 	/// @brief 再生速度倍率をセット
 	/// @param 再生速度倍率
 	void SetPlaySpeedTimes(float _playSpeed);
-
-	/// @brief 全ての再生速度を求める
-	/// @param _controllerSpeed コントローラー再生速度
-	/// @return 再生速度
-	float CalcPlaySpeed(float _controllerSpeed) const;
 
 	/// @brief 現在の再生割合を取得する
 	/// @return 現在の再生割合
@@ -97,6 +113,9 @@ private:
 
 	/// @brief トランスフォームにルートモーションを反映する
 	void ApplyRootMotionToTransform();
+
+	/// @brief 通知イベントを更新
+	void NotifyUpdate();
 protected:
 	/// @brief 各ノードプレイヤーの更新処理
 	virtual void Update(std::vector<BoneTransform>& _outTransforms) = 0;

@@ -318,18 +318,6 @@
     <Filter Include="ソース ファイル\Object\Player">
       <UniqueIdentifier>{f762aecb-5591-4a8a-8c14-1ff5ea162329}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Animation">
-      <UniqueIdentifier>{25db210a-bdf4-48a7-855a-eb3cdc16190a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Component">
-      <UniqueIdentifier>{44a70ce8-ddd0-445a-b29f-38a25df60c0c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Component\PlayerMove">
-      <UniqueIdentifier>{6c7be51c-6d1a-480a-89c3-1083e505d0d7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Component\PlayerInput">
-      <UniqueIdentifier>{3ead3f7f-0159-4fa0-bb22-adcd1bbdcafa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Game">
       <UniqueIdentifier>{ec24e437-56cb-46e1-a163-c0afcf9d909f}</UniqueIdentifier>
     </Filter>
@@ -681,6 +669,27 @@
     </Filter>
     <Filter Include="ソース ファイル\Component\UI\Slider">
       <UniqueIdentifier>{259f007e-cc8f-4406-9da3-c91615ee613c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Attack\NormalAttack1">
+      <UniqueIdentifier>{7f06a87c-0c74-4881-b539-55b0a9815638}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\StateMachine">
+      <UniqueIdentifier>{42bff392-568b-45c2-b400-a40f82d130f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\Base">
+      <UniqueIdentifier>{478c572e-8910-45f7-bbcf-67bc21430454}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\State\Base">
+      <UniqueIdentifier>{47e95638-2833-456c-a82f-87634fd7c68a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\State\ChangeParameter">
+      <UniqueIdentifier>{c58a80d2-a175-43c0-8b35-519907c95306}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter">
+      <UniqueIdentifier>{2d26709a-49f4-4003-8799-c6d6fb8d6b4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\IAnimParametersSetter">
+      <UniqueIdentifier>{bd013dbf-59e1-44fd-a2d4-34e87b52f746}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1127,12 +1136,6 @@
     <ClCompile Include="BulletTest.cpp">
       <Filter>ソース ファイル\Bullet\Test</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationNotifyEvent.cpp">
-      <Filter>ソース ファイル\Animation\AnimationNotify\Event</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimationNotifyState.cpp">
-      <Filter>ソース ファイル\Animation\AnimationNotify\State</Filter>
-    </ClCompile>
     <ClCompile Include="CP_AnimationNotify.cpp">
       <Filter>ソース ファイル\Component\AnimationNotify</Filter>
     </ClCompile>
@@ -1253,8 +1256,26 @@
     <ClCompile Include="CP_UIRenderer.cpp">
       <Filter>ソース ファイル\Component\UI\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="AnimationNotifyEvent.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationNotifyState.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\State\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="ANS_ChangeParameter.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\State\ChangeParameter</Filter>
+    </ClCompile>
+    <ClCompile Include="ANE_ChangeParameter.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter</Filter>
+    </ClCompile>
+    <ClCompile Include="StateMachine.cpp">
+      <Filter>ソース ファイル\Method\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="IAnimParametersSetter.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\IAnimParametersSetter</Filter>
+    </ClCompile>
     <ClCompile Include="CP_UISlider.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Component\UI\Slider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1693,12 +1714,6 @@
     <ClInclude Include="BulletTest.h">
       <Filter>ソース ファイル\Bullet\Test</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationNotifyEvent.h">
-      <Filter>ソース ファイル\Animation\AnimationNotify\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationNotifyState.h">
-      <Filter>ソース ファイル\Animation\AnimationNotify\State</Filter>
-    </ClInclude>
     <ClInclude Include="CP_AnimationNotify.h">
       <Filter>ソース ファイル\Component\AnimationNotify</Filter>
     </ClInclude>
@@ -1843,8 +1858,26 @@
     <ClInclude Include="CP_UIRenderer.h">
       <Filter>ソース ファイル\Component\UI\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationNotifyEvent.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationNotifyState.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\State\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="ANE_ChangeParameter.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter</Filter>
+    </ClInclude>
+    <ClInclude Include="ANS_ChangeParameter.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\State\ChangeParameter</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>ソース ファイル\Method\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="IAnimParametersSetter.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\IAnimParametersSetter</Filter>
+    </ClInclude>
     <ClInclude Include="CP_UISlider.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Component\UI\Slider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

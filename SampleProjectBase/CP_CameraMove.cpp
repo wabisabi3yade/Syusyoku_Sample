@@ -77,6 +77,7 @@ void CP_CameraMove::LateUpdate()
 
 void CP_CameraMove::ImGuiSetting()
 {
+	ImGui::DragFloat("centerAngle", &centerAngle);
 	ImGui::DragFloat("rotSpeed", &rotateSpeed);
 	ImGuiMethod::DragFloat3(offsetTarget, "offsetTarget", 0.1f);
 	ImGui::DragFloat("dis_Hori", &distanceHori, 0.1f);

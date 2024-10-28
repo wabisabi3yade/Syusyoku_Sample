@@ -1,33 +1,44 @@
 #pragma once
 
-// ゲーム内入力
+#include "StateMachine.h"
 #include "GameInput.h"
 #include "IObserever.h"
 #include "CP_Camera.h"
 
 #include "AnimationController.h"
 
+
 class CP_Animation;
 class GameObject;
 
 /// @brief プレイヤーの行動ステート基底クラス
-class PlayerActState_Base : public HashiTaku::IImGuiUser, HashiTaku::ISaveLoad
+class PlayerActState_Base : public HashiTaku::StateNode_Base , public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
 {
 public:
 	// プレイヤーの行動状態
 	enum class StateType
 	{
-		Idle,
-		Move,
-		TargetMove,
-		Jump,
-		Attack,
-		MaxNum
+		// 待機
+		Idle,	// 0
+		
+		// 移動
+		Move = 11,	// 11
+		TargetMove,	// 12
+		Jump,	// 13
+
+		// 攻撃
+		NormalAttack1 = 20,	// 20
+
+		// 最後
+		None
 	};
 
 private:
+	using StateChangeObserver = HashiTaku::IObserver<int>;
+	using StateChangeSubject = HashiTaku::Subject<int>;
+
 	/// @brief ステート遷移することを通知をするサブジェクト
-	std::unique_ptr<HashiTaku::Subject<int>> changeStateSubject;
+	std::unique_ptr<StateChangeSubject> changeStateSubject;
 
 	/// @brief この行動クラスのステートタイプ
 	StateType stateType;
@@ -38,17 +49,20 @@ protected:
 	/// @brief  プレイヤーオブジェクト
 	GameObject* pPlayerObject;
 
+	/// @brief ゲーム入力クラス
 	GameInput* pPlayerInput;
 
+	/// @brief カメラクラス
 	static CP_Camera* pCamera;
 public:
-	PlayerActState_Base(StateType _stateType);
+	PlayerActState_Base();
 	virtual ~PlayerActState_Base() {}
 
 	/// @brief 初期化処理
+	/// @param _stateType　状態
 	/// @param _gameObject　移動するオブジェクト 
 	/// @param _changeObserver ステート遷移オブザーバー
-	void Init(GameObject& _gameObject, HashiTaku::IObserver<int>& _changeObserver);
+	void Init(StateType _stateType, GameObject& _gameObject, StateChangeObserver& _changeObserver);
 
 	/// @brief 開始処理呼び出し
 	void OnStartCall();
@@ -79,17 +93,17 @@ public:
 	void Load(const nlohmann::json& _data) override;
 protected:
 	/// @brief 各状態の開始処理
-	virtual void OnStart() = 0;
+	void OnStart() override {};
 
 	/// @brief 更新処理
-	virtual void Update() = 0;
+	void Update() override {};
 
 	/// @brief 各状態の終了処理
-	virtual void OnEnd() = 0;
+	void OnEnd() override {};
 
 	/// @brief 状態を遷移する
 	/// @param _changeSate 遷移先の状態
-	void ChangeState(StateType _changeState);
+	void ChangeState(StateType _nextState);
 
 	/// @brief	入力値を返す
 	DirectX::SimpleMath::Vector2 InputValue();

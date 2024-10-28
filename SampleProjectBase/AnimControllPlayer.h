@@ -13,6 +13,7 @@ class AnimControllPlayer : public HashiTaku::IImGuiUser
 		Transition,	// 遷移中
 	};
 
+	/// @brief 現在のルートモーション座標位置
 	DirectX::SimpleMath::Vector3 rootMotionPos;
 
 	/// @brief 再生するアニメーションコントローラー
