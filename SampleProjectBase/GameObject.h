@@ -37,10 +37,10 @@ private:
 	std::list<Component*> pStartComponents;
 
 	/// @brief タグ
-	Tag tag;
+	HashiTaku::Tag tag;
 
 	/// @brief レイヤー
-	Layer layer;
+	HashiTaku::Layer layer;
 
 	/// @brief アクティブ状態かどうか
 	bool isActive;
@@ -119,11 +119,11 @@ public:
 
 	/// @brief タグをセット
 	/// @param _setType セットしたいタグの種類
-	void SetTag(Tag::Type _setType);
+	void SetTag(HashiTaku::Tag::Type _setType);
 
 	/// @brief レイヤーをセット
 	/// @param _setType セットしたいレイヤーの種類
-	void SetLayer(Layer::Type _setType);
+	void SetLayer(HashiTaku::Layer::Type _setType);
 
 	/// @brief トランスフォームを取得
 	/// @return トランスフォームの参照
@@ -139,11 +139,11 @@ public:
 	
 	/// @brief タグの種類を取得
 	/// @return タグの種類
-	Tag::Type GetTag() const;
+	HashiTaku::Tag::Type GetTag() const;
 
 	/// @brief レイヤーの種類を取得
 	/// @return レイヤーの種類
-	Layer::Type GetLayer() const;
+	HashiTaku::Layer::Type GetLayer() const;
 private:
 	virtual GameObject& Copy(const GameObject& _other);
 

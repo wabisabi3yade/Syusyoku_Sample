@@ -4,7 +4,6 @@
 #include "PlayerActionController.h"
 
 PlayerAttackState::PlayerAttackState()
-	: PlayerActState_Base(StateType::Attack)
 {
 }
 

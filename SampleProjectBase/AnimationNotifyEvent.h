@@ -7,7 +7,7 @@ class AnimationNotifyEvent : public AnimationNotify_Base
 	/// @brief イベント通知をするアニメーションの割合
 	float eventRatio;
 public:
-	AnimationNotifyEvent();
+	AnimationNotifyEvent(NotifyType _notifyType);
 	virtual ~AnimationNotifyEvent() {}
 
 	void Update(const float _lastPlayingRatio, const float _curPlayingRatio, bool _isLoop) override;
@@ -15,7 +15,9 @@ public:
 	// イベントの割合をセット
 	void SetEventRatio(float _ratio);
 
-	virtual std::string GetTypeName() const override = 0;
+	/// @brief クローン関数
+	/// @return 生成した通知イベント
+	virtual std::unique_ptr<AnimationNotify_Base> Clone() = 0;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

@@ -8,7 +8,6 @@
 #include "InSceneSystemManager.h"
 
 using namespace DirectX::SimpleMath;
-using namespace HashiTaku;
 
 GameObject& GameObject::Copy(const GameObject& _other)
 {
@@ -379,17 +378,18 @@ void GameObject::OnActiveFalse()
 
 void GameObject::ImGuiSetting()
 {
+
 	ImGuiMethod::PushItemSmallWidth();
 	// タグ設定
-	Tag::Type curTag = tag.GetType();
-	if (Tag::ImGuiComboBox(curTag))
+	HashiTaku::Tag::Type curTag = tag.GetType();
+	if (HashiTaku::Tag::ImGuiComboBox(curTag))
 		SetTag(curTag);
 
 	ImGui::SameLine();
 
 	// レイヤー設定
-	Layer::Type curLayer = layer.GetType();
-	if (Layer::ImGuiComboBox(curLayer))
+	HashiTaku::Layer::Type curLayer = layer.GetType();
+	if (HashiTaku::Layer::ImGuiComboBox(curLayer))
 		SetLayer(curLayer);
 
 	ImGui::PopItemWidth();
@@ -468,20 +468,21 @@ nlohmann::json GameObject::Save()
 void GameObject::Load(const nlohmann::json& _data)
 {
 	bool loadActive = true;
-	LoadJsonBoolean("active", loadActive, _data);
+	HashiTaku::LoadJsonBoolean("active", loadActive, _data);
 	SetActive(loadActive);
 
-	Tag::Type tagType;
-	LoadJsonEnum<Tag::Type>("tag", tagType, _data);
+	HashiTaku::Tag::Type tagType;
+	LoadJsonEnum<HashiTaku::Tag::Type>("tag", tagType, _data);
 	SetTag(tagType);
 
-	Layer::Type layerType;
-	LoadJsonEnum<Layer::Type>("layer", layerType, _data);
+	HashiTaku::Layer::Type layerType;
+	LoadJsonEnum<HashiTaku::Layer::Type>("layer", layerType, _data);
 	SetLayer(layerType);
 }
 
 void GameObject::LateLode(const nlohmann::json& _data)
 {
+	using namespace HashiTaku;
 	if (IsJsonContains(_data, "transform"))
 	{
 		pTransform->Load(_data["transform"]);
@@ -520,12 +521,12 @@ void GameObject::SetActive(bool _isActive)
 	}
 }
 
-void GameObject::SetTag(Tag::Type _setType)
+void GameObject::SetTag(HashiTaku::Tag::Type _setType)
 {
 	tag.SetType(_setType);
 }
 
-void GameObject::SetLayer(Layer::Type _setType)
+void GameObject::SetLayer(HashiTaku::Layer::Type _setType)
 {
 	// 同じレイヤーなら終わる
 	if (layer.GetType() == _setType) return;
@@ -552,12 +553,12 @@ bool GameObject::GetIsActive() const
 	return isActive;
 }
 
-Tag::Type GameObject::GetTag() const
+HashiTaku::Tag::Type GameObject::GetTag() const
 {
 	return tag.GetType();
 }
 
-Layer::Type GameObject::GetLayer() const
+HashiTaku::Layer::Type GameObject::GetLayer() const
 {
 	return layer.GetType();
 }

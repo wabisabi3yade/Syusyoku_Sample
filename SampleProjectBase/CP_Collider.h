@@ -4,8 +4,11 @@
 #include <btBulletDynamicsCommon.h>
 #include "DXToBullet.h"
 
-class Tag;
-class Layer;
+namespace HashiTaku
+{
+    class Tag;
+    class Layer;
+}
 
 // “–‚½‚è”»’èŠî‘bƒNƒ‰ƒX
 class CP_Collider : public Component

@@ -48,7 +48,6 @@ class AnimTransitionArrow : public HashiTaku::IImGuiUser, public HashiTaku::ISav
 
 	/// @brief 遷移開始時間でしか開始しないようにする
 	bool isHasExitRatio;
-
 #ifdef EDIT
 	// 選択中の名前
 	std::string selectParamName;

@@ -71,6 +71,11 @@ void AnimationParameters::ResetTrigger()
 		pTrigger->ResetTrigger();
 }
 
+bool AnimationParameters::IsContain(const std::string& _parameterName) const
+{
+	return animParameters.contains(_parameterName);
+}
+
 void AnimationParameters::SetBool(const std::string& _paramName, bool _isBool)
 {
 #ifdef EDIT
@@ -181,6 +186,29 @@ const std::string* AnimationParameters::GetNameAddress(const std::string& _name)
 	return &itr->first;
 }
 
+HashiTaku::AnimParam::TypeKind AnimationParameters::GetParameterType(const std::string& _parameterName) const
+{
+	// パラメータリストにないなら
+	if (!animParameters.contains(_parameterName))
+	{
+		HASHI_DEBUG_LOG(_parameterName + "がないので型を取得できませんでした");
+		return TypeKind::None;
+	}
+	
+	const conditionValType& parameter = animParameters.at(_parameterName);
+
+	// 判別する
+	TypeKind retType = TypeKind::Bool;
+	if (std::holds_alternative<int>(parameter))
+		retType = TypeKind::Int;
+	else if (std::holds_alternative<float>(parameter))
+		retType = TypeKind::Float;
+	else if (std::holds_alternative<TriggerType>(parameter))
+		retType = TypeKind::Trigger;
+
+	return retType;
+}
+
 u_int AnimationParameters::GetParameterCnt() const
 {
 	return static_cast<u_int>(animParameters.size());
@@ -197,12 +225,15 @@ nlohmann::json AnimationParameters::Save()
 
 	for (auto& param : animParameters)
 	{
+		//名前
 		nlohmann::json parameterData;
 		parameterData["name"] = param.first;
 
+		//型
 		TypeKind type = GetType(param.second);
 		parameterData["type"] = type;
 
+		//値
 		const std::string element = "value";
 		switch (type)
 		{
@@ -231,12 +262,15 @@ void AnimationParameters::Load(const nlohmann::json& _data)
 {
 	for (auto& paramData : _data)
 	{
+		// パラメータ名
 		std::string name;
 		if (!HashiTaku::LoadJsonString("name", name, paramData)) continue;
 
+		// パラメータ型
 		TypeKind type;
 		if (!HashiTaku::LoadJsonEnum<TypeKind>("type", type, paramData)) continue;
 
+		// 値
 		conditionValType value;
 		const std::string element = "value";
 		switch (type)
@@ -273,6 +307,7 @@ void AnimationParameters::Load(const nlohmann::json& _data)
 			break;
 		}
 
+		// 追加
 		animParameters[name] = value;
 	}
 }
@@ -282,7 +317,8 @@ void AnimationParameters::NotDuplicateParamName(std::string& _paramName)
 	u_int loopCnt = 1;
 	std::string startName = _paramName;
 
-	while (animParameters.contains(_paramName))	// 同じ名前がある限りループ
+	// 同じ名前がある限りループ
+	while (animParameters.contains(_paramName))	
 	{
 		_paramName = startName + std::to_string(loopCnt);
 		loopCnt++;
@@ -361,6 +397,7 @@ bool AnimationParameters::CheckTrigger(const std::string& _name)
 
 TypeKind AnimationParameters::GetType(const conditionValType& _parameter)
 {
+	// 変数の型を取得
 	TypeKind retType = TypeKind::Bool;
 
 	if (std::holds_alternative<int>(_parameter))

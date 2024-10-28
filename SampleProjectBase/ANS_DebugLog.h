@@ -14,8 +14,9 @@ public:
 	ANS_DebugLog();
 	~ANS_DebugLog() {};
 
-	// 型名を取得する
-	std::string GetTypeName() const override;
+	/// @brief クローン関数
+	/// @return 生成した通知イベント
+	std::unique_ptr<AnimationNotify_Base> Clone() override;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

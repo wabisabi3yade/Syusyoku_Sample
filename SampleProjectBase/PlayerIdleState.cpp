@@ -2,7 +2,7 @@
 #include "PlayerIdleState.h"
 
 PlayerIdleState::PlayerIdleState()
-	: PlayerActState_Base(StateType::Idle), leaveElapsedTime(0.0f), specialIdleTransTiime(3.0f)
+	: leaveElapsedTime(0.0f), specialIdleTransTiime(3.0f)
 {
 }
 

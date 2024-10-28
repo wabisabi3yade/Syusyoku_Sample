@@ -2,16 +2,16 @@
 #include "ANS_DebugLog.h"
 
 ANS_DebugLog::ANS_DebugLog()
-	: selectId(0), inputString("\0")
+	: AnimationNotifyState(NotifyType::ANE_DebugLog), selectId(0), inputString("\0")
 {
 	message[0] = "Begin";
 	message[1] = "Tick";
 	message[2] = "End";
 }
 
-std::string ANS_DebugLog::GetTypeName() const
+std::unique_ptr<AnimationNotify_Base> ANS_DebugLog::Clone()
 {
-	return TYPENAME_ROUGH(ANS_DebugLog);
+	return std::make_unique<ANS_DebugLog>(*this);
 }
 
 nlohmann::json ANS_DebugLog::Save()

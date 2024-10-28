@@ -4,6 +4,9 @@
 /// @brief プレイヤー攻撃のゲーム内処理
 class PlayerAttackState : public PlayerActState_Base
 {
+private:
+
+
 public:
 	PlayerAttackState();
 	~PlayerAttackState() {}

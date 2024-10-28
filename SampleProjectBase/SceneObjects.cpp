@@ -369,6 +369,8 @@ bool SceneObjects::TakeOutObject(const GameObject& _targetObject, std::string& _
 
 bool SceneObjects::IsUI(GameObject& _gameObject)
 {
+	using namespace HashiTaku;
+
 	Layer::Type layer = _gameObject.GetLayer();
 	return layer == Layer::Type::UI ? true : false;
 }
@@ -403,7 +405,7 @@ void SceneObjects::MoveList()
 	// 一時移動配列に入っているオブジェクトを移動させる
 	for (auto& pObj : tmpMoveList)
 	{
-		if (pObj->GetLayer() == Layer::Type::UI)
+		if (pObj->GetLayer() == HashiTaku::Layer::Type::UI)
 			MoveToUIList(*pObj);
 		else
 			MoveToObjList(*pObj);

@@ -25,7 +25,7 @@ void AnimationNotifyEvent::ImGuiSetting()
 	ImGui::SliderFloat("event", &eventRatio, 0.0f, 1.0f);
 }
 
-AnimationNotifyEvent::AnimationNotifyEvent() : eventRatio(0.0f)
+AnimationNotifyEvent::AnimationNotifyEvent(NotifyType _notifyType) : AnimationNotify_Base(_notifyType), eventRatio(0.0f)
 {
 }
 

@@ -7,67 +7,64 @@
 #include "PlayerTargetMove.h"
 #include "PlayerAttackState.h"
 
-PlayerActionController::PlayerActionController(GameObject & _pPlayerObject) 
-	: pCurrentState(nullptr), pAnimation(nullptr), pPlayerObject(&_pPlayerObject)
+PlayerActionController::PlayerActionController(GameObject& _pPlayerObject)
+	: StateMachine_Base("playerAction"), pAnimation(nullptr), pPlayerObject(&_pPlayerObject)
 {
 	// 状態遷移オブザーバー生成
 	pStateChangeObserver = std::make_unique<PlayerActChangeObserver>("StateChangeObserver", *this);
 
 	// 行動クラスを生成
-	CreateState<PlayerIdleState>();
-	CreateState<PlayerMoveState>();
-	CreateState<PlayerTargetMove>();
-	CreateState<PlayerAttackState>();
+	using enum PlayerActState_Base::StateType;
+	CreateState<PlayerIdleState>(Idle);
+	CreateState<PlayerMoveState>(Move);
+	CreateState<PlayerTargetMove>(TargetMove);
+	CreateState<PlayerAttackState>(NormalAttack1);
 
 	// デフォルト状態をセット
-	DefaultState(PlayerActState_Base::StateType::Move);
+	SetDefaultNode(Idle);
 }
 void PlayerActionController::Begin(CP_Animation& _animationController)
 {
+	// ステートマシン共通開始処理
+	StateMachine_Base::Begin();
+
 	// アニメーションコントローラーを各ステートに渡す
 	pAnimation = &_animationController;
-	for (auto& actState : actionList)
+	for (auto& stateNode : stateNodeList)
 	{
-		actState.second->SetAnimation(_animationController);
-	}	
+		PlayerActState_Base& playerAct = CastPlayerAct(*stateNode.second);
+		playerAct.SetAnimation(_animationController);
+	}
 }
 
 void PlayerActionController::Update()
 {
-	pCurrentState->UpdateCall();
+	pCurrentNode->Update();
 }
 
-void PlayerActionController::ChangeState(PlayerActState_Base::StateType _nextState)
+void PlayerActionController::ChangeNode(const PlayerActState_Base::StateType& _nextActionState)
 {
-	// 変更前アクション終了処理
-	pCurrentState->OnEndCall();
+	// ステートマシンで変更
+	StateMachine_Base::ChangeNode(_nextActionState);
 
-	// 指定した状態に遷移
-	pCurrentState = actionList[_nextState].get();
-
-	// アニメーション変数の状態も変更する
-	pAnimation->SetInt(STATE_PARAMNAME, static_cast<int>(_nextState));
-
-	// 変更後アクション初期処理
-	pCurrentState->OnStartCall();
-
-	HASHI_DEBUG_LOG(PlayerActState_Base::StateTypeToStr(_nextState) + "に遷移");
+	// アニメーション側のstate変数も変更
+	pAnimation->SetInt(STATEANIM_PARAMNAME, static_cast<int>(_nextActionState));
 }
 
-void PlayerActionController::DefaultState(PlayerActState_Base::StateType _defaultState)
+PlayerActState_Base& PlayerActionController::CastPlayerAct(HashiTaku::StateNode_Base& _stateNodeBase)
 {
-	pCurrentState = actionList[_defaultState].get();
+	return static_cast<PlayerActState_Base&>(_stateNodeBase);
 }
 
 void PlayerActionController::ImGuiSetting()
 {
 	if (!ImGuiMethod::TreeNode("Action")) return;
 
-	std::string text = "NowState:" + PlayerActState_Base::StateTypeToStr(pCurrentState->GetActStateType());
+	std::string text = "NowState:" + PlayerActState_Base::StateTypeToStr(currentStateKey);
 	ImGui::Text(text.c_str());
 
-	for (auto& pAct : actionList)	// 各アクションの調整
-		pAct.second->ImGuiCall();
+	for (auto& pAct : stateNodeList)	// 各アクションの調整
+		CastPlayerAct(*pAct.second).ImGuiCall();
 
 	ImGui::TreePop();
 }
@@ -76,11 +73,11 @@ nlohmann::json PlayerActionController::Save()
 {
 	nlohmann::json data;
 
-	for (auto& act : actionList)
+	for (auto& node : stateNodeList)
 	{
 		nlohmann::json actData;
-		actData["type"] = act.first;
-		actData["data"] = act.second->Save();
+		actData["type"] = node.first;
+		actData["data"] = CastPlayerAct(*node.second).Save();
 		data["actData"].push_back(actData);
 	}
 
@@ -108,7 +105,8 @@ void PlayerActionController::Load(const nlohmann::json& _data)
 				int i = 0;
 			}
 
-			actionList[state]->Load(actParam);
+			if (stateNodeList.contains(state))
+				CastPlayerAct(*stateNodeList[state]).Load(actParam);
 		}
 	}
 }

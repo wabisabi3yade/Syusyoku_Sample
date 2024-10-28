@@ -127,12 +127,14 @@
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_impl_win32.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_tables.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_widgets.cpp" />
+    <ClCompile Include="ANE_ChangeParameter.cpp" />
     <ClCompile Include="ANE_DebugLog.cpp" />
     <ClCompile Include="AnimationNotifyFactory.cpp" />
     <ClCompile Include="AnimationParameters.cpp" />
     <ClCompile Include="AnimControllerCreater.cpp" />
     <ClCompile Include="AnimControllPlayer.cpp" />
     <ClCompile Include="AnimParamRemoveObserver.cpp" />
+    <ClCompile Include="ANS_ChangeParameter.cpp" />
     <ClCompile Include="ANS_DebugLog.cpp" />
     <ClCompile Include="AnimationController.cpp" />
     <ClCompile Include="AnimationData.cpp" />
@@ -174,6 +176,7 @@
     <ClCompile Include="CP_Player.cpp" />
     <ClCompile Include="GameInput.cpp" />
     <ClCompile Include="IAnimInterpolate.cpp" />
+    <ClCompile Include="IAnimParametersSetter.cpp" />
     <ClCompile Include="IAssetCreater.cpp" />
     <ClCompile Include="IClassNameGetter.cpp" />
     <ClCompile Include="IImGuiUser.cpp" />
@@ -258,6 +261,7 @@
     <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteDrawer.cpp" />
+    <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="StaticMesh.cpp" />
     <ClCompile Include="AppSystemDraw.cpp" />
     <ClCompile Include="Tag.cpp" />
@@ -305,6 +309,7 @@
     <ClInclude Include="..\ThirdParty\imgui\include\imstb_rectpack.h" />
     <ClInclude Include="..\ThirdParty\imgui\include\imstb_textedit.h" />
     <ClInclude Include="..\ThirdParty\imgui\include\imstb_truetype.h" />
+    <ClInclude Include="ANE_ChangeParameter.h" />
     <ClInclude Include="ANE_DebugLog.h" />
     <ClInclude Include="AnimationNotifyFactory.h" />
     <ClInclude Include="AnimationParameters.h" />
@@ -314,6 +319,7 @@
     <ClInclude Include="AnimNotifyConcept.h" />
     <ClInclude Include="AnimNotifyDefine.h" />
     <ClInclude Include="AnimParamRemoveObserver.h" />
+    <ClInclude Include="ANS_ChangeParameter.h" />
     <ClInclude Include="ANS_DebugLog.h" />
     <ClInclude Include="AnimationController.h" />
     <ClInclude Include="AnimationData.h" />
@@ -358,6 +364,7 @@
     <ClInclude Include="CP_Player.h" />
     <ClInclude Include="GameInput.h" />
     <ClInclude Include="IAnimInterpolate.h" />
+    <ClInclude Include="IAnimParametersSetter.h" />
     <ClInclude Include="IAssetCreater.h" />
     <ClInclude Include="IClassNameGetter.h" />
     <ClInclude Include="IImGuiUser.h" />
@@ -453,6 +460,7 @@
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteDrawer.h" />
+    <ClInclude Include="StateMachine.h" />
     <ClInclude Include="StaticMesh.h" />
     <ClInclude Include="AppSystemDraw.h" />
     <ClInclude Include="Tag.h" />

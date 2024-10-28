@@ -4,6 +4,8 @@
 #include "AnimConntrollerType.h"
 #include "AnimationParameters.h"
 #include "AnimTransitionArrow.h"
+#include "AnimationNotifyFactory.h"
+#include "AnimationNotify_Base.h"
 
 // クロスフェード・慣性補間
 #include "CrossFadeAnimation.h"
@@ -14,11 +16,14 @@
 // ボーン
 class BoneList;
 
+using AnimNotifyList = std::list<std::unique_ptr<AnimationNotify_Base>>;
+
 /// @brief アニメーションノード関連の情報
 struct AnimNodeInfo
 {
 	std::unique_ptr<AnimationNode_Base> pAnimNode;	// アニメーションノード
-	std::list<std::unique_ptr<AnimTransitionArrow>> pTransArrows; // 遷移元となっている矢印
+	std::list<std::unique_ptr<AnimTransitionArrow>> transitionArrows; // 遷移元となっている矢印
+	AnimNotifyList notifyList; // 通知イベント
 };
 
 /// @brief アニメーション遷移を管理するクラス
@@ -31,6 +36,9 @@ private:
 
 	/// @brief パラメータリスト
 	std::unique_ptr<AnimationParameters> pAnimParameters;
+
+	/// @brief 通知イベント作成クラス
+	std::unique_ptr<AnimationNotifyFactory> pNotifyFactory;
 
 	/// @brief 前のアニメーション
 	AnimationNode_Base* pPrevAnimNode;
@@ -236,26 +244,33 @@ private:
 	void Copy(const AnimationController& _other);
 	void CopyNodes(const AnimationController& _other);
 
-	// ノード関係
+	// ImGuiでノード関係
 	void ImGuiNode(const std::vector<std::string>& _nodeNames);
 
-	// 遷移矢印
+	// ImGuiで遷移矢印
 	void ImGuiTransArrow(AnimNodeInfo& _nodeInfo, const std::vector<std::string>& _nodeNames);
 
-	// デフォルトノード設定
+	// ImGuiでデフォルトノード設定
 	void ImGuiSetDefaultNode(const std::vector<std::string>& _nodeNames);
 
-	// 遷移情報表示
+	// ImGuiで遷移情報表示
 	void ImGuiTransition();
 
-	// ノード作成
+	// ImGuiでノード作成
 	void ImGuiCreateNode();
+
+	// ImGuiで通知イベントを作成
+	// 引数：追加先のノード情報
+	void ImGuiAnimNotify(AnimNodeInfo& _nodeInfo);
 
 	// ノード情報をセーブする
 	nlohmann::json SaveNodeInfo(AnimNodeInfo& _nodeInfo);
 
 	// ノード情報をロードする
 	void LoadNodeInfo(const nlohmann::json& _nodeInfoData);
+
+	// 通知イベントをロードする
+	void LoadNotify(const nlohmann::json& _nodeInfoData);
 
 	// 遷移矢印をロードする
 	void LoadTransArrow(const nlohmann::json& _nodeInfoData);

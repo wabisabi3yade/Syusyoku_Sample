@@ -64,7 +64,7 @@ void CP_Player::ImGuiSetting()
 
 	ImGui::Begin("Player", &isWindow);
 
-	pActionController->ImGuiSetting();
+	pActionController->ImGuiCall();
 
 	ImGui::End();
 }

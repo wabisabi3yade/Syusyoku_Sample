@@ -1,21 +1,16 @@
 #pragma once
+#include "StateMachine.h"
 #include "PlayerActState_Base.h"
 #include "PlayerActChangeObserver.h"
 
 class CP_Animation;
 
 /// @brief プレイヤーの動きコントローラー
-class PlayerActionController : HashiTaku::IImGuiUser, HashiTaku::ISaveLoad
+class PlayerActionController : public HashiTaku::StateMachine_Base<PlayerActState_Base::StateType>, public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
 {
 private:
-	/// @brief プレイヤーの行動状態リスト
-	std::unordered_map<PlayerActState_Base::StateType, std::unique_ptr<PlayerActState_Base>> actionList;
-
 	/// @brief ステートから変更した時に通知を受け取るオブザーバー
 	std::unique_ptr<PlayerActChangeObserver> pStateChangeObserver;
-
-	/// @brief 現在の行動クラス
-	PlayerActState_Base* pCurrentState;
 
 	/// @brief アニメーションのコントローラー
 	CP_Animation* pAnimation;
@@ -34,32 +29,34 @@ public:
 	void Update();
 
 	/// @brief 行動状態を切り替える
-	/// @param _nextState 次の状態
-	void ChangeState(PlayerActState_Base::StateType _nextState);
+	/// @param _nextActionName 次の状態の名前
+	void ChangeNode(const PlayerActState_Base::StateType& _nextActionState) override;
 
-	/// @brief 初期の状態をセット
-	/// @param _defaultState 初期状態のステート
-	void DefaultState(PlayerActState_Base::StateType _defaultState);
-
-	void ImGuiSetting() override;
+	
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
 private:
 	/// @brief 新しくStateを生成
 	/// @tparam T 対応している行動クラス
-	template <class T> void CreateState();
+	/// @param _actionName アクション名
+	template <class T> void CreateState(PlayerActState_Base::StateType _actionState);
 
+	/// @brief PlayerActState_Baseにキャスト
+	/// @param _stateNodeBase ステートノード基底変数
+	/// @return キャストした変数
+	PlayerActState_Base& CastPlayerAct(HashiTaku::StateNode_Base& _stateNodeBase);
+
+	void ImGuiSetting() override;
 private:
 	// アニメーションコントローラ内のプレイヤー名
-	constexpr static auto STATE_PARAMNAME = "state";	// アニメーションの状態変数
+	constexpr static auto STATEANIM_PARAMNAME = "state";	// アニメーションの状態変数
 };
 
 template<class T>
-inline void PlayerActionController::CreateState()
+inline void PlayerActionController::CreateState(PlayerActState_Base::StateType _actionState)
 {
 	std::unique_ptr<PlayerActState_Base> createState = std::make_unique<T>();
-	createState->Init(*pPlayerObject, *pStateChangeObserver);
+	createState->Init(_actionState, *pPlayerObject, *pStateChangeObserver);
 
-	PlayerActState_Base::StateType state = createState->GetActStateType();
-	actionList[state] = std::move(createState);
+	AddNode(_actionState, std::move(createState));
 }

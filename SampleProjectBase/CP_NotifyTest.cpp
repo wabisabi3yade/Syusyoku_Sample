@@ -15,7 +15,7 @@ CP_NotifyTest& CP_NotifyTest::operator=(const CP_NotifyTest& _other)
 
 void CP_NotifyTest::Init()
 {
-	pFactory = std::make_unique<AnimationNotifyFactory>();
+	//pFactory = std::make_unique<AnimationNotifyFactory>();
 }
 
 void CP_NotifyTest::Update()
@@ -82,7 +82,7 @@ nlohmann::json CP_NotifyTest::Save()
 		notifyData[idx] = TYPENAME_VAR(*n);*/
 
 		notifyData[idx]["notify"] = n->Save();
-		notifyData[idx]["typeName"] = n->GetTypeName();
+		notifyData[idx]["typeName"] = n->GetNotifyType();
 		idx++;
 	}
 
@@ -97,14 +97,14 @@ void CP_NotifyTest::Load(const nlohmann::json& _data)
 	auto& notifyData = _data["notifys"];
 	for (auto& nData : notifyData)
 	{
-		std::string typeName; HashiTaku::LoadJsonString("typeName", typeName, nData);
-		auto notify = pFactory->Create(typeName);
-		if (notify)
+		AnimationNotify_Base::NotifyType typeName; HashiTaku::LoadJsonEnum<AnimationNotify_Base::NotifyType>("typeName", typeName, nData);
+		//auto notify = pFactory->Create(typeName);
+		/*if (notify)
 		{
 			nlohmann::json d; HashiTaku::LoadJsonData("notify", d, nData);
 			notify->Load(d);
 			pNotifys.push_back(std::move(notify));
-		}
+		}*/
 
 	}
 

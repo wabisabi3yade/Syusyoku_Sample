@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Tag.h"
 
+using namespace HashiTaku;
+
 #ifdef EDIT
 std::vector<std::string> g_tagTypeNames
 {
