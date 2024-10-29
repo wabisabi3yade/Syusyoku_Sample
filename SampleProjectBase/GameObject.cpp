@@ -224,19 +224,19 @@ void GameObject::DrawCall()
 	}
 }
 
-void GameObject::OnCollisionEnter(const HashiTaku::Bullet::CollisionInfo& _otherColInfo)
+void GameObject::OnCollisionEnter(const HashiTaku::CollisionInfo& _otherColInfo)
 {
 	for (auto& pActive : pActiveComponents)
 		pActive->OnCollisionEnter(_otherColInfo);
 }
 
-void GameObject::OnCollisionStay(const HashiTaku::Bullet::CollisionInfo& _otherColInfo)
+void GameObject::OnCollisionStay(const HashiTaku::CollisionInfo& _otherColInfo)
 {
 	for (auto& pActive : pActiveComponents)
 		pActive->OnCollisionStay(_otherColInfo);
 }
 
-void GameObject::OnCollisionExit(const HashiTaku::Bullet::CollisionInfo& _otherColInfo)
+void GameObject::OnCollisionExit(const HashiTaku::CollisionInfo& _otherColInfo)
 {
 	for (auto& pActive : pActiveComponents)
 		pActive->OnCollisionExit(_otherColInfo);

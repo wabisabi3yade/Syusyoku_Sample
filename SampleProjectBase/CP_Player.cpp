@@ -33,6 +33,8 @@ void CP_Player::Init()
 
 void CP_Player::Awake()
 {
+	CP_Character::Awake();
+
 	//// モデル関係
 	CP_MeshRenderer* pMeshRenderer = gameObject->GetComponent<CP_MeshRenderer>();
 	pMeshRenderer->SetVertexShader("VS_SkinAnimation");
@@ -41,6 +43,8 @@ void CP_Player::Awake()
 
 void CP_Player::Start()
 {
+	CP_Character::Start();
+
 	//アニメーション関係生成
 	CP_Animation* pAnimation = gameObject->GetComponent<CP_Animation>();
 
@@ -53,6 +57,8 @@ void CP_Player::Start()
 
 void CP_Player::Update()
 {
+	CP_Character::Update();
+
 	pActionController->Update();
 }
 
@@ -67,6 +73,7 @@ void CP_Player::ImGuiSetting()
 
 	ImGui::Begin("Player", &isWindow);
 
+	CP_Character::ImGuiSetting();
 	pActionController->ImGuiCall();
 
 	ImGui::End();
@@ -74,7 +81,7 @@ void CP_Player::ImGuiSetting()
 
 nlohmann::json CP_Player::Save()
 {
-	auto data = Component::Save();
+	auto data = CP_Character::Save();
 	data["actionController"] = pActionController->Save();
 
 	return data;
@@ -82,11 +89,19 @@ nlohmann::json CP_Player::Save()
 
 void CP_Player::Load(const nlohmann::json& _data)
 {
-	Component::Load(_data);
+	CP_Character::Load(_data);
 
 	nlohmann::json actionControllerData;
 	if (HashiTaku::LoadJsonData("actionController", actionControllerData, _data))
 		pActionController->Load(actionControllerData);
+}
+
+void CP_Player::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo)
+{
+}
+
+void CP_Player::OnDeathBehavior()
+{
 }
 
 void CP_Player::Copy(const CP_Player& _other)

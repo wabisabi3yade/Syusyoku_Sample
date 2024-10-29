@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "CP_Character.h"
 
 #include "PlayerActionController.h"
 #include "PlayerAnimObserver.h"
@@ -7,7 +7,7 @@
 class CP_Animation;
 class AnimationController;
 
-class CP_Player : public Component
+class CP_Player : public HashiTaku::CP_Character
 {
 	/// @brief アニメーションコントローラー
 	CP_Animation* pAnimation;
@@ -38,6 +38,11 @@ public:
 	void Load(const nlohmann::json& _data) override;
 
 private:
+	/// @brief プレイヤーのダメージ処理
+	void OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo) override;
+	void OnDeathBehavior() override;
+
 	void Copy(const CP_Player& _other);
 };
+
 
