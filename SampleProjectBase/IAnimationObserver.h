@@ -36,4 +36,3 @@ namespace HashiTaku
 		void NotifyFinish(u_int _animState);
 	};
 }
-

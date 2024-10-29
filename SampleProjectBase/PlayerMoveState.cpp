@@ -48,12 +48,15 @@ void PlayerMoveState::Update()
 	// アタックStateに遷移
 	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
 	{
-		ChangeState(StateType::NormalAttack1);
-		pAnimation->SetTrigger(ATTACKTRIGGER_PARAMNAME);
+		ChangeState(StateType::GroundAttack1);
 	}
 	else if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_RockOn))
 	{
 		ChangeState(StateType::TargetMove);
+	}
+	else if (currentSpeed <= Mathf::epsilon)
+	{
+		ChangeState(StateType::Idle);
 	}
 
 }

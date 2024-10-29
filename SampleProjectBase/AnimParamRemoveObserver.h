@@ -8,12 +8,14 @@ namespace HashiTaku
 {
 	namespace AnimParam
 	{
+		// 変更イベントの種類
 		enum class AnimParamObseveEvent
 		{
 			Remove,	// 削除
 			Rename	// 名前変更
 		};
 
+		/// @brief パラメータの変更内容オブザーバー渡す構造体
 		struct NotificationData
 		{
 			/// @brief イベントの種類
@@ -49,7 +51,7 @@ namespace HashiTaku
 
 			/// @brief 通知が来たときの処理
 			/// @param _notifyData 通知データ
-			void Update(const NotificationData& _notifyData) override;
+			void ObserverUpdate(const NotificationData& _notifyData) override;
 		};
 	}
 }

@@ -159,6 +159,22 @@ void CP_Animation::SetCurPlayerSpeed(float _setSpeed)
 	pAnimConPlayer->GetCurNodePlayer().SetPlaySpeedTimes(_setSpeed);
 }
 
+void CP_Animation::AddChangeAnimObserver(HashiTaku::ChangeAnimObserver& _observer)
+{
+	if (!pAnimConPlayer)
+	{
+		HASHI_DEBUG_LOG("アニメーション再生クラスが生成していないので追加できません");
+		return;
+	}
+
+	pAnimConPlayer->AddChangeAnimObserver(_observer);
+}
+
+void CP_Animation::RemoveChangeAnimObserver(HashiTaku::ChangeAnimObserver& _observer)
+{
+	pAnimConPlayer->RemoveChangeAnimObserver(_observer);
+}
+
 SkeletalMesh& CP_Animation::GetSkeletalMesh()
 {
 	return *pSkeletalMesh;

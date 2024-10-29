@@ -23,7 +23,7 @@
 
 // ƒvƒŒƒCƒ„[
 #include "CP_Player.h"
-#include "CP_Weapon.h"
+#include "CP_Rig.h"
 
 // UI
 #include "CP_UIRenderer.h"

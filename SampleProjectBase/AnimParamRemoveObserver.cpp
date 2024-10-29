@@ -8,7 +8,7 @@ HashiTaku::AnimParam::AnimParamObserver::AnimParamObserver(IAnimParamRelater& _a
 {
 }
 
-void HashiTaku::AnimParam::AnimParamObserver::Update(const NotificationData& _notifyData)
+void HashiTaku::AnimParam::AnimParamObserver::ObserverUpdate(const NotificationData& _notifyData)
 {
 	pInterface->AcceptAnimParamData(_notifyData);
 	HASHI_DEBUG_LOG(GetObserverName() + "‚ª’Ê’m‚³‚ê‚Ü‚µ‚½");

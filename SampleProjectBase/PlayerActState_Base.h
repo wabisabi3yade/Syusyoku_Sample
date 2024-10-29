@@ -12,7 +12,7 @@ class CP_Animation;
 class GameObject;
 
 /// @brief プレイヤーの行動ステート基底クラス
-class PlayerActState_Base : public HashiTaku::StateNode_Base , public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
+class PlayerActState_Base : public HashiTaku::StateNode_AnimationBase , public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
 {
 public:
 	// プレイヤーの行動状態
@@ -27,7 +27,7 @@ public:
 		Jump,	// 13
 
 		// 攻撃
-		NormalAttack1 = 20,	// 20
+		GroundAttack1 = 20,	// 20
 
 		// 最後
 		None

@@ -6,6 +6,7 @@
 #include "PlayerMoveState.h"
 #include "PlayerTargetMove.h"
 #include "PlayerAttackState.h"
+#include "PlayerGroundAttack.h"
 
 PlayerActionController::PlayerActionController(GameObject& _pPlayerObject)
 	: StateMachine_Base("playerAction"), pAnimation(nullptr), pPlayerObject(&_pPlayerObject)
@@ -13,12 +14,15 @@ PlayerActionController::PlayerActionController(GameObject& _pPlayerObject)
 	// 状態遷移オブザーバー生成
 	pStateChangeObserver = std::make_unique<PlayerActChangeObserver>("StateChangeObserver", *this);
 
+	// アニメーション変更オブザーバー生成
+	pChangeAnimObserver = std::make_unique<PlayerChangeAnimObserver>(*this);
+
 	// 行動クラスを生成
 	using enum PlayerActState_Base::StateType;
 	CreateState<PlayerIdleState>(Idle);
 	CreateState<PlayerMoveState>(Move);
 	CreateState<PlayerTargetMove>(TargetMove);
-	CreateState<PlayerAttackState>(NormalAttack1);
+	CreateState<PlayerGroundAttack>(GroundAttack1);
 
 	// デフォルト状態をセット
 	SetDefaultNode(Idle);
@@ -69,6 +73,16 @@ void PlayerActionController::ImGuiSetting()
 	ImGui::TreePop();
 }
 
+PlayerActState_Base* PlayerActionController::GetCurrentAction()
+{
+	return static_cast<PlayerActState_Base*>(pCurrentNode);
+}
+
+PlayerChangeAnimObserver& PlayerActionController::GetChangeAnimObserver()
+{
+	return *pChangeAnimObserver;
+}
+
 nlohmann::json PlayerActionController::Save()
 {
 	nlohmann::json data;
@@ -109,4 +123,27 @@ void PlayerActionController::Load(const nlohmann::json& _data)
 				CastPlayerAct(*stateNodeList[state]).Load(actParam);
 		}
 	}
+}
+
+PlayerChangeAnimObserver::PlayerChangeAnimObserver(PlayerActionController& _playerActCon)
+	: ChangeAnimObserver("playerChangeAnimObserver"), pActionController(&_playerActCon)
+{
+}
+
+void PlayerChangeAnimObserver::ObserverUpdate(const HashiTaku::ChangeAnimationInfo& _value)
+{
+	// 現在再生しているアクションにのみ通知する
+	auto curAction = pActionController->GetCurrentAction();
+	if (!curAction)
+	{
+		HASHI_DEBUG_LOG(GetObserverName() + 
+			"再生されているアクションがないためアニメーション変更通知がおこなえません");
+
+		return;
+	}
+
+	// 通知する
+	curAction->OnAnimationEnd(*_value.pFromAnimNodeName, *_value.pToAnimNodeName);
+
+	HASHI_DEBUG_LOG("from:" + *_value.pFromAnimNodeName + "\nto:" + *_value.pToAnimNodeName);
 }

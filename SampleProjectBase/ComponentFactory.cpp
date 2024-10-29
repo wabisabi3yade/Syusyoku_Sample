@@ -19,7 +19,7 @@ void ComponentFactory::Init()
 
 	// アニメーション
 	ResistComponnent<CP_Animation>();
-	ResistComponnent<CP_Weapon>();
+	ResistComponnent<CP_Rig>();
 	ResistComponnent<CP_AnimationNotify>();
 
 	// カメラ

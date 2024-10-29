@@ -13,7 +13,7 @@ namespace HashiTaku
 		virtual ~IObserver() {}
 
 		/// @brief ’Ê’m‚ª‚«‚½‚Æ‚«‚Ìˆ—
-		virtual void Update(const T& _value) = 0;
+		virtual void ObserverUpdate(const T& _value) = 0;
 
 		std::string GetObserverName() const;
 	};
@@ -68,7 +68,7 @@ namespace HashiTaku
 	inline void Subject<T>::NotifyAll(const T& _value)
 	{
 		for (auto& o : pObservers)
-			o->Update(_value);
+			o->ObserverUpdate(_value);
 	}
 }
 

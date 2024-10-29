@@ -670,9 +670,6 @@
     <Filter Include="ソース ファイル\Component\UI\Slider">
       <UniqueIdentifier>{259f007e-cc8f-4406-9da3-c91615ee613c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Attack\NormalAttack1">
-      <UniqueIdentifier>{7f06a87c-0c74-4881-b539-55b0a9815638}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Method\StateMachine">
       <UniqueIdentifier>{42bff392-568b-45c2-b400-a40f82d130f4}</UniqueIdentifier>
     </Filter>
@@ -690,6 +687,12 @@
     </Filter>
     <Filter Include="ソース ファイル\Animation\AnimationNotify\IAnimParametersSetter">
       <UniqueIdentifier>{bd013dbf-59e1-44fd-a2d4-34e87b52f746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationObserver\ChangeAnimObserver">
+      <UniqueIdentifier>{aad0a846-08ed-43aa-a25b-73332a308eea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\GroundAttack">
+      <UniqueIdentifier>{4e07b83f-83ba-48f8-98f0-d52179374366}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1055,7 +1058,7 @@
     <ClCompile Include="PlayerAnimObserver.cpp">
       <Filter>ソース ファイル\Object\Player\Observer</Filter>
     </ClCompile>
-    <ClCompile Include="CP_Weapon.cpp">
+    <ClCompile Include="CP_Rig.cpp">
       <Filter>ソース ファイル\Component\InGame\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="CP_EaseTest.cpp">
@@ -1217,9 +1220,6 @@
     <ClCompile Include="CopyAnimationParameters.cpp">
       <Filter>ソース ファイル\Animation\AnimationPameters\Copy</Filter>
     </ClCompile>
-    <ClCompile Include="OriginAnimationParameters.cpp">
-      <Filter>ソース ファイル\Animation\AnimationPameters\Origin</Filter>
-    </ClCompile>
     <ClCompile Include="BlendNodePlayer.cpp">
       <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\BlendNodePlayer</Filter>
     </ClCompile>
@@ -1276,6 +1276,12 @@
     </ClCompile>
     <ClCompile Include="CP_UISlider.cpp">
       <Filter>ソース ファイル\Component\UI\Slider</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeAnimObserver.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerGroundAttack.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1624,7 +1630,7 @@
     <ClInclude Include="NullTransform.h">
       <Filter>ソース ファイル\System\Transform</Filter>
     </ClInclude>
-    <ClInclude Include="CP_Weapon.h">
+    <ClInclude Include="CP_Rig.h">
       <Filter>ソース ファイル\Component\InGame\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="CP_EaseTest.h">
@@ -1816,9 +1822,6 @@
     <ClInclude Include="CopyAnimationParameters.h">
       <Filter>ソース ファイル\Animation\AnimationPameters\Copy</Filter>
     </ClInclude>
-    <ClInclude Include="OriginAnimationParameters.h">
-      <Filter>ソース ファイル\Animation\AnimationPameters\Origin</Filter>
-    </ClInclude>
     <ClInclude Include="BlendNodePlayer.h">
       <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\BlendNodePlayer</Filter>
     </ClInclude>
@@ -1878,6 +1881,12 @@
     </ClInclude>
     <ClInclude Include="CP_UISlider.h">
       <Filter>ソース ファイル\Component\UI\Slider</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangeAnimObserver.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerGroundAttack.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
