@@ -149,6 +149,7 @@
     <ClCompile Include="BulletContactCallBack.cpp" />
     <ClCompile Include="BulletTest.cpp" />
     <ClCompile Include="ButtonTransArrow.cpp" />
+    <ClCompile Include="ChangeAnimObserver.cpp" />
     <ClCompile Include="CP_CapsuleCollider.cpp" />
     <ClCompile Include="CatmulSplineInterp.cpp" />
     <ClCompile Include="BulletDebugDraw.cpp" />
@@ -164,7 +165,7 @@
     <ClCompile Include="CP_TestCollider.cpp" />
     <ClCompile Include="CP_UIRenderer.cpp" />
     <ClCompile Include="CP_UISlider.cpp" />
-    <ClCompile Include="CP_Weapon.cpp" />
+    <ClCompile Include="CP_Rig.cpp" />
     <ClCompile Include="CrossFadeAnimation.cpp" />
     <ClCompile Include="DepthStencil.cpp" />
     <ClCompile Include="DX11BulletPhisics.cpp" />
@@ -184,7 +185,7 @@
     <ClCompile Include="IObserever.cpp" />
     <ClCompile Include="MaterialCreater.cpp" />
     <ClCompile Include="AnimNodePlayer_Base.cpp" />
-    <ClCompile Include="OriginAnimationParameters.cpp" />
+    <ClCompile Include="PlayerGroundAttack.cpp" />
     <ClCompile Include="PlayerTargetMove.cpp" />
     <ClCompile Include="PlayerActChangeObserver.cpp" />
     <ClCompile Include="PlayerActionController.cpp" />
@@ -335,6 +336,7 @@
     <ClInclude Include="BulletContactCallBack.h" />
     <ClInclude Include="BulletTest.h" />
     <ClInclude Include="ButtonTransArrow.h" />
+    <ClInclude Include="ChangeAnimObserver.h" />
     <ClInclude Include="CP_CapsuleCollider.h" />
     <ClInclude Include="CatmulSplineInterp.h" />
     <ClInclude Include="BulletDebugDraw.h" />
@@ -352,7 +354,7 @@
     <ClInclude Include="CP_TestCollider.h" />
     <ClInclude Include="CP_UIRenderer.h" />
     <ClInclude Include="CP_UISlider.h" />
-    <ClInclude Include="CP_Weapon.h" />
+    <ClInclude Include="CP_Rig.h" />
     <ClInclude Include="CrossFadeAnimation.h" />
     <ClInclude Include="DepthStencil.h" />
     <ClInclude Include="DX11BulletPhisics.h" />
@@ -377,7 +379,7 @@
     <ClInclude Include="MaterialCreater.h" />
     <ClInclude Include="AnimNodePlayer_Base.h" />
     <ClInclude Include="NullTransform.h" />
-    <ClInclude Include="OriginAnimationParameters.h" />
+    <ClInclude Include="PlayerGroundAttack.h" />
     <ClInclude Include="PlayerTargetMove.h" />
     <ClInclude Include="PlayerActChangeObserver.h" />
     <ClInclude Include="PlayerActionController.h" />

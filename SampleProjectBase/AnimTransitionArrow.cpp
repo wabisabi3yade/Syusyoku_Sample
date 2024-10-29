@@ -238,9 +238,12 @@ void AnimTransitionArrow::ImGuiSetInterpolate()
 void AnimTransitionArrow::ImGuiSetCondistion()
 {
 #ifdef EDIT
-
+	u_int loop = 0;
 	for (auto condItr = conditionList.begin(); condItr != conditionList.end();)	// ƒŠƒXƒg“à‚Ì‘JˆÚðŒ
 	{
+		loop++;
+		ImGui::PushID(loop);
+
 		(*condItr)->ImGuiCall();
 		ImGui::SameLine();
 		bool isDelete = ImGui::Button("X");
@@ -249,6 +252,8 @@ void AnimTransitionArrow::ImGuiSetCondistion()
 			condItr = conditionList.erase(condItr);
 		else
 			condItr++;
+
+		ImGui::PopID();
 	}
 	ImGuiMethod::LineSpaceMid();
 

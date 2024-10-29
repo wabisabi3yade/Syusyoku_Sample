@@ -19,6 +19,16 @@ void AnimControllPlayer::Update()
 	TransitionCheck();
 }
 
+void AnimControllPlayer::AddChangeAnimObserver(HashiTaku::ChangeAnimObserver& _observer)
+{
+	pChangeAnimSubject->AddObserver(_observer);
+}
+
+void AnimControllPlayer::RemoveChangeAnimObserver(HashiTaku::ChangeAnimObserver& _observer)
+{
+	pChangeAnimSubject->RemoveObserver(_observer);
+}
+
 AnimationParameters& AnimControllPlayer::GetCopyAnimParameters()
 {
 	return *pCopyAnimParameters;
@@ -42,6 +52,8 @@ void AnimControllPlayer::PlayInit()
 	// アニメーションパラメータコピー
 	const AnimationParameters& originParams = pAnimController->GetAnimationParameters();
 	pCopyAnimParameters = std::make_unique<AnimationParameters>(originParams);
+
+	pChangeAnimSubject = std::make_unique<HashiTaku::ChangeAnimSubject>();
 
 	// デフォルトノードから再生を始める
 	SetDefault();
@@ -186,6 +198,9 @@ void AnimControllPlayer::OnChangeAnimation(const AnimTransitionArrow& _changeArr
 	const AnimNotifyList& originNotifys = pAnimController->GetNodeInfo(nextAnimation)->notifyList;
 	pCurNodePlayer->CopyNotifys(originNotifys, *pCopyAnimParameters);
 
+	// サブジェクト更新
+	ChangeAnimSubjectUpdate();
+
 	HashiTaku::AnimInterpolateKind interpolate = _changeArrow.GetInterpolateKind();
 
 	// 新しく遷移チェッカーを作成する
@@ -222,6 +237,17 @@ void AnimControllPlayer::OnCrossFadeBegin(const AnimTransitionArrow& _changeArro
 
 	pCrossFadeInterp = std::make_unique<CrossFadeAnimation>();
 	pCrossFadeInterp->Begin(*pPrevNodePlayer, *pCurNodePlayer, *pBoneList, transTime, easeKind);
+}
+
+void AnimControllPlayer::ChangeAnimSubjectUpdate()
+{
+	// アニメーション変更をオブザーバーに通知
+	HashiTaku::ChangeAnimationInfo changeAnimInfo;
+
+	changeAnimInfo.pFromAnimNodeName = &pPrevNodePlayer->GetNodeName();
+	changeAnimInfo.pToAnimNodeName = &pCurNodePlayer->GetNodeName();
+
+	pChangeAnimSubject->NotifyAll(changeAnimInfo);
 }
 
 void AnimControllPlayer::ImGuiSetting()

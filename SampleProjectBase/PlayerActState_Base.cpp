@@ -56,7 +56,7 @@ std::string PlayerActState_Base::StateTypeToStr(StateType _stateType)
 
 	case Jump: return "Jump";
 
-	case NormalAttack1: return "Attack";
+	case GroundAttack1: return "Attack";
 
 	default: break;
 	}

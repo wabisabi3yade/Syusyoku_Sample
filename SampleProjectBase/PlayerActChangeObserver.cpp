@@ -8,7 +8,7 @@ PlayerActChangeObserver::PlayerActChangeObserver(const std::string& _observerNam
 {
 }
 
-void PlayerActChangeObserver::Update(const int& _changeType)
+void PlayerActChangeObserver::ObserverUpdate(const int& _changeType)
 {
 	HASHI_DEBUG_LOG(GetObserverName() + "’Ê’mŽó‚¯Žæ‚è");
 

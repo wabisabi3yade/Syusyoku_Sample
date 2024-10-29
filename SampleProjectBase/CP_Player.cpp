@@ -44,6 +44,9 @@ void CP_Player::Start()
 	//アニメーション関係生成
 	CP_Animation* pAnimation = gameObject->GetComponent<CP_Animation>();
 
+	// アニメーション変更オブザーバーを追加
+	pAnimation->AddChangeAnimObserver(pActionController->GetChangeAnimObserver());
+
 	// アクションコントローラー開始処理
 	pActionController->Begin(*pAnimation);
 }

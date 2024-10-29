@@ -67,6 +67,20 @@ namespace HashiTaku
 		virtual void OnEnd() {}
 	};
 
+	/// @brief アニメーションをするステートマシンで使用するノード
+	class StateNode_AnimationBase : public StateNode_Base
+	{
+
+	public:
+		StateNode_AnimationBase() {}
+		virtual ~StateNode_AnimationBase() {}
+
+		/// @brief アニメーション終了時の行動
+		/// @param _fromAnimNodeName 遷移元のアニメーションノード名
+		/// @param _toAnimNodeName 遷移先のアニメーションノード名
+		virtual void OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName) {}
+	};
+
 	template<class T>
 	inline StateMachine_Base<T>::StateMachine_Base(const std::string& _stateMachineName)
 		: stateMachineName(_stateMachineName), pCurrentNode(nullptr), pDefaultNode(nullptr)

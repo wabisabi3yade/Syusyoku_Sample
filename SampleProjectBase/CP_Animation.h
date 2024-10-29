@@ -87,6 +87,14 @@ public:
 	/// @param _setSpeed スピードをセット
 	void SetCurPlayerSpeed(float _setSpeed);
 
+	/// @brief アニメーション変更オブザーバーを追加
+	/// @param _observer オブザーバー
+	void AddChangeAnimObserver(HashiTaku::ChangeAnimObserver& _observer);
+
+	/// @brief アニメーション変更オブザーバーを削除
+	/// @param _observer オブザーバー
+	void RemoveChangeAnimObserver(HashiTaku::ChangeAnimObserver& _observer);
+
 	// スケルタルメッシュを取得
 	SkeletalMesh& GetSkeletalMesh();
 

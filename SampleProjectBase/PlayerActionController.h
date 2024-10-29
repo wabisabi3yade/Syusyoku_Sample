@@ -2,8 +2,10 @@
 #include "StateMachine.h"
 #include "PlayerActState_Base.h"
 #include "PlayerActChangeObserver.h"
+#include "ChangeAnimObserver.h"
 
 class CP_Animation;
+class PlayerChangeAnimObserver;
 
 /// @brief プレイヤーの動きコントローラー
 class PlayerActionController : public HashiTaku::StateMachine_Base<PlayerActState_Base::StateType>, public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
@@ -11,6 +13,9 @@ class PlayerActionController : public HashiTaku::StateMachine_Base<PlayerActStat
 private:
 	/// @brief ステートから変更した時に通知を受け取るオブザーバー
 	std::unique_ptr<PlayerActChangeObserver> pStateChangeObserver;
+
+	/// @brief アニメーション変更したときのオブザーバー
+	std::unique_ptr<PlayerChangeAnimObserver> pChangeAnimObserver;
 
 	/// @brief アニメーションのコントローラー
 	CP_Animation* pAnimation;
@@ -32,6 +37,13 @@ public:
 	/// @param _nextActionName 次の状態の名前
 	void ChangeNode(const PlayerActState_Base::StateType& _nextActionState) override;
 
+	/// @brief 現在のアクションを取得
+	/// @return アクションステート
+	PlayerActState_Base* GetCurrentAction();
+
+	/// @brief アニメーション変更オブザーバーを取得
+	/// @return アニメーション変更オブザーバー
+	PlayerChangeAnimObserver& GetChangeAnimObserver();
 	
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
@@ -60,3 +72,16 @@ inline void PlayerActionController::CreateState(PlayerActState_Base::StateType _
 
 	AddNode(_actionState, std::move(createState));
 }
+
+/// @brief プレイヤーアクションでアニメーション遷移したときのオブザーバー
+class PlayerChangeAnimObserver : public HashiTaku::ChangeAnimObserver
+{
+	PlayerActionController* pActionController;
+
+public:
+	PlayerChangeAnimObserver(PlayerActionController& _playerActCon);
+	~PlayerChangeAnimObserver() {}
+
+	/// @brief 通知がきたときの処理
+	void ObserverUpdate(const HashiTaku::ChangeAnimationInfo& _value);
+};

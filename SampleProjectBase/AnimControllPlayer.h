@@ -2,6 +2,7 @@
 #include "AnimationController.h"
 #include "AnimNodePlayer_Base.h"
 #include "AnimTransitionChecker.h"
+#include "ChangeAnimObserver.h"
 
 /// @brief AnimationControllerを再生するクラス
 class AnimControllPlayer : public HashiTaku::IImGuiUser
@@ -37,6 +38,9 @@ class AnimControllPlayer : public HashiTaku::IImGuiUser
 	/// @brief 慣性補間
 	std::unique_ptr<InertInterpAnimation> pInertInterp;
 
+	/// @brief アニメーション変更サブジェクト
+	std::unique_ptr<HashiTaku::ChangeAnimSubject> pChangeAnimSubject;
+
 	/// @brief 動かす対象のボーン
 	BoneList* pBoneList;
 
@@ -57,6 +61,14 @@ public:
 
 	/// @brief 更新処理
 	void Update();
+
+	/// @brief サブジェクトにオブザーバーを登録
+	/// @param _observer オブザーバー
+	void AddChangeAnimObserver(HashiTaku::ChangeAnimObserver& _observer);
+
+	/// @brief サブジェクトにオブザーバーを削除
+	/// @param _observer オブザーバー
+	void RemoveChangeAnimObserver(HashiTaku::ChangeAnimObserver& _observer);
 
 	/// @brief コピーされた側のアニメーションパラメータ
 	/// @return アニメーションパラメータの参照
@@ -105,6 +117,9 @@ private:
 
 	/// @brief クロスフェード遷移の開始処理
 	void OnCrossFadeBegin(const AnimTransitionArrow& _changeArrow);
+
+	/// @brief アニメーション変更のサブジェクトを更新する
+	void ChangeAnimSubjectUpdate();
 
 	void ImGuiSetting();
 };
