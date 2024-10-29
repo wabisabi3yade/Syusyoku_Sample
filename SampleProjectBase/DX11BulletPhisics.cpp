@@ -54,7 +54,7 @@ void DX11BulletPhisics::UpdateColExit()
 		// 終了したRbコンポーネントをOnCollisionExitに渡す
 		for (auto& pExitRb : exitRbCps)
 		{
-			Bullet::CollisionInfo otherColInfo;
+			CollisionInfo otherColInfo;
 			otherColInfo.pRigidBodyCp = pExitRb;
 			pRb->GetGameObject().OnCollisionExit(otherColInfo);
 		}
@@ -74,7 +74,7 @@ void DX11BulletPhisics::UpdateColExit()
 		// 終了したRbコンポーネントをOnCollisionExitに渡す
 		for (auto& pExitRb : exitRbCps)
 		{
-			HashiTaku::Bullet::CollisionInfo otherColInfo;
+			CollisionInfo otherColInfo;
 			otherColInfo.pRigidBodyCp = pExitRb;
 			pGhost->GetGameObject().OnCollisionExit(otherColInfo);
 		}

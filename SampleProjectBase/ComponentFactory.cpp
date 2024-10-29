@@ -27,7 +27,7 @@ void ComponentFactory::Init()
 	ResistComponnent<CP_CameraMove>();
 
 	// ƒvƒŒƒCƒ„[
-	ResistComponnent<CP_Player>();
+	ResistComponnent<HashiTaku::CP_Player>();
 
 	// UI
 	ResistComponnent<CP_UIRenderer>();

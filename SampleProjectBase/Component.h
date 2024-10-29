@@ -5,17 +5,14 @@ class GameObject;
 
 namespace HashiTaku
 {
-	namespace Bullet
-	{
-		struct CollisionInfo;
-	}
+	struct CollisionInfo;
 }
 
 // ゲームのサブシステムとなるコンポーネントの基底クラス
 class Component : public HashiTaku::ISaveLoad, public HashiTaku::IImGuiUser
 {
 	friend class GameObject;
-	
+
 	/// @brief 名前
 	std::string name;
 
@@ -32,7 +29,7 @@ protected:
 	GameObject* gameObject;
 public:
 	Component() : name(""), isEnable(true), isAlreadyAwake(false), isAlreadyStart(false), gameObject(nullptr) {}
-	virtual ~Component(){};
+	virtual ~Component() {};
 
 	virtual void Init() {};
 
@@ -61,11 +58,11 @@ public:
 	virtual void OnChangeRotation() {}
 
 	/// @brief 衝突開始時の処理呼び出し
-	virtual void OnCollisionEnter(const HashiTaku::Bullet::CollisionInfo& _otherColInfo) {}
+	virtual void OnCollisionEnter(const HashiTaku::CollisionInfo& _otherColInfo) {}
 	/// @brief 衝突中の処理呼び出し
-	virtual void OnCollisionStay(const HashiTaku::Bullet::CollisionInfo& _otherColInfo) {}
+	virtual void OnCollisionStay(const HashiTaku::CollisionInfo& _otherColInfo) {}
 	/// @brief 衝突終了時の処理呼び出し
-	virtual void OnCollisionExit(const HashiTaku::Bullet::CollisionInfo& _otherColInfo) {}
+	virtual void OnCollisionExit(const HashiTaku::CollisionInfo& _otherColInfo) {}
 
 	/// @brief 名前をセットする
 	/// @param _name 名前
@@ -102,7 +99,7 @@ public:
 	/// @brief ロードする
 	/// @param _data ロードするシーンデータ 
 	void Load(const nlohmann::json& _data) override;
-	
+
 private:
 	/// @brief 活動状態をtrueに変更したときの処理
 	void OnEnableTrueCall();

@@ -8,30 +8,30 @@
 
 using namespace DirectX::SimpleMath;
 
-CP_Player::CP_Player()
+HashiTaku::CP_Player::CP_Player()
 	: pAnimation(nullptr)
 {
 }
 
-CP_Player::CP_Player(const CP_Player& _other)
+HashiTaku::CP_Player::CP_Player(const CP_Player& _other)
 {
 	Copy(_other);
 }
 
-CP_Player& CP_Player::operator=(const CP_Player& _other)
+HashiTaku::CP_Player& HashiTaku::CP_Player::operator=(const CP_Player& _other)
 {
 	Copy(_other);
 
 	return *this;
 }
 
-void CP_Player::Init()
+void HashiTaku::CP_Player::Init()
 {
 	// アクションコントローラー作成
 	pActionController = std::make_unique<PlayerActionController>(*gameObject);
 }
 
-void CP_Player::Awake()
+void HashiTaku::CP_Player::Awake()
 {
 	//// モデル関係
 	CP_MeshRenderer* pMeshRenderer = gameObject->GetComponent<CP_MeshRenderer>();
@@ -39,7 +39,7 @@ void CP_Player::Awake()
 	pMeshRenderer->SetPixelShader("PS_Unlit");
 }
 
-void CP_Player::Start()
+void HashiTaku::CP_Player::Start()
 {
 	//アニメーション関係生成
 	CP_Animation* pAnimation = gameObject->GetComponent<CP_Animation>();
@@ -51,12 +51,12 @@ void CP_Player::Start()
 	pActionController->Begin(*pAnimation);
 }
 
-void CP_Player::Update()
+void HashiTaku::CP_Player::Update()
 {
 	pActionController->Update();
 }
 
-void CP_Player::ImGuiSetting()
+void HashiTaku::CP_Player::ImGuiSetting()
 {
 	static bool isWindow = true;
 
@@ -67,29 +67,38 @@ void CP_Player::ImGuiSetting()
 
 	ImGui::Begin("Player", &isWindow);
 
+	CP_Character::ImGuiSetting();
 	pActionController->ImGuiCall();
 
 	ImGui::End();
 }
 
-nlohmann::json CP_Player::Save()
+nlohmann::json HashiTaku::CP_Player::Save()
 {
-	auto data = Component::Save();
+	auto data = CP_Character::Save();
 	data["actionController"] = pActionController->Save();
 
 	return data;
 }
 
-void CP_Player::Load(const nlohmann::json& _data)
+void HashiTaku::CP_Player::Load(const nlohmann::json& _data)
 {
-	Component::Load(_data);
+	CP_Character::Load(_data);
 
 	nlohmann::json actionControllerData;
-	if (HashiTaku::LoadJsonData("actionController", actionControllerData, _data))
+	if (LoadJsonData("actionController", actionControllerData, _data))
 		pActionController->Load(actionControllerData);
 }
 
-void CP_Player::Copy(const CP_Player& _other)
+void HashiTaku::CP_Player::OnDamageBehavior(const AttackInformation& _attackInfo)
+{
+}
+
+void HashiTaku::CP_Player::OnDeathBehavior()
+{
+}
+
+void HashiTaku::CP_Player::Copy(const CP_Player& _other)
 {
 	if (this == &_other) return;
 

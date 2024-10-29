@@ -144,6 +144,7 @@
     <ClCompile Include="AnimTransitionArrow.cpp" />
     <ClCompile Include="AssetPath_Base.cpp" />
     <ClCompile Include="AssetSaveLoad.cpp" />
+    <ClCompile Include="AttackInformation.cpp" />
     <ClCompile Include="BlendNodePlayer.cpp" />
     <ClCompile Include="BoolTransCondition.cpp" />
     <ClCompile Include="BulletContactCallBack.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="CopyAnimationParameters.cpp" />
     <ClCompile Include="CP_AnimationNotify.cpp" />
     <ClCompile Include="CP_BoxAnimation.cpp" />
+    <ClCompile Include="CP_Character.cpp" />
     <ClCompile Include="CP_NotifyTest.cpp" />
     <ClCompile Include="CP_RigidBody.cpp" />
     <ClCompile Include="CP_SkyBox.cpp" />
@@ -166,6 +168,7 @@
     <ClCompile Include="CP_UIRenderer.cpp" />
     <ClCompile Include="CP_UISlider.cpp" />
     <ClCompile Include="CP_Rig.cpp" />
+    <ClCompile Include="CP_Weapon.cpp" />
     <ClCompile Include="CrossFadeAnimation.cpp" />
     <ClCompile Include="DepthStencil.cpp" />
     <ClCompile Include="DX11BulletPhisics.cpp" />
@@ -180,11 +183,13 @@
     <ClCompile Include="IAnimParametersSetter.cpp" />
     <ClCompile Include="IAssetCreater.cpp" />
     <ClCompile Include="IClassNameGetter.cpp" />
+    <ClCompile Include="IDamageable.cpp" />
     <ClCompile Include="IImGuiUser.cpp" />
     <ClCompile Include="IntTransCondition.cpp" />
     <ClCompile Include="IObserever.cpp" />
     <ClCompile Include="MaterialCreater.cpp" />
     <ClCompile Include="AnimNodePlayer_Base.cpp" />
+    <ClCompile Include="MyClass2.cpp" />
     <ClCompile Include="PlayerGroundAttack.cpp" />
     <ClCompile Include="PlayerTargetMove.cpp" />
     <ClCompile Include="PlayerActChangeObserver.cpp" />
@@ -331,6 +336,7 @@
     <ClInclude Include="AssetConcept.h" />
     <ClInclude Include="AssetPath_Base.h" />
     <ClInclude Include="AssetSaveLoad.h" />
+    <ClInclude Include="AttackInformation.h" />
     <ClInclude Include="BlendNodePlayer.h" />
     <ClInclude Include="BoolTransCondition.h" />
     <ClInclude Include="BulletContactCallBack.h" />
@@ -348,6 +354,7 @@
     <ClInclude Include="CopyAnimationParameters.h" />
     <ClInclude Include="CP_AnimationNotify.h" />
     <ClInclude Include="CP_BoxAnimation.h" />
+    <ClInclude Include="CP_Character.h" />
     <ClInclude Include="CP_NotifyTest.h" />
     <ClInclude Include="CP_RigidBody.h" />
     <ClInclude Include="CP_SkyBox.h" />
@@ -355,6 +362,7 @@
     <ClInclude Include="CP_UIRenderer.h" />
     <ClInclude Include="CP_UISlider.h" />
     <ClInclude Include="CP_Rig.h" />
+    <ClInclude Include="CP_Weapon.h" />
     <ClInclude Include="CrossFadeAnimation.h" />
     <ClInclude Include="DepthStencil.h" />
     <ClInclude Include="DX11BulletPhisics.h" />
@@ -369,15 +377,16 @@
     <ClInclude Include="IAnimParametersSetter.h" />
     <ClInclude Include="IAssetCreater.h" />
     <ClInclude Include="IClassNameGetter.h" />
+    <ClInclude Include="IDamageable.h" />
     <ClInclude Include="IImGuiUser.h" />
     <ClInclude Include="AnimNotifyRespawner.h" />
-    <ClInclude Include="ImGuiGameInput.h" />
     <ClInclude Include="InterpolateKind.h" />
     <ClInclude Include="IntTransCondition.h" />
     <ClInclude Include="IObserever.h" />
     <ClInclude Include="ISaveLoad.h" />
     <ClInclude Include="MaterialCreater.h" />
     <ClInclude Include="AnimNodePlayer_Base.h" />
+    <ClInclude Include="MyClass2.h" />
     <ClInclude Include="NullTransform.h" />
     <ClInclude Include="PlayerGroundAttack.h" />
     <ClInclude Include="PlayerTargetMove.h" />
@@ -439,7 +448,7 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="MathUseful.h" />
     <ClInclude Include="Mesh_Group.h" />
-    <ClInclude Include="MyClass.hpp" />
+    <ClInclude Include="MyClass.h" />
     <ClInclude Include="AnimationChannel.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="PlaneMesh.h" />

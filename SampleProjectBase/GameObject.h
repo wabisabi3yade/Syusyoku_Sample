@@ -62,11 +62,11 @@ public:
 	void DrawCall();
 
 	/// @brief 衝突開始時の処理
-	void OnCollisionEnter(const HashiTaku::Bullet::CollisionInfo& _otherColInfo);
+	void OnCollisionEnter(const HashiTaku::CollisionInfo& _otherColInfo);
 	/// @brief 衝突中の処理
-	void OnCollisionStay(const HashiTaku::Bullet::CollisionInfo& _otherColInfo);
+	void OnCollisionStay(const HashiTaku::CollisionInfo& _otherColInfo);
 	/// @brief 衝突終了時の処理
-	void OnCollisionExit(const HashiTaku::Bullet::CollisionInfo& _otherColInfo);
+	void OnCollisionExit(const HashiTaku::CollisionInfo& _otherColInfo);
 
 	/// @brief 自身を削除
 	void Destroy();
@@ -83,13 +83,13 @@ public:
 	void SetComponent(std::unique_ptr<Component> _pSetComponent);
 
 	/// @brief コンポーネントをアタッチ
-	template<HashiTaku::ComponentConcept T> T* AddComponent();
+	template<class T> T* AddComponent();
 
 	/// @brief コンポーネントを削除する
 	void DeleteComponent(Component& _deleteComonent);
 
 	/// @brief/ コンポーネントを取得
-	template<HashiTaku::ComponentConcept T> T* GetComponent();
+	template<class T> T* GetComponent();
 
 	/// @brief アクティブ配列から外す・追加する
 	void RemoveActiveComponent(Component& _removeComonent);
@@ -176,7 +176,7 @@ private:
 	/// @brief コンポーネントを重複しているか
 	/// @tparam  コンポーネント
 	/// @return 重複しているか？
-	template<HashiTaku::ComponentConcept T> bool isDuplicateCompoent();
+	template<class T> bool isDuplicateCompoent();
 
 	/// @brief コンポーネントのロード処理
 	/// @param _componentData このオブジェクト全てのコンポーネントデータ
@@ -189,7 +189,7 @@ private:
 	void ImGuiSetParent();
 };
 
-template<HashiTaku::ComponentConcept T>
+template<class T>
 inline T* GameObject::AddComponent()
 {
 	// コンポーネントファクトリーから取得
@@ -202,7 +202,7 @@ inline T* GameObject::AddComponent()
 	return &comp;
 }
 
-template<HashiTaku::ComponentConcept T>
+template<class T>
 inline T* GameObject::GetComponent()
 {
 	// 指定した型名と同じコンポーネントがあるか確認
@@ -217,7 +217,7 @@ inline T* GameObject::GetComponent()
 	return nullptr;
 }
 
-template<HashiTaku::ComponentConcept T>
+template<class T>
 inline bool GameObject::isDuplicateCompoent()
 {
 	// 指定した型名と同じコンポーネントがあるか確認
