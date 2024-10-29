@@ -9,7 +9,7 @@ CP_Weapon::CP_Weapon() : isAttackCollision(true)
 void CP_Weapon::OnCollisionEnter(const HashiTaku::CollisionInfo& _otherColInfo)
 {
 	// 攻撃フラグがついていないなら
-	if (isAttackCollision) return;
+	if (!isAttackCollision) return;
 
 	// ダメージを受けるインターフェースがあるか確認
 	GameObject& gameObject = _otherColInfo.pRigidBodyCp->GetGameObject();

@@ -333,9 +333,6 @@
     <Filter Include="ソース ファイル\Scene\NewScene">
       <UniqueIdentifier>{3488b5cd-7fde-47f6-a2bf-4954d67b7489}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\InGame\Weapon">
-      <UniqueIdentifier>{1bbb90cd-7de8-4a67-902c-e3d039dd90b5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Method\SaveLoad">
       <UniqueIdentifier>{c41bb637-2180-4783-83dc-6cd1d9c14167}</UniqueIdentifier>
     </Filter>
@@ -691,9 +688,6 @@
     <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\GroundAttack">
       <UniqueIdentifier>{4e07b83f-83ba-48f8-98f0-d52179374366}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\Weapon">
-      <UniqueIdentifier>{ee42c855-ec56-4212-89cc-f6b4cf07a8c7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Object\Enemy">
       <UniqueIdentifier>{dc9b3105-0e1c-48a6-9f59-8b3065fa9e87}</UniqueIdentifier>
     </Filter>
@@ -706,8 +700,17 @@
     <Filter Include="ソース ファイル\Attack\IDamageable">
       <UniqueIdentifier>{ab2c7d85-ac80-46de-a213-7d88be8f1496}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\CP_Character">
+    <Filter Include="ソース ファイル\Component\Rig">
+      <UniqueIdentifier>{1bbb90cd-7de8-4a67-902c-e3d039dd90b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Character">
       <UniqueIdentifier>{b19c4dd4-0ca0-4fd0-8554-deb86180625e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Enemy">
+      <UniqueIdentifier>{081f6fa9-ed67-4920-a268-4979895dd4f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Weapon">
+      <UniqueIdentifier>{ee42c855-ec56-4212-89cc-f6b4cf07a8c7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1074,7 +1077,7 @@
       <Filter>ソース ファイル\Object\Player\Observer</Filter>
     </ClCompile>
     <ClCompile Include="CP_Rig.cpp">
-      <Filter>ソース ファイル\Component\InGame\Weapon</Filter>
+      <Filter>ソース ファイル\Component\Rig</Filter>
     </ClCompile>
     <ClCompile Include="CP_EaseTest.cpp">
       <Filter>ソース ファイル\Component\InGame\Test</Filter>
@@ -1298,9 +1301,6 @@
     <ClCompile Include="ChangeAnimObserver.cpp">
       <Filter>ソース ファイル\Animation\AnimationObserver\ChangeAnimObserver</Filter>
     </ClCompile>
-    <ClCompile Include="CP_Weapon.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="MyClass2.cpp">
       <Filter>ヘッダー ファイル\template</Filter>
     </ClCompile>
@@ -1310,7 +1310,13 @@
     <ClCompile Include="IDamageable.cpp">
       <Filter>ソース ファイル\Attack\IDamageable</Filter>
     </ClCompile>
+    <ClCompile Include="CP_Weapon.cpp">
+      <Filter>ソース ファイル\Component\InGame\Weapon</Filter>
+    </ClCompile>
     <ClCompile Include="CP_Character.cpp">
+      <Filter>ソース ファイル\Component\InGame\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Enemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1661,7 +1667,7 @@
       <Filter>ソース ファイル\System\Transform</Filter>
     </ClInclude>
     <ClInclude Include="CP_Rig.h">
-      <Filter>ソース ファイル\Component\InGame\Weapon</Filter>
+      <Filter>ソース ファイル\Component\Rig</Filter>
     </ClInclude>
     <ClInclude Include="CP_EaseTest.h">
       <Filter>ソース ファイル\Component\InGame\Test</Filter>
@@ -1915,9 +1921,6 @@
     <ClInclude Include="ChangeAnimObserver.h">
       <Filter>ソース ファイル\Animation\AnimationObserver\ChangeAnimObserver</Filter>
     </ClInclude>
-    <ClInclude Include="CP_Weapon.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="MyClass2.h">
       <Filter>ヘッダー ファイル\template</Filter>
     </ClInclude>
@@ -1927,7 +1930,13 @@
     <ClInclude Include="IDamageable.h">
       <Filter>ソース ファイル\Attack\IDamageable</Filter>
     </ClInclude>
+    <ClInclude Include="CP_Weapon.h">
+      <Filter>ソース ファイル\Component\InGame\Weapon</Filter>
+    </ClInclude>
     <ClInclude Include="CP_Character.h">
+      <Filter>ソース ファイル\Component\InGame\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Enemy.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

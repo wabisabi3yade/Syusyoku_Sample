@@ -16,6 +16,7 @@
 // アニメーション
 #include "CP_Animation.h"
 #include "CP_AnimationNotify.h"
+#include "CP_Rig.h"
 
 // カメラ
 #include "CP_Camera.h"
@@ -23,7 +24,12 @@
 
 // プレイヤー
 #include "CP_Player.h"
-#include "CP_Rig.h"
+
+// 敵
+#include "CP_Enemy.h"
+
+// キャラクター共通
+#include "CP_Weapon.h"
 
 // UI
 #include "CP_UIRenderer.h"

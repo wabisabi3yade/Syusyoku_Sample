@@ -42,6 +42,7 @@ nlohmann::json HashiTaku::CP_Character::Save()
 void HashiTaku::CP_Character::Load(const nlohmann::json& _data)
 {
 	Component::Load(_data);
+
 	LoadJsonFloat("maxHp", maxHP, _data);
 }
 

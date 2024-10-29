@@ -48,6 +48,8 @@ namespace HashiTaku
 		/// @param _data ロードするシーンデータ 
 		void Load(const nlohmann::json& _data) override;
 	protected:
+		void Start() override;
+
 		/// @brief 各クラスのダメージを受けたときの処理
 		/// @param _attackInfo 攻撃情報
 		virtual void OnDamageBehavior(const AttackInformation& _attackInfo) = 0;
@@ -57,8 +59,6 @@ namespace HashiTaku
 		virtual void OnDeathBehavior() = 0;
 
 		void ImGuiSetting() override;
-	private:
-		void Start() override;
 	};
 }
 

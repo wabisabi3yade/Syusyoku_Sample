@@ -7,45 +7,42 @@
 class CP_Animation;
 class AnimationController;
 
-namespace HashiTaku
+class CP_Player : public HashiTaku::CP_Character
 {
-	class CP_Player : public CP_Character
-	{
-		/// @brief アニメーションコントローラー
-		CP_Animation* pAnimation;
+	/// @brief アニメーションコントローラー
+	CP_Animation* pAnimation;
 
-		/// @brief アクションコントローラー
-		std::unique_ptr<PlayerActionController> pActionController;
+	/// @brief アクションコントローラー
+	std::unique_ptr<PlayerActionController> pActionController;
 
-		/// @brief アニメーションオブザーバー
-		std::unique_ptr<PlayerAnimObserver> pAnimObserver;
-	public:
-		CP_Player();
-		CP_Player(const CP_Player& _other);
-		~CP_Player() {}
+	/// @brief アニメーションオブザーバー
+	std::unique_ptr<PlayerAnimObserver> pAnimObserver;
+public:
+	CP_Player();
+	CP_Player(const CP_Player& _other);
+	~CP_Player() {}
 
-		CP_Player& operator=(const CP_Player& _other);
+	CP_Player& operator=(const CP_Player& _other);
 
-		void Init() override;
+	void Init() override;
 
-		void Awake() override;
+	void Awake() override;
 
-		void Start() override;
+	void Start() override;
 
-		void Update() override;
+	void Update() override;
 
-		void ImGuiSetting() override;
+	void ImGuiSetting() override;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
 
-	private:
-		/// @brief プレイヤーのダメージ処理
-		void OnDamageBehavior(const AttackInformation& _attackInfo) override;
-		void OnDeathBehavior() override;
+private:
+	/// @brief プレイヤーのダメージ処理
+	void OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo) override;
+	void OnDeathBehavior() override;
 
-		void Copy(const CP_Player& _other);
-	};
-}
+	void Copy(const CP_Player& _other);
+};
 
 

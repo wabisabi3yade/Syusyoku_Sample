@@ -161,6 +161,7 @@
     <ClCompile Include="CP_AnimationNotify.cpp" />
     <ClCompile Include="CP_BoxAnimation.cpp" />
     <ClCompile Include="CP_Character.cpp" />
+    <ClCompile Include="CP_Enemy.cpp" />
     <ClCompile Include="CP_NotifyTest.cpp" />
     <ClCompile Include="CP_RigidBody.cpp" />
     <ClCompile Include="CP_SkyBox.cpp" />
@@ -355,6 +356,7 @@
     <ClInclude Include="CP_AnimationNotify.h" />
     <ClInclude Include="CP_BoxAnimation.h" />
     <ClInclude Include="CP_Character.h" />
+    <ClInclude Include="CP_Enemy.h" />
     <ClInclude Include="CP_NotifyTest.h" />
     <ClInclude Include="CP_RigidBody.h" />
     <ClInclude Include="CP_SkyBox.h" />

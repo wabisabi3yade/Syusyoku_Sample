@@ -13,7 +13,7 @@ class CP_Weapon : public Component
 	bool isAttackCollision;
 public:
 	CP_Weapon();
-	~CP_Weapon() {}
+	virtual ~CP_Weapon() {}
 
 	// コンポーネント共通
 	void OnCollisionEnter(const HashiTaku::CollisionInfo& _otherColInfo);

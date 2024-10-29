@@ -11,7 +11,6 @@ void ComponentFactory::Init()
 	ResistComponnent<CP_SphereCollider>();
 	ResistComponnent<CP_CapsuleCollider>();
 
-
 	// 描画
 	ResistComponnent<CP_MeshRenderer>();
 	ResistComponnent<CP_SpriteRenderer>();
@@ -27,7 +26,13 @@ void ComponentFactory::Init()
 	ResistComponnent<CP_CameraMove>();
 
 	// プレイヤー
-	ResistComponnent<HashiTaku::CP_Player>();
+	ResistComponnent<CP_Player>();
+
+	// 敵
+	ResistComponnent<CP_Enemy>();
+
+	// キャラクター共通
+	ResistComponnent<CP_Weapon>();
 
 	// UI
 	ResistComponnent<CP_UIRenderer>();
