@@ -154,7 +154,12 @@ void CP_Animation::SetAnimationController(AnimationController& _controller)
 	pAnimController = &_controller;
 }
 
-void CP_Animation::SetCurPlayerSpeed(float _setSpeed)
+void CP_Animation::SetControllerPlaySpeed(float _setSpeed)
+{
+	pAnimConPlayer->SetCurrentPlaySpeed(_setSpeed);
+}
+
+void CP_Animation::SetCurNodePlayerSpeed(float _setSpeed)
 {
 	pAnimConPlayer->GetCurNodePlayer().SetPlaySpeedTimes(_setSpeed);
 }
@@ -180,11 +185,6 @@ SkeletalMesh& CP_Animation::GetSkeletalMesh()
 	return *pSkeletalMesh;
 }
 
-AnimationController* CP_Animation::GetAnimationController()
-{
-	return pAnimController;
-}
-
 const DirectX::SimpleMath::Vector3& CP_Animation::GetMotionPosSpeedPerSec() const
 {
 #ifdef EDIT
@@ -196,6 +196,11 @@ const DirectX::SimpleMath::Vector3& CP_Animation::GetMotionPosSpeedPerSec() cons
 #endif // EDIT
 
 	return pAnimConPlayer->GetCurNodePlayer().GetRootMotionSpeed();
+}
+
+float CP_Animation::GetControllerPlaySpeed() const
+{
+	return pAnimConPlayer->GetCurrentPlaySpeed();
 }
 
 nlohmann::json CP_Animation::Save()

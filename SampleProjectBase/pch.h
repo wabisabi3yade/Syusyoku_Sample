@@ -13,7 +13,7 @@
 #define NOMINMAX
 
 // ImGuiを表示する定義
-#define EDIT_DISPLAY
+//#define EDIT_DISPLAY
 #if defined(_DEBUG) || defined(EDIT_DISPLAY)
 #define EDIT
 #endif
@@ -41,6 +41,7 @@
 #include <SimpleMath.h>	// DirectXTKの数学系
 #pragma comment(lib, "DirectXTK.lib")	// DirectXTKライブラリ
 #include <nlohmann/json.hpp>	// json書き出し
+#include <magic_enum.hpp>
 
 // ImGui
 #define IMGUI_DEFINE_MATH_OPERATORS

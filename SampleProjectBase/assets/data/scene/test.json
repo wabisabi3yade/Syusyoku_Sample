@@ -168,11 +168,6 @@
                     "name": "MeshRenderer"
                 },
                 {
-                    "animConName": "ANC_Player",
-                    "enable": true,
-                    "name": "Animation"
-                },
-                {
                     "AABB": false,
                     "angles": [
                         0.0,
@@ -209,7 +204,7 @@
                         "actData": [
                             {
                                 "data": null,
-                                "type": 0
+                                "typeString": "Idle"
                             },
                             {
                                 "data": {
@@ -218,11 +213,7 @@
                                     "maxSpeed": 10.0,
                                     "rotateSpeed": 7.0
                                 },
-                                "type": 11
-                            },
-                            {
-                                "data": null,
-                                "type": 20
+                                "typeString": "Move"
                             },
                             {
                                 "data": {
@@ -230,13 +221,49 @@
                                     "decade": 0.9800000190734863,
                                     "maxSpeed": 10.0
                                 },
-                                "type": 12
+                                "typeString": "TargetMove"
+                            },
+                            {
+                                "data": {
+                                    "nextCombAttack": 21
+                                },
+                                "typeString": "Attack11"
+                            },
+                            {
+                                "data": {
+                                    "nextCombAttack": 22
+                                },
+                                "typeString": "Attack12"
+                            },
+                            {
+                                "data": {
+                                    "nextCombAttack": 99
+                                },
+                                "typeString": "SpecialAtkHi"
+                            },
+                            {
+                                "data": {
+                                    "nextCombAttack": 99
+                                },
+                                "typeString": "Attack13"
+                            },
+                            {
+                                "data": {
+                                    "nextCombAttack": 20
+                                },
+                                "typeString": "Attack14"
                             }
                         ]
                     },
                     "enable": true,
                     "maxHp": 1.0,
-                    "name": "Player"
+                    "name": "Player",
+                    "weaponObjName": "Weapon_Model"
+                },
+                {
+                    "animConName": "ANC_Player",
+                    "enable": true,
+                    "name": "Animation"
                 }
             ],
             "layer": 1,
@@ -370,6 +397,9 @@
                     "radius": 0.28999999165534973
                 },
                 {
+                    "attackableTags": [
+                        3
+                    ],
                     "enable": true,
                     "name": "Weapon"
                 }
@@ -538,7 +568,7 @@
             ],
             "layer": 0,
             "name": "Enemy",
-            "tag": 0,
+            "tag": 3,
             "transform": {
                 "child": null,
                 "pos": [
@@ -556,6 +586,37 @@
                     1.0000001192092896,
                     1.0,
                     1.0000001192092896
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "name": "HitStopManager"
+                }
+            ],
+            "layer": 0,
+            "name": "HitStopManager",
+            "tag": 0,
+            "transform": {
+                "child": null,
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
                 ]
             }
         },

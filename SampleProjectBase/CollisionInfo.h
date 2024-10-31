@@ -6,7 +6,7 @@ namespace HashiTaku
 	struct CollisionInfo
 	{
 		/// @brief 
-		const CP_RigidBody* pRigidBodyCp;
+		const CP_RigidBody* pRigidBodyCp{ nullptr };
 
 		/// @brief è’ìÀç¿ïW
 		DirectX::SimpleMath::Vector3 contactPoint;

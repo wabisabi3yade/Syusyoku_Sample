@@ -158,7 +158,6 @@
     <ClCompile Include="CollisionTypeJudge.cpp" />
     <ClCompile Include="ComponentRespawner.cpp" />
     <ClCompile Include="CopyAnimationParameters.cpp" />
-    <ClCompile Include="CP_AnimationNotify.cpp" />
     <ClCompile Include="CP_BoxAnimation.cpp" />
     <ClCompile Include="CP_Character.cpp" />
     <ClCompile Include="CP_Enemy.cpp" />
@@ -176,6 +175,7 @@
     <ClCompile Include="DXToBullet.cpp" />
     <ClCompile Include="AnimationNotify_Base.cpp" />
     <ClCompile Include="FloatTransCondition.cpp" />
+    <ClCompile Include="CP_HitStopManager.cpp" />
     <ClCompile Include="IAnimationObserver.cpp" />
     <ClCompile Include="BlendAnimationNode.cpp" />
     <ClCompile Include="CP_Player.cpp" />
@@ -185,6 +185,7 @@
     <ClCompile Include="IAssetCreater.cpp" />
     <ClCompile Include="IClassNameGetter.cpp" />
     <ClCompile Include="IDamageable.cpp" />
+    <ClCompile Include="HitStopper_Base.cpp" />
     <ClCompile Include="IImGuiUser.cpp" />
     <ClCompile Include="IntTransCondition.cpp" />
     <ClCompile Include="IObserever.cpp" />
@@ -263,6 +264,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderCollection.cpp" />
     <ClCompile Include="AnimSingleNodePlayer.cpp" />
+    <ClCompile Include="SingletonComponent.cpp" />
     <ClCompile Include="SkeletalMesh.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SpotLight.cpp" />
@@ -353,7 +355,6 @@
     <ClInclude Include="ComponentConcept.h" />
     <ClInclude Include="ComponentRespawner.h" />
     <ClInclude Include="CopyAnimationParameters.h" />
-    <ClInclude Include="CP_AnimationNotify.h" />
     <ClInclude Include="CP_BoxAnimation.h" />
     <ClInclude Include="CP_Character.h" />
     <ClInclude Include="CP_Enemy.h" />
@@ -371,6 +372,7 @@
     <ClInclude Include="DXToBullet.h" />
     <ClInclude Include="AnimationNotify_Base.h" />
     <ClInclude Include="FloatTransCondition.h" />
+    <ClInclude Include="CP_HitStopManager.h" />
     <ClInclude Include="IAnimationObserver.h" />
     <ClInclude Include="BlendAnimationNode.h" />
     <ClInclude Include="CP_Player.h" />
@@ -380,6 +382,7 @@
     <ClInclude Include="IAssetCreater.h" />
     <ClInclude Include="IClassNameGetter.h" />
     <ClInclude Include="IDamageable.h" />
+    <ClInclude Include="HitStopper_Base.h" />
     <ClInclude Include="IImGuiUser.h" />
     <ClInclude Include="AnimNotifyRespawner.h" />
     <ClInclude Include="InterpolateKind.h" />
@@ -468,6 +471,7 @@
     <ClInclude Include="ShaderCollection.h" />
     <ClInclude Include="ShaderDefine.h" />
     <ClInclude Include="AnimSingleNodePlayer.h" />
+    <ClInclude Include="SingletonComponent.h" />
     <ClInclude Include="SkeletalMesh.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SpotLight.h" />
@@ -633,7 +637,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty/stb_image;$(SolutionDir)ThirdParty/directxtk/include;$(SolutionDir)ThirdParty/json/include;$(SolutionDir)ThirdParty/imgui/include;$(SolutionDir)ThirdParty/bullet/include;$(SolutionDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty/stb_image;$(SolutionDir)ThirdParty/directxtk/include;$(SolutionDir)ThirdParty/json/include;$(SolutionDir)ThirdParty/imgui/include;$(SolutionDir)ThirdParty/bullet/include;$(SolutionDir)ThirdParty/magic_enum/include;$(SolutionDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <AdditionalOptions>/wd26812 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -668,7 +672,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty/stb_image;$(SolutionDir)ThirdParty/directxtk/include;$(SolutionDir)ThirdParty/json/include;$(SolutionDir)ThirdParty/imgui/include;$(SolutionDir)ThirdParty/bullet/include;$(SolutionDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty/stb_image;$(SolutionDir)ThirdParty/directxtk/include;$(SolutionDir)ThirdParty/json/include;$(SolutionDir)ThirdParty/imgui/include;$(SolutionDir)ThirdParty/bullet/include;$(SolutionDir)ThirdParty/magic_enum/include;$(SolutionDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <AdditionalOptions>/wd26812 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>

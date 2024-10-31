@@ -39,7 +39,11 @@ namespace HashiTaku
 
 		/// @brief ノードを変更する
 		/// @param _changeKey 変更するノードのキー
-		virtual void ChangeNode(const T& _changeKey);
+		
+		/// @brief ノードを変更する
+		/// @param _changeKey 変更するノードのキー
+		/// @return 遷移成功したか？
+		virtual bool ChangeNode(const T& _changeKey);
 
 		/// @brief 開始処理
 		virtual void Begin();
@@ -70,7 +74,6 @@ namespace HashiTaku
 	/// @brief アニメーションをするステートマシンで使用するノード
 	class StateNode_AnimationBase : public StateNode_Base
 	{
-
 	public:
 		StateNode_AnimationBase() {}
 		virtual ~StateNode_AnimationBase() {}
@@ -92,7 +95,7 @@ namespace HashiTaku
 	{
 		if (stateNodeList.contains(_registKey))
 		{
-			HASHI_DEBUG_LOG(stateMachineName + "既にあるので追加できません");
+			HASHI_DEBUG_LOG(stateMachineName + "で追加するキーが既にあるので追加できません");
 			return;
 		}
 
@@ -120,12 +123,15 @@ namespace HashiTaku
 	}
 
 	template<class T>
-	inline void StateMachine_Base<T>::ChangeNode(const T& _changeKey)
+	inline bool StateMachine_Base<T>::ChangeNode(const T& _changeKey)
 	{
+		// 同じ状態に遷移しようとしているなら遷移しない
+		if (_changeKey == currentStateKey) return false;
+
 		if (!stateNodeList.contains(_changeKey))
 		{
 			HASHI_DEBUG_LOG(stateMachineName + "指定したキーがないので変更できません");
-			return;
+			return false;
 		}
 
 		// 変更前の終了処理
@@ -136,6 +142,8 @@ namespace HashiTaku
 
 		// 変更後の開始処理
 		pCurrentNode->OnStart();
+
+		return true;
 	}
 
 	template<class T>

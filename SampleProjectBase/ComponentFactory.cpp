@@ -19,7 +19,6 @@ void ComponentFactory::Init()
 	// アニメーション
 	ResistComponnent<CP_Animation>();
 	ResistComponnent<CP_Rig>();
-	ResistComponnent<CP_AnimationNotify>();
 
 	// カメラ
 	ResistComponnent<CP_Camera>();
@@ -33,6 +32,9 @@ void ComponentFactory::Init()
 
 	// キャラクター共通
 	ResistComponnent<CP_Weapon>();
+
+	// インゲーム内
+	ResistComponnent<CP_HitStopManager>();
 
 	// UI
 	ResistComponnent<CP_UIRenderer>();

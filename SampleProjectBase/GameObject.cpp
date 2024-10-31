@@ -22,7 +22,7 @@ GameObject& GameObject::Copy(const GameObject& _other)
 	layer = _other.layer;
 
 	// コンポーネントをコピー
-	for (auto& comp : _other.pComponents)
+	for (auto& comp : _other.components)
 	{
 		CloneComponentBase* clone = dynamic_cast<CloneComponentBase*>(comp.get());
 
@@ -51,12 +51,12 @@ void GameObject::ImGuiSetParent()
 
 bool GameObject::IsExistComponent(const Component& _pCheckComponent)
 {
-	auto itr = std::find_if(pComponents.begin(), pComponents.end(), [&](const std::unique_ptr<Component>& comp)
+	auto itr = std::find_if(components.begin(), components.end(), [&](const std::unique_ptr<Component>& comp)
 		{
 			return comp.get() == &_pCheckComponent;
 		});
 
-	if (itr != pComponents.end()) return true;
+	if (itr != components.end()) return true;
 
 	return false;
 }
@@ -97,14 +97,11 @@ bool GameObject::IsExistStartComponent(const Component& _pCheckComponent)
 	return false;
 }
 
-void GameObject::LoadComponent(const nlohmann::json& _componentData)
+void GameObject::LoadCreateComponnet(const nlohmann::json& _componentsData)
 {
 	ComponentFactory* compFactory = ComponentFactory::GetInstance();
 
-	// ロード処理を後で行う為に、コンポーネントとロードデータをペアにする
-	std::unordered_map<Component*, const nlohmann::json*> componentLoadList;
-
-	for (auto& compData : _componentData)
+	for (auto& compData : _componentsData)
 	{
 		// 名前からコンポーネントセット
 		std::string compName;
@@ -122,7 +119,7 @@ void GameObject::LoadComponent(const nlohmann::json& _componentData)
 
 		Component& comp = *pCreateComp;
 		// リストに追加
-		pComponents.push_back(std::move(pCreateComp));
+		components.push_back(std::move(pCreateComp));
 
 		pActiveComponents.push_back(&comp);
 		pAwakeComponents.push_back(&comp);
@@ -132,16 +129,31 @@ void GameObject::LoadComponent(const nlohmann::json& _componentData)
 		{
 			RemoveActiveComponent(comp);
 		}
-
-		// ペアを作成
-		componentLoadList[&comp] = &compData;
 	}
+}
 
+void GameObject::LoadComponentParameter(const nlohmann::json& _componentData)
+{
 	// 初期処理とロードを行う
-	for(auto& compPair : componentLoadList)
+	for(auto& pComp : components)
 	{
-		compPair.first->Init();
-		compPair.first->Load(*compPair.second);
+		pComp->Init();
+
+		// データ内からコンポーネントのデータを探してロードする
+		for (auto& compData : _componentData)
+		{
+			std::string dataCompName;
+			if (HashiTaku::LoadJsonString("name", dataCompName, compData))
+			{
+				bool isSame = pComp->GetName() == dataCompName;
+
+				if (isSame)
+				{
+					pComp->Load(compData);
+					break;
+				}
+			}
+		}
 	}
 }
 
@@ -162,7 +174,7 @@ GameObject& GameObject::operator=(const GameObject& _other)
 
 GameObject::~GameObject()
 {
-	for (auto& pComp : pComponents)
+	for (auto& pComp : components)
 		pComp->OnDestroy();
 }
 
@@ -292,7 +304,7 @@ void GameObject::SetComponent(std::unique_ptr<Component> _pSetComponent)
 	Component& comp = *_pSetComponent;
 
 	// リストに追加
-	pComponents.push_back(std::move(_pSetComponent));
+	components.push_back(std::move(_pSetComponent));
 
 	pActiveComponents.push_back(&comp);
 	pAwakeComponents.push_back(&comp);
@@ -312,7 +324,7 @@ void GameObject::DeleteComponent(Component& _deleteComonent)
 	pAwakeComponents.remove(&_deleteComonent);
 	pStartComponents.remove(&_deleteComonent);
 
-	pComponents.remove_if([&](std::unique_ptr<Component>& pComp)
+	components.remove_if([&](std::unique_ptr<Component>& pComp)
 		{
 			return pComp.get() == &_deleteComonent;
 		});
@@ -356,7 +368,7 @@ void GameObject::AddActiveComponent(Component& _addComonent)
 
 void GameObject::OnActiveTrue()
 {
-	for (auto& pComp : pComponents)
+	for (auto& pComp : components)
 	{
 		bool isEnable = pComp->GetIsEnable();
 
@@ -367,7 +379,7 @@ void GameObject::OnActiveTrue()
 
 void GameObject::OnActiveFalse()
 {
-	for (auto& pComp : pComponents)
+	for (auto& pComp : components)
 	{
 		bool isEnable = pComp->GetIsEnable();
 
@@ -413,7 +425,7 @@ void GameObject::ImGuiSetting()
 	if (ImGuiMethod::DragFloat3(v, "rot"))
 		pTransform->SetLocalEularAngles(v);
 
-	for (auto cpItr = pComponents.begin(); cpItr != pComponents.end();)
+	for (auto cpItr = components.begin(); cpItr != components.end();)
 	{
 		bool isDelete = false;	// コンポーネント削除フラグ
 
@@ -456,7 +468,7 @@ nlohmann::json GameObject::Save()
 
 	auto& componentData = objectData["components"];
 	// コンポーネントのセーブ
-	for (auto& comp : pComponents)
+	for (auto& comp : components)
 	{
 		componentData.push_back(comp->Save());
 	}
@@ -467,6 +479,8 @@ nlohmann::json GameObject::Save()
 
 void GameObject::Load(const nlohmann::json& _data)
 {
+	using namespace HashiTaku;
+
 	bool loadActive = true;
 	HashiTaku::LoadJsonBoolean("active", loadActive, _data);
 	SetActive(loadActive);
@@ -478,6 +492,13 @@ void GameObject::Load(const nlohmann::json& _data)
 	HashiTaku::Layer::Type layerType;
 	LoadJsonEnum<HashiTaku::Layer::Type>("layer", layerType, _data);
 	SetLayer(layerType);
+
+	if (IsJsonContains(_data, "components"))
+	{
+		const auto& componentsData = _data["components"];
+		LoadCreateComponnet(componentsData);
+	}
+	
 }
 
 void GameObject::LateLode(const nlohmann::json& _data)
@@ -492,7 +513,7 @@ void GameObject::LateLode(const nlohmann::json& _data)
 	if (IsJsonContains(_data, "components"))
 	{
 		const auto& componentsData = _data["components"];
-		LoadComponent(componentsData);
+		LoadComponentParameter(componentsData);
 	}
 }
 

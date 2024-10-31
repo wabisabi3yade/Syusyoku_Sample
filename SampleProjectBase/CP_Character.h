@@ -1,16 +1,19 @@
 #pragma once
 #include "Component.h"
 #include "IDamageable.h"
+#include "HitStopper_Base.h"
 
 namespace HashiTaku
 {
 	/// @brief プレイヤーや敵の基底コンポーネント
-	class CP_Character : public Component, public IDamageable
+	class CP_Character : public Component, public IDamageable, public HitStopper_Base
 	{
 	private:
 		/// @brief 死んだフラグ
 		bool isDead;
 
+		/// @brief ヒットストップ中か？
+		bool isHitStopping;
 	protected:
 		/// @brief 現在の体力
 		float currentHP;
@@ -40,6 +43,12 @@ namespace HashiTaku
 		/// @brief 死んだときの処理
 		void OnDeath();
 
+		/// @brief ヒットストップ開始した時の処理
+		void OnHitStopBegin() override;
+
+		/// @brief ヒットストップ終了した時の処理
+		void OnHitStopEnd() override;
+
 		/// @brief セーブする
 		/// @param _data セーブシーンデータ
 		nlohmann::json Save() override;
@@ -48,6 +57,10 @@ namespace HashiTaku
 		/// @param _data ロードするシーンデータ 
 		void Load(const nlohmann::json& _data) override;
 	protected:
+		/// @brief ヒットストップ中華取得
+		/// @return ヒットストップしてるか？
+		bool GetIsHitStopping() const;
+
 		void Start() override;
 
 		/// @brief 各クラスのダメージを受けたときの処理

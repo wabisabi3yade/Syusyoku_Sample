@@ -34,12 +34,12 @@ void PlayerMoveState::Load(const nlohmann::json& _data)
 	LoadJsonFloat("rotateSpeed", rotateSpeed, _data);
 }
 
-void PlayerMoveState::OnStart()
+void PlayerMoveState::OnStartBehavior()
 {
 
 }
 
-void PlayerMoveState::Update()
+void PlayerMoveState::UpdateBehavior()
 {
 	Move();
 
@@ -48,7 +48,7 @@ void PlayerMoveState::Update()
 	// アタックStateに遷移
 	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
 	{
-		ChangeState(StateType::GroundAttack1);
+		ChangeState(StateType::Attack11);
 	}
 	else if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_RockOn))
 	{
@@ -61,7 +61,7 @@ void PlayerMoveState::Update()
 
 }
 
-void PlayerMoveState::OnEnd()
+void PlayerMoveState::OnEndBehavior()
 {
 }
 
@@ -74,25 +74,22 @@ bool PlayerMoveState::IsRunning()
 
 void PlayerMoveState::ImGuiSetting()
 {
-	if (!ImGuiMethod::TreeNode("Move")) return;
-
 	std::string text = TO_UTF8("speed") + std::to_string(currentSpeed);
 	ImGui::Text(text.c_str());
 	ImGui::DragFloat("maxSpeed", &maxSpeed, 0.1f, 0.0f, 1000.0f);
 	ImGui::DragFloat("acceleration", &acceleration, 0.1f);
 	ImGui::DragFloat("decadeTimes", &decadeSpeedTimes, 0.01f, 0.0f, 1.0f);
 	ImGui::DragFloat("rotateSpeed", &rotateSpeed, 0.1f);
-
-	ImGui::TreePop();
 }
 
 void PlayerMoveState::Move()
 {
 	float deltaTime = MainApplication::DeltaTime();
 
+	// カメラの正面ベクトルを求める
 	Vector3 camForwardVec = pCamera->GetTransform().Forward();
 	Vector3 camRightVec = pCamera->GetTransform().Right();
-	Vector2 input = InputValue();
+	Vector2 input = GetInputLeftStick();
 
 	float mag = input.Length();
 
@@ -123,12 +120,12 @@ void PlayerMoveState::Move()
 
 			float animPlaySpeed = currentSpeed / rootMotion;
 
-			pAnimation->SetCurPlayerSpeed(animPlaySpeed);
+			pAnimation->SetCurNodePlayerSpeed(animPlaySpeed);
 		}
 	}
 	else
 	{
-		pAnimation->SetCurPlayerSpeed(IDLE_ANIM_PLAYSPEED);
+		pAnimation->SetCurNodePlayerSpeed(IDLE_ANIM_PLAYSPEED);
 	}
 
 }
@@ -153,7 +150,7 @@ void PlayerMoveState::Rotation()
 
 bool PlayerMoveState::IsMoveInput()
 {
-	Vector2 absInput = Vec2::Abs(InputValue());
+	Vector2 absInput = Vec2::Abs(GetInputLeftStick());
 	if (absInput.x < Mathf::smallValue && absInput.y < Mathf::smallValue)
 		return false;
 

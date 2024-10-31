@@ -8,7 +8,7 @@
 
 AnimNodePlayer_Base::AnimNodePlayer_Base(const AnimationNode_Base& _playNode, BoneList& _boneList, Transform& _transform)
 	: pPlayAnimNode(&_playNode), pBoneList(&_boneList), pObjectTransform(&_transform),
-	curPlayRatio(0.0f), lastPlayRatio(-Mathf::smallValue), playerSpeedTimes(1.0f), allPlaySpeed(0.0f), isJustLoop(false)
+	curPlayRatio(0.0f), lastPlayRatio(-Mathf::smallValue), playerSpeedTimes(1.0f), allPlaySpeed(0.0f), isJustLoop(false), isPlay(true)
 {
 }
 
@@ -34,6 +34,12 @@ void AnimNodePlayer_Base::CopyNotifys(const std::list<std::unique_ptr<AnimationN
 
 void AnimNodePlayer_Base::UpdateCall(std::vector<BoneTransform>& _outTransforms, float _controllerPlaySpeed)
 {
+	if (!isPlay)
+	{
+		Update(_outTransforms);
+		return;
+	}
+
 	// 再生割合を進める
 	ProgressPlayRatio(_controllerPlaySpeed);
 
@@ -127,17 +133,21 @@ void AnimNodePlayer_Base::OnTerminal()
 {
 	for (auto& pNotify : copyNotifys)
 	{
-		pNotify->OnTerminal();
+		pNotify->OnTerminalCall();
 	}
 
 	copyNotifys.clear();
 }
 
-bool AnimNodePlayer_Base::IsCanLoop() const
+bool AnimNodePlayer_Base::IsCanLoop()
 {
 	// アニメーションの全体時間を超えていないなら
 	if (curPlayRatio < 1.0f) return false;
-	if (!pPlayAnimNode->GetIsLoop()) return false;
+	if (!pPlayAnimNode->GetIsLoop())
+	{
+		isPlay = false;
+		return false;
+	}
 
 	return true;
 }
@@ -158,7 +168,7 @@ void AnimNodePlayer_Base::ApplyRootMotionToTransform()
 	{
 		// 前回のルートモーションを初期化する
 		p_RootMotionPos = GetRootMotionPos(0.0f);
-		p_RootMotionRot = GetRootMotionRot(0.0f);
+		//p_RootMotionRot = GetRootMotionRot(0.0f);
 	}
 
 	float curPlayRatio = GetCurPlayRatio();
@@ -169,7 +179,7 @@ void AnimNodePlayer_Base::ApplyRootMotionToTransform()
 
 	// ループ時に前回の再生割合からアニメーション最後までのルートモーションの座標移動
 	Vector3 loopDeadRMDistabce;
-	if (curPlayRatio < lastPlayRatio)
+	if (isJustLoop)
 	{
 		Vector3 endRootMotionPos = GetRootMotionPos(1.0f);
 		loopDeadRMDistabce = endRootMotionPos - GetRootMotionPos(lastPlayRatio);

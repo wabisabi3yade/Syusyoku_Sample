@@ -16,161 +16,10 @@ using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
 
 AnimationController::AnimationController()
-	: pCurrentNodeInfo(nullptr), pPrevAnimNode(nullptr), pDefaultNodeInfo(nullptr), pCurTransArrow(nullptr), playSpeed(1.0f), pBoneList(nullptr), isPlay(true), isTransitioning(false)
+	: pDefaultNodeInfo(nullptr), playSpeed(1.0f), pBoneList(nullptr)
 {
 	pAnimParameters = std::make_unique<AnimationParameters>();
 	pNotifyFactory = std::make_unique<AnimationNotifyFactory>(*pAnimParameters);
-	pCrossFadeInterp = std::make_unique<CrossFadeAnimation>();
-	pInertInterp = std::make_unique<InertInterpAnimation>();
-}
-
-AnimationController::AnimationController(const AnimationController& _other)
-{
-	Copy(_other);
-}
-
-AnimationController& AnimationController::operator=(const AnimationController& _other)
-{
-	Copy(_other);
-	return *this;
-}
-//
-//void AnimationController::Begin(BoneList& _boneList)
-//{
-//	// デフォルトノードを現在のノードのセット
-//	pCurrentNodeInfo = pDefaultNodeInfo;
-//
-//	// ボーンリストをセット
-//	pBoneList = &_boneList;
-//}
-
-void AnimationController::Update(BoneList& _boneList)
-{
-	if (!IsCanPlay()) return;
-
-	// アニメーション更新
-	AnimatioUpdate();
-
-	// キャッシュ更新
-	CacheUpdate();
-
-	// 遷移の条件を達成しているか確認
-	TranstionCheck();
-}
-
-void AnimationController::NormalUpdate()
-{
-	pCurrentNodeInfo->pAnimNode->ProgressPlayRatio(playSpeed);
-	if (pCurrentNodeInfo->pAnimNode->GetIsFinish())
-		OnAnimationFinish();
-
-	pCurrentNodeInfo->pAnimNode->UpdateCall(*pBoneList);
-}
-
-void AnimationController::CrossFadeUpdate()
-{
-	/*pCrossFadeInterp->Update(*pBoneList, playSpeed);*/
-
-	if (pCrossFadeInterp->GetIsTransitionEnd())
-	{
-		OnTransitionEnd();
-	}
-}
-
-void AnimationController::InertInterpUpdate()
-{
-	// 遷移の時間を進める
-	float transElapsedTime = pInertInterp->ProgressTransitionTime(playSpeed);
-
-	if (pInertInterp->GetIsTransitionEnd())	// ブレンド時間過ぎたら
-	{
-		// 遷移終了の処理
-		OnTransitionEnd();
-		return;
-	}
-
-	for (u_int b_i = 0; b_i < pBoneList->GetBoneCnt(); b_i++)
-	{
-		Bone& bone = pBoneList->GetBone(b_i);
-
-		BoneTransform transform;
-
-		transform.position = pInertInterp->CalcBlendPos(b_i, transElapsedTime);
-		transform.scale = pInertInterp->CalcBlendScale(b_i, transElapsedTime);
-		transform.rotation = pInertInterp->CalcBlendRot(b_i, transElapsedTime);
-
-		/*bone.SetAnimTransform(transform);*/
-	}
-}
-
-//void AnimationController::ChangeAnimation(const std::string& _animName)
-//{
-//	AnimNodeInfo* pNextNodeInfo = GetNodeInfo(_animName);
-//	if (!pNextNodeInfo)	// アニメーションがなかったら
-//	{
-//		HASHI_DEBUG_LOG(_animName + "は取得できませんでした");
-//		return;
-//	}
-//
-//	// 再生開始する
-//	isPlay = true;
-//
-//	// 更新する
-//	pPrevAnimNode = pCurrentNodeInfo->pAnimNode.get();
-//	pCurrentNodeInfo = GetNodeInfo(_animName);
-//
-//	// 開始処理
-//	pCurrentNodeInfo->pAnimNode->Begin();
-//	pCurrentNodeInfo->pAnimNode->SetCurPlayRatio(0.0f);
-//
-//	OnChangeAnimComplete();
-//}
-
-//void AnimationController::ChangeAnimation(const AnimTransitionArrow& _transitionArrow)
-//{
-//	// 再生開始する
-//	isPlay = true;
-//
-//	// 更新する
-//	pPrevAnimNode = pPrevAnimNode = pCurrentNodeInfo->pAnimNode.get();
-//	pCurrentNodeInfo = GetNodeInfo(_transitionArrow.GetToNode());
-//
-//	// 開始処理
-//	pCurrentNodeInfo->pAnimNode->Begin();
-//
-//	// 遷移矢印をセットする
-//	pCurTransArrow = &_transitionArrow;
-//	float targetAnimRatio = pCurTransArrow->GetTargetRatio();
-//	float transitionTime = pCurTransArrow->GetTransitionTime();
-//	EaseKind ease = pCurTransArrow->GetEaseKind();
-//
-//	// 補間開始
-//	switch (pCurTransArrow->GetInterpolateKind())
-//	{
-//	case AnimInterpolateKind::CrossFade:
-//		CrossFadeStart(targetAnimRatio, transitionTime, ease);
-//		break;
-//
-//	case AnimInterpolateKind::Inertialization:
-//		InterpTransitionStart(targetAnimRatio, transitionTime);
-//		break;
-//
-//	default:
-//		assert(!"アニメーション間の補間の種類指定が正常でないです");
-//		break;
-//	}
-//}
-
-
-void AnimationController::SetBlendRatio(float _ratio)
-{
-	using enum AnimationNode_Base::NodeType;
-
-	// 現在のノードがブレンドでないなら
-	AnimationNode_Base& currentNode = *pCurrentNodeInfo->pAnimNode;
-	if (currentNode.GetNodeType() != Blend) return;
-
-	BlendAnimationNode& pBlend = static_cast<BlendAnimationNode&>(currentNode);
 }
 
 void AnimationController::CreateSingleNode(const std::string& _nodeName, const std::string& _animName)
@@ -240,16 +89,6 @@ void AnimationController::RemoveNode(const std::string& _nodeName)
 		});
 }
 
-bool AnimationController::IsSetAnimation()
-{
-	return pCurrentNodeInfo != nullptr;
-}
-
-AnimationNode_Base* AnimationController::GetCurrentNode()
-{
-	return pCurrentNodeInfo->pAnimNode.get();
-}
-
 AnimNodeInfo* AnimationController::GetDefaultNode() const
 {
 	return pDefaultNodeInfo;
@@ -285,11 +124,6 @@ const AnimNodeInfo* AnimationController::GetNodeInfo(const AnimationNode_Base& _
 	return (*itr).get();
 }
 
-float AnimationController::GetPlayingRatio() const
-{
-	return pCurrentNodeInfo->pAnimNode->GetCurPlayRatio();
-}
-
 void AnimationController::GetNodeArray(std::list<const AnimationNode_Base*>& _animNodeArray) const
 {
 	for (auto& n : animNodeInfos)
@@ -301,11 +135,6 @@ void AnimationController::GetNodeArray(std::list<const AnimationNode_Base*>& _an
 const AnimationParameters& AnimationController::GetAnimationParameters() const
 {
 	return *pAnimParameters;
-}
-
-bool AnimationController::GetIsPlay() const
-{
-	return isPlay;
 }
 
 nlohmann::json AnimationController::Save()
@@ -365,82 +194,6 @@ void AnimationController::Load(const nlohmann::json& _data)
 	}
 }
 
-bool AnimationController::IsCanPlay()
-{
-	if (!isPlay) return false;
-	if (pCurrentNodeInfo == nullptr) return false;
-
-	return true;
-}
-
-void AnimationController::AnimatioUpdate()
-{
-	if (isTransitioning)	// アニメーション遷移中なら
-	{
-		switch (pCurTransArrow->GetInterpolateKind())
-		{
-		case AnimInterpolateKind::CrossFade:
-			CrossFadeUpdate();
-			break;
-
-		case AnimInterpolateKind::Inertialization:
-			InertInterpUpdate();
-			break;
-		}
-	}
-	else
-		NormalUpdate();
-}
-
-bool AnimationController::IsCanLoop()
-{
-	return false;
-}
-
-void AnimationController::CacheUpdate()
-{
-	// ボーンのキャッシュ取得のためパラメータを取得する
-	std::vector<BoneTransform> cacheTransforms;
-
-	for (u_int b_i = 0; b_i < pBoneList->GetBoneCnt(); b_i++)
-	{
-		cacheTransforms.push_back(pBoneList->GetBone(b_i).GetAnimationTransform());
-	}
-
-	// 慣性補間用のキャッシュを更新する
-	pInertInterp->UpdateBoneCache(cacheTransforms);
-}
-
-void AnimationController::TranstionCheck()
-{
-	AnimTransitionArrow* pTransArrow = nullptr;
-	float curPlayRatio = pCurrentNodeInfo->pAnimNode->GetCurPlayRatio();
-	float lastPlayRatio = pCurrentNodeInfo->pAnimNode->GetLastPlayRatio();
-
-	for (auto& pArrow : pCurrentNodeInfo->transitionArrows)
-	{
-		/*if (!pArrow->CheckTransition(curPlayRatio, lastPlayRatio)) return;*/
-		pTransArrow = pArrow.get();
-	}
-
-	// トリガー変数をリセットする
-	pAnimParameters->ResetTrigger();
-
-	if (!pTransArrow) return;	// 遷移しないなら終わる
-
-	/*ChangeAnimation(*pTransArrow);*/
-}
-
-void AnimationController::OnChangeAnimComplete()
-{
-	HASHI_DEBUG_LOG(pCurrentNodeInfo->pAnimNode->GetNodeName() + "へ移行");
-}
-
-void AnimationController::OnTransitionStart()
-{
-	isTransitioning = true;
-}
-
 bool AnimationController::IsHaveNode(const std::string& _nodeName)
 {
 	auto itr = std::find_if(animNodeInfos.begin(), animNodeInfos.end(),
@@ -461,102 +214,6 @@ void AnimationController::NotDuplicateNodeName(std::string& _nodename)
 	{
 		_nodename = startName + std::to_string(loopCnt);
 	}
-}
-
-void AnimationController::CrossFadeStart(float _targetAnimRatio, float _transitionTime, HashiTaku::EaseKind _easeKind)
-{
-	// 開始時の割合をセット
-	AnimationNode_Base* pCurNode = pCurrentNodeInfo->pAnimNode.get();
-	pCurNode->SetCurPlayRatio(_targetAnimRatio);
-
-	/*pCrossFadeInterp->Begin(*pPrevAnimNode, *pCurNode, _transitionTime, _easeKind);*/
-
-	OnTransitionStart();
-}
-
-void AnimationController::InterpTransitionStart(float _targetAnimRatio, float _transitionTime)
-{
-	u_int boneCnt = pBoneList->GetBoneCnt();
-	std::vector<BoneTransform> requestPose(boneCnt);
-
-	// 遷移終了時に再生されるのでターゲットの割合をセットしておく
-	AnimationNode_Base* pCurNode = pCurrentNodeInfo->pAnimNode.get();
-	pCurNode->SetCurPlayRatio(_targetAnimRatio);
-
-	// 次のアニメーションの姿勢を取得する
-	for (u_int b_i = 0; b_i < boneCnt; b_i++)
-	{
-		pCurNode->GetAnimTransform(requestPose[b_i], b_i, _targetAnimRatio);
-	}
-
-	// 慣性補間の初期処理
-	bool isSuccess = pInertInterp->Calculate(requestPose, _transitionTime);
-
-	if (!isSuccess) return;	// 失敗したら
-
-	OnTransitionStart();
-}
-
-void AnimationController::OnTransitionEnd()
-{
-	OnChangeAnimComplete();
-
-	isTransitioning = false;	// 遷移終了
-}
-
-void AnimationController::SetBoneList(BoneList& _boneList)
-{
-	pBoneList = &_boneList;
-}
-
-void AnimationController::SetDefaultNode(const std::string& _nodeName)
-{
-	pDefaultNodeInfo = GetNodeInfo(_nodeName);
-}
-
-void AnimationController::SetBool(const std::string& _paramName, bool _isBool)
-{
-	pAnimParameters->SetBool(_paramName, _isBool);
-}
-
-void AnimationController::SetInt(const std::string& _paramName, int _intVal)
-{
-	pAnimParameters->SetInt(_paramName, _intVal);
-}
-
-void AnimationController::SetFloat(const std::string& _paramName, float _floatVal)
-{
-	pAnimParameters->SetFloat(_paramName, _floatVal);
-}
-
-void AnimationController::SetTrigger(const std::string& _paramName)
-{
-	pAnimParameters->SetTrigger(_paramName);
-}
-
-bool AnimationController::GetBool(const std::string& _paramName)
-{
-	return pAnimParameters->GetBool(_paramName);
-}
-
-int AnimationController::GetInt(const std::string& _paramName)
-{
-	return pAnimParameters->GetInt(_paramName);
-}
-
-float AnimationController::GetFloat(const std::string& _paramName)
-{
-	return pAnimParameters->GetFloat(_paramName);
-}
-
-bool AnimationController::GetTrigger(const std::string& _paramName)
-{
-	return pAnimParameters->GetTrigger(_paramName);
-}
-
-void AnimationController::OnAnimationFinish()
-{
-	isPlay = false;
 }
 
 void AnimationController::ImGuiAnimNotify(AnimNodeInfo& _nodeInfo)
@@ -724,29 +381,8 @@ AnimNodeInfo* AnimationController::CreateNodeInfoByType(AnimationNode_Base::Node
 	return pRetNode;
 }
 
-void AnimationController::Copy(const AnimationController& _other)
-{
-	if (this == &_other) return;
-
-	CopyNodes(_other);	// ノードをコピー
-}
-
-void AnimationController::CopyNodes(const AnimationController& _other)
-{
-	for (auto& nodeInfo : _other.animNodeInfos)
-	{
-
-	}
-}
-
 void AnimationController::ImGuiSetting()
 {
-	if (IsSetAnimation() && ImGuiMethod::TreeNode("Play Node"))
-	{
-		pCurrentNodeInfo->pAnimNode->ImGuiPlaying();
-		ImGui::TreePop();
-	}
-
 	std::vector<std::string> nodeNames;	// 全ノード名を取得しておく
 	for (auto& ni : animNodeInfos)
 		nodeNames.push_back(ni->pAnimNode->GetNodeName());
@@ -823,27 +459,6 @@ void AnimationController::ImGuiSetDefaultNode(const std::vector<std::string>& _n
 	{
 		pDefaultNodeInfo = GetNodeInfo(curDefaultName);
 	}
-#endif // EDIT
-}
-
-void AnimationController::ImGuiTransition()
-{
-#ifdef EDIT
-	AnimationNode_Base* pCurNode = pCurrentNodeInfo->pAnimNode.get();
-	IAnimInterpolate* interpolate = pCrossFadeInterp.get();
-	if (pCurTransArrow->GetInterpolateKind() == AnimInterpolateKind::Inertialization)
-		interpolate = pInertInterp.get();
-
-	std::string text = pPrevAnimNode->GetNodeName();
-	text += " ---> ";
-	text += pCurNode->GetNodeName();
-	ImGui::Text(TO_UTF8(text));
-
-	text = "経過：" + std::to_string(interpolate->GetElapsedTime()) + "(s)";
-	ImGui::Text(TO_UTF8(text));
-
-	text = "ブレンド時間" + std::to_string(interpolate->GetTransitionTime()) + "(s)";
-	ImGui::Text(TO_UTF8(text));
 #endif // EDIT
 }
 

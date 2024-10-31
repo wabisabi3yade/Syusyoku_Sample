@@ -6,8 +6,10 @@ AnimationNotifyState::AnimationNotifyState(NotifyType _notifyType)
 {
 }
 
-void AnimationNotifyState::Update(const float _lastPlayingRatio, const float _curPlayingRatio, bool _isLoop)
+void AnimationNotifyState::Update(const float _lastPlayingRatio, const float _curPlayingRatio, const bool _isLoop)
 {
+	if (!GetIsActive()) return;
+
 	if (_isLoop)
 	{
 		if (_lastPlayingRatio > startEventRatio)
@@ -64,5 +66,5 @@ void AnimationNotifyState::ImGuiSetting()
 {
 	AnimationNotify_Base::ImGuiSetting();
 
-	ImGui::DragFloatRange2("event", &startEventRatio, &endEventRatio, 0.01f, 0.0f, 1.0f);
+	ImGui::DragFloatRange2("event", &startEventRatio, &endEventRatio, 0.001f, 0.0f, 1.0f);
 }

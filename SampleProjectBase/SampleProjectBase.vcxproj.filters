@@ -712,6 +712,12 @@
     <Filter Include="ソース ファイル\Component\InGame\Weapon">
       <UniqueIdentifier>{ee42c855-ec56-4212-89cc-f6b4cf07a8c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Component\Singleton">
+      <UniqueIdentifier>{8c63b18e-c12e-4ef8-8766-dd2a16ef4539}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\HitStopManager">
+      <UniqueIdentifier>{63249c5d-525d-4d54-ad72-f133c036bb9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1157,9 +1163,6 @@
     <ClCompile Include="BulletTest.cpp">
       <Filter>ソース ファイル\Bullet\Test</Filter>
     </ClCompile>
-    <ClCompile Include="CP_AnimationNotify.cpp">
-      <Filter>ソース ファイル\Component\AnimationNotify</Filter>
-    </ClCompile>
     <ClCompile Include="AnimationTrack.cpp">
       <Filter>ソース ファイル\Animation\AnimationTrack</Filter>
     </ClCompile>
@@ -1318,6 +1321,15 @@
     </ClCompile>
     <ClCompile Include="CP_Enemy.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SingletonComponent.cpp">
+      <Filter>ソース ファイル\Component\Singleton</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_HitStopManager.cpp">
+      <Filter>ソース ファイル\Component\HitStopManager</Filter>
+    </ClCompile>
+    <ClCompile Include="HitStopper_Base.cpp">
+      <Filter>ソース ファイル\Component\HitStopManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1756,9 +1768,6 @@
     <ClInclude Include="BulletTest.h">
       <Filter>ソース ファイル\Bullet\Test</Filter>
     </ClInclude>
-    <ClInclude Include="CP_AnimationNotify.h">
-      <Filter>ソース ファイル\Component\AnimationNotify</Filter>
-    </ClInclude>
     <ClInclude Include="AnimationTrack.h">
       <Filter>ソース ファイル\Animation\AnimationTrack</Filter>
     </ClInclude>
@@ -1938,6 +1947,15 @@
     </ClInclude>
     <ClInclude Include="CP_Enemy.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SingletonComponent.h">
+      <Filter>ソース ファイル\Component\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_HitStopManager.h">
+      <Filter>ソース ファイル\Component\HitStopManager</Filter>
+    </ClInclude>
+    <ClInclude Include="HitStopper_Base.h">
+      <Filter>ソース ファイル\Component\HitStopManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

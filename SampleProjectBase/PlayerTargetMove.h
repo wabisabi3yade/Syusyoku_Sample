@@ -29,9 +29,9 @@ public:
 	/// @param _data ロードするデータ 
 	void Load(const nlohmann::json& _data) override;
 private:
-	void OnStart() override;
-	void Update() override;
-	void OnEnd() override;
+	void OnStartBehavior() override;
+	void UpdateBehavior() override;
+	void OnEndBehavior() override;
 
 	/// @brief 移動
 	void Move();

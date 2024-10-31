@@ -13,11 +13,11 @@ public:
 
 private:
 	/// @brief 各状態の開始処理
-	void OnStart() override;
+	void OnStartBehavior() override;
 	/// @brief 更新処理
-	void Update() override;
+	void UpdateBehavior() override;
 	/// @brief 各状態の終了処理
-	void OnEnd() override;
+	void OnEndBehavior() override;
 
 	/// @brief 放置経過時間を進める
 	void ProgressLeaveElapse();

@@ -47,7 +47,7 @@ private:
 template<HashiTaku::ComponentConcept T>
 inline std::unique_ptr<T> ComponentFactory::Create()
 {
-	std::unique_ptr<T> createComp = std::make_unique<T>();
+	std::unique_ptr<T> createComp = CreateByName(GetComponentName<T>());
 
 	// 名前セット
 	Component& comp = *createComp;

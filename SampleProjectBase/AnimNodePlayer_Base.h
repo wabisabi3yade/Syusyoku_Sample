@@ -21,6 +21,9 @@ class AnimNodePlayer_Base : public HashiTaku::IImGuiUser
 	/// @brief 計算した全てを考慮した再生速度
 	float allPlaySpeed;
 
+	/// @brief 再生フラグ
+	bool isPlay;
+
 	/// @brief ループしたタイミングか？
 	bool isJustLoop;
 
@@ -106,7 +109,7 @@ public:
 private:
 	/// @brief ループ再生できるか確認
 	/// @return ループできるか？
-	bool IsCanLoop() const;
+	bool IsCanLoop();
 
 	/// @brief 再生がループした時の処理
 	void OnPlayLoop();
