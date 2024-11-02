@@ -45,6 +45,14 @@ void PlayerMoveState::UpdateBehavior()
 
 	Rotation();
 
+}
+
+void PlayerMoveState::OnEndBehavior()
+{
+}
+
+void PlayerMoveState::TransitionCheckUpdate()
+{
 	// アタックStateに遷移
 	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
 	{
@@ -54,15 +62,10 @@ void PlayerMoveState::UpdateBehavior()
 	{
 		ChangeState(StateType::TargetMove);
 	}
-	else if (currentSpeed <= Mathf::epsilon)
+	else if (currentSpeed <= Mathf::epsilon)	// 移動速度が0以下になると
 	{
 		ChangeState(StateType::Idle);
 	}
-
-}
-
-void PlayerMoveState::OnEndBehavior()
-{
 }
 
 bool PlayerMoveState::IsRunning()
@@ -74,6 +77,8 @@ bool PlayerMoveState::IsRunning()
 
 void PlayerMoveState::ImGuiSetting()
 {
+	curve.ImGuiCall();
+
 	std::string text = TO_UTF8("speed") + std::to_string(currentSpeed);
 	ImGui::Text(text.c_str());
 	ImGui::DragFloat("maxSpeed", &maxSpeed, 0.1f, 0.0f, 1000.0f);
@@ -86,20 +91,15 @@ void PlayerMoveState::Move()
 {
 	float deltaTime = MainApplication::DeltaTime();
 
-	// カメラの正面ベクトルを求める
+	// 移動方向・移動量決定
 	Vector3 camForwardVec = pCamera->GetTransform().Forward();
 	Vector3 camRightVec = pCamera->GetTransform().Right();
 	Vector2 input = GetInputLeftStick();
-
-	float mag = input.Length();
-
-	// 移動方向・移動量決定
 	moveVector = camRightVec * input.x;
 	moveVector += camForwardVec * input.y;
 	moveVector.y = 0.0f;
-	moveVector.Normalize();
 
-	Vector3 moveSpeed = moveVector * mag * maxSpeed;
+	Vector3 moveSpeed = moveVector *  maxSpeed;
 	currentSpeed = moveSpeed.Length();
 
 	// 移動
@@ -117,7 +117,6 @@ void PlayerMoveState::Move()
 
 		if (rootMotion > Mathf::epsilon)
 		{
-
 			float animPlaySpeed = currentSpeed / rootMotion;
 
 			pAnimation->SetCurNodePlayerSpeed(animPlaySpeed);
@@ -130,10 +129,6 @@ void PlayerMoveState::Move()
 
 }
 
-DirectX::SimpleMath::Vector3 PlayerMoveState::MoveVector()
-{
-	return moveVector;
-}
 
 void PlayerMoveState::Rotation()
 {

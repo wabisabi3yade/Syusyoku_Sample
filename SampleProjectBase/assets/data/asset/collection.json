@@ -39,6 +39,10 @@
                 {
                     "animNode": {
                         "animTime": 1.0,
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "plotDatas": null
+                        },
                         "axisParam": [
                             {
                                 "ease": 8,
@@ -146,6 +150,10 @@
                     "animNode": {
                         "animName": "knight_Idle1.fbx",
                         "animTime": 2.5333333015441895,
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "plotDatas": null
+                        },
                         "isLoop": true,
                         "isRMR": false,
                         "isRMXZ": false,
@@ -231,6 +239,10 @@
                 {
                     "animNode": {
                         "animTime": 1.0,
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "plotDatas": null
+                        },
                         "axisParam": [
                             {
                                 "ease": 8,
@@ -324,9 +336,9 @@
                                 "exitRatio": 1.0,
                                 "interpolate": 0,
                                 "isHaveExit": false,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.20000000298023224
+                                "targetRatio": 0.15000000596046448,
+                                "transEase": 0.15000000596046448,
+                                "transTime": 0.15000000596046448
                             },
                             "toName": "Attack1"
                         }
@@ -339,6 +351,10 @@
                     "animNode": {
                         "animName": "knight_SlashAttack1.fbx",
                         "animTime": 1.5,
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "plotDatas": null
+                        },
                         "isLoop": false,
                         "isRMR": false,
                         "isRMXZ": true,
@@ -408,6 +424,10 @@
                     "animNode": {
                         "animName": "knight_RollAttack.fbx",
                         "animTime": 1.7333333492279053,
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "plotDatas": null
+                        },
                         "isLoop": false,
                         "isRMR": false,
                         "isRMXZ": true,
@@ -456,6 +476,10 @@
                     "animNode": {
                         "animName": "knight_JumpAttack.fbx",
                         "animTime": 2.3333332538604736,
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "plotDatas": null
+                        },
                         "isLoop": false,
                         "isRMR": false,
                         "isRMXZ": true,
@@ -501,6 +525,10 @@
                 {
                     "animNode": {
                         "animTime": 1.0,
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "plotDatas": null
+                        },
                         "axisParam": [
                             {
                                 "ease": 8,
@@ -557,6 +585,10 @@
                     "animNode": {
                         "animName": "knight_Run_F.fbx",
                         "animTime": 0.699999988079071,
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "plotDatas": null
+                        },
                         "isLoop": true,
                         "isRMR": false,
                         "isRMXZ": false,

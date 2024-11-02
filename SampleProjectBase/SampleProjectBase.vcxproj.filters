@@ -123,9 +123,6 @@
     <Filter Include="ソース ファイル\System\Application\Input\Keyboard">
       <UniqueIdentifier>{67dedc71-2688-4e08-8632-ead66bf81b9e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\System\GameMode">
-      <UniqueIdentifier>{9c95c819-a91d-411a-80fd-9a3899e66cc7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Component\InGame\Test">
       <UniqueIdentifier>{3c61951c-e04f-4483-8c93-ee48a0b9497f}</UniqueIdentifier>
     </Filter>
@@ -377,9 +374,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Animation\AnimNode\Base">
       <UniqueIdentifier>{914716c0-f649-4d87-944b-d8d45449ad5a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Animation\Interpolate\Bezier">
-      <UniqueIdentifier>{ad06e303-10a7-4e7a-ba76-958f34017771}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Animation\Interpolate\Catmul">
       <UniqueIdentifier>{060507b4-1142-4237-a32b-304a2d682538}</UniqueIdentifier>
@@ -718,6 +712,12 @@
     <Filter Include="ソース ファイル\Component\HitStopManager">
       <UniqueIdentifier>{63249c5d-525d-4d54-ad72-f133c036bb9f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\System\AnimationCurve">
+      <UniqueIdentifier>{1cf20d1f-8aaa-46da-9e92-2990afd1dd0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\ImGui\ImPlot">
+      <UniqueIdentifier>{88dc33e0-f5dd-4334-a65b-bc3e1b1527b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -874,9 +874,6 @@
     </ClCompile>
     <ClCompile Include="GameKey.cpp">
       <Filter>ソース ファイル\System\Application\Input\Keyboard</Filter>
-    </ClCompile>
-    <ClCompile Include="GameMode.cpp">
-      <Filter>ソース ファイル\System\GameMode</Filter>
     </ClCompile>
     <ClCompile Include="SaveJson.cpp">
       <Filter>ソース ファイル\System\Json\Save</Filter>
@@ -1331,6 +1328,15 @@
     <ClCompile Include="HitStopper_Base.cpp">
       <Filter>ソース ファイル\Component\HitStopManager</Filter>
     </ClCompile>
+    <ClCompile Include="AnimationCurve.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\implot\include\implot.cpp">
+      <Filter>ソース ファイル\System\ImGui\ImPlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\implot\include\implot_items.cpp">
+      <Filter>ソース ファイル\System\ImGui\ImPlot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -1446,9 +1452,6 @@
     </ClInclude>
     <ClInclude Include="GameKey.h">
       <Filter>ソース ファイル\System\Application\Input\Keyboard</Filter>
-    </ClInclude>
-    <ClInclude Include="GameMode.h">
-      <Filter>ソース ファイル\System\GameMode</Filter>
     </ClInclude>
     <ClInclude Include="SaveJsonValue.h">
       <Filter>ソース ファイル\System\Json\SaveJsonValue</Filter>
@@ -1956,6 +1959,15 @@
     </ClInclude>
     <ClInclude Include="HitStopper_Base.h">
       <Filter>ソース ファイル\Component\HitStopManager</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationCurve.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\implot\include\implot.h">
+      <Filter>ソース ファイル\System\ImGui\ImPlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\implot\include\implot_internal.h">
+      <Filter>ソース ファイル\System\ImGui\ImPlot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

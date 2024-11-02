@@ -33,7 +33,7 @@ void PlayerActState_Base::Update()
 	UpdateBehavior();
 
 	// ステート遷移をチェック
-	OnTransitionCheck();
+	TransitionCheckUpdate();
 }
 
 void PlayerActState_Base::OnEnd()
@@ -91,8 +91,7 @@ bool PlayerActState_Base::ImGuiComboPlayerState(const std::string& _caption, Sta
 		else
 			return false;
 	}
+#endif EDIT
 
 	return false;
-
-#endif EDIT
 }

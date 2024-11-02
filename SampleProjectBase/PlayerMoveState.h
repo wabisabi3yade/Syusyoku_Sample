@@ -1,5 +1,6 @@
 #pragma once
 #include "PlayerActState_Base.h"
+#include "AnimationCurve.h"
 
 class CP_Camera;
 
@@ -8,6 +9,8 @@ class PlayerMoveState : public PlayerActState_Base
 {
 	/// @brief ˆÚ“®•ûŒü
 	DirectX::SimpleMath::Vector3 moveVector;
+
+	AnimationCurve curve;
 
 	/// @brief Œ»İ‚Ì‘¬“x
 	float currentSpeed;
@@ -38,11 +41,10 @@ private:
 	void OnStartBehavior() override;
 	void UpdateBehavior() override;
 	void OnEndBehavior() override;
+	void TransitionCheckUpdate() override;
 
 	/// @brief ˆÚ“®
 	void Move();
-
-	DirectX::SimpleMath::Vector3 MoveVector();
 
 	/// @brief ‰ñ“]‚³‚¹‚é
 	void Rotation();

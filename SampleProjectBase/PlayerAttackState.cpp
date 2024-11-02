@@ -24,7 +24,7 @@ void PlayerAttackState::OnEndBehavior()
 {
 }
 
-void PlayerAttackState::OnTransitionCheck()
+void PlayerAttackState::TransitionCheckUpdate()
 {
 	// UŒ‚“ü—Í‚³‚ê‚½‚çƒXƒe[ƒg‘JˆÚ‚·‚é
 	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))

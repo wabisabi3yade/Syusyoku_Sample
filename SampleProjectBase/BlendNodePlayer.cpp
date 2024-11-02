@@ -122,7 +122,7 @@ void AnimBlendNodePlayer::AnimationUpdate(std::vector<BoneTransform>& _outTransf
 
 void AnimBlendNodePlayer::SingleAnimationUpdate(std::vector<BoneTransform>& _outTransforms)
 {
-	float playingRatio = GetCurPlayRatio();
+	float playingRatio = GetAnimationRatio();
 
 	const AnimationData& animData = *blendingAnimData[0].pAnimation;
 
@@ -137,7 +137,7 @@ void AnimBlendNodePlayer::TwoAnimationUpdate(std::vector<BoneTransform>& _outTra
 {
 	using namespace DirectX::SimpleMath;
 
-	float playingRatio = GetCurPlayRatio();
+	float playingRatio = GetAnimationRatio();
 
 	const AnimationData& p_pAnimData = *blendingAnimData[0].pAnimation;
 	const AnimationData& n_pAnimData = *blendingAnimData[1].pAnimation;
@@ -164,7 +164,7 @@ void AnimBlendNodePlayer::SquareAnimationUpdate(std::vector<BoneTransform>& _out
 {
 	using namespace DirectX::SimpleMath;
 
-	float playingRatio = GetCurPlayRatio();
+	float playingRatio = GetAnimationRatio();
 
 	for (u_int b_i = 0; b_i < pBoneList->GetBoneCnt(); b_i++)
 	{

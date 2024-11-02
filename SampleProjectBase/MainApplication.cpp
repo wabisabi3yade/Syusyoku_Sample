@@ -113,6 +113,9 @@ void MainApplication::Init(HINSTANCE _hInst)
 
 	HashiTaku::Random::Init();
 
+	// イージング初期化
+	HashiTaku::Easing::Init();
+
 	AssetSysytemSetup();
 
 	ImuiSetup();

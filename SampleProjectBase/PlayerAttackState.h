@@ -20,7 +20,7 @@ private:
 	void OnStartBehavior() override;
 	void UpdateBehavior() override;
 	void OnEndBehavior() override;
-	void OnTransitionCheck();
+	void TransitionCheckUpdate();
 
 	/// @brief UŒ‚î•ñ‚ğXV‚·‚é
 	void UpdateAttackInfo();

@@ -1,5 +1,6 @@
 #pragma once
 #include "AnimationData.h"
+#include "AnimationCurve.h"
 
 class BoneList;
 
@@ -21,6 +22,9 @@ public:
 private:
 	/// @brief ノード名
 	std::string nodeName;
+
+	/// @brief アニメーションカーブ
+	std::unique_ptr<AnimationCurve> pAnimationCurve;
 
 	/// @brief ノードの種類
 	NodeType nodeType;
@@ -54,29 +58,15 @@ private:
 public:
 	AnimationNode_Base(std::string _nodeName, NodeType _type);
 	virtual ~AnimationNode_Base() {}
-	AnimationNode_Base(const AnimationNode_Base& _other);
-	AnimationNode_Base& operator=(const AnimationNode_Base& _other);
+	/*AnimationNode_Base(const AnimationNode_Base& _other);
+	AnimationNode_Base& operator=(const AnimationNode_Base& _other);*/
 
 	// 再生中のときに表示
 	virtual void ImGuiPlaying();
 
-	/// @brief アニメーション開始時に行う処理
-	virtual void Begin();
-
-	/// @brief 更新処理
-	/// @param _boneList ボーンリスト
-	virtual void UpdateCall(BoneList& _boneList);
-
-	/// @brief 現在の再生割合を進める
-	/// @param _animationSpeed 再生速度
-	void ProgressPlayRatio(float _animationSpeed);
-
 	/// @brief アニメーションを追加する
 	/// @param _animData アニメーション名
 	virtual void SetAnimationData(const std::string& _animName) = 0;
-
-	// 現在の再生割合をセット
-	void SetCurPlayRatio(float _playingRatio);
 
 	// ノード名をセット
 	void SetNodeName(const std::string& _nodeName);
@@ -131,14 +121,14 @@ public:
 	/// @return 再生速度倍率
 	float GetPlaySpeedTimes() const;
 
+	/// @brief アニメーションカーブの値を取得する
+	/// @param _ratio 割合(0.0～1.0)
+	/// @return アニメーションカーブの値(基本的に0.0～1.0)
+	float GetCurveValue(float _ratio) const;
+
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
 private:
-
-	/// @brief ループできるかチェック
-	/// @return ループできるか？
-	bool IsCanLoop();
-
 	void Copy(const AnimationNode_Base& _other);
 
 	// ノードのパラメーター設定

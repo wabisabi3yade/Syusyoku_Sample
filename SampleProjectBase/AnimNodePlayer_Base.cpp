@@ -3,12 +3,11 @@
 #include "SkeletalMesh.h"
 #include "AnimationNode_Base.h"
 #include "IAnimParametersSetter.h"
-
 #include "AnimationNotifyFactory.h"
 
 AnimNodePlayer_Base::AnimNodePlayer_Base(const AnimationNode_Base& _playNode, BoneList& _boneList, Transform& _transform)
 	: pPlayAnimNode(&_playNode), pBoneList(&_boneList), pObjectTransform(&_transform),
-	curPlayRatio(0.0f), lastPlayRatio(-Mathf::smallValue), playerSpeedTimes(1.0f), allPlaySpeed(0.0f), isJustLoop(false), isPlay(true)
+	curPlayRatio(0.0f), lastPlayRatio(-Mathf::smallValue), animationRatio(0.0f), playerSpeedTimes(1.0f), allPlaySpeed(0.0f), isJustLoop(false), isPlay(true)
 {
 }
 
@@ -62,6 +61,8 @@ void AnimNodePlayer_Base::SetCurPlayRatio(float _playRatio)
 
 	// 1フレーム前の再生割合を現在の割合より前に置く
 	lastPlayRatio = curPlayRatio - Mathf::smallValue;
+
+	animationRatio = pPlayAnimNode->GetCurveValue(curPlayRatio);
 }
 
 void AnimNodePlayer_Base::SetPlaySpeedTimes(float _playSpeed)
@@ -79,6 +80,11 @@ float AnimNodePlayer_Base::GetLastPlayRatio() const
 	return lastPlayRatio;
 }
 
+float AnimNodePlayer_Base::GetAnimationRatio() const
+{
+	return animationRatio;
+}
+
 float AnimNodePlayer_Base::GetNodePlaySpeed() const
 {
 	return playerSpeedTimes;
@@ -86,12 +92,12 @@ float AnimNodePlayer_Base::GetNodePlaySpeed() const
 
 void AnimNodePlayer_Base::GetDeltaRootPos(DirectX::SimpleMath::Vector3& _outPos) const
 {
-	_outPos = GetRootMotionPos(curPlayRatio) - p_RootMotionPos;
+	_outPos = GetRootMotionPos(animationRatio) - p_RootMotionPos;
 }
 
 void AnimNodePlayer_Base::GetCurrentRootPos(DirectX::SimpleMath::Vector3& _outPos, bool _isLoadScaling) const
 {
-	_outPos = GetRootMotionPos(GetCurPlayRatio(), _isLoadScaling);
+	_outPos = GetRootMotionPos(GetAnimationRatio(), _isLoadScaling);
 }
 
 const std::string& AnimNodePlayer_Base::GetNodeName() const
@@ -124,6 +130,8 @@ void AnimNodePlayer_Base::ProgressPlayRatio(float _controllerPlaySpeed)
 
 
 	curPlayRatio += allPlaySpeed * MainApplication::DeltaTime();
+	// アニメーション割合を計算
+	animationRatio = pPlayAnimNode->GetCurveValue(curPlayRatio);
 
 	if (IsCanLoop())
 		OnPlayLoop();
@@ -171,7 +179,7 @@ void AnimNodePlayer_Base::ApplyRootMotionToTransform()
 		//p_RootMotionRot = GetRootMotionRot(0.0f);
 	}
 
-	float curPlayRatio = GetCurPlayRatio();
+	float curPlayRatio = GetAnimationRatio();
 
 	// 移動座標
 	Vector3 curPos = GetRootMotionPos(curPlayRatio);
@@ -219,6 +227,7 @@ void AnimNodePlayer_Base::ApplyLoadTransform(DirectX::SimpleMath::Vector3& _root
 
 void AnimNodePlayer_Base::ImGuiSetting()
 {
-	ImGui::SliderFloat("play", &curPlayRatio, 0.0f, 1.0f);
-	ImGui::DragFloat("speed", &playerSpeedTimes, 0.01f, 0.0f, 50.0f);
+	ImGui::SliderFloat("Play", &curPlayRatio, 0.0f, 1.0f);
+	ImGui::Text("AnimRatio:%lf", animationRatio);
+	ImGui::DragFloat("Speed", &playerSpeedTimes, 0.01f, 0.0f, 50.0f);
 }

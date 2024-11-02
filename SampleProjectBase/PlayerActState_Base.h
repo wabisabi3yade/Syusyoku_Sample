@@ -131,7 +131,7 @@ protected:
 	virtual void OnEndBehavior() {};
 
 	/// @brief ステート遷移条件のチェック処理
-	virtual void OnTransitionCheck() {}
+	virtual void TransitionCheckUpdate() {}
 
 	/// @brief 状態を遷移する
 	/// @param _changeSate 遷移先の状態

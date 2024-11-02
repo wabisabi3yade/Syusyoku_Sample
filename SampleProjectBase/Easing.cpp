@@ -14,7 +14,7 @@ float HashiTaku::Easing::EaseValue(float _ratio, EaseKind _easeType)
 	return easeList[_easeType]->Get(_ratio);
 }
 
-void HashiTaku::Easing::ImGuiSelect(EaseKind& _nowEase)
+bool HashiTaku::Easing::ImGuiSelect(EaseKind& _nowEase)
 {
 #ifdef EDIT
 	u_int easeId = static_cast<u_int>(_nowEase);
@@ -22,8 +22,10 @@ void HashiTaku::Easing::ImGuiSelect(EaseKind& _nowEase)
 	if (ImGuiMethod::ComboBox("Easing", easeId, easeNames))
 	{
 		_nowEase = static_cast<EaseKind>(easeId);
+		return true;
 	}
 #endif // EDIT
+	return false;
 }
 
 void HashiTaku::Easing::Init()

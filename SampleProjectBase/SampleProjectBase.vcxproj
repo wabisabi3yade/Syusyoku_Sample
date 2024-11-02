@@ -127,8 +127,11 @@
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_impl_win32.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_tables.cpp" />
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_widgets.cpp" />
+    <ClCompile Include="..\ThirdParty\implot\include\implot.cpp" />
+    <ClCompile Include="..\ThirdParty\implot\include\implot_items.cpp" />
     <ClCompile Include="ANE_ChangeParameter.cpp" />
     <ClCompile Include="ANE_DebugLog.cpp" />
+    <ClCompile Include="AnimationCurve.cpp" />
     <ClCompile Include="AnimationNotifyFactory.cpp" />
     <ClCompile Include="AnimationParameters.cpp" />
     <ClCompile Include="AnimControllerCreater.cpp" />
@@ -225,7 +228,6 @@
     <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="Easing.cpp" />
     <ClCompile Include="GameKey.cpp" />
-    <ClCompile Include="GameMode.cpp" />
     <ClCompile Include="Geometory.cpp" />
     <ClCompile Include="BlendState.cpp" />
     <ClCompile Include="CP_Camera.cpp" />
@@ -318,8 +320,11 @@
     <ClInclude Include="..\ThirdParty\imgui\include\imstb_rectpack.h" />
     <ClInclude Include="..\ThirdParty\imgui\include\imstb_textedit.h" />
     <ClInclude Include="..\ThirdParty\imgui\include\imstb_truetype.h" />
+    <ClInclude Include="..\ThirdParty\implot\include\implot.h" />
+    <ClInclude Include="..\ThirdParty\implot\include\implot_internal.h" />
     <ClInclude Include="ANE_ChangeParameter.h" />
     <ClInclude Include="ANE_DebugLog.h" />
+    <ClInclude Include="AnimationCurve.h" />
     <ClInclude Include="AnimationNotifyFactory.h" />
     <ClInclude Include="AnimationParameters.h" />
     <ClInclude Include="AnimConntrollerType.h" />
@@ -428,7 +433,6 @@
     <ClInclude Include="EaseFunction.hpp" />
     <ClInclude Include="Easing.hpp" />
     <ClInclude Include="GameKey.h" />
-    <ClInclude Include="GameMode.h" />
     <ClInclude Include="Geometory.h" />
     <ClInclude Include="BlendState.h" />
     <ClInclude Include="CP_Camera.h" />
@@ -637,7 +641,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty/stb_image;$(SolutionDir)ThirdParty/directxtk/include;$(SolutionDir)ThirdParty/json/include;$(SolutionDir)ThirdParty/imgui/include;$(SolutionDir)ThirdParty/bullet/include;$(SolutionDir)ThirdParty/magic_enum/include;$(SolutionDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty/stb_image;$(SolutionDir)ThirdParty/directxtk/include;$(SolutionDir)ThirdParty/json/include;$(SolutionDir)ThirdParty/imgui/include;$(SolutionDir)ThirdParty/implot/include;$(SolutionDir)ThirdParty/bullet/include;$(SolutionDir)ThirdParty/magic_enum/include;$(SolutionDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <AdditionalOptions>/wd26812 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -672,7 +676,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty/stb_image;$(SolutionDir)ThirdParty/directxtk/include;$(SolutionDir)ThirdParty/json/include;$(SolutionDir)ThirdParty/imgui/include;$(SolutionDir)ThirdParty/bullet/include;$(SolutionDir)ThirdParty/magic_enum/include;$(SolutionDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty/stb_image;$(SolutionDir)ThirdParty/directxtk/include;$(SolutionDir)ThirdParty/json/include;$(SolutionDir)ThirdParty/imgui/include;$(SolutionDir)ThirdParty/implot/include;$(SolutionDir)ThirdParty/bullet/include;$(SolutionDir)ThirdParty/magic_enum/include;$(SolutionDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <AdditionalOptions>/wd26812 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
