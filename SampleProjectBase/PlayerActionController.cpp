@@ -22,7 +22,11 @@ PlayerActionController::PlayerActionController(GameObject& _pPlayerObject)
 	CreateState<PlayerIdleState>(Idle);
 	CreateState<PlayerMoveState>(Move);
 	CreateState<PlayerTargetMove>(TargetMove);
-	CreateState<PlayerGroundAttack>(GroundAttack1);
+	CreateState<PlayerGroundAttack>(Attack11);
+	CreateState<PlayerGroundAttack>(Attack12);
+	CreateState<PlayerGroundAttack>(Attack13);
+	CreateState<PlayerGroundAttack>(Attack14);
+	CreateState<PlayerGroundAttack>(SpecialAtkHi);
 
 	// デフォルト状態をセット
 	SetDefaultNode(Idle);
@@ -46,13 +50,16 @@ void PlayerActionController::Update()
 	pCurrentNode->Update();
 }
 
-void PlayerActionController::ChangeNode(const PlayerActState_Base::StateType& _nextActionState)
+bool PlayerActionController::ChangeNode(const PlayerActState_Base::StateType& _nextActionState)
 {
 	// ステートマシンで変更
-	StateMachine_Base::ChangeNode(_nextActionState);
+	bool isSuccess = StateMachine_Base::ChangeNode(_nextActionState);
+	if (!isSuccess) return false;
 
 	// アニメーション側のstate変数も変更
 	pAnimation->SetInt(STATEANIM_PARAMNAME, static_cast<int>(_nextActionState));
+	
+	return true;
 }
 
 PlayerActState_Base& PlayerActionController::CastPlayerAct(HashiTaku::StateNode_Base& _stateNodeBase)
@@ -62,15 +69,20 @@ PlayerActState_Base& PlayerActionController::CastPlayerAct(HashiTaku::StateNode_
 
 void PlayerActionController::ImGuiSetting()
 {
-	if (!ImGuiMethod::TreeNode("Action")) return;
-
-	std::string text = "NowState:" + PlayerActState_Base::StateTypeToStr(currentStateKey);
+	// 現在の状態表示
+	std::string text = "NowState:" + std::string(magic_enum::enum_name(currentStateKey));
 	ImGui::Text(text.c_str());
 
 	for (auto& pAct : stateNodeList)	// 各アクションの調整
-		CastPlayerAct(*pAct.second).ImGuiCall();
+	{
+		std::string stateStr = std::string(magic_enum::enum_name(pAct.first));
+		if (ImGuiMethod::TreeNode(stateStr))
+		{
+			CastPlayerAct(*pAct.second).ImGuiCall();
 
-	ImGui::TreePop();
+			ImGui::TreePop();
+		}
+	}
 }
 
 PlayerActState_Base* PlayerActionController::GetCurrentAction()
@@ -90,7 +102,8 @@ nlohmann::json PlayerActionController::Save()
 	for (auto& node : stateNodeList)
 	{
 		nlohmann::json actData;
-		actData["type"] = node.first;
+		// 文字列に変換
+		actData["typeString"] = magic_enum::enum_name(node.first);
 		actData["data"] = CastPlayerAct(*node.second).Save();
 		data["actData"].push_back(actData);
 	}
@@ -102,25 +115,29 @@ void PlayerActionController::Load(const nlohmann::json& _data)
 {
 	using namespace HashiTaku;
 	nlohmann::json actDataList;
+	// ステートごとのパラメータをロードする
 	if (LoadJsonDataArray("actData", actDataList, _data))
 	{
 		for (auto& actData : actDataList)
 		{
-			PlayerActState_Base::StateType state;
-			if (!LoadJsonEnum<PlayerActState_Base::StateType>("type", state, actData))
+			std::string stateString;
+			if (!LoadJsonString("typeString", stateString , actData))
 				continue;
 
+			PlayerActState_Base::StateType playerState;
+			// 文字列->StateType
+			auto state = magic_enum::enum_cast<PlayerActState_Base::StateType>(stateString);
+			if (state.has_value())
+				playerState = state.value();
+			else
+				continue;
 
 			nlohmann::json actParam;
 			if (!LoadJsonData("data", actParam, actData))
 				continue;
-			else
-			{
-				int i = 0;
-			}
 
-			if (stateNodeList.contains(state))
-				CastPlayerAct(*stateNodeList[state]).Load(actParam);
+			if (stateNodeList.contains(playerState))
+				CastPlayerAct(*stateNodeList[playerState]).Load(actParam);
 		}
 	}
 }

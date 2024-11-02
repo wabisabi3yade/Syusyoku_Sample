@@ -3,7 +3,7 @@
 class IEasing;
 
 // 初期化を任せるクラス
-class SceneManager;
+class MainApplication;
 
 // イージング関数チートシート：https://easings.net/ja
 namespace HashiTaku
@@ -59,7 +59,7 @@ namespace HashiTaku
 	/// @brief イージング関数
 	class Easing
 	{
-		friend class SceneManager;
+		friend class MainApplication;
 
 		/// @brief イージングのクラスをまとめたリスト
 		static std::unordered_map<EaseKind, std::unique_ptr<IEasing>> easeList;
@@ -76,7 +76,7 @@ namespace HashiTaku
 		/// @brief ImGui設定
 		/// @param _easeFunc 関数オブジェクト
 		/// @param _nowEase 現在のイージング
-		static void ImGuiSelect(EaseKind& _nowEase);
+		static bool ImGuiSelect(EaseKind& _nowEase);
 
 	private:
 		/// @brief 初期化　シーンマネージャーで

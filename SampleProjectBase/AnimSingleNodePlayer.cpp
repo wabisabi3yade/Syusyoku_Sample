@@ -9,7 +9,7 @@ AnimSingleNodePlayer::AnimSingleNodePlayer(const AnimationNode_Base& _singleNode
 
 void AnimSingleNodePlayer::Update(std::vector<BoneTransform>& _outTransforms)
 {
-	float playingRatio = GetCurPlayRatio();
+	float playingRatio = GetAnimationRatio();
 	_outTransforms.resize(pBoneList->GetBoneCnt());
 
 	//ボーン数ループ

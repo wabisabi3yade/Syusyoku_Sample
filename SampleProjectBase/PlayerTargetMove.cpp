@@ -32,11 +32,11 @@ void PlayerTargetMove::Load(const nlohmann::json& _data)
 	LoadJsonFloat("decade", decadeSpeedTimes, _data);
 }
 
-void PlayerTargetMove::OnStart()
+void PlayerTargetMove::OnStartBehavior()
 {
 }
 
-void PlayerTargetMove::Update()
+void PlayerTargetMove::UpdateBehavior()
 {
 	Move();
 
@@ -46,7 +46,7 @@ void PlayerTargetMove::Update()
 	}
 }
 
-void PlayerTargetMove::OnEnd()
+void PlayerTargetMove::OnEndBehavior()
 {
 }
 
@@ -58,7 +58,7 @@ void PlayerTargetMove::Move()
 
 	Vector3 camForwardVec = pCamera->GetTransform().Forward();
 	Vector3 camRightVec = pCamera->GetTransform().Right();
-	Vector2 input = InputValue();
+	Vector2 input = GetInputLeftStick();
 
 	float mag = input.Length();
 	HASHI_DEBUG_LOG(std::to_string(mag));
@@ -131,7 +131,7 @@ void PlayerTargetMove::Move()
 	{
 		pAnimation->SetFloat(MOVEAXIS_X_PARAMNAME, 0.5f);
 		pAnimation->SetFloat(MOVEAXIS_Y_PARAMNAME, 0.5f);
-		pAnimation->SetCurPlayerSpeed(IDLE_ANIM_PLAYSPEED);
+		pAnimation->SetCurNodePlayerSpeed(IDLE_ANIM_PLAYSPEED);
 	}
 
 	pAnimation->SetFloat(SPEEDRATIO_PARAMNAME, currentSpeed / maxSpeed);
@@ -147,13 +147,9 @@ void PlayerTargetMove::ImGuiSetting()
 {
 	PlayerActState_Base::ImGuiSetting();
 
-	if (!ImGuiMethod::TreeNode("TargetMove")) return;
-
 	std::string text = TO_UTF8("speed") + std::to_string(currentSpeed);
 	ImGui::Text(text.c_str());
 	ImGui::DragFloat("maxSpeed", &maxSpeed, 0.1f, 0.0f, 1000.0f);
 	ImGui::DragFloat("acceleration", &acceleration, 0.1f);
 	ImGui::DragFloat("decadeTimes", &decadeSpeedTimes, 0.01f, 0.0f, 1.0f);
-
-	ImGui::TreePop();
 }

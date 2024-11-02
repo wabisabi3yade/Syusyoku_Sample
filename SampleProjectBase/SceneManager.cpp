@@ -28,6 +28,7 @@ SceneManager::~SceneManager()
 
 void SceneManager::Setup()
 {
+
 	// Bullet物理エンジン初期化
 	DX11BulletPhisics::GetInstance()->Init();
 
@@ -36,9 +37,6 @@ void SceneManager::Setup()
 
 	// コンポーネント初期化
 	ComponentFactory::GetInstance()->Init();
-
-	// イージング初期化
-	HashiTaku::Easing::Init();
 
 	// シーンリストを準備
 	SetupSceneList();

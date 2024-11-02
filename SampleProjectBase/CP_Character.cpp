@@ -2,7 +2,7 @@
 #include "CP_Character.h"
 
 HashiTaku::CP_Character::CP_Character()
-	: currentHP(0.0f), maxHP(1.0f), isDead(false)
+	: currentHP(0.0f), maxHP(1.0f), isDead(false), isHitStopping(false)
 {
 }
 
@@ -32,6 +32,16 @@ void HashiTaku::CP_Character::OnDeath()
 	OnDeathBehavior();
 }
 
+void HashiTaku::CP_Character::OnHitStopBegin()
+{
+	isHitStopping = true;
+}
+
+void HashiTaku::CP_Character::OnHitStopEnd()
+{
+	isHitStopping = false;
+}
+
 nlohmann::json HashiTaku::CP_Character::Save()
 {
 	auto data = Component::Save();
@@ -46,8 +56,16 @@ void HashiTaku::CP_Character::Load(const nlohmann::json& _data)
 	LoadJsonFloat("maxHp", maxHP, _data);
 }
 
+bool HashiTaku::CP_Character::GetIsHitStopping() const
+{
+	return isHitStopping;
+}
+
 void HashiTaku::CP_Character::Start()
 {
+	// ヒットストップマネージャーに自身を代入
+	AddToHitStopManager();
+
 	// 最大体力に合わせる
 	currentHP = maxHP;
 }

@@ -25,7 +25,7 @@ private:
 	std::unique_ptr<CollisionTypeJudge> pCollisionJudge;
 
 	// コンポーネントリスト
-	std::list<std::unique_ptr<Component>> pComponents;
+	std::list<std::unique_ptr<Component>> components;
 
 	/// @brief アクティブ状態のコンポーネント
 	std::list<Component*> pActiveComponents;
@@ -83,7 +83,7 @@ public:
 	void SetComponent(std::unique_ptr<Component> _pSetComponent);
 
 	/// @brief コンポーネントをアタッチ
-	template<class T> T* AddComponent();
+	template<HashiTaku::ComponentConcept T> T* AddComponent();
 
 	/// @brief コンポーネントを削除する
 	void DeleteComponent(Component& _deleteComonent);
@@ -178,9 +178,13 @@ private:
 	/// @return 重複しているか？
 	template<class T> bool isDuplicateCompoent();
 
+	/// @brief コンポーネント生成ロード処理
+	/// @param _componentsData コンポーネントデータ
+	void LoadCreateComponnet(const nlohmann::json& _componentsData);
+
 	/// @brief コンポーネントのロード処理
 	/// @param _componentData このオブジェクト全てのコンポーネントデータ
-	void LoadComponent(const nlohmann::json& _componentsData);
+	void LoadComponentParameter(const nlohmann::json& _componentsData);
 
 	// ImGuiの設定
 	void ImGuiSetting() override;
@@ -189,7 +193,7 @@ private:
 	void ImGuiSetParent();
 };
 
-template<class T>
+template<HashiTaku::ComponentConcept T>
 inline T* GameObject::AddComponent()
 {
 	// コンポーネントファクトリーから取得
@@ -206,7 +210,7 @@ template<class T>
 inline T* GameObject::GetComponent()
 {
 	// 指定した型名と同じコンポーネントがあるか確認
-	for (auto& comp : pComponents)
+	for (auto& comp : components)
 	{
 		if (T* getPtr = dynamic_cast<T*>(comp.get()))
 		{
@@ -221,7 +225,7 @@ template<class T>
 inline bool GameObject::isDuplicateCompoent()
 {
 	// 指定した型名と同じコンポーネントがあるか確認
-	for (auto& comp : pComponents)
+	for (auto& comp : components)
 	{
 		if (typeid(T) == typeid(*comp))
 			return true;

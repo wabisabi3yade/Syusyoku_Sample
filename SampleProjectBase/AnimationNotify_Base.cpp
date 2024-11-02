@@ -15,6 +15,12 @@ void AnimationNotify_Base::Init()
 {
 }
 
+void AnimationNotify_Base::OnTerminalCall()
+{
+	if (!isActive) return;
+	OnTerminal();
+}
+
 void AnimationNotify_Base::SetIsActive(bool _isActive)
 {
 	isActive = _isActive;

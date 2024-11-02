@@ -13,7 +13,7 @@
 #define NOMINMAX
 
 // ImGuiを表示する定義
-#define EDIT_DISPLAY
+//#define EDIT_DISPLAY
 #if defined(_DEBUG) || defined(EDIT_DISPLAY)
 #define EDIT
 #endif
@@ -41,12 +41,15 @@
 #include <SimpleMath.h>	// DirectXTKの数学系
 #pragma comment(lib, "DirectXTK.lib")	// DirectXTKライブラリ
 #include <nlohmann/json.hpp>	// json書き出し
+#include <magic_enum.hpp>
 
 // ImGui
 #define IMGUI_DEFINE_MATH_OPERATORS
 #include <imgui.h>
 #include <imgui_impl_win32.h>
 #include <imgui_impl_dx11.h>
+// ImPlot
+#include <implot.h>
 
 // 自前クラス
 #include "IClassNameGetter.h"

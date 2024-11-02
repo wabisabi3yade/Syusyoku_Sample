@@ -1,22 +1,27 @@
 #pragma once
 #include "CP_Character.h"
-
 #include "PlayerActionController.h"
-#include "PlayerAnimObserver.h"
+#include "AttackInformation.h"
 
 class CP_Animation;
-class AnimationController;
+class CP_Weapon;
 
 class CP_Player : public HashiTaku::CP_Character
 {
-	/// @brief アニメーションコントローラー
-	CP_Animation* pAnimation;
-
 	/// @brief アクションコントローラー
 	std::unique_ptr<PlayerActionController> pActionController;
 
-	/// @brief アニメーションオブザーバー
-	std::unique_ptr<PlayerAnimObserver> pAnimObserver;
+	/// @brief アニメーション
+	CP_Animation* pAnimation;
+
+	/// @brief 武器判定
+	CP_Weapon* pWeapon;
+
+	/// @brief ヒットストップする前の再生速度
+	float hitStopBeforeAnimSpeed;
+
+	/// @brief 攻撃フラグ
+	const bool* pAttackCollisionFlag;
 public:
 	CP_Player();
 	CP_Player(const CP_Player& _other);
@@ -24,25 +29,46 @@ public:
 
 	CP_Player& operator=(const CP_Player& _other);
 
+	/// @brief 武器コンポーネントをセット
+	/// @param _setWeapon 武器コンポーネント
+	void SetWeapon(CP_Weapon& _setWeapon);
+
+	/// @brief 攻撃情報をセットする
+	/// @param _setAttackInfo 攻撃情報
+	void SetAttackInfo(const HashiTaku::AttackInformation& _setAttackInfo);
+
+	// コンポーネント共通
 	void Init() override;
 
-	void Awake() override;
+	/// @brief ヒットストップ開始した時の処理
+	void OnHitStopBegin() override;
 
-	void Start() override;
-
-	void Update() override;
-
-	void ImGuiSetting() override;
+	/// @brief ヒットストップ終了した時の処理
+	void OnHitStopEnd() override;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
 
 private:
+	/// @brief 武器の攻撃フラグをセット
+	void SetWeaponAttackFlag();
+
+	/// @brief 更新できるか取得する
+	/// @return 更新できるか？
+	bool GetCanUpdate() const;
+
 	/// @brief プレイヤーのダメージ処理
 	void OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo) override;
 	void OnDeathBehavior() override;
 
 	void Copy(const CP_Player& _other);
+
+	void Awake() override;
+	void Start() override;
+	void Update() override;
+
+	void ImGuiSetting() override;
+	void ImGuiSetWeapon();
 };
 
 

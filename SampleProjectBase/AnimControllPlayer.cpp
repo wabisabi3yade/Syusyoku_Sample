@@ -29,6 +29,11 @@ void AnimControllPlayer::RemoveChangeAnimObserver(HashiTaku::ChangeAnimObserver&
 	pChangeAnimSubject->RemoveObserver(_observer);
 }
 
+void AnimControllPlayer::SetCurrentPlaySpeed(float _speed)
+{
+	playSpeed = _speed;
+}
+
 AnimationParameters& AnimControllPlayer::GetCopyAnimParameters()
 {
 	return *pCopyAnimParameters;
@@ -42,6 +47,11 @@ AnimNodePlayer_Base& AnimControllPlayer::GetCurNodePlayer() const
 void AnimControllPlayer::GetCurrentRootPos(DirectX::SimpleMath::Vector3& _outPos) const
 {
 	_outPos = rootMotionPos;
+}
+
+float AnimControllPlayer::GetCurrentPlaySpeed() const
+{
+	return playSpeed;
 }
 
 void AnimControllPlayer::PlayInit()
@@ -123,6 +133,10 @@ void AnimControllPlayer::NodePlayUpdate()
 	std::vector<BoneTransform> animationTransforms;
 	pCurNodePlayer->UpdateCall(animationTransforms, playSpeed);
 
+	// 再生終了していて、ボーンを取得できなかったら
+	if(static_cast<u_int>(animationTransforms.size() != pBoneList->GetBoneCnt()))
+		return;
+
 	// ボーンに適用する
 	for (u_int b_i = 0; b_i < pBoneList->GetBoneCnt(); b_i++)
 	{
@@ -190,17 +204,8 @@ void AnimControllPlayer::TransitionCheck()
 
 void AnimControllPlayer::OnChangeAnimation(const AnimTransitionArrow& _changeArrow)
 {
-	// ノード再生クラスを変更
+	// 次のアニメーションノード取得
 	const AnimationNode_Base& nextAnimation = _changeArrow.GetToNode();
-	ChangeNodePlayer(nextAnimation);
-
-	// 通知イベントをコピーする
-	const AnimNotifyList& originNotifys = pAnimController->GetNodeInfo(nextAnimation)->notifyList;
-	pCurNodePlayer->CopyNotifys(originNotifys, *pCopyAnimParameters);
-
-	// サブジェクト更新
-	ChangeAnimSubjectUpdate();
-
 	HashiTaku::AnimInterpolateKind interpolate = _changeArrow.GetInterpolateKind();
 
 	// 新しく遷移チェッカーを作成する
@@ -210,6 +215,19 @@ void AnimControllPlayer::OnChangeAnimation(const AnimTransitionArrow& _changeArr
 
 	// 遷移ステートに変更
 	updateState = UpdateState::Transition;
+
+	// 変更前に終了処理を行う
+	pCurNodePlayer->OnTerminal();
+
+	// ノード再生クラスを変更
+	ChangeNodePlayer(nextAnimation);
+
+	// 通知イベントをコピーする
+	const AnimNotifyList& originNotifys = pAnimController->GetNodeInfo(nextAnimation)->notifyList;
+	pCurNodePlayer->CopyNotifys(originNotifys, *pCopyAnimParameters);
+
+	// サブジェクト更新
+	ChangeAnimSubjectUpdate();
 
 	switch (interpolate)
 	{
@@ -223,6 +241,8 @@ void AnimControllPlayer::OnChangeAnimation(const AnimTransitionArrow& _changeArr
 	default:
 		break;
 	}
+
+	
 }
 
 void AnimControllPlayer::OnCrossFadeBegin(const AnimTransitionArrow& _changeArrow)

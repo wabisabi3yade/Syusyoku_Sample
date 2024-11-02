@@ -15,11 +15,17 @@ class AnimNodePlayer_Base : public HashiTaku::IImGuiUser
 	/// @brief 1フレーム前の再生割合
 	float lastPlayRatio;
 
+	/// @brief アニメーション割合(アニメーションカーブを反映させる)
+	float animationRatio;
+
 	/// @brief ノードの再生速度
 	float playerSpeedTimes;
 
 	/// @brief 計算した全てを考慮した再生速度
 	float allPlaySpeed;
+
+	/// @brief 再生フラグ
+	bool isPlay;
 
 	/// @brief ループしたタイミングか？
 	bool isJustLoop;
@@ -52,9 +58,9 @@ public:
 	AnimNodePlayer_Base(const AnimationNode_Base& _playNode, BoneList& _boneList, Transform& _transform);
 	virtual ~AnimNodePlayer_Base(){}
 
-	/// @brief 通知イベントをコピーする
+	/// @brief アニメーションコントローラーから通知イベントをコピーする
 	/// @param _notifyList コピー元の通知イベントリスト
-	/// @param _animationParameters アニメーションコントローラ
+	/// @param _animationParameters アニメーションパラメータ
 	void CopyNotifys(const std::list<std::unique_ptr<AnimationNotify_Base>>& _notifyList, AnimationParameters& _animationParameters);
 
 	/// @brief 更新処理呼び出し
@@ -84,6 +90,10 @@ public:
 	/// @return 1フレーム前の再生割合
 	float GetLastPlayRatio() const;
 
+	/// @brief アニメーション割合を取得
+	/// @return アニメーション割合
+	float GetAnimationRatio() const;
+
 	/// @brief ノード再生速度を取得
 	/// @return ノード再生速度
 	float GetNodePlaySpeed() const;
@@ -106,7 +116,7 @@ public:
 private:
 	/// @brief ループ再生できるか確認
 	/// @return ループできるか？
-	bool IsCanLoop() const;
+	bool IsCanLoop();
 
 	/// @brief 再生がループした時の処理
 	void OnPlayLoop();

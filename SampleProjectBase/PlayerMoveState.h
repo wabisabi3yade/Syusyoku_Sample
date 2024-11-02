@@ -1,5 +1,6 @@
 #pragma once
 #include "PlayerActState_Base.h"
+#include "AnimationCurve.h"
 
 class CP_Camera;
 
@@ -8,6 +9,8 @@ class PlayerMoveState : public PlayerActState_Base
 {
 	/// @brief 移動方向
 	DirectX::SimpleMath::Vector3 moveVector;
+
+	AnimationCurve curve;
 
 	/// @brief 現在の速度
 	float currentSpeed;
@@ -35,14 +38,13 @@ public:
 	/// @param _data ロードするデータ 
 	void Load(const nlohmann::json& _data) override;
 private:
-	void OnStart() override;
-	void Update() override;
-	void OnEnd() override;
+	void OnStartBehavior() override;
+	void UpdateBehavior() override;
+	void OnEndBehavior() override;
+	void TransitionCheckUpdate() override;
 
 	/// @brief 移動
 	void Move();
-
-	DirectX::SimpleMath::Vector3 MoveVector();
 
 	/// @brief 回転させる
 	void Rotation();

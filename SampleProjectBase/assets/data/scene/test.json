@@ -4,24 +4,53 @@
             "active": true,
             "components": [
                 {
+                    "distance": 1000.0,
                     "enable": true,
-                    "name": "SpriteRenderer",
-                    "sprite": {
-                        "texName": "ground.png",
-                        "uvDivNum": [
-                            0.0,
-                            0.0
-                        ],
-                        "uvEnd": [
-                            1.0,
-                            1.0
-                        ],
-                        "uvStart": [
-                            0.0,
-                            0.0
-                        ]
-                    }
+                    "fov": 45.0,
+                    "isOrth": false,
+                    "name": "Camera",
+                    "viewSlot": 0
                 },
+                {
+                    "dis_Hori": 9.0,
+                    "dis_Ver": 3.0,
+                    "enable": true,
+                    "name": "CameraMove",
+                    "offsetTarget": [
+                        0.0,
+                        2.0,
+                        0.0
+                    ],
+                    "rotSpeed": 120.0,
+                    "target": "Player"
+                }
+            ],
+            "layer": 1,
+            "name": "Camera",
+            "tag": 1,
+            "transform": {
+                "child": null,
+                "pos": [
+                    6.400000095367432,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    -0.0,
+                    1.0
+                ],
+                "scale": [
+                    4.199999809265137,
+                    0.9999997019767761,
+                    0.9999997019767761
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
                 {
                     "AABB": false,
                     "angles": [
@@ -53,6 +82,25 @@
                     "isTrigger": false,
                     "mass": 0.0,
                     "name": "RigidBody"
+                },
+                {
+                    "enable": true,
+                    "name": "SpriteRenderer",
+                    "sprite": {
+                        "texName": "ground.png",
+                        "uvDivNum": [
+                            0.0,
+                            0.0
+                        ],
+                        "uvEnd": [
+                            1.0,
+                            1.0
+                        ],
+                        "uvStart": [
+                            0.0,
+                            0.0
+                        ]
+                    }
                 }
             ],
             "layer": 0,
@@ -62,13 +110,13 @@
                 "child": null,
                 "pos": [
                     0.0,
-                    1.0,
+                    -2.4000000953674316,
                     0.0
                 ],
                 "rotation": [
+                    -0.0,
                     0.0,
-                    0.0,
-                    0.0,
+                    -0.0,
                     1.0
                 ],
                 "scale": [
@@ -82,95 +130,9 @@
             "active": true,
             "components": [
                 {
-                    "distance": 1000.0,
-                    "enable": true,
-                    "fov": 45.0,
-                    "isOrth": false,
-                    "name": "Camera",
-                    "viewSlot": 0
-                },
-                {
-                    "dis_Hori": 9.0,
-                    "dis_Ver": 3.0,
-                    "enable": true,
-                    "name": "CameraMove",
-                    "offsetTarget": [
-                        0.0,
-                        2.0,
-                        0.0
-                    ],
-                    "rotSpeed": 120.0,
-                    "target": "Player"
-                }
-            ],
-            "layer": 1,
-            "name": "Camera",
-            "tag": 1,
-            "transform": {
-                "child": null,
-                "pos": [
-                    6.400000095367432,
-                    4.599999904632568,
-                    0.0
-                ],
-                "rotation": [
-                    0.1592845767736435,
-                    -0.6094026565551758,
-                    0.12216977775096893,
-                    0.7670276165008545
-                ],
-                "scale": [
-                    0.9999998211860657,
-                    0.9999997019767761,
-                    0.9999997019767761
-                ]
-            }
-        },
-        {
-            "active": false,
-            "components": [
-                {
-                    "enable": true,
-                    "name": "NotifyTest",
-                    "notifys": null,
-                    "speed": 1.0
-                }
-            ],
-            "layer": 0,
-            "name": "NotifyTest",
-            "tag": 0,
-            "transform": {
-                "child": null,
-                "pos": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "rotation": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
                     "enable": true,
                     "meshName": "Knight.fbx",
                     "name": "MeshRenderer"
-                },
-                {
-                    "animConName": "ANC_Player",
-                    "enable": true,
-                    "name": "Animation"
                 },
                 {
                     "AABB": false,
@@ -209,7 +171,7 @@
                         "actData": [
                             {
                                 "data": null,
-                                "type": 0
+                                "typeString": "Idle"
                             },
                             {
                                 "data": {
@@ -218,11 +180,7 @@
                                     "maxSpeed": 10.0,
                                     "rotateSpeed": 7.0
                                 },
-                                "type": 11
-                            },
-                            {
-                                "data": null,
-                                "type": 20
+                                "typeString": "Move"
                             },
                             {
                                 "data": {
@@ -230,13 +188,49 @@
                                     "decade": 0.9800000190734863,
                                     "maxSpeed": 10.0
                                 },
-                                "type": 12
+                                "typeString": "TargetMove"
+                            },
+                            {
+                                "data": {
+                                    "nextCombAttack": 21
+                                },
+                                "typeString": "Attack11"
+                            },
+                            {
+                                "data": {
+                                    "nextCombAttack": 22
+                                },
+                                "typeString": "Attack12"
+                            },
+                            {
+                                "data": {
+                                    "nextCombAttack": 99
+                                },
+                                "typeString": "SpecialAtkHi"
+                            },
+                            {
+                                "data": {
+                                    "nextCombAttack": 99
+                                },
+                                "typeString": "Attack13"
+                            },
+                            {
+                                "data": {
+                                    "nextCombAttack": 20
+                                },
+                                "typeString": "Attack14"
                             }
                         ]
                     },
                     "enable": true,
                     "maxHp": 1.0,
-                    "name": "Player"
+                    "name": "Player",
+                    "weaponObjName": "Weapon_Model"
+                },
+                {
+                    "animConName": "ANC_Player",
+                    "enable": true,
+                    "name": "Animation"
                 }
             ],
             "layer": 1,
@@ -267,19 +261,13 @@
         },
         {
             "active": true,
-            "components": [
-                {
-                    "enable": true,
-                    "grabName": "mixamorig:RightHand",
-                    "name": "Rig"
-                }
-            ],
+            "components": null,
             "layer": 0,
-            "name": "Weapon",
+            "name": "Shield",
             "tag": 0,
             "transform": {
                 "child": [
-                    "Weapon_Model"
+                    "Shield_Mesh"
                 ],
                 "pos": [
                     2.299999952316284,
@@ -288,9 +276,9 @@
                 ],
                 "rotation": [
                     -0.0,
-                    0.04361940547823906,
+                    0.0,
                     -0.0,
-                    0.9990482330322266
+                    1.0
                 ],
                 "scale": [
                     1.0,
@@ -338,6 +326,40 @@
             "components": [
                 {
                     "enable": true,
+                    "grabName": "mixamorig:RightHand",
+                    "name": "Rig"
+                }
+            ],
+            "layer": 0,
+            "name": "Weapon",
+            "tag": 0,
+            "transform": {
+                "child": [
+                    "Weapon_Model"
+                ],
+                "pos": [
+                    2.299999952316284,
+                    1.0599992275238037,
+                    -2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.04361940547823906,
+                    -0.0,
+                    0.9990482330322266
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
                     "meshName": "Knight_Sword.fbx",
                     "name": "MeshRenderer"
                 },
@@ -370,6 +392,9 @@
                     "radius": 0.28999999165534973
                 },
                 {
+                    "attackableTags": [
+                        3
+                    ],
                     "enable": true,
                     "name": "Weapon"
                 }
@@ -425,34 +450,6 @@
                     0.0,
                     0.0,
                     0.0,
-                    1.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": null,
-            "layer": 0,
-            "name": "Shield",
-            "tag": 0,
-            "transform": {
-                "child": [
-                    "Shield_Mesh"
-                ],
-                "pos": [
-                    2.299999952316284,
-                    1.0599992275238037,
-                    -2.0
-                ],
-                "rotation": [
-                    -0.0,
-                    0.0,
-                    -0.0,
                     1.0
                 ],
                 "scale": [
@@ -538,7 +535,7 @@
             ],
             "layer": 0,
             "name": "Enemy",
-            "tag": 0,
+            "tag": 3,
             "transform": {
                 "child": null,
                 "pos": [
@@ -556,6 +553,37 @@
                     1.0000001192092896,
                     1.0,
                     1.0000001192092896
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "name": "HitStopManager"
+                }
+            ],
+            "layer": 0,
+            "name": "HitStopManager",
+            "tag": 0,
+            "transform": {
+                "child": null,
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
                 ]
             }
         },

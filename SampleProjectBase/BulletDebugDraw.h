@@ -1,17 +1,10 @@
 #pragma once
 #include "DXToBullet.h"
 
-#include "VertexShader.h"
-#include "PixelShader.h"
-
 /// @brief DirectX上でBulletPhiscs当たり判定描画を行うクラス
 class BulletDebugDraw : public btIDebugDraw
 {
 private:
-    // 描画するシェーダー
-    VertexShader* pVxShader;
-    PixelShader* pPxShader;
-
     /// @brief 描画設定
     int debugMode;
 

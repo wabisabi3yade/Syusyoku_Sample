@@ -3,12 +3,11 @@
 #include "SkeletalMesh.h"
 #include "AnimationNode_Base.h"
 #include "IAnimParametersSetter.h"
-
 #include "AnimationNotifyFactory.h"
 
 AnimNodePlayer_Base::AnimNodePlayer_Base(const AnimationNode_Base& _playNode, BoneList& _boneList, Transform& _transform)
 	: pPlayAnimNode(&_playNode), pBoneList(&_boneList), pObjectTransform(&_transform),
-	curPlayRatio(0.0f), lastPlayRatio(-Mathf::smallValue), playerSpeedTimes(1.0f), allPlaySpeed(0.0f), isJustLoop(false)
+	curPlayRatio(0.0f), lastPlayRatio(-Mathf::smallValue), animationRatio(0.0f), playerSpeedTimes(1.0f), allPlaySpeed(0.0f), isJustLoop(false), isPlay(true)
 {
 }
 
@@ -34,6 +33,12 @@ void AnimNodePlayer_Base::CopyNotifys(const std::list<std::unique_ptr<AnimationN
 
 void AnimNodePlayer_Base::UpdateCall(std::vector<BoneTransform>& _outTransforms, float _controllerPlaySpeed)
 {
+	if (!isPlay)
+	{
+		Update(_outTransforms);
+		return;
+	}
+
 	// 再生割合を進める
 	ProgressPlayRatio(_controllerPlaySpeed);
 
@@ -56,6 +61,8 @@ void AnimNodePlayer_Base::SetCurPlayRatio(float _playRatio)
 
 	// 1フレーム前の再生割合を現在の割合より前に置く
 	lastPlayRatio = curPlayRatio - Mathf::smallValue;
+
+	animationRatio = pPlayAnimNode->GetCurveValue(curPlayRatio);
 }
 
 void AnimNodePlayer_Base::SetPlaySpeedTimes(float _playSpeed)
@@ -73,6 +80,11 @@ float AnimNodePlayer_Base::GetLastPlayRatio() const
 	return lastPlayRatio;
 }
 
+float AnimNodePlayer_Base::GetAnimationRatio() const
+{
+	return animationRatio;
+}
+
 float AnimNodePlayer_Base::GetNodePlaySpeed() const
 {
 	return playerSpeedTimes;
@@ -80,12 +92,12 @@ float AnimNodePlayer_Base::GetNodePlaySpeed() const
 
 void AnimNodePlayer_Base::GetDeltaRootPos(DirectX::SimpleMath::Vector3& _outPos) const
 {
-	_outPos = GetRootMotionPos(curPlayRatio) - p_RootMotionPos;
+	_outPos = GetRootMotionPos(animationRatio) - p_RootMotionPos;
 }
 
 void AnimNodePlayer_Base::GetCurrentRootPos(DirectX::SimpleMath::Vector3& _outPos, bool _isLoadScaling) const
 {
-	_outPos = GetRootMotionPos(GetCurPlayRatio(), _isLoadScaling);
+	_outPos = GetRootMotionPos(GetAnimationRatio(), _isLoadScaling);
 }
 
 const std::string& AnimNodePlayer_Base::GetNodeName() const
@@ -118,6 +130,8 @@ void AnimNodePlayer_Base::ProgressPlayRatio(float _controllerPlaySpeed)
 
 
 	curPlayRatio += allPlaySpeed * MainApplication::DeltaTime();
+	// アニメーション割合を計算
+	animationRatio = pPlayAnimNode->GetCurveValue(curPlayRatio);
 
 	if (IsCanLoop())
 		OnPlayLoop();
@@ -127,17 +141,21 @@ void AnimNodePlayer_Base::OnTerminal()
 {
 	for (auto& pNotify : copyNotifys)
 	{
-		pNotify->OnTerminal();
+		pNotify->OnTerminalCall();
 	}
 
 	copyNotifys.clear();
 }
 
-bool AnimNodePlayer_Base::IsCanLoop() const
+bool AnimNodePlayer_Base::IsCanLoop()
 {
 	// アニメーションの全体時間を超えていないなら
 	if (curPlayRatio < 1.0f) return false;
-	if (!pPlayAnimNode->GetIsLoop()) return false;
+	if (!pPlayAnimNode->GetIsLoop())
+	{
+		isPlay = false;
+		return false;
+	}
 
 	return true;
 }
@@ -158,10 +176,10 @@ void AnimNodePlayer_Base::ApplyRootMotionToTransform()
 	{
 		// 前回のルートモーションを初期化する
 		p_RootMotionPos = GetRootMotionPos(0.0f);
-		p_RootMotionRot = GetRootMotionRot(0.0f);
+		//p_RootMotionRot = GetRootMotionRot(0.0f);
 	}
 
-	float curPlayRatio = GetCurPlayRatio();
+	float curPlayRatio = GetAnimationRatio();
 
 	// 移動座標
 	Vector3 curPos = GetRootMotionPos(curPlayRatio);
@@ -169,7 +187,7 @@ void AnimNodePlayer_Base::ApplyRootMotionToTransform()
 
 	// ループ時に前回の再生割合からアニメーション最後までのルートモーションの座標移動
 	Vector3 loopDeadRMDistabce;
-	if (curPlayRatio < lastPlayRatio)
+	if (isJustLoop)
 	{
 		Vector3 endRootMotionPos = GetRootMotionPos(1.0f);
 		loopDeadRMDistabce = endRootMotionPos - GetRootMotionPos(lastPlayRatio);
@@ -209,6 +227,7 @@ void AnimNodePlayer_Base::ApplyLoadTransform(DirectX::SimpleMath::Vector3& _root
 
 void AnimNodePlayer_Base::ImGuiSetting()
 {
-	ImGui::SliderFloat("play", &curPlayRatio, 0.0f, 1.0f);
-	ImGui::DragFloat("speed", &playerSpeedTimes, 0.01f, 0.0f, 50.0f);
+	ImGui::SliderFloat("Play", &curPlayRatio, 0.0f, 1.0f);
+	ImGui::Text("AnimRatio:%lf", animationRatio);
+	ImGui::DragFloat("Speed", &playerSpeedTimes, 0.01f, 0.0f, 50.0f);
 }

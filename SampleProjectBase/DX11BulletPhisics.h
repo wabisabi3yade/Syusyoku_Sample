@@ -35,9 +35,6 @@ class DX11BulletPhisics : public Singleton_Base<DX11BulletPhisics>
 	/// @brief GhostObjectのラップ検知を効率化するクラス
 	std::unique_ptr<btGhostPairCallback> pGhostPairCallback;
 
-	/// @brief デバッグ描画
-	std::unique_ptr<BulletDebugDraw> pDebugDraw;
-
 	/// @brief コールバックを呼び出すクラス
 	std::unique_ptr<BulletContactCallBack> pContactCallBack;
 
@@ -46,6 +43,11 @@ class DX11BulletPhisics : public Singleton_Base<DX11BulletPhisics>
 
 	/// @brief 重力値
 	DirectX::SimpleMath::Vector3 gravityValue;
+
+#ifdef EDIT
+	/// @brief デバッグ描画
+	std::unique_ptr<BulletDebugDraw> pDebugDraw;
+#endif // EDIT
 public:
 	/// @brief Bullet初期化
 	void Init();

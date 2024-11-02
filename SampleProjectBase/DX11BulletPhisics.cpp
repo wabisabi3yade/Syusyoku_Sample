@@ -10,7 +10,11 @@ constexpr int  DEFAULT_MAX_SUBSTEPS(10);	// デフォルト最大サブステップ数
 
 bool DX11BulletPhisics::GetDisplay() const
 {
+#ifdef EDIT
 	return pDebugDraw->GetIsDisplay();
+#endif // EDIT
+
+	return false;
 }
 
 DirectX::SimpleMath::Vector3 DX11BulletPhisics::GetGravityValue() const
@@ -98,17 +102,23 @@ void DX11BulletPhisics::Init()
 		pCollisionConfiguration.get()
 	);
 	pGhostPairCallback = std::make_unique<btGhostPairCallback>();
-	pDebugDraw = std::make_unique<BulletDebugDraw>();
+	
 	pContactCallBack = std::make_unique<BulletContactCallBack>();
 
 	// 重力設定
 	pDynamicsWorld->setGravity(Bullet::ToBtVector3(gravityValue));
 
-	// デバッグ描画クラスセット
-	pDynamicsWorld->setDebugDrawer(pDebugDraw.get());
 
 	// Ghostラップ検知をセット
 	pDynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(pGhostPairCallback.get());
+
+
+#ifdef EDIT
+	// デバッグ描画クラスセット
+	pDebugDraw = std::make_unique<BulletDebugDraw>();
+	pDynamicsWorld->setDebugDrawer(pDebugDraw.get());
+#endif // EDIT
+
 }
 
 void DX11BulletPhisics::Update()
@@ -143,10 +153,12 @@ void DX11BulletPhisics::CollisionCallBack()
 
 void DX11BulletPhisics::Draw()
 {
+#ifdef EDIT
 	if (!pDebugDraw->GetIsDisplay()) return;
 
 	// デバッグ描画を呼び出す
 	pDynamicsWorld->debugDrawWorld();
+#endif
 }
 
 void DX11BulletPhisics::AddCollObj(CP_RigidBody& _rigidBodyCp, int _groupId)
@@ -225,7 +237,9 @@ void DX11BulletPhisics::UpdateTransformDxToBt()
 
 void DX11BulletPhisics::SetDisplay(bool _setBool)
 {
+#ifdef EDIT
 	pDebugDraw->SetIsDisplay(_setBool);
+#endif // EDIT
 }
 
 u_int DX11BulletPhisics::GetCollObjCnt() const

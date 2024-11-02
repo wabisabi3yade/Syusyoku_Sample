@@ -35,9 +35,6 @@ public:
 	ANS_ChangeParameter();
 	~ANS_ChangeParameter() {};
 
-	/// @brief 切り替え前終了処理
-	void OnTerminal() override;
-
 	/// @brief アニメーションパラメータリストセット
 	/// @param _animatiionParameters アニメーションリストパラメータ
 	void SetAnimationParameters(AnimationParameters& _animatiionParameters) override;
@@ -61,6 +58,9 @@ private:
 
 	/// @brief イベント終了処理
 	void End() override;
+
+	/// @brief 切り替え前終了処理
+	void OnTerminal() override;
 
 	/// @brief パラメータセットできるか
 	/// @param _type セクション

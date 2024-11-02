@@ -35,7 +35,7 @@ public:
 
 	/// @brief 行動状態を切り替える
 	/// @param _nextActionName 次の状態の名前
-	void ChangeNode(const PlayerActState_Base::StateType& _nextActionState) override;
+	bool ChangeNode(const PlayerActState_Base::StateType& _nextActionState) override;
 
 	/// @brief 現在のアクションを取得
 	/// @return アクションステート

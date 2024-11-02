@@ -6,12 +6,12 @@ PlayerIdleState::PlayerIdleState()
 {
 }
 
-void PlayerIdleState::OnStart()
+void PlayerIdleState::OnStartBehavior()
 {
 	leaveElapsedTime = 0.0f;
 }
 
-void PlayerIdleState::Update()
+void PlayerIdleState::UpdateBehavior()
 {
 	// 移動ステートに遷移できるなら
 	if (IsCanMoveTransition())
@@ -22,7 +22,7 @@ void PlayerIdleState::Update()
 	ProgressLeaveElapse();
 }
 
-void PlayerIdleState::OnEnd()
+void PlayerIdleState::OnEndBehavior()
 {
 }
 

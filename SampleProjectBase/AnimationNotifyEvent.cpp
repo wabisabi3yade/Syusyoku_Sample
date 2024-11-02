@@ -29,8 +29,10 @@ AnimationNotifyEvent::AnimationNotifyEvent(NotifyType _notifyType) : AnimationNo
 {
 }
 
-void AnimationNotifyEvent::Update(const float _lastPlayingRatio, const float _curPlayingRatio, bool _isLoop)
+void AnimationNotifyEvent::Update(const float _lastPlayingRatio, const float _curPlayingRatio, const bool _isLoop)
 {
+	if (!GetIsActive()) return;
+
 	if (_isLoop)
 	{
 		if (eventRatio > _lastPlayingRatio || eventRatio < _curPlayingRatio)

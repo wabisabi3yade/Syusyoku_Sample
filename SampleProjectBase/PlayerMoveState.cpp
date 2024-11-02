@@ -34,35 +34,38 @@ void PlayerMoveState::Load(const nlohmann::json& _data)
 	LoadJsonFloat("rotateSpeed", rotateSpeed, _data);
 }
 
-void PlayerMoveState::OnStart()
+void PlayerMoveState::OnStartBehavior()
 {
 
 }
 
-void PlayerMoveState::Update()
+void PlayerMoveState::UpdateBehavior()
 {
 	Move();
 
 	Rotation();
 
+}
+
+void PlayerMoveState::OnEndBehavior()
+{
+}
+
+void PlayerMoveState::TransitionCheckUpdate()
+{
 	// アタックStateに遷移
 	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
 	{
-		ChangeState(StateType::GroundAttack1);
+		ChangeState(StateType::Attack11);
 	}
 	else if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_RockOn))
 	{
 		ChangeState(StateType::TargetMove);
 	}
-	else if (currentSpeed <= Mathf::epsilon)
+	else if (currentSpeed <= Mathf::epsilon)	// 移動速度が0以下になると
 	{
 		ChangeState(StateType::Idle);
 	}
-
-}
-
-void PlayerMoveState::OnEnd()
-{
 }
 
 bool PlayerMoveState::IsRunning()
@@ -74,7 +77,7 @@ bool PlayerMoveState::IsRunning()
 
 void PlayerMoveState::ImGuiSetting()
 {
-	if (!ImGuiMethod::TreeNode("Move")) return;
+	curve.ImGuiCall();
 
 	std::string text = TO_UTF8("speed") + std::to_string(currentSpeed);
 	ImGui::Text(text.c_str());
@@ -82,27 +85,21 @@ void PlayerMoveState::ImGuiSetting()
 	ImGui::DragFloat("acceleration", &acceleration, 0.1f);
 	ImGui::DragFloat("decadeTimes", &decadeSpeedTimes, 0.01f, 0.0f, 1.0f);
 	ImGui::DragFloat("rotateSpeed", &rotateSpeed, 0.1f);
-
-	ImGui::TreePop();
 }
 
 void PlayerMoveState::Move()
 {
 	float deltaTime = MainApplication::DeltaTime();
 
+	// 移動方向・移動量決定
 	Vector3 camForwardVec = pCamera->GetTransform().Forward();
 	Vector3 camRightVec = pCamera->GetTransform().Right();
-	Vector2 input = InputValue();
-
-	float mag = input.Length();
-
-	// 移動方向・移動量決定
+	Vector2 input = GetInputLeftStick();
 	moveVector = camRightVec * input.x;
 	moveVector += camForwardVec * input.y;
 	moveVector.y = 0.0f;
-	moveVector.Normalize();
 
-	Vector3 moveSpeed = moveVector * mag * maxSpeed;
+	Vector3 moveSpeed = moveVector *  maxSpeed;
 	currentSpeed = moveSpeed.Length();
 
 	// 移動
@@ -120,23 +117,18 @@ void PlayerMoveState::Move()
 
 		if (rootMotion > Mathf::epsilon)
 		{
-
 			float animPlaySpeed = currentSpeed / rootMotion;
 
-			pAnimation->SetCurPlayerSpeed(animPlaySpeed);
+			pAnimation->SetCurNodePlayerSpeed(animPlaySpeed);
 		}
 	}
 	else
 	{
-		pAnimation->SetCurPlayerSpeed(IDLE_ANIM_PLAYSPEED);
+		pAnimation->SetCurNodePlayerSpeed(IDLE_ANIM_PLAYSPEED);
 	}
 
 }
 
-DirectX::SimpleMath::Vector3 PlayerMoveState::MoveVector()
-{
-	return moveVector;
-}
 
 void PlayerMoveState::Rotation()
 {
@@ -153,7 +145,7 @@ void PlayerMoveState::Rotation()
 
 bool PlayerMoveState::IsMoveInput()
 {
-	Vector2 absInput = Vec2::Abs(InputValue());
+	Vector2 absInput = Vec2::Abs(GetInputLeftStick());
 	if (absInput.x < Mathf::smallValue && absInput.y < Mathf::smallValue)
 		return false;
 

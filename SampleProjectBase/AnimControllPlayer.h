@@ -70,6 +70,10 @@ public:
 	/// @param _observer オブザーバー
 	void RemoveChangeAnimObserver(HashiTaku::ChangeAnimObserver& _observer);
 
+	/// @brief 現在の再生速度をセットする
+	/// @param _observer 再生速度
+	void SetCurrentPlaySpeed(float _speed);
+
 	/// @brief コピーされた側のアニメーションパラメータ
 	/// @return アニメーションパラメータの参照
 	AnimationParameters& GetCopyAnimParameters();
@@ -81,6 +85,10 @@ public:
 	/// @brief ルートボーンのローカル座標を取得
 	/// @param _outPos 結果
 	void GetCurrentRootPos(DirectX::SimpleMath::Vector3& _outPos) const;
+
+	/// @brief 現在の再生速度を取得
+	/// @return 再生速度
+	float GetCurrentPlaySpeed() const;
 
 private:
 	/// @brief 再生前初期化

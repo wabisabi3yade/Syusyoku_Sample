@@ -18,6 +18,8 @@ void ImGuiMethod::Initialize(HWND _hwnd, ID3D11Device* _pDevice, ID3D11DeviceCon
 #ifdef EDIT
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
+	ImPlot::CreateContext();	// ImPlot‚à
+
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	ImWchar const ranges[] = { 0x0020, 0xfffd, 0, };
 
@@ -70,6 +72,8 @@ void ImGuiMethod::Terminal()
 
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
+
+	ImPlot::DestroyContext();	// ImPlot‚à
 	ImGui::DestroyContext();
 #endif // EDIT
 }

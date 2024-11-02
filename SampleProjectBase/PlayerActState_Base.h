@@ -19,19 +19,53 @@ public:
 	enum class StateType
 	{
 		// 待機
-		Idle,	// 0
+		Idle,
 		
 		// 移動
-		Move = 11,	// 11
-		TargetMove,	// 12
-		Jump,	// 13
+		Move = 10,
+		TargetMove,
+		Jump,
 
-		// 攻撃
-		GroundAttack1 = 20,	// 20
+		// 地上コンビネーション攻撃
+		Attack11 = 20,
+		Attack12,
+		Attack13,
+		Attack14,
+
+		// 地上必殺攻撃
+		SpecialAtkHi = 30,
+		SpecialAtkLow,
 
 		// 最後
-		None
+		None = 99
 	};
+
+#ifdef EDIT
+	// ステート一覧の文字列
+	inline static const std::vector<std::string> playerStateNameList =
+	{
+		// 待機
+		"Idle",
+
+		// 移動
+		"Move",
+		"TargetMove",
+		"Jump",
+
+		// 地上コンビネーション攻撃
+		"Attack11",
+		"Attack12",
+		"Attack13",
+		"Attack14",
+
+		// 地上必殺攻撃
+		"SpecialAtkHi",
+		"SpecialAtkLow",
+
+		// 最後
+		"None"
+	};
+#endif // EDIT
 
 private:
 	using StateChangeObserver = HashiTaku::IObserver<int>;
@@ -65,21 +99,16 @@ public:
 	void Init(StateType _stateType, GameObject& _gameObject, StateChangeObserver& _changeObserver);
 
 	/// @brief 開始処理呼び出し
-	void OnStartCall();
+	void OnStart() override;
 
 	/// @brief 更新処理呼び出し
-	void UpdateCall();
+	void Update() override;
 
 	/// @brief  終了処理呼び出し
-	void OnEndCall();
+	void OnEnd() override;
 
 	// アニメーションをセットする
 	void SetAnimation(CP_Animation& _pAnimation);
-
-	/// @brief アクション状態列挙型を文字列に変換
-	/// @param _stateType 文字列に変換したいアクション状態
-	/// @return 文字列
-	static std::string StateTypeToStr(StateType _stateType);
 
 	// ステートタイプを取得
 	StateType GetActStateType() const;
@@ -93,23 +122,33 @@ public:
 	void Load(const nlohmann::json& _data) override;
 protected:
 	/// @brief 各状態の開始処理
-	void OnStart() override {};
+	virtual void OnStartBehavior() {};
 
 	/// @brief 更新処理
-	void Update() override {};
+	virtual void UpdateBehavior() {};
 
 	/// @brief 各状態の終了処理
-	void OnEnd() override {};
+	virtual void OnEndBehavior() {};
+
+	/// @brief ステート遷移条件のチェック処理
+	virtual void TransitionCheckUpdate() {}
 
 	/// @brief 状態を遷移する
 	/// @param _changeSate 遷移先の状態
 	void ChangeState(StateType _nextState);
 
-	/// @brief	入力値を返す
-	DirectX::SimpleMath::Vector2 InputValue();
+	/// @brief コントローラーの左スティックの入力を取得
+	/// @return 左スティックの入力
+	DirectX::SimpleMath::Vector2 GetInputLeftStick() const;
 
 	/// @brief ImGui処理
 	virtual void ImGuiSetting() {}
+
+	/// @brief ImGuiによるコンボボックス
+	/// @param _caption キャプション
+	/// @param _currentState 現在のステート
+	/// @return 変更したか？
+	static bool ImGuiComboPlayerState(const std::string& _caption, StateType& _currentState);
 
 protected:
 	// アニメーションコントローラ内のプレイヤー名

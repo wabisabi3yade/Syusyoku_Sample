@@ -77,15 +77,29 @@ public:
 	/// @param _floatVal 取得する値
 	float GetFloat(const std::string& _paramName);
 
+	/// @brief アニメーションパラメータのポインターを取得する
+	/// @return アニメーションパラメータのポインター
+	
+	/// @brief アニメーションパラメータのポインターを取得する
+	/// @tparam T パラメータのフラグ
+	/// @param _paramName パラメータ名
+	/// @return アニメーションパラメータのポインター
+	template<HashiTaku::AnimParam::AnimParamConcept T>
+	const T* GetParameterPointer(const std::string& _paramName) const;
+
 	/// @brief Rendererからスケルタルメッシュをセット 
 	void SetupSkeletalMesh();
 
 	// アニメーションコントローラーをセット
 	void SetAnimationController(AnimationController& _controller);
 
-	/// @brief プレイヤーの再生速度をセットする
+	/// @brief コントローラープレイヤーの再生速度をセットする
 	/// @param _setSpeed スピードをセット
-	void SetCurPlayerSpeed(float _setSpeed);
+	void SetControllerPlaySpeed(float _setSpeed);
+
+	/// @brief 現在のノード再生速度をセットする
+	/// @param _setSpeed スピードをセット
+	void SetCurNodePlayerSpeed(float _setSpeed);
 
 	/// @brief アニメーション変更オブザーバーを追加
 	/// @param _observer オブザーバー
@@ -98,11 +112,13 @@ public:
 	// スケルタルメッシュを取得
 	SkeletalMesh& GetSkeletalMesh();
 
-	AnimationController* GetAnimationController();
-
 	/// @brief 現在再生しているアニメーションのルートモーションの座標移動速度を渡す
 	/// @return 座標移動速度(s)
 	const DirectX::SimpleMath::Vector3& GetMotionPosSpeedPerSec() const;
+
+	/// @brief プレイヤー再生速度を取得する
+	/// @return 現在の再生速度
+	float GetControllerPlaySpeed() const;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
@@ -137,3 +153,12 @@ private:
 	void ImGuiSetting() override;
 };
 
+template<HashiTaku::AnimParam::AnimParamConcept T>
+inline const T* CP_Animation::GetParameterPointer(const std::string& _paramName) const
+{
+	if (!pAnimConPlayer) return nullptr;
+
+	// パラメータから取得する
+	auto pValue = pAnimConPlayer->GetCopyAnimParameters().GetValueAddress(_paramName);
+	return std::get_if<T>(pValue);
+}

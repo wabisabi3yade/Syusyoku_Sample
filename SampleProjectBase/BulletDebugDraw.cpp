@@ -13,14 +13,8 @@ using namespace HashiTaku;
 constexpr float CONTACT_DRAW_LENGTH(0.5f);	// 接触点を描画するときの線の長さ
 
 BulletDebugDraw::BulletDebugDraw()
-	: debugMode(DBG_DrawWireframe), pVxShader(nullptr), pPxShader(nullptr), isDisplay(false)
+	: debugMode(DBG_DrawWireframe), isDisplay(true)
 {
-	ShaderCollection* shCol = ShaderCollection::GetInstance();
-
-	pVxShader = shCol->GetVertexShader("VS_Line");
-	pPxShader = shCol->GetPixelShader("PS_Line");
-
-	assert(pVxShader && pPxShader && "シェーダーが正常に取得できません");
 }
 
 void BulletDebugDraw::drawLine(const btVector3& _from, const btVector3& _to, const btVector3& _color)

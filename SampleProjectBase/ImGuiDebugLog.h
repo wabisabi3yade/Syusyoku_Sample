@@ -4,7 +4,7 @@
 #ifdef EDIT
 #define HASHI_DEBUG_LOG(message) ImGuiDebugLog::Add(message, std::string(__FILE__) , __LINE__)
 #else
-#define HASHI_DEBUG_LOG(message) 
+#define HASHI_DEBUG_LOG(message)
 #endif
 
 

@@ -39,6 +39,7 @@ void MainApplication::Release()
 
 bool MainApplication::EscapeCheck()
 {
+#ifdef EDIT
 	// エスケープキー押されたら
 	if (!isEscapeDisplay && pInput->GetKeyboard().GetKeyDown(DIK_ESCAPE))
 		isEscapeDisplay = true;
@@ -80,6 +81,13 @@ bool MainApplication::EscapeCheck()
 	ImGui::End();
 
 	return isEscape;
+#else
+	// エスケープキー押されたら
+	if (pInput->GetKeyboard().GetKeyDown(DIK_ESCAPE))
+		return true;
+
+	return false;
+#endif
 }
 
 void MainApplication::SystemDraw()
@@ -104,6 +112,9 @@ void MainApplication::Init(HINSTANCE _hInst)
 	ShaderSetup();
 
 	HashiTaku::Random::Init();
+
+	// イージング初期化
+	HashiTaku::Easing::Init();
 
 	AssetSysytemSetup();
 

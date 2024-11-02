@@ -22,46 +22,29 @@ void PlayerActState_Base::Init(StateType _stateType, GameObject& _gameObject, St
 	changeStateSubject->AddObserver(_changeObserver);
 }
 
-void PlayerActState_Base::OnStartCall()
+void PlayerActState_Base::OnStart()
 {
-	OnStart();
+	OnStartBehavior();
 }
 
-void PlayerActState_Base::UpdateCall()
+void PlayerActState_Base::Update()
 {
 	// 各アクション更新
-	Update();
+	UpdateBehavior();
+
+	// ステート遷移をチェック
+	TransitionCheckUpdate();
 }
 
-void PlayerActState_Base::OnEndCall()
+void PlayerActState_Base::OnEnd()
 {
-	OnEnd();
+	OnEndBehavior();
 }
+
 
 void PlayerActState_Base::SetAnimation(CP_Animation& _pAnimation)
 {
 	pAnimation = &_pAnimation;
-}
-
-std::string PlayerActState_Base::StateTypeToStr(StateType _stateType)
-{
-	using enum StateType;
-	switch (_stateType)
-	{
-	case Idle: return "Idle";
-
-	case Move: return "Move";
-
-	case TargetMove: return "TragetMove";
-
-	case Jump: return "Jump";
-
-	case GroundAttack1: return "Attack";
-
-	default: break;
-	}
-
-	return std::string();
 }
 
 PlayerActState_Base::StateType PlayerActState_Base::GetActStateType() const
@@ -83,7 +66,32 @@ void PlayerActState_Base::ChangeState(StateType _nextState)
 	changeStateSubject->NotifyAll(static_cast<int>(_nextState));
 }
 
-DirectX::SimpleMath::Vector2 PlayerActState_Base::InputValue()
+DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStick() const
 {
 	return pPlayerInput->GetValue(GameInput::ValueType::Player_Move);
+}
+
+bool PlayerActState_Base::ImGuiComboPlayerState(const std::string& _caption, StateType& _currentState)
+{
+#ifdef EDIT
+
+	// コンポボックスで変更
+	std::string curStateStr = std::string(magic_enum::enum_name(_currentState));
+	bool isChange = ImGuiMethod::ComboBox(_caption, curStateStr, playerStateNameList);
+
+	if (isChange)
+	{
+		// 文字列から列挙型
+		auto changeState = magic_enum::enum_cast<StateType>(curStateStr);
+		if (changeState.has_value())
+		{
+			_currentState = changeState.value();
+			return true;
+		}
+		else
+			return false;
+	}
+#endif EDIT
+
+	return false;
 }

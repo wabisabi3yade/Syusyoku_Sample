@@ -44,10 +44,10 @@ public:
 	/// @param _lastPlayingRatio アニメーションの前回の再生割合
 	/// @param _curPlayingRatio アニメーションの現在の再生割合
 	/// @param _isLoop 割合がループしたか？
-	virtual void Update(const float _lastPlayingRatio, const float _curPlayingRatio, bool _isLoop) = 0;
+	virtual void Update(const float _lastPlayingRatio, const float _curPlayingRatio, const bool _isLoop) = 0;
 
-	/// @brief 次の通知イベントに切り替える前の終了処理
-	virtual void OnTerminal() {};
+	/// @brief  次のアニメーションに切り替える前の終了処理呼び出し関数
+	void OnTerminalCall();
 
 	// 活動状態をセット
 	void SetIsActive(bool _isActive);
@@ -78,6 +78,9 @@ public:
 	void Load(const nlohmann::json& _data) override;
 
 protected:
+	/// @brief 次のアニメーションに切り替える前の終了処理
+	virtual void OnTerminal() {};
+
 	void ImGuiSetting() override;
 };
 
