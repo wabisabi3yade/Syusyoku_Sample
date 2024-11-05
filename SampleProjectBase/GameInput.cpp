@@ -3,6 +3,13 @@
 
 using namespace DirectX::SimpleMath;
 
+/// @brief この時間を超えると入力履歴を削除する
+constexpr float DELETE_TIMELINE_SEC(2.0f);
+
+/// @brief 数えていない時はこの値
+constexpr float ON_NOTCOUNT_TIME(100.0f);
+
+
 GameInput::GameInput()
 {
 	// ボタンデフォルト設定
@@ -10,6 +17,10 @@ GameInput::GameInput()
 
 	// スティック数値初期設定
 	InitValueSettings();
+
+	// 初期時間をセット
+	for (auto& time : buttonTimeLine)
+		time = ON_NOTCOUNT_TIME;
 }
 
 void GameInput::Update()
@@ -19,11 +30,15 @@ void GameInput::Update()
 
 	// スティック入力の更新
 	ValueUpdate();
+
+	// 入力履歴更新
+	TimeLineUpdate();
 }
 
 bool GameInput::GetButton(ButtonType _buttonType)
 {
-	return c_buttonState[static_cast<u_int>(_buttonType)];
+	u_int buttonNum = static_cast<u_int>(_buttonType);
+	return c_buttonState[buttonNum];
 }
 
 bool GameInput::GetButtonDown(ButtonType _buttonType)
@@ -38,6 +53,11 @@ bool GameInput::GetButtonUp(ButtonType _buttonType)
 	u_int buttonNum = static_cast<u_int>(_buttonType);
 
 	return (!c_buttonState[buttonNum] && p_buttonState[buttonNum]);
+}
+
+bool GameInput::GetButtonDown(ButtonType _buttonType, float _withinTime)
+{
+	return buttonTimeLine[static_cast<u_int>(_buttonType)] < _withinTime;
 }
 
 DirectX::SimpleMath::Vector2 GameInput::GetValue(ValueType _valueType)
@@ -84,12 +104,10 @@ void GameInput::ButtonUpdate()
 
 	InputClass& input = MainApplication::GetInput();
 
-	u_int maxNum = static_cast<u_int>(ButtonType::Max_BoolNum);
-
 	if (IsGamePadConnect()) // ゲームパッドがつながっているなら
 	{
 		const GamePad& pad = input.GetGamePad();
-		for (u_int b_i = 0; b_i < maxNum; b_i++)
+		for (u_int b_i = 0; b_i < BUTTON_TYPE_CNT; b_i++)
 		{
 			c_buttonState[b_i] = pad.ButtonPress(buttonLinks[b_i].padType);
 		}
@@ -97,7 +115,7 @@ void GameInput::ButtonUpdate()
 	else	// キーボード
 	{
 		const GameKey& keyboard = input.GetKeyboard();
-		for (u_int b_i = 0; b_i < maxNum; b_i++)
+		for (u_int b_i = 0; b_i < BUTTON_TYPE_CNT; b_i++)
 		{
 			c_buttonState[b_i] = keyboard.GetKey(buttonLinks[b_i].keyType);
 		}
@@ -143,4 +161,32 @@ void GameInput::ValueUpdate()
 				c_valueState[v_i].y += -1.0f;
 		}
 	}
+}
+
+void GameInput::TimeLineUpdate()
+{
+	float deltaTime = MainApplication::DeltaTime();
+
+	// 削除確認と時間経過
+	for (u_int b_i = 0; b_i < BUTTON_TYPE_CNT; b_i++)
+	{
+		buttonTimeLine[b_i] += deltaTime;
+		// 時間が超えていたら数えないように
+		if (buttonTimeLine[b_i] > DELETE_TIMELINE_SEC)
+			buttonTimeLine[b_i] = ON_NOTCOUNT_TIME;
+
+		// トリガー入力がされたら
+		if (c_buttonState[b_i] && !p_buttonState[b_i])
+			buttonTimeLine[b_i] = 0.0f;
+	}
+
+
+	ImGui::Begin("Input");
+	for (u_int b_i = 0; b_i < BUTTON_TYPE_CNT; b_i++)
+	{
+		ImGui::Text(std::string(magic_enum::enum_name(static_cast<ButtonType>(b_i))).c_str());
+		ImGui::SameLine();
+		ImGui::Text("Time%f", buttonTimeLine[b_i]);
+	}
+	ImGui::End();
 }

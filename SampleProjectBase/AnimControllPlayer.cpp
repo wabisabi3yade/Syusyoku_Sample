@@ -193,8 +193,8 @@ void AnimControllPlayer::TransitionCheck()
 {
 	// ‘JˆÚðŒ‚ð–ž‚½‚µ‚½–îˆó‚ª‚ ‚é‚©Šm”F
 	const AnimTransitionArrow* pTransArrow = pTransChecker->TransitonCheck(
-		pCurNodePlayer->GetCurPlayRatio(), 
-		pCurNodePlayer->GetLastPlayRatio()
+		pCurNodePlayer->GetAnimationRatio(), 
+		pCurNodePlayer->GetLastAnimationRatio()
 	);
 	if (!pTransArrow) return;
 
@@ -253,7 +253,6 @@ void AnimControllPlayer::OnCrossFadeBegin(const AnimTransitionArrow& _changeArro
 
 	float transTime = _changeArrow.GetTransitionTime();
 	HashiTaku::EaseKind easeKind = _changeArrow.GetEaseKind();
-
 
 	pCrossFadeInterp = std::make_unique<CrossFadeAnimation>();
 	pCrossFadeInterp->Begin(*pPrevNodePlayer, *pCurNodePlayer, *pBoneList, transTime, easeKind);

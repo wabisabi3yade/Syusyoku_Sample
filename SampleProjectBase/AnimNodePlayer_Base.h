@@ -12,11 +12,11 @@ class AnimNodePlayer_Base : public HashiTaku::IImGuiUser
 	/// @brief 現在の再生割合
 	float curPlayRatio;
 
-	/// @brief 1フレーム前の再生割合
-	float lastPlayRatio;
+	/// @brief 1フレーム前のアニメーション割合
+	float lastAnimationRatio;
 
 	/// @brief アニメーション割合(アニメーションカーブを反映させる)
-	float animationRatio;
+	float curAnimationRatio;
 
 	/// @brief ノードの再生速度
 	float playerSpeedTimes;
@@ -67,6 +67,16 @@ public:
 	/// @param _controllerPlaySpeed コントローラー自体の再生速度
 	void UpdateCall(std::vector<BoneTransform>& _outTransforms, float _controllerPlaySpeed);
 
+	/// @brief トランスフォームにルートモーションを反映する
+	/// @return このフレームの移動量
+	DirectX::SimpleMath::Vector3 CalcRootMotionToTransform();
+
+	/// @brief トランスフォームにこのフレームのルートモーションを移動する
+	/// @param _rootMovement ルートモーションの移動量
+	void ApplyRootMotion(const DirectX::SimpleMath::Vector3& _rootMovement);
+
+	void OnInterpolateUpdate(std::vector<BoneTransform>& _outTransforms, float _controllerPlaySpeed);
+
 	/// @brief 再生割合を進める
 	/// @param _controllerPlaySpeed コントローラー自体の再生速度
 	void ProgressPlayRatio(float _controllerPlaySpeed);
@@ -88,7 +98,7 @@ public:
 
 	/// @brief 1フレーム前の再生割合を取得
 	/// @return 1フレーム前の再生割合
-	float GetLastPlayRatio() const;
+	float GetLastAnimationRatio() const;
 
 	/// @brief アニメーション割合を取得
 	/// @return アニメーション割合
@@ -120,9 +130,6 @@ private:
 
 	/// @brief 再生がループした時の処理
 	void OnPlayLoop();
-
-	/// @brief トランスフォームにルートモーションを反映する
-	void ApplyRootMotionToTransform();
 
 	/// @brief 通知イベントを更新
 	void NotifyUpdate();

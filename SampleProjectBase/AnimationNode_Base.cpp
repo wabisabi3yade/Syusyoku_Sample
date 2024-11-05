@@ -17,18 +17,6 @@ AnimationNode_Base::AnimationNode_Base(std::string _nodeName, NodeType _type)
 	pAnimationCurve = std::make_unique<AnimationCurve>();
 }
 
-//AnimationNode_Base::AnimationNode_Base(const AnimationNode_Base& _other)
-//{
-//	Copy(_other);
-//}
-//
-//AnimationNode_Base& AnimationNode_Base::operator=(const AnimationNode_Base& _other)
-//{
-//	Copy(_other);
-//
-//	return *this;
-//}
-
 void AnimationNode_Base::ImGuiPlaying()
 {
 #ifdef EDIT
@@ -119,7 +107,7 @@ nlohmann::json AnimationNode_Base::Save()
 {
 	// ノード名とタイプはコントローラーで管理
 	nlohmann::json nodeData;
-	nodeData["animTime"] = animationTime;
+	nodeData["speed"] = playNodeSpeedTimes;
 	nodeData["isLoop"] = isLoop;
 	nodeData["isRMXZ"] = isRootMotionPosXZ;
 	nodeData["isRMY"] = isRootMotionPosY;
@@ -130,7 +118,7 @@ nlohmann::json AnimationNode_Base::Save()
 
 void AnimationNode_Base::Load(const nlohmann::json& _data)
 {
-	LoadJsonFloat("animTime", animationTime, _data);
+	LoadJsonFloat("speed", playNodeSpeedTimes, _data);
 	LoadJsonBoolean("isLoop", isLoop, _data);
 	LoadJsonBoolean("isRMXZ", isRootMotionPosXZ, _data);
 	LoadJsonBoolean("isRMY", isRootMotionPosY, _data);

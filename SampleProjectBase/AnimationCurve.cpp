@@ -5,7 +5,7 @@ constexpr int MIN_PLOT_CNT(2);	// 最低限必要なプロット点
 
 constexpr float VECTOR_LENGTH(2.0f);	// 速度の大きさ
 constexpr float VEC_DRAW_TIMES(0.05f);	// ベクトル点との距離をを描画するときの倍率
-constexpr float REACT_DISTANCE = 0.0025f; // マウスクリックで点との反応距離
+constexpr float REACT_DISTANCE = 0.0035f; // マウスクリックで点との反応距離
 
 constexpr float MIN_TIME(0.0f);	// 最小時間
 constexpr float MAX_TIME(1.0f);	// 最大時間
@@ -24,31 +24,36 @@ AnimationCurve::AnimationCurve()
 
 float AnimationCurve::GetValue(float _time) const
 {
-	// 2点ないなら
-	if (static_cast<int>(plotPoints.size()) < MIN_PLOT_CNT)
-	{
-		HASHI_DEBUG_LOG("始点と終点がありません");
-		return 0.0f;
-	}
+	float returnVal = 0.0f;
 
 	_time = std::clamp(_time, MIN_TIME, MAX_TIME);
 
-	// 前と後を見つける
-	auto prevItr = plotPoints.begin();
-	auto nextItr = std::next(prevItr);
-	for (; nextItr != plotPoints.end(); nextItr++)
+	if (isUseHermite)
 	{
-		// 次を見つけたら
-		if (_time <= (*nextItr).time)
+		// 前と後を見つける
+		auto prevItr = plotPoints.begin();
+		auto nextItr = std::next(prevItr);
+		for (; nextItr != plotPoints.end(); nextItr++)
 		{
-			prevItr = std::prev(nextItr);
-			break;
+			// 次を見つけたら
+			if (_time <= (*nextItr).time)
+			{
+				prevItr = std::prev(nextItr);
+				break;
+			}
+			else
+				assert("次の時間画見つかりませんでした");
 		}
-		else
-			assert("次の時間画見つかりませんでした");
+
+		returnVal = CalcHermiteCurve(_time, *prevItr, *nextItr);
+
+	}
+	else
+	{
+		returnVal = HashiTaku::Easing::EaseValue(_time, easeKind);
 	}
 
-	return CalcHermiteCurve(_time, *prevItr, *nextItr);
+	return returnVal;
 }
 
 float AnimationCurve::CalcHermiteCurve(float _getTime, const HermitePlotParam& _p0, const HermitePlotParam& _p1) const
@@ -130,10 +135,6 @@ bool AnimationCurve::CheckReactPlot(const HermitePlotParam& _plot, float _clickX
 
 	if (dis < REACT_DISTANCE)   // 反応距離内なら
 	{
-		// 最初と最後
-		if (&_plot == &*plotPoints.begin() || &_plot == &*std::prev(plotPoints.end()))
-			return false;
-
 		return true;
 	}
 
@@ -146,7 +147,7 @@ void AnimationCurve::SetEase(HashiTaku::EaseKind _easeKind)
 	easeKind = _easeKind;
 
 	// 始点と終点のベクトルをできるだけ合わせる
-	HermitePlotParam* plot = &*plotPoints.begin();
+	/*HermitePlotParam* plot = &*plotPoints.begin();
 	DirectX::SimpleMath::Vector2 dis;
 	dis.x = Mathf::epsilon;
 	float targetTime = plot->time + Mathf::epsilon;
@@ -161,52 +162,42 @@ void AnimationCurve::SetEase(HashiTaku::EaseKind _easeKind)
 	dis.x = Mathf::epsilon;
 	dis.y = plot->value - val;
 	dis.Normalize();
-	plot->vector = dis.y * VECTOR_LENGTH;
+	plot->vector = dis.y * VECTOR_LENGTH;*/
+}
+
+bool AnimationCurve::IsStartOrEndPlot(const HermitePlotParam* _checkPlot)
+{
+	return _checkPlot == &*plotPoints.begin() || _checkPlot == &*std::prev(plotPoints.end());
 }
 
 void AnimationCurve::ImGuiSetting()
 {
 #ifdef EDIT
-	// ImPlotを初期化してカーブを描画
+	//	ImGui::SetNextWindowSize(ImVec2(1.0f, 1.0f), ImGuiCond_Always);
+		// ImPlotを初期化してカーブを描画
+
+	ImGui::Text("Curve");
+	HashiTaku::Easing::ImGuiSelect(easeKind);
+	ImGui::Checkbox("UseHermite", &isUseHermite);
 	if (ImPlot::BeginPlot("##Animation Curve"))
 	{
 		ImPlot::SetupAxes("##Time", "##Value", ImPlotAxisFlags_AutoFit, ImPlotAxisFlags_AutoFit);
 		ImPlot::SetupAxisLimits(ImAxis_X1, 0.0f, 1.0f);
 		ImPlot::SetupAxisLimits(ImAxis_Y1, 0.0f, 1.0f);
 
-		// ベクトル点を編集
-		ImEditVectorPoint();
-
-		// プロット点を編集
-		ImGuiPlotEditing();
-
-		// 追加・削除
-		ImAddPopPlot();
-
-		// 補間されたカーブを描画
-		constexpr int DRAW_POINT_CNT = 200;
-		float timePoints[DRAW_POINT_CNT];
-		float valuePoints[DRAW_POINT_CNT];
-		// 前と後のプロット点を取得
-		auto prevProtItr = plotPoints.begin();
-		auto nextProtItr = std::next(prevProtItr);
-		for (int p_i = 0; p_i < DRAW_POINT_CNT; p_i++)
+		if (isUseHermite)
 		{
-			timePoints[p_i] = (float)p_i / (DRAW_POINT_CNT - 1);
+			// ベクトル点を編集
+			ImEditVectorPoint();
 
-			// 時間が後のプロットの時間を超えたら
-			if (timePoints[p_i] > (*nextProtItr).time)
-			{
-				// プロットを更新
-				prevProtItr = nextProtItr;
-				nextProtItr = std::next(nextProtItr);
-			}
+			// プロット点を編集
+			ImGuiPlotEditing();
 
-			// 値を取得する
-			valuePoints[p_i] = CalcHermiteCurve(timePoints[p_i], *prevProtItr, *nextProtItr);
+			// 追加・削除
+			ImAddPopPlot();			
 		}
 
-		ImPlot::PlotLine("##AnimationCurve", timePoints, valuePoints, DRAW_POINT_CNT);
+		ImDrawGraph();
 		ImPlot::EndPlot();
 	}
 
@@ -229,43 +220,40 @@ void AnimationCurve::ImGuiPlotEditing()
 		static_cast<float>(mousePos.x),
 		static_cast<float>(mousePos.y)
 	};
+
 	// クリック時
 	if (ImGui::IsMouseClicked(0))
 	{
 		bool isSelecting = false;
 		for (auto& point : plotPoints)
 		{
-			float disx = floatMousePos.x - point.time;
-			float disy = floatMousePos.y - point.value;
-			float dis = disx * disx + disy * disy;
-
-			if (dis < REACT_DISTANCE)   // 反応距離内なら
+			if (CheckReactPlot(point, floatMousePos.x, floatMousePos.y))
 			{
-				// 最初と最後は動かさない
-				if (&point == &*plotPoints.begin() || &point == &*std::prev(plotPoints.end()))
-					continue;
-
 				editingPlot = &point;
 				isSelecting = true;
 				break;
 			}
 		}
-
-		if (!isSelecting && !isVectorEdit)
-			editingPlot = nullptr;
 	}
 	// ドラッグ編集
-	if (editingPlot && !isVectorEdit && ImGui::IsMouseDragging(0))
+	if (ImGui::IsMouseDragging(0))
 	{
-		float changePrev = editingPlot->time;
+		if (!editingPlot) return;
 
-		// 制限をかける
-		editingPlot->time = std::clamp(floatMousePos.x, 0.0f + Mathf::epsilon, 1.0f - Mathf::epsilon);
-		editingPlot->value = std::clamp(floatMousePos.y, 0.0f + Mathf::epsilon, 1.0f - Mathf::epsilon);
+		// 最初と最後は動かさない
+		if (!IsStartOrEndPlot(editingPlot) &&
+			CheckReactPlot(*editingPlot, floatMousePos.x, floatMousePos.y))
+		{
+			float changePrev = editingPlot->time;
 
-		// ソート処理(時間)
-		if (changePrev != editingPlot->time)
-			plotPoints.sort(SortPointTime);
+			// 制限をかける
+			editingPlot->time = std::clamp(floatMousePos.x, 0.0f + Mathf::epsilon, 1.0f - Mathf::epsilon);
+			editingPlot->value = std::clamp(floatMousePos.y, 0.0f + Mathf::epsilon, 1.0f - Mathf::epsilon);
+
+			// ソート処理(時間)
+			if (changePrev != editingPlot->time)
+				plotPoints.sort(SortPointTime);
+		}
 	}
 
 #endif // EDIT
@@ -282,7 +270,7 @@ void AnimationCurve::ImEditVectorPoint()
 	// 描画時のベクトル点
 	ImPlotPoint vectorPoint;
 	vectorPoint.y = editingPlot->value + editingPlot->vector * VEC_DRAW_TIMES;
-	vectorPoint.x = editingPlot->time + std::pow(VECTOR_LENGTH - (editingPlot->vector * editingPlot->vector), 0.5) * VEC_DRAW_TIMES;
+	vectorPoint.x = editingPlot->time + std::pow(VECTOR_LENGTH * VECTOR_LENGTH - (editingPlot->vector * editingPlot->vector), 0.5f) * VEC_DRAW_TIMES;
 	ImPlot::PlotScatter("##Vector", &vectorPoint.x, &vectorPoint.y, 1);
 
 	ImPlotPoint mousePos = ImPlot::GetPlotMousePos();
@@ -328,6 +316,47 @@ void AnimationCurve::ImEditVectorPoint()
 #endif // EDIT
 }
 
+void AnimationCurve::ImDrawGraph()
+{
+	// 補間されたカーブを描画
+	constexpr int DRAW_POINT_CNT = 200;
+	float timePoints[DRAW_POINT_CNT];
+	float valuePoints[DRAW_POINT_CNT];
+
+	if (isUseHermite)
+	{
+		// 前と後のプロット点を取得
+		auto prevProtItr = plotPoints.begin();
+		auto nextProtItr = std::next(prevProtItr);
+		for (int p_i = 0; p_i < DRAW_POINT_CNT; p_i++)
+		{
+			timePoints[p_i] = (float)p_i / (DRAW_POINT_CNT - 1);
+
+			// 時間が後のプロットの時間を超えたら
+			if (timePoints[p_i] > (*nextProtItr).time)
+			{
+				// プロットを更新
+				prevProtItr = nextProtItr;
+				nextProtItr = std::next(nextProtItr);
+			}
+
+			// 値を取得する
+			valuePoints[p_i] = CalcHermiteCurve(timePoints[p_i], *prevProtItr, *nextProtItr);
+		}
+	}
+	else
+	{
+		for (int p_i = 0; p_i < DRAW_POINT_CNT; p_i++)
+		{
+			timePoints[p_i] = (float)p_i / (DRAW_POINT_CNT - 1);
+			valuePoints[p_i] = HashiTaku::Easing::EaseValue(timePoints[p_i], easeKind);
+		}
+	}
+	
+
+	ImPlot::PlotLine("##AnimationCurve", timePoints, valuePoints, DRAW_POINT_CNT);
+}
+
 void AnimationCurve::ImAddPopPlot()
 {
 #ifdef EDIT
@@ -352,6 +381,20 @@ void AnimationCurve::ImAddPopPlot()
 	}
 	if (ImGui::BeginPopup("##Curve Menu"))
 	{
+		if (editingPlot)
+		{
+			if (!IsStartOrEndPlot(editingPlot))
+			{
+				if (ImGui::DragFloat("Time", &editingPlot->time, 0.001f, 0.0f, 1.0f))
+				{
+					plotPoints.sort(SortPointTime);
+				}
+
+				ImGui::DragFloat("Value", &editingPlot->value, 0.001f, 0.0f, 1.0f);
+			}
+			ImGui::DragFloat("Vector", &editingPlot->vector, 0.001f, -1.0f, 1.0f);
+		}
+
 		if (ImGui::MenuItem("Add"))
 		{
 			// マウスの場所
@@ -368,10 +411,6 @@ void AnimationCurve::ImAddPopPlot()
 			if (deletePlot)
 				deletePlot->vector = 0.0f;
 		}
-		if (HashiTaku::Easing::ImGuiSelect(easeKind))
-		{
-
-		}
 		ImGui::EndPopup();
 	}
 #endif // EDIT
@@ -382,20 +421,32 @@ nlohmann::json AnimationCurve::Save()
 	nlohmann::json data;
 
 	data["easeKind"] = easeKind;
+	data["useHermite"] = isUseHermite;
 
 	auto& plotDatas = data["plotDatas"];
-	//for (const auto& plot : plotPoints)
-	//{
-	//	// 始点と終点
-	//	if (&plot == &*plotPoints.begin() || &plot == &*std::prev(plotPoints.end()))
-	//		continue;
+	for (const auto& plot : plotPoints)
+	{
+		nlohmann::json plotData;
 
-	//	nlohmann::json plotData;
-	//	plotData["time"] = plot.time;
-	//	plotData["value"] = plot.value;
-	//	plotData["vector"] = plot.vector;
-	//	plotDatas.push_back(plotData);
-	//}
+		// 始点と終点
+		if (&plot == &*plotPoints.begin())
+		{
+			data["startVector"] = plot.vector;
+			continue;
+		}
+		else if (&plot == &*std::prev(plotPoints.end()))
+		{
+			data["endVector"] = plot.vector;
+			continue;
+		}
+		else // それ以外は
+		{
+			plotData["time"] = plot.time;
+			plotData["value"] = plot.value;
+			plotData["vector"] = plot.vector;
+		}
+		plotDatas.push_back(plotData);
+	}
 
 	return data;
 }
@@ -407,16 +458,30 @@ void AnimationCurve::Load(const nlohmann::json& _data)
 	LoadJsonEnum<EaseKind>("easeKind", loadEase, _data);
 	SetEase(loadEase);
 
+	LoadJsonBoolean("useHermite", isUseHermite, _data);
+
 	nlohmann::json plotDatas;
-	//if (LoadJsonDataArray("plotDatas", plotDatas, _data))
-	//{
-	//	for (auto& plotData : plotDatas)
-	//	{
-	//		HermitePlotParam addPlot;
-	//		LoadJsonFloat("time", addPlot.time, plotData);
-	//		LoadJsonFloat("value", addPlot.value, plotData);
-	//		LoadJsonFloat("vector", addPlot.vector, plotData);
-	//		plotPoints.push_back(addPlot);
-	//	}
-	//}
+	if (LoadJsonDataArray("plotDatas", plotDatas, _data))
+	{
+		for (auto& plotData : plotDatas)
+		{
+			HermitePlotParam addPlot;
+			LoadJsonFloat("time", addPlot.time, plotData);
+			LoadJsonFloat("value", addPlot.value, plotData);
+			LoadJsonFloat("vector", addPlot.vector, plotData);
+			plotPoints.push_back(addPlot);
+		}
+	}
+
+	plotPoints.sort(SortPointTime);
+
+	float loadVector = 0.0f;
+	if (LoadJsonFloat("startVector", loadVector, _data))
+	{
+		(*plotPoints.begin()).vector = loadVector;
+	}
+	if (LoadJsonFloat("endVector", loadVector, _data))
+	{
+		(*std::prev(plotPoints.end())).vector = loadVector;
+	}
 }

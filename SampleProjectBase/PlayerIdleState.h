@@ -18,6 +18,8 @@ private:
 	void UpdateBehavior() override;
 	/// @brief 各状態の終了処理
 	void OnEndBehavior() override;
+	/// @brief ステート遷移条件のチェック処理
+	void TransitionCheckUpdate() override;
 
 	/// @brief 放置経過時間を進める
 	void ProgressLeaveElapse();

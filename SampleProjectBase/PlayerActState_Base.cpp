@@ -6,7 +6,7 @@
 CP_Camera* PlayerActState_Base::pCamera = nullptr;
 
 PlayerActState_Base::PlayerActState_Base()
-	: pPlayerObject(nullptr), pAnimation(nullptr), stateType(StateType::None), pPlayerInput(nullptr)
+	: pPlayer(nullptr), pAnimation(nullptr), stateType(PlayerState::None), pPlayerInput(nullptr)
 {
 	changeStateSubject = std::make_unique<StateChangeSubject>();
 
@@ -15,10 +15,10 @@ PlayerActState_Base::PlayerActState_Base()
 	pCamera = &InSceneSystemManager::GetInstance()->GetMainCamera();
 }
 
-void PlayerActState_Base::Init(StateType _stateType, GameObject& _gameObject, StateChangeObserver& _changeObserver)
+void PlayerActState_Base::Init(PlayerState _stateType, CP_Player& _player, StateChangeObserver& _changeObserver)
 {
 	stateType = _stateType;
-	pPlayerObject = &_gameObject;
+	pPlayer = &_player;
 	changeStateSubject->AddObserver(_changeObserver);
 }
 
@@ -47,7 +47,7 @@ void PlayerActState_Base::SetAnimation(CP_Animation& _pAnimation)
 	pAnimation = &_pAnimation;
 }
 
-PlayerActState_Base::StateType PlayerActState_Base::GetActStateType() const
+PlayerActState_Base::PlayerState PlayerActState_Base::GetActStateType() const
 {
 	return stateType;
 }
@@ -61,7 +61,7 @@ void PlayerActState_Base::Load(const nlohmann::json& _data)
 {
 }
 
-void PlayerActState_Base::ChangeState(StateType _nextState)
+void PlayerActState_Base::ChangeState(PlayerState _nextState)
 {
 	changeStateSubject->NotifyAll(static_cast<int>(_nextState));
 }
@@ -71,7 +71,7 @@ DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStick() const
 	return pPlayerInput->GetValue(GameInput::ValueType::Player_Move);
 }
 
-bool PlayerActState_Base::ImGuiComboPlayerState(const std::string& _caption, StateType& _currentState)
+bool PlayerActState_Base::ImGuiComboPlayerState(const std::string& _caption, PlayerState& _currentState)
 {
 #ifdef EDIT
 
@@ -82,7 +82,7 @@ bool PlayerActState_Base::ImGuiComboPlayerState(const std::string& _caption, Sta
 	if (isChange)
 	{
 		// •¶Žš—ñ‚©‚ç—ñ‹“Œ^
-		auto changeState = magic_enum::enum_cast<StateType>(curStateStr);
+		auto changeState = magic_enum::enum_cast<PlayerState>(curStateStr);
 		if (changeState.has_value())
 		{
 			_currentState = changeState.value();

@@ -13,17 +13,29 @@ void PlayerIdleState::OnStartBehavior()
 
 void PlayerIdleState::UpdateBehavior()
 {
-	// 移動ステートに遷移できるなら
-	if (IsCanMoveTransition())
-	{
-		ChangeState(StateType::Move);
-	}
-
 	ProgressLeaveElapse();
 }
 
 void PlayerIdleState::OnEndBehavior()
 {
+}
+
+void PlayerIdleState::TransitionCheckUpdate()
+{
+	// 移動ステートに遷移できるなら
+	if (pPlayerInput->GetButton(GameInput::ButtonType::Player_RockOn) && IsCanMoveTransition())
+	{
+		ChangeState(PlayerState::TargetMove);
+	}
+	else if (IsCanMoveTransition())
+	{
+		ChangeState(PlayerState::Move);
+	}
+	// 攻撃ボタン
+	else if(pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
+	{
+		ChangeState(PlayerState::Attack11);
+	}
 }
 
 void PlayerIdleState::ProgressLeaveElapse()

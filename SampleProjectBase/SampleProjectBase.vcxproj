@@ -196,6 +196,7 @@
     <ClCompile Include="AnimNodePlayer_Base.cpp" />
     <ClCompile Include="MyClass2.cpp" />
     <ClCompile Include="PlayerGroundAttack.cpp" />
+    <ClCompile Include="PlayerRushAttack.cpp" />
     <ClCompile Include="PlayerTargetMove.cpp" />
     <ClCompile Include="PlayerActChangeObserver.cpp" />
     <ClCompile Include="PlayerActionController.cpp" />
@@ -399,6 +400,7 @@
     <ClInclude Include="MyClass2.h" />
     <ClInclude Include="NullTransform.h" />
     <ClInclude Include="PlayerGroundAttack.h" />
+    <ClInclude Include="PlayerRushAttack.h" />
     <ClInclude Include="PlayerTargetMove.h" />
     <ClInclude Include="PlayerActChangeObserver.h" />
     <ClInclude Include="PlayerActionController.h" />

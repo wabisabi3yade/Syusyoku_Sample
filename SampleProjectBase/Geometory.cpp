@@ -145,7 +145,7 @@ void Geometory::DrawLine()
 	pDevice->CreateBuffer(&bufferDesc, &initData, &pVertexBuffer);
 
 	// ワールド変換行列の座標にモデルの座標を入れる
-	RenderParam::WVP wvp = pRenderer->GetParameter().GetWVP(Vector3::Zero, Vector3::One, Quaternion::Identity);
+	RenderParam::WVP& wvp = pRenderer->GetParameter().GetWVP(Vector3::Zero, Vector3::One, Quaternion::Identity);
 	wvp.world = wvp.world.Transpose();
 
 	// シェーダーの設定
@@ -157,6 +157,8 @@ void Geometory::DrawLine()
 	UINT stride = sizeof(LineVertex);
 	UINT offset = 0;
 	pDeviceContext->IASetVertexBuffers(0, 1, &pVertexBuffer, &stride, &offset);
+
+	SAFE_RELEASE(pVertexBuffer);
 
 	// 実際の描画
 	pDeviceContext->Draw(vertexCnt, 0);

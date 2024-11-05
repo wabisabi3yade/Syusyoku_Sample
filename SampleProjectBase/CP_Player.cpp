@@ -7,7 +7,7 @@
 
 using namespace DirectX::SimpleMath;
 
-constexpr auto ATKCOL_ANIMPARAM_NAME("AttackCollision");
+constexpr auto ATKCOL_ANIMPARAM_NAME("attackCollision");
 
 CP_Player::CP_Player()
 	: pAnimation(nullptr), pWeapon(nullptr), hitStopBeforeAnimSpeed(0.0f), pAttackCollisionFlag(nullptr)
@@ -39,7 +39,7 @@ void CP_Player::SetAttackInfo(const HashiTaku::AttackInformation& _setAttackInfo
 void CP_Player::Init()
 {
 	// アクションコントローラー作成
-	pActionController = std::make_unique<PlayerActionController>(*gameObject);
+	pActionController = std::make_unique<PlayerActionController>(*this);
 }
 
 void CP_Player::Awake()
@@ -186,7 +186,9 @@ void CP_Player::Load(const nlohmann::json& _data)
 
 void CP_Player::SetWeaponAttackFlag()
 {
+#ifdef EDIT
 	if (!pWeapon || !pAttackCollisionFlag) return;
+#endif // EDIT
 
 	// 武器の攻撃判定をセットする
 	pWeapon->SetIsAttackCollision(*pAttackCollisionFlag);
