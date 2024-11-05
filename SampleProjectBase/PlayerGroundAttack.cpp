@@ -7,5 +7,5 @@ void PlayerGroundAttack::OnAnimationEnd(const std::string& _fromAnimNodeName, co
 {
 	// アニメーションの遷移先が待機状態なら待機に戻す
 	if (_toAnimNodeName == IDLE_ANIMNODE_NAME)
-		ChangeState(StateType::Idle);
+		ChangeState(PlayerState::Idle);
 }

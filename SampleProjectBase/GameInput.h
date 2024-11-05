@@ -8,11 +8,13 @@ public:
 	// bool型で扱う種類
 	enum class ButtonType
 	{
-		Player_Attack,
+		Player_Attack,	// 攻撃
 		Player_Jump,
 		Player_RockOn,
 		Max_BoolNum
 	};
+	/// @brief ボタンの種類数
+	static constexpr u_int BUTTON_TYPE_CNT{ static_cast<u_int>(ButtonType::Max_BoolNum) };
 
 	// 数値で扱う種類
 	enum class ValueType
@@ -23,7 +25,6 @@ public:
 	};
 
 private:
-
 	friend class Singleton_Base<GameInput>;
 
 	// 対応ボタン
@@ -45,14 +46,17 @@ private:
 	};
 
 	/// @brief 対応する入力
-	ButtonLink buttonLinks[static_cast<u_int>(ButtonType::Max_BoolNum)];
-	ValueLink valueLinks[static_cast<u_int>(ValueType::Max_ValueNum)];
+	std::array<ButtonLink, BUTTON_TYPE_CNT> buttonLinks;
+	std::array<ValueLink, BUTTON_TYPE_CNT> valueLinks;
+
+	/// @brief ボタン入力の履歴時間(トリガー入力のみ対応)
+	std::array<float, BUTTON_TYPE_CNT> buttonTimeLine;
 
 	// 状態
-	bool c_buttonState[static_cast<u_int>(ButtonType::Max_BoolNum)];
-	bool p_buttonState[static_cast<u_int>(ButtonType::Max_BoolNum)];
+	bool c_buttonState[BUTTON_TYPE_CNT];
+	bool p_buttonState[BUTTON_TYPE_CNT];
 
-	DirectX::SimpleMath::Vector2 c_valueState[static_cast<u_int>(ButtonType::Max_BoolNum)];
+	DirectX::SimpleMath::Vector2 c_valueState[static_cast<u_int>(ValueType::Max_ValueNum)];
 
 	GameInput();
 	~GameInput() {}
@@ -74,6 +78,12 @@ public:
 	/// @return 離された瞬間か？
 	bool GetButtonUp(ButtonType _buttonType);
 
+	/// @brief 指定秒以内にボタンが押されたか取得
+	/// @param _buttonType ゲーム内ボタンの種類
+	/// @param _withinTime 指定秒以内に押されている
+	/// @return 指定秒以内にボタンが押されたか？
+	bool GetButtonDown(ButtonType _buttonType, float _withinTime);
+
 	/// @brief 入力スティックの数値を取得する
 	/// @param _valueType ゲーム内スティックの種類
 	/// @return 入力数値
@@ -94,5 +104,8 @@ private:
 
 	/// @brief 数値入力更新
 	void ValueUpdate();
+
+	/// @brief 履歴の更新処理
+	void TimeLineUpdate();
 };
 

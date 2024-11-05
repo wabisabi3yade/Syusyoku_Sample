@@ -156,7 +156,7 @@ void DX11BulletPhisics::Draw()
 #ifdef EDIT
 	if (!pDebugDraw->GetIsDisplay()) return;
 
-	// デバッグ描画を呼び出す
+	//デバッグ描画を呼び出す
 	pDynamicsWorld->debugDrawWorld();
 #endif
 }

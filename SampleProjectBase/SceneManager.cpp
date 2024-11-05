@@ -78,7 +78,7 @@ void SceneManager::OtherDraw()
 {
 	DX11BulletPhisics* pBulletPhisics = DX11BulletPhisics::GetInstance();
 
-	// “–‚½‚è”»’è•`‰æ
+	//// “–‚½‚è”»’è•`‰æ
 	pBulletPhisics->Draw();
 
 	// ü•`‰æ

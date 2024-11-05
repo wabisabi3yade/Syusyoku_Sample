@@ -36,6 +36,7 @@ bool VariableFrameRate::UpdateCheck()
 
 void VariableFrameRate::ImGuiSetting()
 {
+#ifdef EDIT
 	if (ImGuiMethod::TreeNode("FPS Counter"))
 	{
 		float fps = static_cast<float>(1.0f / (deltaTime_ms * 0.001f));
@@ -45,10 +46,12 @@ void VariableFrameRate::ImGuiSetting()
 
 		ImGui::TreePop();
 	}
+#endif
 }
 
 void VariableFrameRate::ProcessEnd()
 {
+#ifdef EDIT
 	auto processTime = GetNowTime() - previousFrameTime;
 	// 0.1ns‚©‚çms‚É•ÏŠ·
 	float processTime_ms = processTime * 0.0001f;
@@ -65,6 +68,8 @@ void VariableFrameRate::ProcessEnd()
 	avarageProcessTime_ms = sumProcessTime / FPS;
 
 	processTimes.clear();
+
+#endif // EDIT
 }
 
 long long VariableFrameRate::GetNowTime()

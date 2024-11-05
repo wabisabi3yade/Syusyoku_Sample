@@ -11,8 +11,6 @@ public:
 
 	~SingleAnimationNode() {}
 
-	void Update(BoneList& _boneList) override;
-
 	/// @brief アニメーション
 	/// @param _animData アニメーションデータ
 	void SetAnimationData(const std::string& _animName) override;

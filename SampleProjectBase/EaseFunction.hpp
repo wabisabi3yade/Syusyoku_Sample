@@ -501,7 +501,8 @@ inline float EaseFunc_Quint::EaseIn(float _ratio) const
 
 inline float EaseFunc_Quint::EaseOut(float _ratio) const
 {
-	return 1.0f - _ratio * _ratio * _ratio * _ratio * _ratio;
+	float v1 = 1.0 - _ratio;
+	return 1.0f - v1 * v1 * v1 * v1 * v1;
 }
 
 inline float EaseFunc_Quint::EaseInOut(float _ratio) const
@@ -522,7 +523,9 @@ inline float EaseFunc_Expo::EaseIn(float _ratio) const
 
 inline float EaseFunc_Expo::EaseOut(float _ratio) const
 {
-	return 1.0f - EaseFunc_Expo::EaseIn(_ratio);
+	return  _ratio == 1.0f ?
+		1.0f :
+		1.0f - pow(2.0f, -10.0f * _ratio);
 }
 
 inline float EaseFunc_Expo::EaseInOut(float _ratio) const
@@ -542,7 +545,8 @@ inline float EaseFunc_Circ::EaseIn(float _ratio) const
 
 inline float EaseFunc_Circ::EaseOut(float _ratio) const
 {
-	return 1.0f - EaseFunc_Circ::EaseIn(_ratio);
+	float v1 = _ratio - 1.0f;
+	return sqrt(1.0f - v1 * v1);
 }
 
 inline float EaseFunc_Circ::EaseInOut(float _ratio) const

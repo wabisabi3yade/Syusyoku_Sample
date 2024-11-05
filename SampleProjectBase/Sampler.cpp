@@ -10,8 +10,7 @@ bool Sampler::Init(ID3D11Device& _device)
     smpDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
     smpDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
     smpDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-    ID3D11SamplerState* samplePtr = pSampler.get();
-    HRESULT hr = _device.CreateSamplerState(&smpDesc, &samplePtr);
+    HRESULT hr = _device.CreateSamplerState(&smpDesc, &pSampler);
     if (FAILED(hr))
     {
         HASHI_DEBUG_LOG("ÉTÉìÉvÉâÅ[èâä˙âªé∏îs");

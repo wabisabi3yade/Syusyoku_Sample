@@ -8,19 +8,22 @@ private:
 	double deltaTime_ms;	// Δt（ms）
 	long long previousFrameTime;	// 前のフレームレートが終了したときの時間
 
-	float avarageProcessTime_ms;	// 1秒ごとの平均処理時間
-	std::vector<float> processTimes;	// 〇秒ごとの平均をとるための保存リスト
-
 	u_int FPS;	// fps
 
 	// FPS固定用変数
 	LARGE_INTEGER liWork; // 関数から値を受け取る用
+
+#ifdef EDIT
+	float avarageProcessTime_ms{ 0.0f };	// 1秒ごとの平均処理時間
+	std::vector<float> processTimes;	// 〇秒ごとの平均をとるための保存リスト
+#endif
+
 public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="setFrameRate">対応させたいフレームレート</param>
-	VariableFrameRate() : microSecondsPerFrame(0), deltaTime_ms(0), previousFrameTime(0), avarageProcessTime_ms(0.0f), FPS(0), liWork() {}
+	VariableFrameRate() : microSecondsPerFrame(0), deltaTime_ms(0), previousFrameTime(0), FPS(0), liWork() {}
 
 	~VariableFrameRate() {}
 

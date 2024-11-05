@@ -26,6 +26,7 @@ void HashiTaku::AttackInformation::SetHitStopFlame(u_int _hitStopFlame)
 void HashiTaku::AttackInformation::SetAttackLevel(AttackLevel _atkLevel)
 {
 	atkLevel = _atkLevel;
+	ApplyFromAttackLevel();
 }
 
 
@@ -37,6 +38,26 @@ float HashiTaku::AttackInformation::GetDamageValue() const
 u_int HashiTaku::AttackInformation::GetHitStopFlame() const
 {
 	return hitStopFlame;
+}
+
+nlohmann::json HashiTaku::AttackInformation::Save()
+{
+	nlohmann::json data;
+
+	data["damage"] = atkDamage;
+	data["level"] = atkLevel;
+
+	return data;
+}
+
+void HashiTaku::AttackInformation::Load(const nlohmann::json& _data)
+{
+	LoadJsonFloat("damage", atkDamage, _data);
+	
+	if (LoadJsonEnum<AttackLevel>("level", atkLevel, _data))
+	{
+		SetAttackLevel(atkLevel);
+	}
 }
 
 void HashiTaku::AttackInformation::ApplyFromAttackLevel()
@@ -58,4 +79,25 @@ void HashiTaku::AttackInformation::ApplyFromAttackLevel()
 		hitStopFlame = SUPERHIGH_HITSTOP;
 		break;
 	}
+}
+
+void HashiTaku::AttackInformation::ImGuiSetting()
+{
+	// ダメージ値
+	ImGui::DragFloat("AtkDamage", &atkDamage, 0.1f, 0.0f, 9999.0f);
+
+	// レベル
+	std::vector<std::string> levelNames
+	{
+		"Low",
+		"Middle",
+		"High",
+		"SuperHigh"
+	};
+	u_int id = static_cast<u_int>(atkLevel);
+	if (ImGuiMethod::ComboBox("AtkLevel", id, levelNames))
+	{
+		SetAttackLevel(static_cast<AttackLevel>(id));
+	}
+
 }

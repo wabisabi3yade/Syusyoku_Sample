@@ -13,22 +13,26 @@
                     "value": 0.0
                 },
                 {
-                    "name": "AttackCancel",
+                    "name": "canCancel",
                     "type": 0,
                     "value": false
                 },
                 {
-                    "name": "AxisX",
+                    "name": "attackTrigger",
+                    "type": 3
+                },
+                {
+                    "name": "axisX",
                     "type": 2,
                     "value": 0.0
                 },
                 {
-                    "name": "AttackCollision",
+                    "name": "attackCollision",
                     "type": 0,
                     "value": false
                 },
                 {
-                    "name": "AxisY",
+                    "name": "axisY",
                     "type": 2,
                     "value": 0.0
                 }
@@ -38,20 +42,22 @@
             "nodeInfoData": [
                 {
                     "animNode": {
-                        "animTime": 1.0,
                         "animationCurve": {
                             "easeKind": 0,
-                            "plotDatas": null
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startVector": 0.0,
+                            "useHermite": false
                         },
                         "axisParam": [
                             {
                                 "ease": 8,
-                                "name": "AxisX",
+                                "name": "axisX",
                                 "time": 0.4000000059604645
                             },
                             {
                                 "ease": 8,
-                                "name": "AxisY",
+                                "name": "axisY",
                                 "time": 0.4000000059604645
                             }
                         ],
@@ -64,17 +70,17 @@
                                 ]
                             },
                             {
-                                "animName": "knight_Run_F.fbx",
-                                "blendValue": [
-                                    0.5,
-                                    1.0
-                                ]
-                            },
-                            {
                                 "animName": "knight_Run_B.fbx",
                                 "blendValue": [
                                     0.5,
                                     0.0
+                                ]
+                            },
+                            {
+                                "animName": "knight_Run_F.fbx",
+                                "blendValue": [
+                                    0.5,
+                                    1.0
                                 ]
                             },
                             {
@@ -88,7 +94,9 @@
                         "isLoop": true,
                         "isRMR": false,
                         "isRMXZ": false,
-                        "isRMY": false
+                        "isRMY": false,
+                        "speed": 1.0,
+                        "useBlend": true
                     },
                     "arrowDataList": [
                         {
@@ -96,19 +104,11 @@
                                 "conditionList": [
                                     {
                                         "condition": {
-                                            "iCompare": 1,
+                                            "iCompare": 10,
                                             "iJudgeType": 2
                                         },
                                         "paramName": "state",
                                         "typeKind": 1
-                                    },
-                                    {
-                                        "condition": {
-                                            "fCompare": 0.10000000149011612,
-                                            "fJudgeType": 0
-                                        },
-                                        "paramName": "speed",
-                                        "typeKind": 2
                                     }
                                 ],
                                 "exitRatio": 1.0,
@@ -125,11 +125,11 @@
                                 "conditionList": [
                                     {
                                         "condition": {
-                                            "fCompare": 0.10000000149011612,
-                                            "fJudgeType": 1
+                                            "iCompare": 0,
+                                            "iJudgeType": 2
                                         },
-                                        "paramName": "speed",
-                                        "typeKind": 2
+                                        "paramName": "state",
+                                        "typeKind": 1
                                     }
                                 ],
                                 "exitRatio": 1.0,
@@ -140,6 +140,27 @@
                                 "transTime": 0.20000000298023224
                             },
                             "toName": "Idle"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 20,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "targetRatio": 0.28999999165534973,
+                                "transEase": 0.28999999165534973,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "Attack1"
                         }
                     ],
                     "nodeName": "TargetMove",
@@ -149,15 +170,18 @@
                 {
                     "animNode": {
                         "animName": "knight_Idle1.fbx",
-                        "animTime": 2.5333333015441895,
                         "animationCurve": {
                             "easeKind": 0,
-                            "plotDatas": null
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startVector": 1.228140950202942,
+                            "useHermite": false
                         },
                         "isLoop": true,
                         "isRMR": false,
                         "isRMXZ": false,
-                        "isRMY": false
+                        "isRMY": false,
+                        "speed": 1.0
                     },
                     "arrowDataList": [
                         {
@@ -165,19 +189,11 @@
                                 "conditionList": [
                                     {
                                         "condition": {
-                                            "iCompare": 2,
+                                            "iCompare": 11,
                                             "iJudgeType": 2
                                         },
                                         "paramName": "state",
                                         "typeKind": 1
-                                    },
-                                    {
-                                        "condition": {
-                                            "fCompare": 0.4000000059604645,
-                                            "fJudgeType": 0
-                                        },
-                                        "paramName": "speed",
-                                        "typeKind": 2
                                     }
                                 ],
                                 "exitRatio": 1.0,
@@ -225,8 +241,8 @@
                                 "exitRatio": 1.0,
                                 "interpolate": 0,
                                 "isHaveExit": false,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
+                                "targetRatio": 0.28999999165534973,
+                                "transEase": 0.28999999165534973,
                                 "transTime": 0.20000000298023224
                             },
                             "toName": "Attack1"
@@ -238,10 +254,12 @@
                 },
                 {
                     "animNode": {
-                        "animTime": 1.0,
                         "animationCurve": {
                             "easeKind": 0,
-                            "plotDatas": null
+                            "endVector": 1.0,
+                            "plotDatas": null,
+                            "startVector": 1.0,
+                            "useHermite": false
                         },
                         "axisParam": [
                             {
@@ -276,7 +294,9 @@
                         "isLoop": true,
                         "isRMR": false,
                         "isRMXZ": false,
-                        "isRMY": false
+                        "isRMY": false,
+                        "speed": 1.0,
+                        "useBlend": true
                     },
                     "arrowDataList": [
                         {
@@ -305,7 +325,7 @@
                                 "conditionList": [
                                     {
                                         "condition": {
-                                            "iCompare": 2,
+                                            "iCompare": 11,
                                             "iJudgeType": 2
                                         },
                                         "paramName": "state",
@@ -331,14 +351,19 @@
                                         },
                                         "paramName": "state",
                                         "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
                                     }
                                 ],
                                 "exitRatio": 1.0,
                                 "interpolate": 0,
                                 "isHaveExit": false,
-                                "targetRatio": 0.15000000596046448,
-                                "transEase": 0.15000000596046448,
-                                "transTime": 0.15000000596046448
+                                "targetRatio": 0.28999999165534973,
+                                "transEase": 0.28999999165534973,
+                                "transTime": 0.20000000298023224
                             },
                             "toName": "Attack1"
                         }
@@ -350,26 +375,40 @@
                 {
                     "animNode": {
                         "animName": "knight_SlashAttack1.fbx",
-                        "animTime": 1.5,
                         "animationCurve": {
-                            "easeKind": 0,
-                            "plotDatas": null
+                            "easeKind": 6,
+                            "endVector": 1.4142135381698608,
+                            "plotDatas": [
+                                {
+                                    "time": 0.8523985147476196,
+                                    "value": 0.7953668236732483,
+                                    "vector": 0.05810511112213135
+                                },
+                                {
+                                    "time": 1.0,
+                                    "value": 1.0,
+                                    "vector": 0.0
+                                }
+                            ],
+                            "startVector": 0.0,
+                            "useHermite": false
                         },
                         "isLoop": false,
                         "isRMR": false,
                         "isRMXZ": true,
-                        "isRMY": false
+                        "isRMY": false,
+                        "speed": 0.6800000071525574
                     },
                     "arrowDataList": [
                         {
                             "arrowParam": {
                                 "conditionList": null,
-                                "exitRatio": 1.0,
+                                "exitRatio": 0.7599999904632568,
                                 "interpolate": 0,
                                 "isHaveExit": true,
                                 "targetRatio": 0.0,
                                 "transEase": 0.0,
-                                "transTime": 0.12999999523162842
+                                "transTime": 0.3100000023841858
                             },
                             "toName": "Idle"
                         },
@@ -383,13 +422,18 @@
                                         },
                                         "paramName": "state",
                                         "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
                                     }
                                 ],
                                 "exitRatio": 1.0,
                                 "interpolate": 0,
                                 "isHaveExit": false,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
+                                "targetRatio": 0.23999999463558197,
+                                "transEase": 0.23999999463558197,
                                 "transTime": 0.20000000298023224
                             },
                             "toName": "Attack2"
@@ -400,21 +444,41 @@
                     "notifyList": [
                         {
                             "notifyParam": {
-                                "end": 0.5600000023841858,
+                                "end": 0.5350000262260437,
                                 "isActive": true,
                                 "isUse": [
                                     true,
                                     true,
                                     true
                                 ],
-                                "notifyName": "ANS_ChangeParameter",
-                                "parameterName": "AttackCollision",
+                                "notifyName": "ANS_AttackCollision",
+                                "parameterName": "attackCollision",
                                 "setParameter": [
                                     true,
                                     false,
                                     false
                                 ],
-                                "start": 0.27000001072883606
+                                "start": 0.37400001287460327
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "end": 1.0,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "notifyName": "ANS_CanCancel",
+                                "parameterName": "canCancel",
+                                "setParameter": [
+                                    true,
+                                    false,
+                                    false
+                                ],
+                                "start": 0.44999998807907104
                             },
                             "notifyType": 3
                         }
@@ -422,27 +486,36 @@
                 },
                 {
                     "animNode": {
-                        "animName": "knight_RollAttack.fbx",
-                        "animTime": 1.7333333492279053,
+                        "animName": "knight_SlashUp.fbx",
                         "animationCurve": {
-                            "easeKind": 0,
-                            "plotDatas": null
+                            "easeKind": 3,
+                            "endVector": 0.0,
+                            "plotDatas": [
+                                {
+                                    "time": 0.7666666507720947,
+                                    "value": 0.9999998807907104,
+                                    "vector": 0.0
+                                }
+                            ],
+                            "startVector": 0.0,
+                            "useHermite": true
                         },
                         "isLoop": false,
                         "isRMR": false,
                         "isRMXZ": true,
-                        "isRMY": false
+                        "isRMY": false,
+                        "speed": 0.5
                     },
                     "arrowDataList": [
                         {
                             "arrowParam": {
                                 "conditionList": null,
-                                "exitRatio": 1.0,
+                                "exitRatio": 0.8500000238418579,
                                 "interpolate": 0,
                                 "isHaveExit": true,
                                 "targetRatio": 0.0,
                                 "transEase": 0.0,
-                                "transTime": 0.20000000298023224
+                                "transTime": 0.11999999731779099
                             },
                             "toName": "Idle"
                         },
@@ -456,13 +529,18 @@
                                         },
                                         "paramName": "state",
                                         "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
                                     }
                                 ],
                                 "exitRatio": 1.0,
                                 "interpolate": 0,
                                 "isHaveExit": false,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
+                                "targetRatio": 0.07000000029802322,
+                                "transEase": 0.07000000029802322,
                                 "transTime": 0.20000000298023224
                             },
                             "toName": "Attack3"
@@ -470,26 +548,171 @@
                     ],
                     "nodeName": "Attack2",
                     "nodeType": 0,
-                    "notifyList": null
+                    "notifyList": [
+                        {
+                            "notifyParam": {
+                                "end": 0.6029999852180481,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_AttackCollision",
+                                "parameterName": "attackCollision",
+                                "setParameter": [
+                                    true,
+                                    false,
+                                    false
+                                ],
+                                "start": 0.3779999911785126
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "end": 1.0,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "notifyName": "ANS_CanCancel",
+                                "parameterName": "canCancel",
+                                "setParameter": [
+                                    true,
+                                    false,
+                                    false
+                                ],
+                                "start": 0.6000000238418579
+                            },
+                            "notifyType": 3
+                        }
+                    ]
                 },
                 {
                     "animNode": {
-                        "animName": "knight_JumpAttack.fbx",
-                        "animTime": 2.3333332538604736,
+                        "animName": "knight_RollAttack.fbx",
                         "animationCurve": {
-                            "easeKind": 0,
-                            "plotDatas": null
+                            "easeKind": 5,
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startVector": 0.44512927532196045,
+                            "useHermite": false
                         },
                         "isLoop": false,
                         "isRMR": false,
                         "isRMXZ": true,
-                        "isRMY": false
+                        "isRMY": false,
+                        "speed": 0.800000011920929
                     },
                     "arrowDataList": [
                         {
                             "arrowParam": {
                                 "conditionList": null,
+                                "exitRatio": 0.5899999737739563,
+                                "interpolate": 0,
+                                "isHaveExit": true,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.2800000011920929
+                            },
+                            "toName": "Idle"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 23,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
                                 "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "targetRatio": 0.27000001072883606,
+                                "transEase": 0.27000001072883606,
+                                "transTime": 0.27000001072883606
+                            },
+                            "toName": "Attack4"
+                        }
+                    ],
+                    "nodeName": "Attack3",
+                    "nodeType": 0,
+                    "notifyList": [
+                        {
+                            "notifyParam": {
+                                "end": 0.38499999046325684,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_AttackCollision",
+                                "parameterName": "attackCollision",
+                                "setParameter": [
+                                    true,
+                                    false,
+                                    false
+                                ],
+                                "start": 0.28999999165534973
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "end": 0.5899999737739563,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "notifyName": "ANS_CanCancel",
+                                "parameterName": "canCancel",
+                                "setParameter": [
+                                    true,
+                                    false,
+                                    false
+                                ],
+                                "start": 0.37599998712539673
+                            },
+                            "notifyType": 3
+                        }
+                    ]
+                },
+                {
+                    "animNode": {
+                        "animName": "knight_SlashDown.fbx",
+                        "animationCurve": {
+                            "easeKind": 3,
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startVector": 0.0,
+                            "useHermite": false
+                        },
+                        "isLoop": false,
+                        "isRMR": false,
+                        "isRMXZ": true,
+                        "isRMY": false,
+                        "speed": 0.9599999785423279
+                    },
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 0.8600000143051147,
                                 "interpolate": 0,
                                 "isHaveExit": true,
                                 "targetRatio": 0.0,
@@ -499,9 +722,30 @@
                             "toName": "Idle"
                         }
                     ],
-                    "nodeName": "Attack3",
+                    "nodeName": "Attack4",
                     "nodeType": 0,
-                    "notifyList": null
+                    "notifyList": [
+                        {
+                            "notifyParam": {
+                                "end": 0.6430000066757202,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_AttackCollision",
+                                "parameterName": "attackCollision",
+                                "setParameter": [
+                                    true,
+                                    false,
+                                    false
+                                ],
+                                "start": 0.531000018119812
+                            },
+                            "notifyType": 3
+                        }
+                    ]
                 }
             ],
             "playSpeed": 1.0
@@ -524,10 +768,12 @@
             "nodeInfoData": [
                 {
                     "animNode": {
-                        "animTime": 1.0,
                         "animationCurve": {
                             "easeKind": 0,
-                            "plotDatas": null
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startVector": 0.0,
+                            "useHermite": false
                         },
                         "axisParam": [
                             {
@@ -574,7 +820,9 @@
                         "isLoop": true,
                         "isRMR": false,
                         "isRMXZ": false,
-                        "isRMY": false
+                        "isRMY": false,
+                        "speed": 1.0,
+                        "useBlend": true
                     },
                     "arrowDataList": null,
                     "nodeName": "Target",
@@ -583,16 +831,18 @@
                 },
                 {
                     "animNode": {
-                        "animName": "knight_Run_F.fbx",
-                        "animTime": 0.699999988079071,
                         "animationCurve": {
                             "easeKind": 0,
-                            "plotDatas": null
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startVector": 0.0,
+                            "useHermite": false
                         },
                         "isLoop": true,
                         "isRMR": false,
                         "isRMXZ": false,
-                        "isRMY": false
+                        "isRMY": false,
+                        "speed": 1.0
                     },
                     "arrowDataList": null,
                     "nodeName": "F",
@@ -659,6 +909,12 @@
             "rightHand": true
         },
         {
+            "assetName": "knight_Stinger.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_Stinger.fbx",
+            "rightHand": true
+        },
+        {
             "assetName": "knight_JumpAttack.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_JumpAttack.fbx",
@@ -674,6 +930,24 @@
             "assetName": "knight_RollAttack.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_RollAttack.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_SlashStamp.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_SlashStamp.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_SlashUp.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_SlashUp.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_SlashDown.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_SlashDown.fbx",
             "rightHand": true
         }
     ],

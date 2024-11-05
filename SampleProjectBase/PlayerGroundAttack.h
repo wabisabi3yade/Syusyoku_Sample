@@ -6,7 +6,7 @@ class PlayerGroundAttack : public PlayerAttackState
 {
 public:
 	PlayerGroundAttack() {}
-	~PlayerGroundAttack() {}
+	virtual ~PlayerGroundAttack() {}
 
 	void OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName) override;
 };

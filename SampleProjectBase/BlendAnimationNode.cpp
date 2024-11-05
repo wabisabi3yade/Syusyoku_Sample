@@ -16,7 +16,7 @@ using namespace HashiTaku;
 
 
 BlendAnimationNode::BlendAnimationNode(const AnimationParameters& _animParams, std::string _nodeName)
-	: AnimationNode_Base(_nodeName, NodeType::Blend), pAnimParameters(&_animParams)
+	: AnimationNode_Base(_nodeName, NodeType::Blend), pAnimParameters(&_animParams), isUseBlend(true)
 {
 	SetAnimationTime(1.0f);
 }
@@ -43,6 +43,8 @@ nlohmann::json BlendAnimationNode::Save()
 {
 	auto data = AnimationNode_Base::Save();
 
+	data["useBlend"] = isUseBlend;
+
 	// é≤ÇÃÉpÉâÉÅÅ[É^Çï€ë∂
 	for (auto& a : axisParameters)
 		data["axisParam"].push_back(SaveAxisParameter(a));
@@ -57,6 +59,8 @@ nlohmann::json BlendAnimationNode::Save()
 void BlendAnimationNode::Load(const nlohmann::json& _data)
 {
 	AnimationNode_Base::Load(_data);
+
+	LoadJsonBoolean("useBlend", isUseBlend, _data);
 
 	nlohmann::json blendSaveDatas;
 	if (LoadJsonDataArray("axisParam", blendSaveDatas, _data))
@@ -253,9 +257,16 @@ u_int BlendAnimationNode::GetAnimPointCnt() const
 	return static_cast<u_int>(animationPoints.size());
 }
 
+bool BlendAnimationNode::GetIsUseBlend() const
+{
+	return isUseBlend;
+}
+
 void BlendAnimationNode::ImGuiSetting()
 {
 	AnimationNode_Base::ImGuiSetting();
+
+	ImGui::Checkbox("UseBlend", &isUseBlend);
 
 	ImGuiAxisParam();
 

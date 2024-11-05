@@ -58,8 +58,6 @@ private:
 public:
 	AnimationNode_Base(std::string _nodeName, NodeType _type);
 	virtual ~AnimationNode_Base() {}
-	/*AnimationNode_Base(const AnimationNode_Base& _other);
-	AnimationNode_Base& operator=(const AnimationNode_Base& _other);*/
 
 	// 再生中のときに表示
 	virtual void ImGuiPlaying();
@@ -134,9 +132,6 @@ private:
 	// ノードのパラメーター設定
 	void ImGuiSetParameter();
 protected:
-	/// @brief 更新処理を行う
-	/// @param _boneList ボーンリスト
-	virtual void Update(BoneList& _boneList) {};
 
 	// 再生時間をセットする
 	void SetAnimationTime(float _time);

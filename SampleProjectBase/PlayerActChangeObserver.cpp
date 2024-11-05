@@ -12,5 +12,5 @@ void PlayerActChangeObserver::ObserverUpdate(const int& _changeType)
 {
 	HASHI_DEBUG_LOG(GetObserverName() + "’Ê’mŽó‚¯Žæ‚è");
 
-	pActionController->ChangeNode(static_cast<PlayerActState_Base::StateType>(_changeType));
+	pActionController->ChangeNode(static_cast<PlayerActState_Base::PlayerState>(_changeType));
 }

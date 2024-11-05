@@ -77,11 +77,16 @@ void CrossFadeAnimation::Update(float _playSpeed)
 
 	// 更新処理
 	std::vector<BoneTransform> fromBoneTransforms;
-	pFromNodePlayer->UpdateCall(fromBoneTransforms, _playSpeed);
+	pFromNodePlayer->OnInterpolateUpdate(fromBoneTransforms, _playSpeed);
+	Vector3 fromMovement = pFromNodePlayer->CalcRootMotionToTransform();
 
 	std::vector<BoneTransform> toBoneTransforms;
-	pToNodePlayer->UpdateCall(toBoneTransforms, _playSpeed);
+	pToNodePlayer->OnInterpolateUpdate(toBoneTransforms, _playSpeed);
+	Vector3 toMovement = pToNodePlayer->CalcRootMotionToTransform();
 
+	Vector3 blendMovement = Vector3::Lerp(fromMovement, toMovement, transitionWeight);
+	pToNodePlayer->ApplyRootMotion(blendMovement);
+	
 	// 補間したトランスフォームをボーンに適用させる
 	u_int boneCnt = pBoneList->GetBoneCnt();
 	for (u_int b_i = 0; b_i < boneCnt; b_i++)

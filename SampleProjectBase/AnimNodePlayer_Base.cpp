@@ -7,7 +7,7 @@
 
 AnimNodePlayer_Base::AnimNodePlayer_Base(const AnimationNode_Base& _playNode, BoneList& _boneList, Transform& _transform)
 	: pPlayAnimNode(&_playNode), pBoneList(&_boneList), pObjectTransform(&_transform),
-	curPlayRatio(0.0f), lastPlayRatio(-Mathf::smallValue), animationRatio(0.0f), playerSpeedTimes(1.0f), allPlaySpeed(0.0f), isJustLoop(false), isPlay(true)
+	curPlayRatio(0.0f), lastAnimationRatio(-Mathf::smallValue), curAnimationRatio(0.0f), playerSpeedTimes(1.0f), allPlaySpeed(0.0f), isJustLoop(false), isPlay(true)
 {
 }
 
@@ -20,12 +20,12 @@ void AnimNodePlayer_Base::CopyNotifys(const std::list<std::unique_ptr<AnimationN
 		auto pCopyNotify = origin->Clone();
 
 		// アニメーションパラメータをセットするなら
-		if (IAnimParametersSetter* pAnimParamSetter = 
+		if (IAnimParametersSetter* pAnimParamSetter =
 			dynamic_cast<IAnimParametersSetter*>(pCopyNotify.get()))
 		{
 			pAnimParamSetter->SetAnimationParameters(_animationParameters);
 		}
-	
+
 		// 追加
 		copyNotifys.push_back(std::move(pCopyNotify));
 	}
@@ -49,7 +49,33 @@ void AnimNodePlayer_Base::UpdateCall(std::vector<BoneTransform>& _outTransforms,
 	CalcRootMotionPosSpeed(_controllerPlaySpeed);
 
 	// アニメーションのルートモーションを適用する
-	ApplyRootMotionToTransform();
+	ApplyRootMotion(CalcRootMotionToTransform());
+
+	// 通知イベントを更新
+	NotifyUpdate();
+}
+
+void AnimNodePlayer_Base::ApplyRootMotion(const DirectX::SimpleMath::Vector3& _rootMovement)
+{
+	pObjectTransform->SetPosition(pObjectTransform->GetPosition() + _rootMovement);
+}
+
+void AnimNodePlayer_Base::OnInterpolateUpdate(std::vector<BoneTransform>& _outTransforms, float _controllerPlaySpeed)
+{
+	if (!isPlay)
+	{
+		Update(_outTransforms);
+		return;
+	}
+
+	// 再生割合を進める
+	ProgressPlayRatio(_controllerPlaySpeed);
+
+	// アニメーションの更新処理
+	Update(_outTransforms);
+
+	// ルートモーションの座標移動速度を計算
+	CalcRootMotionPosSpeed(_controllerPlaySpeed);
 
 	// 通知イベントを更新
 	NotifyUpdate();
@@ -59,10 +85,10 @@ void AnimNodePlayer_Base::SetCurPlayRatio(float _playRatio)
 {
 	curPlayRatio = _playRatio;
 
-	// 1フレーム前の再生割合を現在の割合より前に置く
-	lastPlayRatio = curPlayRatio - Mathf::smallValue;
+	curAnimationRatio = pPlayAnimNode->GetCurveValue(curPlayRatio);
 
-	animationRatio = pPlayAnimNode->GetCurveValue(curPlayRatio);
+	// 1フレーム前の再生割合を現在の割合より前に置く
+	lastAnimationRatio = curAnimationRatio - Mathf::smallValue;
 }
 
 void AnimNodePlayer_Base::SetPlaySpeedTimes(float _playSpeed)
@@ -75,14 +101,14 @@ float AnimNodePlayer_Base::GetCurPlayRatio() const
 	return curPlayRatio;
 }
 
-float AnimNodePlayer_Base::GetLastPlayRatio() const
+float AnimNodePlayer_Base::GetLastAnimationRatio() const
 {
-	return lastPlayRatio;
+	return lastAnimationRatio;
 }
 
 float AnimNodePlayer_Base::GetAnimationRatio() const
 {
-	return animationRatio;
+	return curAnimationRatio;
 }
 
 float AnimNodePlayer_Base::GetNodePlaySpeed() const
@@ -92,7 +118,7 @@ float AnimNodePlayer_Base::GetNodePlaySpeed() const
 
 void AnimNodePlayer_Base::GetDeltaRootPos(DirectX::SimpleMath::Vector3& _outPos) const
 {
-	_outPos = GetRootMotionPos(animationRatio) - p_RootMotionPos;
+	_outPos = GetRootMotionPos(curAnimationRatio) - p_RootMotionPos;
 }
 
 void AnimNodePlayer_Base::GetCurrentRootPos(DirectX::SimpleMath::Vector3& _outPos, bool _isLoadScaling) const
@@ -114,9 +140,6 @@ void AnimNodePlayer_Base::ProgressPlayRatio(float _controllerPlaySpeed)
 {
 	isJustLoop = false;
 
-	// 1フレーム前の再生割合を更新
-	lastPlayRatio = curPlayRatio;
-
 	/*
 	コントローラ全体の再生速度 ×
 	プレイヤーの再生速度　×
@@ -130,11 +153,15 @@ void AnimNodePlayer_Base::ProgressPlayRatio(float _controllerPlaySpeed)
 
 
 	curPlayRatio += allPlaySpeed * MainApplication::DeltaTime();
-	// アニメーション割合を計算
-	animationRatio = pPlayAnimNode->GetCurveValue(curPlayRatio);
 
 	if (IsCanLoop())
 		OnPlayLoop();
+
+	// 1フレーム前の再生割合を更新
+	lastAnimationRatio = curAnimationRatio;
+
+	// アニメーション割合を計算
+	curAnimationRatio = pPlayAnimNode->GetCurveValue(curPlayRatio);
 }
 
 void AnimNodePlayer_Base::OnTerminal()
@@ -168,7 +195,7 @@ void AnimNodePlayer_Base::OnPlayLoop()
 	curPlayRatio = Mathf::Repeat(curPlayRatio, 1.0f);	// 再生割合を戻す
 }
 
-void AnimNodePlayer_Base::ApplyRootMotionToTransform()
+DirectX::SimpleMath::Vector3 AnimNodePlayer_Base::CalcRootMotionToTransform()
 {
 	using namespace DirectX::SimpleMath;
 
@@ -182,7 +209,7 @@ void AnimNodePlayer_Base::ApplyRootMotionToTransform()
 	float curPlayRatio = GetAnimationRatio();
 
 	// 移動座標
-	Vector3 curPos = GetRootMotionPos(curPlayRatio);
+	Vector3 curPos = GetRootMotionPos(curAnimationRatio);
 	Vector3 posRootMovemrnt = curPos - p_RootMotionPos;
 
 	// ループ時に前回の再生割合からアニメーション最後までのルートモーションの座標移動
@@ -190,7 +217,7 @@ void AnimNodePlayer_Base::ApplyRootMotionToTransform()
 	if (isJustLoop)
 	{
 		Vector3 endRootMotionPos = GetRootMotionPos(1.0f);
-		loopDeadRMDistabce = endRootMotionPos - GetRootMotionPos(lastPlayRatio);
+		loopDeadRMDistabce = endRootMotionPos - GetRootMotionPos(lastAnimationRatio);
 	}
 
 	// オブジェクトの向きに反映する
@@ -203,9 +230,9 @@ void AnimNodePlayer_Base::ApplyRootMotionToTransform()
 	if (pPlayAnimNode->GetIsRootMotionY())
 		worldMovement += pObjectTransform->Up() * (posRootMovemrnt.y + loopDeadRMDistabce.y);
 
-	// オブジェクトの座標更新
-	pObjectTransform->SetPosition(pObjectTransform->GetPosition() + worldMovement);
 	p_RootMotionPos = curPos;
+
+	return worldMovement;
 }
 
 void AnimNodePlayer_Base::NotifyUpdate()
@@ -213,7 +240,7 @@ void AnimNodePlayer_Base::NotifyUpdate()
 	// 全て
 	for (auto& pNotify : copyNotifys)
 	{
-		pNotify->Update(lastPlayRatio, curPlayRatio, isJustLoop);
+		pNotify->Update(lastAnimationRatio, curAnimationRatio, isJustLoop);
 	}
 }
 
@@ -228,6 +255,6 @@ void AnimNodePlayer_Base::ApplyLoadTransform(DirectX::SimpleMath::Vector3& _root
 void AnimNodePlayer_Base::ImGuiSetting()
 {
 	ImGui::SliderFloat("Play", &curPlayRatio, 0.0f, 1.0f);
-	ImGui::Text("AnimRatio:%lf", animationRatio);
+	ImGui::Text("AnimRatio:%lf", curAnimationRatio);
 	ImGui::DragFloat("Speed", &playerSpeedTimes, 0.01f, 0.0f, 50.0f);
 }

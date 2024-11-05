@@ -3,7 +3,7 @@
 namespace HashiTaku
 {
 	/// @brief  攻撃の情報
-	class AttackInformation
+	class AttackInformation : public HashiTaku::ISaveLoad, public HashiTaku::IImGuiUser
 	{
 	public:
 		/// @brief 攻撃レベル
@@ -49,10 +49,13 @@ namespace HashiTaku
 		/// @return ヒットストップ数
 		u_int GetHitStopFlame() const;
 
+		nlohmann::json Save() override;
+		void Load(const nlohmann::json& _data) override;
 	private:
 		/// @brief 攻撃レベルから各パラメータを適用
 		void ApplyFromAttackLevel();
 
+		void ImGuiSetting() override;
 	private:
 		// Low
 		static constexpr u_int LOW_HITSTOP = 6;

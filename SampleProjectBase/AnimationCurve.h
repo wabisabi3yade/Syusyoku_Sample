@@ -29,6 +29,9 @@ class AnimationCurve : public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
 	/// @brief イージング種類
 	HashiTaku::EaseKind easeKind;
 
+	/// @brief エルミート曲線を使用するか？（使用しない場合、線形）
+	bool isUseHermite = false;
+
 #ifdef EDIT
 	// マウス編集中のプロット点
 	HermitePlotParam* editingPlot{ nullptr };
@@ -79,6 +82,11 @@ private:
 	/// @param _easeKind 種類
 	void SetEase(HashiTaku::EaseKind _easeKind);
 
+	/// @brief 始点と終点のプロットか確認
+	/// @param _checkPlot 確認するプロット
+	/// @return 始点または終点のプロットか？
+	bool IsStartOrEndPlot(const HermitePlotParam* _checkPlot);
+
 	void ImGuiSetting() override;
 
 	// ImGuiでプロット点を編集
@@ -86,6 +94,9 @@ private:
 
 	// ImGuiでベクトル点を編集
 	void ImEditVectorPoint();
+
+	// ImGuiでグラフを描画
+	void ImDrawGraph();
 
 	// ImGuiでプロット点を追加・削除を行う
 	void ImAddPopPlot();

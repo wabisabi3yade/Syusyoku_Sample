@@ -16,17 +16,21 @@ PlayerMoveState::PlayerMoveState()
 
 nlohmann::json PlayerMoveState::Save()
 {
-	auto data =  PlayerActState_Base::Save();
+	auto data = PlayerActState_Base::Save();
+
 	data["maxSpeed"] = maxSpeed;
 	data["acceleration"] = acceleration;
 	data["decade"] = decadeSpeedTimes;
 	data["rotateSpeed"] = rotateSpeed;
+
 	return data;
 }
 
 void PlayerMoveState::Load(const nlohmann::json& _data)
 {
 	using namespace HashiTaku;
+
+	PlayerActState_Base::Load(_data);
 
 	LoadJsonFloat("maxSpeed", maxSpeed, _data);
 	LoadJsonFloat("acceleration", acceleration, _data);
@@ -43,6 +47,8 @@ void PlayerMoveState::UpdateBehavior()
 {
 	Move();
 
+	ApplyRootMotion();
+
 	Rotation();
 
 }
@@ -56,15 +62,15 @@ void PlayerMoveState::TransitionCheckUpdate()
 	// アタックStateに遷移
 	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
 	{
-		ChangeState(StateType::Attack11);
+		ChangeState(PlayerState::Attack11);
 	}
 	else if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_RockOn))
 	{
-		ChangeState(StateType::TargetMove);
+		ChangeState(PlayerState::TargetMove);
 	}
 	else if (currentSpeed <= Mathf::epsilon)	// 移動速度が0以下になると
 	{
-		ChangeState(StateType::Idle);
+		ChangeState(PlayerState::Idle);
 	}
 }
 
@@ -77,8 +83,6 @@ bool PlayerMoveState::IsRunning()
 
 void PlayerMoveState::ImGuiSetting()
 {
-	curve.ImGuiCall();
-
 	std::string text = TO_UTF8("speed") + std::to_string(currentSpeed);
 	ImGui::Text(text.c_str());
 	ImGui::DragFloat("maxSpeed", &maxSpeed, 0.1f, 0.0f, 1000.0f);
@@ -90,26 +94,48 @@ void PlayerMoveState::ImGuiSetting()
 void PlayerMoveState::Move()
 {
 	float deltaTime = MainApplication::DeltaTime();
+	GameObject& playerObj = pPlayer->GetGameObject();
 
 	// 移動方向・移動量決定
 	Vector3 camForwardVec = pCamera->GetTransform().Forward();
 	Vector3 camRightVec = pCamera->GetTransform().Right();
 	Vector2 input = GetInputLeftStick();
+
+	// 傾きの大きさを取得
+	float inputMagnitude = std::min(input.Length(), 1.0f);
+	inputMagnitude = inputMagnitude * inputMagnitude;	// 入力の滑らかさをだす
+
+	// 移動方向を求める
 	moveVector = camRightVec * input.x;
 	moveVector += camForwardVec * input.y;
 	moveVector.y = 0.0f;
+	moveVector.Normalize();
 
-	Vector3 moveSpeed = moveVector *  maxSpeed;
-	currentSpeed = moveSpeed.Length();
+	// 移動速度を求める
+	float curMaxSpd = maxSpeed * inputMagnitude;
+	if (currentSpeed > curMaxSpd)
+	{
+		// 減速率をかける
+		currentSpeed *= decadeSpeedTimes * deltaTime;
+		//currentSpeed = std::max(currentSpeed, curMaxSpd);
+	}
+	else
+	{
+		currentSpeed += acceleration * deltaTime;
+		currentSpeed = std::min(currentSpeed, curMaxSpd);
+	}
 
 	// 移動
-	Vector3 pos = pPlayerObject->GetTransform().GetPosition();
-	pos += moveVector * maxSpeed * MainApplication::DeltaTime();
-	pPlayerObject->GetTransform().SetPosition(pos);
+	Vector3 pos = playerObj.GetTransform().GetPosition();
+	pos += moveVector * currentSpeed * MainApplication::DeltaTime();
+	playerObj.GetTransform().SetPosition(pos);
 
 	// アニメーションのブレンド割合をセット
 	pAnimation->SetFloat(SPEEDRATIO_PARAMNAME, currentSpeed / maxSpeed);
+}
 
+void PlayerMoveState::ApplyRootMotion()
+{
 	// ルートモーションと移動速度から移動速度の再生速度を調整する
 	if (IsRunning())
 	{
@@ -122,25 +148,25 @@ void PlayerMoveState::Move()
 			pAnimation->SetCurNodePlayerSpeed(animPlaySpeed);
 		}
 	}
-	else
-	{
-		pAnimation->SetCurNodePlayerSpeed(IDLE_ANIM_PLAYSPEED);
-	}
-
+	//else
+	//{
+	//	pAnimation->SetCurNodePlayerSpeed(IDLE_ANIM_PLAYSPEED);
+	//}
 }
-
 
 void PlayerMoveState::Rotation()
 {
 	if (!IsMoveInput()) return;
 
+	GameObject& playerObj = pPlayer->GetGameObject();
+
 	// 入力方向へ向ける回転量を求める
 	Quaternion targetRotation = Quat::RotateToVector(moveVector);
 
 	// 現在の回転量を球面線形補間で向けていく。
-	Quaternion rotation = pPlayerObject->GetTransform().GetRotation();
+	Quaternion rotation = playerObj.GetTransform().GetRotation();
 	rotation = Quaternion::Slerp(rotation, targetRotation, rotateSpeed * MainApplication::DeltaTime());
-	pPlayerObject->GetTransform().SetRotation(rotation);
+	playerObj.GetTransform().SetRotation(rotation);
 }
 
 bool PlayerMoveState::IsMoveInput()

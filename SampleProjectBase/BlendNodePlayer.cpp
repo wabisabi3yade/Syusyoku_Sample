@@ -95,9 +95,16 @@ void AnimBlendNodePlayer::AnimationUpdate(std::vector<BoneTransform>& _outTransf
 		curBlendValues = { axisPlayParameters[0].curBlendValue, axisPlayParameters[1].curBlendValue };
 		pBlendNode->FindBlendPairTwoAxis(curBlendValues, blendingAnimData);
 	}
+	
+	// ブレンドしなかったら
+	if (!pBlendNode->GetIsUseBlend())
+	{
+		// 一番ウェイトが大きいものだけを残す
+		blendingAnimData.erase(blendingAnimData.begin() + 1, blendingAnimData.end());
+		blendingAnimData[0].blendWeight = 1.0f;
+	}
 
 	u_int blendAnimCnt = static_cast<u_int>(blendingAnimData.size());
-
 	_outTransforms.resize(pBoneList->GetBoneCnt());
 	// アニメーションの数によってブレンド計算方法を変える
 	switch (blendAnimCnt)
@@ -172,12 +179,12 @@ void AnimBlendNodePlayer::SquareAnimationUpdate(std::vector<BoneTransform>& _out
 		for (u_int bl_i = 0; bl_i < 4; bl_i++)
 		{
 			_outTransforms[b_i].position += blendingAnimData[bl_i].pAnimation->GetPositionByRatio(b_i, playingRatio) *
-									  blendingAnimData[bl_i].blendWeight;
+				blendingAnimData[bl_i].blendWeight;
 		}
 
 		Quaternion quat12, quat34;	// クォータニオン1・2個目と3。4個目
 		float weight12 = 0.0f, weight34 = 0.0f;	// ウェイト1・2個目と3。4個目
-		
+
 		// 1・2個目
 		weight12 = blendingAnimData[0].blendWeight + blendingAnimData[1].blendWeight;
 		quat12 = Quaternion::Slerp(
@@ -211,7 +218,7 @@ void AnimBlendNodePlayer::CalcRootMotionPosSpeed(float _controllerSpeed)
 {
 	using namespace DirectX::SimpleMath;
 	pBlendNode->CalcRootMotionSpeed(blendingAnimData, rootMotionPosSpeedPerSec);
-	rootMotionPosSpeedPerSec *= _controllerSpeed /** GetNodePlaySpeed()*/ * pBoneList->GetLoadScale();;
+	rootMotionPosSpeedPerSec *= _controllerSpeed  * pBoneList->GetLoadScale();;
 }
 
 DirectX::SimpleMath::Vector3 AnimBlendNodePlayer::GetRootMotionPos(float _ratio, bool _isLoadScaling) const

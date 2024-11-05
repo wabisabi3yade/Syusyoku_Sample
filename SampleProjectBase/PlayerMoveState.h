@@ -7,10 +7,9 @@ class CP_Camera;
 /// @brief プレイヤー移動処理
 class PlayerMoveState : public PlayerActState_Base
 {
+protected:
 	/// @brief 移動方向
 	DirectX::SimpleMath::Vector3 moveVector;
-
-	AnimationCurve curve;
 
 	/// @brief 現在の速度
 	float currentSpeed;
@@ -28,7 +27,7 @@ class PlayerMoveState : public PlayerActState_Base
 	float rotateSpeed;
 public:
 	PlayerMoveState();
-	~PlayerMoveState() {}
+	virtual ~PlayerMoveState() {}
 
 	/// @brief セーブする
 	/// @return セーブデータ
@@ -37,14 +36,20 @@ public:
 	/// @brief ロードする
 	/// @param _data ロードするデータ 
 	void Load(const nlohmann::json& _data) override;
+
+protected:
+	/// @brief 移動
+	void Move();
+
+	void ImGuiSetting() override;
 private:
 	void OnStartBehavior() override;
 	void UpdateBehavior() override;
 	void OnEndBehavior() override;
 	void TransitionCheckUpdate() override;
 
-	/// @brief 移動
-	void Move();
+	/// @brief ルートモーション適用
+	void ApplyRootMotion();
 
 	/// @brief 回転させる
 	void Rotation();
@@ -55,7 +60,5 @@ private:
 	/// @brief 走っているか取得
 	/// @return 走っているか？
 	bool IsRunning();
-
-	void ImGuiSetting() override;
 };
 

@@ -7,9 +7,10 @@
 #include "PlayerTargetMove.h"
 #include "PlayerAttackState.h"
 #include "PlayerGroundAttack.h"
+#include "PlayerRushAttack.h"
 
-PlayerActionController::PlayerActionController(GameObject& _pPlayerObject)
-	: StateMachine_Base("playerAction"), pAnimation(nullptr), pPlayerObject(&_pPlayerObject)
+PlayerActionController::PlayerActionController(CP_Player& _player)
+	: StateMachine_Base("playerAction"), pAnimation(nullptr), pPlayer(&_player)
 {
 	// 状態遷移オブザーバー生成
 	pStateChangeObserver = std::make_unique<PlayerActChangeObserver>("StateChangeObserver", *this);
@@ -18,7 +19,7 @@ PlayerActionController::PlayerActionController(GameObject& _pPlayerObject)
 	pChangeAnimObserver = std::make_unique<PlayerChangeAnimObserver>(*this);
 
 	// 行動クラスを生成
-	using enum PlayerActState_Base::StateType;
+	using enum PlayerActState_Base::PlayerState;
 	CreateState<PlayerIdleState>(Idle);
 	CreateState<PlayerMoveState>(Move);
 	CreateState<PlayerTargetMove>(TargetMove);
@@ -26,7 +27,7 @@ PlayerActionController::PlayerActionController(GameObject& _pPlayerObject)
 	CreateState<PlayerGroundAttack>(Attack12);
 	CreateState<PlayerGroundAttack>(Attack13);
 	CreateState<PlayerGroundAttack>(Attack14);
-	CreateState<PlayerGroundAttack>(SpecialAtkHi);
+	CreateState<PlayerRushAttack>(SpecialAtkHi);
 
 	// デフォルト状態をセット
 	SetDefaultNode(Idle);
@@ -50,7 +51,7 @@ void PlayerActionController::Update()
 	pCurrentNode->Update();
 }
 
-bool PlayerActionController::ChangeNode(const PlayerActState_Base::StateType& _nextActionState)
+bool PlayerActionController::ChangeNode(const PlayerActState_Base::PlayerState& _nextActionState)
 {
 	// ステートマシンで変更
 	bool isSuccess = StateMachine_Base::ChangeNode(_nextActionState);
@@ -124,9 +125,9 @@ void PlayerActionController::Load(const nlohmann::json& _data)
 			if (!LoadJsonString("typeString", stateString , actData))
 				continue;
 
-			PlayerActState_Base::StateType playerState;
+			PlayerActState_Base::PlayerState playerState;
 			// 文字列->StateType
-			auto state = magic_enum::enum_cast<PlayerActState_Base::StateType>(stateString);
+			auto state = magic_enum::enum_cast<PlayerActState_Base::PlayerState>(stateString);
 			if (state.has_value())
 				playerState = state.value();
 			else

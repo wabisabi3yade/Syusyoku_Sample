@@ -67,6 +67,9 @@ private:
 
 	/// @brief アニメーションパラメータのポインタ
 	const AnimationParameters* pAnimParameters;
+
+	/// @brief アニメーション間でブレンドする(しない場合、ウェイトが大きいアニメーションだけ)
+	bool isUseBlend;
 public:
 	BlendAnimationNode(const AnimationParameters& _animParams, std::string _nodeName);
 	~BlendAnimationNode() {}
@@ -101,6 +104,10 @@ public:
 	/// @param _blendDatas ブレンドデータ 
 	/// @param _outPos 結果
 	void GetRootMotionPos(float _ratio, const std::vector<BlendingData>& _blendDatas, DirectX::SimpleMath::Vector3& _outPos) const;
+
+	/// @brief ブレンドするかどうか取得
+	/// @return ブレンドするか？
+	bool GetIsUseBlend() const;
 
 	/// @brief X軸のみのときのブレンドペア探索
 	/// @param _blendValue ブレンド値

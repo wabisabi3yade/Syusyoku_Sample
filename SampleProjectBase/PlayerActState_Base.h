@@ -9,14 +9,14 @@
 
 
 class CP_Animation;
-class GameObject;
+class CP_Player;
 
 /// @brief プレイヤーの行動ステート基底クラス
 class PlayerActState_Base : public HashiTaku::StateNode_AnimationBase , public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
 {
 public:
 	// プレイヤーの行動状態
-	enum class StateType
+	enum class PlayerState
 	{
 		// 待機
 		Idle,
@@ -75,13 +75,13 @@ private:
 	std::unique_ptr<StateChangeSubject> changeStateSubject;
 
 	/// @brief この行動クラスのステートタイプ
-	StateType stateType;
+	PlayerState stateType;
 protected:
 	/// @brief アニメーション管理
 	CP_Animation* pAnimation;
 
-	/// @brief  プレイヤーオブジェクト
-	GameObject* pPlayerObject;
+	/// @brief プレイヤー
+	CP_Player* pPlayer;
 
 	/// @brief ゲーム入力クラス
 	GameInput* pPlayerInput;
@@ -94,9 +94,9 @@ public:
 
 	/// @brief 初期化処理
 	/// @param _stateType　状態
-	/// @param _gameObject　移動するオブジェクト 
+	/// @param _player　プレイヤーコンポーネント
 	/// @param _changeObserver ステート遷移オブザーバー
-	void Init(StateType _stateType, GameObject& _gameObject, StateChangeObserver& _changeObserver);
+	void Init(PlayerState _stateType, CP_Player& _player, StateChangeObserver& _changeObserver);
 
 	/// @brief 開始処理呼び出し
 	void OnStart() override;
@@ -111,7 +111,7 @@ public:
 	void SetAnimation(CP_Animation& _pAnimation);
 
 	// ステートタイプを取得
-	StateType GetActStateType() const;
+	PlayerState GetActStateType() const;
 
 	/// @brief セーブする
 	/// @return セーブデータ
@@ -135,7 +135,7 @@ protected:
 
 	/// @brief 状態を遷移する
 	/// @param _changeSate 遷移先の状態
-	void ChangeState(StateType _nextState);
+	void ChangeState(PlayerState _nextState);
 
 	/// @brief コントローラーの左スティックの入力を取得
 	/// @return 左スティックの入力
@@ -148,13 +148,13 @@ protected:
 	/// @param _caption キャプション
 	/// @param _currentState 現在のステート
 	/// @return 変更したか？
-	static bool ImGuiComboPlayerState(const std::string& _caption, StateType& _currentState);
+	static bool ImGuiComboPlayerState(const std::string& _caption, PlayerState& _currentState);
 
 protected:
 	// アニメーションコントローラ内のプレイヤー名
 	constexpr static auto SPEEDRATIO_PARAMNAME = "speed";	// 移動速度
-	constexpr static auto ATTACKTRIGGER_PARAMNAME = "attackTrigger";	// 攻撃トリガー
-	constexpr static auto MOVEAXIS_X_PARAMNAME = "AxisX";	// 移動速度
-	constexpr static auto MOVEAXIS_Y_PARAMNAME = "AxisY";	// 攻撃トリガー
+	constexpr static auto MOVEAXIS_X_PARAMNAME = "axisX";	// 移動速度
+	constexpr static auto MOVEAXIS_Y_PARAMNAME = "axisY";	// 攻撃トリガー
+	constexpr static auto CANCEL_PARAMNAME = "canCancel";	// キャンセルできるか？
 };
 

@@ -8,7 +8,7 @@ class CP_Animation;
 class PlayerChangeAnimObserver;
 
 /// @brief プレイヤーの動きコントローラー
-class PlayerActionController : public HashiTaku::StateMachine_Base<PlayerActState_Base::StateType>, public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
+class PlayerActionController : public HashiTaku::StateMachine_Base<PlayerActState_Base::PlayerState>, public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
 {
 private:
 	/// @brief ステートから変更した時に通知を受け取るオブザーバー
@@ -20,10 +20,13 @@ private:
 	/// @brief アニメーションのコントローラー
 	CP_Animation* pAnimation;
 
+	/// @brief プレイヤーコンポーネント
+	CP_Player* pPlayer;
+
 	/// @brief プレイヤーのオブジェクト
 	GameObject* pPlayerObject;
 public:
-	PlayerActionController(GameObject& _pPlayerObject);
+	PlayerActionController(CP_Player& _player);
 	~PlayerActionController() {}
 
 	/// @brief 開始処理
@@ -35,7 +38,7 @@ public:
 
 	/// @brief 行動状態を切り替える
 	/// @param _nextActionName 次の状態の名前
-	bool ChangeNode(const PlayerActState_Base::StateType& _nextActionState) override;
+	bool ChangeNode(const PlayerActState_Base::PlayerState& _nextActionState) override;
 
 	/// @brief 現在のアクションを取得
 	/// @return アクションステート
@@ -51,7 +54,7 @@ private:
 	/// @brief 新しくStateを生成
 	/// @tparam T 対応している行動クラス
 	/// @param _actionName アクション名
-	template <class T> void CreateState(PlayerActState_Base::StateType _actionState);
+	template <class T> void CreateState(PlayerActState_Base::PlayerState _actionState);
 
 	/// @brief PlayerActState_Baseにキャスト
 	/// @param _stateNodeBase ステートノード基底変数
@@ -65,10 +68,10 @@ private:
 };
 
 template<class T>
-inline void PlayerActionController::CreateState(PlayerActState_Base::StateType _actionState)
+inline void PlayerActionController::CreateState(PlayerActState_Base::PlayerState _actionState)
 {
 	std::unique_ptr<PlayerActState_Base> createState = std::make_unique<T>();
-	createState->Init(_actionState, *pPlayerObject, *pStateChangeObserver);
+	createState->Init(_actionState, *pPlayer, *pStateChangeObserver);
 
 	AddNode(_actionState, std::move(createState));
 }

@@ -57,7 +57,7 @@ void HashiTaku::Easing::MakeEase(u_int _easeId)
 		easeName = "Out_Sine"; break;
 
 	case EaseKind::InOutSine:
-		easeClass = std::make_unique<Ease_InSine>();
+		easeClass = std::make_unique<Ease_InOutSine>();
 		easeName = "InOut_Sine"; break;
 
 	case EaseKind::InQuad: easeClass = std::make_unique<Ease_InQuad>();
