@@ -46,5 +46,15 @@ public:
 
 	/// @brief 状態切り替え終了処理
 	void OnEnd() override;
+
+protected:
+	/// @brief 状態切り替え開始処理
+	virtual void OnStartBehavior() {}
+
+	/// @brief 更新処理
+	virtual void UpdateBehavior() {}
+
+	/// @brief 状態切り替え終了処理
+	virtual void OnEndBehavior() {}
 };
 

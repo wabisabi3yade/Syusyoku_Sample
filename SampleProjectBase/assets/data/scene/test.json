@@ -538,7 +538,7 @@
             "components": [
                 {
                     "enable": true,
-                    "meshName": "Arissa.fbx",
+                    "meshName": "Uriel A Plotexia.fbx",
                     "name": "MeshRenderer"
                 },
                 {
@@ -561,7 +561,7 @@
                     ],
                     "center": [
                         0.0,
-                        0.8999999761581421,
+                        1.2000000476837158,
                         0.0
                     ],
                     "enable": true,

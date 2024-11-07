@@ -8,14 +8,14 @@
                     "value": 0
                 },
                 {
-                    "name": "speed",
-                    "type": 2,
-                    "value": 0.0
-                },
-                {
                     "name": "targeting",
                     "type": 0,
                     "value": false
+                },
+                {
+                    "name": "speed",
+                    "type": 2,
+                    "value": 0.0
                 },
                 {
                     "name": "canCancel",
@@ -32,14 +32,14 @@
                     "value": 0.0
                 },
                 {
-                    "name": "axisY",
-                    "type": 2,
-                    "value": 0.0
-                },
-                {
                     "name": "attackCollision",
                     "type": 0,
                     "value": false
+                },
+                {
+                    "name": "axisY",
+                    "type": 2,
+                    "value": 0.0
                 },
                 {
                     "name": "rollingTrigger",
@@ -1235,6 +1235,12 @@
     ],
     "animations": [
         {
+            "assetName": "knight_StrafeWalk_R.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_StrafeWalk_R.fbx",
+            "rightHand": true
+        },
+        {
             "assetName": "knight_Idle1.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_Idle1.fbx",
@@ -1244,12 +1250,6 @@
             "assetName": "knight_StrafeRun_R.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_StrafeRun_R.fbx",
-            "rightHand": true
-        },
-        {
-            "assetName": "knight_StrafeWalk_R.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_StrafeWalk_R.fbx",
             "rightHand": true
         },
         {
@@ -1265,15 +1265,15 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_StrafeRun_L.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_StrafeRun_L.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_StrafeWalk_L.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_StrafeWalk_L.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_StrafeRun_L.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_StrafeRun_L.fbx",
             "rightHand": true
         },
         {
@@ -1283,9 +1283,9 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_Stinger.fbx",
+            "assetName": "knight_TargetIdle1.fbx",
             "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_Stinger.fbx",
+            "pathName": "assets/animation/player/knight_TargetIdle1.fbx",
             "rightHand": true
         },
         {
@@ -1295,9 +1295,9 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_TargetIdle1.fbx",
+            "assetName": "knight_Stinger.fbx",
             "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_TargetIdle1.fbx",
+            "pathName": "assets/animation/player/knight_Stinger.fbx",
             "rightHand": true
         },
         {
@@ -1325,15 +1325,15 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_SlashUp.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_SlashUp.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_RollingMove.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_RollingMove.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_SlashUp.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_SlashUp.fbx",
             "rightHand": true
         },
         {
@@ -1429,17 +1429,6 @@
             "rightHand": true
         },
         {
-            "assetName": "Arissa.fbx",
-            "flipY": true,
-            "getSize": false,
-            "loadScale": 0.009999999776482582,
-            "matDiffuse": [
-                "Arissa_DIFF_diffuse.png"
-            ],
-            "pathName": "assets/model/villain/Arissa.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "Knight_Sword.fbx",
             "flipY": true,
             "getSize": false,
@@ -1448,6 +1437,17 @@
                 "FarbPalette256x256.png"
             ],
             "pathName": "assets/model/sword/Knight_Sword.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "Uriel A Plotexia.fbx",
+            "flipY": true,
+            "getSize": false,
+            "loadScale": 0.009999999776482582,
+            "matDiffuse": [
+                "Uriel_diffuse.png"
+            ],
+            "pathName": "assets/model/boss/Uriel A Plotexia.fbx",
             "rightHand": true
         }
     ],
@@ -1465,24 +1465,24 @@
             "pathName": "assets/texture/skyBox/sky_Day_u.png"
         },
         {
-            "assetName": "sky_Day_r.png",
-            "pathName": "assets/texture/skyBox/sky_Day_r.png"
+            "assetName": "ground.png",
+            "pathName": "assets/texture/ground.png"
         },
         {
             "assetName": "sky_Day_b.png",
             "pathName": "assets/texture/skyBox/sky_Day_b.png"
         },
         {
-            "assetName": "ground.png",
-            "pathName": "assets/texture/ground.png"
-        },
-        {
-            "assetName": "sky_Day_d.png",
-            "pathName": "assets/texture/skyBox/sky_Day_d.png"
+            "assetName": "sky_Day_r.png",
+            "pathName": "assets/texture/skyBox/sky_Day_r.png"
         },
         {
             "assetName": "sky_Day_l.png",
             "pathName": "assets/texture/skyBox/sky_Day_l.png"
+        },
+        {
+            "assetName": "sky_Day_d.png",
+            "pathName": "assets/texture/skyBox/sky_Day_d.png"
         },
         {
             "assetName": "sky_Day_f.png",

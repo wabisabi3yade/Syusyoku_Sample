@@ -17,11 +17,6 @@ public:
 	virtual nlohmann::json Save()  = 0;
 	virtual void Load(const nlohmann::json& _data) = 0;
 protected:
-	// 各ステートの振る舞い
-	virtual void OnStartBehavior() {}
-	virtual void UpdateBehavior() {}
-	virtual void OnEndBehavior() {}
-
 	virtual void ImGuiSetting() = 0;
 };
 

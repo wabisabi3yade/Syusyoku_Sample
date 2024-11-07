@@ -49,7 +49,7 @@ namespace HashiTaku
 
 		/// @brief ƒ_ƒ[ƒW‚ğó‚¯‚½‚Æ‚«‚Ìˆ—
 		/// @param _attackInfo UŒ‚î•ñ
-		void OnDamage(const AttackInformation& _attackInfo);
+		void OnDamage(const AttackInformation& _attackInfo) override;
 
 		/// @brief €‚ñ‚¾‚Æ‚«‚Ìˆ—
 		void OnDeath();
