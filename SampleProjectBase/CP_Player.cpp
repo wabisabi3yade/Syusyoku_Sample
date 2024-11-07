@@ -14,18 +14,6 @@ CP_Player::CP_Player()
 {
 }
 
-CP_Player::CP_Player(const CP_Player& _other)
-{
-	Copy(_other);
-}
-
-CP_Player& CP_Player::operator=(const CP_Player& _other)
-{
-	Copy(_other);
-
-	return *this;
-}
-
 void CP_Player::SetWeapon(CP_Weapon& _setWeapon)
 {
 	pWeapon = &_setWeapon;
@@ -207,11 +195,4 @@ void CP_Player::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo
 
 void CP_Player::OnDeathBehavior()
 {
-}
-
-void CP_Player::Copy(const CP_Player& _other)
-{
-	if (this == &_other) return;
-
-	Component::operator=(_other);
 }

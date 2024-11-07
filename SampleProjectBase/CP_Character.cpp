@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "CP_Character.h"
+#include "CP_HitStopManager.h"
 
 HashiTaku::CP_Character::CP_Character()
-	: currentHP(0.0f), maxHP(1.0f), isDead(false), isHitStopping(false)
+	: currentHP(0.0f), maxHP(1.0f), isDead(false), isHitStopping(false), isInvicible(false)
 {
 }
 
@@ -11,9 +12,19 @@ void HashiTaku::CP_Character::SetMaxHP(float _hitPoint)
 	maxHP = std::clamp(_hitPoint, 0.0f, MAXLIMIT_HP);
 }
 
+void HashiTaku::CP_Character::SetIsInvicible(bool _isInvicible)
+{
+	isInvicible = _isInvicible;
+}
+
 float HashiTaku::CP_Character::GetCurrentHP() const
 {
 	return currentHP;
+}
+
+bool HashiTaku::CP_Character::GetIsInvicible() const
+{
+	return isInvicible;
 }
 
 void HashiTaku::CP_Character::OnDamage(const AttackInformation& _attackInfo)
@@ -70,8 +81,17 @@ void HashiTaku::CP_Character::Start()
 	currentHP = maxHP;
 }
 
+void HashiTaku::CP_Character::BeginHitStop(u_int _hitStopFlame)
+{
+	if (CP_HitStopManager* pHitStopManager = CP_HitStopManager::GetInstance())
+	{
+		pHitStopManager->HitStopBegin(_hitStopFlame);
+	}
+}
+
 void HashiTaku::CP_Character::ImGuiSetting()
 {
+	ImGui::Checkbox("IsInvicible", &isInvicible);
 	ImGui::DragFloat("CurrentHP", &currentHP, 0.1f, 0.0f, MAXLIMIT_HP);
 	ImGui::DragFloat("MaxHP", &maxHP, 0.1f, 0.0f, MAXLIMIT_HP);
 }

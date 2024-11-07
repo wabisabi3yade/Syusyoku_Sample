@@ -25,6 +25,7 @@ void PlayerTargetMove::Load(const nlohmann::json& _data)
 
 void PlayerTargetMove::OnStartBehavior()
 {
+
 }
 
 void PlayerTargetMove::UpdateBehavior()
@@ -44,11 +45,14 @@ void PlayerTargetMove::TransitionCheckUpdate()
 {
 	using enum GameInput::ButtonType;
 
-	if (GameInput::GetInstance()->GetButtonUp(Player_RockOn))
+	if (!IsRunning())
+		ChangeState(PlayerState::Idle);
+
+	else if (!pActionController->GetIsTargeting())
 		ChangeState(PlayerState::Move);
 
-	else if (pPlayerInput->GetButtonDown(Player_Attack) && GetInputLeftStick().y > 0.8f)
-		ChangeState(PlayerState::SpecialAtkHi);
+	//else if (pPlayerInput->GetButtonDown(Player_Attack) && GetInputLeftStick().y > 0.8f)
+	//	ChangeState(PlayerState::SpecialAtkHi);
 
 	else if (pPlayerInput->GetButtonDown(Player_Attack))
 		ChangeState(PlayerState::Attack11);
@@ -58,7 +62,7 @@ void PlayerTargetMove::ApplyBlendAnim()
 {
 	using namespace DirectX::SimpleMath;
 
-	GameObject& playerObj = pPlayer->GetGameObject();
+	GameObject& playerObj = pActionController->GetPlayer().GetGameObject();
 
 	// アニメーションのブレンド割合をセット
 	Vector2 playerFwd =

@@ -3,7 +3,6 @@
 #include "PlayerActionController.h"
 #include "AttackInformation.h"
 
-class CP_Animation;
 class CP_Weapon;
 
 class CP_Player : public HashiTaku::CP_Character
@@ -17,25 +16,14 @@ class CP_Player : public HashiTaku::CP_Character
 	/// @brief 武器判定
 	CP_Weapon* pWeapon;
 
-	/// @brief ヒットストップする前の再生速度
-	float hitStopBeforeAnimSpeed;
-
 	/// @brief 攻撃フラグ
 	const bool* pAttackCollisionFlag;
+
+	/// @brief ヒットストップする前の再生速度
+	float hitStopBeforeAnimSpeed;
 public:
 	CP_Player();
-	CP_Player(const CP_Player& _other);
 	~CP_Player() {}
-
-	CP_Player& operator=(const CP_Player& _other);
-
-	/// @brief 武器コンポーネントをセット
-	/// @param _setWeapon 武器コンポーネント
-	void SetWeapon(CP_Weapon& _setWeapon);
-
-	/// @brief 攻撃情報をセットする
-	/// @param _setAttackInfo 攻撃情報
-	void SetAttackInfo(const HashiTaku::AttackInformation& _setAttackInfo);
 
 	// コンポーネント共通
 	void Init() override;
@@ -45,6 +33,14 @@ public:
 
 	/// @brief ヒットストップ終了した時の処理
 	void OnHitStopEnd() override;
+
+	/// @brief 武器コンポーネントをセット
+	/// @param _setWeapon 武器コンポーネント
+	void SetWeapon(CP_Weapon& _setWeapon);
+
+	/// @brief 攻撃情報をセットする
+	/// @param _setAttackInfo 攻撃情報
+	void SetAttackInfo(const HashiTaku::AttackInformation& _setAttackInfo);
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
@@ -60,8 +56,6 @@ private:
 	/// @brief プレイヤーのダメージ処理
 	void OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo) override;
 	void OnDeathBehavior() override;
-
-	void Copy(const CP_Player& _other);
 
 	void Awake() override;
 	void Start() override;

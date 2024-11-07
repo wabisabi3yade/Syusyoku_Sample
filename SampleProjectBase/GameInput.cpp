@@ -70,7 +70,8 @@ void GameInput::DefaultSetting()
 	using enum ButtonType;
 	using enum GamePad::Button;
 	buttonLinks[static_cast<u_int>(Player_Attack)] = { Sankaku, DIK_RETURN };
-	buttonLinks[static_cast<u_int>(Player_Jump)] = { Shikaku, DIK_SPACE };
+	buttonLinks[static_cast<u_int>(Player_Jump)] = { Batsu, DIK_SPACE };
+	buttonLinks[static_cast<u_int>(Player_Rolling)] = { Shikaku, DIK_LSHIFT };
 	buttonLinks[static_cast<u_int>(Player_RockOn)] = { R1, DIK_LSHIFT };
 }
 
@@ -179,14 +180,4 @@ void GameInput::TimeLineUpdate()
 		if (c_buttonState[b_i] && !p_buttonState[b_i])
 			buttonTimeLine[b_i] = 0.0f;
 	}
-
-
-	ImGui::Begin("Input");
-	for (u_int b_i = 0; b_i < BUTTON_TYPE_CNT; b_i++)
-	{
-		ImGui::Text(std::string(magic_enum::enum_name(static_cast<ButtonType>(b_i))).c_str());
-		ImGui::SameLine();
-		ImGui::Text("Time%f", buttonTimeLine[b_i]);
-	}
-	ImGui::End();
 }

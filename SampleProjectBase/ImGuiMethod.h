@@ -100,6 +100,15 @@ public:
 	/// @param _q 表示するテキスト
 	static void Text(const DirectX::SimpleMath::Quaternion& _q);
 
+	/// @brief boolをテキスト
+	/// @param _b 表示するテキスト
+	/// 
+	
+	/// @brief boolをテキスト
+	/// @param _text 表示するテキスト
+	/// @param _b 表示させたいパラメータ
+	static void Text(const std::string& _text, const bool _b);
+
 	// ランダムなユニークIDをセット
 	//static void PushRandID();
 

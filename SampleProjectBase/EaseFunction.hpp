@@ -501,7 +501,7 @@ inline float EaseFunc_Quint::EaseIn(float _ratio) const
 
 inline float EaseFunc_Quint::EaseOut(float _ratio) const
 {
-	float v1 = 1.0 - _ratio;
+	float v1 = 1.0f - _ratio;
 	return 1.0f - v1 * v1 * v1 * v1 * v1;
 }
 

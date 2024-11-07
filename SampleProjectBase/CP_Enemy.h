@@ -3,10 +3,15 @@
 
 class CP_Enemy : public HashiTaku::CP_Character
 {
+	/// @brief 敵の名称
+	std::string enemyName;
 
 public:
 	CP_Enemy();
+	CP_Enemy(const std::string& _enemyName);
 	~CP_Enemy() {}
+
+	const std::string& GetEnemyName() const;
 
 private:
 	/// @brief 各クラスのダメージを受けたときの処理

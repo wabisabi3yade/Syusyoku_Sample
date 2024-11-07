@@ -3,22 +3,26 @@
 #include "PlayerActionController.h"
 #include "InSceneSystemManager.h"
 
+GameInput* PlayerActState_Base::pPlayerInput = nullptr;
 CP_Camera* PlayerActState_Base::pCamera = nullptr;
 
+
+constexpr float ROLLING_SENKOINPUT_SEC(0.2f);	// ローリングの先行入力秒数
+constexpr float CAN_ROLLING_STICKINPUT(0.3f);	// ローリングできる左スティックの入力量
+
 PlayerActState_Base::PlayerActState_Base()
-	: pPlayer(nullptr), pAnimation(nullptr), stateType(PlayerState::None), pPlayerInput(nullptr)
+	: pActionController(nullptr), pAnimation(nullptr), stateType(PlayerState::None)
 {
 	changeStateSubject = std::make_unique<StateChangeSubject>();
 
 	pPlayerInput = GameInput::GetInstance();
-
 	pCamera = &InSceneSystemManager::GetInstance()->GetMainCamera();
 }
 
-void PlayerActState_Base::Init(PlayerState _stateType, CP_Player& _player, StateChangeObserver& _changeObserver)
+void PlayerActState_Base::Init(PlayerState _stateType, PlayerActionController& _actController, StateChangeObserver& _changeObserver)
 {
 	stateType = _stateType;
-	pPlayer = &_player;
+	pActionController = &_actController;
 	changeStateSubject->AddObserver(_changeObserver);
 }
 
@@ -69,6 +73,21 @@ void PlayerActState_Base::ChangeState(PlayerState _nextState)
 DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStick() const
 {
 	return pPlayerInput->GetValue(GameInput::ValueType::Player_Move);
+}
+
+bool PlayerActState_Base::GetCanRolling() const
+{
+	// キャンセルできないなら
+	if (!pActionController->GetIsCanCancel()) return false;
+
+	// ボタン入力
+	if (!pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Rolling, 
+		ROLLING_SENKOINPUT_SEC)) return false;
+
+	// ローリングできる左スティックの入力ができていない
+	if (std::min(GetInputLeftStick().Length(), 1.0f) < CAN_ROLLING_STICKINPUT) return false;
+
+	return true;
 }
 
 bool PlayerActState_Base::ImGuiComboPlayerState(const std::string& _caption, PlayerState& _currentState)

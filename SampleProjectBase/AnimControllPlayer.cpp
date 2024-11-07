@@ -12,11 +12,14 @@ AnimControllPlayer::AnimControllPlayer(const AnimationController& _animControlle
 
 void AnimControllPlayer::Update()
 {
+	// 遷移するか確認
+	TransitionCheck();
+
 	// 各状態更新処理
 	StateUpdate();
 
-	// 遷移するか確認
-	TransitionCheck();
+	// トリガー変数をリセット
+	pCopyAnimParameters->ResetTrigger();
 }
 
 void AnimControllPlayer::AddChangeAnimObserver(HashiTaku::ChangeAnimObserver& _observer)

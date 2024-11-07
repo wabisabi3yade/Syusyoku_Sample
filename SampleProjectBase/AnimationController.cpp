@@ -381,6 +381,11 @@ AnimNodeInfo* AnimationController::CreateNodeInfoByType(AnimationNode_Base::Node
 	return pRetNode;
 }
 
+bool AnimationController::SortArrowPriority(const std::unique_ptr<AnimTransitionArrow>& _a1, const std::unique_ptr<AnimTransitionArrow>& _a2)
+{
+	return _a1->GetPriority() > _a2->GetPriority();
+}
+
 void AnimationController::ImGuiSetting()
 {
 	std::vector<std::string> nodeNames;	// 全ノード名を取得しておく
@@ -493,7 +498,7 @@ void AnimationController::ImGuiTransArrow(AnimNodeInfo& _nodeInfo, const std::ve
 {
 #ifdef EDIT
 	static u_int selectId = 0;
-
+	bool isChangePriority = false;
 	// 所持している矢印パラメータ
 	auto itr = _nodeInfo.transitionArrows.begin();
 	while (itr != _nodeInfo.transitionArrows.end())
@@ -506,6 +511,15 @@ void AnimationController::ImGuiTransArrow(AnimNodeInfo& _nodeInfo, const std::ve
 		{
 			isDelete = ImGui::Button("X");	// 削除ボタン
 			(*itr)->ImGuiCall();
+
+			// 優先順位
+			int pri = (*itr)->GetPriority();
+			if (ImGui::DragInt("Priority", &pri))
+			{
+				isChangePriority = true;
+				(*itr)->SetPriority(pri);
+			}
+
 			ImGui::TreePop();
 		}
 
@@ -514,6 +528,10 @@ void AnimationController::ImGuiTransArrow(AnimNodeInfo& _nodeInfo, const std::ve
 		else
 			itr++;
 	}
+
+	// 優先順位変えたなら
+	if (isChangePriority)
+		_nodeInfo.transitionArrows.sort(SortArrowPriority);
 
 	// 新たに矢印を作成する
 	ImGui::Text("CreateArrow");

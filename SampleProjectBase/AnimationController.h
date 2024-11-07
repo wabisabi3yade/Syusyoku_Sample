@@ -105,6 +105,9 @@ private:
 	/// @return 作成したノード情報
 	AnimNodeInfo* CreateNodeInfoByType(AnimationNode_Base::NodeType _nodeType, const std::string& _nodeName = "Default");
 
+	/// @brief 遷移矢印の優先順位でソート
+	static bool SortArrowPriority(const std::unique_ptr<AnimTransitionArrow>& _a1, const std::unique_ptr<AnimTransitionArrow>& _a2);
+
 	// ImGuiでノード関係
 	void ImGuiNode(const std::vector<std::string>& _nodeNames);
 

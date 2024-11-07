@@ -35,7 +35,7 @@ void CP_Animation::Awake()
 	SetupAnimCon();
 }
 
-void CP_Animation::Update()
+void CP_Animation::LateUpdate()
 {
 	if (!IsCanPlay()) return;
 
@@ -201,6 +201,19 @@ const DirectX::SimpleMath::Vector3& CP_Animation::GetMotionPosSpeedPerSec() cons
 float CP_Animation::GetControllerPlaySpeed() const
 {
 	return pAnimConPlayer->GetCurrentPlaySpeed();
+}
+
+float CP_Animation::GetCurrentPlayRatio() const
+{
+#ifdef EDIT
+	if (!pAnimConPlayer)
+	{
+		HASHI_DEBUG_LOG("アニメーション再生が作成されていません");
+		return 0.0f;
+	}
+#endif // EDIT
+
+	return pAnimConPlayer->GetCurNodePlayer().GetCurPlayRatio();
 }
 
 nlohmann::json CP_Animation::Save()

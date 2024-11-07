@@ -24,6 +24,9 @@ namespace HashiTaku
 
 		/// @brief デフォルトノード
 		StateNode_Base* pDefaultNode;
+
+		/// @brief このフレームで遷移は行うか？
+		bool isChangCurFlame;
 	public:
 		StateMachine_Base(const std::string& _stateMachineName);
 		virtual ~StateMachine_Base() {}
@@ -36,9 +39,6 @@ namespace HashiTaku
 		/// @brief ノードを削除する
 		/// @param _registKey 
 		virtual void RemoveNode(const T& _registKey);
-
-		/// @brief ノードを変更する
-		/// @param _changeKey 変更するノードのキー
 		
 		/// @brief ノードを変更する
 		/// @param _changeKey 変更するノードのキー
@@ -48,9 +48,16 @@ namespace HashiTaku
 		/// @brief 開始処理
 		virtual void Begin();
 
+		/// @brief 更新処理
+		virtual void Update();
+
 		/// @brief デフォルトノードを設定する
 		/// @param _defaultKey デフォルトノードを指定するキー
 		void SetDefaultNode(const T& _defaultKey);
+
+		/// @brief 現在のノードを取得
+		/// @return 現在のノード
+		StateNode_Base* GetCurrentNode();
 	};
 
 	/// @brief ステートマシンで使用するノード
@@ -153,6 +160,12 @@ namespace HashiTaku
 	}
 
 	template<class T>
+	inline void StateMachine_Base<T>::Update()
+	{
+		pCurrentNode->Update();
+	}
+
+	template<class T>
 	inline void StateMachine_Base<T>::SetDefaultNode(const T& _defaultKey)
 	{
 		if (!stateNodeList.contains(_defaultKey))
@@ -162,6 +175,11 @@ namespace HashiTaku
 		}
 
 		pDefaultNode = stateNodeList[_defaultKey].get();
+	}
+	template<class T>
+	inline StateNode_Base* StateMachine_Base<T>::GetCurrentNode()
+	{
+		return pCurrentNode;
 	}
 }
 

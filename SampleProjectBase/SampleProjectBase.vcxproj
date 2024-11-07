@@ -150,10 +150,14 @@
     <ClCompile Include="AttackInformation.cpp" />
     <ClCompile Include="BlendNodePlayer.cpp" />
     <ClCompile Include="BoolTransCondition.cpp" />
+    <ClCompile Include="BossActionController.cpp" />
+    <ClCompile Include="BossActState_Base.cpp" />
     <ClCompile Include="BulletContactCallBack.cpp" />
     <ClCompile Include="BulletTest.cpp" />
     <ClCompile Include="ButtonTransArrow.cpp" />
     <ClCompile Include="ChangeAnimObserver.cpp" />
+    <ClCompile Include="CharacterActionController.cpp" />
+    <ClCompile Include="CharacterActState_Base.cpp" />
     <ClCompile Include="CP_CapsuleCollider.cpp" />
     <ClCompile Include="CatmulSplineInterp.cpp" />
     <ClCompile Include="BulletDebugDraw.cpp" />
@@ -177,6 +181,8 @@
     <ClCompile Include="DX11BulletPhisics.cpp" />
     <ClCompile Include="DXToBullet.cpp" />
     <ClCompile Include="AnimationNotify_Base.cpp" />
+    <ClCompile Include="EnemyActState_Base.cpp" />
+    <ClCompile Include="EnemyActionController.cpp" />
     <ClCompile Include="FloatTransCondition.cpp" />
     <ClCompile Include="CP_HitStopManager.cpp" />
     <ClCompile Include="IAnimationObserver.cpp" />
@@ -196,6 +202,7 @@
     <ClCompile Include="AnimNodePlayer_Base.cpp" />
     <ClCompile Include="MyClass2.cpp" />
     <ClCompile Include="PlayerGroundAttack.cpp" />
+    <ClCompile Include="PlayerRollingMove.cpp" />
     <ClCompile Include="PlayerRushAttack.cpp" />
     <ClCompile Include="PlayerTargetMove.cpp" />
     <ClCompile Include="PlayerActChangeObserver.cpp" />
@@ -348,10 +355,14 @@
     <ClInclude Include="AttackInformation.h" />
     <ClInclude Include="BlendNodePlayer.h" />
     <ClInclude Include="BoolTransCondition.h" />
+    <ClInclude Include="BossActionController.h" />
+    <ClInclude Include="BossActState_Base.h" />
     <ClInclude Include="BulletContactCallBack.h" />
     <ClInclude Include="BulletTest.h" />
     <ClInclude Include="ButtonTransArrow.h" />
     <ClInclude Include="ChangeAnimObserver.h" />
+    <ClInclude Include="CharacterActionController.h" />
+    <ClInclude Include="CharacterActState_Base.h" />
     <ClInclude Include="CP_CapsuleCollider.h" />
     <ClInclude Include="CatmulSplineInterp.h" />
     <ClInclude Include="BulletDebugDraw.h" />
@@ -377,6 +388,8 @@
     <ClInclude Include="DX11BulletPhisics.h" />
     <ClInclude Include="DXToBullet.h" />
     <ClInclude Include="AnimationNotify_Base.h" />
+    <ClInclude Include="EnemyActState_Base.h" />
+    <ClInclude Include="EnemyActionController.h" />
     <ClInclude Include="FloatTransCondition.h" />
     <ClInclude Include="CP_HitStopManager.h" />
     <ClInclude Include="IAnimationObserver.h" />
@@ -400,6 +413,7 @@
     <ClInclude Include="MyClass2.h" />
     <ClInclude Include="NullTransform.h" />
     <ClInclude Include="PlayerGroundAttack.h" />
+    <ClInclude Include="PlayerRollingMove.h" />
     <ClInclude Include="PlayerRushAttack.h" />
     <ClInclude Include="PlayerTargetMove.h" />
     <ClInclude Include="PlayerActChangeObserver.h" />
