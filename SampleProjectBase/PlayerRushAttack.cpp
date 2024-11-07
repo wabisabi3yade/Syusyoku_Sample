@@ -21,7 +21,7 @@ void PlayerRushAttack::UpdateBehavior()
 	PlayerGroundAttack::UpdateBehavior();
 
 	float deltaTime = MainApplication::DeltaTime();
-	Transform& playerTrans = pPlayer->GetGameObject().GetTransform();
+	Transform& playerTrans = pActionController->GetPlayer().GetGameObject().GetTransform();
 
 	// ˆÚ“®‹——£‚ğ‹‚ß‚é
 	Vector3 movement = playerTrans.Forward() * moveSpeed * deltaTime;

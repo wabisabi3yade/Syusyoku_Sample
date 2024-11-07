@@ -29,7 +29,7 @@ void PlayerAttackState::OnEndBehavior()
 void PlayerAttackState::TransitionCheckUpdate()
 {
 	// キャンセルできるか？
-	if (!CheckCanCancel()) return;
+	if (!pActionController->GetIsCanCancel()) return;
 
 	// 攻撃入力されたらステート遷移する
 	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack, senkoInputTime))
@@ -38,21 +38,16 @@ void PlayerAttackState::TransitionCheckUpdate()
 
 void PlayerAttackState::UpdateAttackInfo()
 {
-	pPlayer->SetAttackInfo(*pAttackInfo);
+	pActionController->GetPlayer().SetAttackInfo(*pAttackInfo);
 }
 
 void PlayerAttackState::ImGuiSetting()
 {
-	ImGui::DragFloat("Senko", &senkoInputTime, 0.05f, 0.0f, 3.0f);
+	ImGui::DragFloat("Senko", &senkoInputTime, 0.01f, 0.0f, 3.0f);
 	ImGuiComboPlayerState("Next", nextCombAtkState);
 
 	ImGui::Text("AtkInfo");
 	pAttackInfo->ImGuiCall();
-}
-
-bool PlayerAttackState::CheckCanCancel() const
-{
-	return pAnimation->GetBool(CANCEL_PARAMNAME);
 }
 
 nlohmann::json PlayerAttackState::Save()

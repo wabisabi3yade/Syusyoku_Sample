@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "PlayerMoveState.h"
-
 #include "CP_Camera.h"
+#include "CP_Player.h"
 #include "GameInput.h"
 #include "InSceneSystemManager.h"
 
@@ -10,7 +10,7 @@ using namespace DirectX::SimpleMath;
 constexpr float IDLE_ANIM_PLAYSPEED(1.0f);
 
 PlayerMoveState::PlayerMoveState()
-	: currentSpeed(0.0f), maxSpeed(10.0f), acceleration(40.0f), rotateSpeed(7.0f), decadeSpeedTimes(0.98f)
+	: currentSpeed(0.0f), maxSpeed(10.0f), acceleration(40.0f), rotateSpeed(7.0f), decadeSpeed(2.0f)
 {
 }
 
@@ -20,7 +20,7 @@ nlohmann::json PlayerMoveState::Save()
 
 	data["maxSpeed"] = maxSpeed;
 	data["acceleration"] = acceleration;
-	data["decade"] = decadeSpeedTimes;
+	data["decade"] = decadeSpeed;
 	data["rotateSpeed"] = rotateSpeed;
 
 	return data;
@@ -34,7 +34,7 @@ void PlayerMoveState::Load(const nlohmann::json& _data)
 
 	LoadJsonFloat("maxSpeed", maxSpeed, _data);
 	LoadJsonFloat("acceleration", acceleration, _data);
-	LoadJsonFloat("decade", decadeSpeedTimes, _data);
+	LoadJsonFloat("decade", decadeSpeed, _data);
 	LoadJsonFloat("rotateSpeed", rotateSpeed, _data);
 }
 
@@ -50,7 +50,6 @@ void PlayerMoveState::UpdateBehavior()
 	ApplyRootMotion();
 
 	Rotation();
-
 }
 
 void PlayerMoveState::OnEndBehavior()
@@ -64,19 +63,23 @@ void PlayerMoveState::TransitionCheckUpdate()
 	{
 		ChangeState(PlayerState::Attack11);
 	}
-	else if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_RockOn))
+	else if (GetCanRolling())
 	{
-		ChangeState(PlayerState::TargetMove);
+		ChangeState(PlayerState::Rolling);
 	}
 	else if (currentSpeed <= Mathf::epsilon)	// ˆÚ“®‘¬“x‚ª0ˆÈ‰º‚É‚È‚é‚Æ
 	{
 		ChangeState(PlayerState::Idle);
 	}
+	else if (pActionController->GetIsTargeting())
+	{
+		ChangeState(PlayerState::TargetMove);
+	}
 }
 
 bool PlayerMoveState::IsRunning()
 {
-	if (currentSpeed > Mathf::epsilon)  return true;
+	if (currentSpeed >= Mathf::epsilon)  return true;
 
 	return false;
 }
@@ -87,14 +90,14 @@ void PlayerMoveState::ImGuiSetting()
 	ImGui::Text(text.c_str());
 	ImGui::DragFloat("maxSpeed", &maxSpeed, 0.1f, 0.0f, 1000.0f);
 	ImGui::DragFloat("acceleration", &acceleration, 0.1f);
-	ImGui::DragFloat("decadeTimes", &decadeSpeedTimes, 0.01f, 0.0f, 1.0f);
+	ImGui::DragFloat("decadeTimes", &decadeSpeed, 0.1f, 0.0f, 1000.0f);
 	ImGui::DragFloat("rotateSpeed", &rotateSpeed, 0.1f);
 }
 
 void PlayerMoveState::Move()
 {
 	float deltaTime = MainApplication::DeltaTime();
-	GameObject& playerObj = pPlayer->GetGameObject();
+	GameObject& playerObj = pActionController->GetPlayer().GetGameObject();
 
 	// ˆÚ“®•ûŒüEˆÚ“®—ÊŒˆ’è
 	Vector3 camForwardVec = pCamera->GetTransform().Forward();
@@ -103,25 +106,28 @@ void PlayerMoveState::Move()
 
 	// ŒX‚«‚Ì‘å‚«‚³‚ğæ“¾
 	float inputMagnitude = std::min(input.Length(), 1.0f);
-	inputMagnitude = inputMagnitude * inputMagnitude;	// “ü—Í‚ÌŠŠ‚ç‚©‚³‚ğ‚¾‚·
 
 	// ˆÚ“®•ûŒü‚ğ‹‚ß‚é
-	moveVector = camRightVec * input.x;
-	moveVector += camForwardVec * input.y;
-	moveVector.y = 0.0f;
-	moveVector.Normalize();
+	if (inputMagnitude > 0.0f)
+	{
+		moveVector = camRightVec * input.x;
+		moveVector += camForwardVec * input.y;
+		moveVector.y = 0.0f;
+		moveVector.Normalize();
+	}
 
 	// ˆÚ“®‘¬“x‚ğ‹‚ß‚é
 	float curMaxSpd = maxSpeed * inputMagnitude;
 	if (currentSpeed > curMaxSpd)
 	{
 		// Œ¸‘¬—¦‚ğ‚©‚¯‚é
-		currentSpeed *= decadeSpeedTimes * deltaTime;
-		//currentSpeed = std::max(currentSpeed, curMaxSpd);
+		currentSpeed -= decadeSpeed * deltaTime;
+		currentSpeed = std::max(currentSpeed, curMaxSpd);
 	}
 	else
 	{
-		currentSpeed += acceleration * deltaTime;
+		// ‰Á‘¬
+		currentSpeed += acceleration * inputMagnitude * deltaTime;
 		currentSpeed = std::min(currentSpeed, curMaxSpd);
 	}
 
@@ -148,17 +154,13 @@ void PlayerMoveState::ApplyRootMotion()
 			pAnimation->SetCurNodePlayerSpeed(animPlaySpeed);
 		}
 	}
-	//else
-	//{
-	//	pAnimation->SetCurNodePlayerSpeed(IDLE_ANIM_PLAYSPEED);
-	//}
 }
 
 void PlayerMoveState::Rotation()
 {
 	if (!IsMoveInput()) return;
 
-	GameObject& playerObj = pPlayer->GetGameObject();
+	GameObject& playerObj = pActionController->GetPlayer().GetGameObject();
 
 	// “ü—Í•ûŒü‚ÖŒü‚¯‚é‰ñ“]—Ê‚ğ‹‚ß‚é
 	Quaternion targetRotation = Quat::RotateToVector(moveVector);

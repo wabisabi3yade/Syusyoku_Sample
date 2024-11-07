@@ -41,7 +41,15 @@ public:
 
 	void Awake() override;
 
-	void Update() override;
+	void LateUpdate() override;
+
+	/// @brief アニメーション変更オブザーバーを追加
+	/// @param _observer オブザーバー
+	void AddChangeAnimObserver(HashiTaku::ChangeAnimObserver& _observer);
+
+	/// @brief アニメーション変更オブザーバーを削除
+	/// @param _observer オブザーバー
+	void RemoveChangeAnimObserver(HashiTaku::ChangeAnimObserver& _observer);
 
 	/// @brief 指定したbool変数に値をセット
 	/// @param _paramName パラメーター名
@@ -62,6 +70,20 @@ public:
 	/// @param _paramName パラメーター名
 	void SetTrigger(const std::string& _paramName);
 
+	/// @brief Rendererからスケルタルメッシュをセット 
+	void SetupSkeletalMesh();
+
+	// アニメーションコントローラーをセット
+	void SetAnimationController(AnimationController& _controller);
+
+	/// @brief コントローラープレイヤーの再生速度をセットする
+	/// @param _setSpeed スピードをセット
+	void SetControllerPlaySpeed(float _setSpeed);
+
+	/// @brief 現在のノード再生速度をセットする
+	/// @param _setSpeed スピードをセット
+	void SetCurNodePlayerSpeed(float _setSpeed);
+
 	/// @brief 指定したbool変数に値を取得
 	/// @param _paramName パラメーター名
 	/// @param _isBool 取得する値
@@ -78,36 +100,11 @@ public:
 	float GetFloat(const std::string& _paramName);
 
 	/// @brief アニメーションパラメータのポインターを取得する
-	/// @return アニメーションパラメータのポインター
-	
-	/// @brief アニメーションパラメータのポインターを取得する
 	/// @tparam T パラメータのフラグ
 	/// @param _paramName パラメータ名
 	/// @return アニメーションパラメータのポインター
 	template<HashiTaku::AnimParam::AnimParamConcept T>
 	const T* GetParameterPointer(const std::string& _paramName) const;
-
-	/// @brief Rendererからスケルタルメッシュをセット 
-	void SetupSkeletalMesh();
-
-	// アニメーションコントローラーをセット
-	void SetAnimationController(AnimationController& _controller);
-
-	/// @brief コントローラープレイヤーの再生速度をセットする
-	/// @param _setSpeed スピードをセット
-	void SetControllerPlaySpeed(float _setSpeed);
-
-	/// @brief 現在のノード再生速度をセットする
-	/// @param _setSpeed スピードをセット
-	void SetCurNodePlayerSpeed(float _setSpeed);
-
-	/// @brief アニメーション変更オブザーバーを追加
-	/// @param _observer オブザーバー
-	void AddChangeAnimObserver(HashiTaku::ChangeAnimObserver& _observer);
-
-	/// @brief アニメーション変更オブザーバーを削除
-	/// @param _observer オブザーバー
-	void RemoveChangeAnimObserver(HashiTaku::ChangeAnimObserver& _observer);
 
 	// スケルタルメッシュを取得
 	SkeletalMesh& GetSkeletalMesh();
@@ -119,6 +116,10 @@ public:
 	/// @brief プレイヤー再生速度を取得する
 	/// @return 現在の再生速度
 	float GetControllerPlaySpeed() const;
+
+	/// @brief プレイヤー再生速度を取得する
+	/// @return 現在の再生速度
+	float GetCurrentPlayRatio() const;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

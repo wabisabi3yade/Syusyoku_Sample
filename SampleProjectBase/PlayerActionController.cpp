@@ -5,24 +5,27 @@
 #include "PlayerIdleState.h"
 #include "PlayerMoveState.h"
 #include "PlayerTargetMove.h"
+#include "PlayerRollingMove.h"
 #include "PlayerAttackState.h"
 #include "PlayerGroundAttack.h"
 #include "PlayerRushAttack.h"
 
 PlayerActionController::PlayerActionController(CP_Player& _player)
-	: StateMachine_Base("playerAction"), pAnimation(nullptr), pPlayer(&_player)
+	: StateMachine_Base("playerAction"), pAnimation(nullptr), pPlayer(&_player),pIsCanCancel(nullptr), isTargeting(false)
 {
 	// 状態遷移オブザーバー生成
 	pStateChangeObserver = std::make_unique<PlayerActChangeObserver>("StateChangeObserver", *this);
 
 	// アニメーション変更オブザーバー生成
 	pChangeAnimObserver = std::make_unique<PlayerChangeAnimObserver>(*this);
+	pGameInput = GameInput::GetInstance();
 
 	// 行動クラスを生成
 	using enum PlayerActState_Base::PlayerState;
 	CreateState<PlayerIdleState>(Idle);
 	CreateState<PlayerMoveState>(Move);
 	CreateState<PlayerTargetMove>(TargetMove);
+	CreateState<PlayerRollingMove>(Rolling);
 	CreateState<PlayerGroundAttack>(Attack11);
 	CreateState<PlayerGroundAttack>(Attack12);
 	CreateState<PlayerGroundAttack>(Attack13);
@@ -44,11 +47,24 @@ void PlayerActionController::Begin(CP_Animation& _animationController)
 		PlayerActState_Base& playerAct = CastPlayerAct(*stateNode.second);
 		playerAct.SetAnimation(_animationController);
 	}
+	
+	// アニメーションパラメータのアドレスを取得
+	pIsCanCancel = pAnimation->GetParameterPointer<bool>(CANCEL_PARAMNAME);
 }
 
 void PlayerActionController::Update()
 {
 	pCurrentNode->Update();
+
+	UpdateTargeting();
+}
+
+void PlayerActionController::UpdateTargeting()
+{
+	isTargeting = pGameInput->GetButton(GameInput::ButtonType::Player_RockOn);
+
+	// アニメーションパラメータにも送る
+	pAnimation->SetBool(TARGET_PARAMNAME, isTargeting);
 }
 
 bool PlayerActionController::ChangeNode(const PlayerActState_Base::PlayerState& _nextActionState)
@@ -59,8 +75,23 @@ bool PlayerActionController::ChangeNode(const PlayerActState_Base::PlayerState& 
 
 	// アニメーション側のstate変数も変更
 	pAnimation->SetInt(STATEANIM_PARAMNAME, static_cast<int>(_nextActionState));
-	
+
 	return true;
+}
+
+bool PlayerActionController::GetIsTargeting() const
+{
+	return isTargeting;
+}
+
+bool PlayerActionController::GetIsCanCancel() const
+{
+	return *pIsCanCancel;
+}
+
+CP_Player& PlayerActionController::GetPlayer()
+{
+	return *pPlayer;
 }
 
 PlayerActState_Base& PlayerActionController::CastPlayerAct(HashiTaku::StateNode_Base& _stateNodeBase)
@@ -70,6 +101,8 @@ PlayerActState_Base& PlayerActionController::CastPlayerAct(HashiTaku::StateNode_
 
 void PlayerActionController::ImGuiSetting()
 {
+	ImGuiMethod::Text("isTargeting", isTargeting);
+
 	// 現在の状態表示
 	std::string text = "NowState:" + std::string(magic_enum::enum_name(currentStateKey));
 	ImGui::Text(text.c_str());
@@ -122,7 +155,7 @@ void PlayerActionController::Load(const nlohmann::json& _data)
 		for (auto& actData : actDataList)
 		{
 			std::string stateString;
-			if (!LoadJsonString("typeString", stateString , actData))
+			if (!LoadJsonString("typeString", stateString, actData))
 				continue;
 
 			PlayerActState_Base::PlayerState playerState;
@@ -154,7 +187,7 @@ void PlayerChangeAnimObserver::ObserverUpdate(const HashiTaku::ChangeAnimationIn
 	auto curAction = pActionController->GetCurrentAction();
 	if (!curAction)
 	{
-		HASHI_DEBUG_LOG(GetObserverName() + 
+		HASHI_DEBUG_LOG(GetObserverName() +
 			"再生されているアクションがないためアニメーション変更通知がおこなえません");
 
 		return;

@@ -257,13 +257,12 @@ void ImGuiMethod::Text(const DirectX::SimpleMath::Quaternion& _q)
 #endif // EDIT
 }
 
-//void ImGuiMethod::PushRandID()
-//{
-//#ifdef EDIT
-//	// óêêîÇ≈IDÉZÉbÉg
-//	ImGui::PushID(HashiTaku::Random::RangeInt<int>(UNIQUE_ID_MIN, UNIQUE_ID_MAX));
-//#endif // EDIT
-//}
+void ImGuiMethod::Text(const std::string& _text, const bool _b)
+{
+	std::string statusStr = _b ? "true" : "false";
+	std::string text = _text + " " + statusStr;
+	ImGui::Text(text.c_str());
+}
 
 void ImGuiMethod::LineSpaceSmall()
 {

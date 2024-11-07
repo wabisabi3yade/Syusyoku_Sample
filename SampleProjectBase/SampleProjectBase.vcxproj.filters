@@ -721,6 +721,39 @@
     <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\RushAttack">
       <UniqueIdentifier>{49ff38db-7ed7-4667-a402-fad7eb68fdc6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Rolling">
+      <UniqueIdentifier>{34ca5317-7d82-4283-9c98-bc8d4dcd88ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Character">
+      <UniqueIdentifier>{ad09703f-2b45-4a4f-9910-67888da99373}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Character\ActionState">
+      <UniqueIdentifier>{ae4f9f80-96f4-43ce-9c88-fb3950800b94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Character\Controller">
+      <UniqueIdentifier>{4b012229-53de-4677-87e1-5c4bd8a90312}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Enemy\Enemy_Base">
+      <UniqueIdentifier>{77650a39-b459-41b7-966d-5118a1f49605}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Enemy\Enemy_Base\Controller">
+      <UniqueIdentifier>{faca9ea9-e734-4ae7-95e6-890e921d7e8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Enemy\Enemy_Base\ActState">
+      <UniqueIdentifier>{d90dea02-8363-4070-bc79-0a0e2976d853}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Enemy\Boss">
+      <UniqueIdentifier>{5f2984ea-6160-4ded-acc8-5a37d0709189}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Enemy\Boss\Controller">
+      <UniqueIdentifier>{d19170bc-d61c-4810-be00-8b9faa46c397}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Enemy\Boss\ActionState">
+      <UniqueIdentifier>{54c2c2c0-6ac1-4f51-a8ec-bc6659198d6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Enemy\Boss\ActionState\BossAct_Base">
+      <UniqueIdentifier>{b5375f29-655e-4426-af57-d2ccb5eda953}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1181,9 +1214,6 @@
     <ClCompile Include="IClassNameGetter.cpp">
       <Filter>ソース ファイル\Method\TypeName</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="CP_NotifyTest.cpp">
       <Filter>ソース ファイル\Component\Test</Filter>
     </ClCompile>
@@ -1319,9 +1349,6 @@
     <ClCompile Include="CP_Character.cpp">
       <Filter>ソース ファイル\Component\InGame\Character</Filter>
     </ClCompile>
-    <ClCompile Include="CP_Enemy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="SingletonComponent.cpp">
       <Filter>ソース ファイル\Component\Singleton</Filter>
     </ClCompile>
@@ -1331,17 +1358,44 @@
     <ClCompile Include="HitStopper_Base.cpp">
       <Filter>ソース ファイル\Component\HitStopManager</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationCurve.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="..\ThirdParty\implot\include\implot.cpp">
       <Filter>ソース ファイル\System\ImGui\ImPlot</Filter>
     </ClCompile>
     <ClCompile Include="..\ThirdParty\implot\include\implot_items.cpp">
       <Filter>ソース ファイル\System\ImGui\ImPlot</Filter>
     </ClCompile>
+    <ClCompile Include="CP_Enemy.cpp">
+      <Filter>ソース ファイル\Component\InGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationCurve.cpp">
+      <Filter>ソース ファイル\System\AnimationCurve</Filter>
+    </ClCompile>
     <ClCompile Include="PlayerRushAttack.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Object\Player\Action\PlayerState\RushAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerRollingMove.cpp">
+      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Rolling</Filter>
+    </ClCompile>
+    <ClCompile Include="BossActState_Base.cpp">
+      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\BossAct_Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterActionController.cpp">
+      <Filter>ソース ファイル\Object\Character\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterActState_Base.cpp">
+      <Filter>ソース ファイル\Object\Character\ActionState</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyActionController.cpp">
+      <Filter>ソース ファイル\Object\Enemy\Enemy_Base\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyActState_Base.cpp">
+      <Filter>ソース ファイル\Object\Enemy\Enemy_Base\ActState</Filter>
+    </ClCompile>
+    <ClCompile Include="BossActionController.cpp">
+      <Filter>ソース ファイル\Object\Enemy\Boss\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1954,9 +2008,6 @@
     <ClInclude Include="CP_Character.h">
       <Filter>ソース ファイル\Component\InGame\Character</Filter>
     </ClInclude>
-    <ClInclude Include="CP_Enemy.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="SingletonComponent.h">
       <Filter>ソース ファイル\Component\Singleton</Filter>
     </ClInclude>
@@ -1966,17 +2017,41 @@
     <ClInclude Include="HitStopper_Base.h">
       <Filter>ソース ファイル\Component\HitStopManager</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationCurve.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="..\ThirdParty\implot\include\implot.h">
       <Filter>ソース ファイル\System\ImGui\ImPlot</Filter>
     </ClInclude>
     <ClInclude Include="..\ThirdParty\implot\include\implot_internal.h">
       <Filter>ソース ファイル\System\ImGui\ImPlot</Filter>
     </ClInclude>
+    <ClInclude Include="CP_Enemy.h">
+      <Filter>ソース ファイル\Component\InGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationCurve.h">
+      <Filter>ソース ファイル\System\AnimationCurve</Filter>
+    </ClInclude>
     <ClInclude Include="PlayerRushAttack.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Object\Player\Action\PlayerState\RushAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerRollingMove.h">
+      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Rolling</Filter>
+    </ClInclude>
+    <ClInclude Include="BossActState_Base.h">
+      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\BossAct_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterActionController.h">
+      <Filter>ソース ファイル\Object\Character\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterActState_Base.h">
+      <Filter>ソース ファイル\Object\Character\ActionState</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyActionController.h">
+      <Filter>ソース ファイル\Object\Enemy\Enemy_Base\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyActState_Base.h">
+      <Filter>ソース ファイル\Object\Enemy\Enemy_Base\ActState</Filter>
+    </ClInclude>
+    <ClInclude Include="BossActionController.h">
+      <Filter>ソース ファイル\Object\Enemy\Boss\Controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

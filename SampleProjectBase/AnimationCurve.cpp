@@ -5,7 +5,7 @@ constexpr int MIN_PLOT_CNT(2);	// 最低限必要なプロット点
 
 constexpr float VECTOR_LENGTH(2.0f);	// 速度の大きさ
 constexpr float VEC_DRAW_TIMES(0.05f);	// ベクトル点との距離をを描画するときの倍率
-constexpr float REACT_DISTANCE = 0.0035f; // マウスクリックで点との反応距離
+constexpr float REACT_DISTANCE = 0.002f; // マウスクリックで点との反応距離
 
 constexpr float MIN_TIME(0.0f);	// 最小時間
 constexpr float MAX_TIME(1.0f);	// 最大時間
@@ -238,17 +238,18 @@ void AnimationCurve::ImGuiPlotEditing()
 	// ドラッグ編集
 	if (ImGui::IsMouseDragging(0))
 	{
-		if (!editingPlot) return;
+		if (!editingPlot || !CheckReactPlot(*editingPlot, floatMousePos.x, floatMousePos.y)) return;
 
-		// 最初と最後は動かさない
-		if (!IsStartOrEndPlot(editingPlot) &&
-			CheckReactPlot(*editingPlot, floatMousePos.x, floatMousePos.y))
+		// 値を動かす
+		editingPlot->value = std::clamp(floatMousePos.y, 0.0f, 1.0f);
+
+		// 時間は最初と最後は動かさない
+		if (!IsStartOrEndPlot(editingPlot))
 		{
 			float changePrev = editingPlot->time;
 
 			// 制限をかける
 			editingPlot->time = std::clamp(floatMousePos.x, 0.0f + Mathf::epsilon, 1.0f - Mathf::epsilon);
-			editingPlot->value = std::clamp(floatMousePos.y, 0.0f + Mathf::epsilon, 1.0f - Mathf::epsilon);
 
 			// ソート処理(時間)
 			if (changePrev != editingPlot->time)
@@ -431,11 +432,13 @@ nlohmann::json AnimationCurve::Save()
 		// 始点と終点
 		if (&plot == &*plotPoints.begin())
 		{
+			data["startValue"] = plot.value;
 			data["startVector"] = plot.vector;
 			continue;
 		}
 		else if (&plot == &*std::prev(plotPoints.end()))
 		{
+			data["endValue"] = plot.value;
 			data["endVector"] = plot.vector;
 			continue;
 		}
@@ -478,10 +481,12 @@ void AnimationCurve::Load(const nlohmann::json& _data)
 	float loadVector = 0.0f;
 	if (LoadJsonFloat("startVector", loadVector, _data))
 	{
+		LoadJsonFloat("startValue", (*plotPoints.begin()).value, _data);
 		(*plotPoints.begin()).vector = loadVector;
 	}
 	if (LoadJsonFloat("endVector", loadVector, _data))
 	{
+		LoadJsonFloat("endValue", (*std::prev(plotPoints.end())).value, _data);
 		(*std::prev(plotPoints.end())).vector = loadVector;
 	}
 }

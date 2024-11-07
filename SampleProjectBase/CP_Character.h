@@ -14,6 +14,9 @@ namespace HashiTaku
 
 		/// @brief ヒットストップ中か？
 		bool isHitStopping;
+
+		/// @brief 無敵フラグ
+		bool isInvicible;
 	protected:
 		/// @brief 現在の体力
 		float currentHP;
@@ -32,9 +35,17 @@ namespace HashiTaku
 		/// @param _hitPoint セットする体力
 		void SetMaxHP(float _hitPoint);
 
+		/// @brief 無敵フラグをセット
+		/// @param _isInvicible 無敵フラグ
+		void SetIsInvicible(bool _isInvicible);
+
 		/// @brief 体力を取得
 		/// @return 現在の体力
 		float GetCurrentHP() const;
+
+		/// @brief 無敵フラグを取得
+		/// @return 無敵か？
+		bool GetIsInvicible() const;
 
 		/// @brief ダメージを受けたときの処理
 		/// @param _attackInfo 攻撃情報
@@ -62,6 +73,10 @@ namespace HashiTaku
 		bool GetIsHitStopping() const;
 
 		void Start() override;
+
+		/// @brief ヒットストップを開始する
+		/// @param _hitStopFlame ヒットストップのフレーム数
+		void BeginHitStop(u_int _hitStopFlame);
 
 		/// @brief 各クラスのダメージを受けたときの処理
 		/// @param _attackInfo 攻撃情報

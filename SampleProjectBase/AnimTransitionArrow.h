@@ -46,6 +46,9 @@ class AnimTransitionArrow : public HashiTaku::IImGuiUser, public HashiTaku::ISav
 	/// @brief 遷移時間
 	float transitionTime;
 
+	/// @brief 条件チェックするときの優先順位
+	int priority;
+
 	/// @brief 遷移開始時間でしか開始しないようにする
 	bool isHasExitRatio;
 #ifdef EDIT
@@ -80,6 +83,10 @@ public:
 	// 遷移にかかる時間をセット
 	void SetTransitonTime(float _transTime);
 
+	/// @brief 条件チェックするときの優先順位を取得
+	/// @param _priority 優先順位
+	void SetPriority(int _priority);
+
 	// イージングの種類をセット
 	void SetEaseKind(HashiTaku::EaseKind _easeKind);
 
@@ -93,17 +100,21 @@ public:
 	/// @return 遷移先の開始割合
 	float GetTargetRatio() const;
 
-	// 遷移時間を取得
+	/// @brief 遷移時間を取得
+	/// @return 遷移時間
 	float GetTransitionTime() const;
 
 	/// @brief 遷移元の終了割合を取得
 	/// @return 遷移元の終了割合
 	float GetExitRatio() const;
 
+	/// @brief 優先順位を取得
+	/// @return 優先順位
+	int GetPriority() const;
+
 	/// @brief 遷移終了時間を持っているか取得
 	/// @return 遷移終了時間もっているか？
 	bool GetIsHasExit() const;
-
 
 	/// @brief 条件リストを取得
 	/// @return 条件リスト

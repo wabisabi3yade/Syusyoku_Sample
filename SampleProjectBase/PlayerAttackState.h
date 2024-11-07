@@ -29,10 +29,6 @@ protected:
 private:
 	/// @brief 攻撃情報を更新する
 	void UpdateAttackInfo();
-
-	/// @brief キャンセルできるか確認する
-	/// @return キャンセルできるか？
-	bool CheckCanCancel() const;
 	
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

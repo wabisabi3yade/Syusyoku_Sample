@@ -4,12 +4,9 @@
 #include "GameInput.h"
 #include "IObserever.h"
 #include "CP_Camera.h"
+#include "CP_Animation.h"
 
-#include "AnimationController.h"
-
-
-class CP_Animation;
-class CP_Player;
+class PlayerActionController;
 
 /// @brief プレイヤーの行動ステート基底クラス
 class PlayerActState_Base : public HashiTaku::StateNode_AnimationBase , public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
@@ -25,6 +22,7 @@ public:
 		Move = 10,
 		TargetMove,
 		Jump,
+		Rolling,
 
 		// 地上コンビネーション攻撃
 		Attack11 = 20,
@@ -51,6 +49,7 @@ public:
 		"Move",
 		"TargetMove",
 		"Jump",
+		"Rolling"
 
 		// 地上コンビネーション攻撃
 		"Attack11",
@@ -81,10 +80,10 @@ protected:
 	CP_Animation* pAnimation;
 
 	/// @brief プレイヤー
-	CP_Player* pPlayer;
+	PlayerActionController* pActionController;
 
 	/// @brief ゲーム入力クラス
-	GameInput* pPlayerInput;
+	static GameInput* pPlayerInput;
 
 	/// @brief カメラクラス
 	static CP_Camera* pCamera;
@@ -94,9 +93,9 @@ public:
 
 	/// @brief 初期化処理
 	/// @param _stateType　状態
-	/// @param _player　プレイヤーコンポーネント
+	/// @param _actController　プレイヤーコンポーネント
 	/// @param _changeObserver ステート遷移オブザーバー
-	void Init(PlayerState _stateType, CP_Player& _player, StateChangeObserver& _changeObserver);
+	void Init(PlayerState _stateType, PlayerActionController& _actController, StateChangeObserver& _changeObserver);
 
 	/// @brief 開始処理呼び出し
 	void OnStart() override;
@@ -141,6 +140,10 @@ protected:
 	/// @return 左スティックの入力
 	DirectX::SimpleMath::Vector2 GetInputLeftStick() const;
 
+	/// @brief ローリングできるか取得する
+	/// @return ローリングできるか？
+	bool GetCanRolling() const;
+
 	/// @brief ImGui処理
 	virtual void ImGuiSetting() {}
 
@@ -155,6 +158,5 @@ protected:
 	constexpr static auto SPEEDRATIO_PARAMNAME = "speed";	// 移動速度
 	constexpr static auto MOVEAXIS_X_PARAMNAME = "axisX";	// 移動速度
 	constexpr static auto MOVEAXIS_Y_PARAMNAME = "axisY";	// 攻撃トリガー
-	constexpr static auto CANCEL_PARAMNAME = "canCancel";	// キャンセルできるか？
 };
 

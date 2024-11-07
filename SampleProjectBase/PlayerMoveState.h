@@ -20,8 +20,8 @@ protected:
 	/// @brief 加速度
 	float acceleration;
 
-	/// @brief 減速率
-	float decadeSpeedTimes;
+	/// @brief 減速スピード
+	float decadeSpeed;
 
 	/// @brief 回転速度
 	float rotateSpeed;
@@ -41,6 +41,10 @@ protected:
 	/// @brief 移動
 	void Move();
 
+	/// @brief 走っているか取得
+	/// @return 走っているか？
+	bool IsRunning();
+
 	void ImGuiSetting() override;
 private:
 	void OnStartBehavior() override;
@@ -56,9 +60,5 @@ private:
 
 	/// @brief 移動入力されているか
 	bool IsMoveInput();
-
-	/// @brief 走っているか取得
-	/// @return 走っているか？
-	bool IsRunning();
 };
 

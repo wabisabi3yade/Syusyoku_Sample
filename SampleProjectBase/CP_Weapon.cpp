@@ -1,14 +1,13 @@
 #include "pch.h"
 #include "CP_Weapon.h"
 #include "GameObject.h"
-#include "CP_HitStopManager.h"
+
 #ifdef EDIT
 #include "Geometory.h"
 constexpr DirectX::SimpleMath::Color ATTACK_COLOR(1.0f, 1.0f, 0.0f);
 constexpr DirectX::SimpleMath::Color NO_ATTACK_COLOR(0.0f, 0.0f, 1.0f);
 constexpr DirectX::SimpleMath::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 #endif // EDIT
-
 
 CP_Weapon::CP_Weapon() : isAttackCollision(false)
 {
@@ -80,12 +79,6 @@ void CP_Weapon::OnAttack(HashiTaku::IDamageable& _damager)
 {
 	// ダメージを与える
 	_damager.OnDamage(atkInfomation);
-
-	// ヒットストップ
-	if (CP_HitStopManager* pHitStop = CP_HitStopManager::GetInstance())
-	{
-		pHitStop->HitStopBegin(atkInfomation.GetHitStopFlame());
-	}
 }
 
 bool CP_Weapon::CheckAttackable(GameObject& _targetObject)
