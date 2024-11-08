@@ -8,14 +8,14 @@
                     "value": 0
                 },
                 {
-                    "name": "speed",
-                    "type": 2,
-                    "value": 0.0
-                },
-                {
                     "name": "targeting",
                     "type": 0,
                     "value": false
+                },
+                {
+                    "name": "speed",
+                    "type": 2,
+                    "value": 0.0
                 },
                 {
                     "name": "canCancel",
@@ -32,14 +32,14 @@
                     "value": 0.0
                 },
                 {
-                    "name": "axisY",
-                    "type": 2,
-                    "value": 0.0
-                },
-                {
                     "name": "attackCollision",
                     "type": 0,
                     "value": false
+                },
+                {
+                    "name": "axisY",
+                    "type": 2,
+                    "value": 0.0
                 },
                 {
                     "name": "rollingTrigger",
@@ -1140,11 +1140,11 @@
         {
             "animParameter": null,
             "assetName": "ANC_Boss",
-            "defaultNode": "SlashUp",
+            "defaultNode": "Idle",
             "nodeInfoData": [
                 {
                     "animNode": {
-                        "animName": "boss_SlashUp.fbx",
+                        "animName": "boss_Idle.fbx",
                         "animationCurve": {
                             "easeKind": 0,
                             "endValue": 1.0,
@@ -1156,12 +1156,12 @@
                         },
                         "isLoop": true,
                         "isRMR": false,
-                        "isRMXZ": true,
+                        "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
                     },
                     "arrowDataList": null,
-                    "nodeName": "SlashUp",
+                    "nodeName": "Idle",
                     "nodeType": 0,
                     "notifyList": null
                 }
@@ -1170,6 +1170,12 @@
         }
     ],
     "animations": [
+        {
+            "assetName": "knight_StrafeWalk_R.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_StrafeWalk_R.fbx",
+            "rightHand": true
+        },
         {
             "assetName": "knight_Idle1.fbx",
             "boneListName": "Knight.fbx",
@@ -1180,12 +1186,6 @@
             "assetName": "knight_StrafeRun_R.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_StrafeRun_R.fbx",
-            "rightHand": true
-        },
-        {
-            "assetName": "knight_StrafeWalk_R.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_StrafeWalk_R.fbx",
             "rightHand": true
         },
         {
@@ -1201,15 +1201,15 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_StrafeRun_L.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_StrafeRun_L.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_StrafeWalk_L.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_StrafeWalk_L.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_StrafeRun_L.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_StrafeRun_L.fbx",
             "rightHand": true
         },
         {
@@ -1219,15 +1219,15 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_Walk_F.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_Walk_F.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_TargetIdle1.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_TargetIdle1.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_Walk_F.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_Walk_F.fbx",
             "rightHand": true
         },
         {
@@ -1255,15 +1255,15 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_SlashUp.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_SlashUp.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_RollingMove.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_RollingMove.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_SlashUp.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_SlashUp.fbx",
             "rightHand": true
         },
         {
@@ -1282,6 +1282,12 @@
             "assetName": "boss_SlashUp.fbx",
             "boneListName": "Uriel A Plotexia.fbx",
             "pathName": "assets/animation/boss/boss_SlashUp.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "boss_Idle.fbx",
+            "boneListName": "Uriel A Plotexia.fbx",
+            "pathName": "assets/animation/boss/boss_Idle.fbx",
             "rightHand": true
         }
     ],
@@ -1360,17 +1366,6 @@
             "rightHand": true
         },
         {
-            "assetName": "Sword15_FBX.fbx",
-            "flipY": true,
-            "getSize": false,
-            "loadScale": 0.009999999776482582,
-            "matDiffuse": [
-                "Sword15_FBX.png"
-            ],
-            "pathName": "assets/model/sword/Sword15_FBX.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "shield1.fbx",
             "flipY": true,
             "getSize": false,
@@ -1379,6 +1374,17 @@
                 "shield1.png"
             ],
             "pathName": "assets/model/shield/shield1.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "Sword15_FBX.fbx",
+            "flipY": true,
+            "getSize": false,
+            "loadScale": 0.009999999776482582,
+            "matDiffuse": [
+                "Sword15_FBX.png"
+            ],
+            "pathName": "assets/model/sword/Sword15_FBX.fbx",
             "rightHand": true
         },
         {
@@ -1414,24 +1420,24 @@
             "pathName": "assets/texture/skyBox/sky_Day_u.png"
         },
         {
-            "assetName": "sky_Day_r.png",
-            "pathName": "assets/texture/skyBox/sky_Day_r.png"
+            "assetName": "ground.png",
+            "pathName": "assets/texture/ground.png"
         },
         {
             "assetName": "sky_Day_b.png",
             "pathName": "assets/texture/skyBox/sky_Day_b.png"
         },
         {
-            "assetName": "ground.png",
-            "pathName": "assets/texture/ground.png"
-        },
-        {
-            "assetName": "sky_Day_d.png",
-            "pathName": "assets/texture/skyBox/sky_Day_d.png"
+            "assetName": "sky_Day_r.png",
+            "pathName": "assets/texture/skyBox/sky_Day_r.png"
         },
         {
             "assetName": "sky_Day_l.png",
             "pathName": "assets/texture/skyBox/sky_Day_l.png"
+        },
+        {
+            "assetName": "sky_Day_d.png",
+            "pathName": "assets/texture/skyBox/sky_Day_d.png"
         },
         {
             "assetName": "sky_Day_f.png",
@@ -1450,11 +1456,11 @@
             "pathName": "assets/texture/UI/UI_hpLine_red.png"
         },
         {
-            "assetName": "shield1.png",
+            "assetName": "Sword15_FBX.png",
             "pathName": ""
         },
         {
-            "assetName": "Sword15_FBX.png",
+            "assetName": "shield1.png",
             "pathName": ""
         },
         {

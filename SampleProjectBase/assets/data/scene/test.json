@@ -310,7 +310,8 @@
                     "enable": true,
                     "maxHp": 1.0,
                     "name": "Player",
-                    "priority": 0
+                    "priority": 0,
+                    "weaponObjName": "Weapon"
                 },
                 {
                     "animConName": "ANC_Player",
@@ -324,8 +325,8 @@
             "tag": 2,
             "transform": {
                 "child": [
-                    "Weapon",
-                    "Player_LeftHand"
+                    "Player_LeftHand",
+                    "Player_RightHand"
                 ],
                 "pos": [
                     2.299999952316284,
@@ -412,45 +413,28 @@
             "active": true,
             "components": [
                 {
+                    "attackableTags": null,
                     "enable": true,
-                    "grabName": "mixamorig:RightHand",
-                    "name": "Rig",
+                    "isDebugDisplay": false,
+                    "name": "Weapon",
                     "priority": 0
-                }
-            ],
-            "layer": 0,
-            "name": "Weapon",
-            "tag": 0,
-            "transform": {
-                "child": [
-                    "Weapon_Model"
-                ],
-                "pos": [
-                    2.299999952316284,
-                    0.05999928340315819,
-                    -2.0
-                ],
-                "rotation": [
-                    -0.0,
-                    0.04361940547823906,
-                    -0.0,
-                    0.9990482330322266
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
+                },
                 {
+                    "angles": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "center": [
+                        0.0,
+                        1.100000023841858,
+                        0.0
+                    ],
                     "enable": true,
-                    "meshName": "Knight_Sword.fbx",
-                    "name": "MeshRenderer",
-                    "priority": 0
+                    "height": 1.5399999618530273,
+                    "name": "CapsuleCollider",
+                    "priority": 0,
+                    "radius": 0.5
                 },
                 {
                     "enable": true,
@@ -464,31 +448,40 @@
                     "mass": 1.0,
                     "name": "RigidBody",
                     "priority": 0
-                },
+                }
+            ],
+            "layer": 0,
+            "name": "Weapon",
+            "tag": 0,
+            "transform": {
+                "child": [
+                    "Weapon_Model"
+                ],
+                "pos": [
+                    2.499238967895508,
+                    0.21000000834465027,
+                    -2.0174312591552734
+                ],
+                "rotation": [
+                    0.14162670075893402,
+                    0.19435752928256989,
+                    -0.6248884201049805,
+                    0.7427526712417603
+                ],
+                "scale": [
+                    1.0000001192092896,
+                    1.0000001192092896,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
                 {
-                    "angles": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "center": [
-                        0.0,
-                        0.5,
-                        0.0
-                    ],
                     "enable": true,
-                    "height": 1.4299999475479126,
-                    "name": "CapsuleCollider",
-                    "priority": 0,
-                    "radius": 0.28999999165534973
-                },
-                {
-                    "attackableTags": [
-                        3
-                    ],
-                    "enable": true,
-                    "isDebugDisplay": true,
-                    "name": "Weapon",
+                    "meshName": "Knight_Sword.fbx",
+                    "name": "MeshRenderer",
                     "priority": 0
                 }
             ],
@@ -498,20 +491,20 @@
             "transform": {
                 "child": null,
                 "pos": [
-                    2.4992387294769287,
-                    0.20999854803085327,
-                    -2.017430305480957
+                    2.499238967895508,
+                    0.21000000834465027,
+                    -2.0174312591552734
                 ],
                 "rotation": [
-                    0.1416267305612564,
-                    0.19435764849185944,
-                    -0.6248886585235596,
-                    0.7427524328231812
+                    0.14162670075893402,
+                    0.19435752928256989,
+                    -0.6248883605003357,
+                    0.7427526712417603
                 ],
                 "scale": [
-                    1.200000524520874,
-                    1.2000008821487427,
-                    1.2000001668930054
+                    1.2000007629394531,
+                    1.2000011205673218,
+                    1.200000286102295
                 ]
             }
         },
@@ -748,6 +741,41 @@
                     0.0,
                     0.0,
                     1.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "grabName": "mixamorig:RightHand",
+                    "name": "Rig",
+                    "priority": 0
+                }
+            ],
+            "layer": 0,
+            "name": "Player_RightHand",
+            "tag": 0,
+            "transform": {
+                "child": [
+                    "Weapon"
+                ],
+                "pos": [
+                    2.299999952316284,
+                    0.05999999865889549,
+                    -2.0
+                ],
+                "rotation": [
+                    -0.0,
+                    0.04361940547823906,
+                    -0.0,
+                    0.9990482330322266
                 ],
                 "scale": [
                     1.0,

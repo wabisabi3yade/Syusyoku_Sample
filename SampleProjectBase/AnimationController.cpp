@@ -73,6 +73,10 @@ void AnimationController::RemoveNode(const std::string& _nodeName)
 	const AnimNodeInfo* pDelete = GetNodeInfo(_nodeName);
 	if (!pDelete) return;
 
+	// デフォルトノードなら取り除く
+	if (pDefaultNodeInfo == pDelete)
+		pDefaultNodeInfo = nullptr;
+
 	// 遷移先が削除ノードならその矢印も消す
 	for (auto& pNodeInfo : animNodeInfos)
 	{
