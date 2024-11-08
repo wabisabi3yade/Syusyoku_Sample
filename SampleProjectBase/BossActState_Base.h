@@ -13,7 +13,7 @@ public:
 		// 移動
 		Idle,
 		Walk,
-		Move,
+		Run,
 
 		// 攻撃
 		Attack1,
@@ -26,6 +26,8 @@ private:
 	/// @brief ボスのステート
 	BossState stateType;
 
+
+protected:
 	/// @brief アクションコントローラー
 	BossActionController* pActionController;
 
@@ -47,6 +49,8 @@ public:
 	/// @brief 状態切り替え終了処理
 	void OnEnd() override;
 
+	nlohmann::json Save();
+	void Load(const nlohmann::json& _data);
 protected:
 	/// @brief 状態切り替え開始処理
 	virtual void OnStartBehavior() {}
@@ -56,5 +60,7 @@ protected:
 
 	/// @brief 状態切り替え終了処理
 	virtual void OnEndBehavior() {}
+
+	void ImGuiSetting() override;
 };
 

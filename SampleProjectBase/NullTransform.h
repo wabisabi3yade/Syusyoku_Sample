@@ -6,10 +6,12 @@ class NullTransform : public Transform
 {
 
 public:
-	NullTransform() : Transform(nullptr, false) { isHaveParent = true;}
+	NullTransform() : Transform(nullptr, false) { isHaveParent = true; isNull = true; }
 	~NullTransform() {}
 
 	void SetChild(Transform& _child) override {}
+	void RemoveParent() override {}
+	void RemoveChild(Transform& _removeTransform) override {}
 
 	void SetPosition(const DirectX::SimpleMath::Vector3& _pos) override {}
 	void SetScale(const DirectX::SimpleMath::Vector3& _scale) override {}

@@ -9,6 +9,7 @@
                     "fov": 45.0,
                     "isOrth": false,
                     "name": "Camera",
+                    "priority": 0,
                     "viewSlot": 0
                 },
                 {
@@ -21,6 +22,7 @@
                         2.0,
                         0.0
                     ],
+                    "priority": 0,
                     "rotSpeed": 120.0,
                     "target": "Player"
                 }
@@ -69,7 +71,8 @@
                         0.20000000298023224,
                         1.0
                     ],
-                    "name": "BoxCollider"
+                    "name": "BoxCollider",
+                    "priority": 0
                 },
                 {
                     "enable": true,
@@ -81,11 +84,13 @@
                     ],
                     "isTrigger": false,
                     "mass": 0.0,
-                    "name": "RigidBody"
+                    "name": "RigidBody",
+                    "priority": 0
                 },
                 {
                     "enable": true,
                     "name": "SpriteRenderer",
+                    "priority": 0,
                     "sprite": {
                         "texName": "ground.png",
                         "uvDivNum": [
@@ -131,8 +136,44 @@
             "components": [
                 {
                     "enable": true,
+                    "grabName": "mixamorig:LeftHand",
+                    "name": "Rig",
+                    "priority": 0
+                }
+            ],
+            "layer": 0,
+            "name": "Boss_WeaponHand",
+            "tag": 0,
+            "transform": {
+                "child": [
+                    "Boss_Weapon"
+                ],
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
                     "meshName": "Knight.fbx",
-                    "name": "MeshRenderer"
+                    "name": "MeshRenderer",
+                    "priority": 0
                 },
                 {
                     "AABB": false,
@@ -152,7 +193,8 @@
                         2.0199999809265137,
                         1.0
                     ],
-                    "name": "BoxCollider"
+                    "name": "BoxCollider",
+                    "priority": 0
                 },
                 {
                     "enable": true,
@@ -164,7 +206,8 @@
                     ],
                     "isTrigger": false,
                     "mass": 1.0,
-                    "name": "RigidBody"
+                    "name": "RigidBody",
+                    "priority": 0
                 },
                 {
                     "actionController": {
@@ -267,12 +310,13 @@
                     "enable": true,
                     "maxHp": 1.0,
                     "name": "Player",
-                    "weaponObjName": "Weapon_Model"
+                    "priority": 0
                 },
                 {
                     "animConName": "ANC_Player",
                     "enable": true,
-                    "name": "Animation"
+                    "name": "Animation",
+                    "priority": 1
                 }
             ],
             "layer": 1,
@@ -335,7 +379,8 @@
                 {
                     "enable": true,
                     "grabName": "mixamorig:LeftHand",
-                    "name": "Rig"
+                    "name": "Rig",
+                    "priority": 0
                 }
             ],
             "layer": 0,
@@ -369,7 +414,8 @@
                 {
                     "enable": true,
                     "grabName": "mixamorig:RightHand",
-                    "name": "Rig"
+                    "name": "Rig",
+                    "priority": 0
                 }
             ],
             "layer": 0,
@@ -403,7 +449,8 @@
                 {
                     "enable": true,
                     "meshName": "Knight_Sword.fbx",
-                    "name": "MeshRenderer"
+                    "name": "MeshRenderer",
+                    "priority": 0
                 },
                 {
                     "enable": true,
@@ -415,7 +462,8 @@
                     ],
                     "isTrigger": true,
                     "mass": 1.0,
-                    "name": "RigidBody"
+                    "name": "RigidBody",
+                    "priority": 0
                 },
                 {
                     "angles": [
@@ -431,6 +479,7 @@
                     "enable": true,
                     "height": 1.4299999475479126,
                     "name": "CapsuleCollider",
+                    "priority": 0,
                     "radius": 0.28999999165534973
                 },
                 {
@@ -438,7 +487,9 @@
                         3
                     ],
                     "enable": true,
-                    "name": "Weapon"
+                    "isDebugDisplay": true,
+                    "name": "Weapon",
+                    "priority": 0
                 }
             ],
             "layer": 0,
@@ -475,7 +526,8 @@
                     "Z_Back": "sky_Day_b.png",
                     "Z_Front": "sky_Day_f.png",
                     "enable": true,
-                    "name": "SkyBox"
+                    "name": "SkyBox",
+                    "priority": 0
                 }
             ],
             "layer": 0,
@@ -507,7 +559,8 @@
                 {
                     "enable": true,
                     "meshName": "shield1.fbx",
-                    "name": "MeshRenderer"
+                    "name": "MeshRenderer",
+                    "priority": 0
                 }
             ],
             "layer": 0,
@@ -539,7 +592,8 @@
                 {
                     "enable": true,
                     "meshName": "Uriel A Plotexia.fbx",
-                    "name": "MeshRenderer"
+                    "name": "MeshRenderer",
+                    "priority": 0
                 },
                 {
                     "enable": true,
@@ -551,7 +605,8 @@
                     ],
                     "isTrigger": true,
                     "mass": 1.0,
-                    "name": "RigidBody"
+                    "name": "RigidBody",
+                    "priority": 0
                 },
                 {
                     "angles": [
@@ -567,19 +622,29 @@
                     "enable": true,
                     "height": 1.2200000286102295,
                     "name": "CapsuleCollider",
+                    "priority": 0,
                     "radius": 0.6600000262260437
                 },
                 {
                     "enable": true,
                     "maxHp": 1.0,
-                    "name": "Enemy"
+                    "name": "Boss",
+                    "priority": 0
+                },
+                {
+                    "animConName": "ANC_Boss",
+                    "enable": true,
+                    "name": "Animation",
+                    "priority": 1
                 }
             ],
             "layer": 0,
             "name": "Enemy",
             "tag": 3,
             "transform": {
-                "child": null,
+                "child": [
+                    "Boss_WeaponHand"
+                ],
                 "pos": [
                     0.5,
                     0.30000001192092896,
@@ -603,7 +668,8 @@
             "components": [
                 {
                     "enable": true,
-                    "name": "HitStopManager"
+                    "name": "HitStopManager",
+                    "priority": 0
                 }
             ],
             "layer": 0,
@@ -631,11 +697,73 @@
         },
         {
             "active": true,
+            "components": null,
+            "layer": 0,
+            "name": "Boss_Weapon",
+            "tag": 0,
+            "transform": {
+                "child": [
+                    "Boss_WeaponModel"
+                ],
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "meshName": "Sword15_FBX.fbx",
+                    "name": "MeshRenderer",
+                    "priority": 0
+                }
+            ],
+            "layer": 0,
+            "name": "Boss_WeaponModel",
+            "tag": 0,
+            "transform": {
+                "child": null,
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
             "components": [
                 {
                     "enable": true,
                     "image": "UI_hpFrame.png",
-                    "name": "UIRenderer"
+                    "name": "UIRenderer",
+                    "priority": 0
                 }
             ],
             "layer": 2,
@@ -667,7 +795,8 @@
                 {
                     "enable": true,
                     "image": "UI_hpLine_green.png",
-                    "name": "UIRenderer"
+                    "name": "UIRenderer",
+                    "priority": 0
                 },
                 {
                     "currentValue": 1.0,
@@ -675,6 +804,7 @@
                     "maxValue": 1.0,
                     "minValue": 0.0,
                     "name": "UISlider",
+                    "priority": 0,
                     "sliderLen": 590.0,
                     "startPos": 20.0
                 }

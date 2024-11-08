@@ -26,7 +26,7 @@ cbuffer WVP : register(b0)
 
 cbuffer BoneMatrixBuffer : register(b1)
 {
-    matrix BoneMatrix[400];
+    matrix BoneMatrix[100];
 }
 
 VS_OUT main(VS_IN vin)

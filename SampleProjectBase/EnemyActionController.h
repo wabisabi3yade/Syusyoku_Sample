@@ -16,6 +16,6 @@ public:
 	/// @brief コンストラクタ
 	/// @param _enemy エネミーコンポーネント
 	/// @param _controllerName アクションコントローラー名
-	EnemyActionController(CP_Character& _enemy, const std::string& _controllerName);
+	EnemyActionController(CP_Enemy& _enemy, const std::string& _controllerName);
 	virtual ~EnemyActionController() {}
 };

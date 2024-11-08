@@ -2,13 +2,8 @@
 #include "CP_Enemy.h"
 
 CP_Enemy::CP_Enemy()
-	: enemyName("enemy_default")
 {
-}
-
-CP_Enemy::CP_Enemy(const std::string& _enemyName)
-	: enemyName(_enemyName)
-{
+	SetEnemyName("Boss");
 }
 
 const std::string& CP_Enemy::GetEnemyName() const
@@ -29,4 +24,9 @@ void CP_Enemy::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo)
 void CP_Enemy::OnDeathBehavior()
 {
 	HASHI_DEBUG_LOG("“GŽ€‚ñ‚¾");
+}
+
+void CP_Enemy::SetEnemyName(const std::string& _enemyName)
+{
+	enemyName = _enemyName;
 }

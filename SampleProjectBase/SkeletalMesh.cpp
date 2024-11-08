@@ -21,7 +21,7 @@ Bone* SkeletalMesh::GetBone(u_int _idx)
 	return pBoneList->FindBone(_idx);
 }
 
-u_int SkeletalMesh::GetBoneNum()
+u_int SkeletalMesh::GetBoneCnt()
 {
 	return pBoneList->GetBoneCnt();
 }

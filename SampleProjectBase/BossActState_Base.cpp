@@ -32,3 +32,16 @@ void BossActState_Base::OnEnd()
 
 	OnEndBehavior();
 }
+
+nlohmann::json BossActState_Base::Save()
+{
+	return nlohmann::json();
+}
+
+void BossActState_Base::Load(const nlohmann::json& _data)
+{
+}
+
+void BossActState_Base::ImGuiSetting()
+{
+}

@@ -8,14 +8,14 @@
                     "value": 0
                 },
                 {
-                    "name": "targeting",
-                    "type": 0,
-                    "value": false
-                },
-                {
                     "name": "speed",
                     "type": 2,
                     "value": 0.0
+                },
+                {
+                    "name": "targeting",
+                    "type": 0,
+                    "value": false
                 },
                 {
                     "name": "canCancel",
@@ -32,14 +32,14 @@
                     "value": 0.0
                 },
                 {
-                    "name": "attackCollision",
-                    "type": 0,
-                    "value": false
-                },
-                {
                     "name": "axisY",
                     "type": 2,
                     "value": 0.0
+                },
+                {
+                    "name": "attackCollision",
+                    "type": 0,
+                    "value": false
                 },
                 {
                     "name": "rollingTrigger",
@@ -114,6 +114,25 @@
                             "arrowParam": {
                                 "conditionList": [
                                     {
+                                        "condition": null,
+                                        "paramName": "rollingTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 1,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "RollingMove"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
                                         "condition": {
                                             "bJudgeType": 1
                                         },
@@ -138,35 +157,6 @@
                                 "transTime": 0.20000000298023224
                             },
                             "toName": "Move"
-                        },
-                        {
-                            "arrowParam": {
-                                "conditionList": [
-                                    {
-                                        "condition": {
-                                            "bJudgeType": 1
-                                        },
-                                        "paramName": "targeting",
-                                        "typeKind": 0
-                                    },
-                                    {
-                                        "condition": {
-                                            "fCompare": 0.0,
-                                            "fJudgeType": 2
-                                        },
-                                        "paramName": "speed",
-                                        "typeKind": 2
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
-                                "priority": 0,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.20000000298023224
-                            },
-                            "toName": "Idle"
                         },
                         {
                             "arrowParam": {
@@ -974,7 +964,7 @@
                                     true
                                 ],
                                 "notifyName": "ANS_CanCancel",
-                                "parameterName": "",
+                                "parameterName": "canCancel",
                                 "setParameter": [
                                     false,
                                     true,
@@ -1107,6 +1097,27 @@
                     "arrowDataList": [
                         {
                             "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "targeting",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 0.8999999761581421,
+                                "interpolate": 0,
+                                "isHaveExit": true,
+                                "priority": 1,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.11999999731779099
+                            },
+                            "toName": "TargetIdle"
+                        },
+                        {
+                            "arrowParam": {
                                 "conditionList": null,
                                 "exitRatio": 0.8999999761581421,
                                 "interpolate": 0,
@@ -1127,88 +1138,13 @@
             "playSpeed": 1.0
         },
         {
-            "animParameter": [
-                {
-                    "name": "new Parameter",
-                    "type": 2,
-                    "value": 0.0
-                },
-                {
-                    "name": "new Parameter1",
-                    "type": 2,
-                    "value": 0.0
-                }
-            ],
-            "assetName": "ANC_Test",
-            "defaultNode": "F",
+            "animParameter": null,
+            "assetName": "ANC_Boss",
+            "defaultNode": "SlashUp",
             "nodeInfoData": [
                 {
                     "animNode": {
-                        "animationCurve": {
-                            "easeKind": 0,
-                            "endValue": 1.0,
-                            "endVector": 0.0,
-                            "plotDatas": null,
-                            "startValue": 0.0,
-                            "startVector": 0.0,
-                            "useHermite": false
-                        },
-                        "axisParam": [
-                            {
-                                "ease": 8,
-                                "name": "new Parameter",
-                                "time": 0.0
-                            },
-                            {
-                                "ease": 8,
-                                "name": "new Parameter1",
-                                "time": 0.0
-                            }
-                        ],
-                        "blendPoint": [
-                            {
-                                "animName": "knight_StrafeRun_L.fbx",
-                                "blendValue": [
-                                    0.0,
-                                    0.5
-                                ]
-                            },
-                            {
-                                "animName": "knight_Run_B.fbx",
-                                "blendValue": [
-                                    0.5,
-                                    0.0
-                                ]
-                            },
-                            {
-                                "animName": "knight_Run_F.fbx",
-                                "blendValue": [
-                                    0.5,
-                                    1.0
-                                ]
-                            },
-                            {
-                                "animName": "knight_StrafeRun_R.fbx",
-                                "blendValue": [
-                                    1.0,
-                                    0.5
-                                ]
-                            }
-                        ],
-                        "isLoop": true,
-                        "isRMR": false,
-                        "isRMXZ": false,
-                        "isRMY": false,
-                        "speed": 1.0,
-                        "useBlend": true
-                    },
-                    "arrowDataList": null,
-                    "nodeName": "Target",
-                    "nodeType": 1,
-                    "notifyList": null
-                },
-                {
-                    "animNode": {
+                        "animName": "boss_SlashUp.fbx",
                         "animationCurve": {
                             "easeKind": 0,
                             "endValue": 1.0,
@@ -1220,12 +1156,12 @@
                         },
                         "isLoop": true,
                         "isRMR": false,
-                        "isRMXZ": false,
+                        "isRMXZ": true,
                         "isRMY": false,
                         "speed": 1.0
                     },
                     "arrowDataList": null,
-                    "nodeName": "F",
+                    "nodeName": "SlashUp",
                     "nodeType": 0,
                     "notifyList": null
                 }
@@ -1234,12 +1170,6 @@
         }
     ],
     "animations": [
-        {
-            "assetName": "knight_StrafeWalk_R.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_StrafeWalk_R.fbx",
-            "rightHand": true
-        },
         {
             "assetName": "knight_Idle1.fbx",
             "boneListName": "Knight.fbx",
@@ -1250,6 +1180,12 @@
             "assetName": "knight_StrafeRun_R.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_StrafeRun_R.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_StrafeWalk_R.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_StrafeWalk_R.fbx",
             "rightHand": true
         },
         {
@@ -1265,15 +1201,15 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_StrafeWalk_L.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_StrafeWalk_L.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_StrafeRun_L.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_StrafeRun_L.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_StrafeWalk_L.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_StrafeWalk_L.fbx",
             "rightHand": true
         },
         {
@@ -1283,21 +1219,15 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_TargetIdle1.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_TargetIdle1.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_Walk_F.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_Walk_F.fbx",
             "rightHand": true
         },
         {
-            "assetName": "knight_Stinger.fbx",
+            "assetName": "knight_TargetIdle1.fbx",
             "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_Stinger.fbx",
+            "pathName": "assets/animation/player/knight_TargetIdle1.fbx",
             "rightHand": true
         },
         {
@@ -1325,21 +1255,33 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_RollingMove.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_RollingMove.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_SlashUp.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_SlashUp.fbx",
             "rightHand": true
         },
         {
+            "assetName": "knight_RollingMove.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_RollingMove.fbx",
+            "rightHand": true
+        },
+        {
             "assetName": "knight_SlashDown.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_SlashDown.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "boss_Run_F.fbx",
+            "boneListName": "Uriel A Plotexia.fbx",
+            "pathName": "assets/animation/boss/boss_Run_F.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "boss_SlashUp.fbx",
+            "boneListName": "Uriel A Plotexia.fbx",
+            "pathName": "assets/animation/boss/boss_SlashUp.fbx",
             "rightHand": true
         }
     ],
@@ -1418,6 +1360,17 @@
             "rightHand": true
         },
         {
+            "assetName": "Sword15_FBX.fbx",
+            "flipY": true,
+            "getSize": false,
+            "loadScale": 0.009999999776482582,
+            "matDiffuse": [
+                "Sword15_FBX.png"
+            ],
+            "pathName": "assets/model/sword/Sword15_FBX.fbx",
+            "rightHand": true
+        },
+        {
             "assetName": "shield1.fbx",
             "flipY": true,
             "getSize": false,
@@ -1457,32 +1410,28 @@
             "pathName": "assets/texture/UI/UI_hpFrame.png"
         },
         {
-            "assetName": "grass.jpg",
-            "pathName": "assets/texture/grass.jpg"
-        },
-        {
             "assetName": "sky_Day_u.png",
             "pathName": "assets/texture/skyBox/sky_Day_u.png"
-        },
-        {
-            "assetName": "ground.png",
-            "pathName": "assets/texture/ground.png"
-        },
-        {
-            "assetName": "sky_Day_b.png",
-            "pathName": "assets/texture/skyBox/sky_Day_b.png"
         },
         {
             "assetName": "sky_Day_r.png",
             "pathName": "assets/texture/skyBox/sky_Day_r.png"
         },
         {
-            "assetName": "sky_Day_l.png",
-            "pathName": "assets/texture/skyBox/sky_Day_l.png"
+            "assetName": "sky_Day_b.png",
+            "pathName": "assets/texture/skyBox/sky_Day_b.png"
+        },
+        {
+            "assetName": "ground.png",
+            "pathName": "assets/texture/ground.png"
         },
         {
             "assetName": "sky_Day_d.png",
             "pathName": "assets/texture/skyBox/sky_Day_d.png"
+        },
+        {
+            "assetName": "sky_Day_l.png",
+            "pathName": "assets/texture/skyBox/sky_Day_l.png"
         },
         {
             "assetName": "sky_Day_f.png",
@@ -1502,6 +1451,10 @@
         },
         {
             "assetName": "shield1.png",
+            "pathName": ""
+        },
+        {
+            "assetName": "Sword15_FBX.png",
             "pathName": ""
         },
         {

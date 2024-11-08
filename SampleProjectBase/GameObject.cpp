@@ -97,6 +97,18 @@ bool GameObject::IsExistStartComponent(const Component& _pCheckComponent)
 	return false;
 }
 
+void GameObject::SortCompPriority()
+{
+	pActiveComponents.sort(SortCompPriorityFunc);
+	pAwakeComponents.sort(SortCompPriorityFunc);
+	pStartComponents.sort(SortCompPriorityFunc);
+}
+
+bool GameObject::SortCompPriorityFunc(const Component* _c1, const Component* _c2)
+{
+	return _c1->GetPriority() > _c2->GetPriority();
+}
+
 void GameObject::LoadCreateComponnet(const nlohmann::json& _componentsData)
 {
 	ComponentFactory* compFactory = ComponentFactory::GetInstance();
@@ -138,7 +150,6 @@ void GameObject::LoadComponentParameter(const nlohmann::json& _componentData)
 	for(auto& pComp : components)
 	{
 		pComp->Init();
-
 		// データ内からコンポーネントのデータを探してロードする
 		for (auto& compData : _componentData)
 		{
@@ -155,6 +166,9 @@ void GameObject::LoadComponentParameter(const nlohmann::json& _componentData)
 			}
 		}
 	}
+
+	// 優先度で並べる
+	SortCompPriority();
 }
 
 GameObject::GameObject() : isActive(true), name("")
@@ -425,6 +439,8 @@ void GameObject::ImGuiSetting()
 	if (ImGuiMethod::DragFloat3(v, "rot"))
 		pTransform->SetLocalEularAngles(v);
 
+
+	bool isChangePriority = false;
 	for (auto cpItr = components.begin(); cpItr != components.end();)
 	{
 		bool isDelete = false;	// コンポーネント削除フラグ
@@ -435,6 +451,14 @@ void GameObject::ImGuiSetting()
 			isDelete = ImGui::Button("Delete");
 			// コンポーネント内の編集
 			(*cpItr)->ImGuiSettingCall();
+
+			// 優先度
+			int pri = (*cpItr)->GetPriority();
+			if (ImGui::DragInt("Priority", &pri))
+			{
+				isChangePriority = true;	// 並べ替えるようにする
+				(*cpItr)->SetPriority(pri);
+			}
 
 			ImGui::TreePop();
 		}
@@ -448,6 +472,10 @@ void GameObject::ImGuiSetting()
 		else
 			cpItr++;
 	}
+
+	// 優先度順に並べる
+	if(isChangePriority)
+		SortCompPriority();	
 
 	ImGui::Dummy(ImVec2(0, 10));
 

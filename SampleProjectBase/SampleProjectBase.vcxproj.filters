@@ -754,6 +754,15 @@
     <Filter Include="ソース ファイル\Object\Enemy\Boss\ActionState\BossAct_Base">
       <UniqueIdentifier>{b5375f29-655e-4426-af57-d2ccb5eda953}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Boss">
+      <UniqueIdentifier>{fbc59e98-d5f9-4a2c-a62d-0f7ca38ed6c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Enemy\Boss\ActionState\Move">
+      <UniqueIdentifier>{72c9ce00-a1e9-4ec8-b2c5-c25b83bdb458}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BattleManager">
+      <UniqueIdentifier>{11171953-3aa3-492c-b43b-ad29c6e81082}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1396,6 +1405,18 @@
     </ClCompile>
     <ClCompile Include="BossActionController.cpp">
       <Filter>ソース ファイル\Object\Enemy\Boss\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Boss.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BossGroundState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BossGroundMove.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_BattleManager.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2052,6 +2073,18 @@
     </ClInclude>
     <ClInclude Include="BossActionController.h">
       <Filter>ソース ファイル\Object\Enemy\Boss\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Boss.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BossGroundState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BossGroundMove.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_BattleManager.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

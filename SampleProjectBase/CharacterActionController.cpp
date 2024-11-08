@@ -27,6 +27,11 @@ nlohmann::json CharacterActionController::Save()
 	return nlohmann::json();
 }
 
+CP_Character& CharacterActionController::GetCharacter()
+{
+	return *pCharacter;
+}
+
 CharacterChangeAnimObserver::CharacterChangeAnimObserver(CharacterActionController& _playerActCon,
 	const std::string& _observerName)
 	: ChangeAnimObserver(_observerName), pActionController(&_playerActCon)

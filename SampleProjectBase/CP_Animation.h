@@ -5,19 +5,21 @@
 
 // モデル
 class TreeNode;
-
-constexpr u_int MAX_BONEMTX(400);	// シェーダーの渡すボーン行列の最大数
+class CP_MeshRenderer;
 
 /// @brief アニメーションコンポーネント
 class CP_Animation : public Component
 {
+	static constexpr u_int MAX_BONEMTX{ 100 };	// シェーダーの渡すボーン行列の最大数
+
 	// シェーダーに渡すボーン行列構造体
 	struct BoneCombMtricies
 	{
 		DirectX::SimpleMath::Matrix matrix[MAX_BONEMTX];
 	};
 
-	static BoneCombMtricies boneComb;
+	/// @brief ボーンのコンビネーション行列のバッファー
+	static BoneCombMtricies boneCombBuffer;
 
 	/// @brief スケルタルメッシュ
 	SkeletalMesh* pSkeletalMesh;
@@ -37,11 +39,7 @@ public:
 
 	CP_Animation& operator=(const CP_Animation& _other);
 
-	void Init() override {}
-
-	void Awake() override;
-
-	void LateUpdate() override;
+	void Init() override;
 
 	/// @brief アニメーション変更オブザーバーを追加
 	/// @param _observer オブザーバー
@@ -69,9 +67,6 @@ public:
 	/// @brief 指定したトリガー変数をtrueにする
 	/// @param _paramName パラメーター名
 	void SetTrigger(const std::string& _paramName);
-
-	/// @brief Rendererからスケルタルメッシュをセット 
-	void SetupSkeletalMesh();
 
 	// アニメーションコントローラーをセット
 	void SetAnimationController(AnimationController& _controller);
@@ -124,8 +119,16 @@ public:
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
 private:
+	void Awake() override;
+	void LateUpdate() override;
+	void Draw() override;
+	void OnAddComponent(Component& _comp);
+
 	/// @brief アニメーションコントローラーの準備
 	void SetupAnimCon();
+
+	/// @brief Rendererからスケルタルメッシュをセット 
+	void SetupSkeletalMesh(CP_MeshRenderer& _mr);
 
 	/// @brief 再生できる状態か？
 	/// @return 再生できるか

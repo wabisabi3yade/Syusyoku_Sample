@@ -14,7 +14,6 @@
 // シーンで使用するオブジェクト全般の基底クラス
 class GameObject : public HashiTaku::ISaveLoad, public HashiTaku::IImGuiUser
 {
-private:
 	/// @brief このオブジェクトの名前
 	std::string name;	
 
@@ -177,6 +176,12 @@ private:
 	/// @tparam  コンポーネント
 	/// @return 重複しているか？
 	template<class T> bool isDuplicateCompoent();
+
+	/// @brief コンポーネントを並べ変える
+	void SortCompPriority();
+
+	/// @brief コンポーネントの優先度が降順に並べていくソート関数
+	static bool SortCompPriorityFunc(const Component* _c1, const Component* _c2);
 
 	/// @brief コンポーネント生成ロード処理
 	/// @param _componentsData コンポーネントデータ

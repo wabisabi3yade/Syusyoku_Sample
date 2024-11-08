@@ -1,7 +1,6 @@
 #pragma once
 #include "StateMachine.h"
 #include "PlayerActState_Base.h"
-#include "PlayerActChangeObserver.h"
 #include "ChangeAnimObserver.h"
 
 class PlayerChangeAnimObserver;
@@ -11,9 +10,6 @@ class CP_Player;
 class PlayerActionController : public HashiTaku::StateMachine_Base<PlayerActState_Base::PlayerState>, public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
 {
 private:
-	/// @brief ステートから変更した時に通知を受け取るオブザーバー
-	std::unique_ptr<PlayerActChangeObserver> pStateChangeObserver;
-
 	/// @brief アニメーション変更したときのオブザーバー
 	std::unique_ptr<PlayerChangeAnimObserver> pChangeAnimObserver;
 
@@ -100,7 +96,7 @@ template<class T>
 inline void PlayerActionController::CreateState(PlayerActState_Base::PlayerState _actionState)
 {
 	std::unique_ptr<PlayerActState_Base> createState = std::make_unique<T>();
-	createState->Init(_actionState, *this, *pStateChangeObserver);
+	createState->Init(_actionState, *this);
 
 	AddNode(_actionState, std::move(createState));
 }

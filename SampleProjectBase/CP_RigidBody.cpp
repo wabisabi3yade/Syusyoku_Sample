@@ -24,6 +24,9 @@ void CP_RigidBody::Init()
 void CP_RigidBody::OnDestroy()
 {
 	DX11BulletPhisics* pEngine = DX11BulletPhisics::GetInstance();
+
+	if (collider)
+		pEngine->RemoveCollObj(*this);
 }
 
 void CP_RigidBody::OnEnableTrue()

@@ -8,7 +8,8 @@
 
 using namespace DirectX::SimpleMath;
 
-CP_Animation::BoneCombMtricies CP_Animation::boneComb;
+CP_Animation::BoneCombMtricies CP_Animation::boneCombBuffer;
+
 
 CP_Animation::CP_Animation() : pSkeletalMesh(nullptr), pAnimController(nullptr)
 {
@@ -26,10 +27,16 @@ CP_Animation& CP_Animation::operator=(const CP_Animation& _other)
 	return *this;
 }
 
+void CP_Animation::Init()
+{
+}
+
 void CP_Animation::Awake()
 {
-	// スケルタルメッシュ準備
-	SetupSkeletalMesh();
+	if (CP_MeshRenderer* pMr = gameObject->GetComponent<CP_MeshRenderer>())
+	{
+		SetupSkeletalMesh(*pMr);
+	}
 
 	// アニメーションコントローラー準備
 	SetupAnimCon();
@@ -44,9 +51,22 @@ void CP_Animation::LateUpdate()
 
 	// コンビネーション行列を更新
 	UpdateBoneCombMtx();
+}
 
+void CP_Animation::Draw()
+{
 	// ボーン行列をバッファとして送信
 	UpdateBoneBuffer();
+}
+
+void CP_Animation::OnAddComponent(Component& _comp)
+{
+	// メッシュレンダラーなら
+	if (CP_MeshRenderer* pMR = dynamic_cast<CP_MeshRenderer*>(&_comp))
+	{
+		// スケルタルメッシュ準備
+		SetupSkeletalMesh(*pMR);
+	}
 }
 
 void CP_Animation::ImGuiSetting()
@@ -140,13 +160,6 @@ float CP_Animation::GetFloat(const std::string& _paramName)
 #endif // EDIT
 
 	return pAnimConPlayer->GetCopyAnimParameters().GetFloat(_paramName);
-}
-
-void CP_Animation::SetupSkeletalMesh()
-{
-	// レンダラーに設定しているスケルタルメッシュを取得
-	CP_MeshRenderer* pMR = gameObject->GetComponent<CP_MeshRenderer>();
-	pSkeletalMesh = dynamic_cast<SkeletalMesh*>(pMR->GetRenderMesh());
 }
 
 void CP_Animation::SetAnimationController(AnimationController& _controller)
@@ -248,6 +261,20 @@ void CP_Animation::SetupAnimCon()
 	pAnimConPlayer = std::make_unique<AnimControllPlayer>(*pAnimController, pSkeletalMesh->GetBoneList(), GetTransform());
 }
 
+void CP_Animation::SetupSkeletalMesh(CP_MeshRenderer& _mr)
+{
+	// レンダラーに設定しているスケルタルメッシュを取得
+	pSkeletalMesh = dynamic_cast<SkeletalMesh*>(_mr.GetRenderMesh());
+
+	//// ボーンの数分行列のサイズを確保する
+	//u_int boneCnt = pSkeletalMesh->GetBoneList().GetBoneCnt();
+	//boneCombBuffer.matrix.resize(boneCnt);
+
+	// モデル関係
+	_mr.SetVertexShader("VS_SkinAnimation");
+	_mr.SetPixelShader("PS_Unlit");
+}
+
 void CP_Animation::UpdateAnimationMtx()
 {
 	// アニメーションプレイヤーで更新する
@@ -324,16 +351,18 @@ void CP_Animation::UpdateNodeHierarchy(TreeNode& _treeNode, const Matrix& _paren
 
 void CP_Animation::UpdateBoneBuffer()
 {
-	u_int boneCnt = pSkeletalMesh->GetBoneNum();
+	if (!pSkeletalMesh) return;
+
+	u_int bufferCnt = static_cast<u_int>(pSkeletalMesh->GetBoneCnt());
 
 	// ボーン数ループ
-	for (u_int b_i = 0; b_i < boneCnt; b_i++)
+	for (u_int b_i = 0; b_i < bufferCnt; b_i++)
 	{
 		const Bone& bone = *pSkeletalMesh->GetBone(b_i);
 
 		// ボーンのID番目に行列を入れる
-		boneComb.matrix[bone.GetIndex()] = bone.GetCombMtx();
-		boneComb.matrix[bone.GetIndex()] = boneComb.matrix[bone.GetIndex()].Transpose();
+		boneCombBuffer.matrix[bone.GetIndex()] = bone.GetCombMtx();
+		boneCombBuffer.matrix[bone.GetIndex()] = boneCombBuffer.matrix[bone.GetIndex()].Transpose();
 	}
 
 	// シェーダーにボーン行列を渡す
@@ -342,7 +371,7 @@ void CP_Animation::UpdateBoneBuffer()
 	{
 		Material* pMaterial = pSkeletalMesh->GetMaterial(m_i);
 		/*pMaterial->GetVertexShader().Map(1, &boneComb, sizeof(BoneCombMtricies));*/
-		pMaterial->GetVertexShader().UpdateSubResource(1, &boneComb);
+		pMaterial->GetVertexShader().UpdateSubResource(1, &boneCombBuffer);
 	}
 }
 

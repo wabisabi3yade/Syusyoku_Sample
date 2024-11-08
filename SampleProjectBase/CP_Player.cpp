@@ -33,11 +33,6 @@ void CP_Player::Init()
 void CP_Player::Awake()
 {
 	CP_Character::Awake();
-
-	//// ƒ‚ƒfƒ‹ŠÖŒW
-	CP_MeshRenderer* pMeshRenderer = gameObject->GetComponent<CP_MeshRenderer>();
-	pMeshRenderer->SetVertexShader("VS_SkinAnimation");
-	pMeshRenderer->SetPixelShader("PS_Unlit");
 }
 
 void CP_Player::Start()
@@ -135,6 +130,9 @@ void CP_Player::ImGuiSetWeapon()
 			HASHI_DEBUG_LOG("CP_Weapon‚ª‚ ‚è‚Ü‚¹‚ñ");
 		}
 	}
+
+	if (ImGui::Button("Release"))
+		pWeapon = nullptr;
 
 #endif //  EDIT
 }

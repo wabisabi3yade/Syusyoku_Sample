@@ -5,7 +5,7 @@
 
 class CP_Weapon;
 
-class CP_Player : public HashiTaku::CP_Character
+class CP_Player : public CP_Character
 {
 	/// @brief アクションコントローラー
 	std::unique_ptr<PlayerActionController> pActionController;

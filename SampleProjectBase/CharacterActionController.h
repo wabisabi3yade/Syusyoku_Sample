@@ -4,6 +4,7 @@
 
 class CharacterChangeAnimObserver;
 class CP_Animation;
+
 class CP_Character;
 
 /// @brief キャラクター（プレイヤー、敵など)のアクションコントローラー
@@ -12,12 +13,12 @@ class CharacterActionController : public HashiTaku::StateMachine_Base<int>, publ
 	/// @brief アニメーション変更したときのオブザーバー
 	std::unique_ptr<CharacterChangeAnimObserver> pChangeAnimObserver;
 
+	/// @brief キャラクターコンポーネント
+	CP_Character* pCharacter;
+
 protected:
 	/// @brief アニメーションコンポーネント	
 	CP_Animation* pAnimation;
-
-	/// @brief キャラクターコンポーネント
-	CP_Character* pCharacter;
 public:
 	CharacterActionController(CP_Character& _character, const std::string& _stateMachineName);
 	~CharacterActionController() {}
@@ -34,6 +35,8 @@ public:
 	void Load(const nlohmann::json& _data) override {};
 
 protected:
+	CP_Character& GetCharacter();
+
 	virtual void ImGuiSetting() = 0;
 };
 

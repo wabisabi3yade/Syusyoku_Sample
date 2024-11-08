@@ -67,12 +67,6 @@ public:
 #endif // EDIT
 
 private:
-	using StateChangeObserver = HashiTaku::IObserver<int>;
-	using StateChangeSubject = HashiTaku::Subject<int>;
-
-	/// @brief ステート遷移することを通知をするサブジェクト
-	std::unique_ptr<StateChangeSubject> changeStateSubject;
-
 	/// @brief この行動クラスのステートタイプ
 	PlayerState stateType;
 protected:
@@ -95,7 +89,7 @@ public:
 	/// @param _stateType　状態
 	/// @param _actController　プレイヤーコンポーネント
 	/// @param _changeObserver ステート遷移オブザーバー
-	void Init(PlayerState _stateType, PlayerActionController& _actController, StateChangeObserver& _changeObserver);
+	void Init(PlayerState _stateType, PlayerActionController& _actController);
 
 	/// @brief 開始処理呼び出し
 	void OnStart() override;

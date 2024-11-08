@@ -97,7 +97,7 @@ public:
 	Bone* GetBone(u_int _idx);
 
 	// ボーンの数を取得
-	u_int GetBoneNum();
+	u_int GetBoneCnt();
 
 	// ルートノードを取得
 	TreeNode& GetRootNode();

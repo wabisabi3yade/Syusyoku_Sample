@@ -13,9 +13,6 @@
 PlayerActionController::PlayerActionController(CP_Player& _player)
 	: StateMachine_Base("playerAction"), pAnimation(nullptr), pPlayer(&_player),pIsCanCancel(nullptr), isTargeting(false)
 {
-	// 状態遷移オブザーバー生成
-	pStateChangeObserver = std::make_unique<PlayerActChangeObserver>("StateChangeObserver", *this);
-
 	// アニメーション変更オブザーバー生成
 	pChangeAnimObserver = std::make_unique<PlayerChangeAnimObserver>(*this);
 	pGameInput = GameInput::GetInstance();

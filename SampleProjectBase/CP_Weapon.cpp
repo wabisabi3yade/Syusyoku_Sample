@@ -54,6 +54,11 @@ nlohmann::json CP_Weapon::Save()
 		attackTagDatas.push_back(tag);
 	}
 
+#ifdef EDIT
+	data["isDebugDisplay"] = isDebugAttackDisplay;
+#endif // EDIT
+
+
 	return data;
 }
 
@@ -72,6 +77,11 @@ void CP_Weapon::Load(const nlohmann::json& _data)
 				AddAttackableTag(static_cast<Tag::Type>(tagData));
 		}
 	}
+
+#ifdef EDIT
+	LoadJsonBoolean("isDebugDisplay", isDebugAttackDisplay, _data);
+#endif // EDIT
+
 
 }
 

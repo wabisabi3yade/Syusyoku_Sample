@@ -13,17 +13,14 @@ constexpr float CAN_ROLLING_STICKINPUT(0.3f);	// ƒ[ƒŠƒ“ƒO‚Å‚«‚é¶ƒXƒeƒBƒbƒN‚Ì“
 PlayerActState_Base::PlayerActState_Base()
 	: pActionController(nullptr), pAnimation(nullptr), stateType(PlayerState::None)
 {
-	changeStateSubject = std::make_unique<StateChangeSubject>();
-
 	pPlayerInput = GameInput::GetInstance();
 	pCamera = &InSceneSystemManager::GetInstance()->GetMainCamera();
 }
 
-void PlayerActState_Base::Init(PlayerState _stateType, PlayerActionController& _actController, StateChangeObserver& _changeObserver)
+void PlayerActState_Base::Init(PlayerState _stateType, PlayerActionController& _actController)
 {
 	stateType = _stateType;
 	pActionController = &_actController;
-	changeStateSubject->AddObserver(_changeObserver);
 }
 
 void PlayerActState_Base::OnStart()
@@ -67,7 +64,7 @@ void PlayerActState_Base::Load(const nlohmann::json& _data)
 
 void PlayerActState_Base::ChangeState(PlayerState _nextState)
 {
-	changeStateSubject->NotifyAll(static_cast<int>(_nextState));
+	pActionController->ChangeNode(_nextState);
 }
 
 DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStick() const
