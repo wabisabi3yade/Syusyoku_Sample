@@ -501,7 +501,6 @@ void AnimationController::ImGuiCreateNode()
 void AnimationController::ImGuiTransArrow(AnimNodeInfo& _nodeInfo, const std::vector<std::string>& _nodeNames)
 {
 #ifdef EDIT
-	static u_int selectId = 0;
 	bool isChangePriority = false;
 	// 所持している矢印パラメータ
 	auto itr = _nodeInfo.transitionArrows.begin();
@@ -539,12 +538,13 @@ void AnimationController::ImGuiTransArrow(AnimNodeInfo& _nodeInfo, const std::ve
 
 	// 新たに矢印を作成する
 	ImGui::Text("CreateArrow");
-	ImGuiMethod::ComboBox("ToNode", selectId, _nodeNames);
+	static std::string selectToNode = "";
+	ImGuiMethod::ComboBox("ToNode", selectToNode, _nodeNames);
 	ImGui::SameLine();
 	if (ImGui::Button("+##TransArrow"))	// 作成
 	{
 		std::string fromName = _nodeInfo.pAnimNode->GetNodeName();
-		CreateTransitionArrow(fromName, _nodeNames[selectId]);
+		CreateTransitionArrow(fromName, selectToNode);
 	}
 #endif // EDIT
 }

@@ -23,6 +23,9 @@ private:
 	void OnDeathBehavior() override;
 
 protected:
+	void Awake() override;
+	void OnDestroy() override;
+
 	void SetEnemyName(const std::string& _enemyName);
 };
 

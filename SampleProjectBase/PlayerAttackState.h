@@ -12,8 +12,17 @@ private:
 	/// @brief 攻撃情報
 	std::unique_ptr<HashiTaku::AttackInformation> pAttackInfo;
 
+	/// @brief 前に進む速度カーブ
+	AnimationCurve forwardSpeedCurve;
+
+	/// @brief 進む距離
+	float atkMoveSpeed;
+
 	/// @brief 先行入力時間
 	float senkoInputTime;
+
+	/// @brief 前へ進むか？
+	bool isMoveForward;
 public:
 	PlayerAttackState();
 	virtual ~PlayerAttackState() {}
@@ -23,12 +32,15 @@ protected:
 	void OnStartBehavior() override;
 	void UpdateBehavior() override;
 	void OnEndBehavior() override;
-	void TransitionCheckUpdate();
+	void TransitionCheckUpdate() override;
 
 	void ImGuiSetting() override;
 private:
 	/// @brief 攻撃情報を更新する
 	void UpdateAttackInfo();
+
+	/// @brief 攻撃時に前へ進む
+	void ForwardProgressMove();
 	
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

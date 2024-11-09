@@ -88,7 +88,8 @@ void AnimNodePlayer_Base::SetCurPlayRatio(float _playRatio)
 	curAnimationRatio = pPlayAnimNode->GetCurveValue(curPlayRatio);
 
 	// 1フレーム前の再生割合を現在の割合より前に置く
-	lastAnimationRatio = curAnimationRatio - Mathf::smallValue;
+	lastAnimationRatio = curAnimationRatio;
+	p_RootMotionPos = GetRootMotionPos(lastAnimationRatio);
 }
 
 void AnimNodePlayer_Base::SetPlaySpeedTimes(float _playSpeed)

@@ -62,6 +62,12 @@ void PlayerActState_Base::Load(const nlohmann::json& _data)
 {
 }
 
+void PlayerActState_Base::TransitionCheckUpdate()
+{
+	// 共通行動
+	CommmonCheckTransition();
+}
+
 void PlayerActState_Base::ChangeState(PlayerState _nextState)
 {
 	pActionController->ChangeNode(_nextState);
@@ -70,6 +76,11 @@ void PlayerActState_Base::ChangeState(PlayerState _nextState)
 DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStick() const
 {
 	return pPlayerInput->GetValue(GameInput::ValueType::Player_Move);
+}
+
+bool PlayerActState_Base::GetIsGroundAction() const
+{
+	return isGroundAction;
 }
 
 bool PlayerActState_Base::GetCanRolling() const
@@ -110,4 +121,41 @@ bool PlayerActState_Base::ImGuiComboPlayerState(const std::string& _caption, Pla
 #endif EDIT
 
 	return false;
+}
+
+void PlayerActState_Base::CommmonCheckTransition()
+{
+	// 遷移しているなら
+	if (CheckCanCancelTransition()) return;
+}
+
+bool PlayerActState_Base::CheckCanCancelTransition()
+{
+	//キャンセルフラグ
+	bool canCancel = pActionController->GetIsCanCancel();
+	if (!canCancel) return false;
+
+	// 上から優先順位が高くなる
+
+	// ローリング
+	if (CheckCanRolling())
+	{
+		ChangeState(PlayerState::Rolling);
+		return true;
+	}
+
+	return false;
+}
+
+bool PlayerActState_Base::CheckCanRolling()
+{
+	// ボタン入力
+	if (!pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Rolling, ROLLING_SENKOINPUT_SEC)) 
+		return false;
+
+	// 左スティックの傾きが足りない
+	if (std::min(GetInputLeftStick().Length(), 1.0f) < CAN_ROLLING_STICKINPUT)
+		return false;
+
+	return true;
 }

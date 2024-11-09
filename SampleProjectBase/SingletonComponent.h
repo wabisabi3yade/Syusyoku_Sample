@@ -24,7 +24,7 @@ protected:
 	SingletonComponent() {}
 	virtual ~SingletonComponent() {}
 
-	void Awake() override;
+	void Init() override;
 private:
 	SingletonComponent(const  SingletonComponent&) = delete;
 	SingletonComponent& operator=(const  SingletonComponent&) = delete;
@@ -53,7 +53,7 @@ inline void SingletonComponent<T>::OnDestroy()
 }
 
 template<class T>
-inline void SingletonComponent<T>::Awake()
+inline void SingletonComponent<T>::Init()
 {
 	// ä˘Ç…ê∂ê¨Ç≥ÇÍÇƒÇ¢ÇÈÇ»ÇÁ
 	if (pInstance)

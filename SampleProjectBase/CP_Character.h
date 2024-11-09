@@ -24,7 +24,6 @@ protected:
 
 	/// @brief Å‘å‘Ì—Í§ŒÀ
 	static constexpr float MAXLIMIT_HP = 9999.9f;
-
 public:
 	CP_Character();
 	virtual ~CP_Character() {}

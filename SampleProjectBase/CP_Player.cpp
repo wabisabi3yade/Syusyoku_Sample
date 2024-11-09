@@ -26,6 +26,8 @@ void CP_Player::SetAttackInfo(const HashiTaku::AttackInformation& _setAttackInfo
 
 void CP_Player::Init()
 {
+	CP_Character::Init();
+
 	// アクションコントローラー作成
 	pActionController = std::make_unique<PlayerActionController>(*this);
 }
@@ -33,6 +35,11 @@ void CP_Player::Init()
 void CP_Player::Awake()
 {
 	CP_Character::Awake();
+
+	if (CP_BattleManager* pBattle = CP_BattleManager::GetInstance())
+	{
+		pBattle->SetPlayer(*this);
+	}
 }
 
 void CP_Player::Start()
@@ -62,6 +69,16 @@ void CP_Player::Update()
 
 	// 武器の当たり判定を更新
 	SetWeaponAttackFlag();
+}
+
+void CP_Player::OnDestroy()
+{
+	CP_Character::OnDestroy();
+
+	if (CP_BattleManager* pBattle = CP_BattleManager::GetInstance())
+	{
+		pBattle->RemovePlayer(*this);
+	}
 }
 
 void CP_Player::OnHitStopBegin()

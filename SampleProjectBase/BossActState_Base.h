@@ -16,7 +16,8 @@ public:
 		Run,
 
 		// 攻撃
-		Attack1,
+		Attack1 = 100,
+		Attack2,
 
 		// 最後
 		None
@@ -61,6 +62,28 @@ protected:
 	/// @brief 状態切り替え終了処理
 	virtual void OnEndBehavior() {}
 
-	void ImGuiSetting() override;
-};
+	/// @brief 遷移切り替え確認
+	virtual void TransitionCheckUpdate() {}
 
+	/// @brief 遷移する
+	/// @param _nextState 次の遷移
+	void ChangeState(BossState _nextState);
+
+	/// @brief トランスフォームを取得する
+	/// @return ボスのトランスフォーム
+	Transform& GetBossTransform();
+
+	/// @brief トランスフォームを取得する
+	/// @return プレイヤーのトランスフォーム
+	Transform& GetPlayerTransform();
+
+	void ImGuiSetting() override;
+
+protected:
+	/// @brief 移動速度のアニメーションパラメータ名
+	static constexpr auto SPEED_ANIMPARAM_NAME{ "speed" };
+	/// @brief 攻撃トリガーのアニメーションパラメータ名
+	static constexpr auto ATTACKTRIGGER_ANIMPARAM_NAME{ "attackTrigger" };
+	/// @brief 待機状態のアニメーション名
+	static constexpr auto RUN_ANIM_NAME{ "Move" };
+};

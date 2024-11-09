@@ -112,9 +112,13 @@ public:
 	/// @return 現在の再生速度
 	float GetControllerPlaySpeed() const;
 
-	/// @brief プレイヤー再生速度を取得する
-	/// @return 現在の再生速度
+	/// @brief プレイヤー再生割合を取得する
+	/// @return 現在の再生割合
 	float GetCurrentPlayRatio() const;
+
+	/// @brief プレイヤーアニメーション割合を取得する
+	/// @return 現在のアニメーション割合
+	float GetCurrentAnimationRatio() const;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

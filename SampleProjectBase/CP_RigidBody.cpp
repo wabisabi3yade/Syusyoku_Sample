@@ -10,7 +10,7 @@ constexpr float SLEEP_LINEAR(0.01f);	// これ以下の移動速度なら静的オブジェクトに
 constexpr float SLEEP_ANGLE(0.01f);	// これ以下の回転速度なら静的オブジェクトに変更する
 
 CP_RigidBody::CP_RigidBody()
-	: mass(1.0f), isAwaking(false), isTrigger(false)
+	: mass(1.0f), friction(0.5f), isAwaking(false), isTrigger(false)
 {
 	isFreezeRotation = { false, false, false };
 }
@@ -92,6 +92,14 @@ void CP_RigidBody::SetMass(float _mass)
 	rigid.updateInertiaTensor();
 }
 
+void CP_RigidBody::SetFriction(float _friction)
+{
+	friction = std::max(_friction, 0.0f);
+
+	if (collider && !isTrigger)
+		CastRigidBody().setFriction(friction);
+}
+
 void CP_RigidBody::SetIsAwake(bool _isAwake)
 {
 	isAwaking = _isAwake;
@@ -163,9 +171,13 @@ void CP_RigidBody::ImGuiSetting()
 		FindSetCollider();
 
 	// 質量
-	float imMass = mass;
-	if (ImGui::DragFloat("mass", &imMass, 0.01f, 0.0f, 1000.0f))
-		SetMass(imMass);
+	float imFloat = mass;
+	if (ImGui::DragFloat("Mass", &imFloat, 0.01f, 0.0f, 1000.0f))
+		SetMass(imFloat);
+
+	imFloat = friction;
+	if (ImGui::DragFloat("Friction", &imFloat, 0.01f, 0.0f, 1000.0f))
+		SetFriction(imFloat);
 
 	// 静的オブジェクトにしない
 	bool isImBool = isAwaking;
@@ -183,6 +195,7 @@ nlohmann::json CP_RigidBody::Save()
 {
 	auto data = Component::Save();
 	data["mass"] = mass;
+	data["friction"] = friction;
 	data["isAwake"] = isAwaking;
 	data["isTrigger"] = isTrigger;
 
@@ -199,6 +212,7 @@ void CP_RigidBody::Load(const nlohmann::json& _data)
 	Component::Load(_data);
 
 	LoadJsonFloat("mass", mass, _data);
+	LoadJsonFloat("friction", friction, _data);
 	LoadJsonBoolean("isAwake", isAwaking, _data);
 	LoadJsonBoolean("isTrigger", isTrigger, _data);
 
@@ -291,6 +305,10 @@ void CP_RigidBody::CreateRigidBody()
 		collider->inertia);
 	collider->pCollisionObject = std::make_unique<btRigidBody>(rbInfo);
 
+	btRigidBody& btRigid = CastRigidBody();
+	btRigid.setFriction(friction);
+	btRigid.setDamping(0.9f, 0.9f);  // 線形ダンピングと回転ダンピングを追加
+	btRigid.setRestitution(0.0f);
 	if (isAwaking)	// 常に計算するならスリーブ状態にしない
 		collider->pCollisionObject->setActivationState(DISABLE_DEACTIVATION);
 

@@ -152,8 +152,10 @@
     <ClCompile Include="BoolTransCondition.cpp" />
     <ClCompile Include="BossActionController.cpp" />
     <ClCompile Include="BossActState_Base.cpp" />
+    <ClCompile Include="BossGroundAttack.cpp" />
     <ClCompile Include="BossGroundMove.cpp" />
     <ClCompile Include="BossGroundState.cpp" />
+    <ClCompile Include="BossIdleState.cpp" />
     <ClCompile Include="BulletContactCallBack.cpp" />
     <ClCompile Include="BulletTest.cpp" />
     <ClCompile Include="ButtonTransArrow.cpp" />
@@ -196,6 +198,7 @@
     <ClCompile Include="IAnimInterpolate.cpp" />
     <ClCompile Include="IAnimParametersSetter.cpp" />
     <ClCompile Include="IAssetCreater.cpp" />
+    <ClCompile Include="IBattleEnemy.cpp" />
     <ClCompile Include="IClassNameGetter.cpp" />
     <ClCompile Include="IDamageable.cpp" />
     <ClCompile Include="HitStopper_Base.cpp" />
@@ -361,8 +364,10 @@
     <ClInclude Include="BoolTransCondition.h" />
     <ClInclude Include="BossActionController.h" />
     <ClInclude Include="BossActState_Base.h" />
+    <ClInclude Include="BossGroundAttack.h" />
     <ClInclude Include="BossGroundMove.h" />
     <ClInclude Include="BossGroundState.h" />
+    <ClInclude Include="BossIdleState.h" />
     <ClInclude Include="BulletContactCallBack.h" />
     <ClInclude Include="BulletTest.h" />
     <ClInclude Include="ButtonTransArrow.h" />
@@ -406,7 +411,9 @@
     <ClInclude Include="GameInput.h" />
     <ClInclude Include="IAnimInterpolate.h" />
     <ClInclude Include="IAnimParametersSetter.h" />
+    <ClInclude Include="IAnimParamSetGetter.h" />
     <ClInclude Include="IAssetCreater.h" />
+    <ClInclude Include="IBattleEnemy.h" />
     <ClInclude Include="IClassNameGetter.h" />
     <ClInclude Include="IDamageable.h" />
     <ClInclude Include="HitStopper_Base.h" />

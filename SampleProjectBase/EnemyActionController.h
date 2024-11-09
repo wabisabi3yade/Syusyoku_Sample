@@ -9,8 +9,6 @@ class CP_Animation;
 /// @tparam T アクションのステートを表す列挙型
 class EnemyActionController : public CharacterActionController
 {
-	/// @brief アニメーションコンポーネント
-	CP_Animation* pAnimation;
 
 public:
 	/// @brief コンストラクタ

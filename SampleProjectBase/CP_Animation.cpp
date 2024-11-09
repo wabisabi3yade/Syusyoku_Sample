@@ -229,6 +229,19 @@ float CP_Animation::GetCurrentPlayRatio() const
 	return pAnimConPlayer->GetCurNodePlayer().GetCurPlayRatio();
 }
 
+float CP_Animation::GetCurrentAnimationRatio() const
+{
+#ifdef EDIT
+	if (!pAnimConPlayer)
+	{
+		HASHI_DEBUG_LOG("アニメーション再生が作成されていません");
+		return 0.0f;
+	}
+#endif // EDIT
+
+	return pAnimConPlayer->GetCurNodePlayer().GetAnimationRatio();
+}
+
 nlohmann::json CP_Animation::Save()
 {
 	auto data = Component::Save();

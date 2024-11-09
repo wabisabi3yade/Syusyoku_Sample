@@ -43,12 +43,6 @@ void PlayerIdleState::TransitionCheckUpdate()
 
 void PlayerIdleState::ProgressLeaveElapse()
 {
-	/*leaveElapsedTime += MainApplication::DeltaTime();
-
-	if (leaveElapsedTime > specialIdleTransTiime)
-	{
-
-	}*/
 }
 
 bool PlayerIdleState::IsCanMoveTransition()

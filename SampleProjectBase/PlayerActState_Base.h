@@ -69,6 +69,9 @@ public:
 private:
 	/// @brief この行動クラスのステートタイプ
 	PlayerState stateType;
+
+	/// @brief 地上で行うアクションか？
+	bool isGroundAction;
 protected:
 	/// @brief アニメーション管理
 	CP_Animation* pAnimation;
@@ -124,7 +127,7 @@ protected:
 	virtual void OnEndBehavior() {};
 
 	/// @brief ステート遷移条件のチェック処理
-	virtual void TransitionCheckUpdate() {}
+	virtual void TransitionCheckUpdate();
 
 	/// @brief 状態を遷移する
 	/// @param _changeSate 遷移先の状態
@@ -133,6 +136,10 @@ protected:
 	/// @brief コントローラーの左スティックの入力を取得
 	/// @return 左スティックの入力
 	DirectX::SimpleMath::Vector2 GetInputLeftStick() const;
+
+	/// @brief 地上で行うアクションか取得
+	/// @return 地上で行うアクションなのか？
+	bool GetIsGroundAction() const;
 
 	/// @brief ローリングできるか取得する
 	/// @return ローリングできるか？
@@ -146,6 +153,16 @@ protected:
 	/// @param _currentState 現在のステート
 	/// @return 変更したか？
 	static bool ImGuiComboPlayerState(const std::string& _caption, PlayerState& _currentState);
+
+private:
+	/// @brief どのアクションにも共通する遷移
+	void CommmonCheckTransition();
+
+	/// @brief キャンセルに合わせてアクションが行うか確認
+	/// @return ステートをここで変更したか？
+	bool CheckCanCancelTransition();
+
+	bool CheckCanRolling();
 
 protected:
 	// アニメーションコントローラ内のプレイヤー名

@@ -1,47 +1,47 @@
 #include "pch.h"
 #include "CP_BattleManager.h"
 #include "GameObject.h"
+#include "InSceneSystemManager.h"
 
-void CP_BattleManager::SetPlayer(GameObject& _playerObj)
+void CP_BattleManager::SetPlayer(CP_Player& _playerObj)
 {
-	pPlayerObject = &_playerObj;
+	pPlayer = &_playerObj;
 }
 
-void CP_BattleManager::AddEnemy(GameObject& _enemyObj)
+void CP_BattleManager::AddEnemy(CP_Enemy& _enemyObj)
 {
-	auto enemyItr = std::find(enemyList.begin(), enemyList.end(), &_enemyObj);
-	
-	if (enemyItr != enemyList.end())
-	{
-		HASHI_DEBUG_LOG(_enemyObj.GetName() + "‚ÍŠù‚É’Ç‰Á‚³‚ê‚Ä‚¢‚Ü‚·");
-		return;
-	}
+	auto itr =  std::find(enemyList.begin(), enemyList.end(), &_enemyObj);
+
+	if (itr != enemyList.end()) return;
 
 	enemyList.push_back(&_enemyObj);
 }
-
-void CP_BattleManager::RemovePlayer(GameObject& _playerObj)
+void CP_BattleManager::RemovePlayer(CP_Player& _playerObj)
 {
-	if (pPlayerObject != &_playerObj) return;
+	if (pPlayer != &_playerObj) return;
 
-	pPlayerObject = nullptr;
+	pPlayer = nullptr;
 }
 
-void CP_BattleManager::RemoveEnemy(GameObject& _enemyObj)
+void CP_BattleManager::RemoveEnemy(CP_Enemy& _enemyObj)
 {
-#ifdef EDIT
-	auto enemyItr = std::find(enemyList.begin(), enemyList.end(), &_enemyObj);
-	if (enemyItr == enemyList.end())
-	{
-		HASHI_DEBUG_LOG(_enemyObj.GetName() + "‚ªƒŠƒXƒg“à‚É‚ ‚è‚Ü‚¹‚ñ");
-		return;
-	}
-#endif // EDIT
-
 	enemyList.remove(&_enemyObj);
 }
 
-GameObject* CP_BattleManager::GetPlayerObject()
+
+CP_Player* CP_BattleManager::GetPlayerObject()
 {
-	return pPlayerObject;
+	return pPlayer;
+}
+
+const CP_BattleManager::EnemyList& CP_BattleManager::GetEnemyList()
+{
+	return enemyList;
+}
+
+void CP_BattleManager::ImGuiSetting()
+{
+	static char input[IM_INPUT_BUF];
+
+	ImGui::InputText("object", input, IM_INPUT_BUF);
 }

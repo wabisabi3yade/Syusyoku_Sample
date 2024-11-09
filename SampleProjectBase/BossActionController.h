@@ -2,13 +2,14 @@
 #include "EnemyActionController.h"
 #include "BossActState_Base.h"
 
+class CP_Player;
 class CP_Boss;
 
 /// @brief ボスのアクションコントローラー
 class BossActionController : public EnemyActionController
 {
 	/// @brief プレイヤーオブジェクト
-	GameObject* pPlayerObject;
+	CP_Player* pPlayerObject;
 
 public:
 	BossActionController(CP_Boss& _boss);
@@ -26,12 +27,19 @@ public:
 	/// @return 成功したか？
 	bool ChangeState(BossActState_Base::BossState _nextState);
 
+	/// @brief プレイヤーオブジェクトをセット
+	/// @param _playerObj プレイヤーオブジェクト
+	void SetPlayer(CP_Player& _playerObj);
+
 	/// @brief ボスコンポーネントを取得
 	CP_Boss& GetBoss();
 
 	/// @brief プレイヤーを取得する
 	/// @return プレイヤーオブジェクト
-	GameObject& GetPlayer();
+	CP_Player& GetPlayer();
+
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
 private:	
 	/// @brief ボスのステートを作成
 	/// @tparam T ボスの行動クラス
@@ -42,6 +50,8 @@ private:
 	/// @brief ボスの更新処理が行えるか
 	/// @return 行えるか?
 	bool IsCanBossUpdate();
+
+	void ImGuiSetting() override;
 };
 
 template<class T>
