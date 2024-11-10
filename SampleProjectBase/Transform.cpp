@@ -13,7 +13,10 @@ Transform::Transform(GameObject* _pGameObject, bool _isInit)
 	: pParent(nullptr), scale(Vector3::One), localScale(Vector3::One), up(Vec3::Up), right(Vec3::Right), forward(Vec3::Forward), isHaveParent(false)
 {
 	if (_isInit)
+	{
 		pParent = new NullTransform();
+		isNull = false;
+	}
 
 	pGameObject = _pGameObject;
 }
@@ -26,9 +29,21 @@ Transform::Transform(const Transform& _other)
 
 Transform::~Transform()
 {
+	if (!isNull)
+	{
+		if (pParent)
+			pParent->RemoveChild(*this);
+
+		for (auto& pChild : childTransforms)
+			pChild->pParent = nullptr;
+	}
+
 	// 親トランスフォームがNullTransformなら
 	if (!isHaveParent)
+	{
 		CLASS_DELETE(pParent);
+		return;
+	}
 }
 
 Transform& Transform::operator=(const Transform& _other)
@@ -60,11 +75,12 @@ void Transform::LookAt(const DirectX::SimpleMath::Vector3& _worldPos, const Dire
 void Transform::RemoveChild(Transform& _removeTransform)
 {
 	childTransforms.remove(&_removeTransform);
-	_removeTransform.RemoveParent();
 }
 
 void Transform::SetParent(Transform& _parent)
 {
+	pParent->RemoveChild(*this);
+
 	_parent.SetChild(*this);
 }
 
@@ -382,6 +398,8 @@ void Transform::UpdateLocalMatrixFromWorld()
 
 void Transform::RemoveParent()
 {
+	pParent->RemoveChild(*this);
+
 	pParent = new NullTransform();
 	isHaveParent = false;
 

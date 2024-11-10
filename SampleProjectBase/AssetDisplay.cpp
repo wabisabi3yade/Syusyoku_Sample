@@ -87,8 +87,6 @@ void AssetDisplay::DisplayModel()
 	if (ImGui::Button("Load"))
 		AssetLoader::ModelLoad(inputText, scale, isFlipY, isRight, getSize);
 
-	ImGui::InputText("name", inputText, IM_INPUT_BUF);
-
 	DeleteInputAsset();
 	if (ImGui::Button("Delete"))
 		pAssetCollection->DeleteAsset<Mesh_Group>(inputText);

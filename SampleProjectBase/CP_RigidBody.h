@@ -36,6 +36,9 @@ class CP_RigidBody : public Component
 	/// @brief 質量
 	float mass;
 
+	/// @brief 摩擦係数(0で完全に滑る)
+	float friction;
+
 	/// @brief 常に計算させる
 	bool isAwaking;
 
@@ -66,8 +69,12 @@ public:
 	void RemoveColliderShape(CP_Collider& _removeCollider);
 
 	/// @brief 質量をセットする
-	/// @param _mass 
+	/// @param _mass 質量
 	void SetMass(float _mass);
+
+	/// @brief 質量をセットする
+	/// @param _friction セットする摩擦係数
+	void SetFriction(float _friction);
 
 	/// @brief 静的オブジェクトに遷移しないようにするかセットする
 	/// @param _isAwake 静的オブジェクトに遷移しないようにするか？

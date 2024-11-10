@@ -54,19 +54,22 @@ void PlayerMoveState::UpdateBehavior()
 
 void PlayerMoveState::OnEndBehavior()
 {
+	pAnimation->SetFloat(SPEEDRATIO_PARAMNAME, 0.0f);
 }
 
 void PlayerMoveState::TransitionCheckUpdate()
 {
+	PlayerActState_Base::TransitionCheckUpdate();
+
 	// アタックStateに遷移
 	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
 	{
 		ChangeState(PlayerState::Attack11);
 	}
-	else if (GetCanRolling())
-	{
-		ChangeState(PlayerState::Rolling);
-	}
+	//else if (GetCanRolling())
+	//{
+	//	ChangeState(PlayerState::Rolling);
+	//}
 	else if (currentSpeed <= Mathf::epsilon)	// 移動速度が0以下になると
 	{
 		ChangeState(PlayerState::Idle);

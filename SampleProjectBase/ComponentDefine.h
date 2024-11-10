@@ -25,13 +25,14 @@
 #include "CP_Player.h"
 
 // 敵
-#include "CP_Enemy.h"
+#include "CP_Boss.h"
 
 // キャラクター共通
 #include "CP_Weapon.h"
 
 // インゲーム内
 #include "CP_HitStopManager.h"
+#include "CP_BattleManager.h"
 
 // UI
 #include "CP_UIRenderer.h"

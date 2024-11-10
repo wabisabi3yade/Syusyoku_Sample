@@ -16,6 +16,9 @@ class Component : public HashiTaku::ISaveLoad, public HashiTaku::IImGuiUser
 	/// @brief 名前
 	std::string name;
 
+	/// @brief 優先度
+	int priority;
+
 	/// @brief Awake処理を行ったかどうか？
 	bool isAlreadyAwake;
 
@@ -28,7 +31,7 @@ protected:
 	/// @brief このコンポーネントの所持オブジェクト
 	GameObject* gameObject;
 public:
-	Component() : name(""), isEnable(true), isAlreadyAwake(false), isAlreadyStart(false), gameObject(nullptr) {}
+	Component();
 	virtual ~Component() {};
 
 	virtual void Init() {};
@@ -68,11 +71,19 @@ public:
 	/// @param _name 名前
 	void SetName(const std::string& _name);
 
+	/// @brief 優先度をセット
+	/// @param _priority 優先度
+	void SetPriority(int _priority);
+
 	// 活動状態をセット
 	void SetEnable(bool _enable);
 
 	// 名前を取得
 	std::string GetName() const;
+
+	/// @brief 優先度を取得
+	/// @return 優先度
+	int GetPriority() const;
 
 	// オブジェクトのトランスフォーム
 	Transform& GetTransform() const;
@@ -122,9 +133,16 @@ protected:
 	/// @brief 描画処理
 	virtual void Draw() {};
 
+	/// @brief Drawの後に行う描画処理
+	virtual void LateDraw() {};
+
 	// 活動状態を切り替える時の処理
 	virtual void OnEnableTrue() {}
 	virtual void OnEnableFalse() {}
+
+	/// @brief 他のコンポーネントが追加されたときの処理
+	/// @param _addComp 追加したコンポーネント
+	virtual void OnAddComponent(Component& _addComp) {}
 
 	/// @brief ゲームオブジェクトとコンポーネントの活動状態を取得
 	/// @return どちらも活動しているか？

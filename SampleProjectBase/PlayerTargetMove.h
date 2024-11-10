@@ -3,6 +3,9 @@
 
 class PlayerTargetMove : public PlayerMoveState
 {
+	/// @brief 回転速度
+	float rotateSpeed;
+
 public:
 	PlayerTargetMove();
 	~PlayerTargetMove() {}
@@ -15,10 +18,12 @@ public:
 	/// @param _data ロードするデータ 
 	void Load(const nlohmann::json& _data) override;
 private:
-	void OnStartBehavior() override;
 	void UpdateBehavior() override;
 	void OnEndBehavior() override;
 	void TransitionCheckUpdate() override;
+
+	/// @brief 前方向を更新する
+	void UpdateForward();
 
 	/// @brief ブレンド割合をセット
 	void ApplyBlendAnim();

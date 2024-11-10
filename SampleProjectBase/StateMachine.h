@@ -19,11 +19,15 @@ namespace HashiTaku
 		/// @brief 現在のノードのキー
 		T currentStateKey;
 
+		/// @brief 次に変更する状態キー
+		T nextStateKey;
+
 		/// @brief 現在のノード
 		StateNode_Base* pCurrentNode;
 
 		/// @brief デフォルトノード
 		StateNode_Base* pDefaultNode;
+
 
 		/// @brief このフレームで遷移は行うか？
 		bool isChangCurFlame;
@@ -45,9 +49,6 @@ namespace HashiTaku
 		/// @return 遷移成功したか？
 		virtual bool ChangeNode(const T& _changeKey);
 
-		/// @brief 開始処理
-		virtual void Begin();
-
 		/// @brief 更新処理
 		virtual void Update();
 
@@ -58,6 +59,10 @@ namespace HashiTaku
 		/// @brief 現在のノードを取得
 		/// @return 現在のノード
 		StateNode_Base* GetCurrentNode();
+
+	protected:
+		/// @brief 開始処理
+		virtual void Begin();
 	};
 
 	/// @brief ステートマシンで使用するノード

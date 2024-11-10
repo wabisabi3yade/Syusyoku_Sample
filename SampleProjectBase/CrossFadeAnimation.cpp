@@ -85,7 +85,7 @@ void CrossFadeAnimation::Update(float _playSpeed)
 	Vector3 toMovement = pToNodePlayer->CalcRootMotionToTransform();
 
 	Vector3 blendMovement = Vector3::Lerp(fromMovement, toMovement, transitionWeight);
-	pToNodePlayer->ApplyRootMotion(blendMovement);
+	pToNodePlayer->ApplyRootMotion(toMovement/*blendMovement*/);
 	
 	// 補間したトランスフォームをボーンに適用させる
 	u_int boneCnt = pBoneList->GetBoneCnt();

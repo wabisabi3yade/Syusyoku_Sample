@@ -7,6 +7,7 @@
 const float BLEND_OFFSET(0.5f);	// ブレンドを0.0f～1.0fに収める
 
 PlayerTargetMove::PlayerTargetMove()
+	: rotateSpeed(180.0f)
 {
 }
 
@@ -23,13 +24,10 @@ void PlayerTargetMove::Load(const nlohmann::json& _data)
 	PlayerMoveState::Load(_data);
 }
 
-void PlayerTargetMove::OnStartBehavior()
-{
-
-}
-
 void PlayerTargetMove::UpdateBehavior()
 {
+	//UpdateForward();
+
 	Move();
 
 	ApplyBlendAnim();
@@ -39,6 +37,7 @@ void PlayerTargetMove::UpdateBehavior()
 
 void PlayerTargetMove::OnEndBehavior()
 {
+	pAnimation->SetFloat(SPEEDRATIO_PARAMNAME, 0.0f);
 }
 
 void PlayerTargetMove::TransitionCheckUpdate()
@@ -56,6 +55,51 @@ void PlayerTargetMove::TransitionCheckUpdate()
 
 	else if (pPlayerInput->GetButtonDown(Player_Attack))
 		ChangeState(PlayerState::Attack11);
+}
+
+void PlayerTargetMove::UpdateForward()
+{
+	using namespace DirectX::SimpleMath;
+
+	CP_BattleManager* pBattle = CP_BattleManager::GetInstance();
+	if (!pBattle) return;
+
+	float deltaTime = MainApplication::DeltaTime();
+	Transform& myTransform = pActionController->GetPlayer().GetTransform();
+	const Vector3& myPos = myTransform.GetPosition();
+
+	// 敵リストを取得
+	CP_BattleManager::EnemyList enemyList = pBattle->GetEnemyList();
+
+	CP_Enemy* enemy = *enemyList.begin();
+	const Vector3& enemyPos = enemy->GetTransform().GetPosition();
+
+	Vector3 targetVec = enemyPos - myPos;
+	targetVec.y = 0.0f;
+	targetVec.Normalize();
+
+	// 正面と目標ベクトルとの角度の差分を求める
+	float diffAng = acosf(targetVec.Dot(myTransform.Forward()));
+	diffAng = std::max(diffAng, Mathf::smallValue);
+	float deltaAngle = rotateSpeed * Mathf::degToRad * MainApplication::DeltaTime();
+
+	// 回転速度が差分を超えたら
+	if (diffAng < deltaAngle)
+	{
+		deltaAngle = diffAng;
+
+	}
+
+	// どっち方向に回転させるか
+	float dotRight = targetVec.Dot(myTransform.Right());
+	if (dotRight < 0.0f)
+		deltaAngle *= -1;
+
+	// 回転させる
+	Quaternion deltaRot = Quaternion::CreateFromAxisAngle(Vec3::Up, deltaAngle);
+	Quaternion rot = myTransform.GetRotation();
+	rot = Quat::Multiply(rot, deltaRot);
+	myTransform.SetRotation(rot);
 }
 
 void PlayerTargetMove::ApplyBlendAnim()

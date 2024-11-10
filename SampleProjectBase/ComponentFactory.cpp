@@ -29,12 +29,15 @@ void ComponentFactory::Init()
 
 	// 敵
 	ResistComponnent<CP_Enemy>();
+	ResistComponnent<CP_Boss>();
+
 
 	// キャラクター共通
 	ResistComponnent<CP_Weapon>();
 
 	// インゲーム内
 	ResistComponnent<CP_HitStopManager>();
+	ResistComponnent<CP_BattleManager>();
 
 	// UI
 	ResistComponnent<CP_UIRenderer>();

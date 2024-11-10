@@ -183,7 +183,7 @@ void AssetLoader::MaterialLoad(Mesh_Group* _pMeshgather,
 			Texture* pTex = SendAsset(texName, std::move(texture));
 			createMaterial->SetDiffuseTexture(*pTex);
 		}
-	
+
 		// 管理クラスにセットする
 		Material* materialPtr =
 			SendAsset<Material>(mtrlname, std::move(createMaterial));
@@ -360,11 +360,12 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 
 	flag |= aiProcessPreset_TargetRealtime_MaxQuality;	// リアルタイム レンダリング用にデータを最適化するデフォルトの後処理構成。
 	flag |= aiProcess_PopulateArmatureData;				// 標準的なボーン,アーマチュアの設定
+	flag &= ~aiProcess_FindDegenerates;	// こいつのせいでロードできないものがあったのでフラグを削除する
 
 	if (_isRightHand)
 		flag |= aiProcess_ConvertToLeftHanded;	// 左手系変更オプションがまとまったもの
 
-
+	
 	// シーン情報を構築
 	const aiScene* pScene = importer.ReadFile(
 		_modelPath.c_str(),

@@ -44,6 +44,8 @@ protected:
 	/// @brief 親トランスフォームがあるか？
 	bool isHaveParent;
 
+	bool isNull;
+
 public:
 	Transform(GameObject* _pGameObject, bool _isInit = true);
 	Transform(const Transform& _other);
@@ -58,15 +60,16 @@ public:
 	void LookAt(const DirectX::SimpleMath::Vector3& _worldPos, const DirectX::SimpleMath::Vector3& _upVector = DirectX::SimpleMath::Vector3::Up);
 
 	/// @brief 親トランスフォームを解除する
-	void RemoveParent();
+	virtual void RemoveParent();
 
 	/// @brief 子トランスフォームを解除する
 	/// @param _removeTransform 解除するトランスフォーム
-	void RemoveChild(Transform& _removeTransform);
+	virtual void RemoveChild(Transform& _removeTransform);
 
 	/// @brief 親トランスフォームを設定する
 	/// @param _parent 親トランスフォームの参照
-	void SetParent(Transform& _parent);
+	virtual void SetParent(Transform& _parent);
+
 
 	/// @brief 子トランスフォームを設定する
 	/// @param _parent 子トランスフォームの参照

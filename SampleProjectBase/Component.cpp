@@ -22,6 +22,11 @@ bool Component::GetIsAlreadyStart() const
     return isAlreadyStart;
 }
 
+Component::Component()
+    : name(""), priority(0), isEnable(true), isAlreadyAwake(false), isAlreadyStart(false), gameObject(nullptr)
+{
+}
+
 void Component::AwakeCall()
 {
     Awake();
@@ -46,6 +51,7 @@ void Component::LateUpdateCall()
 
 void Component::DrawCall()
 {
+    // •`‰æ
     Draw();
 }
 
@@ -53,13 +59,16 @@ nlohmann::json Component::Save()
 {
     nlohmann::json componentData;
     componentData["name"] = name;
+    componentData["priority"] = priority;
     componentData["enable"] = isEnable;
-
+  
     return componentData;
 }
 
 void Component::Load(const nlohmann::json& _componentData)
 {
+    HashiTaku::LoadJsonInteger("priority", priority, _componentData);
+
     bool loadEnable;
     HashiTaku::LoadJsonBoolean("enable", loadEnable, _componentData);
     SetEnable(loadEnable);
@@ -104,6 +113,11 @@ void Component::SetName(const std::string& _name)
     name = _name;
 }
 
+void Component::SetPriority(int _priority)
+{
+    priority = _priority;
+}
+
 void Component::SetEnable(bool _enable)
 {
     if (isEnable == _enable) return;
@@ -119,4 +133,9 @@ void Component::SetEnable(bool _enable)
 std::string Component::GetName() const
 {
     return name;
+}
+
+int Component::GetPriority() const
+{
+    return priority;
 }

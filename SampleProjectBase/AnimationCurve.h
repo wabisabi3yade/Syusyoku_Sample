@@ -29,10 +29,17 @@ class AnimationCurve : public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
 	/// @brief イージング種類
 	HashiTaku::EaseKind easeKind;
 
-	/// @brief エルミート曲線を使用するか？（使用しない場合、線形）
-	bool isUseHermite = false;
+	/*/// @brief 最大値
+	float maxValue;
 
+	/// @brief 最小値
+	float minValue;*/
+
+	/// @brief エルミート曲線を使用するか？（使用しない場合、線形）
+	bool isUseHermite;
 #ifdef EDIT
+	// カーブ名
+	std::string curveName{ "animationCurve" };
 	// マウス編集中のプロット点
 	HermitePlotParam* editingPlot{ nullptr };
 	bool isVectorEdit{ false };
@@ -41,6 +48,17 @@ class AnimationCurve : public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
 public:
 	AnimationCurve();
 	~AnimationCurve() {}
+
+	///// @brief 最大値をセット
+	///// @param _maxValue 最大値
+	//void SetMaxValue(float _maxValue);
+
+	///// @brief 最大値をセット
+	///// @param _minValue 最小値
+	//void SetMinValue(float _minValue);
+
+	// カーブ名をセット
+	void SetCurveName(const std::string& _name);
 
 	/// @brief アニメーションカーブを取得する
 	/// @param _time 時間

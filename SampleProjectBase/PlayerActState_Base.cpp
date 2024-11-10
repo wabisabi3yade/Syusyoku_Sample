@@ -13,17 +13,14 @@ constexpr float CAN_ROLLING_STICKINPUT(0.3f);	// ƒ[ƒŠƒ“ƒO‚Å‚«‚é¶ƒXƒeƒBƒbƒN‚Ì“
 PlayerActState_Base::PlayerActState_Base()
 	: pActionController(nullptr), pAnimation(nullptr), stateType(PlayerState::None)
 {
-	changeStateSubject = std::make_unique<StateChangeSubject>();
-
 	pPlayerInput = GameInput::GetInstance();
 	pCamera = &InSceneSystemManager::GetInstance()->GetMainCamera();
 }
 
-void PlayerActState_Base::Init(PlayerState _stateType, PlayerActionController& _actController, StateChangeObserver& _changeObserver)
+void PlayerActState_Base::Init(PlayerState _stateType, PlayerActionController& _actController)
 {
 	stateType = _stateType;
 	pActionController = &_actController;
-	changeStateSubject->AddObserver(_changeObserver);
 }
 
 void PlayerActState_Base::OnStart()
@@ -65,14 +62,25 @@ void PlayerActState_Base::Load(const nlohmann::json& _data)
 {
 }
 
+void PlayerActState_Base::TransitionCheckUpdate()
+{
+	// ‹¤’Ês“®
+	CommmonCheckTransition();
+}
+
 void PlayerActState_Base::ChangeState(PlayerState _nextState)
 {
-	changeStateSubject->NotifyAll(static_cast<int>(_nextState));
+	pActionController->ChangeNode(_nextState);
 }
 
 DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStick() const
 {
 	return pPlayerInput->GetValue(GameInput::ValueType::Player_Move);
+}
+
+bool PlayerActState_Base::GetIsGroundAction() const
+{
+	return isGroundAction;
 }
 
 bool PlayerActState_Base::GetCanRolling() const
@@ -113,4 +121,41 @@ bool PlayerActState_Base::ImGuiComboPlayerState(const std::string& _caption, Pla
 #endif EDIT
 
 	return false;
+}
+
+void PlayerActState_Base::CommmonCheckTransition()
+{
+	// ‘JˆÚ‚µ‚Ä‚¢‚é‚È‚ç
+	if (CheckCanCancelTransition()) return;
+}
+
+bool PlayerActState_Base::CheckCanCancelTransition()
+{
+	//ƒLƒƒƒ“ƒZƒ‹ƒtƒ‰ƒO
+	bool canCancel = pActionController->GetIsCanCancel();
+	if (!canCancel) return false;
+
+	// ã‚©‚ç—Dæ‡ˆÊ‚ª‚‚­‚È‚é
+
+	// ƒ[ƒŠƒ“ƒO
+	if (CheckCanRolling())
+	{
+		ChangeState(PlayerState::Rolling);
+		return true;
+	}
+
+	return false;
+}
+
+bool PlayerActState_Base::CheckCanRolling()
+{
+	// ƒ{ƒ^ƒ““ü—Í
+	if (!pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Rolling, ROLLING_SENKOINPUT_SEC)) 
+		return false;
+
+	// ¶ƒXƒeƒBƒbƒN‚ÌŒX‚«‚ª‘«‚è‚È‚¢
+	if (std::min(GetInputLeftStick().Length(), 1.0f) < CAN_ROLLING_STICKINPUT)
+		return false;
+
+	return true;
 }

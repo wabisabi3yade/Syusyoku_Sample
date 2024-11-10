@@ -9,6 +9,7 @@
                     "fov": 45.0,
                     "isOrth": false,
                     "name": "Camera",
+                    "priority": 0,
                     "viewSlot": 0
                 },
                 {
@@ -21,6 +22,7 @@
                         2.0,
                         0.0
                     ],
+                    "priority": 0,
                     "rotSpeed": 120.0,
                     "target": "Player"
                 }
@@ -31,20 +33,20 @@
             "transform": {
                 "child": null,
                 "pos": [
-                    4.5,
-                    1.100000023841858,
-                    -20.899999618530273
+                    -1.5,
+                    1.2000000476837158,
+                    2.799999952316284
                 ],
                 "rotation": [
-                    -0.0,
                     0.0,
-                    -0.0,
-                    1.0
+                    0.8746199607849121,
+                    0.0,
+                    0.48480919003486633
                 ],
                 "scale": [
-                    4.199999809265137,
+                    4.1999993324279785,
                     0.9999997019767761,
-                    0.9999997019767761
+                    0.9999996423721313
                 ]
             }
         },
@@ -69,10 +71,12 @@
                         0.20000000298023224,
                         1.0
                     ],
-                    "name": "BoxCollider"
+                    "name": "BoxCollider",
+                    "priority": 0
                 },
                 {
                     "enable": true,
+                    "friction": 0.0,
                     "isAwake": false,
                     "isFreezeRot": [
                         false,
@@ -81,11 +85,13 @@
                     ],
                     "isTrigger": false,
                     "mass": 0.0,
-                    "name": "RigidBody"
+                    "name": "RigidBody",
+                    "priority": 0
                 },
                 {
                     "enable": true,
                     "name": "SpriteRenderer",
+                    "priority": 0,
                     "sprite": {
                         "texName": "ground.png",
                         "uvDivNum": [
@@ -131,31 +137,48 @@
             "components": [
                 {
                     "enable": true,
+                    "grabName": "mixamorig:LeftHand",
+                    "name": "Rig",
+                    "priority": 0
+                }
+            ],
+            "layer": 0,
+            "name": "Boss_WeaponHand",
+            "tag": 0,
+            "transform": {
+                "child": [
+                    "Boss_Weapon"
+                ],
+                "pos": [
+                    -0.09999996423721313,
+                    -0.060000061988830566,
+                    -0.15999990701675415
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    -0.0,
+                    1.0
+                ],
+                "scale": [
+                    1.1999999284744263,
+                    1.2000000476837158,
+                    1.1999999284744263
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
                     "meshName": "Knight.fbx",
-                    "name": "MeshRenderer"
-                },
-                {
-                    "AABB": false,
-                    "angles": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "center": [
-                        0.0,
-                        0.949999988079071,
-                        0.0
-                    ],
-                    "enable": true,
-                    "length": [
-                        0.75,
-                        2.0199999809265137,
-                        1.0
-                    ],
-                    "name": "BoxCollider"
+                    "name": "MeshRenderer",
+                    "priority": 0
                 },
                 {
                     "enable": true,
+                    "friction": 5.0,
                     "isAwake": true,
                     "isFreezeRot": [
                         true,
@@ -164,7 +187,8 @@
                     ],
                     "isTrigger": false,
                     "mass": 1.0,
-                    "name": "RigidBody"
+                    "name": "RigidBody",
+                    "priority": 0
                 },
                 {
                     "actionController": {
@@ -197,6 +221,17 @@
                                         "damage": 0.0,
                                         "level": 0
                                     },
+                                    "atkMoveSpd": 10.0,
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startValue": 0.0,
+                                        "startVector": 0.0,
+                                        "useHermite": false
+                                    },
+                                    "isMoveFwd": false,
                                     "nextCombAttack": 22,
                                     "senko": 0.25
                                 },
@@ -224,6 +259,28 @@
                                         "damage": 0.0,
                                         "level": 0
                                     },
+                                    "atkMoveSpd": 11.0,
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 0.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": [
+                                            {
+                                                "time": 0.2427983582019806,
+                                                "value": 1.0,
+                                                "vector": 0.0
+                                            },
+                                            {
+                                                "time": 0.4279835522174835,
+                                                "value": 0.09266409277915955,
+                                                "vector": 0.0
+                                            }
+                                        ],
+                                        "startValue": 0.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "isMoveFwd": false,
                                     "nextCombAttack": 21,
                                     "senko": 0.15000000596046448
                                 },
@@ -235,6 +292,17 @@
                                         "damage": 0.0,
                                         "level": 0
                                     },
+                                    "atkMoveSpd": 10.0,
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startValue": 0.0,
+                                        "startVector": 0.0,
+                                        "useHermite": false
+                                    },
+                                    "isMoveFwd": false,
                                     "nextCombAttack": 23,
                                     "senko": 0.3499999940395355
                                 },
@@ -246,6 +314,17 @@
                                         "damage": 0.0,
                                         "level": 0
                                     },
+                                    "atkMoveSpd": 10.0,
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startValue": 0.0,
+                                        "startVector": 0.0,
+                                        "useHermite": false
+                                    },
+                                    "isMoveFwd": false,
                                     "nextCombAttack": 99,
                                     "senko": 0.15000000596046448
                                 },
@@ -257,6 +336,17 @@
                                         "damage": 0.0,
                                         "level": 0
                                     },
+                                    "atkMoveSpd": 10.0,
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startValue": 0.0,
+                                        "startVector": 0.0,
+                                        "useHermite": false
+                                    },
+                                    "isMoveFwd": false,
                                     "nextCombAttack": 99,
                                     "senko": 0.15000000596046448
                                 },
@@ -267,12 +357,31 @@
                     "enable": true,
                     "maxHp": 1.0,
                     "name": "Player",
-                    "weaponObjName": "Weapon_Model"
+                    "priority": 0,
+                    "weaponObjName": "Weapon"
                 },
                 {
                     "animConName": "ANC_Player",
                     "enable": true,
-                    "name": "Animation"
+                    "name": "Animation",
+                    "priority": 1
+                },
+                {
+                    "angles": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "center": [
+                        0.0,
+                        1.0499999523162842,
+                        0.0
+                    ],
+                    "enable": true,
+                    "height": 1.1399999856948853,
+                    "name": "CapsuleCollider",
+                    "priority": 0,
+                    "radius": 0.49000000953674316
                 }
             ],
             "layer": 1,
@@ -280,13 +389,13 @@
             "tag": 2,
             "transform": {
                 "child": [
-                    "Weapon",
-                    "Player_LeftHand"
+                    "Player_LeftHand",
+                    "Player_RightHand"
                 ],
                 "pos": [
                     2.299999952316284,
                     0.05999999865889549,
-                    -2.0
+                    -15.399999618530273
                 ],
                 "rotation": [
                     -0.0,
@@ -313,8 +422,8 @@
                 ],
                 "pos": [
                     2.299999952316284,
-                    0.05999928340315819,
-                    -2.0
+                    0.05999927967786789,
+                    -15.399999618530273
                 ],
                 "rotation": [
                     -0.0,
@@ -335,7 +444,8 @@
                 {
                     "enable": true,
                     "grabName": "mixamorig:LeftHand",
-                    "name": "Rig"
+                    "name": "Rig",
+                    "priority": 0
                 }
             ],
             "layer": 0,
@@ -347,8 +457,8 @@
                 ],
                 "pos": [
                     2.299999952316284,
-                    0.05999928340315819,
-                    -2.0
+                    0.05999927967786789,
+                    -15.399999618530273
                 ],
                 "rotation": [
                     -0.0,
@@ -367,9 +477,42 @@
             "active": true,
             "components": [
                 {
+                    "attackableTags": null,
                     "enable": true,
-                    "grabName": "mixamorig:RightHand",
-                    "name": "Rig"
+                    "isDebugDisplay": false,
+                    "name": "Weapon",
+                    "priority": 0
+                },
+                {
+                    "angles": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "center": [
+                        0.0,
+                        1.100000023841858,
+                        0.0
+                    ],
+                    "enable": true,
+                    "height": 1.5399999618530273,
+                    "name": "CapsuleCollider",
+                    "priority": 0,
+                    "radius": 0.5
+                },
+                {
+                    "enable": true,
+                    "friction": 0.0,
+                    "isAwake": false,
+                    "isFreezeRot": [
+                        false,
+                        false,
+                        false
+                    ],
+                    "isTrigger": true,
+                    "mass": 1.0,
+                    "name": "RigidBody",
+                    "priority": 0
                 }
             ],
             "layer": 0,
@@ -380,19 +523,19 @@
                     "Weapon_Model"
                 ],
                 "pos": [
-                    2.299999952316284,
-                    0.05999928340315819,
-                    -2.0
+                    2.499238967895508,
+                    0.21000000834465027,
+                    -15.417430877685547
                 ],
                 "rotation": [
-                    -0.0,
-                    0.04361940547823906,
-                    -0.0,
-                    0.9990482330322266
+                    0.14162670075893402,
+                    0.19435752928256989,
+                    -0.6248884201049805,
+                    0.7427526712417603
                 ],
                 "scale": [
-                    1.0,
-                    1.0,
+                    1.000000238418579,
+                    1.0000001192092896,
                     1.0
                 ]
             }
@@ -403,42 +546,8 @@
                 {
                     "enable": true,
                     "meshName": "Knight_Sword.fbx",
-                    "name": "MeshRenderer"
-                },
-                {
-                    "enable": true,
-                    "isAwake": false,
-                    "isFreezeRot": [
-                        false,
-                        false,
-                        false
-                    ],
-                    "isTrigger": true,
-                    "mass": 1.0,
-                    "name": "RigidBody"
-                },
-                {
-                    "angles": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "center": [
-                        0.0,
-                        0.5,
-                        0.0
-                    ],
-                    "enable": true,
-                    "height": 1.4299999475479126,
-                    "name": "CapsuleCollider",
-                    "radius": 0.28999999165534973
-                },
-                {
-                    "attackableTags": [
-                        3
-                    ],
-                    "enable": true,
-                    "name": "Weapon"
+                    "name": "MeshRenderer",
+                    "priority": 0
                 }
             ],
             "layer": 0,
@@ -447,20 +556,20 @@
             "transform": {
                 "child": null,
                 "pos": [
-                    2.4992387294769287,
-                    0.20999854803085327,
-                    -2.017430305480957
+                    2.499239206314087,
+                    0.21000005304813385,
+                    -15.417430877685547
                 ],
                 "rotation": [
-                    0.1416267305612564,
-                    0.19435764849185944,
-                    -0.6248886585235596,
-                    0.7427524328231812
+                    0.14162668585777283,
+                    0.1943575143814087,
+                    -0.6248883605003357,
+                    0.7427526712417603
                 ],
                 "scale": [
-                    1.200000524520874,
+                    1.2000007629394531,
                     1.2000008821487427,
-                    1.2000001668930054
+                    1.2000004053115845
                 ]
             }
         },
@@ -475,7 +584,8 @@
                     "Z_Back": "sky_Day_b.png",
                     "Z_Front": "sky_Day_f.png",
                     "enable": true,
-                    "name": "SkyBox"
+                    "name": "SkyBox",
+                    "priority": 0
                 }
             ],
             "layer": 0,
@@ -507,7 +617,8 @@
                 {
                     "enable": true,
                     "meshName": "shield1.fbx",
-                    "name": "MeshRenderer"
+                    "name": "MeshRenderer",
+                    "priority": 0
                 }
             ],
             "layer": 0,
@@ -517,19 +628,19 @@
                 "child": null,
                 "pos": [
                     2.3999998569488525,
-                    0.05999928340315819,
-                    -1.9300003051757813
+                    0.05999927967786789,
+                    -15.329999923706055
                 ],
                 "rotation": [
-                    -0.10568557679653168,
-                    0.11533579230308533,
+                    -0.10568558424711227,
+                    0.11533579975366592,
                     0.7282005548477173,
                     0.66727215051651
                 ],
                 "scale": [
-                    1.0000008344650269,
-                    0.8000005483627319,
-                    1.0
+                    1.0000007152557373,
+                    0.8000004887580872,
+                    0.9999999403953552
                 ]
             }
         },
@@ -538,20 +649,23 @@
             "components": [
                 {
                     "enable": true,
-                    "meshName": "Arissa.fbx",
-                    "name": "MeshRenderer"
+                    "meshName": "Uriel A Plotexia.fbx",
+                    "name": "MeshRenderer",
+                    "priority": 0
                 },
                 {
                     "enable": true,
-                    "isAwake": false,
+                    "friction": 0.20000000298023224,
+                    "isAwake": true,
                     "isFreezeRot": [
                         true,
                         false,
                         true
                     ],
-                    "isTrigger": true,
-                    "mass": 1.0,
-                    "name": "RigidBody"
+                    "isTrigger": false,
+                    "mass": 50.0,
+                    "name": "RigidBody",
+                    "priority": 0
                 },
                 {
                     "angles": [
@@ -561,25 +675,65 @@
                     ],
                     "center": [
                         0.0,
-                        0.8999999761581421,
+                        1.149999976158142,
                         0.0
                     ],
                     "enable": true,
-                    "height": 1.2200000286102295,
+                    "height": 1.3300000429153442,
                     "name": "CapsuleCollider",
-                    "radius": 0.6600000262260437
+                    "priority": 0,
+                    "radius": 0.5299999713897705
                 },
                 {
-                    "enable": true,
+                    "actionController": {
+                        "actData": [
+                            {
+                                "data": null,
+                                "typeString": "Idle"
+                            },
+                            {
+                                "data": {
+                                    "moveAcceleration": 4.0,
+                                    "moveMaxSpeed": 9.0,
+                                    "moveRotateSpeed": 120.0,
+                                    "transNearDistance": 6.0
+                                },
+                                "typeString": "Walk"
+                            },
+                            {
+                                "data": {
+                                    "moveAcceleration": 2.0,
+                                    "moveMaxSpeed": 5.0,
+                                    "moveRotateSpeed": 150.0,
+                                    "transNearDistance": 3.0
+                                },
+                                "typeString": "Run"
+                            },
+                            {
+                                "data": null,
+                                "typeString": "Attack1"
+                            }
+                        ]
+                    },
+                    "enable": false,
                     "maxHp": 1.0,
-                    "name": "Enemy"
+                    "name": "Boss",
+                    "priority": 0
+                },
+                {
+                    "animConName": "ANC_Boss",
+                    "enable": true,
+                    "name": "Animation",
+                    "priority": 1
                 }
             ],
             "layer": 0,
             "name": "Enemy",
             "tag": 3,
             "transform": {
-                "child": null,
+                "child": [
+                    "Boss_WeaponHand"
+                ],
                 "pos": [
                     0.5,
                     0.30000001192092896,
@@ -592,9 +746,9 @@
                     1.0
                 ],
                 "scale": [
-                    1.0000001192092896,
-                    1.0,
-                    1.0000001192092896
+                    1.2000000476837158,
+                    1.2000000476837158,
+                    1.2000000476837158
                 ]
             }
         },
@@ -603,7 +757,8 @@
             "components": [
                 {
                     "enable": true,
-                    "name": "HitStopManager"
+                    "name": "HitStopManager",
+                    "priority": 0
                 }
             ],
             "layer": 0,
@@ -631,11 +786,140 @@
         },
         {
             "active": true,
+            "components": null,
+            "layer": 0,
+            "name": "Boss_Weapon",
+            "tag": 0,
+            "transform": {
+                "child": [
+                    "Boss_WeaponModel"
+                ],
+                "pos": [
+                    -0.3399999141693115,
+                    0.1199999451637268,
+                    -0.21999990940093994
+                ],
+                "rotation": [
+                    0.29135027527809143,
+                    -0.33102723956108093,
+                    0.6144918203353882,
+                    0.6541680097579956
+                ],
+                "scale": [
+                    1.2000000476837158,
+                    1.2000000476837158,
+                    1.2000000476837158
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "meshName": "Sword15_FBX.fbx",
+                    "name": "MeshRenderer",
+                    "priority": 0
+                }
+            ],
+            "layer": 0,
+            "name": "Boss_WeaponModel",
+            "tag": 0,
+            "transform": {
+                "child": null,
+                "pos": [
+                    -0.3399999439716339,
+                    0.1199999526143074,
+                    -0.21999993920326233
+                ],
+                "rotation": [
+                    0.291350394487381,
+                    -0.3310272991657257,
+                    0.6144919395446777,
+                    0.6541678309440613
+                ],
+                "scale": [
+                    1.4400004148483276,
+                    1.440000057220459,
+                    1.440000057220459
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "grabName": "mixamorig:RightHand",
+                    "name": "Rig",
+                    "priority": 0
+                }
+            ],
+            "layer": 0,
+            "name": "Player_RightHand",
+            "tag": 0,
+            "transform": {
+                "child": [
+                    "Weapon"
+                ],
+                "pos": [
+                    2.299999952316284,
+                    0.059999994933605194,
+                    -15.399999618530273
+                ],
+                "rotation": [
+                    -0.0,
+                    0.04361940547823906,
+                    -0.0,
+                    0.9990482330322266
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
+                    "name": "BattleManager",
+                    "priority": 0
+                }
+            ],
+            "layer": 0,
+            "name": "BattleManager",
+            "tag": 0,
+            "transform": {
+                "child": null,
+                "pos": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
             "components": [
                 {
                     "enable": true,
                     "image": "UI_hpFrame.png",
-                    "name": "UIRenderer"
+                    "name": "UIRenderer",
+                    "priority": 0
                 }
             ],
             "layer": 2,
@@ -667,7 +951,8 @@
                 {
                     "enable": true,
                     "image": "UI_hpLine_green.png",
-                    "name": "UIRenderer"
+                    "name": "UIRenderer",
+                    "priority": 0
                 },
                 {
                     "currentValue": 1.0,
@@ -675,6 +960,7 @@
                     "maxValue": 1.0,
                     "minValue": 0.0,
                     "name": "UISlider",
+                    "priority": 0,
                     "sliderLen": 590.0,
                     "startPos": 20.0
                 }
