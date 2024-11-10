@@ -6,7 +6,7 @@
 using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
 
-void CP_BoxAnimation::ImGuiSetting()
+void CP_BoxAnimation::ImGuiDebug()
 {
 	if (ImGui::Button("Transition"))
 		TransitionStart();

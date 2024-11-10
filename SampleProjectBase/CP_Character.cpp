@@ -89,7 +89,7 @@ void  CP_Character::BeginHitStop(u_int _hitStopFlame)
 	}
 }
 
-void  CP_Character::ImGuiSetting()
+void  CP_Character::ImGuiDebug()
 {
 	ImGui::Checkbox("IsInvicible", &isInvicible);
 	ImGui::DragFloat("CurrentHP", &currentHP, 0.1f, 0.0f, MAXLIMIT_HP);

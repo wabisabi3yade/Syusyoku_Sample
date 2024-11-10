@@ -72,6 +72,6 @@ private:
 	/// @return short
 	short CastShort(SectionType _type);
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 

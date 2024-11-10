@@ -35,7 +35,7 @@ public:
 
 	void Draw() override;
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 
 	// •Ší‚ğ‚à‚Âƒ{[ƒ“‚ğæ“¾‚·‚é
 	void SetGrabBone(const Bone* _grabBone);

@@ -136,7 +136,7 @@ protected:
 	// Ä¶ŠÔ‚ğƒZƒbƒg‚·‚é
 	void SetAnimationTime(float _time);
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 
 };
 

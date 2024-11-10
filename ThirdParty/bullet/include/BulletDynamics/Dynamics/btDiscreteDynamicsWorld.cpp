@@ -1027,7 +1027,7 @@ void btDiscreteDynamicsWorld::integrateTransformsInternal(btRigidBody** bodies, 
 #else
 
 						//don't apply the collision response right now, it will happen next frame
-						//if you really need to, you can uncomment next 3 lines. Note that is uses zero restitution.
+						//if you really need to, you can uncomment next 3 drawLines. Note that is uses zero restitution.
 						//btScalar appliedImpulse = 0.f;
 						//btScalar depth = 0.f;
 						//appliedImpulse = resolveSingleCollision(body,(btCollisionObject*)sweepResults.m_hitCollisionObject,sweepResults.m_hitPointWorld,sweepResults.m_hitNormalWorld,getSolverInfo(), depth);

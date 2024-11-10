@@ -12,6 +12,9 @@ class InSceneSystemManager : public Singleton_Base<InSceneSystemManager>
 
 	/// @brief メインカメラ
 	CP_Camera* pMainCamera;
+
+	/// @brief ゲーム内入力クラス
+	std::unique_ptr<GameInput> pGameInput;
 	
 	/// @brief シーンオブジェクト
 	std::unique_ptr<SceneObjects> pSceneObjects;
@@ -29,6 +32,9 @@ public:
 	/// @brief 初期化処理
 	void Init();
 
+	/// @brief ゲーム内入力クラスを更新する
+	void InputUpdate();
+
 	/// @brief 変数を解放して、新しく生成する
 	void Reset();
 
@@ -43,6 +49,10 @@ public:
 	/// @brief シーンのライティング配列を取得
 	/// @return ライティング配列の参照
 	SceneLights& GetSceneLights();
+
+	/// @brief 入力クラスを取得
+	/// @return 入力クラス
+	GameInput& GetInput();
 
 	// カメラをセットする
 	void SetCamera(CP_Camera& _camera);

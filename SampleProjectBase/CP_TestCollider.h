@@ -22,7 +22,7 @@ public:
 
 	void SetIsGravity(bool a);
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 
 	/// @brief セーブする
 	/// @param _data セーブシーンデータ

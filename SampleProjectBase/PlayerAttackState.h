@@ -34,7 +34,7 @@ protected:
 	void OnEndBehavior() override;
 	void TransitionCheckUpdate() override;
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 private:
 	/// @brief UŒ‚î•ñ‚ğXV‚·‚é
 	void UpdateAttackInfo();

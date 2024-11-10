@@ -148,5 +148,5 @@ protected:
 	/// @return ‚Ç‚¿‚ç‚àŠˆ“®‚µ‚Ä‚¢‚é‚©H
 	bool GetIsActive();
 
-	void ImGuiSetting() override {}
+	void ImGuiDebug() override {}
 };

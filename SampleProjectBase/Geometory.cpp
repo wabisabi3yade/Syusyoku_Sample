@@ -22,7 +22,7 @@ Vector3 Geometory::position = Vector3::Zero;
 Vector3 Geometory::scale = Vector3::One;
 Vector3 Geometory::eularAngle = Vector3::Zero;
 Color Geometory::color = Color(1.0f, 1.0f, 1.0f, 1.0f);
-std::vector<Geometory::LineVertex>  Geometory::lines;
+std::vector<Geometory::LineVertex>  Geometory::drawLines;
 VertexShader* Geometory::pLineVs = nullptr;
 PixelShader* Geometory::pLinePs = nullptr;
 
@@ -115,15 +115,15 @@ void Geometory::AddLine(const DirectX::SimpleMath::Vector3& _start, const Direct
 	LineVertex line;
 	line.position = _start;
 	line.color = _color;
-	lines.push_back(line);
+	drawLines.push_back(line);
 
 	line.position = _end;
-	lines.push_back(line);
+	drawLines.push_back(line);
 }
 
 void Geometory::DrawLine()
 {
-	if (lines.size() <= 0) return;
+	if (drawLines.size() <= 0) return;
 
 	D3D11_Renderer* pRenderer = Direct3D11::GetInstance()->GetRenderer();
 	ID3D11Device* pDevice = pRenderer->GetDevice();
@@ -133,14 +133,14 @@ void Geometory::DrawLine()
 	pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 
 	// 頂点バッファ作成
-	u_int vertexCnt = static_cast<int>(lines.size());
+	u_int vertexCnt = static_cast<int>(drawLines.size());
 	D3D11_BUFFER_DESC bufferDesc = {};
 	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	bufferDesc.ByteWidth = sizeof(LineVertex) * vertexCnt;
 	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	bufferDesc.CPUAccessFlags = 0;
 	D3D11_SUBRESOURCE_DATA initData = {};
-	initData.pSysMem = lines.data();
+	initData.pSysMem = drawLines.data();
 	ID3D11Buffer* pVertexBuffer = nullptr;
 	pDevice->CreateBuffer(&bufferDesc, &initData, &pVertexBuffer);
 
@@ -163,7 +163,7 @@ void Geometory::DrawLine()
 	// 実際の描画
 	pDeviceContext->Draw(vertexCnt, 0);
 
-	lines.clear();
+	drawLines.clear();
 }
 
 void Geometory::MakeMaterial()

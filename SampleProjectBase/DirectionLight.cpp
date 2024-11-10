@@ -9,8 +9,10 @@ void DirectionLight::Draw()
 	Geometory::SetPosition(parameter.position);
 	Geometory::SetColor(parameter.color);
 
+#ifdef EDIT
 	if(GetDisplay())
 	Geometory::DrawCube();
+#endif
 }
 
 void DirectionLight::SetDirection(const DirectX::SimpleMath::Vector3& _dir)

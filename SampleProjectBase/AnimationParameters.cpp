@@ -424,7 +424,7 @@ void AnimationParameters::Copy(const AnimationParameters& _other)
 	}
 }
 
-void AnimationParameters::ImGuiSetting()
+void AnimationParameters::ImGuiDebug()
 {
 	ImGui::Text("Parameter");
 	ImGuiAddParam();

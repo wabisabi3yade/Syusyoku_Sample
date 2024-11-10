@@ -49,7 +49,7 @@ protected:
 	/// @return キャラクターコンポーネント
 	CP_Character& GetCharacter();
 
-	virtual void ImGuiSetting();
+	virtual void ImGuiDebug();
 };
 
 /// @brief キャラクターがアニメーション遷移したときのオブザーバー

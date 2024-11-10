@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "PlayerActionController.h"
 #include "CP_Animation.h"
+#include "InSceneSystemManager.h"
 
 #include "PlayerIdleState.h"
 #include "PlayerMoveState.h"
@@ -15,7 +16,8 @@ PlayerActionController::PlayerActionController(CP_Player& _player)
 {
 	// アニメーション変更オブザーバー生成
 	pChangeAnimObserver = std::make_unique<PlayerChangeAnimObserver>(*this);
-	pGameInput = GameInput::GetInstance();
+
+	pInput = &InSceneSystemManager::GetInstance()->GetInput();
 
 	// 行動クラスを生成
 	using enum PlayerActState_Base::PlayerState;
@@ -58,7 +60,7 @@ void PlayerActionController::Update()
 
 void PlayerActionController::UpdateTargeting()
 {
-	isTargeting = pGameInput->GetButton(GameInput::ButtonType::Player_RockOn);
+	isTargeting = pInput->GetButton(GameInput::ButtonType::Player_RockOn);
 
 	// アニメーションパラメータにも送る
 	pAnimation->SetBool(TARGET_PARAMNAME, isTargeting);
@@ -96,7 +98,7 @@ PlayerActState_Base& PlayerActionController::CastPlayerAct(HashiTaku::StateNode_
 	return static_cast<PlayerActState_Base&>(_stateNodeBase);
 }
 
-void PlayerActionController::ImGuiSetting()
+void PlayerActionController::ImGuiDebug()
 {
 	ImGuiMethod::Text("isTargeting", isTargeting);
 

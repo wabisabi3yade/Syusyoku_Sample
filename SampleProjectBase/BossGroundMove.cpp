@@ -143,7 +143,7 @@ bool BossGroundMove::CheckNearTransition()
 	return true;
 }
 
-void BossGroundMove::ImGuiSetting()
+void BossGroundMove::ImGuiDebug()
 {
 	ImGui::DragFloat("MaxSpeed", &maxSpeed, 0.1f, 0.0f, 1000.0f);
 	ImGui::DragFloat("Acceleration", &acceleration, 0.1f, 0.0f, 1000.0f);

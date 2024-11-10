@@ -13,6 +13,6 @@ namespace HashiTaku
 		void ImGuiCall();
 	protected:
 		/// @brief ImGui‚Åİ’è‚ğs‚¤
-		virtual void ImGuiSetting() = 0;
+		virtual void ImGuiDebug() = 0;
 	};
 }

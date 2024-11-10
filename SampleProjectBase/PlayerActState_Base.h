@@ -146,7 +146,7 @@ protected:
 	bool GetCanRolling() const;
 
 	/// @brief ImGui処理
-	virtual void ImGuiSetting() {}
+	virtual void ImGuiDebug() {}
 
 	/// @brief ImGuiによるコンボボックス
 	/// @param _caption キャプション

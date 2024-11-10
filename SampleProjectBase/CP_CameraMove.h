@@ -36,7 +36,7 @@ public:
 	virtual void Start();
 	virtual void LateUpdate();
 
-	virtual void ImGuiSetting() override;
+	virtual void ImGuiDebug() override;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

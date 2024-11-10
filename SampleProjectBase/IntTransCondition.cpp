@@ -65,10 +65,10 @@ void IntTransCondition::Load(const nlohmann::json& _data)
 	HashiTaku::LoadJsonEnum<JudgeType>("iJudgeType", judgeType, _data);
 }
 
-void IntTransCondition::ImGuiSetting()
+void IntTransCondition::ImGuiDebug()
 {
 #ifdef EDIT
-	TransCondition_Base::ImGuiSetting();
+	TransCondition_Base::ImGuiDebug();
 	ImGui::SameLine();
 
 	ImGuiMethod::PushItemSmallWidth();

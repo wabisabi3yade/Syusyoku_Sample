@@ -31,6 +31,6 @@ private:
 	/// @brief ルートモーションをセット
 	void ApplyRootMotion();
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 

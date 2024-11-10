@@ -161,7 +161,7 @@ void PlayerTargetMove::ApplyRootMotion()
 
 }
 
-void PlayerTargetMove::ImGuiSetting()
+void PlayerTargetMove::ImGuiDebug()
 {
-	PlayerMoveState::ImGuiSetting();
+	PlayerMoveState::ImGuiDebug();
 }

@@ -31,6 +31,6 @@ private:
 	/// @brief イベント起動時処理
 	void OnEvent() override;
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 

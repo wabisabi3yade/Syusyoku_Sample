@@ -81,7 +81,7 @@ protected:
 	/// @brief 次のアニメーションに切り替える前の終了処理
 	virtual void OnTerminal() {};
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 
 namespace HashiTaku

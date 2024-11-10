@@ -46,7 +46,7 @@ private:
 	/// @brief 無敵時間の更新
 	void UpdateInvicible();
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 
 	/// @brief セーブする
 	/// @return セーブデータ

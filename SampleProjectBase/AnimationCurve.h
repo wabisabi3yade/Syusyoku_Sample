@@ -105,7 +105,7 @@ private:
 	/// @return 始点または終点のプロットか？
 	bool IsStartOrEndPlot(const HermitePlotParam* _checkPlot);
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 
 	// ImGuiでプロット点を編集
 	void ImGuiPlotEditing();

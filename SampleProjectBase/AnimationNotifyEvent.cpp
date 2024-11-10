@@ -19,9 +19,9 @@ void AnimationNotifyEvent::Load(const nlohmann::json& _data)
 	HashiTaku::LoadJsonFloat("eventRatio", eventRatio, _data);
 }
 
-void AnimationNotifyEvent::ImGuiSetting()
+void AnimationNotifyEvent::ImGuiDebug()
 {
-	AnimationNotify_Base::ImGuiSetting();
+	AnimationNotify_Base::ImGuiDebug();
 	ImGui::SliderFloat("event", &eventRatio, 0.0f, 1.0f);
 }
 

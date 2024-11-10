@@ -63,9 +63,9 @@ void SingleAnimationNode::Load(const nlohmann::json& _data)
 		SetAnimationData(animName);
 }
 
-void SingleAnimationNode::ImGuiSetting()
+void SingleAnimationNode::ImGuiDebug()
 {
-	AnimationNode_Base::ImGuiSetting();
+	AnimationNode_Base::ImGuiDebug();
 
 	std::string animName;
 	if (pAnimationData)

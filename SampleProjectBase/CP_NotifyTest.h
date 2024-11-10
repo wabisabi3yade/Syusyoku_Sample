@@ -20,7 +20,7 @@ public:
 
 	void Init() override;
 	void Update();
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

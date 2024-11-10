@@ -47,7 +47,7 @@ public:
 
 	/// @brief UIとオブジェクトのリスト間を移動する
 	/// @param _targetObj 対象オブジェクト
-	void MoveListToList(GameObject& _targetObj);
+	void MoveTmpList(GameObject& _targetObj);
 
 	// オブジェクトの名前からオブジェクトを返す
 	GameObject* GetSceneObject(const std::string& _objectName);
@@ -97,7 +97,7 @@ private:
 	/// @param _gameObject 対象のUIオブジェクト
 	void MoveToObjList(GameObject& _gameObject);
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 
 	/// @brief ゲームオブジェクトのImGUi表示
 	/// @param _gameObject 表示するゲームオブジェクト

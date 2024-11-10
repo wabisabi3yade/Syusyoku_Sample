@@ -7,7 +7,7 @@
 
 AnimNodePlayer_Base::AnimNodePlayer_Base(const AnimationNode_Base& _playNode, BoneList& _boneList, Transform& _transform)
 	: pPlayAnimNode(&_playNode), pBoneList(&_boneList), pObjectTransform(&_transform),
-	curPlayRatio(0.0f), lastAnimationRatio(-Mathf::smallValue), curAnimationRatio(0.0f), playerSpeedTimes(1.0f), allPlaySpeed(0.0f), isJustLoop(false), isPlay(true)
+	curPlayRatio(0.0f), lastAnimationRatio(-Mathf::smallValue), curAnimationRatio(0.0f), playerSpeedTimes(1.0f), allPlaySpeed(0.0f), isJustLoop(false), isPlaying(true)
 {
 }
 
@@ -33,7 +33,7 @@ void AnimNodePlayer_Base::CopyNotifys(const std::list<std::unique_ptr<AnimationN
 
 void AnimNodePlayer_Base::UpdateCall(std::vector<BoneTransform>& _outTransforms, float _controllerPlaySpeed)
 {
-	if (!isPlay)
+	if (!isPlaying)
 	{
 		Update(_outTransforms);
 		return;
@@ -62,7 +62,7 @@ void AnimNodePlayer_Base::ApplyRootMotion(const DirectX::SimpleMath::Vector3& _r
 
 void AnimNodePlayer_Base::OnInterpolateUpdate(std::vector<BoneTransform>& _outTransforms, float _controllerPlaySpeed)
 {
-	if (!isPlay)
+	if (!isPlaying)
 	{
 		Update(_outTransforms);
 		return;
@@ -181,7 +181,7 @@ bool AnimNodePlayer_Base::IsCanLoop()
 	if (curPlayRatio < 1.0f) return false;
 	if (!pPlayAnimNode->GetIsLoop())
 	{
-		isPlay = false;
+		isPlaying = false;
 		return false;
 	}
 
@@ -253,7 +253,7 @@ void AnimNodePlayer_Base::ApplyLoadTransform(DirectX::SimpleMath::Vector3& _root
 	_rootMotionPos = Vector3::Transform(_rootMotionPos, Matrix::CreateFromQuaternion(pBoneList->GetLoadRotation()));
 }
 
-void AnimNodePlayer_Base::ImGuiSetting()
+void AnimNodePlayer_Base::ImGuiDebug()
 {
 	ImGui::SliderFloat("Play", &curPlayRatio, 0.0f, 1.0f);
 	ImGui::Text("AnimRatio:%lf", curAnimationRatio);

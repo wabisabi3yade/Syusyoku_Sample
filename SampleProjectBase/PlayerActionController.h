@@ -20,7 +20,7 @@ private:
 	CP_Player* pPlayer;
 
 	/// @brief 入力クラス
-	GameInput* pGameInput;
+	GameInput* pInput;
 
 	/// @brief キャンセルフラグのポインタ
 	const bool* pIsCanCancel;
@@ -80,7 +80,7 @@ private:
 	/// @return キャストした変数
 	PlayerActState_Base& CastPlayerAct(HashiTaku::StateNode_Base& _stateNodeBase);
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 private:
 	/// @brief アニメーションコントローラ内のプレイヤー名
 	static constexpr  auto STATEANIM_PARAMNAME{ "state" };

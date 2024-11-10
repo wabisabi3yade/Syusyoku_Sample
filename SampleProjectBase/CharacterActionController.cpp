@@ -51,7 +51,7 @@ CP_Character& CharacterActionController::GetCharacter()
 	return *pCharacter;
 }
 
-void CharacterActionController::ImGuiSetting()
+void CharacterActionController::ImGuiDebug()
 {
 	ImGui::Checkbox("DebugDisplay", &isDebugDisplay);
 }

@@ -13,7 +13,7 @@ constexpr float CAN_ROLLING_STICKINPUT(0.3f);	// ƒ[ƒŠƒ“ƒO‚Å‚«‚é¶ƒXƒeƒBƒbƒN‚Ì“
 PlayerActState_Base::PlayerActState_Base()
 	: pActionController(nullptr), pAnimation(nullptr), stateType(PlayerState::None)
 {
-	pPlayerInput = GameInput::GetInstance();
+	pPlayerInput = &InSceneSystemManager::GetInstance()->GetInput();
 	pCamera = &InSceneSystemManager::GetInstance()->GetMainCamera();
 }
 

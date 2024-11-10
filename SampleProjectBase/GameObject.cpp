@@ -402,7 +402,7 @@ void GameObject::OnActiveFalse()
 	}
 }
 
-void GameObject::ImGuiSetting()
+void GameObject::ImGuiDebug()
 {
 
 	ImGuiMethod::PushItemSmallWidth();
@@ -584,7 +584,7 @@ void GameObject::SetLayer(HashiTaku::Layer::Type _setType)
 	layer.SetType(_setType);
 
 	SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->GetSceneObjects();
-	sceneObjects.MoveListToList(*this);
+	sceneObjects.MoveTmpList(*this);
 }
 
 Transform& GameObject::GetTransform()

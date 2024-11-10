@@ -44,6 +44,6 @@ private:
 	long long GetNowTime();
 
 	// フレームレート描画
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 

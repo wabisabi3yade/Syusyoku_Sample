@@ -16,7 +16,7 @@ public:
 	/// @return ”¼Œa
 	float GetRadius() const;
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

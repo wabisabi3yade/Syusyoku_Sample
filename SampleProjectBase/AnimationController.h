@@ -136,5 +136,5 @@ private:
 	// ‘JˆÚ–îˆó‚ğƒ[ƒh‚·‚é
 	void LoadTransArrow(const nlohmann::json& _nodeInfoData);
 protected:
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };

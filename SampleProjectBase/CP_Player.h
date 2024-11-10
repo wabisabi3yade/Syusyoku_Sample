@@ -62,7 +62,7 @@ private:
 	void OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo) override;
 	void OnDeathBehavior() override;	
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 	void ImGuiSetWeapon();
 };
 

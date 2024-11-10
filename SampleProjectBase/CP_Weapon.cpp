@@ -128,7 +128,7 @@ void CP_Weapon::AddAttackableTag(HashiTaku::Tag::Type _addTag)
 	attackableTags.push_back(_addTag);
 }
 
-void CP_Weapon::ImGuiSetting()
+void CP_Weapon::ImGuiDebug()
 {
 #ifdef EDIT
 	ImGui::Text("Attack Tag");

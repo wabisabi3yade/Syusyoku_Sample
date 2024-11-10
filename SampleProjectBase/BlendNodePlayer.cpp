@@ -240,9 +240,9 @@ DirectX::SimpleMath::Quaternion AnimBlendNodePlayer::GetRootMotionRot(float _rat
 	return DirectX::SimpleMath::Quaternion();
 }
 
-void AnimBlendNodePlayer::ImGuiSetting()
+void AnimBlendNodePlayer::ImGuiDebug()
 {
-	AnimNodePlayer_Base::ImGuiSetting();
+	AnimNodePlayer_Base::ImGuiDebug();
 
 	ImGui::Text("Bllending");
 

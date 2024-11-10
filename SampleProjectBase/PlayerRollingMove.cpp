@@ -102,9 +102,9 @@ void PlayerRollingMove::UpdateInvicible()
 		pActionController->GetPlayer().SetIsInvicible(false);
 }
 
-void PlayerRollingMove::ImGuiSetting()
+void PlayerRollingMove::ImGuiDebug()
 {
-	PlayerActState_Base::ImGuiSetting();
+	PlayerActState_Base::ImGuiDebug();
 
 	ImGui::DragFloat("Distance", &rollingDistance, 0.1f, 0.0f, 1000.0f);
 	ImGui::DragFloat("InvicibleTime", &invicibleTime, 0.01f, 0.0f, 5.0f);

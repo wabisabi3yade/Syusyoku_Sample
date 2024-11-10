@@ -169,7 +169,7 @@ bool AnimationCurve::IsStartOrEndPlot(const HermitePlotParam* _checkPlot)
 	return _checkPlot == &*plotPoints.begin() || _checkPlot == &*std::prev(plotPoints.end());
 }
 
-void AnimationCurve::ImGuiSetting()
+void AnimationCurve::ImGuiDebug()
 {
 #ifdef EDIT
 	ImGui::Text(curveName.c_str());

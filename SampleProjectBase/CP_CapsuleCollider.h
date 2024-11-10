@@ -32,6 +32,6 @@ private:
 	/// @param _outHeight ”½‰f‚µ‚½‚‚³
 	void ApplyObjectScale(float& _outRadius, float& _outHeight);
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 

@@ -272,7 +272,7 @@ void AnimControllPlayer::ChangeAnimSubjectUpdate()
 	pChangeAnimSubject->NotifyAll(changeAnimInfo);
 }
 
-void AnimControllPlayer::ImGuiSetting()
+void AnimControllPlayer::ImGuiDebug()
 {
 	ImGui::Text(std::to_string(static_cast<int>(updateState)).c_str());
 

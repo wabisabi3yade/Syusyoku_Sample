@@ -4,25 +4,18 @@
 #include "InSceneSystemManager.h"
 #include "ShaderCollection.h"
 #include "DX11BulletPhisics.h"
-#include "AssetSaveLoad.h"
+#include "Geometory.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
-Scene::Scene(const std::string& _name) : isPlay(true)
+Scene::Scene(const std::string& _sceneName) : sceneName(_sceneName)
 {
 	pInSceneSystem = InSceneSystemManager::GetInstance();
 	pInSceneSystem->Init();
 
-	sceneName = _name;
-
-	// 編集するときの処理
-#ifdef EDIT
-	OnEditProcess();
-#endif // EDIT
-
 	// ロードする
-	Load();
+	SceneLoad();
 }
 
 Scene::~Scene()
@@ -32,31 +25,20 @@ Scene::~Scene()
 
 void Scene::Exec()
 {
-	SceneObjects& sceneObjects = pInSceneSystem->GetSceneObjects();
-	DX11BulletPhisics* pBulletEngine = DX11BulletPhisics::GetInstance();
+	// シーン内更新
+	SceneUpdate();
 
-	// 再生中のみの更新
-	PlayOnlyUpdate();
-
-	// ImGui編集
-	sceneObjects.ImGuiCall();
-
-	// Dxのトランスフォームを Bulletに合わせる
-	pBulletEngine->UpdateTransformDxToBt();
-
-	// 描画前準備
-	DrawSetup();
-
-	// シーン内の描画処理
-	sceneObjects.Draw();
+	// シーン描画
+	SceneDraw();
 }
 
-void Scene::PlayOnlyUpdate()
+void Scene::SceneUpdate()
 {
-	if (!IsUpdatePlay()) return;	// 再生中なら
-
 	SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->GetSceneObjects();
 	DX11BulletPhisics* pBulletEngine = DX11BulletPhisics::GetInstance();
+
+	// ゲーム内入力更新処理
+	pInSceneSystem->InputUpdate();
 
 	// 開始処理
 	sceneObjects.Awake();
@@ -68,47 +50,26 @@ void Scene::PlayOnlyUpdate()
 	// シーン内の更新処理
 	sceneObjects.Update();
 	sceneObjects.LateUpdate();
+
+	// Dxのトランスフォームを Bulletに合わせる
+	pBulletEngine->UpdateTransformDxToBt();
 }
 
-void Scene::ImGuiSetting()
+void Scene::SceneDraw()
 {
-	if (isPlay)
-		ImGuiPlaying();
-	else
-		ImGuiStop();
+	SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->GetSceneObjects();
+
+	// 描画前準備
+	DrawSetup();
+
+	// シーン内の描画処理
+	sceneObjects.Draw();
+
+	// 線描画
+	Geometory::DrawLine();
 }
 
-void Scene::Save()
-{
-	// シーンデータ
-	nlohmann::json sceneData;
-
-	// シーン内オブジェクトをセーブ
-	SceneObjects& sceneObj = pInSceneSystem->GetSceneObjects();
-	sceneData["objects"] = sceneObj.SaveObject();
-
-	std::ofstream f(SaveFilePath());
-
-	auto str = sceneData.dump(4);
-	auto len = str.length();
-	f.write(str.c_str(), len);
-
-	HASHI_DEBUG_LOG(sceneName + " セーブしました");
-
-	AssetSaveLoader::Save();	// アセットセーブ
-}
-
-bool Scene::GetIsUpdatePlay() const
-{
-	return isPlay;
-}
-
-void Scene::OnEditProcess()
-{
-	isPlay = false;
-}
-
-void Scene::Load()
+void Scene::SceneLoad()
 {
 	// ファイルからjsonを読み込み
 	std::ifstream f(SaveFilePath());
@@ -163,50 +124,50 @@ std::string Scene::SaveFilePath()
 	return fileName;
 }
 
-bool Scene::IsUpdatePlay()
-{
-#ifdef EDIT
-	if (!isPlay) return false;
-#endif // EDIT
+//bool Scene::IsUpdatePlay()
+//{
+//#ifdef EDIT
+//	if (!isPlaying) return false;
+//#endif // EDIT
+//
+//	return true;
+//}
 
-	return true;
-}
+//void Scene::ImGuiPlaying()
+//{
+//#ifdef EDIT
+//	if (ImGui::Button("Stop"))
+//		PlayEnd();
+//#endif // EDIT
+//}
+//
+//void Scene::ImGuiStop()
+//{
+//#ifdef EDIT
+//	if (ImGui::Button("Play"))
+//		PlayStart();
+//
+//	// 以下再生中は表示しない
+//	if (ImGui::Button("Save"))
+//	{
+//		Save();
+//	}
+//#endif // EDIT
+//}
+//
+//void Scene::PlayStart()
+//{
+//	isPlaying = true;
+//
+//	// シーン再生前にセーブする
+//	Save();
+//}
 
-void Scene::ImGuiPlaying()
-{
-#ifdef EDIT
-	if (ImGui::Button("Stop"))
-		PlayStop();
-#endif // EDIT
-}
-
-void Scene::ImGuiStop()
-{
-#ifdef EDIT
-	if (ImGui::Button("Play"))
-		PlayStart();
-
-	// 以下再生中は表示しない
-	if (ImGui::Button("Save"))
-	{
-		Save();
-	}
-#endif // EDIT
-}
-
-void Scene::PlayStart()
-{
-	isPlay = true;
-
-	// シーン再生前にセーブする
-	Save();
-}
-
-void Scene::PlayStop()
-{
-	isPlay = false;
-
-	// 新しくシーンの中を生成する
-	InSceneSystemManager::GetInstance()->Reset();
-	Load();
-}
+//void Scene::PlayEnd()
+//{
+//	isPlaying = false;
+//
+//	// 新しくシーンの中を生成する
+//	InSceneSystemManager::GetInstance()->Reset();
+//	Load();
+//}

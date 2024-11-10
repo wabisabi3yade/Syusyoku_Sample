@@ -83,7 +83,7 @@ void AnimationNotify_Base::Load(const nlohmann::json& _data)
 	HashiTaku::LoadJsonString("notifyName", notifyName, _data);
 }
 
-void AnimationNotify_Base::ImGuiSetting()
+void AnimationNotify_Base::ImGuiDebug()
 {
 #ifdef EDIT
 	ImGui::Checkbox("isActive", &isActive);

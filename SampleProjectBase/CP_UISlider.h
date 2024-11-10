@@ -52,6 +52,6 @@ private:
 	/// @brief スライダー画像に適用する
 	void ApplySlider();
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 

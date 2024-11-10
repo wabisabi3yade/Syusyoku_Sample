@@ -43,7 +43,7 @@ void CP_Rig::Draw()
 #endif // EDIT
 }
 
-void CP_Rig::ImGuiSetting()
+void CP_Rig::ImGuiDebug()
 {
 	ImGui::Checkbox("display", &isDisplayPos);
 	ImGui::Text(grabBoneName.c_str());

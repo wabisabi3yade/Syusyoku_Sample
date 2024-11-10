@@ -69,7 +69,7 @@ void CP_Animation::OnAddComponent(Component& _comp)
 	}
 }
 
-void CP_Animation::ImGuiSetting()
+void CP_Animation::ImGuiDebug()
 {
 	// コントローラー名表示
 	std::string text = "controllerName:";

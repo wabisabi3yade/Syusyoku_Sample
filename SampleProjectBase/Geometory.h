@@ -45,7 +45,7 @@ private:
 	static std::vector<StaticMesh*> pGeometory;
 
 	/// @brief 描画する線リスト
-	static std::vector<LineVertex> lines;
+	static std::vector<LineVertex> drawLines;
 
 	/// @brief 線描画のシェーダー
 	static VertexShader* pLineVs;

@@ -87,7 +87,7 @@ bool PlayerMoveState::IsRunning()
 	return false;
 }
 
-void PlayerMoveState::ImGuiSetting()
+void PlayerMoveState::ImGuiDebug()
 {
 	std::string text = TO_UTF8("speed") + std::to_string(currentSpeed);
 	ImGui::Text(text.c_str());

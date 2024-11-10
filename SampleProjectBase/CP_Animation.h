@@ -158,7 +158,7 @@ private:
 
 	void Copy(const CP_Animation& _other);
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 
 template<HashiTaku::AnimParam::AnimParamConcept T>

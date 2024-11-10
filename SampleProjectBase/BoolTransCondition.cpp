@@ -52,10 +52,10 @@ void BoolTransCondition::Load(const nlohmann::json& _data)
 	HashiTaku::LoadJsonEnum<JudgeType>("bJudgeType", judgeType, _data);
 }
 
-void BoolTransCondition::ImGuiSetting()
+void BoolTransCondition::ImGuiDebug()
 {
 #ifdef EDIT
-	TransCondition_Base::ImGuiSetting();
+	TransCondition_Base::ImGuiDebug();
 	ImGui::SameLine();
 	ImGuiMethod::PushItemSmallWidth();
 	// ƒ^ƒCƒv‚ð•ÏŠ·‚·‚é

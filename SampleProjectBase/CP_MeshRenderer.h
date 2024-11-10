@@ -73,6 +73,6 @@ private:
 	/// @brief Œ´“_•\Ž¦
 	void OriginDisplay();
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 

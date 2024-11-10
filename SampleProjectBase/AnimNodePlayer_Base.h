@@ -25,7 +25,7 @@ class AnimNodePlayer_Base : public HashiTaku::IImGuiUser
 	float allPlaySpeed;
 
 	/// @brief 再生フラグ
-	bool isPlay;
+	bool isPlaying;
 
 	/// @brief ループしたタイミングか？
 	bool isJustLoop;
@@ -158,6 +158,6 @@ protected:
 	/// @param _rootMotionPos 反映させたいルートモーション
 	void ApplyLoadTransform(DirectX::SimpleMath::Vector3& _rootMotionPos) const;
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 

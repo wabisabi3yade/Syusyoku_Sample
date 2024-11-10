@@ -390,7 +390,7 @@ bool AnimationController::SortArrowPriority(const std::unique_ptr<AnimTransition
 	return _a1->GetPriority() > _a2->GetPriority();
 }
 
-void AnimationController::ImGuiSetting()
+void AnimationController::ImGuiDebug()
 {
 	std::vector<std::string> nodeNames;	// ‘Sƒm[ƒh–¼‚ğæ“¾‚µ‚Ä‚¨‚­
 	for (auto& ni : animNodeInfos)

@@ -3,6 +3,6 @@
 void HashiTaku::IImGuiUser::ImGuiCall()
 {
 #ifdef EDIT
-	ImGuiSetting();
+	ImGuiDebug();
 #endif // EDIT
 }

@@ -272,7 +272,7 @@ void AnimTransitionArrow::ImGuiSetCondistion()
 #endif // EDIT
 }
 
-void AnimTransitionArrow::ImGuiSetting()
+void AnimTransitionArrow::ImGuiDebug()
 {
 	ImGuiMethod::PushItemSmallWidth();
 	ImGui::DragFloat("TransitionTime", &transitionTime, 0.01f, 0.0f, 10.0f);	// ‘JˆÚŽžŠÔ

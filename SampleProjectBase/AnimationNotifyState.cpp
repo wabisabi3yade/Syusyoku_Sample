@@ -62,9 +62,9 @@ void AnimationNotifyState::Load(const nlohmann::json& _data)
 	HashiTaku::LoadJsonFloat("end", endEventRatio, _data);
 }
 
-void AnimationNotifyState::ImGuiSetting()
+void AnimationNotifyState::ImGuiDebug()
 {
-	AnimationNotify_Base::ImGuiSetting();
+	AnimationNotify_Base::ImGuiDebug();
 
 	ImGui::DragFloatRange2("event", &startEventRatio, &endEventRatio, 0.001f, 0.0f, 1.0f);
 }

@@ -131,9 +131,9 @@ bool BossActionController::IsCanBossUpdate()
 	return true;
 }
 
-void BossActionController::ImGuiSetting()
+void BossActionController::ImGuiDebug()
 {
-	EnemyActionController::ImGuiSetting();
+	EnemyActionController::ImGuiDebug();
 
 	// 各ステート
 	for (auto& node : stateNodeList)

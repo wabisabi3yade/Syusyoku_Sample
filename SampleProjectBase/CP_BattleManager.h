@@ -44,6 +44,6 @@ public:
 	/// @return 
 	const EnemyList& GetEnemyList();
 private:
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 

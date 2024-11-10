@@ -1499,7 +1499,7 @@ static inline int Precision(double val) { return OrderToPrecision(OrderOfMagnitu
 // Round a value to a given precision
 static inline double RoundTo(double val, int prec) { double p = pow(10,(double)prec); return floor(val*p+0.5)/p; }
 
-// Returns the intersection point of two lines A and B (assumes they are not parallel!)
+// Returns the intersection point of two drawLines A and B (assumes they are not parallel!)
 static inline ImVec2 Intersection(const ImVec2& a1, const ImVec2& a2, const ImVec2& b1, const ImVec2& b2) {
     float v1 = (a1.x * a2.y - a1.y * a2.x);  float v2 = (b1.x * b2.y - b1.y * b2.x);
     float v3 = ((a1.x - a2.x) * (b1.y - b2.y) - (a1.y - a2.y) * (b1.x - b2.x));

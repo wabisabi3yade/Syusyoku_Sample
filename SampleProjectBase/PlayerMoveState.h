@@ -45,7 +45,7 @@ protected:
 	/// @return ‘–‚Á‚Ä‚¢‚é‚©H
 	bool IsRunning();
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 private:
 	void OnStartBehavior() override;
 	void UpdateBehavior() override;

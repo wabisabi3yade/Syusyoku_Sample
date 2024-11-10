@@ -30,6 +30,6 @@ private:
 	/// @brief イベント終了処理
 	void End() override;
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 

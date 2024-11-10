@@ -133,7 +133,7 @@ static int intersectRectQuad2(btScalar h[2], btScalar p[8], btScalar ret[16])
 			nr = 0;
 			for (int i = nq; i > 0; i--)
 			{
-				// go through all points in q and all lines between adjacent points
+				// go through all points in q and all drawLines between adjacent points
 				if (sign * pq[dir] < h[dir])
 				{
 					// this point is inside the chopping line

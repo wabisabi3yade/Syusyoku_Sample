@@ -159,7 +159,7 @@ private:
 
 	void Copy(const AnimationParameters& _other);
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 	// ImGuiでパラメータを新規に追加する
 	void ImGuiAddParam();
 	// ImGuiでパラメータを表示

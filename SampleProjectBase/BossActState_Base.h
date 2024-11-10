@@ -77,7 +77,7 @@ protected:
 	/// @return プレイヤーのトランスフォーム
 	Transform& GetPlayerTransform();
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 
 protected:
 	/// @brief 移動速度のアニメーションパラメータ名

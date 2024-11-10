@@ -4,19 +4,19 @@ class AssetDisplay;
 class DX11BulletPhisics;
 
 /// @brief ImGuiでシステム関連の描画を行う
-class AppSystemDraw : public HashiTaku::IImGuiUser
+class AppSystemDraw : public Singleton_Base<AppSystemDraw>, public HashiTaku::IImGuiUser
 {
+	friend class Singleton_Base<AppSystemDraw>;
+
 	/// @brief 可変フレームレートクラス
 	VariableFrameRate* pFrameRate;
-
-	/// @brief あたり判定
-	DX11BulletPhisics* pBulletEngine;
 	
 public:
-	AppSystemDraw(VariableFrameRate& _frameRate, DX11BulletPhisics& _bulletEngine);
-	~AppSystemDraw() {}
+	void Init(VariableFrameRate& _variabeFrameRate);
 
 private:
-	void ImGuiSetting() override;
+	AppSystemDraw();
+	~AppSystemDraw() {}
+	void ImGuiDebug() override;
 };
 

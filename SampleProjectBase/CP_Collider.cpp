@@ -69,7 +69,7 @@ bool CP_Collider::GetIsCreateCompound() const
 	return isCreateCompound;
 }
 
-void CP_Collider::ImGuiSetting()
+void CP_Collider::ImGuiDebug()
 {
 	if (ImGui::Button("Set Shape"))
 		RecreateShape();

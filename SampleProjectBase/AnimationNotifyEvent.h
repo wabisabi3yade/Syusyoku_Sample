@@ -25,6 +25,6 @@ protected:
 	/// @brief イベント起動時処理
 	virtual void OnEvent() = 0;
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 

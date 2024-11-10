@@ -23,7 +23,7 @@ HashiTaku::AnimParam::TypeKind TransCondition_Base::GetTypeKind() const
 	return typeKind;
 }
 
-void TransCondition_Base::ImGuiSetting()
+void TransCondition_Base::ImGuiDebug()
 {
 	ImGui::Text(pParameterName->c_str());
 }

@@ -20,6 +20,6 @@ public:
 	virtual nlohmann::json Save()  = 0;
 	virtual void Load(const nlohmann::json& _data) = 0;
 protected:
-	virtual void ImGuiSetting() = 0;
+	virtual void ImGuiDebug() = 0;
 };
 

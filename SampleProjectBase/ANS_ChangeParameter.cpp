@@ -122,13 +122,13 @@ short ANS_ChangeParameter::CastShort(SectionType _type)
 	return static_cast<short>(_type);
 }
 
-void ANS_ChangeParameter::ImGuiSetting()
+void ANS_ChangeParameter::ImGuiDebug()
 {
 	// 各行で横をそろえるためのスペース幅s
 	const float TAB_SPACE_USE(140);
 	const float TAB_SPACE_SETPARAM(240);
 
-	AnimationNotifyState::ImGuiSetting();
+	AnimationNotifyState::ImGuiDebug();
 
 	// パラメータ名を変更する
 	std::vector<const std::string*> parameterNames;
