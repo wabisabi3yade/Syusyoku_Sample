@@ -3,17 +3,23 @@
 #include "AssetDisplay.h"
 #include "DX11BulletPhisics.h"
 
-AppSystemDraw::AppSystemDraw(VariableFrameRate& _frameRate, DX11BulletPhisics& _bulletEngine)
+void AppSystemDraw::Init(VariableFrameRate& _variabeFrameRate)
 {
-	pFrameRate = &_frameRate;
-	pBulletEngine = &_bulletEngine;
+	pFrameRate = &_variabeFrameRate;
+
 }
 
-void AppSystemDraw::ImGuiSetting()
+AppSystemDraw::AppSystemDraw() : pFrameRate(nullptr)
 {
+
+}
+
+void AppSystemDraw::ImGuiDebug()
+{
+	DX11BulletPhisics* pBulletEngine = DX11BulletPhisics::GetInstance();
+
 	ImGui::Begin("System");
 
-	AssetDisplay::Draw();
 	pFrameRate->ImGuiCall();
 
 	if (ImGuiMethod::TreeNode("Phisics"))
@@ -24,6 +30,8 @@ void AppSystemDraw::ImGuiSetting()
 
 		ImGui::TreePop();
 	}
+
+	AssetDisplay::Draw();
 
 	ImGui::End();
 }

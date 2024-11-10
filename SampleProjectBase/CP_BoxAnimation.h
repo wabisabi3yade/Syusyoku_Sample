@@ -39,7 +39,7 @@ class CP_BoxAnimation :
     float blendTime = 1.0f;
     float culElapsedBlend = 0.0f;
 public:
-    void ImGuiSetting() override;
+    void ImGuiDebug() override;
 
     void Update() override;
 

@@ -98,7 +98,7 @@ public:
 	/// @return 衝突タイプ判定クラス変数
 	CollisionTypeJudge& GetColTypeJudge() const;
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 
 	/// @brief セーブする
 	/// @param _data セーブシーンデータ

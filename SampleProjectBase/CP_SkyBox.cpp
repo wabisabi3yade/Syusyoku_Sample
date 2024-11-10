@@ -59,7 +59,7 @@ void CP_SkyBox::Draw()
 	}
 }
 
-void CP_SkyBox::ImGuiSetting()
+void CP_SkyBox::ImGuiDebug()
 {
 	ImGui::DragFloat("size", &size);
 

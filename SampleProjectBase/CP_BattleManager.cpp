@@ -39,7 +39,7 @@ const CP_BattleManager::EnemyList& CP_BattleManager::GetEnemyList()
 	return enemyList;
 }
 
-void CP_BattleManager::ImGuiSetting()
+void CP_BattleManager::ImGuiDebug()
 {
 	static char input[IM_INPUT_BUF];
 

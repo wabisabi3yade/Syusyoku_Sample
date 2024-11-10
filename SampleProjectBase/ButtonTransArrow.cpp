@@ -11,6 +11,6 @@
 //	return GameInput::GetInstance()->GetButtonDown(buttonType);
 //}
 //
-//void ButtonTransArrow::ImGuiSetting()
+//void ButtonTransArrow::ImGuiDebug()
 //{
 //}

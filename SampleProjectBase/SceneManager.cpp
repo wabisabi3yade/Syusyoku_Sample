@@ -7,8 +7,8 @@
 
 // アセット初期化
 #include "AssetSetter.h"
-#include "Geometory.h"
 #include "Material.h"
+#include "Geometory.h"
 
 namespace fs = std::filesystem;
 
@@ -16,9 +16,7 @@ SceneManager::SceneManager() : nowSceneName("")
 {
 	Setup();
 
-	CreateScene("test");
-
-	ChangeScene("test");
+	ChangeScene("test", true);
 }
 
 SceneManager::~SceneManager()
@@ -28,7 +26,6 @@ SceneManager::~SceneManager()
 
 void SceneManager::Setup()
 {
-
 	// Bullet物理エンジン初期化
 	DX11BulletPhisics::GetInstance()->Init();
 
@@ -45,7 +42,7 @@ void SceneManager::Setup()
 void SceneManager::SetupSceneList()
 {
 	std::string folderPath = "assets/data/scene";
-	
+
 	// シーンフォルダにあるシーンファイルを取得する
 	for (const auto& entry : fs::recursive_directory_iterator(folderPath))
 	{
@@ -68,21 +65,9 @@ void SceneManager::AssetSetup()
 void SceneManager::Release()
 {
 	pNowScene.reset();
-	GameInput::Delete();
 	ComponentFactory::Delete();
 	Geometory::Release();
 	DX11BulletPhisics::Delete();
-}
-
-void SceneManager::OtherDraw()
-{
-	DX11BulletPhisics* pBulletPhisics = DX11BulletPhisics::GetInstance();
-
-	//// 当たり判定描画
-	pBulletPhisics->Draw();
-
-	// 線描画
-	Geometory::DrawLine();
 }
 
 void SceneManager::CreateScene(const std::string& _sceneName)
@@ -98,63 +83,68 @@ void SceneManager::CreateScene(const std::string& _sceneName)
 	sceneList.push_back(_sceneName);
 }
 
-void SceneManager::ImGuiSetting()
+void SceneManager::ImGuiDebug()
 {
+#ifdef EDIT
 	ImGui::Begin("SceneList");
 
-	pNowScene->ImGuiCall();
-
-	ImGui::Dummy(ImVec2(0.0f, 10.0f));
-
 	ImGuiChangeScene();
-
-	ImGui::Dummy(ImVec2(0.0f, 20.0f));
 
 	ImGuiCreateScene();
 
 	ImGui::End();
+#endif
 }
 
 void SceneManager::ImGuiChangeScene()
 {
+#ifdef EDIT
 	ImGui::Text(TO_UTF8("シーン名 " + nowSceneName));
-
+	
+	// 再生のみのシーン
+	ImGui::Text("Play Only");
 	for (auto& name : sceneList)
 	{
 		if (ImGui::Button(name.c_str()))
 			ChangeScene(name);
 	}
+
+	ImGui::Text("--------------");
+
+	// 編集できるシーン
+	ImGui::Text("Edit");
+	ImGui::PushID("Edit");
+	for (auto& name : sceneList)
+	{
+		if (ImGui::Button(name.c_str()))
+			ChangeScene(name, true);
+	}
+	ImGui::PopID();
+#endif
 }
 
 void SceneManager::ImGuiCreateScene()
 {
+#ifdef EDIT
 	constexpr u_int buf = 256;
 	static char input[buf];
 	ImGui::InputText("name", input, buf);
 
 	if (ImGui::Button("New Scene"))
 		CreateScene(input);
+#endif
 }
 
 void SceneManager::Exec()
 {
-	// ゲーム内入力更新
-	GameInput::GetInstance()->Update();
-
 	// シーンの実行
 	pNowScene->Exec();
-
-	// オブジェクト以外描画
-	OtherDraw();
 
 	ImGuiCall();
 }
 
-void SceneManager::ChangeScene(const std::string& _sceneName)
+void SceneManager::ChangeScene(const std::string& _sceneName, bool _isEditScene)
 {
-	// 現在シーンなら処理しない
-	if (nowSceneName == _sceneName) return;
-
 	auto itr = std::find(sceneList.begin(), sceneList.end(), _sceneName);
 
 	if (itr == sceneList.end())	// シーン名がないなら
@@ -164,9 +154,13 @@ void SceneManager::ChangeScene(const std::string& _sceneName)
 	}
 
 	pNowScene.reset();
-
 	nowSceneName = _sceneName;
-	pNowScene = std::make_unique<Scene>(_sceneName);
+
+	// 編集するシーンかどうか
+	if (!_isEditScene)
+		pNowScene = std::make_unique<Scene>(_sceneName);
+	else
+		pNowScene = std::make_unique<EditScene>(_sceneName);
 
 	HASHI_DEBUG_LOG(_sceneName + "へ移行");
 }

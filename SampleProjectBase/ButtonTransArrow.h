@@ -14,6 +14,6 @@
 //private:
 //	bool TransitionCondition() override;
 //
-//	void ImGuiSetting() override;
+//	void ImGuiDebug() override;
 //};
 //

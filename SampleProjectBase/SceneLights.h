@@ -23,7 +23,7 @@ struct SceneLightsParam
 };
 
 // シーン内の光源リスト
-class SceneLights
+class SceneLights : public HashiTaku::IImGuiUser
 {
 private:
 	/// @brief シーン内の光源パラメータ
@@ -57,8 +57,9 @@ private:
 	// 光源のパラメータを更新する
 	void UpdateParameter();
 
+	void ImGuiDebug() override;
+
 	// ImGuiの表示
-	void ImGuiDisplay();
 	void ImGuiDirection();
 	void ImGuiPoint();
 	void ImGuiSpot();

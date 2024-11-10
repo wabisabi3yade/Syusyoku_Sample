@@ -130,7 +130,7 @@ void CP_UIRenderer::ReCreatePolygon()
 	pPolygon->MakePolygon(t.GetPosition(), s, t.GetEularAngles());
 }
 
-void CP_UIRenderer::ImGuiSetting()
+void CP_UIRenderer::ImGuiDebug()
 {
 	std::string texName;
 	if (pTexture)

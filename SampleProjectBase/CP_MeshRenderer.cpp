@@ -92,7 +92,7 @@ void CP_MeshRenderer::SetPixelShader(const std::string& _psName)
 }
 
 
-void CP_MeshRenderer::ImGuiSetting()
+void CP_MeshRenderer::ImGuiDebug()
 {
 	// ImGuiŠJ‚¢‚½‚Æ‚«‚¾‚¯Œ´“_•\Ž¦
 	isOriginDisplay = true;

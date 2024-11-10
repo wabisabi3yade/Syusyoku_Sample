@@ -18,7 +18,7 @@ public:
 	// メッセージをセット
 	void SetMessage(const std::string& _message);
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 
 	/// @brief クローン関数
 	/// @return 生成した通知イベント

@@ -83,7 +83,7 @@ void Material::SetPixelShader(PixelShader& _psShader)
 	pPixelShader = &_psShader;
 }
 
-void Material::ImGuiSetting()
+void Material::ImGuiDebug()
 {
 	// テクスチャ
 	std::string texName;

@@ -59,6 +59,6 @@ private:
 	/// @brief サイズなど変更するためにポリゴン再生成
 	void ReCreatePolygon();
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 

@@ -30,9 +30,9 @@ void CP_BoxCollider::CreateShape()
 	pCollisionShape = std::make_unique<btBoxShape>(btLength * 0.5);
 }
 
-void CP_BoxCollider::ImGuiSetting()
+void CP_BoxCollider::ImGuiDebug()
 {
-	CP_Collider::ImGuiSetting();
+	CP_Collider::ImGuiDebug();
 
 	ImGui::Checkbox("AABB", &isAABB);
 

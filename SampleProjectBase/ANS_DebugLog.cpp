@@ -43,9 +43,9 @@ void ANS_DebugLog::End()
 	HASHI_DEBUG_LOG(message[2]);
 }
 
-void ANS_DebugLog::ImGuiSetting()
+void ANS_DebugLog::ImGuiDebug()
 {
-	AnimationNotifyState::ImGuiSetting();
+	AnimationNotifyState::ImGuiDebug();
 
 	std::vector<std::string> typeName =
 	{

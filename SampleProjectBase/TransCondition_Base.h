@@ -35,6 +35,6 @@ public:
 	virtual nlohmann::json Save() = 0;
 	virtual void Load(const nlohmann::json& _data) = 0;
 protected:
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 

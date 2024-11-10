@@ -262,9 +262,9 @@ bool BlendAnimationNode::GetIsUseBlend() const
 	return isUseBlend;
 }
 
-void BlendAnimationNode::ImGuiSetting()
+void BlendAnimationNode::ImGuiDebug()
 {
-	AnimationNode_Base::ImGuiSetting();
+	AnimationNode_Base::ImGuiDebug();
 
 	ImGui::Checkbox("UseBlend", &isUseBlend);
 

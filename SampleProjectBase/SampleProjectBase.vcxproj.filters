@@ -30,9 +30,6 @@
     <Filter Include="ソース ファイル\Scene\SceneManager">
       <UniqueIdentifier>{f9797062-9c55-4a6c-baed-e07a2277e087}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Scene\SceneMoveInfo">
-      <UniqueIdentifier>{7ed6a9c7-5047-4dae-87fc-54f777f9a701}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\System\pch">
       <UniqueIdentifier>{8c29c4da-c53b-415b-8ae0-a5554f701a24}</UniqueIdentifier>
     </Filter>
@@ -769,6 +766,9 @@
     <Filter Include="ソース ファイル\Animation\AnimationPameters\IAnimParamSetter">
       <UniqueIdentifier>{dded9990-a1dc-4379-9c1a-bf81219a70a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Scene\SceneEditer">
+      <UniqueIdentifier>{7ed6a9c7-5047-4dae-87fc-54f777f9a701}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1432,6 +1432,9 @@
     </ClCompile>
     <ClCompile Include="BossGroundAttack.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="EditScene.cpp">
+      <Filter>ソース ファイル\Scene\SceneEditer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2112,6 +2115,9 @@
     </ClInclude>
     <ClInclude Include="IAnimParamSetGetter.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="EditScene.h">
+      <Filter>ソース ファイル\Scene\SceneEditer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -147,7 +147,7 @@ private:
 	/// @return アニメーションポイント数
 	u_int GetAnimPointCnt() const;
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 
 	/// @brief ブレンド内のアニメーション
 	void ImGuiAnimationInBlend();

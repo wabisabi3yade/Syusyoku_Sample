@@ -45,7 +45,7 @@ public:
 
 	void Init() override;
 	void Draw() override;
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 
 	/// @brief 指定した面のテクスチャを貼る
 	/// @param _pTex テクスチャ

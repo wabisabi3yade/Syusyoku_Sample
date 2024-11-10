@@ -511,7 +511,7 @@ bool    ImGui::BeginTableEx(const char* name, ImGuiID id, int columns_count, ImG
     table->AngledHeadersHeight = 0.0f;
     temp_data->AngledHeadersExtraWidth = 0.0f;
 
-    // Using opaque colors facilitate overlapping lines of the grid, otherwise we'd need to improve TableDrawBorders()
+    // Using opaque colors facilitate overlapping drawLines of the grid, otherwise we'd need to improve TableDrawBorders()
     table->BorderColorStrong = GetColorU32(ImGuiCol_TableBorderStrong);
     table->BorderColorLight = GetColorU32(ImGuiCol_TableBorderLight);
 
@@ -3297,7 +3297,7 @@ void ImGui::TableAngledHeadersRowEx(ImGuiID row_id, float angle, float max_label
 
                 // Draw label
                 // - First draw at an offset where RenderTextXXX() function won't meddle with applying current ClipRect, then transform to final offset.
-                // - Handle multiple lines manually, as we want each lines to follow on the horizontal border, rather than see a whole block rotated.
+                // - Handle multiple drawLines manually, as we want each drawLines to follow on the horizontal border, rather than see a whole block rotated.
                 const char* label_name = TableGetColumnName(table, column_n);
                 const char* label_name_end = FindRenderedTextEnd(label_name);
                 const float line_off_step_x = (g.FontSize / -sin_a);
@@ -4404,7 +4404,7 @@ void ImGui::EndColumns()
             window->DrawList->AddLine(ImVec2(xi, y1 + 1.0f), ImVec2(xi, y2), col);
         }
 
-        // Apply dragging after drawing the column lines, so our rendered lines are in sync with how items were displayed during the frame.
+        // Apply dragging after drawing the column drawLines, so our rendered drawLines are in sync with how items were displayed during the frame.
         if (dragging_column != -1)
         {
             if (!columns->IsBeingResized)

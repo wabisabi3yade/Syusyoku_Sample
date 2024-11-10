@@ -83,7 +83,7 @@ protected:
 	/// @param _attackInfo UŒ‚î•ñ
 	virtual void OnDeathBehavior() = 0;
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 
 

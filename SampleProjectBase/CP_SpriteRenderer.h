@@ -29,7 +29,7 @@ public:
 
 	void Draw() override;
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 
 	void SetTexture(Texture& _texture);
 

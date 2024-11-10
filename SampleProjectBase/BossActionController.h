@@ -51,7 +51,7 @@ private:
 	/// @return çsÇ¶ÇÈÇ©?
 	bool IsCanBossUpdate();
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 
 template<class T>

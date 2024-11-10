@@ -165,7 +165,7 @@ CollisionTypeJudge& CP_RigidBody::GetColTypeJudge() const
 	return *collider->pColTypeJudge;
 }
 
-void CP_RigidBody::ImGuiSetting()
+void CP_RigidBody::ImGuiDebug()
 {
 	if (ImGui::Button("SetShape"))
 		FindSetCollider();

@@ -88,5 +88,5 @@ private:
 	/// @brief シェーダーの準備
 	void ShaderSetup(Shader& _shader, RenderParam::WVP& _wvp);
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };

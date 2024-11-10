@@ -253,7 +253,7 @@ public:
 			closest_point_v = vp_e0;
 			// calc edges and separation
 
-			if (isect_u[1] + MIN_EDGE_EDGE_DIS < isect_v[0])  //calc distance between two lines instead
+			if (isect_u[1] + MIN_EDGE_EDGE_DIS < isect_v[0])  //calc distance between two drawLines instead
 			{
 				SEGMENT_COLLISION(
 					tu_vertices[tu_e1], tu_vertices[(tu_e1 + 1) % 3],
@@ -286,7 +286,7 @@ public:
 			closest_point_v = vp_e1;
 			// calc edges and separation
 
-			if (isect_v[1] + MIN_EDGE_EDGE_DIS < isect_u[0])  //calc distance between two lines instead
+			if (isect_v[1] + MIN_EDGE_EDGE_DIS < isect_u[0])  //calc distance between two drawLines instead
 			{
 				SEGMENT_COLLISION(
 					tu_vertices[tu_e0], tu_vertices[(tu_e0 + 1) % 3],

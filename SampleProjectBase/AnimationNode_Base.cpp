@@ -172,7 +172,7 @@ void AnimationNode_Base::SetAnimationTime(float _time)
 	animationTime = std::max(_time, 0.0f);
 }
 
-void AnimationNode_Base::ImGuiSetting()
+void AnimationNode_Base::ImGuiDebug()
 {
 	ImGuiSetParameter();
 }

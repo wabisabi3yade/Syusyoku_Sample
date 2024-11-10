@@ -146,7 +146,7 @@ enum ImPlotFlags_ {
 enum ImPlotAxisFlags_ {
     ImPlotAxisFlags_None          = 0,       // default
     ImPlotAxisFlags_NoLabel       = 1 << 0,  // the axis label will not be displayed (axis labels are also hidden if the supplied string name is nullptr)
-    ImPlotAxisFlags_NoGridLines   = 1 << 1,  // no grid lines will be displayed
+    ImPlotAxisFlags_NoGridLines   = 1 << 1,  // no grid drawLines will be displayed
     ImPlotAxisFlags_NoTickMarks   = 1 << 2,  // no tick marks will be displayed
     ImPlotAxisFlags_NoTickLabels  = 1 << 3,  // no text labels will be displayed
     ImPlotAxisFlags_NoInitialFit  = 1 << 4,  // axis will not be initially fit to data extents on the first rendered frame
@@ -154,7 +154,7 @@ enum ImPlotAxisFlags_ {
     ImPlotAxisFlags_NoSideSwitch  = 1 << 6,  // the user will not be able to switch the axis side by dragging it
     ImPlotAxisFlags_NoHighlight   = 1 << 7,  // the axis will not have its background highlighted when hovered or held
     ImPlotAxisFlags_Opposite      = 1 << 8,  // axis ticks and labels will be rendered on the conventionally opposite side (i.e, right or top)
-    ImPlotAxisFlags_Foreground    = 1 << 9,  // grid lines will be displayed in the foreground (i.e. on top of data) instead of the background
+    ImPlotAxisFlags_Foreground    = 1 << 9,  // grid drawLines will be displayed in the foreground (i.e. on top of data) instead of the background
     ImPlotAxisFlags_Invert        = 1 << 10, // the axis will be inverted
     ImPlotAxisFlags_AutoFit       = 1 << 11, // axis will be auto-fitting to data extents
     ImPlotAxisFlags_RangeFit      = 1 << 12, // axis will only fit points if the point is in the visible range of the **orthogonal** axis
@@ -282,7 +282,7 @@ enum ImPlotStemsFlags_ {
 // Flags for PlotInfLines
 enum ImPlotInfLinesFlags_ {
     ImPlotInfLinesFlags_None       = 0,      // default
-    ImPlotInfLinesFlags_Horizontal = 1 << 10 // lines will be rendered horizontally on the current y-axis
+    ImPlotInfLinesFlags_Horizontal = 1 << 10 // drawLines will be rendered horizontally on the current y-axis
 };
 
 // Flags for PlotPieChart
@@ -379,13 +379,13 @@ enum ImPlotStyleVar_ {
     ImPlotStyleVar_DigitalBitGap,      // float,  digital channels bit padding gap in pixels
     // plot styling variables
     ImPlotStyleVar_PlotBorderSize,     // float,  thickness of border around plot area
-    ImPlotStyleVar_MinorAlpha,         // float,  alpha multiplier applied to minor axis grid lines
+    ImPlotStyleVar_MinorAlpha,         // float,  alpha multiplier applied to minor axis grid drawLines
     ImPlotStyleVar_MajorTickLen,       // ImVec2, major tick lengths for X and Y axes
     ImPlotStyleVar_MinorTickLen,       // ImVec2, minor tick lengths for X and Y axes
     ImPlotStyleVar_MajorTickSize,      // ImVec2, line thickness of major ticks
     ImPlotStyleVar_MinorTickSize,      // ImVec2, line thickness of minor ticks
-    ImPlotStyleVar_MajorGridSize,      // ImVec2, line thickness of major grid lines
-    ImPlotStyleVar_MinorGridSize,      // ImVec2, line thickness of minor grid lines
+    ImPlotStyleVar_MajorGridSize,      // ImVec2, line thickness of major grid drawLines
+    ImPlotStyleVar_MinorGridSize,      // ImVec2, line thickness of minor grid drawLines
     ImPlotStyleVar_PlotPadding,        // ImVec2, padding between widget frame and plot area, labels, or outside legends (i.e. main padding)
     ImPlotStyleVar_LabelPadding,       // ImVec2, padding between axes labels, tick labels, and plot edge
     ImPlotStyleVar_LegendPadding,      // ImVec2, legend padding from plot edges
@@ -518,13 +518,13 @@ struct ImPlotStyle {
     float   DigitalBitGap;           // = 4,      digital channels bit padding gap in pixels
     // plot styling variables
     float   PlotBorderSize;          // = 1,      line thickness of border around plot area
-    float   MinorAlpha;              // = 0.25    alpha multiplier applied to minor axis grid lines
+    float   MinorAlpha;              // = 0.25    alpha multiplier applied to minor axis grid drawLines
     ImVec2  MajorTickLen;            // = 10,10   major tick lengths for X and Y axes
     ImVec2  MinorTickLen;            // = 5,5     minor tick lengths for X and Y axes
     ImVec2  MajorTickSize;           // = 1,1     line thickness of major ticks
     ImVec2  MinorTickSize;           // = 1,1     line thickness of minor ticks
-    ImVec2  MajorGridSize;           // = 1,1     line thickness of major grid lines
-    ImVec2  MinorGridSize;           // = 1,1     line thickness of minor grid lines
+    ImVec2  MajorGridSize;           // = 1,1     line thickness of major grid drawLines
+    ImVec2  MinorGridSize;           // = 1,1     line thickness of minor grid drawLines
     ImVec2  PlotPadding;             // = 10,10   padding between widget frame and plot area, labels, or outside legends (i.e. main padding)
     ImVec2  LabelPadding;            // = 5,5     padding between axes labels, tick labels, and plot edge
     ImVec2  LegendPadding;           // = 10,10   legend padding from plot edges
@@ -868,7 +868,7 @@ IMPLOT_TMP void PlotStairs(const char* label_id, const T* values, int count, dou
 IMPLOT_TMP void PlotStairs(const char* label_id, const T* xs, const T* ys, int count, ImPlotStairsFlags flags=0, int offset=0, int stride=sizeof(T));
 IMPLOT_API void PlotStairsG(const char* label_id, ImPlotGetter getter, void* data, int count, ImPlotStairsFlags flags=0);
 
-// Plots a shaded (filled) region between two lines, or a line and a horizontal reference. Set yref to +/-INFINITY for infinite fill extents.
+// Plots a shaded (filled) region between two drawLines, or a line and a horizontal reference. Set yref to +/-INFINITY for infinite fill extents.
 IMPLOT_TMP void PlotShaded(const char* label_id, const T* values, int count, double yref=0, double xscale=1, double xstart=0, ImPlotShadedFlags flags=0, int offset=0, int stride=sizeof(T));
 IMPLOT_TMP void PlotShaded(const char* label_id, const T* xs, const T* ys, int count, double yref=0, ImPlotShadedFlags flags=0, int offset=0, int stride=sizeof(T));
 IMPLOT_TMP void PlotShaded(const char* label_id, const T* xs, const T* ys1, const T* ys2, int count, ImPlotShadedFlags flags=0, int offset=0, int stride=sizeof(T));
@@ -890,7 +890,7 @@ IMPLOT_TMP void PlotErrorBars(const char* label_id, const T* xs, const T* ys, co
 IMPLOT_TMP void PlotStems(const char* label_id, const T* values, int count, double ref=0, double scale=1, double start=0, ImPlotStemsFlags flags=0, int offset=0, int stride=sizeof(T));
 IMPLOT_TMP void PlotStems(const char* label_id, const T* xs, const T* ys, int count, double ref=0, ImPlotStemsFlags flags=0, int offset=0, int stride=sizeof(T));
 
-// Plots infinite vertical or horizontal lines (e.g. for references or asymptotes).
+// Plots infinite vertical or horizontal drawLines (e.g. for references or asymptotes).
 IMPLOT_TMP void PlotInfLines(const char* label_id, const T* values, int count, ImPlotInfLinesFlags flags=0, int offset=0, int stride=sizeof(T));
 
 // Plots a pie chart. Center and radius are in plot units. #label_fmt can be set to nullptr for no labels.

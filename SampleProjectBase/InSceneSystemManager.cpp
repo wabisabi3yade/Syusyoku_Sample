@@ -22,9 +22,17 @@ void InSceneSystemManager::Init()
 	// シーン光源作成
 	pSceneLights = std::make_unique<SceneLights>();
 
+	pGameInput = std::make_unique<GameInput>();
+
 	// Nullオブジェクトを作成
 	pMainCamera = new CP_CameraNull();
 	isNullCamera = true;
+}
+
+void InSceneSystemManager::InputUpdate()
+{
+	// ゲーム内入力更新
+	pGameInput->Update();
 }
 
 void InSceneSystemManager::Reset()
@@ -56,6 +64,11 @@ SceneObjects& InSceneSystemManager::GetSceneObjects()
 SceneLights& InSceneSystemManager::GetSceneLights()
 {
 	return *pSceneLights;
+}
+
+GameInput& InSceneSystemManager::GetInput()
+{
+	return *pGameInput;
 }
 
 void InSceneSystemManager::SetCamera(CP_Camera& _camera)

@@ -40,7 +40,7 @@ void PlayerRushAttack::TransitionCheckUpdate()
 		ChangeState(PlayerState::Idle);
 }
 
-void PlayerRushAttack::ImGuiSetting()
+void PlayerRushAttack::ImGuiDebug()
 {
 	ImGui::DragFloat("Speed", &moveSpeed, 0.01f, 0.0f, 1000.0f);
 	ImGui::DragFloat("Time", &moveTime, 0.01f, 0.0f, 1000.0f);

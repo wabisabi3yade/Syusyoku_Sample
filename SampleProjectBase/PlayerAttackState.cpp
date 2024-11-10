@@ -48,7 +48,7 @@ void PlayerAttackState::UpdateAttackInfo()
 	pActionController->GetPlayer().SetAttackInfo(*pAttackInfo);
 }
 
-void PlayerAttackState::ImGuiSetting()
+void PlayerAttackState::ImGuiDebug()
 {
 	ImGui::Checkbox("MoveFwd", &isMoveForward);
 	ImGui::DragFloat("Senko", &senkoInputTime, 0.01f, 0.0f, 3.0f);

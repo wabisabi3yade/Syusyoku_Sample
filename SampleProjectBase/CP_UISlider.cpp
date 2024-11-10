@@ -91,7 +91,7 @@ void CP_UISlider::ApplySlider()
 		pUiRenderer->SetUV(Vector2::Zero, Vector2(curRatio, 1.0f));
 }
 
-void CP_UISlider::ImGuiSetting()
+void CP_UISlider::ImGuiDebug()
 {
 	if (ImGui::Button("Set Render"))
 	{

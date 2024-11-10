@@ -31,11 +31,8 @@ class MainApplication
 	/// @brief アセットの管理
 	static std::unique_ptr<AssetCollection> pAssetCollection;
 
-	/// @brief アプリケーションで使用する描画
-	static std::unique_ptr<AppSystemDraw> pAppSystemDraw;
-
-	/// @brief アプリケーション終了
-	static bool isEscapeDisplay;
+	/// @brief アプリケーション終了するか確認中
+	static bool isEscapeChecking;
 
 	MainApplication() {};
 	~MainApplication() {};
@@ -84,7 +81,7 @@ private:
 	static void InputSetup(HWND _hwnd);
 
 	/// @brief ImGui初期化
-	static void ImuiSetup();
+	static void ImGuiSetup();
 
 	/// @brief アセット関係のシステムの初期化
 	static void AssetSysytemSetup();

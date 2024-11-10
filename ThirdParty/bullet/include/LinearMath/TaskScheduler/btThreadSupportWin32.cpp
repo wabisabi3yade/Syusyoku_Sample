@@ -144,7 +144,7 @@ void getProcessorInformation(btProcessorInfo* procInfo)
 					// processors that share L3 cache are considered to be on the same team
 					// because they can more easily work together on the same data.
 					// Large performance penalties will occur if 2 or more threads from different
-					// teams attempt to frequently read and modify the same cache lines.
+					// teams attempt to frequently read and modify the same cache drawLines.
 					//
 					// On the AMD Ryzen 7 CPU for example, the 8 cores on the CPU are split into
 					// 2 CCX units of 4 cores each. Each CCX has a separate L3 cache, so if both

@@ -34,6 +34,6 @@ void ANE_ChangeParameter::OnEvent()
 {
 }
 
-void ANE_ChangeParameter::ImGuiSetting()
+void ANE_ChangeParameter::ImGuiDebug()
 {
 }

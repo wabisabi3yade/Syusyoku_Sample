@@ -97,7 +97,7 @@ void CP_SpriteRenderer::Draw()
 	CP_Renderer::DrawMesh(pSprite->GetSquare());
 }
 
-void CP_SpriteRenderer::ImGuiSetting()
+void CP_SpriteRenderer::ImGuiDebug()
 {
 	std::string texName;
 	if (pSprite->GetIsTexEnable())

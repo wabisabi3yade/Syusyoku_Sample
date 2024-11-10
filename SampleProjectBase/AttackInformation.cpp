@@ -81,7 +81,7 @@ void HashiTaku::AttackInformation::ApplyFromAttackLevel()
 	}
 }
 
-void HashiTaku::AttackInformation::ImGuiSetting()
+void HashiTaku::AttackInformation::ImGuiDebug()
 {
 	// ダメージ値
 	ImGui::DragFloat("AtkDamage", &atkDamage, 0.1f, 0.0f, 9999.0f);

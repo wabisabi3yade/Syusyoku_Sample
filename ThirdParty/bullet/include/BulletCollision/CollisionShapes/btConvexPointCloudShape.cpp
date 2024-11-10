@@ -63,7 +63,7 @@ void btConvexPointCloudShape::batchedUnitVectorGetSupportingVertexWithoutMargin(
 		supportVerticesOut[j][3] = btScalar(-BT_LARGE_FLOAT);
 		if (0 <= index)
 		{
-			//WARNING: don't swap next lines, the w component would get overwritten!
+			//WARNING: don't swap next drawLines, the w component would get overwritten!
 			supportVerticesOut[j] = getScaledPoint(index);
 			supportVerticesOut[j][3] = maxDot;
 		}

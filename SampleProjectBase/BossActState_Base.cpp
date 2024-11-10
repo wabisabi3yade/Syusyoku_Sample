@@ -62,6 +62,6 @@ Transform& BossActState_Base::GetPlayerTransform()
 	return pActionController->GetPlayer().GetTransform();
 }
 
-void BossActState_Base::ImGuiSetting()
+void BossActState_Base::ImGuiDebug()
 {
 }

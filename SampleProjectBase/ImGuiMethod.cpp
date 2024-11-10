@@ -56,8 +56,6 @@ void ImGuiMethod::EndFrame()
 void ImGuiMethod::Draw()
 {
 #ifdef EDIT
-	ImGuiDebugLog::DisplayMessage();
-
 	// ImGuiÅ@ï`âÊ
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());

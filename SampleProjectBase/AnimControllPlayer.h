@@ -129,6 +129,6 @@ private:
 	/// @brief アニメーション変更のサブジェクトを更新する
 	void ChangeAnimSubjectUpdate();
 
-	void ImGuiSetting();
+	void ImGuiDebug();
 };
 

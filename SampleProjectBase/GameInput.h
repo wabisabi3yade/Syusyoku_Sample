@@ -2,7 +2,7 @@
 #include "Singleton_Base.h"
 
 // ゲーム内入力クラス
-class GameInput : public Singleton_Base<GameInput>
+class GameInput
 {
 public:
 	// bool型で扱う種類
@@ -26,8 +26,6 @@ public:
 	};
 
 private:
-	friend class Singleton_Base<GameInput>;
-
 	// 対応ボタン
 	struct ButtonLink
 	{
@@ -59,9 +57,11 @@ private:
 
 	DirectX::SimpleMath::Vector2 c_valueState[static_cast<u_int>(ValueType::Max_ValueNum)];
 
+public:
 	GameInput();
 	~GameInput() {}
-public:
+
+	/// @brief 更新処理
 	void Update();
 
 	/// @brief 押されているか取得

@@ -1,7 +1,7 @@
 #pragma once
 #include "Singleton_Base.h"
 
-#include "Scene.h"
+#include "EditScene.h"
 
 class SceneManager : public Singleton_Base<SceneManager>, public HashiTaku::IImGuiUser
 {
@@ -20,13 +20,13 @@ class SceneManager : public Singleton_Base<SceneManager>, public HashiTaku::IImG
 	~SceneManager();
 	
 public:
-
 	// 実行関数
 	void Exec();
 
 	/// @brief シーンを変更する
 	/// @param _sceneName シーン名
-	void ChangeScene(const std::string& _sceneName);
+	/// @param _isEditScene EditSceneか？
+	void ChangeScene(const std::string& _sceneName, bool _isEditScene = false);
 
 private:
 	/// @brief  準備
@@ -44,14 +44,11 @@ private:
 	// 解放処理
 	void Release();
 
-	/// @brief シーンオブジェクト以外の描画 
-	void OtherDraw();
-
 	/// @brief シーンを作成
 	/// @param _sceneName シーン名
 	void CreateScene(const std::string& _sceneName);
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 	void ImGuiChangeScene();
 	void ImGuiCreateScene();
 };

@@ -47,6 +47,6 @@ private:
 	/// @return ‘JˆÚ‚·‚é‚©H
 	bool CheckNearTransition();
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 

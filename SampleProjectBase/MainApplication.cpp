@@ -20,11 +20,13 @@ SceneManager* MainApplication::pSceneManager = nullptr;
 std::unique_ptr<VariableFrameRate> MainApplication::pVariableFps = nullptr;
 std::unique_ptr<InputClass> MainApplication::pInput = nullptr;
 std::unique_ptr<AssetCollection> MainApplication::pAssetCollection = nullptr;
-std::unique_ptr<AppSystemDraw> MainApplication::pAppSystemDraw = nullptr;
-bool MainApplication::isEscapeDisplay = false;
+bool MainApplication::isEscapeChecking = false;
 
 void MainApplication::Release()
 {
+	// システム描画終了
+	AppSystemDraw::Delete();
+
 	// アセットのセーブを行う
 	AssetSaveLoader::Save();
 
@@ -39,61 +41,33 @@ void MainApplication::Release()
 
 bool MainApplication::EscapeCheck()
 {
-#ifdef EDIT
-	// エスケープキー押されたら
-	if (!isEscapeDisplay && pInput->GetKeyboard().GetKeyDown(DIK_ESCAPE))
-		isEscapeDisplay = true;
-
-	if (!isEscapeDisplay) return false;
-
-	bool isEscape = false;
-
-	// アプリケーション終了表示
-
-	// ウィンドウ大きさ設定
-	ImVec2 windowSize(170, 70);
-	ImVec2 windowPos(
-		(ImGui::GetIO().DisplaySize.x - windowSize.x) * 0.5f,
-		(ImGui::GetIO().DisplaySize.y - windowSize.y) * 0.5f
-	);
-	ImGui::SetNextWindowPos(windowPos);
-	ImGui::SetNextWindowSize(windowSize);
-
-	// ボタン処理
-	ImGui::Begin(ShiftJisToUtf8("終了しますか").c_str(), nullptr,
-		ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-
-	if (ImGui::Button(ShiftJisToUtf8("はい").c_str()))
-	{
-		isEscape = true;
-		isEscapeDisplay = false;
-	}
-
-	ImGui::SameLine();
-	ImGui::Dummy(ImVec2(30.0f, 0.0f));
-	ImGui::SameLine();
-
-	if (ImGui::Button(ShiftJisToUtf8("いいえ").c_str()))
-	{
-		isEscapeDisplay = false;
-	}
-
-	ImGui::End();
-
-	return isEscape;
-#else
 	// エスケープキー押されたら
 	if (pInput->GetKeyboard().GetKeyDown(DIK_ESCAPE))
+		isEscapeChecking = true;
+
+	if (!isEscapeChecking) return false;
+
+	// 終了するかメッセージボックスを出す
+	int id = 0;
+	id = MessageBox(NULL, TEXT("ゲームを終了しますか？"),
+		TEXT("確認"), 
+		MB_YESNO | MB_ICONQUESTION);
+
+	if (id == IDYES)
+	{
+		isEscapeChecking = false;
 		return true;
+	}
+	else if(id == IDNO)
+	{
+		isEscapeChecking = false;
+	}
 
 	return false;
-#endif
 }
 
 void MainApplication::SystemDraw()
 {
-	pAppSystemDraw->ImGuiCall();
-
 	ImGuiMethod::Draw();
 }
 
@@ -111,6 +85,7 @@ void MainApplication::Init(HINSTANCE _hInst)
 
 	ShaderSetup();
 
+	// 乱数クラス初期化
 	HashiTaku::Random::Init();
 
 	// イージング初期化
@@ -118,11 +93,9 @@ void MainApplication::Init(HINSTANCE _hInst)
 
 	AssetSysytemSetup();
 
-	ImuiSetup();
+	ImGuiSetup();
 
 	SceneManagerSetup();
-
-	pAppSystemDraw = std::make_unique<AppSystemDraw>(*pVariableFps, *DX11BulletPhisics::GetInstance());
 }
 
 void MainApplication::GameLoop()
@@ -191,8 +164,9 @@ void MainApplication::InputSetup(HWND _hwnd)
 	pInput->Init(_hwnd);
 }
 
-void MainApplication::ImuiSetup()
+void MainApplication::ImGuiSetup()
 {
+#ifdef EDIT
 	// ImGuiの初期化
 	D3D11_Renderer* pRenderer = pD3D->GetRenderer();
 	ImGuiMethod::Initialize(
@@ -200,6 +174,9 @@ void MainApplication::ImuiSetup()
 		pRenderer->GetDevice(),
 		pRenderer->GetDeviceContext()
 	);
+
+	AppSystemDraw::GetInstance()->Init(*pVariableFps);
+#endif // EDIT
 }
 
 void MainApplication::AssetSysytemSetup()

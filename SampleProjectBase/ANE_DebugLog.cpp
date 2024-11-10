@@ -11,10 +11,10 @@ void ANE_DebugLog::SetMessage(const std::string& _message)
 	displayMessage = _message;
 }
 
-void ANE_DebugLog::ImGuiSetting()
+void ANE_DebugLog::ImGuiDebug()
 {
 #ifdef  EDIT
-	AnimationNotifyEvent::ImGuiSetting();
+	AnimationNotifyEvent::ImGuiDebug();
 	ImGuiMethod::EditableText("##aneDebug", displayMessage, isEditing);
 #endif //  EDIT
 }

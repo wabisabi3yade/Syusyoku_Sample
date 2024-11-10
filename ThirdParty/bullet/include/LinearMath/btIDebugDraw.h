@@ -374,7 +374,7 @@ public:
 			}
 		}
 
-		// Draw some additional lines
+		// Draw some additional drawLines
 		btVector3 start = transform.getOrigin();
 
 		for (int i = 0; i < 360; i += stepDegrees)

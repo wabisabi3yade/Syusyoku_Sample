@@ -60,7 +60,7 @@ void CP_TestCollider::SetIsGravity(bool a)
 	isGra = a;
 }
 
-void CP_TestCollider::ImGuiSetting()
+void CP_TestCollider::ImGuiDebug()
 {
 	ImGui::Checkbox("a", &isGra);
 

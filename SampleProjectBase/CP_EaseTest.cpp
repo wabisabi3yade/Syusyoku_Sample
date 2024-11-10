@@ -63,7 +63,7 @@ void CP_EaseTest::Draw()
 	Geometory::DrawSphere();
 }
 
-void CP_EaseTest::ImGuiSetting()
+void CP_EaseTest::ImGuiDebug()
 {
 	ImGui::DragFloat("magnitude", &magnitude);
 	ImGui::DragFloat("time", &time, 0.1f);	

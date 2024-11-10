@@ -115,7 +115,7 @@ void SceneObjects::MoveToObjList(GameObject& _gameObject)
 	objList[objectName] = std::move(takeoutObj);
 }
 
-void SceneObjects::ImGuiSetting()
+void SceneObjects::ImGuiDebug()
 {
 	ImGui::Begin("SceneObjects");
 
@@ -157,6 +157,8 @@ void SceneObjects::ImGuiSetting()
 
 bool SceneObjects::ImGuiSettingObject(GameObject& _gameObject)
 {
+#ifdef  EDIT
+
 	bool isDelete = false;
 
 	const std::string& objName = _gameObject.GetName();
@@ -185,6 +187,7 @@ bool SceneObjects::ImGuiSettingObject(GameObject& _gameObject)
 	}
 	ImGui::Unindent();
 
+#endif //  EDIT
 	return false;
 }
 
@@ -238,7 +241,7 @@ void SceneObjects::DeleteGameObject(GameObject& _deleteObj)
 	HASHI_DEBUG_LOG(_deleteObj.GetName() + "はシーン内にありません");
 }
 
-void SceneObjects::MoveListToList(GameObject& _targetObj)
+void SceneObjects::MoveTmpList(GameObject& _targetObj)
 {
 	// 移動配列に追加する
 	tmpMoveList.push_back(&_targetObj);
@@ -294,6 +297,10 @@ void SceneObjects::LoadObject(const nlohmann::json& _objectsData)
 		HashiTaku::LoadJsonString("name", objectName, data);
 		GameObject& go = SceneFunction::ObjectFunc::CreateEmpty(objectName);
 		go.Load(data);
+
+		if (IsUI(go))
+			MoveToUIList(go);
+			
 	}
 
 	// オブジェクトをロード
@@ -383,13 +390,13 @@ void SceneObjects::UIDrawSetup()
 	// UI描画のため平行投影に切り替え
 	camera.SetOrthographic();
 
-	//// 深度バッファをリセットする
-	//renderer.GetDeviceContext()->ClearDepthStencilView(
-	//	renderer.GetDepthStencil(),
-	//	D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 
-	//	1.0f, 
-	//	0
-	//);
+	// 深度バッファをリセットする
+	renderer.GetDeviceContext()->ClearDepthStencilView(
+		renderer.GetDepthStencil(),
+		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 
+		1.0f, 
+		0
+	);
 }
 
 void SceneObjects::UIDrawEnd()

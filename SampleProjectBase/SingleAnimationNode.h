@@ -34,5 +34,5 @@ public:
 	// Ä¶‚É•\¦‚·‚é
 	void ImGuiPlaying() override;
 private:
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };

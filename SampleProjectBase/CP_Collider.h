@@ -70,7 +70,7 @@ public:
 
     bool GetIsCreateCompound() const;
 
-    void ImGuiSetting() override;
+    void ImGuiDebug() override;
 
     virtual nlohmann::json Save() override;
     virtual void Load(const nlohmann::json& _data) override;

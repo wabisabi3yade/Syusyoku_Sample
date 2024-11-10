@@ -37,6 +37,6 @@ protected:
 	/// @brief イベント終了処理
 	virtual void End() = 0;
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 

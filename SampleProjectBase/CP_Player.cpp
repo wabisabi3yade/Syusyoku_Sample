@@ -100,7 +100,7 @@ void CP_Player::OnHitStopEnd()
 	pAnimation->SetControllerPlaySpeed(hitStopBeforeAnimSpeed);
 }
 
-void CP_Player::ImGuiSetting()
+void CP_Player::ImGuiDebug()
 {
 	ImGuiSetWeapon();
 
@@ -113,7 +113,7 @@ void CP_Player::ImGuiSetting()
 
 	ImGui::Begin("Player", &isWindow);
 
-	CP_Character::ImGuiSetting();
+	CP_Character::ImGuiDebug();
 	pActionController->ImGuiCall();
 
 	ImGui::End();

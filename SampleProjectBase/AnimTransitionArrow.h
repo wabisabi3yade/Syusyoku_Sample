@@ -143,6 +143,6 @@ private:
 	void ImGuiSetCondistion();
 
 protected:
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 

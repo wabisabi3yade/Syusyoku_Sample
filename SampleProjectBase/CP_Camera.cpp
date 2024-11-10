@@ -41,7 +41,7 @@ void CP_Camera::OnDestroy()
 	InSceneSystemManager::GetInstance()->DeleteCamera(*this);
 }
 
-void CP_Camera::ImGuiSetting()
+void CP_Camera::ImGuiDebug()
 {
 	ImGui::Text("Right");
 	ImGuiMethod::Text(GetTransform().Right());

@@ -14,7 +14,7 @@ void CP_CameraMove::UpdateVector()
 {
 	Transform& transform = GetTransform();
 
-	rotateVec = GameInput::GetInstance()->GetValue(GameInput::ValueType::Camera_Move).x;
+	rotateVec = InSceneSystemManager::GetInstance()->GetInput().GetValue(GameInput::ValueType::Camera_Move).x;
 }
 
 void CP_CameraMove::Move()
@@ -75,7 +75,7 @@ void CP_CameraMove::LateUpdate()
 	LookUpdate();
 }
 
-void CP_CameraMove::ImGuiSetting()
+void CP_CameraMove::ImGuiDebug()
 {
 	ImGui::DragFloat("centerAngle", &centerAngle);
 	ImGui::DragFloat("rotSpeed", &rotateSpeed);

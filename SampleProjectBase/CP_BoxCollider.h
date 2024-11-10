@@ -40,6 +40,6 @@ private:
 	/// @param ƒ[ƒ‹ƒhÀ•W‚Å‚Ì’·‚³
 	void CalcWorldLength(DirectX::SimpleMath::Vector3& _out);
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 

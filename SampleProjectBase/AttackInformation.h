@@ -55,7 +55,7 @@ namespace HashiTaku
 		/// @brief 攻撃レベルから各パラメータを適用
 		void ApplyFromAttackLevel();
 
-		void ImGuiSetting() override;
+		void ImGuiDebug() override;
 	private:
 		// Low
 		static constexpr u_int LOW_HITSTOP = 6;

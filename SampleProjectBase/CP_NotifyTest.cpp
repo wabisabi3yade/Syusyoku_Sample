@@ -37,7 +37,7 @@ void CP_NotifyTest::Update()
 	lastRatio = curRatio;
 }
 
-void CP_NotifyTest::ImGuiSetting()
+void CP_NotifyTest::ImGuiDebug()
 {
 	ImGui::DragFloat("speed", &speed, 1.0f, 0.0f, 100.0f);
 	ImGui::SliderFloat("curRatio", &curRatio, 0.0f, 1.0f);

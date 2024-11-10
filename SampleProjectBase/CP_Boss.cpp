@@ -93,9 +93,9 @@ void CP_Boss::OnHitStopEnd()
 	pAnimation->SetControllerPlaySpeed(hitStopBeforeAnimSpeed);
 }
 
-void CP_Boss::ImGuiSetting()
+void CP_Boss::ImGuiDebug()
 {
-	CP_Enemy::ImGuiSetting();
+	CP_Enemy::ImGuiDebug();
 
 	pActionController->ImGuiCall();
 }

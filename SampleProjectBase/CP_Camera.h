@@ -42,7 +42,7 @@ public:
 	// ビューポート番号をセット
 	void SetViewportSlot(u_int _slot);
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 
 	/// @brief セーブする
 	/// @param _sceneData セーブデータ
@@ -76,7 +76,7 @@ public:
 
 	void Draw() override {}
 
-	void ImGuiSetting() override {}
+	void ImGuiDebug() override {}
 
 	/// @brief ビュー変換行列
 	void UpdateViewMatrix() {}

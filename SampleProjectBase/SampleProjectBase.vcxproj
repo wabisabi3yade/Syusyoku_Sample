@@ -223,6 +223,7 @@
     <ClCompile Include="Polygon2D.cpp" />
     <ClCompile Include="RenderTarget.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="EditScene.cpp" />
     <ClCompile Include="SingleAnimationNode.cpp" />
     <ClCompile Include="AnimationNode_Base.cpp" />
     <ClCompile Include="Bone.cpp" />
@@ -443,6 +444,7 @@
     <ClInclude Include="RenderTarget.h" />
     <ClInclude Include="resource1.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="EditScene.h" />
     <ClInclude Include="SingleAnimationNode.h" />
     <ClInclude Include="AnimationNode_Base.h" />
     <ClInclude Include="Bone.h" />

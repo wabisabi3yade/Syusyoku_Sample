@@ -88,7 +88,7 @@ private:
 	/// @return 現在の割合のルートモーション回転量
 	DirectX::SimpleMath::Quaternion GetRootMotionRot(float _ratio, bool _isLoadScaling = true) const override;
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 	// ImGuiで軸のパラメータを表示
 	void ImGuiAxisParameer(const AxisPlayParameter& _axis);
 };

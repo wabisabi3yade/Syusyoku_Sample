@@ -69,9 +69,9 @@ void CP_CapsuleCollider::ApplyObjectScale(float& _outRadius, float& _outHeight)
 	_outHeight = height * scale.y;
 }
 
-void CP_CapsuleCollider::ImGuiSetting()
+void CP_CapsuleCollider::ImGuiDebug()
 {
-	CP_Collider::ImGuiSetting();
+	CP_Collider::ImGuiDebug();
 
 	if (ImGui::DragFloat("Radius", &radius, 0.01f, 0.0f, 1000.0f))
 		RecreateShape();

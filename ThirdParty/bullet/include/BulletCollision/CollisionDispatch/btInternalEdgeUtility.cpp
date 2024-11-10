@@ -430,7 +430,7 @@ void btNearestPointInLineSegment(const btVector3& point, const btVector3& line0,
 {
 	btVector3 lineDelta = line1 - line0;
 
-	// Handle degenerate lines
+	// Handle degenerate drawLines
 	if (lineDelta.fuzzyZero())
 	{
 		nearestPoint = line0;

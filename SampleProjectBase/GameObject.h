@@ -192,7 +192,7 @@ private:
 	void LoadComponentParameter(const nlohmann::json& _componentsData);
 
 	// ImGui‚Ìİ’è
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 
 	// ImGui‚Åeó‘Ô‚Ìİ’è
 	void ImGuiSetParent();

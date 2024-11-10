@@ -50,7 +50,7 @@ bool PlayerIdleState::IsCanMoveTransition()
 	using namespace DirectX::SimpleMath;
 
 	// “ü—Í’l‚ª0‚È‚ç
-	Vector2 inputVal = GameInput::GetInstance()->GetValue(GameInput::ValueType::Player_Move);
+	Vector2 inputVal = GetInputLeftStick();
 	if (inputVal.Length() <= Mathf::epsilon)return false;
 
 	return true;

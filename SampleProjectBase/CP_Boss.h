@@ -40,6 +40,6 @@ private:
 	/// @brief ヒットストップ終了処理
 	void OnHitStopEnd() override;
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 

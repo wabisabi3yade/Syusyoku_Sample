@@ -1099,10 +1099,10 @@ long _maxdot_large_v1(const float *vv, const float *vec, unsigned long count, fl
 		float32x4_t v2 = vld1q_f32_aligned_postincrement(vv);
 		float32x4_t v3 = vld1q_f32_aligned_postincrement(vv);
 
-		// the next two lines should resolve to a single vswp d, d
+		// the next two drawLines should resolve to a single vswp d, d
 		float32x4_t xy0 = vcombine_f32(vget_low_f32(v0), vget_low_f32(v1));
 		float32x4_t xy1 = vcombine_f32(vget_low_f32(v2), vget_low_f32(v3));
-		// the next two lines should resolve to a single vswp d, d
+		// the next two drawLines should resolve to a single vswp d, d
 		float32x4_t z0 = vcombine_f32(vget_high_f32(v0), vget_high_f32(v1));
 		float32x4_t z1 = vcombine_f32(vget_high_f32(v2), vget_high_f32(v3));
 
@@ -1125,10 +1125,10 @@ long _maxdot_large_v1(const float *vv, const float *vec, unsigned long count, fl
 		v2 = vld1q_f32_aligned_postincrement(vv);
 		v3 = vld1q_f32_aligned_postincrement(vv);
 
-		// the next two lines should resolve to a single vswp d, d
+		// the next two drawLines should resolve to a single vswp d, d
 		xy0 = vcombine_f32(vget_low_f32(v0), vget_low_f32(v1));
 		xy1 = vcombine_f32(vget_low_f32(v2), vget_low_f32(v3));
-		// the next two lines should resolve to a single vswp d, d
+		// the next two drawLines should resolve to a single vswp d, d
 		z0 = vcombine_f32(vget_high_f32(v0), vget_high_f32(v1));
 		z1 = vcombine_f32(vget_high_f32(v2), vget_high_f32(v3));
 
@@ -1154,10 +1154,10 @@ long _maxdot_large_v1(const float *vv, const float *vec, unsigned long count, fl
 		float32x4_t v2 = vld1q_f32_aligned_postincrement(vv);
 		float32x4_t v3 = vld1q_f32_aligned_postincrement(vv);
 
-		// the next two lines should resolve to a single vswp d, d
+		// the next two drawLines should resolve to a single vswp d, d
 		float32x4_t xy0 = vcombine_f32(vget_low_f32(v0), vget_low_f32(v1));
 		float32x4_t xy1 = vcombine_f32(vget_low_f32(v2), vget_low_f32(v3));
-		// the next two lines should resolve to a single vswp d, d
+		// the next two drawLines should resolve to a single vswp d, d
 		float32x4_t z0 = vcombine_f32(vget_high_f32(v0), vget_high_f32(v1));
 		float32x4_t z1 = vcombine_f32(vget_high_f32(v2), vget_high_f32(v3));
 
@@ -1184,10 +1184,10 @@ long _maxdot_large_v1(const float *vv, const float *vec, unsigned long count, fl
 			float32x4_t v1 = vld1q_f32_aligned_postincrement(vv);
 			float32x4_t v2 = vld1q_f32_aligned_postincrement(vv);
 
-			// the next two lines should resolve to a single vswp d, d
+			// the next two drawLines should resolve to a single vswp d, d
 			float32x4_t xy0 = vcombine_f32(vget_low_f32(v0), vget_low_f32(v1));
 			float32x4_t xy1 = vcombine_f32(vget_low_f32(v2), vget_low_f32(v2));
-			// the next two lines should resolve to a single vswp d, d
+			// the next two drawLines should resolve to a single vswp d, d
 			float32x4_t z0 = vcombine_f32(vget_high_f32(v0), vget_high_f32(v1));
 			float32x4_t z1 = vcombine_f32(vget_high_f32(v2), vget_high_f32(v2));
 
@@ -1212,9 +1212,9 @@ long _maxdot_large_v1(const float *vv, const float *vec, unsigned long count, fl
 			float32x4_t v0 = vld1q_f32_aligned_postincrement(vv);
 			float32x4_t v1 = vld1q_f32_aligned_postincrement(vv);
 
-			// the next two lines should resolve to a single vswp d, d
+			// the next two drawLines should resolve to a single vswp d, d
 			float32x4_t xy0 = vcombine_f32(vget_low_f32(v0), vget_low_f32(v1));
-			// the next two lines should resolve to a single vswp d, d
+			// the next two drawLines should resolve to a single vswp d, d
 			float32x4_t z0 = vcombine_f32(vget_high_f32(v0), vget_high_f32(v1));
 
 			xy0 = vmulq_f32(xy0, vLo);
@@ -1236,9 +1236,9 @@ long _maxdot_large_v1(const float *vv, const float *vec, unsigned long count, fl
 		{
 			float32x4_t v0 = vld1q_f32_aligned_postincrement(vv);
 
-			// the next two lines should resolve to a single vswp d, d
+			// the next two drawLines should resolve to a single vswp d, d
 			float32x4_t xy0 = vcombine_f32(vget_low_f32(v0), vget_low_f32(v0));
-			// the next two lines should resolve to a single vswp d, d
+			// the next two drawLines should resolve to a single vswp d, d
 			float32x4_t z = vdupq_lane_f32(vget_high_f32(v0), 0);
 
 			xy0 = vmulq_f32(xy0, vLo);
@@ -1481,10 +1481,10 @@ long _mindot_large_v1(const float *vv, const float *vec, unsigned long count, fl
 		float32x4_t v2 = vld1q_f32_aligned_postincrement(vv);
 		float32x4_t v3 = vld1q_f32_aligned_postincrement(vv);
 
-		// the next two lines should resolve to a single vswp d, d
+		// the next two drawLines should resolve to a single vswp d, d
 		float32x4_t xy0 = vcombine_f32(vget_low_f32(v0), vget_low_f32(v1));
 		float32x4_t xy1 = vcombine_f32(vget_low_f32(v2), vget_low_f32(v3));
-		// the next two lines should resolve to a single vswp d, d
+		// the next two drawLines should resolve to a single vswp d, d
 		float32x4_t z0 = vcombine_f32(vget_high_f32(v0), vget_high_f32(v1));
 		float32x4_t z1 = vcombine_f32(vget_high_f32(v2), vget_high_f32(v3));
 
@@ -1507,10 +1507,10 @@ long _mindot_large_v1(const float *vv, const float *vec, unsigned long count, fl
 		v2 = vld1q_f32_aligned_postincrement(vv);
 		v3 = vld1q_f32_aligned_postincrement(vv);
 
-		// the next two lines should resolve to a single vswp d, d
+		// the next two drawLines should resolve to a single vswp d, d
 		xy0 = vcombine_f32(vget_low_f32(v0), vget_low_f32(v1));
 		xy1 = vcombine_f32(vget_low_f32(v2), vget_low_f32(v3));
-		// the next two lines should resolve to a single vswp d, d
+		// the next two drawLines should resolve to a single vswp d, d
 		z0 = vcombine_f32(vget_high_f32(v0), vget_high_f32(v1));
 		z1 = vcombine_f32(vget_high_f32(v2), vget_high_f32(v3));
 
@@ -1536,10 +1536,10 @@ long _mindot_large_v1(const float *vv, const float *vec, unsigned long count, fl
 		float32x4_t v2 = vld1q_f32_aligned_postincrement(vv);
 		float32x4_t v3 = vld1q_f32_aligned_postincrement(vv);
 
-		// the next two lines should resolve to a single vswp d, d
+		// the next two drawLines should resolve to a single vswp d, d
 		float32x4_t xy0 = vcombine_f32(vget_low_f32(v0), vget_low_f32(v1));
 		float32x4_t xy1 = vcombine_f32(vget_low_f32(v2), vget_low_f32(v3));
-		// the next two lines should resolve to a single vswp d, d
+		// the next two drawLines should resolve to a single vswp d, d
 		float32x4_t z0 = vcombine_f32(vget_high_f32(v0), vget_high_f32(v1));
 		float32x4_t z1 = vcombine_f32(vget_high_f32(v2), vget_high_f32(v3));
 
@@ -1566,10 +1566,10 @@ long _mindot_large_v1(const float *vv, const float *vec, unsigned long count, fl
 			float32x4_t v1 = vld1q_f32_aligned_postincrement(vv);
 			float32x4_t v2 = vld1q_f32_aligned_postincrement(vv);
 
-			// the next two lines should resolve to a single vswp d, d
+			// the next two drawLines should resolve to a single vswp d, d
 			float32x4_t xy0 = vcombine_f32(vget_low_f32(v0), vget_low_f32(v1));
 			float32x4_t xy1 = vcombine_f32(vget_low_f32(v2), vget_low_f32(v2));
-			// the next two lines should resolve to a single vswp d, d
+			// the next two drawLines should resolve to a single vswp d, d
 			float32x4_t z0 = vcombine_f32(vget_high_f32(v0), vget_high_f32(v1));
 			float32x4_t z1 = vcombine_f32(vget_high_f32(v2), vget_high_f32(v2));
 
@@ -1594,9 +1594,9 @@ long _mindot_large_v1(const float *vv, const float *vec, unsigned long count, fl
 			float32x4_t v0 = vld1q_f32_aligned_postincrement(vv);
 			float32x4_t v1 = vld1q_f32_aligned_postincrement(vv);
 
-			// the next two lines should resolve to a single vswp d, d
+			// the next two drawLines should resolve to a single vswp d, d
 			float32x4_t xy0 = vcombine_f32(vget_low_f32(v0), vget_low_f32(v1));
-			// the next two lines should resolve to a single vswp d, d
+			// the next two drawLines should resolve to a single vswp d, d
 			float32x4_t z0 = vcombine_f32(vget_high_f32(v0), vget_high_f32(v1));
 
 			xy0 = vmulq_f32(xy0, vLo);
@@ -1618,9 +1618,9 @@ long _mindot_large_v1(const float *vv, const float *vec, unsigned long count, fl
 		{
 			float32x4_t v0 = vld1q_f32_aligned_postincrement(vv);
 
-			// the next two lines should resolve to a single vswp d, d
+			// the next two drawLines should resolve to a single vswp d, d
 			float32x4_t xy0 = vcombine_f32(vget_low_f32(v0), vget_low_f32(v0));
-			// the next two lines should resolve to a single vswp d, d
+			// the next two drawLines should resolve to a single vswp d, d
 			float32x4_t z = vdupq_lane_f32(vget_high_f32(v0), 0);
 
 			xy0 = vmulq_f32(xy0, vLo);

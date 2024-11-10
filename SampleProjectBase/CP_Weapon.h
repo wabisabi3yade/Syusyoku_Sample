@@ -60,7 +60,7 @@ private:
 	/// @param _addTag É^ÉO
 	void AddAttackableTag(HashiTaku::Tag::Type _addTag);
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 
 

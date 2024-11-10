@@ -24,6 +24,6 @@ private:
 	void UpdateBehavior() override;
 	void TransitionCheckUpdate();
 
-	void ImGuiSetting() override;
+	void ImGuiDebug() override;
 };
 

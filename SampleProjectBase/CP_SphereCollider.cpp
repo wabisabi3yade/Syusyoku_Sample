@@ -10,9 +10,9 @@ void CP_SphereCollider::Draw()
 {
 }
 
-void CP_SphereCollider::ImGuiSetting()
+void CP_SphereCollider::ImGuiDebug()
 {
-	CP_Collider::ImGuiSetting();
+	CP_Collider::ImGuiDebug();
 
 	float changeRadius = radius;
 	if (ImGui::DragFloat("radius", &changeRadius, 0.01f, 0.0f, 1000.0f))
