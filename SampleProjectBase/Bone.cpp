@@ -3,6 +3,18 @@
 
 using namespace DirectX::SimpleMath;
 
+Bone::Bone(const Bone& _other)
+{
+	Copy(_other);
+}
+
+Bone& Bone::operator=(const Bone& _other)
+{
+	Copy(_other);
+
+	return *this;
+}
+
 void Bone::CreateCombMtx(const DirectX::SimpleMath::Matrix& _parentMtx)
 {	
 	combinationMatrix = offsetMatrix * GetAnimMtx() * _parentMtx;
@@ -72,4 +84,13 @@ BoneTransform Bone::GetAnimationTransform() const
 u_int Bone::GetIndex() const
 {
 	return boneIdx;
+}
+
+void Bone::Copy(const Bone& _other)
+{
+	if (this == &_other) return;
+
+	boneName = _other.boneName;
+	offsetMatrix = _other.offsetMatrix;
+	boneIdx = _other.boneIdx;
 }

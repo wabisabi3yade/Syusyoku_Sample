@@ -105,7 +105,7 @@ void AnimBlendNodePlayer::AnimationUpdate(std::vector<BoneTransform>& _outTransf
 	}
 
 	u_int blendAnimCnt = static_cast<u_int>(blendingAnimData.size());
-	_outTransforms.resize(pBoneList->GetBoneCnt());
+	_outTransforms.resize(pAssetBoneList->GetBoneCnt());
 	// アニメーションの数によってブレンド計算方法を変える
 	switch (blendAnimCnt)
 	{
@@ -134,7 +134,7 @@ void AnimBlendNodePlayer::SingleAnimationUpdate(std::vector<BoneTransform>& _out
 	const AnimationData& animData = *blendingAnimData[0].pAnimation;
 
 	//ボーン数ループ
-	for (unsigned int b_i = 0; b_i < pBoneList->GetBoneCnt(); b_i++)
+	for (unsigned int b_i = 0; b_i < pAssetBoneList->GetBoneCnt(); b_i++)
 	{
 		animData.GetTransformByRatio(b_i, playingRatio, _outTransforms[b_i]);
 	}
@@ -151,7 +151,7 @@ void AnimBlendNodePlayer::TwoAnimationUpdate(std::vector<BoneTransform>& _outTra
 	// 比率
 	float weightRatio = blendingAnimData[1].blendWeight;
 
-	for (u_int b_i = 0; b_i < pBoneList->GetBoneCnt(); b_i++)
+	for (u_int b_i = 0; b_i < pAssetBoneList->GetBoneCnt(); b_i++)
 	{
 		BoneTransform p_Transform;	// 前のアニメーション
 		p_pAnimData.GetTransformByRatio(b_i, playingRatio, p_Transform);
@@ -173,7 +173,7 @@ void AnimBlendNodePlayer::SquareAnimationUpdate(std::vector<BoneTransform>& _out
 
 	float playingRatio = GetAnimationRatio();
 
-	for (u_int b_i = 0; b_i < pBoneList->GetBoneCnt(); b_i++)
+	for (u_int b_i = 0; b_i < pAssetBoneList->GetBoneCnt(); b_i++)
 	{
 		// 比率分アニメーションの座標・回転量をブレンドする
 		for (u_int bl_i = 0; bl_i < 4; bl_i++)
@@ -218,7 +218,7 @@ void AnimBlendNodePlayer::CalcRootMotionPosSpeed(float _controllerSpeed)
 {
 	using namespace DirectX::SimpleMath;
 	pBlendNode->CalcRootMotionSpeed(blendingAnimData, rootMotionPosSpeedPerSec);
-	rootMotionPosSpeedPerSec *= _controllerSpeed  * pBoneList->GetLoadScale();;
+	rootMotionPosSpeedPerSec *= _controllerSpeed  * pAssetBoneList->GetLoadScale();;
 }
 
 DirectX::SimpleMath::Vector3 AnimBlendNodePlayer::GetRootMotionPos(float _ratio, bool _isLoadScaling) const

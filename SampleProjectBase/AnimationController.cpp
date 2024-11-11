@@ -16,7 +16,7 @@ using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
 
 AnimationController::AnimationController()
-	: pDefaultNodeInfo(nullptr), playSpeed(1.0f), pBoneList(nullptr)
+	: pDefaultNodeInfo(nullptr), playSpeed(1.0f), pAssetBoneList(nullptr)
 {
 	pAnimParameters = std::make_unique<AnimationParameters>();
 	pNotifyFactory = std::make_unique<AnimationNotifyFactory>(*pAnimParameters);

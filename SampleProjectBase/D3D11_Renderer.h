@@ -30,10 +30,6 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> pDepthStencilTexture;
 	// 深度バッファ
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> pDepthStencilView;
-	// 深度バッファ用テクスチャ
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> pDisableDepthStencilTexture;
-	// 深度バッファ(深度なし)
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> pDisableDepthStencilView;
 	// ラスタライザ
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> pRasterizerStates[RASTERIZE_NUM];
 

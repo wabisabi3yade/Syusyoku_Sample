@@ -43,7 +43,7 @@ protected:
 	DirectX::SimpleMath::Quaternion p_RootMotionRot;
 
 	/// @brief 動かすボーン
-	BoneList* pBoneList;
+	BoneList* pAssetBoneList;
 
 	/// @brief 再生するアニメーションノード
 	const AnimationNode_Base* pPlayAnimNode;

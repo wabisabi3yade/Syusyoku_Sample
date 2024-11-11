@@ -61,8 +61,9 @@ public:
 	// 名前を取得する
 	std::string GetName() const;
 
-	// ボーンを取得する
-	Bone& GetBone();
+	/// @brief ボーンIDを取得
+	/// @return ボーンID
+	u_int GetBoneIdx() const;
 
 	// ローカル座標までの移動行列を取得
 	DirectX::SimpleMath::Matrix GetTransformMtx() const;

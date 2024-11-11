@@ -543,8 +543,8 @@ AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, const st
 	const aiAnimation* aiAnimation = pAiScene->mAnimations[0];
 
 	// アニメーション対応させるボーンリストを取得する
-	const BoneList* pBoneList = AssetGetter::GetAsset<BoneList>(_boneName);
-	if (pBoneList == nullptr)
+	const BoneList* pAssetBoneList = AssetGetter::GetAsset<BoneList>(_boneName);
+	if (pAssetBoneList == nullptr)
 	{
 		HASHI_DEBUG_LOG(_boneName + "：ボーンがアセットにありませんでした");
 		return nullptr;
@@ -554,7 +554,7 @@ AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, const st
 	// ノードを作成する
 	for (u_int an_i = 0; an_i < aiAnimation->mNumChannels; an_i++)
 	{
-		std::unique_ptr<AnimationChannel> pAnimChannel = CreateAnimChannel(aiAnimation->mChannels[an_i], *pBoneList);
+		std::unique_ptr<AnimationChannel> pAnimChannel = CreateAnimChannel(aiAnimation->mChannels[an_i], *pAssetBoneList);
 
 		// アニメーションの追加していく
 		pAnimData->AddAnimationChannel(std::move(pAnimChannel));
@@ -562,7 +562,7 @@ AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, const st
 
 	pAnimData->SetAnimationTime(GetAnimationTime(aiAnimation));
 	pAnimData->SetTimePerKey(GetTimePerKey(aiAnimation));
-	pAnimData->CalcRootMotion(pBoneList->GetRootBoneId());
+	pAnimData->CalcRootMotion(pAssetBoneList->GetRootBoneId());
 
 	// 名前をパス名から取得
 	std::string assetName = PathToFileName(_animPath);
@@ -628,7 +628,7 @@ void AssetLoader::CreateBone(const aiScene* _pScene, SkeletalMesh& _skeletalMesh
 		pBones.push_back(std::move(pBone));
 	}
 
-	pCreateBones->SetBoneList(std::move(pBones));
+	pCreateBones->SetAssetBoneList(std::move(pBones));
 	pCreateBones->loadScale = _loadScale;
 	pCreateBones->loadOffsetRotation = Quat::ToQuaternion(_loadOffsetAngles);
 
@@ -636,7 +636,7 @@ void AssetLoader::CreateBone(const aiScene* _pScene, SkeletalMesh& _skeletalMesh
 	BoneList* pRetBones = SendAsset<BoneList>(boneName, std::move(pCreateBones));
 
 	// スケルタルメッシュにセット
-	_skeletalMesh.SetBoneList(pRetBones);
+	_skeletalMesh.SetAssetBoneList(pRetBones);
 }
 
 std::unique_ptr<TreeNode> AssetLoader::CreateNode(const aiNode& _aiChildNode, SkeletalMesh& _skeletalMesh)

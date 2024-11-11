@@ -9,7 +9,7 @@ using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
 
 CrossFadeAnimation::CrossFadeAnimation()
-	: pFromNodePlayer(nullptr), pToNodePlayer(nullptr), pBoneList(nullptr), transitionWeight(0.0f), transitionTime(0.0f), elapsedTime(0.0f), easeKind(HashiTaku::EaseKind::InOutCubic)
+	: pFromNodePlayer(nullptr), pToNodePlayer(nullptr), pAssetBoneList(nullptr), transitionWeight(0.0f), transitionTime(0.0f), elapsedTime(0.0f), easeKind(HashiTaku::EaseKind::InOutCubic)
 {
 }
 
@@ -17,7 +17,7 @@ void CrossFadeAnimation::Begin(AnimNodePlayer_Base& _fromNode, AnimNodePlayer_Ba
 {
 	pFromNodePlayer = &_fromNode;
 	pToNodePlayer = &_toNode;
-	pBoneList = &_updateBones;
+	pAssetBoneList = &_updateBones;
 	elapsedTime = 0.0f;
 	transitionTime = _transitionTime;
 	easeKind = _easeKind;
@@ -73,25 +73,27 @@ void CrossFadeAnimation::Update(float _playSpeed)
 	// アニメーション再生の速度を考慮する
 	float deltaTime = MainApplication::DeltaTime() * _playSpeed;
 
+	// 遷移の時間を進め、アニメーションのウェイトを変化させる
 	ProgressTime(deltaTime);
 
-	// 更新処理
+	// 遷移元のアニメーション更新
 	std::vector<BoneTransform> fromBoneTransforms;
 	pFromNodePlayer->OnInterpolateUpdate(fromBoneTransforms, _playSpeed);
 	Vector3 fromMovement = pFromNodePlayer->CalcRootMotionToTransform();
 
+	// 遷移先のアニメーション更新
 	std::vector<BoneTransform> toBoneTransforms;
 	pToNodePlayer->OnInterpolateUpdate(toBoneTransforms, _playSpeed);
 	Vector3 toMovement = pToNodePlayer->CalcRootMotionToTransform();
 
-	Vector3 blendMovement = Vector3::Lerp(fromMovement, toMovement, transitionWeight);
-	pToNodePlayer->ApplyRootMotion(toMovement/*blendMovement*/);
+	// ルートモーションは遷移先のものを使用
+	pToNodePlayer->ApplyRootMotion(toMovement);
 	
 	// 補間したトランスフォームをボーンに適用させる
-	u_int boneCnt = pBoneList->GetBoneCnt();
+	u_int boneCnt = pAssetBoneList->GetBoneCnt();
 	for (u_int b_i = 0; b_i < boneCnt; b_i++)
 	{
-		Bone& bone = pBoneList->GetBone(b_i);
+		Bone& bone = *pAssetBoneList->GetBone(b_i);
 
 		BoneTransform interpTransform;
 		Interpolate(fromBoneTransforms[b_i], toBoneTransforms[b_i], bone.GetRefelenceAnimTransform());

@@ -44,7 +44,7 @@ private:
 	AnimNodeInfo* pDefaultNodeInfo;
 
 	/// @brief 動かすボーン配列
-	BoneList* pBoneList;
+	BoneList* pAssetBoneList;
 
 	/// @brief 再生速度
 	float playSpeed;

@@ -5,7 +5,7 @@
 #include "BlendNodePlayer.h"
 
 AnimControllPlayer::AnimControllPlayer(const AnimationController& _animController, BoneList& _boneList, Transform& _transform)
-	: pAnimController(&_animController), pBoneList(&_boneList), pObjectTransform(&_transform), playSpeed(1.0f), updateState(UpdateState::PlayNode), curTransitonKind(HashiTaku::AnimInterpolateKind::CrossFade)
+	: pAnimController(&_animController), pAssetBoneList(&_boneList), pObjectTransform(&_transform), playSpeed(1.0f), updateState(UpdateState::PlayNode), curTransitonKind(HashiTaku::AnimInterpolateKind::CrossFade)
 {
 	PlayInit();
 }
@@ -118,11 +118,11 @@ void AnimControllPlayer::ChangeNodePlayer(const AnimationNode_Base& _changeNode)
 	switch (animNode.GetNodeType())
 	{
 	case AnimationNode_Base::NodeType::Single:	// 単一のアニメーション
-		pCurNodePlayer = std::make_unique<AnimSingleNodePlayer>(animNode, *pBoneList, *pObjectTransform);
+		pCurNodePlayer = std::make_unique<AnimSingleNodePlayer>(animNode, *pAssetBoneList, *pObjectTransform);
 		break;
 
 	case AnimationNode_Base::NodeType::Blend:	// ブレンドスペース
-		pCurNodePlayer = std::make_unique<AnimBlendNodePlayer>(*pCopyAnimParameters, animNode, *pBoneList, *pObjectTransform);
+		pCurNodePlayer = std::make_unique<AnimBlendNodePlayer>(*pCopyAnimParameters, animNode, *pAssetBoneList, *pObjectTransform);
 		break;
 
 	default:
@@ -133,26 +133,31 @@ void AnimControllPlayer::ChangeNodePlayer(const AnimationNode_Base& _changeNode)
 
 void AnimControllPlayer::NodePlayUpdate()
 {
+	// アニメーションのトランスフォームを再生機能から取得する
 	std::vector<BoneTransform> animationTransforms;
 	pCurNodePlayer->UpdateCall(animationTransforms, playSpeed);
 
 	// 再生終了していて、ボーンを取得できなかったら
-	if(static_cast<u_int>(animationTransforms.size() != pBoneList->GetBoneCnt()))
+	if (static_cast<u_int>(animationTransforms.size() != pAssetBoneList->GetBoneCnt()))
 		return;
 
 	// ボーンに適用する
-	for (u_int b_i = 0; b_i < pBoneList->GetBoneCnt(); b_i++)
+	u_int boneCnt = pAssetBoneList->GetBoneCnt();
+	for (u_int b_i = 0; b_i < boneCnt; b_i++)
 	{
-		Bone& bone = pBoneList->GetBone(b_i);
+		Bone& bone = *pAssetBoneList->GetBone(b_i);
 		bone.GetRefelenceAnimTransform() = animationTransforms[b_i];
 	}
-	
+
 	pCurNodePlayer->GetCurrentRootPos(rootMotionPos, false);
 }
 
 void AnimControllPlayer::TransitionUpdate()
 {
-	switch (curTransitonKind)
+	// 現在はクロスフェードしか対応していない
+	CrossFadeUpdate();
+
+	/*switch (curTransitonKind)
 	{
 	case HashiTaku::CrossFade:
 		CrossFadeUpdate();
@@ -162,7 +167,7 @@ void AnimControllPlayer::TransitionUpdate()
 		break;
 	default:
 		break;
-	}
+	}*/
 }
 
 void AnimControllPlayer::CrossFadeUpdate()
@@ -196,7 +201,7 @@ void AnimControllPlayer::TransitionCheck()
 {
 	// 遷移条件を満たした矢印があるか確認
 	const AnimTransitionArrow* pTransArrow = pTransChecker->TransitonCheck(
-		pCurNodePlayer->GetAnimationRatio(), 
+		pCurNodePlayer->GetAnimationRatio(),
 		pCurNodePlayer->GetLastAnimationRatio()
 	);
 	if (!pTransArrow) return;
@@ -245,7 +250,7 @@ void AnimControllPlayer::OnChangeAnimation(const AnimTransitionArrow& _changeArr
 		break;
 	}
 
-	
+
 }
 
 void AnimControllPlayer::OnCrossFadeBegin(const AnimTransitionArrow& _changeArrow)
@@ -258,7 +263,7 @@ void AnimControllPlayer::OnCrossFadeBegin(const AnimTransitionArrow& _changeArro
 	HashiTaku::EaseKind easeKind = _changeArrow.GetEaseKind();
 
 	pCrossFadeInterp = std::make_unique<CrossFadeAnimation>();
-	pCrossFadeInterp->Begin(*pPrevNodePlayer, *pCurNodePlayer, *pBoneList, transTime, easeKind);
+	pCrossFadeInterp->Begin(*pPrevNodePlayer, *pCurNodePlayer, *pAssetBoneList, transTime, easeKind);
 }
 
 void AnimControllPlayer::ChangeAnimSubjectUpdate()
@@ -282,7 +287,7 @@ void AnimControllPlayer::ImGuiDebug()
 		pCurNodePlayer->ImGuiCall();
 		ImGui::TreePop();
 	}
-	
+
 
 	ImGui::DragFloat("controllPlaySpeed", &playSpeed, 0.01f, 0.0f, 100.0f);
 	pCopyAnimParameters->ImGuiCall();

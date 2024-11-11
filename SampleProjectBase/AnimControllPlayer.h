@@ -42,7 +42,7 @@ class AnimControllPlayer : public HashiTaku::IImGuiUser
 	std::unique_ptr<HashiTaku::ChangeAnimSubject> pChangeAnimSubject;
 
 	/// @brief 動かす対象のボーン
-	BoneList* pBoneList;
+	BoneList* pAssetBoneList;
 
 	/// @brief ゲームオブジェクトのトランスフォーム
 	Transform* pObjectTransform;

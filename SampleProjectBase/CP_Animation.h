@@ -21,11 +21,14 @@ class CP_Animation : public Component
 	/// @brief ボーンのコンビネーション行列のバッファー
 	static BoneCombMtricies boneCombBuffer;
 
+	/// @brief ルートボーンに対するオフセット行列
+	DirectX::SimpleMath::Matrix rootOffsetMtx;
+
 	/// @brief スケルタルメッシュ
 	SkeletalMesh* pSkeletalMesh;
 
-	/// @brief モデルのオフセット行列
-	DirectX::SimpleMath::Matrix offsetMtx;
+	/// @brief 実際に動かすボーン
+	std::unique_ptr<BoneList> pMoveBoneList;
 
 	/// @brief アニメーションコントローラー
 	AnimationController* pAnimController;
@@ -34,12 +37,7 @@ class CP_Animation : public Component
 	std::unique_ptr<AnimControllPlayer> pAnimConPlayer;
 public:
 	CP_Animation();
-	CP_Animation(const CP_Animation& _other);
 	virtual ~CP_Animation() {}
-
-	CP_Animation& operator=(const CP_Animation& _other);
-
-	void Init() override;
 
 	/// @brief アニメーション変更オブザーバーを追加
 	/// @param _observer オブザーバー
@@ -101,9 +99,6 @@ public:
 	template<HashiTaku::AnimParam::AnimParamConcept T>
 	const T* GetParameterPointer(const std::string& _paramName) const;
 
-	// スケルタルメッシュを取得
-	SkeletalMesh& GetSkeletalMesh();
-
 	/// @brief 現在再生しているアニメーションのルートモーションの座標移動速度を渡す
 	/// @return 座標移動速度(s)
 	const DirectX::SimpleMath::Vector3& GetMotionPosSpeedPerSec() const;
@@ -120,6 +115,10 @@ public:
 	/// @return 現在のアニメーション割合
 	float GetCurrentAnimationRatio() const;
 
+	/// @brief 実際に動かすボーンリストを取得する
+	/// @return ボーンリスト
+	BoneList* GetMoveBoneList();
+
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
 private:
@@ -131,8 +130,8 @@ private:
 	/// @brief アニメーションコントローラーの準備
 	void SetupAnimCon();
 
-	/// @brief Rendererからスケルタルメッシュをセット 
-	void SetupSkeletalMesh(CP_MeshRenderer& _mr);
+	/// @brief Rendererからボーンをコピーし、動かすボーンを作成 
+	void CopyBoneList(CP_MeshRenderer& _mr);
 
 	/// @brief 再生できる状態か？
 	/// @return 再生できるか
@@ -155,8 +154,6 @@ private:
 
 	/// @brief シェーダーのバッファを更新する
 	void UpdateBoneBuffer();
-
-	void Copy(const CP_Animation& _other);
 
 	void ImGuiDebug() override;
 };

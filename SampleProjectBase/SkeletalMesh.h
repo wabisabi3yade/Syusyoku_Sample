@@ -20,7 +20,7 @@ class BoneList : public Asset_Base
 	
 	/// @brief ボーン配列をセット
 	/// @param _setList ボーン配列
-	void SetBoneList(std::vector<std::unique_ptr<Bone>> _setList);
+	void SetAssetBoneList(std::vector<std::unique_ptr<Bone>> _setList);
 
 public:
 	BoneList();
@@ -29,18 +29,13 @@ public:
 
 	BoneList& operator=(const BoneList& _other);
 
-	/// @brief ボーンIDからボーンを取得する
-	/// @param _boneIdx ボーンID
-	/// @return ボーン
-	Bone* FindBone(u_int _boneIdx);
-
 	/// @brief 名前からボーンを取得する
 	/// @param  _boneName ボーン名
 	/// @return ボーン
 	Bone* FindBone(const std::string& _boneName);
 
 	// 要素数からボーンを取得
-	Bone& GetBone(u_int _arrayIdx);
+	Bone* GetBone(u_int _arrayIdx);
 
 	/// @brief 名前からボーンIDを取得する
 	/// @param _boneName ボーン名
@@ -69,32 +64,22 @@ private:
 // スケルタルメッシュクラス
 class SkeletalMesh : public Mesh_Group
 {
-	/// @brief ボーン情報
-	BoneList* pBoneList;
+	friend class AssetLoader;
+
+	/// @brief このスケルタルメッシュで使用するボーンリストのポインタ(アセット管理にある)
+	BoneList* pAssetBoneList;
 
 	/// @brief ノード情報の元ノードを持つ
 	std::unique_ptr<TreeNode> pRootNode;
 
 public:
-	SkeletalMesh() : Mesh_Group(MeshType::SK), pBoneList(nullptr) {}
+	SkeletalMesh() : Mesh_Group(MeshType::SK), pAssetBoneList(nullptr) {}
 	~SkeletalMesh() {}
-
-	/// @brief ボーン配列をセット
-	/// @param _pBones ボーン配列
-	void SetBoneList(BoneList* _pBones);
-
-	// ルートノードをセット
-	void SetRootNode(std::unique_ptr<TreeNode> _pRootNode);
 
 	/// @brief 名前からボーンを探す
 	/// @param _name 探すボーン名
 	/// @return ボーンのポインタ
 	Bone* GetBoneByName(const std::string& _name);
-
-	/// @brief ボーンのIDから探す
-	/// @param _idx ボーンID
-	/// @return ボーン
-	Bone* GetBone(u_int _idx);
 
 	// ボーンの数を取得
 	u_int GetBoneCnt();
@@ -102,7 +87,15 @@ public:
 	// ルートノードを取得
 	TreeNode& GetRootNode();
 
-	// ボーンリストを取得
+	// ボーンリストを取得(これは動かさないようにする)
 	BoneList& GetBoneList();
 
+private:
+	/// @brief ルートノードをセット
+	/// @param スケルタルメッシュのルートノードを取得
+	void SetRootNode(std::unique_ptr<TreeNode> _pRootNode);
+
+	/// @brief ボーン配列をセット
+	/// @param _pBones ボーン配列
+	void SetAssetBoneList(BoneList* _pBones);
 };

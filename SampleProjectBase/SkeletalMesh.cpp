@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "SkeletalMesh.h"
 
-void SkeletalMesh::SetBoneList(BoneList* _pBones)
+void SkeletalMesh::SetAssetBoneList(BoneList* _pBones)
 {
-	pBoneList = _pBones;
+	pAssetBoneList = _pBones;
 }
 
 void SkeletalMesh::SetRootNode(std::unique_ptr<TreeNode> _pRootNode)
@@ -13,17 +13,12 @@ void SkeletalMesh::SetRootNode(std::unique_ptr<TreeNode> _pRootNode)
 
 Bone* SkeletalMesh::GetBoneByName(const std::string& _name)
 {
-	return pBoneList->FindBone(_name);
-}
-
-Bone* SkeletalMesh::GetBone(u_int _idx)
-{
-	return pBoneList->FindBone(_idx);
+	return pAssetBoneList->FindBone(_name);
 }
 
 u_int SkeletalMesh::GetBoneCnt()
 {
-	return pBoneList->GetBoneCnt();
+	return pAssetBoneList->GetBoneCnt();
 }
 
 TreeNode& SkeletalMesh::GetRootNode()
@@ -33,14 +28,13 @@ TreeNode& SkeletalMesh::GetRootNode()
 
 BoneList& SkeletalMesh::GetBoneList()
 {
-	return *pBoneList;
+	return *pAssetBoneList;
 }
 
-void BoneList::SetBoneList(std::vector<std::unique_ptr<Bone>> _setList)
+void BoneList::SetAssetBoneList(std::vector<std::unique_ptr<Bone>> _setList)
 {
 	pBones = std::move(_setList);
 }
-
 
 BoneList::BoneList() : loadScale(1.0f)
 {
@@ -58,21 +52,9 @@ BoneList& BoneList::operator=(const BoneList& _other)
 	return *this;
 }
 
-Bone* BoneList::FindBone(u_int _boneIdx)
-{
-	assert(_boneIdx < GetBoneCnt() && "ボーンIDが大きすぎます");
-
-	for (auto& b : pBones)
-	{
-		if (b->GetIndex() == _boneIdx)
-			return b.get();
-	}
-
-	return nullptr;
-}
-
 Bone* BoneList::FindBone(const std::string& _boneName)
 {
+	// ボーン名を探して返す
 	for (auto& b : pBones)
 	{
 		if (b->GetBoneName() == _boneName)
@@ -82,11 +64,25 @@ Bone* BoneList::FindBone(const std::string& _boneName)
 	return nullptr;
 }
 
-Bone& BoneList::GetBone(u_int _arrayIdx)
+Bone* BoneList::GetBone(u_int _boneId)
 {
-	assert(_arrayIdx < GetBoneCnt());
+#ifdef EDIT
+	// ボーンIDが大きすぎたら
+	if (_boneId >= GetBoneCnt())
+	{
+		assert(!"ボーンIDが大きすぎます");
+		return nullptr;
+	}
 
-	return *pBones[_arrayIdx];
+	// 配列の要素数とボーンインデックスが一致していないなtら
+	if (pBones[_boneId]->GetIndex() != _boneId)
+	{
+		assert(!"ボーンIDが対応できていません");
+		return nullptr;
+	}
+#endif // EDIT	
+
+	return pBones[_boneId].get();
 }
 
 u_int BoneList::GetIndex(const std::string& _boneName) const
@@ -132,4 +128,7 @@ void BoneList::Copy(const BoneList& _other)
 		std::unique_ptr<Bone> create = std::make_unique<Bone>(*otherBone.get());
 		pBones.push_back(std::move(create));
 	}
+
+	loadOffsetRotation = _other.loadOffsetRotation;
+	loadScale = _other.loadScale;
 }

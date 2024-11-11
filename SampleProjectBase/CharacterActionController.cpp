@@ -53,7 +53,9 @@ CP_Character& CharacterActionController::GetCharacter()
 
 void CharacterActionController::ImGuiDebug()
 {
+#ifdef EDIT
 	ImGui::Checkbox("DebugDisplay", &isDebugDisplay);
+#endif // EDIT
 }
 
 

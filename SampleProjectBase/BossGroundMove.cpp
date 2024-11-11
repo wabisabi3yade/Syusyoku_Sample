@@ -11,11 +11,11 @@ BossGroundMove::BossGroundMove()
 void BossGroundMove::DebugDisplay()
 {
 #ifdef EDIT
-	using namespace DirectX::SimpleMath;
-	Geometory::SetColor(Color(1, 1, 1, 0.5f));
-	Geometory::SetPosition(GetBossTransform().GetPosition());
-	Geometory::SetScale(Vector3::One * transNearDistance * 2);
-	Geometory::DrawSphere();
+	//using namespace DirectX::SimpleMath;
+	//Geometory::SetColor(Color(1, 1, 1, 0.5f));
+	//Geometory::SetPosition(GetBossTransform().GetPosition());
+	//Geometory::SetScale(Vector3::One * transNearDistance * 2);
+	//Geometory::DrawSphere();
 #endif
 }
 
@@ -81,27 +81,29 @@ void BossGroundMove::Rotation()
 	targetVec.y = 0.0f;
 	targetVec.Normalize();
 
-	// 正面と目標ベクトルとの角度の差分を求める
-	float diffAng = acosf(targetVec.Dot(myTransform.Forward()));
-	diffAng = std::max(diffAng, Mathf::smallValue);
-	float deltaAngle = rotateSpeed * Mathf::degToRad * MainApplication::DeltaTime();
+	Quaternion targetRotation = Quat::RotateToVector(targetVec);
 
-	// 回転速度が差分を超えたら
-	if (diffAng < deltaAngle)
-	{
-		deltaAngle = diffAng;
+	//// 正面と目標ベクトルとの角度の差分を求める
+	//float diffAng = acosf(targetVec.Dot(myTransform.Forward()));
+	//diffAng = std::max(diffAng, Mathf::smallValue);
 
-	}
 
-	// どっち方向に回転させるか
-	float dotRight = targetVec.Dot(myTransform.Right());
-	if (dotRight < 0.0f)
-		deltaAngle *= -1;
+	//float deltaAngle = rotateSpeed * Mathf::degToRad * MainApplication::DeltaTime();
+	//// 回転速度が差分を超えたら
+	//if (diffAng < deltaAngle)
+	//{
+	//	deltaAngle = diffAng;
+	//}
 
+	//// どっち方向に回転させるか
+	//float dotRight = targetVec.Dot(myTransform.Right());
+	//if (dotRight < 0.0f)
+	//	deltaAngle *= -1;
+	//Quaternion deltaRot = Quaternion::CreateFromAxisAngle(Vec3::Up, deltaAngle);]
+	
 	// 回転させる
-	Quaternion deltaRot = Quaternion::CreateFromAxisAngle(Vec3::Up, deltaAngle);
 	Quaternion rot = myTransform.GetRotation();
-	rot = Quat::Multiply(rot, deltaRot);
+	rot = Quaternion::Slerp(rot, targetRotation, rotateSpeed * deltaTime);
 	myTransform.SetRotation(rot);
 }
 

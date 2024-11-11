@@ -2,8 +2,7 @@
 #include "Component.h"
 
 class Bone;
-class SkeletalMesh;
-class CP_MeshRenderer;
+class BoneList;
 
 /// @brief 武器につけるコンポーネント
 class CP_Rig : public Component
@@ -12,8 +11,6 @@ class CP_Rig : public Component
 
 	/// @brief 武器をもつボーン
 	const Bone* pGrabBone;
-
-	const CP_MeshRenderer* pMeshRenderer;
 
 	/// @brief ロード時の角度
 	DirectX::SimpleMath::Quaternion loadMeshRot;
@@ -45,7 +42,7 @@ public:
 
 	/// @brief スケルタルメッシュから情報を取得する
 	/// @param _skeletalMesh 反映するスケルタルメッシュ
-	void SetSkeletalMeshData(SkeletalMesh& _skeletalMesh);
+	void SetSkeletalMeshData(BoneList& _skeletalMesh);
 
 	// ボーン名取得
 	std::string GetGrabBoneName() const;

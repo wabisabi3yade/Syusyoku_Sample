@@ -1,16 +1,14 @@
 #include "pch.h"
 #include "CP_Rig.h"
-
-#include "Bone.h"
-
 #include "Geometory.h"
 #include "GameObject.h"
-
 #include "SkeletalMesh.h"
 
 using namespace DirectX::SimpleMath;
 
-CP_Rig::CP_Rig() : grabBoneName(""), pGrabBone(nullptr), pMeshRenderer(nullptr), loadMeshScale(0.0f), isDisplayPos(false)
+CP_Rig::CP_Rig():
+	grabBoneName(""), pGrabBone(nullptr), loadMeshScale(0.0f),
+	isDisplayPos(false)
 {
 }
 
@@ -69,12 +67,12 @@ void CP_Rig::SetGrabBoneName(const std::string& _grabName)
 	}
 }
 
-void CP_Rig::SetSkeletalMeshData(SkeletalMesh& _skeletalMesh)
+void CP_Rig::SetSkeletalMeshData(BoneList& _boneList)
 {
-	loadMeshScale = _skeletalMesh.GetLoadOffsetScale();
-	loadMeshRot = Quat::ToQuaternion(_skeletalMesh.GetLoadOffsetAngles());
+	loadMeshScale = _boneList.GetLoadScale();
+	loadMeshRot = _boneList.GetLoadRotation();
 
-	Bone* pBone = _skeletalMesh.GetBoneByName(grabBoneName);
+	Bone* pBone = _boneList.FindBone(grabBoneName);
 	if (pBone)
 	{
 		pGrabBone = pBone;
@@ -150,11 +148,11 @@ void CP_Rig::SetBoneFromParent()
 
 	if (!pParent) return;
 
-	CP_MeshRenderer* pMr = pParent->GetGameObject().GetComponent<CP_MeshRenderer>();
-	if (!pMr) return;
+	CP_Animation* pAnimation = pParent->GetGameObject().GetComponent<CP_Animation>();
+	if (!pAnimation) return;
 
-	SkeletalMesh* pSk = dynamic_cast<SkeletalMesh*>(pMr->GetRenderMesh());
-	if (!pSk) return;
+	BoneList* pBoneList = pAnimation->GetMoveBoneList();
+	if (!pBoneList) return;
 
-	SetSkeletalMeshData(*pSk);
+	SetSkeletalMeshData(*pBoneList);
 }

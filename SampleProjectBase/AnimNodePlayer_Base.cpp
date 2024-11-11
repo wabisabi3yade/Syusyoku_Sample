@@ -6,7 +6,7 @@
 #include "AnimationNotifyFactory.h"
 
 AnimNodePlayer_Base::AnimNodePlayer_Base(const AnimationNode_Base& _playNode, BoneList& _boneList, Transform& _transform)
-	: pPlayAnimNode(&_playNode), pBoneList(&_boneList), pObjectTransform(&_transform),
+	: pPlayAnimNode(&_playNode), pAssetBoneList(&_boneList), pObjectTransform(&_transform),
 	curPlayRatio(0.0f), lastAnimationRatio(-Mathf::smallValue), curAnimationRatio(0.0f), playerSpeedTimes(1.0f), allPlaySpeed(0.0f), isJustLoop(false), isPlaying(true)
 {
 }
@@ -249,8 +249,8 @@ void AnimNodePlayer_Base::ApplyLoadTransform(DirectX::SimpleMath::Vector3& _root
 {
 	using namespace DirectX::SimpleMath;
 
-	_rootMotionPos *= pBoneList->GetLoadScale();
-	_rootMotionPos = Vector3::Transform(_rootMotionPos, Matrix::CreateFromQuaternion(pBoneList->GetLoadRotation()));
+	_rootMotionPos *= pAssetBoneList->GetLoadScale();
+	_rootMotionPos = Vector3::Transform(_rootMotionPos, Matrix::CreateFromQuaternion(pAssetBoneList->GetLoadRotation()));
 }
 
 void AnimNodePlayer_Base::ImGuiDebug()
