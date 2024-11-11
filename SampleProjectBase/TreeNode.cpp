@@ -77,9 +77,9 @@ std::string TreeNode::GetName() const
     return nodeName;
 }
 
-Bone& TreeNode::GetBone()
+u_int TreeNode::GetBoneIdx() const
 {
-    return *pLinkBone;
+    return pLinkBone->GetIndex();
 }
 
 DirectX::SimpleMath::Matrix TreeNode::GetTransformMtx() const

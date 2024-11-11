@@ -14,7 +14,7 @@ class CrossFadeAnimation : public IAnimInterpolate
 	/// @brief 遷移先アニメーション
 	AnimNodePlayer_Base* pToNodePlayer;
 
-	BoneList* pBoneList;
+	BoneList* pAssetBoneList;
 
 	/// @brief 遷移のウェイト
 	float transitionWeight;

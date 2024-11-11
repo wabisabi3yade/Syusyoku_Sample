@@ -73,37 +73,6 @@ inline bool AssetGetter::ImGuiGetCombobox(const std::string& _caption, std::stri
 	return isChange;
 }
 
-//template<HashiTaku::AssetConcept T>
-//inline bool AssetGetter::ImGuiGetCombobox(T* _asset, const std::string& _caption)
-//{
-//	bool isChange = false;
-//
-//#ifdef EDIT
-//	AssetList& assetList = pAssetCollection->GetAssetList<T>();
-//	std::vector<const std::string*> assetNames;
-//	for (auto& asset : assetList)
-//	{
-//		assetNames.push_back(&asset.first);
-//	}
-//
-//	// –¼‘OŽæ“¾
-//	std::string currentName;
-//	if (_asset)
-//	{
-//		Asset_Base* pAsset = static_cast<Asset_Base*>(_asset);
-//		currentName = pAsset->GetAssetName();
-//	}
-//
-//	isChange = ImGuiMethod::ComboBox(_caption, currentName, assetNames);
-//	if (isChange)
-//	{
-//		_asset = GetAsset<T>(currentName);
-//	}
-//#endif // EDIT
-//
-//	return isChange;
-//}
-
 namespace HashiTaku
 {
 	template<HashiTaku::AssetConcept T> T* LoadJsonAsset(const std::string& _s, const nlohmann::json& _j);

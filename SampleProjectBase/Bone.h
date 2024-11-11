@@ -31,7 +31,9 @@ class Bone
 
 public:
 	Bone() : boneName(""), boneIdx(0) {}
+	Bone(const Bone& _other);
 	~Bone() {}
+	Bone& operator=(const Bone& _other);
 
 	/// @brief コンビネーション行列を作成
 	/// @param _parentMtx 親ノードまでのローカルトランスフォーム
@@ -69,4 +71,7 @@ public:
 
 	// インデックスを取得
 	u_int GetIndex() const;
+
+private:
+	void Copy(const Bone& _other);
 };

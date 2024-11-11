@@ -10,10 +10,10 @@ AnimSingleNodePlayer::AnimSingleNodePlayer(const AnimationNode_Base& _singleNode
 void AnimSingleNodePlayer::Update(std::vector<BoneTransform>& _outTransforms)
 {
 	float playingRatio = GetAnimationRatio();
-	_outTransforms.resize(pBoneList->GetBoneCnt());
+	_outTransforms.resize(pAssetBoneList->GetBoneCnt());
 
 	//ボーン数ループ
-	for (unsigned int b_i = 0; b_i < pBoneList->GetBoneCnt(); b_i++)
+	for (unsigned int b_i = 0; b_i < pAssetBoneList->GetBoneCnt(); b_i++)
 	{
 		// 再生時間から各パラメータを取得
 		pPlayAnimNode->GetAnimTransform(_outTransforms[b_i], b_i, playingRatio);
@@ -25,7 +25,7 @@ void AnimSingleNodePlayer::CalcRootMotionPosSpeed(float _controllerSpeed)
 	// コントローラーの
 	const SingleAnimationNode& singleNode = static_cast<const SingleAnimationNode&>(*pPlayAnimNode);
 
-	rootMotionPosSpeedPerSec = _controllerSpeed * singleNode.GetRootMotionPosSpeed() * pBoneList->GetLoadScale();
+	rootMotionPosSpeedPerSec = _controllerSpeed * singleNode.GetRootMotionPosSpeed() * pAssetBoneList->GetLoadScale();
 }
 
 DirectX::SimpleMath::Vector3 AnimSingleNodePlayer::GetRootMotionPos(float _ratio, bool _isLoadScaling) const
@@ -50,12 +50,12 @@ DirectX::SimpleMath::Quaternion AnimSingleNodePlayer::GetRootMotionRot(float _ra
 
 	// ロード時の回転量を掛ける
 	//if (_isLoadScaling)
-	//	rootMotionRot = Quat::Multiply(rootMotionRot, pBoneList->GetLoadRotation());
+	//	rootMotionRot = Quat::Multiply(rootMotionRot, pAssetBoneList->GetLoadRotation());
 
 	return rootMotionRot;
 }
 
 float AnimSingleNodePlayer::GetModelScale() const
 {
-	return pBoneList->GetLoadScale();
+	return pAssetBoneList->GetLoadScale();
 }
