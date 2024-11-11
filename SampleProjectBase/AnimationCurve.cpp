@@ -12,6 +12,11 @@ constexpr float MAX_TIME(1.0f);	// 最大時間
 constexpr float MIN_VAL(0.0f);	// 最小値
 constexpr float MAX_VAL(1.0f);	// 最大値
 
+constexpr float GRAPH_DISPLAY_MIN_X(MIN_TIME - 0.2f);	// グラフ表示するX最小
+constexpr float GRAPH_DISPLAY_MAX_X(MAX_TIME + 0.2f);	// グラフ表示するX最大
+constexpr float GRAPH_DISPLAY_MIN_Y(MIN_VAL - 0.2f);	// グラフ表示するY最小
+constexpr float GRAPH_DISPLAY_MAX_Y(MAX_VAL + 0.2f);	// グラフ表示するY最大
+
 AnimationCurve::AnimationCurve()
 	: easeKind(HashiTaku::EaseKind::Linear), /*maxValue(1.0f), minValue(0.0f),*/ isUseHermite(false)
 {
@@ -21,16 +26,6 @@ AnimationCurve::AnimationCurve()
 		{1.0f, 1.0f, 0.0f}
 	};
 }
-
-//void AnimationCurve::SetMaxValue(float _maxValue)
-//{
-//	maxValue = std::max(minValue, _maxValue);
-//}
-//
-//void AnimationCurve::SetMinValue(float _minValue)
-//{
-//	minValue = std::min(maxValue, minValue);
-//}
 
 void AnimationCurve::SetCurveName(const std::string& _name)
 {
@@ -174,23 +169,22 @@ void AnimationCurve::ImGuiDebug()
 #ifdef EDIT
 	ImGui::Text(curveName.c_str());
 
-	//	ImGui::SetNextWindowSize(ImVec2(1.0f, 1.0f), ImGuiCond_Always);
-		// ImPlotを初期化してカーブを描画
-
-	//// 範囲を設定
-	//float editMinVal = minValue;
-	//float editMaxVal = maxValue;
-	//if (ImGui::DragFloatRange2("Range", &editMinVal, &editMaxVal, 0.1f))
-	//{
-	//	SetMinValue(editMinVal);
-	//	SetMaxValue(editMaxVal);
-	//}
-
+	// イージング選択
 	HashiTaku::Easing::ImGuiSelect(easeKind);
 	ImGui::Checkbox("UseHermite", &isUseHermite);
+
+	// グラフ範囲制限
+	ImPlot::SetNextAxesLimits(
+		GRAPH_DISPLAY_MIN_X,
+		GRAPH_DISPLAY_MAX_X,
+		GRAPH_DISPLAY_MIN_Y,
+		GRAPH_DISPLAY_MAX_Y,
+		ImGuiCond_Always
+	);
+
 	if (ImPlot::BeginPlot("##Animation Curve"))
 	{
-		ImPlot::SetupAxes("##Time", "##Value"/*, ImPlotAxisFlags_AutoFit, ImPlotAxisFlags_AutoFit*/);
+		ImPlot::SetupAxes("##Time", "##Value", ImPlotAxisFlags_AutoFit, ImPlotAxisFlags_AutoFit);
 
 		if (isUseHermite)
 		{
@@ -201,7 +195,7 @@ void AnimationCurve::ImGuiDebug()
 			ImGuiPlotEditing();
 
 			// 追加・削除
-			ImAddPopPlot();			
+			ImAddPopPlot();
 		}
 
 		ImDrawGraph();
@@ -229,7 +223,7 @@ void AnimationCurve::ImGuiPlotEditing()
 	};
 
 	// クリック時
-	if (ImGui::IsMouseClicked(2))
+	if (ImGui::IsMouseClicked(0))
 	{
 		bool isSelecting = false;
 		for (auto& point : plotPoints)
@@ -237,15 +231,19 @@ void AnimationCurve::ImGuiPlotEditing()
 			if (CheckReactPlot(point, floatMousePos.x, floatMousePos.y))
 			{
 				editingPlot = &point;
+				dragingPlot = &point;
 				isSelecting = true;
 				break;
 			}
 		}
+
+		return;
 	}
+
 	// ドラッグ編集
-	if (ImGui::IsMouseDragging(2))
+	if (ImGui::IsMouseDragging(0))
 	{
-		if (!editingPlot || !CheckReactPlot(*editingPlot, floatMousePos.x, floatMousePos.y)) return;
+		if (!dragingPlot) return;
 
 		// 値を動かす
 		editingPlot->value = std::clamp(floatMousePos.y, MIN_VAL, MAX_VAL/*minValue, maxValue*/);
@@ -263,6 +261,10 @@ void AnimationCurve::ImGuiPlotEditing()
 				plotPoints.sort(SortPointTime);
 		}
 	}
+	
+	// クリックを離したら
+	if (ImGui::IsMouseReleased(0))
+		dragingPlot = nullptr;
 
 #endif // EDIT
 
@@ -284,7 +286,7 @@ void AnimationCurve::ImEditVectorPoint()
 	ImPlotPoint mousePos = ImPlot::GetPlotMousePos();
 	if (!isVectorEdit)	// ベクトル点編集していないなら
 	{
-		if (ImGui::IsMouseClicked(2))
+		if (ImGui::IsMouseClicked(0))
 		{
 			// 反応距離
 			double disVM_X = mousePos.x - vectorPoint.x;
@@ -303,7 +305,7 @@ void AnimationCurve::ImEditVectorPoint()
 	else
 	{
 		// クリック時
-		if (ImGui::IsMouseDragging(2))
+		if (ImGui::IsMouseDragging(0))
 		{
 			DirectX::SimpleMath::Vector2 vecDis;
 			vecDis.x = static_cast<float>(mousePos.x) - editingPlot->time;
@@ -317,8 +319,11 @@ void AnimationCurve::ImEditVectorPoint()
 			editingPlot->vector = vecDis.y * VECTOR_LENGTH;
 		}
 
-		if (ImGui::IsMouseReleased(2))	// 離したら
+		if (ImGui::IsMouseReleased(0))	// 離したら
+		{
 			isVectorEdit = false;
+		}
+			
 	}
 
 #endif // EDIT
@@ -362,7 +367,7 @@ void AnimationCurve::ImDrawGraph()
 			valuePoints[p_i] = HashiTaku::Easing::EaseValue(timePoints[p_i], easeKind);
 		}
 	}
-	
+
 
 	ImPlot::PlotLine("##AnimationCurve", timePoints, valuePoints, DRAW_POINT_CNT);
 }
@@ -401,7 +406,7 @@ void AnimationCurve::ImAddPopPlot()
 				}
 			}
 
-			ImGui::DragFloat("Value", &editingPlot->value, 0.001f, MIN_VAL, MAX_VAL/*minValue, maxValue*/);
+			ImGui::DragFloat("Value", &editingPlot->value, 0.001f, MIN_VAL, MAX_VAL);
 			ImGui::DragFloat("Vector", &editingPlot->vector, 0.001f, -1.0f, 1.0f);
 		}
 

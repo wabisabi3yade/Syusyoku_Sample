@@ -1,9 +1,9 @@
 #pragma once
-#include "CloneComponent.h"
+#include "Component.h"
 
 class CP_Camera;
 
-class CP_CameraMove : public Component,  public CloneComponent<CP_CameraMove>
+class CP_CameraMove : public Component
 {
 	/// @brief í«è]ëŒè€
 	GameObject* pTargetObj;

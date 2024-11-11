@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "CP_Camera.h"
-
 #include "GameObject.h"
-
 #include "InSceneSystemManager.h"
 
 using namespace DirectX::SimpleMath;
@@ -23,11 +21,6 @@ void CP_Camera::Init()
 	InSceneSystemManager::GetInstance()->SetCamera(*this);
 
 	SetPerspective();	// 透視投影から始める
-}
-
-void CP_Camera::LateUpdate()
-{
-	/*UpdateProjection();*/
 }
 
 void CP_Camera::Draw()
@@ -63,12 +56,8 @@ void CP_Camera::ImGuiDebug()
 
 void CP_Camera::UpdateViewMatrix()
 {
+	// 注視点を求める
 	Vector3 focusPos = GetTransform().GetPosition() + GetTransform().Forward();
-
-	if (Vector3::Distance(GetTransform().GetPosition(), focusPos) < Mathf::smallValue)
-	{
-		focusPos.z += Mathf::smallValue;
-	}
 
 	// ビュー変換行列を求める
 	Matrix viewMatrix = DirectX::XMMatrixLookAtLH
@@ -112,7 +101,6 @@ nlohmann::json CP_Camera::Save()
 
 	data["fov"] = fov;
 	data["distance"] = distance;
-	data["isOrth"] = isOrthographic;
 	data["viewSlot"] = viewPortSlot;
 
 	return data;
@@ -124,7 +112,6 @@ void CP_Camera::Load(const nlohmann::json& _data)
 
 	LoadJsonFloat("fov", fov, _data);
 	LoadJsonFloat("distance", distance, _data);
-	LoadJsonBoolean("isOrth", isOrthographic, _data);
 	LoadJsonUnsigned("viewSlot", viewPortSlot, _data);
 }
 
@@ -154,6 +141,7 @@ void CP_Camera::UpdatePerspective()
 		screenWidth / screenHeight,   // アスペクト比
 		nearZ,	// 描画最近
 		farZ);	// 描画最遠
+
 	mat = mat.Transpose();
 
 	// 投影行列の参照を取得し、ビュー変換行列を代入する

@@ -2,14 +2,24 @@
 
 #include "ShaderDefine.h"
 
-// csoファイルが入っているフォルダまでのパス名
-constexpr const char* FILE_FOLDER = "assets/Shader/";
-
 void ShaderCollection::LoadFromCSO()
 {
-	LoadVS();
-	
-	LoadPS();
+	// 頂点シェーダー
+	LoadShader<VS_Gouraud>("VS_Gouraud.cso");
+	LoadShader<VS_Primitive>("VS_Primitive.cso");
+	LoadShader<VS_SkinnedAnimation>("VS_SkinAnimation.cso");
+	LoadShader<VertexShader>("VS_Line.cso");
+	LoadShader<VertexShader>("VS_Sprite.cso");
+	LoadShader<VertexShader>("VS_UI.cso");
+	defaultVS = "VS_Gouraud";
+
+	// ピクセルシェーダー
+	LoadShader<PS_TexColor>("PS_TexColor.cso");
+	LoadShader<PS_Unlit>("PS_Unlit.cso");
+	LoadShader<PixelShader>("PS_Primitive.cso");
+	LoadShader<PixelShader>("PS_Line.cso");
+	LoadShader<PixelShader>("PS_UI.cso");
+	defaultPS = "PS_TexColor";
 }
 
 void ShaderCollection::LoadVS()

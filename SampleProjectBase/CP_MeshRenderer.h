@@ -10,18 +10,11 @@ class CP_MeshRenderer : public CP_Renderer
 	/// @brief 描画するメッシュ群
 	Mesh_Group* pRenderMesh{ nullptr };
 
-	/// @brief 描画時に使用するマテリアル(無ければメッシュ側のマテリアルで描画)
-	std::vector<Material*> pRenderMaterial;
-
 	/// @brief オブジェクトの原点を表示するか
 	bool isOriginDisplay;
 public:
 	CP_MeshRenderer();
 	~CP_MeshRenderer() {}
-
-	void Start();
-
-	void Draw() override;
 
 	/// @brief 描画するメッシュをセット
 	/// @param _renderMesh メッシュ群
@@ -42,6 +35,10 @@ public:
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
 private:
+	// コンポーネント共通関数
+	void Start() override;
+	void Draw() override;
+
 	/// @brief 描画できるのか返す
 	/// @return 描画できるか？
 	bool IsCanDraw();

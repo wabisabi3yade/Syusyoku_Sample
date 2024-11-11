@@ -109,6 +109,7 @@ nlohmann::json CP_CameraMove::Save()
 		data["target"] = pTargetObj->GetName();
 
 	data["rotSpeed"] = rotateSpeed;
+	data["centerAngle"] = centerAngle;
 	SaveJsonVector3("offsetTarget", offsetTarget, data);
 	data["dis_Hori"] = distanceHori;
 	data["dis_Ver"] = distanceVer;
@@ -126,6 +127,7 @@ void CP_CameraMove::Load(const nlohmann::json& _data)
 
 	LoadJsonVector3("offsetTarget", offsetTarget, _data);
 	LoadJsonFloat("rotSpeed", rotateSpeed, _data);
+	LoadJsonFloat("centerAngle", centerAngle, _data);
 	LoadJsonFloat("dis_Hori", distanceHori, _data);
 	LoadJsonFloat("dis_Ver", distanceVer, _data);
 }

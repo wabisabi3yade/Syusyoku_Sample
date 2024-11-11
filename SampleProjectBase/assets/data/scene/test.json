@@ -4,56 +4,6 @@
             "active": true,
             "components": [
                 {
-                    "distance": 1000.0,
-                    "enable": true,
-                    "fov": 45.0,
-                    "isOrth": false,
-                    "name": "Camera",
-                    "priority": 0,
-                    "viewSlot": 0
-                },
-                {
-                    "dis_Hori": 6.599999904632568,
-                    "dis_Ver": 2.799999952316284,
-                    "enable": true,
-                    "name": "CameraMove",
-                    "offsetTarget": [
-                        0.0,
-                        2.0,
-                        0.0
-                    ],
-                    "priority": 0,
-                    "rotSpeed": 120.0,
-                    "target": "Player"
-                }
-            ],
-            "layer": 1,
-            "name": "Camera",
-            "tag": 1,
-            "transform": {
-                "child": null,
-                "pos": [
-                    0.0,
-                    4.300000190734863,
-                    -24.799999237060547
-                ],
-                "rotation": [
-                    -0.0,
-                    0.0,
-                    -0.0,
-                    1.0
-                ],
-                "scale": [
-                    4.1999993324279785,
-                    0.9999997019767761,
-                    0.9999997019767761
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
                     "AABB": false,
                     "angles": [
                         0.0,
@@ -129,6 +79,84 @@
                     100.0,
                     1.0,
                     100.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "distance": 1000.0,
+                    "enable": true,
+                    "fov": 45.0,
+                    "name": "Camera",
+                    "priority": 0,
+                    "viewSlot": 0
+                },
+                {
+                    "centerAngle": -90.0,
+                    "dis_Hori": 6.599999904632568,
+                    "dis_Ver": 2.799999952316284,
+                    "enable": true,
+                    "name": "CameraMove",
+                    "offsetTarget": [
+                        0.0,
+                        2.0,
+                        0.0
+                    ],
+                    "priority": 0,
+                    "rotSpeed": 120.0,
+                    "target": "Player"
+                }
+            ],
+            "layer": 1,
+            "name": "Camera",
+            "tag": 1,
+            "transform": {
+                "child": null,
+                "pos": [
+                    0.0,
+                    4.300000190734863,
+                    -24.799999237060547
+                ],
+                "rotation": [
+                    -0.0,
+                    0.0,
+                    -0.0,
+                    1.0
+                ],
+                "scale": [
+                    4.1999993324279785,
+                    0.9999997019767761,
+                    0.9999997019767761
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": null,
+            "layer": 0,
+            "name": "Shield",
+            "tag": 0,
+            "transform": {
+                "child": [
+                    "Shield_Mesh"
+                ],
+                "pos": [
+                    0.0,
+                    0.3999992609024048,
+                    -15.399999618530273
+                ],
+                "rotation": [
+                    0.0,
+                    0.9990482330322266,
+                    0.0,
+                    0.04361892491579056
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
                 ]
             }
         },
@@ -412,69 +440,6 @@
         },
         {
             "active": true,
-            "components": null,
-            "layer": 0,
-            "name": "Shield",
-            "tag": 0,
-            "transform": {
-                "child": [
-                    "Shield_Mesh"
-                ],
-                "pos": [
-                    0.0,
-                    0.3999992609024048,
-                    -15.399999618530273
-                ],
-                "rotation": [
-                    0.0,
-                    0.9990482330322266,
-                    0.0,
-                    0.04361892491579056
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "enable": true,
-                    "grabName": "mixamorig:LeftHand",
-                    "name": "Rig",
-                    "priority": 0
-                }
-            ],
-            "layer": 0,
-            "name": "Player_LeftHand",
-            "tag": 0,
-            "transform": {
-                "child": [
-                    "Shield"
-                ],
-                "pos": [
-                    0.0,
-                    0.3999992609024048,
-                    -15.399999618530273
-                ],
-                "rotation": [
-                    0.0,
-                    0.9990482330322266,
-                    0.0,
-                    0.04361892491579056
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            }
-        },
-        {
-            "active": true,
             "components": [
                 {
                     "attackableTags": null,
@@ -545,6 +510,41 @@
             "components": [
                 {
                     "enable": true,
+                    "grabName": "mixamorig:LeftHand",
+                    "name": "Rig",
+                    "priority": 0
+                }
+            ],
+            "layer": 0,
+            "name": "Player_LeftHand",
+            "tag": 0,
+            "transform": {
+                "child": [
+                    "Shield"
+                ],
+                "pos": [
+                    0.0,
+                    0.3999992609024048,
+                    -15.399999618530273
+                ],
+                "rotation": [
+                    0.0,
+                    0.9990482330322266,
+                    0.0,
+                    0.04361892491579056
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "enable": true,
                     "meshName": "Knight_Sword.fbx",
                     "name": "MeshRenderer",
                     "priority": 0
@@ -570,45 +570,6 @@
                     1.2000008821487427,
                     1.2000006437301636,
                     1.200000524520874
-                ]
-            }
-        },
-        {
-            "active": true,
-            "components": [
-                {
-                    "enable": true,
-                    "meshName": "Knight.fbx",
-                    "name": "MeshRenderer",
-                    "priority": 0
-                },
-                {
-                    "animConName": "ANC_Player",
-                    "enable": true,
-                    "name": "Animation",
-                    "priority": 10
-                }
-            ],
-            "layer": 0,
-            "name": "aa",
-            "tag": 0,
-            "transform": {
-                "child": null,
-                "pos": [
-                    -2.5999999046325684,
-                    0.0,
-                    0.0
-                ],
-                "rotation": [
-                    -0.0,
-                    0.0,
-                    -0.0,
-                    1.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
                 ]
             }
         },
@@ -743,7 +704,7 @@
                                 "data": {
                                     "moveAcceleration": 2.0,
                                     "moveMaxSpeed": 5.0,
-                                    "moveRotateSpeed": 150.0,
+                                    "moveRotateSpeed": 10.0,
                                     "transNearDistance": 3.0
                                 },
                                 "typeString": "Run"

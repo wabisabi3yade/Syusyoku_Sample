@@ -29,20 +29,23 @@ class AnimationCurve : public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
 	/// @brief イージング種類
 	HashiTaku::EaseKind easeKind;
 
-	/*/// @brief 最大値
-	float maxValue;
-
-	/// @brief 最小値
-	float minValue;*/
-
 	/// @brief エルミート曲線を使用するか？（使用しない場合、線形）
 	bool isUseHermite;
 #ifdef EDIT
 	// カーブ名
 	std::string curveName{ "animationCurve" };
-	// マウス編集中のプロット点
+
+	// 編集対象になっているかのプロット点
 	HermitePlotParam* editingPlot{ nullptr };
+
+	// 編集対象になっているかのプロット点
+	HermitePlotParam* dragingPlot{ nullptr };
+
+	// 速度ベクトル編集中か？
 	bool isVectorEdit{ false };
+
+	// 1フレーム前はドラッグ中か？
+	bool prevIsDrag{ false };
 #endif
 
 public:

@@ -1,8 +1,8 @@
 #pragma once
-#include "CloneComponent.h"
+#include "Component.h"
 
 // ゲーム内カメラクラス
-class CP_Camera : public Component, public CloneComponent<CP_Camera>
+class CP_Camera : public Component
 {
 	/// @brief カメラの上ベクトル
 	DirectX::SimpleMath::Vector3 camUp{ Vec3::Up };
@@ -23,7 +23,6 @@ public:
 	~CP_Camera() {};
 
 	void Init() override;
-	void LateUpdate() override;
 	void Draw() override;
 	void OnDestroy() override;
 

@@ -71,35 +71,18 @@ void BossGroundMove::TransitionCheckUpdate()
 void BossGroundMove::Rotation()
 {
 	using namespace DirectX::SimpleMath;
-
 	float deltaTime = MainApplication::DeltaTime();
 
 	Transform& myTransform = GetBossTransform();
 	Transform& playerTrans = GetPlayerTransform();
 
+	// プレイヤーへの方向ベクトルを求める
 	Vector3 targetVec = playerTrans.GetPosition() - myTransform.GetPosition();
 	targetVec.y = 0.0f;
 	targetVec.Normalize();
 
+	// ベクトルからクォータニオンを生成
 	Quaternion targetRotation = Quat::RotateToVector(targetVec);
-
-	//// 正面と目標ベクトルとの角度の差分を求める
-	//float diffAng = acosf(targetVec.Dot(myTransform.Forward()));
-	//diffAng = std::max(diffAng, Mathf::smallValue);
-
-
-	//float deltaAngle = rotateSpeed * Mathf::degToRad * MainApplication::DeltaTime();
-	//// 回転速度が差分を超えたら
-	//if (diffAng < deltaAngle)
-	//{
-	//	deltaAngle = diffAng;
-	//}
-
-	//// どっち方向に回転させるか
-	//float dotRight = targetVec.Dot(myTransform.Right());
-	//if (dotRight < 0.0f)
-	//	deltaAngle *= -1;
-	//Quaternion deltaRot = Quaternion::CreateFromAxisAngle(Vec3::Up, deltaAngle);]
 	
 	// 回転させる
 	Quaternion rot = myTransform.GetRotation();
