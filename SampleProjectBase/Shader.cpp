@@ -135,6 +135,11 @@ void Shader::SetName(const std::string& _name)
 	shaderName = _name;
 }
 
+Shader::Type Shader::GetShaderType() const
+{
+	return type;
+}
+
 Shader::BufferType Shader::GetBufferType(u_int _slot)
 {
 	return bufferTypes[_slot];

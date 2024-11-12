@@ -403,7 +403,7 @@ void btGeneric6DofConstraint::buildJacobian()
 #ifndef __SPU__
 	if (m_useSolveConstraintObsolete)
 	{
-		// Clear accumulated impulses for the next simulation step
+		// ClearColor accumulated impulses for the next simulation step
 		m_linearLimits.m_accumulatedImpulse.setValue(btScalar(0.), btScalar(0.), btScalar(0.));
 		int i;
 		for (i = 0; i < 3; i++)

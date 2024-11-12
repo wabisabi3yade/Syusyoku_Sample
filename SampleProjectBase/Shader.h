@@ -87,6 +87,10 @@ public:
 	/// @param _name 名前
 	void SetName(const std::string& _name);
 
+	/// @brief シェーダーの種類を取得
+	/// @return シェーダータイプ
+	Type GetShaderType() const;
+
 	/// @brief バッファの種類
 	/// @param _slot スロット番号
 	/// @return バッファの種類

@@ -1227,9 +1227,9 @@ static void ShowDemoWindowWidgets()
         ImGui::CheckboxFlags("ImGuiComboFlags_PopupAlignLeft", &flags, ImGuiComboFlags_PopupAlignLeft);
         ImGui::SameLine(); HelpMarker("Only makes a difference if the popup is larger than the combo");
         if (ImGui::CheckboxFlags("ImGuiComboFlags_NoArrowButton", &flags, ImGuiComboFlags_NoArrowButton))
-            flags &= ~ImGuiComboFlags_NoPreview;     // Clear incompatible flags
+            flags &= ~ImGuiComboFlags_NoPreview;     // ClearColor incompatible flags
         if (ImGui::CheckboxFlags("ImGuiComboFlags_NoPreview", &flags, ImGuiComboFlags_NoPreview))
-            flags &= ~(ImGuiComboFlags_NoArrowButton | ImGuiComboFlags_WidthFitPreview); // Clear incompatible flags
+            flags &= ~(ImGuiComboFlags_NoArrowButton | ImGuiComboFlags_WidthFitPreview); // ClearColor incompatible flags
         if (ImGui::CheckboxFlags("ImGuiComboFlags_WidthFitPreview", &flags, ImGuiComboFlags_WidthFitPreview))
             flags &= ~ImGuiComboFlags_NoPreview;
 
@@ -1381,7 +1381,7 @@ static void ShowDemoWindowWidgets()
                 sprintf(buf, "Object %d", n);
                 if (ImGui::Selectable(buf, selection[n]))
                 {
-                    if (!ImGui::GetIO().KeyCtrl)    // Clear selection when CTRL is not held
+                    if (!ImGui::GetIO().KeyCtrl)    // ClearColor selection when CTRL is not held
                         memset(selection, 0, sizeof(selection));
                     selection[n] ^= 1;
                 }
@@ -7498,10 +7498,10 @@ struct ExampleAppLog
     ExampleAppLog()
     {
         AutoScroll = true;
-        Clear();
+        ClearColor();
     }
 
-    void    Clear()
+    void    ClearColor()
     {
         Buf.clear();
         LineOffsets.clear();
@@ -7550,7 +7550,7 @@ struct ExampleAppLog
         if (ImGui::BeginChild("scrolling", ImVec2(0, 0), ImGuiChildFlags_None, ImGuiWindowFlags_HorizontalScrollbar))
         {
             if (clear)
-                Clear();
+                ClearColor();
             if (copy)
                 ImGui::LogToClipboard();
 

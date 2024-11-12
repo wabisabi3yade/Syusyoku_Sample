@@ -30,9 +30,9 @@ void CP_MeshRenderer::Draw()
 
 	RenderParam& rendererParam = Direct3D11::GetInstance()->GetRenderer()->GetParameter();
 
+	// WVP求める
 	Transform& transform = GetTransform();
 	auto& wvp = rendererParam.GetWVP();
-
 	wvp.world = CalcLoadMtx() * transform.GetWorldMatrix();
 	wvp.world = wvp.world.Transpose();
 
@@ -41,30 +41,6 @@ void CP_MeshRenderer::Draw()
 
 	// 原点表示
 	OriginDisplay();
-
-	// 影描画
-	/*Matrix mtx[3];
-	mtx[0] = Matrix::Identity;
-	mtx[0] = mtx[0] * Matrix::CreateScale(scale);
-
-	Matrix LMat[3];
-	LMat[0] = mtx[0];
-	SceneLights& sceneLight = InSceneSystemManager::GetInstance()->GetSceneLights();
-	SceneLightsParam& lightParam = sceneLight.GetLightsParam();
-	Vector3 lightPos = lightParam.dirParam.base.position;
-	Vector3 lightDir = lightParam.dirParam.direction;
-
-	LMat[1] = DirectX::XMMatrixLookAtLH(
-		DirectX::XMVectorSet(lightPos.x, lightPos.y, lightPos.z, 0.0f),
-		DirectX::XMVectorSet(lightPos.x + lightDir.x, lightPos.y + lightDir.y, lightPos.z + lightDir.z, 0.0f),
-		DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)
-	);
-	LMat[1].Transpose(LMat[1]);
-
-	LMat[2] = DirectX::XMMatrixOrthographicLH(5.0f, 5.0f, 0.1f, 100.0f);
-	LMat[2].Transpose(LMat[2]);
-
-	Color color = { 1.0f,1.0f,1.0f,1.0f };*/
 }
 
 void CP_MeshRenderer::SetRenderMesh(Mesh_Group& _renderMesh)
@@ -94,17 +70,86 @@ void CP_MeshRenderer::SetPixelShader(const std::string& _psName)
 
 void CP_MeshRenderer::ImGuiDebug()
 {
+#ifdef EDIT
 	// ImGui開いたときだけ原点表示
 	isOriginDisplay = true;
 
+	// メッシュ取得
 	std::string meshName;
 	if (pRenderMesh)
 		meshName = pRenderMesh->GetAssetName();
-
 	if (AssetGetter::ImGuiGetCombobox<Mesh_Group>("model", meshName))
 	{
 		pRenderMesh = AssetGetter::GetAsset<Mesh_Group>(meshName);
 	}
+	ImGuiMethod::LineSpaceSmall();
+
+	ImGui::Text("Material Set");
+	// マテリアルを取得
+	u_int cnt = 0;
+	auto endItr = setMaterials.end();
+	for (auto matItr = setMaterials.begin(); matItr != endItr; ++matItr)
+	{
+		// テキスト
+		std::string display = std::to_string(cnt) + ":";
+		std::string matName = "Null";
+		if (*matItr != nullptr)
+			matName = (*matItr)->GetAssetName();
+
+		display += matName;
+
+		ImGui::Text(display.c_str());
+
+		ImGui::SameLine();
+
+		// Nullにする
+		if (ImGui::Button("Null"))
+			*matItr = nullptr;
+
+		cnt++;
+	}
+	std::string meshCntText = "meshCnt:" + static_cast<u_int>(setMaterials.size());
+	ImGui::Text(meshCntText.c_str());
+	if (ImGui::Button("+"))
+	{
+		setMaterials.push_back(nullptr);	// 枠追加
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("-"))
+	{
+		setMaterials.pop_back();	// 枠追加
+	}
+
+
+	ImGuiMethod::LineSpaceSmall();
+
+	int useMaterialCnt = static_cast<int>(setMaterials.size());
+
+	// マテリアルを指定
+	ImGuiMethod::PushItemSmallWidth();
+	static int inputId = 0;
+	ImGui::DragInt("MatId", &inputId, 1, 0, useMaterialCnt - 1);
+	ImGui::PopItemWidth();
+
+	// アセットからマテリアル選ぶ
+	static std::string getName;
+	AssetGetter::ImGuiGetCombobox<Material>("##material", getName);
+
+	// セットする
+	if (ImGui::Button("Set"))
+	{
+		if (inputId >= useMaterialCnt) return;
+
+		// マテリアルを取得
+		Material* pGetMat = AssetGetter::GetAsset<Material>(getName);
+		if (!pGetMat) return;
+
+		// セット
+		auto setItr = std::next(setMaterials.begin(), inputId);
+		(*setItr) = pGetMat;
+	}
+
+#endif // EDIT
 }
 
 
@@ -142,44 +187,69 @@ DirectX::SimpleMath::Matrix CP_MeshRenderer::CalcLoadMtx()
 	float loadScale = pRenderMesh->GetLoadOffsetScale();
 	Vector3 loadAngles = pRenderMesh->GetLoadOffsetAngles() * Mathf::degToRad;
 
-	return Matrix::CreateScale(Vector3::One * loadScale) * 
+	return Matrix::CreateScale(Vector3::One * loadScale) *
 		Matrix::CreateFromYawPitchRoll(loadAngles.y, loadAngles.x, loadAngles.z);
 }
 
 void CP_MeshRenderer::DrawMesh(RenderParam::WVP& _wvp)
 {
-	u_int meshNum = pRenderMesh->GetMeshNum();
+	// メッシュ数
+	u_int meshCnt = pRenderMesh->GetMeshNum();
 
-	for (u_int meshLoop = 0; meshLoop < meshNum; meshLoop++)
+	// このレンダラーでセットされているマテリアル数
+	u_int rendererMatCnt = static_cast<u_int>(setMaterials.size());
+
+	auto setMatItr = setMaterials.begin();
+
+	for (u_int meshLoop = 0; meshLoop < meshCnt; meshLoop++)
 	{
 		// メッシュを取得
 		const SingleMesh* pSingleMesh = pRenderMesh->GetMesh(meshLoop);
 
-		// 使用するマテリアル取得
-		u_int materialID = pSingleMesh->GetMaterialID();
+		// 今回描画するマテリアル
+		Material* pRenderMaterial = nullptr;
+
+		if (meshLoop < rendererMatCnt)	// セットされているマテリアルを取得
+		{
+			pRenderMaterial = *setMatItr;
+			++setMatItr;
+		}
+
+		// まだセットされていないなら
+		if (!pRenderMaterial)
+		{
+			// メッシュ側から取得
+			u_int materialID = pSingleMesh->GetMaterialID();
+			pRenderMaterial = pRenderMesh->GetMaterial(materialID);
+		}
 
 		// マテリアルの描画準備
-		MaterialSetup(_wvp, materialID);
+		MaterialSetup(_wvp, pRenderMaterial);
 
+		// メッシュ描画
 		CP_Renderer::DrawMesh(*pSingleMesh);
 	}
 }
 
-void CP_MeshRenderer::MaterialSetup(RenderParam::WVP& _wvp, u_int _mtrlIdx)
+void CP_MeshRenderer::DrawShadow()
 {
-	Material* pMaterial = pRenderMesh->GetMaterial(_mtrlIdx);
-	if (pMaterial == nullptr) return;
 
-	VertexShader& pVS = pMaterial->GetVertexShader();
-	PixelShader& pPs = pMaterial->GetPixelShader();
+}
+
+void CP_MeshRenderer::MaterialSetup(RenderParam::WVP& _wvp, Material* _pMaterial)
+{
+	if (_pMaterial == nullptr) return;
+
+	VertexShader& pVS = _pMaterial->GetVertexShader();
+	PixelShader& pPs = _pMaterial->GetPixelShader();
 
 	// シェーダーにバッファを送る
 	// (ここではライト、カメラ座標などの1ループで1度しか送らないものは送らない)
-	ShaderSetup(pVS, _wvp, *pMaterial);
-	ShaderSetup(pPs, _wvp, *pMaterial);
+	ShaderSetup(pVS, _wvp, *_pMaterial);
+	ShaderSetup(pPs, _wvp, *_pMaterial);
 
 	// テクスチャを送る
-	pPs.SetTexture(TEX_DIFUSSE_SLOT, pMaterial->GetDiffuseTexture());
+	pPs.SetTexture(TEX_DIFUSSE_SLOT, _pMaterial->GetDiffuseTexture());
 
 	// GPUに送る
 	pVS.SetGPU();

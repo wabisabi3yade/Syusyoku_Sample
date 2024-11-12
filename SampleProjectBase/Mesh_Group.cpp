@@ -36,6 +36,11 @@ Material* Mesh_Group::GetMaterial(u_int _materialIdx)
 	return materials[_materialIdx];
 }
 
+VertexShader* Mesh_Group::GetVertexShader()
+{
+	return &materials[0]->GetVertexShader();
+}
+
 u_int Mesh_Group::GetMaterialNum()
 {
 	return static_cast<u_int>(materials.size());

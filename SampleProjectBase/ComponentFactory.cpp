@@ -14,6 +14,7 @@ void ComponentFactory::Init()
 	// 描画
 	ResistComponnent<CP_MeshRenderer>();
 	ResistComponnent<CP_SpriteRenderer>();
+	ResistComponnent<CP_OutLineRenderer>();
 	ResistComponnent<CP_SkyBox>();
 
 	// アニメーション

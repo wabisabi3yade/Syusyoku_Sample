@@ -5,7 +5,7 @@ class InSceneSystemManager;
 class EditScene;
 
 // 1シーンクラス
-class Scene /*: public HashiTaku::IImGuiUser*/
+class Scene
 {
 protected:
 	/// @brief シーン名
@@ -19,9 +19,6 @@ public:
 
 	/// @brief 実行関数
 	virtual void Exec();
-
-	///// @brief セーブ機能
-	//void Save();
 
 	// シーン名設定
 	void SetName(const std::string& _name);
@@ -44,21 +41,5 @@ private:
 
 	// セーブファイルのパス名
 	std::string SaveFilePath();
-
-	/// @brief シーン再生するか？
-	/// @return 再生するか？
-	bool IsUpdatePlay();
-
-	///// @brief 再生中の表示
-	//void ImGuiPlaying();
-
-	///// @brief 停止中の表示
-	//void ImGuiStop();
-
-	///// @brief 再生を始める
-	//void PlayStart();
-
-	///// @brief 再生を止める
-	//void PlayEnd();
 };
 

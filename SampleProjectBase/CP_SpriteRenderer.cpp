@@ -23,6 +23,7 @@ void CP_SpriteRenderer::MaterialSetup()
 	// マテリアル作成し、アセットをセットする
 	std::unique_ptr<Material> pCreateMaterial = std::make_unique<Material>();
 	pMaterial = AssetSetter::SetAsset(MATERIAL_NAME, std::move(pCreateMaterial));
+	pMaterial->SetPixelShader("PS_TexColor");
 }
 
 

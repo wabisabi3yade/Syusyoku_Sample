@@ -226,6 +226,13 @@ BoneList* CP_Animation::GetMoveBoneList()
 	return pMoveBoneList.get();
 }
 
+u_int CP_Animation::GetBoneCnt() const
+{
+	if (!pSkeletalMesh) return 0;
+
+	return pSkeletalMesh->GetBoneCnt();
+}
+
 nlohmann::json CP_Animation::Save()
 {
 	auto data = Component::Save();
@@ -268,7 +275,6 @@ void CP_Animation::CopyBoneList(CP_MeshRenderer& _mr)
 
 	// ƒ‚ƒfƒ‹ŠÖŒW
 	_mr.SetVertexShader("VS_SkinAnimation");
-	_mr.SetPixelShader("PS_Unlit");
 }
 
 void CP_Animation::UpdateAnimationMtx()

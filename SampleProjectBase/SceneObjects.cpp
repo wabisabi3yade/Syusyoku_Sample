@@ -76,7 +76,7 @@ void SceneObjects::Draw()
 	}
 
 	UIDrawSetup();
-	
+
 	// 2D空間（UI）のオブジェクト
 	for (auto& ui : uiList)
 	{
@@ -115,6 +115,32 @@ void SceneObjects::MoveToObjList(GameObject& _gameObject)
 	objList[objectName] = std::move(takeoutObj);
 }
 
+std::string SceneObjects::PrefabFileParh()
+{
+	return "assets/data/prefab/";
+}
+
+void SceneObjects::CreatePrefab(const std::string& _prefabName)
+{
+	// プレハブのパス名
+	std::string prefabPath = PrefabFileParh();
+	prefabPath += _prefabName + ".json";
+
+	// ファイルからjsonを読み込み
+	std::ifstream f(prefabPath);
+	if (!f.is_open())
+	{
+		HASHI_DEBUG_LOG(prefabPath + " プレハブファイルが開けませんでした");
+		return;
+	}
+
+	const nlohmann::json prefabData = nlohmann::json::parse(f);
+	// プレハブをロード
+	LoadObject(prefabData);
+	LateLoadObject(prefabData);
+	HASHI_DEBUG_LOG(_prefabName + " 作成完了");
+}
+
 void SceneObjects::ImGuiDebug()
 {
 	ImGui::Begin("SceneObjects");
@@ -149,10 +175,117 @@ void SceneObjects::ImGuiDebug()
 	if (ImGui::Button("new Object") && createObjName[0] != '\0')
 		SceneFunction::ObjectFunc::CreateEmpty(createObjName);
 
+	// プレハブ生成
+	if (ImGui::Button("prefab") && createObjName[0] != '\0')
+		CreatePrefab(createObjName);
+
 	ImGui::End();
 
 	// リスト間移動をする
 	MoveList();
+}
+
+nlohmann::json SceneObjects::SaveObject(GameObject& _go)
+{
+	nlohmann::json objData;
+	objData["gameObject"] = _go.Save();
+
+	Transform& transform = _go.GetTransform();
+
+	// 子オブジェクトをセーブ
+	auto& childData = objData["childs"];
+	u_int childCnt = transform.GetChildCnt();
+	for (u_int c_i = 0; c_i < childCnt; c_i++)
+	{
+		// 子オブジェクトをセーブする
+		GameObject& childGameObj = transform.GetChild(c_i)->GetGameObject();
+		childData.push_back(SaveObject(childGameObj));
+	}
+
+	return objData;
+}
+
+void SceneObjects::ObjectToPrefab(GameObject& _toPrefabObject)
+{
+	// シーンデータ
+	nlohmann::json prefabData;
+
+	// シーン内オブジェクトをセーブ
+	prefabData = SaveObject(_toPrefabObject);
+
+	// ファイル名を設定
+	std::string savePathStr;
+	savePathStr = PrefabFileParh();	// パス
+	savePathStr += _toPrefabObject.GetName();	// ファイル名
+	savePathStr += ".json";	// 拡張子PrefabFileParh()
+
+	std::ofstream f(savePathStr);
+	auto str = prefabData.dump(4);
+	auto len = str.length();
+	f.write(str.c_str(), len);
+
+	HASHI_DEBUG_LOG(_toPrefabObject.GetName() + "のプレハブ化に成功しました");
+}
+
+bool SceneObjects::LoadObject(const nlohmann::json& _gameObjectData)
+{
+	// オブジェクトを読み込む
+	nlohmann::json objData;
+	if (!HashiTaku::LoadJsonData("gameObject", objData, _gameObjectData))
+	{
+		HASHI_DEBUG_LOG("オブジェクトが読み込めませんでした");
+		return false;
+	}
+
+	// 名前からゲームオブジェクトを作成
+	std::string objectName;
+	HashiTaku::LoadJsonString("name", objectName, objData);
+	GameObject& go = SceneFunction::ObjectFunc::CreateEmpty(objectName);
+	go.Load(objData);
+
+	// UIならUIリスト
+	if (IsUI(go))
+		MoveToUIList(go);
+
+
+	// 子オブジェクトを読み込む
+	nlohmann::json childDatas;
+	if (!HashiTaku::LoadJsonDataArray("childs", childDatas, _gameObjectData))
+	{
+		return false;
+	}
+
+	// 再帰的に読み込む
+	for (auto& childData : childDatas)
+		LoadObject(childData);
+}
+
+bool SceneObjects::LateLoadObject(const nlohmann::json& _gameObjectData)
+{
+	// オブジェクトを読み込む
+	nlohmann::json objData;
+	if (!HashiTaku::LoadJsonData("gameObject", objData, _gameObjectData))
+	{
+		HASHI_DEBUG_LOG("オブジェクトが読み込めませんでした");
+		return false;
+	}
+
+	std::string objectName;
+	HashiTaku::LoadJsonString("name", objectName, objData);
+	GameObject* go = GetSceneObject(objectName);
+
+	go->LateLode(objData);
+
+	// 子オブジェクトを読み込む
+	nlohmann::json childDatas;
+	if (!HashiTaku::LoadJsonDataArray("childs", childDatas, _gameObjectData))
+	{
+		return false;
+	}
+
+	// 再帰的に読み込む
+	for (auto& childData : childDatas)
+		LateLoadObject(childData);
 }
 
 bool SceneObjects::ImGuiSettingObject(GameObject& _gameObject)
@@ -164,8 +297,17 @@ bool SceneObjects::ImGuiSettingObject(GameObject& _gameObject)
 	const std::string& objName = _gameObject.GetName();
 	if (ImGuiMethod::TreeNode(objName))
 	{
+		// 削除
 		isDelete = ImGui::Button("Delete");
+
+		ImGui::SameLine();
+
+		// プレハブを作成
+		if (ImGui::Button("Prefab"))
+			ObjectToPrefab(_gameObject);
+
 		_gameObject.ImGuiCall();
+
 		ImGui::TreePop();
 	}
 
@@ -270,47 +412,45 @@ GameObject* SceneObjects::GetSceneObject(const std::string& _objectName)
 	return itr->second.get();
 }
 
-nlohmann::json SceneObjects::SaveObject()
+nlohmann::json SceneObjects::SaveObjectList()
 {
 	nlohmann::json objectData;
 
 	for (auto& obj : objList)
 	{
-		objectData.push_back(obj.second->Save());
+		Transform& transform = obj.second->GetTransform();
+
+		// 親オブジェクトがあるなら
+		if (transform.GetParent()) continue;
+		objectData.push_back(SaveObject(*obj.second));	// セーブ
 	}
 
 
 	for (auto& ui : uiList)
 	{
-		objectData.push_back(ui.second->Save());
+		Transform& transform = ui.second->GetTransform();
+
+		// 親オブジェクトがあるなら
+		if (transform.GetParent()) continue;
+		objectData.push_back(SaveObject(*ui.second));	// セーブ
 	}
 
 	return objectData;
 }
 
-void SceneObjects::LoadObject(const nlohmann::json& _objectsData)
+void SceneObjects::LoadObjectList(const nlohmann::json& _objectsData)
 {
 	// オブジェクトを作成する
 	for (const auto& data : _objectsData)
 	{
-		std::string objectName;
-		HashiTaku::LoadJsonString("name", objectName, data);
-		GameObject& go = SceneFunction::ObjectFunc::CreateEmpty(objectName);
-		go.Load(data);
-
-		if (IsUI(go))
-			MoveToUIList(go);
-			
+		// オブジェクトをロード
+		LoadObject(data);
 	}
 
 	// オブジェクトをロード
 	for (auto& data : _objectsData)
 	{
-		std::string objectName;
-		HashiTaku::LoadJsonString("name", objectName, data);
-		GameObject* go = GetSceneObject(objectName);
-
-		go->LateLode(data);
+		LateLoadObject(data);
 	}
 }
 
@@ -393,8 +533,8 @@ void SceneObjects::UIDrawSetup()
 	// 深度バッファをリセットする
 	renderer.GetDeviceContext()->ClearDepthStencilView(
 		renderer.GetDepthStencil(),
-		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 
-		1.0f, 
+		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
+		1.0f,
 		0
 	);
 }

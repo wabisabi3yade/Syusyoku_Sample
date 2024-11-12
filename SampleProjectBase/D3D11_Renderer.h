@@ -1,6 +1,8 @@
 #pragma once
 #include "RenderParam.h"
 #include "IGetRenderResource.h"
+#include "RenderTarget.h"
+#include "DepthStencil.h"
 
 class BlendState;
 class Sampler;
@@ -50,9 +52,15 @@ public:
 
 	void Swap();    //バックバッファをフロントバッファ(画面)へ表示
 
+	/// @brief カリングモードを設定
+	/// @param _cullMode カリングモード
 	void SetCullingMode(D3D11_CULL_MODE _cullMode);
 
-	void SeStencil(bool _isStencil);
+	/// @brief レンダーターゲットをセット
+	/// @param _viewPortId ビューポートのID
+	/// @param _pRrenderTarget レンダーターゲット
+	/// @param _pDepthStencils 深度ステンシル
+	void SetRenderTerget(u_int _cnt, RenderTarget* _pRrenderTarget, DepthStencil* _pDepthStencil);
 
 	// 描画の情報を取得
 	RenderParam& GetParameter() override;
@@ -60,9 +68,18 @@ public:
 	ID3D11DeviceContext* GetDeviceContext() override { return pDeviceContext.Get(); }
 	IDXGISwapChain* GetSwapChain() override;
 	ID3D11DepthStencilView* GetDepthStencil();
+
 	// ビューポートを取得（どのビューポートを指定）
 	const D3D11_VIEWPORT& GetViewPort(u_int _slot) { return viewPorts[_slot]; }
 	u_int GetViewPortNum() { return static_cast<u_int>(viewPorts.size()); }
+
+	/// @brief ウィンドウの横幅を取得
+	/// @return ウィンドウの横幅
+	u_int GetWindowWidth() const;
+
+	/// @brief ウィンドウの縦幅を取得
+	/// @return ウィンドウの縦幅
+	u_int GetWindowHeight() const;
 
 private:
 	bool Init(HWND _hWnd);  // 初期化

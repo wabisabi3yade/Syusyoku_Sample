@@ -8,14 +8,14 @@
                     "value": 0
                 },
                 {
-                    "name": "speed",
-                    "type": 2,
-                    "value": 0.0
-                },
-                {
                     "name": "targeting",
                     "type": 0,
                     "value": false
+                },
+                {
+                    "name": "speed",
+                    "type": 2,
+                    "value": 0.0
                 },
                 {
                     "name": "canCancel",
@@ -32,14 +32,14 @@
                     "value": 0.0
                 },
                 {
-                    "name": "axisY",
-                    "type": 2,
-                    "value": 0.0
-                },
-                {
                     "name": "attackCollision",
                     "type": 0,
                     "value": false
+                },
+                {
+                    "name": "axisY",
+                    "type": 2,
+                    "value": 0.0
                 },
                 {
                     "name": "rollingTrigger",
@@ -1231,14 +1231,14 @@
                     "value": 0
                 },
                 {
-                    "name": "targeting",
-                    "type": 0,
-                    "value": false
-                },
-                {
                     "name": "speed",
                     "type": 2,
                     "value": 0.0
+                },
+                {
+                    "name": "targeting",
+                    "type": 0,
+                    "value": false
                 },
                 {
                     "name": "canCancel",
@@ -1255,14 +1255,14 @@
                     "value": 0.0
                 },
                 {
-                    "name": "attackCollision",
-                    "type": 0,
-                    "value": false
-                },
-                {
                     "name": "axisY",
                     "type": 2,
                     "value": 0.0
+                },
+                {
+                    "name": "attackCollision",
+                    "type": 0,
+                    "value": false
                 },
                 {
                     "name": "rollingTrigger",
@@ -2719,12 +2719,6 @@
     ],
     "animations": [
         {
-            "assetName": "knight_StrafeWalk_R.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_StrafeWalk_R.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_Idle1.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_Idle1.fbx",
@@ -2734,6 +2728,12 @@
             "assetName": "knight_StrafeRun_R.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_StrafeRun_R.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_StrafeWalk_R.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_StrafeWalk_R.fbx",
             "rightHand": true
         },
         {
@@ -2749,15 +2749,15 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_StrafeWalk_L.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_StrafeWalk_L.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_StrafeRun_L.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_StrafeRun_L.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_StrafeWalk_L.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_StrafeWalk_L.fbx",
             "rightHand": true
         },
         {
@@ -2767,15 +2767,15 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_TargetIdle1.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_TargetIdle1.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_Walk_F.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_Walk_F.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_TargetIdle1.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_TargetIdle1.fbx",
             "rightHand": true
         },
         {
@@ -2785,21 +2785,15 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_SlashAttack1.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_SlashAttack1.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "boss_Death.fbx",
             "boneListName": "Uriel A Plotexia.fbx",
             "pathName": "assets/animation/boss/boss_Death.fbx",
             "rightHand": true
         },
         {
-            "assetName": "knight_RollAttack.fbx",
+            "assetName": "knight_SlashAttack1.fbx",
             "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_RollAttack.fbx",
+            "pathName": "assets/animation/player/knight_SlashAttack1.fbx",
             "rightHand": true
         },
         {
@@ -2809,21 +2803,27 @@
             "rightHand": true
         },
         {
+            "assetName": "knight_RollAttack.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_RollAttack.fbx",
+            "rightHand": true
+        },
+        {
             "assetName": "knight_SlashStamp.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_SlashStamp.fbx",
             "rightHand": true
         },
         {
-            "assetName": "knight_RollingMove.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_RollingMove.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_SlashUp.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_SlashUp.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_RollingMove.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_RollingMove.fbx",
             "rightHand": true
         },
         {
@@ -2845,15 +2845,15 @@
             "rightHand": true
         },
         {
-            "assetName": "boss_Idle.fbx",
-            "boneListName": "Uriel A Plotexia.fbx",
-            "pathName": "assets/animation/boss/boss_Idle.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "boss_GuardEnd.fbx",
             "boneListName": "Uriel A Plotexia.fbx",
             "pathName": "assets/animation/boss/boss_GuardEnd.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "boss_Idle.fbx",
+            "boneListName": "Uriel A Plotexia.fbx",
+            "pathName": "assets/animation/boss/boss_Idle.fbx",
             "rightHand": true
         },
         {
@@ -2956,17 +2956,6 @@
             "rightHand": true
         },
         {
-            "assetName": "shield1.fbx",
-            "flipY": true,
-            "getSize": false,
-            "loadScale": 1.0,
-            "matDiffuse": [
-                "shield1.png"
-            ],
-            "pathName": "assets/model/shield/shield1.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "Sword15_FBX.fbx",
             "flipY": true,
             "getSize": false,
@@ -2975,6 +2964,17 @@
                 "Sword15_FBX.png"
             ],
             "pathName": "assets/model/sword/Sword15_FBX.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "shield1.fbx",
+            "flipY": true,
+            "getSize": false,
+            "loadScale": 1.0,
+            "matDiffuse": [
+                "shield1.png"
+            ],
+            "pathName": "assets/model/shield/shield1.fbx",
             "rightHand": true
         },
         {
@@ -3010,24 +3010,24 @@
             "pathName": "assets/texture/skyBox/sky_Day_u.png"
         },
         {
-            "assetName": "ground.png",
-            "pathName": "assets/texture/ground.png"
+            "assetName": "sky_Day_r.png",
+            "pathName": "assets/texture/skyBox/sky_Day_r.png"
         },
         {
             "assetName": "sky_Day_b.png",
             "pathName": "assets/texture/skyBox/sky_Day_b.png"
         },
         {
-            "assetName": "sky_Day_r.png",
-            "pathName": "assets/texture/skyBox/sky_Day_r.png"
-        },
-        {
-            "assetName": "sky_Day_l.png",
-            "pathName": "assets/texture/skyBox/sky_Day_l.png"
+            "assetName": "ground.png",
+            "pathName": "assets/texture/ground.png"
         },
         {
             "assetName": "sky_Day_d.png",
             "pathName": "assets/texture/skyBox/sky_Day_d.png"
+        },
+        {
+            "assetName": "sky_Day_l.png",
+            "pathName": "assets/texture/skyBox/sky_Day_l.png"
         },
         {
             "assetName": "sky_Day_f.png",
@@ -3046,11 +3046,11 @@
             "pathName": "assets/texture/UI/UI_hpLine_red.png"
         },
         {
-            "assetName": "Sword15_FBX.png",
+            "assetName": "shield1.png",
             "pathName": ""
         },
         {
-            "assetName": "shield1.png",
+            "assetName": "Sword15_FBX.png",
             "pathName": ""
         },
         {

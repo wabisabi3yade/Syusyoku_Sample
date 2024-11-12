@@ -119,6 +119,10 @@ public:
 	/// @return ボーンリスト
 	BoneList* GetMoveBoneList();
 
+	/// @brief ボーン数を取得
+	/// @return ボーン数
+	u_int GetBoneCnt() const;
+
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
 private:

@@ -6,6 +6,7 @@ struct DirectionLParameter
 	LightParameter base;
 	DirectX::SimpleMath::Color ambeimt{ 0.5f, 0.5f, 0.5f, 1.0f };	// ŠÂ‹«Œõ
 	DirectX::SimpleMath::Vector3 direction{ 0.0f, -1.0f, 1.0f };	// •ûŒü
+	float dummy;
 };
 
 class DirectionLight
@@ -17,7 +18,7 @@ class DirectionLight
 	// •ûŒüƒxƒNƒgƒ‹
 	DirectX::SimpleMath::Vector3 direction;
 public:
-	DirectionLight() : ambiemt(0.2f, 0.2f, 0.2f, 1.0f), direction(0.0f, -1.0f, 1.0f) { type = Type::Direction; }
+	DirectionLight() : ambiemt(0.3f, 0.3f, 0.3f, 1.0f), direction(0.0f, -1.0f, 1.0f) { type = Type::Direction; }
 	~DirectionLight() {}
 
 	virtual void Draw() override;

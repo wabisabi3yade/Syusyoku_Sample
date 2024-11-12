@@ -45,7 +45,7 @@ void EditScene::SceneSave()
 
 	// シーン内オブジェクトをセーブ
 	SceneObjects& sceneObj = pInSceneSystem->GetSceneObjects();
-	sceneData["objects"] = sceneObj.SaveObject();
+	sceneData["objects"] = sceneObj.SaveObjectList();
 
 	std::ofstream f(SaveFilePath());
 

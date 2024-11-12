@@ -15,7 +15,7 @@ class ShaderCollection : public Singleton_Base<ShaderCollection>
 	friend class Singleton_Base<ShaderCollection>;
 
 	// シェーダー配列
-	std::unordered_map<std::string, std::unique_ptr<Shader>> pShaders;
+	std::unordered_map<std::string, std::unique_ptr<Shader>> shaderList;
 
 	// csoファイルが入っているフォルダまでのパス名
 	static constexpr auto FILE_FOLDER = "assets/Shader/";
@@ -33,15 +33,16 @@ public:
 	VertexShader* GetVertexShader(const std::string& _shaderName);
 	PixelShader* GetPixelShader(const std::string& _shaderName);
 
+	/// @brief 頂点シェーダー名前リストを取得
+	/// @return シェーダー名リスト
+	std::vector<const std::string*> GetVSNameList();
+
+	/// @brief ピクセルシェーダー名前リストを取得
+	/// @return シェーダー名リスト
+	std::vector<const std::string*> GetPSNameList();
 private:
 	/// @brief CSOファイルから読み込む
 	void LoadFromCSO();
-
-	/// @brief 頂点シェーダー
-	void LoadVS();
-
-	/// @brief ピクセルシェーダー
-	void LoadPS();
 
 	/// @brief シェーダーをロードして作成する
 	/// @tparam T シェーダーのクラス
@@ -51,7 +52,6 @@ private:
 private:
 	ShaderCollection() : defaultVS(""), defaultPS("") {};
 	~ShaderCollection() {};
-
 };
 
 template<ShaderConcept T>
@@ -75,5 +75,5 @@ inline void ShaderCollection::LoadShader(const std::string& _csoFileName)
 	pCreateShader->SetName(shaderName);
 
 	// 配列に追加する
-	pShaders.emplace(shaderName, std::move(pCreateShader));
+	shaderList.emplace(shaderName, std::move(pCreateShader));
 }
