@@ -34,7 +34,7 @@ VS_OUTPUT main(VS_INPUT vin)
     VS_OUTPUT output;
 
     // äeçsóÒÇåvéZÇ∑ÇÈ
-    float4 pos = float4(vin.pos, 1.0);
+    float4 pos = float4(vin.pos, 1.0f);
     pos = mul(pos, world);
     pos = mul(pos, view);
     pos = mul(pos, projection);

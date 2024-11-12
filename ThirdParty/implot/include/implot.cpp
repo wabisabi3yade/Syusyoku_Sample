@@ -540,8 +540,8 @@ ImPlotPlot* GetCurrentPlot() {
 
 void BustPlotCache() {
     ImPlotContext& gp = *GImPlot;
-    gp.Plots.Clear();
-    gp.Subplots.Clear();
+    gp.Plots.ClearColor();
+    gp.Subplots.ClearColor();
 }
 
 //-----------------------------------------------------------------------------

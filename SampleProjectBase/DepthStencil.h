@@ -1,8 +1,8 @@
 #pragma once
-#include "Texture.h"
+#include "RenderTarget.h"
 
 // 深度ステンシルクラス
-class DepthStencil : public Texture
+class DepthStencil : public D3DTexture_Base
 {
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> pDSV;
 
@@ -11,7 +11,7 @@ public:
 	~DepthStencil() {}
 
 	/// @brief クリアする
-	void Clear();
+	void ClearColor();
 
 	/// @brief 作成する
 	/// @param _width 横幅
@@ -21,5 +21,8 @@ public:
 	bool Create(UINT _width, UINT _height, bool _useStencil);
 
 	ID3D11DepthStencilView* GetView() const;
+
+private:
+	bool CreateResource(D3D11_TEXTURE2D_DESC& desc, const void* pData = nullptr) override;
 };
 

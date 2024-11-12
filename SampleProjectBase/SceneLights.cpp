@@ -11,31 +11,31 @@ void SceneLights::UpdateParameter()
 	// ディレクションライト
 	pSceneLightsParam->dirParam = pDirection->GetParameter();
 
-	// ポイントライト
-	u_int pointCnt = 0;
-	for (auto& p : pPointLights)
-	{
-		pSceneLightsParam->pointParams[pointCnt] = p->GetParameter();
-		pointCnt++;
-	}
+	//// ポイントライト
+	//u_int pointCnt = 0;
+	//for (auto& p : pPointLights)
+	//{
+	//	pSceneLightsParam->pointParams[pointCnt] = p->GetParameter();
+	//	pointCnt++;
+	//}
 
-	// 使用していない配列は光が反映されないようにしておく
-	for (; pointCnt < MAX_POINTLIGHT; pointCnt++)
-	{
-		pSceneLightsParam->pointParams[pointCnt].range = 0.0f;
-	}
+	//// 使用していない配列は光が反映されないようにしておく
+	//for (; pointCnt < MAX_POINTLIGHT; pointCnt++)
+	//{
+	//	pSceneLightsParam->pointParams[pointCnt].range = 0.0f;
+	//}
 
-	// スポットライト
-	u_int spotCnt = 0;
-	for (auto& s : pSpotLights)
-	{
-		pSceneLightsParam->spotParams[spotCnt] = s->GetParameter();
-		spotCnt++;
-	}
-	for (;  spotCnt < MAX_SPOTLIGHT;  spotCnt++)
-	{
-		pSceneLightsParam->spotParams[spotCnt].distance = 0.0f;
-	}
+	//// スポットライト
+	//u_int spotCnt = 0;
+	//for (auto& s : pSpotLights)
+	//{
+	//	pSceneLightsParam->spotParams[spotCnt] = s->GetParameter();
+	//	spotCnt++;
+	//}
+	//for (;  spotCnt < MAX_SPOTLIGHT;  spotCnt++)
+	//{
+	//	pSceneLightsParam->spotParams[spotCnt].distance = 0.0f;
+	//}
 }
 
 void SceneLights::ImGuiDebug()

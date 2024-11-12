@@ -62,11 +62,11 @@ void Scene::SceneDraw()
 	// 描画前準備
 	DrawSetup();
 
-	// シーン内の描画処理
-	sceneObjects.Draw();
-
 	// 線描画
 	Geometory::DrawLine();
+
+	// シーン内の描画処理
+	sceneObjects.Draw();
 }
 
 void Scene::SceneLoad()
@@ -123,51 +123,3 @@ std::string Scene::SaveFilePath()
 
 	return fileName;
 }
-
-//bool Scene::IsUpdatePlay()
-//{
-//#ifdef EDIT
-//	if (!isPlaying) return false;
-//#endif // EDIT
-//
-//	return true;
-//}
-
-//void Scene::ImGuiPlaying()
-//{
-//#ifdef EDIT
-//	if (ImGui::Button("Stop"))
-//		PlayEnd();
-//#endif // EDIT
-//}
-//
-//void Scene::ImGuiStop()
-//{
-//#ifdef EDIT
-//	if (ImGui::Button("Play"))
-//		PlayStart();
-//
-//	// 以下再生中は表示しない
-//	if (ImGui::Button("Save"))
-//	{
-//		Save();
-//	}
-//#endif // EDIT
-//}
-//
-//void Scene::PlayStart()
-//{
-//	isPlaying = true;
-//
-//	// シーン再生前にセーブする
-//	Save();
-//}
-
-//void Scene::PlayEnd()
-//{
-//	isPlaying = false;
-//
-//	// 新しくシーンの中を生成する
-//	InSceneSystemManager::GetInstance()->Reset();
-//	Load();
-//}

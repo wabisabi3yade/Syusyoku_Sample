@@ -43,6 +43,16 @@ ID3D11DepthStencilView* D3D11_Renderer::GetDepthStencil()
 	return pDepthStencilView.Get();
 }
 
+u_int D3D11_Renderer::GetWindowWidth() const
+{
+	return screenWidth;
+}
+
+u_int D3D11_Renderer::GetWindowHeight() const
+{
+	return screenHeight;
+}
+
 bool D3D11_Renderer::Init(HWND _hWnd)
 {
 	bool isResult; // 初期化成功したか
@@ -275,8 +285,31 @@ void D3D11_Renderer::SetCullingMode(D3D11_CULL_MODE _cullMode)
 	}
 }
 
-void D3D11_Renderer::SeStencil(bool _isStencil)
+void D3D11_Renderer::SetRenderTerget(u_int _cnt, RenderTarget* _pRrenderTarget, DepthStencil* _pDepthStencil)
 {
+	static ID3D11RenderTargetView* rtvs[1];
+	rtvs[0] = _pRrenderTarget->GetView();
+
+	// レンダーターゲット設定
+	pDeviceContext->OMSetRenderTargets(
+		_cnt, 
+		rtvs, 
+		_pDepthStencil ? 
+		_pDepthStencil->GetView() :	nullptr
+	);
+
+	D3D11_VIEWPORT& vp = viewPorts[0];
+
+	// ビューポート設定
+	vp.TopLeftX = 0.0f;
+	vp.TopLeftY = 0.0f;
+	vp.Width = static_cast<float>(_pRrenderTarget->GetWidth());
+	vp.Height = static_cast<float>(_pRrenderTarget->GetHeight());
+	vp.Height = static_cast<float>(_pRrenderTarget->GetHeight());
+	vp.MinDepth = 0.0f;
+	vp.MaxDepth = 1.0f;
+
+	pDeviceContext->RSSetViewports(1, &vp);
 }
 
 void D3D11_Renderer::SetUpDraw()

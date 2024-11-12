@@ -150,7 +150,6 @@ bool AnimationCurve::CheckReactPlot(const HermitePlotParam& _plot, float _clickX
 		return true;
 	}
 
-
 	return false;
 }
 

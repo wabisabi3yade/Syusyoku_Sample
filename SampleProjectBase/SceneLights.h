@@ -17,9 +17,9 @@ struct SceneLightsParam
 {
 	DirectionLParameter dirParam;
 
-	PointLParameter pointParams[MAX_POINTLIGHT];
+	/*PointLParameter pointParams[MAX_POINTLIGHT];
 
-	SpotLParameter spotParams[MAX_SPOTLIGHT];
+	SpotLParameter spotParams[MAX_SPOTLIGHT];*/
 };
 
 // シーン内の光源リスト

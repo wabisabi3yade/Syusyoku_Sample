@@ -79,6 +79,10 @@ public:
 	/// @return マテリアルのポインタ
 	Material* GetMaterial(u_int _materialIdx);
 
+	/// @brief 頂点シェーダー取得
+	/// @return 頂点シェーダー
+	VertexShader* GetVertexShader();
+
 	/// @brief マテリアルの数取得
 	/// @return マテリアルの数
 	u_int GetMaterialNum();

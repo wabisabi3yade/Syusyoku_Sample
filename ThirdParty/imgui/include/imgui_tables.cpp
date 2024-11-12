@@ -352,7 +352,7 @@ bool    ImGui::BeginTableEx(const char* name, ImGuiID id, int columns_count, ImG
     ImGuiTableTempData* temp_data = table->TempData = &g.TablesTempData[g.TablesTempDataStacked - 1];
     temp_data->TableIndex = table_idx;
     table->DrawSplitter = &table->TempData->DrawSplitter;
-    table->DrawSplitter->Clear();
+    table->DrawSplitter->ClearColor();
 
     // Fix flags
     table->IsDefaultSizingPolicy = (flags & ImGuiTableFlags_SizingMask_) == 0;
@@ -606,7 +606,7 @@ bool    ImGui::BeginTableEx(const char* name, ImGuiID id, int columns_count, ImG
     // Because we cannot safely assert in EndTable() when no rows have been created, this seems like our best option.
     inner_window->SkipItems = true;
 
-    // Clear names
+    // ClearColor names
     // At this point the ->NameOffset field of each column will be invalid until TableUpdateLayout() or the first call to TableSetupColumn()
     if (table->ColumnsNames.Buf.Size > 0)
         table->ColumnsNames.Buf.resize(0);
@@ -803,7 +803,7 @@ void ImGui::TableUpdateLayout(ImGuiTable* table)
             table->IsDefaultDisplayOrder = false;
         ImGuiTableColumn* column = &table->Columns[column_n];
 
-        // Clear column setup if not submitted by user. Currently we make it mandatory to call TableSetupColumn() every frame.
+        // ClearColor column setup if not submitted by user. Currently we make it mandatory to call TableSetupColumn() every frame.
         // It would easily work without but we're not ready to guarantee it since e.g. names need resubmission anyway.
         // We take a slight shortcut but in theory we could be calling TableSetupColumn() here with dummy values, it should yield the same effect.
         if (table->DeclColumnsCount <= column_n)
@@ -1041,7 +1041,7 @@ void ImGui::TableUpdateLayout(ImGuiTable* table)
             offset_x_frozen = false;
         }
 
-        // Clear status flags
+        // ClearColor status flags
         column->Flags &= ~ImGuiTableColumnFlags_StatusMask_;
 
         if (!IM_BITARRAY_TESTBIT(table->EnabledMaskByDisplayOrder, order_n))
@@ -1170,7 +1170,7 @@ void ImGui::TableUpdateLayout(ImGuiTable* table)
     }
 
     // [Part 7] Detect/store when we are hovering the unused space after the right-most column (so e.g. context menus can react on it)
-    // Clear Resizable flag if none of our column are actually resizable (either via an explicit _NoResize flag, either
+    // ClearColor Resizable flag if none of our column are actually resizable (either via an explicit _NoResize flag, either
     // because of using _WidthAuto/_WidthStretch). This will hide the resizing option from the context menu.
     const float unused_x1 = ImMax(table->WorkRect.Min.x, table->Columns[table->RightMostEnabledColumn].ClipRect.Max.x);
     if (is_hovering_table && table->HoveredColumnBody == -1)
@@ -1520,7 +1520,7 @@ void    ImGui::EndTable()
         TableSaveSettings(table);
     table->IsInitializing = false;
 
-    // Clear or restore current table, if any
+    // ClearColor or restore current table, if any
     IM_ASSERT(g.CurrentWindow == outer_window && g.CurrentTable == table);
     IM_ASSERT(g.TablesTempDataStacked > 0);
     temp_data = (--g.TablesTempDataStacked > 0) ? &g.TablesTempData[g.TablesTempDataStacked - 1] : NULL;
@@ -2867,7 +2867,7 @@ void ImGui::TableSortSpecsSanitize(ImGuiTable* table)
 {
     IM_ASSERT(table->Flags & ImGuiTableFlags_Sortable);
 
-    // Clear SortOrder from hidden column and verify that there's no gap or duplicate.
+    // ClearColor SortOrder from hidden column and verify that there's no gap or duplicate.
     int sort_order_count = 0;
     ImU64 sort_order_mask = 0x00;
     for (int column_n = 0; column_n < table->ColumnsCount; column_n++)
@@ -3519,7 +3519,7 @@ void ImGui::TableDrawDefaultContextMenu(ImGuiTable* table, ImGuiTableFlags flags
 // [Main] 4: TableSettingsHandler_WriteAll()   When .ini file is dirty (which can come from other source), save TableSettings into .ini file.
 //-------------------------------------------------------------------------
 
-// Clear and initialize empty settings instance
+// ClearColor and initialize empty settings instance
 static void TableSettingsInit(ImGuiTableSettings* settings, ImGuiID id, int columns_count, int columns_count_max)
 {
     IM_PLACEMENT_NEW(settings) ImGuiTableSettings();
@@ -4248,7 +4248,7 @@ void ImGui::BeginColumns(const char* str_id, int columns_count, ImGuiOldColumnFl
     columns->OffMaxX = ImMax(ImMin(max_1, max_2) - window->Pos.x, columns->OffMinX + 1.0f);
     columns->LineMinY = columns->LineMaxY = window->DC.CursorPos.y;
 
-    // Clear data if columns count changed
+    // ClearColor data if columns count changed
     if (columns->Columns.Size != 0 && columns->Columns.Size != columns_count + 1)
         columns->Columns.resize(0);
 

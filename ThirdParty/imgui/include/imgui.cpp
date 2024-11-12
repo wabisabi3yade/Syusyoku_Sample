@@ -1440,7 +1440,7 @@ void ImGuiIO::AddInputCharactersUTF8(const char* utf8_chars)
     }
 }
 
-// Clear all incoming events.
+// ClearColor all incoming events.
 void ImGuiIO::ClearEventsQueue()
 {
     IM_ASSERT(Ctx != NULL);
@@ -1448,7 +1448,7 @@ void ImGuiIO::ClearEventsQueue()
     g.InputEventsQueue.clear();
 }
 
-// Clear current keyboard/mouse/gamepad state + current frame text input buffer. Equivalent to releasing all keys/buttons.
+// ClearColor current keyboard/mouse/gamepad state + current frame text input buffer. Equivalent to releasing all keys/buttons.
 void ImGuiIO::ClearInputKeys()
 {
 #ifndef IMGUI_DISABLE_OBSOLETE_KEYIO
@@ -3740,19 +3740,19 @@ void ImGui::Shutdown()
 
     CallContextHooks(&g, ImGuiContextHookType_Shutdown);
 
-    // Clear everything else
+    // ClearColor everything else
     g.Windows.clear_delete();
     g.WindowsFocusOrder.clear();
     g.WindowsTempSortBuffer.clear();
     g.CurrentWindow = NULL;
     g.CurrentWindowStack.clear();
-    g.WindowsById.Clear();
+    g.WindowsById.ClearColor();
     g.NavWindow = NULL;
     g.HoveredWindow = g.HoveredWindowUnderMovingWindow = NULL;
     g.ActiveIdWindow = g.ActiveIdPreviousFrameWindow = NULL;
     g.MovingWindow = NULL;
 
-    g.KeysRoutingTable.Clear();
+    g.KeysRoutingTable.ClearColor();
 
     g.ColorStack.clear();
     g.StyleVarStack.clear();
@@ -3763,13 +3763,13 @@ void ImGui::Shutdown()
 
     g.Viewports.clear_delete();
 
-    g.TabBars.Clear();
+    g.TabBars.ClearColor();
     g.CurrentTabBarStack.clear();
     g.ShrinkWidthBuffer.clear();
 
     g.ClipperTempData.clear_destruct();
 
-    g.Tables.Clear();
+    g.Tables.ClearColor();
     g.TablesTempData.clear_destruct();
     g.DrawChannelsTempMergeBuffer.clear();
 
@@ -3915,7 +3915,7 @@ void ImGui::SetActiveID(ImGuiID id, ImGuiWindow* window)
 {
     ImGuiContext& g = *GImGui;
 
-    // Clear previous active id
+    // ClearColor previous active id
     if (g.ActiveId != 0)
     {
         // While most behaved code would make an effort to not steal active id during window move/drag operations,
@@ -3962,7 +3962,7 @@ void ImGui::SetActiveID(ImGuiID id, ImGuiWindow* window)
         IM_ASSERT(g.ActiveIdSource != ImGuiInputSource_None);
     }
 
-    // Clear declaration of inputs claimed by the widget
+    // ClearColor declaration of inputs claimed by the widget
     // (Please note that this is WIP and not all keys/inputs are thoroughly declared by all widgets yet)
     g.ActiveIdUsingNavDirMask = 0x00;
     g.ActiveIdUsingAllKeyboardKeys = false;
@@ -4704,7 +4704,7 @@ void ImGui::NewFrame()
     g.HoveredIdAllowOverlap = false;
     g.HoveredIdDisabled = false;
 
-    // Clear ActiveID if the item is not alive anymore.
+    // ClearColor ActiveID if the item is not alive anymore.
     // In 1.87, the common most call to KeepAliveID() was moved from GetID() to ItemAdd().
     // As a result, custom widget using ButtonBehavior() _without_ ItemAdd() need to call KeepAliveID() themselves.
     if (g.ActiveId != 0 && g.ActiveIdIsAlive != g.ActiveId && g.ActiveIdPreviousFrame == g.ActiveId)
@@ -5171,7 +5171,7 @@ void ImGui::EndFrame()
     // Unlock font atlas
     g.IO.Fonts->Locked = false;
 
-    // Clear Input data for next frame
+    // ClearColor Input data for next frame
     g.IO.MousePosPrev = g.IO.MousePos;
     g.IO.AppFocusLost = false;
     g.IO.MouseWheel = g.IO.MouseWheelH = 0.0f;
@@ -7119,7 +7119,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
         if (!(flags & ImGuiWindowFlags_NoTitleBar))
             RenderWindowTitleBarContents(window, ImRect(title_bar_rect.Min.x + window->WindowBorderSize, title_bar_rect.Min.y, title_bar_rect.Max.x - window->WindowBorderSize, title_bar_rect.Max.y), name, p_open);
 
-        // Clear hit test shape every frame
+        // ClearColor hit test shape every frame
         window->HitTestHoleSize.x = window->HitTestHoleSize.y = 0;
 
         // Pressing CTRL+C while holding on a window copy its content to the clipboard
@@ -7162,7 +7162,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
     if (!window->SkipRefresh)
         PushClipRect(window->InnerClipRect.Min, window->InnerClipRect.Max, true);
 
-    // Clear 'accessed' flag last thing (After PushClipRect which will set the flag. We want the flag to stay false when the default "Debug" window is unused)
+    // ClearColor 'accessed' flag last thing (After PushClipRect which will set the flag. We want the flag to stay false when the default "Debug" window is unused)
     window->WriteAccessed = false;
     window->BeginCount++;
     g.NextWindowData.ClearFlags();
@@ -9198,7 +9198,7 @@ static void ImGui::UpdateKeyboardInputs()
     if (prev_key_mods != io.KeyMods && prev_key_mods == 0)
         g.LastKeyModsChangeFromNoneTime = g.Time;
 
-    // Clear gamepad data if disabled
+    // ClearColor gamepad data if disabled
     if ((io.BackendFlags & ImGuiBackendFlags_HasGamepad) == 0)
         for (int i = ImGuiKey_Gamepad_BEGIN; i < ImGuiKey_Gamepad_END; i++)
         {
@@ -9230,7 +9230,7 @@ static void ImGui::UpdateKeyboardInputs()
         owner_data->OwnerCurr = owner_data->OwnerNext;
         if (!key_data->Down) // Important: ownership is released on the frame after a release. Ensure a 'MouseDown -> CloseWindow -> MouseUp' chain doesn't lead to someone else seeing the MouseUp.
             owner_data->OwnerNext = ImGuiKeyOwner_NoOwner;
-        owner_data->LockThisFrame = owner_data->LockUntilRelease = owner_data->LockUntilRelease && key_data->Down;  // Clear LockUntilRelease when key is not Down anymore
+        owner_data->LockThisFrame = owner_data->LockUntilRelease = owner_data->LockUntilRelease && key_data->Down;  // ClearColor LockUntilRelease when key is not Down anymore
     }
 
     // Update key routing (for e.g. shortcuts)
@@ -9614,7 +9614,7 @@ void ImGui::UpdateInputEvents(bool trickle_fast_inputs)
     else
         g.InputEventsQueue.erase(g.InputEventsQueue.Data, g.InputEventsQueue.Data + event_n);
 
-    // Clear buttons state when focus is lost
+    // ClearColor buttons state when focus is lost
     // - this is useful so e.g. releasing Alt after focus loss on Alt-Tab doesn't trigger the Alt menu toggle.
     // - we clear in EndFrame() and not now in order allow application/user code polling this flag
     //   (e.g. custom backend may want to clear additional data, custom widgets may want to react with a "canceling" event).
@@ -11580,7 +11580,7 @@ void ImGui::SetNavID(ImGuiID id, ImGuiNavLayer nav_layer, ImGuiID focus_scope_id
     g.NavWindow->NavLastIds[nav_layer] = id;
     g.NavWindow->NavRectRel[nav_layer] = rect_rel;
 
-    // Clear preferred scoring position (NavMoveRequestApplyResult() will tend to restore it)
+    // ClearColor preferred scoring position (NavMoveRequestApplyResult() will tend to restore it)
     NavClearPreferredPosForAxis(ImGuiAxis_X);
     NavClearPreferredPosForAxis(ImGuiAxis_Y);
 }
@@ -11608,7 +11608,7 @@ void ImGui::SetFocusID(ImGuiID id, ImGuiWindow* window)
     else
         g.NavDisableHighlight = true;
 
-    // Clear preferred scoring position (NavMoveRequestApplyResult() will tend to restore it)
+    // ClearColor preferred scoring position (NavMoveRequestApplyResult() will tend to restore it)
     NavClearPreferredPosForAxis(ImGuiAxis_X);
     NavClearPreferredPosForAxis(ImGuiAxis_Y);
 }
@@ -11960,11 +11960,11 @@ void ImGui::NavMoveRequestSubmit(ImGuiDir move_dir, ImGuiDir clip_dir, ImGuiNavM
     g.NavMoveScrollFlags = scroll_flags;
     g.NavMoveForwardToNextFrame = false;
     g.NavMoveKeyMods = (move_flags & ImGuiNavMoveFlags_FocusApi) ? 0 : g.IO.KeyMods;
-    g.NavMoveResultLocal.Clear();
-    g.NavMoveResultLocalVisible.Clear();
-    g.NavMoveResultOther.Clear();
+    g.NavMoveResultLocal.ClearColor();
+    g.NavMoveResultLocalVisible.ClearColor();
+    g.NavMoveResultOther.ClearColor();
     g.NavTabbingCounter = 0;
-    g.NavTabbingResultFirst.Clear();
+    g.NavTabbingResultFirst.ClearColor();
     NavUpdateAnyRequestFlag();
 }
 
@@ -12594,7 +12594,7 @@ void ImGui::NavMoveRequestApplyResult()
         g.NavLastValidSelectionUserData = ImGuiSelectionUserData_Invalid;
     }
 
-    // Clear active id unless requested not to
+    // ClearColor active id unless requested not to
     // FIXME: ImGuiNavMoveFlags_NoClearActiveId is currently unused as we don't have a clear strategy to preserve active id after interaction,
     // so this is mostly provided as a gateway for further experiments (see #1418, #2890)
     if (g.ActiveId != result->ID && (g.NavMoveFlags & ImGuiNavMoveFlags_NoClearActiveId) == 0)
@@ -12682,7 +12682,7 @@ static void ImGui::NavUpdateCancelRequest()
     }
     else
     {
-        // Clear NavLastId for popups but keep it for regular child window so we can leave one and come back where we were
+        // ClearColor NavLastId for popups but keep it for regular child window so we can leave one and come back where we were
         if (g.NavWindow && ((g.NavWindow->Flags & ImGuiWindowFlags_Popup) || !(g.NavWindow->Flags & ImGuiWindowFlags_ChildWindow)))
             g.NavWindow->NavLastIds[0] = 0;
         g.NavId = 0;
@@ -13135,7 +13135,7 @@ void ImGui::ClearDragDrop()
     if (g.DragDropActive)
         IMGUI_DEBUG_LOG_ACTIVEID("[dragdrop] ClearDragDrop()\n");
     g.DragDropActive = false;
-    g.DragDropPayload.Clear();
+    g.DragDropPayload.ClearColor();
     g.DragDropAcceptFlags = ImGuiDragDropFlags_None;
     g.DragDropAcceptIdCurr = g.DragDropAcceptIdPrev = 0;
     g.DragDropAcceptIdCurrRectSurface = FLT_MAX;
@@ -13465,7 +13465,7 @@ void ImGui::EndDragDropTarget()
     IM_ASSERT(g.DragDropWithinTarget);
     g.DragDropWithinTarget = false;
 
-    // Clear drag and drop state payload right after delivery
+    // ClearColor drag and drop state payload right after delivery
     if (g.DragDropPayload.Delivery)
         ClearDragDrop();
 }
@@ -13803,7 +13803,7 @@ ImGuiSettingsHandler* ImGui::FindSettingsHandler(const char* type_name)
     return NULL;
 }
 
-// Clear all settings (windows, tables, docking etc.)
+// ClearColor all settings (windows, tables, docking etc.)
 void ImGui::ClearIniSettings()
 {
     ImGuiContext& g = *GImGui;
@@ -13996,7 +13996,7 @@ static void* WindowSettingsHandler_ReadOpen(ImGuiContext*, ImGuiSettingsHandler*
     ImGuiID id = ImHashStr(name);
     ImGuiWindowSettings* settings = ImGui::FindWindowSettingsByID(id);
     if (settings)
-        *settings = ImGuiWindowSettings(); // Clear existing if recycling previous entry
+        *settings = ImGuiWindowSettings(); // ClearColor existing if recycling previous entry
     else
         settings = ImGui::CreateNewWindowSettings(name);
     settings->ID = id;
@@ -14547,7 +14547,7 @@ void ImGui::ShowMetricsWindow(bool* p_open)
         return;
     }
 
-    // [DEBUG] Clear debug breaks hooks after exactly one cycle.
+    // [DEBUG] ClearColor debug breaks hooks after exactly one cycle.
     DebugBreakClearData();
 
     // Basic info
@@ -15839,7 +15839,7 @@ void ImGui::UpdateDebugToolStackQueries()
     ImGuiContext& g = *GImGui;
     ImGuiIDStackTool* tool = &g.DebugIDStackTool;
 
-    // Clear hook when id stack tool is not visible
+    // ClearColor hook when id stack tool is not visible
     g.DebugHookIdInfo = 0;
     if (g.FrameCount != tool->LastActiveFrame + 1)
         return;

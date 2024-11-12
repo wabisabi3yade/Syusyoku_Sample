@@ -1006,7 +1006,7 @@ struct ImPlotItemGroup
     int         GetLegendCount() const           { return Legend.Indices.size();                                 }
     ImPlotItem* GetLegendItem(int i)             { return ItemPool.GetByIndex(Legend.Indices[i]);                }
     const char* GetLegendLabel(int i)            { return Legend.Labels.Buf.Data + GetLegendItem(i)->NameOffset; }
-    void        Reset()                          { ItemPool.Clear(); Legend.Reset(); ColormapIdx = 0;            }
+    void        Reset()                          { ItemPool.ClearColor(); Legend.Reset(); ColormapIdx = 0;            }
 };
 
 // Holds Plot state information that must persist after EndPlot
