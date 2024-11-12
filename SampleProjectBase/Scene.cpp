@@ -84,7 +84,7 @@ void Scene::SceneLoad()
 
 	// シーンオブジェクトをロード
 	const nlohmann::json& sceneObjData = sceneData["objects"];
-	pInSceneSystem->GetSceneObjects().LoadObject(sceneObjData);
+	pInSceneSystem->GetSceneObjects().LoadObjectList(sceneObjData);
 
 	HASHI_DEBUG_LOG(sceneName + " ロード完了");
 }

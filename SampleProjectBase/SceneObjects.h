@@ -56,8 +56,8 @@ public:
 	u_int GetObjectsNum()const { return static_cast<u_int>(objList.size()); }
 
 	// シーンオブジェクトをセーブ・ロード
-	nlohmann::json SaveObject();
-	void LoadObject(const nlohmann::json& _objectsData);
+	nlohmann::json SaveObjectList();
+	void LoadObjectList(const nlohmann::json& _objectsData);
 private:
 	/// @brief オブジェクトの名前があるか確認
 	/// @param _gameObject オブジェクト
@@ -97,7 +97,34 @@ private:
 	/// @param _gameObject 対象のUIオブジェクト
 	void MoveToObjList(GameObject& _gameObject);
 
+	/// @brief プレハブファイルのパス名を取得
+	/// @return プレハブファイルのパス名
+	std::string PrefabFileParh();
+
+	/// @brief プレハブを生成
+	/// @param _prefabName プレハブ名
+	void CreatePrefab(const std::string& _prefabName);
+
 	void ImGuiDebug() override;
+
+	/// @brief オブジェクトをセーブ
+	/// @param _go ゲームオブジェクト
+	/// @return セーブデータ
+	nlohmann::json SaveObject(GameObject& _go);
+
+	/// @brief オブジェクトをプレハブ化する
+	/// @param _toPrefabObject プレハブ化するオブジェクト
+	void ObjectToPrefab(GameObject& _toPrefabObject);
+
+	/// @brief オブジェクトをロードする
+	/// @param _gameObjectData ゲームオブジェクトデータ
+	/// @return 成功したか？
+	bool LoadObject(const nlohmann::json& _gameObjectData);
+
+	/// @brief オブジェクトを遅れたロードする
+	/// @param _gameObjectData ゲームオブジェクトデータ
+	/// @return 成功したか？
+	bool LateLoadObject(const nlohmann::json& _gameObjectData);
 
 	/// @brief ゲームオブジェクトのImGUi表示
 	/// @param _gameObject 表示するゲームオブジェクト
