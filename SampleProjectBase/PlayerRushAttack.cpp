@@ -20,7 +20,7 @@ void PlayerRushAttack::UpdateBehavior()
 
 	PlayerGroundAttack::UpdateBehavior();
 
-	float deltaTime = MainApplication::DeltaTime();
+	float deltaTime = DeltaTime();
 	Transform& playerTrans = pActionController->GetPlayer().GetGameObject().GetTransform();
 
 	// ˆÚ“®‹——£‚ğ‹‚ß‚é

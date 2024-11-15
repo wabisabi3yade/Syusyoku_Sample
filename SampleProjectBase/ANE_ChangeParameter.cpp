@@ -2,12 +2,8 @@
 #include "ANE_ChangeParameter.h"
 
 ANE_ChangeParameter::ANE_ChangeParameter()
-	: AnimationNotifyEvent(NotifyType::ANE_ChangeParameter), pAnimationParameters(nullptr)
-{
-}
-
-ANE_ChangeParameter::ANE_ChangeParameter(AnimationParameters& _animationParameters)
-	: AnimationNotifyEvent(NotifyType::ANE_ChangeParameter), pAnimationParameters(& _animationParameters)
+	: AnimationNotifyEvent(NotifyType::ANE_ChangeParameter),
+	pAnimationParameters(nullptr)
 {
 }
 

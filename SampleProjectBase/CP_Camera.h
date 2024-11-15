@@ -23,7 +23,6 @@ public:
 	~CP_Camera() {};
 
 	void Init() override;
-	void Draw() override;
 	void OnDestroy() override;
 
 	/// @brief ƒrƒ…[•ÏŠ·s—ñ

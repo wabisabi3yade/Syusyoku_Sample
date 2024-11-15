@@ -27,7 +27,7 @@ void PlayerRollingMove::OnStartBehavior()
 	pActionController->GetPlayer().SetIsInvicible(true);
 
 	// アニメーションの反映
-	pAnimation->SetTrigger(ROLLING_ANIMPARAM);
+	pActionController->GetAnimation()->SetTrigger(ROLLING_ANIMPARAM);
 }
 
 void PlayerRollingMove::UpdateBehavior()
@@ -80,10 +80,10 @@ void PlayerRollingMove::Move()
 	using namespace DirectX::SimpleMath;
 
 	Transform& transform = pActionController->GetPlayer().GetTransform();
-	float deltaTime = MainApplication::DeltaTime();
+	float deltaTime = DeltaTime();
 
 	// アニメーションの再生割合から進む距離を求める
-	float animPlayRatio = pAnimation->GetCurrentPlayRatio();
+	float animPlayRatio = pActionController->GetAnimation()->GetCurrentPlayRatio();
 	float moveDistance = pSpeedCurve->GetValue(animPlayRatio) * rollingDistance;
 
 	// 前進方向に移動する
@@ -95,7 +95,7 @@ void PlayerRollingMove::Move()
 void PlayerRollingMove::UpdateInvicible()
 {
 	// 無敵時間内か見る
-	elapsedTime += MainApplication::DeltaTime();
+	elapsedTime += DeltaTime();
 	CP_Player& player = pActionController->GetPlayer();
 
 	if (player.GetIsInvicible() && elapsedTime > invicibleTime)

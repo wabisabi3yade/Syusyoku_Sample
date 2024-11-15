@@ -19,7 +19,7 @@ void CrossFadeAnimation::Begin(AnimNodePlayer_Base& _fromNode, AnimNodePlayer_Ba
 	pToNodePlayer = &_toNode;
 	pAssetBoneList = &_updateBones;
 	elapsedTime = 0.0f;
-	transitionTime = _transitionTime;
+	transitionTime = std::max(_transitionTime, Mathf::epsilon);
 	easeKind = _easeKind;
 }
 
@@ -66,27 +66,26 @@ void CrossFadeAnimation::ProgressTime(float _deltaTime)
 	// 遷移割合をイージングを考慮した値で求める
 	float ratio = elapsedTime / transitionTime;
 	transitionWeight = Easing::EaseValue(ratio, easeKind);
+
+	// 範囲におさめる
+	transitionWeight = std::clamp(transitionWeight, 0.0f, 1.0f);
 }
 
-void CrossFadeAnimation::Update(float _playSpeed)
+void CrossFadeAnimation::Update(float _deltaTime, float _controllerSpeed)
 {
-	// アニメーション再生の速度を考慮する
-	float deltaTime = MainApplication::DeltaTime() * _playSpeed;
-
 	// 遷移の時間を進め、アニメーションのウェイトを変化させる
-	ProgressTime(deltaTime);
+	ProgressTime(_deltaTime);
 
 	// 遷移元のアニメーション更新
 	std::vector<BoneTransform> fromBoneTransforms;
-	pFromNodePlayer->OnInterpolateUpdate(fromBoneTransforms, _playSpeed);
-	Vector3 fromMovement = pFromNodePlayer->CalcRootMotionToTransform();
+	pFromNodePlayer->OnInterpolateUpdate(fromBoneTransforms, _deltaTime, _controllerSpeed);
 
 	// 遷移先のアニメーション更新
 	std::vector<BoneTransform> toBoneTransforms;
-	pToNodePlayer->OnInterpolateUpdate(toBoneTransforms, _playSpeed);
-	Vector3 toMovement = pToNodePlayer->CalcRootMotionToTransform();
-
+	pToNodePlayer->OnInterpolateUpdate(toBoneTransforms, _deltaTime, _controllerSpeed);
+	
 	// ルートモーションは遷移先のものを使用
+	Vector3 toMovement = pToNodePlayer->CalcRootMotionToTransform();
 	pToNodePlayer->ApplyRootMotion(toMovement);
 	
 	// 補間したトランスフォームをボーンに適用させる

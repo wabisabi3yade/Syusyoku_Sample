@@ -41,10 +41,8 @@ void CP_Boss::Start()
 {
 	CP_Enemy::Start();
 
-	if (pAnimation = GetGameObject().GetComponent<CP_Animation>())
-	{
-		pActionController->Init(*pAnimation);
-	}
+	pAnimation = GetGameObject().GetComponent<CP_Animation>();
+	pActionController->Init(pAnimation);
 
 	// プレイヤーを取得する
 	if (CP_BattleManager* pBattle = CP_BattleManager::GetInstance())
@@ -59,7 +57,7 @@ void CP_Boss::Update()
 
 	CP_Enemy::Update();
 
-	pActionController->Update();
+	pActionController->UpdateCall();
 }
 
 void CP_Boss::Draw()
@@ -91,6 +89,13 @@ void CP_Boss::OnHitStopEnd()
 
 	// アニメーションの速度を戻す
 	pAnimation->SetControllerPlaySpeed(hitStopBeforeAnimSpeed);
+}
+
+void CP_Boss::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo)
+{
+	CP_Enemy::OnDamageBehavior(_attackInfo);
+
+	pActionController->OnDamage();
 }
 
 void CP_Boss::ImGuiDebug()

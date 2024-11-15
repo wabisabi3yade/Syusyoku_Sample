@@ -19,6 +19,9 @@ protected:
 	/// @brief 現在の体力
 	float currentHP;
 
+	/// @brief HSが入る前のオブジェクトの経過時間
+	float hsBeforeDeltaTime;
+
 	/// @brief 最大体力
 	float maxHP;
 

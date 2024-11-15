@@ -51,11 +51,11 @@ AnimTransitionArrow* AnimationController::CreateTransitionArrow(const std::strin
 		return nullptr;
 	}
 
-	if (fromNodeInfo == toNodeInfo)	// 自分自身につなげていたら
-	{
-		HASHI_DEBUG_LOG("遷移元と先が同じノードです");
-		return nullptr;
-	}
+	//if (fromNodeInfo == toNodeInfo)	// 自分自身につなげていたら
+	//{
+	//	HASHI_DEBUG_LOG("遷移元と先が同じノードです");
+	//	return nullptr;
+	//}
 
 	// 矢印作成して追加
 	AnimationNode_Base* pFromNode = fromNodeInfo->pAnimNode.get();
@@ -91,6 +91,11 @@ void AnimationController::RemoveNode(const std::string& _nodeName)
 		{
 			return pDelete == _nodeInfo.get();
 		});
+}
+
+float AnimationController::GetPlaySpeed() const
+{
+	return playSpeed;
 }
 
 AnimNodeInfo* AnimationController::GetDefaultNode() const
@@ -244,8 +249,13 @@ void AnimationController::ImGuiAnimNotify(AnimNodeInfo& _nodeInfo)
 	// 追加
 	// 生成クラス側でイベント作成
 	std::unique_ptr<AnimationNotify_Base> pNotify;
-	if(pNotifyFactory->ImGuiCombo(pNotify))
+	if (pNotifyFactory->ImGuiCombo(pNotify))
+	{
+		pNotify->SetAnimationFrameCnt(_nodeInfo.pAnimNode->GetAllKeyFrame());
+
 		_nodeInfo.notifyList.push_back(std::move(pNotify));
+	}
+		
 
 #endif //  EDIT
 }
@@ -322,7 +332,9 @@ void AnimationController::LoadNotify(const nlohmann::json& _nodeInfoData)
 
 		// 作成
 		std::unique_ptr<AnimationNotify_Base> pLoadNotify =  pNotifyFactory->Create(loadType);
+		pLoadNotify->SetAnimationFrameCnt(pNodeInfo->pAnimNode->GetAllKeyFrame());
 		pLoadNotify->Load(notifyParamData);
+		
 
 		// 追加
 		pNodeInfo->notifyList.push_back(std::move(pLoadNotify));
@@ -392,6 +404,8 @@ bool AnimationController::SortArrowPriority(const std::unique_ptr<AnimTransition
 
 void AnimationController::ImGuiDebug()
 {
+	ImGui::DragFloat("PlaySpeed", &playSpeed, 0.01f, 0.0f, 1000.0f);
+
 	std::vector<std::string> nodeNames;	// 全ノード名を取得しておく
 	for (auto& ni : animNodeInfos)
 		nodeNames.push_back(ni->pAnimNode->GetNodeName());

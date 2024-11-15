@@ -47,7 +47,6 @@ void ComponentFactory::Init()
 	// ‚»‚Ì‘¼
 	ResistComponnent<CP_EaseTest>();
 	ResistComponnent<CP_BoxAnimation>();
-	ResistComponnent<CP_NotifyTest>();
 }
 
 std::unique_ptr<Component> ComponentFactory::CreateByName(const std::string& _componentName)

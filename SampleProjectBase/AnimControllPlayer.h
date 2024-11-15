@@ -50,6 +50,9 @@ class AnimControllPlayer : public HashiTaku::IImGuiUser
 	/// @brief 再生速度
 	float playSpeed;
 
+	/// @brief 経過時間
+	float deltaTime;
+
 	/// @brief アニメーション更新の状態
 	UpdateState updateState;
 
@@ -60,7 +63,8 @@ public:
 	~AnimControllPlayer() {}
 
 	/// @brief 更新処理
-	void Update();
+	///  @param _deltaTime　経過時間
+	void Update(float _deltaTime);
 
 	/// @brief サブジェクトにオブザーバーを登録
 	/// @param _observer オブザーバー

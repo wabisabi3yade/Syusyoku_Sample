@@ -12,12 +12,12 @@ void BossGroundAttack::OnStartBehavior()
 	BossGroundState::OnStartBehavior();
 
 	// UŒ‚ƒgƒŠƒK[
-	pActionController->GetAnimation().SetTrigger(ATTACKTRIGGER_ANIMPARAM_NAME);
+	pActionController->GetAnimation()->SetTrigger(ATTACKTRIGGER_ANIMPARAM_NAME);
 }
 
 void BossGroundAttack::OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName)
 {
-	if (_toAnimNodeName == RUN_ANIM_NAME)
+	if (_toAnimNodeName == IDLE_ANIM_NAME)
 	{
 		ChangeState(BossState::Run);
 	}

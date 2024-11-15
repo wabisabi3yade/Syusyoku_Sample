@@ -3,6 +3,13 @@
 /// @brief アニメーションカーブによるパラメータ編集(エルミート曲線)
 class AnimationCurve : public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
 {
+	// 補間の種類
+	enum class InterpKind
+	{
+		Hermite, // エルミート
+		Linear	// 線形
+	};
+
 	/// @brief エルミート曲線の点パラメータ
 	struct HermitePlotParam
 	{
@@ -14,6 +21,9 @@ class AnimationCurve : public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
 
 		/// @brief ベクトル
 		float vector{ 0.5f };
+
+		/// @brief 次までの補間方法
+		InterpKind toNextInterp { InterpKind::Hermite };
 
 		bool operator==(const HermitePlotParam& _other)
 		{
@@ -77,6 +87,14 @@ private:
 	/// @param _p1 後の制御点
 	/// @return 時間の値
 	float CalcHermiteCurve(float _getTime, const HermitePlotParam& _p0, const HermitePlotParam& _p1) const;
+
+	/// @brief 時間からリニア曲線を取得する
+	/// @param _getTime 2点間の割合(0.0～1.0)
+	/// @param _p0 前の制御点
+	/// @param _p1 後の制御点
+	/// @return 時間の値
+	float CalcLinearCurve(float _getTime, const HermitePlotParam& _p0, const HermitePlotParam& _p1) const;
+
 
 	/// @brief プロット点の時間を昇順にする
 	/// @param _p0 前

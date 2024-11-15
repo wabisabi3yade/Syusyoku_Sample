@@ -41,6 +41,12 @@ class GameObject : public HashiTaku::ISaveLoad, public HashiTaku::IImGuiUser
 	/// @brief レイヤー
 	HashiTaku::Layer layer;
 
+	/// @brief オブジェクト自身の経過時間速度
+	float deltaTimeSpeed;
+
+	/// @brief オブジェクト自身の経過時間
+	float deltaTime;
+
 	/// @brief アクティブ状態かどうか
 	bool isActive;
 public:
@@ -124,6 +130,10 @@ public:
 	/// @param _setType セットしたいレイヤーの種類
 	void SetLayer(HashiTaku::Layer::Type _setType);
 
+	/// @brief 経過時間を進める速度をセット
+	/// @param _deltaSpeed 経過時間を進める速度(1.0が等速)
+	void SetDeltaTimeSpeed(float _deltaSpeed);
+
 	/// @brief トランスフォームを取得
 	/// @return トランスフォームの参照
 	Transform& GetTransform();
@@ -131,6 +141,14 @@ public:
 	/// @brief オブジェクト名を取得
 	/// @return オブジェクト名
 	const std::string& GetName() const;
+
+	/// @brief オブジェクトの経過時間を取得する
+	/// @return オブジェクトの経過時間
+	float DeltaTime() const;
+
+	/// @brief Δt速度を取得
+	/// @return Δt
+	float GetDeltdaSpeed() const;
 
 	/// @brief 活動状態を取得
 	/// @return 活動状態
@@ -145,6 +163,9 @@ public:
 	HashiTaku::Layer::Type GetLayer() const;
 private:
 	virtual GameObject& Copy(const GameObject& _other);
+
+	/// @brief 経過時間を更新する
+	void UpdateDeltaTime();
 
 	/// @brief アクティブ状態を切り替えた時に起こす処理
 	void OnActiveTrue();

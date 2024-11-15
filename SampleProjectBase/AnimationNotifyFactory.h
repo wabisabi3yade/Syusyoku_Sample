@@ -16,12 +16,12 @@ public:
 	~AnimationNotifyFactory() {}
 
 	/// @brief 通知クラスを生成し、返す
-	/// @param _notifyName 通知イベントクラス名
+	/// @param _notifyName 通知イベントクラス
 	/// @return 生成したインスタンス
 	std::unique_ptr<AnimationNotify_Base> Create(AnimationNotify_Base::NotifyType _notifyType);
 
 	/// @brief コンボボックスで作成する
-	/// @brief Factoryで
+	/// @brief Factoryで作成した通知
 	/// @return 作成するボタンをおされたら返す
 	bool ImGuiCombo(std::unique_ptr<AnimationNotify_Base>& _pCreateNotify);
 private:

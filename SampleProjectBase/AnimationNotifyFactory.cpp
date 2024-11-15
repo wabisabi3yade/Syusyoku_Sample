@@ -5,7 +5,7 @@
 bool AnimationNotifyFactory::ImGuiCombo(std::unique_ptr<AnimationNotify_Base>& _pCreateNotify)
 {
 	static u_int selectType;
-	
+
 	// タイプの文字列を取得する
 	std::vector<std::string> nameList;
 	for (auto& respawner : animNotifyList)
@@ -17,10 +17,11 @@ bool AnimationNotifyFactory::ImGuiCombo(std::unique_ptr<AnimationNotify_Base>& _
 
 	if (ImGui::Button("+"))
 	{
-		_pCreateNotify = Create(static_cast<AnimationNotify_Base::NotifyType>(selectType));
+		_pCreateNotify = Create(
+			static_cast<AnimationNotify_Base::NotifyType>(selectType));
 		return true;
 	}
-	
+
 	ImGui::SameLine();
 	ImGuiMethod::ComboBox("AddNotify", selectType, nameList);
 
@@ -46,7 +47,9 @@ std::unique_ptr<AnimationNotify_Base> AnimationNotifyFactory::Create(AnimationNo
 	}
 #endif // _DEBUG
 
-	std::unique_ptr<AnimationNotify_Base> pCreate = animNotifyList[_notifyType]->Create();
+	// 柵瀬
+	std::unique_ptr<AnimationNotify_Base> pCreate = animNotifyList[_notifyType]->
+		Create();
 	pCreate->SetNotifyName(notifyTypeStr);
 
 	// アニメーションパラメータをセットする必要があるなら

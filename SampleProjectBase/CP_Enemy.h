@@ -13,7 +13,15 @@ public:
 	/// @brief 敵名を取得
 	/// @return 敵名
 	const std::string& GetEnemyName() const;
-private:
+
+protected:
+	void Awake() override;
+	void OnDestroy() override;
+
+	/// @brief 敵名をセット
+	/// @param _enemyName 敵名
+	void SetEnemyName(const std::string& _enemyName);
+
 	/// @brief 各クラスのダメージを受けたときの処理
 	/// @param _attackInfo 攻撃情報
 	void OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo) override;
@@ -21,11 +29,5 @@ private:
 	/// @brief 各クラスのダメージを受けたときの処理
 	/// @param _attackInfo 攻撃情報
 	void OnDeathBehavior() override;
-
-protected:
-	void Awake() override;
-	void OnDestroy() override;
-
-	void SetEnemyName(const std::string& _enemyName);
 };
 

@@ -34,7 +34,7 @@ void Scene::Exec()
 
 void Scene::SceneUpdate()
 {
-	SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->GetSceneObjects();
+	SceneObjects& sceneObjects = pInSceneSystem->GetSceneObjects();
 	DX11BulletPhisics* pBulletEngine = DX11BulletPhisics::GetInstance();
 
 	// ゲーム内入力更新処理
@@ -112,6 +112,9 @@ void Scene::DrawSetup()
 	// 1ループ1度だけ更新すればいいバッファ更新
 	ShaderCollection* shCol = ShaderCollection::GetInstance();
 	shCol->UniqueUpdateBuffer();
+
+	// ビュー変換行列を更新
+	pInSceneSystem->UpdateViewMatrix();
 }
 
 std::string Scene::SaveFilePath()

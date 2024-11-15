@@ -75,8 +75,7 @@ private:
 	u_int GetBlendAxisCnt() const;
 
 	/// @brief ルートモーションの座標移動速度を計算する
-	/// @param _controllerSpeed コントローラー速度
-	void CalcRootMotionPosSpeed(float _controllerSpeed) override;
+	void CalcRootMotionPosSpeed() override;
 
 	/// @brief ルートモーションを取得する（内部で必要な計算を行う）
 	/// @param 現在の再生割合

@@ -12,6 +12,8 @@ namespace HashiTaku
 		/// @brief ステートマシン名
 		std::string stateMachineName;
 
+		/// @brief このフレームでは状態は
+		bool isCurFrameStateChange;
 	protected:
 		/// @brief 状態ノードリスト
 		std::unordered_map<T, std::unique_ptr<StateNode_Base>> stateNodeList;
@@ -30,10 +32,13 @@ namespace HashiTaku
 
 
 		/// @brief このフレームで遷移は行うか？
-		bool isChangCurFlame;
+		bool isChangeCurFlame;
 	public:
 		StateMachine_Base(const std::string& _stateMachineName);
 		virtual ~StateMachine_Base() {}
+
+		/// @brief 更新関数呼び出し
+		void UpdateCall();
 
 		/// @brief ノードを追加する
 		/// @param _registKey 追加するキー
@@ -43,14 +48,12 @@ namespace HashiTaku
 		/// @brief ノードを削除する
 		/// @param _registKey 
 		virtual void RemoveNode(const T& _registKey);
-		
+
 		/// @brief ノードを変更する
 		/// @param _changeKey 変更するノードのキー
+		/// @param _isForceChange 強制的に変更する
 		/// @return 遷移成功したか？
-		virtual bool ChangeNode(const T& _changeKey);
-
-		/// @brief 更新処理
-		virtual void Update();
+		virtual bool ChangeNode(const T& _changeKey, bool _isForceChange = false);
 
 		/// @brief デフォルトノードを設定する
 		/// @param _defaultKey デフォルトノードを指定するキー
@@ -63,6 +66,14 @@ namespace HashiTaku
 	protected:
 		/// @brief 開始処理
 		virtual void Begin();
+
+		/// @brief 更新処理
+		virtual void Update();
+	private:
+		/// @brief ノード変更できる条件を整っているか？
+		/// @param _changeKey 遷移先キー
+		/// @return 変更できるか？
+		bool CanChengeNode(const T& _changeKey);
 	};
 
 	/// @brief ステートマシンで使用するノード
@@ -103,6 +114,19 @@ namespace HashiTaku
 	}
 
 	template<class T>
+	inline void StateMachine_Base<T>::UpdateCall()
+	{
+		// 外部からのコールバックで変更しているかもなのでリセット
+		isChangeCurFlame = false;
+		
+		// 更新
+		Update();
+
+		// リセット
+		isChangeCurFlame = false;
+	}
+
+	template<class T>
 	inline void StateMachine_Base<T>::AddNode(const T& _registKey, std::unique_ptr<StateNode_Base> _addNode)
 	{
 		if (stateNodeList.contains(_registKey))
@@ -124,7 +148,7 @@ namespace HashiTaku
 		}
 
 		StateNode_Base& removeNode = *stateNodeList[_registKey];
-		
+
 		if (pDefaultNode == &removeNode)
 			pDefaultNode = nullptr;
 
@@ -135,10 +159,11 @@ namespace HashiTaku
 	}
 
 	template<class T>
-	inline bool StateMachine_Base<T>::ChangeNode(const T& _changeKey)
+	inline bool StateMachine_Base<T>::ChangeNode(const T& _changeKey, bool _isForceChange)
 	{
-		// 同じ状態に遷移しようとしているなら遷移しない
-		if (_changeKey == currentStateKey) return false;
+		// 遷移できるか確認する
+		if (!_isForceChange && !CanChengeNode(_changeKey))
+			return false;
 
 		if (!stateNodeList.contains(_changeKey))
 		{
@@ -149,11 +174,15 @@ namespace HashiTaku
 		// 変更前の終了処理
 		pCurrentNode->OnEnd();
 
+		// 現在のノードを変更
 		pCurrentNode = stateNodeList[_changeKey].get();
 		currentStateKey = _changeKey;
 
 		// 変更後の開始処理
 		pCurrentNode->OnStart();
+
+		// 変更したフラグを立てる
+		isChangeCurFlame = true;
 
 		return true;
 	}
@@ -162,6 +191,18 @@ namespace HashiTaku
 	inline void StateMachine_Base<T>::Begin()
 	{
 		pCurrentNode = pDefaultNode;
+	}
+
+	template<class T>
+	inline bool StateMachine_Base<T>::CanChengeNode(const T& _changeKey)
+	{
+		// 同じ状態に遷移しようとしているなら遷移しない
+		if (_changeKey == currentStateKey) return false;
+		
+		// 既にこのフレーム中に変更されているなら
+		if (isChangeCurFlame) return false;
+
+		return true;
 	}
 
 	template<class T>

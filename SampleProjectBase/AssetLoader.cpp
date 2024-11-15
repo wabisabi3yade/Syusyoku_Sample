@@ -560,8 +560,10 @@ AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, const st
 		pAnimData->AddAnimationChannel(std::move(pAnimChannel));
 	}
 
+	// アニメーションのデータを自作クラスにセット
 	pAnimData->SetAnimationTime(GetAnimationTime(aiAnimation));
 	pAnimData->SetTimePerKey(GetTimePerKey(aiAnimation));
+	pAnimData->SetAllFrameCnt(GetAnimationFrameCnt(aiAnimation));
 	pAnimData->CalcRootMotion(pAssetBoneList->GetRootBoneId());
 
 	// 名前をパス名から取得
@@ -760,6 +762,18 @@ float AssetLoader::GetAnimationTime(const aiAnimation* _pAiAnim)
 	}
 
 	return static_cast<float>(animationTime_s);
+}
+
+u_int AssetLoader::GetAnimationFrameCnt(const aiAnimation* _pAiAnim)
+{
+	// アニメーションデータの1秒間のフレーム数
+	constexpr u_int FRAME_PERSEC(30);
+
+	//　1秒間のtick速度を求める
+	double tickSpeedPerFrame = _pAiAnim->mTicksPerSecond / FRAME_PERSEC;
+
+	// フレーム数を求める
+	return static_cast<u_int>(_pAiAnim->mDuration / tickSpeedPerFrame);
 }
 
 float AssetLoader::GetTimePerKey(const aiAnimation* _pAiAnim)

@@ -2,7 +2,7 @@
 #include "AttackInformation.h"
 
 HashiTaku::AttackInformation::AttackInformation()
-	: atkDamage(0.0f), hitStopFlame(0), atkLevel(AttackLevel::Low)
+	: atkDamage(0.0f), hitStopFrame(0), atkLevel(AttackLevel::Low)
 {
 	SetAttackLevel(AttackLevel::Low);
 }
@@ -20,7 +20,7 @@ void HashiTaku::AttackInformation::SetDamageValue(float _atkDamage)
 
 void HashiTaku::AttackInformation::SetHitStopFlame(u_int _hitStopFlame)
 {
-	hitStopFlame = _hitStopFlame;
+	hitStopFrame = _hitStopFlame;
 }
 
 void HashiTaku::AttackInformation::SetAttackLevel(AttackLevel _atkLevel)
@@ -37,7 +37,7 @@ float HashiTaku::AttackInformation::GetDamageValue() const
 
 u_int HashiTaku::AttackInformation::GetHitStopFlame() const
 {
-	return hitStopFlame;
+	return hitStopFrame;
 }
 
 nlohmann::json HashiTaku::AttackInformation::Save()
@@ -66,17 +66,17 @@ void HashiTaku::AttackInformation::ApplyFromAttackLevel()
 	switch (atkLevel)
 	{
 	case Low:
-		hitStopFlame = LOW_HITSTOP;
+		hitStopFrame = LOW_HITSTOP;
 		break;
 
 	case Mid:
-		hitStopFlame = MID_HITSTOP;
+		hitStopFrame = MID_HITSTOP;
 		break;
 	case High:
-		hitStopFlame = HIGH_HITSTOP;
+		hitStopFrame = HIGH_HITSTOP;
 		break;
 	case SuperHigh:
-		hitStopFlame = SUPERHIGH_HITSTOP;
+		hitStopFrame = SUPERHIGH_HITSTOP;
 		break;
 	}
 }
@@ -85,7 +85,7 @@ void HashiTaku::AttackInformation::ImGuiDebug()
 {
 	// ダメージ値
 	ImGui::DragFloat("AtkDamage", &atkDamage, 0.1f, 0.0f, 9999.0f);
-
+	ImGui::Text("HSframe:%d", hitStopFrame);
 	// レベル
 	std::vector<std::string> levelNames
 	{
@@ -95,6 +95,7 @@ void HashiTaku::AttackInformation::ImGuiDebug()
 		"SuperHigh"
 	};
 	u_int id = static_cast<u_int>(atkLevel);
+
 	if (ImGuiMethod::ComboBox("AtkLevel", id, levelNames))
 	{
 		SetAttackLevel(static_cast<AttackLevel>(id));

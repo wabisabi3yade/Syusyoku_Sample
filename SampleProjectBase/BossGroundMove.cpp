@@ -11,11 +11,11 @@ BossGroundMove::BossGroundMove()
 void BossGroundMove::DebugDisplay()
 {
 #ifdef EDIT
-	//using namespace DirectX::SimpleMath;
-	//Geometory::SetColor(Color(1, 1, 1, 0.5f));
-	//Geometory::SetPosition(GetBossTransform().GetPosition());
-	//Geometory::SetScale(Vector3::One * transNearDistance * 2);
-	//Geometory::DrawSphere();
+	using namespace DirectX::SimpleMath;
+	Geometory::SetColor(Color(1, 1, 1, 0.5f));
+	Geometory::SetPosition(GetBossTransform().GetPosition());
+	Geometory::SetScale(Vector3::One * transNearDistance * 2);
+	Geometory::DrawSphere();
 #endif
 }
 
@@ -55,7 +55,7 @@ void BossGroundMove::UpdateBehavior()
 void BossGroundMove::OnEndBehavior()
 {
 	// ブレンドアニメーションの速度を渡す
-	pActionController->GetAnimation().SetFloat(SPEED_ANIMPARAM_NAME, 0.0f);
+	pActionController->GetAnimation()->SetFloat(SPEED_ANIMPARAM_NAME, 0.0f);
 }
 
 void BossGroundMove::TransitionCheckUpdate()
@@ -71,7 +71,7 @@ void BossGroundMove::TransitionCheckUpdate()
 void BossGroundMove::Rotation()
 {
 	using namespace DirectX::SimpleMath;
-	float deltaTime = MainApplication::DeltaTime();
+	float deltaTime = DeltaTime();
 
 	Transform& myTransform = GetBossTransform();
 	Transform& playerTrans = GetPlayerTransform();
@@ -83,7 +83,7 @@ void BossGroundMove::Rotation()
 
 	// ベクトルからクォータニオンを生成
 	Quaternion targetRotation = Quat::RotateToVector(targetVec);
-	
+
 	// 回転させる
 	Quaternion rot = myTransform.GetRotation();
 	rot = Quaternion::Slerp(rot, targetRotation, rotateSpeed * deltaTime);
@@ -94,7 +94,7 @@ void BossGroundMove::Move()
 {
 	using namespace DirectX::SimpleMath;
 
-	float deltaTime = MainApplication::DeltaTime();
+	float deltaTime = DeltaTime();
 	Transform& myTransform = pActionController->GetBoss().GetTransform();
 
 	// 加速
@@ -110,7 +110,7 @@ void BossGroundMove::Move()
 	myTransform.SetPosition(pos);
 
 	// ブレンドアニメーションの速度を渡す
-	pActionController->GetAnimation().SetFloat(SPEED_ANIMPARAM_NAME, currentSpeed / maxSpeed);
+	pActionController->GetAnimation()->SetFloat(SPEED_ANIMPARAM_NAME, currentSpeed / maxSpeed);
 }
 
 bool BossGroundMove::CheckNearTransition()

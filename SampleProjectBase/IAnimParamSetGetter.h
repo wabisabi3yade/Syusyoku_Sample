@@ -5,6 +5,6 @@
 //	IAnimParamSetGetter() = default;
 //	virtual ~IAnimParamSetGetter() = default;
 //
-//	virtual SetFloat()
+//	virtual SetAnimationFloat()
 //};
 

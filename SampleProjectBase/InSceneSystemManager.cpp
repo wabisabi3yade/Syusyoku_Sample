@@ -56,6 +56,12 @@ CP_Camera& InSceneSystemManager::GetMainCamera()
 	return *pMainCamera;
 }
 
+void InSceneSystemManager::UpdateViewMatrix()
+{
+	if (pMainCamera)
+		pMainCamera->UpdateViewMatrix();
+}
+
 SceneObjects& InSceneSystemManager::GetSceneObjects()
 {
 	return *pSceneObjects;

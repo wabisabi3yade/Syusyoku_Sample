@@ -73,8 +73,9 @@ public:
 	bool Calculate(const std::vector<BoneTransform>& _nextAnimation, float _blendTime);
 
 	/// @brief ボーンのキャッシュを更新する
-	/// @param boneTransforms 更新するボーンのトランスフォーム
-	void UpdateBoneCache(std::vector<BoneTransform>& boneTransforms);
+	/// @param boneTransforms 更新するボーンの
+	/// @param _deltaTime 経過時間
+	void UpdateBoneCache(std::vector<BoneTransform>& boneTransforms, float _deltaTime);
 
 	// 各パラメータのブレンド値を計算する
 	DirectX::SimpleMath::Vector3 CalcBlendPos(u_int _boneIdx, float _blendingTime);
@@ -82,9 +83,9 @@ public:
 	DirectX::SimpleMath::Quaternion CalcBlendRot(u_int _boneIdx, float _blendingTime);
 
 	/// @brief 遷移の経過時間を進める
-	/// @param _playSpeed 再生速度
-	/// @return 経過時間
-	float ProgressTransitionTime(float _playSpeed);
+	/// @param _deltaTime Δt
+	/// @return 補間開始からの経過時間
+	float ProgressTransitionTime(float _deltaTime);
 
 	/// @brief 遷移が終了しているか取得する
 	/// @return 遷移終了しているか？

@@ -20,7 +20,7 @@ void CP_NotifyTest::Init()
 
 void CP_NotifyTest::Update()
 {
-	curRatio += speed * MainApplication::DeltaTime();
+	curRatio += speed * DeltaTime();
 	bool isLoop = false;
 
 	if (curRatio > 1.0f)

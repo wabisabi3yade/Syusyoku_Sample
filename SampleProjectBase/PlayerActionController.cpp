@@ -11,12 +11,10 @@
 #include "PlayerGroundAttack.h"
 #include "PlayerRushAttack.h"
 
-PlayerActionController::PlayerActionController(CP_Player& _player)
-	: StateMachine_Base("playerAction"), pAnimation(nullptr), pPlayer(&_player),pIsCanCancel(nullptr), isTargeting(false)
+PlayerActionController::PlayerActionController(CP_Player& _player):
+	CharacterActionController(_player, "playerAction"), pIsCanCancel(nullptr), 
+	isTargeting(false)
 {
-	// アニメーション変更オブザーバー生成
-	pChangeAnimObserver = std::make_unique<PlayerChangeAnimObserver>(*this);
-
 	pInput = &InSceneSystemManager::GetInstance()->GetInput();
 
 	// 行動クラスを生成
@@ -32,23 +30,18 @@ PlayerActionController::PlayerActionController(CP_Player& _player)
 	CreateState<PlayerRushAttack>(SpecialAtkHi);
 
 	// デフォルト状態をセット
-	SetDefaultNode(Idle);
+	SetDefaultNode(static_cast<int>(Idle));
 }
-void PlayerActionController::Begin(CP_Animation& _animationController)
+void PlayerActionController::Init(CP_Animation* _animationController)
 {
 	// ステートマシン共通開始処理
-	StateMachine_Base::Begin();
+	CharacterActionController::Init(_animationController);
 
-	// アニメーションコントローラーを各ステートに渡す
-	pAnimation = &_animationController;
-	for (auto& stateNode : stateNodeList)
-	{
-		PlayerActState_Base& playerAct = CastPlayerAct(*stateNode.second);
-		playerAct.SetAnimation(_animationController);
-	}
-	
 	// アニメーションパラメータのアドレスを取得
 	pIsCanCancel = pAnimation->GetParameterPointer<bool>(CANCEL_PARAMNAME);
+
+	// 先行入力のアドレスを取得
+	pIsSenkoInput = pAnimation->GetParameterPointer<bool>(SENKOINPUT_PARAMNAME);
 }
 
 void PlayerActionController::Update()
@@ -66,10 +59,10 @@ void PlayerActionController::UpdateTargeting()
 	pAnimation->SetBool(TARGET_PARAMNAME, isTargeting);
 }
 
-bool PlayerActionController::ChangeNode(const PlayerActState_Base::PlayerState& _nextActionState)
+bool PlayerActionController::ChangeState(const PlayerActState_Base::PlayerState& _nextActionState)
 {
 	// ステートマシンで変更
-	bool isSuccess = StateMachine_Base::ChangeNode(_nextActionState);
+	bool isSuccess = StateMachine_Base::ChangeNode(static_cast<int>(_nextActionState));
 	if (!isSuccess) return false;
 
 	// アニメーション側のstate変数も変更
@@ -88,9 +81,14 @@ bool PlayerActionController::GetIsCanCancel() const
 	return *pIsCanCancel;
 }
 
+bool PlayerActionController::GetCanInput() const
+{
+	return *pIsSenkoInput;
+}
+
 CP_Player& PlayerActionController::GetPlayer()
 {
-	return *pPlayer;
+	return static_cast<CP_Player&>(*pCharacter);
 }
 
 PlayerActState_Base& PlayerActionController::CastPlayerAct(HashiTaku::StateNode_Base& _stateNodeBase)
@@ -103,19 +101,9 @@ void PlayerActionController::ImGuiDebug()
 	ImGuiMethod::Text("isTargeting", isTargeting);
 
 	// 現在の状態表示
-	std::string text = "NowState:" + std::string(magic_enum::enum_name(currentStateKey));
-	ImGui::Text(text.c_str());
+	ImGui::Text(GetStateStr(currentStateKey).c_str());
 
-	for (auto& pAct : stateNodeList)	// 各アクションの調整
-	{
-		std::string stateStr = std::string(magic_enum::enum_name(pAct.first));
-		if (ImGuiMethod::TreeNode(stateStr))
-		{
-			CastPlayerAct(*pAct.second).ImGuiCall();
-
-			ImGui::TreePop();
-		}
-	}
+	CharacterActionController::ImGuiDebug();
 }
 
 PlayerActState_Base* PlayerActionController::GetCurrentAction()
@@ -123,77 +111,33 @@ PlayerActState_Base* PlayerActionController::GetCurrentAction()
 	return static_cast<PlayerActState_Base*>(pCurrentNode);
 }
 
-PlayerChangeAnimObserver& PlayerActionController::GetChangeAnimObserver()
+std::string PlayerActionController::GetStateStr(int _stateId)
 {
-	return *pChangeAnimObserver;
+	PlayerActState_Base::PlayerState state =
+		static_cast<PlayerActState_Base::PlayerState>(_stateId);
+
+	return std::string(magic_enum::enum_name<PlayerActState_Base::PlayerState>(state));
 }
 
-nlohmann::json PlayerActionController::Save()
+int PlayerActionController::GetStateId(const std::string& _stateName)
 {
-	nlohmann::json data;
-
-	for (auto& node : stateNodeList)
+	auto state = magic_enum::enum_cast<PlayerActState_Base::PlayerState>(_stateName);
+	if (!state.has_value())
 	{
-		nlohmann::json actData;
-		// 文字列に変換
-		actData["typeString"] = magic_enum::enum_name(node.first);
-		actData["data"] = CastPlayerAct(*node.second).Save();
-		data["actData"].push_back(actData);
+		assert("正常に状態を取得できません");
+		return -1;
 	}
 
-	return data;
+	return static_cast<int>(state.value());
 }
 
-void PlayerActionController::Load(const nlohmann::json& _data)
+void PlayerActionController::GetTargetObject(ITargetAccepter& _targetObject)
 {
-	using namespace HashiTaku;
-	nlohmann::json actDataList;
-	// ステートごとのパラメータをロードする
-	if (LoadJsonDataArray("actData", actDataList, _data))
-	{
-		for (auto& actData : actDataList)
-		{
-			std::string stateString;
-			if (!LoadJsonString("typeString", stateString, actData))
-				continue;
-
-			PlayerActState_Base::PlayerState playerState;
-			// 文字列->StateType
-			auto state = magic_enum::enum_cast<PlayerActState_Base::PlayerState>(stateString);
-			if (state.has_value())
-				playerState = state.value();
-			else
-				continue;
-
-			nlohmann::json actParam;
-			if (!LoadJsonData("data", actParam, actData))
-				continue;
-
-			if (stateNodeList.contains(playerState))
-				CastPlayerAct(*stateNodeList[playerState]).Load(actParam);
-		}
-	}
+	pTargetObject = &_targetObject;
 }
 
-PlayerChangeAnimObserver::PlayerChangeAnimObserver(PlayerActionController& _playerActCon)
-	: ChangeAnimObserver("playerChangeAnimObserver"), pActionController(&_playerActCon)
+void PlayerActionController::OnTargetDeath()
 {
+	pTargetObject = nullptr;
 }
 
-void PlayerChangeAnimObserver::ObserverUpdate(const HashiTaku::ChangeAnimationInfo& _value)
-{
-	// 現在再生しているアクションにのみ通知する
-	auto curAction = pActionController->GetCurrentAction();
-	if (!curAction)
-	{
-		HASHI_DEBUG_LOG(GetObserverName() +
-			"再生されているアクションがないためアニメーション変更通知がおこなえません");
-
-		return;
-	}
-
-	// 通知する
-	curAction->OnAnimationEnd(*_value.pFromAnimNodeName, *_value.pToAnimNodeName);
-
-	HASHI_DEBUG_LOG("from:" + *_value.pFromAnimNodeName + "\nto:" + *_value.pToAnimNodeName);
-}

@@ -1,5 +1,6 @@
 #pragma once
 #include "PlayerActState_Base.h"
+#include "AnimationCurve.h"
 
 /// @brief プレイヤーのローリング処理
 class PlayerRollingMove : public PlayerActState_Base

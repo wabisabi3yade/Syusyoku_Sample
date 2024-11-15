@@ -22,6 +22,8 @@ void CP_Player::SetWeapon(CP_Weapon& _setWeapon)
 void CP_Player::SetAttackInfo(const HashiTaku::AttackInformation& _setAttackInfo)
 {
 	pWeapon->SetAttackInfo(_setAttackInfo);
+	
+	pAnimation->SetBool(ATKCOL_ANIMPARAM_NAME, false);
 }
 
 void CP_Player::Init()
@@ -54,18 +56,18 @@ void CP_Player::Start()
 	pAnimation->AddChangeAnimObserver(pActionController->GetChangeAnimObserver());
 
 	// アクションコントローラー開始処理
-	pActionController->Begin(*pAnimation);
+	pActionController->Init(pAnimation);
 }
 
 void CP_Player::Update()
 {
-	// 更新できるかチェック
-	if (!GetCanUpdate()) return;
+	//// 更新できるかチェック
+	//if (!GetCanUpdate()) return;
 
 	CP_Character::Update();
 
 	// アクション周りを更新
-	pActionController->Update();
+	pActionController->UpdateCall();
 
 	// 武器の当たり判定を更新
 	SetWeaponAttackFlag();
@@ -85,19 +87,19 @@ void CP_Player::OnHitStopBegin()
 {
 	CP_Character::OnHitStopBegin();
 
-	// ヒットストップ前の再生速度を取得
-	hitStopBeforeAnimSpeed = pAnimation->GetControllerPlaySpeed();
+	//// ヒットストップ前の再生速度を取得
+	//hitStopBeforeAnimSpeed = pAnimation->GetControllerPlaySpeed();
 
-	// ヒットストップを演出するためにアニメーションの速度を0にする
-	pAnimation->SetControllerPlaySpeed(0.0f);
+	//// ヒットストップを演出するためにアニメーションの速度を0にする
+	//pAnimation->SetControllerPlaySpeed(0.0f);
 }
 
 void CP_Player::OnHitStopEnd()
 {
 	CP_Character::OnHitStopEnd();
 
-	// アニメーションの速度を戻す
-	pAnimation->SetControllerPlaySpeed(hitStopBeforeAnimSpeed);
+	//// アニメーションの速度を戻す
+	//pAnimation->SetControllerPlaySpeed(hitStopBeforeAnimSpeed);
 }
 
 void CP_Player::ImGuiDebug()
@@ -152,6 +154,11 @@ void CP_Player::ImGuiSetWeapon()
 		pWeapon = nullptr;
 
 #endif //  EDIT
+}
+
+bool CP_Player::GetIsAttackFlag() const
+{
+	return *pAttackCollisionFlag;
 }
 
 nlohmann::json CP_Player::Save()

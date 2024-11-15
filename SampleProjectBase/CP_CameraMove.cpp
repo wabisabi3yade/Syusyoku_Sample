@@ -19,7 +19,7 @@ void CP_CameraMove::UpdateVector()
 
 void CP_CameraMove::Move()
 {
-	centerAngle += rotateVec * rotateSpeed * MainApplication::DeltaTime();
+	centerAngle += rotateVec * rotateSpeed * DeltaTime();
 	Mathf::Repeat(centerAngle, Mathf::roundDeg);
 	
 	Transform& transform = GetTransform();

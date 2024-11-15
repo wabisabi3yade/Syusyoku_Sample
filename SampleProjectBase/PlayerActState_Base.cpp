@@ -11,7 +11,7 @@ constexpr float ROLLING_SENKOINPUT_SEC(0.2f);	// ローリングの先行入力秒数
 constexpr float CAN_ROLLING_STICKINPUT(0.3f);	// ローリングできる左スティックの入力量
 
 PlayerActState_Base::PlayerActState_Base()
-	: pActionController(nullptr), pAnimation(nullptr), stateType(PlayerState::None)
+	: pActionController(nullptr), stateType(PlayerState::None), isAttackInput(false)
 {
 	pPlayerInput = &InSceneSystemManager::GetInstance()->GetInput();
 	pCamera = &InSceneSystemManager::GetInstance()->GetMainCamera();
@@ -25,11 +25,16 @@ void PlayerActState_Base::Init(PlayerState _stateType, PlayerActionController& _
 
 void PlayerActState_Base::OnStart()
 {
+	// 入力フラグのクリア
+	InputFlagClear();
+
 	OnStartBehavior();
 }
 
 void PlayerActState_Base::Update()
 {
+	CheckInputUpdate();
+
 	// 各アクション更新
 	UpdateBehavior();
 
@@ -40,12 +45,6 @@ void PlayerActState_Base::Update()
 void PlayerActState_Base::OnEnd()
 {
 	OnEndBehavior();
-}
-
-
-void PlayerActState_Base::SetAnimation(CP_Animation& _pAnimation)
-{
-	pAnimation = &_pAnimation;
 }
 
 PlayerActState_Base::PlayerState PlayerActState_Base::GetActStateType() const
@@ -68,9 +67,30 @@ void PlayerActState_Base::TransitionCheckUpdate()
 	CommmonCheckTransition();
 }
 
+void PlayerActState_Base::InputFlagClear()
+{
+	isAttackInput = false;
+}
+
+void PlayerActState_Base::CheckInputUpdate()
+{
+	if (!pActionController->GetCanInput()) return;
+
+	// 攻撃
+	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
+	{
+		isAttackInput = true;
+	}
+}
+
 void PlayerActState_Base::ChangeState(PlayerState _nextState)
 {
-	pActionController->ChangeNode(_nextState);
+	pActionController->ChangeState(_nextState);
+}
+
+float PlayerActState_Base::DeltaTime() const
+{
+	return pActionController->GetCharacter().DeltaTime();
 }
 
 DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStick() const
@@ -78,22 +98,30 @@ DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStick() const
 	return pPlayerInput->GetValue(GameInput::ValueType::Player_Move);
 }
 
-bool PlayerActState_Base::GetIsGroundAction() const
-{
-	return isGroundAction;
-}
-
 bool PlayerActState_Base::GetCanRolling() const
 {
 	// キャンセルできないなら
 	if (!pActionController->GetIsCanCancel()) return false;
 
+	// 入力受け付けていないなら
+	if (!pActionController->GetCanInput()) return false;
+
 	// ボタン入力
-	if (!pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Rolling, 
-		ROLLING_SENKOINPUT_SEC)) return false;
+	if (!pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Rolling)) return false;
 
 	// ローリングできる左スティックの入力ができていない
 	if (std::min(GetInputLeftStick().Length(), 1.0f) < CAN_ROLLING_STICKINPUT) return false;
+
+	return true;
+}
+
+bool PlayerActState_Base::GetCanAttack() const
+{
+	// キャンセルできないなら
+	if (!pActionController->GetIsCanCancel()) return false;
+
+	// 期間中にボタン入力されていたら
+	if (!isAttackInput) return false;
 
 	return true;
 }
@@ -125,7 +153,7 @@ bool PlayerActState_Base::ImGuiComboPlayerState(const std::string& _caption, Pla
 
 void PlayerActState_Base::CommmonCheckTransition()
 {
-	// 遷移しているなら
+	// キャンセル行動を見る
 	if (CheckCanCancelTransition()) return;
 }
 

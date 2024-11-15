@@ -20,7 +20,7 @@ namespace HashiTaku
 		float atkDamage;
 
 		/// @brief ヒットストップで止めるフレーム数
-		u_int hitStopFlame;
+		u_int hitStopFrame;
 
 		/// @brief 攻撃レベル
 		AttackLevel atkLevel;
@@ -58,16 +58,16 @@ namespace HashiTaku
 		void ImGuiDebug() override;
 	private:
 		// Low
-		static constexpr u_int LOW_HITSTOP = 6;
+		static constexpr u_int LOW_HITSTOP = 2;
 
 		// Mid
-		static constexpr u_int MID_HITSTOP = 8;
+		static constexpr u_int MID_HITSTOP = 4;
 
 		// High
-		static constexpr u_int HIGH_HITSTOP = 10;
+		static constexpr u_int HIGH_HITSTOP = 6;
 
 		// SuperHigh
-		static constexpr u_int SUPERHIGH_HITSTOP = 12;
+		static constexpr u_int SUPERHIGH_HITSTOP = 8;
 	};
 }
 

@@ -42,6 +42,9 @@ public:
 	/// @return カメラの取得
 	CP_Camera& GetMainCamera();
 
+	/// @brief ビュー変換行列を更新
+	void UpdateViewMatrix();
+
 	/// @brief シーンのオブジェクト配列を取得
 	/// @return オブジェクト配列の参照
 	SceneObjects& GetSceneObjects();

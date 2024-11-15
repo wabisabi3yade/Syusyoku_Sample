@@ -68,6 +68,12 @@ float AnimationNode_Base::GetAnimationTime() const
 	return animationTime;
 }
 
+u_int AnimationNode_Base::GetAllKeyFrame() const
+{
+	// アニメーションデータがないので仮に1
+	return 1;
+}
+
 bool AnimationNode_Base::GetIsLoop() const
 {
 	return isLoop;
@@ -159,6 +165,8 @@ void AnimationNode_Base::ImGuiSetParameter()
 	ImGui::Checkbox("Rot", &isRootMotionRot);
 
 	ImGuiMethod::PushItemSmallWidth();
+	float animPlayTime = animationTime / playNodeSpeedTimes;
+	ImGui::Text("Time:%f", animPlayTime);
 	ImGui::DragFloat("Speed", &playNodeSpeedTimes, 0.01f, 0.0f, 100.0f);
 	pAnimationCurve->ImGuiCall();
 	ImGui::PopItemWidth();

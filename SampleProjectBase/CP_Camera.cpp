@@ -23,11 +23,6 @@ void CP_Camera::Init()
 	SetPerspective();	// 透視投影から始める
 }
 
-void CP_Camera::Draw()
-{
-	UpdateViewMatrix();
-}
-
 void CP_Camera::OnDestroy()
 {
 	// メインカメラから外す

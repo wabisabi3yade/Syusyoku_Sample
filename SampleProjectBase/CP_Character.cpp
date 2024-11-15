@@ -1,14 +1,17 @@
 #include "pch.h"
 #include "CP_Character.h"
 #include "CP_HitStopManager.h"
+#include "GameObject.h"
 
-CP_Character::CP_Character()
-	: currentHP(0.0f), maxHP(1.0f), isDead(false), isHitStopping(false), isInvicible(false)
+CP_Character::CP_Character() :
+	currentHP(0.0f), maxHP(1.0f), hsBeforeDeltaTime(0.0f), isDead(false), 
+	isHitStopping(false), isInvicible(false)
+
 {
 }
 
 void CP_Character::SetMaxHP(float _hitPoint)
-{	
+{
 	maxHP = std::clamp(_hitPoint, 0.0f, MAXLIMIT_HP);
 }
 
@@ -46,11 +49,22 @@ void CP_Character::OnDeath()
 void CP_Character::OnHitStopBegin()
 {
 	isHitStopping = true;
+
+	// オブジェクトの経過速度を止める
+	GameObject& go = GetGameObject();
+	hsBeforeDeltaTime = go.GetDeltdaSpeed();
+	go.SetDeltaTimeSpeed(0.0f);
+
+	HASHI_DEBUG_LOG("atatta");
 }
 
 void CP_Character::OnHitStopEnd()
 {
 	isHitStopping = false;
+
+	GameObject& go = GetGameObject();
+	go.SetDeltaTimeSpeed(hsBeforeDeltaTime);
+	hsBeforeDeltaTime = 0.0f;
 }
 
 nlohmann::json CP_Character::Save()

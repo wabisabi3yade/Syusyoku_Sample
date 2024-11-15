@@ -1,29 +1,27 @@
 #pragma once
-#include "StateMachine.h"
+#include "CharacterActionController.h"
 #include "PlayerActState_Base.h"
 #include "ChangeAnimObserver.h"
+#include "ITargetAccepter.h"
 
 class PlayerChangeAnimObserver;
 class CP_Player;
 
 /// @brief プレイヤーの動きコントローラー
-class PlayerActionController : public HashiTaku::StateMachine_Base<PlayerActState_Base::PlayerState>, public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
+class PlayerActionController : public CharacterActionController, public IObjectTargeter
 {
 private:
-	/// @brief アニメーション変更したときのオブザーバー
-	std::unique_ptr<PlayerChangeAnimObserver> pChangeAnimObserver;
-
-	/// @brief アニメーションコンポーネント	
-	CP_Animation* pAnimation;
-
-	/// @brief プレイヤーコンポーネント
-	CP_Player* pPlayer;
-
 	/// @brief 入力クラス
 	GameInput* pInput;
 
+	/// @brief ターゲットしているオブジェクト先
+	ITargetAccepter* pTargetObject;
+
 	/// @brief キャンセルフラグのポインタ
 	const bool* pIsCanCancel;
+
+	/// @brief 先行入力フラグのポインタ
+	const bool* pIsSenkoInput;
 
 	/// @brief ターゲット中かどうか
 	bool isTargeting;
@@ -34,18 +32,15 @@ public:
 	~PlayerActionController() {}
 
 	/// @brief 開始処理
-	/// @param _animationController アニメーション
-	void Begin(CP_Animation& _animation);
-
-	/// @brief 現在の更新処理
-	void Update();
+	/// @param _animation アニメーション
+	void Init(CP_Animation* _animation);
 
 	/// @brief ターゲットの更新処理
 	void UpdateTargeting();
 
 	/// @brief 行動状態を切り替える
 	/// @param _nextActionName 次の状態の名前
-	bool ChangeNode(const PlayerActState_Base::PlayerState& _nextActionState) override;
+	bool ChangeState(const PlayerActState_Base::PlayerState& _nextActionState);
 
 	/// @brief ターゲット中か取得する
 	/// @return ターゲット中か？
@@ -55,6 +50,10 @@ public:
 	/// @return キャンセルできるか？
 	bool GetIsCanCancel() const;
 
+	/// @brief 先行入力できるかを取得
+	/// @return 先行入力できるか？
+	bool GetCanInput() const;
+
 	/// @brief プレイヤーコンポーネント取得
 	/// @return プレイヤーコンポーネント
 	CP_Player& GetPlayer();
@@ -63,13 +62,26 @@ public:
 	/// @return アクションステート
 	PlayerActState_Base* GetCurrentAction();
 
-	/// @brief アニメーション変更オブザーバーを取得
-	/// @return アニメーション変更オブザーバー
-	PlayerChangeAnimObserver& GetChangeAnimObserver();
+	/// @brief 各Stateの文字列を取得する
+	/// @param _stateId 状態のID
+	/// @return 文字列
+	std::string GetStateStr(int _stateId) override;
 
-	nlohmann::json Save() override;
-	void Load(const nlohmann::json& _data) override;
+	/// @brief 各StateのIDを取得する
+	/// @param _stateName　状態名
+	/// @return 状態のID
+	int GetStateId(const std::string& _stateName);
+
+	/// @brief ターゲットオブジェクトを取得する
+	/// @param _targetObject ターゲットオブジェクト
+	void GetTargetObject(ITargetAccepter& _targetObject);
+
+	/// @brief ターゲットが死んだときの処理
+	void OnTargetDeath();
 private:
+	/// @brief 現在の更新処理
+	void Update() override;
+
 	/// @brief 新しくStateを生成
 	/// @tparam T 対応している行動クラス
 	/// @param _actionName アクション名
@@ -90,6 +102,9 @@ private:
 
 	/// @brief キャンセルできるかを表すアニメーションパラメータ
 	static constexpr auto CANCEL_PARAMNAME = "canCancel";
+
+	/// @brief 先行入力できるかを表すアニメーションパラメータ
+	static constexpr auto SENKOINPUT_PARAMNAME = "canInput";
 };
 
 template<class T>
@@ -98,18 +113,5 @@ inline void PlayerActionController::CreateState(PlayerActState_Base::PlayerState
 	std::unique_ptr<PlayerActState_Base> createState = std::make_unique<T>();
 	createState->Init(_actionState, *this);
 
-	AddNode(_actionState, std::move(createState));
+	AddNode(static_cast<int>(_actionState), std::move(createState));
 }
-
-/// @brief プレイヤーアクションでアニメーション遷移したときのオブザーバー
-class PlayerChangeAnimObserver : public HashiTaku::ChangeAnimObserver
-{
-	PlayerActionController* pActionController;
-
-public:
-	PlayerChangeAnimObserver(PlayerActionController& _playerActCon);
-	~PlayerChangeAnimObserver() {}
-
-	/// @brief 通知がきたときの処理
-	void ObserverUpdate(const HashiTaku::ChangeAnimationInfo& _value);
-};

@@ -7,6 +7,12 @@
 
 using namespace DirectX::SimpleMath;
 
+AnimationData::AnimationData() :
+	animationTime_s(0.0f), timePerKey_s(0.0f), allFrameCnt(0), rootBoneId(-1),
+	isRightHand(false)
+{
+}
+
 void AnimationData::AddAnimationChannel(std::unique_ptr<AnimationChannel> _pAnimNode)
 {
 	pAnimChannels.push_back(std::move(_pAnimNode));
@@ -61,6 +67,11 @@ void AnimationData::SetAnimationTime(float _animTime)
 	animationTime_s = std::max(_animTime, 0.0f);
 }
 
+void AnimationData::SetAllFrameCnt(u_int _allFrameCnt)
+{
+	allFrameCnt = _allFrameCnt;
+}
+
 void AnimationData::SetTimePerKey(float _timePerKey)
 {
 	assert(_timePerKey >= 0.0f);
@@ -89,6 +100,16 @@ u_int AnimationData::GetBoneIdx(u_int _nodeId) const
 u_int AnimationData::GetChannelCount() const
 {
 	return static_cast<u_int>(pAnimChannels.size());
+}
+
+u_int AnimationData::GetAllAnimationFrame() const
+{
+	return allFrameCnt;
+}
+
+u_int AnimationData::GetRatioToFrame(float _ratio)
+{
+	return allFrameCnt * _ratio;
 }
 
 DirectX::SimpleMath::Vector3 AnimationData::GetScaleByRatio(u_int _boneId, float _playingRatio) const

@@ -78,6 +78,10 @@ public:
 	// 活動状態をセット
 	void SetEnable(bool _enable);
 
+	/// @brief オブジェクトの経過時間を取得
+	/// @return 経過時間
+	float DeltaTime() const;
+
 	// 名前を取得
 	std::string GetName() const;
 

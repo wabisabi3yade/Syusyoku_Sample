@@ -4,14 +4,25 @@
 #include "IDamageable.h"
 #include "Tag.h"
 
+class CP_RigidBody;
+
 /// @brief 武器コンポーネント
 class CP_Weapon : public Component
 {
+	/// @brief 攻撃対象タグの上限
+	static constexpr u_int ATTACK_TAG_MAX{ 3 };
+
 	/// @brief 攻撃情報
 	HashiTaku::AttackInformation atkInfomation;
 
 	/// @brief 攻撃にあたるタグ
-	std::list<HashiTaku::Tag::Type> attackableTags;
+	std::array<HashiTaku::Tag::Type, ATTACK_TAG_MAX> attackableTags;
+
+	/// @brief 一回の攻撃判定で重複しないように記録する用リスト
+	std::vector<const CP_RigidBody*> attackedRbs;
+
+	/// @brief 攻撃タグの数
+	u_int attackTagCnt;
 
 	/// @brief 攻撃判定コリジョン
 	bool isAttackCollision;
@@ -28,13 +39,16 @@ public:
 	void Draw() override;
 
 	// コンポーネント共通
-	void OnCollisionEnter(const HashiTaku::CollisionInfo& _otherColInfo);
+	void OnCollisionStay(const HashiTaku::CollisionInfo& _otherColInfo);
 
 	void SetAttackInfo(const HashiTaku::AttackInformation& _attackInformation);
 
 	/// @brief 武器の攻撃判定コリジョン
 	/// @param _isAttackCollision 
 	void SetIsAttackCollision(bool _isAttackCollision);
+
+	/// @brief 攻撃済みコリジョンをリセット
+	void ClearAttackedRb();
 
 	/// @brief セーブする
 	/// @param _data セーブシーンデータ
@@ -48,10 +62,19 @@ private:
 	/// @param _damager 攻撃与える対象
 	void OnAttack(HashiTaku::IDamageable& _damager);
 
+	/// @brief 既に攻撃したかリストに追加
+	/// @param _rb 攻撃済みのRb
+	void AddAttackedRb(const CP_RigidBody& _rb);
+
 	/// @brief 攻撃できるか確認
 	/// @param _targetObject 対象のオブジェクト
 	/// @return 攻撃できるか？
-	bool CheckAttackable(GameObject& _targetObject);
+	bool CheckAttackableTag(GameObject& _targetObject);
+
+	/// @brief 攻撃できるか確認
+	/// @param  _targetRb 対象のオブジェクト
+	/// @return 攻撃できるか？
+	bool CheckAttackedRb(const CP_RigidBody& _targetRb);
 
 	// デバッグ用攻撃フラグが立っているか見るための描画
 	void DebugAttackFlag();
@@ -59,6 +82,10 @@ private:
 	/// @brief 攻撃できるタグを追加
 	/// @param _addTag タグ
 	void AddAttackableTag(HashiTaku::Tag::Type _addTag);
+
+	/// @brief 最後尾の攻撃できるタグを削除
+	/// @param _addTag タグ
+	void RemoveBackAttackableTag();
 
 	void ImGuiDebug() override;
 };

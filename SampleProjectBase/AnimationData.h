@@ -30,10 +30,13 @@ private:
 	/// @brief 1キーごとの時間(s)
 	float timePerKey_s;
 
+	/// @brief 全体のフレーム数
+	u_int allFrameCnt;
+
 	/// @brief 右手系か？
 	bool isRightHand;
 public:
-	AnimationData() : animationTime_s(0.0f), timePerKey_s(0.0f), rootBoneId(-1), isRightHand(false) {}
+	AnimationData();
 	~AnimationData() {}
 
 	/// @brief アニメーションノードを追加する
@@ -54,6 +57,10 @@ public:
 	// アニメーション時間をセット
 	void SetAnimationTime(float _animTime);
 
+	/// @brief 全体のアニメーションのフレーム数をセット
+	/// @param _allFrameCnt 全体のフレーム数
+	void SetAllFrameCnt(u_int _allFrameCnt);
+
 	// 1キーごとのの時間をセット
 	void SetTimePerKey(float _timePerKey);
 
@@ -72,6 +79,15 @@ public:
 
 	// チャンネルの数を取得
 	u_int GetChannelCount() const;
+
+	/// @brief アニメーションのキー数を取得
+	/// @return アニメーションのキー数
+	u_int GetAllAnimationFrame() const;
+
+	/// @brief 割合からキーに変換
+	/// @param _ratio 割合
+	/// @return キー
+	u_int GetRatioToFrame(float _ratio);
 
 	/// @brief スケールを求める
 	/// @param _boneId ボーンID
