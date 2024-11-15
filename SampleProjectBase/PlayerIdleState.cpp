@@ -17,7 +17,7 @@ void PlayerIdleState::UpdateBehavior()
 	ProgressLeaveElapse();
 
 	// アニメーションのブレンド割合をセット
-	pAnimation->SetFloat(SPEEDRATIO_PARAMNAME, 0.0f);
+	pActionController->GetAnimation()->SetFloat(SPEEDRATIO_PARAMNAME, 0.0f);
 }
 
 void PlayerIdleState::OnEndBehavior()

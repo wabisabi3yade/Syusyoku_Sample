@@ -15,6 +15,9 @@ public:
 		Walk,
 		Run,
 
+		// 振る舞い
+		Damage_Small,	// 小ダメージ
+
 		// 攻撃
 		Attack1 = 100,
 		Attack2,
@@ -26,8 +29,6 @@ public:
 private:
 	/// @brief ボスのステート
 	BossState stateType;
-
-
 protected:
 	/// @brief アクションコントローラー
 	BossActionController* pActionController;
@@ -50,6 +51,9 @@ public:
 	/// @brief 状態切り替え終了処理
 	void OnEnd() override;
 
+	/// @brief ダメージ時処理
+	void OnDamage();
+
 	nlohmann::json Save();
 	void Load(const nlohmann::json& _data);
 protected:
@@ -67,7 +71,8 @@ protected:
 
 	/// @brief 遷移する
 	/// @param _nextState 次の遷移
-	void ChangeState(BossState _nextState);
+	/// @param _isForce　強制切り替え
+	void ChangeState(BossState _nextState, bool _isForce = false);
 
 	/// @brief トランスフォームを取得する
 	/// @return ボスのトランスフォーム
@@ -77,13 +82,24 @@ protected:
 	/// @return プレイヤーのトランスフォーム
 	Transform& GetPlayerTransform();
 
+	/// @brief 経過時間を取得する
+	/// @return 経過時間
+	float DeltaTime() const;
+
 	void ImGuiDebug() override;
+private:
+	/// @brief どのアクションにも共通する遷移
+	void CommmonCheckTransition();
 
 protected:
 	/// @brief 移動速度のアニメーションパラメータ名
 	static constexpr auto SPEED_ANIMPARAM_NAME{ "speed" };
 	/// @brief 攻撃トリガーのアニメーションパラメータ名
 	static constexpr auto ATTACKTRIGGER_ANIMPARAM_NAME{ "attackTrigger" };
+	/// @brief 攻撃トリガーのアニメーションパラメータ名
+	static constexpr auto DAMAGETRIGGER_ANIMPARAM_NAME{ "damageTrigger" };
 	/// @brief 待機状態のアニメーション名
+	static constexpr auto IDLE_ANIM_NAME{ "Idle" };
+	/// @brief 走り状態のアニメーション名
 	static constexpr auto RUN_ANIM_NAME{ "Move" };
 };

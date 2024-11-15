@@ -4,14 +4,19 @@
 #include "AnimSingleNodePlayer.h"
 #include "BlendNodePlayer.h"
 
-AnimControllPlayer::AnimControllPlayer(const AnimationController& _animController, BoneList& _boneList, Transform& _transform)
-	: pAnimController(&_animController), pAssetBoneList(&_boneList), pObjectTransform(&_transform), playSpeed(1.0f), updateState(UpdateState::PlayNode), curTransitonKind(HashiTaku::AnimInterpolateKind::CrossFade)
+AnimControllPlayer::AnimControllPlayer(const AnimationController& _animController, BoneList& _boneList, Transform& _transform): 
+	pAnimController(&_animController), pAssetBoneList(&_boneList), 
+	pObjectTransform(&_transform), deltaTime(0.0f), playSpeed(1.0f),
+	updateState(UpdateState::PlayNode), 
+	curTransitonKind(HashiTaku::AnimInterpolateKind::CrossFade)
 {
 	PlayInit();
 }
 
-void AnimControllPlayer::Update()
+void AnimControllPlayer::Update(float _deltaTime)
 {
+	deltaTime = _deltaTime;
+
 	// 遷移するか確認
 	TransitionCheck();
 
@@ -135,7 +140,12 @@ void AnimControllPlayer::NodePlayUpdate()
 {
 	// アニメーションのトランスフォームを再生機能から取得する
 	std::vector<BoneTransform> animationTransforms;
-	pCurNodePlayer->UpdateCall(animationTransforms, playSpeed);
+
+	// コントローラーと再生クラスの速度を掛ける
+	float multiPlaySpeed = playSpeed * pAnimController->GetPlaySpeed();
+
+	// ノード再生を更新
+	pCurNodePlayer->UpdateCall(animationTransforms, multiPlaySpeed * deltaTime, multiPlaySpeed);
 
 	// 再生終了していて、ボーンを取得できなかったら
 	if (static_cast<u_int>(animationTransforms.size() != pAssetBoneList->GetBoneCnt()))
@@ -174,7 +184,12 @@ void AnimControllPlayer::CrossFadeUpdate()
 {
 	using namespace DirectX::SimpleMath;
 
-	pCrossFadeInterp->Update(playSpeed);
+	// コントローラーと再生クラスの速度を掛ける
+	float multiPlaySpeed = playSpeed * pAnimController->GetPlaySpeed();
+
+
+	// クロスフェードを進める
+	pCrossFadeInterp->Update(deltaTime * multiPlaySpeed, multiPlaySpeed);
 
 	// ルートモーションもブレンドする
 	Vector3 prevRoot;
@@ -259,6 +274,9 @@ void AnimControllPlayer::OnCrossFadeBegin(const AnimTransitionArrow& _changeArro
 	float targetRatio = _changeArrow.GetTargetRatio();
 	pCurNodePlayer->SetCurPlayRatio(targetRatio);
 
+	if (_changeArrow.GetTransitionTime() == 0.0f)
+		int o = 0;
+
 	float transTime = _changeArrow.GetTransitionTime();
 	HashiTaku::EaseKind easeKind = _changeArrow.GetEaseKind();
 
@@ -273,6 +291,8 @@ void AnimControllPlayer::ChangeAnimSubjectUpdate()
 
 	changeAnimInfo.pFromAnimNodeName = &pPrevNodePlayer->GetNodeName();
 	changeAnimInfo.pToAnimNodeName = &pCurNodePlayer->GetNodeName();
+
+	HASHI_DEBUG_LOG("f:" + *changeAnimInfo.pFromAnimNodeName + "\nn:" + *changeAnimInfo.pToAnimNodeName);
 
 	pChangeAnimSubject->NotifyAll(changeAnimInfo);
 }

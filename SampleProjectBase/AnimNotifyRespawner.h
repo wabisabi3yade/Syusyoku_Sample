@@ -21,7 +21,7 @@ public:
 	~AnimNotifyRespawner() {}
 
 	/// @brief 指定したクラスのインスタンスを生成する
-	/// @return インスタンスのユニークポインタ
+	/// @returnインスタンスのユニークポインタ
 	std::unique_ptr<AnimationNotify_Base> Create() override;
 };
 

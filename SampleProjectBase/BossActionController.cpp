@@ -7,11 +7,16 @@
 #include "BossIdleState.h"
 #include "BossGroundMove.h"
 #include "BossGroundAttack.h"
+#include "BossDamageState.h"
 
-constexpr auto STATE_PARAM_NAME("state");	// 状態を表すアニメーションパラメータ名
+// 状態を表すアニメーションパラメータ名
+constexpr auto STATE_PARAM_NAME("state");	
+// のけぞりができるかアニメーションパラメータ名
+constexpr auto CAN_KNOCK_PARAM_NAME("canKnock");	
 
-BossActionController::BossActionController(CP_Boss& _boss)
-	: EnemyActionController(_boss, "bossActCon"), pPlayerObject(nullptr)
+BossActionController::BossActionController(CP_Boss& _boss): 
+	EnemyActionController(_boss, "bossActCon"), pPlayerObject(nullptr), pCanKnock(nullptr),
+	defaultState(BossActState_Base::BossState::Idle)
 {
 	// ステート作成
 	using enum BossActState_Base::BossState;
@@ -19,14 +24,18 @@ BossActionController::BossActionController(CP_Boss& _boss)
 	CreateState<BossGroundMove>(Walk);
 	CreateState<BossGroundMove>(Run);
 	CreateState<BossGroundAttack>(Attack1);
+	CreateState<BossDamageState>(Damage_Small);
 
 	// デフォルトノード設定
-	SetDefaultNode(static_cast<int>(Run));
+	SetDefaultNode(static_cast<int>(defaultState));
 }
 
-void BossActionController::Init(CP_Animation& _animationController)
+void BossActionController::Init(CP_Animation* _pAnimation)
 {
-	EnemyActionController::Init(_animationController);
+	EnemyActionController::Init(_pAnimation);
+
+	// アニメーションパラメータから変数のポインタもらう
+	GetAnimationParam();
 }
 
 void BossActionController::Update()
@@ -36,13 +45,21 @@ void BossActionController::Update()
 	EnemyActionController::Update();
 }
 
-bool BossActionController::ChangeState(BossActState_Base::BossState _nextState)
+bool BossActionController::ChangeState(BossActState_Base::BossState _nextState, bool _isForce)
 {
-	if (!ChangeNode(static_cast<int>(_nextState))) return false;
+	if (!ChangeNode(static_cast<int>(_nextState), _isForce)) return false;
 		
 	// アニメーションにも渡す
 	pAnimation->SetInt(STATE_PARAM_NAME, currentStateKey);
 	return true;
+}
+
+void BossActionController::OnDamage()
+{
+	assert(pCurrentNode && "現在のノードが設定されていません");
+
+	// 現在のノードにダメージ処理を伝える
+	CastBossAct(pCurrentNode)->OnDamage();
 }
 
 void BossActionController::SetPlayer(CP_Player& _playerObj)
@@ -62,56 +79,35 @@ CP_Player& BossActionController::GetPlayer()
 	return *pPlayerObject;
 }
 
+const bool BossActionController::GetCanKnock() const
+{
+	if (!pCanKnock) return false;
+
+	return *pCanKnock;
+}
+
 nlohmann::json BossActionController::Save()
 {
-	nlohmann::json data;
-
-	for (auto& node : stateNodeList)
-	{
-
-		BossActState_Base::BossState bossState = static_cast<BossActState_Base::BossState>(node.first);
-		nlohmann::json actData;
-		// 文字列に変換
-		actData["typeString"] = magic_enum::enum_name(bossState);
-		actData["data"] = static_cast<BossActState_Base&>(*node.second).Save();
-		data["actData"].push_back(actData);
-	}
-
+	auto data = EnemyActionController::Save();
+	data["defaultState"] = defaultState;
 	return data;
 }
 
 void BossActionController::Load(const nlohmann::json& _data)
 {
-	using namespace HashiTaku;
-	nlohmann::json actDataList;
-	// ステートごとのパラメータをロードする
-	if (LoadJsonDataArray("actData", actDataList, _data))
-	{
-		for (auto& actData : actDataList)
-		{
-			std::string stateString;
-			if (!LoadJsonString("typeString", stateString, actData))
-				continue;
+	EnemyActionController::Load(_data);
 
-			BossActState_Base::BossState bossState;
-			// 文字列->StateType
-			auto state = magic_enum::enum_cast<BossActState_Base::BossState>(stateString);
-			if (state.has_value())
-				bossState = state.value();
-			else
-				continue;
-
-			nlohmann::json actParam;
-			if (!LoadJsonData("data", actParam, actData))
-				continue;
-
-			int stateId = static_cast<int>(bossState);
-			if (stateNodeList.contains(stateId))
-				static_cast<BossActState_Base&>(*stateNodeList[stateId]).Load(actParam);
-		}
-	}
+	HashiTaku::LoadJsonEnum<BossActState_Base::BossState>(
+		"defaultState", 
+		defaultState,
+		_data);
 }
 
+void BossActionController::GetAnimationParam()
+{
+	// のけぞりできるか？
+	pCanKnock = pAnimation->GetParameterPointer<bool>(CAN_KNOCK_PARAM_NAME);
+}
 
 bool BossActionController::IsCanBossUpdate()
 {
@@ -131,20 +127,53 @@ bool BossActionController::IsCanBossUpdate()
 	return true;
 }
 
+BossActState_Base* BossActionController::CastBossAct(HashiTaku::StateNode_Base* _pBaseNode)
+{
+	if (!_pBaseNode) return nullptr;
+
+	return static_cast<BossActState_Base*>(_pBaseNode);
+}
+
+void BossActionController::SetDefaultState(BossActState_Base::BossState _defaultState)
+{
+	defaultState = _defaultState;
+	SetDefaultNode(static_cast<int>(defaultState));
+}
+
+std::string BossActionController::GetStateStr(int _stateId)
+{
+	BossActState_Base::BossState state =
+		static_cast<BossActState_Base::BossState>(_stateId);
+
+	return std::string(magic_enum::enum_name<BossActState_Base::BossState>(state));
+}
+
+int BossActionController::GetStateId(const std::string& _stateName)
+{
+	auto state = magic_enum::enum_cast<BossActState_Base::BossState>(_stateName);
+	if (!state.has_value())
+	{
+		assert("正常に状態を取得できません");
+		return -1;
+	}
+
+	return static_cast<int>(state.value());
+}
+
 void BossActionController::ImGuiDebug()
 {
-	EnemyActionController::ImGuiDebug();
-
-	// 各ステート
+	// 名前取得
+	std::vector<std::string> stateNames;
 	for (auto& node : stateNodeList)
 	{
-		BossActState_Base::BossState state = static_cast<BossActState_Base::BossState>(node.first);
-		if (ImGuiMethod::TreeNode(std::string(magic_enum::enum_name(state))))
-		{
-			static_cast<BossActState_Base&>(*node.second).ImGuiCall();
-
-			ImGui::TreePop();
-		}
+		stateNames.push_back(GetStateStr(node.first));
 	}
+
+	// デフォルトを変更
+	std::string stateName = GetStateStr(static_cast<int>(defaultState));
+	if (ImGuiMethod::ComboBox("Default", stateName, stateNames))
+		SetDefaultState(static_cast<BossActState_Base::BossState>(GetStateId(stateName)));
+
+	EnemyActionController::ImGuiDebug();
 }
 

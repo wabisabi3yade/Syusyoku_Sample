@@ -11,9 +11,6 @@ class ANE_ChangeParameter : public AnimationNotifyEvent, public IAnimParametersS
 	AnimationParameters* pAnimationParameters;
 public:
 	ANE_ChangeParameter();
-	/// @brief コンストラクタ
-	/// @param _animationParameters アニメーションパラメータリスト
-	ANE_ChangeParameter(AnimationParameters& _animationParameters);
 	~ANE_ChangeParameter() {}
 
 	/// @brief アニメーションパラメータセット

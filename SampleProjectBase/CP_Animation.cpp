@@ -10,23 +10,36 @@ using namespace DirectX::SimpleMath;
 
 CP_Animation::BoneCombMtricies CP_Animation::boneCombBuffer;
 
+// ボーン行列のスロット番号
+constexpr int SHBUFFER_BONE_SLOT(1);
 
-CP_Animation::CP_Animation() : pSkeletalMesh(nullptr), pAnimController(nullptr)
+CP_Animation::CP_Animation() :
+	pSkeletalMesh(nullptr), pAnimController(nullptr), boneCnt(0)
+
 {
+}
+
+void CP_Animation::Init()
+{
+	for (u_int i = 0; i < MAX_BONEMTX; i++)
+	{
+		boneCombBuffer.matrix[i] = Matrix::Identity.Transpose();
+	}
+
+	// ボーンのコピーを行う
+	CopyBoneList();
 }
 
 void CP_Animation::Awake()
 {
-	if (CP_MeshRenderer* pMr = gameObject->GetComponent<CP_MeshRenderer>())
-	{
-		CopyBoneList(*pMr);
-	}
+	if (!pSkeletalMesh)
+		CopyBoneList();
 
 	// アニメーションコントローラー準備
 	SetupAnimCon();
 }
 
-void CP_Animation::LateUpdate()
+void CP_Animation::Update()
 {
 	if (!IsCanPlay()) return;
 
@@ -41,16 +54,6 @@ void CP_Animation::Draw()
 {
 	// ボーン行列をバッファとして送信
 	UpdateBoneBuffer();
-}
-
-void CP_Animation::OnAddComponent(Component& _comp)
-{
-	// メッシュレンダラーなら
-	if (CP_MeshRenderer* pMR = dynamic_cast<CP_MeshRenderer*>(&_comp))
-	{
-		// スケルタルメッシュ準備
-		CopyBoneList(*pMR);
-	}
 }
 
 void CP_Animation::ImGuiDebug()
@@ -265,22 +268,25 @@ void CP_Animation::SetupAnimCon()
 	pAnimConPlayer = std::make_unique<AnimControllPlayer>(*pAnimController, *pMoveBoneList, GetTransform());
 }
 
-void CP_Animation::CopyBoneList(CP_MeshRenderer& _mr)
+void CP_Animation::CopyBoneList()
 {
+	CP_MeshRenderer* pMr = gameObject->GetComponent<CP_MeshRenderer>();
+	if (!pMr) return;
+
 	// レンダラーに設定しているスケルタルメッシュを取得
-	pSkeletalMesh = dynamic_cast<SkeletalMesh*>(_mr.GetRenderMesh());
+	pSkeletalMesh = dynamic_cast<SkeletalMesh*>(pMr->GetRenderMesh());
 
 	// アニメーションするボーンをコピーし、作成
 	pMoveBoneList = std::make_unique<BoneList>(pSkeletalMesh->GetBoneList());
 
 	// モデル関係
-	_mr.SetVertexShader("VS_SkinAnimation");
+	pMr->SetVertexShader("VS_SkinAnimation");
 }
 
 void CP_Animation::UpdateAnimationMtx()
 {
 	// アニメーションプレイヤーで更新する
-	pAnimConPlayer->Update();
+	pAnimConPlayer->Update(DeltaTime());
 }
 
 bool CP_Animation::IsCanPlay()
@@ -319,7 +325,7 @@ void CP_Animation::UpdateBoneCombMtx()
 	// ロードの回転、スケール
 	Vector3 loadScales = Vector3::One * pSkeletalMesh->GetLoadOffsetScale();
 	Vector3 loadAngles = pSkeletalMesh->GetLoadOffsetAngles();
-	rootOffsetMtx = 
+	rootOffsetMtx =
 		Matrix::CreateScale(Vector3::One * loadScales) * Mtx::CreateRoratateMtx(loadAngles);
 
 	// ノードを辿って全体のコンビネーション行列を更新していく
@@ -355,18 +361,23 @@ void CP_Animation::UpdateNodeHierarchy(TreeNode& _treeNode, const Matrix& _paren
 
 void CP_Animation::UpdateBoneBuffer()
 {
-	if (!pMoveBoneList) return;
+	if (!pSkeletalMesh) return;
 
-	u_int bufferCnt = static_cast<u_int>(pMoveBoneList->GetBoneCnt());
-
-	// ボーン数ループ
-	for (u_int b_i = 0; b_i < bufferCnt; b_i++)
+	if (pMoveBoneList)	// 動かすボーンがあるか
 	{
-		const Bone& bone = *pMoveBoneList->GetBone(b_i);
+		u_int bufferCnt = static_cast<u_int>(pMoveBoneList->GetBoneCnt());
+		// ボーン数ループ
+		for (u_int b_i = 0; b_i < bufferCnt; b_i++)
+		{
+			const Bone& bone = *pMoveBoneList->GetBone(b_i);
 
-		// ボーンのID番目に行列を入れる
-		boneCombBuffer.matrix[bone.GetIndex()] = bone.GetCombMtx();
-		boneCombBuffer.matrix[bone.GetIndex()] = boneCombBuffer.matrix[bone.GetIndex()].Transpose();
+			// ボーンのID番目に行列を入れる
+			boneCombBuffer.matrix[bone.GetIndex()] = bone.GetCombMtx();
+
+			// シェーダーに渡すので転置行列を作成
+			boneCombBuffer.matrix[bone.GetIndex()] =
+				boneCombBuffer.matrix[bone.GetIndex()].Transpose();
+		}
 	}
 
 	// シェーダーにボーン行列を渡す

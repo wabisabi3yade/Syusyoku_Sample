@@ -2,16 +2,31 @@
 #include "AnimSingleNodePlayer.h"
 #include "SingleAnimationNode.h"
 
-AnimSingleNodePlayer::AnimSingleNodePlayer(const AnimationNode_Base& _singleNode, BoneList& _boneList, Transform& _transform)
-	: AnimNodePlayer_Base(_singleNode, _boneList, _transform)
+AnimSingleNodePlayer::AnimSingleNodePlayer(const AnimationNode_Base& _singleNode, 
+	BoneList& _boneList, Transform& _transform):
+	AnimNodePlayer_Base(_singleNode, _boneList, _transform),
+	playingFrame(0)
 {
+}
+
+u_int AnimSingleNodePlayer::GetAllFrame() const
+{
+	const SingleAnimationNode& singleNode =
+		static_cast<const SingleAnimationNode&>(*pPlayAnimNode);
+
+	u_int allKeyFrame = singleNode.GetAllKeyFrame();
+
+	return allKeyFrame;
 }
 
 void AnimSingleNodePlayer::Update(std::vector<BoneTransform>& _outTransforms)
 {
 	float playingRatio = GetAnimationRatio();
-	_outTransforms.resize(pAssetBoneList->GetBoneCnt());
 
+	// 再生キーに反映
+	playingFrame = static_cast<u_int>(playingRatio * GetAllFrame());
+
+	_outTransforms.resize(pAssetBoneList->GetBoneCnt());
 	//ボーン数ループ
 	for (unsigned int b_i = 0; b_i < pAssetBoneList->GetBoneCnt(); b_i++)
 	{
@@ -20,12 +35,15 @@ void AnimSingleNodePlayer::Update(std::vector<BoneTransform>& _outTransforms)
 	}
 }
 
-void AnimSingleNodePlayer::CalcRootMotionPosSpeed(float _controllerSpeed)
+void AnimSingleNodePlayer::CalcRootMotionPosSpeed()
 {
 	// コントローラーの
 	const SingleAnimationNode& singleNode = static_cast<const SingleAnimationNode&>(*pPlayAnimNode);
 
-	rootMotionPosSpeedPerSec = _controllerSpeed * singleNode.GetRootMotionPosSpeed() * pAssetBoneList->GetLoadScale();
+	rootMotionPosSpeedPerSec = singleNode.GetRootMotionPosSpeed() * 
+		pAssetBoneList->GetLoadScale()
+		* allPlaySpeed
+		/ GetNodePlaySpeed();
 }
 
 DirectX::SimpleMath::Vector3 AnimSingleNodePlayer::GetRootMotionPos(float _ratio, bool _isLoadScaling) const
@@ -58,4 +76,31 @@ DirectX::SimpleMath::Quaternion AnimSingleNodePlayer::GetRootMotionRot(float _ra
 float AnimSingleNodePlayer::GetModelScale() const
 {
 	return pAssetBoneList->GetLoadScale();
+}
+
+void AnimSingleNodePlayer::ImGuiDebug()
+{
+	AnimNodePlayer_Base::ImGuiDebug();
+	
+	// 再生キーを編集
+	int imKey = static_cast<int>(playingFrame);
+	if (ImGui::SliderInt("Key", &imKey, 0, GetAllFrame()))
+	{
+		SetPlayingKey(imKey);
+	}
+}
+
+void AnimSingleNodePlayer::SetPlayingKey(u_int _playKey)
+{
+	u_int allKey = GetAllFrame();
+	playingFrame = _playKey;
+
+	// キー数から再生割合を求める
+	float playingRatio = static_cast<float>(playingFrame) / allKey;
+	SetCurPlayRatio(playingRatio);
+}
+
+u_int AnimSingleNodePlayer::GetPlayKey() const
+{
+	return playingFrame;
 }

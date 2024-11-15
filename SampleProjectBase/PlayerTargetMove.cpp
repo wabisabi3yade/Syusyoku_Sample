@@ -37,24 +37,23 @@ void PlayerTargetMove::UpdateBehavior()
 
 void PlayerTargetMove::OnEndBehavior()
 {
-	pAnimation->SetFloat(SPEEDRATIO_PARAMNAME, 0.0f);
+	pActionController->GetAnimation()->SetFloat(SPEEDRATIO_PARAMNAME, 0.0f);
 }
 
 void PlayerTargetMove::TransitionCheckUpdate()
 {
 	using enum GameInput::ButtonType;
 
+	if (GetCanAttack())
+		ChangeState(PlayerState::Attack11);
+
+	CommmonCheckTransition();
+
 	if (!IsRunning())
 		ChangeState(PlayerState::Idle);
 
 	else if (!pActionController->GetIsTargeting())
 		ChangeState(PlayerState::Move);
-
-	//else if (pPlayerInput->GetButtonDown(Player_Attack) && GetInputLeftStick().y > 0.8f)
-	//	ChangeState(PlayerState::SpecialAtkHi);
-
-	else if (pPlayerInput->GetButtonDown(Player_Attack))
-		ChangeState(PlayerState::Attack11);
 }
 
 void PlayerTargetMove::UpdateForward()
@@ -64,7 +63,7 @@ void PlayerTargetMove::UpdateForward()
 	CP_BattleManager* pBattle = CP_BattleManager::GetInstance();
 	if (!pBattle) return;
 
-	float deltaTime = MainApplication::DeltaTime();
+	float deltaTime = DeltaTime();
 	Transform& myTransform = pActionController->GetPlayer().GetTransform();
 	const Vector3& myPos = myTransform.GetPosition();
 
@@ -81,7 +80,7 @@ void PlayerTargetMove::UpdateForward()
 	// 正面と目標ベクトルとの角度の差分を求める
 	float diffAng = acosf(targetVec.Dot(myTransform.Forward()));
 	diffAng = std::max(diffAng, Mathf::smallValue);
-	float deltaAngle = rotateSpeed * Mathf::degToRad * MainApplication::DeltaTime();
+	float deltaAngle = rotateSpeed * Mathf::degToRad * DeltaTime();
 
 	// 回転速度が差分を超えたら
 	if (diffAng < deltaAngle)
@@ -144,12 +143,15 @@ void PlayerTargetMove::ApplyBlendAnim()
 		moveAxis.y = sin(ang) * 0.5f + BLEND_OFFSET;	
 	}
 
-	pAnimation->SetFloat(MOVEAXIS_X_PARAMNAME, moveAxis.x);
-	pAnimation->SetFloat(MOVEAXIS_Y_PARAMNAME, moveAxis.y);
+	pActionController->SetAnimationFloat(MOVEAXIS_X_PARAMNAME, moveAxis.x);
+	pActionController->SetAnimationFloat(MOVEAXIS_Y_PARAMNAME, moveAxis.y);
 }
 
 void PlayerTargetMove::ApplyRootMotion()
 {
+	CP_Animation* pAnimation = pActionController->GetAnimation();
+	if (!pAnimation) return;
+
 	float rootMotion = pAnimation->GetMotionPosSpeedPerSec().Length();
 
 	if (rootMotion > Mathf::epsilon)

@@ -9,16 +9,18 @@ CharacterActionController::CharacterActionController(CP_Character& _character, c
 	pChangeAnimObserver = std::make_unique<CharacterChangeAnimObserver>(*this, _stateMachineName);
 }
 
-void CharacterActionController::Init(CP_Animation& _animationController)
+void CharacterActionController::Init(CP_Animation* _pAnimation)
 {
 	// ステートマシン共通開始処理
 	StateMachine_Base::Begin();
 
-	// アニメーションコントローラーを各ステートに渡す
-	pAnimation = &_animationController;
-	
-	// アニメーション変更オブザーバーを追加
-	pAnimation->AddChangeAnimObserver(*pChangeAnimObserver);
+	if (_pAnimation)
+	{
+		// アニメーションコントローラーを各ステートに渡す
+		pAnimation = _pAnimation;
+		// アニメーション変更オブザーバーを追加
+		pAnimation->AddChangeAnimObserver(*pChangeAnimObserver);
+	}
 }
 
 CharacterChangeAnimObserver& CharacterActionController::GetChangeAnimObserver()
@@ -41,9 +43,99 @@ void CharacterActionController::DebugDisplay()
 }
 #endif // EDIT
 
+void CharacterActionController::SetAnimationBool(const std::string& _paramName, bool _isBool)
+{
+	if (!CheckHaveAnimation()) return;
+	pAnimation->SetBool(_paramName, _isBool);
+}
+
+void CharacterActionController::SetAnimationInt(const std::string& _paramName, int _intVal)
+{
+	if (!CheckHaveAnimation()) return;
+	pAnimation->SetInt(_paramName, _intVal);
+}
+
+void CharacterActionController::SetAnimationFloat(const std::string& _paramName, float _floatVal)
+{
+	if (!CheckHaveAnimation()) return;
+	pAnimation->SetFloat(_paramName, _floatVal);
+}
+
+void CharacterActionController::SetAnimationTrigger(const std::string& _paramName)
+{
+	if (!CheckHaveAnimation()) return;
+	pAnimation->SetTrigger(_paramName);
+}
+
+bool CharacterActionController::GetAnimationBool(const std::string& _paramName)
+{
+	if (!CheckHaveAnimation()) return false;
+	return pAnimation->GetBool(_paramName);
+}
+
+int CharacterActionController::GetAnimationInt(const std::string& _paramName)
+{
+	if (!CheckHaveAnimation()) return 0;
+	return pAnimation->GetInt(_paramName);
+}
+
+float CharacterActionController::GetAnimationFloat(const std::string& _paramName)
+{
+	if (!CheckHaveAnimation()) return 0.0f;
+	return pAnimation->GetFloat(_paramName);
+}
+
 nlohmann::json CharacterActionController::Save()
 {
-	return nlohmann::json();
+	nlohmann::json data;
+
+	for (auto& node : stateNodeList)
+	{
+		nlohmann::json actData;
+		// 文字列に変換
+		actData["typeString"] = GetStateStr(node.first);
+		actData["data"] = static_cast<CharacterActState_Base&>(*node.second).Save();
+		data["actData"].push_back(actData);
+	}
+
+	return data;
+}
+
+void CharacterActionController::Load(const nlohmann::json& _data)
+{
+	nlohmann::json actDataList;
+	// ステートごとのパラメータをロードする
+	if (HashiTaku::LoadJsonDataArray("actData", actDataList, _data))
+	{
+		for (auto& actData : actDataList)
+		{
+			std::string stateString;
+			if (!HashiTaku::LoadJsonString("typeString", stateString, actData))
+				continue;
+
+			// 文字列→状態ID
+			int stateId = GetStateId(stateString);
+
+			nlohmann::json actParam;
+			if (!HashiTaku::LoadJsonData("data", actParam, actData))
+				continue;
+
+			// ロード
+			if (stateNodeList.contains(stateId))
+				static_cast<CharacterActState_Base&>(*stateNodeList[stateId]).Load(actParam);
+		}
+	}
+}
+
+bool CharacterActionController::CheckHaveAnimation()
+{
+	if (!pAnimation)
+	{
+		HASHI_DEBUG_LOG("アニメーションが設定されていません");
+		return false;
+	}
+
+	return true;
 }
 
 CP_Character& CharacterActionController::GetCharacter()
@@ -55,13 +147,26 @@ void CharacterActionController::ImGuiDebug()
 {
 #ifdef EDIT
 	ImGui::Checkbox("DebugDisplay", &isDebugDisplay);
+
+	ImGui::Text(GetStateStr(prevStateKey).c_str());
+	ImGui::Text(GetStateStr(currentStateKey).c_str());
+
+	// 各アクションの調整
+	for (auto& pAct : stateNodeList)	
+	{
+		std::string stateStr = GetStateStr(pAct.first);
+		if (ImGuiMethod::TreeNode(stateStr))
+		{
+			static_cast<CharacterActState_Base&>(*pAct.second).ImGuiCall();
+			ImGui::TreePop();
+		}
+	}
 #endif // EDIT
 }
 
-
-CP_Animation& CharacterActionController::GetAnimation()
+CP_Animation* CharacterActionController::GetAnimation()
 {
-	return *pAnimation;
+	return pAnimation;
 }
 
 CharacterChangeAnimObserver::CharacterChangeAnimObserver(CharacterActionController& _playerActCon,

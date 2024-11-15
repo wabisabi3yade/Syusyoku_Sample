@@ -39,6 +39,16 @@ void SingleAnimationNode::GetAnimTransform(BoneTransform& _outTransform, u_int _
 	pAnimationData->GetTransformByRatio(_boneId, _requestRatio, _outTransform);
 }
 
+u_int SingleAnimationNode::GetRatioToKey(float _ratio) const
+{
+	return pAnimationData->GetRatioToFrame(_ratio);
+}
+
+u_int SingleAnimationNode::GetAllKeyFrame() const
+{
+	return pAnimationData->GetAllAnimationFrame();
+}
+
 const DirectX::SimpleMath::Vector3& SingleAnimationNode::GetRootMotionPosSpeed() const
 {
 	return pAnimationData->GetRootMotionPosSpeedPerSec();

@@ -9,6 +9,7 @@ class ANS_ChangeParameter : public AnimationNotifyState, public IAnimParametersS
 	//セクションの種類
 	enum class SectionType
 	{
+		Init,	// 初期
 		Tick,	// 更新中の値
 		End,	// 終了
 		Terminal, // 変更前終了処理
@@ -51,13 +52,16 @@ public:
 	void Load(const nlohmann::json& _data) override;
 private:
 	/// @brief イベント間の更新処理
-	void Begin() override;
+	void Begin() override {};
 
 	/// @brief イベント間の更新処理
 	void Tick() override;
 
 	/// @brief イベント終了処理
 	void End() override;
+
+	/// @brief 切り替えはじめの処理
+	void OnInitialize() override;
 
 	/// @brief 切り替え前終了処理
 	void OnTerminal() override;

@@ -38,6 +38,15 @@ void BossActState_Base::OnEnd()
 	OnEndBehavior();
 }
 
+void BossActState_Base::OnDamage()
+{
+	// ‚Ì‚¯‚¼‚ç‚È‚¢‚È‚çI‚¦‚é
+	if (!pActionController->GetCanKnock()) return;
+
+	// ‚Ì‚¯‚¼‚é‚æ‚¤‚É
+	ChangeState(BossState::Damage_Small, true);
+}
+
 nlohmann::json BossActState_Base::Save()
 {
 	return nlohmann::json();
@@ -47,9 +56,9 @@ void BossActState_Base::Load(const nlohmann::json& _data)
 {
 }
 
-void BossActState_Base::ChangeState(BossState _nextState)
+void BossActState_Base::ChangeState(BossState _nextState, bool _isForce)
 {
-	pActionController->ChangeState(_nextState);
+	pActionController->ChangeState(_nextState, _isForce);
 }
 
 Transform& BossActState_Base::GetBossTransform()
@@ -62,6 +71,15 @@ Transform& BossActState_Base::GetPlayerTransform()
 	return pActionController->GetPlayer().GetTransform();
 }
 
+float BossActState_Base::DeltaTime() const
+{
+	return pActionController->GetCharacter().DeltaTime();
+}
+
 void BossActState_Base::ImGuiDebug()
+{
+}
+
+void BossActState_Base::CommmonCheckTransition()
 {
 }

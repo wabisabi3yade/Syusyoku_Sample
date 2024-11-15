@@ -18,7 +18,7 @@ void CP_EaseTest::Start()
 
 void CP_EaseTest::Update()
 {
-	elapsedTime += vec * MainApplication::DeltaTime();
+	elapsedTime += vec * DeltaTime();
 
 	if (elapsedTime > time)
 	{

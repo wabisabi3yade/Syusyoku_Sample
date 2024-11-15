@@ -176,6 +176,7 @@
     <ClCompile Include="BoolTransCondition.cpp" />
     <ClCompile Include="BossActionController.cpp" />
     <ClCompile Include="BossActState_Base.cpp" />
+    <ClCompile Include="BossDamageState.cpp" />
     <ClCompile Include="BossGroundAttack.cpp" />
     <ClCompile Include="BossGroundMove.cpp" />
     <ClCompile Include="BossGroundState.cpp" />
@@ -198,7 +199,6 @@
     <ClCompile Include="CP_BoxAnimation.cpp" />
     <ClCompile Include="CP_Character.cpp" />
     <ClCompile Include="CP_Enemy.cpp" />
-    <ClCompile Include="CP_NotifyTest.cpp" />
     <ClCompile Include="CP_OutLineRenderer.cpp" />
     <ClCompile Include="CP_RigidBody.cpp" />
     <ClCompile Include="CP_SkyBox.cpp" />
@@ -230,6 +230,7 @@
     <ClCompile Include="IImGuiUser.cpp" />
     <ClCompile Include="IntTransCondition.cpp" />
     <ClCompile Include="IObserever.cpp" />
+    <ClCompile Include="ITargetAccepter.cpp" />
     <ClCompile Include="MaterialCreater.cpp" />
     <ClCompile Include="AnimNodePlayer_Base.cpp" />
     <ClCompile Include="MyClass2.cpp" />
@@ -239,7 +240,6 @@
     <ClCompile Include="PlayerTargetMove.cpp" />
     <ClCompile Include="PlayerActChangeObserver.cpp" />
     <ClCompile Include="PlayerActionController.cpp" />
-    <ClCompile Include="PlayerAnimObserver.cpp" />
     <ClCompile Include="PlayerAttackState.cpp" />
     <ClCompile Include="PlayerIdleState.cpp" />
     <ClCompile Include="PlayerMoveState.cpp" />
@@ -394,6 +394,7 @@
     <ClInclude Include="BoolTransCondition.h" />
     <ClInclude Include="BossActionController.h" />
     <ClInclude Include="BossActState_Base.h" />
+    <ClInclude Include="BossDamageState.h" />
     <ClInclude Include="BossGroundAttack.h" />
     <ClInclude Include="BossGroundMove.h" />
     <ClInclude Include="BossGroundState.h" />
@@ -418,7 +419,6 @@
     <ClInclude Include="CP_BoxAnimation.h" />
     <ClInclude Include="CP_Character.h" />
     <ClInclude Include="CP_Enemy.h" />
-    <ClInclude Include="CP_NotifyTest.h" />
     <ClInclude Include="CP_OutLineRenderer.h" />
     <ClInclude Include="CP_RigidBody.h" />
     <ClInclude Include="CP_SkyBox.h" />
@@ -454,6 +454,7 @@
     <ClInclude Include="IntTransCondition.h" />
     <ClInclude Include="IObserever.h" />
     <ClInclude Include="ISaveLoad.h" />
+    <ClInclude Include="ITargetAccepter.h" />
     <ClInclude Include="MaterialCreater.h" />
     <ClInclude Include="AnimNodePlayer_Base.h" />
     <ClInclude Include="MyClass2.h" />
@@ -464,7 +465,6 @@
     <ClInclude Include="PlayerTargetMove.h" />
     <ClInclude Include="PlayerActChangeObserver.h" />
     <ClInclude Include="PlayerActionController.h" />
-    <ClInclude Include="PlayerAnimObserver.h" />
     <ClInclude Include="PlayerAttackState.h" />
     <ClInclude Include="PlayerIdleState.h" />
     <ClInclude Include="PlayerMoveState.h" />

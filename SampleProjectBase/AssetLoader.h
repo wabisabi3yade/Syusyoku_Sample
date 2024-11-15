@@ -127,6 +127,11 @@ private:	// 便利関数
 	/// @return アニメーション時間
 	static float GetAnimationTime(const aiAnimation* _pAiAnim);
 
+	/// @brief アニメーションのキー数を取得
+	/// @param _pAiAnim assimpアニメーション
+	/// @return アニメーションキー数
+	static u_int GetAnimationFrameCnt(const aiAnimation* _pAiAnim);
+
 	/// @brief 1キーごとの時間を取得する
 	/// @param _pAiAnim assimpアニメーション
 	/// @return 1キーごとの時間

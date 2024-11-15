@@ -88,10 +88,6 @@ void ANS_ChangeParameter::Load(const nlohmann::json& _data)
 	}
 }
 
-void ANS_ChangeParameter::Begin()
-{
-}
-
 void ANS_ChangeParameter::Tick()
 {
 	if (!IsCanSet(SectionType::Tick)) return;
@@ -106,13 +102,16 @@ void ANS_ChangeParameter::End()
 	pAnimationParameters->SetBool(changeParamName, setParameter[CastShort(SectionType::End)]);
 }
 
+void ANS_ChangeParameter::OnInitialize()
+{
+	if (!IsCanSet(SectionType::Init)) return;
+
+	pAnimationParameters->SetBool(changeParamName, setParameter[CastShort(SectionType::Init)]);
+}
+
 bool ANS_ChangeParameter::IsCanSet(SectionType _type)
 {
 	if (!isUsing[CastShort(_type)]) return false;
-	//if (!setParameter[CastShort(_type)]) return false;
-
-	// bool以外なら変更しない
-	//if (parameterType != TypeKind::Bool) return false;
 
 	return true;
 }
@@ -150,6 +149,7 @@ void ANS_ChangeParameter::ImGuiDebug()
 	// 各セクションの編集
 	std::vector<std::string> typeName =
 	{
+		"Init",
 		"Tick",
 		"End",
 		"Terminal"

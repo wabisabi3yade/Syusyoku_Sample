@@ -37,6 +37,9 @@ btScalar BulletContactCallBack::addSingleResult(btManifoldPoint& cp, const btCol
 	case CollisionTypeJudge::ColType::Enter: // Õ“ËŠJn‚È‚ç
 		gameObjA.OnCollisionEnter(infoB);
 		gameObjB.OnCollisionEnter(infoA);
+		// “ü‚Á‚Ä‚¢‚é‚Ì‚ÅStay‚à
+		gameObjA.OnCollisionStay(infoB);
+		gameObjB.OnCollisionStay(infoA);
 		break;
 
 	case CollisionTypeJudge::ColType::Stay: // Õ“Ë’†‚È‚ç

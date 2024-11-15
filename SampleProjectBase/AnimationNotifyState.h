@@ -6,14 +6,23 @@ class AnimationNotifyState : public AnimationNotify_Base
 {
 	/// @brief 開始イベント割合
 	float startEventRatio;
+	/// @brief 開始イベントフレーム
+	u_int startEventFrame;
 
 	/// @brief 終了イベント割合
 	float endEventRatio;
+	/// @brief 終了イベントフレーム
+	u_int endEventFrame;
 public:
+
+	/// @brief コンストラクタ
+	/// @param _notifyType 通知イベント種類
 	AnimationNotifyState(NotifyType _notifyType);
 	virtual ~AnimationNotifyState() {}
 
 	void Update(const float _lastPlayingRatio, const float _curPlayingRatio, bool _isLoop) override;
+
+	void Update(const u_int _lastPlayFrame, u_int _curPlayingFrame, bool _isLoop) override;
 
 	// 開始時のイベント割合をセットする
 	void SetStartRatio(float _startRatio);

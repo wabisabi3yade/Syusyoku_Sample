@@ -57,8 +57,12 @@ float AnimationCurve::GetValue(float _time) const
 				assert("次の時間画見つかりませんでした");
 		}
 
-		returnVal = CalcHermiteCurve(_time, *prevItr, *nextItr);
-
+		// エルミート
+		if (prevItr->toNextInterp == InterpKind::Hermite)
+			returnVal = CalcHermiteCurve(_time, *prevItr, *nextItr);
+		// 線形
+		else
+			returnVal = CalcLinearCurve(_time, *prevItr, *nextItr);
 	}
 	else
 	{
@@ -82,6 +86,13 @@ float AnimationCurve::CalcHermiteCurve(float _getTime, const HermitePlotParam& _
 	float mV1 = t3 - t2;
 
 	return _p0.value * mP0 + _p0.vector * mV0 + _p1.value * mP1 + _p1.vector * mV1;
+}
+
+float AnimationCurve::CalcLinearCurve(float _getTime, const HermitePlotParam& _p0, const HermitePlotParam& _p1) const
+{
+	// 2点間の割合
+	float ratio = (_getTime - _p0.time) / (_p1.time - _p0.time);
+	return Mathf::Lerp(_p0.value, _p1.value, ratio);
 }
 
 bool AnimationCurve::SortPointTime(const HermitePlotParam& _p0, const HermitePlotParam& _p1)
@@ -260,7 +271,7 @@ void AnimationCurve::ImGuiPlotEditing()
 				plotPoints.sort(SortPointTime);
 		}
 	}
-	
+
 	// クリックを離したら
 	if (ImGui::IsMouseReleased(0))
 		dragingPlot = nullptr;
@@ -322,7 +333,7 @@ void AnimationCurve::ImEditVectorPoint()
 		{
 			isVectorEdit = false;
 		}
-			
+
 	}
 
 #endif // EDIT
@@ -342,6 +353,7 @@ void AnimationCurve::ImDrawGraph()
 		// 前と後のプロット点を取得
 		auto prevProtItr = plotPoints.begin();
 		auto nextProtItr = std::next(prevProtItr);
+		InterpKind curKind = prevProtItr->toNextInterp;
 		for (int p_i = 0; p_i < DRAW_POINT_CNT; p_i++)
 		{
 			timePoints[p_i] = (float)p_i / (DRAW_POINT_CNT - 1);
@@ -352,10 +364,14 @@ void AnimationCurve::ImDrawGraph()
 				// プロットを更新
 				prevProtItr = nextProtItr;
 				nextProtItr = std::next(nextProtItr);
+				curKind = prevProtItr->toNextInterp;
 			}
 
 			// 値を取得する
-			valuePoints[p_i] = CalcHermiteCurve(timePoints[p_i], *prevProtItr, *nextProtItr);
+			if (curKind == InterpKind::Hermite)
+				valuePoints[p_i] = CalcHermiteCurve(timePoints[p_i], *prevProtItr, *nextProtItr);
+			else 
+				valuePoints[p_i] = CalcLinearCurve(timePoints[p_i], *prevProtItr, *nextProtItr);
 		}
 	}
 	else
@@ -407,6 +423,17 @@ void AnimationCurve::ImAddPopPlot()
 
 			ImGui::DragFloat("Value", &editingPlot->value, 0.001f, MIN_VAL, MAX_VAL);
 			ImGui::DragFloat("Vector", &editingPlot->vector, 0.001f, -1.0f, 1.0f);
+
+			// 補間種類を変える
+			std::vector<std::string> interpKindName
+			{
+				"Hermite",
+				"Linear"
+			};
+
+			u_int id = static_cast<int>(editingPlot->toNextInterp);
+			if (ImGuiMethod::ComboBox("##interpKind", id, interpKindName))
+				editingPlot->toNextInterp = static_cast<InterpKind>(id);
 		}
 
 		if (ImGui::MenuItem("Add"))
@@ -451,6 +478,7 @@ nlohmann::json AnimationCurve::Save()
 		{
 			data["startValue"] = plot.value;
 			data["startVector"] = plot.vector;
+			data["startInterp"] = plot.toNextInterp;
 			continue;
 		}
 		else if (&plot == &*std::prev(plotPoints.end()))
@@ -464,6 +492,7 @@ nlohmann::json AnimationCurve::Save()
 			plotData["time"] = plot.time;
 			plotData["value"] = plot.value;
 			plotData["vector"] = plot.vector;
+			plotData["interp"] = plot.toNextInterp;
 		}
 		plotDatas.push_back(plotData);
 	}
@@ -489,6 +518,7 @@ void AnimationCurve::Load(const nlohmann::json& _data)
 			LoadJsonFloat("time", addPlot.time, plotData);
 			LoadJsonFloat("value", addPlot.value, plotData);
 			LoadJsonFloat("vector", addPlot.vector, plotData);
+			LoadJsonEnum<InterpKind>("interp", addPlot.toNextInterp, plotData);
 			plotPoints.push_back(addPlot);
 		}
 	}
@@ -499,6 +529,8 @@ void AnimationCurve::Load(const nlohmann::json& _data)
 	if (LoadJsonFloat("startVector", loadVector, _data))
 	{
 		LoadJsonFloat("startValue", (*plotPoints.begin()).value, _data);
+		LoadJsonEnum<InterpKind>("startInterp", (*plotPoints.begin()).toNextInterp, _data);
+		
 		(*plotPoints.begin()).vector = loadVector;
 	}
 	if (LoadJsonFloat("endVector", loadVector, _data))

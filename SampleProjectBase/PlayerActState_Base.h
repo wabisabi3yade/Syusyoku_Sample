@@ -1,15 +1,13 @@
 #pragma once
 
-#include "StateMachine.h"
+#include "CharacterActState_Base.h"
 #include "GameInput.h"
-#include "IObserever.h"
 #include "CP_Camera.h"
-#include "CP_Animation.h"
 
 class PlayerActionController;
 
 /// @brief プレイヤーの行動ステート基底クラス
-class PlayerActState_Base : public HashiTaku::StateNode_AnimationBase , public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
+class PlayerActState_Base : public CharacterActState_Base
 {
 public:
 	// プレイヤーの行動状態
@@ -70,12 +68,10 @@ private:
 	/// @brief この行動クラスのステートタイプ
 	PlayerState stateType;
 
-	/// @brief 地上で行うアクションか？
-	bool isGroundAction;
-protected:
-	/// @brief アニメーション管理
-	CP_Animation* pAnimation;
+	/// @brief 入力期間中に攻撃が押されていたか?
+	bool isAttackInput;
 
+protected:
 	/// @brief プレイヤー
 	PlayerActionController* pActionController;
 
@@ -103,9 +99,6 @@ public:
 	/// @brief  終了処理呼び出し
 	void OnEnd() override;
 
-	// アニメーションをセットする
-	void SetAnimation(CP_Animation& _pAnimation);
-
 	// ステートタイプを取得
 	PlayerState GetActStateType() const;
 
@@ -129,24 +122,37 @@ protected:
 	/// @brief ステート遷移条件のチェック処理
 	virtual void TransitionCheckUpdate();
 
+	/// @brief 入力のフラグをクリア
+	void InputFlagClear();
+
+	/// @brief 入力確認の更新
+	void CheckInputUpdate();
+
+	/// @brief どのアクションにも共通する遷移
+	void CommmonCheckTransition();
+
 	/// @brief 状態を遷移する
 	/// @param _changeSate 遷移先の状態
 	void ChangeState(PlayerState _nextState);
+
+	/// @brief Δtを取得
+	/// @return Δt
+	float DeltaTime() const;
 
 	/// @brief コントローラーの左スティックの入力を取得
 	/// @return 左スティックの入力
 	DirectX::SimpleMath::Vector2 GetInputLeftStick() const;
 
-	/// @brief 地上で行うアクションか取得
-	/// @return 地上で行うアクションなのか？
-	bool GetIsGroundAction() const;
-
 	/// @brief ローリングできるか取得する
 	/// @return ローリングできるか？
 	bool GetCanRolling() const;
 
+	/// @brief 攻撃できるか取得する
+	/// @return 攻撃できるか？
+	bool GetCanAttack() const;
+
 	/// @brief ImGui処理
-	virtual void ImGuiDebug() {}
+	void ImGuiDebug() override {}
 
 	/// @brief ImGuiによるコンボボックス
 	/// @param _caption キャプション
@@ -155,8 +161,7 @@ protected:
 	static bool ImGuiComboPlayerState(const std::string& _caption, PlayerState& _currentState);
 
 private:
-	/// @brief どのアクションにも共通する遷移
-	void CommmonCheckTransition();
+
 
 	/// @brief キャンセルに合わせてアクションが行うか確認
 	/// @return ステートをここで変更したか？

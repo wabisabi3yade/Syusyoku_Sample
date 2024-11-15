@@ -69,7 +69,7 @@ void AnimBlendNodePlayer::MoveCurrentBlend()
 		HashiTaku::EaseKind blendMoveEase = pBlendNode->GetBlendMoveEasing(a_i);
 
 		// 割合移動時間を進める
-		playParam.curBlendMoveTime += MainApplication::DeltaTime();
+		playParam.curBlendMoveTime += deltaTime;
 		playParam.curBlendMoveTime = std::min(playParam.curBlendMoveTime, blendMoveTime);
 
 		float easeValue = HashiTaku::Easing::EaseValue(playParam.curBlendMoveTime / blendMoveTime, blendMoveEase);
@@ -214,11 +214,16 @@ u_int AnimBlendNodePlayer::GetBlendAxisCnt() const
 	return static_cast<u_int>(axisPlayParameters.size());
 }
 
-void AnimBlendNodePlayer::CalcRootMotionPosSpeed(float _controllerSpeed)
+void AnimBlendNodePlayer::CalcRootMotionPosSpeed()
 {
 	using namespace DirectX::SimpleMath;
+
 	pBlendNode->CalcRootMotionSpeed(blendingAnimData, rootMotionPosSpeedPerSec);
-	rootMotionPosSpeedPerSec *= _controllerSpeed  * pAssetBoneList->GetLoadScale();;
+
+	// ノード再生速度は適用しない
+	rootMotionPosSpeedPerSec *= pAssetBoneList->GetLoadScale() * 
+		allPlaySpeed / 
+		GetNodePlaySpeed();
 }
 
 DirectX::SimpleMath::Vector3 AnimBlendNodePlayer::GetRootMotionPos(float _ratio, bool _isLoadScaling) const

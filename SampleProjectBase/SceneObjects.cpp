@@ -258,6 +258,8 @@ bool SceneObjects::LoadObject(const nlohmann::json& _gameObjectData)
 	// 再帰的に読み込む
 	for (auto& childData : childDatas)
 		LoadObject(childData);
+
+	return true;
 }
 
 bool SceneObjects::LateLoadObject(const nlohmann::json& _gameObjectData)
@@ -286,6 +288,8 @@ bool SceneObjects::LateLoadObject(const nlohmann::json& _gameObjectData)
 	// 再帰的に読み込む
 	for (auto& childData : childDatas)
 		LateLoadObject(childData);
+
+	return true;
 }
 
 bool SceneObjects::ImGuiSettingObject(GameObject& _gameObject)

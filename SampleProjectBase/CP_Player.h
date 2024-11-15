@@ -42,6 +42,10 @@ public:
 	/// @param _setAttackInfo UŒ‚î•ñ
 	void SetAttackInfo(const HashiTaku::AttackInformation& _setAttackInfo);
 
+	/// @brief UŒ‚ƒtƒ‰ƒO‚ğæ“¾
+	/// @return UŒ‚ƒtƒ‰ƒO
+	bool GetIsAttackFlag() const;
+
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
 

@@ -122,7 +122,7 @@
                     "pos": [
                         0.0,
                         2.5999999046325684,
-                        -17.200000762939453
+                        -22.200000762939453
                     ],
                     "rotation": [
                         -0.0,
@@ -292,7 +292,9 @@
                                 "active": true,
                                 "components": [
                                     {
-                                        "attackableTags": null,
+                                        "attackableTags": [
+                                            3
+                                        ],
                                         "enable": true,
                                         "isDebugDisplay": false,
                                         "name": "Weapon",
@@ -454,6 +456,7 @@
                                             "endValue": 1.0,
                                             "endVector": 0.0,
                                             "plotDatas": null,
+                                            "startInterp": 0,
                                             "startValue": 0.0,
                                             "startVector": 0.0,
                                             "useHermite": false
@@ -473,6 +476,7 @@
                                             "endValue": 1.0,
                                             "endVector": 0.0,
                                             "plotDatas": null,
+                                            "startInterp": 0,
                                             "startValue": 0.0,
                                             "startVector": 2.0,
                                             "useHermite": true
@@ -493,16 +497,19 @@
                                             "endVector": 0.0,
                                             "plotDatas": [
                                                 {
+                                                    "interp": 0,
                                                     "time": 0.2427983582019806,
                                                     "value": 1.0,
                                                     "vector": 0.0
                                                 },
                                                 {
+                                                    "interp": 0,
                                                     "time": 0.4279835522174835,
                                                     "value": 0.09266409277915955,
                                                     "vector": 0.0
                                                 }
                                             ],
+                                            "startInterp": 0,
                                             "startValue": 0.0,
                                             "startVector": 0.0,
                                             "useHermite": true
@@ -525,6 +532,7 @@
                                             "endValue": 1.0,
                                             "endVector": 0.0,
                                             "plotDatas": null,
+                                            "startInterp": 0,
                                             "startValue": 0.0,
                                             "startVector": 0.0,
                                             "useHermite": false
@@ -547,6 +555,7 @@
                                             "endValue": 1.0,
                                             "endVector": 0.0,
                                             "plotDatas": null,
+                                            "startInterp": 0,
                                             "startValue": 0.0,
                                             "startVector": 0.0,
                                             "useHermite": false
@@ -569,6 +578,7 @@
                                             "endValue": 1.0,
                                             "endVector": 0.0,
                                             "plotDatas": null,
+                                            "startInterp": 0,
                                             "startValue": 0.0,
                                             "startVector": 0.0,
                                             "useHermite": false
@@ -588,7 +598,7 @@
                         "weaponObjName": "Weapon"
                     },
                     {
-                        "animConName": "ANC_Player",
+                        "animConName": "ANC_Player_Mixiamo",
                         "enable": true,
                         "name": "Animation",
                         "priority": 1
@@ -827,7 +837,7 @@
                         "height": 1.3300000429153442,
                         "name": "CapsuleCollider",
                         "priority": 0,
-                        "radius": 0.5299999713897705
+                        "radius": 0.7400000095367432
                     },
                     {
                         "actionController": {
@@ -857,10 +867,15 @@
                                 {
                                     "data": null,
                                     "typeString": "Attack1"
+                                },
+                                {
+                                    "data": null,
+                                    "typeString": "Damage_Small"
                                 }
-                            ]
+                            ],
+                            "defaultState": 2
                         },
-                        "enable": false,
+                        "enable": true,
                         "maxHp": 1.0,
                         "name": "Boss",
                         "priority": 0

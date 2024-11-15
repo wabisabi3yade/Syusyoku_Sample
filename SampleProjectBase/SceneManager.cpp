@@ -16,7 +16,7 @@ SceneManager::SceneManager() : nowSceneName("")
 {
 	Setup();
 
-	ChangeScene("test", true);
+	ChangeScene("playerTest", true);
 }
 
 SceneManager::~SceneManager()
@@ -156,11 +156,17 @@ void SceneManager::ChangeScene(const std::string& _sceneName, bool _isEditScene)
 	pNowScene.reset();
 	nowSceneName = _sceneName;
 
+#ifdef EDIT
 	// 編集するシーンかどうか
 	if (!_isEditScene)
 		pNowScene = std::make_unique<Scene>(_sceneName);
 	else
 		pNowScene = std::make_unique<EditScene>(_sceneName);
+#else
+	pNowScene = std::make_unique<Scene>(_sceneName);
+#endif // EDIT
+
+	
 
 	HASHI_DEBUG_LOG(_sceneName + "へ移行");
 }

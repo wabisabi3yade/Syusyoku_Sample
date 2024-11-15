@@ -35,9 +35,17 @@ class CP_Animation : public Component
 
 	/// @brief アニメーションコントローラ再生機能
 	std::unique_ptr<AnimControllPlayer> pAnimConPlayer;
+
+	/// @brief ボーンの数
+	u_int boneCnt;
 public:
 	CP_Animation();
 	virtual ~CP_Animation() {}
+
+	/// @brief 初期化
+	void Init() override;
+
+	//void OnDestroy() override;
 
 	/// @brief アニメーション変更オブザーバーを追加
 	/// @param _observer オブザーバー
@@ -127,15 +135,14 @@ public:
 	void Load(const nlohmann::json& _data) override;
 private:
 	void Awake() override;
-	void LateUpdate() override;
+	void Update() override;
 	void Draw() override;
-	void OnAddComponent(Component& _comp);
 
 	/// @brief アニメーションコントローラーの準備
 	void SetupAnimCon();
 
 	/// @brief Rendererからボーンをコピーし、動かすボーンを作成 
-	void CopyBoneList(CP_MeshRenderer& _mr);
+	void CopyBoneList();
 
 	/// @brief 再生できる状態か？
 	/// @return 再生できるか

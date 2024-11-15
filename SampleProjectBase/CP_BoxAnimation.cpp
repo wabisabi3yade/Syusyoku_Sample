@@ -29,14 +29,14 @@ void CP_BoxAnimation::Update()
 	if (!isTransition)
 	{
 		Vector3 a = GetTransform().GetLocalEularAngles();
-		a += vec * MainApplication::DeltaTime();
+		a += vec * DeltaTime();
 		a = Vec3::Repeat(a, 360.0f);
 		GetTransform().SetLocalEularAngles(a);
 
 		secondQuat = std::move(lastQuat);
 		secondTime = lastTime;
 		lastQuat = GetTransform().GetLocalRotation();
-		lastTime = MainApplication::DeltaTime();
+		lastTime = DeltaTime();
 	}
 	else
 	{
@@ -77,7 +77,7 @@ void CP_BoxAnimation::Transition()
 {
 	/*if (isStop) return;*/
 
-	culElapsedBlend += MainApplication::DeltaTime();
+	culElapsedBlend += DeltaTime();
 
 	if (culElapsedBlend > blendTime)
 	{

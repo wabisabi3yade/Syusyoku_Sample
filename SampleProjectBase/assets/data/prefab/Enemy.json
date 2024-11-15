@@ -1,0 +1,189 @@
+{
+    "childs": [
+        {
+            "childs": [
+                {
+                    "childs": [
+                        {
+                            "childs": null,
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "enable": true,
+                                        "meshName": "Sword15_FBX.fbx",
+                                        "name": "MeshRenderer",
+                                        "priority": 0
+                                    }
+                                ],
+                                "layer": 0,
+                                "name": "Boss_WeaponModel",
+                                "tag": 0,
+                                "transform": {
+                                    "child": null,
+                                    "pos": [
+                                        1.0640003681182861,
+                                        -0.1799992471933365,
+                                        1.8199989795684814
+                                    ],
+                                    "rotation": [
+                                        -0.6807566285133362,
+                                        0.7291289567947388,
+                                        -0.045077405869960785,
+                                        -0.05393882840871811
+                                    ],
+                                    "scale": [
+                                        1.4400010108947754,
+                                        1.4399995803833008,
+                                        1.4399998188018799
+                                    ]
+                                }
+                            }
+                        }
+                    ],
+                    "gameObject": {
+                        "active": true,
+                        "components": null,
+                        "layer": 0,
+                        "name": "Boss_Weapon",
+                        "tag": 0,
+                        "transform": {
+                            "child": [
+                                "Boss_WeaponModel"
+                            ],
+                            "pos": [
+                                1.0640009641647339,
+                                -0.18000008165836334,
+                                1.8199989795684814
+                            ],
+                            "rotation": [
+                                -0.680756688117981,
+                                0.729128897190094,
+                                -0.045077405869960785,
+                                -0.053939007222652435
+                            ],
+                            "scale": [
+                                1.1999999284744263,
+                                1.1999995708465576,
+                                1.2000000476837158
+                            ]
+                        }
+                    }
+                }
+            ],
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "grabName": "mixamorig:RightHand",
+                        "name": "Rig",
+                        "priority": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "Boss_WeaponHand",
+                "tag": 0,
+                "transform": {
+                    "child": [
+                        "Boss_Weapon"
+                    ],
+                    "pos": [
+                        1.1000008583068848,
+                        -0.3600000739097595,
+                        1.7599992752075195
+                    ],
+                    "rotation": [
+                        0.0,
+                        1.0,
+                        0.0,
+                        -4.76837158203125e-07
+                    ],
+                    "scale": [
+                        1.1999998092651367,
+                        1.1999998092651367,
+                        1.1999998092651367
+                    ]
+                }
+            }
+        }
+    ],
+    "gameObject": {
+        "active": true,
+        "components": [
+            {
+                "enable": true,
+                "meshName": "Uriel A Plotexia.fbx",
+                "name": "MeshRenderer",
+                "priority": 0
+            },
+            {
+                "enable": true,
+                "friction": 0.20000000298023224,
+                "isAwake": true,
+                "isFreezeRot": [
+                    true,
+                    false,
+                    true
+                ],
+                "isTrigger": false,
+                "mass": 50.0,
+                "name": "RigidBody",
+                "priority": 0
+            },
+            {
+                "angles": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "center": [
+                    0.0,
+                    1.149999976158142,
+                    0.0
+                ],
+                "enable": true,
+                "height": 1.3300000429153442,
+                "name": "CapsuleCollider",
+                "priority": 0,
+                "radius": 0.5299999713897705
+            },
+            {
+                "animConName": "ANC_Boss",
+                "enable": true,
+                "name": "Animation",
+                "priority": 1
+            },
+            {
+                "enable": true,
+                "maxHp": 1.0,
+                "name": "Enemy",
+                "priority": 0
+            }
+        ],
+        "layer": 0,
+        "name": "Enemy",
+        "tag": 3,
+        "transform": {
+            "child": [
+                "Boss_WeaponHand"
+            ],
+            "pos": [
+                0.5,
+                0.0,
+                0.800000011920929
+            ],
+            "rotation": [
+                0.0,
+                1.0,
+                0.0,
+                -4.76837158203125e-07
+            ],
+            "scale": [
+                1.2000000476837158,
+                1.2000000476837158,
+                1.2000000476837158
+            ]
+        }
+    }
+}

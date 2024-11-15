@@ -24,6 +24,15 @@ public:
 	/// @param _requestRatio 取得する指定のアニメーション割合
 	void GetAnimTransform(BoneTransform& _outTransform, u_int _boneId, float _requestRatio) const override;
 
+	/// @brief 割合からキー数を求める
+	/// @param _ratio 割合
+	/// @return キー数
+	u_int GetRatioToKey(float _ratio) const;
+
+	/// @brief 全体キー数を求める
+	/// @return 全体のキー数
+	u_int GetAllKeyFrame() const override;
+
 	/// @brief ルートモーションの移動速度を取得する
 	/// @return ルートモーションの移動速度
 	const DirectX::SimpleMath::Vector3& GetRootMotionPosSpeed() const;

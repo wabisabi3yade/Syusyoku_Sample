@@ -29,12 +29,18 @@ private:
 
 	/// @brief イベント種類
 	NotifyType notifyType;
+
+	/// @brief アニメーションのフレーム数
+	u_int animFrameCnt;
 #ifdef EDIT
 	bool isEditing{ false };
 #endif // EDIT
 
 public:
 	AnimationNotify_Base();
+
+	/// @brief コンストラクタ
+	/// @param _notifyType 通知イベント種類
 	AnimationNotify_Base(NotifyType _notifyType);
 	virtual ~AnimationNotify_Base() {}
 
@@ -46,6 +52,11 @@ public:
 	/// @param _isLoop 割合がループしたか？
 	virtual void Update(const float _lastPlayingRatio, const float _curPlayingRatio, const bool _isLoop) = 0;
 
+	virtual void Update(u_int _lastPlayFrame, u_int _curPlayingFrame, bool _isLoop) = 0;
+
+	/// @brief 通知イベントが始まったときの初期化
+	void OnInitCall();
+
 	/// @brief  次のアニメーションに切り替える前の終了処理呼び出し関数
 	void OnTerminalCall();
 
@@ -54,6 +65,9 @@ public:
 
 	// イベント名を取得
 	void SetNotifyName(const std::string& _notifyName);
+
+	/// @brief アニメーションのフレーム数をセット
+	void SetAnimationFrameCnt(u_int _animFrame);
 
 	/// @brief 種類から名前に変換
 	/// @param _notifyType 種類
@@ -70,6 +84,10 @@ public:
 	/// @return 通知イベントの種類
 	NotifyType GetNotifyType() const;
 
+	/// @brief 全体のフレーム数を取得
+	/// @return フレーム数
+	u_int GetAnimFrameCnt() const;
+
 	/// @brief クローン関数
 	/// @return 生成した通知イベント
 	virtual std::unique_ptr<AnimationNotify_Base> Clone() = 0;
@@ -78,8 +96,21 @@ public:
 	void Load(const nlohmann::json& _data) override;
 
 protected:
+	/// @brief 始まったときの開始処理
+	virtual void OnInitialize() {};
+
 	/// @brief 次のアニメーションに切り替える前の終了処理
 	virtual void OnTerminal() {};
+
+	/// @brief フレーム数から割合に変換
+	/// @param _frame フレーム数
+	/// @return 割合
+	float ConvertFrameToRatio(u_int _frame);
+
+	/// @brief フレーム数で調整するか取得
+	/// @return フレーム数で調整するか？
+	bool UseFrame();
+
 
 	void ImGuiDebug() override;
 };

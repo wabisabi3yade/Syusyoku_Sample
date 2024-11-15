@@ -42,8 +42,8 @@ public:
 	void Begin(AnimNodePlayer_Base& _fromNode, AnimNodePlayer_Base& _toNode, BoneList& _updateBones, float _transitionTime, HashiTaku::EaseKind _easeKind);
 
 	/// @brief 更新処理
-	/// @param _playSpeed アニメーション全体速度
-	void Update(float _playSpeed);
+	/// @param _deltaTime 経過時間
+	void Update(float _deltaTime, float _controllerSpeed);
 
 	/// @brief 遷移時間を進める
 	/// @param _deltaTime 再生速度を考慮した経過時間

@@ -1,6 +1,7 @@
 #pragma once
 #include "PlayerActState_Base.h"
 #include "AttackInformation.h"
+#include "AnimationCurve.h"
 
 /// @brief プレイヤー攻撃のゲーム内処理
 class PlayerAttackState : public PlayerActState_Base
@@ -12,17 +13,21 @@ private:
 	/// @brief 攻撃情報
 	std::unique_ptr<HashiTaku::AttackInformation> pAttackInfo;
 
-	/// @brief 前に進む速度カーブ
-	AnimationCurve forwardSpeedCurve;
+	/// @brief 前に進む距離カーブ
+	AnimationCurve progressDistanceCurve;
 
 	/// @brief 進む距離
 	float atkMoveSpeed;
 
-	/// @brief 先行入力時間
-	float senkoInputTime;
+	/// @brief 最初に見る回転速度
+	float lookRotateSpeed;
 
 	/// @brief 前へ進むか？
 	bool isMoveForward;
+
+	/// @brief 攻撃判定出る前か？
+	bool isAttackCollisionBefore; 
+	
 public:
 	PlayerAttackState();
 	virtual ~PlayerAttackState() {}
@@ -38,6 +43,9 @@ protected:
 private:
 	/// @brief 攻撃情報を更新する
 	void UpdateAttackInfo();
+
+	/// @brief 敵に対して向ける
+	void LookAtEnemy();
 
 	/// @brief 攻撃時に前へ進む
 	void ForwardProgressMove();

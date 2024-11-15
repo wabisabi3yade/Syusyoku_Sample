@@ -622,9 +622,6 @@
     <Filter Include="ソース ファイル\Animation\AnimationNotify\State\ChangeParameter">
       <UniqueIdentifier>{c58a80d2-a175-43c0-8b35-519907c95306}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter">
-      <UniqueIdentifier>{2d26709a-49f4-4003-8799-c6d6fb8d6b4e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Animation\AnimationNotify\IAnimParametersSetter">
       <UniqueIdentifier>{bd013dbf-59e1-44fd-a2d4-34e87b52f746}</UniqueIdentifier>
     </Filter>
@@ -771,6 +768,15 @@
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Shader\Vertex\VS_Object">
       <UniqueIdentifier>{479e427c-5306-4063-a9e5-ffb5d3e8f05a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Enemy\Boss\ActionState\Ground">
+      <UniqueIdentifier>{4b72b850-47e2-4154-ad11-c3dd8293cca8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Enemy\Boss\ActionState\Damage">
+      <UniqueIdentifier>{8ae26436-5c09-42e2-91e6-3d54ef3ef5c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter">
+      <UniqueIdentifier>{3e15c111-0798-4478-89c4-15cad16afe66}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1142,9 +1148,6 @@
     <ClCompile Include="IAnimationObserver.cpp">
       <Filter>ソース ファイル\Animation\AnimationObserver</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerAnimObserver.cpp">
-      <Filter>ソース ファイル\Object\Player\Observer</Filter>
-    </ClCompile>
     <ClCompile Include="CP_Rig.cpp">
       <Filter>ソース ファイル\Component\Rig</Filter>
     </ClCompile>
@@ -1243,9 +1246,6 @@
     </ClCompile>
     <ClCompile Include="IClassNameGetter.cpp">
       <Filter>ソース ファイル\Method\TypeName</Filter>
-    </ClCompile>
-    <ClCompile Include="CP_NotifyTest.cpp">
-      <Filter>ソース ファイル\Component\Test</Filter>
     </ClCompile>
     <ClCompile Include="ButtonTransArrow.cpp">
       <Filter>ソース ファイル\Animation\AnimTransitionArrow\Button</Filter>
@@ -1346,9 +1346,6 @@
     <ClCompile Include="ANS_ChangeParameter.cpp">
       <Filter>ソース ファイル\Animation\AnimationNotify\State\ChangeParameter</Filter>
     </ClCompile>
-    <ClCompile Include="ANE_ChangeParameter.cpp">
-      <Filter>ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter</Filter>
-    </ClCompile>
     <ClCompile Include="StateMachine.cpp">
       <Filter>ソース ファイル\Method\StateMachine</Filter>
     </ClCompile>
@@ -1427,22 +1424,7 @@
     <ClCompile Include="BossActionController.cpp">
       <Filter>ソース ファイル\Object\Enemy\Boss\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="CP_Boss.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="BossGroundState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="BossGroundMove.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="IBattleEnemy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="BossIdleState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="BossGroundAttack.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="EditScene.cpp">
@@ -1465,6 +1447,30 @@
     </ClCompile>
     <ClCompile Include="VS_WorldPosition.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Boss.cpp">
+      <Filter>ソース ファイル\Component\InGame\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossIdleState.cpp">
+      <Filter>ソース ファイル\Object\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossGroundState.cpp">
+      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState</Filter>
+    </ClCompile>
+    <ClCompile Include="BossGroundAttack.cpp">
+      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="BossGroundMove.cpp">
+      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="BossDamageState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ITargetAccepter.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ANE_ChangeParameter.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1804,9 +1810,6 @@
     <ClInclude Include="IAnimationObserver.h">
       <Filter>ソース ファイル\Animation\AnimationObserver</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerAnimObserver.h">
-      <Filter>ソース ファイル\Object\Player\Observer</Filter>
-    </ClInclude>
     <ClInclude Include="NullTransform.h">
       <Filter>ソース ファイル\System\Transform</Filter>
     </ClInclude>
@@ -1924,9 +1927,6 @@
     <ClInclude Include="IClassNameGetter.h">
       <Filter>ソース ファイル\Method\TypeName</Filter>
     </ClInclude>
-    <ClInclude Include="CP_NotifyTest.h">
-      <Filter>ソース ファイル\Component\Test</Filter>
-    </ClInclude>
     <ClInclude Include="ComponentConcept.h">
       <Filter>ソース ファイル\Component</Filter>
     </ClInclude>
@@ -2041,9 +2041,6 @@
     <ClInclude Include="AnimationNotifyState.h">
       <Filter>ソース ファイル\Animation\AnimationNotify\State\Base</Filter>
     </ClInclude>
-    <ClInclude Include="ANE_ChangeParameter.h">
-      <Filter>ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter</Filter>
-    </ClInclude>
     <ClInclude Include="ANS_ChangeParameter.h">
       <Filter>ソース ファイル\Animation\AnimationNotify\State\ChangeParameter</Filter>
     </ClInclude>
@@ -2125,19 +2122,10 @@
     <ClInclude Include="CP_Boss.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="BossGroundState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="BossGroundMove.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="IBattleEnemy.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="BossIdleState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="BossGroundAttack.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="IAnimParamSetGetter.h">
@@ -2163,6 +2151,24 @@
     </ClInclude>
     <ClInclude Include="VS_WorldPosition.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BossDamageState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BossGroundAttack.h">
+      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="BossGroundMove.h">
+      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="BossGroundState.h">
+      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="ITargetAccepter.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ANE_ChangeParameter.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

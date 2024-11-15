@@ -4,12 +4,12 @@
 #include "GameObject.h"
 
 PlayerAttackState::PlayerAttackState()
-	: nextCombAtkState(PlayerState::None), senkoInputTime(0.15f), atkMoveSpeed(10.0f), isMoveForward(false)
+	: nextCombAtkState(PlayerState::None), atkMoveSpeed(10.0f), lookRotateSpeed(0.0f), isMoveForward(false), isAttackCollisionBefore(false)
 {
 	pAttackInfo = std::make_unique<HashiTaku::AttackInformation>();
 
 	// カーブ名をセット
-	forwardSpeedCurve.SetCurveName("AtkMoveSpd");
+	progressDistanceCurve.SetCurveName("AtkMoveSpd");
 }
 
 void PlayerAttackState::OnStartBehavior()
@@ -18,7 +18,9 @@ void PlayerAttackState::OnStartBehavior()
 	UpdateAttackInfo();
 
 	// 攻撃フラグを立てる
-	pAnimation->SetTrigger(ATTACKTRIGGER_PARAMNAME);
+	pActionController->SetAnimationTrigger(ATTACKTRIGGER_PARAMNAME);
+
+	isAttackCollisionBefore = false;
 }
 
 void PlayerAttackState::UpdateBehavior()
@@ -33,14 +35,11 @@ void PlayerAttackState::OnEndBehavior()
 
 void PlayerAttackState::TransitionCheckUpdate()
 {
-	PlayerActState_Base::TransitionCheckUpdate();
-
-	// キャンセルできるか？
-	if (!pActionController->GetIsCanCancel()) return;
-
 	// 攻撃入力されたらステート遷移する
-	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack, senkoInputTime))
+	if (GetCanAttack())
 		ChangeState(nextCombAtkState);
+
+	PlayerActState_Base::TransitionCheckUpdate();
 }
 
 void PlayerAttackState::UpdateAttackInfo()
@@ -48,18 +47,22 @@ void PlayerAttackState::UpdateAttackInfo()
 	pActionController->GetPlayer().SetAttackInfo(*pAttackInfo);
 }
 
+void PlayerAttackState::LookAtEnemy()
+{
+	
+
+}
+
 void PlayerAttackState::ImGuiDebug()
 {
 	ImGui::Checkbox("MoveFwd", &isMoveForward);
-	ImGui::DragFloat("Senko", &senkoInputTime, 0.01f, 0.0f, 3.0f);
-	ImGuiComboPlayerState("Next", nextCombAtkState);
 	ImGui::Text("AtkInfo");
 	pAttackInfo->ImGuiCall();
 
 	if (isMoveForward)
 	{
 		ImGui::DragFloat("AtkMoveSpeed", &atkMoveSpeed, 0.1f);
-		forwardSpeedCurve.ImGuiCall();
+		progressDistanceCurve.ImGuiCall();
 	}
 }
 
@@ -69,15 +72,18 @@ void PlayerAttackState::ForwardProgressMove()
 
 	if (!isMoveForward) return;
 
+	CP_Animation* pAnimation = pActionController->GetAnimation();
+	if (!pAnimation) return;
+
 	// カーブから進無料を取得
 	float animPlayRatio = pAnimation->GetCurrentPlayRatio();
-	float curveVal = forwardSpeedCurve.GetValue(animPlayRatio);
+	float curveVal = progressDistanceCurve.GetValue(animPlayRatio);
 
 	Transform& transform = pActionController->GetPlayer().GetTransform();
 
 	// 座標に反映
 	Vector3 pos = transform.GetPosition();
-	pos += transform.Forward() * curveVal * atkMoveSpeed * MainApplication::DeltaTime();
+	pos += transform.Forward() * curveVal * atkMoveSpeed * DeltaTime();
 	transform.SetPosition(pos);
 }
 
@@ -86,11 +92,10 @@ nlohmann::json PlayerAttackState::Save()
 	auto data = PlayerActState_Base::Save();
 
 	data["nextCombAttack"] = nextCombAtkState;
-	data["senko"] = senkoInputTime;
 	data["atkInfo"] = pAttackInfo->Save();
 	data["atkMoveSpd"] = atkMoveSpeed;
 	data["isMoveFwd"] = isMoveForward;
-	data["forwardCurve"] = forwardSpeedCurve.Save();
+	data["forwardCurve"] = progressDistanceCurve.Save();
 
 	return data;
 }
@@ -101,7 +106,6 @@ void PlayerAttackState::Load(const nlohmann::json& _data)
 	PlayerActState_Base::Load(_data);
 
 	LoadJsonEnum<PlayerState>("nextCombAttack", nextCombAtkState, _data);
-	LoadJsonFloat("senko", senkoInputTime, _data);
 	LoadJsonBoolean("isMoveFwd", isMoveForward, _data);
 	LoadJsonFloat("atkMoveSpd", atkMoveSpeed, _data);
 	nlohmann::json loadData;
@@ -112,6 +116,6 @@ void PlayerAttackState::Load(const nlohmann::json& _data)
 
 	if (LoadJsonData("forwardCurve", loadData, _data))
 	{
-		forwardSpeedCurve.Load(loadData);
+		progressDistanceCurve.Load(loadData);
 	}
 }

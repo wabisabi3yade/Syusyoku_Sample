@@ -21,9 +21,6 @@ class AnimNodePlayer_Base : public HashiTaku::IImGuiUser
 	/// @brief ノードの再生速度
 	float playerSpeedTimes;
 
-	/// @brief 計算した全てを考慮した再生速度
-	float allPlaySpeed;
-
 	/// @brief 再生フラグ
 	bool isPlaying;
 
@@ -50,6 +47,12 @@ protected:
 
 	/// @brief ルートモーション時に移動するオブジェクトのトランスフォーム
 	Transform* pObjectTransform;
+
+	/// @brief 計算した全てを考慮した再生速度
+	float allPlaySpeed;
+
+	/// @brief 経過時間
+	float deltaTime;
 public:
 	/// @brief コンストラクタ
 	/// @param _playNode 再生ノード
@@ -64,8 +67,9 @@ public:
 	void CopyNotifys(const std::list<std::unique_ptr<AnimationNotify_Base>>& _notifyList, AnimationParameters& _animationParameters);
 
 	/// @brief 更新処理呼び出し
-	/// @param _controllerPlaySpeed コントローラー自体の再生速度
-	void UpdateCall(std::vector<BoneTransform>& _outTransforms, float _controllerPlaySpeed);
+	/// @param _deltaTime 経過時間
+	/// @param _controllerSpeed コントローラー速度
+	void UpdateCall(std::vector<BoneTransform>& _outTransforms, float _deltaTime, float _controllerSpeed);
 
 	/// @brief トランスフォームにルートモーションを反映する
 	/// @return このフレームの移動量
@@ -73,13 +77,13 @@ public:
 
 	/// @brief トランスフォームにこのフレームのルートモーションを移動する
 	/// @param _rootMovement ルートモーションの移動量
+	/// @param _deltaTime 経過時間
 	void ApplyRootMotion(const DirectX::SimpleMath::Vector3& _rootMovement);
 
-	void OnInterpolateUpdate(std::vector<BoneTransform>& _outTransforms, float _controllerPlaySpeed);
+	void OnInterpolateUpdate(std::vector<BoneTransform>& _outTransforms, float _deltaTime, float _controllerSpeed);
 
 	/// @brief 再生割合を進める
-	/// @param _controllerPlaySpeed コントローラー自体の再生速度
-	void ProgressPlayRatio(float _controllerPlaySpeed);
+	void ProgressPlayRatio(float _controllerSpeed);
 
 	/// @brief 変更前終了処理
 	void OnTerminal();
@@ -138,9 +142,7 @@ protected:
 	virtual void Update(std::vector<BoneTransform>& _outTransforms) = 0;
 
 	/// @brief ルートモーションの座標移動速度を計算する
-	/// @param _controllerSpeed コントローラー速度
-	/// @return 座標移動速度
-	virtual void CalcRootMotionPosSpeed(float _controllerSpeed) = 0;
+	virtual void CalcRootMotionPosSpeed() = 0;
 
 	/// @brief ルートモーションを取得する（内部で必要な計算を行う）
 	/// @param 現在の再生割合

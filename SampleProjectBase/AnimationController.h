@@ -69,6 +69,10 @@ public:
 	/// @param _animName アニメーションの名前
 	void RemoveNode(const std::string& _animName);
 
+	/// @brief アニメーションの進める速度を取得
+	/// @return 進める速度
+	float GetPlaySpeed() const;
+
 	/// @brief デフォルトノード情報を取得
 	/// @return デフォルトノード情報
 	AnimNodeInfo* GetDefaultNode() const;

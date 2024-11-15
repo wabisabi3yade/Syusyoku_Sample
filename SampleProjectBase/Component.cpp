@@ -130,6 +130,11 @@ void Component::SetEnable(bool _enable)
         OnEnableFalseCall();
 }
 
+float Component::DeltaTime() const
+{
+    return gameObject->DeltaTime();
+}
+
 std::string Component::GetName() const
 {
     return name;

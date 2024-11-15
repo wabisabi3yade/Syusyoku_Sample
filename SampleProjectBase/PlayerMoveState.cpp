@@ -54,23 +54,20 @@ void PlayerMoveState::UpdateBehavior()
 
 void PlayerMoveState::OnEndBehavior()
 {
-	pAnimation->SetFloat(SPEEDRATIO_PARAMNAME, 0.0f);
+	pActionController->SetAnimationFloat(SPEEDRATIO_PARAMNAME, 0.0f);
 }
 
 void PlayerMoveState::TransitionCheckUpdate()
 {
-	PlayerActState_Base::TransitionCheckUpdate();
-
 	// アタックStateに遷移
-	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
+	if (GetCanAttack())
 	{
 		ChangeState(PlayerState::Attack11);
 	}
-	//else if (GetCanRolling())
-	//{
-	//	ChangeState(PlayerState::Rolling);
-	//}
-	else if (currentSpeed <= Mathf::epsilon)	// 移動速度が0以下になると
+
+	PlayerActState_Base::TransitionCheckUpdate();
+
+	if (currentSpeed <= Mathf::epsilon)	// 移動速度が0以下になると
 	{
 		ChangeState(PlayerState::Idle);
 	}
@@ -99,7 +96,7 @@ void PlayerMoveState::ImGuiDebug()
 
 void PlayerMoveState::Move()
 {
-	float deltaTime = MainApplication::DeltaTime();
+	float deltaTime = DeltaTime();
 	GameObject& playerObj = pActionController->GetPlayer().GetGameObject();
 
 	// 移動方向・移動量決定
@@ -136,11 +133,11 @@ void PlayerMoveState::Move()
 
 	// 移動
 	Vector3 pos = playerObj.GetTransform().GetPosition();
-	pos += moveVector * currentSpeed * MainApplication::DeltaTime();
+	pos += moveVector * currentSpeed * DeltaTime();
 	playerObj.GetTransform().SetPosition(pos);
 
 	// アニメーションのブレンド割合をセット
-	pAnimation->SetFloat(SPEEDRATIO_PARAMNAME, currentSpeed / maxSpeed);
+	pActionController->SetAnimationFloat(SPEEDRATIO_PARAMNAME, currentSpeed / maxSpeed);
 }
 
 void PlayerMoveState::ApplyRootMotion()
@@ -148,6 +145,9 @@ void PlayerMoveState::ApplyRootMotion()
 	// ルートモーションと移動速度から移動速度の再生速度を調整する
 	if (IsRunning())
 	{
+		CP_Animation* pAnimation = pActionController->GetAnimation();
+		if (!pAnimation) return;
+
 		float rootMotion = abs(pAnimation->GetMotionPosSpeedPerSec().z);
 
 		if (rootMotion > Mathf::epsilon)
@@ -170,7 +170,7 @@ void PlayerMoveState::Rotation()
 
 	// 現在の回転量を球面線形補間で向けていく。
 	Quaternion rotation = playerObj.GetTransform().GetRotation();
-	rotation = Quaternion::Slerp(rotation, targetRotation, rotateSpeed * MainApplication::DeltaTime());
+	rotation = Quaternion::Slerp(rotation, targetRotation, rotateSpeed * DeltaTime());
 	playerObj.GetTransform().SetRotation(rotation);
 }
 

@@ -33,6 +33,11 @@ GameObject& GameObject::Copy(const GameObject& _other)
 	return *this;
 }
 
+void GameObject::UpdateDeltaTime()
+{
+	deltaTime = deltaTimeSpeed * MainApplication::DeltaTime();
+}
+
 void GameObject::ImGuiSetParent()
 {
 	const u_int buf = 256;
@@ -171,7 +176,7 @@ void GameObject::LoadComponentParameter(const nlohmann::json& _componentData)
 	SortCompPriority();
 }
 
-GameObject::GameObject() : isActive(true), name("")
+GameObject::GameObject() : isActive(true), name(""), deltaTimeSpeed(1.0f), deltaTime(0.0f)
 {
 	pTransform = std::make_unique<Transform>(this);
 }
@@ -219,6 +224,9 @@ void GameObject::StartCall()
 void GameObject::UpdateCall()
 {
 	if (!isActive) return;
+
+	// åoâﬂéûä‘ÇçXêVÇ∑ÇÈ
+	UpdateDeltaTime();
 
 	// Update
 	for (auto& comp : pActiveComponents)
@@ -587,6 +595,11 @@ void GameObject::SetLayer(HashiTaku::Layer::Type _setType)
 	sceneObjects.MoveTmpList(*this);
 }
 
+void GameObject::SetDeltaTimeSpeed(float _deltaSpeed)
+{
+	deltaTimeSpeed = _deltaSpeed;
+}
+
 Transform& GameObject::GetTransform()
 {
 	return *pTransform;
@@ -595,6 +608,16 @@ Transform& GameObject::GetTransform()
 const std::string& GameObject::GetName() const
 {
 	return name;
+}
+
+float GameObject::DeltaTime() const
+{
+	return deltaTime;
+}
+
+float GameObject::GetDeltdaSpeed() const
+{
+	return deltaTimeSpeed;
 }
 
 bool GameObject::GetIsActive() const

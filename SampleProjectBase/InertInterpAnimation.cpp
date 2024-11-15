@@ -44,7 +44,7 @@ bool InertInterpAnimation::Calculate(const std::vector<BoneTransform>& _nextAnim
 	return true;
 }
 
-void InertInterpAnimation::UpdateBoneCache(std::vector<BoneTransform>& boneTransforms)
+void InertInterpAnimation::UpdateBoneCache(std::vector<BoneTransform>& boneTransforms, float _deltaTime)
 {
 	if (lastBoneCache.isEnable)
 	{
@@ -52,7 +52,7 @@ void InertInterpAnimation::UpdateBoneCache(std::vector<BoneTransform>& boneTrans
 	}
 
 	lastBoneCache.transform = std::move(boneTransforms);
-	lastBoneCache.deltaTime_s = MainApplication::DeltaTime();
+	lastBoneCache.deltaTime_s = _deltaTime;
 	lastBoneCache.isEnable = true;
 }
 
@@ -86,9 +86,9 @@ DirectX::SimpleMath::Quaternion InertInterpAnimation::CalcBlendRot(u_int _boneId
 	return Quat::Multiply(q, changeTimeTransform[_boneIdx].rotation);
 }
 
-float InertInterpAnimation::ProgressTransitionTime(float _playSpeed)
+float InertInterpAnimation::ProgressTransitionTime(float _deltaTime)
 {
-	transitionElapsedTime += MainApplication::DeltaTime() * _playSpeed;
+	transitionElapsedTime += _deltaTime;
 
 	return transitionElapsedTime;
 }

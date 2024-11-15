@@ -90,6 +90,10 @@ public:
 	// 再生時間を取得
 	float GetAnimationTime() const;
 
+	/// @brief 全体キー数を求める
+	/// @return 全体のキー数
+	virtual u_int GetAllKeyFrame() const;
+
 	/// @brief ループ再生フラグを取得
 	/// @return ループ再生フラグ
 	bool GetIsLoop() const;
@@ -137,6 +141,5 @@ protected:
 	void SetAnimationTime(float _time);
 
 	void ImGuiDebug() override;
-
 };
 

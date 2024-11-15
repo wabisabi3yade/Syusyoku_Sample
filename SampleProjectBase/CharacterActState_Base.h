@@ -2,7 +2,9 @@
 #include "StateMachine.h"
 
 /// @brief キャラクタのアクションステート基底
-class CharacterActState_Base : public HashiTaku::StateNode_Base, public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
+class CharacterActState_Base : 
+	public HashiTaku::StateNode_Base, public HashiTaku::IImGuiUser,
+	public HashiTaku::ISaveLoad
 {
 public:
 	CharacterActState_Base() {}

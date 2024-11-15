@@ -5,9 +5,11 @@
 #include "IAnimParametersSetter.h"
 #include "AnimationNotifyFactory.h"
 
-AnimNodePlayer_Base::AnimNodePlayer_Base(const AnimationNode_Base& _playNode, BoneList& _boneList, Transform& _transform)
-	: pPlayAnimNode(&_playNode), pAssetBoneList(&_boneList), pObjectTransform(&_transform),
-	curPlayRatio(0.0f), lastAnimationRatio(-Mathf::smallValue), curAnimationRatio(0.0f), playerSpeedTimes(1.0f), allPlaySpeed(0.0f), isJustLoop(false), isPlaying(true)
+AnimNodePlayer_Base::AnimNodePlayer_Base(const AnimationNode_Base& _playNode, BoneList& _boneList, Transform& _transform):
+	pPlayAnimNode(&_playNode), pAssetBoneList(&_boneList), pObjectTransform(&_transform),
+	curPlayRatio(0.0f),	lastAnimationRatio(-Mathf::smallValue), curAnimationRatio(0.0f), 
+	playerSpeedTimes(1.0f), allPlaySpeed(0.0f), deltaTime(0.0f), isJustLoop(false),
+	isPlaying(true)
 {
 }
 
@@ -26,13 +28,18 @@ void AnimNodePlayer_Base::CopyNotifys(const std::list<std::unique_ptr<AnimationN
 			pAnimParamSetter->SetAnimationParameters(_animationParameters);
 		}
 
+		// 初期処理
+		pCopyNotify->OnInitCall();
+
 		// 追加
 		copyNotifys.push_back(std::move(pCopyNotify));
 	}
 }
 
-void AnimNodePlayer_Base::UpdateCall(std::vector<BoneTransform>& _outTransforms, float _controllerPlaySpeed)
+void AnimNodePlayer_Base::UpdateCall(std::vector<BoneTransform>& _outTransforms, float _deltaTime, float _controllerSpeed)
 {
+	deltaTime = _deltaTime;
+
 	if (!isPlaying)
 	{
 		Update(_outTransforms);
@@ -40,13 +47,13 @@ void AnimNodePlayer_Base::UpdateCall(std::vector<BoneTransform>& _outTransforms,
 	}
 
 	// 再生割合を進める
-	ProgressPlayRatio(_controllerPlaySpeed);
+	ProgressPlayRatio(_controllerSpeed);
 
 	// アニメーションの更新処理
 	Update(_outTransforms);
 
 	// ルートモーションの座標移動速度を計算
-	CalcRootMotionPosSpeed(_controllerPlaySpeed);
+	CalcRootMotionPosSpeed();
 
 	// アニメーションのルートモーションを適用する
 	ApplyRootMotion(CalcRootMotionToTransform());
@@ -60,8 +67,9 @@ void AnimNodePlayer_Base::ApplyRootMotion(const DirectX::SimpleMath::Vector3& _r
 	pObjectTransform->SetPosition(pObjectTransform->GetPosition() + _rootMovement);
 }
 
-void AnimNodePlayer_Base::OnInterpolateUpdate(std::vector<BoneTransform>& _outTransforms, float _controllerPlaySpeed)
+void AnimNodePlayer_Base::OnInterpolateUpdate(std::vector<BoneTransform>& _outTransforms, float _deltaTime, float _controllerSpeed)
 {
+	deltaTime = _deltaTime;
 	if (!isPlaying)
 	{
 		Update(_outTransforms);
@@ -69,13 +77,13 @@ void AnimNodePlayer_Base::OnInterpolateUpdate(std::vector<BoneTransform>& _outTr
 	}
 
 	// 再生割合を進める
-	ProgressPlayRatio(_controllerPlaySpeed);
+	ProgressPlayRatio(_controllerSpeed);
 
 	// アニメーションの更新処理
 	Update(_outTransforms);
 
 	// ルートモーションの座標移動速度を計算
-	CalcRootMotionPosSpeed(_controllerPlaySpeed);
+	CalcRootMotionPosSpeed();
 
 	// 通知イベントを更新
 	NotifyUpdate();
@@ -137,23 +145,25 @@ const DirectX::SimpleMath::Vector3& AnimNodePlayer_Base::GetRootMotionSpeed() co
 	return rootMotionPosSpeedPerSec;
 }
 
-void AnimNodePlayer_Base::ProgressPlayRatio(float _controllerPlaySpeed)
+void AnimNodePlayer_Base::ProgressPlayRatio(float _controllerSpeed)
 {
 	isJustLoop = false;
 
 	/*
-	コントローラ全体の再生速度 ×
+	コントローラー速度 ×
 	プレイヤーの再生速度　×
-	ノードの速度倍率　/
-	再生時間を考慮したアニメーション速度(割合で進めているので)
+	ノードの速度倍率
 	*/
-	allPlaySpeed = _controllerPlaySpeed *
-		playerSpeedTimes *
-		pPlayAnimNode->GetPlaySpeedTimes() /
-		pPlayAnimNode->GetAnimationTime();
+	allPlaySpeed = _controllerSpeed * playerSpeedTimes * pPlayAnimNode->GetPlaySpeedTimes();
 
+	// 0徐算防止
+	float divideVal = _controllerSpeed;
+	if (divideVal < Mathf::epsilon)
+		divideVal = Mathf::epsilon;
 
-	curPlayRatio += allPlaySpeed * MainApplication::DeltaTime();
+	// deltaTimeにcontrollerSpeedが掛けてあるので
+	float deltaRemoveConSpeed = deltaTime / divideVal;
+	curPlayRatio += allPlaySpeed * deltaRemoveConSpeed / pPlayAnimNode->GetAnimationTime();
 
 	if (IsCanLoop())
 		OnPlayLoop();
@@ -255,7 +265,8 @@ void AnimNodePlayer_Base::ApplyLoadTransform(DirectX::SimpleMath::Vector3& _root
 
 void AnimNodePlayer_Base::ImGuiDebug()
 {
-	ImGui::SliderFloat("Play", &curPlayRatio, 0.0f, 1.0f);
-	ImGui::Text("AnimRatio:%lf", curAnimationRatio);
+	ImGui::Checkbox("IsPlay", &isPlaying);
 	ImGui::DragFloat("Speed", &playerSpeedTimes, 0.01f, 0.0f, 50.0f);
+	ImGui::Text("AnimRatio:%lf", curAnimationRatio);
+	ImGui::SliderFloat("Ratio", &curPlayRatio, 0.0f, 1.0f);
 }
