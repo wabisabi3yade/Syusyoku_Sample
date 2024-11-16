@@ -26,7 +26,7 @@ void PlayerTargetMove::Load(const nlohmann::json& _data)
 
 void PlayerTargetMove::UpdateBehavior()
 {
-	//UpdateForward();
+	UpdateForward();
 
 	Move();
 
@@ -58,77 +58,36 @@ void PlayerTargetMove::TransitionCheckUpdate()
 
 void PlayerTargetMove::UpdateForward()
 {
-	using namespace DirectX::SimpleMath;
 
-	CP_BattleManager* pBattle = CP_BattleManager::GetInstance();
-	if (!pBattle) return;
-
-	float deltaTime = DeltaTime();
-	Transform& myTransform = pActionController->GetPlayer().GetTransform();
-	const Vector3& myPos = myTransform.GetPosition();
-
-	// 敵リストを取得
-	CP_BattleManager::EnemyList enemyList = pBattle->GetEnemyList();
-
-	CP_Enemy* enemy = *enemyList.begin();
-	const Vector3& enemyPos = enemy->GetTransform().GetPosition();
-
-	Vector3 targetVec = enemyPos - myPos;
-	targetVec.y = 0.0f;
-	targetVec.Normalize();
-
-	// 正面と目標ベクトルとの角度の差分を求める
-	float diffAng = acosf(targetVec.Dot(myTransform.Forward()));
-	diffAng = std::max(diffAng, Mathf::smallValue);
-	float deltaAngle = rotateSpeed * Mathf::degToRad * DeltaTime();
-
-	// 回転速度が差分を超えたら
-	if (diffAng < deltaAngle)
-	{
-		deltaAngle = diffAng;
-
-	}
-
-	// どっち方向に回転させるか
-	float dotRight = targetVec.Dot(myTransform.Right());
-	if (dotRight < 0.0f)
-		deltaAngle *= -1;
-
-	// 回転させる
-	Quaternion deltaRot = Quaternion::CreateFromAxisAngle(Vec3::Up, deltaAngle);
-	Quaternion rot = myTransform.GetRotation();
-	rot = Quat::Multiply(rot, deltaRot);
-	myTransform.SetRotation(rot);
 }
 
 void PlayerTargetMove::ApplyBlendAnim()
 {
-	using namespace DirectX::SimpleMath;
 
 	GameObject& playerObj = pActionController->GetPlayer().GetGameObject();
 
 	// アニメーションのブレンド割合をセット
-	Vector2 playerFwd =
+	DXSimp::Vector2 playerFwd =
 	{
 		playerObj.GetTransform().Forward().x,
 		playerObj.GetTransform().Forward().z
 	};
 	playerFwd.Normalize();
 
-	Vector2 playerRight =
+	DXSimp::Vector2 playerRight =
 	{
 		playerObj.GetTransform().Right().x,
 		playerObj.GetTransform().Right().z
 	};
 	playerRight.Normalize();
 
-	Vector2 moveVector2D =
+	DXSimp::Vector2 moveVector2D =
 	{
 		moveVector.x,
 		moveVector.z
 	};
 
-	Vector2 moveAxis = Vector2::One * BLEND_OFFSET;
+	DXSimp::Vector2 moveAxis = DXSimp::Vector2::One * BLEND_OFFSET;
 	if (moveVector2D.Length() > Mathf::epsilon)
 	{
 		// 進行方向と右ベクトルとの角度を求める

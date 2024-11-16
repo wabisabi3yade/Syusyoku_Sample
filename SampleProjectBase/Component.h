@@ -82,6 +82,10 @@ public:
 	/// @return 経過時間
 	float DeltaTime() const;
 
+	/// @brief 経過時間を進める速度取得
+	/// @return 進める速度
+	float GetDeltaSpeed() const;
+
 	// 名前を取得
 	std::string GetName() const;
 

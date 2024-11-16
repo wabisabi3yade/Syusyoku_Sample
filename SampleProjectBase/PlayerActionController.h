@@ -33,7 +33,8 @@ public:
 
 	/// @brief 開始処理
 	/// @param _animation アニメーション
-	void Init(CP_Animation* _animation);
+	/// @param _pRigidBody リジッドボディ
+	void Init(CP_Animation* _animation, CP_RigidBody* _pRigidBody);
 
 	/// @brief ターゲットの更新処理
 	void UpdateTargeting();
@@ -79,6 +80,10 @@ public:
 	/// @brief ターゲットが死んだときの処理
 	void OnTargetDeath();
 private:
+	/// @brief 更新できるか取得
+	/// @return 更新できるか？
+	bool GetCanUpdate();
+
 	/// @brief 現在の更新処理
 	void Update() override;
 

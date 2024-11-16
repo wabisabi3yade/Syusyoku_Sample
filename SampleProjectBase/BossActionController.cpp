@@ -30,9 +30,9 @@ BossActionController::BossActionController(CP_Boss& _boss):
 	SetDefaultNode(static_cast<int>(defaultState));
 }
 
-void BossActionController::Init(CP_Animation* _pAnimation)
+void BossActionController::Init(CP_Animation* _pAnimation, CP_RigidBody* _pRigidBody)
 {
-	EnemyActionController::Init(_pAnimation);
+	EnemyActionController::Init(_pAnimation, _pRigidBody);
 
 	// アニメーションパラメータから変数のポインタもらう
 	GetAnimationParam();
@@ -97,10 +97,13 @@ void BossActionController::Load(const nlohmann::json& _data)
 {
 	EnemyActionController::Load(_data);
 
-	HashiTaku::LoadJsonEnum<BossActState_Base::BossState>(
+	bool isLoad = HashiTaku::LoadJsonEnum<BossActState_Base::BossState>(
 		"defaultState", 
 		defaultState,
 		_data);
+
+	if (isLoad)
+		SetDefaultNode(static_cast<int>(defaultState));
 }
 
 void BossActionController::GetAnimationParam()

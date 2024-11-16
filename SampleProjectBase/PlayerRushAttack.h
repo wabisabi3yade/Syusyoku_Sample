@@ -4,7 +4,8 @@
 /// @brief ‘O“ËiUŒ‚
 class PlayerRushAttack : public PlayerGroundAttack
 {
-	std::unique_ptr<AnimationCurve> pSpeedCurve;
+	AnimationCurve speedVerCurve;
+	AnimationCurve speedHoriCurve;
 
 	/// @brief ˆÚ“®‘¬“x
 	float moveSpeed;

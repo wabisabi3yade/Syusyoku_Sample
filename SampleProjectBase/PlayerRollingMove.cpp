@@ -4,10 +4,11 @@
 
 constexpr auto ROLLING_ANIMNODE_NAME("RollingMove");	// ローリングのアニメーションノード名
 
-PlayerRollingMove::PlayerRollingMove()
-	: rollingDistance(5.0f), invicibleTime(0.4f)
+PlayerRollingMove::PlayerRollingMove(): 
+	rollingDistance(5.0f), invicibleTime(0.4f), elapsedTime(0.0f), 
+	prevProgressDistance(0.0f)
 {
-	pSpeedCurve = std::make_unique<AnimationCurve>();
+	pDistanceCurve = std::make_unique<AnimationCurve>();
 }
 
 void PlayerRollingMove::OnStartBehavior()
@@ -17,17 +18,7 @@ void PlayerRollingMove::OnStartBehavior()
 	// 入力の向きに即時に向ける
 	TurnInputVec();
 
-	// 回避開始座標を取得
-	Transform& transform = pActionController->GetPlayer().GetTransform();
-	rollingStartPos = transform.GetPosition();
-
-	elapsedTime = 0.0f;
-
-	// 無敵
-	pActionController->GetPlayer().SetIsInvicible(true);
-
-	// アニメーションの反映
-	pActionController->GetAnimation()->SetTrigger(ROLLING_ANIMPARAM);
+	BeginParametar();
 }
 
 void PlayerRollingMove::UpdateBehavior()
@@ -75,6 +66,18 @@ void PlayerRollingMove::TurnInputVec()
 	transform.SetRotation(targetRotation);
 }
 
+void PlayerRollingMove::BeginParametar()
+{
+	elapsedTime = 0.0f;
+	prevProgressDistance = 0.0f;
+
+	// 無敵
+	pActionController->GetPlayer().SetIsInvicible(true);
+
+	// アニメーションの反映
+	pActionController->GetAnimation()->SetTrigger(ROLLING_ANIMPARAM);
+}
+
 void PlayerRollingMove::Move()
 {
 	using namespace DirectX::SimpleMath;
@@ -84,12 +87,21 @@ void PlayerRollingMove::Move()
 
 	// アニメーションの再生割合から進む距離を求める
 	float animPlayRatio = pActionController->GetAnimation()->GetCurrentPlayRatio();
-	float moveDistance = pSpeedCurve->GetValue(animPlayRatio) * rollingDistance;
+	float curveDistance = pDistanceCurve->GetValue(animPlayRatio) * rollingDistance;
+
+	// 前回との差分値を求める
+	float moveDistance = curveDistance - prevProgressDistance;
 
 	// 前進方向に移動する
-	Vector3 pos = transform.GetPosition();
-	pos = rollingStartPos + transform.Forward() * moveDistance;
-	transform.SetPosition(pos);
+	/*Vector3 pos = transform.GetPosition();
+	pos += transform.Forward() * moveDistance;
+	transform.SetPosition(pos);*/
+
+
+	GetRB().SetVelocity(transform.Forward() * moveDistance / deltaTime);
+
+	// 次フレームの為に更新
+	prevProgressDistance = curveDistance;
 }
 
 void PlayerRollingMove::UpdateInvicible()
@@ -108,7 +120,7 @@ void PlayerRollingMove::ImGuiDebug()
 
 	ImGui::DragFloat("Distance", &rollingDistance, 0.1f, 0.0f, 1000.0f);
 	ImGui::DragFloat("InvicibleTime", &invicibleTime, 0.01f, 0.0f, 5.0f);
-	pSpeedCurve->ImGuiCall();
+	pDistanceCurve->ImGuiCall();
 }
 
 nlohmann::json PlayerRollingMove::Save()
@@ -117,7 +129,7 @@ nlohmann::json PlayerRollingMove::Save()
 
 	data["rollingDistance"] = rollingDistance;
 	data["invicibleTime"] = invicibleTime;
-	data["speedCurve"] = pSpeedCurve->Save();
+	data["speedCurve"] = pDistanceCurve->Save();
 
 	return data;
 }
@@ -134,6 +146,6 @@ void PlayerRollingMove::Load(const nlohmann::json& _data)
 	nlohmann::json speedCurveData;
 	if (LoadJsonData("speedCurve", speedCurveData, _data))
 	{
-		pSpeedCurve->Load(speedCurveData);
+		pDistanceCurve->Load(speedCurveData);
 	}
 }

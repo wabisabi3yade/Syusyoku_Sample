@@ -276,6 +276,11 @@ GameObject& Transform::GetGameObject()
 	return *pGameObject;
 }
 
+const std::string& Transform::GetObjectName() const
+{
+	return pGameObject->GetName();
+}
+
 Transform* Transform::GetParent()
 {
 	if (!isHaveParent)

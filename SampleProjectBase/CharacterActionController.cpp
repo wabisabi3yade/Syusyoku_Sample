@@ -9,7 +9,7 @@ CharacterActionController::CharacterActionController(CP_Character& _character, c
 	pChangeAnimObserver = std::make_unique<CharacterChangeAnimObserver>(*this, _stateMachineName);
 }
 
-void CharacterActionController::Init(CP_Animation* _pAnimation)
+void CharacterActionController::Init(CP_Animation* _pAnimation, CP_RigidBody* _pRigidBody)
 {
 	// ステートマシン共通開始処理
 	StateMachine_Base::Begin();
@@ -21,11 +21,18 @@ void CharacterActionController::Init(CP_Animation* _pAnimation)
 		// アニメーション変更オブザーバーを追加
 		pAnimation->AddChangeAnimObserver(*pChangeAnimObserver);
 	}
+
+	pRigidBody = _pRigidBody;
 }
 
 CharacterChangeAnimObserver& CharacterActionController::GetChangeAnimObserver()
 {
 	return *pChangeAnimObserver;
+}
+
+CP_RigidBody* CharacterActionController::GetRB()
+{
+	return pRigidBody;
 }
 
 #ifdef EDIT

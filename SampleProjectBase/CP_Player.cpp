@@ -55,8 +55,10 @@ void CP_Player::Start()
 	// アニメーション変更オブザーバーを追加
 	pAnimation->AddChangeAnimObserver(pActionController->GetChangeAnimObserver());
 
+	CP_RigidBody* pRb = GetGameObject().GetComponent<CP_RigidBody>();
+
 	// アクションコントローラー開始処理
-	pActionController->Init(pAnimation);
+	pActionController->Init(pAnimation, pRb);
 }
 
 void CP_Player::Update()

@@ -605,6 +605,11 @@ Transform& GameObject::GetTransform()
 	return *pTransform;
 }
 
+const Transform& GameObject::GetConstTransform() const
+{
+	return *pTransform;
+}
+
 const std::string& GameObject::GetName() const
 {
 	return name;

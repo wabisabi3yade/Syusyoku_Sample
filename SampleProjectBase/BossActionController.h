@@ -23,7 +23,8 @@ public:
 
 	/// @brief 初期化処理
 	/// @param _pAnimation アニメーション
-	void Init(CP_Animation* _pAnimation) override;
+	/// @param _pRigidBody リジッドボディ
+	void Init(CP_Animation* _pAnimation, CP_RigidBody* _pRigidBody) override;
 
 	/// @brief ステートを変更
 	/// @param _nextState 次のステート

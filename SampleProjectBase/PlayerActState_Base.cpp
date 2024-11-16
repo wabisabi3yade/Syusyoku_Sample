@@ -10,6 +10,8 @@ CP_Camera* PlayerActState_Base::pCamera = nullptr;
 constexpr float ROLLING_SENKOINPUT_SEC(0.2f);	// ローリングの先行入力秒数
 constexpr float CAN_ROLLING_STICKINPUT(0.3f);	// ローリングできる左スティックの入力量
 
+namespace DX = DirectX::SimpleMath;
+
 PlayerActState_Base::PlayerActState_Base()
 	: pActionController(nullptr), stateType(PlayerState::None), isAttackInput(false)
 {
@@ -44,6 +46,9 @@ void PlayerActState_Base::Update()
 
 void PlayerActState_Base::OnEnd()
 {
+	// 前の慣性はなくす
+	GetRB().SetVelocity(DX::Vector3::Zero);
+
 	OnEndBehavior();
 }
 
@@ -88,9 +93,19 @@ void PlayerActState_Base::ChangeState(PlayerState _nextState)
 	pActionController->ChangeState(_nextState);
 }
 
+CP_RigidBody& PlayerActState_Base::GetRB()
+{
+	return *pActionController->GetRB();
+}
+
 float PlayerActState_Base::DeltaTime() const
 {
 	return pActionController->GetCharacter().DeltaTime();
+}
+
+float PlayerActState_Base::GetDeltaSpeed() const
+{
+	return pActionController->GetCharacter().GetDeltaSpeed();
 }
 
 DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStick() const
