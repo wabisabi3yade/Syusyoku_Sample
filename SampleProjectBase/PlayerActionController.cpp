@@ -32,10 +32,11 @@ PlayerActionController::PlayerActionController(CP_Player& _player):
 	// デフォルト状態をセット
 	SetDefaultNode(static_cast<int>(Idle));
 }
-void PlayerActionController::Init(CP_Animation* _animationController)
+void PlayerActionController::Init(CP_Animation* _animationController,
+	CP_RigidBody* _pRigidBody)
 {
 	// ステートマシン共通開始処理
-	CharacterActionController::Init(_animationController);
+	CharacterActionController::Init(_animationController, _pRigidBody);
 
 	// アニメーションパラメータのアドレスを取得
 	pIsCanCancel = pAnimation->GetParameterPointer<bool>(CANCEL_PARAMNAME);
@@ -44,8 +45,23 @@ void PlayerActionController::Init(CP_Animation* _animationController)
 	pIsSenkoInput = pAnimation->GetParameterPointer<bool>(SENKOINPUT_PARAMNAME);
 }
 
+bool PlayerActionController::GetCanUpdate()
+{
+	if (!pRigidBody)
+	{
+		assert(!"rigidBodyを設定してください");
+		return false;
+	}	
+
+	return true;
+}
+
 void PlayerActionController::Update()
 {
+#ifdef EDIT
+	if (!GetCanUpdate()) return;
+#endif // EDIT
+
 	pCurrentNode->Update();
 
 	UpdateTargeting();

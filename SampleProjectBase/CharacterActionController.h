@@ -3,6 +3,7 @@
 #include "ChangeAnimObserver.h"
 #include "CP_Character.h"
 #include "CP_Animation.h"
+#include "CP_RigidBody.h"
 
 class CharacterChangeAnimObserver;
 
@@ -21,6 +22,8 @@ protected:
 	/// @brief アニメーションコンポーネント	
 	CP_Animation* pAnimation;
 
+	/// @brief プレイヤーのリジッドボディ
+	CP_RigidBody* pRigidBody;
 #ifdef EDIT
 	// 前回の状態キー
 	int prevStateKey{ 0 };
@@ -35,11 +38,16 @@ public:
 
 	/// @brief 初期化処理
 	/// @param _pAnimation アニメーションコンポーネント
-	virtual void Init(CP_Animation* _pAnimation);
+	/// @param _pRigidBody リジッドボディ
+	virtual void Init(CP_Animation* _pAnimation, CP_RigidBody* _pRigidBody);
 
 	/// @brief アニメーション変更オブザーバーを取得
 	/// @return アニメーション変更オブザーバー
 	CharacterChangeAnimObserver& GetChangeAnimObserver();
+
+	/// @brief RigidBodyを取得
+	/// @return RigidBody
+	CP_RigidBody* GetRB();
 
 	/// @brief アニメーションを取得
 	/// @return アニメーションコンポーネント

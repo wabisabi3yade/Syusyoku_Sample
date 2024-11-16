@@ -5,20 +5,20 @@
 /// @brief プレイヤーのローリング処理
 class PlayerRollingMove : public PlayerActState_Base
 {
-	/// @brief 速度の変位アニメーションカーブ
-	std::unique_ptr<AnimationCurve> pSpeedCurve;
+	/// @brief 移動距離の変位アニメーションカーブ
+	std::unique_ptr<AnimationCurve> pDistanceCurve;
 
 	/// @brief ローリング距離
 	float rollingDistance;
-
-	/// @brief ローリング開始地点
-	DirectX::SimpleMath::Vector3 rollingStartPos;
 
 	/// @brief 無敵時間
 	float invicibleTime;
 
 	/// @brief 経過時間
 	float elapsedTime;
+
+	/// @brief 前フレームまでに進んだ距離
+	float prevProgressDistance;
 public:
 	PlayerRollingMove();
 	~PlayerRollingMove() {}
@@ -40,6 +40,9 @@ private:
 
 	/// @brief 入力方向に即時に向く
 	void TurnInputVec();
+
+	/// @brief 開始時のパラメータ処理
+	void BeginParametar();
 
 	/// @brief 前進方向に移動する
 	void Move();

@@ -45,6 +45,9 @@ class CP_RigidBody : public Component
 	/// @brief すり抜けるか？
 	bool isTrigger;
 
+	/// @brief キネマティック
+	bool isKinematic;
+
 	/// @brief 軸の数
 	static constexpr short AXIS_CNT = 3;
 
@@ -84,11 +87,19 @@ public:
 	/// @param _isTrigger  実態を持たないようにするか？
 	void SetIsTrigger(bool _isTrigger);
 
+	/// @brief キネマティックをセット
+	/// @param _isKinematic キネマティック
+	void SetIsKinematic(bool _isKinematic);
+
 	/// @brief DXからBulletにトランスフォームを代入する
 	void SetToBtTransform();
 
 	/// @brief BulletからDXにトランスフォームを代入する
 	void SetToDXTransform();
+
+	/// @brief 速度をセット
+	/// @param _velocity 速度
+	void SetVelocity(const DirectX::SimpleMath::Vector3& _velocity);
 
 	/// @brief 衝突オブジェクトを取得する
 	/// @param _outObject 結果オブジェクト

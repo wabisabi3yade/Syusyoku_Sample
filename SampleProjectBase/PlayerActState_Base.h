@@ -3,6 +3,7 @@
 #include "CharacterActState_Base.h"
 #include "GameInput.h"
 #include "CP_Camera.h"
+#include "CP_RigidBody.h"
 
 class PlayerActionController;
 
@@ -135,9 +136,17 @@ protected:
 	/// @param _changeSate 遷移先の状態
 	void ChangeState(PlayerState _nextState);
 
+	/// @brief RigidBodyを取得
+	/// @return RigidBody
+	CP_RigidBody& GetRB();
+
 	/// @brief Δtを取得
 	/// @return Δt
 	float DeltaTime() const;
+
+	/// @brief Δtを進める速度を取得
+	/// @return Δt進める速度
+	float GetDeltaSpeed() const;
 
 	/// @brief コントローラーの左スティックの入力を取得
 	/// @return 左スティックの入力

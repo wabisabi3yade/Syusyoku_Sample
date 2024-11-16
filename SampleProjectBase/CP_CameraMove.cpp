@@ -10,82 +10,67 @@
 using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
 
-void CP_CameraMove::UpdateVector()
-{
-	Transform& transform = GetTransform();
 
-	rotateVec = InSceneSystemManager::GetInstance()->GetInput().GetValue(GameInput::ValueType::Camera_Move).x;
+CP_CameraMove::CP_CameraMove() :
+	pTargetTransform(nullptr), pCamera(nullptr)
+{
 }
 
-void CP_CameraMove::Move()
+void CP_CameraMove::Init()
 {
-	centerAngle += rotateVec * rotateSpeed * DeltaTime();
-	Mathf::Repeat(centerAngle, Mathf::roundDeg);
-	
-	Transform& transform = GetTransform();
-	Vector3 position = transform.GetPosition();
-	Vector3 targetPos = pTargetObj->GetTransform().GetPosition();
-
-	float centerRad = centerAngle * Mathf::degToRad;
-
-	position.x = targetPos.x + cos(centerRad) * distanceHori;
-	position.z = targetPos.z + sin(centerRad) * distanceHori;
-	position.y = targetPos.y + distanceVer;
-
-	transform.SetPosition(position);
-}
-
-void CP_CameraMove::LookUpdate()
-{
-	Vector3 targetPos = pTargetObj->GetTransform().GetPosition();
-	targetPos += offsetTarget;
-
-	GetTransform().LookAt(targetPos);
+	// コントローラを作成
+	pMoveController = std::make_unique<CameraMoveController>();
 }
 
 bool CP_CameraMove::IsCanUpdate()
 {
 #ifdef EDIT
-	if (pTargetObj == nullptr) return false;
+	if (pTargetTransform == nullptr) return false;
 #endif // EDIT
 
 	return true;
 }
 
-
-CP_CameraMove::CP_CameraMove()
-	:pTargetObj(nullptr), pCamera(nullptr), rotateSpeed(120.f), centerAngle(0.0f), distanceHori(3.0f), distanceVer(1.5f)
-{
-}
-
 void CP_CameraMove::Start()
 {
-	pCamera = gameObject->GetComponent<CP_Camera>();	// カメラを取得する
-
+	// カメラを取得する
+	pCamera = gameObject->GetComponent<CP_Camera>();
 	if (pCamera == nullptr)
-		HASHI_DEBUG_LOG("Cameraコンポーネントがありません");
+		assert(!"Cameraコンポーネントをつけてください");
+
+	pMoveController->Begin(*pCamera);	// 初期処理
+	pMoveController->SetTargetTransform(pTargetTransform);
 }
 
 void CP_CameraMove::LateUpdate()
 {
 	if (!IsCanUpdate()) return;
 
-	UpdateVector();
-	Move();
-	LookUpdate();
+	// カメラ移動を更新
+	pMoveController->UpdateCall();
+}
+
+void CP_CameraMove::SetTargetTransform(const Transform* _targetTransform)
+{
+	pTargetTransform = _targetTransform;
+	pMoveController->SetTargetTransform(_targetTransform);
 }
 
 void CP_CameraMove::ImGuiDebug()
 {
-	ImGui::DragFloat("centerAngle", &centerAngle);
-	ImGui::DragFloat("rotSpeed", &rotateSpeed);
-	ImGuiMethod::DragFloat3(offsetTarget, "offsetTarget", 0.1f);
-	ImGui::DragFloat("dis_Hori", &distanceHori, 0.1f);
-	ImGui::DragFloat("dis_Veri", &distanceVer, 0.1f);
+	ImGuiSetTarget();
 
-	std::string text = "target ";
-	if (pTargetObj)
-		text += pTargetObj->GetName();
+	// コントローラの編集
+	pMoveController->ImGuiCall();
+}
+
+void CP_CameraMove::ImGuiSetTarget()
+{
+	// ターゲットの名前を探してセットする
+	std::string text = "target:";
+
+	if (pTargetTransform)
+		text += pTargetTransform->GetObjectName();
 
 	ImGui::Text(text.c_str());
 	static char str[IM_INPUT_BUF];
@@ -96,23 +81,20 @@ void CP_CameraMove::ImGuiDebug()
 		SceneObjects& objects = InSceneSystemManager::GetInstance()->GetSceneObjects();
 		GameObject* go = objects.GetSceneObject(str);
 		if (go)
-			pTargetObj = go;
+			pTargetTransform = &go->GetConstTransform();
 	}
-
 }
 
 nlohmann::json CP_CameraMove::Save()
 {
 	auto data = Component::Save();
 
-	if (pTargetObj)
-		data["target"] = pTargetObj->GetName();
+	// ターゲットのオブジェクトをセーブ
+	if (pTargetTransform)
+		data["target"] = pTargetTransform->GetObjectName();
 
-	data["rotSpeed"] = rotateSpeed;
-	data["centerAngle"] = centerAngle;
-	SaveJsonVector3("offsetTarget", offsetTarget, data);
-	data["dis_Hori"] = distanceHori;
-	data["dis_Ver"] = distanceVer;
+	// 移動コントローラのセーブ
+	data["moveController"] = pMoveController->Save();
 
 	return data;
 }
@@ -122,12 +104,19 @@ void CP_CameraMove::Load(const nlohmann::json& _data)
 	// ターゲット名からオブジェクト取得
 	std::string targetObjName;
 	LoadJsonString("target", targetObjName, _data);
-	SceneObjects& sceneObjs = InSceneSystemManager::GetInstance()->GetSceneObjects();
-	pTargetObj = sceneObjs.GetSceneObject(targetObjName);
 
-	LoadJsonVector3("offsetTarget", offsetTarget, _data);
-	LoadJsonFloat("rotSpeed", rotateSpeed, _data);
-	LoadJsonFloat("centerAngle", centerAngle, _data);
-	LoadJsonFloat("dis_Hori", distanceHori, _data);
-	LoadJsonFloat("dis_Ver", distanceVer, _data);
+	// シーンないから探す
+	SceneObjects& sceneObjs = InSceneSystemManager::GetInstance()->GetSceneObjects();
+	GameObject* pTargetObject = sceneObjs.GetSceneObject(targetObjName);
+	if (!pTargetObject) return;
+
+	// 対象トランスフォームにセット
+	pTargetTransform = &pTargetObject->GetConstTransform();
+
+	// コントローラのロード
+	nlohmann::json controllerData;
+	if (HashiTaku::LoadJsonData("moveController", controllerData, _data))
+	{
+		pMoveController->Load(controllerData);
+	}
 }

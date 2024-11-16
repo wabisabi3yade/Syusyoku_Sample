@@ -162,7 +162,7 @@ void AnimationNode_Base::ImGuiSetParameter()
 	ImGui::Text("RootMotion");
 	ImGui::Checkbox("XZ", &isRootMotionPosXZ); ImGui::SameLine();
 	ImGui::Checkbox("Y", &isRootMotionPosY); ImGui::SameLine();
-	ImGui::Checkbox("Rot", &isRootMotionRot);
+	/*ImGui::Checkbox("Rot", &isRootMotionRot);*/
 
 	ImGuiMethod::PushItemSmallWidth();
 	float animPlayTime = animationTime / playNodeSpeedTimes;

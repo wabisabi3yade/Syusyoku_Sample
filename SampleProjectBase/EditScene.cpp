@@ -22,6 +22,11 @@ void EditScene::Exec()
 		SceneUpdate();
 		isOneFrameProgressing = false;
 	}
+	else
+	{
+		// Ä¶‚µ‚Ä‚¢‚È‚¢‚Å‚à“¯Šú‚³‚¹‚é
+		DX11BulletPhisics::GetInstance()->UpdateTransformDxToBt();
+	}
 
 	// ImGui‚É‚æ‚é•ÒW
 	ImGuiCall();

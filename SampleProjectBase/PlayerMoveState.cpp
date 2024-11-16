@@ -96,7 +96,7 @@ void PlayerMoveState::ImGuiDebug()
 
 void PlayerMoveState::Move()
 {
-	float deltaTime = DeltaTime();
+	float deltaSpeed = GetDeltaSpeed();
 	GameObject& playerObj = pActionController->GetPlayer().GetGameObject();
 
 	// 移動方向・移動量決定
@@ -121,20 +121,19 @@ void PlayerMoveState::Move()
 	if (currentSpeed > curMaxSpd)
 	{
 		// 減速率をかける
-		currentSpeed -= decadeSpeed * deltaTime;
+		currentSpeed -= decadeSpeed;
 		currentSpeed = std::max(currentSpeed, curMaxSpd);
 	}
 	else
 	{
 		// 加速
-		currentSpeed += acceleration * inputMagnitude * deltaTime;
+		currentSpeed += acceleration * inputMagnitude;
 		currentSpeed = std::min(currentSpeed, curMaxSpd);
 	}
 
+	Vector3 moveSpeed = moveVector * currentSpeed * deltaSpeed;
 	// 移動
-	Vector3 pos = playerObj.GetTransform().GetPosition();
-	pos += moveVector * currentSpeed * DeltaTime();
-	playerObj.GetTransform().SetPosition(pos);
+	GetRB().SetVelocity(moveSpeed);
 
 	// アニメーションのブレンド割合をセット
 	pActionController->SetAnimationFloat(SPEEDRATIO_PARAMNAME, currentSpeed / maxSpeed);

@@ -227,7 +227,6 @@ void DX11BulletPhisics::UpdateTransformBtToDx()
 void DX11BulletPhisics::UpdateTransformDxToBt()
 {
 	// 衝突オブジェクト全て更新する
-
 	for (auto& pRbCp : sceneRigidbodys)
 		pRbCp->SetToBtTransform();
 

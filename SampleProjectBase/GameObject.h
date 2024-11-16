@@ -138,6 +138,10 @@ public:
 	/// @return トランスフォームの参照
 	Transform& GetTransform();
 
+	/// @brief トランスフォームを取得
+	/// @return トランスフォームの参照
+	const Transform& GetConstTransform() const;
+
 	/// @brief オブジェクト名を取得
 	/// @return オブジェクト名
 	const std::string& GetName() const;

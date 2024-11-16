@@ -101,13 +101,17 @@ public:
 	const DirectX::SimpleMath::Quaternion& GetLocalRotation() const;
 	const DirectX::SimpleMath::Matrix& GetLocalMatrix() const;
 
-	
-
 	const DirectX::SimpleMath::Vector3& Right()const { return right; }	// 右ベクトル
 	const DirectX::SimpleMath::Vector3& Up()const { return up; }	// 上ベクトル
 	const DirectX::SimpleMath::Vector3& Forward()const { return forward; }	// 正面ベクトル
 
+	/// @brief ゲームオブジェクトを取得する
+	/// @return ゲームオブジェクト
 	GameObject& GetGameObject();
+
+	/// @brief ゲームオブジェクト名を取得する
+	/// @return オブジェクト名
+	const std::string& GetObjectName() const;
 
 	// 親トランスフォームを取得
 	Transform* GetParent();

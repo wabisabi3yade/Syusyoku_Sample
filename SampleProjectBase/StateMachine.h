@@ -30,7 +30,6 @@ namespace HashiTaku
 		/// @brief デフォルトノード
 		StateNode_Base* pDefaultNode;
 
-
 		/// @brief このフレームで遷移は行うか？
 		bool isChangeCurFlame;
 	public:
@@ -43,17 +42,17 @@ namespace HashiTaku
 		/// @brief ノードを追加する
 		/// @param _registKey 追加するキー
 		/// @param _addNode 追加するノード
-		virtual void AddNode(const T& _registKey, std::unique_ptr<StateNode_Base> _addNode);
+		void AddNode(const T& _registKey, std::unique_ptr<StateNode_Base> _addNode);
 
 		/// @brief ノードを削除する
 		/// @param _registKey 
-		virtual void RemoveNode(const T& _registKey);
+		void RemoveNode(const T& _registKey);
 
 		/// @brief ノードを変更する
 		/// @param _changeKey 変更するノードのキー
 		/// @param _isForceChange 強制的に変更する
 		/// @return 遷移成功したか？
-		virtual bool ChangeNode(const T& _changeKey, bool _isForceChange = false);
+		bool ChangeNode(const T& _changeKey, bool _isForceChange = false);
 
 		/// @brief デフォルトノードを設定する
 		/// @param _defaultKey デフォルトノードを指定するキー

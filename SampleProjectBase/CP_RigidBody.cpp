@@ -10,7 +10,7 @@ constexpr float SLEEP_LINEAR(0.01f);	// これ以下の移動速度なら静的オブジェクトに
 constexpr float SLEEP_ANGLE(0.01f);	// これ以下の回転速度なら静的オブジェクトに変更する
 
 CP_RigidBody::CP_RigidBody()
-	: mass(1.0f), friction(0.5f), isAwaking(false), isTrigger(false)
+	: mass(1.0f), friction(0.5f), isAwaking(false), isTrigger(false), isKinematic(false)
 {
 	isFreezeRotation = { false, false, false };
 }
@@ -119,6 +119,26 @@ void CP_RigidBody::SetIsTrigger(bool _isTrigger)
 	ReCreateCollider();
 }
 
+void CP_RigidBody::SetIsKinematic(bool _isKinematic)
+{
+	isKinematic = _isKinematic;
+
+	if (!collider || isTrigger) return;
+
+	btRigidBody& btRigid = CastRigidBody();
+	if (isKinematic)
+	{
+		// キネマティックに変更
+		btRigid.setCollisionFlags(btRigid.getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+		btRigid.setActivationState(DISABLE_DEACTIVATION);
+	}
+	else
+	{
+		// キネマティックを解除
+		btRigid.setCollisionFlags(btRigid.getCollisionFlags() & ~btCollisionObject::CF_KINEMATIC_OBJECT);
+	}
+}
+
 void CP_RigidBody::SetToBtTransform()
 {
 	assert(collider && "コライダーがありません");
@@ -159,6 +179,14 @@ void CP_RigidBody::SetToDXTransform()
 	dxTransform.SetRotation(Bullet::ToDXQuaternion(bulletTransform.getRotation()));
 }
 
+void CP_RigidBody::SetVelocity(const DirectX::SimpleMath::Vector3& _velocity)
+{
+	if (!collider || isTrigger) return;
+
+	// 速度を代入
+	CastRigidBody().setLinearVelocity(Bullet::ToBtVector3(_velocity));
+}
+
 CollisionTypeJudge& CP_RigidBody::GetColTypeJudge() const
 {
 	assert(collider && "colliderが作成されていません");
@@ -188,6 +216,10 @@ void CP_RigidBody::ImGuiDebug()
 	if (ImGui::Checkbox("IsTrigger", &isImBool))
 		SetIsTrigger(isImBool);
 
+	isImBool = isKinematic;
+	if (ImGui::Checkbox("IsKinematic", &isImBool))
+		SetIsKinematic(isImBool);
+
 	ImGuiFreezeRot();
 }
 
@@ -198,6 +230,7 @@ nlohmann::json CP_RigidBody::Save()
 	data["friction"] = friction;
 	data["isAwake"] = isAwaking;
 	data["isTrigger"] = isTrigger;
+	data["isKinematic"] = isKinematic;
 
 	for (short a_i = 0; a_i < AXIS_CNT; a_i++)
 	{
@@ -215,6 +248,7 @@ void CP_RigidBody::Load(const nlohmann::json& _data)
 	LoadJsonFloat("friction", friction, _data);
 	LoadJsonBoolean("isAwake", isAwaking, _data);
 	LoadJsonBoolean("isTrigger", isTrigger, _data);
+	LoadJsonBoolean("isKinematic", isKinematic, _data);
 
 	if (HashiTaku::IsJsonContains(_data, "isFreezeRot"))
 	{
@@ -309,8 +343,13 @@ void CP_RigidBody::CreateRigidBody()
 	btRigid.setFriction(friction);
 	btRigid.setDamping(0.9f, 0.9f);  // 線形ダンピングと回転ダンピングを追加
 	btRigid.setRestitution(0.0f);
+
+
 	if (isAwaking)	// 常に計算するならスリーブ状態にしない
 		collider->pCollisionObject->setActivationState(DISABLE_DEACTIVATION);
+
+	// キネマティック
+	SetIsKinematic(isKinematic);
 
 	// 回転軸固定を適用する
 	UpdateFreezeRotation();

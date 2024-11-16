@@ -1,51 +1,43 @@
 #pragma once
 #include "Component.h"
+#include "CameraMoveController.h"
 
 class CP_Camera;
 
+/// @brief カメラ移動クラス
 class CP_CameraMove : public Component
 {
+	/// @brief カメラの動きを統制するコントローラー
+	std::unique_ptr<CameraMoveController> pMoveController;
+
 	/// @brief 追従対象
-	GameObject* pTargetObj;
+	const Transform* pTargetTransform;
 
 	/// @brief カメラ
 	CP_Camera* pCamera;
-
-	/// @brief 注視点のオフセット
-	DirectX::SimpleMath::Vector3 offsetTarget;
-
-	/// @brief カメラの移動速度	
-	float rotateSpeed;
-
-	/// @brief ターゲットとの中心角度
-	float centerAngle;
-
-	/// @brief ターゲットとの横距離
-	float distanceHori;
-
-	/// @brief ターゲットとの縦距離
-	float distanceVer;
-	
-	/// @brief 視点移動ベクトル
-	float rotateVec;
-
 public:
 	CP_CameraMove();
 	~CP_CameraMove() {}
+	
+	void Init() override;
 
-	virtual void Start();
-	virtual void LateUpdate();
+	/// @brief 対象とするゲームオブジェクトをセット
+	/// @param _targetTransform 対象のオブジェクト(nullptrで外す)
+	void SetTargetTransform(const Transform* _targetTransform);
 
 	virtual void ImGuiDebug() override;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
-
 private:
-	void UpdateVector();
-	void Move();
-	void LookUpdate();
+	void Start() override;
+	void LateUpdate() override;
 
+	/// @brief 更新できるか確認する
+	/// @return 更新できるか？
 	bool IsCanUpdate();
+
+	// ターゲットオブジェクトをImGuiで
+	void ImGuiSetTarget();
 };
 

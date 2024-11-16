@@ -42,7 +42,9 @@ void CP_Boss::Start()
 	CP_Enemy::Start();
 
 	pAnimation = GetGameObject().GetComponent<CP_Animation>();
-	pActionController->Init(pAnimation);
+	CP_RigidBody* pRb = GetGameObject().GetComponent<CP_RigidBody>();
+
+	pActionController->Init(pAnimation, pRb);
 
 	// ƒvƒŒƒCƒ„[‚ğæ“¾‚·‚é
 	if (CP_BattleManager* pBattle = CP_BattleManager::GetInstance())
