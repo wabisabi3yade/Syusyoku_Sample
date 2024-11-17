@@ -54,7 +54,6 @@ void PlayerRollingMove::TurnInputVec()
 	Vector3 camForwardVec = pCamera->GetTransform().Forward();
 	Vector3 camRightVec = pCamera->GetTransform().Right();
 	Vector2 input = GetInputLeftStick();
-
 	Vector3 turnVec;
 	turnVec = camRightVec * input.x;
 	turnVec += camForwardVec * input.y;
@@ -82,8 +81,10 @@ void PlayerRollingMove::Move()
 {
 	using namespace DirectX::SimpleMath;
 
-	Transform& transform = pActionController->GetPlayer().GetTransform();
 	float deltaTime = DeltaTime();
+	if (deltaTime < Mathf::epsilon) return;
+
+	Transform& transform = pActionController->GetPlayer().GetTransform();
 
 	// アニメーションの再生割合から進む距離を求める
 	float animPlayRatio = pActionController->GetAnimation()->GetCurrentPlayRatio();
@@ -91,12 +92,6 @@ void PlayerRollingMove::Move()
 
 	// 前回との差分値を求める
 	float moveDistance = curveDistance - prevProgressDistance;
-
-	// 前進方向に移動する
-	/*Vector3 pos = transform.GetPosition();
-	pos += transform.Forward() * moveDistance;
-	transform.SetPosition(pos);*/
-
 
 	GetRB().SetVelocity(transform.Forward() * moveDistance / deltaTime);
 

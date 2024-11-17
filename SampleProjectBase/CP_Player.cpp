@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "SkeletalMesh.h"
 #include "InSceneSystemManager.h"
+#include "Geometory.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -73,6 +74,17 @@ void CP_Player::Update()
 
 	// •Ší‚Ì“–‚½‚è”»’è‚ğXV
 	SetWeaponAttackFlag();
+}
+
+void CP_Player::Draw()
+{
+	CP_Character::Draw();
+
+//#ifdef  EDIT
+//
+//	Transform& t = GetTransform();
+//	Geometory::AddLine(t.GetPosition(), t.GetPosition() + t.Forward() * 3.0f, Color(0, 0, 1));
+//#endif //  EDIT
 }
 
 void CP_Player::OnDestroy()

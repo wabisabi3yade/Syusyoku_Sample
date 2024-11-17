@@ -198,7 +198,7 @@ void ImGui_ImplDX11_RenderDrawData(ImDrawData* draw_data)
         ctx->Unmap(bd->pVertexConstantBuffer, 0);
     }
 
-    // Backup DX state that will be modified to restore it afterwards (unfortunately this is very ugly looking and verbose. Close your eyes!)
+    // Backup DXSimp state that will be modified to restore it afterwards (unfortunately this is very ugly looking and verbose. Close your eyes!)
     struct BACKUP_DX11_STATE
     {
         UINT                        ScissorRectsCount, ViewportsCount;
@@ -243,7 +243,7 @@ void ImGui_ImplDX11_RenderDrawData(ImDrawData* draw_data)
     ctx->IAGetVertexBuffers(0, 1, &old.VertexBuffer, &old.VertexBufferStride, &old.VertexBufferOffset);
     ctx->IAGetInputLayout(&old.InputLayout);
 
-    // Setup desired DX state
+    // Setup desired DXSimp state
     ImGui_ImplDX11_SetupRenderState(draw_data, ctx);
 
     // Render command lists
@@ -288,7 +288,7 @@ void ImGui_ImplDX11_RenderDrawData(ImDrawData* draw_data)
         global_vtx_offset += cmd_list->VtxBuffer.Size;
     }
 
-    // Restore modified DX state
+    // Restore modified DXSimp state
     ctx->RSSetScissorRects(old.ScissorRectsCount, old.ScissorRects);
     ctx->RSSetViewports(old.ViewportsCount, old.Viewports);
     ctx->RSSetState(old.RS); if (old.RS) old.RS->Release();

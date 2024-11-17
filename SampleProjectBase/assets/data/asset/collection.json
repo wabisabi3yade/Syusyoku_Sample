@@ -13,6 +13,11 @@
                     "value": 0.0
                 },
                 {
+                    "name": "canCombAttack",
+                    "type": 0,
+                    "value": false
+                },
+                {
                     "name": "targeting",
                     "type": 0,
                     "value": false
@@ -32,14 +37,14 @@
                     "value": 0.0
                 },
                 {
-                    "name": "axisY",
-                    "type": 2,
-                    "value": 0.0
-                },
-                {
                     "name": "attackCollision",
                     "type": 0,
                     "value": false
+                },
+                {
+                    "name": "axisY",
+                    "type": 2,
+                    "value": 0.0
                 },
                 {
                     "name": "rollingTrigger",
@@ -49,11 +54,6 @@
                     "name": "canInput",
                     "type": 0,
                     "value": true
-                },
-                {
-                    "name": "canAttack",
-                    "type": 0,
-                    "value": false
                 }
             ],
             "assetName": "ANC_Player",
@@ -125,6 +125,33 @@
                             "arrowParam": {
                                 "conditionList": [
                                     {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    },
+                                    {
+                                        "condition": {
+                                            "iCompare": 30,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 4,
+                                "targetRatio": 0.23000000417232513,
+                                "transEase": 0.23000000417232513,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "RushAttack"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
                                         "condition": {
                                             "iCompare": 20,
                                             "iJudgeType": 2
@@ -142,9 +169,9 @@
                                 "interpolate": 0,
                                 "isHaveExit": false,
                                 "priority": 3,
-                                "targetRatio": 0.28999999165534973,
-                                "transEase": 0.28999999165534973,
-                                "transTime": 0.20000000298023224
+                                "targetRatio": 0.20000000298023224,
+                                "transEase": 0.20000000298023224,
+                                "transTime": 0.10000000149011612
                             },
                             "toName": "Attack1"
                         },
@@ -263,7 +290,7 @@
                                 "exitRatio": 1.0,
                                 "interpolate": 0,
                                 "isHaveExit": false,
-                                "priority": 3,
+                                "priority": 4,
                                 "targetRatio": 0.20000000298023224,
                                 "transEase": 0.20000000298023224,
                                 "transTime": 0.10000000149011612
@@ -282,12 +309,33 @@
                                 "exitRatio": 1.0,
                                 "interpolate": 0,
                                 "isHaveExit": false,
-                                "priority": 1,
+                                "priority": 2,
                                 "targetRatio": 0.0,
                                 "transEase": 0.0,
                                 "transTime": 0.10000000149011612
                             },
                             "toName": "RollingMove"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "targeting",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 1,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "TargetIdle"
                         },
                         {
                             "arrowParam": {
@@ -310,27 +358,6 @@
                                 "transTime": 0.12999999523162842
                             },
                             "toName": "Move"
-                        },
-                        {
-                            "arrowParam": {
-                                "conditionList": [
-                                    {
-                                        "condition": {
-                                            "bJudgeType": 0
-                                        },
-                                        "paramName": "targeting",
-                                        "typeKind": 0
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
-                                "priority": 0,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.10000000149011612
-                            },
-                            "toName": "TargetIdle"
                         }
                     ],
                     "nodeName": "Idle",
@@ -526,6 +553,33 @@
                             "arrowParam": {
                                 "conditionList": [
                                     {
+                                        "condition": {
+                                            "iCompare": 21,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 5,
+                                "targetRatio": 0.20000000298023224,
+                                "transEase": 0.20000000298023224,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Attack2"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
                                         "condition": null,
                                         "paramName": "rollingTrigger",
                                         "typeKind": 3
@@ -540,6 +594,33 @@
                                 "transTime": 0.10000000149011612
                             },
                             "toName": "RollingMove"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 30,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 3,
+                                "targetRatio": 0.23000000417232513,
+                                "transEase": 0.23000000417232513,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "RushAttack"
                         },
                         {
                             "arrowParam": {
@@ -574,33 +655,6 @@
                                 "transTime": 0.3100000023841858
                             },
                             "toName": "Idle"
-                        },
-                        {
-                            "arrowParam": {
-                                "conditionList": [
-                                    {
-                                        "condition": {
-                                            "iCompare": 21,
-                                            "iJudgeType": 2
-                                        },
-                                        "paramName": "state",
-                                        "typeKind": 1
-                                    },
-                                    {
-                                        "condition": null,
-                                        "paramName": "attackTrigger",
-                                        "typeKind": 3
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
-                                "priority": 0,
-                                "targetRatio": 0.20000000298023224,
-                                "transEase": 0.20000000298023224,
-                                "transTime": 0.10000000149011612
-                            },
-                            "toName": "Attack2"
                         }
                     ],
                     "nodeName": "Attack1",
@@ -647,7 +701,7 @@
                                     false,
                                     true
                                 ],
-                                "startFrame": 24,
+                                "startFrame": 25,
                                 "useFrame": true
                             },
                             "notifyType": 3
@@ -670,7 +724,7 @@
                                     false,
                                     true
                                 ],
-                                "startFrame": 18,
+                                "startFrame": 14,
                                 "useFrame": true
                             },
                             "notifyType": 3
@@ -685,13 +739,13 @@
                                     true,
                                     true
                                 ],
-                                "notifyName": "ANS_CanAttack",
-                                "parameterName": "",
+                                "notifyName": "ANS_CanCombAttack",
+                                "parameterName": "canCombAttack",
                                 "setParameter": [
                                     false,
                                     true,
                                     false,
-                                    true
+                                    false
                                 ],
                                 "startFrame": 24,
                                 "useFrame": true
@@ -737,6 +791,33 @@
                             "arrowParam": {
                                 "conditionList": [
                                     {
+                                        "condition": {
+                                            "iCompare": 22,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 3,
+                                "targetRatio": 0.25999999046325684,
+                                "transEase": 0.25999999046325684,
+                                "transTime": 0.1899999976158142
+                            },
+                            "toName": "Attack3"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
                                         "condition": null,
                                         "paramName": "rollingTrigger",
                                         "typeKind": 3
@@ -745,7 +826,7 @@
                                 "exitRatio": 1.0,
                                 "interpolate": 0,
                                 "isHaveExit": false,
-                                "priority": 3,
+                                "priority": 1,
                                 "targetRatio": 0.0,
                                 "transEase": 0.0,
                                 "transTime": 0.20000000298023224
@@ -766,7 +847,7 @@
                                 "exitRatio": 0.8500000238418579,
                                 "interpolate": 0,
                                 "isHaveExit": true,
-                                "priority": 1,
+                                "priority": 0,
                                 "targetRatio": 0.0,
                                 "transEase": 0.0,
                                 "transTime": 0.11999999731779099
@@ -779,39 +860,12 @@
                                 "exitRatio": 0.8500000238418579,
                                 "interpolate": 0,
                                 "isHaveExit": true,
-                                "priority": 0,
+                                "priority": -1,
                                 "targetRatio": 0.0,
                                 "transEase": 0.0,
                                 "transTime": 0.23999999463558197
                             },
                             "toName": "Idle"
-                        },
-                        {
-                            "arrowParam": {
-                                "conditionList": [
-                                    {
-                                        "condition": {
-                                            "iCompare": 22,
-                                            "iJudgeType": 2
-                                        },
-                                        "paramName": "state",
-                                        "typeKind": 1
-                                    },
-                                    {
-                                        "condition": null,
-                                        "paramName": "attackTrigger",
-                                        "typeKind": 3
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
-                                "priority": 0,
-                                "targetRatio": 0.07999999821186066,
-                                "transEase": 0.07999999821186066,
-                                "transTime": 0.12999999523162842
-                            },
-                            "toName": "Attack3"
                         }
                     ],
                     "nodeName": "Attack2",
@@ -854,11 +908,57 @@
                                 "parameterName": "canCancel",
                                 "setParameter": [
                                     false,
-                                    false,
+                                    true,
                                     false,
                                     true
                                 ],
-                                "startFrame": 0,
+                                "startFrame": 40,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 50,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_CanInput",
+                                "parameterName": "canInput",
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 23,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 50,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_CanCombAtk",
+                                "parameterName": "canCombAttack",
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    false
+                                ],
+                                "startFrame": 31,
                                 "useFrame": true
                             },
                             "notifyType": 3
@@ -869,20 +969,33 @@
                     "animNode": {
                         "animName": "knight_RollAttack.fbx",
                         "animationCurve": {
-                            "easeKind": 5,
+                            "easeKind": 0,
                             "endValue": 1.0,
-                            "endVector": 0.0,
-                            "plotDatas": null,
+                            "endVector": 0.4759000241756439,
+                            "plotDatas": [
+                                {
+                                    "interp": 1,
+                                    "time": 0.460999995470047,
+                                    "value": 0.3050000071525574,
+                                    "vector": 0.22256463766098022
+                                },
+                                {
+                                    "interp": 0,
+                                    "time": 0.5569999814033508,
+                                    "value": 0.44200000166893005,
+                                    "vector": 0.29804810881614685
+                                }
+                            ],
                             "startInterp": 0,
-                            "startValue": 0.0,
-                            "startVector": 0.44512927532196045,
-                            "useHermite": false
+                            "startValue": 0.097297303378582,
+                            "startVector": 0.0,
+                            "useHermite": true
                         },
                         "isLoop": false,
                         "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
-                        "speed": 0.8899999856948853
+                        "speed": 1.2699999809265137
                     },
                     "arrowDataList": [
                         {
@@ -909,27 +1022,6 @@
                                 "conditionList": [
                                     {
                                         "condition": {
-                                            "bJudgeType": 0
-                                        },
-                                        "paramName": "targeting",
-                                        "typeKind": 0
-                                    }
-                                ],
-                                "exitRatio": 0.5899999737739563,
-                                "interpolate": 0,
-                                "isHaveExit": true,
-                                "priority": 1,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.2800000011920929
-                            },
-                            "toName": "TargetIdle"
-                        },
-                        {
-                            "arrowParam": {
-                                "conditionList": [
-                                    {
-                                        "condition": {
                                             "iCompare": 23,
                                             "iJudgeType": 2
                                         },
@@ -945,7 +1037,7 @@
                                 "exitRatio": 1.0,
                                 "interpolate": 0,
                                 "isHaveExit": false,
-                                "priority": 0,
+                                "priority": 2,
                                 "targetRatio": 0.20999999344348907,
                                 "transEase": 0.20999999344348907,
                                 "transTime": 0.2800000011920929
@@ -954,14 +1046,35 @@
                         },
                         {
                             "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "targeting",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 0.9409999847412109,
+                                "interpolate": 0,
+                                "isHaveExit": true,
+                                "priority": 1,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.1599999964237213
+                            },
+                            "toName": "TargetIdle"
+                        },
+                        {
+                            "arrowParam": {
                                 "conditionList": null,
-                                "exitRatio": 0.5899999737739563,
+                                "exitRatio": 0.9409999847412109,
                                 "interpolate": 0,
                                 "isHaveExit": true,
                                 "priority": 0,
                                 "targetRatio": 0.0,
                                 "transEase": 0.0,
-                                "transTime": 0.2800000011920929
+                                "transTime": 0.1599999964237213
                             },
                             "toName": "Idle"
                         }
@@ -971,46 +1084,92 @@
                     "notifyList": [
                         {
                             "notifyParam": {
-                                "endFrame": 0,
+                                "endFrame": 35,
                                 "isActive": true,
                                 "isUse": [
                                     false,
-                                    false,
-                                    false,
-                                    false
+                                    true,
+                                    true,
+                                    true
                                 ],
                                 "notifyName": "ANS_AttackCollision",
-                                "parameterName": "",
+                                "parameterName": "attackCollision",
                                 "setParameter": [
                                     false,
-                                    false,
+                                    true,
                                     false,
                                     false
                                 ],
-                                "startFrame": 0,
+                                "startFrame": 30,
                                 "useFrame": true
                             },
                             "notifyType": 3
                         },
                         {
                             "notifyParam": {
-                                "endFrame": 0,
+                                "endFrame": 95,
                                 "isActive": true,
                                 "isUse": [
-                                    false,
-                                    false,
-                                    false,
-                                    false
+                                    true,
+                                    true,
+                                    true,
+                                    true
                                 ],
                                 "notifyName": "ANS_CanCancel",
-                                "parameterName": "",
+                                "parameterName": "canCancel",
                                 "setParameter": [
                                     false,
+                                    true,
                                     false,
+                                    true
+                                ],
+                                "startFrame": 51,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 95,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_CombAtk",
+                                "parameterName": "canCombAttack",
+                                "setParameter": [
+                                    false,
+                                    true,
                                     false,
                                     false
                                 ],
-                                "startFrame": 0,
+                                "startFrame": 36,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 95,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_CanInput",
+                                "parameterName": "canInput",
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 26,
                                 "useFrame": true
                             },
                             "notifyType": 3
@@ -1180,6 +1339,33 @@
                                 "conditionList": [
                                     {
                                         "condition": {
+                                            "iCompare": 30,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 4,
+                                "targetRatio": 0.23000000417232513,
+                                "transEase": 0.23000000417232513,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "RushAttack"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
                                             "fCompare": 0.0,
                                             "fJudgeType": 0
                                         },
@@ -1190,12 +1376,31 @@
                                 "exitRatio": 1.0,
                                 "interpolate": 0,
                                 "isHaveExit": false,
-                                "priority": 0,
+                                "priority": 3,
                                 "targetRatio": 0.0,
                                 "transEase": 0.0,
                                 "transTime": 0.20000000298023224
                             },
                             "toName": "TargetMove"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "rollingTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 1,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "RollingMove"
                         },
                         {
                             "arrowParam": {
@@ -1239,9 +1444,9 @@
                                 "interpolate": 0,
                                 "isHaveExit": false,
                                 "priority": 0,
-                                "targetRatio": 0.28999999165534973,
-                                "transEase": 0.28999999165534973,
-                                "transTime": 0.20000000298023224
+                                "targetRatio": 0.20000000298023224,
+                                "transEase": 0.20000000298023224,
+                                "transTime": 0.10000000149011612
                             },
                             "toName": "Attack1"
                         }
@@ -1345,24 +1550,158 @@
                         "animName": "knight_JumpAttack.fbx",
                         "animationCurve": {
                             "easeKind": 0,
-                            "endValue": 1.0,
-                            "endVector": 0.0,
-                            "plotDatas": null,
-                            "startInterp": 0,
+                            "endValue": 0.9240000247955322,
+                            "endVector": 0.36861780285835266,
+                            "plotDatas": [
+                                {
+                                    "interp": 1,
+                                    "time": 0.26600000262260437,
+                                    "value": 0.17100000381469727,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.3799999952316284,
+                                    "value": 0.3230000138282776,
+                                    "vector": 1.0274171829223633
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.4650000035762787,
+                                    "value": 0.4429999887943268,
+                                    "vector": 0.7840913534164429
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.5260000228881836,
+                                    "value": 0.6000000238418579,
+                                    "vector": 0.5407655835151672
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.7910000085830688,
+                                    "value": 0.8199999928474426,
+                                    "vector": 0.45469170808792114
+                                }
+                            ],
+                            "startInterp": 1,
                             "startValue": 0.0,
                             "startVector": 0.0,
-                            "useHermite": false
+                            "useHermite": true
                         },
-                        "isLoop": false,
+                        "isLoop": true,
                         "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
-                        "speed": 1.0
+                        "speed": 0.9700000286102295
                     },
-                    "arrowDataList": null,
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "rollingTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 2,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "RollingMove"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 0.8399999737739563,
+                                "interpolate": 0,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "Idle"
+                        }
+                    ],
                     "nodeName": "RushAttack",
                     "nodeType": 0,
-                    "notifyList": null
+                    "notifyList": [
+                        {
+                            "notifyParam": {
+                                "endFrame": 42,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_AttackCllision",
+                                "parameterName": "attackCollision",
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    false
+                                ],
+                                "startFrame": 34,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 70,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_CanInput",
+                                "parameterName": "canInput",
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 41,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 70,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_CanCancel",
+                                "parameterName": "canCancel",
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 49,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        }
+                    ]
                 }
             ],
             "playSpeed": 1.0

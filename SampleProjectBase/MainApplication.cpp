@@ -47,10 +47,11 @@ bool MainApplication::EscapeCheck()
 
 	if (!isEscapeChecking) return false;
 
+#if _DEBUG
 	// 終了するかメッセージボックスを出す
 	int id = 0;
 	id = MessageBox(NULL, TEXT("ゲームを終了しますか？"),
-		TEXT("確認"), 
+		TEXT("確認"),
 		MB_YESNO | MB_ICONQUESTION);
 
 	if (id == IDYES)
@@ -58,10 +59,14 @@ bool MainApplication::EscapeCheck()
 		isEscapeChecking = false;
 		return true;
 	}
-	else if(id == IDNO)
+	else if (id == IDNO)
 	{
 		isEscapeChecking = false;
 	}
+
+#else
+	return true;
+#endif // _DEBUG
 
 	return false;
 }

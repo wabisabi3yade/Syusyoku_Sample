@@ -6,6 +6,7 @@
 
 class PlayerChangeAnimObserver;
 class CP_Player;
+class CP_BattleManager;
 
 /// @brief プレイヤーの動きコントローラー
 class PlayerActionController : public CharacterActionController, public IObjectTargeter
@@ -14,17 +15,26 @@ private:
 	/// @brief 入力クラス
 	GameInput* pInput;
 
+	/// @brief バトルマネジャー
+	CP_BattleManager* pBattleManager;
+
 	/// @brief ターゲットしているオブジェクト先
 	ITargetAccepter* pTargetObject;
 
 	/// @brief キャンセルフラグのポインタ
 	const bool* pIsCanCancel;
 
-	/// @brief 先行入力フラグのポインタ
-	const bool* pIsSenkoInput;
+	/// @brief 入力可能フラグのポインタ
+	const bool* pIsCanInput;
+
+	/// @brief コンビネーション攻撃可能のポインタ
+	const bool* pIsCanCombAtk;
 
 	/// @brief ターゲット中かどうか
 	bool isTargeting;
+
+	/// @brief 1フレーム前のターゲット状態
+	bool prevIsTargeting;
 public:
 	/// @brief コンストラクタ
 	/// @param _player プレイヤーコンポーネント
@@ -47,6 +57,10 @@ public:
 	/// @return ターゲット中か？
 	bool GetIsTargeting() const;
 
+	/// @brief 1フレーム前のターゲット中か取得する
+	/// @return ターゲット中か？
+	bool GetIsPrevTargeting() const;
+
 	/// @brief キャンセルできるか取得
 	/// @return キャンセルできるか？
 	bool GetIsCanCancel() const;
@@ -54,6 +68,10 @@ public:
 	/// @brief 先行入力できるかを取得
 	/// @return 先行入力できるか？
 	bool GetCanInput() const;
+
+	/// @brief コンビネーション攻撃できるかを取得
+	/// @return コンビネーション攻撃できるか？
+	bool GetCanCombAtk() const;
 
 	/// @brief プレイヤーコンポーネント取得
 	/// @return プレイヤーコンポーネント
@@ -73,12 +91,17 @@ public:
 	/// @return 状態のID
 	int GetStateId(const std::string& _stateName);
 
+	/// @brief ターゲットにしているオブジェクトを取得
+	/// @return ターゲットにしているオブジェクト
+	ITargetAccepter* GetTargetObject();
+
 	/// @brief ターゲットオブジェクトを取得する
 	/// @param _targetObject ターゲットオブジェクト
-	void GetTargetObject(ITargetAccepter& _targetObject);
+	void SetTargetObject(ITargetAccepter& _targetObject) override;
 
-	/// @brief ターゲットが死んだときの処理
-	void OnTargetDeath();
+	/// @brief ターゲットオブジェクトが死んだときの更新処理
+	/// @param _deathTargetObj 死んだターゲットオブジェクト
+	void UpdateDeathNotify(const ITargetAccepter& _deathTargetObj) override;
 private:
 	/// @brief 更新できるか取得
 	/// @return 更新できるか？
@@ -86,6 +109,12 @@ private:
 
 	/// @brief 現在の更新処理
 	void Update() override;
+
+	/// @brief  ターゲット開始時のお処理
+	void OnBeginTargeting();
+
+	/// @brief ターゲット終了時の処理
+	void OnEndTargeting();
 
 	/// @brief 新しくStateを生成
 	/// @tparam T 対応している行動クラス
@@ -106,10 +135,13 @@ private:
 	static constexpr auto TARGET_PARAMNAME{ "targeting" };
 
 	/// @brief キャンセルできるかを表すアニメーションパラメータ
-	static constexpr auto CANCEL_PARAMNAME = "canCancel";
+	static constexpr auto CANCEL_PARAMNAME{ "canCancel" };
 
 	/// @brief 先行入力できるかを表すアニメーションパラメータ
-	static constexpr auto SENKOINPUT_PARAMNAME = "canInput";
+	static constexpr auto INPUT_PARAMNAME{ "canInput" };
+
+	/// @brief コンビネーション攻撃できるかを表すアニメーションパラメータ
+	static constexpr auto COMBATK_PARAMNAME{ "canCombAttack" };
 };
 
 template<class T>

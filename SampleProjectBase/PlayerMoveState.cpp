@@ -60,7 +60,7 @@ void PlayerMoveState::OnEndBehavior()
 void PlayerMoveState::TransitionCheckUpdate()
 {
 	// アタックStateに遷移
-	if (GetCanAttack())
+	if (GetCanCombAttack())
 	{
 		ChangeState(PlayerState::Attack11);
 	}
@@ -86,6 +86,8 @@ bool PlayerMoveState::IsRunning()
 
 void PlayerMoveState::ImGuiDebug()
 {
+	PlayerActState_Base::ImGuiDebug();
+
 	std::string text = TO_UTF8("speed") + std::to_string(currentSpeed);
 	ImGui::Text(text.c_str());
 	ImGui::DragFloat("maxSpeed", &maxSpeed, 0.1f, 0.0f, 1000.0f);

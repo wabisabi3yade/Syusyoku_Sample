@@ -5,6 +5,7 @@
 PlayerIdleState::PlayerIdleState()
 	: leaveElapsedTime(0.0f), specialIdleTransTiime(3.0f)
 {
+	SetTargetAtEnemy(true);
 }
 
 void PlayerIdleState::OnStartBehavior()

@@ -26,12 +26,13 @@ private:
 	bool isMoveForward;
 
 	/// @brief 攻撃判定出る前か？
-	bool isAttackCollisionBefore; 
-	
+	bool isAttackCollisionBefore;
 public:
 	PlayerAttackState();
 	virtual ~PlayerAttackState() {}
 
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
 protected:
 	// State共通処理
 	void OnStartBehavior() override;
@@ -44,15 +45,14 @@ private:
 	/// @brief 攻撃情報を更新する
 	void UpdateAttackInfo();
 
+	/// @brief 攻撃始めにプレイヤーの向きを回転させる
+	void OnStartRotate();
+
 	/// @brief 敵に対して向ける
-	void LookAtEnemy();
+	void LookAtEnemyInstant();
 
 	/// @brief 攻撃時に前へ進む
 	void ForwardProgressMove();
-	
-	nlohmann::json Save() override;
-	void Load(const nlohmann::json& _data) override;
-
 public:
 	constexpr static auto ATTACKTRIGGER_PARAMNAME = "attackTrigger";	// 攻撃トリガー
 };
