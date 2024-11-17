@@ -60,7 +60,7 @@ void PlayerMoveState::OnEndBehavior()
 void PlayerMoveState::TransitionCheckUpdate()
 {
 	// アタックStateに遷移
-	if (GetCanAttack())
+	if (GetCanCombAttack())
 	{
 		ChangeState(PlayerState::Attack11);
 	}

@@ -14,8 +14,8 @@
 
 PlayerActionController::PlayerActionController(CP_Player& _player) :
 	CharacterActionController(_player, "playerAction"), pBattleManager(nullptr),
-	pIsCanCancel(nullptr), pTargetObject(nullptr), isTargeting(false), 
-	prevIsTargeting(false)
+	pIsCanCancel(nullptr), pTargetObject(nullptr), pIsCanCombAtk(nullptr), 
+	isTargeting(false), prevIsTargeting(false)
 {
 	pInput = &InSceneSystemManager::GetInstance()->GetInput();
 
@@ -46,7 +46,10 @@ void PlayerActionController::Init(CP_Animation* _animationController,
 	pIsCanCancel = pAnimation->GetParameterPointer<bool>(CANCEL_PARAMNAME);
 
 	// 先行入力のアドレスを取得
-	pIsSenkoInput = pAnimation->GetParameterPointer<bool>(INPUT_PARAMNAME);
+	pIsCanInput = pAnimation->GetParameterPointer<bool>(INPUT_PARAMNAME);
+
+	// コンビネーション攻撃k可能アドレスを取得
+	pIsCanCombAtk = pAnimation->GetParameterPointer<bool>(COMBATK_PARAMNAME);
 }
 
 bool PlayerActionController::GetCanUpdate()
@@ -139,7 +142,12 @@ bool PlayerActionController::GetIsCanCancel() const
 
 bool PlayerActionController::GetCanInput() const
 {
-	return *pIsSenkoInput;
+	return *pIsCanInput;
+}
+
+bool PlayerActionController::GetCanCombAtk() const
+{
+	return *pIsCanCombAtk;
 }
 
 CP_Player& PlayerActionController::GetPlayer()

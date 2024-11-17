@@ -38,6 +38,8 @@ public:
 	void Load(const nlohmann::json& _data) override;
 
 protected:
+	void TransitionCheckUpdate() override;
+
 	/// @brief 移動
 	void Move();
 
@@ -50,7 +52,6 @@ private:
 	void OnStartBehavior() override;
 	void UpdateBehavior() override;
 	void OnEndBehavior() override;
-	void TransitionCheckUpdate() override;
 
 	/// @brief ルートモーション適用
 	void ApplyRootMotion();

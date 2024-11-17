@@ -144,9 +144,6 @@ protected:
 	/// @brief 入力確認の更新
 	virtual void CheckInputUpdate();
 
-	/// @brief どのアクションにも共通する遷移
-	void CommmonCheckTransition();
-
 	/// @brief 状態を遷移する
 	/// @param _changeSate 遷移先の状態
 	void ChangeState(PlayerState _nextState);
@@ -191,7 +188,7 @@ protected:
 
 	/// @brief 攻撃できるか取得する
 	/// @return 攻撃できるか？
-	bool GetCanAttack() const;
+	bool GetCanCombAttack() const;
 
 	/// @brief ImGui処理
 	void ImGuiDebug() override;

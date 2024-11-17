@@ -26,8 +26,7 @@ private:
 	bool isMoveForward;
 
 	/// @brief 攻撃判定出る前か？
-	bool isAttackCollisionBefore; 
-	
+	bool isAttackCollisionBefore;
 public:
 	PlayerAttackState();
 	virtual ~PlayerAttackState() {}
@@ -45,6 +44,9 @@ protected:
 private:
 	/// @brief 攻撃情報を更新する
 	void UpdateAttackInfo();
+
+	/// @brief 攻撃始めにプレイヤーの向きを回転させる
+	void OnStartRotate();
 
 	/// @brief 敵に対して向ける
 	void LookAtEnemyInstant();

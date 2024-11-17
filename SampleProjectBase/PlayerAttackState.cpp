@@ -24,7 +24,6 @@ void PlayerAttackState::OnStartBehavior()
 	// UŒ‚ƒtƒ‰ƒO‚ğ—§‚Ä‚é
 	pActionController->SetAnimationTrigger(ATTACKTRIGGER_PARAMNAME);
 
-	isAttackCollisionBefore = false;
 }
 
 void PlayerAttackState::UpdateBehavior()
@@ -40,7 +39,7 @@ void PlayerAttackState::OnEndBehavior()
 void PlayerAttackState::TransitionCheckUpdate()
 {
 	// UŒ‚“ü—Í‚³‚ê‚½‚çƒXƒe[ƒg‘JˆÚ‚·‚é
-	if (GetCanAttack())
+	if (GetCanCombAttack())
 		ChangeState(nextCombAtkState);
 
 	PlayerActState_Base::TransitionCheckUpdate();
@@ -49,6 +48,15 @@ void PlayerAttackState::TransitionCheckUpdate()
 void PlayerAttackState::UpdateAttackInfo()
 {
 	pActionController->GetPlayer().SetAttackInfo(*pAttackInfo);
+}
+
+void PlayerAttackState::OnStartRotate()
+{
+	/*if(GetInputLeftStick())*/
+
+
+	// u‚É“G‚ÉŒü‚¯‚é
+	LookAtEnemyInstant();
 }
 
 void PlayerAttackState::LookAtEnemyInstant()

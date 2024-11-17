@@ -24,8 +24,11 @@ private:
 	/// @brief キャンセルフラグのポインタ
 	const bool* pIsCanCancel;
 
-	/// @brief 先行入力フラグのポインタ
-	const bool* pIsSenkoInput;
+	/// @brief 入力可能フラグのポインタ
+	const bool* pIsCanInput;
+
+	/// @brief コンビネーション攻撃可能のポインタ
+	const bool* pIsCanCombAtk;
 
 	/// @brief ターゲット中かどうか
 	bool isTargeting;
@@ -65,6 +68,10 @@ public:
 	/// @brief 先行入力できるかを取得
 	/// @return 先行入力できるか？
 	bool GetCanInput() const;
+
+	/// @brief コンビネーション攻撃できるかを取得
+	/// @return コンビネーション攻撃できるか？
+	bool GetCanCombAtk() const;
 
 	/// @brief プレイヤーコンポーネント取得
 	/// @return プレイヤーコンポーネント
@@ -128,10 +135,13 @@ private:
 	static constexpr auto TARGET_PARAMNAME{ "targeting" };
 
 	/// @brief キャンセルできるかを表すアニメーションパラメータ
-	static constexpr auto CANCEL_PARAMNAME = "canCancel";
+	static constexpr auto CANCEL_PARAMNAME{ "canCancel" };
 
 	/// @brief 先行入力できるかを表すアニメーションパラメータ
-	static constexpr auto INPUT_PARAMNAME = "canInput";
+	static constexpr auto INPUT_PARAMNAME{ "canInput" };
+
+	/// @brief コンビネーション攻撃できるかを表すアニメーションパラメータ
+	static constexpr auto COMBATK_PARAMNAME{ "canCombAttack" };
 };
 
 template<class T>

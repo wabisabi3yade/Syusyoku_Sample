@@ -45,14 +45,7 @@ void PlayerTargetMove::TransitionCheckUpdate()
 {
 	using enum GameInput::ButtonType;
 
-	if (GetCanAttack())
-	{
-		{
-			ChangeState(PlayerState::Attack11);
-		}
-	}
-		
-	CommmonCheckTransition();
+	PlayerMoveState::TransitionCheckUpdate();
 
 	if (!IsRunning())
 		ChangeState(PlayerState::Idle);
@@ -99,7 +92,7 @@ void PlayerTargetMove::ApplyBlendAnim()
 			ang *= -1;
 
 		moveAxis.x = cos(ang) * 0.5f + BLEND_OFFSET;
-		moveAxis.y = sin(ang) * 0.5f + BLEND_OFFSET;	
+		moveAxis.y = sin(ang) * 0.5f + BLEND_OFFSET;
 	}
 
 	pActionController->SetAnimationFloat(MOVEAXIS_X_PARAMNAME, moveAxis.x);

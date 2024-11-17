@@ -40,9 +40,6 @@ void PlayerActState_Base::Update()
 	// 入力更新
 	CheckInputUpdate();
 
-	// キャンセルによる遷移変更
-	CancelTransitionUpdate();
-
 	// ターゲットの方向を見る
 	UpdateTargetLook();
 
@@ -77,8 +74,8 @@ void PlayerActState_Base::Load(const nlohmann::json& _data)
 
 void PlayerActState_Base::TransitionCheckUpdate()
 {
-	// 共通行動
-	CommmonCheckTransition();
+	// キャンセルによる遷移変更
+	CancelTransitionUpdate();
 }
 
 void PlayerActState_Base::ParameterClear()
@@ -89,24 +86,24 @@ void PlayerActState_Base::ParameterClear()
 
 void PlayerActState_Base::CheckInputUpdate()
 {
-	if (!pActionController->GetCanInput()) return;
+	if (!pActionController->GetCanInput()) return;	// 入力受け付けていないなら
+	if (cancelPlayState != PlayerState::None) return;	// 既にキャンセル行動決まっているなら
 
 	// ローリングボタンを押す　かつ　左スティックの傾きが足りる
 	if (IsRollingInput())
 	{
 		cancelPlayState = PlayerState::Rolling;
 	}
-
 	// 前突進攻撃
 	else if (IsSpecialAtkInput(InputVector::Forward))
 	{
 		cancelPlayState = PlayerState::SpecialAtkHi;
 	}
-
 	// 攻撃
 	else if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
 	{
 		isAttackInput = true;
+		cancelPlayState = PlayerState::Attack11;
 	}
 }
 
@@ -196,10 +193,10 @@ bool PlayerActState_Base::IsSpecialAtkInput(InputVector _inputVecter) const
 	return true;
 }
 
-bool PlayerActState_Base::GetCanAttack() const
+bool PlayerActState_Base::GetCanCombAttack() const
 {
-	// キャンセルできないなら
-	if (!pActionController->GetIsCanCancel()) return false;
+	// コンビネーション攻撃できないなら
+	if (!pActionController->GetCanCombAtk()) return false;
 
 	// 期間中にボタン入力されていたら
 	if (!isAttackInput) return false;
@@ -258,10 +255,6 @@ void PlayerActState_Base::UpdateTargetLook()
 	myRot = DXSimp::Quaternion::Slerp(myRot, targetRot, targetLookRotateSpeed * DeltaTime());
 
 	transform.SetRotation(myRot);
-}
-
-void PlayerActState_Base::CommmonCheckTransition()
-{
 }
 
 void PlayerActState_Base::CancelTransitionUpdate()
