@@ -6,64 +6,6 @@
                 "active": true,
                 "components": [
                     {
-                        "distance": 1000.0,
-                        "enable": true,
-                        "fov": 45.0,
-                        "name": "Camera",
-                        "priority": 0,
-                        "viewSlot": 0
-                    },
-                    {
-                        "enable": true,
-                        "moveController": {
-                            "stateDatas": [
-                                {
-                                    "parameter": {
-                                        "centerAngle": -90.0,
-                                        "currentHeight": 3.0,
-                                        "disHorizon": 8.0,
-                                        "lookOffsetY": 2.4000000953674316,
-                                        "rotateSpeed": 120.0
-                                    },
-                                    "stateType": 0
-                                }
-                            ]
-                        },
-                        "name": "CameraMove",
-                        "priority": 0,
-                        "target": "Player"
-                    }
-                ],
-                "layer": 1,
-                "name": "Camera",
-                "tag": 1,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        0.0,
-                        2.5999999046325684,
-                        -17.200000762939453
-                    ],
-                    "rotation": [
-                        -0.0,
-                        0.0,
-                        -0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        4.1999993324279785,
-                        0.9999997019767761,
-                        0.9999997019767761
-                    ]
-                }
-            }
-        },
-        {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
                         "AABB": false,
                         "angles": [
                             0.0,
@@ -140,6 +82,64 @@
                         100.0,
                         1.0,
                         100.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "distance": 1000.0,
+                        "enable": true,
+                        "fov": 45.0,
+                        "name": "Camera",
+                        "priority": 0,
+                        "viewSlot": 0
+                    },
+                    {
+                        "enable": true,
+                        "moveController": {
+                            "stateDatas": [
+                                {
+                                    "parameter": {
+                                        "centerAngle": -90.0,
+                                        "currentHeight": 3.0,
+                                        "disHorizon": 8.0,
+                                        "lookOffsetY": 2.4000000953674316,
+                                        "rotateSpeed": 120.0
+                                    },
+                                    "stateType": 0
+                                }
+                            ]
+                        },
+                        "name": "CameraMove",
+                        "priority": 0,
+                        "target": "Player"
+                    }
+                ],
+                "layer": 1,
+                "name": "Camera",
+                "tag": 1,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        2.5999999046325684,
+                        -17.200000762939453
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        4.1999993324279785,
+                        0.9999997019767761,
+                        0.9999997019767761
                     ]
                 }
             }

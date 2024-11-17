@@ -808,8 +808,8 @@
                                 "interpolate": 0,
                                 "isHaveExit": false,
                                 "priority": 3,
-                                "targetRatio": 0.25999999046325684,
-                                "transEase": 0.25999999046325684,
+                                "targetRatio": 0.27000001072883606,
+                                "transEase": 0.27000001072883606,
                                 "transTime": 0.1899999976158142
                             },
                             "toName": "Attack3"
@@ -977,7 +977,7 @@
                                     "interp": 1,
                                     "time": 0.460999995470047,
                                     "value": 0.3050000071525574,
-                                    "vector": 0.22256463766098022
+                                    "vector": 0.2723073363304138
                                 },
                                 {
                                     "interp": 0,
@@ -1038,9 +1038,9 @@
                                 "interpolate": 0,
                                 "isHaveExit": false,
                                 "priority": 2,
-                                "targetRatio": 0.20999999344348907,
-                                "transEase": 0.20999999344348907,
-                                "transTime": 0.2800000011920929
+                                "targetRatio": 0.18000000715255737,
+                                "transEase": 0.18000000715255737,
+                                "transTime": 0.20999999344348907
                             },
                             "toName": "Attack4"
                         },
@@ -1130,7 +1130,7 @@
                         },
                         {
                             "notifyParam": {
-                                "endFrame": 95,
+                                "endFrame": 58,
                                 "isActive": true,
                                 "isUse": [
                                     true,
@@ -1186,27 +1186,39 @@
                             "plotDatas": [
                                 {
                                     "interp": 1,
-                                    "time": 0.4090000092983246,
-                                    "value": 0.39399999380111694,
-                                    "vector": 0.43135830760002136
+                                    "time": 0.414000004529953,
+                                    "value": 0.4790000021457672,
+                                    "vector": 0.22810176014900208
                                 },
                                 {
-                                    "interp": 0,
-                                    "time": 0.5619999766349792,
-                                    "value": 0.6470000147819519,
-                                    "vector": 0.2923961877822876
+                                    "interp": 1,
+                                    "time": 0.5130000114440918,
+                                    "value": 0.6579999923706055,
+                                    "vector": -0.0636603832244873
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.6179999709129333,
+                                    "value": 0.7200000286102295,
+                                    "vector": 0.06716980785131454
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.881138801574707,
+                                    "value": 0.9129999876022339,
+                                    "vector": 0.13258489966392517
                                 }
                             ],
                             "startInterp": 0,
-                            "startValue": 0.08648649603128433,
-                            "startVector": -0.08123365044593811,
+                            "startValue": 0.0,
+                            "startVector": 0.4882732629776001,
                             "useHermite": true
                         },
                         "isLoop": false,
                         "isRMR": false,
-                        "isRMXZ": true,
+                        "isRMXZ": false,
                         "isRMY": false,
-                        "speed": 1.1799999475479126
+                        "speed": 1.0
                     },
                     "arrowDataList": [
                         {
@@ -1239,7 +1251,7 @@
                                         "typeKind": 0
                                     }
                                 ],
-                                "exitRatio": 0.8600000143051147,
+                                "exitRatio": 0.9599999785423279,
                                 "interpolate": 0,
                                 "isHaveExit": true,
                                 "priority": 1,
@@ -1252,7 +1264,7 @@
                         {
                             "arrowParam": {
                                 "conditionList": null,
-                                "exitRatio": 0.8600000143051147,
+                                "exitRatio": 0.9599999785423279,
                                 "interpolate": 0,
                                 "isHaveExit": true,
                                 "priority": 0,
@@ -1268,46 +1280,69 @@
                     "notifyList": [
                         {
                             "notifyParam": {
-                                "endFrame": 0,
+                                "endFrame": 46,
                                 "isActive": true,
                                 "isUse": [
                                     false,
-                                    false,
-                                    false,
-                                    false
+                                    true,
+                                    true,
+                                    true
                                 ],
                                 "notifyName": "ANS_AttackCollision",
-                                "parameterName": "",
+                                "parameterName": "attackCollision",
                                 "setParameter": [
                                     false,
-                                    false,
+                                    true,
                                     false,
                                     false
                                 ],
-                                "startFrame": 0,
+                                "startFrame": 40,
                                 "useFrame": true
                             },
                             "notifyType": 3
                         },
                         {
                             "notifyParam": {
-                                "endFrame": 0,
+                                "endFrame": 73,
                                 "isActive": true,
                                 "isUse": [
-                                    false,
-                                    false,
-                                    false,
-                                    false
+                                    true,
+                                    true,
+                                    true,
+                                    true
                                 ],
                                 "notifyName": "ANS_CanCancel",
-                                "parameterName": "",
+                                "parameterName": "canCancel",
                                 "setParameter": [
                                     false,
+                                    true,
                                     false,
-                                    false,
-                                    false
+                                    true
                                 ],
-                                "startFrame": 0,
+                                "startFrame": 54,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 73,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_CanInput",
+                                "parameterName": "canInput",
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 47,
                                 "useFrame": true
                             },
                             "notifyType": 3
