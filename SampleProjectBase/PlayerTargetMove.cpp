@@ -4,11 +4,14 @@
 #include "GameObject.h"
 #include "Geometory.h"
 
+namespace DXSimp = DirectX::SimpleMath;
+
 const float BLEND_OFFSET(0.5f);	// ƒuƒŒƒ“ƒh‚ð0.0f`1.0f‚ÉŽû‚ß‚é
 
 PlayerTargetMove::PlayerTargetMove()
 	: rotateSpeed(180.0f)
 {
+	SetTargetAtEnemy(true);
 }
 
 nlohmann::json PlayerTargetMove::Save()
@@ -26,8 +29,6 @@ void PlayerTargetMove::Load(const nlohmann::json& _data)
 
 void PlayerTargetMove::UpdateBehavior()
 {
-	UpdateForward();
-
 	Move();
 
 	ApplyBlendAnim();
@@ -45,8 +46,12 @@ void PlayerTargetMove::TransitionCheckUpdate()
 	using enum GameInput::ButtonType;
 
 	if (GetCanAttack())
-		ChangeState(PlayerState::Attack11);
-
+	{
+		{
+			ChangeState(PlayerState::Attack11);
+		}
+	}
+		
 	CommmonCheckTransition();
 
 	if (!IsRunning())
@@ -54,11 +59,6 @@ void PlayerTargetMove::TransitionCheckUpdate()
 
 	else if (!pActionController->GetIsTargeting())
 		ChangeState(PlayerState::Move);
-}
-
-void PlayerTargetMove::UpdateForward()
-{
-
 }
 
 void PlayerTargetMove::ApplyBlendAnim()

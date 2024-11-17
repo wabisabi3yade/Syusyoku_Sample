@@ -7,13 +7,15 @@ GameInput* PlayerActState_Base::pPlayerInput = nullptr;
 CP_Camera* PlayerActState_Base::pCamera = nullptr;
 
 
-constexpr float ROLLING_SENKOINPUT_SEC(0.2f);	// ローリングの先行入力秒数
-constexpr float CAN_ROLLING_STICKINPUT(0.3f);	// ローリングできる左スティックの入力量
+constexpr float CAN_ACTION_STICKINPUT(0.7f);	// アクションできる左スティックの入力量
+constexpr float INPUT_VECTOR_DOT(0.6f);	// スティックの方向の内積でこれ以上一致していないなら反応しない
 
-namespace DX = DirectX::SimpleMath;
+namespace DXSimp = DirectX::SimpleMath;
 
-PlayerActState_Base::PlayerActState_Base()
-	: pActionController(nullptr), stateType(PlayerState::None), isAttackInput(false)
+PlayerActState_Base::PlayerActState_Base() :
+	pActionController(nullptr), stateType(PlayerState::None), 
+	cancelPlayState(PlayerState::None),	targetLookRotateSpeed(40.0f),
+	isAttackInput(false), isTargetLookAtEnemy(false)
 {
 	pPlayerInput = &InSceneSystemManager::GetInstance()->GetInput();
 	pCamera = &InSceneSystemManager::GetInstance()->GetMainCamera();
@@ -28,14 +30,21 @@ void PlayerActState_Base::Init(PlayerState _stateType, PlayerActionController& _
 void PlayerActState_Base::OnStart()
 {
 	// 入力フラグのクリア
-	InputFlagClear();
+	ParameterClear();
 
 	OnStartBehavior();
 }
 
 void PlayerActState_Base::Update()
 {
+	// 入力更新
 	CheckInputUpdate();
+
+	// キャンセルによる遷移変更
+	CancelTransitionUpdate();
+
+	// ターゲットの方向を見る
+	UpdateTargetLook();
 
 	// 各アクション更新
 	UpdateBehavior();
@@ -47,7 +56,7 @@ void PlayerActState_Base::Update()
 void PlayerActState_Base::OnEnd()
 {
 	// 前の慣性はなくす
-	GetRB().SetVelocity(DX::Vector3::Zero);
+	GetRB().SetVelocity(DXSimp::Vector3::Zero);
 
 	OnEndBehavior();
 }
@@ -72,17 +81,30 @@ void PlayerActState_Base::TransitionCheckUpdate()
 	CommmonCheckTransition();
 }
 
-void PlayerActState_Base::InputFlagClear()
+void PlayerActState_Base::ParameterClear()
 {
 	isAttackInput = false;
+	cancelPlayState = PlayerState::None;
 }
 
 void PlayerActState_Base::CheckInputUpdate()
 {
 	if (!pActionController->GetCanInput()) return;
 
+	// ローリングボタンを押す　かつ　左スティックの傾きが足りる
+	if (IsRollingInput())
+	{
+		cancelPlayState = PlayerState::Rolling;
+	}
+
+	// 前突進攻撃
+	else if (IsSpecialAtkInput(InputVector::Forward))
+	{
+		cancelPlayState = PlayerState::SpecialAtkHi;
+	}
+
 	// 攻撃
-	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
+	else if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
 	{
 		isAttackInput = true;
 	}
@@ -93,9 +115,19 @@ void PlayerActState_Base::ChangeState(PlayerState _nextState)
 	pActionController->ChangeState(_nextState);
 }
 
+void PlayerActState_Base::SetTargetAtEnemy(bool _isLook)
+{
+	isTargetLookAtEnemy = _isLook;
+}
+
 CP_RigidBody& PlayerActState_Base::GetRB()
 {
 	return *pActionController->GetRB();
+}
+
+Transform& PlayerActState_Base::GetTransform()
+{
+	return pActionController->GetPlayer().GetTransform();
 }
 
 float PlayerActState_Base::DeltaTime() const
@@ -113,19 +145,53 @@ DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStick() const
 	return pPlayerInput->GetValue(GameInput::ValueType::Player_Move);
 }
 
-bool PlayerActState_Base::GetCanRolling() const
+bool PlayerActState_Base::IsInputVector(InputVector _checkVector) const
 {
-	// キャンセルできないなら
-	if (!pActionController->GetIsCanCancel()) return false;
+	// 入力値を取得
+	DXSimp::Vector2 inputVec = GetInputLeftStick();
+	if (inputVec.Length() < CAN_ACTION_STICKINPUT) return false;	// 傾きが十分でないなら
 
-	// 入力受け付けていないなら
-	if (!pActionController->GetCanInput()) return false;
+	// カメラから見た入力とする
+	const Transform& camTrans = pCamera->GetTransform();
+	DXSimp::Vector3 inputVecByCam = inputVec.x * camTrans.Right() + 
+									inputVec.y * camTrans.Forward();
+	inputVec = { inputVecByCam.x, inputVecByCam.z };
+	inputVec.Normalize();
 
+
+	// 向きを取得
+	const DXSimp::Vector3& playerFwd = pActionController->GetPlayer().GetTransform().Forward();
+	DXSimp::Vector2 forwardXZ = { playerFwd.x, playerFwd.z };
+	forwardXZ.Normalize();
+
+	// スティックの方向が一致しているか見る
+	float dot = inputVec.Dot(forwardXZ);
+
+	HASHI_DEBUG_LOG(std::to_string(dot));
+	return dot > INPUT_VECTOR_DOT ? true : false;
+}
+
+bool PlayerActState_Base::IsRollingInput() const
+{
 	// ボタン入力
 	if (!pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Rolling)) return false;
 
 	// ローリングできる左スティックの入力ができていない
-	if (std::min(GetInputLeftStick().Length(), 1.0f) < CAN_ROLLING_STICKINPUT) return false;
+	if (std::min(GetInputLeftStick().Length(), 1.0f) < CAN_ACTION_STICKINPUT) return false;
+
+	return true;
+}
+
+bool PlayerActState_Base::IsSpecialAtkInput(InputVector _inputVecter) const
+{
+	// ボタン入力
+	if (!pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack)) return false;
+
+	// ターゲットした瞬間は出ないようにする
+	if (!pActionController->GetIsTargeting() || 
+		!pActionController->GetIsPrevTargeting()) return false;
+
+	if (!IsInputVector(_inputVecter)) return false;
 
 	return true;
 }
@@ -139,6 +205,10 @@ bool PlayerActState_Base::GetCanAttack() const
 	if (!isAttackInput) return false;
 
 	return true;
+}
+
+void PlayerActState_Base::ImGuiDebug()
+{
 }
 
 bool PlayerActState_Base::ImGuiComboPlayerState(const std::string& _caption, PlayerState& _currentState)
@@ -166,39 +236,43 @@ bool PlayerActState_Base::ImGuiComboPlayerState(const std::string& _caption, Pla
 	return false;
 }
 
-void PlayerActState_Base::CommmonCheckTransition()
+void PlayerActState_Base::UpdateTargetLook()
 {
-	// キャンセル行動を見る
-	if (CheckCanCancelTransition()) return;
+	// ターゲットの方向見ないなら
+	if (!isTargetLookAtEnemy) return;
+	
+	ITargetAccepter* pTargetObj = pActionController->GetTargetObject();
+	if (!pTargetObj) return;	// ターゲットがいないなら
+
+	Transform& transform = pActionController->GetPlayer().GetTransform();
+
+	// ターゲットへのベクトルを求める
+	const DXSimp::Vector3& playerPos = transform.GetPosition();
+	const DXSimp::Vector3& targetPos = pTargetObj->GetWorldPosByTargetObj();
+	DXSimp::Vector3 vector = targetPos - playerPos;
+	vector.y = 0.0f; vector.Normalize();
+
+	// 回転させる
+	DXSimp::Quaternion targetRot = Quat::RotateToVector(vector);
+	DXSimp::Quaternion myRot = transform.GetRotation();
+	myRot = DXSimp::Quaternion::Slerp(myRot, targetRot, targetLookRotateSpeed * DeltaTime());
+
+	transform.SetRotation(myRot);
 }
 
-bool PlayerActState_Base::CheckCanCancelTransition()
+void PlayerActState_Base::CommmonCheckTransition()
+{
+}
+
+void PlayerActState_Base::CancelTransitionUpdate()
 {
 	//キャンセルフラグ
 	bool canCancel = pActionController->GetIsCanCancel();
-	if (!canCancel) return false;
+	if (!canCancel) return;
 
-	// 上から優先順位が高くなる
+	// キャンセルするアクションがないなら
+	if (cancelPlayState == PlayerState::None) return;
 
-	// ローリング
-	if (CheckCanRolling())
-	{
-		ChangeState(PlayerState::Rolling);
-		return true;
-	}
-
-	return false;
-}
-
-bool PlayerActState_Base::CheckCanRolling()
-{
-	// ボタン入力
-	if (!pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Rolling, ROLLING_SENKOINPUT_SEC)) 
-		return false;
-
-	// 左スティックの傾きが足りない
-	if (std::min(GetInputLeftStick().Length(), 1.0f) < CAN_ROLLING_STICKINPUT)
-		return false;
-
-	return true;
+	// キャンセルの動きに変更
+	ChangeState(cancelPlayState);
 }

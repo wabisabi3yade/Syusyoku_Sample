@@ -85,6 +85,11 @@ public:
 	/// @param _setSpeed スピードをセット
 	void SetCurNodePlayerSpeed(float _setSpeed);
 
+	/// @brief 現在再生しているアニメーションの再生割合をセット
+	/// @param _playRatio 再生割合
+	void SetPlayRatio(float _playRatio);
+
+
 	/// @brief 指定したbool変数に値を取得
 	/// @param _paramName パラメーター名
 	/// @param _isBool 取得する値

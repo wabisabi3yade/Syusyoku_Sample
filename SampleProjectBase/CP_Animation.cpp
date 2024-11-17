@@ -164,6 +164,19 @@ void CP_Animation::SetCurNodePlayerSpeed(float _setSpeed)
 	pAnimConPlayer->GetCurNodePlayer().SetPlaySpeedTimes(_setSpeed);
 }
 
+void CP_Animation::SetPlayRatio(float _playRatio)
+{
+#ifdef EDIT
+	if (!pAnimConPlayer)
+	{
+		HASHI_DEBUG_LOG("アニメーション再生が作成されていません");
+		return;
+	}
+#endif // EDIT
+
+	pAnimConPlayer->GetCurNodePlayer().SetCurPlayRatio(_playRatio);
+}
+
 void CP_Animation::AddChangeAnimObserver(HashiTaku::ChangeAnimObserver& _observer)
 {
 	if (!pAnimConPlayer)

@@ -2,6 +2,7 @@
 #include "PlayerActionController.h"
 #include "CP_Animation.h"
 #include "InSceneSystemManager.h"
+#include "CP_BattleManager.h"
 
 #include "PlayerIdleState.h"
 #include "PlayerMoveState.h"
@@ -11,9 +12,10 @@
 #include "PlayerGroundAttack.h"
 #include "PlayerRushAttack.h"
 
-PlayerActionController::PlayerActionController(CP_Player& _player):
-	CharacterActionController(_player, "playerAction"), pIsCanCancel(nullptr), 
-	isTargeting(false)
+PlayerActionController::PlayerActionController(CP_Player& _player) :
+	CharacterActionController(_player, "playerAction"), pBattleManager(nullptr),
+	pIsCanCancel(nullptr), pTargetObject(nullptr), isTargeting(false), 
+	prevIsTargeting(false)
 {
 	pInput = &InSceneSystemManager::GetInstance()->GetInput();
 
@@ -35,6 +37,8 @@ PlayerActionController::PlayerActionController(CP_Player& _player):
 void PlayerActionController::Init(CP_Animation* _animationController,
 	CP_RigidBody* _pRigidBody)
 {
+	pBattleManager = CP_BattleManager::GetInstance();
+
 	// ステートマシン共通開始処理
 	CharacterActionController::Init(_animationController, _pRigidBody);
 
@@ -42,7 +46,7 @@ void PlayerActionController::Init(CP_Animation* _animationController,
 	pIsCanCancel = pAnimation->GetParameterPointer<bool>(CANCEL_PARAMNAME);
 
 	// 先行入力のアドレスを取得
-	pIsSenkoInput = pAnimation->GetParameterPointer<bool>(SENKOINPUT_PARAMNAME);
+	pIsSenkoInput = pAnimation->GetParameterPointer<bool>(INPUT_PARAMNAME);
 }
 
 bool PlayerActionController::GetCanUpdate()
@@ -67,12 +71,43 @@ void PlayerActionController::Update()
 	UpdateTargeting();
 }
 
+void PlayerActionController::OnBeginTargeting()
+{
+	if (!pBattleManager) return;
+
+	// 敵リストを取得する
+	auto& enemyList = pBattleManager->GetEnemyList();
+	u_int enemyCnt = static_cast<u_int>(enemyList.size());
+
+	if (enemyCnt == 0) return;
+
+	// ↓敵が複数体でるようにするならどのターゲットにするかの処理をここに書く
+	// 今回はボス1体なのでそいつを見る
+
+	SetTargetObject(*(*enemyList.begin()));
+}
+
+void PlayerActionController::OnEndTargeting()
+{
+	// ターゲットで参照するのをやめる
+	pTargetObject = nullptr;
+}
+
 void PlayerActionController::UpdateTargeting()
 {
+	// ボタン押されたらターゲット中
 	isTargeting = pInput->GetButton(GameInput::ButtonType::Player_RockOn);
 
 	// アニメーションパラメータにも送る
 	pAnimation->SetBool(TARGET_PARAMNAME, isTargeting);
+
+	if (isTargeting && !prevIsTargeting)	// ターゲットした瞬間
+		OnBeginTargeting();
+	else if (!isTargeting && prevIsTargeting)	// ターゲット解除の瞬間
+		OnEndTargeting();
+
+	// 次フレームの為に更新
+	prevIsTargeting = isTargeting;
 }
 
 bool PlayerActionController::ChangeState(const PlayerActState_Base::PlayerState& _nextActionState)
@@ -90,6 +125,11 @@ bool PlayerActionController::ChangeState(const PlayerActState_Base::PlayerState&
 bool PlayerActionController::GetIsTargeting() const
 {
 	return isTargeting;
+}
+
+bool PlayerActionController::GetIsPrevTargeting() const
+{
+	return prevIsTargeting;
 }
 
 bool PlayerActionController::GetIsCanCancel() const
@@ -115,9 +155,6 @@ PlayerActState_Base& PlayerActionController::CastPlayerAct(HashiTaku::StateNode_
 void PlayerActionController::ImGuiDebug()
 {
 	ImGuiMethod::Text("isTargeting", isTargeting);
-
-	// 現在の状態表示
-	ImGui::Text(GetStateStr(currentStateKey).c_str());
 
 	CharacterActionController::ImGuiDebug();
 }
@@ -147,13 +184,22 @@ int PlayerActionController::GetStateId(const std::string& _stateName)
 	return static_cast<int>(state.value());
 }
 
-void PlayerActionController::GetTargetObject(ITargetAccepter& _targetObject)
+ITargetAccepter* PlayerActionController::GetTargetObject()
+{
+	return pTargetObject;
+}
+
+void PlayerActionController::SetTargetObject(ITargetAccepter& _targetObject)
 {
 	pTargetObject = &_targetObject;
 }
 
-void PlayerActionController::OnTargetDeath()
+void PlayerActionController::UpdateDeathNotify(const ITargetAccepter& _deathTargetObj)
 {
+	// 死んだターゲット先が現在見ているオブジェクトだったら参照を消す
+	if (!pTargetObject) return;
+	if (pTargetObject != &_deathTargetObj) return;
+
 	pTargetObject = nullptr;
 }
 

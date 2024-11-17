@@ -53,6 +53,7 @@ private:
 	void Awake() override;
 	void Start() override;
 	void Update() override;
+	void Draw() override;
 	void OnDestroy() override;
 
 	/// @brief 武器の攻撃フラグをセット

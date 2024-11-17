@@ -22,9 +22,6 @@ private:
 	void OnEndBehavior() override;
 	void TransitionCheckUpdate() override;
 
-	/// @brief 前方向を更新する
-	void UpdateForward();
-
 	/// @brief ブレンド割合をセット
 	void ApplyBlendAnim();
 

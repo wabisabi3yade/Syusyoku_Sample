@@ -11,7 +11,7 @@ class PlayerActionController;
 class PlayerActState_Base : public CharacterActState_Base
 {
 public:
-	// プレイヤーの行動状態
+	/// @brief  プレイヤーの行動状態
 	enum class PlayerState
 	{
 		// 待機
@@ -35,6 +35,13 @@ public:
 
 		// 最後
 		None = 99
+	};
+
+	/// @brief プレイヤーから見た入力の方向
+	enum class InputVector
+	{
+		Forward,	// 前方向
+		Back	// 後ろ
 	};
 
 #ifdef EDIT
@@ -69,9 +76,17 @@ private:
 	/// @brief この行動クラスのステートタイプ
 	PlayerState stateType;
 
+	/// @brief キャンセルして繰り出す状態
+	PlayerState cancelPlayState;
+
+	/// @brief ターゲットを見るときの回転速度
+	float targetLookRotateSpeed;
+
 	/// @brief 入力期間中に攻撃が押されていたか?
 	bool isAttackInput;
 
+	/// @brief ターゲット時に敵を見る行動にするか？
+	bool isTargetLookAtEnemy;
 protected:
 	/// @brief プレイヤー
 	PlayerActionController* pActionController;
@@ -124,10 +139,10 @@ protected:
 	virtual void TransitionCheckUpdate();
 
 	/// @brief 入力のフラグをクリア
-	void InputFlagClear();
+	void ParameterClear();
 
 	/// @brief 入力確認の更新
-	void CheckInputUpdate();
+	virtual void CheckInputUpdate();
 
 	/// @brief どのアクションにも共通する遷移
 	void CommmonCheckTransition();
@@ -136,9 +151,17 @@ protected:
 	/// @param _changeSate 遷移先の状態
 	void ChangeState(PlayerState _nextState);
 
+	/// @brief その行動はターゲットを見るのかセット
+	/// @param _isLook 見るのか？
+	void SetTargetAtEnemy(bool _isLook);
+
 	/// @brief RigidBodyを取得
 	/// @return RigidBody
 	CP_RigidBody& GetRB();
+
+	/// @brief プレイヤーのトランスフォームを取得
+	/// @return トランスフォーム
+	Transform& GetTransform();
 
 	/// @brief Δtを取得
 	/// @return Δt
@@ -152,16 +175,26 @@ protected:
 	/// @return 左スティックの入力
 	DirectX::SimpleMath::Vector2 GetInputLeftStick() const;
 
-	/// @brief ローリングできるか取得する
+	/// @brief その方向に入力できているか確認する
+	/// @param _checkVector 確認したい方向
+	/// @return できているか？
+	bool IsInputVector(InputVector _checkVector) const;
+
+	/// @brief ローリング入力できているか？
 	/// @return ローリングできるか？
-	bool GetCanRolling() const;
+	bool IsRollingInput() const;
+
+	/// @brief 必殺技入力できているか？
+	/// @param _inputVecter 方向の入力
+	/// @return  必殺技できるか？
+	bool IsSpecialAtkInput(InputVector _inputVecter) const;
 
 	/// @brief 攻撃できるか取得する
 	/// @return 攻撃できるか？
 	bool GetCanAttack() const;
 
 	/// @brief ImGui処理
-	void ImGuiDebug() override {}
+	void ImGuiDebug() override;
 
 	/// @brief ImGuiによるコンボボックス
 	/// @param _caption キャプション
@@ -170,14 +203,11 @@ protected:
 	static bool ImGuiComboPlayerState(const std::string& _caption, PlayerState& _currentState);
 
 private:
+	/// @brief ターゲットの方向を見る
+	void UpdateTargetLook();
 
-
-	/// @brief キャンセルに合わせてアクションが行うか確認
-	/// @return ステートをここで変更したか？
-	bool CheckCanCancelTransition();
-
-	bool CheckCanRolling();
-
+	/// @brief キャンセルに合わせてアクションを変更するかチェック
+	void CancelTransitionUpdate();
 protected:
 	// アニメーションコントローラ内のプレイヤー名
 	constexpr static auto SPEEDRATIO_PARAMNAME = "speed";	// 移動速度

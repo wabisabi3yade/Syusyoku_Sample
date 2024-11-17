@@ -1,8 +1,6 @@
 #pragma once
 #include "StateMachine.h"
 
-namespace DXSimp = DirectX::SimpleMath;
-
 /// @brief キャラクタのアクションステート基底
 class CharacterActState_Base : 
 	public HashiTaku::StateNode_Base, public HashiTaku::IImGuiUser,

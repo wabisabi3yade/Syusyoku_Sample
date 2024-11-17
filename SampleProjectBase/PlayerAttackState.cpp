@@ -3,6 +3,8 @@
 #include "PlayerActionController.h"
 #include "GameObject.h"
 
+namespace DXSimp = DirectX::SimpleMath;
+
 PlayerAttackState::PlayerAttackState()
 	: nextCombAtkState(PlayerState::None), atkMoveSpeed(10.0f), lookRotateSpeed(0.0f), isMoveForward(false), isAttackCollisionBefore(false)
 {
@@ -14,6 +16,8 @@ PlayerAttackState::PlayerAttackState()
 
 void PlayerAttackState::OnStartBehavior()
 {
+	LookAtEnemyInstant();
+
 	// UŒ‚î•ñ‚ðXV
 	UpdateAttackInfo();
 
@@ -47,14 +51,40 @@ void PlayerAttackState::UpdateAttackInfo()
 	pActionController->GetPlayer().SetAttackInfo(*pAttackInfo);
 }
 
-void PlayerAttackState::LookAtEnemy()
+void PlayerAttackState::LookAtEnemyInstant()
 {
-	
+	CP_BattleManager* pBattle = CP_BattleManager::GetInstance();
+	if (!pBattle) return;
 
+	// “GƒŠƒXƒg‚ðŽæ“¾‚·‚é
+	const auto& enemyList = pBattle->GetEnemyList();
+
+	// “G‚ª‚¢‚È‚¢‚È‚ç
+	if (static_cast<u_int>(enemyList.size()) == 0) return;
+
+	DXSimp::Vector3 lookPos;
+	// ƒ^[ƒQƒbƒgæ‚ª‚¢‚é‚È‚ç
+	if (auto* pTargetObj = pActionController->GetTargetObject())
+	{
+		lookPos = pTargetObj->GetWorldPosByTargetObj();
+	}
+	else
+	{
+		// –{—ˆ‚Íˆê”Ô‹ß‚­‚Ì“G‚ðŽæ“¾‚·‚é
+		lookPos = (*enemyList.begin())->GetWorldPosByTargetObj();
+	}
+
+	// “G‚Ì•ûŒü‚ðŒ©‚é
+	Transform& trans = GetTransform();
+	lookPos.y = trans.GetPosition().y;	// yŽ²‰ñ“]‚Ì‚Ý‚·‚é
+
+	trans.LookAt(lookPos);
 }
 
 void PlayerAttackState::ImGuiDebug()
 {
+	PlayerActState_Base::ImGuiDebug();
+
 	ImGui::Checkbox("MoveFwd", &isMoveForward);
 	ImGui::Text("AtkInfo");
 	pAttackInfo->ImGuiCall();

@@ -177,6 +177,8 @@ bool AnimationCurve::IsStartOrEndPlot(const HermitePlotParam* _checkPlot)
 void AnimationCurve::ImGuiDebug()
 {
 #ifdef EDIT
+	ImGui::PushID(curveName.c_str());
+
 	ImGui::Text(curveName.c_str());
 
 	// イージング選択
@@ -211,6 +213,8 @@ void AnimationCurve::ImGuiDebug()
 		ImDrawGraph();
 		ImPlot::EndPlot();
 	}
+
+	ImGui::PopID();
 
 #endif // EDIT
 }

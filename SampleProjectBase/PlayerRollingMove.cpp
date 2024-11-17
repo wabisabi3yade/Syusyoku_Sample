@@ -92,12 +92,6 @@ void PlayerRollingMove::Move()
 	// 前回との差分値を求める
 	float moveDistance = curveDistance - prevProgressDistance;
 
-	// 前進方向に移動する
-	/*Vector3 pos = transform.GetPosition();
-	pos += transform.Forward() * moveDistance;
-	transform.SetPosition(pos);*/
-
-
 	GetRB().SetVelocity(transform.Forward() * moveDistance / deltaTime);
 
 	// 次フレームの為に更新

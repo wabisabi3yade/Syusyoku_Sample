@@ -5,9 +5,9 @@
 #include "IAnimParametersSetter.h"
 #include "AnimationNotifyFactory.h"
 
-AnimNodePlayer_Base::AnimNodePlayer_Base(const AnimationNode_Base& _playNode, BoneList& _boneList, Transform& _transform):
+AnimNodePlayer_Base::AnimNodePlayer_Base(const AnimationNode_Base& _playNode, BoneList& _boneList, Transform& _transform) :
 	pPlayAnimNode(&_playNode), pAssetBoneList(&_boneList), pObjectTransform(&_transform),
-	curPlayRatio(0.0f),	lastAnimationRatio(-Mathf::smallValue), curAnimationRatio(0.0f), 
+	curPlayRatio(0.0f), lastAnimationRatio(-Mathf::smallValue), curAnimationRatio(0.0f),
 	playerSpeedTimes(1.0f), allPlaySpeed(0.0f), deltaTime(0.0f), isJustLoop(false),
 	isPlaying(true)
 {
@@ -91,7 +91,7 @@ void AnimNodePlayer_Base::OnInterpolateUpdate(std::vector<BoneTransform>& _outTr
 
 void AnimNodePlayer_Base::SetCurPlayRatio(float _playRatio)
 {
-	curPlayRatio = _playRatio;
+	curPlayRatio = std::clamp(_playRatio, 0.0f, 1.0f);
 
 	curAnimationRatio = pPlayAnimNode->GetCurveValue(curPlayRatio);
 

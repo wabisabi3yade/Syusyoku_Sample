@@ -1,5 +1,6 @@
 #pragma once
 #include "SingletonComponent.h"
+#include "ITargetAccepter.h"
 
 class CP_Player;
 class CP_Enemy;
@@ -43,6 +44,7 @@ public:
 	/// @brief “GƒŠƒXƒg‚ðŽæ“¾‚·‚é
 	/// @return 
 	const EnemyList& GetEnemyList();
+
 private:
 	void ImGuiDebug() override;
 };

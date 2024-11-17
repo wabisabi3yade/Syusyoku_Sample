@@ -32,6 +32,8 @@ public:
 	PlayerAttackState();
 	virtual ~PlayerAttackState() {}
 
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
 protected:
 	// State‹¤’Êˆ—
 	void OnStartBehavior() override;
@@ -45,14 +47,10 @@ private:
 	void UpdateAttackInfo();
 
 	/// @brief “G‚É‘Î‚µ‚ÄŒü‚¯‚é
-	void LookAtEnemy();
+	void LookAtEnemyInstant();
 
 	/// @brief UŒ‚‚É‘O‚Öi‚Ş
 	void ForwardProgressMove();
-	
-	nlohmann::json Save() override;
-	void Load(const nlohmann::json& _data) override;
-
 public:
 	constexpr static auto ATTACKTRIGGER_PARAMNAME = "attackTrigger";	// UŒ‚ƒgƒŠƒK[
 };
