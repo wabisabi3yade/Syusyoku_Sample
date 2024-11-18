@@ -3143,7 +3143,7 @@
                             "startVector": 0.0,
                             "useHermite": false
                         },
-                        "isLoop": true,
+                        "isLoop": false,
                         "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
