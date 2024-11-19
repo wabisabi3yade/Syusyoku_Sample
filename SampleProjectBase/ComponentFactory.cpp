@@ -32,7 +32,6 @@ void ComponentFactory::Init()
 	ResistComponnent<CP_Enemy>();
 	ResistComponnent<CP_Boss>();
 
-
 	// キャラクター共通
 	ResistComponnent<CP_Weapon>();
 
@@ -43,6 +42,9 @@ void ComponentFactory::Init()
 	// UI
 	ResistComponnent<CP_UIRenderer>();
 	ResistComponnent<CP_UISlider>();
+
+	// UI
+	ResistComponnent<CP_VisualEffect>();
 
 	// その他
 	ResistComponnent<CP_EaseTest>();

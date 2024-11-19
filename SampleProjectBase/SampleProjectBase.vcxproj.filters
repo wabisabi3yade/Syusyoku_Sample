@@ -336,9 +336,6 @@
     <Filter Include="ソース ファイル\Component\InGame\Player">
       <UniqueIdentifier>{8f20992c-476d-48af-ab1a-565fb4cd2840}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Asset\Asset_Base\AssetSaveLoad">
-      <UniqueIdentifier>{e920b94b-d20d-453e-9d2a-5a37f71f5329}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Bullet">
       <UniqueIdentifier>{7e975cb2-f733-4690-ab3c-d2922af551a6}</UniqueIdentifier>
     </Filter>
@@ -589,9 +586,6 @@
     <Filter Include="ソース ファイル\Bullet\CollisionObject\Base">
       <UniqueIdentifier>{cd05e6a9-bf43-415d-8f04-d27294299ab5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\CollisionTypeJudge">
-      <UniqueIdentifier>{13f0554e-7b52-4850-a7dc-fd4ef58f66df}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Bullet\CollisionInfo">
       <UniqueIdentifier>{c0486cea-d8a8-466f-8a36-1798c02af0bf}</UniqueIdentifier>
     </Filter>
@@ -754,9 +748,6 @@
     <Filter Include="ソース ファイル\Graphics\Shader\Pixel\Unlit">
       <UniqueIdentifier>{62285b9b-b13a-4a48-90bb-923d7ff90ed0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\Lit">
-      <UniqueIdentifier>{023695c9-70cd-4b26-803d-53a8a07213f8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\Shader\Pixel\TexColor">
       <UniqueIdentifier>{d7cbca95-6ee4-4195-b332-5c656e152d42}</UniqueIdentifier>
     </Filter>
@@ -777,6 +768,57 @@
     </Filter>
     <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter">
       <UniqueIdentifier>{3e15c111-0798-4478-89c4-15cad16afe66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Effect">
+      <UniqueIdentifier>{92b70c80-2df1-4126-be51-c67de92e5d28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Effect\DX11EffecseerManager">
+      <UniqueIdentifier>{8846c3da-289d-4247-8121-d08d67a865dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\AssetSaveLoad">
+      <UniqueIdentifier>{e920b94b-d20d-453e-9d2a-5a37f71f5329}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\WorldPosition">
+      <UniqueIdentifier>{4c00a6ec-e64f-4d40-b548-7c33b6357371}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\Toon">
+      <UniqueIdentifier>{f634eda5-f768-4b58-88a5-7041621c14b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Collision">
+      <UniqueIdentifier>{5129898d-5a60-46fd-bbec-b5837c36e0d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Collision\CollisionTypeJudge">
+      <UniqueIdentifier>{13f0554e-7b52-4850-a7dc-fd4ef58f66df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Camera">
+      <UniqueIdentifier>{42963d73-08e2-4d8f-8208-32a17577e4d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Camera\Controller">
+      <UniqueIdentifier>{5ff96db3-4852-4e95-a133-c2a2525a6d74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Camera\State">
+      <UniqueIdentifier>{c1514f2a-4b35-4b24-a894-b820746f4a17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Camera\State\Move">
+      <UniqueIdentifier>{8111d62c-0679-43a8-a7e3-83d4319f3a10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Camera\State\Base">
+      <UniqueIdentifier>{99d6c39a-9b1d-4e02-9dcc-4e3d860ab86f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Enemy\Boss\ActionState\Idle">
+      <UniqueIdentifier>{545b3d9e-caef-4425-959e-398832bdd930}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Effect\VFX">
+      <UniqueIdentifier>{19e1e296-d736-4147-bac9-f6613df9476a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\VFX">
+      <UniqueIdentifier>{2b7b1691-01e0-4ebc-84ac-89c7898f3ff0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\OutLine">
+      <UniqueIdentifier>{c2248bd5-6fe0-412b-b7b0-c41baaf6391f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\ITargeter">
+      <UniqueIdentifier>{3fa1c02a-1e34-463b-adeb-5cc177ac9265}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1167,7 +1209,7 @@
       <Filter>ソース ファイル\Asset\Asset_Base</Filter>
     </ClCompile>
     <ClCompile Include="AssetSaveLoad.cpp">
-      <Filter>ソース ファイル\Asset\Asset_Base\AssetSaveLoad</Filter>
+      <Filter>ソース ファイル\Asset\AssetSaveLoad</Filter>
     </ClCompile>
     <ClCompile Include="..\ThirdParty\bullet\include\btBulletCollisionAll.cpp">
       <Filter>ソース ファイル\Bullet\import</Filter>
@@ -1326,7 +1368,7 @@
       <Filter>ソース ファイル\Component\Collider\RigidBody</Filter>
     </ClCompile>
     <ClCompile Include="CollisionTypeJudge.cpp">
-      <Filter>ソース ファイル\Object\CollisionTypeJudge</Filter>
+      <Filter>ソース ファイル\System\Collision\CollisionTypeJudge</Filter>
     </ClCompile>
     <ClCompile Include="CP_CapsuleCollider.cpp">
       <Filter>ソース ファイル\Component\Collider\Capsule</Filter>
@@ -1424,38 +1466,14 @@
     <ClCompile Include="BossActionController.cpp">
       <Filter>ソース ファイル\Object\Enemy\Boss\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="IBattleEnemy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="EditScene.cpp">
       <Filter>ソース ファイル\Scene\SceneEditer</Filter>
     </ClCompile>
     <ClCompile Include="CP_BattleManager.cpp">
       <Filter>ソース ファイル\Component\BattleManager</Filter>
     </ClCompile>
-    <ClCompile Include="PS_Toon.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ShadowDrawer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="VS_Object.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CP_OutLineRenderer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="VS_WorldPosition.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="CP_Boss.cpp">
       <Filter>ソース ファイル\Component\InGame\Boss</Filter>
-    </ClCompile>
-    <ClCompile Include="BossIdleState.cpp">
-      <Filter>ソース ファイル\Object\Enemy\Boss</Filter>
-    </ClCompile>
-    <ClCompile Include="BossGroundState.cpp">
-      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState</Filter>
     </ClCompile>
     <ClCompile Include="BossGroundAttack.cpp">
       <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Ground</Filter>
@@ -1463,14 +1481,53 @@
     <ClCompile Include="BossGroundMove.cpp">
       <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Ground</Filter>
     </ClCompile>
-    <ClCompile Include="BossDamageState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ITargetAccepter.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ANE_ChangeParameter.cpp">
       <Filter>ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter</Filter>
+    </ClCompile>
+    <ClCompile Include="VS_Object.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\VS_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="VS_WorldPosition.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\WorldPosition</Filter>
+    </ClCompile>
+    <ClCompile Include="PS_Toon.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\Toon</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraMoveController.cpp">
+      <Filter>ソース ファイル\Object\Camera\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraMoveState_Base.cpp">
+      <Filter>ソース ファイル\Object\Camera\State\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraOnMoveState.cpp">
+      <Filter>ソース ファイル\Object\Camera\State\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="BossDamageState.cpp">
+      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Damage</Filter>
+    </ClCompile>
+    <ClCompile Include="BossGroundState.cpp">
+      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="BossIdleState.cpp">
+      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="VisualEffect.cpp">
+      <Filter>ソース ファイル\Graphics\Effect\VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11EffecseerManager.cpp">
+      <Filter>ソース ファイル\Graphics\Effect\DX11EffecseerManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_VisualEffect.cpp">
+      <Filter>ソース ファイル\Component\VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_OutLineRenderer.cpp">
+      <Filter>ソース ファイル\Component\OutLine</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowDrawer.cpp">
+      <Filter>ソース ファイル\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="ITargetAccepter.cpp">
+      <Filter>ソース ファイル\Object\ITargeter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1835,7 +1892,7 @@
       <Filter>ソース ファイル\Asset\Asset_Base</Filter>
     </ClInclude>
     <ClInclude Include="AssetSaveLoad.h">
-      <Filter>ソース ファイル\Asset\Asset_Base\AssetSaveLoad</Filter>
+      <Filter>ソース ファイル\Asset\AssetSaveLoad</Filter>
     </ClInclude>
     <ClInclude Include="DXToBullet.h">
       <Filter>ソース ファイル\Bullet\DXToBullet</Filter>
@@ -2021,7 +2078,7 @@
       <Filter>ソース ファイル\Component\Collider\RigidBody</Filter>
     </ClInclude>
     <ClInclude Include="CollisionTypeJudge.h">
-      <Filter>ソース ファイル\Object\CollisionTypeJudge</Filter>
+      <Filter>ソース ファイル\System\Collision\CollisionTypeJudge</Filter>
     </ClInclude>
     <ClInclude Include="CollisionInfo.h">
       <Filter>ソース ファイル\Bullet\CollisionInfo</Filter>
@@ -2119,41 +2176,11 @@
     <ClInclude Include="BossActionController.h">
       <Filter>ソース ファイル\Object\Enemy\Boss\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="CP_Boss.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="IBattleEnemy.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="BossIdleState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="IAnimParamSetGetter.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="EditScene.h">
       <Filter>ソース ファイル\Scene\SceneEditer</Filter>
     </ClInclude>
     <ClInclude Include="CP_BattleManager.h">
       <Filter>ソース ファイル\Component\BattleManager</Filter>
-    </ClInclude>
-    <ClInclude Include="PS_Toon.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ShadowDrawer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="VS_Object.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CP_OutLineRenderer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="VS_WorldPosition.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="BossDamageState.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="BossGroundAttack.h">
       <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Ground</Filter>
@@ -2164,11 +2191,53 @@
     <ClInclude Include="BossGroundState.h">
       <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Ground</Filter>
     </ClInclude>
-    <ClInclude Include="ITargetAccepter.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ANE_ChangeParameter.h">
       <Filter>ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter</Filter>
+    </ClInclude>
+    <ClInclude Include="VS_Object.h">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\VS_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="VS_WorldPosition.h">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\WorldPosition</Filter>
+    </ClInclude>
+    <ClInclude Include="PS_Toon.h">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\Toon</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraMoveController.h">
+      <Filter>ソース ファイル\Object\Camera\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraMoveState_Base.h">
+      <Filter>ソース ファイル\Object\Camera\State\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraOnMoveState.h">
+      <Filter>ソース ファイル\Object\Camera\State\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="BossDamageState.h">
+      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Damage</Filter>
+    </ClInclude>
+    <ClInclude Include="BossIdleState.h">
+      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="VisualEffect.h">
+      <Filter>ソース ファイル\Graphics\Effect\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11EffecseerManager.h">
+      <Filter>ソース ファイル\Graphics\Effect\DX11EffecseerManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_VisualEffect.h">
+      <Filter>ソース ファイル\Component\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_OutLineRenderer.h">
+      <Filter>ソース ファイル\Component\OutLine</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowDrawer.h">
+      <Filter>ソース ファイル\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="ITargetAccepter.h">
+      <Filter>ソース ファイル\Object\ITargeter</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Boss.h">
+      <Filter>ソース ファイル\Component\InGame\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

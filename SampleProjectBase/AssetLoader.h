@@ -87,6 +87,12 @@ public:
 	static AnimationData* AnimationLoad(const std::string& _animPath, const std::string& _boneName,
 		bool _isRightHand);
 
+	/// @brief	エフェクシア専用エフェクトをロードする
+	/// @param _pathName パス名
+	/// @param _loadScale ロード時のスケール
+	/// @return ロードしたエフェクト
+	static VisualEffect* VFXLoadForEffekseer(const std::string& _pathName, float _loadScale);
+
 private:	// 便利関数
 
 	/// @brief スタティックかスケルタルを判断して作成する
@@ -151,6 +157,11 @@ private:	// 便利関数
 	/// @param _pathName パス名
 	/// @return 拡張しなしファイル名
 	static std::string GetPathNameNotExt(const std::string& _pathName);
+
+	/// @brief string→u16stringに変換
+	/// @param _string 変換したいstring型文字列
+	/// @return u16string文字列
+	static std::u16string ConvertToU16String(const std::string& _string);
 
 	/// @brief 最大・最小サイズを更新
 	/// @param _vertexPos 頂点座標

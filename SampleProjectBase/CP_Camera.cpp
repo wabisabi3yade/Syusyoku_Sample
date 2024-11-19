@@ -29,6 +29,21 @@ void CP_Camera::OnDestroy()
 	InSceneSystemManager::GetInstance()->DeleteCamera(*this);
 }
 
+const DirectX::SimpleMath::Vector3& CP_Camera::GetCamUp() const
+{
+	return camUp;
+}
+
+const DirectX::SimpleMath::Vector3& CP_Camera::GetEyePos() const
+{
+	return GetTransform().GetPosition();
+}
+
+const DirectX::SimpleMath::Vector3& CP_Camera::GetTarget() const
+{
+	return target;
+}
+
 void CP_Camera::ImGuiDebug()
 {
 	ImGui::Text("Right");
@@ -52,13 +67,13 @@ void CP_Camera::ImGuiDebug()
 void CP_Camera::UpdateViewMatrix()
 {
 	// 注視点を求める
-	Vector3 focusPos = GetTransform().GetPosition() + GetTransform().Forward();
+	target = GetTransform().GetPosition() + GetTransform().Forward();
 
 	// ビュー変換行列を求める
 	Matrix viewMatrix = DirectX::XMMatrixLookAtLH
 	(
 		GetTransform().GetPosition(),		// カメラ座標
-		focusPos,	// 注視点
+		target,	// 注視点
 		Vector3::Up // 上ベクトル
 	);
 	viewMatrix = viewMatrix.Transpose();

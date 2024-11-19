@@ -39,6 +39,9 @@
 #include "CP_UIRenderer.h"
 #include "CP_UISlider.h"
 
+// エフェクト
+#include "CP_VisualEffect.h"
+
 // テスト
 #include "CP_EaseTest.h"
 #include "CP_BoxAnimation.h"

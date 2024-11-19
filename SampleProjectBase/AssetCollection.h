@@ -9,6 +9,7 @@ class SkeletalMesh;
 class StaticMesh;
 class Material;
 class AnimationData;
+class VisualEffect;
 class BoneList;
 class AnimationController;
 
@@ -42,6 +43,9 @@ class AssetCollection
 
 	/// @brief マテリアルのアセットリスト
 	AssetList materialAssets;
+
+	/// @brief エフェクトのアセットリスト
+	AssetList vfxAssets;
 
 	/// @brief アニメーションのアセットリスト
 	AssetList animationAssets;
@@ -178,6 +182,10 @@ inline AssetList& AssetCollection::GetAssetList()
 	// マテリアル
 	else if constexpr (std::is_same<T, Material>::value)
 		return materialAssets;
+
+	// エフェクト
+	else if constexpr (std::is_same<T, VisualEffect>::value)
+		return vfxAssets;
 
 	// アニメーション
 	else if constexpr (std::is_same<T, AnimationData>::value)

@@ -42,6 +42,8 @@
 #pragma comment(lib, "DirectXTK.lib")	// DirectXTKライブラリ
 #include <nlohmann/json.hpp>	// json書き出し
 #include <magic_enum.hpp>
+#include <Effekseer.h>	// エフェクシア
+#include <EffekseerRendererDX11.h>	// エフェクシアDx11対応
 
 // ImGui
 #define IMGUI_DEFINE_MATH_OPERATORS

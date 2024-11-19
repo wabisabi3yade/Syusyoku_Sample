@@ -2,6 +2,7 @@
 #include "BulletTest.h"
 
 class InSceneSystemManager;
+class DX11EffecseerManager;
 class EditScene;
 
 // 1シーンクラス
@@ -13,6 +14,9 @@ protected:
 
 	/// @brief シーン内システムマネジャー
 	InSceneSystemManager* pInSceneSystem;
+
+	/// @brief エフェクトマネジャー
+	DX11EffecseerManager* pEffectManager;
 public:
 	Scene(const std::string& _name);
 	virtual ~Scene();

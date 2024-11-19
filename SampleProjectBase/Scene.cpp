@@ -5,6 +5,7 @@
 #include "ShaderCollection.h"
 #include "DX11BulletPhisics.h"
 #include "Geometory.h"
+#include "DX11EffecseerManager.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -13,6 +14,8 @@ Scene::Scene(const std::string& _sceneName) : sceneName(_sceneName)
 {
 	pInSceneSystem = InSceneSystemManager::GetInstance();
 	pInSceneSystem->Init();
+
+	pEffectManager = DX11EffecseerManager::GetInstance();
 
 	// ロードする
 	SceneLoad();
@@ -53,6 +56,9 @@ void Scene::SceneUpdate()
 
 	// Dxのトランスフォームを Bulletに合わせる
 	pBulletEngine->UpdateTransformDxToBt();
+
+	// エフェクト更新処理
+	pEffectManager->Update();
 }
 
 void Scene::SceneDraw()
@@ -67,6 +73,10 @@ void Scene::SceneDraw()
 
 	// シーン内の描画処理
 	sceneObjects.Draw();
+
+	// エフェクト描画
+	pEffectManager->EffectDraw();
+
 }
 
 void Scene::SceneLoad()

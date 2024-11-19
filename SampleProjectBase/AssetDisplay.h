@@ -18,6 +18,7 @@ private:
 	static void DisplayTexture();
 	static void DisplayModel();
 	static void DisplayMaterial();
+	static void DisplayVFX();
 	static void DisplayAnimation();
 	static void DisplayBoneList();
 	static void DisplayAnimationController();

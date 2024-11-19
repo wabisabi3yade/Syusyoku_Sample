@@ -25,6 +25,7 @@ private:
 	static void CreateTexture(const nlohmann::json& _loadData);
 	static void CreateMesh(const nlohmann::json& _loadData);
 	static void CreateMaterial(const nlohmann::json& _loadData);
+	static void CreateVFX(const nlohmann::json& _loadData);
 	static void CreateAnimaton(const nlohmann::json& _loadData);
 	static void CreateAnimController(const nlohmann::json& _loadData);
 

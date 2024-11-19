@@ -24,6 +24,7 @@ void AssetDisplay::Draw()
 		DisplayTexture();
 		DisplayModel();
 		DisplayMaterial();
+		DisplayVFX();
 		DisplayAnimation();
 		DisplayBoneList();
 		DisplayAnimationController();
@@ -122,6 +123,32 @@ void AssetDisplay::DisplayMaterial()
 	DeleteInputAsset();
 	if (ImGui::Button("Delete"))
 		pAssetCollection->DeleteAsset<Material>(inputText);
+
+	ImGui::TreePop();
+}
+
+void AssetDisplay::DisplayVFX()
+{
+	if (!ImGuiMethod::TreeNode("VFX")) return;
+
+	// •\Ž¦
+	AssetList& assets = pAssetCollection->GetAssetList<VisualEffect>();
+	Display(assets);
+
+	// ƒ[ƒh‚·‚é
+	static char createVFX[IM_INPUT_BUF];
+	ImGui::InputText("##createVfx", createVFX, IM_INPUT_BUF);
+	static float loadScale = 0.0f;
+	ImGui::DragFloat("Scale", &loadScale, 0.01f, 0.0f, 10000.0f);
+	if (ImGui::Button("Create"))
+	{
+		AssetLoader::VFXLoadForEffekseer(createVFX, loadScale);
+	}
+
+	// íœ
+	DeleteInputAsset();
+	if (ImGui::Button("Delete"))
+		pAssetCollection->DeleteAsset<VisualEffect>(inputText);
 
 	ImGui::TreePop();
 }

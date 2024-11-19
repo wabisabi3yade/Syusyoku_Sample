@@ -101,6 +101,8 @@ nlohmann::json CP_CameraMove::Save()
 
 void CP_CameraMove::Load(const nlohmann::json& _data)
 {
+	Component::Load(_data);
+
 	// ターゲット名からオブジェクト取得
 	std::string targetObjName;
 	LoadJsonString("target", targetObjName, _data);

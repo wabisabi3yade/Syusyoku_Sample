@@ -109,7 +109,7 @@ u_int AnimationData::GetAllAnimationFrame() const
 
 u_int AnimationData::GetRatioToFrame(float _ratio)
 {
-	return allFrameCnt * _ratio;
+	return static_cast<u_int>(allFrameCnt * _ratio);
 }
 
 DirectX::SimpleMath::Vector3 AnimationData::GetScaleByRatio(u_int _boneId, float _playingRatio) const
