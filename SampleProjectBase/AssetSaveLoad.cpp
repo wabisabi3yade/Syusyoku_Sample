@@ -8,6 +8,7 @@
 #include "Material.h"
 #include "StaticMesh.h"
 #include "SkeletalMesh.h"
+#include "VisualEffect.h"
 #include "AnimationData.h"
 #include "AnimControllerCreater.h"
 
@@ -18,8 +19,10 @@ constexpr auto ASSET_ELEMENT = "assets";
 constexpr auto TEX_ELEMENT = "textures";
 constexpr auto MOD_ELEMENT = "models";
 constexpr auto MAT_ELEMENT = "materials";
+constexpr auto VFX_ELEMENT = "vfx";
 constexpr auto ANIM_ELEMENT = "animations";
 constexpr auto ANIMCON_ELEMENT = "animController";
+
 
 void AssetSaveLoader::Save()
 {
@@ -28,6 +31,7 @@ void AssetSaveLoader::Save()
 
 	auto& assetData = saveData[ASSET_ELEMENT];
 
+	// テクスチャ
 	auto& texData = assetData[TEX_ELEMENT];
 	for (auto& tex : pAssetCollection->textureAssets)
 	{
@@ -35,6 +39,7 @@ void AssetSaveLoader::Save()
 			texData.push_back(tex.second->Save());
 	}
 
+	// モデル
 	auto& modelDatas = assetData[MOD_ELEMENT];
 	for (auto& model : pAssetCollection->modelAssets)
 	{
@@ -42,6 +47,7 @@ void AssetSaveLoader::Save()
 			modelDatas.push_back(model.second->Save());
 	}
 
+	// マテリアル
 	auto& materialData = assetData[MAT_ELEMENT];
 	for (auto& material : pAssetCollection->materialAssets)
 	{
@@ -49,6 +55,15 @@ void AssetSaveLoader::Save()
 			materialData.push_back(material.second->Save());
 	}
 
+	// エフェクト
+	auto& vfxData = assetData[VFX_ELEMENT];
+	for (auto& vfx : pAssetCollection->vfxAssets)
+	{
+		if (vfx.second->GetIsSave())
+			vfxData.push_back(vfx.second->Save());
+	}
+
+	// アニメーション
 	auto& animData = assetData[ANIM_ELEMENT];
 	for (auto& anim : pAssetCollection->animationAssets)
 	{
@@ -56,6 +71,7 @@ void AssetSaveLoader::Save()
 			animData.push_back(anim.second->Save());
 	}
 
+	// アニメーションコントローラ
 	auto& animConData = assetData[ANIMCON_ELEMENT];
 	for (auto& animCon : pAssetCollection->animControllerAssets)
 	{
@@ -94,6 +110,9 @@ void AssetSaveLoader::Load()
 	// メッシュ
 	CreateMesh(loadData);
 
+	// エフェクトを作成
+	CreateVFX(loadData);
+
 	// アニメーション
 	CreateAnimaton(loadData);
 
@@ -129,6 +148,24 @@ void AssetSaveLoader::CreateMaterial(const nlohmann::json& _loadData)
 		LoadJsonString("assetName", name, data);
 
 		pAssetCollection->SetAsset<Material>(name, std::move(pCreate));
+	}
+}
+
+void AssetSaveLoader::CreateVFX(const nlohmann::json& _loadData)
+{
+	if (!IsJsonContains(_loadData, VFX_ELEMENT)) return;
+
+	// 名前を取得し、アセット生成
+	for (auto& data : _loadData[VFX_ELEMENT])
+	{
+		std::string path;
+		if (!LoadJsonString("pathName", path, data)) continue;
+
+		float loadScale = 1.0f;
+		if (!LoadJsonFloat("loadScale", loadScale, data)) return;
+
+		// エフェクトをロード
+		AssetLoader::VFXLoadForEffekseer(path, loadScale);
 	}
 }
 
@@ -234,6 +271,20 @@ void AssetSaveLoader::LoadAsset(const nlohmann::json& _loadData)
 			LoadJsonString("assetName", assetName, asset);
 
 			Asset_Base* pAsset = pAssetCollection->GetAsset<Mesh_Group>(assetName);
+
+			if (pAsset)
+				pAsset->Load(asset);
+		}
+	}
+
+	if (LoadJsonDataArray(VFX_ELEMENT, assetDatas, _loadData))
+	{
+		for (const auto& asset : assetDatas)
+		{
+			std::string assetName;
+			LoadJsonString("assetName", assetName, asset);
+
+			Asset_Base* pAsset = pAssetCollection->GetAsset<VisualEffect>(assetName);
 
 			if (pAsset)
 				pAsset->Load(asset);

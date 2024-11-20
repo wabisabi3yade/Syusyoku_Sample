@@ -4,6 +4,7 @@
 #include "CP_Character.h"
 #include "CP_Animation.h"
 #include "CP_RigidBody.h"
+//#include "AttackInformation.h"
 
 class CharacterChangeAnimObserver;
 
@@ -40,6 +41,10 @@ public:
 	/// @param _pAnimation アニメーションコンポーネント
 	/// @param _pRigidBody リジッドボディ
 	virtual void Init(CP_Animation* _pAnimation, CP_RigidBody* _pRigidBody);
+
+	/// @brief ダメージ受けたときのアクション処理
+	/// @param _atkInfo 攻撃情報
+	virtual void OnDamage(const HashiTaku::AttackInformation& _atkInfo) {};
 
 	/// @brief アニメーション変更オブザーバーを取得
 	/// @return アニメーション変更オブザーバー

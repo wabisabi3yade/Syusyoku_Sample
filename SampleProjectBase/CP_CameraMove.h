@@ -10,6 +10,9 @@ class CP_CameraMove : public Component
 	/// @brief カメラの動きを統制するコントローラー
 	std::unique_ptr<CameraMoveController> pMoveController;
 
+	/// @brief 追従先のオブジェクト名
+	std::string followObjName;
+
 	/// @brief 追従対象
 	const Transform* pTargetTransform;
 
@@ -36,6 +39,9 @@ private:
 	/// @brief 更新できるか確認する
 	/// @return 更新できるか？
 	bool IsCanUpdate();
+
+	/// @brief 追従先のオブジェクト名を探す
+	void FindFollowObject();
 
 	// ターゲットオブジェクトをImGuiで
 	void ImGuiSetTarget();

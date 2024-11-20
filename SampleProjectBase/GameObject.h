@@ -152,7 +152,7 @@ public:
 
 	/// @brief ƒ¢t‘¬“x‚ğæ“¾
 	/// @return ƒ¢t
-	float GetDeltdaSpeed() const;
+	float GetDeltaSpeed() const;
 
 	/// @brief Šˆ“®ó‘Ô‚ğæ“¾
 	/// @return Šˆ“®ó‘Ô

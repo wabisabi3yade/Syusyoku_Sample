@@ -5,6 +5,7 @@
 #include "AssetCollection.h"
 #include "ShaderCollection.h"
 #include "DX11BulletPhisics.h"
+#include "DX11EffecseerManager.h"
 
 // Asset関連
 #include "AssetContacter.h"
@@ -33,8 +34,12 @@ void MainApplication::Release()
 	// ImGuiの終了処理
 	ImGuiMethod::Terminal();
 
+	// アセット管理解放
+	pAssetCollection.reset();
+
 	// シングルトンインスタンスを解放
 	SceneManager::Delete();
+	DX11EffecseerManager::Delete();
 	ShaderCollection::Delete();
 	Direct3D11::Delete();
 }
@@ -95,6 +100,9 @@ void MainApplication::Init(HINSTANCE _hInst)
 
 	// イージング初期化
 	HashiTaku::Easing::Init();
+
+	// エフェクシア初期化
+	DX11EffecseerManager::GetInstance()->Init();
 
 	AssetSysytemSetup();
 

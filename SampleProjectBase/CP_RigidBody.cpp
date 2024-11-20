@@ -193,6 +193,14 @@ CollisionTypeJudge& CP_RigidBody::GetColTypeJudge() const
 	return *collider->pColTypeJudge;
 }
 
+DirectX::SimpleMath::Vector3 CP_RigidBody::GetVelocity() const
+{
+	if (!collider || isTrigger) return DX::Vector3::Zero;
+
+	btRigidBody& btRb = static_cast<btRigidBody&>(*collider->pCollisionObject);
+	return Bullet::ToDXVector3(btRb.getLinearVelocity());
+}
+
 void CP_RigidBody::ImGuiDebug()
 {
 	if (ImGui::Button("SetShape"))

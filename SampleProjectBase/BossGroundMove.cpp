@@ -21,7 +21,7 @@ void BossGroundMove::DebugDisplay()
 
 nlohmann::json BossGroundMove::Save()
 {
-	auto data = BossGroundState::Save();
+	auto data = BossActState_Base::Save();
 
 	data["moveMaxSpeed"] = maxSpeed;
 	data["moveAcceleration"] = acceleration;
@@ -35,7 +35,7 @@ void BossGroundMove::Load(const nlohmann::json& _data)
 {
 	using namespace HashiTaku;
 
-	BossGroundState::Load(_data);
+	BossActState_Base::Load(_data);
 
 	LoadJsonFloat("moveMaxSpeed", maxSpeed, _data);
 	LoadJsonFloat("moveAcceleration", acceleration, _data);
@@ -63,7 +63,7 @@ void BossGroundMove::TransitionCheckUpdate()
 	// ‹ß‹——£”ÍˆÍ‚É“ü‚Á‚Ä‚¢‚é‚©
 	if (CheckNearTransition())
 	{
-		pActionController->ChangeState(BossState::Attack1);
+		pActionController->ChangeState(BossState::CombAttack1);
 	}
 
 }

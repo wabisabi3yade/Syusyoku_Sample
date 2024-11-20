@@ -1,8 +1,7 @@
 #pragma once
 #include "BulletTest.h"
-
-class InSceneSystemManager;
-class EditScene;
+#include "InSceneSystemManager.h"
+#include "DX11EffecseerManager.h"
 
 // 1シーンクラス
 class Scene
@@ -13,6 +12,9 @@ protected:
 
 	/// @brief シーン内システムマネジャー
 	InSceneSystemManager* pInSceneSystem;
+
+	/// @brief エフェクトマネジャー
+	DX11EffecseerManager* pEffectManager;
 public:
 	Scene(const std::string& _name);
 	virtual ~Scene();

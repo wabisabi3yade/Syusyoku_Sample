@@ -1,7 +1,5 @@
 #include "pch.h"
 #include "Scene.h"
-
-#include "InSceneSystemManager.h"
 #include "ShaderCollection.h"
 #include "DX11BulletPhisics.h"
 #include "Geometory.h"
@@ -14,6 +12,8 @@ Scene::Scene(const std::string& _sceneName) : sceneName(_sceneName)
 	pInSceneSystem = InSceneSystemManager::GetInstance();
 	pInSceneSystem->Init();
 
+	pEffectManager = DX11EffecseerManager::GetInstance();
+
 	// ロードする
 	SceneLoad();
 }
@@ -21,6 +21,9 @@ Scene::Scene(const std::string& _sceneName) : sceneName(_sceneName)
 Scene::~Scene()
 {
 	InSceneSystemManager::Delete();
+
+	// エフェクトを削除
+	pEffectManager->AllEffectDestroy();
 }
 
 void Scene::Exec()
@@ -53,6 +56,9 @@ void Scene::SceneUpdate()
 
 	// Dxのトランスフォームを Bulletに合わせる
 	pBulletEngine->UpdateTransformDxToBt();
+
+	// エフェクト更新処理
+	pEffectManager->Update();
 }
 
 void Scene::SceneDraw()
@@ -67,6 +73,10 @@ void Scene::SceneDraw()
 
 	// シーン内の描画処理
 	sceneObjects.Draw();
+
+	// エフェクト描画
+	pEffectManager->EffectDraw();
+
 }
 
 void Scene::SceneLoad()

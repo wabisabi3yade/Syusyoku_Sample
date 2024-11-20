@@ -1,0 +1,86 @@
+{
+    "childs": null,
+    "gameObject": {
+        "active": true,
+        "components": [
+            {
+                "AABB": false,
+                "angles": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "center": [
+                    0.0,
+                    -0.10000000149011612,
+                    0.0
+                ],
+                "enable": true,
+                "length": [
+                    1.0,
+                    0.20000000298023224,
+                    1.0
+                ],
+                "name": "BoxCollider",
+                "priority": 0
+            },
+            {
+                "enable": true,
+                "friction": 0.0,
+                "isAwake": false,
+                "isFreezeRot": [
+                    false,
+                    false,
+                    false
+                ],
+                "isKinematic": false,
+                "isTrigger": false,
+                "mass": 0.0,
+                "name": "RigidBody",
+                "priority": 0
+            },
+            {
+                "enable": true,
+                "name": "SpriteRenderer",
+                "priority": 0,
+                "sprite": {
+                    "texName": "ground.png",
+                    "uvDivNum": [
+                        0.0,
+                        0.0
+                    ],
+                    "uvEnd": [
+                        1.0,
+                        1.0
+                    ],
+                    "uvStart": [
+                        0.0,
+                        0.0
+                    ]
+                }
+            }
+        ],
+        "layer": 0,
+        "name": "Ground",
+        "tag": 0,
+        "transform": {
+            "child": null,
+            "pos": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                -0.0,
+                0.0,
+                -0.0,
+                1.0
+            ],
+            "scale": [
+                100.0,
+                1.0,
+                100.0
+            ]
+        }
+    }
+}

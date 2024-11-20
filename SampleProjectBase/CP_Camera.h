@@ -7,9 +7,12 @@ class CP_Camera : public Component
 	/// @brief カメラの上ベクトル
 	DirectX::SimpleMath::Vector3 camUp{ Vec3::Up };
 
+	/// @brief カメラの上ベクトル
+	DirectX::SimpleMath::Vector3 target{ Vec3::Forward };
+
 	/// @brief 視野角
 	float fov;
-	
+
 	/// @brief 描画距離
 	float distance;
 
@@ -26,7 +29,7 @@ public:
 	void OnDestroy() override;
 
 	/// @brief ビュー変換行列
-	void UpdateViewMatrix();	
+	void UpdateViewMatrix();
 
 	/// @brief 透視投影に変更
 	void SetPerspective();
@@ -39,6 +42,15 @@ public:
 
 	// ビューポート番号をセット
 	void SetViewportSlot(u_int _slot);
+
+	/// @brief カメラの上ベクトル
+	virtual const DirectX::SimpleMath::Vector3& GetCamUp() const;
+
+	/// @brief カメラの座標
+	virtual const DirectX::SimpleMath::Vector3& GetEyePos() const;
+
+	/// @brief カメラの注視点
+	virtual const DirectX::SimpleMath::Vector3& GetTarget() const;
 
 	void ImGuiDebug() override;
 
@@ -90,6 +102,22 @@ public:
 
 	// ビューポート番号をセット
 	void SetViewportSlot(u_int _slot) {}
+
+	/// @brief カメラの上ベクトル
+	const DirectX::SimpleMath::Vector3& GetCamUp() const override { return Vec3::Up; }
+
+	/// @brief カメラの座標
+	const DirectX::SimpleMath::Vector3& GetEyePos() const override 
+	{
+		return DirectX::SimpleMath::Vector3::Zero;
+	}
+
+	/// @brief カメラの注視点
+	const DirectX::SimpleMath::Vector3& GetTarget() const override
+	{
+		return Vec3::Forward;
+	};
+
 
 	/// @brief セーブする
 	/// @param _sceneData セーブデータ

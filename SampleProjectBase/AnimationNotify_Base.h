@@ -52,8 +52,6 @@ public:
 	/// @param _isLoop 割合がループしたか？
 	virtual void Update(const float _lastPlayingRatio, const float _curPlayingRatio, const bool _isLoop) = 0;
 
-	virtual void Update(u_int _lastPlayFrame, u_int _curPlayingFrame, bool _isLoop) = 0;
-
 	/// @brief 通知イベントが始まったときの初期化
 	void OnInitCall();
 

@@ -176,8 +176,9 @@
     <ClCompile Include="BoolTransCondition.cpp" />
     <ClCompile Include="BossActionController.cpp" />
     <ClCompile Include="BossActState_Base.cpp" />
+    <ClCompile Include="BossCombAttack.cpp" />
     <ClCompile Include="BossDamageState.cpp" />
-    <ClCompile Include="BossGroundAttack.cpp" />
+    <ClCompile Include="BossAttackState.cpp" />
     <ClCompile Include="BossGroundMove.cpp" />
     <ClCompile Include="BossGroundState.cpp" />
     <ClCompile Include="BossIdleState.cpp" />
@@ -209,10 +210,12 @@
     <ClCompile Include="CP_UIRenderer.cpp" />
     <ClCompile Include="CP_UISlider.cpp" />
     <ClCompile Include="CP_Rig.cpp" />
+    <ClCompile Include="CP_VisualEffect.cpp" />
     <ClCompile Include="CP_Weapon.cpp" />
     <ClCompile Include="CrossFadeAnimation.cpp" />
     <ClCompile Include="DepthStencil.cpp" />
     <ClCompile Include="DX11BulletPhisics.cpp" />
+    <ClCompile Include="DX11EffecseerManager.cpp" />
     <ClCompile Include="DXToBullet.cpp" />
     <ClCompile Include="AnimationNotify_Base.cpp" />
     <ClCompile Include="EnemyActState_Base.cpp" />
@@ -226,7 +229,7 @@
     <ClCompile Include="IAnimInterpolate.cpp" />
     <ClCompile Include="IAnimParametersSetter.cpp" />
     <ClCompile Include="IAssetCreater.cpp" />
-    <ClCompile Include="IBattleEnemy.cpp" />
+    <ClCompile Include="IAttacker.cpp" />
     <ClCompile Include="IClassNameGetter.cpp" />
     <ClCompile Include="IDamageable.cpp" />
     <ClCompile Include="HitStopper_Base.cpp" />
@@ -237,6 +240,7 @@
     <ClCompile Include="MaterialCreater.cpp" />
     <ClCompile Include="AnimNodePlayer_Base.cpp" />
     <ClCompile Include="MyClass2.cpp" />
+    <ClCompile Include="PlayerDamageState.cpp" />
     <ClCompile Include="PlayerGroundAttack.cpp" />
     <ClCompile Include="PlayerRollingMove.cpp" />
     <ClCompile Include="PlayerRushAttack.cpp" />
@@ -350,6 +354,7 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
     <ClCompile Include="VertexShader.cpp" />
+    <ClCompile Include="VisualEffect.cpp" />
     <ClCompile Include="VS_Object.cpp" />
     <ClCompile Include="VS_Primitive.cpp" />
     <ClCompile Include="VS_Gouraud.cpp" />
@@ -397,8 +402,9 @@
     <ClInclude Include="BoolTransCondition.h" />
     <ClInclude Include="BossActionController.h" />
     <ClInclude Include="BossActState_Base.h" />
+    <ClInclude Include="BossCombAttack.h" />
     <ClInclude Include="BossDamageState.h" />
-    <ClInclude Include="BossGroundAttack.h" />
+    <ClInclude Include="BossAttackState.h" />
     <ClInclude Include="BossGroundMove.h" />
     <ClInclude Include="BossGroundState.h" />
     <ClInclude Include="BossIdleState.h" />
@@ -432,10 +438,12 @@
     <ClInclude Include="CP_UIRenderer.h" />
     <ClInclude Include="CP_UISlider.h" />
     <ClInclude Include="CP_Rig.h" />
+    <ClInclude Include="CP_VisualEffect.h" />
     <ClInclude Include="CP_Weapon.h" />
     <ClInclude Include="CrossFadeAnimation.h" />
     <ClInclude Include="DepthStencil.h" />
     <ClInclude Include="DX11BulletPhisics.h" />
+    <ClInclude Include="DX11EffecseerManager.h" />
     <ClInclude Include="DXToBullet.h" />
     <ClInclude Include="AnimationNotify_Base.h" />
     <ClInclude Include="EnemyActState_Base.h" />
@@ -448,9 +456,8 @@
     <ClInclude Include="GameInput.h" />
     <ClInclude Include="IAnimInterpolate.h" />
     <ClInclude Include="IAnimParametersSetter.h" />
-    <ClInclude Include="IAnimParamSetGetter.h" />
     <ClInclude Include="IAssetCreater.h" />
-    <ClInclude Include="IBattleEnemy.h" />
+    <ClInclude Include="IAttacker.h" />
     <ClInclude Include="IClassNameGetter.h" />
     <ClInclude Include="IDamageable.h" />
     <ClInclude Include="HitStopper_Base.h" />
@@ -465,6 +472,7 @@
     <ClInclude Include="AnimNodePlayer_Base.h" />
     <ClInclude Include="MyClass2.h" />
     <ClInclude Include="NullTransform.h" />
+    <ClInclude Include="PlayerDamageState.h" />
     <ClInclude Include="PlayerGroundAttack.h" />
     <ClInclude Include="PlayerRollingMove.h" />
     <ClInclude Include="PlayerRushAttack.h" />
@@ -586,6 +594,7 @@
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="VertexBuffer.h" />
     <ClInclude Include="VertexShader.h" />
+    <ClInclude Include="VisualEffect.h" />
     <ClInclude Include="VS_Object.h" />
     <ClInclude Include="VS_Primitive.h" />
     <ClInclude Include="VS_Gouraud.h" />
@@ -714,15 +723,15 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty/stb_image;$(SolutionDir)ThirdParty/directxtk/include;$(SolutionDir)ThirdParty/json/include;$(SolutionDir)ThirdParty/imgui/include;$(SolutionDir)ThirdParty/implot/include;$(SolutionDir)ThirdParty/bullet/include;$(SolutionDir)ThirdParty/magic_enum/include;$(SolutionDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty/stb_image;$(SolutionDir)ThirdParty/directxtk/include;$(SolutionDir)ThirdParty/json/include;$(SolutionDir)ThirdParty/imgui/include;$(SolutionDir)ThirdParty/implot/include;$(SolutionDir)ThirdParty/bullet/include;$(SolutionDir)ThirdParty/magic_enum/include;$(SolutionDir)ThirdParty/effekseer/include;$(SolutionDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <AdditionalOptions>/wd26812 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty/assimp/x64/$(Configuration);$(SolutionDir)ThirdParty/directxtk/lib/x64/$(Configuration);$(SolutionDir)ThirdParty/bullet/bin/$(Configuration);$(SolutionDir)ThirdParty;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty/assimp/x64/$(Configuration);$(SolutionDir)ThirdParty/directxtk/lib/x64/$(Configuration);$(SolutionDir)ThirdParty/bullet/bin/$(Configuration);$(SolutionDir)ThirdParty/effekseer/lib/x64/$(Configuration);$(SolutionDir)ThirdParty;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Effekseerd.lib;EffekseerRendererDX11d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
       <ObjectFileOutput>$(ProjectDir)Assets\Shader\%(Filename).cso</ObjectFileOutput>
@@ -749,7 +758,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty/stb_image;$(SolutionDir)ThirdParty/directxtk/include;$(SolutionDir)ThirdParty/json/include;$(SolutionDir)ThirdParty/imgui/include;$(SolutionDir)ThirdParty/implot/include;$(SolutionDir)ThirdParty/bullet/include;$(SolutionDir)ThirdParty/magic_enum/include;$(SolutionDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty/stb_image;$(SolutionDir)ThirdParty/directxtk/include;$(SolutionDir)ThirdParty/json/include;$(SolutionDir)ThirdParty/imgui/include;$(SolutionDir)ThirdParty/implot/include;$(SolutionDir)ThirdParty/bullet/include;$(SolutionDir)ThirdParty/magic_enum/include;$(SolutionDir)ThirdParty/effekseer/include;$(SolutionDir)ThirdParty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <AdditionalOptions>/wd26812 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -758,8 +767,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty/assimp/x64/$(Configuration);$(SolutionDir)ThirdParty/directxtk/lib/x64/$(Configuration);$(SolutionDir)ThirdParty/bullet/bin/$(Configuration);$(SolutionDir)ThirdParty/bin/$(Configuration);$(SolutionDir)ThirdParty;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty/assimp/x64/$(Configuration);$(SolutionDir)ThirdParty/directxtk/lib/x64/$(Configuration);$(SolutionDir)ThirdParty/bullet/bin/$(Configuration);$(SolutionDir)ThirdParty/effekseer/lib/x64/$(Configuration);$(SolutionDir)ThirdParty/bin/$(Configuration);$(SolutionDir)ThirdParty;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Effekseer.lib;EffekseerRendererDX11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>

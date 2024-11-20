@@ -93,10 +93,12 @@ void PlayerAttackState::ImGuiDebug()
 {
 	PlayerActState_Base::ImGuiDebug();
 
-	ImGui::Checkbox("MoveFwd", &isMoveForward);
+	ImGuiComboAttack("nextCombo", nextCombAtkState);
+
 	ImGui::Text("AtkInfo");
 	pAttackInfo->ImGuiCall();
 
+	ImGui::Checkbox("MoveFwd", &isMoveForward);
 	if (isMoveForward)
 	{
 		ImGui::DragFloat("AtkMoveSpeed", &atkMoveSpeed, 0.1f);

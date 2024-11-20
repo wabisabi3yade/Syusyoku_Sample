@@ -134,6 +134,7 @@ void PlayerMoveState::Move()
 	}
 
 	Vector3 moveSpeed = moveVector * currentSpeed * deltaSpeed;
+
 	// ˆÚ“®
 	GetRB().SetVelocity(moveSpeed);
 

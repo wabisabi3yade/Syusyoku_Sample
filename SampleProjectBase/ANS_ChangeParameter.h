@@ -15,6 +15,7 @@ class ANS_ChangeParameter : public AnimationNotifyState, public IAnimParametersS
 		Terminal, // 変更前終了処理
 		Num
 	};
+
 	/// @brief セクション数
 	static constexpr short SECTION_CNT = static_cast<short>(SectionType::Num);
 

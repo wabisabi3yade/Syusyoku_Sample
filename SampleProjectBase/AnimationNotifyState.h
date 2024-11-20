@@ -22,8 +22,6 @@ public:
 
 	void Update(const float _lastPlayingRatio, const float _curPlayingRatio, bool _isLoop) override;
 
-	void Update(const u_int _lastPlayFrame, u_int _curPlayingFrame, bool _isLoop) override;
-
 	// 開始時のイベント割合をセットする
 	void SetStartRatio(float _startRatio);
 

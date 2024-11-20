@@ -9,6 +9,9 @@ class ANE_ChangeParameter : public AnimationNotifyEvent, public IAnimParametersS
 
 	/// @brief アニメーション内パラメータ
 	AnimationParameters* pAnimationParameters;
+
+	/// @brief イベントで代入する値
+	bool setParam;
 public:
 	ANE_ChangeParameter();
 	~ANE_ChangeParameter() {}
@@ -27,6 +30,12 @@ public:
 private:
 	/// @brief イベント起動時処理
 	void OnEvent() override;
+
+	/// @brief  初期化
+	void OnInitialize() override;
+
+	/// @brief 終了
+	void OnTerminal() override;
 
 	void ImGuiDebug() override;
 };

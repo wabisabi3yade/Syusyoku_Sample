@@ -37,7 +37,8 @@ AnimationNotifyFactory::AnimationNotifyFactory(AnimationParameters& _animationPa
 std::unique_ptr<AnimationNotify_Base> AnimationNotifyFactory::Create(AnimationNotify_Base::NotifyType _notifyType)
 {
 	// 種類の文字列
-	std::string notifyTypeStr = AnimationNotify_Base::GetTypeToStr(_notifyType);
+	std::string notifyTypeStr =
+		AnimationNotify_Base::GetTypeToStr(_notifyType);
 
 #ifdef _DEBUG
 	if (!animNotifyList.contains(_notifyType))
@@ -47,9 +48,9 @@ std::unique_ptr<AnimationNotify_Base> AnimationNotifyFactory::Create(AnimationNo
 	}
 #endif // _DEBUG
 
-	// 柵瀬
-	std::unique_ptr<AnimationNotify_Base> pCreate = animNotifyList[_notifyType]->
-		Create();
+	// 作成
+	std::unique_ptr<AnimationNotify_Base> pCreate =
+		animNotifyList[_notifyType]->Create();
 	pCreate->SetNotifyName(notifyTypeStr);
 
 	// アニメーションパラメータをセットする必要があるなら
@@ -63,11 +64,8 @@ std::unique_ptr<AnimationNotify_Base> AnimationNotifyFactory::Create(AnimationNo
 
 void AnimationNotifyFactory::Init()
 {
-	// イベント追加
 	ResisterNotify<ANE_DebugLog>(AnimationNotify_Base::NotifyType::ANE_DebugLog);
-	ResisterNotify<ANE_ChangeParameter>(AnimationNotify_Base::NotifyType::ANE_ChangeParameter);
-
-	// ステート追加
 	ResisterNotify<ANS_DebugLog>(AnimationNotify_Base::NotifyType::ANS_DebugLog);
+	ResisterNotify<ANE_ChangeParameter>(AnimationNotify_Base::NotifyType::ANE_ChangeParameter);
 	ResisterNotify<ANS_ChangeParameter>(AnimationNotify_Base::NotifyType::ANS_ChangeParameter);
 }

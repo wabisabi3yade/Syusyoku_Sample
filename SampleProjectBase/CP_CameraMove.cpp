@@ -31,8 +31,23 @@ bool CP_CameraMove::IsCanUpdate()
 	return true;
 }
 
+void CP_CameraMove::FindFollowObject()
+{
+	// シーン内から探す
+	SceneObjects& objects =
+		InSceneSystemManager::GetInstance()->GetSceneObjects();
+
+	GameObject* go = objects.GetSceneObject(followObjName);
+
+	if (go)	// あったらトランスフォームを取得
+		pTargetTransform = &go->GetConstTransform();
+}
+
 void CP_CameraMove::Start()
 {
+	// 追従先のオブジェクトを探す
+	FindFollowObject();
+
 	// カメラを取得する
 	pCamera = gameObject->GetComponent<CP_Camera>();
 	if (pCamera == nullptr)
@@ -67,21 +82,15 @@ void CP_CameraMove::ImGuiDebug()
 void CP_CameraMove::ImGuiSetTarget()
 {
 	// ターゲットの名前を探してセットする
-	std::string text = "target:";
-
-	if (pTargetTransform)
-		text += pTargetTransform->GetObjectName();
-
+	std::string text = "target:" + followObjName;
 	ImGui::Text(text.c_str());
+
+	// 入力で変更
 	static char str[IM_INPUT_BUF];
 	ImGui::InputText("targetName", str, IM_INPUT_BUF);
-
 	if (ImGui::Button("Set"))
 	{
-		SceneObjects& objects = InSceneSystemManager::GetInstance()->GetSceneObjects();
-		GameObject* go = objects.GetSceneObject(str);
-		if (go)
-			pTargetTransform = &go->GetConstTransform();
+		followObjName = str;
 	}
 }
 
@@ -90,8 +99,7 @@ nlohmann::json CP_CameraMove::Save()
 	auto data = Component::Save();
 
 	// ターゲットのオブジェクトをセーブ
-	if (pTargetTransform)
-		data["target"] = pTargetTransform->GetObjectName();
+	data["target"] = followObjName;
 
 	// 移動コントローラのセーブ
 	data["moveController"] = pMoveController->Save();
@@ -101,17 +109,10 @@ nlohmann::json CP_CameraMove::Save()
 
 void CP_CameraMove::Load(const nlohmann::json& _data)
 {
+	Component::Load(_data);
+
 	// ターゲット名からオブジェクト取得
-	std::string targetObjName;
-	LoadJsonString("target", targetObjName, _data);
-
-	// シーンないから探す
-	SceneObjects& sceneObjs = InSceneSystemManager::GetInstance()->GetSceneObjects();
-	GameObject* pTargetObject = sceneObjs.GetSceneObject(targetObjName);
-	if (!pTargetObject) return;
-
-	// 対象トランスフォームにセット
-	pTargetTransform = &pTargetObject->GetConstTransform();
+	LoadJsonString("target", followObjName, _data);
 
 	// コントローラのロード
 	nlohmann::json controllerData;

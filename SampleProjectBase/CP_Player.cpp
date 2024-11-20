@@ -15,15 +15,12 @@ CP_Player::CP_Player()
 {
 }
 
-void CP_Player::SetWeapon(CP_Weapon& _setWeapon)
-{
-	pWeapon = &_setWeapon;
-}
-
 void CP_Player::SetAttackInfo(const HashiTaku::AttackInformation& _setAttackInfo)
 {
+	if (!pWeapon) return;
+
 	pWeapon->SetAttackInfo(_setAttackInfo);
-	
+
 	pAnimation->SetBool(ATKCOL_ANIMPARAM_NAME, false);
 }
 
@@ -49,6 +46,8 @@ void CP_Player::Start()
 {
 	CP_Character::Start();
 
+	CP_RigidBody* pRb = GetGameObject().GetComponent<CP_RigidBody>();
+
 	//アニメーション関係生成
 	pAnimation = gameObject->GetComponent<CP_Animation>();
 	pAttackCollisionFlag = pAnimation->GetParameterPointer<bool>(ATKCOL_ANIMPARAM_NAME);
@@ -56,17 +55,15 @@ void CP_Player::Start()
 	// アニメーション変更オブザーバーを追加
 	pAnimation->AddChangeAnimObserver(pActionController->GetChangeAnimObserver());
 
-	CP_RigidBody* pRb = GetGameObject().GetComponent<CP_RigidBody>();
-
 	// アクションコントローラー開始処理
 	pActionController->Init(pAnimation, pRb);
+
+	// 武器オブジェクトをセット
+	SetWeaponObject();
 }
 
 void CP_Player::Update()
 {
-	//// 更新できるかチェック
-	//if (!GetCanUpdate()) return;
-
 	CP_Character::Update();
 
 	// アクション周りを更新
@@ -79,12 +76,6 @@ void CP_Player::Update()
 void CP_Player::Draw()
 {
 	CP_Character::Draw();
-
-//#ifdef  EDIT
-//
-//	Transform& t = GetTransform();
-//	Geometory::AddLine(t.GetPosition(), t.GetPosition() + t.Forward() * 3.0f, Color(0, 0, 1));
-//#endif //  EDIT
 }
 
 void CP_Player::OnDestroy()
@@ -97,23 +88,27 @@ void CP_Player::OnDestroy()
 	}
 }
 
+void CP_Player::SetWeaponObject()
+{
+	auto pWeaponObj = InSceneSystemManager::GetInstance()->
+		GetSceneObjects().GetSceneObject(weaponObjName);
+	if (!pWeaponObj) return;
+
+	// 武器コンポーネントを取得
+	if (CP_Weapon* pGetWeapon = pWeaponObj->GetComponent<CP_Weapon>())
+	{
+		pWeapon = pGetWeapon;
+	}
+}
+
 void CP_Player::OnHitStopBegin()
 {
 	CP_Character::OnHitStopBegin();
-
-	//// ヒットストップ前の再生速度を取得
-	//hitStopBeforeAnimSpeed = pAnimation->GetControllerPlaySpeed();
-
-	//// ヒットストップを演出するためにアニメーションの速度を0にする
-	//pAnimation->SetControllerPlaySpeed(0.0f);
 }
 
 void CP_Player::OnHitStopEnd()
 {
 	CP_Character::OnHitStopEnd();
-
-	//// アニメーションの速度を戻す
-	//pAnimation->SetControllerPlaySpeed(hitStopBeforeAnimSpeed);
 }
 
 void CP_Player::ImGuiDebug()
@@ -145,27 +140,13 @@ void CP_Player::ImGuiSetWeapon()
 		ImGui::Text("Weapon is Setting");
 	}
 
+	// 武器オブジェクト名を入力
 	static char input[IM_INPUT_BUF];
 	ImGui::InputText("Weapon", input, IM_INPUT_BUF);
-
 	if (ImGui::Button("Set"))
 	{
-		auto pWeaponObj = InSceneSystemManager::GetInstance()->GetSceneObjects().GetSceneObject(input);
-		if (!pWeaponObj) return;
-
-		// 武器コンポーネントを取得
-		if (CP_Weapon* pGetWeapon = pWeaponObj->GetComponent<CP_Weapon>())
-		{
-			SetWeapon(*pGetWeapon);
-		}
-		else
-		{
-			HASHI_DEBUG_LOG("CP_Weaponがありません");
-		}
+		weaponObjName = input;
 	}
-
-	if (ImGui::Button("Release"))
-		pWeapon = nullptr;
 
 #endif //  EDIT
 }
@@ -180,8 +161,7 @@ nlohmann::json CP_Player::Save()
 	auto data = CP_Character::Save();
 	data["actionController"] = pActionController->Save();
 
-	if (pWeapon)
-		data["weaponObjName"] = pWeapon->GetGameObject().GetName();
+	data["weaponObjName"] = weaponObjName;
 
 	return data;
 }
@@ -194,18 +174,7 @@ void CP_Player::Load(const nlohmann::json& _data)
 	if (HashiTaku::LoadJsonData("actionController", actionControllerData, _data))
 		pActionController->Load(actionControllerData);
 
-	std::string weaponObjName;
-	if (HashiTaku::LoadJsonString("weaponObjName", weaponObjName, _data))
-	{
-		auto pWeaponObj = InSceneSystemManager::GetInstance()->GetSceneObjects().GetSceneObject(weaponObjName);
-		if (!pWeaponObj) return;
-
-		// 武器コンポーネントを取得
-		if (CP_Weapon* pGetWeapon = pWeaponObj->GetComponent<CP_Weapon>())
-		{
-			SetWeapon(*pGetWeapon);
-		}
-	}
+	HashiTaku::LoadJsonString("weaponObjName", weaponObjName, _data);
 }
 
 void CP_Player::SetWeaponAttackFlag()
@@ -227,6 +196,7 @@ bool CP_Player::GetCanUpdate() const
 
 void CP_Player::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo)
 {
+	pActionController->OnDamage(_attackInfo);
 }
 
 void CP_Player::OnDeathBehavior()

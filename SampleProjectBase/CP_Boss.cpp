@@ -1,9 +1,10 @@
 #include "pch.h"
 #include "CP_Boss.h"
 #include "GameObject.h"
+#include "InSceneSystemManager.h"
 
 CP_Boss::CP_Boss()
-	: pAnimation(nullptr), hitStopBeforeAnimSpeed(0.0f)
+	: pAnimation(nullptr)
 {
 }
 
@@ -12,6 +13,11 @@ void CP_Boss::Init()
 	CP_Enemy::Init();
 
 	pActionController = std::make_unique<BossActionController>(*this);
+}
+
+void CP_Boss::SetAttackInfo(const HashiTaku::AttackInformation& _attackInfo)
+{
+	pWeapon->SetAttackInfo(_attackInfo);
 }
 
 nlohmann::json CP_Boss::Save()
@@ -55,8 +61,6 @@ void CP_Boss::Start()
 
 void CP_Boss::Update()
 {
-	if (!GetCanUpdate()) return;
-
 	CP_Enemy::Update();
 
 	pActionController->UpdateCall();
@@ -69,40 +73,44 @@ void CP_Boss::Draw()
 	pActionController->DebugDisplay();
 }
 
+void CP_Boss::SetupWeapon()
+{
+	auto pWeaponObj = InSceneSystemManager::GetInstance()->
+		GetSceneObjects().GetSceneObject(weaponObjName);
+	if (!pWeaponObj) return;
+
+	// 武器コンポーネントを取得
+	if (CP_Weapon* pGetWeapon = pWeaponObj->GetComponent<CP_Weapon>())
+	{
+		pWeapon = pGetWeapon;
+	}
+}
+
 bool CP_Boss::GetCanUpdate()
 {
-	if (GetIsHitStopping()) return false;
-
 	return true;
 }
 
 void CP_Boss::OnHitStopBegin()
 {
 	CP_Enemy::OnHitStopBegin();
-
-	// アニメーションを止める
-	hitStopBeforeAnimSpeed = pAnimation->GetControllerPlaySpeed();
-	pAnimation->SetControllerPlaySpeed(0.0f);
 }
 
 void CP_Boss::OnHitStopEnd()
 {
 	CP_Enemy::OnHitStopEnd();
-
-	// アニメーションの速度を戻す
-	pAnimation->SetControllerPlaySpeed(hitStopBeforeAnimSpeed);
 }
 
 void CP_Boss::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo)
 {
 	CP_Enemy::OnDamageBehavior(_attackInfo);
 
-	pActionController->OnDamage();
+	pActionController->OnDamage(_attackInfo);
 }
 
 void CP_Boss::ImGuiDebug()
 {
 	CP_Enemy::ImGuiDebug();
-
+	ImGui::InputText("weaponName", &weaponObjName[0], IM_INPUT_BUF);
 	pActionController->ImGuiCall();
 }

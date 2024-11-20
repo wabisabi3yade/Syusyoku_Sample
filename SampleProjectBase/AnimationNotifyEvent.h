@@ -17,8 +17,6 @@ public:
 
 	void Update(const float _lastPlayingRatio, const float _curPlayingRatio, bool _isLoop) override;
 
-	void Update(const u_int _lastPlayFrame, const u_int _curPlayingFrame, bool _isLoop) override;
-
 	// イベントの割合をセット
 	void SetEventRatio(float _ratio);
 
@@ -31,6 +29,12 @@ public:
 protected:
 	/// @brief イベント起動時処理
 	virtual void OnEvent() = 0;
+
+	/// @brief 始まったときの開始処理
+	virtual void OnInitialize() {};
+
+	/// @brief 次のアニメーションに切り替える前の終了処理
+	virtual void OnTerminal() {};
 
 	void ImGuiDebug() override;
 };

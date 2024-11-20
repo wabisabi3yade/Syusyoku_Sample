@@ -6,25 +6,31 @@
 
 #include "BossIdleState.h"
 #include "BossGroundMove.h"
-#include "BossGroundAttack.h"
+#include "BossAttackState.h"
+#include "BossCombAttack.h"
 #include "BossDamageState.h"
 
 // 状態を表すアニメーションパラメータ名
-constexpr auto STATE_PARAM_NAME("state");	
+constexpr auto STATE_PARAM_NAME("state");
 // のけぞりができるかアニメーションパラメータ名
-constexpr auto CAN_KNOCK_PARAM_NAME("canKnock");	
+constexpr auto CAN_KNOCK_PARAM_NAME("canKnock");
 
-BossActionController::BossActionController(CP_Boss& _boss): 
+BossActionController::BossActionController(CP_Boss& _boss) :
 	EnemyActionController(_boss, "bossActCon"), pPlayerObject(nullptr), pCanKnock(nullptr),
 	defaultState(BossActState_Base::BossState::Idle)
 {
 	// ステート作成
 	using enum BossActState_Base::BossState;
-	CreateState<BossIdleState>(Idle);
-	CreateState<BossGroundMove>(Walk);
-	CreateState<BossGroundMove>(Run);
-	CreateState<BossGroundAttack>(Attack1);
-	CreateState<BossDamageState>(Damage_Small);
+	using enum ActDistance;
+	CreateState<BossIdleState>(Idle, { ActDistance::Far });
+	CreateState<BossGroundMove>(Walk, { ActDistance::Far });
+	CreateState<BossGroundMove>(Run, { ActDistance::Far });
+
+	CreateState<BossDamageState>(Damage_Small, {});
+
+	CreateState<BossCombAttack>(CombAttack1, { ActDistance::Short });
+	CreateState<BossAttackState>(JumpAttack, 
+		{ ActDistance::Far,ActDistance::Short });
 
 	// デフォルトノード設定
 	SetDefaultNode(static_cast<int>(defaultState));
@@ -48,13 +54,13 @@ void BossActionController::Update()
 bool BossActionController::ChangeState(BossActState_Base::BossState _nextState, bool _isForce)
 {
 	if (!ChangeNode(static_cast<int>(_nextState), _isForce)) return false;
-		
+
 	// アニメーションにも渡す
 	pAnimation->SetInt(STATE_PARAM_NAME, currentStateKey);
 	return true;
 }
 
-void BossActionController::OnDamage()
+void BossActionController::OnDamage(const HashiTaku::AttackInformation& _atkInfo)
 {
 	assert(pCurrentNode && "現在のノードが設定されていません");
 
@@ -65,6 +71,11 @@ void BossActionController::OnDamage()
 void BossActionController::SetPlayer(CP_Player& _playerObj)
 {
 	pPlayerObject = &_playerObj;
+}
+
+void BossActionController::SetAttackInfo(const HashiTaku::AttackInformation& _atkInfo)
+{
+	GetBoss().SetAttackInfo(_atkInfo);
 }
 
 CP_Boss& BossActionController::GetBoss()
@@ -98,7 +109,7 @@ void BossActionController::Load(const nlohmann::json& _data)
 	EnemyActionController::Load(_data);
 
 	bool isLoad = HashiTaku::LoadJsonEnum<BossActState_Base::BossState>(
-		"defaultState", 
+		"defaultState",
 		defaultState,
 		_data);
 
@@ -117,12 +128,10 @@ bool BossActionController::IsCanBossUpdate()
 #ifdef EDIT
 	if (!pPlayerObject)
 	{
-		assert(!"プレイヤーセットしてください");
 		return false;
 	}
 	if (!pAnimation)
 	{
-		assert(!"アニメーションセットしてください");
 		return false;
 	}
 #endif

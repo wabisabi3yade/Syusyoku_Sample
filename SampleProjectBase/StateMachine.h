@@ -195,8 +195,8 @@ namespace HashiTaku
 	template<class T>
 	inline bool StateMachine_Base<T>::CanChengeNode(const T& _changeKey)
 	{
-		// “¯‚¶ó‘Ô‚É‘JˆÚ‚µ‚æ‚¤‚Æ‚µ‚Ä‚¢‚é‚È‚ç‘JˆÚ‚µ‚È‚¢
-		if (_changeKey == currentStateKey) return false;
+		//// “¯‚¶ó‘Ô‚É‘JˆÚ‚µ‚æ‚¤‚Æ‚µ‚Ä‚¢‚é‚È‚ç‘JˆÚ‚µ‚È‚¢
+		//if (_changeKey == currentStateKey) return false;
 		
 		// Šù‚É‚±‚ÌƒtƒŒ[ƒ€’†‚É•ÏX‚³‚ê‚Ä‚¢‚é‚È‚ç
 		if (isChangeCurFlame) return false;

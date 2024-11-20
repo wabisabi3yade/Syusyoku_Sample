@@ -14,8 +14,8 @@ namespace DXSimp = DirectX::SimpleMath;
 
 PlayerActState_Base::PlayerActState_Base() :
 	pActionController(nullptr), stateType(PlayerState::None), 
-	cancelPlayState(PlayerState::None),	targetLookRotateSpeed(40.0f),
-	isAttackInput(false), isTargetLookAtEnemy(false)
+	cancelPlayState(PlayerState::None),	placeElement(ActPlaceElement::Ground),
+	targetLookRotateSpeed(40.0f),isAttackInput(false), isTargetLookAtEnemy(false)
 {
 	pPlayerInput = &InSceneSystemManager::GetInstance()->GetInput();
 	pCamera = &InSceneSystemManager::GetInstance()->GetMainCamera();
@@ -127,6 +127,11 @@ Transform& PlayerActState_Base::GetTransform()
 	return pActionController->GetPlayer().GetTransform();
 }
 
+CP_Animation* PlayerActState_Base::GetAnimation()
+{
+	return pActionController->GetAnimation();
+}
+
 float PlayerActState_Base::DeltaTime() const
 {
 	return pActionController->GetCharacter().DeltaTime();
@@ -208,13 +213,13 @@ void PlayerActState_Base::ImGuiDebug()
 {
 }
 
-bool PlayerActState_Base::ImGuiComboPlayerState(const std::string& _caption, PlayerState& _currentState)
+bool PlayerActState_Base::ImGuiComboAttack(const std::string& _caption, PlayerState& _currentState)
 {
 #ifdef EDIT
 
 	// コンポボックスで変更
 	std::string curStateStr = std::string(magic_enum::enum_name(_currentState));
-	bool isChange = ImGuiMethod::ComboBox(_caption, curStateStr, playerStateNameList);
+	bool isChange = ImGuiMethod::ComboBox(_caption, curStateStr, playerCombAtkList);
 
 	if (isChange)
 	{

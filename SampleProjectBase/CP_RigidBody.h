@@ -109,6 +109,10 @@ public:
 	/// @return 衝突タイプ判定クラス変数
 	CollisionTypeJudge& GetColTypeJudge() const;
 
+	/// @brief 剛体の速度を取得する
+	/// @return 速度
+	DirectX::SimpleMath::Vector3 GetVelocity() const;
+
 	void ImGuiDebug() override;
 
 	/// @brief セーブする

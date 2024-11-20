@@ -25,6 +25,10 @@
 // アニメーション
 #include "AnimationData.h"
 
+// エフェクト
+#include "DX11EffecseerManager.h"
+#include "VisualEffect.h"
+
 namespace fs = std::filesystem;
 
 using namespace DirectX::SimpleMath;
@@ -575,6 +579,37 @@ AnimationData* AssetLoader::AnimationLoad(const std::string& _animPath, const st
 	return pRetAnim;
 }
 
+VisualEffect* AssetLoader::VFXLoadForEffekseer(const std::string& _pathName, float _loadScale)
+{
+	DX11EffecseerManager* pEffekseerManager = DX11EffecseerManager::GetInstance();
+	const auto& manager = pEffekseerManager->GetManager();
+
+	// string→u16Stringに変換
+	auto u16Path = ConvertToU16String(_pathName);
+
+	// ロードする
+	auto effect = Effekseer::Effect::Create(manager, u16Path.c_str(), _loadScale);
+	if (effect == nullptr)	// 失敗したなら
+	{
+		HASHI_DEBUG_LOG(_pathName + " ロード失敗");
+		return nullptr;
+	}
+
+	// エフェクトを作成
+	std::unique_ptr<VisualEffect> pCreateVFX = 
+		std::make_unique<VisualEffect>(effect, _loadScale);
+	VisualEffect* pRetPtr = pCreateVFX.get();
+
+	// パス保存
+	pCreateVFX->SetPathName(_pathName);
+
+	// アセット管理に送る
+	std::string vfxName = GetPathNameNotExt(_pathName);
+	SendAsset<VisualEffect>(vfxName, std::move(pCreateVFX));
+
+	return pRetPtr;
+}
+
 std::unique_ptr<Mesh_Group> AssetLoader::CreateMeshGroup(const aiScene* _pScene, const std::string& _assetName, float _loadScale, const DirectX::SimpleMath::Vector3& _loadAngles)
 {
 	// ボーンがなかったら
@@ -809,6 +844,16 @@ std::string AssetLoader::GetPathNameNotExt(const std::string& _pathName)
 {
 	fs::path fsPath = _pathName;
 	return fsPath.stem().string();
+}
+
+std::u16string AssetLoader::ConvertToU16String(const std::string& _string)
+{
+	std::u16string u16Str;
+	for (unsigned char c : _string)
+	{
+		u16Str.push_back(c);
+	}
+	return u16Str;
 }
 
 void AssetLoader::UpdateSize(const DirectX::SimpleMath::Vector3& _vertexPos, DirectX::SimpleMath::Vector3& _max, DirectX::SimpleMath::Vector3& _min)
