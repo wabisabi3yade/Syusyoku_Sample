@@ -44,6 +44,8 @@ void AnimationNotifyEvent::Load(const nlohmann::json& _data)
 
 void AnimationNotifyEvent::ImGuiDebug()
 {
+	AnimationNotify_Base::ImGuiDebug();
+
 	if (UseFrame())
 	{
 		int imInt = static_cast<int>(eventFrame);

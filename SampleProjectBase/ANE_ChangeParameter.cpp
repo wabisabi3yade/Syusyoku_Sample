@@ -54,6 +54,8 @@ void ANE_ChangeParameter::OnTerminal()
 
 void ANE_ChangeParameter::ImGuiDebug()
 {
+	AnimationNotifyEvent::ImGuiDebug();
+
 	// パラメータ名を変更する
 	std::vector<const std::string*> parameterNames;
 	pAnimationParameters->GetNameList(parameterNames);	// パラメータ名一覧取得

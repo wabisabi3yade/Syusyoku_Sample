@@ -18,6 +18,9 @@ class CP_Boss : public CP_Enemy
 
 	/// @brief 武器オブジェクト
 	CP_Weapon* pWeapon;
+
+	/// @brief 攻撃判定
+	const bool* pCanAttack;
 public:
 	CP_Boss();
 	~CP_Boss() {}
@@ -40,6 +43,9 @@ private:
 	void Start() override;
 	void Update() override;
 	void Draw() override;
+
+	/// @brief 攻撃できるか更新する
+	void UpdateAttackCollision();
 
 	/// @brief 武器をセットする
 	void SetupWeapon();

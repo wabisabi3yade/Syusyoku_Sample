@@ -131,7 +131,23 @@ bool PlayerActionController::ChangeState(const PlayerActState_Base::PlayerState&
 
 void PlayerActionController::OnDamage(const HashiTaku::AttackInformation& _atkInfo)
 {
-	ChangeState(PlayerActState_Base::PlayerState::Damage_S, true);
+	using enum HashiTaku::AttackInformation::AttackLevel;
+	switch (_atkInfo.GetAttackLevel())
+	{
+
+	case Low :
+	case Mid:
+		ChangeState(PlayerActState_Base::PlayerState::Damage_S, true);
+		break;
+
+	case High:
+	case SuperHigh:
+		ChangeState(PlayerActState_Base::PlayerState::Damage_L, true);
+		break;
+
+	default:
+		break;
+	}
 }
 
 bool PlayerActionController::GetIsTargeting() const

@@ -64,7 +64,7 @@ namespace HashiTaku
 
 	protected:
 		/// @brief 開始処理
-		virtual void Begin();
+		void Begin();
 
 		/// @brief 更新処理
 		virtual void Update();
@@ -190,6 +190,8 @@ namespace HashiTaku
 	inline void StateMachine_Base<T>::Begin()
 	{
 		pCurrentNode = pDefaultNode;
+
+		pCurrentNode->OnStart();
 	}
 
 	template<class T>
