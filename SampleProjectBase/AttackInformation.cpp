@@ -40,6 +40,11 @@ u_int HashiTaku::AttackInformation::GetHitStopFlame() const
 	return hitStopFrame;
 }
 
+HashiTaku::AttackInformation::AttackLevel HashiTaku::AttackInformation::GetAttackLevel() const
+{
+	return atkLevel;
+}
+
 nlohmann::json HashiTaku::AttackInformation::Save()
 {
 	nlohmann::json data;

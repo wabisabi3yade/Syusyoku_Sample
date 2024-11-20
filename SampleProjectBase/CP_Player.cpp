@@ -134,12 +134,6 @@ void CP_Player::ImGuiSetWeapon()
 {
 #ifdef  EDIT
 
-	// シーン内からオブジェクトを取得する
-	if (pWeapon)
-	{
-		ImGui::Text("Weapon is Setting");
-	}
-
 	// 武器オブジェクト名を入力
 	static char input[IM_INPUT_BUF];
 	ImGui::InputText("Weapon", input, IM_INPUT_BUF);

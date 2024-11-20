@@ -53,9 +53,9 @@ void BossAttackState::Load(const nlohmann::json& _data)
 
 	// 攻撃情報をロード
 	nlohmann::json atkLoadDatas;
-	if (HashiTaku::LoadJsonData("atkInfos", atkLoadDatas, _data))
+	if (HashiTaku::LoadJsonDataArray("atkInfos", atkLoadDatas, _data))
 	{
-		atkLoadDatas.clear();	// 今の情報をリセット
+		attackInfos.clear();	// 今の情報をリセット
 		for (auto& atkLoadData : atkLoadDatas)
 		{
 			HashiTaku::AttackInformation atkInfo;

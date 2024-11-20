@@ -13,7 +13,7 @@ void BossCombAttack::OnStartBehavior()
 
 	// リアタック変数を取っていないなら
 	if (!pIsReAttack)
-		GetAnimation()->GetParameterPointer<bool>(REATTACK_PARAMNAME);
+		pIsReAttack = GetAnimation()->GetParameterPointer<bool>(REATTACK_PARAMNAME);
 
 	// 初期化
 	curAttackTime = 1;	// 1段目から入る
@@ -45,10 +45,12 @@ void BossCombAttack::Load(const nlohmann::json& _data)
 void BossCombAttack::UpdateReAttack()
 {
 	// リアタックのタイミングでないなら
-	if (!pIsReAttack) return;
+	if (!(*pIsReAttack)) return;
 
 	// リアタックフラグを降ろす
 	GetAnimation()->SetBool(REATTACK_PARAMNAME, false);
+
+	HASHI_DEBUG_LOG("a");
 
 	// 総攻撃回数を超えるなら
 	if(curAttackTime + 1 > attackTimeCnt)	
@@ -60,7 +62,7 @@ void BossCombAttack::UpdateReAttack()
 	// リアタック更新
 	curAttackTime++;
 
-	assert(static_cast<u_int>(attackInfos.size()) < curAttackTime && 
+	assert(static_cast<u_int>(attackInfos.size()) >= curAttackTime && 
 		"攻撃情報が攻撃回数以下です");
 
 	// 対応した攻撃情報をセットする

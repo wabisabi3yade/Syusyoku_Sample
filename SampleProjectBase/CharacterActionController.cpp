@@ -11,9 +11,6 @@ CharacterActionController::CharacterActionController(CP_Character& _character, c
 
 void CharacterActionController::Init(CP_Animation* _pAnimation, CP_RigidBody* _pRigidBody)
 {
-	// ステートマシン共通開始処理
-	StateMachine_Base::Begin();
-
 	if (_pAnimation)
 	{
 		// アニメーションコントローラーを各ステートに渡す
@@ -23,6 +20,9 @@ void CharacterActionController::Init(CP_Animation* _pAnimation, CP_RigidBody* _p
 	}
 
 	pRigidBody = _pRigidBody;
+
+	// ステートマシン共通開始処理
+	StateMachine_Base::Begin();
 }
 
 

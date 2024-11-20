@@ -14,7 +14,6 @@ namespace HashiTaku
 			High,	// 高
 			SuperHigh	// 最大
 		};
-
 	private:
 		/// @brief 攻撃時のダメージ
 		float atkDamage;
@@ -48,6 +47,10 @@ namespace HashiTaku
 		/// @brief ヒットストップで止めるフレーム数を取得
 		/// @return ヒットストップ数
 		u_int GetHitStopFlame() const;
+
+		/// @brief 攻撃レベルを取得
+		/// @return 攻撃レベル
+		AttackLevel GetAttackLevel() const;
 
 		nlohmann::json Save() override;
 		void Load(const nlohmann::json& _data) override;
