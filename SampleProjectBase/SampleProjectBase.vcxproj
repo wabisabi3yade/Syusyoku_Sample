@@ -176,8 +176,9 @@
     <ClCompile Include="BoolTransCondition.cpp" />
     <ClCompile Include="BossActionController.cpp" />
     <ClCompile Include="BossActState_Base.cpp" />
+    <ClCompile Include="BossCombAttack.cpp" />
     <ClCompile Include="BossDamageState.cpp" />
-    <ClCompile Include="BossGroundAttack.cpp" />
+    <ClCompile Include="BossAttackState.cpp" />
     <ClCompile Include="BossGroundMove.cpp" />
     <ClCompile Include="BossGroundState.cpp" />
     <ClCompile Include="BossIdleState.cpp" />
@@ -401,8 +402,9 @@
     <ClInclude Include="BoolTransCondition.h" />
     <ClInclude Include="BossActionController.h" />
     <ClInclude Include="BossActState_Base.h" />
+    <ClInclude Include="BossCombAttack.h" />
     <ClInclude Include="BossDamageState.h" />
-    <ClInclude Include="BossGroundAttack.h" />
+    <ClInclude Include="BossAttackState.h" />
     <ClInclude Include="BossGroundMove.h" />
     <ClInclude Include="BossGroundState.h" />
     <ClInclude Include="BossIdleState.h" />

@@ -1481,7 +1481,7 @@
     <ClCompile Include="CP_Boss.cpp">
       <Filter>ソース ファイル\Component\InGame\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="BossGroundAttack.cpp">
+    <ClCompile Include="BossAttackState.cpp">
       <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Ground</Filter>
     </ClCompile>
     <ClCompile Include="BossGroundMove.cpp">
@@ -1542,6 +1542,9 @@
       <Filter>ソース ファイル\Object\Player\Action\PlayerState\Attack</Filter>
     </ClCompile>
     <ClCompile Include="PlayerDamageState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BossCombAttack.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -2194,7 +2197,7 @@
     <ClInclude Include="CP_BattleManager.h">
       <Filter>ソース ファイル\Component\BattleManager</Filter>
     </ClInclude>
-    <ClInclude Include="BossGroundAttack.h">
+    <ClInclude Include="BossAttackState.h">
       <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Ground</Filter>
     </ClInclude>
     <ClInclude Include="BossGroundMove.h">
@@ -2258,6 +2261,9 @@
       <Filter>ソース ファイル\Object\Player\Action\PlayerState\Attack</Filter>
     </ClInclude>
     <ClInclude Include="PlayerDamageState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BossCombAttack.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

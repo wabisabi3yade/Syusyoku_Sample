@@ -36,35 +36,6 @@ void AnimationNotifyState::Update(const float _lastPlayingRatio, const float _cu
 	}
 }
 
-void AnimationNotifyState::Update(const u_int _lastPlayFrame, u_int _curPlayingFrame, bool _isLoop)
-{
-	if (!GetIsActive()) return;
-
-	if (_isLoop)
-	{
-		if (_lastPlayFrame > startEventFrame)
-		{
-			Begin();
-			End();
-		}
-	}
-	else
-	{
-		// ”ÍˆÍ“à‚Å‚È‚¢‚È‚çI—¹‚·‚é
-		if (_curPlayingFrame > startEventFrame)
-		{
-			if (_lastPlayFrame < startEventFrame)
-				Begin();
-
-			if (_curPlayingFrame < endEventFrame)
-				Tick();
-		}
-
-		if (_lastPlayFrame < endEventFrame && _curPlayingFrame > endEventFrame)
-			End();
-	}
-}
-
 void AnimationNotifyState::SetStartRatio(float _startRatio)
 {
 	// I—¹‚æ‚è‚àŒã‚É‚Í’u‚©‚È‚¢

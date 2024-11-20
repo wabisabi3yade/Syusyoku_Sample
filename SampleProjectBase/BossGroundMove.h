@@ -2,7 +2,7 @@
 #include "BossGroundState.h"
 
 /// @brief ボス地上移動
-class BossGroundMove : public BossGroundState
+class BossGroundMove : public BossActState_Base
 {
 	/// @brief  最大移動速度
 	float maxSpeed;

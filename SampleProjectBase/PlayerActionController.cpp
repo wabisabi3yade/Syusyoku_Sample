@@ -131,7 +131,7 @@ bool PlayerActionController::ChangeState(const PlayerActState_Base::PlayerState&
 
 void PlayerActionController::OnDamage(const HashiTaku::AttackInformation& _atkInfo)
 {
-
+	ChangeState(PlayerActState_Base::PlayerState::Damage_S, true);
 }
 
 bool PlayerActionController::GetIsTargeting() const

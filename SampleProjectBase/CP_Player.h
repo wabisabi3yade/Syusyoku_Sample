@@ -7,6 +7,9 @@ class CP_Weapon;
 
 class CP_Player : public CP_Character
 {
+	/// @brief 武器のオブジェクト名
+	std::string weaponObjName;
+
 	/// @brief アクションコントローラー
 	std::unique_ptr<PlayerActionController> pActionController;
 
@@ -34,10 +37,6 @@ public:
 	/// @brief ヒットストップ終了した時の処理
 	void OnHitStopEnd() override;
 
-	/// @brief 武器コンポーネントをセット
-	/// @param _setWeapon 武器コンポーネント
-	void SetWeapon(CP_Weapon& _setWeapon);
-
 	/// @brief 攻撃情報をセットする
 	/// @param _setAttackInfo 攻撃情報
 	void SetAttackInfo(const HashiTaku::AttackInformation& _setAttackInfo);
@@ -55,6 +54,9 @@ private:
 	void Update() override;
 	void Draw() override;
 	void OnDestroy() override;
+
+	/// @brief 武器のオブジェクトをセットする
+	void SetWeaponObject();
 
 	/// @brief 武器の攻撃フラグをセット
 	void SetWeaponAttackFlag();

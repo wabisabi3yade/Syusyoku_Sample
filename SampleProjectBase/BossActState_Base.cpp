@@ -71,6 +71,11 @@ Transform& BossActState_Base::GetPlayerTransform()
 	return pActionController->GetPlayer().GetTransform();
 }
 
+CP_Animation* BossActState_Base::GetAnimation()
+{
+	return pActionController->GetAnimation();
+}
+
 float BossActState_Base::DeltaTime() const
 {
 	return pActionController->GetCharacter().DeltaTime();

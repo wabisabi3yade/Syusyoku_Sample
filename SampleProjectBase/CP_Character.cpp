@@ -52,10 +52,8 @@ void CP_Character::OnHitStopBegin()
 
 	// オブジェクトの経過速度を止める
 	GameObject& go = GetGameObject();
-	hsBeforeDeltaTime = go.GetDeltdaSpeed();
+	hsBeforeDeltaTime = go.GetDeltaSpeed();
 	go.SetDeltaTimeSpeed(0.0f);
-
-	HASHI_DEBUG_LOG("atatta");
 }
 
 void CP_Character::OnHitStopEnd()

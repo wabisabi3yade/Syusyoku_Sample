@@ -81,22 +81,3 @@ void AnimationNotifyEvent::Update(const float _lastPlayingRatio, const float _cu
 		OnEvent();
 	}
 }
-
-void AnimationNotifyEvent::Update(const u_int _lastPlayFrame, const u_int _curPlayingFrame, bool _isLoop)
-{
-	if (!GetIsActive()) return;
-
-	if (_isLoop)
-	{
-		if (eventFrame > _lastPlayFrame || eventFrame < _curPlayingFrame)
-			OnEvent();
-	}
-	else
-	{
-		// ‘O‰ñ‚ÆŒ»Ý‚ÌŠ„‡”ÍˆÍ‚É“ü‚Á‚Ä‚¢‚é‚È‚çˆ—
-		if (eventFrame < _lastPlayFrame) return;
-		if (eventFrame > _curPlayingFrame) return;
-
-		OnEvent();
-	}
-}

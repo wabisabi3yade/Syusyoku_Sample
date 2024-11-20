@@ -1,5 +1,6 @@
 #pragma once
 #include "EnemyActState_Base.h"
+#include "CP_Animation.h"
 
 class BossActionController;
 
@@ -19,8 +20,8 @@ public:
 		Damage_Small,	// 小ダメージ
 
 		// 攻撃
-		Attack1 = 100,
-		Attack2,
+		CombAttack1 = 100,	// コンビネーション攻撃
+		JumpAttack,	// ジャンプ攻撃
 
 		// 最後
 		None
@@ -54,8 +55,8 @@ public:
 	/// @brief ダメージ時処理
 	void OnDamage();
 
-	nlohmann::json Save();
-	void Load(const nlohmann::json& _data);
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
 protected:
 	/// @brief 状態切り替え開始処理
 	virtual void OnStartBehavior() {}
@@ -82,6 +83,10 @@ protected:
 	/// @return プレイヤーのトランスフォーム
 	Transform& GetPlayerTransform();
 
+	/// @brief アニメーションコントローラポーネントを取得
+	/// @return コンポーネント
+	CP_Animation* GetAnimation();
+
 	/// @brief 経過時間を取得する
 	/// @return 経過時間
 	float DeltaTime() const;
@@ -92,12 +97,15 @@ private:
 	void CommmonCheckTransition();
 
 protected:
+	// パラメータ
 	/// @brief 移動速度のアニメーションパラメータ名
 	static constexpr auto SPEED_ANIMPARAM_NAME{ "speed" };
 	/// @brief 攻撃トリガーのアニメーションパラメータ名
 	static constexpr auto ATTACKTRIGGER_ANIMPARAM_NAME{ "attackTrigger" };
 	/// @brief 攻撃トリガーのアニメーションパラメータ名
 	static constexpr auto DAMAGETRIGGER_ANIMPARAM_NAME{ "damageTrigger" };
+
+	// アニメーション
 	/// @brief 待機状態のアニメーション名
 	static constexpr auto IDLE_ANIM_NAME{ "Idle" };
 	/// @brief 走り状態のアニメーション名

@@ -137,7 +137,7 @@ float Component::DeltaTime() const
 
 float Component::GetDeltaSpeed() const
 {
-    return gameObject->GetDeltdaSpeed();
+    return gameObject->GetDeltaSpeed();
 }
 
 std::string Component::GetName() const

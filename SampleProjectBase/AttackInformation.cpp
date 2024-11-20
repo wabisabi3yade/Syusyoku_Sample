@@ -83,9 +83,6 @@ void HashiTaku::AttackInformation::ApplyFromAttackLevel()
 
 void HashiTaku::AttackInformation::ImGuiDebug()
 {
-	// ダメージ値
-	ImGui::DragFloat("AtkDamage", &atkDamage, 0.1f, 0.0f, 9999.0f);
-	ImGui::Text("HSframe:%d", hitStopFrame);
 	// レベル
 	std::vector<std::string> levelNames
 	{
@@ -94,8 +91,10 @@ void HashiTaku::AttackInformation::ImGuiDebug()
 		"High",
 		"SuperHigh"
 	};
-	u_int id = static_cast<u_int>(atkLevel);
 
+	ImGui::Text("HSframe:%d", hitStopFrame);
+	ImGui::DragFloat("AtkDamage", &atkDamage, 0.1f, 0.0f, 9999.0f);
+	u_int id = static_cast<u_int>(atkLevel);
 	if (ImGuiMethod::ComboBox("AtkLevel", id, levelNames))
 	{
 		SetAttackLevel(static_cast<AttackLevel>(id));

@@ -8,6 +8,11 @@
                     "value": 0
                 },
                 {
+                    "name": "speed",
+                    "type": 2,
+                    "value": 0.0
+                },
+                {
                     "name": "canCombAttack",
                     "type": 0,
                     "value": false
@@ -16,11 +21,6 @@
                     "name": "targeting",
                     "type": 0,
                     "value": false
-                },
-                {
-                    "name": "speed",
-                    "type": 2,
-                    "value": 0.0
                 },
                 {
                     "name": "canCancel",
@@ -2093,14 +2093,14 @@
                     "value": 0
                 },
                 {
-                    "name": "speed",
-                    "type": 2,
-                    "value": 0.0
-                },
-                {
                     "name": "targeting",
                     "type": 0,
                     "value": false
+                },
+                {
+                    "name": "speed",
+                    "type": 2,
+                    "value": 0.0
                 },
                 {
                     "name": "canCancel",
@@ -2117,14 +2117,14 @@
                     "value": 0.0
                 },
                 {
-                    "name": "axisY",
-                    "type": 2,
-                    "value": 0.0
-                },
-                {
                     "name": "attackCollision",
                     "type": 0,
                     "value": false
+                },
+                {
+                    "name": "axisY",
+                    "type": 2,
+                    "value": 0.0
                 },
                 {
                     "name": "rollingTrigger",
@@ -3369,6 +3369,11 @@
                     "value": 0
                 },
                 {
+                    "name": "isReAttack",
+                    "type": 0,
+                    "value": false
+                },
+                {
                     "name": "damageTrigger",
                     "type": 3
                 },
@@ -3379,7 +3384,7 @@
                 }
             ],
             "assetName": "ANC_Boss",
-            "defaultNode": "Idle",
+            "defaultNode": "CombAttack1",
             "nodeInfoData": [
                 {
                     "animNode": {
@@ -3542,18 +3547,31 @@
                         "animationCurve": {
                             "easeKind": 0,
                             "endValue": 1.0,
-                            "endVector": 0.0,
-                            "plotDatas": null,
+                            "endVector": 0.45409882068634033,
+                            "plotDatas": [
+                                {
+                                    "interp": 1,
+                                    "time": 0.4169999957084656,
+                                    "value": 0.37299999594688416,
+                                    "vector": 0.34819379448890686
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.5109999775886536,
+                                    "value": 0.5,
+                                    "vector": 0.0
+                                }
+                            ],
                             "startInterp": 0,
                             "startValue": 0.0,
-                            "startVector": 0.0,
-                            "useHermite": false
+                            "startVector": 0.3217795193195343,
+                            "useHermite": true
                         },
                         "isLoop": true,
                         "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
-                        "speed": 1.0
+                        "speed": 1.0800000429153442
                     },
                     "arrowDataList": null,
                     "nodeName": "JumpSlash",
@@ -3763,6 +3781,79 @@
                     "nodeName": "Damage_Small",
                     "nodeType": 0,
                     "notifyList": null
+                },
+                {
+                    "animNode": {
+                        "animName": "boss_CombAttack1.fbx",
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": [
+                                {
+                                    "interp": 1,
+                                    "time": 0.13699999451637268,
+                                    "value": 0.17000000178813934,
+                                    "vector": 0.050055745989084244
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.20000000298023224,
+                                    "value": 0.3109999895095825,
+                                    "vector": -0.11250338703393936
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.3100000023841858,
+                                    "value": 0.4620000123977661,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.36000001430511475,
+                                    "value": 0.546999990940094,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.4659999907016754,
+                                    "value": 0.7080000042915344,
+                                    "vector": -0.1241905614733696
+                                },
+                                {
+                                    "interp": 0,
+                                    "time": 0.5220000147819519,
+                                    "value": 0.8109999895095825,
+                                    "vector": 0.40086477994918823
+                                }
+                            ],
+                            "startInterp": 0,
+                            "startValue": 0.0,
+                            "startVector": 6.084376025228266e-08,
+                            "useHermite": true
+                        },
+                        "isLoop": true,
+                        "isRMR": false,
+                        "isRMXZ": true,
+                        "isRMY": false,
+                        "speed": 0.8299999833106995
+                    },
+                    "arrowDataList": null,
+                    "nodeName": "CombAttack1",
+                    "nodeType": 0,
+                    "notifyList": [
+                        {
+                            "notifyParam": {
+                                "eventFrame": 0,
+                                "isActive": true,
+                                "notifyName": "ANE_ChangeParameter",
+                                "paramName": "isReAttack",
+                                "setParam": true,
+                                "useFrame": true
+                            },
+                            "notifyType": 2
+                        }
+                    ]
                 }
             ],
             "playSpeed": 1.0
@@ -3818,21 +3909,15 @@
             "rightHand": true
         },
         {
-            "assetName": "boss_Death.fbx",
-            "boneListName": "Uriel A Plotexia.fbx",
-            "pathName": "assets/animation/boss/boss_Death.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_SlashAttack1.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_SlashAttack1.fbx",
             "rightHand": true
         },
         {
-            "assetName": "boss_JumpSlash.fbx",
+            "assetName": "boss_Death.fbx",
             "boneListName": "Uriel A Plotexia.fbx",
-            "pathName": "assets/animation/boss/boss_JumpSlash.fbx",
+            "pathName": "assets/animation/boss/boss_Death.fbx",
             "rightHand": true
         },
         {
@@ -3842,21 +3927,27 @@
             "rightHand": true
         },
         {
+            "assetName": "boss_JumpSlash.fbx",
+            "boneListName": "Uriel A Plotexia.fbx",
+            "pathName": "assets/animation/boss/boss_JumpSlash.fbx",
+            "rightHand": true
+        },
+        {
             "assetName": "knight_SlashStamp.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_SlashStamp.fbx",
             "rightHand": true
         },
         {
-            "assetName": "knight_SlashUp.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_SlashUp.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_RollingMove.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_RollingMove.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_SlashUp.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_SlashUp.fbx",
             "rightHand": true
         },
         {
@@ -3878,15 +3969,15 @@
             "rightHand": true
         },
         {
-            "assetName": "boss_GuardEnd.fbx",
-            "boneListName": "Uriel A Plotexia.fbx",
-            "pathName": "assets/animation/boss/boss_GuardEnd.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "boss_Idle.fbx",
             "boneListName": "Uriel A Plotexia.fbx",
             "pathName": "assets/animation/boss/boss_Idle.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "boss_GuardEnd.fbx",
+            "boneListName": "Uriel A Plotexia.fbx",
+            "pathName": "assets/animation/boss/boss_GuardEnd.fbx",
             "rightHand": true
         },
         {
@@ -3929,6 +4020,12 @@
             "assetName": "knight_Wakeup.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_Wakeup.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "boss_CombAttack1.fbx",
+            "boneListName": "Uriel A Plotexia.fbx",
+            "pathName": "assets/animation/boss/boss_CombAttack1.fbx",
             "rightHand": true
         }
     ],
@@ -4037,17 +4134,6 @@
             "rightHand": true
         },
         {
-            "assetName": "Sword15_FBX.fbx",
-            "flipY": true,
-            "getSize": false,
-            "loadScale": 0.009999999776482582,
-            "matDiffuse": [
-                "Sword15_FBX.png"
-            ],
-            "pathName": "assets/model/sword/Sword15_FBX.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "shield1.fbx",
             "flipY": true,
             "getSize": false,
@@ -4056,6 +4142,17 @@
                 "shield1.png"
             ],
             "pathName": "assets/model/shield/shield1.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "Sword15_FBX.fbx",
+            "flipY": true,
+            "getSize": false,
+            "loadScale": 0.009999999776482582,
+            "matDiffuse": [
+                "Sword15_FBX.png"
+            ],
+            "pathName": "assets/model/sword/Sword15_FBX.fbx",
             "rightHand": true
         },
         {
@@ -4091,24 +4188,24 @@
             "pathName": "assets/texture/skyBox/sky_Day_u.png"
         },
         {
-            "assetName": "sky_Day_r.png",
-            "pathName": "assets/texture/skyBox/sky_Day_r.png"
+            "assetName": "ground.png",
+            "pathName": "assets/texture/ground.png"
         },
         {
             "assetName": "sky_Day_b.png",
             "pathName": "assets/texture/skyBox/sky_Day_b.png"
         },
         {
-            "assetName": "ground.png",
-            "pathName": "assets/texture/ground.png"
-        },
-        {
-            "assetName": "sky_Day_d.png",
-            "pathName": "assets/texture/skyBox/sky_Day_d.png"
+            "assetName": "sky_Day_r.png",
+            "pathName": "assets/texture/skyBox/sky_Day_r.png"
         },
         {
             "assetName": "sky_Day_l.png",
             "pathName": "assets/texture/skyBox/sky_Day_l.png"
+        },
+        {
+            "assetName": "sky_Day_d.png",
+            "pathName": "assets/texture/skyBox/sky_Day_d.png"
         },
         {
             "assetName": "sky_Day_f.png",
@@ -4127,11 +4224,11 @@
             "pathName": "assets/texture/UI/UI_hpLine_red.png"
         },
         {
-            "assetName": "shield1.png",
+            "assetName": "Sword15_FBX.png",
             "pathName": ""
         },
         {
-            "assetName": "Sword15_FBX.png",
+            "assetName": "shield1.png",
             "pathName": ""
         },
         {
@@ -4141,14 +4238,14 @@
     ],
     "vfx": [
         {
-            "assetName": "Laser01",
-            "loadScale": 1.0,
-            "pathName": "assets/vfx/Laser01.efkefc"
-        },
-        {
             "assetName": "Simple_Distortion",
             "loadScale": 1.0,
             "pathName": "assets/vfx/Simple_Distortion.efkefc"
+        },
+        {
+            "assetName": "Laser01",
+            "loadScale": 1.0,
+            "pathName": "assets/vfx/Laser01.efkefc"
         }
     ]
 }

@@ -22,20 +22,20 @@
                                 "transform": {
                                     "child": null,
                                     "pos": [
-                                        1.0640003681182861,
-                                        -0.1799992471933365,
-                                        1.8199989795684814
+                                        0.5639991760253906,
+                                        -0.18000707030296326,
+                                        0.41999858617782593
                                     ],
                                     "rotation": [
-                                        -0.6807566285133362,
-                                        0.7291289567947388,
-                                        -0.045077405869960785,
-                                        -0.05393882840871811
+                                        -0.6008124351501465,
+                                        0.7962932586669922,
+                                        -0.0504688061773777,
+                                        -0.04893164709210396
                                     ],
                                     "scale": [
-                                        1.4400010108947754,
+                                        1.4400005340576172,
                                         1.4399995803833008,
-                                        1.4399998188018799
+                                        1.4400004148483276
                                     ]
                                 }
                             }
@@ -43,7 +43,49 @@
                     ],
                     "gameObject": {
                         "active": true,
-                        "components": null,
+                        "components": [
+                            {
+                                "angles": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "center": [
+                                    0.0,
+                                    1.2999999523162842,
+                                    0.0
+                                ],
+                                "enable": true,
+                                "height": 1.7000000476837158,
+                                "name": "CapsuleCollider",
+                                "priority": 0,
+                                "radius": 0.30000001192092896
+                            },
+                            {
+                                "enable": true,
+                                "friction": 0.5,
+                                "isAwake": false,
+                                "isFreezeRot": [
+                                    false,
+                                    false,
+                                    false
+                                ],
+                                "isKinematic": false,
+                                "isTrigger": true,
+                                "mass": 1.0,
+                                "name": "RigidBody",
+                                "priority": 0
+                            },
+                            {
+                                "attackableTags": [
+                                    2
+                                ],
+                                "enable": true,
+                                "isDebugDisplay": true,
+                                "name": "Weapon",
+                                "priority": 0
+                            }
+                        ],
                         "layer": 0,
                         "name": "Boss_Weapon",
                         "tag": 0,
@@ -52,20 +94,20 @@
                                 "Boss_WeaponModel"
                             ],
                             "pos": [
-                                1.0640009641647339,
-                                -0.18000008165836334,
-                                1.8199989795684814
+                                0.5640008449554443,
+                                -0.1800040453672409,
+                                0.4199986755847931
                             ],
                             "rotation": [
-                                -0.680756688117981,
-                                0.729128897190094,
-                                -0.045077405869960785,
-                                -0.053939007222652435
+                                -0.6008124351501465,
+                                0.7962931990623474,
+                                -0.0504688024520874,
+                                -0.048931773751974106
                             ],
                             "scale": [
-                                1.1999999284744263,
+                                1.2000006437301636,
                                 1.1999995708465576,
-                                1.2000000476837158
+                                1.2000001668930054
                             ]
                         }
                     }
@@ -89,9 +131,9 @@
                         "Boss_Weapon"
                     ],
                     "pos": [
-                        1.1000008583068848,
-                        -0.3600000739097595,
-                        1.7599992752075195
+                        0.60000079870224,
+                        -0.36000311374664307,
+                        0.35999906063079834
                     ],
                     "rotation": [
                         0.0,
@@ -123,11 +165,12 @@
                 "isAwake": true,
                 "isFreezeRot": [
                     true,
-                    false,
+                    true,
                     true
                 ],
+                "isKinematic": true,
                 "isTrigger": false,
-                "mass": 50.0,
+                "mass": 1.0,
                 "name": "RigidBody",
                 "priority": 0
             },
@@ -155,9 +198,44 @@
                 "priority": 1
             },
             {
+                "actionController": {
+                    "actData": [
+                        {
+                            "data": null,
+                            "typeString": "Idle"
+                        },
+                        {
+                            "data": {
+                                "moveAcceleration": 4.0,
+                                "moveMaxSpeed": 9.0,
+                                "moveRotateSpeed": 120.0,
+                                "transNearDistance": 6.0
+                            },
+                            "typeString": "Walk"
+                        },
+                        {
+                            "data": {
+                                "moveAcceleration": 4.0,
+                                "moveMaxSpeed": 9.0,
+                                "moveRotateSpeed": 10.0,
+                                "transNearDistance": 6.0
+                            },
+                            "typeString": "Run"
+                        },
+                        {
+                            "data": null,
+                            "typeString": "Attack1"
+                        },
+                        {
+                            "data": null,
+                            "typeString": "Damage_Small"
+                        }
+                    ],
+                    "defaultState": 0
+                },
                 "enable": true,
                 "maxHp": 1.0,
-                "name": "Enemy",
+                "name": "Boss",
                 "priority": 0
             }
         ],
@@ -169,9 +247,9 @@
                 "Boss_WeaponHand"
             ],
             "pos": [
-                0.5,
                 0.0,
-                0.800000011920929
+                0.0,
+                -0.6000000238418579
             ],
             "rotation": [
                 0.0,

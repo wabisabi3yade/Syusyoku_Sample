@@ -620,7 +620,7 @@ float GameObject::DeltaTime() const
 	return deltaTime;
 }
 
-float GameObject::GetDeltdaSpeed() const
+float GameObject::GetDeltaSpeed() const
 {
 	return deltaTimeSpeed;
 }
