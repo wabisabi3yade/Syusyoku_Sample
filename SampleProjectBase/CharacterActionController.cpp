@@ -25,6 +25,7 @@ void CharacterActionController::Init(CP_Animation* _pAnimation, CP_RigidBody* _p
 	pRigidBody = _pRigidBody;
 }
 
+
 CharacterChangeAnimObserver& CharacterActionController::GetChangeAnimObserver()
 {
 	return *pChangeAnimObserver;

@@ -228,6 +228,7 @@
     <ClCompile Include="IAnimInterpolate.cpp" />
     <ClCompile Include="IAnimParametersSetter.cpp" />
     <ClCompile Include="IAssetCreater.cpp" />
+    <ClCompile Include="IAttacker.cpp" />
     <ClCompile Include="IClassNameGetter.cpp" />
     <ClCompile Include="IDamageable.cpp" />
     <ClCompile Include="HitStopper_Base.cpp" />
@@ -238,6 +239,7 @@
     <ClCompile Include="MaterialCreater.cpp" />
     <ClCompile Include="AnimNodePlayer_Base.cpp" />
     <ClCompile Include="MyClass2.cpp" />
+    <ClCompile Include="PlayerDamageState.cpp" />
     <ClCompile Include="PlayerGroundAttack.cpp" />
     <ClCompile Include="PlayerRollingMove.cpp" />
     <ClCompile Include="PlayerRushAttack.cpp" />
@@ -453,6 +455,7 @@
     <ClInclude Include="IAnimInterpolate.h" />
     <ClInclude Include="IAnimParametersSetter.h" />
     <ClInclude Include="IAssetCreater.h" />
+    <ClInclude Include="IAttacker.h" />
     <ClInclude Include="IClassNameGetter.h" />
     <ClInclude Include="IDamageable.h" />
     <ClInclude Include="HitStopper_Base.h" />
@@ -467,6 +470,7 @@
     <ClInclude Include="AnimNodePlayer_Base.h" />
     <ClInclude Include="MyClass2.h" />
     <ClInclude Include="NullTransform.h" />
+    <ClInclude Include="PlayerDamageState.h" />
     <ClInclude Include="PlayerGroundAttack.h" />
     <ClInclude Include="PlayerRollingMove.h" />
     <ClInclude Include="PlayerRushAttack.h" />

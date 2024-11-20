@@ -1,11 +1,8 @@
 #include "pch.h"
 #include "Scene.h"
-
-#include "InSceneSystemManager.h"
 #include "ShaderCollection.h"
 #include "DX11BulletPhisics.h"
 #include "Geometory.h"
-#include "DX11EffecseerManager.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -24,6 +21,9 @@ Scene::Scene(const std::string& _sceneName) : sceneName(_sceneName)
 Scene::~Scene()
 {
 	InSceneSystemManager::Delete();
+
+	// エフェクトを削除
+	pEffectManager->AllEffectDestroy();
 }
 
 void Scene::Exec()

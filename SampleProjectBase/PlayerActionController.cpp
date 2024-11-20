@@ -11,6 +11,7 @@
 #include "PlayerAttackState.h"
 #include "PlayerGroundAttack.h"
 #include "PlayerRushAttack.h"
+#include "PlayerDamageState.h"
 
 PlayerActionController::PlayerActionController(CP_Player& _player) :
 	CharacterActionController(_player, "playerAction"), pBattleManager(nullptr),
@@ -24,6 +25,9 @@ PlayerActionController::PlayerActionController(CP_Player& _player) :
 	CreateState<PlayerIdleState>(Idle);
 	CreateState<PlayerMoveState>(Move);
 	CreateState<PlayerTargetMove>(TargetMove);
+	CreateState<PlayerRollingMove>(Rolling);
+	CreateState<PlayerDamageState>(Damage_S);
+	CreateState<PlayerDamageState>(Damage_L);
 	CreateState<PlayerRollingMove>(Rolling);
 	CreateState<PlayerGroundAttack>(Attack11);
 	CreateState<PlayerGroundAttack>(Attack12);
@@ -113,16 +117,21 @@ void PlayerActionController::UpdateTargeting()
 	prevIsTargeting = isTargeting;
 }
 
-bool PlayerActionController::ChangeState(const PlayerActState_Base::PlayerState& _nextActionState)
+bool PlayerActionController::ChangeState(const PlayerActState_Base::PlayerState& _nextActionState, bool _isForce)
 {
 	// ステートマシンで変更
-	bool isSuccess = StateMachine_Base::ChangeNode(static_cast<int>(_nextActionState));
+	bool isSuccess = StateMachine_Base::ChangeNode(static_cast<int>(_nextActionState), _isForce);
 	if (!isSuccess) return false;
 
 	// アニメーション側のstate変数も変更
 	pAnimation->SetInt(STATEANIM_PARAMNAME, static_cast<int>(_nextActionState));
 
 	return true;
+}
+
+void PlayerActionController::OnDamage(const HashiTaku::AttackInformation& _atkInfo)
+{
+
 }
 
 bool PlayerActionController::GetIsTargeting() const
@@ -164,6 +173,15 @@ void PlayerActionController::ImGuiDebug()
 {
 	ImGuiMethod::Text("isTargeting", isTargeting);
 
+	if (ImGui::Button("damageS"))
+	{
+		ChangeState(PlayerActState_Base::PlayerState::Damage_S, true);
+	}
+	else if (ImGui::Button("damageL"))
+	{
+		ChangeState(PlayerActState_Base::PlayerState::Damage_L, true);
+	}
+
 	CharacterActionController::ImGuiDebug();
 }
 
@@ -177,7 +195,9 @@ std::string PlayerActionController::GetStateStr(int _stateId)
 	PlayerActState_Base::PlayerState state =
 		static_cast<PlayerActState_Base::PlayerState>(_stateId);
 
-	return std::string(magic_enum::enum_name<PlayerActState_Base::PlayerState>(state));
+	std::string str = std::string(magic_enum::enum_name<PlayerActState_Base::PlayerState>(state));
+
+	return str;
 }
 
 int PlayerActionController::GetStateId(const std::string& _stateName)

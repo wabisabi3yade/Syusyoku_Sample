@@ -58,16 +58,16 @@ namespace HashiTaku
 		void ImGuiDebug() override;
 	private:
 		// Low
-		static constexpr u_int LOW_HITSTOP = 2;
+		static constexpr u_int LOW_HITSTOP = 0;
 
 		// Mid
-		static constexpr u_int MID_HITSTOP = 4;
+		static constexpr u_int MID_HITSTOP = 2;
 
 		// High
-		static constexpr u_int HIGH_HITSTOP = 6;
+		static constexpr u_int HIGH_HITSTOP = 4;
 
 		// SuperHigh
-		static constexpr u_int SUPERHIGH_HITSTOP = 8;
+		static constexpr u_int SUPERHIGH_HITSTOP = 6;
 	};
 }
 

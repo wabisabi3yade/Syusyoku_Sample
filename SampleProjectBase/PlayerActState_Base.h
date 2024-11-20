@@ -4,6 +4,7 @@
 #include "GameInput.h"
 #include "CP_Camera.h"
 #include "CP_RigidBody.h"
+#include "CP_Animation.h"
 
 class PlayerActionController;
 
@@ -18,10 +19,12 @@ public:
 		Idle,
 		
 		// 移動
-		Move = 10,
+		Move,
 		TargetMove,
 		Jump,
 		Rolling,
+		Damage_S,	// ダメージ小のけぞり
+		Damage_L,	// ダメージ大のけぞり
 
 		// 地上コンビネーション攻撃
 		Attack11 = 20,
@@ -37,6 +40,13 @@ public:
 		None = 99
 	};
 
+	/// @brief アクションの場所属性
+	enum class ActPlaceElement
+	{
+		Ground,
+		Air
+	};
+
 	/// @brief プレイヤーから見た入力の方向
 	enum class InputVector
 	{
@@ -46,29 +56,13 @@ public:
 
 #ifdef EDIT
 	// ステート一覧の文字列
-	inline static const std::vector<std::string> playerStateNameList =
+	inline static const std::vector<std::string> playerCombAtkList =
 	{
-		// 待機
-		"Idle",
-
-		// 移動
-		"Move",
-		"TargetMove",
-		"Jump",
-		"Rolling"
-
 		// 地上コンビネーション攻撃
 		"Attack11",
 		"Attack12",
 		"Attack13",
 		"Attack14",
-
-		// 地上必殺攻撃
-		"SpecialAtkHi",
-		"SpecialAtkLow",
-
-		// 最後
-		"None"
 	};
 #endif // EDIT
 
@@ -79,6 +73,9 @@ private:
 	/// @brief キャンセルして繰り出す状態
 	PlayerState cancelPlayState;
 
+	/// @brief 行動の場所属性
+	ActPlaceElement placeElement;
+
 	/// @brief ターゲットを見るときの回転速度
 	float targetLookRotateSpeed;
 
@@ -87,6 +84,7 @@ private:
 
 	/// @brief ターゲット時に敵を見る行動にするか？
 	bool isTargetLookAtEnemy;
+
 protected:
 	/// @brief プレイヤー
 	PlayerActionController* pActionController;
@@ -160,6 +158,10 @@ protected:
 	/// @return トランスフォーム
 	Transform& GetTransform();
 
+	/// @brief アニメーションを取得する
+	/// @return アニメーション
+	CP_Animation* GetAnimation();
+
 	/// @brief Δtを取得
 	/// @return Δt
 	float DeltaTime() const;
@@ -197,7 +199,7 @@ protected:
 	/// @param _caption キャプション
 	/// @param _currentState 現在のステート
 	/// @return 変更したか？
-	static bool ImGuiComboPlayerState(const std::string& _caption, PlayerState& _currentState);
+	static bool ImGuiComboAttack(const std::string& _caption, PlayerState& _currentState);
 
 private:
 	/// @brief ターゲットの方向を見る
@@ -208,7 +210,12 @@ private:
 protected:
 	// アニメーションコントローラ内のプレイヤー名
 	constexpr static auto SPEEDRATIO_PARAMNAME = "speed";	// 移動速度
-	constexpr static auto MOVEAXIS_X_PARAMNAME = "axisX";	// 移動速度
-	constexpr static auto MOVEAXIS_Y_PARAMNAME = "axisY";	// 攻撃トリガー
+	constexpr static auto MOVEAXIS_X_PARAMNAME = "axisX";	// X移動
+	constexpr static auto MOVEAXIS_Y_PARAMNAME = "axisY";	// Y移動
+	// 攻撃トリガー
+	constexpr static auto DAMAGETRIGGER_PARAMNAME = "damageTrigger";
+
+	// アニメーション名
+	constexpr static auto IDLE_ANIM_NAME = "Idle";	// 待機状態
 };
 

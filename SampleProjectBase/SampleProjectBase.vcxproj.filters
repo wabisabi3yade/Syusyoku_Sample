@@ -511,12 +511,6 @@
     <Filter Include="ソース ファイル\Object\Player\Action\PlayerState">
       <UniqueIdentifier>{30b7385e-e266-4a05-8e63-0b4ecc32555c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Move">
-      <UniqueIdentifier>{10a12211-e7fc-402b-94f0-347b6af8ff71}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Attack">
-      <UniqueIdentifier>{524a883d-d5ba-414d-86a7-c8dd375fabee}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Object\Player\Action\Controller">
       <UniqueIdentifier>{8007b5fd-3163-4427-92a4-a7ace58b8af8}</UniqueIdentifier>
     </Filter>
@@ -544,9 +538,6 @@
     <Filter Include="ソース ファイル\Animation\AnimationPameters\Copy">
       <UniqueIdentifier>{607275a5-2cc3-4b3b-91a7-098c765fdf6d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Idle">
-      <UniqueIdentifier>{a089199f-2d9b-4703-8356-fe11a5e3c6fd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Animation\AnimControllPlayer\NodePlayer">
       <UniqueIdentifier>{6b69ad4a-22bc-49ef-8162-56de7deea6b9}</UniqueIdentifier>
     </Filter>
@@ -564,9 +555,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Component\Collider\Test">
       <UniqueIdentifier>{6774cb9a-dd42-43a1-a66b-0b1c0f8117fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Target">
-      <UniqueIdentifier>{f8125145-3108-4eff-b3aa-c7c99e0ece36}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Base">
       <UniqueIdentifier>{492cca82-3a6e-47dd-bd72-21b904e2eaee}</UniqueIdentifier>
@@ -622,9 +610,6 @@
     <Filter Include="ソース ファイル\Animation\AnimationObserver\ChangeAnimObserver">
       <UniqueIdentifier>{aad0a846-08ed-43aa-a25b-73332a308eea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\GroundAttack">
-      <UniqueIdentifier>{4e07b83f-83ba-48f8-98f0-d52179374366}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Object\Enemy">
       <UniqueIdentifier>{dc9b3105-0e1c-48a6-9f59-8b3065fa9e87}</UniqueIdentifier>
     </Filter>
@@ -660,12 +645,6 @@
     </Filter>
     <Filter Include="ソース ファイル\System\ImGui\ImPlot">
       <UniqueIdentifier>{88dc33e0-f5dd-4334-a65b-bc3e1b1527b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\RushAttack">
-      <UniqueIdentifier>{49ff38db-7ed7-4667-a402-fad7eb68fdc6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Rolling">
-      <UniqueIdentifier>{34ca5317-7d82-4283-9c98-bc8d4dcd88ac}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Object\Character">
       <UniqueIdentifier>{ad09703f-2b45-4a4f-9910-67888da99373}</UniqueIdentifier>
@@ -819,6 +798,36 @@
     </Filter>
     <Filter Include="ソース ファイル\Object\ITargeter">
       <UniqueIdentifier>{3fa1c02a-1e34-463b-adeb-5cc177ac9265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Attack\IAttacker">
+      <UniqueIdentifier>{753bcb83-00c6-4e7f-9d0a-5c0cb27e7d63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Attack">
+      <UniqueIdentifier>{524a883d-d5ba-414d-86a7-c8dd375fabee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\Base">
+      <UniqueIdentifier>{ba74db7d-77d2-420b-ac94-9d746a0d86db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Rolling">
+      <UniqueIdentifier>{34ca5317-7d82-4283-9c98-bc8d4dcd88ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\RushAttack">
+      <UniqueIdentifier>{49ff38db-7ed7-4667-a402-fad7eb68fdc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Target">
+      <UniqueIdentifier>{f8125145-3108-4eff-b3aa-c7c99e0ece36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Move">
+      <UniqueIdentifier>{10a12211-e7fc-402b-94f0-347b6af8ff71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Damage">
+      <UniqueIdentifier>{decc60b5-b129-4992-9ceb-e0c9fce69e44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\GroundAttack">
+      <UniqueIdentifier>{4e07b83f-83ba-48f8-98f0-d52179374366}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Idle">
+      <UniqueIdentifier>{a089199f-2d9b-4703-8356-fe11a5e3c6fd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1181,9 +1190,6 @@
     <ClCompile Include="GameInput.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerAttackState.cpp">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Attack</Filter>
-    </ClCompile>
     <ClCompile Include="IObserever.cpp">
       <Filter>ソース ファイル\Method\Observe</Filter>
     </ClCompile>
@@ -1529,6 +1535,15 @@
     <ClCompile Include="ITargetAccepter.cpp">
       <Filter>ソース ファイル\Object\ITargeter</Filter>
     </ClCompile>
+    <ClCompile Include="IAttacker.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAttackState.cpp">
+      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDamageState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -1857,9 +1872,6 @@
     </ClInclude>
     <ClInclude Include="GameInput.h">
       <Filter>ソース ファイル\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerAttackState.h">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Attack</Filter>
     </ClInclude>
     <ClInclude Include="IObserever.h">
       <Filter>ソース ファイル\Method\Observe</Filter>
@@ -2238,6 +2250,15 @@
     </ClInclude>
     <ClInclude Include="CP_Boss.h">
       <Filter>ソース ファイル\Component\InGame\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="IAttacker.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAttackState.h">
+      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDamageState.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

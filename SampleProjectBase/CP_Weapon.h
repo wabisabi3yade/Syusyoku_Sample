@@ -41,6 +41,8 @@ public:
 	// コンポーネント共通
 	void OnCollisionStay(const HashiTaku::CollisionInfo& _otherColInfo);
 
+	/// @brief 攻撃情報をセットする
+	/// @param _attackInformation 攻撃情報
 	void SetAttackInfo(const HashiTaku::AttackInformation& _attackInformation);
 
 	/// @brief 武器の攻撃判定コリジョン

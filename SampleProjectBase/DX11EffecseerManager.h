@@ -29,6 +29,9 @@ public:
 	/// @brief 更新処理
 	void Update();
 
+	/// @brief 再生中のエフェクトを削除
+	void AllEffectDestroy();
+
 	/// @brief エフェクトを再生する
 	/// @param _effect 再生するエフェクト
 	/// @return 再生しているハンドル

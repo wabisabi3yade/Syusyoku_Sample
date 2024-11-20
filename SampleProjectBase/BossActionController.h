@@ -33,7 +33,7 @@ public:
 	bool ChangeState(BossActState_Base::BossState _nextState, bool _isForce = false);
 
 	/// @brief ダメージ時処理
-	void OnDamage();
+	void OnDamage(const HashiTaku::AttackInformation& _atkInfo) override;
 
 	/// @brief プレイヤーオブジェクトをセット
 	/// @param _playerObj プレイヤーオブジェクト

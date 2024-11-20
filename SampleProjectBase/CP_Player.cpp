@@ -227,6 +227,7 @@ bool CP_Player::GetCanUpdate() const
 
 void CP_Player::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo)
 {
+	pActionController->OnDamage(_attackInfo);
 }
 
 void CP_Player::OnDeathBehavior()

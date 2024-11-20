@@ -97,7 +97,7 @@ void CP_Boss::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo)
 {
 	CP_Enemy::OnDamageBehavior(_attackInfo);
 
-	pActionController->OnDamage();
+	pActionController->OnDamage(_attackInfo);
 }
 
 void CP_Boss::ImGuiDebug()

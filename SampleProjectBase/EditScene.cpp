@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "EditScene.h"
 #include "AssetSaveLoad.h"
-#include "InSceneSystemManager.h"
 
 EditScene::EditScene(const std::string& _sceneName) :
 	Scene(_sceneName),
@@ -155,6 +154,7 @@ void EditScene::PlayEnd()
 
 	// V‚µ‚­ƒV[ƒ“‚Ì’†‚ð¶¬‚·‚é
 	InSceneSystemManager::GetInstance()->Reset();
+	pEffectManager->AllEffectDestroy();
 	SceneLoad();
 }
 

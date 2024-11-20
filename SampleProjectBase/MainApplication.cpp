@@ -38,8 +38,8 @@ void MainApplication::Release()
 	pAssetCollection.reset();
 
 	// シングルトンインスタンスを解放
-	DX11EffecseerManager::Delete();
 	SceneManager::Delete();
+	DX11EffecseerManager::Delete();
 	ShaderCollection::Delete();
 	Direct3D11::Delete();
 }

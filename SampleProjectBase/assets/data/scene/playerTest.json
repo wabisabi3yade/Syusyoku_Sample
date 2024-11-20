@@ -6,6 +6,64 @@
                 "active": true,
                 "components": [
                     {
+                        "distance": 1000.0,
+                        "enable": true,
+                        "fov": 45.0,
+                        "name": "Camera",
+                        "priority": 0,
+                        "viewSlot": 0
+                    },
+                    {
+                        "enable": true,
+                        "moveController": {
+                            "stateDatas": [
+                                {
+                                    "parameter": {
+                                        "centerAngle": -90.0,
+                                        "currentHeight": 3.0,
+                                        "disHorizon": 8.0,
+                                        "lookOffsetY": 2.4000000953674316,
+                                        "rotateSpeed": 120.0
+                                    },
+                                    "stateType": 0
+                                }
+                            ]
+                        },
+                        "name": "CameraMove",
+                        "priority": 0,
+                        "target": "Player"
+                    }
+                ],
+                "layer": 1,
+                "name": "Camera",
+                "tag": 1,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        19.600000381469727,
+                        10.100000381469727,
+                        -7.0
+                    ],
+                    "rotation": [
+                        0.12699829041957855,
+                        -0.6716376543045044,
+                        0.11842790246009827,
+                        0.720242440700531
+                    ],
+                    "scale": [
+                        1.000000238418579,
+                        0.999999463558197,
+                        0.9999996423721313
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
                         "AABB": false,
                         "angles": [
                             0.0,
@@ -82,64 +140,6 @@
                         100.0,
                         1.0,
                         100.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "distance": 1000.0,
-                        "enable": true,
-                        "fov": 45.0,
-                        "name": "Camera",
-                        "priority": 0,
-                        "viewSlot": 0
-                    },
-                    {
-                        "enable": true,
-                        "moveController": {
-                            "stateDatas": [
-                                {
-                                    "parameter": {
-                                        "centerAngle": -90.0,
-                                        "currentHeight": 3.0,
-                                        "disHorizon": 8.0,
-                                        "lookOffsetY": 2.4000000953674316,
-                                        "rotateSpeed": 120.0
-                                    },
-                                    "stateType": 0
-                                }
-                            ]
-                        },
-                        "name": "CameraMove",
-                        "priority": 0,
-                        "target": "Player"
-                    }
-                ],
-                "layer": 1,
-                "name": "Camera",
-                "tag": 1,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        19.600000381469727,
-                        10.100000381469727,
-                        -7.0
-                    ],
-                    "rotation": [
-                        0.12699829041957855,
-                        -0.6716376543045044,
-                        0.11842790246009827,
-                        0.720242440700531
-                    ],
-                    "scale": [
-                        1.000000238418579,
-                        0.999999463558197,
-                        0.9999996423721313
                     ]
                 }
             }
@@ -470,9 +470,9 @@
                                             "useHermite": false
                                         },
                                         "isMoveFwd": false,
-                                        "nextCombAttack": 22
+                                        "nextCombAttack": 21
                                     },
-                                    "typeString": "Attack12"
+                                    "typeString": "Attack11"
                                 },
                                 {
                                     "data": {
@@ -497,34 +497,66 @@
                                             "damage": 0.0,
                                             "level": 0
                                         },
-                                        "atkMoveSpd": 11.0,
+                                        "atkMoveSpd": 10.0,
                                         "forwardCurve": {
+                                            "easeKind": 0,
+                                            "endValue": 1.0,
+                                            "endVector": 0.0,
+                                            "plotDatas": null,
+                                            "startInterp": 0,
+                                            "startValue": 0.0,
+                                            "startVector": 0.0,
+                                            "useHermite": false
+                                        },
+                                        "isMoveFwd": false,
+                                        "nextCombAttack": 22
+                                    },
+                                    "typeString": "Attack12"
+                                },
+                                {
+                                    "data": {
+                                        "knockCurve": {
+                                            "easeKind": 0,
+                                            "endValue": 1.0,
+                                            "endVector": 0.0,
+                                            "plotDatas": null,
+                                            "startInterp": 0,
+                                            "startValue": 0.0,
+                                            "startVector": 0.0,
+                                            "useHermite": false
+                                        },
+                                        "knockDis": 0.0
+                                    },
+                                    "typeString": "Damage_S"
+                                },
+                                {
+                                    "data": {
+                                        "knockCurve": {
                                             "easeKind": 0,
                                             "endValue": 0.0,
                                             "endVector": 0.0,
                                             "plotDatas": [
                                                 {
                                                     "interp": 0,
-                                                    "time": 0.2427983582019806,
+                                                    "time": 0.37599998712539673,
                                                     "value": 1.0,
                                                     "vector": 0.0
                                                 },
                                                 {
                                                     "interp": 0,
-                                                    "time": 0.4279835522174835,
-                                                    "value": 0.09266409277915955,
+                                                    "time": 0.5180000066757202,
+                                                    "value": 0.0,
                                                     "vector": 0.0
                                                 }
                                             ],
-                                            "startInterp": 0,
-                                            "startValue": 0.0,
+                                            "startInterp": 1,
+                                            "startValue": 1.0,
                                             "startVector": 0.0,
                                             "useHermite": true
                                         },
-                                        "isMoveFwd": false,
-                                        "nextCombAttack": 21
+                                        "knockDis": 18.100000381469727
                                     },
-                                    "typeString": "Attack11"
+                                    "typeString": "Damage_L"
                                 },
                                 {
                                     "data": {
@@ -577,6 +609,7 @@
                                             "level": 0
                                         },
                                         "atkMoveSpd": 10.0,
+                                        "cancelAnim": 0.3799999952316284,
                                         "forwardCurve": {
                                             "easeKind": 0,
                                             "endValue": 1.0,
@@ -594,13 +627,13 @@
                                             "plotDatas": [
                                                 {
                                                     "interp": 0,
-                                                    "time": 0.26600000262260437,
+                                                    "time": 0.24300000071525574,
                                                     "value": 0.0,
-                                                    "vector": 1.5404033660888672
+                                                    "vector": 1.6519999504089355
                                                 },
                                                 {
-                                                    "interp": 1,
-                                                    "time": 0.5199999809265137,
+                                                    "interp": 0,
+                                                    "time": 0.5569999814033508,
                                                     "value": 1.0,
                                                     "vector": 0.0
                                                 }
@@ -613,6 +646,7 @@
                                         "horiDis": 11.0,
                                         "isMoveFwd": false,
                                         "nextCombAttack": 99,
+                                        "slashAnim": 0.4429999887943268,
                                         "slashBegin": 2.200000047683716
                                     },
                                     "typeString": "SpecialAtkHi"
@@ -672,42 +706,6 @@
                         1.0,
                         1.0,
                         1.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "name": "VisualEffect",
-                        "priority": 0,
-                        "vfxName": "Simple_Distortion"
-                    }
-                ],
-                "layer": 0,
-                "name": "TestEffect",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        0.0,
-                        0.8999999761581421,
-                        -2.0
-                    ],
-                    "rotation": [
-                        -0.0,
-                        0.0,
-                        -0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        0.9999999403953552,
-                        1.0,
-                        0.9999999403953552
                     ]
                 }
             }
@@ -798,7 +796,49 @@
                             ],
                             "gameObject": {
                                 "active": true,
-                                "components": null,
+                                "components": [
+                                    {
+                                        "angles": [
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
+                                        "center": [
+                                            0.0,
+                                            1.2000000476837158,
+                                            0.0
+                                        ],
+                                        "enable": true,
+                                        "height": 1.8300000429153442,
+                                        "name": "CapsuleCollider",
+                                        "priority": 0,
+                                        "radius": 0.27000001072883606
+                                    },
+                                    {
+                                        "enable": true,
+                                        "friction": 0.5,
+                                        "isAwake": false,
+                                        "isFreezeRot": [
+                                            false,
+                                            false,
+                                            false
+                                        ],
+                                        "isKinematic": false,
+                                        "isTrigger": true,
+                                        "mass": 1.0,
+                                        "name": "RigidBody",
+                                        "priority": 0
+                                    },
+                                    {
+                                        "attackableTags": [
+                                            2
+                                        ],
+                                        "enable": true,
+                                        "isDebugDisplay": true,
+                                        "name": "Weapon",
+                                        "priority": 0
+                                    }
+                                ],
                                 "layer": 0,
                                 "name": "Boss_Weapon",
                                 "tag": 0,

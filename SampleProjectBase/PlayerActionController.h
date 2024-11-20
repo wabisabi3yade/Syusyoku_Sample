@@ -51,7 +51,12 @@ public:
 
 	/// @brief 行動状態を切り替える
 	/// @param _nextActionName 次の状態の名前
-	bool ChangeState(const PlayerActState_Base::PlayerState& _nextActionState);
+	/// @param _isForce 強制で切り替えするか？
+	bool ChangeState(const PlayerActState_Base::PlayerState& _nextActionState, bool _isForce = false);
+
+	/// @brief ダメージ受けたときのアクション処理
+	/// @param _atkInfo 攻撃情報
+	void OnDamage(const HashiTaku::AttackInformation& _atkInfo) override;
 
 	/// @brief ターゲット中か取得する
 	/// @return ターゲット中か？

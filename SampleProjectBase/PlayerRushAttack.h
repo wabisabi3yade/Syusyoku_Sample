@@ -21,6 +21,12 @@ class PlayerRushAttack : public PlayerGroundAttack
 	/// @brief 斬り始める敵との距離
 	float slashBeginDistance;
 
+	/// @brief キャンセルアニメーション割合
+	float cancelBeginRatio;
+
+	/// @brief 斬り始めるアニメーション割合
+	float slashBeginAnimRatio;
+
 	/// @brief 前に進むか
 	bool isProgressForward;
 public:

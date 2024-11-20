@@ -47,6 +47,11 @@ void DX11EffecseerManager::Update()
 	manager->Update();
 }
 
+void DX11EffecseerManager::AllEffectDestroy()
+{
+	manager->StopAllEffects();
+}
+
 Effekseer::Handle DX11EffecseerManager::Play(const Effekseer::EffectRef& _effect,
 	const DirectX::SimpleMath::Vector3 _effectPos)
 {

@@ -54,7 +54,7 @@ bool BossActionController::ChangeState(BossActState_Base::BossState _nextState, 
 	return true;
 }
 
-void BossActionController::OnDamage()
+void BossActionController::OnDamage(const HashiTaku::AttackInformation& _atkInfo)
 {
 	assert(pCurrentNode && "Œ»İ‚Ìƒm[ƒh‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
 
