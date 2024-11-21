@@ -2,7 +2,7 @@
 #include "BossActState_Base.h"
 #include "AttackInformation.h"
 
-/// @brief 地上での攻撃
+/// @brief ボスのs攻撃ステート
 class BossAttackState : public BossActState_Base
 {
 protected:

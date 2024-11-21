@@ -23,25 +23,25 @@ class CP_Camera : public Component
 	u_int viewPortSlot;
 public:
 	CP_Camera();
-	~CP_Camera() {};
+	virtual ~CP_Camera() {};
 
-	void Init() override;
-	void OnDestroy() override;
+	virtual void Init() override;
+	virtual void OnDestroy() override;
 
 	/// @brief ビュー変換行列
-	void UpdateViewMatrix();
+	virtual void UpdateViewMatrix();
 
 	/// @brief 透視投影に変更
-	void SetPerspective();
+	virtual void SetPerspective();
 
 	/// @brief 平行投影に変更
-	void SetOrthographic();
+	virtual void SetOrthographic();
 
 	// fovセット
-	void SetFov(float _setFov);
+	virtual void SetFov(float _setFov);
 
 	// ビューポート番号をセット
-	void SetViewportSlot(u_int _slot);
+	virtual void SetViewportSlot(u_int _slot);
 
 	/// @brief カメラの上ベクトル
 	virtual const DirectX::SimpleMath::Vector3& GetCamUp() const;
@@ -62,15 +62,15 @@ public:
 	/// @param _sceneData ロードするデータ 
 	void Load(const nlohmann::json& _data);
 
-private:
+protected:
 	/// @brief 投影行列を更新する
-	void UpdateProjection();
+	virtual void UpdateProjection();
 
 	/// @brief 透視投影行列を更新
-	void UpdatePerspective();
+	virtual void UpdatePerspective();
 
 	/// @brief 平行投影をセットする
-	void UpdateOrthographic();
+	virtual void UpdateOrthographic();
 };
 
 /// @brief CP_CameraのNullオブジェクト
@@ -107,7 +107,7 @@ public:
 	const DirectX::SimpleMath::Vector3& GetCamUp() const override { return Vec3::Up; }
 
 	/// @brief カメラの座標
-	const DirectX::SimpleMath::Vector3& GetEyePos() const override 
+	const DirectX::SimpleMath::Vector3& GetEyePos() const override
 	{
 		return DirectX::SimpleMath::Vector3::Zero;
 	}
@@ -126,4 +126,14 @@ public:
 	/// @brief ロードする
 	/// @param _sceneData ロードするデータ 
 	void Load(const nlohmann::json& _data) {}
+
+private:
+	/// @brief 投影行列を更新する
+	virtual void UpdateProjection() {};
+
+	/// @brief 透視投影行列を更新
+	virtual void UpdatePerspective() {};
+
+	/// @brief 平行投影をセットする
+	virtual void UpdateOrthographic() {};
 };

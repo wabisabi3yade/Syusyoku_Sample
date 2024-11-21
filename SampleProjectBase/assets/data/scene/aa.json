@@ -1,0 +1,78 @@
+{
+    "objects": [
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "distance": 1000.0,
+                        "enable": true,
+                        "fov": 45.0,
+                        "name": "Camera",
+                        "priority": 0,
+                        "viewSlot": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "a",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "meshName": "arena.fbx",
+                        "name": "MeshRenderer",
+                        "priority": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "aa",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        -5.199999809265137,
+                        10.699999809265137
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.6087616682052612,
+                        -0.0,
+                        0.7933531403541565
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        }
+    ]
+}

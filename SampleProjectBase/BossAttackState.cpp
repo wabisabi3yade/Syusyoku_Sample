@@ -75,7 +75,7 @@ void BossAttackState::ImGuiDebug()
 	{
 		ImGui::PushID(a_i);
 
-		std::string text = std::to_string(a_i) + "’i–Ú";
+		std::string text = "Step" + std::to_string(a_i);
 		ImGui::Text(text.c_str());
 		attackInfos[a_i].ImGuiCall();
 		ImGuiMethod::LineSpaceSmall();

@@ -14,10 +14,11 @@ namespace HashiTaku
 class CP_Collider : public Component
 {
 public :
-    enum ShapeType   // 形状の種類
+    enum class ShapeType   // 形状の種類
     {
         Box,    // ボックス
         Sphere, // 球
+        Cyllinder,  // 円柱
         Capsule,    // カプセル
         Num
     };

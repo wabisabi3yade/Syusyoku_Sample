@@ -76,6 +76,11 @@ CP_Animation* BossActState_Base::GetAnimation()
 	return pActionController->GetAnimation();
 }
 
+CP_RigidBody* BossActState_Base::GetRB()
+{
+	return pActionController->GetRB();
+}
+
 float BossActState_Base::DeltaTime() const
 {
 	return pActionController->GetCharacter().DeltaTime();

@@ -54,12 +54,6 @@ private:
 	/// @return 更新できるか？
 	bool GetCanUpdate();
 
-	/// @brief ヒットストップ開始処理
-	void OnHitStopBegin() override;
-
-	/// @brief ヒットストップ終了処理
-	void OnHitStopEnd() override;
-
 	/// @brief 各クラスのダメージを受けたときの処理
 	/// @param _attackInfo 攻撃情報
 	void OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo) override;

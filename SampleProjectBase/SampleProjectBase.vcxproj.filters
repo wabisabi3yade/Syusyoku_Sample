@@ -42,9 +42,6 @@
     <Filter Include="ソース ファイル\System\Transform">
       <UniqueIdentifier>{d3eb84ad-7e35-417a-9ffc-d5938579ae06}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object">
-      <UniqueIdentifier>{55c4fa45-2e89-43b4-91f6-f99c07eb6859}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\System\ImGui">
       <UniqueIdentifier>{3a4f88db-e57c-4ce8-9c11-57982a744aca}</UniqueIdentifier>
     </Filter>
@@ -56,9 +53,6 @@
     </Filter>
     <Filter Include="ソース ファイル\System\ImGui\ImGui">
       <UniqueIdentifier>{65a46e3a-d104-4ba9-bbba-6c4a1a612f0f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Tag">
-      <UniqueIdentifier>{988b4f81-a66d-4eef-8758-f35438d16df4}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\System\JISToUTF8">
       <UniqueIdentifier>{044f28fe-fa18-4027-b4b8-860014ccfae3}</UniqueIdentifier>
@@ -86,9 +80,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Component\Collider\CollisionChecker">
       <UniqueIdentifier>{ee02f005-9104-4dc7-80e5-56016c5bdf4e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\SceneObjects">
-      <UniqueIdentifier>{4b5fda20-e416-43b8-99cd-92e298c295f2}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Component\Collider\Base">
       <UniqueIdentifier>{0157a627-13bf-479e-b143-2b1c12827e0c}</UniqueIdentifier>
@@ -123,9 +114,6 @@
     <Filter Include="ソース ファイル\Component\InGame\Test">
       <UniqueIdentifier>{3c61951c-e04f-4483-8c93-ee48a0b9497f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\GameObject">
-      <UniqueIdentifier>{54651696-70bc-4ca7-ba6d-128c5dc1b8e4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\Geometory">
       <UniqueIdentifier>{8ad7004a-18e3-467b-b982-788b90b03a7c}</UniqueIdentifier>
     </Filter>
@@ -159,26 +147,11 @@
     <Filter Include="ソース ファイル\System\ShaderCollection">
       <UniqueIdentifier>{88a9f50c-2731-4458-9ed8-c1fe343fcaf2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Asset">
-      <UniqueIdentifier>{a26d63dc-8a9b-49c0-931a-460745a76043}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Asset\Loader">
-      <UniqueIdentifier>{6fb219dd-20f3-4daf-838c-d6ecf47f452f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Asset\Get">
-      <UniqueIdentifier>{a0b7a1e8-da1e-4da0-bfdc-0cdbf998ba55}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Scene\SceneFunction">
       <UniqueIdentifier>{873b7fd4-8efe-4072-b1f3-edf202c51acb}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Scene\SceneFunction\GameObject">
       <UniqueIdentifier>{561d5b96-25b2-4652-b462-abca12791b72}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Asset\Collection">
-      <UniqueIdentifier>{0914fd39-6184-4c51-bbf5-0a403f0e3bdd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Asset\Display">
-      <UniqueIdentifier>{a6513ca5-8784-4484-b15a-f0da6b60d05a}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Mesh">
       <UniqueIdentifier>{da97f189-bf52-4ca3-a034-e91971362e8d}</UniqueIdentifier>
@@ -188,12 +161,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Mesh\SkeletalMesh">
       <UniqueIdentifier>{3809995c-1437-4c7a-ab17-d7c291a74efb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Asset\Asset_Base">
-      <UniqueIdentifier>{5e4258b4-aaaa-48c5-9f60-b10c8a265734}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Asset\IAssetContacter">
-      <UniqueIdentifier>{333b47f0-4487-44d6-b0ee-473ec0bc5c9b}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Buffer">
       <UniqueIdentifier>{4fac6332-97e3-4d69-8966-9c1e468ac2b8}</UniqueIdentifier>
@@ -206,9 +173,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Buffer\Interface">
       <UniqueIdentifier>{e51dfb6c-9168-4783-bdb0-0997e7af955a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Asset\Set">
-      <UniqueIdentifier>{9fd6fdb1-928a-4b90-84b7-151791e0d456}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Component\Renderer\Base">
       <UniqueIdentifier>{e042d57d-0041-48e4-9ab9-365bdbd9bde3}</UniqueIdentifier>
@@ -309,14 +273,8 @@
     <Filter Include="ソース ファイル\Animation\AnimNode\Blend">
       <UniqueIdentifier>{d0a695e2-7790-421a-bf72-b2df994ea1c4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Player">
-      <UniqueIdentifier>{f762aecb-5591-4a8a-8c14-1ff5ea162329}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Game">
       <UniqueIdentifier>{ec24e437-56cb-46e1-a163-c0afcf9d909f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Observer">
-      <UniqueIdentifier>{4e6d4fd8-ad0a-4ca2-b4e8-3368ea14ea38}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Animation\AnimationObserver">
       <UniqueIdentifier>{8fd6faa5-22ea-4057-adcb-8b28d6760af5}</UniqueIdentifier>
@@ -417,12 +375,6 @@
     <Filter Include="ソース ファイル\Graphics\Sprite\Drawer">
       <UniqueIdentifier>{f78a12b9-8f83-4cd7-9a90-ea95740bfd77}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Asset\Creater">
-      <UniqueIdentifier>{44856d4f-ce3f-41e6-abd2-d33017fe20c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Asset\Creater\Material">
-      <UniqueIdentifier>{e6f51b7a-e972-4329-b590-ab33c6425c28}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Component\SkyBox">
       <UniqueIdentifier>{5197527b-98a8-4fc6-968c-8e9157f342c2}</UniqueIdentifier>
     </Filter>
@@ -469,9 +421,6 @@
     <Filter Include="ソース ファイル\Method\TypeName">
       <UniqueIdentifier>{a7f0cabf-f61d-4f9b-8be0-75d4abfe72a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Asset\Creater\AnimationController">
-      <UniqueIdentifier>{224f1176-7fe3-4e4e-9a1d-1c15263d870e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Animation\AnimTransitionArrow\Button">
       <UniqueIdentifier>{bdc19cae-5bf9-4368-b5de-d45df261d9a0}</UniqueIdentifier>
     </Filter>
@@ -504,18 +453,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Animation\AnimationPameters">
       <UniqueIdentifier>{d78781e3-3f17-4ca1-a572-6cc82b233ef0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action">
-      <UniqueIdentifier>{734f0100-f685-4552-a879-1602de240990}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState">
-      <UniqueIdentifier>{30b7385e-e266-4a05-8e63-0b4ecc32555c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\Controller">
-      <UniqueIdentifier>{8007b5fd-3163-4427-92a4-a7ace58b8af8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\Observer">
-      <UniqueIdentifier>{3c7cea81-6190-47bc-ba54-8d1a1f6f3797}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Animation\AnimationPameters\Trigger">
       <UniqueIdentifier>{417e5fb0-e652-49e6-a75a-fb4a18d42e35}</UniqueIdentifier>
@@ -555,9 +492,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Component\Collider\Test">
       <UniqueIdentifier>{6774cb9a-dd42-43a1-a66b-0b1c0f8117fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Base">
-      <UniqueIdentifier>{492cca82-3a6e-47dd-bd72-21b904e2eaee}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\System\SystemDraw">
       <UniqueIdentifier>{67933a3e-6739-46f8-bc0a-99cbcc12782e}</UniqueIdentifier>
@@ -610,18 +544,6 @@
     <Filter Include="ソース ファイル\Animation\AnimationObserver\ChangeAnimObserver">
       <UniqueIdentifier>{aad0a846-08ed-43aa-a25b-73332a308eea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Enemy">
-      <UniqueIdentifier>{dc9b3105-0e1c-48a6-9f59-8b3065fa9e87}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Attack">
-      <UniqueIdentifier>{20c2d3de-34df-4e16-bfb2-e323b6d14c3f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Attack\Information">
-      <UniqueIdentifier>{612ab13f-3e57-455e-a59a-3200c7d49c5d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Attack\IDamageable">
-      <UniqueIdentifier>{ab2c7d85-ac80-46de-a213-7d88be8f1496}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Component\Rig">
       <UniqueIdentifier>{1bbb90cd-7de8-4a67-902c-e3d039dd90b5}</UniqueIdentifier>
     </Filter>
@@ -637,50 +559,14 @@
     <Filter Include="ソース ファイル\Component\Singleton">
       <UniqueIdentifier>{8c63b18e-c12e-4ef8-8766-dd2a16ef4539}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\HitStopManager">
-      <UniqueIdentifier>{63249c5d-525d-4d54-ad72-f133c036bb9f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\System\AnimationCurve">
       <UniqueIdentifier>{1cf20d1f-8aaa-46da-9e92-2990afd1dd0a}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\System\ImGui\ImPlot">
       <UniqueIdentifier>{88dc33e0-f5dd-4334-a65b-bc3e1b1527b3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Character">
-      <UniqueIdentifier>{ad09703f-2b45-4a4f-9910-67888da99373}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Character\ActionState">
-      <UniqueIdentifier>{ae4f9f80-96f4-43ce-9c88-fb3950800b94}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Character\Controller">
-      <UniqueIdentifier>{4b012229-53de-4677-87e1-5c4bd8a90312}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Enemy\Enemy_Base">
-      <UniqueIdentifier>{77650a39-b459-41b7-966d-5118a1f49605}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Enemy\Enemy_Base\Controller">
-      <UniqueIdentifier>{faca9ea9-e734-4ae7-95e6-890e921d7e8e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Enemy\Enemy_Base\ActState">
-      <UniqueIdentifier>{d90dea02-8363-4070-bc79-0a0e2976d853}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Enemy\Boss">
-      <UniqueIdentifier>{5f2984ea-6160-4ded-acc8-5a37d0709189}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Enemy\Boss\Controller">
-      <UniqueIdentifier>{d19170bc-d61c-4810-be00-8b9faa46c397}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Enemy\Boss\ActionState">
-      <UniqueIdentifier>{54c2c2c0-6ac1-4f51-a8ec-bc6659198d6d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Enemy\Boss\ActionState\BossAct_Base">
-      <UniqueIdentifier>{b5375f29-655e-4426-af57-d2ccb5eda953}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Component\InGame\Boss">
       <UniqueIdentifier>{fbc59e98-d5f9-4a2c-a62d-0f7ca38ed6c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Enemy\Boss\ActionState\Move">
-      <UniqueIdentifier>{72c9ce00-a1e9-4ec8-b2c5-c25b83bdb458}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Animation\AnimationPameters\NewFilter1">
       <UniqueIdentifier>{98c24367-84b0-49b0-a920-e3fea59a1c52}</UniqueIdentifier>
@@ -690,9 +576,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Scene\SceneEditer">
       <UniqueIdentifier>{7ed6a9c7-5047-4dae-87fc-54f777f9a701}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\BattleManager">
-      <UniqueIdentifier>{11171953-3aa3-492c-b43b-ad29c6e81082}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Shader">
       <UniqueIdentifier>{5ab34369-180c-463a-a98c-0888e0f123e3}</UniqueIdentifier>
@@ -739,12 +622,6 @@
     <Filter Include="ソース ファイル\Graphics\Shader\Vertex\VS_Object">
       <UniqueIdentifier>{479e427c-5306-4063-a9e5-ffb5d3e8f05a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Enemy\Boss\ActionState\Ground">
-      <UniqueIdentifier>{4b72b850-47e2-4154-ad11-c3dd8293cca8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Enemy\Boss\ActionState\Damage">
-      <UniqueIdentifier>{8ae26436-5c09-42e2-91e6-3d54ef3ef5c7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter">
       <UniqueIdentifier>{3e15c111-0798-4478-89c4-15cad16afe66}</UniqueIdentifier>
     </Filter>
@@ -753,9 +630,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Effect\DX11EffecseerManager">
       <UniqueIdentifier>{8846c3da-289d-4247-8121-d08d67a865dc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Asset\AssetSaveLoad">
-      <UniqueIdentifier>{e920b94b-d20d-453e-9d2a-5a37f71f5329}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Shader\Vertex\WorldPosition">
       <UniqueIdentifier>{4c00a6ec-e64f-4d40-b548-7c33b6357371}</UniqueIdentifier>
@@ -769,24 +643,6 @@
     <Filter Include="ソース ファイル\System\Collision\CollisionTypeJudge">
       <UniqueIdentifier>{13f0554e-7b52-4850-a7dc-fd4ef58f66df}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Camera">
-      <UniqueIdentifier>{42963d73-08e2-4d8f-8208-32a17577e4d7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Camera\Controller">
-      <UniqueIdentifier>{5ff96db3-4852-4e95-a133-c2a2525a6d74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Camera\State">
-      <UniqueIdentifier>{c1514f2a-4b35-4b24-a894-b820746f4a17}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Camera\State\Move">
-      <UniqueIdentifier>{8111d62c-0679-43a8-a7e3-83d4319f3a10}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Camera\State\Base">
-      <UniqueIdentifier>{99d6c39a-9b1d-4e02-9dcc-4e3d860ab86f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Enemy\Boss\ActionState\Idle">
-      <UniqueIdentifier>{545b3d9e-caef-4425-959e-398832bdd930}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\Effect\VFX">
       <UniqueIdentifier>{19e1e296-d736-4147-bac9-f6613df9476a}</UniqueIdentifier>
     </Filter>
@@ -796,38 +652,188 @@
     <Filter Include="ソース ファイル\Component\OutLine">
       <UniqueIdentifier>{c2248bd5-6fe0-412b-b7b0-c41baaf6391f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\ITargeter">
-      <UniqueIdentifier>{3fa1c02a-1e34-463b-adeb-5cc177ac9265}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Component\HitStopManager">
+      <UniqueIdentifier>{63249c5d-525d-4d54-ad72-f133c036bb9f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Attack\IAttacker">
-      <UniqueIdentifier>{753bcb83-00c6-4e7f-9d0a-5c0cb27e7d63}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Component\InGame\BattleManager">
+      <UniqueIdentifier>{11171953-3aa3-492c-b43b-ad29c6e81082}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Attack">
+    <Filter Include="ソース ファイル\Asset">
+      <UniqueIdentifier>{a26d63dc-8a9b-49c0-931a-460745a76043}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Loader">
+      <UniqueIdentifier>{6fb219dd-20f3-4daf-838c-d6ecf47f452f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Get">
+      <UniqueIdentifier>{a0b7a1e8-da1e-4da0-bfdc-0cdbf998ba55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Collection">
+      <UniqueIdentifier>{0914fd39-6184-4c51-bbf5-0a403f0e3bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Display">
+      <UniqueIdentifier>{a6513ca5-8784-4484-b15a-f0da6b60d05a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Asset_Base">
+      <UniqueIdentifier>{5e4258b4-aaaa-48c5-9f60-b10c8a265734}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\IAssetContacter">
+      <UniqueIdentifier>{333b47f0-4487-44d6-b0ee-473ec0bc5c9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Set">
+      <UniqueIdentifier>{9fd6fdb1-928a-4b90-84b7-151791e0d456}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Creater">
+      <UniqueIdentifier>{44856d4f-ce3f-41e6-abd2-d33017fe20c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Creater\Material">
+      <UniqueIdentifier>{e6f51b7a-e972-4329-b590-ab33c6425c28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Creater\AnimationController">
+      <UniqueIdentifier>{224f1176-7fe3-4e4e-9a1d-1c15263d870e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\AssetSaveLoad">
+      <UniqueIdentifier>{e920b94b-d20d-453e-9d2a-5a37f71f5329}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame">
+      <UniqueIdentifier>{55c4fa45-2e89-43b4-91f6-f99c07eb6859}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player">
+      <UniqueIdentifier>{f762aecb-5591-4a8a-8c14-1ff5ea162329}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action">
+      <UniqueIdentifier>{734f0100-f685-4552-a879-1602de240990}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState">
+      <UniqueIdentifier>{30b7385e-e266-4a05-8e63-0b4ecc32555c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Base">
+      <UniqueIdentifier>{492cca82-3a6e-47dd-bd72-21b904e2eaee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Attack">
       <UniqueIdentifier>{524a883d-d5ba-414d-86a7-c8dd375fabee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\Base">
-      <UniqueIdentifier>{ba74db7d-77d2-420b-ac94-9d746a0d86db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Rolling">
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Rolling">
       <UniqueIdentifier>{34ca5317-7d82-4283-9c98-bc8d4dcd88ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\RushAttack">
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\RushAttack">
       <UniqueIdentifier>{49ff38db-7ed7-4667-a402-fad7eb68fdc6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Target">
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Target">
       <UniqueIdentifier>{f8125145-3108-4eff-b3aa-c7c99e0ece36}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Move">
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Move">
       <UniqueIdentifier>{10a12211-e7fc-402b-94f0-347b6af8ff71}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Damage">
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Damage">
       <UniqueIdentifier>{decc60b5-b129-4992-9ceb-e0c9fce69e44}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\GroundAttack">
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\GroundAttack">
       <UniqueIdentifier>{4e07b83f-83ba-48f8-98f0-d52179374366}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\Player\Action\PlayerState\Idle">
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Idle">
       <UniqueIdentifier>{a089199f-2d9b-4703-8356-fe11a5e3c6fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\Controller">
+      <UniqueIdentifier>{8007b5fd-3163-4427-92a4-a7ace58b8af8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\Observer">
+      <UniqueIdentifier>{3c7cea81-6190-47bc-ba54-8d1a1f6f3797}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy">
+      <UniqueIdentifier>{dc9b3105-0e1c-48a6-9f59-8b3065fa9e87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Enemy_Base">
+      <UniqueIdentifier>{77650a39-b459-41b7-966d-5118a1f49605}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Enemy_Base\Controller">
+      <UniqueIdentifier>{faca9ea9-e734-4ae7-95e6-890e921d7e8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Enemy_Base\ActState">
+      <UniqueIdentifier>{d90dea02-8363-4070-bc79-0a0e2976d853}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss">
+      <UniqueIdentifier>{5f2984ea-6160-4ded-acc8-5a37d0709189}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\Controller">
+      <UniqueIdentifier>{d19170bc-d61c-4810-be00-8b9faa46c397}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState">
+      <UniqueIdentifier>{54c2c2c0-6ac1-4f51-a8ec-bc6659198d6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\BossAct_Base">
+      <UniqueIdentifier>{b5375f29-655e-4426-af57-d2ccb5eda953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\Move">
+      <UniqueIdentifier>{72c9ce00-a1e9-4ec8-b2c5-c25b83bdb458}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\Ground">
+      <UniqueIdentifier>{4b72b850-47e2-4154-ad11-c3dd8293cca8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\Damage">
+      <UniqueIdentifier>{8ae26436-5c09-42e2-91e6-3d54ef3ef5c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\Idle">
+      <UniqueIdentifier>{545b3d9e-caef-4425-959e-398832bdd930}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\CombAttack">
+      <UniqueIdentifier>{261fa268-03f7-4ac3-8b72-0265e47c2420}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Character">
+      <UniqueIdentifier>{ad09703f-2b45-4a4f-9910-67888da99373}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Character\ActionState">
+      <UniqueIdentifier>{ae4f9f80-96f4-43ce-9c88-fb3950800b94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Character\Controller">
+      <UniqueIdentifier>{4b012229-53de-4677-87e1-5c4bd8a90312}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera">
+      <UniqueIdentifier>{42963d73-08e2-4d8f-8208-32a17577e4d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera\Controller">
+      <UniqueIdentifier>{5ff96db3-4852-4e95-a133-c2a2525a6d74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera\State">
+      <UniqueIdentifier>{c1514f2a-4b35-4b24-a894-b820746f4a17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera\State\Move">
+      <UniqueIdentifier>{8111d62c-0679-43a8-a7e3-83d4319f3a10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera\State\Base">
+      <UniqueIdentifier>{99d6c39a-9b1d-4e02-9dcc-4e3d860ab86f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\ITargeter">
+      <UniqueIdentifier>{3fa1c02a-1e34-463b-adeb-5cc177ac9265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Attack">
+      <UniqueIdentifier>{20c2d3de-34df-4e16-bfb2-e323b6d14c3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Attack\Information">
+      <UniqueIdentifier>{612ab13f-3e57-455e-a59a-3200c7d49c5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Attack\IDamageable">
+      <UniqueIdentifier>{ab2c7d85-ac80-46de-a213-7d88be8f1496}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Attack\IAttacker">
+      <UniqueIdentifier>{753bcb83-00c6-4e7f-9d0a-5c0cb27e7d63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Tag">
+      <UniqueIdentifier>{988b4f81-a66d-4eef-8758-f35438d16df4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\GameObject">
+      <UniqueIdentifier>{54651696-70bc-4ca7-ba6d-128c5dc1b8e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\SceneObjects">
+      <UniqueIdentifier>{4b5fda20-e416-43b8-99cd-92e298c295f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\Attack">
+      <UniqueIdentifier>{6e12c62b-ea29-452a-bba4-150f66d5365e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Collider\Cylinder">
+      <UniqueIdentifier>{9df9eb26-c86d-48da-b9e0-d9754bbb46dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Collider\Cylinder\JumpAttack">
+      <UniqueIdentifier>{895815e6-92fc-4e24-9814-1d2538ab20f5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -954,16 +960,16 @@
       <Filter>ソース ファイル\System\ImGui\ImGuiDebugLog</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>ソース ファイル\Object\GameObject</Filter>
+      <Filter>ソース ファイル\System\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="SceneObjects.cpp">
-      <Filter>ソース ファイル\Object\SceneObjects</Filter>
+      <Filter>ソース ファイル\System\SceneObjects</Filter>
     </ClCompile>
     <ClCompile Include="Cube.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\Cube</Filter>
     </ClCompile>
     <ClCompile Include="Tag.cpp">
-      <Filter>ソース ファイル\Object\Tag</Filter>
+      <Filter>ソース ファイル\System\Tag</Filter>
     </ClCompile>
     <ClCompile Include="JISToUTF8.cpp">
       <Filter>ソース ファイル\System\JISToUTF8</Filter>
@@ -1182,10 +1188,10 @@
       <Filter>ソース ファイル\Animation\AnimNode\Blend</Filter>
     </ClCompile>
     <ClCompile Include="PlayerActionController.cpp">
-      <Filter>ソース ファイル\Object\Player\Action\Controller</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\Controller</Filter>
     </ClCompile>
     <ClCompile Include="PlayerMoveState.cpp">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Move</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Move</Filter>
     </ClCompile>
     <ClCompile Include="GameInput.cpp">
       <Filter>ソース ファイル\Game</Filter>
@@ -1323,7 +1329,7 @@
       <Filter>ソース ファイル\Animation\TransCondition\Integer</Filter>
     </ClCompile>
     <ClCompile Include="PlayerActChangeObserver.cpp">
-      <Filter>ソース ファイル\Object\Player\Action\Observer</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\Observer</Filter>
     </ClCompile>
     <ClCompile Include="TriggerType.cpp">
       <Filter>ソース ファイル\Animation\AnimationPameters\Trigger</Filter>
@@ -1353,16 +1359,16 @@
       <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\BlendNodePlayer</Filter>
     </ClCompile>
     <ClCompile Include="PlayerIdleState.cpp">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Idle</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Idle</Filter>
     </ClCompile>
     <ClCompile Include="AnimTransitionChecker.cpp">
       <Filter>ソース ファイル\Animation\AnimControllPlayer\TransitionChecker</Filter>
     </ClCompile>
     <ClCompile Include="PlayerTargetMove.cpp">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Target</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Target</Filter>
     </ClCompile>
     <ClCompile Include="PlayerActState_Base.cpp">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Base</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Base</Filter>
     </ClCompile>
     <ClCompile Include="AppSystemDraw.cpp">
       <Filter>ソース ファイル\System\SystemDraw</Filter>
@@ -1404,7 +1410,7 @@
       <Filter>ソース ファイル\Component\UI\Slider</Filter>
     </ClCompile>
     <ClCompile Include="PlayerGroundAttack.cpp">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState\GroundAttack</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\GroundAttack</Filter>
     </ClCompile>
     <ClCompile Include="ChangeAnimObserver.cpp">
       <Filter>ソース ファイル\Animation\AnimationObserver\ChangeAnimObserver</Filter>
@@ -1413,10 +1419,10 @@
       <Filter>ヘッダー ファイル\template</Filter>
     </ClCompile>
     <ClCompile Include="AttackInformation.cpp">
-      <Filter>ソース ファイル\Attack\Information</Filter>
+      <Filter>ソース ファイル\InGame\Attack\Information</Filter>
     </ClCompile>
     <ClCompile Include="IDamageable.cpp">
-      <Filter>ソース ファイル\Attack\IDamageable</Filter>
+      <Filter>ソース ファイル\InGame\Attack\IDamageable</Filter>
     </ClCompile>
     <ClCompile Include="CP_Weapon.cpp">
       <Filter>ソース ファイル\Component\InGame\Weapon</Filter>
@@ -1446,46 +1452,43 @@
       <Filter>ソース ファイル\System\AnimationCurve</Filter>
     </ClCompile>
     <ClCompile Include="PlayerRushAttack.cpp">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState\RushAttack</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\RushAttack</Filter>
     </ClCompile>
     <ClCompile Include="PlayerRollingMove.cpp">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Rolling</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Rolling</Filter>
     </ClCompile>
     <ClCompile Include="BossActState_Base.cpp">
-      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\BossAct_Base</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\BossAct_Base</Filter>
     </ClCompile>
     <ClCompile Include="CharacterActionController.cpp">
-      <Filter>ソース ファイル\Object\Character\Controller</Filter>
+      <Filter>ソース ファイル\InGame\Character\Controller</Filter>
     </ClCompile>
     <ClCompile Include="CharacterActState_Base.cpp">
-      <Filter>ソース ファイル\Object\Character\ActionState</Filter>
+      <Filter>ソース ファイル\InGame\Character\ActionState</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
     <ClCompile Include="EnemyActionController.cpp">
-      <Filter>ソース ファイル\Object\Enemy\Enemy_Base\Controller</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Enemy_Base\Controller</Filter>
     </ClCompile>
     <ClCompile Include="EnemyActState_Base.cpp">
-      <Filter>ソース ファイル\Object\Enemy\Enemy_Base\ActState</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Enemy_Base\ActState</Filter>
     </ClCompile>
     <ClCompile Include="BossActionController.cpp">
-      <Filter>ソース ファイル\Object\Enemy\Boss\Controller</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Boss\Controller</Filter>
     </ClCompile>
     <ClCompile Include="EditScene.cpp">
       <Filter>ソース ファイル\Scene\SceneEditer</Filter>
     </ClCompile>
     <ClCompile Include="CP_BattleManager.cpp">
-      <Filter>ソース ファイル\Component\BattleManager</Filter>
+      <Filter>ソース ファイル\Component\InGame\BattleManager</Filter>
     </ClCompile>
     <ClCompile Include="CP_Boss.cpp">
       <Filter>ソース ファイル\Component\InGame\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="BossAttackState.cpp">
-      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Ground</Filter>
-    </ClCompile>
     <ClCompile Include="BossGroundMove.cpp">
-      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Ground</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Ground</Filter>
     </ClCompile>
     <ClCompile Include="ANE_ChangeParameter.cpp">
       <Filter>ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter</Filter>
@@ -1500,22 +1503,22 @@
       <Filter>ソース ファイル\Graphics\Shader\Pixel\Toon</Filter>
     </ClCompile>
     <ClCompile Include="CameraMoveController.cpp">
-      <Filter>ソース ファイル\Object\Camera\Controller</Filter>
+      <Filter>ソース ファイル\InGame\Camera\Controller</Filter>
     </ClCompile>
     <ClCompile Include="CameraMoveState_Base.cpp">
-      <Filter>ソース ファイル\Object\Camera\State\Base</Filter>
+      <Filter>ソース ファイル\InGame\Camera\State\Base</Filter>
     </ClCompile>
     <ClCompile Include="CameraOnMoveState.cpp">
-      <Filter>ソース ファイル\Object\Camera\State\Base</Filter>
+      <Filter>ソース ファイル\InGame\Camera\State\Base</Filter>
     </ClCompile>
     <ClCompile Include="BossDamageState.cpp">
-      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Damage</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Damage</Filter>
     </ClCompile>
     <ClCompile Include="BossGroundState.cpp">
-      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Ground</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Ground</Filter>
     </ClCompile>
     <ClCompile Include="BossIdleState.cpp">
-      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Idle</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Idle</Filter>
     </ClCompile>
     <ClCompile Include="VisualEffect.cpp">
       <Filter>ソース ファイル\Graphics\Effect\VFX</Filter>
@@ -1533,19 +1536,28 @@
       <Filter>ソース ファイル\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="ITargetAccepter.cpp">
-      <Filter>ソース ファイル\Object\ITargeter</Filter>
-    </ClCompile>
-    <ClCompile Include="IAttacker.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\InGame\ITargeter</Filter>
     </ClCompile>
     <ClCompile Include="PlayerAttackState.cpp">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerDamageState.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Attack</Filter>
     </ClCompile>
     <ClCompile Include="BossCombAttack.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\CombAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDamageState.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Damage</Filter>
+    </ClCompile>
+    <ClCompile Include="IAttacker.cpp">
+      <Filter>ソース ファイル\InGame\Attack\IAttacker</Filter>
+    </ClCompile>
+    <ClCompile Include="BossAttackState.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="BossJumpAttack.cpp">
+      <Filter>ソース ファイル\Component\Collider\Cylinder\JumpAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_CylinderCollider.cpp">
+      <Filter>ソース ファイル\Component\Collider\Cylinder</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1619,16 +1631,16 @@
       <Filter>ソース ファイル\System\ImGui\ImGuiDebugLog</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>ソース ファイル\Object\GameObject</Filter>
+      <Filter>ソース ファイル\System\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="SceneObjects.h">
-      <Filter>ソース ファイル\Object\SceneObjects</Filter>
+      <Filter>ソース ファイル\System\SceneObjects</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h">
       <Filter>ソース ファイル\Graphics\Mesh\Cube</Filter>
     </ClInclude>
     <ClInclude Include="Tag.h">
-      <Filter>ソース ファイル\Object\Tag</Filter>
+      <Filter>ソース ファイル\System\Tag</Filter>
     </ClInclude>
     <ClInclude Include="JISToUTF8.h">
       <Filter>ソース ファイル\System\JISToUTF8</Filter>
@@ -1868,10 +1880,10 @@
       <Filter>ソース ファイル\Animation\AnimNode\Blend</Filter>
     </ClInclude>
     <ClInclude Include="PlayerActionController.h">
-      <Filter>ソース ファイル\Object\Player\Action\Controller</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\Controller</Filter>
     </ClInclude>
     <ClInclude Include="PlayerMoveState.h">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Move</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Move</Filter>
     </ClInclude>
     <ClInclude Include="GameInput.h">
       <Filter>ソース ファイル\Game</Filter>
@@ -2042,7 +2054,7 @@
       <Filter>ソース ファイル\Animation\AnimationController</Filter>
     </ClInclude>
     <ClInclude Include="PlayerActChangeObserver.h">
-      <Filter>ソース ファイル\Object\Player\Action\Observer</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\Observer</Filter>
     </ClInclude>
     <ClInclude Include="TriggerType.h">
       <Filter>ソース ファイル\Animation\AnimationPameters\Trigger</Filter>
@@ -2072,16 +2084,16 @@
       <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\BlendNodePlayer</Filter>
     </ClInclude>
     <ClInclude Include="PlayerIdleState.h">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Idle</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Idle</Filter>
     </ClInclude>
     <ClInclude Include="AnimTransitionChecker.h">
       <Filter>ソース ファイル\Animation\AnimControllPlayer\TransitionChecker</Filter>
     </ClInclude>
     <ClInclude Include="PlayerTargetMove.h">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Target</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Target</Filter>
     </ClInclude>
     <ClInclude Include="PlayerActState_Base.h">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Base</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Base</Filter>
     </ClInclude>
     <ClInclude Include="AppSystemDraw.h">
       <Filter>ソース ファイル\System\SystemDraw</Filter>
@@ -2126,7 +2138,7 @@
       <Filter>ソース ファイル\Component\UI\Slider</Filter>
     </ClInclude>
     <ClInclude Include="PlayerGroundAttack.h">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState\GroundAttack</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\GroundAttack</Filter>
     </ClInclude>
     <ClInclude Include="ChangeAnimObserver.h">
       <Filter>ソース ファイル\Animation\AnimationObserver\ChangeAnimObserver</Filter>
@@ -2135,10 +2147,10 @@
       <Filter>ヘッダー ファイル\template</Filter>
     </ClInclude>
     <ClInclude Include="AttackInformation.h">
-      <Filter>ソース ファイル\Attack\Information</Filter>
+      <Filter>ソース ファイル\InGame\Attack\Information</Filter>
     </ClInclude>
     <ClInclude Include="IDamageable.h">
-      <Filter>ソース ファイル\Attack\IDamageable</Filter>
+      <Filter>ソース ファイル\InGame\Attack\IDamageable</Filter>
     </ClInclude>
     <ClInclude Include="CP_Weapon.h">
       <Filter>ソース ファイル\Component\InGame\Weapon</Filter>
@@ -2168,43 +2180,40 @@
       <Filter>ソース ファイル\System\AnimationCurve</Filter>
     </ClInclude>
     <ClInclude Include="PlayerRushAttack.h">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState\RushAttack</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\RushAttack</Filter>
     </ClInclude>
     <ClInclude Include="PlayerRollingMove.h">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Rolling</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Rolling</Filter>
     </ClInclude>
     <ClInclude Include="BossActState_Base.h">
-      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\BossAct_Base</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\BossAct_Base</Filter>
     </ClInclude>
     <ClInclude Include="CharacterActionController.h">
-      <Filter>ソース ファイル\Object\Character\Controller</Filter>
+      <Filter>ソース ファイル\InGame\Character\Controller</Filter>
     </ClInclude>
     <ClInclude Include="CharacterActState_Base.h">
-      <Filter>ソース ファイル\Object\Character\ActionState</Filter>
+      <Filter>ソース ファイル\InGame\Character\ActionState</Filter>
     </ClInclude>
     <ClInclude Include="EnemyActionController.h">
-      <Filter>ソース ファイル\Object\Enemy\Enemy_Base\Controller</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Enemy_Base\Controller</Filter>
     </ClInclude>
     <ClInclude Include="EnemyActState_Base.h">
-      <Filter>ソース ファイル\Object\Enemy\Enemy_Base\ActState</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Enemy_Base\ActState</Filter>
     </ClInclude>
     <ClInclude Include="BossActionController.h">
-      <Filter>ソース ファイル\Object\Enemy\Boss\Controller</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Boss\Controller</Filter>
     </ClInclude>
     <ClInclude Include="EditScene.h">
       <Filter>ソース ファイル\Scene\SceneEditer</Filter>
     </ClInclude>
     <ClInclude Include="CP_BattleManager.h">
-      <Filter>ソース ファイル\Component\BattleManager</Filter>
-    </ClInclude>
-    <ClInclude Include="BossAttackState.h">
-      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Ground</Filter>
+      <Filter>ソース ファイル\Component\InGame\BattleManager</Filter>
     </ClInclude>
     <ClInclude Include="BossGroundMove.h">
-      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Ground</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Ground</Filter>
     </ClInclude>
     <ClInclude Include="BossGroundState.h">
-      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Ground</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Ground</Filter>
     </ClInclude>
     <ClInclude Include="ANE_ChangeParameter.h">
       <Filter>ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter</Filter>
@@ -2219,19 +2228,19 @@
       <Filter>ソース ファイル\Graphics\Shader\Pixel\Toon</Filter>
     </ClInclude>
     <ClInclude Include="CameraMoveController.h">
-      <Filter>ソース ファイル\Object\Camera\Controller</Filter>
+      <Filter>ソース ファイル\InGame\Camera\Controller</Filter>
     </ClInclude>
     <ClInclude Include="CameraMoveState_Base.h">
-      <Filter>ソース ファイル\Object\Camera\State\Base</Filter>
+      <Filter>ソース ファイル\InGame\Camera\State\Base</Filter>
     </ClInclude>
     <ClInclude Include="CameraOnMoveState.h">
-      <Filter>ソース ファイル\Object\Camera\State\Base</Filter>
+      <Filter>ソース ファイル\InGame\Camera\State\Base</Filter>
     </ClInclude>
     <ClInclude Include="BossDamageState.h">
-      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Damage</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Damage</Filter>
     </ClInclude>
     <ClInclude Include="BossIdleState.h">
-      <Filter>ソース ファイル\Object\Enemy\Boss\ActionState\Idle</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Idle</Filter>
     </ClInclude>
     <ClInclude Include="VisualEffect.h">
       <Filter>ソース ファイル\Graphics\Effect\VFX</Filter>
@@ -2249,22 +2258,31 @@
       <Filter>ソース ファイル\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="ITargetAccepter.h">
-      <Filter>ソース ファイル\Object\ITargeter</Filter>
+      <Filter>ソース ファイル\InGame\ITargeter</Filter>
     </ClInclude>
     <ClInclude Include="CP_Boss.h">
       <Filter>ソース ファイル\Component\InGame\Boss</Filter>
     </ClInclude>
-    <ClInclude Include="IAttacker.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerAttackState.h">
-      <Filter>ソース ファイル\Object\Player\Action\PlayerState\Attack</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerDamageState.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Attack</Filter>
     </ClInclude>
     <ClInclude Include="BossCombAttack.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\CombAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDamageState.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Damage</Filter>
+    </ClInclude>
+    <ClInclude Include="IAttacker.h">
+      <Filter>ソース ファイル\InGame\Attack\IAttacker</Filter>
+    </ClInclude>
+    <ClInclude Include="BossAttackState.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="BossJumpAttack.h">
+      <Filter>ソース ファイル\Component\Collider\Cylinder\JumpAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_CylinderCollider.h">
+      <Filter>ソース ファイル\Component\Collider\Cylinder</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

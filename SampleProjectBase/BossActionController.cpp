@@ -6,9 +6,10 @@
 
 #include "BossIdleState.h"
 #include "BossGroundMove.h"
-#include "BossAttackState.h"
-#include "BossCombAttack.h"
 #include "BossDamageState.h"
+#include "BossCombAttack.h"
+#include "BossJumpAttack.h"
+
 
 // 状態を表すアニメーションパラメータ名
 constexpr auto STATE_PARAM_NAME("state");
@@ -29,7 +30,7 @@ BossActionController::BossActionController(CP_Boss& _boss) :
 	CreateState<BossDamageState>(Damage_Small, {});
 
 	CreateState<BossCombAttack>(CombAttack1, { ActDistance::Short });
-	CreateState<BossAttackState>(JumpAttack, 
+	CreateState<BossJumpAttack>(JumpAttack, 
 		{ ActDistance::Far,ActDistance::Short });
 
 	// デフォルトノード設定
@@ -134,6 +135,10 @@ bool BossActionController::IsCanBossUpdate()
 	{
 		return false;
 	}
+	if (!pRigidBody)
+	{
+		return false;
+	}
 #endif
 
 	return true;
@@ -178,6 +183,7 @@ void BossActionController::ImGuiDebug()
 	std::vector<std::string> stateNames;
 	for (auto& node : stateNodeList)
 	{
+
 		stateNames.push_back(GetStateStr(node.first));
 	}
 
@@ -185,6 +191,13 @@ void BossActionController::ImGuiDebug()
 	std::string stateName = GetStateStr(static_cast<int>(defaultState));
 	if (ImGuiMethod::ComboBox("Default", stateName, stateNames))
 		SetDefaultState(static_cast<BossActState_Base::BossState>(GetStateId(stateName)));
+
+	// デバッグステート変更
+	for (auto& node : stateNodeList)
+	{
+		if (ImGui::Button(GetStateStr(node.first).c_str()))
+			ChangeState(static_cast<BossActState_Base::BossState>(node.first));
+	}
 
 	EnemyActionController::ImGuiDebug();
 }

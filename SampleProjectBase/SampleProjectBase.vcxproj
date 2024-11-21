@@ -182,6 +182,7 @@
     <ClCompile Include="BossGroundMove.cpp" />
     <ClCompile Include="BossGroundState.cpp" />
     <ClCompile Include="BossIdleState.cpp" />
+    <ClCompile Include="BossJumpAttack.cpp" />
     <ClCompile Include="BulletContactCallBack.cpp" />
     <ClCompile Include="BulletTest.cpp" />
     <ClCompile Include="ButtonTransArrow.cpp" />
@@ -202,6 +203,7 @@
     <ClCompile Include="CopyAnimationParameters.cpp" />
     <ClCompile Include="CP_BoxAnimation.cpp" />
     <ClCompile Include="CP_Character.cpp" />
+    <ClCompile Include="CP_CylinderCollider.cpp" />
     <ClCompile Include="CP_Enemy.cpp" />
     <ClCompile Include="CP_OutLineRenderer.cpp" />
     <ClCompile Include="CP_RigidBody.cpp" />
@@ -408,6 +410,7 @@
     <ClInclude Include="BossGroundMove.h" />
     <ClInclude Include="BossGroundState.h" />
     <ClInclude Include="BossIdleState.h" />
+    <ClInclude Include="BossJumpAttack.h" />
     <ClInclude Include="BulletContactCallBack.h" />
     <ClInclude Include="BulletTest.h" />
     <ClInclude Include="ButtonTransArrow.h" />
@@ -430,6 +433,7 @@
     <ClInclude Include="CopyAnimationParameters.h" />
     <ClInclude Include="CP_BoxAnimation.h" />
     <ClInclude Include="CP_Character.h" />
+    <ClInclude Include="CP_CylinderCollider.h" />
     <ClInclude Include="CP_Enemy.h" />
     <ClInclude Include="CP_OutLineRenderer.h" />
     <ClInclude Include="CP_RigidBody.h" />

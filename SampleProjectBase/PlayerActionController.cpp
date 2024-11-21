@@ -131,15 +131,19 @@ bool PlayerActionController::ChangeState(const PlayerActState_Base::PlayerState&
 
 void PlayerActionController::OnDamage(const HashiTaku::AttackInformation& _atkInfo)
 {
-	using enum HashiTaku::AttackInformation::AttackLevel;
+	using enum HashiTaku::AttackInformation::AttackLevel; 
+
+	// ダメージのレベルでのけぞりモーションを変更
 	switch (_atkInfo.GetAttackLevel())
 	{
 
+		// 小のけぞり
 	case Low :
 	case Mid:
 		ChangeState(PlayerActState_Base::PlayerState::Damage_S, true);
 		break;
 
+		// 大のけぞり
 	case High:
 	case SuperHigh:
 		ChangeState(PlayerActState_Base::PlayerState::Damage_L, true);

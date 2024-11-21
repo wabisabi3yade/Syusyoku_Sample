@@ -52,11 +52,12 @@ void CP_Boss::Start()
 {
 	CP_Enemy::Start();
 
+	// 武器を取得
 	SetupWeapon();
 
+	// コンポーネント取得
 	pAnimation = GetGameObject().GetComponent<CP_Animation>();
 	CP_RigidBody* pRb = GetGameObject().GetComponent<CP_RigidBody>();
-
 
 	// プレイヤーを取得する
 	if (CP_BattleManager* pBattle = CP_BattleManager::GetInstance())
@@ -67,6 +68,7 @@ void CP_Boss::Start()
 	// アニメーションパラメータのアドレスを取得
 	pCanAttack = pAnimation->GetParameterPointer<bool>(CAN_ATTACK_ANIMPARAM);
 
+	// アクションコントローラー初期化s
 	pActionController->Init(pAnimation, pRb);
 }
 
@@ -84,7 +86,10 @@ void CP_Boss::Draw()
 {
 	CP_Enemy::Draw();
 
+#ifdef EDIT
+	// アクション側で表示させたいデバッグ描画
 	pActionController->DebugDisplay();
+#endif // EDIT
 }
 
 void CP_Boss::UpdateAttackCollision()
@@ -113,16 +118,6 @@ void CP_Boss::SetupWeapon()
 bool CP_Boss::GetCanUpdate()
 {
 	return true;
-}
-
-void CP_Boss::OnHitStopBegin()
-{
-	CP_Enemy::OnHitStopBegin();
-}
-
-void CP_Boss::OnHitStopEnd()
-{
-	CP_Enemy::OnHitStopEnd();
 }
 
 void CP_Boss::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo)
