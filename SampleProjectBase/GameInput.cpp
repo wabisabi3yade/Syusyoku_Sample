@@ -73,6 +73,7 @@ void GameInput::DefaultSetting()
 	buttonLinks[static_cast<u_int>(Player_Jump)] = { Batsu, DIK_SPACE };
 	buttonLinks[static_cast<u_int>(Player_Rolling)] = { Shikaku, DIK_LSHIFT };
 	buttonLinks[static_cast<u_int>(Player_RockOn)] = { R1, DIK_LCONTROL };
+	buttonLinks[static_cast<u_int>(Player_Guard)] = { Maru, DIK_E };
 }
 
 void GameInput::InitValueSettings()

@@ -3,11 +3,23 @@
 #include "AnimTransitionArrow.h"
 
 AnimTransitionChecker::AnimTransitionChecker(const AnimationParameters& _animParams,
-	const std::list<std::unique_ptr<AnimTransitionArrow>>& _transArrows)
+	const std::list<std::unique_ptr<AnimTransitionArrow>>& _transArrows, 
+	const std::list<std::unique_ptr<AnimTransitionArrow>>* _pGroupTransArrows)
 {
-	// グループを作成
+	// 遷移条件を作成
 	for (auto& arrow : _transArrows)
 		CreateInfo(_animParams, *arrow);
+
+	// グループ側の条件があるなら
+	if (_pGroupTransArrows)
+	{
+		// 遷移条件を作成
+		for (auto& groupArrow : *_pGroupTransArrows)
+			CreateInfo(_animParams, *groupArrow);
+	}
+
+	// 優先度でソートする
+	transitionInfos.sort(SortArrowPriority);
 }
 
 void AnimTransitionChecker::CreateInfo(const AnimationParameters& _animParams, const AnimTransitionArrow& _arrow)
@@ -52,7 +64,7 @@ const AnimTransitionArrow* AnimTransitionChecker::TransitonCheck(float _curRatio
 				break;
 			}
 
-			condItr++;	// 次の条件に進
+			++condItr;	// 次の条件に進
 		}
 
 		if (!isNotArchive)	// 全て達成しているなら
@@ -69,4 +81,10 @@ const AnimTransitionArrow* AnimTransitionChecker::TransitonCheck(float _curRatio
 	}
 
 	return nullptr;	// 達成していないなら
+}
+
+bool AnimTransitionChecker::SortArrowPriority(const TransitionInfo& _a1, 
+	const TransitionInfo& _a2)
+{
+	return _a1.pArrow->GetPriority() > _a2.pArrow->GetPriority();
 }

@@ -10,17 +10,32 @@ private:
 	/// @brief コンビネーション攻撃の先
 	PlayerState nextCombAtkState;
 
-	/// @brief 攻撃情報
-	std::unique_ptr<HashiTaku::AttackInformation> pAttackInfo;
+	/// @brief 攻撃情報リスト(単発なら最初の情報を使用する)
+	std::vector<HashiTaku::AttackInformation> attackInfos;
 
 	/// @brief 前に進む距離カーブ
 	AnimationCurve progressDistanceCurve;
 
-	/// @brief 進む距離
-	float atkMoveSpeed;
+	/// @brief リアタック変数
+	const bool* pIsReAttack;
+
+	/// @brief 今回の攻撃で進む距離
+	float curAtkProgressDis;
+
+	/// @brief 進む最大距離
+	float atkMaxDistance;
+
+	/// @brief 前フレームまでに進んだ距離
+	float prevProgressDistance;
 
 	/// @brief 最初に見る回転速度
 	float lookRotateSpeed;
+
+	/// @brief 攻撃情報何個目か
+	u_int curAttackTime;
+
+	/// @brief 全体の攻撃情報何個あるか
+	u_int attackTimeCnt;
 
 	/// @brief 前へ進むか？
 	bool isMoveForward;
@@ -42,17 +57,33 @@ protected:
 
 	void ImGuiDebug() override;
 private:
+	/// @brief パラメータを初期化
+	void InitParameter();
+
 	/// @brief 攻撃情報を更新する
 	void UpdateAttackInfo();
 
-	/// @brief 攻撃始めにプレイヤーの向きを回転させる
-	void OnStartRotate();
+	/// @brief リアタックするか確認する
+	void UpdateReAttack();
+
+	/// @brief 攻撃で進む距離を求める
+	/// @param _atkEnemyPos 敵の座標
+	void CalcProgressDis(const DirectX::SimpleMath::Vector3& _atkEnemyPos);
 
 	/// @brief 敵に対して向ける
-	void LookAtEnemyInstant();
+	/// @param _atkEnemyPos 敵の座標
+	void LookAtEnemyInstant(DirectX::SimpleMath::Vector3 _atkEnemyPos);
 
 	/// @brief 攻撃時に前へ進む
 	void ForwardProgressMove();
+
+	/// @brief 攻撃する敵の座標を取得する
+	/// @return 敵の座標
+	DirectX::SimpleMath::Vector3 GetAtkEnemyPos();
 public:
-	constexpr static auto ATTACKTRIGGER_PARAMNAME = "attackTrigger";	// 攻撃トリガー
+	/// @brief 攻撃トリガー
+	constexpr static auto ATTACKTRIGGER_PARAMNAME{ "attackTrigger" };
+
+	/// @brief リアタックするときに呼び出す変数
+	static constexpr auto REATTACK_PARAMNAME{ "isReAttack" };
 };

@@ -2,7 +2,7 @@
 #include "CP_Enemy.h"
 #include "CP_BattleManager.h"
 
-CP_Enemy::CP_Enemy() : pTargeter(nullptr)
+CP_Enemy::CP_Enemy()
 {
 	SetEnemyName("Boss");
 }
@@ -17,16 +17,27 @@ const DirectX::SimpleMath::Vector3& CP_Enemy::GetWorldPosByTargetObj() const
 	return GetTransform().GetPosition();
 }
 
-void CP_Enemy::GetTargeter(IObjectTargeter& _targeter)
+void CP_Enemy::SetTargeter(IObjectTargeter& _targeter)
 {
-	pTargeter = &_targeter;
+	auto itr = std::find(pTargeters.begin(), pTargeters.end(), &_targeter);
+	if (itr != pTargeters.end())
+	{
+		HASHI_DEBUG_LOG("ターゲットが重複しました");
+		return;
+	}
+
+	pTargeters.push_back(&_targeter);
 }
 
-void CP_Enemy::OnDeathNotifyToTargeter()
+void CP_Enemy::RemoveTargeter(IObjectTargeter& _targeter)
 {
-	// 伝える
-	if (pTargeter)
-		pTargeter->UpdateDeathNotify(*this);
+	pTargeters.remove(&_targeter);
+}
+
+void CP_Enemy::OnRemoveNotifyToTargeter()
+{
+	for (auto& targeter : pTargeters)
+		targeter->RemoveNotify(*this);
 }
 
 void CP_Enemy::Awake()
@@ -40,7 +51,7 @@ void CP_Enemy::Awake()
 
 void CP_Enemy::OnDestroy()
 {
-	OnDeathNotifyToTargeter();
+	OnRemoveNotifyToTargeter();
 
 	// バトルマネジャーがあるなら自身を削除する
 	if (CP_BattleManager* pBattle = CP_BattleManager::GetInstance())
@@ -49,7 +60,8 @@ void CP_Enemy::OnDestroy()
 	}
 }
 
-void CP_Enemy::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo)
+void CP_Enemy::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo,
+	const DirectX::SimpleMath::Vector3& _attackerPos)
 {
 	if (GetIsInvicible()) return;
 

@@ -27,6 +27,8 @@ void PlayerIdleState::OnEndBehavior()
 
 void PlayerIdleState::TransitionCheckUpdate()
 {
+	PlayerActState_Base::TransitionCheckUpdate();
+
 	// 移動ステートに遷移できるなら
 	if (IsCanMoveTransition())
 	{
@@ -34,11 +36,6 @@ void PlayerIdleState::TransitionCheckUpdate()
 			ChangeState(PlayerState::TargetMove);
 		else
 			ChangeState(PlayerState::Move);
-	}
-	// 攻撃ボタン
-	else if(pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
-	{
-		ChangeState(PlayerState::Attack11);
 	}
 }
 

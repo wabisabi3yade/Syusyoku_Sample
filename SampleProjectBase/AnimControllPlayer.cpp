@@ -87,13 +87,16 @@ void AnimControllPlayer::SetDefault()
 
 	// ノード再生を変更
 	ChangeNodePlayer(*defaultNodeInfo.pAnimNode);
+
 	// 通知イベントをコピーする
 	const AnimNotifyList& originNotifys = defaultNodeInfo.notifyList;
 	pCurNodePlayer->CopyNotifys(originNotifys, *pCopyAnimParameters);
 
 	// 遷移条件確認クラスを作成
 	const auto& transArrows = defaultNodeInfo.transitionArrows;
-	pTransChecker = std::make_unique<AnimTransitionChecker>(*pCopyAnimParameters, transArrows);
+	const auto* groupArrows = pAnimController->GetGroupArrows(defaultNodeInfo.groupArrowsName);
+	pTransChecker = std::make_unique<AnimTransitionChecker>(*pCopyAnimParameters, transArrows,
+		groupArrows);
 }
 
 void AnimControllPlayer::StateUpdate()
@@ -234,7 +237,10 @@ void AnimControllPlayer::OnChangeAnimation(const AnimTransitionArrow& _changeArr
 	// 新しく遷移チェッカーを作成する
 	const AnimNodeInfo& nodeInfo = *pAnimController->GetNodeInfo(nextAnimation);
 	const auto& transArrowList = nodeInfo.transitionArrows;
-	pTransChecker = std::make_unique<AnimTransitionChecker>(*pCopyAnimParameters, transArrowList);
+	const auto* groupArrows = pAnimController->GetGroupArrows(nodeInfo.groupArrowsName);
+	pTransChecker = 
+		std::make_unique<AnimTransitionChecker>(*pCopyAnimParameters, transArrowList,
+			groupArrows);
 
 	// 遷移ステートに変更
 	updateState = UpdateState::Transition;
@@ -291,8 +297,6 @@ void AnimControllPlayer::ChangeAnimSubjectUpdate()
 
 	changeAnimInfo.pFromAnimNodeName = &pPrevNodePlayer->GetNodeName();
 	changeAnimInfo.pToAnimNodeName = &pCurNodePlayer->GetNodeName();
-
-	HASHI_DEBUG_LOG("f:" + *changeAnimInfo.pFromAnimNodeName + "\nn:" + *changeAnimInfo.pToAnimNodeName);
 
 	pChangeAnimSubject->NotifyAll(changeAnimInfo);
 }

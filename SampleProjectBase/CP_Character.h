@@ -49,7 +49,8 @@ public:
 
 	/// @brief ダメージを受けたときの処理
 	/// @param _attackInfo 攻撃情報
-	void OnDamage(const HashiTaku::AttackInformation& _attackInfo) override;
+	void OnDamage(const HashiTaku::AttackInformation& _attackInfo,
+		const DirectX::SimpleMath::Vector3& _attackerPos) override;
 
 	/// @brief 死んだときの処理
 	void OnDeath();
@@ -80,7 +81,8 @@ protected:
 
 	/// @brief 各クラスのダメージを受けたときの処理
 	/// @param _attackInfo 攻撃情報
-	virtual void OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo) = 0;
+	virtual void OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo,
+		const DirectX::SimpleMath::Vector3& _attackerPos) = 0;
 
 	/// @brief 各クラスのダメージを受けたときの処理
 	/// @param _attackInfo 攻撃情報

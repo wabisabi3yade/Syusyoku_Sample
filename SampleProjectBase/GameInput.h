@@ -9,9 +9,10 @@ public:
 	enum class ButtonType
 	{
 		Player_Attack,	// 攻撃
-		Player_Jump,
-		Player_Rolling,
-		Player_RockOn,
+		Player_Jump, // ジャンプ
+		Player_Rolling,	// ローリング
+		Player_RockOn,	// ロックオン
+		Player_Guard,	// ガード
 		Max_BoolNum
 	};
 	/// @brief ボタンの種類数

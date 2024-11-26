@@ -4,11 +4,15 @@
 #include "AttackInformation.h"
 
 class CP_Weapon;
+class CP_CameraMove;
 
 class CP_Player : public CP_Character
 {
 	/// @brief 武器のオブジェクト名
 	std::string weaponObjName;
+
+	/// @brief カメラオブジェクト名
+	std::string cameraObjName;
 
 	/// @brief アクションコントローラー
 	std::unique_ptr<PlayerActionController> pActionController;
@@ -19,11 +23,20 @@ class CP_Player : public CP_Character
 	/// @brief 武器判定
 	CP_Weapon* pWeapon;
 
+	/// @brief カメラ移動
+	CP_CameraMove* pCameraMove;
+
 	/// @brief 攻撃フラグ
 	const bool* pAttackCollisionFlag;
 
 	/// @brief ヒットストップする前の再生速度
 	float hitStopBeforeAnimSpeed;
+
+	/// @brief 現在のガードゲージ
+	float curGuardGage;
+
+	/// @brief 最大のガードゲージ
+	float maxGuardGage;
 public:
 	CP_Player();
 	~CP_Player() {}
@@ -36,6 +49,12 @@ public:
 
 	/// @brief ヒットストップ終了した時の処理
 	void OnHitStopEnd() override;
+
+	/// @brief ガードゲージを増やす
+	void AddGuardGage(float _addGage);
+
+	/// @brief ガードゲージをリセット
+	void ResetGuardGage();
 
 	/// @brief 攻撃情報をセットする
 	/// @param _setAttackInfo 攻撃情報
@@ -56,7 +75,7 @@ private:
 	void OnDestroy() override;
 
 	/// @brief 武器のオブジェクトをセットする
-	void SetWeaponObject();
+	void SetRequireObject();
 
 	/// @brief 武器の攻撃フラグをセット
 	void SetWeaponAttackFlag();
@@ -66,11 +85,12 @@ private:
 	bool GetCanUpdate() const;
 
 	/// @brief プレイヤーのダメージ処理
-	void OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo) override;
+	void OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo,
+		const DirectX::SimpleMath::Vector3& _attackerPos) override;
 	void OnDeathBehavior() override;	
 
 	void ImGuiDebug() override;
-	void ImGuiSetWeapon();
+	void ImGuiFindObj();
 };
 
 

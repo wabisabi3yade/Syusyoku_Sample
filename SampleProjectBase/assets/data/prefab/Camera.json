@@ -1,0 +1,88 @@
+{
+    "childs": null,
+    "gameObject": {
+        "active": true,
+        "components": [
+            {
+                "distance": 1000.0,
+                "enable": true,
+                "fov": 45.0,
+                "name": "Camera",
+                "priority": 0,
+                "viewSlot": 0
+            },
+            {
+                "enable": true,
+                "moveController": {
+                    "shakeLevels": [
+                        {
+                            "duration": 0.5099999904632568,
+                            "power": 0.20000000298023224
+                        },
+                        {
+                            "duration": 0.30000001192092896,
+                            "power": 0.20000000298023224
+                        },
+                        {
+                            "duration": 0.8199999928474426,
+                            "power": 0.07999999821186066
+                        },
+                        {
+                            "duration": 0.4000000059604645,
+                            "power": 0.20000000298023224
+                        }
+                    ],
+                    "stateDatas": [
+                        {
+                            "parameter": {
+                                "centerAngle": -90.0,
+                                "currentHeight": 3.0,
+                                "disHorizon": 8.0,
+                                "lookOffsetY": 2.4000000953674316,
+                                "rotateSpeed": 120.0
+                            },
+                            "stateType": 0
+                        },
+                        {
+                            "parameter": {
+                                "Distance": 8.0,
+                                "FollowOffsetY": 2.0,
+                                "LookOffsetY": 2.0,
+                                "LookSpeed": 30.0,
+                                "MaxHeight": 3.0,
+                                "MinHeight": 2.0,
+                                "MoveSpeed": 30.0
+                            },
+                            "stateType": 1
+                        }
+                    ]
+                },
+                "name": "CameraMove",
+                "priority": 0,
+                "target": "Player"
+            }
+        ],
+        "layer": 1,
+        "name": "Camera",
+        "tag": 1,
+        "transform": {
+            "child": null,
+            "pos": [
+                0.0,
+                11.399999618530273,
+                20.0
+            ],
+            "rotation": [
+                -1.0320650289941113e-07,
+                0.9762959480285645,
+                -0.21643970906734467,
+                -4.6553415700145706e-07
+            ],
+            "scale": [
+                4.199999809265137,
+                0.9999996423721313,
+                0.9999997615814209
+            ]
+        }
+    }
+}

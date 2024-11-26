@@ -95,7 +95,7 @@ void AnimBlendNodePlayer::AnimationUpdate(std::vector<BoneTransform>& _outTransf
 		curBlendValues = { axisPlayParameters[0].curBlendValue, axisPlayParameters[1].curBlendValue };
 		pBlendNode->FindBlendPairTwoAxis(curBlendValues, blendingAnimData);
 	}
-	
+
 	// ブレンドしなかったら
 	if (!pBlendNode->GetIsUseBlend())
 	{
@@ -204,7 +204,9 @@ void AnimBlendNodePlayer::SquareAnimationUpdate(std::vector<BoneTransform>& _out
 		quat34.Normalize();
 
 		// 1.2個目と3・4個目を球面線形補間でブレンドする
-		_outTransforms[b_i].rotation = Quaternion::Slerp(quat12, quat34, weight34 / (weight12 + weight34));
+		float t = weight34 / (weight12 + weight34);
+		t = std::clamp(t, 0.0f, 1.0f);
+		_outTransforms[b_i].rotation = Quaternion::Slerp(quat12, quat34, t);
 		_outTransforms[b_i].rotation.Normalize();
 	}
 }
@@ -221,8 +223,8 @@ void AnimBlendNodePlayer::CalcRootMotionPosSpeed()
 	pBlendNode->CalcRootMotionSpeed(blendingAnimData, rootMotionPosSpeedPerSec);
 
 	// ノード再生速度は適用しない
-	rootMotionPosSpeedPerSec *= pAssetBoneList->GetLoadScale() * 
-		allPlaySpeed / 
+	rootMotionPosSpeedPerSec *= pAssetBoneList->GetLoadScale() *
+		allPlaySpeed /
 		GetNodePlaySpeed();
 }
 

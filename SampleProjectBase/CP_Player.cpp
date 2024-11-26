@@ -11,7 +11,7 @@ using namespace DirectX::SimpleMath;
 constexpr auto ATKCOL_ANIMPARAM_NAME("attackCollision");
 
 CP_Player::CP_Player()
-	: pAnimation(nullptr), pWeapon(nullptr), hitStopBeforeAnimSpeed(0.0f), pAttackCollisionFlag(nullptr)
+	: pAnimation(nullptr), pWeapon(nullptr), pCameraMove(nullptr), hitStopBeforeAnimSpeed(0.0f), pAttackCollisionFlag(nullptr), curGuardGage(0.0f), maxGuardGage(0.0f)
 {
 }
 
@@ -46,6 +46,9 @@ void CP_Player::Start()
 {
 	CP_Character::Start();
 
+	// 武器オブジェクトをセット
+	SetRequireObject();
+
 	CP_RigidBody* pRb = GetGameObject().GetComponent<CP_RigidBody>();
 
 	//アニメーション関係生成
@@ -56,10 +59,7 @@ void CP_Player::Start()
 	pAnimation->AddChangeAnimObserver(pActionController->GetChangeAnimObserver());
 
 	// アクションコントローラー開始処理
-	pActionController->Init(pAnimation, pRb);
-
-	// 武器オブジェクトをセット
-	SetWeaponObject();
+	pActionController->Init(pAnimation, pRb, pCameraMove);
 }
 
 void CP_Player::Update()
@@ -88,17 +88,19 @@ void CP_Player::OnDestroy()
 	}
 }
 
-void CP_Player::SetWeaponObject()
+void CP_Player::SetRequireObject()
 {
-	auto pWeaponObj = InSceneSystemManager::GetInstance()->
-		GetSceneObjects().GetSceneObject(weaponObjName);
-	if (!pWeaponObj) return;
+	SceneObjects& sceneObjs = InSceneSystemManager::GetInstance()->GetSceneObjects();
 
 	// 武器コンポーネントを取得
-	if (CP_Weapon* pGetWeapon = pWeaponObj->GetComponent<CP_Weapon>())
-	{
-		pWeapon = pGetWeapon;
-	}
+	GameObject* pFindObj = sceneObjs.GetSceneObject(weaponObjName);
+	if (pFindObj)
+		pWeapon = pFindObj->GetComponent<CP_Weapon>(); 
+
+	// カメラ移動クラス
+	pFindObj = sceneObjs.GetSceneObject(cameraObjName);
+	if (pFindObj)
+		pCameraMove = pFindObj->GetComponent<CP_CameraMove>();
 }
 
 void CP_Player::OnHitStopBegin()
@@ -111,9 +113,20 @@ void CP_Player::OnHitStopEnd()
 	CP_Character::OnHitStopEnd();
 }
 
+void CP_Player::AddGuardGage(float _addGage)
+{
+	curGuardGage += _addGage;	// 足す
+	curGuardGage = std::clamp(curGuardGage, 0.0f, maxGuardGage);
+}
+
+void CP_Player::ResetGuardGage()
+{
+	curGuardGage = 0.0f;
+}
+
 void CP_Player::ImGuiDebug()
 {
-	ImGuiSetWeapon();
+	ImGuiFindObj();
 
 	static bool isWindow = true;
 
@@ -130,16 +143,26 @@ void CP_Player::ImGuiDebug()
 	ImGui::End();
 }
 
-void CP_Player::ImGuiSetWeapon()
+void CP_Player::ImGuiFindObj()
 {
 #ifdef  EDIT
 
 	// 武器オブジェクト名を入力
 	static char input[IM_INPUT_BUF];
-	ImGui::InputText("Weapon", input, IM_INPUT_BUF);
-	if (ImGui::Button("Set"))
+	ImGui::InputText("ObjName", input, IM_INPUT_BUF);
+
+	std::string text = "Weapon:" + weaponObjName;
+	ImGui::Text(text.c_str());
+	if (ImGui::Button("Set Weapon"))
 	{
 		weaponObjName = input;
+	}
+
+	text = "Camera:" + cameraObjName;
+	ImGui::Text(text.c_str());
+	if (ImGui::Button("Set Camera"))
+	{
+		cameraObjName = input;
 	}
 
 #endif //  EDIT
@@ -156,6 +179,7 @@ nlohmann::json CP_Player::Save()
 	data["actionController"] = pActionController->Save();
 
 	data["weaponObjName"] = weaponObjName;
+	data["camObjName"] = cameraObjName;
 
 	return data;
 }
@@ -169,6 +193,7 @@ void CP_Player::Load(const nlohmann::json& _data)
 		pActionController->Load(actionControllerData);
 
 	HashiTaku::LoadJsonString("weaponObjName", weaponObjName, _data);
+	HashiTaku::LoadJsonString("camObjName", cameraObjName, _data);
 }
 
 void CP_Player::SetWeaponAttackFlag()
@@ -188,9 +213,10 @@ bool CP_Player::GetCanUpdate() const
 	return true;
 }
 
-void CP_Player::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo)
+void CP_Player::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo,
+	const DirectX::SimpleMath::Vector3& _attackerPos)
 {
-	pActionController->OnDamage(_attackInfo);
+	pActionController->OnDamage(_attackInfo, _attackerPos);
 }
 
 void CP_Player::OnDeathBehavior()

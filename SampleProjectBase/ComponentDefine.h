@@ -6,6 +6,7 @@
 #include "CP_RigidBody.h"
 #include "CP_BoxCollider.h"
 #include "CP_SphereCollider.h"
+#include "CP_CylinderCollider.h"
 #include "CP_CapsuleCollider.h"
 
 // •`‰æ

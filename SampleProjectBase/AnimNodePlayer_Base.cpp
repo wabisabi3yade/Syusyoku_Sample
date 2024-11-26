@@ -214,7 +214,6 @@ DirectX::SimpleMath::Vector3 AnimNodePlayer_Base::CalcRootMotionToTransform()
 	{
 		// 前回のルートモーションを初期化する
 		p_RootMotionPos = GetRootMotionPos(0.0f);
-		//p_RootMotionRot = GetRootMotionRot(0.0f);
 	}
 
 	float curPlayRatio = GetAnimationRatio();

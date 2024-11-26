@@ -27,7 +27,7 @@ void BossActState_Base::Update()
 	EnemyActState_Base::Update();
 
 	UpdateBehavior();
-	
+
 	TransitionCheckUpdate();
 }
 
@@ -36,6 +36,12 @@ void BossActState_Base::OnEnd()
 	EnemyActState_Base::OnEnd();
 
 	OnEndBehavior();
+
+	// 速度をリセット
+	if (CP_RigidBody* pRb = GetRB())
+	{
+		pRb->SetVelocity({ 0.0f,0.0f,0.0f });
+	}
 }
 
 void BossActState_Base::OnDamage()
@@ -74,6 +80,11 @@ Transform& BossActState_Base::GetPlayerTransform()
 CP_Animation* BossActState_Base::GetAnimation()
 {
 	return pActionController->GetAnimation();
+}
+
+CP_RigidBody* BossActState_Base::GetRB()
+{
+	return pActionController->GetRB();
 }
 
 float BossActState_Base::DeltaTime() const

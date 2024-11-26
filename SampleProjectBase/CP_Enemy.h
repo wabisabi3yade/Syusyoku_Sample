@@ -8,7 +8,7 @@ class CP_Enemy : public CP_Character, public ITargetAccepter
 	std::string enemyName;
 
 	/// @brief 自身をターゲットにしている者
-	IObjectTargeter* pTargeter;
+	std::list<IObjectTargeter*> pTargeters;
 
 public:
 	CP_Enemy();
@@ -24,10 +24,14 @@ public:
 
 	/// @brief ターゲットする側を取得する
 	/// @param _targeter ターゲットする側
-	void GetTargeter(IObjectTargeter& _targeter);
+	void SetTargeter(IObjectTargeter& _targeter);
+
+	/// @brief ターゲットする側を削除する
+	/// @param _targeter 削除ターゲットする側
+	void RemoveTargeter(IObjectTargeter& _targeter) override;
 
 	/// @brief ターゲット側に死んだことを通知
-	void OnDeathNotifyToTargeter();
+	void OnRemoveNotifyToTargeter();
 protected:
 	void Awake() override;
 	void OnDestroy() override;
@@ -38,7 +42,8 @@ protected:
 
 	/// @brief 各クラスのダメージを受けたときの処理
 	/// @param _attackInfo 攻撃情報
-	void OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo) override;
+	void OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo,
+		const DirectX::SimpleMath::Vector3& _attackerPos) override;
 
 	/// @brief 各クラスのダメージを受けたときの処理
 	/// @param _attackInfo 攻撃情報

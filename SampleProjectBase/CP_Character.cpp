@@ -30,9 +30,12 @@ bool CP_Character::GetIsInvicible() const
 	return isInvicible;
 }
 
-void CP_Character::OnDamage(const HashiTaku::AttackInformation& _attackInfo)
+void CP_Character::OnDamage(const HashiTaku::AttackInformation& _attackInfo,
+	const DirectX::SimpleMath::Vector3& _attackerPos)
 {
-	OnDamageBehavior(_attackInfo);
+	if (isInvicible) return;
+
+	OnDamageBehavior(_attackInfo, _attackerPos);
 
 	// ‘Ì—Í‚ª‚È‚­‚È‚Á‚½‚ç
 	if (currentHP <= 0.0f)

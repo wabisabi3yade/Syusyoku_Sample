@@ -14,6 +14,8 @@ void BossDamageState::OnStartBehavior()
 {
 	BossActState_Base::OnStartBehavior();
 
+	HASHI_DEBUG_LOG("a");
+
 	// ダメージトリガーをONにする
 	pActionController->SetAnimationTrigger(DAMAGETRIGGER_ANIMPARAM_NAME);
 

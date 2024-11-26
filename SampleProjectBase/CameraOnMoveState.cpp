@@ -46,19 +46,19 @@ void CameraOnMoveState::OnStartBehavior()
 void CameraOnMoveState::UpdateBehavior()
 {
 	Transform& camTransform = GetCamera().GetTransform();
-	cameraPos = camTransform.GetPosition();
-	targetPos = GetTargetPosition();
+	cameraPos = GetBasePosition();
+	targetPos = GetFollowPosition();
 
 	inputVal = pInput->GetValue(GameInput::ValueType::Camera_Move);
 
-	//// 縦軸の移動
+	// 縦軸の移動
 	VerticalMove();
 
 	// オブジェクトを中心に回転移動
 	RotationMove();
 
 	// カメラの座標更新する
-	camTransform.SetPosition(cameraPos);
+	SetBasePosition(cameraPos);
 
 	// 注視点更新
 	LookUpdate();
@@ -101,8 +101,15 @@ void CameraOnMoveState::RotationMove()
 
 void CameraOnMoveState::LookUpdate()
 {
-	// 座標を見る
-	GetCamera().GetTransform().LookAt(targetPos + Vec3::Up * lookTargetOffsetY);
+	Transform& camTrans = GetCamera().GetTransform();
+
+	// 注視する場所を見る
+	DXSimp::Vector3 lookPos = targetPos + Vec3::Up * lookTargetOffsetY;
+	DXSimp::Vector3 lookVec = lookPos - GetBasePosition();
+	lookVec.Normalize();
+	DXSimp::Quaternion camTargetRot = Quat::RotateToVector(lookVec);
+
+	camTrans.SetRotation(camTargetRot);
 }
 
 void CameraOnMoveState::ImGuiDebug()

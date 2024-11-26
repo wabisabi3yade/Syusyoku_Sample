@@ -21,6 +21,18 @@ private:
 	/// @brief ターゲットしているオブジェクト先
 	ITargetAccepter* pTargetObject;
 
+	/// @brief ターゲット先をカメラに伝える
+	IObjectTargeter* pTargetCamera;
+
+	/// @brief カメラ
+	CP_Camera* pCamera;
+
+	/// @brief 攻撃してきた敵の座標
+	DirectX::SimpleMath::Vector3 atkEnemyPos;
+
+	/// @brief 攻撃してきた側の攻撃情報
+	const HashiTaku::AttackInformation* pDamageAtkInfo;
+
 	/// @brief キャンセルフラグのポインタ
 	const bool* pIsCanCancel;
 
@@ -29,6 +41,15 @@ private:
 
 	/// @brief コンビネーション攻撃可能のポインタ
 	const bool* pIsCanCombAtk;
+
+	/// @brief ダメージ受けてからのフレーム数(パリィ)
+	int damageElapsedFrame;
+
+	/// @brief パリィの猶予フレーム
+	int extensionParryFrame;
+
+	/// @brief パリィチェック
+	bool isParryChecking;
 
 	/// @brief ターゲット中かどうか
 	bool isTargeting;
@@ -39,12 +60,13 @@ public:
 	/// @brief コンストラクタ
 	/// @param _player プレイヤーコンポーネント
 	PlayerActionController(CP_Player& _player);
-	~PlayerActionController() {}
+	~PlayerActionController();
 
 	/// @brief 開始処理
 	/// @param _animation アニメーション
 	/// @param _pRigidBody リジッドボディ
-	void Init(CP_Animation* _animation, CP_RigidBody* _pRigidBody);
+	/// @param ターゲット時に一緒に見るカメラ
+	void Init(CP_Animation* _animation, CP_RigidBody* _pRigidBody, IObjectTargeter* _pTargetCam);
 
 	/// @brief ターゲットの更新処理
 	void UpdateTargeting();
@@ -56,7 +78,9 @@ public:
 
 	/// @brief ダメージ受けたときのアクション処理
 	/// @param _atkInfo 攻撃情報
-	void OnDamage(const HashiTaku::AttackInformation& _atkInfo) override;
+	/// @param _attackerPos 攻撃委敵の座標
+	void OnDamage(const HashiTaku::AttackInformation& _atkInfo,
+		const DirectX::SimpleMath::Vector3& _attackerPos) override;
 
 	/// @brief ターゲット中か取得する
 	/// @return ターゲット中か？
@@ -82,6 +106,10 @@ public:
 	/// @return プレイヤーコンポーネント
 	CP_Player& GetPlayer();
 
+	/// @brief カメラ取得
+	/// @return カメラ
+	CP_Camera& GetCamera();
+
 	/// @brief 現在のアクションを取得
 	/// @return アクションステート
 	PlayerActState_Base* GetCurrentAction();
@@ -106,7 +134,7 @@ public:
 
 	/// @brief ターゲットオブジェクトが死んだときの更新処理
 	/// @param _deathTargetObj 死んだターゲットオブジェクト
-	void UpdateDeathNotify(const ITargetAccepter& _deathTargetObj) override;
+	void RemoveNotify(const ITargetAccepter& _deathTargetObj) override;
 private:
 	/// @brief 更新できるか取得
 	/// @return 更新できるか？
@@ -114,6 +142,9 @@ private:
 
 	/// @brief 現在の更新処理
 	void Update() override;
+
+	/// @brief 攻撃受けてからパリィできるかの更新（食らいパリィ）
+	void CheckParryUpdate();
 
 	/// @brief  ターゲット開始時のお処理
 	void OnBeginTargeting();
@@ -130,6 +161,16 @@ private:
 	/// @param _stateNodeBase ステートノード基底変数
 	/// @return キャストした変数
 	PlayerActState_Base& CastPlayerAct(HashiTaku::StateNode_Base& _stateNodeBase);
+
+	/// @brief パリィできているか確認
+	/// @return パリィできたか？
+	bool OnDamageParryCheck();
+
+	/// @brief ノック状態に遷移
+	/// @param _atkInfo 攻撃情報
+	/// @param _attackerPos 攻撃敵の座標
+	void ChangeKnockState(const HashiTaku::AttackInformation& _atkInfo,
+		const DirectX::SimpleMath::Vector3& _attackerPos);
 
 	void ImGuiDebug() override;
 private:

@@ -182,12 +182,14 @@
     <ClCompile Include="BossGroundMove.cpp" />
     <ClCompile Include="BossGroundState.cpp" />
     <ClCompile Include="BossIdleState.cpp" />
+    <ClCompile Include="BossJumpAttack.cpp" />
     <ClCompile Include="BulletContactCallBack.cpp" />
     <ClCompile Include="BulletTest.cpp" />
     <ClCompile Include="ButtonTransArrow.cpp" />
     <ClCompile Include="CameraMoveController.cpp" />
     <ClCompile Include="CameraMoveState_Base.cpp" />
     <ClCompile Include="CameraOnMoveState.cpp" />
+    <ClCompile Include="CameraTargetMove.cpp" />
     <ClCompile Include="ChangeAnimObserver.cpp" />
     <ClCompile Include="CharacterActionController.cpp" />
     <ClCompile Include="CharacterActState_Base.cpp" />
@@ -202,6 +204,7 @@
     <ClCompile Include="CopyAnimationParameters.cpp" />
     <ClCompile Include="CP_BoxAnimation.cpp" />
     <ClCompile Include="CP_Character.cpp" />
+    <ClCompile Include="CP_CylinderCollider.cpp" />
     <ClCompile Include="CP_Enemy.cpp" />
     <ClCompile Include="CP_OutLineRenderer.cpp" />
     <ClCompile Include="CP_RigidBody.cpp" />
@@ -236,12 +239,14 @@
     <ClCompile Include="IImGuiUser.cpp" />
     <ClCompile Include="IntTransCondition.cpp" />
     <ClCompile Include="IObserever.cpp" />
+    <ClCompile Include="ISetTargeterForCam.cpp" />
     <ClCompile Include="ITargetAccepter.cpp" />
     <ClCompile Include="MaterialCreater.cpp" />
     <ClCompile Include="AnimNodePlayer_Base.cpp" />
     <ClCompile Include="MyClass2.cpp" />
     <ClCompile Include="PlayerDamageState.cpp" />
     <ClCompile Include="PlayerGroundAttack.cpp" />
+    <ClCompile Include="PlayerGuardState.cpp" />
     <ClCompile Include="PlayerRollingMove.cpp" />
     <ClCompile Include="PlayerRushAttack.cpp" />
     <ClCompile Include="PlayerTargetMove.cpp" />
@@ -408,12 +413,14 @@
     <ClInclude Include="BossGroundMove.h" />
     <ClInclude Include="BossGroundState.h" />
     <ClInclude Include="BossIdleState.h" />
+    <ClInclude Include="BossJumpAttack.h" />
     <ClInclude Include="BulletContactCallBack.h" />
     <ClInclude Include="BulletTest.h" />
     <ClInclude Include="ButtonTransArrow.h" />
     <ClInclude Include="CameraMoveController.h" />
     <ClInclude Include="CameraMoveState_Base.h" />
     <ClInclude Include="CameraOnMoveState.h" />
+    <ClInclude Include="CameraTargetMove.h" />
     <ClInclude Include="ChangeAnimObserver.h" />
     <ClInclude Include="CharacterActionController.h" />
     <ClInclude Include="CharacterActState_Base.h" />
@@ -430,6 +437,7 @@
     <ClInclude Include="CopyAnimationParameters.h" />
     <ClInclude Include="CP_BoxAnimation.h" />
     <ClInclude Include="CP_Character.h" />
+    <ClInclude Include="CP_CylinderCollider.h" />
     <ClInclude Include="CP_Enemy.h" />
     <ClInclude Include="CP_OutLineRenderer.h" />
     <ClInclude Include="CP_RigidBody.h" />
@@ -467,6 +475,7 @@
     <ClInclude Include="IntTransCondition.h" />
     <ClInclude Include="IObserever.h" />
     <ClInclude Include="ISaveLoad.h" />
+    <ClInclude Include="ISetTargeterForCam.h" />
     <ClInclude Include="ITargetAccepter.h" />
     <ClInclude Include="MaterialCreater.h" />
     <ClInclude Include="AnimNodePlayer_Base.h" />
@@ -474,6 +483,7 @@
     <ClInclude Include="NullTransform.h" />
     <ClInclude Include="PlayerDamageState.h" />
     <ClInclude Include="PlayerGroundAttack.h" />
+    <ClInclude Include="PlayerGuardState.h" />
     <ClInclude Include="PlayerRollingMove.h" />
     <ClInclude Include="PlayerRushAttack.h" />
     <ClInclude Include="PlayerTargetMove.h" />

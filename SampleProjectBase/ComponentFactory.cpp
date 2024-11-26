@@ -9,6 +9,7 @@ void ComponentFactory::Init()
 	ResistComponnent<CP_RigidBody>();
 	ResistComponnent<CP_BoxCollider>();
 	ResistComponnent<CP_SphereCollider>();
+	ResistComponnent<CP_CylinderCollider>();
 	ResistComponnent<CP_CapsuleCollider>();
 
 	// •`‰æ

@@ -10,7 +10,9 @@ constexpr DirectX::SimpleMath::Color NO_ATTACK_COLOR(0.0f, 0.0f, 1.0f);
 constexpr DirectX::SimpleMath::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 #endif // EDIT
 
-CP_Weapon::CP_Weapon() : isAttackCollision(false), attackTagCnt(0)
+namespace DXSimp = DirectX::SimpleMath;
+
+CP_Weapon::CP_Weapon() : isAttackCollision(false), attackTagCnt(0), pHaveObjectPos(nullptr)
 {
 	// 初期化
 	for (u_int t_i = 0; t_i < ATTACK_TAG_MAX; t_i++)
@@ -38,8 +40,11 @@ void CP_Weapon::OnCollisionStay(const HashiTaku::CollisionInfo& _otherColInfo)
 	HashiTaku::IDamageable* pDamager = gameObject.GetComponent<HashiTaku::IDamageable>();
 	if (!pDamager) return;
 
+	
 	// 攻撃処理
-	OnAttack(*pDamager);
+	DXSimp::Vector3 haveObjPos;	// 所有オブジェクトの座標を取得する
+	if (pHaveObjectPos) haveObjPos = *pHaveObjectPos;
+	OnAttack(*pDamager, haveObjPos);
 
 	// 追加する
 	AddAttackedRb(*_otherColInfo.pRigidBodyCp);
@@ -55,6 +60,11 @@ void CP_Weapon::SetAttackInfo(const HashiTaku::AttackInformation& _attackInforma
 void CP_Weapon::SetIsAttackCollision(bool _isAttackCollision)
 {
 	isAttackCollision = _isAttackCollision;
+}
+
+void CP_Weapon::SetHaveObjPosPointer(const DirectX::SimpleMath::Vector3* _pWorldPos)
+{
+	pHaveObjectPos = _pWorldPos;
 }
 
 void CP_Weapon::ClearAttackedRb()
@@ -100,10 +110,11 @@ void CP_Weapon::Load(const nlohmann::json& _data)
 
 }
 
-void CP_Weapon::OnAttack(HashiTaku::IDamageable& _damager)
+void CP_Weapon::OnAttack(HashiTaku::IDamageable& _damager, 
+	const DirectX::SimpleMath::Vector3& _haveObjPos)
 {
 	// ダメージを与える
-	_damager.OnDamage(atkInfomation);
+	_damager.OnDamage(atkInfomation, _haveObjPos);
 }
 
 void CP_Weapon::AddAttackedRb(const CP_RigidBody& _rb)

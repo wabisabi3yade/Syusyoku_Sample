@@ -8,13 +8,17 @@ class CP_Boss;
 /// @brief ボスのアクションコントローラー
 class BossActionController : public EnemyActionController
 {
+public:
 	// 行動の距離タイプ
 	enum class ActDistance
 	{
 		Short,	// 近距離
-		Far	// 遠距離
+		Mid,	// 中距離
+		Far,	// 遠距離
+		MaxNum
 	};
 
+private:
 	/// @brief プレイヤーオブジェクト
 	CP_Player* pPlayerObject;
 
@@ -24,8 +28,14 @@ class BossActionController : public EnemyActionController
 	/// @brief デフォルト状態設定
 	BossActState_Base::BossState defaultState;
 
+	/// @brief それぞれの距離を指定する
+	std::array<float, static_cast<u_int>(ActDistance::MaxNum)> disLengthList;
+
 	/// @brief 近距離行動のアクションリスト
 	std::vector<BossActState_Base::BossState> shortRangeActions;
+	
+	/// @brief 中距離行動のアクションリスト
+	std::vector<BossActState_Base::BossState> midRangeActions;
 
 	/// @brief 遠距離行動のアクションリスト
 	std::vector<BossActState_Base::BossState> farRangeActions;
@@ -45,7 +55,16 @@ public:
 	bool ChangeState(BossActState_Base::BossState _nextState, bool _isForce = false);
 
 	/// @brief ダメージ時処理
-	void OnDamage(const HashiTaku::AttackInformation& _atkInfo) override;
+	void OnDamage(const HashiTaku::AttackInformation& _atkInfo,
+		const DirectX::SimpleMath::Vector3& _attackerPos) override;
+
+	/// @brief デバッグ描画
+	void DebugDisplay() override;
+
+	/// @brief 乱数で距離のステートを取得
+	/// @param _actDistance 距離
+	/// @return ボスのステート
+	BossActState_Base::BossState RandState(ActDistance _actDistance);
 
 	/// @brief プレイヤーオブジェクトをセット
 	/// @param _playerObj プレイヤーオブジェクト
@@ -65,6 +84,16 @@ public:
 	/// @brief のけぞることができるか取得
 	/// @return のけぞりできるか？
 	const bool GetCanKnock() const;
+
+	/// @brief 行動の距離を取得
+	/// @param _actDistance 取得したい距離の種類
+	/// @return 距離んお長さ
+	float GetActDistanceLength(ActDistance _actDistance);
+
+	/// @brief どの距離か判断する
+	/// @param _disLength 距離の長さ
+	/// @return どの距離か？
+	ActDistance JudgeActDistance(float _disLength) const;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
@@ -139,6 +168,10 @@ inline void BossActionController::CreateState(BossActState_Base::BossState _crea
 		{
 		case ActDistance::Short:
 			shortRangeActions.push_back(_createState);
+			break;
+
+		case ActDistance::Mid:
+			midRangeActions.push_back(_createState);
 			break;
 
 		case ActDistance::Far:

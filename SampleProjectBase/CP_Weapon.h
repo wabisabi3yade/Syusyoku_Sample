@@ -21,6 +21,9 @@ class CP_Weapon : public Component
 	/// @brief 一回の攻撃判定で重複しないように記録する用リスト
 	std::vector<const CP_RigidBody*> attackedRbs;
 
+	/// @brief この武器を持つオブジェクトの座標
+	const DirectX::SimpleMath::Vector3* pHaveObjectPos;
+
 	/// @brief 攻撃タグの数
 	u_int attackTagCnt;
 
@@ -49,6 +52,10 @@ public:
 	/// @param _isAttackCollision 
 	void SetIsAttackCollision(bool _isAttackCollision);
 
+	/// @brief 所有オブジェクトの座標のポインタ
+	/// @param _pWorldPos ワールド座標
+	void SetHaveObjPosPointer(const DirectX::SimpleMath::Vector3* _pWorldPos);
+
 	/// @brief 攻撃済みコリジョンをリセット
 	void ClearAttackedRb();
 
@@ -62,7 +69,9 @@ public:
 private:
 	/// @brief 攻撃処理
 	/// @param _damager 攻撃与える対象
-	void OnAttack(HashiTaku::IDamageable& _damager);
+	/// @param _haveObjPos 所有オブジェクトの座標
+	void OnAttack(HashiTaku::IDamageable& _damager, 
+		const DirectX::SimpleMath::Vector3& _haveObjPos);
 
 	/// @brief 既に攻撃したかリストに追加
 	/// @param _rb 攻撃済みのRb

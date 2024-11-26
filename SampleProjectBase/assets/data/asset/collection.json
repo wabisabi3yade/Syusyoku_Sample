@@ -58,10 +58,25 @@
                 {
                     "name": "damageTrigger",
                     "type": 3
+                },
+                {
+                    "name": "isGuard",
+                    "type": 0,
+                    "value": false
+                },
+                {
+                    "name": "parryTrigger",
+                    "type": 3
+                },
+                {
+                    "name": "isReAttack",
+                    "type": 0,
+                    "value": false
                 }
             ],
             "assetName": "ANC_Player",
             "defaultNode": "Idle",
+            "groupArrows": null,
             "nodeInfoData": [
                 {
                     "animNode": {
@@ -125,6 +140,27 @@
                         "useBlend": true
                     },
                     "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "isGuard",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 25,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Guard_Start"
+                        },
                         {
                             "arrowParam": {
                                 "conditionList": [
@@ -203,6 +239,60 @@
                                 "conditionList": [
                                     {
                                         "condition": {
+                                            "iCompare": 6,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 10,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Knock_L"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 5,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 10,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "Knock_S"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
                                             "bJudgeType": 1
                                         },
                                         "paramName": "targeting",
@@ -250,6 +340,7 @@
                             "toName": "TargetIdle"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "TargetMove",
                     "nodeType": 1,
                     "notifyList": null
@@ -274,6 +365,27 @@
                         "speed": 1.0
                     },
                     "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "isGuard",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 25,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Guard_Start"
+                        },
                         {
                             "arrowParam": {
                                 "conditionList": [
@@ -418,6 +530,7 @@
                             "toName": "Move"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "Idle",
                     "nodeType": 0,
                     "notifyList": null
@@ -523,6 +636,33 @@
                                 "conditionList": [
                                     {
                                         "condition": {
+                                            "iCompare": 5,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 10,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Knock_S"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
                                             "iCompare": 20,
                                             "iJudgeType": 2
                                         },
@@ -544,6 +684,33 @@
                                 "transTime": 0.10000000149011612
                             },
                             "toName": "Attack1"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 6,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 10,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Knock_L"
                         },
                         {
                             "arrowParam": {
@@ -597,6 +764,7 @@
                             "toName": "TargetMove"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "Move",
                     "nodeType": 1,
                     "notifyList": null
@@ -634,6 +802,27 @@
                         "speed": 0.699999988079071
                     },
                     "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "isGuard",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 25,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Guard_Start"
+                        },
                         {
                             "arrowParam": {
                                 "conditionList": [
@@ -709,6 +898,33 @@
                         },
                         {
                             "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 5,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 10,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Knock_S"
+                        },
+                        {
+                            "arrowParam": {
                                 "conditionList": null,
                                 "exitRatio": 0.6800000071525574,
                                 "interpolate": 0,
@@ -719,8 +935,36 @@
                                 "transTime": 0.3100000023841858
                             },
                             "toName": "Idle"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 6,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Knock_L"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "Attack1",
                     "nodeType": 0,
                     "notifyList": [
@@ -855,6 +1099,27 @@
                             "arrowParam": {
                                 "conditionList": [
                                     {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "isGuard",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 25,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Guard_Start"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
                                         "condition": null,
                                         "paramName": "rollingTrigger",
                                         "typeKind": 3
@@ -921,6 +1186,60 @@
                         },
                         {
                             "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 5,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Knock_S"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 6,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Knock_L"
+                        },
+                        {
+                            "arrowParam": {
                                 "conditionList": null,
                                 "exitRatio": 0.8500000238418579,
                                 "interpolate": 0,
@@ -933,6 +1252,7 @@
                             "toName": "Idle"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "Attack2",
                     "nodeType": 0,
                     "notifyList": [
@@ -1148,8 +1468,84 @@
                                 "transTime": 0.1599999964237213
                             },
                             "toName": "Idle"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    },
+                                    {
+                                        "condition": {
+                                            "iCompare": 5,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Knock_S"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 6,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Knock_L"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "isGuard",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Guard_Start"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "Attack3",
                     "nodeType": 0,
                     "notifyList": [
@@ -1194,7 +1590,7 @@
                                     false,
                                     true
                                 ],
-                                "startFrame": 51,
+                                "startFrame": 43,
                                 "useFrame": true
                             },
                             "notifyType": 3
@@ -1296,6 +1692,27 @@
                             "arrowParam": {
                                 "conditionList": [
                                     {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "isGuard",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 25,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "Guard_Start"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
                                         "condition": null,
                                         "paramName": "rollingTrigger",
                                         "typeKind": 3
@@ -1350,8 +1767,63 @@
                                 "transTime": 0.20000000298023224
                             },
                             "toName": "Idle"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 5,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Knock_S"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 6,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Knock_L"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "Attack4",
                     "nodeType": 0,
                     "notifyList": [
@@ -1446,6 +1918,27 @@
                         "speed": 1.0
                     },
                     "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "isGuard",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 25,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Guard_Start"
+                        },
                         {
                             "arrowParam": {
                                 "conditionList": [
@@ -1561,8 +2054,58 @@
                                 "transTime": 0.05000000074505806
                             },
                             "toName": "Idle"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 5,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Knock_S"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 6,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Knock_L"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "TargetIdle",
                     "nodeType": 0,
                     "notifyList": null
@@ -1601,6 +2144,54 @@
                                         "condition": {
                                             "bJudgeType": 0
                                         },
+                                        "paramName": "isGuard",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 25,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Guard_Start"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 30,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 10,
+                                "targetRatio": 0.23000000417232513,
+                                "transEase": 0.23000000417232513,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "RushAttack"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
                                         "paramName": "targeting",
                                         "typeKind": 0
                                     }
@@ -1627,30 +2218,108 @@
                                 "transTime": 0.11999999731779099
                             },
                             "toName": "Idle"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 5,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Knock_S"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 6,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Knock_L"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "RollingMove",
                     "nodeType": 0,
                     "notifyList": [
                         {
                             "notifyParam": {
-                                "endFrame": 0,
+                                "endFrame": 49,
                                 "isActive": true,
                                 "isUse": [
                                     true,
-                                    false,
-                                    false,
+                                    true,
+                                    true,
                                     true
                                 ],
                                 "notifyName": "ANS_CanCancel",
                                 "parameterName": "canCancel",
                                 "setParameter": [
                                     false,
-                                    false,
+                                    true,
                                     false,
                                     true
                                 ],
-                                "startFrame": 0,
+                                "startFrame": 39,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 49,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_Input",
+                                "parameterName": "canInput",
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 35,
                                 "useFrame": true
                             },
                             "notifyType": 3
@@ -1712,6 +2381,27 @@
                             "arrowParam": {
                                 "conditionList": [
                                     {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "isGuard",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 25,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Guard_Start"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
                                         "condition": null,
                                         "paramName": "rollingTrigger",
                                         "typeKind": 3
@@ -1756,6 +2446,33 @@
                         },
                         {
                             "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 20,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 2,
+                                "targetRatio": 0.20000000298023224,
+                                "transEase": 0.20000000298023224,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Attack1"
+                        },
+                        {
+                            "arrowParam": {
                                 "conditionList": null,
                                 "exitRatio": 0.8399999737739563,
                                 "interpolate": 0,
@@ -1766,8 +2483,63 @@
                                 "transTime": 0.20000000298023224
                             },
                             "toName": "Idle"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 6,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Knock_L"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 5,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "Knock_S"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "RushAttack",
                     "nodeType": 0,
                     "notifyList": [
@@ -1812,7 +2584,7 @@
                                     false,
                                     true
                                 ],
-                                "startFrame": 41,
+                                "startFrame": 36,
                                 "useFrame": true
                             },
                             "notifyType": 3
@@ -1835,7 +2607,7 @@
                                     false,
                                     true
                                 ],
-                                "startFrame": 49,
+                                "startFrame": 43,
                                 "useFrame": true
                             },
                             "notifyType": 3
@@ -1846,7 +2618,7 @@
                     "animNode": {
                         "animName": "knight_Knock_S.fbx",
                         "animationCurve": {
-                            "easeKind": 0,
+                            "easeKind": 2,
                             "endValue": 1.0,
                             "endVector": 0.0,
                             "plotDatas": null,
@@ -1859,7 +2631,7 @@
                         "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
-                        "speed": 1.0
+                        "speed": 1.25
                     },
                     "arrowDataList": [
                         {
@@ -1930,6 +2702,7 @@
                             "toName": "Knock_L"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "Knock_S",
                     "nodeType": 0,
                     "notifyList": [
@@ -1992,6 +2765,7 @@
                             "toName": "WakeUp"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "Knock_L",
                     "nodeType": 0,
                     "notifyList": [
@@ -2037,7 +2811,7 @@
                         "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
-                        "speed": 1.0
+                        "speed": 1.7899999618530273
                     },
                     "arrowDataList": [
                         {
@@ -2054,7 +2828,359 @@
                             "toName": "Idle"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "WakeUp",
+                    "nodeType": 0,
+                    "notifyList": [
+                        {
+                            "notifyParam": {
+                                "endFrame": 0,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    false,
+                                    false,
+                                    true
+                                ],
+                                "notifyName": "ANS_Cancel",
+                                "parameterName": "canCancel",
+                                "setParameter": [
+                                    false,
+                                    false,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 0,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        }
+                    ]
+                },
+                {
+                    "animNode": {
+                        "animName": "knight_Guard_Begin.fbx",
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": [
+                                {
+                                    "interp": 1,
+                                    "time": 0.07040499150753021,
+                                    "value": 0.9729729890823364,
+                                    "vector": 0.0
+                                }
+                            ],
+                            "startInterp": 0,
+                            "startValue": 0.0,
+                            "startVector": 1.8987749814987183,
+                            "useHermite": true
+                        },
+                        "isLoop": false,
+                        "isRMR": false,
+                        "isRMXZ": true,
+                        "isRMY": false,
+                        "speed": 7.230000019073486
+                    },
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "parryTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 5,
+                                "targetRatio": 0.18000000715255737,
+                                "transEase": 0.18000000715255737,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Guard_Knock"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Guard_Idle"
+                        }
+                    ],
+                    "groupArrowName": "",
+                    "nodeName": "Guard_Start",
+                    "nodeType": 0,
+                    "notifyList": [
+                        {
+                            "notifyParam": {
+                                "endFrame": 17,
+                                "isActive": false,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_Cancel",
+                                "parameterName": "canCancel",
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 0,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        }
+                    ]
+                },
+                {
+                    "animNode": {
+                        "animName": "knight_Guard_Idle.fbx",
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": [
+                                {
+                                    "interp": 1,
+                                    "time": 0.11838006973266602,
+                                    "value": 0.9891892075538635,
+                                    "vector": 0.0
+                                }
+                            ],
+                            "startInterp": 1,
+                            "startValue": 0.0,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "isLoop": true,
+                        "isRMR": false,
+                        "isRMXZ": false,
+                        "isRMY": false,
+                        "speed": 7.619999885559082
+                    },
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "parryTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 5,
+                                "targetRatio": 0.18000000715255737,
+                                "transEase": 0.18000000715255737,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Guard_Knock"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 1
+                                        },
+                                        "paramName": "isGuard",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Guard_End"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.1899999976158142
+                            },
+                            "toName": "Attack1"
+                        }
+                    ],
+                    "groupArrowName": "",
+                    "nodeName": "Guard_Idle",
+                    "nodeType": 0,
+                    "notifyList": [
+                        {
+                            "notifyParam": {
+                                "endFrame": 42,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_Cancel",
+                                "parameterName": "canCancel",
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 0,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        }
+                    ]
+                },
+                {
+                    "animNode": {
+                        "animName": "knight_Guard_End.fbx",
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startInterp": 0,
+                            "startValue": 0.0,
+                            "startVector": 0.0,
+                            "useHermite": false
+                        },
+                        "isLoop": false,
+                        "isRMR": false,
+                        "isRMXZ": true,
+                        "isRMY": false,
+                        "speed": 5.340000152587891
+                    },
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 1
+                                        },
+                                        "paramName": "targeting",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Idle"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "targeting",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "TargetIdle"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    },
+                                    {
+                                        "condition": {
+                                            "iCompare": 5,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Knock_S"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 6,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Knock_L"
+                        }
+                    ],
+                    "groupArrowName": "",
+                    "nodeName": "Guard_End",
                     "nodeType": 0,
                     "notifyList": [
                         {
@@ -2081,6 +3207,241 @@
                             "notifyType": 3
                         }
                     ]
+                },
+                {
+                    "animNode": {
+                        "animName": "knight_TwinAttack1.fbx",
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": [
+                                {
+                                    "interp": 1,
+                                    "time": 0.3619999885559082,
+                                    "value": 0.36399999260902405,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.41499999165534973,
+                                    "value": 0.4569999873638153,
+                                    "vector": 0.32750773429870605
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.4880000054836273,
+                                    "value": 0.6000000238418579,
+                                    "vector": 0.30486351251602173
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.5270000100135803,
+                                    "value": 0.6859999895095825,
+                                    "vector": 0.3687450587749481
+                                },
+                                {
+                                    "interp": 0,
+                                    "time": 0.6430000066757202,
+                                    "value": 0.7509999871253967,
+                                    "vector": 0.18437252938747406
+                                }
+                            ],
+                            "startInterp": 1,
+                            "startValue": 0.0,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "isLoop": false,
+                        "isRMR": false,
+                        "isRMXZ": true,
+                        "isRMY": false,
+                        "speed": 1.4500000476837158
+                    },
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 0.9100000262260437,
+                                "interpolate": 0,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Idle"
+                        }
+                    ],
+                    "groupArrowName": "",
+                    "nodeName": "Guard_SpecialAttack",
+                    "nodeType": 0,
+                    "notifyList": [
+                        {
+                            "notifyParam": {
+                                "endFrame": 140,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_Cancel",
+                                "parameterName": "canCancel",
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 96,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 140,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_Input",
+                                "parameterName": "canInput",
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 91,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "eventFrame": 83,
+                                "isActive": true,
+                                "notifyName": "ANE_ReAttack2",
+                                "paramName": "isReAttack",
+                                "setParam": true,
+                                "useFrame": true
+                            },
+                            "notifyType": 2
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 64,
+                                "isActive": true,
+                                "isUse": [
+                                    false,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_AttackCollision1",
+                                "parameterName": "attackCollision",
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    false
+                                ],
+                                "startFrame": 51,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 96,
+                                "isActive": true,
+                                "isUse": [
+                                    false,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_AttackCollision2",
+                                "parameterName": "attackCollision",
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 84,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        }
+                    ]
+                },
+                {
+                    "animNode": {
+                        "animName": "knight_GuardKnock.fbx",
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startInterp": 0,
+                            "startValue": 0.0,
+                            "startVector": 0.0,
+                            "useHermite": false
+                        },
+                        "isLoop": false,
+                        "isRMR": false,
+                        "isRMXZ": true,
+                        "isRMY": false,
+                        "speed": 4.53000020980835
+                    },
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 32,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 0.5,
+                                "interpolate": 0,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.09000000357627869,
+                                "transEase": 0.09000000357627869,
+                                "transTime": 0.5
+                            },
+                            "toName": "Guard_SpecialAttack"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "Guard_End"
+                        }
+                    ],
+                    "groupArrowName": "",
+                    "nodeName": "Guard_Knock",
+                    "nodeType": 0,
+                    "notifyList": null
                 }
             ],
             "playSpeed": 1.0
@@ -2138,6 +3499,7 @@
             ],
             "assetName": "ANC_Player_Mixiamo",
             "defaultNode": "Idle",
+            "groupArrows": null,
             "nodeInfoData": [
                 {
                     "animNode": {
@@ -2299,6 +3661,7 @@
                             "toName": "TargetIdle"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "TargetMove",
                     "nodeType": 1,
                     "notifyList": null
@@ -2413,6 +3776,7 @@
                             "toName": "TargetIdle"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "Idle",
                     "nodeType": 0,
                     "notifyList": null
@@ -2565,6 +3929,7 @@
                             "toName": "TargetMove"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "Move",
                     "nodeType": 1,
                     "notifyList": null
@@ -2670,6 +4035,7 @@
                             "toName": "Idle"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "Attack1",
                     "nodeType": 0,
                     "notifyList": [
@@ -2829,6 +4195,7 @@
                             "toName": "Idle"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "Attack2",
                     "nodeType": 0,
                     "notifyList": [
@@ -2981,6 +4348,7 @@
                             "toName": "Idle"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "Attack3",
                     "nodeType": 0,
                     "notifyList": [
@@ -3113,6 +4481,7 @@
                             "toName": "Idle"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "Attack4",
                     "nodeType": 0,
                     "notifyList": [
@@ -3255,6 +4624,7 @@
                             "toName": "Attack1"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "TargetIdle",
                     "nodeType": 0,
                     "notifyList": null
@@ -3321,6 +4691,7 @@
                             "toName": "Idle"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "RollingMove",
                     "nodeType": 0,
                     "notifyList": [
@@ -3389,7 +4760,8 @@
                 }
             ],
             "assetName": "ANC_Boss",
-            "defaultNode": "CombAttack1",
+            "defaultNode": "Idle",
+            "groupArrows": null,
             "nodeInfoData": [
                 {
                     "animNode": {
@@ -3416,41 +4788,27 @@
                                 "conditionList": [
                                     {
                                         "condition": null,
-                                        "paramName": "damageTrigger",
+                                        "paramName": "attackTrigger",
                                         "typeKind": 3
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
-                                "priority": 2,
-                                "targetRatio": 0.1899999976158142,
-                                "transEase": 0.1899999976158142,
-                                "transTime": 0.0
-                            },
-                            "toName": "Damage_Small"
-                        },
-                        {
-                            "arrowParam": {
-                                "conditionList": [
+                                    },
                                     {
                                         "condition": {
-                                            "fCompare": 0.0,
-                                            "fJudgeType": 0
+                                            "iCompare": 101,
+                                            "iJudgeType": 2
                                         },
-                                        "paramName": "speed",
-                                        "typeKind": 2
+                                        "paramName": "state",
+                                        "typeKind": 1
                                     }
                                 ],
                                 "exitRatio": 1.0,
                                 "interpolate": 0,
                                 "isHaveExit": false,
-                                "priority": 0,
+                                "priority": 20,
                                 "targetRatio": 0.0,
                                 "transEase": 0.0,
-                                "transTime": 0.20000000298023224
+                                "transTime": 0.10000000149011612
                             },
-                            "toName": "Move"
+                            "toName": "JumpSlash"
                         },
                         {
                             "arrowParam": {
@@ -3472,36 +4830,88 @@
                                 "exitRatio": 1.0,
                                 "interpolate": 0,
                                 "isHaveExit": false,
+                                "priority": 20,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "CombAttack1"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 1,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Walk"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 2,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
                                 "priority": 0,
                                 "targetRatio": 0.0,
                                 "transEase": 0.0,
                                 "transTime": 0.20000000298023224
                             },
-                            "toName": "SlashDown"
+                            "toName": "Run"
                         }
                     ],
+                    "groupArrowName": "",
                     "nodeName": "Idle",
                     "nodeType": 0,
                     "notifyList": null
                 },
                 {
                     "animNode": {
-                        "animName": "boss_SlashDown.fbx",
+                        "animName": "boss_Knock_S.fbx",
                         "animationCurve": {
                             "easeKind": 0,
                             "endValue": 1.0,
                             "endVector": 0.0,
-                            "plotDatas": null,
-                            "startInterp": 0,
+                            "plotDatas": [
+                                {
+                                    "interp": 1,
+                                    "time": 0.4945169985294342,
+                                    "value": 0.9513514041900635,
+                                    "vector": 0.0
+                                }
+                            ],
+                            "startInterp": 1,
                             "startValue": 0.0,
                             "startVector": 0.0,
-                            "useHermite": false
+                            "useHermite": true
                         },
                         "isLoop": false,
                         "isRMR": false,
-                        "isRMXZ": true,
+                        "isRMXZ": false,
                         "isRMY": false,
-                        "speed": 1.0
+                        "speed": 1.1399999856948853
                     },
                     "arrowDataList": [
                         {
@@ -3513,38 +4923,58 @@
                                 "priority": 0,
                                 "targetRatio": 0.0,
                                 "transEase": 0.0,
-                                "transTime": 0.20000000298023224
+                                "transTime": 0.10000000149011612
                             },
                             "toName": "Idle"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "KnockSmall"
                         }
                     ],
-                    "nodeName": "SlashDown",
-                    "nodeType": 0,
-                    "notifyList": null
-                },
-                {
-                    "animNode": {
-                        "animName": "boss_Knock_S.fbx",
-                        "animationCurve": {
-                            "easeKind": 0,
-                            "endValue": 1.0,
-                            "endVector": 0.0,
-                            "plotDatas": null,
-                            "startInterp": 0,
-                            "startValue": 0.0,
-                            "startVector": 0.0,
-                            "useHermite": false
-                        },
-                        "isLoop": false,
-                        "isRMR": false,
-                        "isRMXZ": false,
-                        "isRMY": false,
-                        "speed": 1.0
-                    },
-                    "arrowDataList": null,
+                    "groupArrowName": "",
                     "nodeName": "KnockSmall",
                     "nodeType": 0,
-                    "notifyList": null
+                    "notifyList": [
+                        {
+                            "notifyParam": {
+                                "endFrame": 36,
+                                "isActive": true,
+                                "isUse": [
+                                    false,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "notifyName": "ANS_ChangeParameter",
+                                "parameterName": "canKnock",
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    false
+                                ],
+                                "startFrame": 0,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        }
+                    ]
                 },
                 {
                     "animNode": {
@@ -3572,16 +5002,97 @@
                             "startVector": 0.3217795193195343,
                             "useHermite": true
                         },
-                        "isLoop": true,
+                        "isLoop": false,
                         "isRMR": false,
-                        "isRMXZ": false,
+                        "isRMXZ": true,
                         "isRMY": false,
-                        "speed": 1.0800000429153442
+                        "speed": 1.100000023841858
                     },
-                    "arrowDataList": null,
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Idle"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "KnockSmall"
+                        }
+                    ],
+                    "groupArrowName": "",
                     "nodeName": "JumpSlash",
                     "nodeType": 0,
-                    "notifyList": null
+                    "notifyList": [
+                        {
+                            "notifyParam": {
+                                "endFrame": 56,
+                                "isActive": true,
+                                "isUse": [
+                                    false,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_AttackCollision",
+                                "parameterName": "attackCollision",
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    false
+                                ],
+                                "startFrame": 50,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 110,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_ChangeParameter",
+                                "parameterName": "canKnock",
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    false
+                                ],
+                                "startFrame": 57,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        }
+                    ]
                 },
                 {
                     "animNode": {
@@ -3603,187 +5114,8 @@
                         "speed": 1.0
                     },
                     "arrowDataList": null,
+                    "groupArrowName": "",
                     "nodeName": "Dead",
-                    "nodeType": 0,
-                    "notifyList": null
-                },
-                {
-                    "animNode": {
-                        "animationCurve": {
-                            "easeKind": 0,
-                            "endValue": 1.0,
-                            "endVector": 0.0,
-                            "plotDatas": null,
-                            "startInterp": 0,
-                            "startValue": 0.0,
-                            "startVector": 0.0,
-                            "useHermite": false
-                        },
-                        "axisParam": [
-                            {
-                                "ease": 8,
-                                "name": "speed",
-                                "time": 0.20000000298023224
-                            }
-                        ],
-                        "blendPoint": [
-                            {
-                                "animName": "boss_Idle.fbx",
-                                "blendValue": [
-                                    0.0,
-                                    0.0
-                                ]
-                            },
-                            {
-                                "animName": "boss_Walk_F.fbx",
-                                "blendValue": [
-                                    0.4000000059604645,
-                                    0.0
-                                ]
-                            },
-                            {
-                                "animName": "boss_Run_F.fbx",
-                                "blendValue": [
-                                    1.0,
-                                    0.0
-                                ]
-                            }
-                        ],
-                        "isLoop": true,
-                        "isRMR": false,
-                        "isRMXZ": false,
-                        "isRMY": false,
-                        "speed": 1.0,
-                        "useBlend": true
-                    },
-                    "arrowDataList": [
-                        {
-                            "arrowParam": {
-                                "conditionList": [
-                                    {
-                                        "condition": null,
-                                        "paramName": "damageTrigger",
-                                        "typeKind": 3
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
-                                "priority": 2,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.20000000298023224
-                            },
-                            "toName": "Damage_Small"
-                        },
-                        {
-                            "arrowParam": {
-                                "conditionList": [
-                                    {
-                                        "condition": null,
-                                        "paramName": "attackTrigger",
-                                        "typeKind": 3
-                                    },
-                                    {
-                                        "condition": {
-                                            "iCompare": 100,
-                                            "iJudgeType": 2
-                                        },
-                                        "paramName": "state",
-                                        "typeKind": 1
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
-                                "priority": 1,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.20000000298023224
-                            },
-                            "toName": "SlashDown"
-                        },
-                        {
-                            "arrowParam": {
-                                "conditionList": [
-                                    {
-                                        "condition": {
-                                            "fCompare": 0.0,
-                                            "fJudgeType": 2
-                                        },
-                                        "paramName": "speed",
-                                        "typeKind": 2
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
-                                "priority": 0,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.20000000298023224
-                            },
-                            "toName": "Idle"
-                        }
-                    ],
-                    "nodeName": "Move",
-                    "nodeType": 1,
-                    "notifyList": null
-                },
-                {
-                    "animNode": {
-                        "animName": "boss_Knock_S.fbx",
-                        "animationCurve": {
-                            "easeKind": 0,
-                            "endValue": 1.0,
-                            "endVector": 0.0,
-                            "plotDatas": null,
-                            "startInterp": 0,
-                            "startValue": 0.0,
-                            "startVector": 0.0,
-                            "useHermite": false
-                        },
-                        "isLoop": false,
-                        "isRMR": false,
-                        "isRMXZ": true,
-                        "isRMY": false,
-                        "speed": 1.8300000429153442
-                    },
-                    "arrowDataList": [
-                        {
-                            "arrowParam": {
-                                "conditionList": [
-                                    {
-                                        "condition": null,
-                                        "paramName": "damageTrigger",
-                                        "typeKind": 3
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
-                                "priority": 2,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.0
-                            },
-                            "toName": "Damage_Small"
-                        },
-                        {
-                            "arrowParam": {
-                                "conditionList": null,
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": true,
-                                "priority": 0,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.20000000298023224
-                            },
-                            "toName": "Idle"
-                        }
-                    ],
-                    "nodeName": "Damage_Small",
                     "nodeType": 0,
                     "notifyList": null
                 },
@@ -3837,13 +5169,47 @@
                             "startVector": 6.084376025228266e-08,
                             "useHermite": true
                         },
-                        "isLoop": true,
+                        "isLoop": false,
                         "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
-                        "speed": 0.8299999833106995
+                        "speed": 1.0
                     },
-                    "arrowDataList": null,
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 0.949999988079071,
+                                "interpolate": 0,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Idle"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toName": "KnockSmall"
+                        }
+                    ],
+                    "groupArrowName": "",
                     "nodeName": "CombAttack1",
                     "nodeType": 0,
                     "notifyList": [
@@ -3937,8 +5303,137 @@
                                 "useFrame": true
                             },
                             "notifyType": 2
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 106,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_ChangeParameter",
+                                "parameterName": "canKnock",
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    false
+                                ],
+                                "startFrame": 89,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
                         }
                     ]
+                },
+                {
+                    "animNode": {
+                        "animName": "boss_Run_F.fbx",
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startInterp": 0,
+                            "startValue": 0.0,
+                            "startVector": 0.0,
+                            "useHermite": false
+                        },
+                        "isLoop": true,
+                        "isRMR": false,
+                        "isRMXZ": false,
+                        "isRMY": false,
+                        "speed": 1.0
+                    },
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    },
+                                    {
+                                        "condition": {
+                                            "iCompare": 100,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "CombAttack1"
+                        }
+                    ],
+                    "groupArrowName": "",
+                    "nodeName": "Run",
+                    "nodeType": 0,
+                    "notifyList": null
+                },
+                {
+                    "animNode": {
+                        "animName": "boss_Walk_F.fbx",
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startInterp": 0,
+                            "startValue": 0.0,
+                            "startVector": 0.0,
+                            "useHermite": false
+                        },
+                        "isLoop": true,
+                        "isRMR": false,
+                        "isRMXZ": false,
+                        "isRMY": false,
+                        "speed": 1.0
+                    },
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    },
+                                    {
+                                        "condition": {
+                                            "iCompare": 100,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "CombAttack1"
+                        }
+                    ],
+                    "groupArrowName": "",
+                    "nodeName": "Walk",
+                    "nodeType": 0,
+                    "notifyList": null
                 }
             ],
             "playSpeed": 1.0
@@ -4066,12 +5561,6 @@
             "rightHand": true
         },
         {
-            "assetName": "boss_SlashDown.fbx",
-            "boneListName": "Uriel A Plotexia.fbx",
-            "pathName": "assets/animation/boss/boss_SlashDown.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "boss_Knock_S.fbx",
             "boneListName": "Uriel A Plotexia.fbx",
             "pathName": "assets/animation/boss/boss_Knock_S.fbx",
@@ -4087,6 +5576,12 @@
             "assetName": "boss_Walk_F.fbx",
             "boneListName": "Uriel A Plotexia.fbx",
             "pathName": "assets/animation/boss/boss_Walk_F.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_Guard_Idle.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_Guard_Idle.fbx",
             "rightHand": true
         },
         {
@@ -4111,6 +5606,30 @@
             "assetName": "boss_CombAttack1.fbx",
             "boneListName": "Uriel A Plotexia.fbx",
             "pathName": "assets/animation/boss/boss_CombAttack1.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_Guard_Begin.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_Guard_Begin.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_Guard_End.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_Guard_End.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_TwinAttack1.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_TwinAttack1.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_GuardKnock.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_GuardKnock.fbx",
             "rightHand": true
         }
     ],
@@ -4261,6 +5780,23 @@
             ],
             "pathName": "assets/model/boss/Uriel A Plotexia.fbx",
             "rightHand": true
+        },
+        {
+            "assetName": "arena.fbx",
+            "flipY": true,
+            "getSize": false,
+            "loadScale": 1.0,
+            "matDiffuse": [
+                "null",
+                "null",
+                "null",
+                "null",
+                "null",
+                "null",
+                "null"
+            ],
+            "pathName": "assets/model/arena/arena.fbx",
+            "rightHand": false
         }
     ],
     "textures": [

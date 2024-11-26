@@ -197,6 +197,4 @@ void CharacterChangeAnimObserver::ObserverUpdate(const HashiTaku::ChangeAnimatio
 
 	// ’Ê’m‚·‚é
 	curAction->OnAnimationEnd(*_value.pFromAnimNodeName, *_value.pToAnimNodeName);
-
-	HASHI_DEBUG_LOG("from:" + *_value.pFromAnimNodeName + "\nto:" + *_value.pToAnimNodeName);
 }

@@ -44,6 +44,19 @@ AnimTransitionArrow* AnimationController::CreateTransitionArrow(const std::strin
 		return nullptr;
 	}
 
+	// 矢印作成して追加
+	AnimationNode_Base* pFromNode = fromNodeInfo->pAnimNode.get();
+	std::unique_ptr<AnimTransitionArrow> pTransitionArrow = CreateTransitionArrow(_toNodeName);
+	if (!pTransitionArrow) return nullptr;
+
+	AnimTransitionArrow* pRetArrow = pTransitionArrow.get();
+	fromNodeInfo->transitionArrows.push_back(std::move(pTransitionArrow));
+
+	return pRetArrow;
+}
+
+std::unique_ptr<AnimTransitionArrow> AnimationController::CreateTransitionArrow(const std::string& _toNodeName)
+{
 	const AnimNodeInfo* toNodeInfo = GetNodeInfo(_toNodeName);
 	if (!toNodeInfo)
 	{
@@ -51,21 +64,11 @@ AnimTransitionArrow* AnimationController::CreateTransitionArrow(const std::strin
 		return nullptr;
 	}
 
-	//if (fromNodeInfo == toNodeInfo)	// 自分自身につなげていたら
-	//{
-	//	HASHI_DEBUG_LOG("遷移元と先が同じノードです");
-	//	return nullptr;
-	//}
-
 	// 矢印作成して追加
-	AnimationNode_Base* pFromNode = fromNodeInfo->pAnimNode.get();
 	AnimationNode_Base* pToNode = toNodeInfo->pAnimNode.get();
-	std::unique_ptr<AnimTransitionArrow> pTransitionArrow = std::make_unique<AnimTransitionArrow>(*pFromNode, *pToNode, *pAnimParameters);
+	std::unique_ptr<AnimTransitionArrow> pTransitionArrow = std::make_unique<AnimTransitionArrow>(*pToNode, *pAnimParameters);
 
-	AnimTransitionArrow* pRetArrow = pTransitionArrow.get();
-	fromNodeInfo->transitionArrows.push_back(std::move(pTransitionArrow));
-
-	return pRetArrow;
+	return std::move(pTransitionArrow);
 }
 
 void AnimationController::RemoveNode(const std::string& _nodeName)
@@ -146,6 +149,14 @@ const AnimationParameters& AnimationController::GetAnimationParameters() const
 	return *pAnimParameters;
 }
 
+const TransArrowList* AnimationController::GetGroupArrows(const std::string& _groupName) const
+{
+	auto itr = groupArrows.find(_groupName);
+	if (itr == groupArrows.end()) return nullptr;	// 無かったら
+
+	return &itr->second;
+}
+
 nlohmann::json AnimationController::Save()
 {
 	auto data = Asset_Base::Save();
@@ -161,6 +172,8 @@ nlohmann::json AnimationController::Save()
 	if (pDefaultNodeInfo)
 		data["defaultNode"] = pDefaultNodeInfo->pAnimNode->GetNodeName();
 
+	data["groupArrows"] = SaveGroupArrows();
+
 	data["animParameter"] = pAnimParameters->Save();	// パラメーター
 	return data;
 }
@@ -171,28 +184,33 @@ void AnimationController::Load(const nlohmann::json& _data)
 	LoadJsonFloat("playSpeed", playSpeed, _data);
 
 	// パラメーター
-	nlohmann::json paramsData;
-	if (LoadJsonDataArray("animParameter", paramsData, _data))
+	nlohmann::json loadData;
+	if (LoadJsonDataArray("animParameter", loadData, _data))
 	{
-		pAnimParameters->Load(paramsData);
+		pAnimParameters->Load(loadData);
 	}
 
 	// ノード情報をロードする
-	nlohmann::json nodeInfoDatas;
-	if (LoadJsonDataArray("nodeInfoData", nodeInfoDatas, _data))
+	if (LoadJsonDataArray("nodeInfoData", loadData, _data))
 	{
 		// 先にノードを作成
-		for (auto& nd : nodeInfoDatas)
+		for (auto& nd : loadData)
 		{
 			LoadNodeInfo(nd);
 		}
 
 		// 後でイベント・矢印を作成
-		for (auto& nd : nodeInfoDatas)
+		for (auto& nd : loadData)
 		{
 			LoadNotify(nd);
 			LoadTransArrow(nd);
 		}
+	}
+
+	// グループ矢印
+	if (LoadJsonDataArray("groupArrows", loadData, _data))
+	{
+		LoadGroupArrow(loadData);
 	}
 
 	// デフォルトノードをロード
@@ -255,9 +273,68 @@ void AnimationController::ImGuiAnimNotify(AnimNodeInfo& _nodeInfo)
 
 		_nodeInfo.notifyList.push_back(std::move(pNotify));
 	}
-		
+
 
 #endif //  EDIT
+}
+
+void AnimationController::ImGuiGroupArrows(const std::vector<std::string>& _nodeNames)
+{
+	// グループごと
+	auto groupItr = groupArrows.begin();
+	while (groupItr != groupArrows.end())
+	{
+		bool isGroupDelete = false;
+		const std::string& groupName = (*groupItr).first;
+		if (ImGuiMethod::TreeNode(groupName))
+		{
+			isGroupDelete = ImGui::Button("X##Group");
+
+			// 矢印
+			TransArrowList& arrowList = (*groupItr).second;
+			auto arrowItr = arrowList.begin();
+			while (arrowItr != arrowList.end())
+			{
+				bool isaArrowDelete = false;
+				const AnimTransitionArrow& arrow = *(*arrowItr);
+				if (ImGuiMethod::TreeNode(arrow.GetToNode().GetNodeName()))
+				{
+					isaArrowDelete = ImGui::Button("X");
+					(*arrowItr)->ImGuiCall();
+					ImGui::TreePop();
+				}
+
+				if (isaArrowDelete)
+					arrowItr = arrowList.erase(arrowItr);
+				else
+					arrowItr++;
+			}
+
+			// 追加
+			static std::string toNodeNmae;
+			ImGuiMethod::ComboBox("ToNode", toNodeNmae, _nodeNames);
+			ImGui::SameLine();
+			if (ImGui::Button("+##CreateArrow"))
+			{
+				AddArrowToGroup(groupName, CreateTransitionArrow(toNodeNmae));
+			}
+
+			ImGui::TreePop();
+		}
+
+		if (isGroupDelete)
+			groupItr = groupArrows.erase(groupItr);
+		else
+			++groupItr;
+	}
+
+	// 新しくグループを作成
+	static char inputText[IM_INPUT_BUF] = "\0";
+	ImGui::InputText("groupName", inputText, IM_INPUT_BUF);
+	if (ImGui::Button("+"))
+	{
+		CreateGroupArrows(inputText);
+	}
 }
 
 nlohmann::json AnimationController::SaveNodeInfo(AnimNodeInfo& _nodeInfo)
@@ -266,9 +343,10 @@ nlohmann::json AnimationController::SaveNodeInfo(AnimNodeInfo& _nodeInfo)
 	nodeInfoData["nodeName"] = _nodeInfo.pAnimNode->GetNodeName();
 	nodeInfoData["nodeType"] = _nodeInfo.pAnimNode->GetNodeType();
 	nodeInfoData["animNode"] = _nodeInfo.pAnimNode->Save();
+	nodeInfoData["groupArrowName"] = _nodeInfo.groupArrowsName;
 
 	// 通知イベント
-	auto& notifyDataList =  nodeInfoData["notifyList"];
+	auto& notifyDataList = nodeInfoData["notifyList"];
 	for (auto& pNotify : _nodeInfo.notifyList)
 	{
 		nlohmann::json notifyData;
@@ -290,13 +368,40 @@ nlohmann::json AnimationController::SaveNodeInfo(AnimNodeInfo& _nodeInfo)
 	return nodeInfoData;
 }
 
+nlohmann::json AnimationController::SaveGroupArrows()
+{
+	nlohmann::json groupDatas;
+	for (auto& group : groupArrows)
+	{
+		nlohmann::json groupData;
+		groupData["name"] = group.first;	// 名前
+
+		auto& arrowDatas = groupData["arrows"];
+		for (auto& arrow : group.second)
+		{
+			nlohmann::json arrowData;
+			arrowData["toNode"] = arrow->GetToNode().GetNodeName();
+			arrowData["param"] = arrow->Save();
+			arrowDatas.push_back(arrowData);	// 矢印のデータ
+		}
+
+		groupDatas.push_back(groupData);
+	}
+
+	return groupDatas;
+}
+
 void AnimationController::LoadNodeInfo(const nlohmann::json& _nodeInfoData)
 {
 	std::string nodeName;	// ノード名
 	LoadJsonString("nodeName", nodeName, _nodeInfoData);
+
 	AnimationNode_Base::NodeType createType;	// ノードタイプ
 	LoadJsonEnum<AnimationNode_Base::NodeType>("nodeType", createType, _nodeInfoData);
 	auto pCreateNodeInfo = CreateNodeInfoByType(createType, nodeName);	// ノード情報作成
+
+	// グループ遷移矢印名
+	LoadJsonString("groupArrowName", pCreateNodeInfo->groupArrowsName, _nodeInfoData);
 
 	nlohmann::json nodeData;	// ノード種ごとのロード
 	LoadJsonData("animNode", nodeData, _nodeInfoData);
@@ -331,10 +436,10 @@ void AnimationController::LoadNotify(const nlohmann::json& _nodeInfoData)
 			continue;
 
 		// 作成
-		std::unique_ptr<AnimationNotify_Base> pLoadNotify =  pNotifyFactory->Create(loadType);
+		std::unique_ptr<AnimationNotify_Base> pLoadNotify = pNotifyFactory->Create(loadType);
 		pLoadNotify->SetAnimationFrameCnt(pNodeInfo->pAnimNode->GetAllKeyFrame());
 		pLoadNotify->Load(notifyParamData);
-		
+
 
 		// 追加
 		pNodeInfo->notifyList.push_back(std::move(pLoadNotify));
@@ -397,9 +502,74 @@ AnimNodeInfo* AnimationController::CreateNodeInfoByType(AnimationNode_Base::Node
 	return pRetNode;
 }
 
+TransArrowList* AnimationController::CreateGroupArrows(const std::string& _groupName)
+{
+	if (_groupName.empty()) return nullptr;
+	if (groupArrows.contains(_groupName)) return nullptr;		// 重複しているなら
+
+	// 追加
+	TransArrowList createArrows;
+	groupArrows[_groupName] = std::move(createArrows);
+
+	return &groupArrows[_groupName];
+}
+
+void AnimationController::AddArrowToGroup(const std::string& _groupName, std::unique_ptr<AnimTransitionArrow> _addArrow)
+{
+	if (!_addArrow) return;	// そもそもないなら
+	if (!groupArrows.contains(_groupName)) return;	// あるか確認
+
+	// 追加
+	groupArrows[_groupName].push_back(std::move(_addArrow));
+}
+
+void AnimationController::GetGroupNamelist(std::vector<const std::string*>& _outList)
+{
+	// 名前を追加していく
+	for (auto& arrowList : groupArrows)
+	{
+		_outList.push_back(&arrowList.first);
+	}
+}
+
 bool AnimationController::SortArrowPriority(const std::unique_ptr<AnimTransitionArrow>& _a1, const std::unique_ptr<AnimTransitionArrow>& _a2)
 {
 	return _a1->GetPriority() > _a2->GetPriority();
+}
+
+void AnimationController::LoadGroupArrow(const nlohmann::json& _groupArrowData)
+{
+	for (auto& groupData : _groupArrowData)
+	{
+		std::string groupName;	// グループ名
+		if (!HashiTaku::LoadJsonString("name", groupName, groupData)) continue;
+
+		TransArrowList* pTransArrow = CreateGroupArrows(groupName);
+		if (!pTransArrow) continue;	// 作成失敗したなら
+
+		nlohmann::json arrowDatas;
+		if (!HashiTaku::LoadJsonDataArray("arrows", arrowDatas, groupData)) continue;
+
+		for (auto& arrowData : arrowDatas)	// 矢印
+		{
+			std::string toNodeName;	// 遷移先ノード名
+			if (!HashiTaku::LoadJsonString("toNode", toNodeName, arrowData)) continue;
+
+			AnimNodeInfo* pToNodeInfo = GetNodeInfo(toNodeName);
+			if (!pToNodeInfo) continue;
+
+			// 作成
+			std::unique_ptr<AnimTransitionArrow> pCreateArrow =
+				std::make_unique<AnimTransitionArrow>(*pToNodeInfo->pAnimNode, *pAnimParameters);
+
+			// パラメータ
+			nlohmann::json paramData;
+			if (!LoadJsonData("param", paramData, arrowData)) continue;
+			pCreateArrow->Load(paramData);
+
+			pTransArrow->push_back(std::move(pCreateArrow));	// 追加
+		}
+	}
 }
 
 void AnimationController::ImGuiDebug()
@@ -420,6 +590,12 @@ void AnimationController::ImGuiDebug()
 		ImGui::TreePop();
 	}
 
+	if (ImGuiMethod::TreeNode("Group Arrow"))
+	{
+		ImGuiGroupArrows(nodeNames);
+		ImGui::TreePop();
+	}
+
 	// パラメータ
 	if (ImGuiMethod::TreeNode("Parameter"))
 	{
@@ -432,6 +608,10 @@ void AnimationController::ImGuiDebug()
 void AnimationController::ImGuiNode(const std::vector<std::string>& _nodeNames)
 {
 #ifdef EDIT
+	// 遷移条件のグループ名を取得
+	std::vector<const std::string*> groupNames;
+	GetGroupNamelist(groupNames);
+
 	auto nodeItr = animNodeInfos.begin();
 	while (nodeItr != animNodeInfos.end())	// 全ノード
 	{
@@ -453,6 +633,10 @@ void AnimationController::ImGuiNode(const std::vector<std::string>& _nodeNames)
 			// 矢印
 			ImGui::Text("Arrow");
 			ImGuiTransArrow(*(*nodeItr), _nodeNames);
+
+			// グループ名をセットする
+			ImGuiMethod::ComboBox("groupArrow", (*nodeItr)->groupArrowsName, groupNames);
+
 			ImGui::TreePop();
 		}
 

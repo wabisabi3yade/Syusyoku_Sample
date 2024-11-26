@@ -26,6 +26,8 @@ namespace HashiTaku
 		template <typename T> requires std::same_as<T, int> || std::same_as<T, u_int>
 		static int RangeInt(int _min, int _max);
 
+
+
 	private:
 		static void Init();	// ‰Šú‰»ŠÖ”
 	};

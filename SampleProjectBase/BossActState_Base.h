@@ -1,6 +1,7 @@
 #pragma once
 #include "EnemyActState_Base.h"
 #include "CP_Animation.h"
+#include "CP_RigidBody.h"
 
 class BossActionController;
 
@@ -86,6 +87,10 @@ protected:
 	/// @brief アニメーションコントローラポーネントを取得
 	/// @return コンポーネント
 	CP_Animation* GetAnimation();
+
+	/// @brief Rbを取得
+	/// @return Rbコンポーネント
+	CP_RigidBody* GetRB();
 
 	/// @brief 経過時間を取得する
 	/// @return 経過時間

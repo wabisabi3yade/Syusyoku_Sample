@@ -6,6 +6,7 @@
 #include "CP_RigidBody.h"
 #include "CP_Animation.h"
 
+class CP_Player;
 class PlayerActionController;
 
 /// @brief プレイヤーの行動ステート基底クラス
@@ -17,7 +18,7 @@ public:
 	{
 		// 待機
 		Idle,
-		
+
 		// 移動
 		Move,
 		TargetMove,
@@ -25,6 +26,8 @@ public:
 		Rolling,
 		Damage_S,	// ダメージ小のけぞり
 		Damage_L,	// ダメージ大のけぞり
+		Guard,	// ガード開始
+		Guard_Parry,	// パリィ処理
 
 		// 地上コンビネーション攻撃
 		Attack11 = 20,
@@ -35,6 +38,7 @@ public:
 		// 地上必殺攻撃
 		SpecialAtkHi = 30,
 		SpecialAtkLow,
+		SpecialAtkGuard,	// ガードパリィ時の攻撃
 
 		// 最後
 		None = 99
@@ -91,9 +95,6 @@ protected:
 
 	/// @brief ゲーム入力クラス
 	static GameInput* pPlayerInput;
-
-	/// @brief カメラクラス
-	static CP_Camera* pCamera;
 public:
 	PlayerActState_Base();
 	virtual ~PlayerActState_Base() {}
@@ -150,6 +151,10 @@ protected:
 	/// @param _isLook 見るのか？
 	void SetTargetAtEnemy(bool _isLook);
 
+	/// @brief 無敵にするか？
+	/// @param _isInvicible 無敵
+	void SetInvicible(bool _isInvicible);
+
 	/// @brief RigidBodyを取得
 	/// @return RigidBody
 	CP_RigidBody& GetRB();
@@ -161,6 +166,10 @@ protected:
 	/// @brief アニメーションを取得する
 	/// @return アニメーション
 	CP_Animation* GetAnimation();
+
+	/// @brief プレイヤーコンポーネントを取得する
+	/// @return プレイヤーコンポーネント
+	CP_Player& GetPlayer();
 
 	/// @brief Δtを取得
 	/// @return Δt
@@ -177,7 +186,7 @@ protected:
 	/// @brief その方向に入力できているか確認する
 	/// @param _checkVector 確認したい方向
 	/// @return できているか？
-	bool IsInputVector(InputVector _checkVector) const;
+	bool IsInputVector(InputVector _checkVector);
 
 	/// @brief ローリング入力できているか？
 	/// @return ローリングできるか？
@@ -186,11 +195,11 @@ protected:
 	/// @brief 必殺技入力できているか？
 	/// @param _inputVecter 方向の入力
 	/// @return  必殺技できるか？
-	bool IsSpecialAtkInput(InputVector _inputVecter) const;
+	bool IsSpecialAtkInput(InputVector _inputVecter);
 
 	/// @brief 攻撃できるか取得する
 	/// @return 攻撃できるか？
-	bool GetCanCombAttack() const;
+	bool GetCanCombAttack();
 
 	/// @brief ImGui処理
 	void ImGuiDebug() override;
