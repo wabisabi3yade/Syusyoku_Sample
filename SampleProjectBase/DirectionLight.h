@@ -18,7 +18,7 @@ class DirectionLight
 	// •ûŒüƒxƒNƒgƒ‹
 	DirectX::SimpleMath::Vector3 direction;
 public:
-	DirectionLight() : ambiemt(0.3f, 0.3f, 0.3f, 1.0f), direction(0.0f, -1.0f, 1.0f) { type = Type::Direction; }
+	DirectionLight() : ambiemt(0.6f, 0.6f, 0.6f, 1.0f), direction(0.0f, -1.0f, 1.0f) { type = Type::Direction; }
 	~DirectionLight() {}
 
 	virtual void Draw() override;

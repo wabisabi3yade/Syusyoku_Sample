@@ -77,7 +77,7 @@ void PlayerRushAttack::MoveForward()
 	float deltaTime = DeltaTime();
 	if (deltaTime < Mathf::epsilon) return;	// Δtが0なら
 
-	Transform& playerTrans = pActionController->GetPlayer().GetGameObject().GetTransform();
+	Transform& playerTrans = GetPlayer().GetGameObject().GetTransform();
 
 	// アニメーションの割合を取得する
 	CP_Animation* pAnimation = pActionController->GetAnimation();

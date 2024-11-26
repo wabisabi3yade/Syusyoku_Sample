@@ -56,7 +56,8 @@ private:
 
 	/// @brief 各クラスのダメージを受けたときの処理
 	/// @param _attackInfo 攻撃情報
-	void OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo) override;
+	void OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo,
+		const DirectX::SimpleMath::Vector3& _attackerPos) override;
 
 	void ImGuiDebug() override;
 };

@@ -835,6 +835,15 @@
     <Filter Include="ソース ファイル\Component\Collider\Cylinder\JumpAttack">
       <UniqueIdentifier>{895815e6-92fc-4e24-9814-1d2538ab20f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera\State\Target">
+      <UniqueIdentifier>{c103a246-7170-4072-8df8-012169b25b52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Guard">
+      <UniqueIdentifier>{e1b71816-1567-4f01-bebc-516ff818b860}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Parry">
+      <UniqueIdentifier>{616e5f7a-1534-4693-b588-9286886260a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1508,9 +1517,6 @@
     <ClCompile Include="CameraMoveState_Base.cpp">
       <Filter>ソース ファイル\InGame\Camera\State\Base</Filter>
     </ClCompile>
-    <ClCompile Include="CameraOnMoveState.cpp">
-      <Filter>ソース ファイル\InGame\Camera\State\Base</Filter>
-    </ClCompile>
     <ClCompile Include="BossDamageState.cpp">
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Damage</Filter>
     </ClCompile>
@@ -1558,6 +1564,18 @@
     </ClCompile>
     <ClCompile Include="CP_CylinderCollider.cpp">
       <Filter>ソース ファイル\Component\Collider\Cylinder</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraOnMoveState.cpp">
+      <Filter>ソース ファイル\InGame\Camera\State\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraTargetMove.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ISetTargeterForCam.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerGuardState.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2233,9 +2251,6 @@
     <ClInclude Include="CameraMoveState_Base.h">
       <Filter>ソース ファイル\InGame\Camera\State\Base</Filter>
     </ClInclude>
-    <ClInclude Include="CameraOnMoveState.h">
-      <Filter>ソース ファイル\InGame\Camera\State\Base</Filter>
-    </ClInclude>
     <ClInclude Include="BossDamageState.h">
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Damage</Filter>
     </ClInclude>
@@ -2283,6 +2298,18 @@
     </ClInclude>
     <ClInclude Include="CP_CylinderCollider.h">
       <Filter>ソース ファイル\Component\Collider\Cylinder</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraOnMoveState.h">
+      <Filter>ソース ファイル\InGame\Camera\State\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraTargetMove.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ISetTargeterForCam.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerGuardState.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

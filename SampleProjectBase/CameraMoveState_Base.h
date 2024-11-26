@@ -1,6 +1,7 @@
 #pragma once
 #include "StateMachine.h"
 #include "CP_Camera.h"
+#include "GameInput.h"
 
 class CameraMoveController;
 
@@ -16,9 +17,12 @@ public:
 		None
 	};
 
-private:
+protected:
 	/// @brief カメラの行動コントローラ
 	CameraMoveController* pCamController;
+
+	/// @brief 入力
+	GameInput* pInput;
 
 public:
 	CameraMoveState_Base();
@@ -49,13 +53,28 @@ protected:
 	/// @brief 終了処理の振る舞い
 	virtual void OnEndBehavior() {}
 
+	/// @brief 他のステートに遷移するか確認
+	virtual void CheckTransitionUpdate();
+
+	/// @brief カメラのステートを遷移
+	/// @param _camState 遷移先のカメラ
+	void ChangeState(CameraState _camState, bool _isForce = false);
+
+	/// @brief ベースとなるカメラの座標をセット
+	/// @param _basePos ベースとなる座標
+	void SetBasePosition(const DirectX::SimpleMath::Vector3& _basePos);
+
 	/// @brief カメラコンポーネントを取得
 	/// @return カメラ
 	CP_Camera& GetCamera();
 
 	/// @brief ターゲットとする座標を取得する
 	/// @return ターゲットのワールド座座標
-	const DirectX::SimpleMath::Vector3& GetTargetPosition() const;
+	const DirectX::SimpleMath::Vector3& GetFollowPosition() const;
+
+	/// @brief ベースとなる座標を取得する
+	/// @return	カメラのベースとなるワールド座標
+	const DirectX::SimpleMath::Vector3& GetBasePosition() const;
 
 	/// @brief オブジェクトの経過時間を取得
 	/// @return 経過時間

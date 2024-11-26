@@ -19,6 +19,8 @@ void CP_Boss::Init()
 
 void CP_Boss::SetAttackInfo(const HashiTaku::AttackInformation& _attackInfo)
 {
+	if (!pWeapon) return;
+
 	pWeapon->SetAttackInfo(_attackInfo);
 }
 
@@ -112,6 +114,8 @@ void CP_Boss::SetupWeapon()
 	if (CP_Weapon* pGetWeapon = pWeaponObj->GetComponent<CP_Weapon>())
 	{
 		pWeapon = pGetWeapon;
+		// Ž©•ª‚ÌÀ•W‚ð“n‚·
+		pWeapon->SetHaveObjPosPointer(&GetTransform().GetPosition());
 	}
 }
 
@@ -120,11 +124,12 @@ bool CP_Boss::GetCanUpdate()
 	return true;
 }
 
-void CP_Boss::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo)
+void CP_Boss::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo,
+	const DirectX::SimpleMath::Vector3& _attackerPos)
 {
-	CP_Enemy::OnDamageBehavior(_attackInfo);
+	CP_Enemy::OnDamageBehavior(_attackInfo, _attackerPos);
 
-	pActionController->OnDamage(_attackInfo);
+	pActionController->OnDamage(_attackInfo, _attackerPos);
 }
 
 void CP_Boss::ImGuiDebug()

@@ -1,6 +1,5 @@
 #pragma once
 #include "CameraMoveState_Base.h"
-#include "GameInput.h"
 
 /// @brief プレイヤー移動時のカメラの行動
 class CameraOnMoveState : public CameraMoveState_Base
@@ -13,9 +12,6 @@ class CameraOnMoveState : public CameraMoveState_Base
 
 	/// @brief 入力数値
 	DirectX::SimpleMath::Vector2 inputVal;
-
-	/// @brief ゲーム内入力
-	GameInput* pInput;
 
 	/// @brief 現在のy距離
 	float currentHeight;

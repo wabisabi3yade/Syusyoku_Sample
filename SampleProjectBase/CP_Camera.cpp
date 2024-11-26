@@ -44,6 +44,11 @@ const DirectX::SimpleMath::Vector3& CP_Camera::GetTarget() const
 	return target;
 }
 
+float CP_Camera::GetFov() const
+{
+	return fov;
+}
+
 void CP_Camera::ImGuiDebug()
 {
 	ImGui::Text("Right");

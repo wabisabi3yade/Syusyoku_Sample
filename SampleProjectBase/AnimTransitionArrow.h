@@ -22,9 +22,6 @@ class AnimTransitionArrow : public HashiTaku::IImGuiUser, public HashiTaku::ISav
 	/// @brief パラメータ削除時の通知受け取り
 	std::unique_ptr<HashiTaku::AnimParam::AnimParamObserver> pRemoveParamObserver;
 
-	/// @brief	遷移元アニメノード
-	AnimationNode_Base* pFromNode;
-
 	/// @brief	遷移先アニメノード
 	AnimationNode_Base* pToNode;
 
@@ -60,7 +57,7 @@ public:
 	/// @param _fromNode 遷移前
 	/// @param _toNode 遷移先
 	/// @param _animParameters コントローラー内変数
-	AnimTransitionArrow(AnimationNode_Base& _fromNode, AnimationNode_Base& _toNode, AnimationParameters& _animParameters);
+	AnimTransitionArrow(AnimationNode_Base& _toNode, AnimationParameters& _animParameters);
 	virtual ~AnimTransitionArrow() {}
 
 	/// @brief 矢印に遷移条件を作成

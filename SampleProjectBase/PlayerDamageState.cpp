@@ -3,9 +3,14 @@
 
 namespace DXSimp = DirectX::SimpleMath;
 
-PlayerDamageState::PlayerDamageState() : 
-	maxKnockMoveSpeed(0.0f), prevAnimRatio(0.0f), isKnockMoving(false)
+PlayerDamageState::PlayerDamageState() :
+	maxKnockMoveSpeed(0.0f), prevAnimRatio(0.0f), isKnockMoving(false), isInvicible(false)
 {
+}
+
+void PlayerDamageState::SetKnockVec(const DirectX::SimpleMath::Vector3& _knockVec)
+{
+	knockVector = _knockVec;
 }
 
 nlohmann::json PlayerDamageState::Save()
@@ -34,6 +39,12 @@ void PlayerDamageState::OnStartBehavior()
 	// アニメーションに通知
 	GetAnimation()->SetTrigger(DAMAGETRIGGER_PARAMNAME);
 
+	// 敵の方向を見る
+	LookEnemy();
+
+	// のけぞりに無敵をつけるか
+	SetInvicible(isInvicible);
+
 	// リセット
 	prevAnimRatio = 0.0f;
 	isKnockMoving = true;
@@ -46,11 +57,13 @@ void PlayerDamageState::UpdateBehavior()
 
 void PlayerDamageState::OnEndBehavior()
 {
+	// 無敵解除
+	SetInvicible(false);
 }
 
 void PlayerDamageState::OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName)
 {
-	if(_toAnimNodeName == IDLE_ANIM_NAME)	// 待機に変わったら
+	if (_toAnimNodeName == IDLE_ANIM_NAME)	// 待機に変わったら
 		ChangeState(PlayerState::Idle);
 }
 
@@ -79,8 +92,17 @@ void PlayerDamageState::KnockMove()
 	prevAnimRatio = animRatio;
 }
 
+void PlayerDamageState::LookEnemy()
+{
+	// 敵の方向を見る
+	knockVector *= -1;
+	auto rot = Quat::RotateToVector(knockVector);
+	GetTransform().SetRotation(rot);
+}
+
 void PlayerDamageState::ImGuiDebug()
 {
+	ImGui::Checkbox("Invicible", &isInvicible);
 	ImGui::DragFloat("knockDistance", &maxKnockMoveSpeed, 0.1f, 0.0f, 1000.0f);
 	knockSpeedCurve.ImGuiCall();
 }

@@ -11,8 +11,6 @@ constexpr float LOOKMOMENT_DEGREE_RANGE{ 20.0f };
 // ‰¡ˆÚ“®ƒJ[ƒu‚Ì’l‚ª‚±‚êˆÈã‚¾‚Æu‚ÉU‚èŒü‚­‚±‚Æ‚ª‚Å‚«‚é
 constexpr float CAN_LOOKMOMENT_HORICURVE_VAL{ 0.5f };
 
-static float aaaaaaa = 0.0f;
-
 BossJumpAttack::BossJumpAttack() :
 	maxHoriSpeed(12.0f), maxJumpHeight(5.0f), prevJumpHeight(0.0f), rotSpeedOnJump(10.0f),
 	horiSpeedCofficient(2.0f), fallPosOffset(0.0f)
@@ -136,13 +134,13 @@ void BossJumpAttack::HorizonMove()
 	DXSimp::Quaternion toPlayerRot = Quat::RotateToVector(toPlayerVec);
 	DXSimp::Quaternion diffRot = Quat::RotationDifference(bossRot, toPlayerRot);
 
-	// Œü‚«‚Æ‚Ì·‚ª‚È‚¢‚È‚çu‚ÉU‚èŒü‚­
-	if (diffRot.ToEuler().y <  LOOKMOMENT_DEGREE_RANGE * Mathf::degToRad  &&
-		curSpeedCofficient > CAN_LOOKMOMENT_HORICURVE_VAL)
-	{
-		bossTrans.SetRotation(toPlayerRot);
-	}
-	else // ŠŠ‚ç‚©‚ÉŒü‚¯‚é
+	//// Œü‚«‚Æ‚Ì·‚ª‚È‚¢‚È‚çu‚ÉU‚èŒü‚­
+	//if (abs(diffRot.ToEuler().y) <  LOOKMOMENT_DEGREE_RANGE * Mathf::degToRad  &&
+	//	curSpeedCofficient >0.0f)
+	//{
+	//	bossTrans.SetRotation(toPlayerRot);
+	//}
+	//else // ŠŠ‚ç‚©‚ÉŒü‚¯‚é
 	{
 		bossRot = DXSimp::Quaternion::Slerp(	// ‰ñ“]
 			bossTrans.GetRotation(),
@@ -180,7 +178,7 @@ void BossJumpAttack::ImGuiDebug()
 	ImGui::DragFloat("HoriSpeed", &horiSpeedCofficient, 1.0f, 0.0f, 1000.0f);
 	ImGui::DragFloat("RotSpeed", &rotSpeedOnJump, 0.0f, 1000.0f);
 	horiSpeedCofficientCurve.ImGuiCall();
-	ImGui::DragFloat("a", &aaaaaaa, 0.001f);
+
 	// Vert
 	ImGui::DragFloat("Height", &maxJumpHeight, 0.01f, 0.0f, 1000.0f);
 	jumpHeightDisCurve.ImGuiCall();

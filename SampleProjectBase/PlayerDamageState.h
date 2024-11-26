@@ -8,6 +8,9 @@ class PlayerDamageState : public PlayerActState_Base
 	/// @brief 移動速度のアニメーショカーブ
 	AnimationCurve knockSpeedCurve;
 
+	/// @brief 吹っ飛ぶ方向(外部からセットする)
+	DirectX::SimpleMath::Vector3 knockVector;
+
 	/// @brief ダメージ中に移動する距離
 	float maxKnockMoveSpeed;
 
@@ -16,9 +19,15 @@ class PlayerDamageState : public PlayerActState_Base
 
 	/// @brief ノックで移動しているか？
 	bool isKnockMoving;
+
+	/// @brief 無敵にするか？
+	bool isInvicible;
 public:
 	PlayerDamageState();
 	~PlayerDamageState() {}
+
+	/// @brief 吹っ飛ぶベクトル
+	void SetKnockVec(const DirectX::SimpleMath::Vector3& _knockVec);
 
 	/// @brief セーブする
 	/// @return セーブデータ
@@ -44,6 +53,8 @@ private:
 
 	/// @brief ノック中の移動
 	void KnockMove();
+
+	void LookEnemy();
 
 	void ImGuiDebug() override;
 };

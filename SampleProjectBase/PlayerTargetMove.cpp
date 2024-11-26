@@ -11,6 +11,7 @@ const float BLEND_OFFSET(0.5f);	// ブレンドを0.0f～1.0fに収める
 PlayerTargetMove::PlayerTargetMove()
 	: rotateSpeed(180.0f)
 {
+	// ターゲットの方向に向く
 	SetTargetAtEnemy(true);
 }
 
@@ -61,8 +62,7 @@ void PlayerTargetMove::TransitionCheckUpdate()
 
 void PlayerTargetMove::ApplyBlendAnim()
 {
-
-	GameObject& playerObj = pActionController->GetPlayer().GetGameObject();
+	GameObject& playerObj = GetPlayer().GetGameObject();
 
 	// アニメーションのブレンド割合をセット
 	DXSimp::Vector2 playerFwd =

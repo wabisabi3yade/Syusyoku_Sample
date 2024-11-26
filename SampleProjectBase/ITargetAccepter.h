@@ -16,10 +16,14 @@ public:
 
 	/// @brief ターゲットする側を取得する
 	/// @param _targeter ターゲットする側
-	virtual void GetTargeter(IObjectTargeter& _targeter) = 0;
+	virtual void SetTargeter(IObjectTargeter& _targeter) = 0;
 
-	/// @brief ターゲット側に死んだことを通知
-	virtual void OnDeathNotifyToTargeter() = 0;
+	/// @brief ターゲットする側を削除する
+	/// @param _targeter 削除ターゲットする側
+	virtual void RemoveTargeter(IObjectTargeter& _targeter) = 0;
+
+	/// @brief ターゲット側に解除することを通知
+	virtual void OnRemoveNotifyToTargeter() = 0;
 };
 
 /// @brief ターゲットする人のインターフェース
@@ -34,8 +38,8 @@ public:
 	/// @param _targetObject ターゲットオブジェクト
 	virtual void SetTargetObject(ITargetAccepter& _targetObject) = 0;
 
-	/// @brief ターゲットオブジェクトが死んだときの更新処理
-	/// @param _deathTargetObj 死んだターゲットオブジェクト
-	virtual void UpdateDeathNotify(const ITargetAccepter& _deathTargetObj) = 0;
+	/// @brief 解除するときの更新処理
+	/// @param _removeObj 死んだターゲットオブジェクト
+	virtual void RemoveNotify(const ITargetAccepter& _removeObj) = 0;
 };
 

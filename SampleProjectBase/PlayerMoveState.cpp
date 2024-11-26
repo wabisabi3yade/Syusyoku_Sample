@@ -99,11 +99,11 @@ void PlayerMoveState::ImGuiDebug()
 void PlayerMoveState::Move()
 {
 	float deltaSpeed = GetDeltaSpeed();
-	GameObject& playerObj = pActionController->GetPlayer().GetGameObject();
 
 	// ˆÚ“®•ûŒüEˆÚ“®—ÊŒˆ’è
-	Vector3 camForwardVec = pCamera->GetTransform().Forward();
-	Vector3 camRightVec = pCamera->GetTransform().Right();
+	Transform& camTransform = pActionController->GetCamera().GetTransform();
+	Vector3 camForwardVec = camTransform.Forward();
+	Vector3 camRightVec = camTransform.Right();
 	Vector2 input = GetInputLeftStick();
 
 	// ŒX‚«‚Ì‘å‚«‚³‚ğæ“¾
@@ -165,7 +165,7 @@ void PlayerMoveState::Rotation()
 {
 	if (!IsMoveInput()) return;
 
-	GameObject& playerObj = pActionController->GetPlayer().GetGameObject();
+	GameObject& playerObj = GetPlayer().GetGameObject();
 
 	// “ü—Í•ûŒü‚ÖŒü‚¯‚é‰ñ“]—Ê‚ğ‹‚ß‚é
 	Quaternion targetRotation = Quat::RotateToVector(moveVector);

@@ -35,7 +35,7 @@ void PlayerRollingMove::UpdateBehavior()
 
 void PlayerRollingMove::OnEndBehavior()
 {
-	pActionController->GetPlayer().SetIsInvicible(false);
+	GetPlayer().SetIsInvicible(false);
 }
 
 void PlayerRollingMove::OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName)
@@ -48,11 +48,12 @@ void PlayerRollingMove::OnAnimationEnd(const std::string& _fromAnimNodeName, con
 void PlayerRollingMove::TurnInputVec()
 {
 	using namespace DirectX::SimpleMath;
-	Transform& transform = pActionController->GetPlayer().GetTransform();
+	Transform& transform = GetPlayer().GetTransform();
 
 	// 向く方向を求める
-	Vector3 camForwardVec = pCamera->GetTransform().Forward();
-	Vector3 camRightVec = pCamera->GetTransform().Right();
+	Transform& camTransform = pActionController->GetCamera().GetTransform();
+	Vector3 camForwardVec = camTransform.Forward();
+	Vector3 camRightVec = camTransform.Right();
 	Vector2 input = GetInputLeftStick();
 	Vector3 turnVec;
 	turnVec = camRightVec * input.x;
@@ -71,7 +72,7 @@ void PlayerRollingMove::BeginParametar()
 	prevProgressDistance = 0.0f;
 
 	// 無敵
-	pActionController->GetPlayer().SetIsInvicible(true);
+	GetPlayer().SetIsInvicible(true);
 
 	// アニメーションの反映
 	pActionController->GetAnimation()->SetTrigger(ROLLING_ANIMPARAM);
@@ -84,7 +85,7 @@ void PlayerRollingMove::Move()
 	float deltaTime = DeltaTime();
 	if (deltaTime < Mathf::epsilon) return;
 
-	Transform& transform = pActionController->GetPlayer().GetTransform();
+	Transform& transform = GetPlayer().GetTransform();
 
 	// アニメーションの再生割合から進む距離を求める
 	float animPlayRatio = pActionController->GetAnimation()->GetCurrentPlayRatio();
@@ -103,7 +104,7 @@ void PlayerRollingMove::UpdateInvicible()
 {
 	// 無敵時間内か見る
 	elapsedTime += DeltaTime();
-	CP_Player& player = pActionController->GetPlayer();
+	CP_Player& player = GetPlayer();
 
 	if (player.GetIsInvicible() && elapsedTime > invicibleTime)
 		pActionController->GetPlayer().SetIsInvicible(false);

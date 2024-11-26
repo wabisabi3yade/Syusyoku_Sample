@@ -102,15 +102,12 @@ void BossGroundMove::Move()
 	currentSpeed = std::min(currentSpeed, maxSpeed);
 
 	// 正面方向に移動
-	Vector3 movement = myTransform.Forward() * currentSpeed * deltaTime;
+	Vector3 movement = myTransform.Forward() * currentSpeed;
 
-	// 座標反映
-	Vector3 pos = myTransform.GetPosition();
-	pos += movement;
-	myTransform.SetPosition(pos);
-
-	// ブレンドアニメーションの速度を渡す
-	pActionController->GetAnimation()->SetFloat(SPEED_ANIMPARAM_NAME, currentSpeed / maxSpeed);
+	// 移動する(y座標は反映させない)
+	auto* pRb = GetRB();
+	movement.y = pRb->GetVelocity().y;
+	pRb->SetVelocity(movement);
 }
 
 bool BossGroundMove::CheckNearTransition()

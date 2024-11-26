@@ -6,8 +6,15 @@
 
 using namespace HashiTaku;
 
-AnimTransitionArrow::AnimTransitionArrow(AnimationNode_Base& _fromNode, AnimationNode_Base& _toNode, AnimationParameters& _animParameters)
-	: pFromNode(&_fromNode), pToNode(&_toNode), pAnimParameters(&_animParameters), exitRatio(1.0f), transTargetRatio(0.0f), transitionTime(0.2f), priority(0), transitiionEase(HashiTaku::EaseKind::Linear), interpolateKind(AnimInterpolateKind::CrossFade),
+AnimTransitionArrow::AnimTransitionArrow(AnimationNode_Base& _toNode, AnimationParameters& _animParameters): 
+	pToNode(&_toNode), 
+	pAnimParameters(&_animParameters),
+	exitRatio(1.0f),
+	transTargetRatio(0.0f),
+	transitionTime(0.2f),
+	priority(0), 
+	transitiionEase(HashiTaku::EaseKind::Linear), 
+	interpolateKind(AnimInterpolateKind::CrossFade),
 	isHasExitRatio(false)
 {
 	// アニメーションパラメータ削除オブザーバーを作成、サブジェクトに追加する

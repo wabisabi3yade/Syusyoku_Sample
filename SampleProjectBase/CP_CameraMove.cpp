@@ -12,8 +12,14 @@ using namespace HashiTaku;
 
 
 CP_CameraMove::CP_CameraMove() :
-	pTargetTransform(nullptr), pCamera(nullptr)
+	pFollowTransform(nullptr), pCamera(nullptr), pTargetObject(nullptr)
 {
+}
+
+CP_CameraMove::~CP_CameraMove()
+{
+	if (pTargetObject)
+		pTargetObject->RemoveTargeter(*this);
 }
 
 void CP_CameraMove::Init()
@@ -25,7 +31,7 @@ void CP_CameraMove::Init()
 bool CP_CameraMove::IsCanUpdate()
 {
 #ifdef EDIT
-	if (pTargetTransform == nullptr) return false;
+	if (pFollowTransform == nullptr) return false;
 #endif // EDIT
 
 	return true;
@@ -40,7 +46,7 @@ void CP_CameraMove::FindFollowObject()
 	GameObject* go = objects.GetSceneObject(followObjName);
 
 	if (go)	// あったらトランスフォームを取得
-		pTargetTransform = &go->GetConstTransform();
+		pFollowTransform = &go->GetConstTransform();
 }
 
 void CP_CameraMove::Start()
@@ -54,7 +60,7 @@ void CP_CameraMove::Start()
 		assert(!"Cameraコンポーネントをつけてください");
 
 	pMoveController->Begin(*pCamera);	// 初期処理
-	pMoveController->SetTargetTransform(pTargetTransform);
+	pMoveController->SetFollowTransform(pFollowTransform);
 }
 
 void CP_CameraMove::LateUpdate()
@@ -65,10 +71,27 @@ void CP_CameraMove::LateUpdate()
 	pMoveController->UpdateCall();
 }
 
-void CP_CameraMove::SetTargetTransform(const Transform* _targetTransform)
+void CP_CameraMove::SetFollowTransform(const Transform* _followTransform)
 {
-	pTargetTransform = _targetTransform;
-	pMoveController->SetTargetTransform(_targetTransform);
+	pFollowTransform = _followTransform;
+	pMoveController->SetFollowTransform(_followTransform);
+}
+
+void CP_CameraMove::SetTargetObject(ITargetAccepter& _targetObject)
+{
+	// ターゲットオブジェクトを取得
+	pTargetObject = &_targetObject;
+	pTargetObject->SetTargeter(*this);
+	pMoveController->SetLookAtObject(&_targetObject);
+}
+
+void CP_CameraMove::RemoveNotify(const ITargetAccepter& _removeObj)
+{
+	// ターゲット側から解除してきたなら
+	if (pTargetObject != &_removeObj) return;
+
+	pTargetObject = nullptr;
+	pMoveController->SetLookAtObject(nullptr);
 }
 
 void CP_CameraMove::ImGuiDebug()
@@ -82,13 +105,13 @@ void CP_CameraMove::ImGuiDebug()
 void CP_CameraMove::ImGuiSetTarget()
 {
 	// ターゲットの名前を探してセットする
-	std::string text = "target:" + followObjName;
+	std::string text = "follow:" + followObjName;
 	ImGui::Text(text.c_str());
 
 	// 入力で変更
 	static char str[IM_INPUT_BUF];
-	ImGui::InputText("targetName", str, IM_INPUT_BUF);
-	if (ImGui::Button("Set"))
+	ImGui::InputText("objName", str, IM_INPUT_BUF);
+	if (ImGui::Button("Set Follow"))
 	{
 		followObjName = str;
 	}

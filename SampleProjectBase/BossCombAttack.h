@@ -7,6 +7,9 @@ class BossCombAttack : public BossAttackState
 	/// @brief リアタックをするトリガー
 	const bool* pIsReAttack;
 
+	/// @brief 前進むカーブ
+	AnimationCurve progressCurve;
+
 	/// @brief コンビネーション攻撃の攻撃回数
 	u_int attackTimeCnt;
 

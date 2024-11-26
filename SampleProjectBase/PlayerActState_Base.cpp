@@ -4,7 +4,6 @@
 #include "InSceneSystemManager.h"
 
 GameInput* PlayerActState_Base::pPlayerInput = nullptr;
-CP_Camera* PlayerActState_Base::pCamera = nullptr;
 
 
 constexpr float CAN_ACTION_STICKINPUT(0.7f);	// アクションできる左スティックの入力量
@@ -18,7 +17,6 @@ PlayerActState_Base::PlayerActState_Base() :
 	targetLookRotateSpeed(40.0f),isAttackInput(false), isTargetLookAtEnemy(false)
 {
 	pPlayerInput = &InSceneSystemManager::GetInstance()->GetInput();
-	pCamera = &InSceneSystemManager::GetInstance()->GetMainCamera();
 }
 
 void PlayerActState_Base::Init(PlayerState _stateType, PlayerActionController& _actController)
@@ -87,10 +85,14 @@ void PlayerActState_Base::ParameterClear()
 void PlayerActState_Base::CheckInputUpdate()
 {
 	if (!pActionController->GetCanInput()) return;	// 入力受け付けていないなら
-	if (cancelPlayState != PlayerState::None) return;	// 既にキャンセル行動決まっているなら
-
+	
 	// ローリングボタンを押す　かつ　左スティックの傾きが足りる
-	if (IsRollingInput())
+	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Guard))
+	{
+		cancelPlayState = PlayerState::Guard;
+	}
+	// ローリングボタンを押す　かつ　左スティックの傾きが足りる
+	else if (IsRollingInput())
 	{
 		cancelPlayState = PlayerState::Rolling;
 	}
@@ -117,6 +119,11 @@ void PlayerActState_Base::SetTargetAtEnemy(bool _isLook)
 	isTargetLookAtEnemy = _isLook;
 }
 
+void PlayerActState_Base::SetInvicible(bool _isInvicible)
+{
+	GetPlayer().SetIsInvicible(_isInvicible);
+}
+
 CP_RigidBody& PlayerActState_Base::GetRB()
 {
 	return *pActionController->GetRB();
@@ -124,12 +131,17 @@ CP_RigidBody& PlayerActState_Base::GetRB()
 
 Transform& PlayerActState_Base::GetTransform()
 {
-	return pActionController->GetPlayer().GetTransform();
+	return GetPlayer().GetTransform();
 }
 
 CP_Animation* PlayerActState_Base::GetAnimation()
 {
 	return pActionController->GetAnimation();
+}
+
+CP_Player& PlayerActState_Base::GetPlayer()
+{
+	return pActionController->GetPlayer();
 }
 
 float PlayerActState_Base::DeltaTime() const
@@ -147,14 +159,14 @@ DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStick() const
 	return pPlayerInput->GetValue(GameInput::ValueType::Player_Move);
 }
 
-bool PlayerActState_Base::IsInputVector(InputVector _checkVector) const
+bool PlayerActState_Base::IsInputVector(InputVector _checkVector)
 {
 	// 入力値を取得
 	DXSimp::Vector2 inputVec = GetInputLeftStick();
 	if (inputVec.Length() < CAN_ACTION_STICKINPUT) return false;	// 傾きが十分でないなら
 
 	// カメラから見た入力とする
-	const Transform& camTrans = pCamera->GetTransform();
+	const Transform& camTrans = pActionController->GetCamera().GetTransform();
 	DXSimp::Vector3 inputVecByCam = inputVec.x * camTrans.Right() + 
 									inputVec.y * camTrans.Forward();
 	inputVec = { inputVecByCam.x, inputVecByCam.z };
@@ -162,7 +174,7 @@ bool PlayerActState_Base::IsInputVector(InputVector _checkVector) const
 
 
 	// 向きを取得
-	const DXSimp::Vector3& playerFwd = pActionController->GetPlayer().GetTransform().Forward();
+	const DXSimp::Vector3& playerFwd = GetPlayer().GetTransform().Forward();
 	DXSimp::Vector2 forwardXZ = { playerFwd.x, playerFwd.z };
 	forwardXZ.Normalize();
 
@@ -184,21 +196,21 @@ bool PlayerActState_Base::IsRollingInput() const
 	return true;
 }
 
-bool PlayerActState_Base::IsSpecialAtkInput(InputVector _inputVecter) const
+bool PlayerActState_Base::IsSpecialAtkInput(InputVector _inputVecter)
 {
 	// ボタン入力
 	if (!pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack)) return false;
 
 	// ターゲットした瞬間は出ないようにする
-	if (!pActionController->GetIsTargeting() || 
-		!pActionController->GetIsPrevTargeting()) return false;
+	if (!pActionController->GetIsTargeting() /*|| 
+		!pActionController->GetIsPrevTargeting()*/) return false;
 
 	if (!IsInputVector(_inputVecter)) return false;
 
 	return true;
 }
 
-bool PlayerActState_Base::GetCanCombAttack() const
+bool PlayerActState_Base::GetCanCombAttack()
 {
 	// コンビネーション攻撃できないなら
 	if (!pActionController->GetCanCombAtk()) return false;

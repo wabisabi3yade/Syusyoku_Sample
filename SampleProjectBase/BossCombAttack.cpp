@@ -50,8 +50,6 @@ void BossCombAttack::UpdateReAttack()
 	// リアタックフラグを降ろす
 	GetAnimation()->SetBool(REATTACK_PARAMNAME, false);
 
-	HASHI_DEBUG_LOG("a");
-
 	// 総攻撃回数を超えるなら
 	if(curAttackTime + 1 > attackTimeCnt)	
 	{

@@ -44,7 +44,8 @@ public:
 
 	/// @brief ダメージ受けたときのアクション処理
 	/// @param _atkInfo 攻撃情報
-	virtual void OnDamage(const HashiTaku::AttackInformation& _atkInfo) {};
+	virtual void OnDamage(const HashiTaku::AttackInformation& _atkInfo,
+		const DirectX::SimpleMath::Vector3& _attackerPos) {};
 
 	/// @brief アニメーション変更オブザーバーを取得
 	/// @return アニメーション変更オブザーバー
@@ -59,7 +60,7 @@ public:
 	CP_Animation* GetAnimation();
 
 	/// @brief デバッグ描画を行う
-	void DebugDisplay();
+	virtual void DebugDisplay();
 
 	/// @brief 指定したbool変数に値をセット
 	/// @param _paramName パラメーター名

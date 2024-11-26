@@ -52,6 +52,10 @@ public:
 	/// @brief カメラの注視点
 	virtual const DirectX::SimpleMath::Vector3& GetTarget() const;
 
+	/// @brief 視野角を取得(deg)
+	/// @return 視野角
+	virtual float GetFov() const;
+
 	void ImGuiDebug() override;
 
 	/// @brief セーブする
@@ -118,6 +122,7 @@ public:
 		return Vec3::Forward;
 	};
 
+	float GetFov() const override { return 0.0f; }
 
 	/// @brief セーブする
 	/// @param _sceneData セーブデータ
