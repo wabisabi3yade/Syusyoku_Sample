@@ -5,20 +5,17 @@ constexpr int MIN_PLOT_CNT(2);	// 最低限必要なプロット点
 
 constexpr float VECTOR_LENGTH(2.0f);	// 速度の大きさ
 constexpr float VEC_DRAW_TIMES(0.05f);	// ベクトル点との距離をを描画するときの倍率
-constexpr float REACT_DISTANCE = 0.002f; // マウスクリックで点との反応距離
+constexpr float REACT_DISTANCE = 0.02f; // マウスクリックで点との反応距離
 
 constexpr float MIN_TIME(0.0f);	// 最小時間
-constexpr float MAX_TIME(1.0f);	// 最大時間
-constexpr float MIN_VAL(0.0f);	// 最小値
-constexpr float MAX_VAL(1.0f);	// 最大値
+constexpr float MAX_TIME(1.0f);	// 最小時間
+constexpr double MIN_VAL(0.0);	// 最小値
+constexpr double MAX_VAL(10000.0);	// 最大値
 
-constexpr float GRAPH_DISPLAY_MIN_X(MIN_TIME - 0.2f);	// グラフ表示するX最小
-constexpr float GRAPH_DISPLAY_MAX_X(MAX_TIME + 0.2f);	// グラフ表示するX最大
-constexpr float GRAPH_DISPLAY_MIN_Y(MIN_VAL - 0.2f);	// グラフ表示するY最小
-constexpr float GRAPH_DISPLAY_MAX_Y(MAX_VAL + 0.2f);	// グラフ表示するY最大
+constexpr double GRAPH_DISPLAY_OFFSET(0.2);	// グラフ表示の周りの余白の長さ
 
 AnimationCurve::AnimationCurve()
-	: easeKind(HashiTaku::EaseKind::Linear), /*maxValue(1.0f), minValue(0.0f),*/ isUseHermite(false)
+	: easeKind(HashiTaku::EaseKind::Linear), isUseHermite(false)
 {
 	plotPoints =
 	{
@@ -100,6 +97,26 @@ bool AnimationCurve::SortPointTime(const HermitePlotParam& _p0, const HermitePlo
 	return _p0.time < _p1.time;
 }
 
+ImPlotRect AnimationCurve::GetPlotRect()
+{
+	ImPlotRect rect;
+	rect.X.Max = -1000.0;
+	rect.X.Min = 1000.0;
+	rect.Y.Max = -1000.0;
+	rect.Y.Min = 1000.0;
+
+	for (auto& plot : plotPoints)
+	{
+		rect.X.Min = std::min((double)plot.time, rect.X.Min);
+		rect.X.Max = std::max((double)plot.time, rect.X.Max);
+
+		rect.Y.Min = std::min((double)plot.value, rect.Y.Min);
+		rect.Y.Max = std::max((double)plot.value, rect.Y.Max);
+	}
+
+	return rect;
+}
+
 void AnimationCurve::AddPlot(float _time)
 {
 	// 制限
@@ -150,13 +167,20 @@ void AnimationCurve::RemovePlot(HermitePlotParam& _deletePlot)
 	plotPoints.erase(itr);
 }
 
-bool AnimationCurve::CheckReactPlot(const HermitePlotParam& _plot, float _clickX, float _clickY)
+bool AnimationCurve::CheckReactPlot(const HermitePlotParam& _plot)
 {
-	float disx = _clickX - _plot.time;
-	float disy = _clickY - _plot.value;
-	float dis = disx * disx + disy * disy;
+	return CheckReactPlot(_plot.time, _plot.value);
+}
 
-	if (dis < REACT_DISTANCE)   // 反応距離内なら
+bool AnimationCurve::CheckReactPlot(float _posX, float _posY)
+{
+	ImPlotPoint mousePos = ImPlot::GetPlotMousePos();
+	float disx = abs(static_cast<float>(mousePos.x) - _posX);
+	float disy = abs(static_cast<float>(mousePos.y) - _posY);
+
+	ImPlotPoint size = ImPlot::GetPlotLimits().Size();
+
+	if (disx < REACT_DISTANCE * size.x && disy < REACT_DISTANCE * size.y)   // 反応距離内なら
 	{
 		return true;
 	}
@@ -185,17 +209,16 @@ void AnimationCurve::ImGuiDebug()
 	HashiTaku::Easing::ImGuiSelect(easeKind);
 	ImGui::Checkbox("UseHermite", &isUseHermite);
 
-	// グラフ範囲制限
-	ImPlot::SetNextAxesLimits(
-		GRAPH_DISPLAY_MIN_X,
-		GRAPH_DISPLAY_MAX_X,
-		GRAPH_DISPLAY_MIN_Y,
-		GRAPH_DISPLAY_MAX_Y,
-		ImGuiCond_Always
-	);
-
 	if (ImPlot::BeginPlot("##Animation Curve"))
 	{
+		// データに基づいた表示範囲を設定
+		auto rect = GetPlotRect();
+		/*auto size = ImPlot::GetPlotLimits().Size();
+		double offsetX = size.x * GRAPH_DISPLAY_OFFSET;
+		double offsetY = size.y * GRAPH_DISPLAY_OFFSET;*/
+		ImPlot::SetupAxisLimits(ImAxis_X1, rect.X.Min /*- offsetX*/, rect.X.Max/* + offsetX*/);
+		ImPlot::SetupAxisLimits(ImAxis_Y1, rect.Y.Min/* - offsetY*/, rect.Y.Max /*+ offsetY*/);
+
 		ImPlot::SetupAxes("##Time", "##Value", ImPlotAxisFlags_AutoFit, ImPlotAxisFlags_AutoFit);
 
 		if (isUseHermite)
@@ -242,7 +265,7 @@ void AnimationCurve::ImGuiPlotEditing()
 		bool isSelecting = false;
 		for (auto& point : plotPoints)
 		{
-			if (CheckReactPlot(point, floatMousePos.x, floatMousePos.y))
+			if (CheckReactPlot(point))
 			{
 				editingPlot = &point;
 				dragingPlot = &point;
@@ -260,7 +283,7 @@ void AnimationCurve::ImGuiPlotEditing()
 		if (!dragingPlot) return;
 
 		// 値を動かす
-		editingPlot->value = std::clamp(floatMousePos.y, MIN_VAL, MAX_VAL/*minValue, maxValue*/);
+		editingPlot->value = floatMousePos.y;
 
 		// 時間は最初と最後は動かさない
 		if (!IsStartOrEndPlot(editingPlot))
@@ -268,7 +291,8 @@ void AnimationCurve::ImGuiPlotEditing()
 			float changePrev = editingPlot->time;
 
 			// 制限をかける
-			editingPlot->time = std::clamp(floatMousePos.x, MIN_TIME + Mathf::epsilon, MAX_TIME - Mathf::epsilon);
+			editingPlot->time = std::clamp(floatMousePos.x, MIN_TIME + Mathf::epsilon, 
+				MAX_TIME - Mathf::epsilon);
 
 			// ソート処理(時間)
 			if (changePrev != editingPlot->time)
@@ -307,7 +331,7 @@ void AnimationCurve::ImEditVectorPoint()
 			double disVM_Y = mousePos.y - vectorPoint.y;
 			double disVM = disVM_X * disVM_X + disVM_Y * disVM_Y;
 
-			if (disVM > REACT_DISTANCE)
+			if (!CheckReactPlot((float)vectorPoint.x, (float)vectorPoint.y))
 				return;
 			else
 			{
@@ -406,7 +430,7 @@ void AnimationCurve::ImAddPopPlot()
 		deletePlot = nullptr;
 		for (auto& plot : plotPoints)
 		{
-			if (CheckReactPlot(plot, static_cast<float>(clickPos.x), static_cast<float>(clickPos.y)))
+			if (CheckReactPlot(plot))
 			{
 				deletePlot = &plot;
 				break;
@@ -425,7 +449,7 @@ void AnimationCurve::ImAddPopPlot()
 				}
 			}
 
-			ImGui::DragFloat("Value", &editingPlot->value, 0.001f, MIN_VAL, MAX_VAL);
+			ImGui::DragFloat("Value", &editingPlot->value, 0.001f);
 			ImGui::DragFloat("Vector", &editingPlot->vector, 0.001f, -1.0f, 1.0f);
 
 			// 補間種類を変える

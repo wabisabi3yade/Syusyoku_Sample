@@ -4489,16 +4489,10 @@
                     "arrowDataList": [
                         {
                             "arrowParam": {
-                                "conditionList": [
-                                    {
-                                        "condition": null,
-                                        "paramName": "standUp",
-                                        "typeKind": 3
-                                    }
-                                ],
+                                "conditionList": null,
                                 "exitRatio": 1.0,
                                 "interpolate": 0,
-                                "isHaveExit": false,
+                                "isHaveExit": true,
                                 "priority": 0,
                                 "targetRatio": 0.1599999964237213,
                                 "transEase": 0.1599999964237213,
