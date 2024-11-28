@@ -124,10 +124,6 @@ public:
 	/// @return 現在の再生割合
 	float GetCurrentPlayRatio() const;
 
-	/// @brief プレイヤーアニメーション割合を取得する
-	/// @return 現在のアニメーション割合
-	float GetCurrentAnimationRatio() const;
-
 	/// @brief 実際に動かすボーンリストを取得する
 	/// @return ボーンリスト
 	BoneList* GetMoveBoneList();

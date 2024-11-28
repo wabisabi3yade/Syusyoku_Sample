@@ -12,14 +12,14 @@ constexpr float MAX_TIME(1.0f);	// 最小時間
 constexpr double MIN_VAL(0.0);	// 最小値
 constexpr double MAX_VAL(10000.0);	// 最大値
 
-constexpr double GRAPH_DISPLAY_OFFSET(0.2);	// グラフ表示の周りの余白の長さ
+constexpr double DISPLAY_OFFSET(0.2);	// グラフ表示の周りの余白の長さ
 
 AnimationCurve::AnimationCurve()
-	: easeKind(HashiTaku::EaseKind::Linear), isUseHermite(false)
+	: easeKind(HashiTaku::EaseKind::Linear), isUseHermite(true)
 {
 	plotPoints =
 	{
-		{0.0f, 0.0f, 0.0f},
+		{1.0f, 0.0f, 0.0f},
 		{1.0f, 1.0f, 0.0f}
 	};
 }
@@ -209,16 +209,20 @@ void AnimationCurve::ImGuiDebug()
 	HashiTaku::Easing::ImGuiSelect(easeKind);
 	ImGui::Checkbox("UseHermite", &isUseHermite);
 
+	// データに基づいた表示範囲を設定
+	auto rect = GetPlotRect();
+
+	double offsetX = std::max(DISPLAY_OFFSET * rect.Size().x, DISPLAY_OFFSET);
+	double offsetY = std::max(DISPLAY_OFFSET * rect.Size().y, DISPLAY_OFFSET);
+
+	ImPlot::SetNextAxesLimits(rect.X.Min - offsetX,
+		rect.X.Max + offsetX,
+		rect.Y.Min - offsetY,
+		rect.Y.Max + offsetY,
+		ImGuiCond_Always);
+
 	if (ImPlot::BeginPlot("##Animation Curve"))
 	{
-		// データに基づいた表示範囲を設定
-		auto rect = GetPlotRect();
-		/*auto size = ImPlot::GetPlotLimits().Size();
-		double offsetX = size.x * GRAPH_DISPLAY_OFFSET;
-		double offsetY = size.y * GRAPH_DISPLAY_OFFSET;*/
-		ImPlot::SetupAxisLimits(ImAxis_X1, rect.X.Min /*- offsetX*/, rect.X.Max/* + offsetX*/);
-		ImPlot::SetupAxisLimits(ImAxis_Y1, rect.Y.Min/* - offsetY*/, rect.Y.Max /*+ offsetY*/);
-
 		ImPlot::SetupAxes("##Time", "##Value", ImPlotAxisFlags_AutoFit, ImPlotAxisFlags_AutoFit);
 
 		if (isUseHermite)
@@ -410,7 +414,6 @@ void AnimationCurve::ImDrawGraph()
 			valuePoints[p_i] = HashiTaku::Easing::EaseValue(timePoints[p_i], easeKind);
 		}
 	}
-
 
 	ImPlot::PlotLine("##AnimationCurve", timePoints, valuePoints, DRAW_POINT_CNT);
 }

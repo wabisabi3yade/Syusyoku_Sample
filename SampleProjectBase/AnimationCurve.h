@@ -23,7 +23,7 @@ class AnimationCurve : public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
 		float vector{ 0.5f };
 
 		/// @brief ŽŸ‚Ü‚Å‚Ì•âŠÔ•û–@
-		InterpKind toNextInterp { InterpKind::Hermite };
+		InterpKind toNextInterp { InterpKind::Linear };
 
 		bool operator==(const HermitePlotParam& _other)
 		{

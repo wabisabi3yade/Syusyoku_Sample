@@ -219,8 +219,8 @@ void AnimControllPlayer::TransitionCheck()
 {
 	// ‘JˆÚðŒ‚ð–ž‚½‚µ‚½–îˆó‚ª‚ ‚é‚©Šm”F
 	const AnimTransitionArrow* pTransArrow = pTransChecker->TransitonCheck(
-		pCurNodePlayer->GetAnimationRatio(),
-		pCurNodePlayer->GetLastAnimationRatio()
+		pCurNodePlayer->GetCurPlayRatio(),
+		pCurNodePlayer->GetLastPlayRatio()
 	);
 	if (!pTransArrow) return;
 
