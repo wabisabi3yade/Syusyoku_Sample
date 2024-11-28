@@ -56,14 +56,30 @@ void SceneObjects::Update()
 
 void SceneObjects::LateUpdate()
 {
-	for (auto& obj : objList)
+	auto objItr = objList.begin();
+	for (; objItr != objList.end();)
 	{
-		obj.second->LateUpdateCall();
-	}
+		GameObject& go = *(*objItr).second;
+		go.LateUpdateCall();
 
-	for (auto& ui : uiList)
+		++objItr;
+
+		// リストから削除するのでここで行う
+		if (go.isDestroy)
+			go.Destroy();
+	}
+	
+	auto uiItr = uiList.begin();
+	for (; uiItr!= uiList.end();)
 	{
-		ui.second->LateUpdateCall();
+		GameObject& go = *(*uiItr).second;
+		go.LateUpdateCall();
+
+		++uiItr;
+
+		// リストから削除するのでここで行う
+		if (go.isDestroy)
+			go.Destroy();			
 	}
 }
 

@@ -31,7 +31,6 @@ void DX11EffecseerManager::Init()
 
 void DX11EffecseerManager::BeginDraw()
 {
-
 }
 
 void DX11EffecseerManager::EffectDraw()
@@ -52,10 +51,28 @@ void DX11EffecseerManager::AllEffectDestroy()
 	manager->StopAllEffects();
 }
 
-Effekseer::Handle DX11EffecseerManager::Play(const Effekseer::EffectRef& _effect,
-	const DirectX::SimpleMath::Vector3 _effectPos)
+bool DX11EffecseerManager::ExistEffect(Effekseer::Handle _vfxHandle) const
 {
-	return manager->Play(_effect, _effectPos.x, _effectPos.y, _effectPos.z);
+	return manager->Exists(_vfxHandle);
+}
+
+Effekseer::Handle DX11EffecseerManager::Play(const Effekseer::EffectRef& _effect,
+	const DirectX::SimpleMath::Vector3& _pos,
+	const DirectX::SimpleMath::Vector3& _scale)
+{
+	Effekseer::Handle handle = manager->Play(_effect, 0.0f, 0.0f, 0.0f);
+
+	// 座標・スケール反映
+	Effekseer::Matrix43 transformMatrix;
+	transformMatrix.Value[0][0] = _scale.x;
+	transformMatrix.Value[1][1] = _scale.y;
+	transformMatrix.Value[2][2] = _scale.z;
+	transformMatrix.Value[3][0] = _pos.x;
+	transformMatrix.Value[3][1] = _pos.y;
+	transformMatrix.Value[3][2] = _pos.z;
+	manager->SetMatrix(handle, transformMatrix);
+
+	return  handle;
 }
 
 const Effekseer::ManagerRef& DX11EffecseerManager::GetManager() const

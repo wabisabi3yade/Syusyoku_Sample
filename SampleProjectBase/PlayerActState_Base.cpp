@@ -13,8 +13,8 @@ namespace DXSimp = DirectX::SimpleMath;
 
 PlayerActState_Base::PlayerActState_Base() :
 	pActionController(nullptr), stateType(PlayerState::None), 
-	cancelPlayState(PlayerState::None),	placeElement(ActPlaceElement::Ground),
-	targetLookRotateSpeed(40.0f),isAttackInput(false), isTargetLookAtEnemy(false)
+	cancelPlayState(PlayerState::None), placeElement(ActPlaceElement::Ground),
+	targetLookRotateSpeed(40.0f), isTargetLookAtEnemy(false)
 {
 	pPlayerInput = &InSceneSystemManager::GetInstance()->GetInput();
 }
@@ -78,14 +78,13 @@ void PlayerActState_Base::TransitionCheckUpdate()
 
 void PlayerActState_Base::ParameterClear()
 {
-	isAttackInput = false;
 	cancelPlayState = PlayerState::None;
 }
 
 void PlayerActState_Base::CheckInputUpdate()
 {
 	if (!pActionController->GetCanInput()) return;	// 入力受け付けていないなら
-	
+
 	// ローリングボタンを押す　かつ　左スティックの傾きが足りる
 	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Guard))
 	{
@@ -96,15 +95,16 @@ void PlayerActState_Base::CheckInputUpdate()
 	{
 		cancelPlayState = PlayerState::Rolling;
 	}
+
 	// 前突進攻撃
 	else if (IsSpecialAtkInput(InputVector::Forward))
 	{
 		cancelPlayState = PlayerState::SpecialAtkHi;
 	}
+
 	// 攻撃
 	else if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
 	{
-		isAttackInput = true;
 		cancelPlayState = PlayerState::Attack11;
 	}
 }
@@ -174,14 +174,27 @@ bool PlayerActState_Base::IsInputVector(InputVector _checkVector)
 
 
 	// 向きを取得
-	const DXSimp::Vector3& playerFwd = GetPlayer().GetTransform().Forward();
-	DXSimp::Vector2 forwardXZ = { playerFwd.x, playerFwd.z };
-	forwardXZ.Normalize();
+	DXSimp::Vector3 baseVec; 
+
+	// ターゲット時で敵がいるなら　敵の方向ベクトルを基準ベクトルに
+	if (pActionController->GetIsTargeting() &&
+		pActionController->GetTargetObject())
+	{
+		DXSimp::Vector3 targetObjVec = 
+			pActionController->GetTargetObject()->GetWorldPosByTargetObj() -
+			GetTransform().GetPosition();
+
+		targetObjVec.Normalize(baseVec);
+	}
+	else // 違うなら　プレイヤーの前ベクトル
+		baseVec = GetPlayer().GetTransform().Forward();
+
+	DXSimp::Vector2 baseVecXZ = { baseVec.x, baseVec.z };
+	baseVecXZ.Normalize();
 
 	// スティックの方向が一致しているか見る
-	float dot = inputVec.Dot(forwardXZ);
+	float dot = inputVec.Dot(baseVecXZ);
 
-	HASHI_DEBUG_LOG(std::to_string(dot));
 	return dot > INPUT_VECTOR_DOT ? true : false;
 }
 
@@ -201,22 +214,10 @@ bool PlayerActState_Base::IsSpecialAtkInput(InputVector _inputVecter)
 	// ボタン入力
 	if (!pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack)) return false;
 
-	// ターゲットした瞬間は出ないようにする
-	if (!pActionController->GetIsTargeting() /*|| 
-		!pActionController->GetIsPrevTargeting()*/) return false;
+	// ターゲットしていないなら
+	if (!pActionController->GetIsTargeting()) return false;
 
 	if (!IsInputVector(_inputVecter)) return false;
-
-	return true;
-}
-
-bool PlayerActState_Base::GetCanCombAttack()
-{
-	// コンビネーション攻撃できないなら
-	if (!pActionController->GetCanCombAtk()) return false;
-
-	// 期間中にボタン入力されていたら
-	if (!isAttackInput) return false;
 
 	return true;
 }

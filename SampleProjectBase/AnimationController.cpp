@@ -285,6 +285,7 @@ void AnimationController::ImGuiGroupArrows(const std::vector<std::string>& _node
 	while (groupItr != groupArrows.end())
 	{
 		bool isGroupDelete = false;
+		bool isChangePri = false;
 		const std::string& groupName = (*groupItr).first;
 		if (ImGuiMethod::TreeNode(groupName))
 		{
@@ -296,11 +297,20 @@ void AnimationController::ImGuiGroupArrows(const std::vector<std::string>& _node
 			while (arrowItr != arrowList.end())
 			{
 				bool isaArrowDelete = false;
-				const AnimTransitionArrow& arrow = *(*arrowItr);
+				AnimTransitionArrow& arrow = *(*arrowItr);
 				if (ImGuiMethod::TreeNode(arrow.GetToNode().GetNodeName()))
 				{
 					isaArrowDelete = ImGui::Button("X");
-					(*arrowItr)->ImGuiCall();
+					arrow.ImGuiCall();
+
+					// 優先順位
+					int pri = arrow.GetPriority();
+					if (ImGui::DragInt("Priority", &pri))
+					{
+						isChangePri = true;
+						arrow.SetPriority(pri);
+					}
+
 					ImGui::TreePop();
 				}
 
@@ -309,6 +319,9 @@ void AnimationController::ImGuiGroupArrows(const std::vector<std::string>& _node
 				else
 					arrowItr++;
 			}
+
+			if (isChangePri)	// 優先度を変えたなら
+				arrowList.sort(SortArrowPriority);	// ソート
 
 			// 追加
 			static std::string toNodeNmae;

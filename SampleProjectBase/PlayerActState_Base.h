@@ -74,22 +74,19 @@ private:
 	/// @brief この行動クラスのステートタイプ
 	PlayerState stateType;
 
-	/// @brief キャンセルして繰り出す状態
-	PlayerState cancelPlayState;
-
 	/// @brief 行動の場所属性
 	ActPlaceElement placeElement;
 
 	/// @brief ターゲットを見るときの回転速度
 	float targetLookRotateSpeed;
 
-	/// @brief 入力期間中に攻撃が押されていたか?
-	bool isAttackInput;
-
 	/// @brief ターゲット時に敵を見る行動にするか？
 	bool isTargetLookAtEnemy;
 
 protected:
+	/// @brief キャンセルして繰り出す状態
+	PlayerState cancelPlayState;
+
 	/// @brief プレイヤー
 	PlayerActionController* pActionController;
 
@@ -196,10 +193,6 @@ protected:
 	/// @param _inputVecter 方向の入力
 	/// @return  必殺技できるか？
 	bool IsSpecialAtkInput(InputVector _inputVecter);
-
-	/// @brief 攻撃できるか取得する
-	/// @return 攻撃できるか？
-	bool GetCanCombAttack();
 
 	/// @brief ImGui処理
 	void ImGuiDebug() override;

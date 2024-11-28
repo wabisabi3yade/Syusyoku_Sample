@@ -10,6 +10,9 @@ private:
 	/// @brief コンビネーション攻撃の先
 	PlayerState nextCombAtkState;
 
+	/// @brief 遷移する先の攻撃
+	PlayerState curChangeAtkState;
+
 	/// @brief 攻撃情報リスト(単発なら最初の情報を使用する)
 	std::vector<HashiTaku::AttackInformation> attackInfos;
 
@@ -52,7 +55,6 @@ protected:
 	// State共通処理
 	void OnStartBehavior() override;
 	void UpdateBehavior() override;
-	void OnEndBehavior() override;
 	void TransitionCheckUpdate() override;
 
 	void ImGuiDebug() override;
@@ -66,6 +68,9 @@ private:
 	/// @brief リアタックするか確認する
 	void UpdateReAttack();
 
+	/// @brief コンビネーション攻撃の入力更新
+	void UpdateCombInput();
+
 	/// @brief 攻撃で進む距離を求める
 	/// @param _atkEnemyPos 敵の座標
 	void CalcProgressDis(const DirectX::SimpleMath::Vector3& _atkEnemyPos);
@@ -76,6 +81,10 @@ private:
 
 	/// @brief 攻撃時に前へ進む
 	void ForwardProgressMove();
+
+	/// @brief 攻撃できるか取得する
+	/// @return 攻撃できるか？
+	bool GetCanCombAttack();
 
 	/// @brief 攻撃する敵の座標を取得する
 	/// @return 敵の座標

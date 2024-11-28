@@ -4,8 +4,8 @@
 
 constexpr auto ROLLING_ANIMNODE_NAME("RollingMove");	// ローリングのアニメーションノード名
 
-PlayerRollingMove::PlayerRollingMove(): 
-	rollingDistance(5.0f), invicibleTime(0.4f), elapsedTime(0.0f), 
+PlayerRollingMove::PlayerRollingMove() :
+	rollingDistance(5.0f), invicibleTime(0.4f), elapsedTime(0.0f),
 	prevProgressDistance(0.0f)
 {
 	pDistanceCurve = std::make_unique<AnimationCurve>();
@@ -41,7 +41,7 @@ void PlayerRollingMove::OnEndBehavior()
 void PlayerRollingMove::OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName)
 {
 	// アニメーションの遷移先が待機状態なら待機に戻す
-	if (_fromAnimNodeName == ROLLING_ANIMNODE_NAME)
+	if (_toAnimNodeName == IDLE_ANIM_NAME)
 		ChangeState(PlayerState::Idle);
 }
 
