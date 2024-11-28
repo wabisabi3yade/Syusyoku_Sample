@@ -59,12 +59,6 @@ void PlayerMoveState::OnEndBehavior()
 
 void PlayerMoveState::TransitionCheckUpdate()
 {
-	// アタックStateに遷移
-	if (GetCanCombAttack())
-	{
-		ChangeState(PlayerState::Attack11);
-	}
-
 	PlayerActState_Base::TransitionCheckUpdate();
 
 	if (currentSpeed <= Mathf::epsilon)	// 移動速度が0以下になると

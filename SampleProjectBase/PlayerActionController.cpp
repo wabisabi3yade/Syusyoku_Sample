@@ -102,9 +102,6 @@ void PlayerActionController::Update()
 
 	// ターゲッティングの更新
 	UpdateTargeting();
-
-	//// パリィの更新
-	//CheckParryUpdate();
 }
 
 void PlayerActionController::CheckParryUpdate()

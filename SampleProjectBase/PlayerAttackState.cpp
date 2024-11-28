@@ -5,19 +5,20 @@
 
 namespace DXSimp = DirectX::SimpleMath;
 
-PlayerAttackState::PlayerAttackState():
+PlayerAttackState::PlayerAttackState() :
 	pIsReAttack(nullptr),
-	nextCombAtkState(PlayerState::None), 
+	nextCombAtkState(PlayerState::None),
+	curChangeAtkState(PlayerState::None),
 	atkMaxDistance(10.0f),
 	lookRotateSpeed(0.0f),
-	curAtkProgressDis(0.0f), 
+	curAtkProgressDis(0.0f),
 	prevProgressDistance(0.0f),
 	curAttackTime(1),
 	attackTimeCnt(1),
 	isMoveForward(false),
 	isAttackCollisionBefore(false)
 {
-	
+
 	attackInfos.resize(1);	// 攻撃情報を最低1作成しておく
 	HashiTaku::AttackInformation atkInfo;
 	attackInfos.push_back(atkInfo);
@@ -28,7 +29,6 @@ PlayerAttackState::PlayerAttackState():
 
 void PlayerAttackState::OnStartBehavior()
 {
-
 	// 敵の座標を取得
 	DXSimp::Vector3 atkPos = GetAtkEnemyPos();
 
@@ -46,6 +46,7 @@ void PlayerAttackState::OnStartBehavior()
 
 	// パラメータリセット
 	prevProgressDistance = 0.0f;
+	curChangeAtkState = PlayerState::None;
 }
 
 void PlayerAttackState::UpdateBehavior()
@@ -55,17 +56,16 @@ void PlayerAttackState::UpdateBehavior()
 
 	// 攻撃情報を更新するか確認
 	UpdateReAttack();
-}
 
-void PlayerAttackState::OnEndBehavior()
-{
+	// コンビネーション攻撃の入力
+	UpdateCombInput();
 }
 
 void PlayerAttackState::TransitionCheckUpdate()
 {
 	// 攻撃入力されたらステート遷移する
 	if (GetCanCombAttack())
-		ChangeState(nextCombAtkState);
+		ChangeState(curChangeAtkState);
 
 	PlayerActState_Base::TransitionCheckUpdate();
 }
@@ -96,6 +96,17 @@ void PlayerAttackState::UpdateReAttack()
 	GetAnimation()->SetBool(REATTACK_PARAMNAME, false);	// リアタックフラグを降ろす
 }
 
+void PlayerAttackState::UpdateCombInput()
+{
+	if (!pActionController->GetCanInput()) return;	// 入力受け付けていないなら
+
+	if (IsSpecialAtkInput(InputVector::Forward))
+		curChangeAtkState = PlayerState::SpecialAtkHi;
+
+	else if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
+		curChangeAtkState = nextCombAtkState;
+}
+
 void PlayerAttackState::CalcProgressDis(const DirectX::SimpleMath::Vector3& _atkEnemyPos)
 {
 	if (!isMoveForward) return;
@@ -113,7 +124,7 @@ void PlayerAttackState::ImGuiDebug()
 	PlayerActState_Base::ImGuiDebug();
 
 	ImGuiComboAttack("nextCombo", nextCombAtkState);
-	
+
 	// 攻撃情報
 	ImGui::Text("AtkInfo");
 	int imInt = static_cast<int>(attackTimeCnt);	// 回数指定
@@ -184,6 +195,14 @@ void PlayerAttackState::ForwardProgressMove()
 	prevProgressDistance = curDis;
 }
 
+bool PlayerAttackState::GetCanCombAttack()
+{
+	if (curChangeAtkState == PlayerState::None) return false;
+	if (!pActionController->GetCanCombAtk()) return false;
+
+	return true;
+}
+
 DirectX::SimpleMath::Vector3 PlayerAttackState::GetAtkEnemyPos()
 {
 	CP_BattleManager* pBattle = CP_BattleManager::GetInstance();
@@ -248,7 +267,7 @@ void PlayerAttackState::Load(const nlohmann::json& _data)
 		u_int arrayIdx = 0;
 		attackInfos.clear();
 		attackInfos.resize(attackTimeCnt);
-		
+
 		for (auto& atkInfoData : attackDatas)
 		{
 			attackInfos[arrayIdx].Load(atkInfoData);

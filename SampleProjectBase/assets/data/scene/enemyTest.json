@@ -1177,7 +1177,8 @@
                     {
                         "enable": true,
                         "name": "BattleManager",
-                        "priority": 0
+                        "priority": 0,
+                        "radius": 12.100000381469727
                     }
                 ],
                 "layer": 0,

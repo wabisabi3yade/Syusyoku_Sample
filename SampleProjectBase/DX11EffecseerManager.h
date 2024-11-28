@@ -32,12 +32,20 @@ public:
 	/// @brief 再生中のエフェクトを削除
 	void AllEffectDestroy();
 
+	/// @brief エフェクトが存在しているか取得
+	/// @param _vfxHandle 確認するエフェクトのハンドル
+	/// @return 存在しているか？
+	bool ExistEffect(Effekseer::Handle _vfxHandle) const;
+
 	/// @brief エフェクトを再生する
 	/// @param _effect 再生するエフェクト
+	/// @param _pos 座標
+	/// @param _scale スケール
 	/// @return 再生しているハンドル
 	Effekseer::Handle Play(
 		const Effekseer::EffectRef& _effect,
-		const DirectX::SimpleMath::Vector3 _effectPos);
+		const DirectX::SimpleMath::Vector3& _pos,
+		const DirectX::SimpleMath::Vector3& _scale);
 
 	/// @brief マネジャーを取得
 	/// @return エフェクシアマネジャー変数

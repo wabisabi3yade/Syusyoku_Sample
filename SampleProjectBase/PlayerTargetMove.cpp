@@ -46,12 +46,6 @@ void PlayerTargetMove::TransitionCheckUpdate()
 {
 	using enum GameInput::ButtonType;
 
-	// アタックStateに遷移
-	if (GetCanCombAttack())
-	{
-		ChangeState(PlayerState::Attack11);
-	}
-
 	PlayerActState_Base::TransitionCheckUpdate();
 	if (!IsRunning())
 		ChangeState(PlayerState::Idle);

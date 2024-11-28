@@ -44,5 +44,5 @@ void SceneFunction::ObjectFunc::DeleteObject(const std::string& _deleteName)
 	GameObject* go =  sceneObjs.GetSceneObject(_deleteName);
 	if (!go) return;
 
-	go->Destroy();
+	go->SetDestroy();
 }

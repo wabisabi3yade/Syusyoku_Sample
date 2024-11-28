@@ -14,6 +14,8 @@
 // シーンで使用するオブジェクト全般の基底クラス
 class GameObject : public HashiTaku::ISaveLoad, public HashiTaku::IImGuiUser
 {
+	friend class SceneObjects;
+
 	/// @brief このオブジェクトの名前
 	std::string name;	
 
@@ -49,6 +51,9 @@ class GameObject : public HashiTaku::ISaveLoad, public HashiTaku::IImGuiUser
 
 	/// @brief アクティブ状態かどうか
 	bool isActive;
+
+	/// @brief 削除するか？
+	bool isDestroy;
 public:
 	GameObject();
 	GameObject(const GameObject& _other);
@@ -73,8 +78,6 @@ public:
 	/// @brief 衝突終了時の処理
 	void OnCollisionExit(const HashiTaku::CollisionInfo& _otherColInfo);
 
-	/// @brief 自身を削除
-	void Destroy();
 
 	/// @brief 移動座標が変更した時のコールバック
 	void OnChangePosition();
@@ -86,6 +89,9 @@ public:
 	/// @brief コンポーネントをセットするときの処理
 	/// @param _pSetComponent セットするコンポーネント
 	void SetComponent(std::unique_ptr<Component> _pSetComponent);
+
+	/// @brief 削除するようにする
+	void SetDestroy();
 
 	/// @brief コンポーネントをアタッチ
 	template<HashiTaku::ComponentConcept T> T* AddComponent();
@@ -176,6 +182,9 @@ private:
 
 	/// @brief 非アクティブ状態を切り替えた時に起こす処理
 	void OnActiveFalse();
+
+	/// @brief 自身を削除
+	void Destroy();
 
 	/// @brief 所持している配列にコンポーネントが存在するか
 	/// @param _pCheckComponent 確認するコンポーネント

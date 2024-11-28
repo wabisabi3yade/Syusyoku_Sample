@@ -20,6 +20,17 @@ private:
 
 	/// @brief 敵全体リスト
 	EnemyList enemyList;
+
+	/// @brief 移動範囲の中心座標
+	DirectX::SimpleMath::Vector3 moveAreaCenterPos;
+
+	/// @brief 移動範囲の半径
+	float moveAreaRadius{ 0.0f };
+
+#ifdef EDIT
+	bool isDebugDisplay{ false };
+#endif // EDIT
+
 public:
 	/// @brief プレイヤーオブジェクトをセット
 	/// @param _playerObj プレイヤーオブジェクト
@@ -45,7 +56,19 @@ public:
 	/// @return 
 	const EnemyList& GetEnemyList();
 
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
 private:
+	void LateUpdate() override;
+	void Draw() override;
+
+	/// @brief キャラクターの移動制限更新処理
+	void MoveAreaUpdate();
+
+	/// @brief 移動範囲を制限するキャラクターの移動制限を行う
+	/// @param _charaTransform キャラクターのトランスフォーム
+	void PositionClamp(Transform& _charaTransform);
+
 	void ImGuiDebug() override;
 };
 

@@ -176,7 +176,12 @@ void GameObject::LoadComponentParameter(const nlohmann::json& _componentData)
 	SortCompPriority();
 }
 
-GameObject::GameObject() : isActive(true), name(""), deltaTimeSpeed(1.0f), deltaTime(0.0f)
+GameObject::GameObject() : 
+	isActive(true), 
+	name(""), 
+	deltaTimeSpeed(1.0f),
+	deltaTime(0.0f),
+	isDestroy(false)
 {
 	pTransform = std::make_unique<Transform>(this);
 }
@@ -335,6 +340,11 @@ void GameObject::SetComponent(std::unique_ptr<Component> _pSetComponent)
 
 	// èâä˙èàóù
 	comp.Init();
+}
+
+void GameObject::SetDestroy()
+{
+	isDestroy = true;
 }
 
 void GameObject::DeleteComponent(Component& _deleteComonent)

@@ -186,8 +186,8 @@ private:
 	/// @brief 先行入力できるかを表すアニメーションパラメータ
 	static constexpr auto INPUT_PARAMNAME{ "canInput" };
 
-	/// @brief コンビネーション攻撃できるかを表すアニメーションパラメータ
-	static constexpr auto COMBATK_PARAMNAME{ "canCombAttack" };
+	/// @brief 攻撃できるかを表すアニメーションパラメータ
+	static constexpr auto COMBATK_PARAMNAME{ "canAttack" };
 };
 
 template<class T>
