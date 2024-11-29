@@ -190,7 +190,6 @@ void AnimControllPlayer::CrossFadeUpdate()
 	// コントローラーと再生クラスの速度を掛ける
 	float multiPlaySpeed = playSpeed * pAnimController->GetPlaySpeed();
 
-
 	// クロスフェードを進める
 	pCrossFadeInterp->Update(deltaTime * multiPlaySpeed, multiPlaySpeed);
 

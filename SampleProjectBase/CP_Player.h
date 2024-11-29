@@ -2,6 +2,7 @@
 #include "CP_Character.h"
 #include "PlayerActionController.h"
 #include "AttackInformation.h"
+#include "IUISlider.h"
 
 class CP_Weapon;
 class CP_CameraMove;
@@ -14,6 +15,12 @@ class CP_Player : public CP_Character
 	/// @brief カメラオブジェクト名
 	std::string cameraObjName;
 
+	/// @brief HPスライダーオブジェクト名
+	std::string hpBarObjName;
+
+	/// @brief ガードスライダーオブジェクト名
+	std::string guardBarObjName;
+
 	/// @brief アクションコントローラー
 	std::unique_ptr<PlayerActionController> pActionController;
 
@@ -25,6 +32,12 @@ class CP_Player : public CP_Character
 
 	/// @brief カメラ移動
 	CP_CameraMove* pCameraMove;
+
+	/// @brief hpゲージ
+	IUISlider* pHpSlider;
+
+	/// @brief ガードゲージ
+	IUISlider* pGuardSlider;
 
 	/// @brief 攻撃フラグ
 	const bool* pAttackCollisionFlag;
@@ -80,9 +93,9 @@ private:
 	/// @brief 武器の攻撃フラグをセット
 	void SetWeaponAttackFlag();
 
-	/// @brief 更新できるか取得する
-	/// @return 更新できるか？
-	bool GetCanUpdate() const;
+	/// @brief プレイヤーの体力をセット
+	/// @param _damageVal ダメージ値
+	void DecadePlayerHp(float _damageVal);
 
 	/// @brief プレイヤーのダメージ処理
 	void OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo,

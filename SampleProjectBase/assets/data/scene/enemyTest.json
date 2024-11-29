@@ -639,11 +639,11 @@
                                         "attackInfos": [
                                             {
                                                 "damage": 0.0,
-                                                "level": 0
+                                                "level": 3
                                             },
                                             {
                                                 "damage": 0.0,
-                                                "level": 0
+                                                "level": 3
                                             }
                                         ],
                                         "forwardCurve": {
@@ -658,7 +658,7 @@
                                         },
                                         "isMoveFwd": false,
                                         "maxDistance": 10.0,
-                                        "nextCombAttack": 99
+                                        "nextCombAttack": 23
                                     },
                                     "typeString": "SpecialAtkGuard"
                                 }
@@ -666,7 +666,9 @@
                         },
                         "camObjName": "Camera",
                         "enable": true,
-                        "maxHp": 1.0,
+                        "guardBarObjName": "",
+                        "hpBarObjName": "Player_HpBar",
+                        "maxHp": 12.100000381469727,
                         "name": "Player",
                         "priority": 0,
                         "weaponObjName": "Weapon"
@@ -997,16 +999,16 @@
                                     "data": {
                                         "atkInfos": [
                                             {
-                                                "damage": 0.0,
+                                                "damage": 3.5999999046325684,
                                                 "level": 0
                                             },
                                             {
-                                                "damage": 0.0,
+                                                "damage": 5.400000095367432,
                                                 "level": 0
                                             },
                                             {
-                                                "damage": 0.0,
-                                                "level": 3
+                                                "damage": 7.0,
+                                                "level": 0
                                             }
                                         ],
                                         "atkTimeCnt": 3
@@ -1017,7 +1019,7 @@
                                     "data": {
                                         "atkInfos": [
                                             {
-                                                "damage": 0.0,
+                                                "damage": 6.699999809265137,
                                                 "level": 3
                                             }
                                         ],

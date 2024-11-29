@@ -3,6 +3,7 @@
 #include "CP_Player.h"
 
 constexpr auto GUARDEND_ANIM("Guard_End");
+constexpr auto GUARDKNOCK_ANIM("Guard_Knock");
 constexpr auto PARRYTRIGGER_NAME("parryTrigger");
 
 PlayerGuardState::PlayerGuardState() : 
@@ -22,6 +23,9 @@ void PlayerGuardState::OnParry()
 
 	// パリィトリガーをtrue
 	GetAnimation()->SetTrigger(PARRYTRIGGER_NAME);
+
+	// アニメーション
+	GetAnimation()->SetBool(GUARD_PARAMNAME, false);
 
 	// 前入力されていたら
 	if (IsInputVector(InputVector::Forward))
@@ -71,7 +75,7 @@ void PlayerGuardState::OnEndBehavior()
 void PlayerGuardState::OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName)
 {
 	// ガード終了アニメーションが終われば
-	if (_fromAnimNodeName == GUARDEND_ANIM)
+	if (_fromAnimNodeName == GUARDEND_ANIM || _fromAnimNodeName == GUARDKNOCK_ANIM)
 		ChangeState(PlayerState::Idle);
 }
 
@@ -111,4 +115,6 @@ void PlayerGuardState::ImGuiDebug()
 	int imInt = static_cast<int>(sustainParryFrame);
 	ImGui::DragInt("canParry", &imInt, 1, 0, 100);
 	sustainParryFrame = static_cast<u_int>(imInt);
+
+	HASHI_DEBUG_LOG("parry");
 }

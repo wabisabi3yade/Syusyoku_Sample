@@ -649,6 +649,8 @@ void AnimationController::ImGuiNode(const std::vector<std::string>& _nodeNames)
 
 			// グループ名をセットする
 			ImGuiMethod::ComboBox("groupArrow", (*nodeItr)->groupArrowsName, groupNames);
+			ImGui::SameLine();
+			if (ImGui::Button("Clear")) (*nodeItr)->groupArrowsName = "";
 
 			ImGui::TreePop();
 		}

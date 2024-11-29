@@ -9,6 +9,9 @@ class AnimationNotifyEvent : public AnimationNotify_Base
 
 	/// @brief イベント時のフレーム
 	u_int eventFrame;
+
+	/// @brief 1ループに一回のみイベントを起こす
+	bool isEvented;
 public:
 	/// @brief コンストラクタ
 	/// @param _notifyType 通知イベント種類

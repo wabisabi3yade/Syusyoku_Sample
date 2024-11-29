@@ -1,10 +1,11 @@
 #pragma once
 #include "Component.h"
+#include "IUISlider.h"
 
 class CP_UIRenderer;
 
 /// @brief UIのスライダー処理を行うクラス
-class CP_UISlider : public Component
+class CP_UISlider : public Component, public IUISlider
 {
 	/// @brief UI描画
 	CP_UIRenderer* pUiRenderer;
