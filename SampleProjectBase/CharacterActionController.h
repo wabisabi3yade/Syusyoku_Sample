@@ -45,7 +45,8 @@ public:
 	/// @brief ダメージ受けたときのアクション処理
 	/// @param _atkInfo 攻撃情報
 	virtual void OnDamage(const HashiTaku::AttackInformation& _atkInfo,
-		const DirectX::SimpleMath::Vector3& _attackerPos) {};
+		const DirectX::SimpleMath::Vector3& _attackerPos,
+		bool* _pAcceptDamage = nullptr) {};
 
 	/// @brief アニメーション変更オブザーバーを取得
 	/// @return アニメーション変更オブザーバー

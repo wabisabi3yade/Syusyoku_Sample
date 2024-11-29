@@ -10,8 +10,16 @@ using namespace DirectX::SimpleMath;
 
 constexpr auto ATKCOL_ANIMPARAM_NAME("attackCollision");
 
-CP_Player::CP_Player()
-	: pAnimation(nullptr), pWeapon(nullptr), pCameraMove(nullptr), hitStopBeforeAnimSpeed(0.0f), pAttackCollisionFlag(nullptr), curGuardGage(0.0f), maxGuardGage(0.0f)
+CP_Player::CP_Player() :
+	pAnimation(nullptr),
+	pWeapon(nullptr),
+	pCameraMove(nullptr),
+	pHpSlider(nullptr),
+	pGuardSlider(nullptr),
+	pAttackCollisionFlag(nullptr),
+	hitStopBeforeAnimSpeed(0.0f),
+	curGuardGage(0.0f),
+	maxGuardGage(0.0f)
 {
 }
 
@@ -46,7 +54,7 @@ void CP_Player::Start()
 {
 	CP_Character::Start();
 
-	// 武器オブジェクトをセット
+	// 必要オブジェクトをセット
 	SetRequireObject();
 
 	CP_RigidBody* pRb = GetGameObject().GetComponent<CP_RigidBody>();
@@ -95,12 +103,32 @@ void CP_Player::SetRequireObject()
 	// 武器コンポーネントを取得
 	GameObject* pFindObj = sceneObjs.GetSceneObject(weaponObjName);
 	if (pFindObj)
-		pWeapon = pFindObj->GetComponent<CP_Weapon>(); 
+		pWeapon = pFindObj->GetComponent<CP_Weapon>();
 
 	// カメラ移動クラス
 	pFindObj = sceneObjs.GetSceneObject(cameraObjName);
 	if (pFindObj)
 		pCameraMove = pFindObj->GetComponent<CP_CameraMove>();
+
+	// 体力バー
+	pFindObj = sceneObjs.GetSceneObject(hpBarObjName);
+	if (pFindObj)
+	{
+		pHpSlider = pFindObj->GetComponent<IUISlider>();
+		pHpSlider->SetMaxValue(maxHP);
+		pHpSlider->SetCurrentValue(currentHP);
+	}
+		
+
+	// ガードバー
+	pFindObj = sceneObjs.GetSceneObject(guardBarObjName);
+	if (pFindObj)
+	{
+		pGuardSlider = pFindObj->GetComponent<IUISlider>();
+		pGuardSlider->SetMaxValue(maxGuardGage);
+		pGuardSlider->SetCurrentValue(maxGuardGage);
+	}
+		
 }
 
 void CP_Player::OnHitStopBegin()
@@ -165,6 +193,20 @@ void CP_Player::ImGuiFindObj()
 		cameraObjName = input;
 	}
 
+	text = "HpBar:" + hpBarObjName;
+	ImGui::Text(text.c_str());
+	if (ImGui::Button("Set HpBar"))
+	{
+		hpBarObjName = input;
+	}
+
+	text = "GuardBar:" + guardBarObjName;
+	ImGui::Text(text.c_str());
+	if (ImGui::Button("Set GuardBar"))
+	{
+		guardBarObjName = input;
+	}
+
 #endif //  EDIT
 }
 
@@ -180,6 +222,8 @@ nlohmann::json CP_Player::Save()
 
 	data["weaponObjName"] = weaponObjName;
 	data["camObjName"] = cameraObjName;
+	data["hpBarObjName"] = hpBarObjName;
+	data["guardBarObjName"] = guardBarObjName;
 
 	return data;
 }
@@ -194,6 +238,8 @@ void CP_Player::Load(const nlohmann::json& _data)
 
 	HashiTaku::LoadJsonString("weaponObjName", weaponObjName, _data);
 	HashiTaku::LoadJsonString("camObjName", cameraObjName, _data);
+	HashiTaku::LoadJsonString("hpBarObjName", hpBarObjName, _data);
+	HashiTaku::LoadJsonString("guardBarObjName", guardBarObjName, _data);
 }
 
 void CP_Player::SetWeaponAttackFlag()
@@ -206,17 +252,28 @@ void CP_Player::SetWeaponAttackFlag()
 	pWeapon->SetIsAttackCollision(*pAttackCollisionFlag);
 }
 
-bool CP_Player::GetCanUpdate() const
+void CP_Player::DecadePlayerHp(float _damageVal)
 {
-	if (GetIsHitStopping()) return false;
+	// 体力を減らす
+	currentHP -= _damageVal;
 
-	return true;
+	// スライダーにも反映
+	if (pHpSlider)
+		pHpSlider->SetCurrentValue(currentHP);
 }
 
 void CP_Player::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo,
 	const DirectX::SimpleMath::Vector3& _attackerPos)
 {
-	pActionController->OnDamage(_attackInfo, _attackerPos);
+	bool isAcceptDamage = false;	// アクション内でダメージ受けているかチェック
+	pActionController->OnDamage(_attackInfo, _attackerPos, &isAcceptDamage);
+
+	// ダメージ受けていたら
+	if (isAcceptDamage)
+	{
+		// 体力を減らす
+		DecadePlayerHp(_attackInfo.GetDamageValue());
+	}
 }
 
 void CP_Player::OnDeathBehavior()

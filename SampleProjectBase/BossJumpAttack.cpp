@@ -100,7 +100,7 @@ void BossJumpAttack::HorizonMove()
 	Transform& bossTrans = GetBossTransform();
 	const DXSimp::Vector3& playerPos = GetPlayerTransform().GetPosition();
 	float deltaTime = DeltaTime();
-	float animRatio = GetAnimation()->GetCurrentAnimationRatio();
+	float animRatio = GetAnimation()->GetCurrentPlayRatio();
 
 	// ‘¬“xŒW”‚ğæ“¾‚·‚é
 	float curSpeedCofficient = horiSpeedCofficientCurve.GetValue(animRatio);
@@ -156,7 +156,7 @@ void BossJumpAttack::VertivalMove()
 
 	Transform& bossTrans = GetBossTransform();
 	float deltaTime = DeltaTime();
-	float animRatio = GetAnimation()->GetCurrentAnimationRatio();
+	float animRatio = GetAnimation()->GetCurrentPlayRatio();
 
 	// ‚‚³‚ÌˆÚ“®
 	// ‘¬“x‚ğŒvZ

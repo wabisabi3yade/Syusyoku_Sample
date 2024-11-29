@@ -21,7 +21,7 @@ u_int AnimSingleNodePlayer::GetAllFrame() const
 
 void AnimSingleNodePlayer::Update(std::vector<BoneTransform>& _outTransforms)
 {
-	float playingRatio = GetAnimationRatio();
+	float playingRatio = GetCurPlayRatio();
 
 	// çƒê∂ÉLÅ[Ç…îΩâf
 	playingFrame = static_cast<u_int>(playingRatio * GetAllFrame());

@@ -612,6 +612,7 @@
     <ClInclude Include="VS_WorldPosition.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="AnimationParameterType.h" />
+    <ClInclude Include="IUISlider.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SampleProjectBase.rc" />

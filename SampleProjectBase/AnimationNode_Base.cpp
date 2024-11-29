@@ -14,7 +14,7 @@ std::vector<std::string> AnimationNode_Base::edit_nodeTypeStrings =
 AnimationNode_Base::AnimationNode_Base(std::string _nodeName, NodeType _type)
 	: nodeName(_nodeName), nodeType(_type), curPlayingRatio(0.0f), lastPlayingRatio(0.0f), playNodeSpeedTimes(1.0f), animationTime(1.0f), isLoop(true), isFinish(false), isRootMotionPosXZ(false), isRootMotionPosY(false), isRootMotionRot(false)
 {
-	pAnimationCurve = std::make_unique<AnimationCurve>();
+	pCurveSpeed = std::make_unique<AnimationCurve>();
 }
 
 void AnimationNode_Base::ImGuiPlaying()
@@ -106,7 +106,7 @@ float AnimationNode_Base::GetPlaySpeedTimes() const
 
 float AnimationNode_Base::GetCurveValue(float _ratio) const
 {
-	return pAnimationCurve->GetValue(_ratio);
+	return pCurveSpeed->GetValue(_ratio);
 }
 
 nlohmann::json AnimationNode_Base::Save()
@@ -118,7 +118,7 @@ nlohmann::json AnimationNode_Base::Save()
 	nodeData["isRMXZ"] = isRootMotionPosXZ;
 	nodeData["isRMY"] = isRootMotionPosY;
 	nodeData["isRMR"] = isRootMotionRot;
-	nodeData["animationCurve"] = pAnimationCurve->Save();
+	nodeData["animationCurve"] = pCurveSpeed->Save();
 	return nodeData;
 }
 
@@ -133,7 +133,7 @@ void AnimationNode_Base::Load(const nlohmann::json& _data)
 	nlohmann::json loadData;
 	if (LoadJsonData("animationCurve", loadData, _data))
 	{
-		pAnimationCurve->Load(loadData);
+		pCurveSpeed->Load(loadData);
 	}
 }
 
@@ -168,7 +168,7 @@ void AnimationNode_Base::ImGuiSetParameter()
 	float animPlayTime = animationTime / playNodeSpeedTimes;
 	ImGui::Text("Time:%f", animPlayTime);
 	ImGui::DragFloat("Speed", &playNodeSpeedTimes, 0.01f, 0.0f, 100.0f);
-	pAnimationCurve->ImGuiCall();
+	pCurveSpeed->ImGuiCall();
 	ImGui::PopItemWidth();
 
 	ImGui::Text("AnimationTime:%f", animationTime);

@@ -12,11 +12,8 @@ class AnimNodePlayer_Base : public HashiTaku::IImGuiUser
 	/// @brief 現在の再生割合
 	float curPlayRatio;
 
-	/// @brief 1フレーム前のアニメーション割合
-	float lastAnimationRatio;
-
-	/// @brief アニメーション割合(アニメーションカーブを反映させる)
-	float curAnimationRatio;
+	/// @brief 1フレーム前の再生割合
+	float lastPlayRatio;
 
 	/// @brief ノードの再生速度
 	float playerSpeedTimes;
@@ -102,11 +99,7 @@ public:
 
 	/// @brief 1フレーム前の再生割合を取得
 	/// @return 1フレーム前の再生割合
-	float GetLastAnimationRatio() const;
-
-	/// @brief アニメーション割合を取得
-	/// @return アニメーション割合
-	float GetAnimationRatio() const;
+	float GetLastPlayRatio() const;
 
 	/// @brief ノード再生速度を取得
 	/// @return ノード再生速度

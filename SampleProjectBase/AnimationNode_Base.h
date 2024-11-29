@@ -24,7 +24,7 @@ private:
 	std::string nodeName;
 
 	/// @brief アニメーションカーブ
-	std::unique_ptr<AnimationCurve> pAnimationCurve;
+	std::unique_ptr<AnimationCurve> pCurveSpeed;
 
 	/// @brief ノードの種類
 	NodeType nodeType;

@@ -22,7 +22,7 @@ PlayerActionController::PlayerActionController(CP_Player& _player) :
 	pIsCanCancel(nullptr),
 	pTargetObject(nullptr),
 	pTargetCamera(nullptr),
-	pIsCanCombAtk(nullptr),
+	pIsCanAttack(nullptr),
 	pDamageAtkInfo(nullptr),
 	damageElapsedFrame(0),
 	extensionParryFrame(4),
@@ -78,7 +78,7 @@ void PlayerActionController::Init(CP_Animation* _animationController,
 	pIsCanInput = pAnimation->GetParameterPointer<bool>(INPUT_PARAMNAME);
 
 	// コンビネーション攻撃k可能アドレスを取得
-	pIsCanCombAtk = pAnimation->GetParameterPointer<bool>(COMBATK_PARAMNAME);
+	pIsCanAttack = pAnimation->GetParameterPointer<bool>(COMBATK_PARAMNAME);
 }
 
 bool PlayerActionController::GetCanUpdate()
@@ -185,13 +185,19 @@ bool PlayerActionController::ChangeState(const PlayerState& _nextActionState, bo
 }
 
 void PlayerActionController::OnDamage(const HashiTaku::AttackInformation& _atkInfo,
-	const DirectX::SimpleMath::Vector3& _attackerPos)
+	const DirectX::SimpleMath::Vector3& _attackerPos, bool* _pAcceptDamage)
 {
+	if(_pAcceptDamage)
+		*_pAcceptDamage = false;	
+
 	// パリィできたら移行の処理は行わない
 	if (OnDamageParryCheck()) return;
 
 	// ノック状態に移行
 	ChangeKnockState(_atkInfo, _attackerPos);
+
+	if (_pAcceptDamage)
+		*_pAcceptDamage = true;
 }
 
 bool PlayerActionController::GetIsTargeting() const
@@ -216,7 +222,7 @@ bool PlayerActionController::GetCanInput() const
 
 bool PlayerActionController::GetCanCombAtk() const
 {
-	return *pIsCanCombAtk;
+	return *pIsCanAttack;
 }
 
 CP_Player& PlayerActionController::GetPlayer()

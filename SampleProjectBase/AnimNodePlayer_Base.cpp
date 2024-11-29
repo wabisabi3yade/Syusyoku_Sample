@@ -6,9 +6,15 @@
 #include "AnimationNotifyFactory.h"
 
 AnimNodePlayer_Base::AnimNodePlayer_Base(const AnimationNode_Base& _playNode, BoneList& _boneList, Transform& _transform) :
-	pPlayAnimNode(&_playNode), pAssetBoneList(&_boneList), pObjectTransform(&_transform),
-	curPlayRatio(0.0f), lastAnimationRatio(-Mathf::smallValue), curAnimationRatio(0.0f),
-	playerSpeedTimes(1.0f), allPlaySpeed(0.0f), deltaTime(0.0f), isJustLoop(false),
+	pPlayAnimNode(&_playNode),
+	pAssetBoneList(&_boneList),
+	pObjectTransform(&_transform),
+	curPlayRatio(0.0f),
+	lastPlayRatio(-Mathf::smallValue),
+	playerSpeedTimes(1.0f),
+	allPlaySpeed(0.0f),
+	deltaTime(0.0f),
+	isJustLoop(false),
 	isPlaying(true)
 {
 }
@@ -93,11 +99,11 @@ void AnimNodePlayer_Base::SetCurPlayRatio(float _playRatio)
 {
 	curPlayRatio = std::clamp(_playRatio, 0.0f, 1.0f);
 
-	curAnimationRatio = pPlayAnimNode->GetCurveValue(curPlayRatio);
+	// 1フレーム前の割合を求めておく
+	lastPlayRatio = curPlayRatio - Mathf::smallValue;
 
-	// 1フレーム前の再生割合を現在の割合より前に置く
-	lastAnimationRatio = curAnimationRatio;
-	p_RootMotionPos = GetRootMotionPos(lastAnimationRatio);
+	// ルートモーションも求めておく
+	p_RootMotionPos = GetRootMotionPos(lastPlayRatio);
 }
 
 void AnimNodePlayer_Base::SetPlaySpeedTimes(float _playSpeed)
@@ -110,14 +116,9 @@ float AnimNodePlayer_Base::GetCurPlayRatio() const
 	return curPlayRatio;
 }
 
-float AnimNodePlayer_Base::GetLastAnimationRatio() const
+float AnimNodePlayer_Base::GetLastPlayRatio() const
 {
-	return lastAnimationRatio;
-}
-
-float AnimNodePlayer_Base::GetAnimationRatio() const
-{
-	return curAnimationRatio;
+	return lastPlayRatio;
 }
 
 float AnimNodePlayer_Base::GetNodePlaySpeed() const
@@ -127,12 +128,12 @@ float AnimNodePlayer_Base::GetNodePlaySpeed() const
 
 void AnimNodePlayer_Base::GetDeltaRootPos(DirectX::SimpleMath::Vector3& _outPos) const
 {
-	_outPos = GetRootMotionPos(curAnimationRatio) - p_RootMotionPos;
+	_outPos = GetRootMotionPos(curPlayRatio) - p_RootMotionPos;
 }
 
 void AnimNodePlayer_Base::GetCurrentRootPos(DirectX::SimpleMath::Vector3& _outPos, bool _isLoadScaling) const
 {
-	_outPos = GetRootMotionPos(GetAnimationRatio(), _isLoadScaling);
+	_outPos = GetRootMotionPos(curPlayRatio, _isLoadScaling);
 }
 
 const std::string& AnimNodePlayer_Base::GetNodeName() const
@@ -149,12 +150,17 @@ void AnimNodePlayer_Base::ProgressPlayRatio(float _controllerSpeed)
 {
 	isJustLoop = false;
 
+	// カーブ上での速度
+	float animCurveSpeed = pPlayAnimNode->GetCurveValue(curPlayRatio);
+
 	/*
 	コントローラー速度 ×
 	プレイヤーの再生速度　×
+	アニメーションカーブでの速度　×
 	ノードの速度倍率
 	*/
-	allPlaySpeed = _controllerSpeed * playerSpeedTimes * pPlayAnimNode->GetPlaySpeedTimes();
+	allPlaySpeed = _controllerSpeed * playerSpeedTimes * 
+		pPlayAnimNode->GetPlaySpeedTimes() * animCurveSpeed;
 
 	// 0徐算防止
 	float divideVal = _controllerSpeed;
@@ -167,12 +173,6 @@ void AnimNodePlayer_Base::ProgressPlayRatio(float _controllerSpeed)
 
 	if (IsCanLoop())
 		OnPlayLoop();
-
-	// 1フレーム前の再生割合を更新
-	lastAnimationRatio = curAnimationRatio;
-
-	// アニメーション割合を計算
-	curAnimationRatio = pPlayAnimNode->GetCurveValue(curPlayRatio);
 }
 
 void AnimNodePlayer_Base::OnTerminal()
@@ -216,10 +216,8 @@ DirectX::SimpleMath::Vector3 AnimNodePlayer_Base::CalcRootMotionToTransform()
 		p_RootMotionPos = GetRootMotionPos(0.0f);
 	}
 
-	float curPlayRatio = GetAnimationRatio();
-
 	// 移動座標
-	Vector3 curPos = GetRootMotionPos(curAnimationRatio);
+	Vector3 curPos = GetRootMotionPos(curPlayRatio);
 	Vector3 posRootMovemrnt = curPos - p_RootMotionPos;
 
 	// ループ時に前回の再生割合からアニメーション最後までのルートモーションの座標移動
@@ -227,7 +225,7 @@ DirectX::SimpleMath::Vector3 AnimNodePlayer_Base::CalcRootMotionToTransform()
 	if (isJustLoop)
 	{
 		Vector3 endRootMotionPos = GetRootMotionPos(1.0f);
-		loopDeadRMDistabce = endRootMotionPos - GetRootMotionPos(lastAnimationRatio);
+		loopDeadRMDistabce = endRootMotionPos - GetRootMotionPos(lastPlayRatio);
 	}
 
 	// オブジェクトの向きに反映する
@@ -250,7 +248,7 @@ void AnimNodePlayer_Base::NotifyUpdate()
 	// 全て
 	for (auto& pNotify : copyNotifys)
 	{
-		pNotify->Update(lastAnimationRatio, curAnimationRatio, isJustLoop);
+		pNotify->Update(lastPlayRatio, curPlayRatio, isJustLoop);
 	}
 }
 
@@ -266,6 +264,7 @@ void AnimNodePlayer_Base::ImGuiDebug()
 {
 	ImGui::Checkbox("IsPlay", &isPlaying);
 	ImGui::DragFloat("Speed", &playerSpeedTimes, 0.01f, 0.0f, 50.0f);
-	ImGui::Text("AnimRatio:%lf", curAnimationRatio);
+	float curveSpeed = pPlayAnimNode->GetCurveValue(curPlayRatio);
+	ImGui::Text("curveSpeed:%f", curveSpeed);
 	ImGui::SliderFloat("Ratio", &curPlayRatio, 0.0f, 1.0f);
 }

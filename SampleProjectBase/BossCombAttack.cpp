@@ -54,7 +54,7 @@ void BossCombAttack::UpdateReAttack()
 	if(curAttackTime + 1 > attackTimeCnt)	
 	{
 		HASHI_DEBUG_LOG("エラー：総攻撃回数を超えています");
-		return;
+		curAttackTime = attackTimeCnt;
 	}
 
 	// リアタック更新

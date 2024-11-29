@@ -182,7 +182,7 @@ void PlayerAttackState::ForwardProgressMove()
 	if (!pAnimation) return;
 
 	// カーブから進む料を取得
-	float animPlayRatio = pAnimation->GetCurrentAnimationRatio();
+	float animPlayRatio = pAnimation->GetCurrentPlayRatio();
 	float curveVal = progressDistanceCurve.GetValue(animPlayRatio);
 	float curDis = curveVal * curAtkProgressDis;
 	float curSpeed = (curDis - prevProgressDistance) / deltaTime;

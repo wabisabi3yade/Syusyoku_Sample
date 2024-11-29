@@ -71,7 +71,7 @@ bool BossActionController::ChangeState(BossActState_Base::BossState _nextState, 
 }
 
 void BossActionController::OnDamage(const HashiTaku::AttackInformation& _atkInfo,
-	const DirectX::SimpleMath::Vector3& _attackerPos)
+	const DirectX::SimpleMath::Vector3& _attackerPos, bool* _pAcceptDamage)
 {
 	assert(pCurrentNode && "Œ»İ‚Ìƒm[ƒh‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
 

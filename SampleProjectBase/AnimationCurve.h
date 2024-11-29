@@ -23,7 +23,7 @@ class AnimationCurve : public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
 		float vector{ 0.5f };
 
 		/// @brief 次までの補間方法
-		InterpKind toNextInterp { InterpKind::Hermite };
+		InterpKind toNextInterp { InterpKind::Linear };
 
 		bool operator==(const HermitePlotParam& _other)
 		{
@@ -62,14 +62,6 @@ public:
 	AnimationCurve();
 	~AnimationCurve() {}
 
-	///// @brief 最大値をセット
-	///// @param _maxValue 最大値
-	//void SetMaxValue(float _maxValue);
-
-	///// @brief 最大値をセット
-	///// @param _minValue 最小値
-	//void SetMinValue(float _minValue);
-
 	// カーブ名をセット
 	void SetCurveName(const std::string& _name);
 
@@ -101,6 +93,10 @@ private:
 	/// @param _p1 後
 	/// @return 入れ替えるか？
 	static bool SortPointTime(const HermitePlotParam& _p0, const HermitePlotParam& _p1);
+	
+	/// @brief 各軸の最小値と最大値を取得する
+	/// @return 各軸の最大値と最小値
+	ImPlotRect GetPlotRect();
 
 	/// @brief プロット点を追加
 	/// @param _time 時間
@@ -115,7 +111,15 @@ private:
 	/// @param _clickX クリックしたX座標
 	/// @param clickY Y座標
 	/// @return 反応する
-	bool CheckReactPlot(const HermitePlotParam& _plot, float _clickX, float clickY);
+	bool CheckReactPlot(const HermitePlotParam& _plot);
+
+	/// @brief クリックしたところが反応するかチェック
+	/// @param _posXプロットX座標
+	/// @param _posY プロットY座標
+	/// @param _clickX クリックしたX座標
+	/// @param clickY Y座標
+	/// @return 反応する
+	bool CheckReactPlot(float _posX, float _posY);
 
 	/// @brief イージング種類をセット
 	/// @param _easeKind 種類

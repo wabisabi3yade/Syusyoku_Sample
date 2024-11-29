@@ -190,7 +190,6 @@ void AnimControllPlayer::CrossFadeUpdate()
 	// コントローラーと再生クラスの速度を掛ける
 	float multiPlaySpeed = playSpeed * pAnimController->GetPlaySpeed();
 
-
 	// クロスフェードを進める
 	pCrossFadeInterp->Update(deltaTime * multiPlaySpeed, multiPlaySpeed);
 
@@ -219,8 +218,8 @@ void AnimControllPlayer::TransitionCheck()
 {
 	// 遷移条件を満たした矢印があるか確認
 	const AnimTransitionArrow* pTransArrow = pTransChecker->TransitonCheck(
-		pCurNodePlayer->GetAnimationRatio(),
-		pCurNodePlayer->GetLastAnimationRatio()
+		pCurNodePlayer->GetCurPlayRatio(),
+		pCurNodePlayer->GetLastPlayRatio()
 	);
 	if (!pTransArrow) return;
 

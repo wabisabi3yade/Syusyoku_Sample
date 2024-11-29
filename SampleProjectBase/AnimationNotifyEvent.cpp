@@ -61,7 +61,7 @@ void AnimationNotifyEvent::ImGuiDebug()
 	}
 }
 
-AnimationNotifyEvent::AnimationNotifyEvent(NotifyType _notifyType) : AnimationNotify_Base(_notifyType), eventRatio(0.0f), eventFrame(0)
+AnimationNotifyEvent::AnimationNotifyEvent(NotifyType _notifyType) : AnimationNotify_Base(_notifyType), eventRatio(0.0f), eventFrame(0), isEvented(false)
 {
 }
 
@@ -71,6 +71,8 @@ void AnimationNotifyEvent::Update(const float _lastPlayingRatio, const float _cu
 
 	if (_isLoop)
 	{
+		isEvented = false;
+
 		if (eventRatio > _lastPlayingRatio || eventRatio < _curPlayingRatio)
 			OnEvent();
 	}
@@ -79,7 +81,9 @@ void AnimationNotifyEvent::Update(const float _lastPlayingRatio, const float _cu
 		// ‘O‰ñ‚ÆŒ»Ý‚ÌŠ„‡”ÍˆÍ‚É“ü‚Á‚Ä‚¢‚é‚È‚çˆ—
 		if (eventRatio < _lastPlayingRatio) return;
 		if (eventRatio > _curPlayingRatio) return;
+		if (isEvented) return;
 
+		isEvented = true;
 		OnEvent();
 	}
 }

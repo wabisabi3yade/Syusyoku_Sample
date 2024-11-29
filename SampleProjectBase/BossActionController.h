@@ -56,7 +56,8 @@ public:
 
 	/// @brief ダメージ時処理
 	void OnDamage(const HashiTaku::AttackInformation& _atkInfo,
-		const DirectX::SimpleMath::Vector3& _attackerPos) override;
+		const DirectX::SimpleMath::Vector3& _attackerPos,
+		bool* _pAcceptDamage = nullptr) override;
 
 	/// @brief デバッグ描画
 	void DebugDisplay() override;

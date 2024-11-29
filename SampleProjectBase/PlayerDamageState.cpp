@@ -71,7 +71,7 @@ void PlayerDamageState::KnockMove()
 {
 	if (!isKnockMoving) return;	// ノック移動中じゃないなら
 
-	float animRatio = GetAnimation()->GetCurrentAnimationRatio();
+	float animRatio = GetAnimation()->GetCurrentPlayRatio();
 
 	// 前回の割合より前に来たなら
 	if (prevAnimRatio > animRatio)

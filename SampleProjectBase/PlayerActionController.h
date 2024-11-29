@@ -39,8 +39,8 @@ private:
 	/// @brief 入力可能フラグのポインタ
 	const bool* pIsCanInput;
 
-	/// @brief コンビネーション攻撃可能のポインタ
-	const bool* pIsCanCombAtk;
+	/// @brief 攻撃可能のポインタ
+	const bool* pIsCanAttack;
 
 	/// @brief ダメージ受けてからのフレーム数(パリィ)
 	int damageElapsedFrame;
@@ -79,8 +79,10 @@ public:
 	/// @brief ダメージ受けたときのアクション処理
 	/// @param _atkInfo 攻撃情報
 	/// @param _attackerPos 攻撃委敵の座標
+	/// @param _pAcceptDamage ダメージ受けたか？
 	void OnDamage(const HashiTaku::AttackInformation& _atkInfo,
-		const DirectX::SimpleMath::Vector3& _attackerPos) override;
+		const DirectX::SimpleMath::Vector3& _attackerPos,
+		bool* _pAcceptDamage = nullptr) override;
 
 	/// @brief ターゲット中か取得する
 	/// @return ターゲット中か？
