@@ -450,7 +450,8 @@ void AnimationController::LoadNotify(const nlohmann::json& _nodeInfoData)
 
 		// çÏê¨
 		std::unique_ptr<AnimationNotify_Base> pLoadNotify = pNotifyFactory->Create(loadType);
-		pLoadNotify->SetAnimationFrameCnt(pNodeInfo->pAnimNode->GetAllKeyFrame());
+		if(pNodeInfo->pAnimNode)
+			pLoadNotify->SetAnimationFrameCnt(pNodeInfo->pAnimNode->GetAllKeyFrame());
 		pLoadNotify->Load(notifyParamData);
 
 

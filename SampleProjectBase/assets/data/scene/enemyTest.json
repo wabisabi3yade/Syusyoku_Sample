@@ -726,47 +726,6 @@
             }
         },
         {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "X_Left": "sky_Day_l.png",
-                        "X_Right": "sky_Day_r.png",
-                        "Y_Bottom": "sky_Day_d.png",
-                        "Y_Top": "sky_Day_u.png",
-                        "Z_Back": "sky_Day_b.png",
-                        "Z_Front": "sky_Day_f.png",
-                        "enable": true,
-                        "name": "SkyBox",
-                        "priority": 0
-                    }
-                ],
-                "layer": 0,
-                "name": "SkyBox",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            }
-        },
-        {
             "childs": [
                 {
                     "childs": [
@@ -1290,6 +1249,47 @@
                         100.0,
                         1.0,
                         100.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "X_Left": "Sunset_left.png",
+                        "X_Right": "Sunset_right.png",
+                        "Y_Bottom": "Sunset_down.png",
+                        "Y_Top": "Sunset_up.png",
+                        "Z_Back": "Sunset_back.png",
+                        "Z_Front": "Sunset_front.png",
+                        "enable": true,
+                        "name": "SkyBox",
+                        "priority": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "SkyBox",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
                     ]
                 }
             }

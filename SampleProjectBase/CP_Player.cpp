@@ -120,14 +120,13 @@ void CP_Player::SetRequireObject()
 		pHpSlider->SetCurrentValue(currentHP);
 	}
 
-
 	// ガードバー
 	pFindObj = sceneObjs.GetSceneObject(guardBarObjName);
 	if (pFindObj)
 	{
 		pGuardSlider = pFindObj->GetComponent<IUISlider>();
 		pGuardSlider->SetMaxValue(maxGuardGage);
-		pGuardSlider->SetCurrentValue(maxGuardGage);
+		pGuardSlider->SetCurrentValue(curGuardGage);
 	}
 
 }

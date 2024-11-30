@@ -8,14 +8,14 @@
                     "value": 0
                 },
                 {
-                    "name": "speed",
-                    "type": 2,
-                    "value": 0.0
-                },
-                {
                     "name": "targeting",
                     "type": 0,
                     "value": false
+                },
+                {
+                    "name": "speed",
+                    "type": 2,
+                    "value": 0.0
                 },
                 {
                     "name": "canCancel",
@@ -32,14 +32,14 @@
                     "value": 0.0
                 },
                 {
-                    "name": "axisY",
-                    "type": 2,
-                    "value": 0.0
-                },
-                {
                     "name": "attackCollision",
                     "type": 0,
                     "value": false
+                },
+                {
+                    "name": "axisY",
+                    "type": 2,
+                    "value": 0.0
                 },
                 {
                     "name": "rollingTrigger",
@@ -3010,14 +3010,14 @@
                     "value": 0
                 },
                 {
-                    "name": "targeting",
-                    "type": 0,
-                    "value": false
-                },
-                {
                     "name": "speed",
                     "type": 2,
                     "value": 0.0
+                },
+                {
+                    "name": "targeting",
+                    "type": 0,
+                    "value": false
                 },
                 {
                     "name": "canCancel",
@@ -3034,14 +3034,14 @@
                     "value": 0.0
                 },
                 {
-                    "name": "attackCollision",
-                    "type": 0,
-                    "value": false
-                },
-                {
                     "name": "axisY",
                     "type": 2,
                     "value": 0.0
+                },
+                {
+                    "name": "attackCollision",
+                    "type": 0,
+                    "value": false
                 },
                 {
                     "name": "rollingTrigger",
@@ -4299,52 +4299,28 @@
                     "value": 0
                 },
                 {
+                    "name": "damageTrigger",
+                    "type": 3
+                },
+                {
                     "name": "isReAttack",
                     "type": 0,
                     "value": false
                 },
                 {
-                    "name": "damageTrigger",
-                    "type": 3
+                    "name": "attackCollision",
+                    "type": 0,
+                    "value": false
                 },
                 {
                     "name": "canKnock",
                     "type": 0,
                     "value": true
-                },
-                {
-                    "name": "attackCollision",
-                    "type": 0,
-                    "value": false
                 }
             ],
             "assetName": "ANC_Boss",
             "defaultNode": "Idle",
             "groupArrows": [
-                {
-                    "arrows": [
-                        {
-                            "param": {
-                                "conditionList": [
-                                    {
-                                        "condition": null,
-                                        "paramName": "damageTrigger",
-                                        "typeKind": 3
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
-                                "priority": 0,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.0
-                            },
-                            "toNode": "KnockSmall"
-                        }
-                    ],
-                    "name": "Attack"
-                },
                 {
                     "arrows": [
                         {
@@ -4395,6 +4371,30 @@
                         }
                     ],
                     "name": "MoveToAttack"
+                },
+                {
+                    "arrows": [
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toNode": "KnockSmall"
+                        }
+                    ],
+                    "name": "Attack"
                 }
             ],
             "nodeInfoData": [
@@ -5224,21 +5224,15 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_SlashAttack1.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_SlashAttack1.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "boss_Death.fbx",
             "boneListName": "Uriel A Plotexia.fbx",
             "pathName": "assets/animation/boss/boss_Death.fbx",
             "rightHand": true
         },
         {
-            "assetName": "knight_RollAttack.fbx",
+            "assetName": "knight_SlashAttack1.fbx",
             "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_RollAttack.fbx",
+            "pathName": "assets/animation/player/knight_SlashAttack1.fbx",
             "rightHand": true
         },
         {
@@ -5248,21 +5242,27 @@
             "rightHand": true
         },
         {
+            "assetName": "knight_RollAttack.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_RollAttack.fbx",
+            "rightHand": true
+        },
+        {
             "assetName": "knight_SlashStamp.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_SlashStamp.fbx",
             "rightHand": true
         },
         {
-            "assetName": "knight_RollingMove.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_RollingMove.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_SlashUp.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_SlashUp.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_RollingMove.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_RollingMove.fbx",
             "rightHand": true
         },
         {
@@ -5284,9 +5284,9 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_TitleSitting.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_TitleSitting.fbx",
+            "assetName": "boss_GuardEnd.fbx",
+            "boneListName": "Uriel A Plotexia.fbx",
+            "pathName": "assets/animation/boss/boss_GuardEnd.fbx",
             "rightHand": true
         },
         {
@@ -5296,9 +5296,9 @@
             "rightHand": true
         },
         {
-            "assetName": "boss_GuardEnd.fbx",
-            "boneListName": "Uriel A Plotexia.fbx",
-            "pathName": "assets/animation/boss/boss_GuardEnd.fbx",
+            "assetName": "knight_TitleSitting.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_TitleSitting.fbx",
             "rightHand": true
         },
         {
@@ -5314,21 +5314,27 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_Guard_Idle.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_Guard_Idle.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "boss_Walk_F.fbx",
             "boneListName": "Uriel A Plotexia.fbx",
             "pathName": "assets/animation/boss/boss_Walk_F.fbx",
             "rightHand": true
         },
         {
+            "assetName": "knight_Guard_Idle.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_Guard_Idle.fbx",
+            "rightHand": true
+        },
+        {
             "assetName": "knight_Knock_S.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_Knock_S.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "boss_RollingRush.fbx",
+            "boneListName": "Uriel A Plotexia.fbx",
+            "pathName": "assets/animation/boss/boss_RollingRush.fbx",
             "rightHand": true
         },
         {
@@ -5344,15 +5350,15 @@
             "rightHand": true
         },
         {
-            "assetName": "boss_CombAttack1.fbx",
-            "boneListName": "Uriel A Plotexia.fbx",
-            "pathName": "assets/animation/boss/boss_CombAttack1.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_RollSlash.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_RollSlash.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "boss_CombAttack1.fbx",
+            "boneListName": "Uriel A Plotexia.fbx",
+            "pathName": "assets/animation/boss/boss_CombAttack1.fbx",
             "rightHand": true
         },
         {
@@ -5374,15 +5380,15 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_TitleStandUp.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_TitleStandUp.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_GuardKnock.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_GuardKnock.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_TitleStandUp.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_TitleStandUp.fbx",
             "rightHand": true
         },
         {
@@ -5395,6 +5401,30 @@
             "assetName": "knight_RollingAttack2.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_RollingAttack2.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "boss_SlidingSlash.fbx",
+            "boneListName": "Uriel A Plotexia.fbx",
+            "pathName": "assets/animation/boss/boss_SlidingSlash.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "boss_Kick1.fbx",
+            "boneListName": "Uriel A Plotexia.fbx",
+            "pathName": "assets/animation/boss/boss_Kick1.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "boss_CombAttack3.fbx",
+            "boneListName": "Uriel A Plotexia.fbx",
+            "pathName": "assets/animation/boss/boss_CombAttack3.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "boss_CombAttack2.fbx",
+            "boneListName": "Uriel A Plotexia.fbx",
+            "pathName": "assets/animation/boss/boss_CombAttack2.fbx",
             "rightHand": true
         }
     ],
@@ -5503,17 +5533,6 @@
             "rightHand": true
         },
         {
-            "assetName": "shield1.fbx",
-            "flipY": true,
-            "getSize": false,
-            "loadScale": 1.0,
-            "matDiffuse": [
-                "shield1.png"
-            ],
-            "pathName": "assets/model/shield/shield1.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "Sword15_FBX.fbx",
             "flipY": true,
             "getSize": false,
@@ -5525,14 +5544,14 @@
             "rightHand": true
         },
         {
-            "assetName": "Knight_Sword.fbx",
+            "assetName": "shield1.fbx",
             "flipY": true,
             "getSize": false,
-            "loadScale": 0.009999999776482582,
+            "loadScale": 1.0,
             "matDiffuse": [
-                "FarbPalette256x256.png"
+                "shield1.png"
             ],
-            "pathName": "assets/model/sword/Knight_Sword.fbx",
+            "pathName": "assets/model/shield/shield1.fbx",
             "rightHand": true
         },
         {
@@ -5544,6 +5563,17 @@
                 "solkaya_DefaultMaterial_BaseColor.png"
             ],
             "pathName": "assets/model/rock/2/rock2.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "Knight_Sword.fbx",
+            "flipY": true,
+            "getSize": false,
+            "loadScale": 0.009999999776482582,
+            "matDiffuse": [
+                "FarbPalette256x256.png"
+            ],
+            "pathName": "assets/model/sword/Knight_Sword.fbx",
             "rightHand": true
         },
         {
@@ -5590,16 +5620,16 @@
             "pathName": "assets/texture/skyBox/sky_Day_u.png"
         },
         {
-            "assetName": "ground.png",
-            "pathName": "assets/texture/ground.png"
+            "assetName": "sky_Day_r.png",
+            "pathName": "assets/texture/skyBox/sky_Day_r.png"
         },
         {
             "assetName": "sky_Day_b.png",
             "pathName": "assets/texture/skyBox/sky_Day_b.png"
         },
         {
-            "assetName": "sky_Day_r.png",
-            "pathName": "assets/texture/skyBox/sky_Day_r.png"
+            "assetName": "ground.png",
+            "pathName": "assets/texture/ground.png"
         },
         {
             "assetName": "Sunset_down.png",
@@ -5626,12 +5656,12 @@
             "pathName": "assets/texture/UI/UI_target_red.png"
         },
         {
-            "assetName": "UI_hpLine_green.png",
-            "pathName": "assets/texture/UI/UI_hpLine_green.png"
-        },
-        {
             "assetName": "Sunset_right.png",
             "pathName": "assets/texture/sunset/Sunset_right.png"
+        },
+        {
+            "assetName": "UI_hpLine_green.png",
+            "pathName": "assets/texture/UI/UI_hpLine_green.png"
         },
         {
             "assetName": "UI_hpLine_red.png",
@@ -5666,11 +5696,11 @@
             "pathName": ""
         },
         {
-            "assetName": "solkaya_DefaultMaterial_BaseColor.png",
+            "assetName": "FarbPalette256x256.png",
             "pathName": ""
         },
         {
-            "assetName": "FarbPalette256x256.png",
+            "assetName": "solkaya_DefaultMaterial_BaseColor.png",
             "pathName": ""
         },
         {

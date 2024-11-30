@@ -44,7 +44,7 @@ bool HashiTaku::LoadJsonDataArray(const std::string& _s, nlohmann::json& _d, con
 #ifdef EDIT
 	if (!IsJsonContains(_j, _s)) return false;
 
-	if (!_j[_s].is_array())
+	if (!_j[_s].is_array() && !_j[_s].is_object())
 	{
 		HASHI_DEBUG_LOG(_s + "‚Íjson”z—ñ‚Å‚Í‚ ‚è‚Ü‚¹‚ñ");
 		/*return false;*/
