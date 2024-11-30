@@ -156,7 +156,9 @@ void CharacterActionController::ImGuiDebug()
 #ifdef EDIT
 	ImGui::Checkbox("DebugDisplay", &isDebugDisplay);
 
-	ImGui::Text(GetStateStr(prevStateKey).c_str());
+	int prevState;
+	DebugGetPrevState(prevState);
+	ImGui::Text(GetStateStr(prevState).c_str());
 	ImGui::Text(GetStateStr(currentStateKey).c_str());
 
 	// 各アクションの調整

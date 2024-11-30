@@ -17,15 +17,16 @@ class CP_UIRenderer : public CP_Renderer
 	/// @brief シェーダーが既にセットされているか？
 	static bool isSetShader;
 
-	/// @brief テクスチャを貼るポリゴン
-	std::unique_ptr<Polygon2D> pPolygon;
-
 	/// @brief 表示するテクスチャ
 	const Texture* pTexture;
 
+protected:
+	/// @brief テクスチャを貼るポリゴン
+	std::unique_ptr<Polygon2D> pPolygon;
+
 public:
 	CP_UIRenderer();
-	~CP_UIRenderer(){}
+	virtual ~CP_UIRenderer(){}
 
 	void Init() override;
 	void OnChangeScale();
@@ -49,16 +50,16 @@ public:
 	/// @param _data ロードするシーンデータ 
 	void Load(const nlohmann::json& _data) override;
 
+protected:
+	/// @brief サイズなど変更するためにポリゴン再生成(トランスフォームから自動で)
+	virtual void ReCreatePolygon();
+
+	void ImGuiDebug() override;
 private:
 	/// @brief 描画
 	void Draw() override;
 
 	/// @brief 描画準備
 	void DrawSetup();
-
-	/// @brief サイズなど変更するためにポリゴン再生成
-	void ReCreatePolygon();
-
-	void ImGuiDebug() override;
 };
 

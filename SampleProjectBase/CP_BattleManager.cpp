@@ -41,6 +41,25 @@ const CP_BattleManager::EnemyList& CP_BattleManager::GetEnemyList()
 	return enemyList;
 }
 
+void CP_BattleManager::OnPlayerWin()
+{
+	// ほぼ同タイミングで起きた場合に重複しないようにする
+	if (curBattleState == BattleState::Lose) return;
+
+	curBattleState = BattleState::Win;
+
+	HASHI_DEBUG_LOG("プレイヤー勝ち");
+}
+
+void CP_BattleManager::OnPlayerLose()
+{
+	// ほぼ同タイミングで起きた場合に重複しないようにする
+	if (curBattleState == BattleState::Win) return;
+
+	curBattleState = BattleState::Lose;
+	HASHI_DEBUG_LOG("プレイヤー負け");
+}
+
 nlohmann::json CP_BattleManager::Save()
 {
 	auto data = SingletonComponent::Save();

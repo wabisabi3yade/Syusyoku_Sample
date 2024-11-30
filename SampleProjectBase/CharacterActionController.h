@@ -26,9 +26,6 @@ protected:
 	/// @brief プレイヤーのリジッドボディ
 	CP_RigidBody* pRigidBody;
 #ifdef EDIT
-	// 前回の状態キー
-	int prevStateKey{ 0 };
-
 	// アクション周りでデバッグ描画するか？
 	bool isDebugDisplay{ false };
 #endif // EDIT

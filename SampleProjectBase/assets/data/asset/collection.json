@@ -8,14 +8,14 @@
                     "value": 0
                 },
                 {
-                    "name": "targeting",
-                    "type": 0,
-                    "value": false
-                },
-                {
                     "name": "speed",
                     "type": 2,
                     "value": 0.0
+                },
+                {
+                    "name": "targeting",
+                    "type": 0,
+                    "value": false
                 },
                 {
                     "name": "canCancel",
@@ -32,14 +32,14 @@
                     "value": 0.0
                 },
                 {
-                    "name": "attackCollision",
-                    "type": 0,
-                    "value": false
-                },
-                {
                     "name": "axisY",
                     "type": 2,
                     "value": 0.0
+                },
+                {
+                    "name": "attackCollision",
+                    "type": 0,
+                    "value": false
                 },
                 {
                     "name": "rollingTrigger",
@@ -199,6 +199,57 @@
                                 "transTime": 0.20000000298023224
                             },
                             "toNode": "RushAttack"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "fCompare": 0.0,
+                                            "fJudgeType": 0
+                                        },
+                                        "paramName": "speed",
+                                        "typeKind": 2
+                                    },
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "targeting",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 2,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toNode": "TargetMove"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "fCompare": 0.0,
+                                            "fJudgeType": 0
+                                        },
+                                        "paramName": "speed",
+                                        "typeKind": 2
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toNode": "Move"
                         }
                     ],
                     "name": "Attack"
@@ -484,9 +535,264 @@
                                 "transTime": 0.10000000149011612
                             },
                             "toNode": "Attack1"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "targeting",
+                                        "typeKind": 0
+                                    },
+                                    {
+                                        "condition": {
+                                            "fCompare": 0.0,
+                                            "fJudgeType": 0
+                                        },
+                                        "paramName": "speed",
+                                        "typeKind": 2
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 2,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toNode": "TargetMove"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "fCompare": 0.0,
+                                            "fJudgeType": 0
+                                        },
+                                        "paramName": "speed",
+                                        "typeKind": 2
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toNode": "Move"
                         }
                     ],
                     "name": "Guard"
+                },
+                {
+                    "arrows": [
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 5,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 40,
+                                "targetRatio": 0.10000000149011612,
+                                "transEase": 0.10000000149011612,
+                                "transTime": 0.0
+                            },
+                            "toNode": "Knock_S"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 6,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 40,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toNode": "Knock_L"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "rollingTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 30,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toNode": "RollingMove"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "isGuard",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 28,
+                                "targetRatio": 0.10999999940395355,
+                                "transEase": 0.10999999940395355,
+                                "transTime": 0.05000000074505806
+                            },
+                            "toNode": "Guard_Start"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 30,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 12,
+                                "targetRatio": 0.20000000298023224,
+                                "transEase": 0.20000000298023224,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toNode": "RushAttack"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    },
+                                    {
+                                        "condition": {
+                                            "iCompare": 20,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 10,
+                                "targetRatio": 0.17800000309944153,
+                                "transEase": 0.17800000309944153,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toNode": "Attack1"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "targeting",
+                                        "typeKind": 0
+                                    },
+                                    {
+                                        "condition": {
+                                            "fCompare": 0.0,
+                                            "fJudgeType": 0
+                                        },
+                                        "paramName": "speed",
+                                        "typeKind": 2
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 2,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toNode": "TargetMove"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "fCompare": 0.0,
+                                            "fJudgeType": 0
+                                        },
+                                        "paramName": "speed",
+                                        "typeKind": 2
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toNode": "Move"
+                        }
+                    ],
+                    "name": "Action"
                 }
             ],
             "nodeInfoData": [
@@ -643,37 +949,15 @@
                                 "exitRatio": 1.0,
                                 "interpolate": 0,
                                 "isHaveExit": false,
-                                "priority": 1,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.05000000074505806
-                            },
-                            "toName": "TargetIdle"
-                        },
-                        {
-                            "arrowParam": {
-                                "conditionList": [
-                                    {
-                                        "condition": {
-                                            "fCompare": 0.0,
-                                            "fJudgeType": 0
-                                        },
-                                        "paramName": "speed",
-                                        "typeKind": 2
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
                                 "priority": 0,
                                 "targetRatio": 0.0,
                                 "transEase": 0.0,
-                                "transTime": 0.12999999523162842
+                                "transTime": 0.10000000149011612
                             },
-                            "toName": "Move"
+                            "toName": "TargetIdle"
                         }
                     ],
-                    "groupArrowName": "Move",
+                    "groupArrowName": "Action",
                     "nodeName": "Idle",
                     "nodeType": 0,
                     "notifyList": null
@@ -1212,6 +1496,33 @@
                     "arrowDataList": [
                         {
                             "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    },
+                                    {
+                                        "condition": {
+                                            "iCompare": 20,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 10,
+                                "targetRatio": 0.17800000309944153,
+                                "transEase": 0.17800000309944153,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Attack1"
+                        },
+                        {
+                            "arrowParam": {
                                 "conditionList": null,
                                 "exitRatio": 0.9599999785423279,
                                 "interpolate": 0,
@@ -1293,6 +1604,29 @@
                                     true
                                 ],
                                 "startFrame": 47,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 73,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "notifyName": "ANS_CanAttack",
+                                "parameterName": "canAttack",
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    false
+                                ],
+                                "startFrame": 60,
                                 "useFrame": true
                             },
                             "notifyType": 3
@@ -1402,7 +1736,7 @@
                             "toName": "Idle"
                         }
                     ],
-                    "groupArrowName": "Move",
+                    "groupArrowName": "Action",
                     "nodeName": "RollingMove",
                     "nodeType": 0,
                     "notifyList": [
@@ -1947,7 +2281,7 @@
                             "toName": "Guard_Idle"
                         }
                     ],
-                    "groupArrowName": "",
+                    "groupArrowName": "Guard",
                     "nodeName": "Guard_Start",
                     "nodeType": 0,
                     "notifyList": [
@@ -2676,14 +3010,14 @@
                     "value": 0
                 },
                 {
-                    "name": "speed",
-                    "type": 2,
-                    "value": 0.0
-                },
-                {
                     "name": "targeting",
                     "type": 0,
                     "value": false
+                },
+                {
+                    "name": "speed",
+                    "type": 2,
+                    "value": 0.0
                 },
                 {
                     "name": "canCancel",
@@ -2700,14 +3034,14 @@
                     "value": 0.0
                 },
                 {
-                    "name": "axisY",
-                    "type": 2,
-                    "value": 0.0
-                },
-                {
                     "name": "attackCollision",
                     "type": 0,
                     "value": false
+                },
+                {
+                    "name": "axisY",
+                    "type": 2,
+                    "value": 0.0
                 },
                 {
                     "name": "rollingTrigger",
@@ -3965,28 +4299,52 @@
                     "value": 0
                 },
                 {
-                    "name": "damageTrigger",
-                    "type": 3
-                },
-                {
                     "name": "isReAttack",
                     "type": 0,
                     "value": false
                 },
                 {
-                    "name": "attackCollision",
-                    "type": 0,
-                    "value": false
+                    "name": "damageTrigger",
+                    "type": 3
                 },
                 {
                     "name": "canKnock",
                     "type": 0,
                     "value": true
+                },
+                {
+                    "name": "attackCollision",
+                    "type": 0,
+                    "value": false
                 }
             ],
             "assetName": "ANC_Boss",
             "defaultNode": "Idle",
             "groupArrows": [
+                {
+                    "arrows": [
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toNode": "KnockSmall"
+                        }
+                    ],
+                    "name": "Attack"
+                },
                 {
                     "arrows": [
                         {
@@ -4037,30 +4395,6 @@
                         }
                     ],
                     "name": "MoveToAttack"
-                },
-                {
-                    "arrows": [
-                        {
-                            "param": {
-                                "conditionList": [
-                                    {
-                                        "condition": null,
-                                        "paramName": "damageTrigger",
-                                        "typeKind": 3
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
-                                "priority": 0,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.0
-                            },
-                            "toNode": "KnockSmall"
-                        }
-                    ],
-                    "name": "Attack"
                 }
             ],
             "nodeInfoData": [
@@ -4890,21 +5224,15 @@
             "rightHand": true
         },
         {
-            "assetName": "boss_Death.fbx",
-            "boneListName": "Uriel A Plotexia.fbx",
-            "pathName": "assets/animation/boss/boss_Death.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_SlashAttack1.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_SlashAttack1.fbx",
             "rightHand": true
         },
         {
-            "assetName": "boss_JumpSlash.fbx",
+            "assetName": "boss_Death.fbx",
             "boneListName": "Uriel A Plotexia.fbx",
-            "pathName": "assets/animation/boss/boss_JumpSlash.fbx",
+            "pathName": "assets/animation/boss/boss_Death.fbx",
             "rightHand": true
         },
         {
@@ -4914,21 +5242,27 @@
             "rightHand": true
         },
         {
+            "assetName": "boss_JumpSlash.fbx",
+            "boneListName": "Uriel A Plotexia.fbx",
+            "pathName": "assets/animation/boss/boss_JumpSlash.fbx",
+            "rightHand": true
+        },
+        {
             "assetName": "knight_SlashStamp.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_SlashStamp.fbx",
             "rightHand": true
         },
         {
-            "assetName": "knight_SlashUp.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_SlashUp.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_RollingMove.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_RollingMove.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_SlashUp.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_SlashUp.fbx",
             "rightHand": true
         },
         {
@@ -4950,9 +5284,9 @@
             "rightHand": true
         },
         {
-            "assetName": "boss_GuardEnd.fbx",
-            "boneListName": "Uriel A Plotexia.fbx",
-            "pathName": "assets/animation/boss/boss_GuardEnd.fbx",
+            "assetName": "knight_TitleSitting.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_TitleSitting.fbx",
             "rightHand": true
         },
         {
@@ -4962,9 +5296,9 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_TitleSitting.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_TitleSitting.fbx",
+            "assetName": "boss_GuardEnd.fbx",
+            "boneListName": "Uriel A Plotexia.fbx",
+            "pathName": "assets/animation/boss/boss_GuardEnd.fbx",
             "rightHand": true
         },
         {
@@ -4980,15 +5314,15 @@
             "rightHand": true
         },
         {
-            "assetName": "boss_Walk_F.fbx",
-            "boneListName": "Uriel A Plotexia.fbx",
-            "pathName": "assets/animation/boss/boss_Walk_F.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_Guard_Idle.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_Guard_Idle.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "boss_Walk_F.fbx",
+            "boneListName": "Uriel A Plotexia.fbx",
+            "pathName": "assets/animation/boss/boss_Walk_F.fbx",
             "rightHand": true
         },
         {
@@ -5010,15 +5344,15 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_RollSlash.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_RollSlash.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "boss_CombAttack1.fbx",
             "boneListName": "Uriel A Plotexia.fbx",
             "pathName": "assets/animation/boss/boss_CombAttack1.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_RollSlash.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_RollSlash.fbx",
             "rightHand": true
         },
         {
@@ -5040,15 +5374,15 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_GuardKnock.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_GuardKnock.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_TitleStandUp.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_TitleStandUp.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_GuardKnock.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_GuardKnock.fbx",
             "rightHand": true
         },
         {
@@ -5169,17 +5503,6 @@
             "rightHand": true
         },
         {
-            "assetName": "Sword15_FBX.fbx",
-            "flipY": true,
-            "getSize": false,
-            "loadScale": 0.009999999776482582,
-            "matDiffuse": [
-                "Sword15_FBX.png"
-            ],
-            "pathName": "assets/model/sword/Sword15_FBX.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "shield1.fbx",
             "flipY": true,
             "getSize": false,
@@ -5191,14 +5514,14 @@
             "rightHand": true
         },
         {
-            "assetName": "rock2.fbx",
+            "assetName": "Sword15_FBX.fbx",
             "flipY": true,
             "getSize": false,
-            "loadScale": 0.0010000000474974513,
+            "loadScale": 0.009999999776482582,
             "matDiffuse": [
-                "solkaya_DefaultMaterial_BaseColor.png"
+                "Sword15_FBX.png"
             ],
-            "pathName": "assets/model/rock/2/rock2.fbx",
+            "pathName": "assets/model/sword/Sword15_FBX.fbx",
             "rightHand": true
         },
         {
@@ -5210,6 +5533,17 @@
                 "FarbPalette256x256.png"
             ],
             "pathName": "assets/model/sword/Knight_Sword.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "rock2.fbx",
+            "flipY": true,
+            "getSize": false,
+            "loadScale": 0.0010000000474974513,
+            "matDiffuse": [
+                "solkaya_DefaultMaterial_BaseColor.png"
+            ],
+            "pathName": "assets/model/rock/2/rock2.fbx",
             "rightHand": true
         },
         {
@@ -5256,16 +5590,16 @@
             "pathName": "assets/texture/skyBox/sky_Day_u.png"
         },
         {
-            "assetName": "sky_Day_r.png",
-            "pathName": "assets/texture/skyBox/sky_Day_r.png"
+            "assetName": "ground.png",
+            "pathName": "assets/texture/ground.png"
         },
         {
             "assetName": "sky_Day_b.png",
             "pathName": "assets/texture/skyBox/sky_Day_b.png"
         },
         {
-            "assetName": "ground.png",
-            "pathName": "assets/texture/ground.png"
+            "assetName": "sky_Day_r.png",
+            "pathName": "assets/texture/skyBox/sky_Day_r.png"
         },
         {
             "assetName": "Sunset_down.png",
@@ -5292,12 +5626,12 @@
             "pathName": "assets/texture/UI/UI_target_red.png"
         },
         {
-            "assetName": "Sunset_right.png",
-            "pathName": "assets/texture/sunset/Sunset_right.png"
-        },
-        {
             "assetName": "UI_hpLine_green.png",
             "pathName": "assets/texture/UI/UI_hpLine_green.png"
+        },
+        {
+            "assetName": "Sunset_right.png",
+            "pathName": "assets/texture/sunset/Sunset_right.png"
         },
         {
             "assetName": "UI_hpLine_red.png",
@@ -5332,11 +5666,11 @@
             "pathName": ""
         },
         {
-            "assetName": "FarbPalette256x256.png",
+            "assetName": "solkaya_DefaultMaterial_BaseColor.png",
             "pathName": ""
         },
         {
-            "assetName": "solkaya_DefaultMaterial_BaseColor.png",
+            "assetName": "FarbPalette256x256.png",
             "pathName": ""
         },
         {

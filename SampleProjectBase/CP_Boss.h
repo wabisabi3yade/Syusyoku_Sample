@@ -59,6 +59,9 @@ private:
 	void OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo,
 		const DirectX::SimpleMath::Vector3& _attackerPos) override;
 
+	/// @brief €‚ñ‚¾‚Æ‚«‚Ìˆ—
+	void OnDeathBehavior() override;
+
 	void ImGuiDebug() override;
 };
 

@@ -15,6 +15,7 @@
 #include "PlayerDamageState.h"
 
 using PlayerState = PlayerActState_Base::PlayerState;
+namespace DXSimp = DirectX::SimpleMath;
 
 PlayerActionController::PlayerActionController(CP_Player& _player) :
 	CharacterActionController(_player, "playerAction"),
@@ -191,7 +192,7 @@ void PlayerActionController::OnDamage(const HashiTaku::AttackInformation& _atkIn
 		*_pAcceptDamage = false;	
 
 	// パリィできたら移行の処理は行わない
-	if (OnDamageParryCheck()) return;
+	if (OnDamageParryCheck(_attackerPos)) return;
 
 	// ノック状態に移行
 	ChangeKnockState(_atkInfo, _attackerPos);
@@ -235,12 +236,17 @@ CP_Camera& PlayerActionController::GetCamera()
 	return *pCamera;
 }
 
+PlayerActState_Base::PlayerState PlayerActionController::GetCurrentState() const
+{
+	return static_cast<PlayerActState_Base::PlayerState>(currentStateKey);
+}
+
 PlayerActState_Base& PlayerActionController::CastPlayerAct(HashiTaku::StateNode_Base& _stateNodeBase)
 {
 	return static_cast<PlayerActState_Base&>(_stateNodeBase);
 }
 
-bool PlayerActionController::OnDamageParryCheck()
+bool PlayerActionController::OnDamageParryCheck(const DirectX::SimpleMath::Vector3& _enemyPos)
 {
 	// 今パリィできるか確認する
 	// 今ガード状態でないなら
@@ -249,7 +255,7 @@ bool PlayerActionController::OnDamageParryCheck()
 
 	// パリィできるフレーム内か確認
 	PlayerGuardState& guardState = static_cast<PlayerGuardState&>(*pCurrentNode);
-	if (!guardState.GetCanParry()) return false;
+	if (!guardState.GetCanParry(_enemyPos)) return false;
 
 	// パリィ処理
 	guardState.OnParry();
@@ -306,11 +312,6 @@ void PlayerActionController::ImGuiDebug()
 	ImGui::DragInt("CanParryFrame", &extensionParryFrame, 1.f, 0, 1000);
 
 	CharacterActionController::ImGuiDebug();
-}
-
-PlayerActState_Base* PlayerActionController::GetCurrentAction()
-{
-	return static_cast<PlayerActState_Base*>(pCurrentNode);
 }
 
 std::string PlayerActionController::GetStateStr(int _stateId)

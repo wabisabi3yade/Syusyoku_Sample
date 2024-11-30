@@ -11,6 +11,8 @@ bool CP_UIRenderer::isSetShader = false;
 constexpr auto VS_NAME("VS_UI");	// 頂点シェーダー名
 constexpr auto PS_NAME("PS_UI");	// ピクセルシェーダー名
 
+namespace DXSimp = DirectX::SimpleMath;
+
 CP_UIRenderer::CP_UIRenderer() : pTexture(nullptr)
 {
 	// 2Dポリゴン作成
@@ -95,8 +97,6 @@ void CP_UIRenderer::Draw()
 
 void CP_UIRenderer::DrawSetup()
 {
-	using namespace DirectX::SimpleMath;
-
 	// テクスチャを使用するかシェーダーに渡す構造体
 	struct TexEnable
 	{
@@ -112,7 +112,7 @@ void CP_UIRenderer::DrawSetup()
 	texEnable.isTexEnable = pTexture != nullptr;
 
 	// 投影
-	Matrix projection = renderer.GetParameter().GetProjectionMatrix();
+	DXSimp::Matrix projection = renderer.GetParameter().GetProjectionMatrix();
 
 	pVertexShader->UpdateSubResource(0, &projection);
 	pPixelShader->UpdateSubResource(0, &texEnable);
@@ -123,10 +123,9 @@ void CP_UIRenderer::DrawSetup()
 
 void CP_UIRenderer::ReCreatePolygon()
 {
-	using namespace DirectX::SimpleMath;
 	const Transform& t = GetTransform();
 
-	Vector2 s = Vector2(t.GetScale().x, t.GetScale().y);
+	DXSimp::Vector2 s = DXSimp::Vector2(t.GetScale().x, t.GetScale().y);
 	pPolygon->MakePolygon(t.GetPosition(), s, t.GetEularAngles());
 }
 

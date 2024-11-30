@@ -10,7 +10,7 @@ using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
 
 Transform::Transform(GameObject* _pGameObject, bool _isInit)
-	: pParent(nullptr), scale(Vector3::One), localScale(Vector3::One), up(Vec3::Up), right(Vec3::Right), forward(Vec3::Forward), isHaveParent(false)
+	: pParent(nullptr), scale(Vector3::One), localScale(Vector3::One), up(Vec3::Up), right(Vec3::Right), forward(Vec3::Forward), isHaveParent(false), isNull(false)
 {
 	if (_isInit)
 	{
@@ -102,9 +102,6 @@ void Transform::SetChild(Transform& _child)
 
 	// ワールド座標は変えずにローカル行列を求める
 	_child.UpdateLocalMatrixFromWorld();
-
-	// 子オブジェクトのワールド行列を更新
-	/*_child.UpdateWorldMatrix(GetWorldMatrix());*/
 }
 
 void Transform::SetPosition(const DirectX::SimpleMath::Vector3& _pos)
@@ -119,7 +116,7 @@ void Transform::SetPosition(const DirectX::SimpleMath::Vector3& _pos)
 	UpdateWorldMatrix(pParent->GetWorldMatrix());
 
 	// オブジェクト側に変更したことを伝える
-	pGameObject->OnChangePosition();
+	ChangePosNotify();
 }
 
 void Transform::SetScale(const DirectX::SimpleMath::Vector3& _scale)
@@ -133,7 +130,7 @@ void Transform::SetScale(const DirectX::SimpleMath::Vector3& _scale)
 
 
 	// オブジェクト側に変更したことを伝える
-	pGameObject->OnChangeScale();
+	ChangeScaleNotify();
 }
 
 void Transform::SetEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
@@ -151,7 +148,7 @@ void Transform::SetEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
 	UpdateWorldMatrix(pParent->GetWorldMatrix());
 
 	// オブジェクト側に変更したことを伝える
-	pGameObject->OnChangeRotation();
+	ChangeRotNotify();
 }
 
 void Transform::SetRotation(const DirectX::SimpleMath::Quaternion& _quaternion)
@@ -168,7 +165,7 @@ void Transform::SetRotation(const DirectX::SimpleMath::Quaternion& _quaternion)
 	UpdateWorldMatrix(pParent->GetWorldMatrix());
 
 	// オブジェクト側に変更したことを伝える
-	pGameObject->OnChangeRotation();
+	ChangeRotNotify();
 }
 
 
@@ -181,7 +178,7 @@ void Transform::SetLocalPosition(const DirectX::SimpleMath::Vector3& _localPos)
 	UpdateWorldMatrix(pParent->GetWorldMatrix());
 
 	// オブジェクト側に変更したことを伝える
-	pGameObject->OnChangePosition();
+	ChangePosNotify();
 }
 
 void Transform::SetLocalScale(const DirectX::SimpleMath::Vector3& _scale)
@@ -192,7 +189,7 @@ void Transform::SetLocalScale(const DirectX::SimpleMath::Vector3& _scale)
 	UpdateWorldMatrix(pParent->GetWorldMatrix());
 
 	// オブジェクト側に変更したことを伝える
-	pGameObject->OnChangeScale();
+	ChangeScaleNotify();
 }
 
 void Transform::SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
@@ -205,7 +202,7 @@ void Transform::SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAn
 	UpdateWorldMatrix(pParent->GetWorldMatrix());
 
 	// オブジェクト側に変更したことを伝える
-	pGameObject->OnChangeRotation();
+	ChangeRotNotify();
 }
 
 void Transform::SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quaternion)
@@ -218,7 +215,7 @@ void Transform::SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quatern
 	UpdateWorldMatrix(pParent->GetWorldMatrix());
 
 	// オブジェクト側に変更したことを伝える
-	pGameObject->OnChangeRotation();
+	ChangeRotNotify();
 }
 
 const DirectX::SimpleMath::Vector3& Transform::GetPosition() const
@@ -399,6 +396,40 @@ void Transform::UpdateLocalMatrixFromWorld()
 	// パラメータに反映する
 	Mtx::GetTransformFromWldMtx(localMatrix, localPosition, localScale, localRotation);
 	localEularAngles = localRotation.ToEuler() * Mathf::radToDeg;
+}
+
+void Transform::ChangePosNotify()
+{
+	pGameObject->OnChangePosition();
+
+	for (auto& child : childTransforms)
+	{
+		child->ChangePosNotify();
+	}
+
+	// UiだったらシーンオブジェクトにZ座標ソートしてもらう
+	if (pGameObject->GetLayer() != Layer::UI) return;
+	InSceneSystemManager::GetInstance()->GetSceneObjects().SortUiList();
+}
+
+void Transform::ChangeScaleNotify()
+{
+	pGameObject->OnChangeScale();
+
+	for (auto& child : childTransforms)
+	{
+		child->ChangeScaleNotify();
+	}
+}
+
+void Transform::ChangeRotNotify()
+{
+	pGameObject->OnChangeRotation();
+
+	for (auto& child : childTransforms)
+	{
+		child->ChangeRotNotify();
+	}
 }
 
 void Transform::RemoveParent()

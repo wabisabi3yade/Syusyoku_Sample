@@ -45,8 +45,7 @@ protected:
 	void OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo,
 		const DirectX::SimpleMath::Vector3& _attackerPos) override;
 
-	/// @brief 各クラスのダメージを受けたときの処理
-	/// @param _attackInfo 攻撃情報
-	void OnDeathBehavior() override;
+	/// @brief 死んだときの処理
+	void OnDeathBehavior() override {};
 };
 

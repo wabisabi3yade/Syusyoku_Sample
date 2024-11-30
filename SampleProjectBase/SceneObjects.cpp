@@ -3,8 +3,6 @@
 #include "SF_Define.h"
 #include "InSceneSystemManager.h"
 
-typedef std::unordered_map<std::string, std::unique_ptr<GameObject>> ObjectList;
-
 SceneObjects::SceneObjects()
 {
 }
@@ -94,9 +92,9 @@ void SceneObjects::Draw()
 	UIDrawSetup();
 
 	// 2D空間（UI）のオブジェクト
-	for (auto& ui : uiList)
+	for (auto& ui : drawUiList)
 	{
-		ui.second->DrawCall();
+		ui->DrawCall();
 	}
 
 	// 透視投影に戻す
@@ -113,6 +111,9 @@ void SceneObjects::MoveToUIList(GameObject& _gameObject)
 	std::unique_ptr<GameObject> takeoutObj;
 	if (!TakeOutObject(_gameObject, objectName, takeoutObj, objList)) return;
 
+	// 描画UIリストに追加
+	SetDrawUIList(*takeoutObj);
+
 	// UIリストに追加する
 	uiList[objectName] = std::move(takeoutObj);
 }
@@ -127,8 +128,29 @@ void SceneObjects::MoveToObjList(GameObject& _gameObject)
 	std::unique_ptr<GameObject> takeoutObj;
 	if (!TakeOutObject(_gameObject, objectName, takeoutObj, uiList)) return;
 
+	RemoveDrawUIList(*takeoutObj);
+
 	// UIリストに追加する
 	objList[objectName] = std::move(takeoutObj);
+}
+
+void SceneObjects::SetDrawUIList(GameObject& _uiObj)
+{
+	// UIオブジェクトか？
+	if (_uiObj.GetLayer() != HashiTaku::Layer::Type::UI) return;
+	
+	// リスト内にあるなら
+	auto itr = std::find(drawUiList.begin(), drawUiList.end(), &_uiObj);
+	if (itr != drawUiList.end()) return;
+	
+	drawUiList.push_back(&_uiObj);	// 追加
+
+	drawUiList.sort(SortUIPosZFunction);	// z値順に並べる
+}
+
+void SceneObjects::RemoveDrawUIList(GameObject& _uiObj)
+{
+	drawUiList.remove(&_uiObj);
 }
 
 std::string SceneObjects::PrefabFileParh()
@@ -353,6 +375,11 @@ bool SceneObjects::ImGuiSettingObject(GameObject& _gameObject)
 	return false;
 }
 
+bool SceneObjects::SortUIPosZFunction(const GameObject* _a1, const GameObject* _a2)
+{
+	return _a1->GetConstTransform().GetPosition().z > _a2->GetConstTransform().GetPosition().z;
+}
+
 GameObject* SceneObjects::SetObject(std::unique_ptr<GameObject> _objPtr)
 {
 	// 名前が空か確認
@@ -363,7 +390,7 @@ GameObject* SceneObjects::SetObject(std::unique_ptr<GameObject> _objPtr)
 	CheckDuplicationName(*_objPtr.get(), uiList);
 
 	// セットするリスト（オブジェクト側かUIか）
-	ObjectList* setList = &objList;
+	SceneObjectList* setList = &objList;
 
 	// UIなら
 	if (IsUI(*_objPtr.get()))
@@ -396,6 +423,7 @@ void SceneObjects::DeleteGameObject(GameObject& _deleteObj)
 		if (itr->second.get() != &_deleteObj) continue;
 
 		// あったら
+		RemoveDrawUIList(*(*itr).second);
 		uiList.erase(itr);	// 削除する
 		return;
 	}
@@ -407,6 +435,12 @@ void SceneObjects::MoveTmpList(GameObject& _targetObj)
 {
 	// 移動配列に追加する
 	tmpMoveList.push_back(&_targetObj);
+}
+
+void SceneObjects::SortUiList()
+{
+	// ソートする
+	drawUiList.sort(SortUIPosZFunction);
 }
 
 GameObject* SceneObjects::GetSceneObject(const std::string& _objectName)

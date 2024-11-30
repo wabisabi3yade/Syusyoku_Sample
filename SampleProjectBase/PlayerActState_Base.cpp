@@ -5,16 +5,25 @@
 
 GameInput* PlayerActState_Base::pPlayerInput = nullptr;
 
-
-constexpr float CAN_ACTION_STICKINPUT(0.7f);	// アクションできる左スティックの入力量
-constexpr float INPUT_VECTOR_DOT(0.6f);	// スティックの方向の内積でこれ以上一致していないなら反応しない
+// アクションできる左スティックの入力量
+constexpr float CAN_ACTION_STICKINPUT(0.7f);
+// スティックの方向の内積でこれ以上一致していないなら反応しない
+constexpr float INPUT_VECTOR_DOT(0.6f);
+// 移動でキャンセルができるスティックの入力量
+constexpr float CAN_MOVECANCEL_INPUT(0.3f);
+// キャンセル入力で予約した状態の有効期限時間（超えると予約した状態はリセットされる）
+constexpr float CANCEL_RESERVE_VALIED_TIME(0.3f);
 
 namespace DXSimp = DirectX::SimpleMath;
 
 PlayerActState_Base::PlayerActState_Base() :
-	pActionController(nullptr), stateType(PlayerState::None), 
-	cancelPlayState(PlayerState::None), placeElement(ActPlaceElement::Ground),
-	targetLookRotateSpeed(40.0f), isTargetLookAtEnemy(false)
+	pActionController(nullptr),
+	stateType(PlayerState::None),
+	cancelPlayState(PlayerState::None),
+	placeElement(ActPlaceElement::Ground),
+	targetLookRotateSpeed(40.0f),
+	lastCancelReserveElapse(0.0f),
+	isTargetLookAtEnemy(false)
 {
 	pPlayerInput = &InSceneSystemManager::GetInstance()->GetInput();
 }
@@ -107,6 +116,27 @@ void PlayerActState_Base::CheckInputUpdate()
 	{
 		cancelPlayState = PlayerState::Attack11;
 	}
+
+	// 移動キャンセル
+	else if (cancelPlayState == PlayerState::None)
+	{
+		// 入力量
+		float inputMag = std::min(1.0f,
+			pPlayerInput->GetValue(GameInput::ValueType::Player_Move).Length());
+
+		// スティックの入力量が大きければ
+		if (inputMag > CAN_MOVECANCEL_INPUT)	
+		{
+			PlayerState curState = pActionController->GetCurrentState();
+			bool isTarget = pActionController->GetIsTargeting();
+			// 同じ種類の移動→移動はしないようにする
+			// ターゲット時ならターゲット移動
+			if(isTarget && curState != PlayerState::TargetMove)
+				cancelPlayState = PlayerState::TargetMove;
+			else if (!isTarget && curState != PlayerState::Move)
+				cancelPlayState = PlayerState::Move;				
+		}
+	}
 }
 
 void PlayerActState_Base::ChangeState(PlayerState _nextState)
@@ -167,20 +197,20 @@ bool PlayerActState_Base::IsInputVector(InputVector _checkVector)
 
 	// カメラから見た入力とする
 	const Transform& camTrans = pActionController->GetCamera().GetTransform();
-	DXSimp::Vector3 inputVecByCam = inputVec.x * camTrans.Right() + 
-									inputVec.y * camTrans.Forward();
+	DXSimp::Vector3 inputVecByCam = inputVec.x * camTrans.Right() +
+		inputVec.y * camTrans.Forward();
 	inputVec = { inputVecByCam.x, inputVecByCam.z };
 	inputVec.Normalize();
 
 
 	// 向きを取得
-	DXSimp::Vector3 baseVec; 
+	DXSimp::Vector3 baseVec;
 
 	// ターゲット時で敵がいるなら　敵の方向ベクトルを基準ベクトルに
 	if (pActionController->GetIsTargeting() &&
 		pActionController->GetTargetObject())
 	{
-		DXSimp::Vector3 targetObjVec = 
+		DXSimp::Vector3 targetObjVec =
 			pActionController->GetTargetObject()->GetWorldPosByTargetObj() -
 			GetTransform().GetPosition();
 
@@ -255,7 +285,7 @@ void PlayerActState_Base::UpdateTargetLook()
 {
 	// ターゲットの方向見ないなら
 	if (!isTargetLookAtEnemy) return;
-	
+
 	ITargetAccepter* pTargetObj = pActionController->GetTargetObject();
 	if (!pTargetObj) return;	// ターゲットがいないなら
 

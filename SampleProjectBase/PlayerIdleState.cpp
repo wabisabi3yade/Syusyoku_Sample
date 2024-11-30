@@ -29,14 +29,14 @@ void PlayerIdleState::TransitionCheckUpdate()
 {
 	PlayerActState_Base::TransitionCheckUpdate();
 
-	// 移動ステートに遷移できるなら
-	if (IsCanMoveTransition())
-	{
-		if(pActionController->GetIsTargeting())
-			ChangeState(PlayerState::TargetMove);
-		else
-			ChangeState(PlayerState::Move);
-	}
+	//// 移動ステートに遷移できるなら
+	//if (IsCanMoveTransition())
+	//{
+	//	if(pActionController->GetIsTargeting())
+	//		ChangeState(PlayerState::TargetMove);
+	//	else
+	//		ChangeState(PlayerState::Move);
+	//}
 }
 
 void PlayerIdleState::ProgressLeaveElapse()

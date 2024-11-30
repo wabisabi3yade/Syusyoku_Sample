@@ -14,15 +14,16 @@ namespace HashiTaku
 
 		/// @brief このフレームでは状態は
 		bool isCurFrameStateChange;
+
+#ifdef EDIT
+		T prevStateKey;	// デバッグ用前回の状態
+#endif 
 	protected:
 		/// @brief 状態ノードリスト
 		std::unordered_map<T, std::unique_ptr<StateNode_Base>> stateNodeList;
 
 		/// @brief 現在のノードのキー
 		T currentStateKey;
-
-		/// @brief 次に変更する状態キー
-		T nextStateKey;
 
 		/// @brief 現在のノード
 		StateNode_Base* pCurrentNode;
@@ -68,6 +69,10 @@ namespace HashiTaku
 
 		/// @brief 更新処理
 		virtual void Update();
+
+		/// @brief 前回のステートを取得する
+		/// @param _outState 前回のステートを受け取る変数
+		void DebugGetPrevState(T& _outState);
 	private:
 		/// @brief ノード変更できる条件を整っているか？
 		/// @param _changeKey 遷移先キー
@@ -117,7 +122,7 @@ namespace HashiTaku
 	{
 		// 外部からのコールバックで変更しているかもなのでリセット
 		isChangeCurFlame = false;
-		
+
 		// 更新
 		Update();
 
@@ -173,6 +178,11 @@ namespace HashiTaku
 		// 変更前の終了処理
 		pCurrentNode->OnEnd();
 
+
+#ifdef EDIT
+		prevStateKey = currentStateKey;	// 前回のキーに保存
+#endif
+
 		// 現在のノードを変更
 		pCurrentNode = stateNodeList[_changeKey].get();
 		currentStateKey = _changeKey;
@@ -197,9 +207,6 @@ namespace HashiTaku
 	template<class T>
 	inline bool StateMachine_Base<T>::CanChengeNode(const T& _changeKey)
 	{
-		//// 同じ状態に遷移しようとしているなら遷移しない
-		//if (_changeKey == currentStateKey) return false;
-		
 		// 既にこのフレーム中に変更されているなら
 		if (isChangeCurFlame) return false;
 
@@ -213,6 +220,14 @@ namespace HashiTaku
 	}
 
 	template<class T>
+	inline void StateMachine_Base<T>::DebugGetPrevState(T& _outState)
+	{
+#ifdef EDIT
+		_outState = prevStateKey;
+#endif // EDIT
+	}
+
+	template<class T>
 	inline void StateMachine_Base<T>::SetDefaultNode(const T& _defaultKey)
 	{
 		if (!stateNodeList.contains(_defaultKey))
@@ -221,7 +236,12 @@ namespace HashiTaku
 			return;
 		}
 
+		currentStateKey = _defaultKey;
 		pDefaultNode = stateNodeList[_defaultKey].get();
+
+#ifdef EDIT
+		prevStateKey = currentStateKey;
+#endif // EDIT
 	}
 	template<class T>
 	inline StateNode_Base* StateMachine_Base<T>::GetCurrentNode()

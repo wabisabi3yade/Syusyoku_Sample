@@ -2,18 +2,32 @@
 #include "PlayerGuardState.h"
 #include "CP_Player.h"
 
+namespace DXSimp = DirectX::SimpleMath;
+
 constexpr auto GUARDEND_ANIM("Guard_End");
 constexpr auto GUARDKNOCK_ANIM("Guard_Knock");
 constexpr auto PARRYTRIGGER_NAME("parryTrigger");
 
 PlayerGuardState::PlayerGuardState() : 
-	canParry(false), sustainParryFrame(4), parryElapsedFrame(0), parryAddGuardGage(25.0f)
+	canParry(false), sustainParryFrame(4), parryElapsedFrame(0), parryAddGuardGage(25.0f),
+	canParryForwardAngle(180.0f)
 {
 }
 
-bool PlayerGuardState::GetCanParry() const
+bool PlayerGuardState::GetCanParry(const DirectX::SimpleMath::Vector3& _enemyPos)
 {
-	return canParry;
+	if (!canParry) return false;
+
+	// 攻撃を正面で受けれているか確認(敵との座標)
+	// プレイヤーの正面に敵がいるか確認
+	Transform& transform = GetTransform();
+	DXSimp::Vector3 toEnemyVec = _enemyPos - transform.GetPosition();
+	toEnemyVec.y = 0.0f; toEnemyVec.Normalize();
+	float dot = toEnemyVec.Dot(transform.Forward());
+	
+	if (dot < cos(canParryForwardAngle * Mathf::degToRad * 0.5f)) return false;
+
+	return true;
 }
 
 void PlayerGuardState::OnParry()
@@ -38,6 +52,7 @@ nlohmann::json PlayerGuardState::Save()
 {
 	auto data = PlayerActState_Base::Save();
 	data["canParryTime"] = sustainParryFrame;
+	data["parryAngle"] = canParryForwardAngle;
 	return data;
 }
 
@@ -45,6 +60,7 @@ void PlayerGuardState::Load(const nlohmann::json& _data)
 {
 	PlayerActState_Base::Load(_data);
 	HashiTaku::LoadJsonUnsigned("canParryTime", sustainParryFrame, _data);
+	HashiTaku::LoadJsonFloat("parryAngle", canParryForwardAngle, _data);
 }
 
 void PlayerGuardState::OnStartBehavior()
@@ -116,5 +132,5 @@ void PlayerGuardState::ImGuiDebug()
 	ImGui::DragInt("canParry", &imInt, 1, 0, 100);
 	sustainParryFrame = static_cast<u_int>(imInt);
 
-	HASHI_DEBUG_LOG("parry");
+	ImGui::DragFloat("parryAngle", &canParryForwardAngle, 0.1f, 0.0f, 360.0f);
 }
