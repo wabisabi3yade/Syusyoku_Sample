@@ -524,7 +524,8 @@
                                 },
                                 {
                                     "data": {
-                                        "canParryTime": 12
+                                        "canParryTime": 12,
+                                        "parryAngle": 180.0
                                     },
                                     "typeString": "Guard"
                                 },
@@ -625,7 +626,7 @@
                                         },
                                         "isMoveFwd": true,
                                         "maxDistance": 2.700000047683716,
-                                        "nextCombAttack": 99
+                                        "nextCombAttack": 20
                                     },
                                     "typeString": "Attack14"
                                 },
@@ -1351,9 +1352,7 @@
                         "maxValue": 1.0,
                         "minValue": 0.0,
                         "name": "UISlider",
-                        "priority": 0,
-                        "sliderLen": 590.0,
-                        "startPos": 20.0
+                        "priority": 0
                     }
                 ],
                 "layer": 2,

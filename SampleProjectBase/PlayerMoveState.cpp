@@ -40,11 +40,12 @@ void PlayerMoveState::Load(const nlohmann::json& _data)
 
 void PlayerMoveState::OnStartBehavior()
 {
-
+	HASHI_DEBUG_LOG("aaaa");
 }
 
 void PlayerMoveState::UpdateBehavior()
 {
+
 	Move();
 
 	ApplyRootMotion();
@@ -64,10 +65,6 @@ void PlayerMoveState::TransitionCheckUpdate()
 	if (currentSpeed <= Mathf::epsilon)	// ˆÚ“®‘¬“x‚ª0ˆÈ‰º‚É‚È‚é‚Æ
 	{
 		ChangeState(PlayerState::Idle);
-	}
-	else if (pActionController->GetIsTargeting())
-	{
-		ChangeState(PlayerState::TargetMove);
 	}
 }
 
@@ -117,7 +114,7 @@ void PlayerMoveState::Move()
 	if (currentSpeed > curMaxSpd)
 	{
 		// Œ¸‘¬—¦‚ð‚©‚¯‚é
-		currentSpeed -= decadeSpeed;
+		currentSpeed -= decadeSpeed * DeltaTime();
 		currentSpeed = std::max(currentSpeed, curMaxSpd);
 	}
 	else

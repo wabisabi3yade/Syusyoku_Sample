@@ -132,6 +132,17 @@ void CP_Boss::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo,
 	pActionController->OnDamage(_attackInfo, _attackerPos);
 }
 
+void CP_Boss::OnDeathBehavior()
+{
+	CP_Enemy::OnDeathBehavior();
+
+	// ƒvƒŒƒCƒ„[‚ðŸ—˜‚É‚·‚é
+	if (CP_BattleManager* pBattle = CP_BattleManager::GetInstance())
+	{
+		pBattle->OnPlayerWin();
+	}
+}
+
 void CP_Boss::ImGuiDebug()
 {
 	CP_Enemy::ImGuiDebug();

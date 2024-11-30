@@ -112,9 +112,9 @@ public:
 	/// @return カメラ
 	CP_Camera& GetCamera();
 
-	/// @brief 現在のアクションを取得
-	/// @return アクションステート
-	PlayerActState_Base* GetCurrentAction();
+	/// @brief 現在のプレイヤーの状態を取得する
+	/// @return 現在のプレイヤーの状態
+	PlayerActState_Base::PlayerState GetCurrentState() const;
 
 	/// @brief 各Stateの文字列を取得する
 	/// @param _stateId 状態のID
@@ -165,8 +165,9 @@ private:
 	PlayerActState_Base& CastPlayerAct(HashiTaku::StateNode_Base& _stateNodeBase);
 
 	/// @brief パリィできているか確認
+	/// @param _enemyPos 敵座標
 	/// @return パリィできたか？
-	bool OnDamageParryCheck();
+	bool OnDamageParryCheck(const DirectX::SimpleMath::Vector3& _enemyPos);
 
 	/// @brief ノック状態に遷移
 	/// @param _atkInfo 攻撃情報

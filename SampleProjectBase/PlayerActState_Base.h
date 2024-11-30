@@ -80,9 +80,11 @@ private:
 	/// @brief ターゲットを見るときの回転速度
 	float targetLookRotateSpeed;
 
+	/// @brief 最後にキャンセル予約してからの経過時間
+	float lastCancelReserveElapse;
+
 	/// @brief ターゲット時に敵を見る行動にするか？
 	bool isTargetLookAtEnemy;
-
 protected:
 	/// @brief キャンセルして繰り出す状態
 	PlayerState cancelPlayState;

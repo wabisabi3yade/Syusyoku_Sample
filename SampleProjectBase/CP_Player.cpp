@@ -8,6 +8,7 @@
 
 using namespace DirectX::SimpleMath;
 
+// 攻撃判定のアニメーションパラメータ名
 constexpr auto ATKCOL_ANIMPARAM_NAME("attackCollision");
 
 CP_Player::CP_Player() :
@@ -19,7 +20,7 @@ CP_Player::CP_Player() :
 	pAttackCollisionFlag(nullptr),
 	hitStopBeforeAnimSpeed(0.0f),
 	curGuardGage(0.0f),
-	maxGuardGage(0.0f)
+	maxGuardGage(100.0f)
 {
 }
 
@@ -118,7 +119,7 @@ void CP_Player::SetRequireObject()
 		pHpSlider->SetMaxValue(maxHP);
 		pHpSlider->SetCurrentValue(currentHP);
 	}
-		
+
 
 	// ガードバー
 	pFindObj = sceneObjs.GetSceneObject(guardBarObjName);
@@ -128,7 +129,7 @@ void CP_Player::SetRequireObject()
 		pGuardSlider->SetMaxValue(maxGuardGage);
 		pGuardSlider->SetCurrentValue(maxGuardGage);
 	}
-		
+
 }
 
 void CP_Player::OnHitStopBegin()
@@ -145,11 +146,17 @@ void CP_Player::AddGuardGage(float _addGage)
 {
 	curGuardGage += _addGage;	// 足す
 	curGuardGage = std::clamp(curGuardGage, 0.0f, maxGuardGage);
+
+	if (pGuardSlider)
+		pGuardSlider->SetCurrentValue(curGuardGage);
 }
 
 void CP_Player::ResetGuardGage()
 {
 	curGuardGage = 0.0f;
+
+	if (pGuardSlider)
+		pGuardSlider->SetCurrentValue(0.0f);
 }
 
 void CP_Player::ImGuiDebug()
@@ -278,4 +285,9 @@ void CP_Player::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo
 
 void CP_Player::OnDeathBehavior()
 {
+	// 敗北
+	if (CP_BattleManager* pBattle = CP_BattleManager::GetInstance())
+	{
+		pBattle->OnPlayerLose();
+	}
 }

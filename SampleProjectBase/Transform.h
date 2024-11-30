@@ -147,4 +147,13 @@ private:
 	void UpdateLocalMatrix();
 
 	void UpdateLocalMatrixFromWorld();
+
+	/// @brief 座標変更をオブジェクトに伝える
+	void ChangePosNotify();
+
+	/// @brief スケール変更をオブジェクトに伝える
+	void ChangeScaleNotify();
+
+	/// @brief 回転変更をオブジェクトに伝える
+	void ChangeRotNotify();
 };

@@ -17,6 +17,9 @@ class SceneObjects : public HashiTaku::IImGuiUser
 	// UI用のリスト(描画を上のリストより後にするため)
 	SceneObjectList uiList;
 
+	/// @brief z座標の値でソートした描画UIリスト
+	std::list<GameObject*> drawUiList;
+
 	/// @brief オブジェクト配列とUI配列を行き来する為に一時的に格納するリスト
 	std::list<GameObject*> tmpMoveList;
 
@@ -48,6 +51,9 @@ public:
 	/// @brief UIとオブジェクトのリスト間を移動する
 	/// @param _targetObj 対象オブジェクト
 	void MoveTmpList(GameObject& _targetObj);
+
+	/// @brief z値順にUIリストをソートする
+	void SortUiList();
 
 	// オブジェクトの名前からオブジェクトを返す
 	GameObject* GetSceneObject(const std::string& _objectName);
@@ -97,6 +103,14 @@ private:
 	/// @param _gameObject 対象のUIオブジェクト
 	void MoveToObjList(GameObject& _gameObject);
 
+	/// @brief UI描画リストに追加する
+	/// @param _uiObj 追加するUI
+	void SetDrawUIList(GameObject& _uiObj);
+
+	/// @brief UI描画リストから削除する
+	/// @param _uiObj 削除するUI
+	void RemoveDrawUIList(GameObject& _uiObj);
+
 	/// @brief プレハブファイルのパス名を取得
 	/// @return プレハブファイルのパス名
 	std::string PrefabFileParh();
@@ -130,4 +144,7 @@ private:
 	/// @param _gameObject 表示するゲームオブジェクト
 	/// @return deleteしたか
 	bool ImGuiSettingObject(GameObject& _gameObject);
+
+	/// @brief UIオブジェクトのZ座標
+	static bool SortUIPosZFunction(const GameObject* _a1, const GameObject* _a2);
 };

@@ -172,6 +172,8 @@ void BossJumpAttack::VertivalMove()
 
 void BossJumpAttack::ImGuiDebug()
 {
+	BossAttackState::ImGuiDebug();
+
 	// Hori
 	ImGui::DragFloat("FallOffset", &fallPosOffset, 0.01f);
 	ImGui::DragFloat("MaxHoriSpd", &maxHoriSpeed, 1.0f, 0.0f, 1000.0f);
@@ -182,6 +184,4 @@ void BossJumpAttack::ImGuiDebug()
 	// Vert
 	ImGui::DragFloat("Height", &maxJumpHeight, 0.01f, 0.0f, 1000.0f);
 	jumpHeightDisCurve.ImGuiCall();
-
-	BossAttackState::ImGuiDebug();
 }

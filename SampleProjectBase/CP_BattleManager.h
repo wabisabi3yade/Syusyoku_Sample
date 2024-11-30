@@ -15,6 +15,15 @@ public:
 private:
 	friend class SingletonComponent<CP_BattleManager>;
 
+	/// @brief バトルの状態
+	enum class BattleState
+	{
+		Start,	// 最初の演出
+		Battle,	// 戦闘中
+		Win,	// 勝利
+		Lose	// 負け
+	};
+
 	/// @brief プレイヤーオブジェクト
 	CP_Player* pPlayer{ nullptr };
 
@@ -23,6 +32,9 @@ private:
 
 	/// @brief 移動範囲の中心座標
 	DirectX::SimpleMath::Vector3 moveAreaCenterPos;
+
+	/// @brief 現在のバトルの状態
+	BattleState curBattleState{ BattleState::Start };
 
 	/// @brief 移動範囲の半径
 	float moveAreaRadius{ 0.0f };
@@ -55,6 +67,12 @@ public:
 	/// @brief 敵リストを取得する
 	/// @return 
 	const EnemyList& GetEnemyList();
+
+	/// @brief プレイヤーが勝利したときの処理
+	void OnPlayerWin();
+
+	/// @brief プレイヤーが負けたときの処理
+	void OnPlayerLose();
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

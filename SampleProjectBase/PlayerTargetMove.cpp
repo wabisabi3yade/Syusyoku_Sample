@@ -44,14 +44,9 @@ void PlayerTargetMove::OnEndBehavior()
 
 void PlayerTargetMove::TransitionCheckUpdate()
 {
-	using enum GameInput::ButtonType;
-
 	PlayerActState_Base::TransitionCheckUpdate();
 	if (!IsRunning())
 		ChangeState(PlayerState::Idle);
-
-	else if (!pActionController->GetIsTargeting())
-		ChangeState(PlayerState::Move);
 }
 
 void PlayerTargetMove::ApplyBlendAnim()

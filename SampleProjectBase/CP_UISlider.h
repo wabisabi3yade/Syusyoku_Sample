@@ -1,17 +1,17 @@
 #pragma once
-#include "Component.h"
+#include "CP_UIRenderer.h"
 #include "IUISlider.h"
 
 class CP_UIRenderer;
 
 /// @brief UIのスライダー処理を行うクラス
-class CP_UISlider : public Component, public IUISlider
+class CP_UISlider : public CP_UIRenderer, public IUISlider
 {
-	/// @brief UI描画
-	CP_UIRenderer* pUiRenderer;
+	/// @brief スライダー画像の中心座標
+	DirectX::SimpleMath::Vector3 sliderCenterPos;
 
-	/// @brief 
-	float startPos;
+	/// @brief スライダー画像のスケール
+	DirectX::SimpleMath::Vector2 sliderScale;
 
 	/// @brief 現在の値
 	float currentValue;
@@ -21,14 +21,14 @@ class CP_UISlider : public Component, public IUISlider
 
 	/// @brief 最小値
 	float minValue;
-
-	/// @brief スライダーの全体の長さ
-	float sliderAllLength;
 public:
 	CP_UISlider();
 	~CP_UISlider() {}
 
 	void Init() override;
+	void OnChangeScale() override;
+	void OnChangePosition() override;
+	void OnChangeRotation() override;
 
 	/// @brief 現在の値を割合でセット(0.0～1.0)
 	/// @param _curRatio 現在の割合
@@ -52,6 +52,9 @@ public:
 private:
 	/// @brief スライダー画像に適用する
 	void ApplySlider();
+
+	/// @brief ポリゴン再生性
+	void ReCreatePolygon() override;
 
 	void ImGuiDebug() override;
 };

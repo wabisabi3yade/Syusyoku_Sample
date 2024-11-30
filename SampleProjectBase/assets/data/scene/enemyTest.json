@@ -489,7 +489,8 @@
                                 },
                                 {
                                     "data": {
-                                        "canParryTime": 8
+                                        "canParryTime": 8,
+                                        "parryAngle": 180.0
                                     },
                                     "typeString": "Guard"
                                 },
@@ -576,7 +577,7 @@
                                             "useHermite": true
                                         },
                                         "isMoveFwd": true,
-                                        "maxDistance": 10.0,
+                                        "maxDistance": 3.0,
                                         "nextCombAttack": 99
                                     },
                                     "typeString": "Attack14"
@@ -1289,88 +1290,6 @@
                         100.0,
                         1.0,
                         100.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "image": "UI_hpFrame.png",
-                        "name": "UIRenderer",
-                        "priority": 0
-                    }
-                ],
-                "layer": 2,
-                "name": "Player_HpFrame",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        314.8999938964844,
-                        54.20000076293945,
-                        0.8999999761581421
-                    ],
-                    "rotation": [
-                        -4.768378971675702e-07,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        600.0,
-                        50.0,
-                        1.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "image": "UI_hpLine_green.png",
-                        "name": "UIRenderer",
-                        "priority": 0
-                    },
-                    {
-                        "currentValue": 1.0,
-                        "enable": true,
-                        "maxValue": 1.0,
-                        "minValue": 0.0,
-                        "name": "UISlider",
-                        "priority": 0,
-                        "sliderLen": 590.0,
-                        "startPos": 20.0
-                    }
-                ],
-                "layer": 2,
-                "name": "Player_HpBar",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        315.0,
-                        54.5,
-                        0.4000000059604645
-                    ],
-                    "rotation": [
-                        -4.768374992636382e-07,
-                        0.0,
-                        -0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        590.0,
-                        38.0,
-                        1.0
                     ]
                 }
             }

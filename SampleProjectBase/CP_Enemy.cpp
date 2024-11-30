@@ -71,11 +71,6 @@ void CP_Enemy::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo,
 	BeginHitStop(_attackInfo.GetHitStopFlame());
 }
 
-void CP_Enemy::OnDeathBehavior()
-{
-	HASHI_DEBUG_LOG("“GŽ€‚ñ‚¾");
-}
-
 void CP_Enemy::SetEnemyName(const std::string& _enemyName)
 {
 	enemyName = _enemyName;

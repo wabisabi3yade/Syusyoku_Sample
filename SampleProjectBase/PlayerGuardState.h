@@ -12,6 +12,9 @@ class PlayerGuardState : public PlayerActState_Base
 	/// @brief パリィで増えるゲージ
 	float parryAddGuardGage;
 
+	/// @brief ガードすることができる正面の角度
+	float canParryForwardAngle;
+
 	/// @brief パリィできる状態
 	bool canParry;
 public:
@@ -20,7 +23,7 @@ public:
 
 	/// @brief パリィできるか確認
 	/// @return パリィできるか？
-	bool GetCanParry() const;
+	bool GetCanParry(const DirectX::SimpleMath::Vector3& _enemyPos);
 
 	/// @brief パリィ時の行動
 	void OnParry();
