@@ -19,7 +19,9 @@ namespace DXSimp = DirectX::SimpleMath;
 PlayerActState_Base::PlayerActState_Base() :
 	pActionController(nullptr),
 	stateType(PlayerState::None),
-	cancelPlayState(PlayerState::None),
+	cancelReserveState(PlayerState::None),
+	atkReserveState(PlayerState::None),
+	moveReserveState(PlayerState::None),
 	placeElement(ActPlaceElement::Ground),
 	targetLookRotateSpeed(40.0f),
 	lastCancelReserveElapse(0.0f),
@@ -87,7 +89,9 @@ void PlayerActState_Base::TransitionCheckUpdate()
 
 void PlayerActState_Base::ParameterClear()
 {
-	cancelPlayState = PlayerState::None;
+	cancelReserveState = PlayerState::None;
+	atkReserveState = PlayerState::None;
+	moveReserveState = PlayerState::None;
 }
 
 void PlayerActState_Base::CheckInputUpdate()
@@ -97,28 +101,32 @@ void PlayerActState_Base::CheckInputUpdate()
 	// ローリングボタンを押す　かつ　左スティックの傾きが足りる
 	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Guard))
 	{
-		cancelPlayState = PlayerState::Guard;
+		atkReserveState = PlayerState::None;
+		cancelReserveState = PlayerState::Guard;
 	}
 	// ローリングボタンを押す　かつ　左スティックの傾きが足りる
 	else if (IsRollingInput())
 	{
-		cancelPlayState = PlayerState::Rolling;
+		atkReserveState = PlayerState::None;
+		cancelReserveState = PlayerState::Rolling;
 	}
 
 	// 前突進攻撃
 	else if (IsSpecialAtkInput(InputVector::Forward))
 	{
-		cancelPlayState = PlayerState::SpecialAtkHi;
+		cancelReserveState = PlayerState::None;
+		atkReserveState = PlayerState::SpecialAtkHi;
 	}
 
 	// 攻撃
 	else if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
 	{
-		cancelPlayState = PlayerState::Attack11;
+		cancelReserveState = PlayerState::None;
+		atkReserveState = PlayerState::Attack11;
 	}
 
 	// 移動キャンセル
-	else if (cancelPlayState == PlayerState::None)
+	else
 	{
 		// 入力量
 		float inputMag = std::min(1.0f,
@@ -132,9 +140,9 @@ void PlayerActState_Base::CheckInputUpdate()
 			// 同じ種類の移動→移動はしないようにする
 			// ターゲット時ならターゲット移動
 			if(isTarget && curState != PlayerState::TargetMove)
-				cancelPlayState = PlayerState::TargetMove;
+				moveReserveState = PlayerState::TargetMove;
 			else if (!isTarget && curState != PlayerState::Move)
-				cancelPlayState = PlayerState::Move;				
+				moveReserveState = PlayerState::Move;				
 		}
 	}
 }
@@ -308,12 +316,23 @@ void PlayerActState_Base::UpdateTargetLook()
 void PlayerActState_Base::CancelTransitionUpdate()
 {
 	//キャンセルフラグ
-	bool canCancel = pActionController->GetIsCanCancel();
-	if (!canCancel) return;
-
-	// キャンセルするアクションがないなら
-	if (cancelPlayState == PlayerState::None) return;
-
-	// キャンセルの動きに変更
-	ChangeState(cancelPlayState);
+	if (pActionController->GetIsCanCancel() && cancelReserveState != PlayerState::None)
+	{
+		// キャンセルの動きに変更
+		ChangeState(cancelReserveState);
+		return;
+	}
+	if (pActionController->GetCanAttack() && atkReserveState != PlayerState::None)
+	{
+		// 攻撃の動きに変更
+		ChangeState(atkReserveState);
+		return;
+	}
+	if (pActionController->GetCanMove() && moveReserveState != PlayerState::None)
+	{
+		// 移動の動きに変更
+		ChangeState(moveReserveState);
+		return;
+	}
+	
 }

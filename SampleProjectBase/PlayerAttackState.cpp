@@ -198,7 +198,7 @@ void PlayerAttackState::ForwardProgressMove()
 bool PlayerAttackState::GetCanCombAttack()
 {
 	if (curChangeAtkState == PlayerState::None) return false;
-	if (!pActionController->GetCanCombAtk()) return false;
+	if (!pActionController->GetCanAttack()) return false;
 
 	return true;
 }

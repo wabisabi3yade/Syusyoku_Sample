@@ -71,7 +71,12 @@
                 {
                     "name": "canAttack",
                     "type": 0,
-                    "value": false
+                    "value": true
+                },
+                {
+                    "name": "canMove",
+                    "type": 0,
+                    "value": true
                 }
             ],
             "assetName": "ANC_Player",
@@ -1170,7 +1175,9 @@
                                     true
                                 ],
                                 "notifyName": "ANS_AttackCollision",
-                                "parameterName": "attackCollision",
+                                "parameterNames": [
+                                    "attackCollision"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
@@ -1193,7 +1200,9 @@
                                     true
                                 ],
                                 "notifyName": "ANS_CanCancel",
-                                "parameterName": "canCancel",
+                                "parameterNames": [
+                                    "canCancel"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
@@ -1216,7 +1225,9 @@
                                     true
                                 ],
                                 "notifyName": "ANS_CanInput",
-                                "parameterName": "canInput",
+                                "parameterNames": [
+                                    "canInput"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
@@ -1239,14 +1250,41 @@
                                     true
                                 ],
                                 "notifyName": "ANS_CanCombAttack",
-                                "parameterName": "canAttack",
+                                "parameterNames": [
+                                    "canAttack"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
                                     false,
-                                    false
+                                    true
                                 ],
                                 "startFrame": 24,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 45,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_CanMove",
+                                "parameterNames": [
+                                    "canMove"
+                                ],
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 27,
                                 "useFrame": true
                             },
                             "notifyType": 3
@@ -1354,7 +1392,9 @@
                                     true
                                 ],
                                 "notifyName": "ANS_AttackCollision",
-                                "parameterName": "attackCollision",
+                                "parameterNames": [
+                                    "attackCollision"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
@@ -1377,14 +1417,16 @@
                                     true
                                 ],
                                 "notifyName": "ANS_CanCancel",
-                                "parameterName": "canCancel",
+                                "parameterNames": [
+                                    "canCancel"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
                                     false,
                                     true
                                 ],
-                                "startFrame": 36,
+                                "startFrame": 34,
                                 "useFrame": true
                             },
                             "notifyType": 3
@@ -1400,7 +1442,7 @@
                                     true
                                 ],
                                 "notifyName": "ANS_CanInput",
-                                "parameterName": "canInput",
+                                "parameterNames": [],
                                 "setParameter": [
                                     false,
                                     true,
@@ -1423,14 +1465,41 @@
                                     true
                                 ],
                                 "notifyName": "ANS_CanCombAtk",
-                                "parameterName": "canAttack",
+                                "parameterNames": [
+                                    "canAttack"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
                                     false,
-                                    false
+                                    true
                                 ],
                                 "startFrame": 31,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 50,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_CanMove",
+                                "parameterNames": [
+                                    "canMove"
+                                ],
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 38,
                                 "useFrame": true
                             },
                             "notifyType": 3
@@ -1550,7 +1619,9 @@
                                     true
                                 ],
                                 "notifyName": "ANS_AttackCollision",
-                                "parameterName": "attackCollision",
+                                "parameterNames": [
+                                    "attackCollision"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
@@ -1573,7 +1644,9 @@
                                     true
                                 ],
                                 "notifyName": "ANS_CanCancel",
-                                "parameterName": "canCancel",
+                                "parameterNames": [
+                                    "canCancel"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
@@ -1596,7 +1669,9 @@
                                     true
                                 ],
                                 "notifyName": "ANS_CanInput",
-                                "parameterName": "canInput",
+                                "parameterNames": [
+                                    "canInput"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
@@ -1615,18 +1690,45 @@
                                 "isUse": [
                                     true,
                                     true,
-                                    false,
+                                    true,
                                     true
                                 ],
                                 "notifyName": "ANS_CanAttack",
-                                "parameterName": "canAttack",
+                                "parameterNames": [
+                                    "canAttack"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
                                     false,
-                                    false
+                                    true
                                 ],
-                                "startFrame": 60,
+                                "startFrame": 53,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 73,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_CanMove",
+                                "parameterNames": [
+                                    "canMove"
+                                ],
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 53,
                                 "useFrame": true
                             },
                             "notifyType": 3
@@ -1751,7 +1853,11 @@
                                     true
                                 ],
                                 "notifyName": "ANS_CanCancel",
-                                "parameterName": "canCancel",
+                                "parameterNames": [
+                                    "canCancel",
+                                    "canAttack",
+                                    "canMove"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
@@ -1774,7 +1880,9 @@
                                     true
                                 ],
                                 "notifyName": "ANS_Input",
-                                "parameterName": "canInput",
+                                "parameterNames": [
+                                    "canInput"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
@@ -1889,7 +1997,9 @@
                                     true
                                 ],
                                 "notifyName": "ANS_AttackCllision",
-                                "parameterName": "attackCollision",
+                                "parameterNames": [
+                                    "attackCollision"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
@@ -1912,7 +2022,9 @@
                                     true
                                 ],
                                 "notifyName": "ANS_CanInput",
-                                "parameterName": "canInput",
+                                "parameterNames": [
+                                    "canInput"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
@@ -1935,35 +2047,16 @@
                                     true
                                 ],
                                 "notifyName": "ANS_CanCancel",
-                                "parameterName": "canCancel",
+                                "parameterNames": [
+                                    "canCancel",
+                                    "canMove",
+                                    "canAttack"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
                                     false,
                                     true
-                                ],
-                                "startFrame": 43,
-                                "useFrame": true
-                            },
-                            "notifyType": 3
-                        },
-                        {
-                            "notifyParam": {
-                                "endFrame": 70,
-                                "isActive": true,
-                                "isUse": [
-                                    true,
-                                    true,
-                                    true,
-                                    false
-                                ],
-                                "notifyName": "ANS_Attack",
-                                "parameterName": "",
-                                "setParameter": [
-                                    false,
-                                    true,
-                                    false,
-                                    false
                                 ],
                                 "startFrame": 43,
                                 "useFrame": true
@@ -2079,7 +2172,7 @@
                     "notifyList": [
                         {
                             "notifyParam": {
-                                "endFrame": 29,
+                                "endFrame": 0,
                                 "isActive": true,
                                 "isUse": [
                                     true,
@@ -2087,8 +2180,12 @@
                                     false,
                                     true
                                 ],
-                                "notifyName": "ANS_ChangeParameter",
-                                "parameterName": "canCancel",
+                                "notifyName": "ANS_NotCancel",
+                                "parameterNames": [
+                                    "canAttack",
+                                    "canCancel",
+                                    "canMove"
+                                ],
                                 "setParameter": [
                                     false,
                                     false,
@@ -2150,8 +2247,12 @@
                                     false,
                                     true
                                 ],
-                                "notifyName": "ANS_ChangeParameter",
-                                "parameterName": "canCancel",
+                                "notifyName": "ANS_NotCancel",
+                                "parameterNames": [
+                                    "canMove",
+                                    "canAttack",
+                                    "canCancel"
+                                ],
                                 "setParameter": [
                                     false,
                                     false,
@@ -2214,7 +2315,11 @@
                                     true
                                 ],
                                 "notifyName": "ANS_Cancel",
-                                "parameterName": "canCancel",
+                                "parameterNames": [
+                                    "canCancel",
+                                    "canAttack",
+                                    "canMove"
+                                ],
                                 "setParameter": [
                                     false,
                                     false,
@@ -2296,7 +2401,11 @@
                                     true
                                 ],
                                 "notifyName": "ANS_Cancel",
-                                "parameterName": "canCancel",
+                                "parameterNames": [
+                                    "canCancel",
+                                    "canAttack",
+                                    "canMove"
+                                ],
                                 "setParameter": [
                                     false,
                                     false,
@@ -2386,7 +2495,11 @@
                                     true
                                 ],
                                 "notifyName": "ANS_Cancel",
-                                "parameterName": "canCancel",
+                                "parameterNames": [
+                                    "canMove",
+                                    "canAttack",
+                                    "canCancel"
+                                ],
                                 "setParameter": [
                                     false,
                                     false,
@@ -2478,7 +2591,11 @@
                                     true
                                 ],
                                 "notifyName": "ANS_Cancel",
-                                "parameterName": "canCancel",
+                                "parameterNames": [
+                                    "canCancel",
+                                    "canAttack",
+                                    "canMove"
+                                ],
                                 "setParameter": [
                                     false,
                                     false,
@@ -2590,7 +2707,11 @@
                                     true
                                 ],
                                 "notifyName": "ANS_Cancel",
-                                "parameterName": "canCancel",
+                                "parameterNames": [
+                                    "canMove",
+                                    "canAttack",
+                                    "canCancel"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
@@ -2613,7 +2734,9 @@
                                     true
                                 ],
                                 "notifyName": "ANS_Input",
-                                "parameterName": "canInput",
+                                "parameterNames": [
+                                    "canInput"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
@@ -2647,7 +2770,9 @@
                                     true
                                 ],
                                 "notifyName": "ANS_AttackCollision1",
-                                "parameterName": "attackCollision",
+                                "parameterNames": [
+                                    "attackCollision"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
@@ -2670,7 +2795,9 @@
                                     true
                                 ],
                                 "notifyName": "ANS_AttackCollision2",
-                                "parameterName": "attackCollision",
+                                "parameterNames": [
+                                    "attackCollision"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
@@ -2786,15 +2913,19 @@
                                     true,
                                     false,
                                     false,
-                                    true
+                                    false
                                 ],
                                 "notifyName": "ANS_Cancel",
-                                "parameterName": "canCancel",
+                                "parameterNames": [
+                                    "canCancel",
+                                    "canAttack",
+                                    "canMove"
+                                ],
                                 "setParameter": [
                                     true,
                                     false,
                                     false,
-                                    true
+                                    false
                                 ],
                                 "startFrame": 0,
                                 "useFrame": true
@@ -2916,7 +3047,9 @@
                                     true
                                 ],
                                 "notifyName": "ANS_Cancel",
-                                "parameterName": "canCancel",
+                                "parameterNames": [
+                                    "canCancel"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
@@ -2939,7 +3072,7 @@
                                     true
                                 ],
                                 "notifyName": "ANS_AttackCollision",
-                                "parameterName": "attackCollision",
+                                "parameterNames": [],
                                 "setParameter": [
                                     false,
                                     true,
@@ -2962,7 +3095,7 @@
                                     true
                                 ],
                                 "notifyName": "ANS_CanInput",
-                                "parameterName": "canInput",
+                                "parameterNames": [],
                                 "setParameter": [
                                     false,
                                     true,
@@ -2985,7 +3118,9 @@
                                     true
                                 ],
                                 "notifyName": "ANS_Attack",
-                                "parameterName": "canAttack",
+                                "parameterNames": [
+                                    "canAttack"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
@@ -2993,6 +3128,31 @@
                                     true
                                 ],
                                 "startFrame": 29,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 52,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_CanMove",
+                                "parameterNames": [
+                                    "canMove"
+                                ],
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 37,
                                 "useFrame": true
                             },
                             "notifyType": 3
@@ -3606,7 +3766,7 @@
                                     false
                                 ],
                                 "notifyName": "ANS_AttackCollision",
-                                "parameterName": "",
+                                "parameterNames": [],
                                 "setParameter": [
                                     false,
                                     false,
@@ -3629,7 +3789,7 @@
                                     false
                                 ],
                                 "notifyName": "ANS_CanCancel",
-                                "parameterName": "",
+                                "parameterNames": [],
                                 "setParameter": [
                                     false,
                                     false,
@@ -3759,7 +3919,7 @@
                                     false
                                 ],
                                 "notifyName": "ANS_AttackCollision",
-                                "parameterName": "",
+                                "parameterNames": [],
                                 "setParameter": [
                                     false,
                                     false,
@@ -3782,7 +3942,7 @@
                                     false
                                 ],
                                 "notifyName": "ANS_CanCancel",
-                                "parameterName": "",
+                                "parameterNames": [],
                                 "setParameter": [
                                     false,
                                     false,
@@ -3912,7 +4072,7 @@
                                     false
                                 ],
                                 "notifyName": "ANS_AttackCollision",
-                                "parameterName": "",
+                                "parameterNames": [],
                                 "setParameter": [
                                     false,
                                     false,
@@ -3935,7 +4095,7 @@
                                     false
                                 ],
                                 "notifyName": "ANS_CanCancel",
-                                "parameterName": "",
+                                "parameterNames": [],
                                 "setParameter": [
                                     false,
                                     false,
@@ -4038,7 +4198,7 @@
                                     false
                                 ],
                                 "notifyName": "ANS_AttackCollision",
-                                "parameterName": "",
+                                "parameterNames": [],
                                 "setParameter": [
                                     false,
                                     false,
@@ -4061,7 +4221,7 @@
                                     false
                                 ],
                                 "notifyName": "ANS_CanCancel",
-                                "parameterName": "",
+                                "parameterNames": [],
                                 "setParameter": [
                                     false,
                                     false,
@@ -4241,7 +4401,7 @@
                                     false
                                 ],
                                 "notifyName": "ANS_ChangeParameter",
-                                "parameterName": "",
+                                "parameterNames": [],
                                 "setParameter": [
                                     false,
                                     false,
@@ -4319,7 +4479,7 @@
                 }
             ],
             "assetName": "ANC_Boss",
-            "defaultNode": "Idle",
+            "defaultNode": "CombAttack2",
             "groupArrows": [
                 {
                     "arrows": [
@@ -4603,7 +4763,7 @@
                                     true
                                 ],
                                 "notifyName": "ANS_CanKnock",
-                                "parameterName": "canKnock",
+                                "parameterNames": [],
                                 "setParameter": [
                                     false,
                                     true,
@@ -4734,7 +4894,7 @@
                                     true
                                 ],
                                 "notifyName": "ANS_AttackCollision",
-                                "parameterName": "attackCollision",
+                                "parameterNames": [],
                                 "setParameter": [
                                     false,
                                     true,
@@ -4757,7 +4917,7 @@
                                     true
                                 ],
                                 "notifyName": "ANS_ChangeParameter",
-                                "parameterName": "canKnock",
+                                "parameterNames": [],
                                 "setParameter": [
                                     false,
                                     true,
@@ -4937,7 +5097,7 @@
                                     true
                                 ],
                                 "notifyName": "ANS_AtkCol1",
-                                "parameterName": "attackCollision",
+                                "parameterNames": [],
                                 "setParameter": [
                                     false,
                                     true,
@@ -4960,7 +5120,7 @@
                                     false
                                 ],
                                 "notifyName": "ANS_AtkCol2",
-                                "parameterName": "attackCollision",
+                                "parameterNames": [],
                                 "setParameter": [
                                     false,
                                     true,
@@ -4983,7 +5143,7 @@
                                     false
                                 ],
                                 "notifyName": "ANS_AtkCol3",
-                                "parameterName": "attackCollision",
+                                "parameterNames": [],
                                 "setParameter": [
                                     false,
                                     true,
@@ -5028,7 +5188,7 @@
                                     true
                                 ],
                                 "notifyName": "ANS_Knock",
-                                "parameterName": "canKnock",
+                                "parameterNames": [],
                                 "setParameter": [
                                     false,
                                     true,
@@ -5089,6 +5249,161 @@
                     "arrowDataList": null,
                     "groupArrowName": "MoveToAttack",
                     "nodeName": "Walk",
+                    "nodeType": 0,
+                    "notifyList": null
+                },
+                {
+                    "animNode": {
+                        "animName": "boss_CombAttack2.fbx",
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.399999976158142,
+                            "endVector": 0.0,
+                            "plotDatas": [
+                                {
+                                    "interp": 1,
+                                    "time": 0.3779999911785126,
+                                    "value": 1.2000000476837158,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.3790000081062317,
+                                    "value": 2.200000047683716,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.44999998807907104,
+                                    "value": 2.200000047683716,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.45100000500679016,
+                                    "value": 1.899999976158142,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.5989999771118164,
+                                    "value": 1.899999976158142,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.6000000238418579,
+                                    "value": 1.7000000476837158,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.6790000200271606,
+                                    "value": 1.7000000476837158,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.722000002861023,
+                                    "value": 0.800000011920929,
+                                    "vector": -0.6669554710388184
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.8360000252723694,
+                                    "value": 0.7580000162124634,
+                                    "vector": -0.3334777355194092
+                                }
+                            ],
+                            "startInterp": 1,
+                            "startValue": 1.2000000476837158,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "isLoop": true,
+                        "isRMR": false,
+                        "isRMXZ": false,
+                        "isRMY": false,
+                        "speed": 1.0
+                    },
+                    "arrowDataList": null,
+                    "groupArrowName": "",
+                    "nodeName": "CombAttack2",
+                    "nodeType": 0,
+                    "notifyList": null
+                },
+                {
+                    "animNode": {
+                        "animName": "boss_CombAttack3.fbx",
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startInterp": 1,
+                            "startValue": 1.0,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "isLoop": true,
+                        "isRMR": false,
+                        "isRMXZ": true,
+                        "isRMY": false,
+                        "speed": 1.0
+                    },
+                    "arrowDataList": null,
+                    "groupArrowName": "",
+                    "nodeName": "CombAttack3",
+                    "nodeType": 0,
+                    "notifyList": null
+                },
+                {
+                    "animNode": {
+                        "animName": "boss_SlidingSlash.fbx",
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startInterp": 1,
+                            "startValue": 1.0,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "isLoop": false,
+                        "isRMR": false,
+                        "isRMXZ": false,
+                        "isRMY": false,
+                        "speed": 1.0
+                    },
+                    "arrowDataList": null,
+                    "groupArrowName": "",
+                    "nodeName": "SlidingSlash",
+                    "nodeType": 0,
+                    "notifyList": null
+                },
+                {
+                    "animNode": {
+                        "animName": "boss_RollingRush.fbx",
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startInterp": 1,
+                            "startValue": 1.0,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "isLoop": true,
+                        "isRMR": false,
+                        "isRMXZ": false,
+                        "isRMY": false,
+                        "speed": 1.0
+                    },
+                    "arrowDataList": null,
+                    "groupArrowName": "",
+                    "nodeName": "RollingRushSlash",
                     "nodeType": 0,
                     "notifyList": null
                 }

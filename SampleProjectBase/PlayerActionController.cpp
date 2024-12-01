@@ -24,6 +24,7 @@ PlayerActionController::PlayerActionController(CP_Player& _player) :
 	pTargetObject(nullptr),
 	pTargetCamera(nullptr),
 	pIsCanAttack(nullptr),
+	pIsCanMove(nullptr),
 	pDamageAtkInfo(nullptr),
 	damageElapsedFrame(0),
 	extensionParryFrame(4),
@@ -74,12 +75,12 @@ void PlayerActionController::Init(CP_Animation* _animationController,
 
 	// アニメーションパラメータのアドレスを取得
 	pIsCanCancel = pAnimation->GetParameterPointer<bool>(CANCEL_PARAMNAME);
-
 	// 先行入力のアドレスを取得
 	pIsCanInput = pAnimation->GetParameterPointer<bool>(INPUT_PARAMNAME);
-
-	// コンビネーション攻撃k可能アドレスを取得
-	pIsCanAttack = pAnimation->GetParameterPointer<bool>(COMBATK_PARAMNAME);
+	// 攻撃可能アドレスを取得
+	pIsCanAttack = pAnimation->GetParameterPointer<bool>(CANATK_PARAMNAME);
+	// 移動可能アドレスを取得
+	pIsCanMove = pAnimation->GetParameterPointer<bool>(CANMOVE_PARAMNAME);
 }
 
 bool PlayerActionController::GetCanUpdate()
@@ -188,8 +189,8 @@ bool PlayerActionController::ChangeState(const PlayerState& _nextActionState, bo
 void PlayerActionController::OnDamage(const HashiTaku::AttackInformation& _atkInfo,
 	const DirectX::SimpleMath::Vector3& _attackerPos, bool* _pAcceptDamage)
 {
-	if(_pAcceptDamage)
-		*_pAcceptDamage = false;	
+	if (_pAcceptDamage)
+		*_pAcceptDamage = false;
 
 	// パリィできたら移行の処理は行わない
 	if (OnDamageParryCheck(_attackerPos)) return;
@@ -213,17 +214,26 @@ bool PlayerActionController::GetIsPrevTargeting() const
 
 bool PlayerActionController::GetIsCanCancel() const
 {
+	assert(pIsCanCancel);
 	return *pIsCanCancel;
 }
 
 bool PlayerActionController::GetCanInput() const
 {
+	assert(pIsCanInput);
 	return *pIsCanInput;
 }
 
-bool PlayerActionController::GetCanCombAtk() const
+bool PlayerActionController::GetCanAttack() const
 {
+	assert(pIsCanAttack);
 	return *pIsCanAttack;
+}
+
+bool PlayerActionController::GetCanMove() const
+{
+	assert(pIsCanMove);
+	return *pIsCanMove;
 }
 
 CP_Player& PlayerActionController::GetPlayer()
