@@ -26,7 +26,7 @@ class ANS_ChangeParameter : public AnimationNotifyState, public IAnimParametersS
 	std::array<bool, SECTION_CNT> setParameter;
 
 	/// @brief 変更したいパラメータ名
-	std::string changeParamName;
+	std::vector<std::string> changeParamNames;
 
 	/// @brief アニメーション内パラメータ
 	AnimationParameters* pAnimationParameters;
@@ -40,10 +40,6 @@ public:
 	/// @brief アニメーションパラメータリストセット
 	/// @param _animatiionParameters アニメーションリストパラメータ
 	void SetAnimationParameters(AnimationParameters& _animatiionParameters) override;
-
-	/// @brief パラメータを変更
-	/// @param _parameterName 変更したいパラメータ名
-	void ChangeAnimationParameter(const std::string& _parameterName);
 
 	/// @brief クローン関数
 	/// @return 生成した通知イベント

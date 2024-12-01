@@ -87,47 +87,6 @@
             }
         },
         {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "X_Left": "sky_Day_l.png",
-                        "X_Right": "sky_Day_r.png",
-                        "Y_Bottom": "sky_Day_d.png",
-                        "Y_Top": "sky_Day_u.png",
-                        "Z_Back": "sky_Day_b.png",
-                        "Z_Front": "sky_Day_f.png",
-                        "enable": true,
-                        "name": "SkyBox",
-                        "priority": 0
-                    }
-                ],
-                "layer": 0,
-                "name": "SkyBox",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            }
-        },
-        {
             "childs": [
                 {
                     "childs": [
@@ -1305,75 +1264,36 @@
                 "active": true,
                 "components": [
                     {
+                        "X_Left": "Sunset_left.png",
+                        "X_Right": "Sunset_right.png",
+                        "Y_Bottom": "Sunset_down.png",
+                        "Y_Top": "Sunset_up.png",
+                        "Z_Back": "Sunset_back.png",
+                        "Z_Front": "Sunset_front.png",
                         "enable": true,
-                        "image": "UI_hpFrame.png",
-                        "name": "UIRenderer",
+                        "name": "SkyBox",
                         "priority": 0
                     }
                 ],
-                "layer": 2,
-                "name": "Player_HpFrame",
+                "layer": 0,
+                "name": "SkyBox",
                 "tag": 0,
                 "transform": {
                     "child": null,
                     "pos": [
-                        314.8999938964844,
-                        54.20000076293945,
-                        0.8999999761581421
+                        0.0,
+                        0.0,
+                        0.0
                     ],
                     "rotation": [
-                        -4.768378971675702e-07,
+                        0.0,
                         0.0,
                         0.0,
                         1.0
                     ],
                     "scale": [
-                        600.0,
-                        50.0,
-                        1.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "image": "UI_hpLine_green.png",
-                        "name": "UIRenderer",
-                        "priority": 0
-                    },
-                    {
-                        "currentValue": 1.0,
-                        "enable": true,
-                        "maxValue": 1.0,
-                        "minValue": 0.0,
-                        "name": "UISlider",
-                        "priority": 0
-                    }
-                ],
-                "layer": 2,
-                "name": "Player_HpBar",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        315.0,
-                        54.5,
-                        0.4000000059604645
-                    ],
-                    "rotation": [
-                        -4.768374992636382e-07,
-                        0.0,
-                        -0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        590.0,
-                        38.0,
+                        1.0,
+                        1.0,
                         1.0
                     ]
                 }

@@ -133,7 +133,9 @@ void CP_BattleManager::PositionClamp(Transform& _charaTransform)
 
 void CP_BattleManager::ImGuiDebug()
 {
+#ifdef EDIT
 	ImGui::Checkbox("IsDisplay", &isDebugDisplay);
 	ImGui::DragFloat("AreaRadius", &moveAreaRadius, 0.1f, 0.0f, 10000.0f);
 	ImGuiMethod::DragFloat3(moveAreaCenterPos, "AreaCenter", 0.1f);
+#endif // EDIT
 }

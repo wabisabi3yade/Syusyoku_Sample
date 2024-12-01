@@ -87,7 +87,13 @@ private:
 	bool isTargetLookAtEnemy;
 protected:
 	/// @brief キャンセルして繰り出す状態
-	PlayerState cancelPlayState;
+	PlayerState cancelReserveState;
+
+	/// @brief キャンセルして繰り出す状態
+	PlayerState atkReserveState;
+
+	/// @brief キャンセルして繰り出す状態
+	PlayerState moveReserveState;
 
 	/// @brief プレイヤー
 	PlayerActionController* pActionController;

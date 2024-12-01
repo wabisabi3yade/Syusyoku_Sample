@@ -42,6 +42,9 @@ private:
 	/// @brief 攻撃可能のポインタ
 	const bool* pIsCanAttack;
 
+	/// @brief 移動可能のポインタ
+	const bool* pIsCanMove;
+
 	/// @brief ダメージ受けてからのフレーム数(パリィ)
 	int damageElapsedFrame;
 
@@ -102,7 +105,11 @@ public:
 
 	/// @brief コンビネーション攻撃できるかを取得
 	/// @return コンビネーション攻撃できるか？
-	bool GetCanCombAtk() const;
+	bool GetCanAttack() const;
+
+	/// @brief 移動できるかを取得
+	/// @return 移動できるか？
+	bool GetCanMove() const;
 
 	/// @brief プレイヤーコンポーネント取得
 	/// @return プレイヤーコンポーネント
@@ -190,7 +197,10 @@ private:
 	static constexpr auto INPUT_PARAMNAME{ "canInput" };
 
 	/// @brief 攻撃できるかを表すアニメーションパラメータ
-	static constexpr auto COMBATK_PARAMNAME{ "canAttack" };
+	static constexpr auto CANATK_PARAMNAME{ "canAttack" };
+
+	/// @brief 移動できるかを表すアニメーションパラメータ
+	static constexpr auto CANMOVE_PARAMNAME{ "canMove" };
 };
 
 template<class T>

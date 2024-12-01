@@ -29,6 +29,9 @@ PlayerAttackState::PlayerAttackState() :
 
 void PlayerAttackState::OnStartBehavior()
 {
+	if (!pIsReAttack)
+		pIsReAttack = GetAnimation()->GetParameterPointer<bool>(REATTACK_PARAMNAME);
+
 	// “G‚ÌÀ•W‚ğæ“¾
 	DXSimp::Vector3 atkPos = GetAtkEnemyPos();
 
@@ -198,7 +201,7 @@ void PlayerAttackState::ForwardProgressMove()
 bool PlayerAttackState::GetCanCombAttack()
 {
 	if (curChangeAtkState == PlayerState::None) return false;
-	if (!pActionController->GetCanCombAtk()) return false;
+	if (!pActionController->GetCanAttack()) return false;
 
 	return true;
 }
