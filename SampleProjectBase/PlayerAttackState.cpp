@@ -29,6 +29,9 @@ PlayerAttackState::PlayerAttackState() :
 
 void PlayerAttackState::OnStartBehavior()
 {
+	if (!pIsReAttack)
+		pIsReAttack = GetAnimation()->GetParameterPointer<bool>(REATTACK_PARAMNAME);
+
 	// “G‚ÌÀ•W‚ğæ“¾
 	DXSimp::Vector3 atkPos = GetAtkEnemyPos();
 
