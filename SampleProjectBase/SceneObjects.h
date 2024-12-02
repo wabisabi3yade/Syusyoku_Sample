@@ -43,7 +43,10 @@ public:
 	void LateUpdate();
 
 	/// @brief オブジェクトDraw処理
-	void Draw();
+	void ObjectDraw();
+
+	/// @brief UIDraw処理
+	void UIDraw();
 
 	//　配列からゲームオブジェクトを削除する
 	void DeleteGameObject(GameObject& _deleteObj);

@@ -41,11 +41,13 @@ public:
 	/// @param _effect 再生するエフェクト
 	/// @param _pos 座標
 	/// @param _scale スケール
+	/// @param _startFrame 再生開始フレーム
 	/// @return 再生しているハンドル
 	Effekseer::Handle Play(
 		const Effekseer::EffectRef& _effect,
 		const DirectX::SimpleMath::Vector3& _pos,
-		const DirectX::SimpleMath::Vector3& _scale);
+		const DirectX::SimpleMath::Vector3& _scale = DirectX::SimpleMath::Vector3::One,
+		int _startFrame = 0);
 
 	/// @brief マネジャーを取得
 	/// @return エフェクシアマネジャー変数

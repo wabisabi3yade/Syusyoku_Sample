@@ -39,9 +39,12 @@
 // UI
 #include "CP_UIRenderer.h"
 #include "CP_UISlider.h"
+#include "CP_Button.h"
+#include "CP_ButtonGroup.h"
 
 // エフェクト
 #include "CP_VisualEffect.h"
+#include "CP_EffectCreater.h"
 
 // テスト
 #include "CP_EaseTest.h"

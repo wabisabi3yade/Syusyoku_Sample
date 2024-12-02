@@ -38,14 +38,8 @@ void PlayerMoveState::Load(const nlohmann::json& _data)
 	LoadJsonFloat("rotateSpeed", rotateSpeed, _data);
 }
 
-void PlayerMoveState::OnStartBehavior()
-{
-	HASHI_DEBUG_LOG("aaaa");
-}
-
 void PlayerMoveState::UpdateBehavior()
 {
-
 	Move();
 
 	ApplyRootMotion();

@@ -808,7 +808,7 @@
                                             2
                                         ],
                                         "enable": true,
-                                        "isDebugDisplay": true,
+                                        "isDebugDisplay": false,
                                         "name": "Weapon",
                                         "priority": 0
                                     }
@@ -1064,6 +1064,7 @@
                             ]
                         },
                         "enable": true,
+                        "hpBarName": "",
                         "maxHp": 1.0,
                         "name": "Boss",
                         "priority": 0,
@@ -1177,7 +1178,7 @@
                         "name": "SpriteRenderer",
                         "priority": 0,
                         "sprite": {
-                            "texName": "ground.png",
+                            "texName": "ground1_Diffuse.png",
                             "uvDivNum": [
                                 0.0,
                                 0.0

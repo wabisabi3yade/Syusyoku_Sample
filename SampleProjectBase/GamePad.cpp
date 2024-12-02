@@ -1,90 +1,6 @@
 #include "pch.h"
 #include "GamePad.h"
 
-void GamePad::DebugInput()
-{
-	std::string inputName;
-	if (ImGuiMethod::TreeNode(TO_UTF8("コントローラー入力")))
-	{
-		for (int idx = 0; idx < Button::Button_Num; idx++)
-		{
-			if (!buttonState[idx]) continue;
-
-			switch (idx)
-			{
-			case Button::Arrow_Up: inputName = ("Up");	break;
-
-			case Button::Arrow_Down: inputName = ("Down"); break;
-
-			case Button::Arrow_Right: inputName = ("Right"); break;
-
-			case Button::Arrow_Left: inputName = ("Left"); break;
-
-			case Button::Sankaku: inputName = ("サンカク"); break;
-
-			case Button::Batsu: inputName = ("バツ"); break;
-
-			case Button::Maru: inputName = ("マル"); break;
-
-			case Button::Shikaku: inputName = ("シカク"); break;
-
-			case Button::R1: inputName = ("R1"); break;
-
-			case Button::L1: inputName = ("R2"); break;
-
-			case Button::R3: inputName = ("R3"); break;
-
-			case Button::L3: inputName = ("L3"); break;
-
-			case Button::Option: inputName = ("オプション"); break;
-
-			case Button::Share: inputName = ("シェア"); break;
-
-			default: break;
-			}
-
-			ImGui::Text(ShiftJisToUtf8(inputName).c_str());
-		}
-
-		std::string inputVal;
-		for (int idx = 0; idx < Value::Value_Num; idx++)
-		{
-			if (padValue[idx] == 0.0f) continue;
-
-			switch (idx)
-			{
-			case Value::StickR_X:
-			case Value::StickR_Y:
-				inputName = "Rスティック"; 
-				inputVal = " X： " + std::to_string(padValue[Value::StickR_X]) + " Y： " + std::to_string(padValue[Value::StickR_Y]);
-				break;
-
-			case Value::StickL_X:
-			case Value::StickL_Y:
-				inputName = "Lスティック：";
-				inputVal = " X： " + std::to_string(padValue[Value::StickL_X]) + " Y： " + std::to_string(padValue[Value::StickL_Y]);
-				break;
-
-			case Value::Trigger_R2: 
-				inputName = "R2： ";
-				inputVal = std::to_string(padValue[idx]);
-				break;
-
-			case Value::Trigger_L2: 
-				inputName = "L2：";
-				inputVal = std::to_string(padValue[idx]);
-				break;
-
-			default: break;
-			}
-
-			ImGui::Text((ShiftJisToUtf8(inputName + inputVal)).c_str());
-		}
-
-		ImGui::TreePop();
-	}
-}
-
 GamePad::GamePad() :isResult(ERROR_SUCCESS)
 {
 	for (int idx = 0; idx < Button::Button_Num; idx++)
@@ -171,8 +87,10 @@ void GamePad::InputUpdate()
 	if (state.Gamepad.wButtons & XINPUT_GAMEPAD_BACK) buttonState[Button::Share] = true;
 
 	// スティックのデッドゾーンを超えたら
-	if (state.Gamepad.sThumbRX > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE || state.Gamepad.sThumbRX < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE ||
-		state.Gamepad.sThumbRY > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE || state.Gamepad.sThumbRY < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
+	if (state.Gamepad.sThumbRX > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE || 
+		state.Gamepad.sThumbRX < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE ||
+		state.Gamepad.sThumbRY > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE ||
+		state.Gamepad.sThumbRY < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
 	{
 		// 正入力は負に比べて1小さい値になるので1足す
 		long int valX = state.Gamepad.sThumbRX;	// オーバーフロー対策

@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "SF_GameObject.h"
-#include "GameObject.h"
 
 // ƒVƒXƒeƒ€
 #include "InSceneSystemManager.h"

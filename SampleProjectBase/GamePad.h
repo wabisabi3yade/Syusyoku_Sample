@@ -5,7 +5,6 @@
 // ゲームパッドクラス
 class GamePad	
 {
-
 public:
 	enum Button	// ボタン
 	{
@@ -70,8 +69,6 @@ public:
 	bool ButtonUp(const Button& _getButton)const;	// 離れた瞬間(瞬間)
 
 	float GetValue(const Value& _getValue)const;
-
-	void DebugInput();	// デバッグ確認
 
 	bool GetConnecting() const { return (isResult == ERROR_SUCCESS); }	// 繋がってるか確認する
 };

@@ -446,7 +446,7 @@ void AnimationCurve::ImAddPopPlot()
 		{
 			if (!IsStartOrEndPlot(editingPlot))
 			{
-				if (ImGui::DragFloat("Time", &editingPlot->time, 0.001f, 0.0f, 1.0f))
+				if (ImGui::DragFloat("Time", &editingPlot->time, 0.001f, 0.0f, MAX_TIME - Mathf::smallValue))
 				{
 					plotPoints.sort(SortPointTime);
 				}

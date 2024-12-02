@@ -4,13 +4,17 @@
 #include "AssetGetter.h"
 #include "GameObject.h"
 
-CP_VisualEffect::CP_VisualEffect() : 
+CP_VisualEffect::CP_VisualEffect() :
 	pDxVfxManager(nullptr),
 	pVFX(nullptr),
-	vfxHandle(-1), 
-	playSpeed(1.0f), 
+	vfxHandle(-1),
+	currentPlayFrame(0.0f),
+	playStartFrame(0),
+	playEndFrame(0),
+	playSpeed(1.0f),
 	isPlaying(false),
-	isLoop(false)
+	isLoop(false),
+	isTrimming(false)
 {
 }
 
@@ -25,12 +29,23 @@ void CP_VisualEffect::SetPlaySpeed(float _playSpeed)
 	pDxVfxManager->GetManager()->SetSpeed(vfxHandle, _playSpeed);	// 速度変更
 }
 
+void CP_VisualEffect::SetVisualEffect(const VisualEffect* _setVfx)
+{
+	pVFX = _setVfx;
+}
+
 nlohmann::json CP_VisualEffect::Save()
 {
 	auto data = Component::Save();
 
 	data["isLoop"] = isLoop;
 	data["playSpeed"] = playSpeed;
+	data["isTrimming"] = isTrimming;
+	if (isTrimming)
+	{
+		data["startFrame"] = playStartFrame;
+		data["endFrame"] = playEndFrame;
+	}
 
 	if (pVFX)
 		data["vfxName"] = pVFX->GetAssetName();
@@ -44,6 +59,12 @@ void CP_VisualEffect::Load(const nlohmann::json& _data)
 
 	HashiTaku::LoadJsonBoolean("isLoop", isLoop, _data);
 	HashiTaku::LoadJsonFloat("playSpeed", playSpeed, _data);
+	HashiTaku::LoadJsonBoolean("isTrimming", isTrimming, _data);
+	if (isTrimming)
+	{
+		HashiTaku::LoadJsonInteger("startFrame", playStartFrame, _data);
+		HashiTaku::LoadJsonInteger("endFrame", playEndFrame, _data);
+	}
 
 	std::string vfxName;
 	if (HashiTaku::LoadJsonString("vfxName", vfxName, _data))
@@ -60,7 +81,25 @@ void CP_VisualEffect::Start()
 
 void CP_VisualEffect::Update()
 {
+	if (!isPlaying) return;
+
+	TrimmingUpdate();
+
 	PlayEndUpdate();
+}
+
+void CP_VisualEffect::TrimmingUpdate()
+{
+	if (!isTrimming) return;
+
+	// 指定した終了フレームを過ぎると
+	if (static_cast<int>(currentPlayFrame) >= playEndFrame)
+	{
+		// エフェクトを止める
+		pDxVfxManager->GetManager()->StopEffect(vfxHandle);
+	}
+
+	currentPlayFrame += playSpeed;
 }
 
 void CP_VisualEffect::PlayEndUpdate()
@@ -89,17 +128,20 @@ void CP_VisualEffect::BeginPlayVFX()
 
 	// 再生中なら
 	if (isPlaying) return;
-
+	// トリミングしないなら
+	if (!isTrimming) playStartFrame = 0;
 
 	// 再生してハンドルを取得
 	Transform& transform = GetTransform();
 	vfxHandle = pDxVfxManager->Play(pVFX->GetEffect(),
 		transform.GetPosition(),
-		transform.GetScale());
+		transform.GetScale(),
+		playStartFrame);
+
+	currentPlayFrame = static_cast<float>(playStartFrame);
 
 	// 再生速度を変更
 	SetPlaySpeed(playSpeed);
-
 	isPlaying = true;
 }
 
@@ -127,4 +169,9 @@ void CP_VisualEffect::ImGuiDebug()
 	{
 		pVFX = AssetGetter::GetAsset<VisualEffect>(vfxName);
 	}
+
+	// 範囲指定
+	ImGui::Checkbox("IsTrimming", &isTrimming);
+	if (isTrimming)
+		ImGui::DragIntRange2("PlayRange", &playStartFrame, &playEndFrame, 1.0f, 0, 1000);
 }

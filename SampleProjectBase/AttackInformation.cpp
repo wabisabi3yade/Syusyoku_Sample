@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "AttackInformation.h"
+#include "AssetGetter.h"
+#include "VisualEffect.h"
 
 HashiTaku::AttackInformation::AttackInformation()
 	: atkDamage(0.0f), hitStopFrame(0), atkLevel(AttackLevel::Low)
@@ -43,6 +45,11 @@ u_int HashiTaku::AttackInformation::GetHitStopFlame() const
 HashiTaku::AttackInformation::AttackLevel HashiTaku::AttackInformation::GetAttackLevel() const
 {
 	return atkLevel;
+}
+
+const std::string& HashiTaku::AttackInformation::GetHitVfxName() const
+{
+	return hitVfxName;
 }
 
 nlohmann::json HashiTaku::AttackInformation::Save()
@@ -105,4 +112,8 @@ void HashiTaku::AttackInformation::ImGuiDebug()
 		SetAttackLevel(static_cast<AttackLevel>(id));
 	}
 
+	// ヒット時エフェクト
+	AssetGetter::ImGuiGetCombobox<VisualEffect>("HitVfx", hitVfxName);
+	if (ImGui::Button("Clear"))
+		hitVfxName = "";
 }

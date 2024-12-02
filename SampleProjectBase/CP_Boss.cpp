@@ -4,9 +4,10 @@
 #include "InSceneSystemManager.h"
 
 constexpr auto CAN_ATTACK_ANIMPARAM("attackCollision");	// 攻撃可能フラグのアニメパラム名
+constexpr auto DEAD_ANIMPARAM("deadTrigger");	// 死んだときのアニメパラム名
 
 CP_Boss::CP_Boss() :
-	pAnimation(nullptr), pWeapon(nullptr), pCanAttack(nullptr)
+	pAnimation(nullptr), pWeapon(nullptr), pHpBar(nullptr), pCanAttack(nullptr)
 {
 }
 
@@ -30,6 +31,7 @@ nlohmann::json CP_Boss::Save()
 
 	data["actionController"] = pActionController->Save();
 	data["weaponName"] = weaponObjName;
+	data["hpBarName"] = hpBarObjName;
 
 	return data;
 }
@@ -39,6 +41,7 @@ void CP_Boss::Load(const nlohmann::json& _data)
 	CP_Enemy::Load(_data);
 
 	HashiTaku::LoadJsonString("weaponName", weaponObjName, _data);
+	HashiTaku::LoadJsonString("hpBarName", hpBarObjName, _data);
 
 	nlohmann::json actionControllerData;
 	if (HashiTaku::LoadJsonData("actionController", actionControllerData, _data))
@@ -54,8 +57,8 @@ void CP_Boss::Start()
 {
 	CP_Enemy::Start();
 
-	// 武器を取得
-	SetupWeapon();
+	// オブジェクトを取得
+	FindRequaireObject();
 
 	// コンポーネント取得
 	pAnimation = GetGameObject().GetComponent<CP_Animation>();
@@ -66,7 +69,7 @@ void CP_Boss::Start()
 	{
 		pActionController->SetPlayer(*pBattle->GetPlayerObject());
 	}
-	
+
 	// アニメーションパラメータのアドレスを取得
 	pCanAttack = pAnimation->GetParameterPointer<bool>(CAN_ATTACK_ANIMPARAM);
 
@@ -76,6 +79,8 @@ void CP_Boss::Start()
 
 void CP_Boss::Update()
 {
+	if (!CanUpdate()) return;
+
 	CP_Enemy::Update();
 
 	pActionController->UpdateCall();
@@ -94,6 +99,13 @@ void CP_Boss::Draw()
 #endif // EDIT
 }
 
+bool CP_Boss::CanUpdate()
+{
+	if (GetDead()) return false;
+
+	return true;
+}
+
 void CP_Boss::UpdateAttackCollision()
 {
 #ifdef EDIT
@@ -104,24 +116,35 @@ void CP_Boss::UpdateAttackCollision()
 	pWeapon->SetIsAttackCollision(*pCanAttack);
 }
 
-void CP_Boss::SetupWeapon()
+void CP_Boss::FindRequaireObject()
 {
-	auto pWeaponObj = InSceneSystemManager::GetInstance()->
-		GetSceneObjects().GetSceneObject(weaponObjName);
-	if (!pWeaponObj) return;
+	SceneObjects& sceneObjs = InSceneSystemManager::GetInstance()->GetSceneObjects();
 
 	// 武器コンポーネントを取得
-	if (CP_Weapon* pGetWeapon = pWeaponObj->GetComponent<CP_Weapon>())
+	GameObject* pFindObj = sceneObjs.GetSceneObject(weaponObjName);
+	if (!pFindObj) return;
+	if (pWeapon = pFindObj->GetComponent<CP_Weapon>())
 	{
-		pWeapon = pGetWeapon;
 		// 自分の座標を渡す
 		pWeapon->SetHaveObjPosPointer(&GetTransform().GetPosition());
 	}
+
+	// 体力バー
+	if (pFindObj = sceneObjs.GetSceneObject(hpBarObjName))
+	{
+		pHpBar = pFindObj->GetComponent<IUISlider>();
+		pHpBar->SetMaxValue(maxHP);
+		pHpBar->SetCurrentValue(currentHP);
+	}
 }
 
-bool CP_Boss::GetCanUpdate()
+void CP_Boss::SetCurrentHP(float _setHp)
 {
-	return true;
+	CP_Character::SetCurrentHP(_setHp);
+
+	// 体力バーにも反映
+	if (pHpBar)
+		pHpBar->SetCurrentValue(currentHP);
 }
 
 void CP_Boss::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo,
@@ -141,19 +164,28 @@ void CP_Boss::OnDeathBehavior()
 	{
 		pBattle->OnPlayerWin();
 	}
+
+	// アニメーションに通知
+	if (pAnimation)
+		pAnimation->SetTrigger(DEAD_ANIMPARAM);
+
 }
 
 void CP_Boss::ImGuiDebug()
 {
 	CP_Enemy::ImGuiDebug();
 
-	// 武器オブジェクト名を入力
+	// オブジェクト名をセット
 	static char input[IM_INPUT_BUF];
-	ImGui::InputText("Weapon", input, IM_INPUT_BUF);
-	if (ImGui::Button("Set"))
-	{
+	ImGui::InputText("ObjName", input, IM_INPUT_BUF);
+
+	ImGui::Text("Weapon:%s", weaponObjName.c_str());
+	if (ImGui::Button("Weapon"))
 		weaponObjName = input;
-	}
-	
+
+	ImGui::Text("HpBa:r%s", hpBarObjName.c_str());
+	if (ImGui::Button("HpBar"))
+		hpBarObjName = input;
+
 	pActionController->ImGuiCall();
 }

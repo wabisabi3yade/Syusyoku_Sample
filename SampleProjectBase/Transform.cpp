@@ -104,6 +104,7 @@ void Transform::SetChild(Transform& _child)
 	_child.UpdateLocalMatrixFromWorld();
 }
 
+
 void Transform::SetPosition(const DirectX::SimpleMath::Vector3& _pos)
 {
 	// ローカル行列を求める為にローカル座標を更新

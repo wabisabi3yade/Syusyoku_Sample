@@ -342,7 +342,7 @@ public:
 		btVector3 capEnd(0.f, 0.f, 0.f);
 		capEnd[upAxis] = halfHeight;
 
-		// Draw the ends
+		// ObjectDraw the ends
 		{
 			btTransform childTransform = transform;
 			childTransform.getOrigin() = transform * capStart;
@@ -374,7 +374,7 @@ public:
 			}
 		}
 
-		// Draw some additional drawLines
+		// ObjectDraw some additional drawLines
 		btVector3 start = transform.getOrigin();
 
 		for (int i = 0; i < 360; i += stepDegrees)

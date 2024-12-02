@@ -23,6 +23,9 @@ namespace HashiTaku
 
 		/// @brief 攻撃レベル
 		AttackLevel atkLevel;
+
+		/// @brief 攻撃ヒット時に出すエフェクト名
+		std::string hitVfxName;
 	public:
 		AttackInformation();
 		AttackInformation(float _atkDamage, AttackLevel _atkLevel);
@@ -51,6 +54,10 @@ namespace HashiTaku
 		/// @brief 攻撃レベルを取得
 		/// @return 攻撃レベル
 		AttackLevel GetAttackLevel() const;
+
+		/// @brief ヒット時に出すエフェクト名取得
+		/// @return エフェクト名
+		const std::string& GetHitVfxName() const;
 
 		nlohmann::json Save() override;
 		void Load(const nlohmann::json& _data) override;

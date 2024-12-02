@@ -65,7 +65,8 @@ void CP_Enemy::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo,
 {
 	if (GetIsInvicible()) return;
 
-	currentHP -= _attackInfo.GetDamageValue();
+	// HPを減らす
+	DecadeHp(_attackInfo.GetDamageValue());
 
 	// ヒットストップをする
 	BeginHitStop(_attackInfo.GetHitStopFlame());

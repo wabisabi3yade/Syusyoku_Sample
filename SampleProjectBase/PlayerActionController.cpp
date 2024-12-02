@@ -146,6 +146,8 @@ void PlayerActionController::OnBeginTargeting()
 
 void PlayerActionController::OnEndTargeting()
 {
+	if (!pTargetObject) return;
+
 	if (pTargetCamera)	// ƒJƒƒ‰‚É‚à“`‚¦‚é
 	{
 		pTargetCamera->RemoveNotify(*pTargetObject);

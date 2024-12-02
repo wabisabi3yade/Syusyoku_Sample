@@ -18,11 +18,23 @@ class CP_VisualEffect : public Component
 	/// @brief 再生速度
 	float playSpeed;
 
+	/// @brief 現在のフレーム
+	float currentPlayFrame;
+
+	/// @brief 再生開始フレーム
+	int playStartFrame;
+
+	/// @brief 再生終了フレーム
+	int playEndFrame;
+
 	/// @brief 再生中か？
 	bool isPlaying;
 
 	/// @brief ループ再生するか？
 	bool isLoop;
+
+	/// @brief 再生時間の範囲指定するか？
+	bool isTrimming;
 public:
 	CP_VisualEffect();
 	~CP_VisualEffect() {}
@@ -32,6 +44,10 @@ public:
 	/// @brief 再生速度を変更
 	/// @param _playSpeed 再生速度
 	void SetPlaySpeed(float _playSpeed);
+
+	/// @brief エフェクトをセット
+	/// @param _setVfx エフェクト
+	void SetVisualEffect(const VisualEffect* _setVfx);
 
 	/// @brief セーブする
 	/// @param _data セーブシーンデータ
@@ -44,6 +60,9 @@ private:
 	void Start() override;
 
 	void Update() override;
+
+	/// @brief トリミング関連の更新処理
+	void TrimmingUpdate();
 
 	/// @brief 終了した時の処理
 	void PlayEndUpdate();

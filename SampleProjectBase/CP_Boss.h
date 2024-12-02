@@ -2,13 +2,16 @@
 #include "CP_Enemy.h"
 #include "CP_Weapon.h"
 #include "BossActionController.h"
-
+#include "IUISlider.h"
 
 /// @brief ボスのコンポーネント
 class CP_Boss : public CP_Enemy
 {
 	/// @brief 武器名
 	std::string weaponObjName;
+
+	/// @brief 体力バーオブジェクト名
+	std::string hpBarObjName;
 
 	/// @brief アクション管理
 	std::unique_ptr<BossActionController> pActionController;
@@ -18,6 +21,9 @@ class CP_Boss : public CP_Enemy
 
 	/// @brief 武器オブジェクト
 	CP_Weapon* pWeapon;
+
+	/// @brief 体力バー
+	IUISlider* pHpBar;
 
 	/// @brief 攻撃判定
 	const bool* pCanAttack;
@@ -44,15 +50,20 @@ private:
 	void Update() override;
 	void Draw() override;
 
+	/// @brief 更新できるか取得
+	/// @return 更新できるか？
+	bool CanUpdate();
+
 	/// @brief 攻撃できるか更新する
 	void UpdateAttackCollision();
 
-	/// @brief 武器をセットする
-	void SetupWeapon();
+	/// @brief 必要なオブジェクトを探す
+	void FindRequaireObject();
 
-	/// @brief 更新できるか？
-	/// @return 更新できるか？
-	bool GetCanUpdate();
+	
+	/// @brief 体力をセット
+	/// @param _setHp 体力
+	void SetCurrentHP(float _setHp)override;
 
 	/// @brief 各クラスのダメージを受けたときの処理
 	/// @param _attackInfo 攻撃情報

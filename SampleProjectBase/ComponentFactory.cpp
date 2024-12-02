@@ -43,9 +43,12 @@ void ComponentFactory::Init()
 	// UI
 	ResistComponnent<CP_UIRenderer>();
 	ResistComponnent<CP_UISlider>();
+	ResistComponnent<CP_Button>();
+	ResistComponnent<CP_ButtonGroup>();
 
-	// UI
+	// エフェクト
 	ResistComponnent<CP_VisualEffect>();
+	ResistComponnent<CP_EffectCreater>();
 
 	// その他
 	ResistComponnent<CP_EaseTest>();
@@ -54,9 +57,9 @@ void ComponentFactory::Init()
 
 std::unique_ptr<Component> ComponentFactory::CreateByName(const std::string& _componentName)
 {
-	auto itr = pComponents1.find(_componentName);
+	auto itr = pComponents.find(_componentName);
 
-	if (itr == pComponents1.end())
+	if (itr == pComponents.end())
 	{
 		HASHI_DEBUG_LOG(_componentName + "はリストにありません");
 		return nullptr;
@@ -86,7 +89,7 @@ std::vector<const std::string*> ComponentFactory::GetComponentsName()
 {
 	std::vector<const std::string*> s;
 
-	for (auto& itr : pComponents1)
+	for (auto& itr : pComponents)
 	{
 		s.push_back(&itr.first);
 	}

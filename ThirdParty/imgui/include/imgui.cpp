@@ -5021,7 +5021,7 @@ static void ImGui::RenderDimmedBackgroundBehindWindow(ImGuiWindow* window, ImU32
     ImGuiViewportP* viewport = (ImGuiViewportP*)GetMainViewport();
     ImRect viewport_rect = viewport->GetMainRect();
 
-    // Draw behind window by moving the draw command at the FRONT of the draw list
+    // ObjectDraw behind window by moving the draw command at the FRONT of the draw list
     {
         // We've already called AddWindowToDrawData() which called DrawList->ChannelsMerge() on DockNodeHost windows,
         // and draw list have been trimmed already, hence the explicit recreation of a draw command if missing.
@@ -5070,16 +5070,16 @@ static void ImGui::RenderDimmedBackgrounds()
 
     if (dim_bg_for_modal)
     {
-        // Draw dimming behind modal or a begin stack child, whichever comes first in draw order.
+        // ObjectDraw dimming behind modal or a begin stack child, whichever comes first in draw order.
         ImGuiWindow* dim_behind_window = FindBottomMostVisibleWindowWithinBeginStack(modal_window);
         RenderDimmedBackgroundBehindWindow(dim_behind_window, GetColorU32(modal_window->DC.ModalDimBgColor, g.DimBgRatio));
     }
     else if (dim_bg_for_window_list)
     {
-        // Draw dimming behind CTRL+Tab target window
+        // ObjectDraw dimming behind CTRL+Tab target window
         RenderDimmedBackgroundBehindWindow(g.NavWindowingTargetAnim, GetColorU32(ImGuiCol_NavWindowingDimBg, g.DimBgRatio));
 
-        // Draw border around CTRL+Tab target window
+        // ObjectDraw border around CTRL+Tab target window
         ImGuiWindow* window = g.NavWindowingTargetAnim;
         ImGuiViewport* viewport = GetMainViewport();
         float distance = g.FontSize;
@@ -5197,7 +5197,7 @@ void ImGui::Render()
     g.IO.MetricsRenderWindows = 0;
     CallContextHooks(&g, ImGuiContextHookType_RenderPre);
 
-    // Draw modal/window whitening backgrounds
+    // ObjectDraw modal/window whitening backgrounds
     RenderDimmedBackgrounds();
 
     // Add background ImDrawList (for each active viewport)
@@ -5222,7 +5222,7 @@ void ImGui::Render()
         if (windows_to_render_top_most[n] && IsWindowActiveAndVisible(windows_to_render_top_most[n])) // NavWindowingTarget is always temporarily displayed as the top-most window
             AddRootWindowToDrawData(windows_to_render_top_most[n]);
 
-    // Draw software mouse cursor if requested by io.MouseDrawCursor flag
+    // ObjectDraw software mouse cursor if requested by io.MouseDrawCursor flag
     if (g.IO.MouseDrawCursor && g.MouseCursor != ImGuiMouseCursor_None)
         RenderMouseCursor(g.IO.MousePos, g.Style.MouseCursorScale, g.MouseCursor, IM_COL32_WHITE, IM_COL32_BLACK, IM_COL32(0, 0, 0, 48));
 
@@ -6228,8 +6228,8 @@ static void ImGui::RenderWindowOuterBorders(ImGuiWindow* window)
     }
 }
 
-// Draw background and borders
-// Draw and handle scrollbars
+// ObjectDraw background and borders
+// ObjectDraw and handle scrollbars
 void ImGui::RenderWindowDecorations(ImGuiWindow* window, const ImRect& title_bar_rect, bool title_bar_is_highlight, bool handle_borders_and_resize_grips, int resize_grip_count, const ImU32 resize_grip_col[4], float resize_grip_draw_size)
 {
     ImGuiContext& g = *GImGui;
@@ -6240,7 +6240,7 @@ void ImGui::RenderWindowDecorations(ImGuiWindow* window, const ImRect& title_bar
     IM_ASSERT(window->BeginCount == 0);
     window->SkipItems = false;
 
-    // Draw window + handle manual resize
+    // ObjectDraw window + handle manual resize
     // As we highlight the title bar when want_focus is set, multiple reappearing windows will have their title bar highlighted on their reappearing frame.
     const float window_rounding = window->WindowRounding;
     const float window_border_size = window->WindowBorderSize;
@@ -14373,7 +14373,7 @@ static void RenderViewportsThumbnails()
     ImVec2 p = window->DC.CursorPos;
     ImVec2 off = p - bb_full.Min * SCALE;
 
-    // Draw viewports
+    // ObjectDraw viewports
     for (ImGuiViewportP* viewport : g.Viewports)
     {
         ImRect viewport_draw_bb(off + (viewport->Pos) * SCALE, off + (viewport->Pos + viewport->Size) * SCALE);
@@ -14382,7 +14382,7 @@ static void RenderViewportsThumbnails()
     ImGui::Dummy(bb_full.GetSize() * SCALE);
 }
 
-// Draw an arbitrary US keyboard layout to visualize translated keys
+// ObjectDraw an arbitrary US keyboard layout to visualize translated keys
 void ImGui::DebugRenderKeyboardPreview(ImDrawList* draw_list)
 {
     const float scale = ImGui::GetFontSize() / 13.0f;
@@ -15282,7 +15282,7 @@ void ImGui::DebugNodeDrawCmdShowMeshAndBoundingBox(ImDrawList* out_draw_list, co
 {
     IM_ASSERT(show_mesh || show_aabb);
 
-    // Draw wire-frame version of all triangles
+    // ObjectDraw wire-frame version of all triangles
     ImRect clip_rect = draw_cmd->ClipRect;
     ImRect vtxs_rect(FLT_MAX, FLT_MAX, -FLT_MAX, -FLT_MAX);
     ImDrawListFlags backup_flags = out_draw_list->Flags;
@@ -15298,7 +15298,7 @@ void ImGui::DebugNodeDrawCmdShowMeshAndBoundingBox(ImDrawList* out_draw_list, co
         if (show_mesh)
             out_draw_list->AddPolyline(triangle, 3, IM_COL32(255, 255, 0, 255), ImDrawFlags_Closed, 1.0f); // In yellow: mesh triangles
     }
-    // Draw bounding boxes
+    // ObjectDraw bounding boxes
     if (show_aabb)
     {
         out_draw_list->AddRect(ImTrunc(clip_rect.Min), ImTrunc(clip_rect.Max), IM_COL32(255, 0, 255, 255)); // In pink: clipping rectangle submitted to GPU
@@ -15371,7 +15371,7 @@ void ImGui::DebugNodeFont(ImFont* font)
             if (!TreeNode((void*)(intptr_t)base, "U+%04X..U+%04X (%d %s)", base, base + 255, count, count > 1 ? "glyphs" : "glyph"))
                 continue;
 
-            // Draw a 16x16 grid of glyphs
+            // ObjectDraw a 16x16 grid of glyphs
             ImVec2 base_pos = GetCursorScreenPos();
             for (unsigned int n = 0; n < 256; n++)
             {
@@ -15714,7 +15714,7 @@ void ImGui::DebugTextUnformattedWithLocateItem(const char* line_begin, const cha
 // [SECTION] OTHER DEBUG TOOLS (ITEM PICKER, ID STACK TOOL)
 //-----------------------------------------------------------------------------
 
-// Draw a small cross at current CursorPos in current window's DrawList
+// ObjectDraw a small cross at current CursorPos in current window's DrawList
 void ImGui::DebugDrawCursorPos(ImU32 col)
 {
     ImGuiContext& g = *GImGui;
@@ -15724,7 +15724,7 @@ void ImGui::DebugDrawCursorPos(ImU32 col)
     window->DrawList->AddLine(ImVec2(pos.x - 3.0f, pos.y), ImVec2(pos.x + 4.0f, pos.y), col, 1.0f);
 }
 
-// Draw a 10px wide rectangle around CurposPos.x using Line Y1/Y2 in current window's DrawList
+// ObjectDraw a 10px wide rectangle around CurposPos.x using Line Y1/Y2 in current window's DrawList
 void ImGui::DebugDrawLineExtents(ImU32 col)
 {
     ImGuiContext& g = *GImGui;
@@ -15737,7 +15737,7 @@ void ImGui::DebugDrawLineExtents(ImU32 col)
     window->DrawList->AddLine(ImVec2(curr_x - 5.0f, line_y2), ImVec2(curr_x + 5.0f, line_y2), col, 1.0f);
 }
 
-// Draw last item rect in ForegroundDrawList (so it is always visible)
+// ObjectDraw last item rect in ForegroundDrawList (so it is always visible)
 void ImGui::DebugDrawItemRect(ImU32 col)
 {
     ImGuiContext& g = *GImGui;

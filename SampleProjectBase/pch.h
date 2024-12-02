@@ -13,7 +13,7 @@
 #define NOMINMAX
 
 // ImGui‚ð•\Ž¦‚·‚é’è‹`
-//#define EDIT_DISPLAY
+#define EDIT_DISPLAY
 #if defined(_DEBUG) || defined(EDIT_DISPLAY)
 #define EDIT
 #endif

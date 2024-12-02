@@ -87,6 +87,10 @@ private:
 	void Draw() override;
 	void OnDestroy() override;
 
+	/// @brief 更新できるか取得
+	/// @return 更新できるか？
+	bool CanUpdate();
+
 	/// @brief 武器のオブジェクトをセットする
 	void SetRequireObject();
 

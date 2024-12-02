@@ -844,6 +844,18 @@
     <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Parry">
       <UniqueIdentifier>{616e5f7a-1534-4693-b588-9286886260a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Component\EffectCreater">
+      <UniqueIdentifier>{699f964f-7cc8-4a7a-8e53-a2ce27970312}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Button">
+      <UniqueIdentifier>{b54bed7e-988f-4559-b2fe-3e38781386c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\ButtonGroup">
+      <UniqueIdentifier>{d2e90e45-216a-4261-a7af-78ed16dfa6e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\ButtonGroup\Title">
+      <UniqueIdentifier>{744eef72-07b5-42ee-9904-0bd13a0b0957}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1575,6 +1587,18 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="PlayerGuardState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_EffectCreater.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Button.cpp">
+      <Filter>ソース ファイル\Component\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_ButtonGroup.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_TitleButtonGroup.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -2313,6 +2337,18 @@
     </ClInclude>
     <ClInclude Include="IUISlider.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_EffectCreater.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Button.h">
+      <Filter>ソース ファイル\Component\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_ButtonGroup.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_TitleButtonGroup.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

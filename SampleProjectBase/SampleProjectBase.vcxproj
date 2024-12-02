@@ -195,6 +195,8 @@
     <ClCompile Include="CharacterActState_Base.cpp" />
     <ClCompile Include="CP_BattleManager.cpp" />
     <ClCompile Include="CP_Boss.cpp" />
+    <ClCompile Include="CP_Button.cpp" />
+    <ClCompile Include="CP_ButtonGroup.cpp" />
     <ClCompile Include="CP_CapsuleCollider.cpp" />
     <ClCompile Include="CatmulSplineInterp.cpp" />
     <ClCompile Include="BulletDebugDraw.cpp" />
@@ -205,11 +207,13 @@
     <ClCompile Include="CP_BoxAnimation.cpp" />
     <ClCompile Include="CP_Character.cpp" />
     <ClCompile Include="CP_CylinderCollider.cpp" />
+    <ClCompile Include="CP_EffectCreater.cpp" />
     <ClCompile Include="CP_Enemy.cpp" />
     <ClCompile Include="CP_OutLineRenderer.cpp" />
     <ClCompile Include="CP_RigidBody.cpp" />
     <ClCompile Include="CP_SkyBox.cpp" />
     <ClCompile Include="CP_TestCollider.cpp" />
+    <ClCompile Include="CP_TitleButtonGroup.cpp" />
     <ClCompile Include="CP_UIRenderer.cpp" />
     <ClCompile Include="CP_UISlider.cpp" />
     <ClCompile Include="CP_Rig.cpp" />
@@ -426,6 +430,8 @@
     <ClInclude Include="CharacterActState_Base.h" />
     <ClInclude Include="CP_BattleManager.h" />
     <ClInclude Include="CP_Boss.h" />
+    <ClInclude Include="CP_Button.h" />
+    <ClInclude Include="CP_ButtonGroup.h" />
     <ClInclude Include="CP_CapsuleCollider.h" />
     <ClInclude Include="CatmulSplineInterp.h" />
     <ClInclude Include="BulletDebugDraw.h" />
@@ -438,11 +444,13 @@
     <ClInclude Include="CP_BoxAnimation.h" />
     <ClInclude Include="CP_Character.h" />
     <ClInclude Include="CP_CylinderCollider.h" />
+    <ClInclude Include="CP_EffectCreater.h" />
     <ClInclude Include="CP_Enemy.h" />
     <ClInclude Include="CP_OutLineRenderer.h" />
     <ClInclude Include="CP_RigidBody.h" />
     <ClInclude Include="CP_SkyBox.h" />
     <ClInclude Include="CP_TestCollider.h" />
+    <ClInclude Include="CP_TitleButtonGroup.h" />
     <ClInclude Include="CP_UIRenderer.h" />
     <ClInclude Include="CP_UISlider.h" />
     <ClInclude Include="CP_Rig.h" />

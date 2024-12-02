@@ -9,7 +9,9 @@
 using namespace DirectX::SimpleMath;
 
 // 攻撃判定のアニメーションパラメータ名
-constexpr auto ATKCOL_ANIMPARAM_NAME("attackCollision");
+constexpr auto ATKCOL_ANIMPARAM("attackCollision");
+// 死んだときのアニメーションパラメータ名
+constexpr auto DEAD_ANIMPARAM("deadTrigger");
 
 CP_Player::CP_Player() :
 	pAnimation(nullptr),
@@ -30,7 +32,7 @@ void CP_Player::SetAttackInfo(const HashiTaku::AttackInformation& _setAttackInfo
 
 	pWeapon->SetAttackInfo(_setAttackInfo);
 
-	pAnimation->SetBool(ATKCOL_ANIMPARAM_NAME, false);
+	pAnimation->SetBool(ATKCOL_ANIMPARAM, false);
 }
 
 void CP_Player::Init()
@@ -62,7 +64,7 @@ void CP_Player::Start()
 
 	//アニメーション関係生成
 	pAnimation = gameObject->GetComponent<CP_Animation>();
-	pAttackCollisionFlag = pAnimation->GetParameterPointer<bool>(ATKCOL_ANIMPARAM_NAME);
+	pAttackCollisionFlag = pAnimation->GetParameterPointer<bool>(ATKCOL_ANIMPARAM);
 
 	// アニメーション変更オブザーバーを追加
 	pAnimation->AddChangeAnimObserver(pActionController->GetChangeAnimObserver());
@@ -73,6 +75,8 @@ void CP_Player::Start()
 
 void CP_Player::Update()
 {
+	if (!CanUpdate()) return;
+
 	CP_Character::Update();
 
 	// アクション周りを更新
@@ -95,6 +99,13 @@ void CP_Player::OnDestroy()
 	{
 		pBattle->RemovePlayer(*this);
 	}
+}
+
+bool CP_Player::CanUpdate()
+{
+	if (GetDead()) return false;
+
+	return true;
 }
 
 void CP_Player::SetRequireObject()
@@ -289,4 +300,7 @@ void CP_Player::OnDeathBehavior()
 	{
 		pBattle->OnPlayerLose();
 	}
+
+	if (pAnimation)
+		pAnimation->SetTrigger(DEAD_ANIMPARAM);
 }

@@ -210,11 +210,14 @@
                         "components": [
                             {
                                 "enable": true,
+                                "endFrame": 34,
                                 "isLoop": true,
+                                "isTrimming": true,
                                 "name": "VisualEffect",
-                                "playSpeed": 0.5,
+                                "playSpeed": 0.7540000081062317,
                                 "priority": 0,
-                                "vfxName": "NA_Fire"
+                                "startFrame": 23,
+                                "vfxName": "Fire01"
                             }
                         ],
                         "layer": 0,
@@ -223,20 +226,20 @@
                         "transform": {
                             "child": null,
                             "pos": [
-                                0.0,
-                                -5.0,
-                                -11.5
+                                0.01828049123287201,
+                                -5.099999904632568,
+                                -11.648881912231445
                             ],
                             "rotation": [
                                 -0.0,
-                                -0.061048611998558044,
+                                -0.06104859709739685,
                                 -0.0,
-                                0.9981347918510437
+                                0.9981348514556885
                             ],
                             "scale": [
-                                0.4000000059604645,
-                                0.4000000059604645,
-                                0.4000000059604645
+                                0.8999999761581421,
+                                0.800000011920929,
+                                0.699999988079071
                             ]
                         }
                     }
@@ -316,6 +319,196 @@
                         0.9999998807907104,
                         1.0,
                         0.9999998807907104
+                    ]
+                }
+            }
+        },
+        {
+            "childs": [
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": null,
+                        "layer": 0,
+                        "name": "SelectBackImage",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "image": "UI_StartText.png",
+                                "name": "UIRenderer",
+                                "priority": 0
+                            },
+                            {
+                                "enable": true,
+                                "name": "Button",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 2,
+                        "name": "StartImage",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                200.0,
+                                461.79998779296875,
+                                0.0
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                250.0,
+                                100.0,
+                                1.0
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "image": "UI_EndText.png",
+                                "name": "UIRenderer",
+                                "priority": 0
+                            },
+                            {
+                                "enable": true,
+                                "name": "Button",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 2,
+                        "name": "EndImage",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                198.6999969482422,
+                                569.5,
+                                0.0
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                175.0,
+                                70.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            ],
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "defaultId": 0,
+                        "enable": true,
+                        "horiSpeed": 0,
+                        "name": "ButtonGroup",
+                        "priority": 0,
+                        "vertSpeed": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "ButtonGroup",
+                "tag": 0,
+                "transform": {
+                    "child": [
+                        "SelectBackImage",
+                        "StartImage",
+                        "EndImage"
+                    ],
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "image": "UI_TitleImage.png",
+                        "name": "UIRenderer",
+                        "priority": 0
+                    }
+                ],
+                "layer": 2,
+                "name": "TitleImage",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        640.0,
+                        159.39999389648438,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1100.0,
+                        220.0,
+                        1.0
                     ]
                 }
             }
