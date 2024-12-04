@@ -224,11 +224,12 @@ void AnimBlendNodePlayer::CalcRootMotionPosSpeed()
 
 	// ノード再生速度は適用しない
 	rootMotionPosSpeedPerSec *= pAssetBoneList->GetLoadScale() *
+		pObjectTransform->GetScale() *
 		allPlaySpeed /
 		GetNodePlaySpeed();
 }
 
-DirectX::SimpleMath::Vector3 AnimBlendNodePlayer::GetRootMotionPos(float _ratio, bool _isLoadScaling) const
+DirectX::SimpleMath::Vector3 AnimBlendNodePlayer::GetRootMotionPos(float _ratio, bool _isWorldScaling) const
 {
 	using namespace DirectX::SimpleMath;
 	Vector3 rootMotionPos;
@@ -236,16 +237,14 @@ DirectX::SimpleMath::Vector3 AnimBlendNodePlayer::GetRootMotionPos(float _ratio,
 	blendNode.GetRootMotionPos(_ratio, blendingAnimData, rootMotionPos);
 
 	// ロード時の回転量と、スケールを掛ける
-	if (_isLoadScaling)
+	if (_isWorldScaling)
 		ApplyLoadTransform(rootMotionPos);
+
+	
 
 	return rootMotionPos;
 }
 
-DirectX::SimpleMath::Quaternion AnimBlendNodePlayer::GetRootMotionRot(float _ratio, bool _isLoadScaling) const
-{
-	return DirectX::SimpleMath::Quaternion();
-}
 
 void AnimBlendNodePlayer::ImGuiDebug()
 {

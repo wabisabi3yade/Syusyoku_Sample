@@ -4,7 +4,7 @@
 #include "InSceneSystemManager.h"
 
 using namespace HashiTaku;
-namespace DX = DirectX::SimpleMath;
+namespace DXSimp = DirectX::SimpleMath;
 
 constexpr float SLEEP_LINEAR(0.01f);	// これ以下の移動速度なら静的オブジェクトに変更する
 constexpr float SLEEP_ANGLE(0.01f);	// これ以下の回転速度なら静的オブジェクトに変更する
@@ -195,7 +195,7 @@ CollisionTypeJudge& CP_RigidBody::GetColTypeJudge() const
 
 DirectX::SimpleMath::Vector3 CP_RigidBody::GetVelocity() const
 {
-	if (!collider || isTrigger) return DX::Vector3::Zero;
+	if (!collider || isTrigger) return DXSimp::Vector3::Zero;
 
 	btRigidBody& btRb = static_cast<btRigidBody&>(*collider->pCollisionObject);
 	return Bullet::ToDXVector3(btRb.getLinearVelocity());

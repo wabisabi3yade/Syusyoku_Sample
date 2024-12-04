@@ -173,23 +173,24 @@ void CP_Boss::OnDeathBehavior()
 
 void CP_Boss::ImGuiDebug()
 {
-	if (!ImGui::Begin("Boss")) return;
+	if (ImGui::Begin("Boss"))
+	{
+		CP_Enemy::ImGuiDebug();
 
-	CP_Enemy::ImGuiDebug();
+		// オブジェクト名をセット
+		static char input[IM_INPUT_BUF];
+		ImGui::InputText("ObjName", input, IM_INPUT_BUF);
 
-	// オブジェクト名をセット
-	static char input[IM_INPUT_BUF];
-	ImGui::InputText("ObjName", input, IM_INPUT_BUF);
+		ImGui::Text("Weapon:%s", weaponObjName.c_str());
+		if (ImGui::Button("Weapon"))
+			weaponObjName = input;
 
-	ImGui::Text("Weapon:%s", weaponObjName.c_str());
-	if (ImGui::Button("Weapon"))
-		weaponObjName = input;
+		ImGui::Text("HpBar:%s", hpBarObjName.c_str());
+		if (ImGui::Button("HpBar"))
+			hpBarObjName = input;
 
-	ImGui::Text("HpBa:r%s", hpBarObjName.c_str());
-	if (ImGui::Button("HpBar"))
-		hpBarObjName = input;
+		pActionController->ImGuiCall();
 
-	pActionController->ImGuiCall();
-
-	ImGui::End();
+		ImGui::End();
+	}
 }

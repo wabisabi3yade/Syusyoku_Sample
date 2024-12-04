@@ -66,8 +66,6 @@ void AnimNodePlayer_Base::UpdateCall(std::vector<BoneTransform>& _outTransforms,
 
 	// 通知イベントを更新
 	NotifyUpdate();
-
-	
 }
 
 void AnimNodePlayer_Base::ApplyRootMotion(const DirectX::SimpleMath::Vector3& _rootMovement)
@@ -128,11 +126,6 @@ float AnimNodePlayer_Base::GetLastPlayRatio() const
 float AnimNodePlayer_Base::GetNodePlaySpeed() const
 {
 	return playerSpeedTimes;
-}
-
-void AnimNodePlayer_Base::GetDeltaRootPos(DirectX::SimpleMath::Vector3& _outPos) const
-{
-	_outPos = GetRootMotionPos(curPlayRatio) - p_RootMotionPos;
 }
 
 void AnimNodePlayer_Base::GetCurrentRootPos(DirectX::SimpleMath::Vector3& _outPos, bool _isLoadScaling) const
@@ -262,6 +255,8 @@ void AnimNodePlayer_Base::ApplyLoadTransform(DirectX::SimpleMath::Vector3& _root
 
 	_rootMotionPos *= pAssetBoneList->GetLoadScale();
 	_rootMotionPos = Vector3::Transform(_rootMotionPos, Matrix::CreateFromQuaternion(pAssetBoneList->GetLoadRotation()));
+
+	_rootMotionPos *= pObjectTransform->GetScale();
 }
 
 void AnimNodePlayer_Base::ImGuiDebug()

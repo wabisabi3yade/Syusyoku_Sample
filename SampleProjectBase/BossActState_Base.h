@@ -15,23 +15,26 @@ protected:
 		/// @brief ワープモーションで移動する割合(XZ成分)
 		AnimationCurve horiMovementCurve;
 
-		/// @brief ワープモーションで移動する割合(Y成分)
-		AnimationCurve vertMovementCurve;
+		/*/// @brief ワープモーションで移動する割合(Y成分)
+		AnimationCurve vertMovementCurve;*/
 
 		/// @brief 移動するXZ最大距離(0未満なら制限なしとする)
 		float maxMovementXZ{ -10.0f };
 
-		/// @brief 移動するY最大距離(0未満なら制限なしとする)
-		float maxMovementY{ -10.0f };
+		/*	/// @brief 移動するY最大距離(0未満なら制限なしとする)
+			float maxMovementY{ -10.0f };*/
 
-		/// @brief 開始する割合
+			/// @brief 開始する割合
 		float beginAnimRatio{ 0.0f };
 
 		/// @brief 終了する割合
 		float endAnimRatio{ 0.0f };
 
-		/// @brief Y移動させるか？
-		bool isUseVertical{ false };
+		/// @brief ルートモーションの割合から移動割合を求める
+		bool isFromRootMotion{ true };
+
+		/*/// @brief Y移動させるか？
+		bool isUseVertical{ false };*/
 	};
 
 public:
@@ -64,8 +67,8 @@ private:
 	/// @brief ワープモーションで移動するときのターゲット座標との距離
 	DirectX::SimpleMath::Vector3 disToWarpTargePos;
 
-	/// @brief 最後のワープモーションで求めたカーブ値
-	float lastWarpCurveValue;
+	/// @brief 最後のワープモーションで求めた進行度(0.0～1.0)
+	float lastProgressRatio;
 
 	/// @brief ボスのステート
 	BossState stateType;
@@ -75,6 +78,12 @@ private:
 
 	/// @brief 現在のワープ回数
 	u_int curWarpStep;
+
+	/// @brief ワープ開始時のルートモーション座標
+	DirectX::SimpleMath::Vector3 startRMPos;
+
+	/// @brief ワープ終了時のルートモーション座標
+	DirectX::SimpleMath::Vector3 endRMPos;
 
 	/// @brief ワープモーションさせるか？
 	bool isUseWarpMotion;

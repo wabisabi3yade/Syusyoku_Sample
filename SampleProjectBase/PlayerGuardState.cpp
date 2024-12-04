@@ -77,6 +77,11 @@ void PlayerGuardState::UpdateBehavior()
 {
 	// パリィできる時間の更新
 	ParryTimeUpdate();
+
+	CP_RigidBody& rb = GetRB();
+	DXSimp::Vector3 velocity;
+	velocity.y = rb.GetVelocity().y;
+	GetRB().SetVelocity(velocity);
 }
 
 void PlayerGuardState::OnEndBehavior()

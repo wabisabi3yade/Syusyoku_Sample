@@ -49,31 +49,20 @@ void AnimSingleNodePlayer::CalcRootMotionPosSpeed()
 		(allPlaySpeed / nodePlaySpeed);
 }
 
-DirectX::SimpleMath::Vector3 AnimSingleNodePlayer::GetRootMotionPos(float _ratio, bool _isLoadScaling) const
+DirectX::SimpleMath::Vector3 AnimSingleNodePlayer::GetRootMotionPos(float _ratio, bool _isWorldScaling) const
 {
 	using namespace DirectX::SimpleMath;
 
 	const SingleAnimationNode& singleNode = static_cast<const SingleAnimationNode&>(*pPlayAnimNode);
+
 	DirectX::SimpleMath::Vector3 rootMotionPos = singleNode.GetAnimationData().GetRootMotionPos(_ratio);
 
 	// ロード時の回転量と、スケールを掛ける
-	if (_isLoadScaling)
+	if (_isWorldScaling)
 		ApplyLoadTransform(rootMotionPos);
 
+
 	return rootMotionPos;
-}
-
-DirectX::SimpleMath::Quaternion AnimSingleNodePlayer::GetRootMotionRot(float _ratio, bool _isLoadScaling) const
-{
-	using namespace DirectX::SimpleMath;
-	const SingleAnimationNode& singleNode = static_cast<const SingleAnimationNode&>(*pPlayAnimNode);
-	DirectX::SimpleMath::Quaternion rootMotionRot; //= singleNode.GetAnimationData().GetRootMotionRot(_ratio);
-
-	// ロード時の回転量を掛ける
-	//if (_isLoadScaling)
-	//	rootMotionRot = Quat::Multiply(rootMotionRot, pAssetBoneList->GetLoadRotation());
-
-	return rootMotionRot;
 }
 
 float AnimSingleNodePlayer::GetModelScale() const

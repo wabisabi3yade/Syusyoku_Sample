@@ -12,7 +12,7 @@ BossActState_Base::BossActState_Base() :
 	stateType(BossState::None),
 	pActionController(nullptr),
 	pWarpTargetPos(nullptr),
-	lastWarpCurveValue(0.0f),
+	lastProgressRatio(0.0f),
 	allWarpSteps(0),
 	curWarpStep(0),
 	isUseWarpMotion(false),
@@ -33,7 +33,7 @@ void BossActState_Base::OnStart()
 	OnStartBehavior();
 
 	// パラメータリセット
-	lastWarpCurveValue = 0.0f;
+	lastProgressRatio = 0.0f;
 	curWarpStep = 0;
 }
 
@@ -41,7 +41,7 @@ void BossActState_Base::Update()
 {
 	EnemyActState_Base::Update();
 
-	//WarpMotionUpdate();
+	WarpMotionUpdate();
 
 	UpdateBehavior();
 
@@ -102,12 +102,16 @@ void BossActState_Base::CalcWarpDistance(const DirectX::SimpleMath::Vector3& _ta
 	// 距離を求める
 	disToWarpTargePos = _targetWorldPos - GetBossTransform().GetPosition();
 
-	// 距離制限を掛ける
+	// 距離制限を掛ける(マイナスは無制限)
+	float maxMovement = warpMotionParams[curWarpStep - 1].maxMovementXZ;
+	if (maxMovement < 0.0f) return;
+
 	DXSimp::Vector2 distanceXZ = { disToWarpTargePos.x, disToWarpTargePos.z };
 	float disLength = distanceXZ.Length();
-	if (disLength > warpMotionParams[curWarpStep - 1].maxMovementXZ)
+
+	if (disLength > maxMovement)
 	{
-		float times = warpMotionParams[curWarpStep - 1].maxMovementXZ / disLength;
+		float times = maxMovement / disLength;
 		disToWarpTargePos.x *= times;
 		disToWarpTargePos.z *= times;
 	}
@@ -170,17 +174,28 @@ void BossActState_Base::WarpMotionUpdate()
 	// 現在のワープ
 	const WarpMotionParam& curWarp = warpMotionParams[curWarpStep - 1];
 
-	// 区間内の進行割合を求めて、カーブ値を取得
-	float curProgressRatio = (animRatio - curWarp.beginAnimRatio) / 
-		(curWarp.endAnimRatio - curWarp.beginAnimRatio);
-	float warpRatioVal = curWarp.horiMovementCurve.GetValue(curProgressRatio);
+	// 現在の距離の進行割合を求める
+	float curProgressRatio = 0.0f;	
+	if (curWarp.isFromRootMotion) // ルートモーションから求めるなら
+	{
+		// 現在は正面の移動にのみ適用
+		DXSimp::Vector3 curRMPos = GetAnimation()->GetCurAnimRMPos(animRatio);
+		curProgressRatio = (curRMPos.z - startRMPos.z) / (endRMPos.z - startRMPos.z);
+	}
+	else // カーブから求めるなら
+	{
+		// 区間内の進行割合を求めて、カーブ値を取得
+		float curProgressRatio = (animRatio - curWarp.beginAnimRatio) /
+			(curWarp.endAnimRatio - curWarp.beginAnimRatio);
+		curProgressRatio = curWarp.horiMovementCurve.GetValue(curProgressRatio);
+	}
 
-	// 前回から進んだカーブ値を求める
-	float progressCurveValue = warpRatioVal - lastWarpCurveValue;
-	lastWarpCurveValue = warpRatioVal;
+	// 前回からの差を求める
+	float diffCurveValue = curProgressRatio - lastProgressRatio;
+	lastProgressRatio = curProgressRatio;
 
 	// 今回進む距離を求め、秒速に変換してRBに速度を渡す
-	DXSimp::Vector3 moveSpeed = disToWarpTargePos * progressCurveValue / deltaTime;
+	DXSimp::Vector3 moveSpeed = disToWarpTargePos * diffCurveValue / deltaTime;
 	moveSpeed.y = 0.0f;
 	GetRB()->SetVelocity(moveSpeed);
 }
@@ -194,7 +209,16 @@ void BossActState_Base::CheckTransNextWarp(float _animRatio)
 		// 移動開始
 		isWarpMoving = true;
 		curWarpStep++;
-		lastWarpCurveValue = 0.0f;
+		lastProgressRatio = 0.0f;
+
+		WarpMotionParam& nextWarp = warpMotionParams[curWarpStep - 1];
+		if (nextWarp.isFromRootMotion)
+		{
+			// 開始と終了のルートモーションを求める
+			CP_Animation* pAnim = GetAnimation();
+			startRMPos = pAnim->GetCurAnimRMPos(nextWarp.beginAnimRatio);
+			endRMPos = pAnim->GetCurAnimRMPos(nextWarp.endAnimRatio);
+		}
 
 		// ポインタ設定されているなら
 		if (pWarpTargetPos)
@@ -240,29 +264,36 @@ void BossActState_Base::ImGuiWarpDebug()
 	{
 		WarpMotionParam& param = warpMotionParams[w_i];
 
-		if (!ImGuiMethod::TreeNode("Step：" + std::to_string(w_i + 1))) continue;
+		if (!ImGuiMethod::TreeNode("Step:" + std::to_string(w_i + 1))) continue;
+
+		ImGui::Checkbox("FromRM", &param.isFromRootMotion);
+
 		// アニメーション割合
-		ImGui::DragFloatRange2("animRatio", 
-			&param.beginAnimRatio, 
-			&param.endAnimRatio, 
-			0.001f, 
+		ImGui::DragFloatRange2("animRatio",
+			&param.beginAnimRatio,
+			&param.endAnimRatio,
+			0.001f,
 			0.0f,
 			1.0f);
 
 		ImGui::DragFloat("maxDisXZ", &param.maxMovementXZ, 0.01f, -10.0f, 1000.0f);
-		ImGuiMethod::LineSpaceSmall();
-		param.horiMovementCurve.ImGuiCall();
 
-		// 縦移動するときのみ表示
-		ImGui::Checkbox("UseVertical", &param.isUseVertical);
-		if (!param.isUseVertical)
+		if (!param.isFromRootMotion)
 		{
-			ImGui::TreePop();
-			continue;
+			ImGuiMethod::LineSpaceSmall();
+			param.horiMovementCurve.ImGuiCall();
 		}
 
-		ImGui::DragFloat("maxDisY", &param.maxMovementY, 0.01f, -10.0f, 1000.0f);
-		param.vertMovementCurve.ImGuiCall();
+		//// 縦移動するときのみ表示
+		//ImGui::Checkbox("UseVertical", &param.isUseVertical);
+		//if (!param.isUseVertical)
+		//{
+		//	ImGui::TreePop();
+		//	continue;
+		//}
+
+		//ImGui::DragFloat("maxDisY", &param.maxMovementY, 0.01f, -10.0f, 1000.0f);
+		//param.vertMovementCurve.ImGuiCall();
 
 		ImGui::TreePop();
 	}
@@ -277,13 +308,15 @@ nlohmann::json BossActState_Base::SaveWarpParameters()
 
 	if (!isUseWarpMotion) return warpData;
 	warpData["allWarpStep"] = allWarpSteps;
-	
+
 	// 構造体のセーブ
 	nlohmann::json& warpStructDatas = warpData["warpStructs"];
 	for (u_int w_i = 0; w_i < allWarpSteps; w_i++)
 	{
 		nlohmann::json paramData;
 		WarpMotionParam& warpParam = warpMotionParams[w_i];
+
+		paramData["fromRootMotion"] = warpParam.isFromRootMotion;
 
 		// 割合
 		paramData["beginRatio"] = warpParam.beginAnimRatio;
@@ -293,13 +326,13 @@ nlohmann::json BossActState_Base::SaveWarpParameters()
 		paramData["moveCurveXZ"] = warpParam.horiMovementCurve.Save();
 		paramData["movementXZ"] = warpParam.maxMovementXZ;
 
-		// 縦移動
-		paramData["useVert"] = warpParam.isUseVertical;
-		if (warpParam.isUseVertical)
-		{
-			paramData["moveCurveY"] = warpParam.vertMovementCurve.Save();
-			paramData["movementY"] = warpParam.maxMovementY;
-		}
+		//// 縦移動
+		//paramData["useVert"] = warpParam.isUseVertical;
+		//if (warpParam.isUseVertical)
+		//{
+		//	paramData["moveCurveY"] = warpParam.vertMovementCurve.Save();
+		//	paramData["movementY"] = warpParam.maxMovementY;
+		//}
 		warpStructDatas.push_back(paramData);	// 追加
 	}
 
@@ -325,6 +358,8 @@ void BossActState_Base::LoadWarpParameters(const nlohmann::json& _warpData)
 		const nlohmann::json& paramData = warpStructDatas[d_i];
 		WarpMotionParam& warpParam = warpMotionParams[d_i];
 
+		HashiTaku::LoadJsonBoolean("fromRootMotion", warpParam.isFromRootMotion, paramData);
+
 		// 割合
 		HashiTaku::LoadJsonFloat("beginRatio", warpParam.beginAnimRatio, paramData);
 		HashiTaku::LoadJsonFloat("endRatio", warpParam.endAnimRatio, paramData);
@@ -335,14 +370,14 @@ void BossActState_Base::LoadWarpParameters(const nlohmann::json& _warpData)
 			warpParam.horiMovementCurve.Load(paramData["moveCurveXZ"]);
 		}
 		HashiTaku::LoadJsonFloat("movementXZ", warpParam.maxMovementXZ, paramData);
-	
-		// 縦移動
-		HashiTaku::LoadJsonBoolean("useVert", warpParam.isUseVertical, paramData);
-		if (!warpParam.isUseVertical) continue;
-		if (HashiTaku::IsJsonContains(paramData, "moveCurveY"))
-		{
-			warpParam.vertMovementCurve.Load(paramData["moveCurveY"]);
-		}
-		HashiTaku::LoadJsonFloat("movementY", warpParam.maxMovementY, paramData);
+
+		//// 縦移動
+		//HashiTaku::LoadJsonBoolean("useVert", warpParam.isUseVertical, paramData);
+		//if (!warpParam.isUseVertical) continue;
+		//if (HashiTaku::IsJsonContains(paramData, "moveCurveY"))
+		//{
+		//	warpParam.vertMovementCurve.Load(paramData["moveCurveY"]);
+		//}
+		//HashiTaku::LoadJsonFloat("movementY", warpParam.maxMovementY, paramData);
 	}
 }

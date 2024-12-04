@@ -1,22 +1,10 @@
 #include "pch.h"
 #include "BossGroundMove.h"
 #include "GameObject.h"
-#include "Geometory.h"
 
 BossGroundMove::BossGroundMove()
-	: maxSpeed(9.0f), acceleration(4.0f), currentSpeed(0.0f), rotateSpeed(120.0f), transNearDistance(6.0f)
+	: maxSpeed(9.0f), acceleration(4.0f), currentSpeed(0.0f), rotateSpeed(120.0f)
 {
-}
-
-void BossGroundMove::DebugDisplay()
-{
-#ifdef EDIT
-	using namespace DirectX::SimpleMath;
-	Geometory::SetColor(Color(1, 1, 1, 0.5f));
-	Geometory::SetPosition(GetBossTransform().GetPosition());
-	Geometory::SetScale(Vector3::One * transNearDistance * 2);
-	Geometory::DrawSphere();
-#endif
 }
 
 nlohmann::json BossGroundMove::Save()
@@ -26,7 +14,6 @@ nlohmann::json BossGroundMove::Save()
 	data["moveMaxSpeed"] = maxSpeed;
 	data["moveAcceleration"] = acceleration;
 	data["moveRotateSpeed"] = rotateSpeed;
-	data["transNearDistance"] = transNearDistance;
 
 	return data;
 }
@@ -40,7 +27,6 @@ void BossGroundMove::Load(const nlohmann::json& _data)
 	LoadJsonFloat("moveMaxSpeed", maxSpeed, _data);
 	LoadJsonFloat("moveAcceleration", acceleration, _data);
 	LoadJsonFloat("moveRotateSpeed", rotateSpeed, _data);
-	LoadJsonFloat("transNearDistance", transNearDistance, _data);
 }
 
 void BossGroundMove::UpdateBehavior()
@@ -63,7 +49,7 @@ void BossGroundMove::TransitionCheckUpdate()
 	// ‹ß‹——£”ÍˆÍ‚É“ü‚Á‚Ä‚¢‚é‚©
 	if (CheckNearTransition())
 	{
-		pActionController->ChangeState(BossState::CombAttack1);
+		pActionController->ChangeState(BossState::Idle);
 	}
 
 }
@@ -108,6 +94,23 @@ void BossGroundMove::Move()
 	auto* pRb = GetRB();
 	movement.y = pRb->GetVelocity().y;
 	pRb->SetVelocity(movement);
+
+	CP_Animation* pAnimation = GetAnimation();
+	if (!pAnimation) return;
+
+	if (maxSpeed < Mathf::epsilon) // 0™ŽZ‹ÖŽ~
+		maxSpeed = Mathf::epsilon;
+
+	pAnimation->SetFloat(SPEED_ANIMPARAM_NAME, currentSpeed / maxSpeed);
+
+	float rootMotion = abs(pAnimation->GetMotionPosSpeedPerSec().z);
+
+	if (rootMotion > Mathf::epsilon)
+	{
+		float animPlaySpeed = currentSpeed / rootMotion;
+
+		pAnimation->SetCurNodePlayerSpeed(animPlaySpeed);
+	}
 }
 
 bool BossGroundMove::CheckNearTransition()
@@ -120,7 +123,9 @@ bool BossGroundMove::CheckNearTransition()
 	float distanceLen = playerToDis.Length();
 
 	// ”ÍˆÍŠO‚È‚ç
-	if (distanceLen > transNearDistance) return false;
+	float shortDis = 
+		pActionController->GetActDistanceLength(BossActionController::ActDistance::Short);
+	if (distanceLen > shortDis) return false;
 
 	return true;
 }
@@ -130,7 +135,5 @@ void BossGroundMove::ImGuiDebug()
 	ImGui::DragFloat("MaxSpeed", &maxSpeed, 0.1f, 0.0f, 1000.0f);
 	ImGui::DragFloat("Acceleration", &acceleration, 0.1f, 0.0f, 1000.0f);
 	ImGui::DragFloat("RotateSpeed", &rotateSpeed, 0.1f, 0.0f, 1000.0f);
-	ImGui::DragFloat("TransitionNear", &transNearDistance, 0.1f, 0.0f, 1000.0f);
-
 }
 

@@ -19,7 +19,7 @@ void BossCombAttack::OnStartBehavior()
 	curAttackTime = 1;	// 1段目から入る
 
 	// プレイヤーめがけてワープするようにする
-	//SetWarpTargetPosReference(GetPlayerTransform().GetPosition());
+	SetWarpTargetPosReference(GetPlayerTransform().GetPosition());
 }
 
 void BossCombAttack::UpdateBehavior()
@@ -87,7 +87,6 @@ void BossCombAttack::SetAttackTimeCnt(u_int _attackTime)
 void BossCombAttack::ImGuiDebug()
 {
 	BossAttackState::ImGuiDebug();
-
 	// 攻撃回数
 	int imInt = static_cast<u_int>(attackTimeCnt);
 	if (ImGui::DragInt("attackCnt", &imInt, 1, 1, 100))

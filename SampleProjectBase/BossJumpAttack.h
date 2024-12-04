@@ -28,9 +28,6 @@ class BossJumpAttack : public BossAttackState
 
 	/// @brief 1フレーム前までの高さ
 	float prevJumpHeight;
-
-	// ジャンプ中の回転速度
-	float rotSpeedOnJump;
 public:
 	BossJumpAttack();
 	~BossJumpAttack() {}

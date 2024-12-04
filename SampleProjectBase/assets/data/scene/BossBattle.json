@@ -817,7 +817,7 @@
                         "enable": true,
                         "name": "BattleManager",
                         "priority": 0,
-                        "radius": 23.5
+                        "radius": 66.69999694824219
                     }
                 ],
                 "layer": 0,
@@ -914,15 +914,15 @@
                 "transform": {
                     "child": null,
                     "pos": [
-                        0.0,
+                        31.0,
                         2.0999999046325684,
-                        -18.5
+                        -4.099999904632568
                     ],
                     "rotation": [
-                        2.664537164924507e-15,
-                        2.5381209612654514e-22,
-                        -9.525560074052919e-08,
-                        1.0
+                        -6.735596969065227e-08,
+                        0.7071069478988647,
+                        6.735592705808813e-08,
+                        -0.7071065306663513
                     ],
                     "scale": [
                         1.0,
@@ -957,17 +957,17 @@
                                             "child": null,
                                             "pos": [
                                                 0.6579986214637756,
-                                                -0.010017353110015392,
-                                                3.3899974822998047
+                                                -0.010017452761530876,
+                                                7.689996242523193
                                             ],
                                             "rotation": [
                                                 -0.6008124947547913,
                                                 0.7962931990623474,
-                                                -0.05046878382563591,
+                                                -0.05046877637505531,
                                                 -0.04893164336681366
                                             ],
                                             "scale": [
-                                                1.680000901222229,
+                                                1.6800007820129395,
                                                 1.679998755455017,
                                                 1.68000066280365
                                             ]
@@ -1030,17 +1030,17 @@
                                     "pos": [
                                         0.6580001711845398,
                                         -0.01001274585723877,
-                                        3.389997720718384
+                                        7.689997673034668
                                     ],
                                     "rotation": [
-                                        -0.600812554359436,
+                                        -0.6008126139640808,
                                         0.7962931990623474,
-                                        -0.05046878010034561,
+                                        -0.05046878382563591,
                                         -0.0489317812025547
                                     ],
                                     "scale": [
                                         1.4000006914138794,
-                                        1.3999998569488525,
+                                        1.399999976158142,
                                         1.4000006914138794
                                     ]
                                 }
@@ -1067,7 +1067,7 @@
                             "pos": [
                                 0.7000004053115845,
                                 -0.22000955045223236,
-                                3.3199987411499023
+                                7.619998931884766
                             ],
                             "rotation": [
                                 0.0,
@@ -1145,8 +1145,9 @@
                                 },
                                 {
                                     "data": {
-                                        "moveAcceleration": 4.0,
-                                        "moveMaxSpeed": 5.0,
+                                        "farDis": 10.0,
+                                        "moveAcceleration": 7.300000190734863,
+                                        "moveMaxSpeed": 2.200000047683716,
                                         "moveRotateSpeed": 10.0,
                                         "transNearDistance": 2.0,
                                         "warpMotion": {
@@ -1157,8 +1158,8 @@
                                 },
                                 {
                                     "data": {
-                                        "moveAcceleration": 4.0,
-                                        "moveMaxSpeed": 9.0,
+                                        "moveAcceleration": 6.599999904632568,
+                                        "moveMaxSpeed": 8.899999618530273,
                                         "moveRotateSpeed": 10.0,
                                         "transNearDistance": 2.0,
                                         "warpMotion": {
@@ -1192,8 +1193,120 @@
                                             }
                                         ],
                                         "atkTimeCnt": 3,
+                                        "rotCurve": {
+                                            "easeKind": 0,
+                                            "endValue": 0.0,
+                                            "endVector": 0.0,
+                                            "plotDatas": [
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.1080000028014183,
+                                                    "value": 1.0,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.1599999964237213,
+                                                    "value": 1.0,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.1679999977350235,
+                                                    "value": 0.0,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.3149999976158142,
+                                                    "value": 0.0,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.34299999475479126,
+                                                    "value": 1.0,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.4320000112056732,
+                                                    "value": 1.0,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.4620000123977661,
+                                                    "value": 0.0,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.546999990940094,
+                                                    "value": 0.0,
+                                                    "vector": 0.0
+                                                }
+                                            ],
+                                            "startInterp": 1,
+                                            "startValue": 0.0,
+                                            "startVector": 0.0,
+                                            "useHermite": true
+                                        },
+                                        "rotTimes": 5.0,
+                                        "useRotCurve": true,
                                         "warpMotion": {
-                                            "useWarp": false
+                                            "allWarpStep": 3,
+                                            "useWarp": true,
+                                            "warpStructs": [
+                                                {
+                                                    "beginRatio": 0.0,
+                                                    "endRatio": 0.3109999895095825,
+                                                    "fromRootMotion": true,
+                                                    "moveCurveXZ": {
+                                                        "easeKind": 0,
+                                                        "endValue": 1.0,
+                                                        "endVector": 0.0,
+                                                        "plotDatas": null,
+                                                        "startInterp": 1,
+                                                        "startValue": 1.0,
+                                                        "startVector": 0.0,
+                                                        "useHermite": true
+                                                    },
+                                                    "movementXZ": 2.4000000953674316
+                                                },
+                                                {
+                                                    "beginRatio": 0.31200000643730164,
+                                                    "endRatio": 0.5419999957084656,
+                                                    "fromRootMotion": true,
+                                                    "moveCurveXZ": {
+                                                        "easeKind": 0,
+                                                        "endValue": 1.0,
+                                                        "endVector": 0.0,
+                                                        "plotDatas": null,
+                                                        "startInterp": 1,
+                                                        "startValue": 1.0,
+                                                        "startVector": 0.0,
+                                                        "useHermite": true
+                                                    },
+                                                    "movementXZ": 2.7699999809265137
+                                                },
+                                                {
+                                                    "beginRatio": 0.5429999828338623,
+                                                    "endRatio": 1.0,
+                                                    "fromRootMotion": true,
+                                                    "moveCurveXZ": {
+                                                        "easeKind": 0,
+                                                        "endValue": 1.0,
+                                                        "endVector": 0.0,
+                                                        "plotDatas": null,
+                                                        "startInterp": 1,
+                                                        "startValue": 1.0,
+                                                        "startVector": 0.0,
+                                                        "useHermite": true
+                                                    },
+                                                    "movementXZ": 2.3399999141693115
+                                                }
+                                            ]
                                         }
                                     },
                                     "typeString": "CombAttack1"
@@ -1202,7 +1315,7 @@
                                     "data": {
                                         "atkInfos": [
                                             {
-                                                "damage": 7.300000190734863,
+                                                "damage": 15.0,
                                                 "level": 3
                                             }
                                         ],
@@ -1273,8 +1386,44 @@
                                             "useHermite": true
                                         },
                                         "maxHoriSpeed": 500.0,
-                                        "rotSpeed": 2.0,
+                                        "rotCurve": {
+                                            "easeKind": 0,
+                                            "endValue": 0.0,
+                                            "endVector": 0.0,
+                                            "plotDatas": [
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.19599999487400055,
+                                                    "value": 1.0,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.2150000035762787,
+                                                    "value": 0.5,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.3720000088214874,
+                                                    "value": 0.5,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.37400001287460327,
+                                                    "value": 0.0,
+                                                    "vector": 0.0
+                                                }
+                                            ],
+                                            "startInterp": 1,
+                                            "startValue": 0.0,
+                                            "startVector": 0.0,
+                                            "useHermite": true
+                                        },
+                                        "rotTimes": 15.0,
                                         "speedCof": 2.0,
+                                        "useRotCurve": true,
                                         "warpMotion": {
                                             "useWarp": false
                                         }
@@ -1284,9 +1433,9 @@
                             ],
                             "defaultState": 0,
                             "disLengthList": [
-                                2.0,
                                 4.0,
-                                6.0
+                                8.0,
+                                10.0
                             ]
                         },
                         "enable": true,
@@ -1307,7 +1456,7 @@
                     "pos": [
                         0.0,
                         0.20000000298023224,
-                        2.200000047683716
+                        6.5
                     ],
                     "rotation": [
                         0.0,

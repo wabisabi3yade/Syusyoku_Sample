@@ -4,7 +4,7 @@
 #include "CP_Boss.h"
 #include "CP_Player.h"
 
-namespace DX = DirectX::SimpleMath;
+namespace DXSimp = DirectX::SimpleMath;
 
 BossDamageState::BossDamageState()
 {
@@ -33,9 +33,9 @@ void BossDamageState::LookPlayer()
 {
 	// •ûŒüƒxƒNƒgƒ‹‚ð‹‚ß‚é(y‚Í–³Ž‹)
 	Transform& myTransform = pActionController->GetCharacter().GetTransform();
-	DX::Vector3 playerPos = pActionController->GetPlayer().GetTransform().GetPosition();
-	DX::Vector3 bossPos = myTransform.GetPosition();
-	DX::Vector3 targetVec = playerPos - bossPos;
+	DXSimp::Vector3 playerPos = pActionController->GetPlayer().GetTransform().GetPosition();
+	DXSimp::Vector3 bossPos = myTransform.GetPosition();
+	DXSimp::Vector3 targetVec = playerPos - bossPos;
 	targetVec.y = 0.0f;
 	targetVec.Normalize();
 

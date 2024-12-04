@@ -5,7 +5,7 @@
 #include "CP_BattleManager.h"
 
 #include "BossIdleState.h"
-#include "BossGroundMove.h"
+#include "BossWalkState.h"
 #include "BossDamageState.h"
 #include "BossCombAttack.h"
 #include "BossJumpAttack.h"
@@ -32,7 +32,7 @@ BossActionController::BossActionController(CP_Boss& _boss) :
 	using enum BossActState_Base::BossState;
 	using enum ActDistance;
 	CreateState<BossIdleState>(Idle, {});
-	CreateState<BossGroundMove>(Walk, { ActDistance::Mid });
+	CreateState<BossWalkState>(Walk, { ActDistance::Mid });
 	CreateState<BossGroundMove>(Run, { ActDistance::Far });
 
 	CreateState<BossDamageState>(Damage_Small, {});

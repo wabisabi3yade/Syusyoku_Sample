@@ -6,7 +6,7 @@
 
 #include "Geometory.h"
 
-namespace DX = DirectX::SimpleMath;
+namespace DXSimp = DirectX::SimpleMath;
 
 using namespace HashiTaku;
 
@@ -19,9 +19,9 @@ BulletDebugDraw::BulletDebugDraw()
 
 void BulletDebugDraw::drawLine(const btVector3& _from, const btVector3& _to, const btVector3& _color)
 {
-	DX::Vector3 start(Bullet::ToDXVector3(_from));
-	DX::Vector3 end(Bullet::ToDXVector3(_to));
-	DX::Color lineColor(
+	DXSimp::Vector3 start(Bullet::ToDXVector3(_from));
+	DXSimp::Vector3 end(Bullet::ToDXVector3(_to));
+	DXSimp::Color lineColor(
 		Bullet::ToDxScalar(_color.x()),
 		Bullet::ToDxScalar(_color.y()),
 		Bullet::ToDxScalar(_color.z()),

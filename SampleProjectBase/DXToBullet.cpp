@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "DXToBullet.h"
 
-namespace DX = DirectX::SimpleMath;
+namespace DXSimp = DirectX::SimpleMath;
 
 btScalar HashiTaku::Bullet::ToBtScalar(float _dxScalar)
 {
@@ -32,7 +32,7 @@ float HashiTaku::Bullet::ToDxScalar(btScalar _btScalar)
 	return static_cast<float>(_btScalar);
 }
 
-DX::Vector3 HashiTaku::Bullet::ToDXVector3(const btVector3& _btVector3)
+DXSimp::Vector3 HashiTaku::Bullet::ToDXVector3(const btVector3& _btVector3)
 {
 	return DX::Vector3(
 		ToDxScalar(_btVector3.getX()),
@@ -41,7 +41,7 @@ DX::Vector3 HashiTaku::Bullet::ToDXVector3(const btVector3& _btVector3)
 	);
 }
 
-DX::Quaternion HashiTaku::Bullet::ToDXQuaternion(const btQuaternion& _btQuaternion)
+DXSimp::Quaternion HashiTaku::Bullet::ToDXQuaternion(const btQuaternion& _btQuaternion)
 {
 	return DX::Quaternion(
 		ToDxScalar(-_btQuaternion.getX()),

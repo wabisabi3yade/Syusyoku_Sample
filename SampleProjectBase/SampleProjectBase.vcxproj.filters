@@ -856,6 +856,18 @@
     <Filter Include="ソース ファイル\Animation\AnimationNotify\WarpMotion">
       <UniqueIdentifier>{e8ab12bb-5bc1-48f9-851b-998e3219f3e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Sound">
+      <UniqueIdentifier>{ec9e47da-f6b6-4a9d-a6c9-2dcd1e18a81f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Sound\Manager">
+      <UniqueIdentifier>{d47ed0d5-505e-4dfe-b88f-29feabbf5da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Sound\Asset">
+      <UniqueIdentifier>{53e3975b-510e-4e97-80f4-7af7828cb900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\Walk">
+      <UniqueIdentifier>{43127128-d05d-4723-b8cf-79f2d8d619ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1505,9 +1517,6 @@
     <ClCompile Include="CP_Boss.cpp">
       <Filter>ソース ファイル\Component\InGame\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="BossGroundMove.cpp">
-      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Ground</Filter>
-    </ClCompile>
     <ClCompile Include="ANE_ChangeParameter.cpp">
       <Filter>ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter</Filter>
     </ClCompile>
@@ -1599,6 +1608,18 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ANS_WarpMotion.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DXSoundManager.cpp">
+      <Filter>ソース ファイル\Sound\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundAsset.cpp">
+      <Filter>ソース ファイル\Sound\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="BossGroundMove.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="BossWalkState.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -2248,9 +2269,6 @@
     <ClInclude Include="CP_BattleManager.h">
       <Filter>ソース ファイル\Component\InGame\BattleManager</Filter>
     </ClInclude>
-    <ClInclude Include="BossGroundMove.h">
-      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Ground</Filter>
-    </ClInclude>
     <ClInclude Include="BossGroundState.h">
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Ground</Filter>
     </ClInclude>
@@ -2348,6 +2366,18 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ANS_WarpMotion.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DXSoundManager.h">
+      <Filter>ソース ファイル\Sound\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundAsset.h">
+      <Filter>ソース ファイル\Sound\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="BossGroundMove.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="BossWalkState.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

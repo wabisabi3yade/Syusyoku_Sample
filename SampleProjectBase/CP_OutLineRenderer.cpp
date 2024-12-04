@@ -10,7 +10,7 @@ constexpr auto VS_NAME = "VS_OutLine";
 constexpr auto ANIMVS_NAME = "VS_OutLine";
 constexpr auto PS_NAME = "PS_OutLine";
 
-namespace DX = DirectX::SimpleMath;
+namespace DXSimp = DirectX::SimpleMath;
 
 CP_OutLineRenderer::CP_OutLineRenderer()
 	: pRenderMesh(nullptr)
@@ -100,13 +100,13 @@ void CP_OutLineRenderer::GetRenderMesh()
 	SetPriority(pMeshRender->GetPriority() - 1);
 }
 
-DX::Matrix CP_OutLineRenderer::MakeLoadMatrix()
+DXSimp::Matrix CP_OutLineRenderer::MakeLoadMatrix()
 {
 	float loadScale = pRenderMesh->GetLoadOffsetScale();
-	DX::Vector3 loadAngles = pRenderMesh->GetLoadOffsetAngles() * Mathf::degToRad;
+	DXSimp::Vector3 loadAngles = pRenderMesh->GetLoadOffsetAngles() * Mathf::degToRad;
 
-	return DX::Matrix::CreateScale(DX::Vector3::One * loadScale) *
-		DX::Matrix::CreateFromYawPitchRoll(loadAngles.y, loadAngles.x, loadAngles.z);
+	return DXSimp::Matrix::CreateScale(DXSimp::Vector3::One * loadScale) *
+		DXSimp::Matrix::CreateFromYawPitchRoll(loadAngles.y, loadAngles.x, loadAngles.z);
 }
 
 void CP_OutLineRenderer::ImGuiDebug()

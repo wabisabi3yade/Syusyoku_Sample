@@ -183,6 +183,7 @@
     <ClCompile Include="BossGroundState.cpp" />
     <ClCompile Include="BossIdleState.cpp" />
     <ClCompile Include="BossJumpAttack.cpp" />
+    <ClCompile Include="BossWalkState.cpp" />
     <ClCompile Include="BulletContactCallBack.cpp" />
     <ClCompile Include="BulletTest.cpp" />
     <ClCompile Include="ButtonTransArrow.cpp" />
@@ -223,6 +224,7 @@
     <ClCompile Include="DepthStencil.cpp" />
     <ClCompile Include="DX11BulletPhisics.cpp" />
     <ClCompile Include="DX11EffecseerManager.cpp" />
+    <ClCompile Include="DXSoundManager.cpp" />
     <ClCompile Include="DXToBullet.cpp" />
     <ClCompile Include="AnimationNotify_Base.cpp" />
     <ClCompile Include="EnemyActState_Base.cpp" />
@@ -327,6 +329,7 @@
     <ClCompile Include="AnimSingleNodePlayer.cpp" />
     <ClCompile Include="SingletonComponent.cpp" />
     <ClCompile Include="SkeletalMesh.cpp" />
+    <ClCompile Include="SoundAsset.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -418,6 +421,7 @@
     <ClInclude Include="BossGroundState.h" />
     <ClInclude Include="BossIdleState.h" />
     <ClInclude Include="BossJumpAttack.h" />
+    <ClInclude Include="BossWalkState.h" />
     <ClInclude Include="BulletContactCallBack.h" />
     <ClInclude Include="BulletTest.h" />
     <ClInclude Include="ButtonTransArrow.h" />
@@ -460,6 +464,7 @@
     <ClInclude Include="DepthStencil.h" />
     <ClInclude Include="DX11BulletPhisics.h" />
     <ClInclude Include="DX11EffecseerManager.h" />
+    <ClInclude Include="DXSoundManager.h" />
     <ClInclude Include="DXToBullet.h" />
     <ClInclude Include="AnimationNotify_Base.h" />
     <ClInclude Include="EnemyActState_Base.h" />
@@ -574,6 +579,7 @@
     <ClInclude Include="AnimSingleNodePlayer.h" />
     <ClInclude Include="SingletonComponent.h" />
     <ClInclude Include="SkeletalMesh.h" />
+    <ClInclude Include="SoundAsset.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Sprite.h" />
