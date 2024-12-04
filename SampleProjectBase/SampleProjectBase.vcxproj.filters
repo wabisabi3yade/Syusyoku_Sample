@@ -390,9 +390,6 @@
     <Filter Include="ソース ファイル\Animation\AnimationNotify\State">
       <UniqueIdentifier>{36bcc241-e81b-40e3-a9e6-ef31c64e4aad}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Animation\AnimationTrack">
-      <UniqueIdentifier>{8ea5adef-6d5d-44f9-913e-8db23e1808ee}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Animation\AnimationNotify\IAnimationNotify">
       <UniqueIdentifier>{a22e08c0-d965-436f-8b63-e3e75d37df5f}</UniqueIdentifier>
     </Filter>
@@ -615,9 +612,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Shader\Base">
       <UniqueIdentifier>{54f60261-d464-492f-94cd-725c9e08a910}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Shadow">
-      <UniqueIdentifier>{0d77d069-9eb9-421f-8297-2f15797cd4fd}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Shader\Vertex\VS_Object">
       <UniqueIdentifier>{479e427c-5306-4063-a9e5-ffb5d3e8f05a}</UniqueIdentifier>
@@ -855,6 +849,12 @@
     </Filter>
     <Filter Include="ソース ファイル\Component\ButtonGroup\Title">
       <UniqueIdentifier>{744eef72-07b5-42ee-9904-0bd13a0b0957}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shadow">
+      <UniqueIdentifier>{0d77d069-9eb9-421f-8297-2f15797cd4fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\WarpMotion">
+      <UniqueIdentifier>{e8ab12bb-5bc1-48f9-851b-998e3219f3e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1304,9 +1304,6 @@
     <ClCompile Include="BulletTest.cpp">
       <Filter>ソース ファイル\Bullet\Test</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationTrack.cpp">
-      <Filter>ソース ファイル\Animation\AnimationTrack</Filter>
-    </ClCompile>
     <ClCompile Include="AnimationNotify_Base.cpp">
       <Filter>ソース ファイル\Animation\AnimationNotify\IAnimationNotify</Filter>
     </ClCompile>
@@ -1599,6 +1596,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="CP_TitleButtonGroup.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ANS_WarpMotion.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -2029,9 +2029,6 @@
     <ClInclude Include="BulletTest.h">
       <Filter>ソース ファイル\Bullet\Test</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationTrack.h">
-      <Filter>ソース ファイル\Animation\AnimationTrack</Filter>
-    </ClInclude>
     <ClInclude Include="AnimationNotify_Base.h">
       <Filter>ソース ファイル\Animation\AnimationNotify\IAnimationNotify</Filter>
     </ClInclude>
@@ -2348,6 +2345,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="CP_TitleButtonGroup.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ANS_WarpMotion.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

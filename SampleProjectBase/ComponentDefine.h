@@ -40,7 +40,7 @@
 #include "CP_UIRenderer.h"
 #include "CP_UISlider.h"
 #include "CP_Button.h"
-#include "CP_ButtonGroup.h"
+#include "CP_TitleButtonGroup.h"
 
 // エフェクト
 #include "CP_VisualEffect.h"

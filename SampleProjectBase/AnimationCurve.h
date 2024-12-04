@@ -40,7 +40,7 @@ class AnimationCurve : public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
 	HashiTaku::EaseKind easeKind;
 
 	/// @brief エルミート曲線を使用するか？（使用しない場合、線形）
-	bool isUseHermite;
+	bool isUsePlot;
 #ifdef EDIT
 	// カーブ名
 	std::string curveName{ "animationCurve" };

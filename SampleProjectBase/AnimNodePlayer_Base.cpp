@@ -45,7 +45,7 @@ void AnimNodePlayer_Base::CopyNotifys(const std::list<std::unique_ptr<AnimationN
 void AnimNodePlayer_Base::UpdateCall(std::vector<BoneTransform>& _outTransforms, float _deltaTime, float _controllerSpeed)
 {
 	deltaTime = _deltaTime;
-
+	lastPlayRatio = curPlayRatio;
 	if (!isPlaying)
 	{
 		Update(_outTransforms);
@@ -66,6 +66,8 @@ void AnimNodePlayer_Base::UpdateCall(std::vector<BoneTransform>& _outTransforms,
 
 	// 通知イベントを更新
 	NotifyUpdate();
+
+	
 }
 
 void AnimNodePlayer_Base::ApplyRootMotion(const DirectX::SimpleMath::Vector3& _rootMovement)
@@ -76,6 +78,8 @@ void AnimNodePlayer_Base::ApplyRootMotion(const DirectX::SimpleMath::Vector3& _r
 void AnimNodePlayer_Base::OnInterpolateUpdate(std::vector<BoneTransform>& _outTransforms, float _deltaTime, float _controllerSpeed)
 {
 	deltaTime = _deltaTime;
+	lastPlayRatio = curPlayRatio;
+
 	if (!isPlaying)
 	{
 		Update(_outTransforms);
@@ -220,7 +224,7 @@ DirectX::SimpleMath::Vector3 AnimNodePlayer_Base::CalcRootMotionToTransform()
 	Vector3 curPos = GetRootMotionPos(curPlayRatio);
 	Vector3 posRootMovemrnt = curPos - p_RootMotionPos;
 
-	// ループ時に前回の再生割合からアニメーション最後までのルートモーションの座標移動
+	// ループ時に前回の再生割合からアニメーション1.0までのルートモーションの座標移動を足す
 	Vector3 loopDeadRMDistabce;
 	if (isJustLoop)
 	{
@@ -267,4 +271,5 @@ void AnimNodePlayer_Base::ImGuiDebug()
 	float curveSpeed = pPlayAnimNode->GetCurveValue(curPlayRatio);
 	ImGui::Text("curveSpeed:%f", curveSpeed);
 	ImGui::SliderFloat("Ratio", &curPlayRatio, 0.0f, 1.0f);
+	ImGui::Text("LastRatio:%f", lastPlayRatio);
 }

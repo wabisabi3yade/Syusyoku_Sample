@@ -44,7 +44,7 @@ void ComponentFactory::Init()
 	ResistComponnent<CP_UIRenderer>();
 	ResistComponnent<CP_UISlider>();
 	ResistComponnent<CP_Button>();
-	ResistComponnent<CP_ButtonGroup>();
+	ResistComponnent<CP_TitleButtonGroup>();
 
 	// エフェクト
 	ResistComponnent<CP_VisualEffect>();

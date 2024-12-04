@@ -8,6 +8,32 @@ class BossActionController;
 /// @brief ボスのステートノード基底
 class BossActState_Base : public EnemyActState_Base
 {
+protected:
+	/// @brief  ワープモーションで必要なパラメータ
+	struct WarpMotionParam
+	{
+		/// @brief ワープモーションで移動する割合(XZ成分)
+		AnimationCurve horiMovementCurve;
+
+		/// @brief ワープモーションで移動する割合(Y成分)
+		AnimationCurve vertMovementCurve;
+
+		/// @brief 移動するXZ最大距離(0未満なら制限なしとする)
+		float maxMovementXZ{ -10.0f };
+
+		/// @brief 移動するY最大距離(0未満なら制限なしとする)
+		float maxMovementY{ -10.0f };
+
+		/// @brief 開始する割合
+		float beginAnimRatio{ 0.0f };
+
+		/// @brief 終了する割合
+		float endAnimRatio{ 0.0f };
+
+		/// @brief Y移動させるか？
+		bool isUseVertical{ false };
+	};
+
 public:
 	// ボスのステートタイプ
 	enum class BossState
@@ -29,12 +55,35 @@ public:
 	};
 
 private:
+	/// @brief ワープモーションのパラメータ郡
+	std::vector<WarpMotionParam> warpMotionParams;
+
+	/// @brief ワープモーションのターゲット先のポインタ
+	const DirectX::SimpleMath::Vector3* pWarpTargetPos;
+
+	/// @brief ワープモーションで移動するときのターゲット座標との距離
+	DirectX::SimpleMath::Vector3 disToWarpTargePos;
+
+	/// @brief 最後のワープモーションで求めたカーブ値
+	float lastWarpCurveValue;
+
 	/// @brief ボスのステート
 	BossState stateType;
+
+	/// @brief 全てで何回ワープさせるか？
+	u_int allWarpSteps;
+
+	/// @brief 現在のワープ回数
+	u_int curWarpStep;
+
+	/// @brief ワープモーションさせるか？
+	bool isUseWarpMotion;
+
+	/// @brief ワープモーション中か？
+	bool isWarpMoving;
 protected:
 	/// @brief アクションコントローラー
 	BossActionController* pActionController;
-
 public:
 	BossActState_Base();
 	virtual ~BossActState_Base() {}
@@ -76,6 +125,14 @@ protected:
 	/// @param _isForce　強制切り替え
 	void ChangeState(BossState _nextState, bool _isForce = false);
 
+	/// @brief ワープモーションのターゲットの座標をセット
+	/// @param _targetWorldPos ターゲットの座標
+	void CalcWarpDistance(const DirectX::SimpleMath::Vector3& _targetWorldPos);
+
+	/// @brief ワープモーションのターゲットの座標の参照をセット
+	/// @param _targetWorldPos ターゲットの座標の参照
+	void SetWarpTargetPosReference(const DirectX::SimpleMath::Vector3& _targetPosRef);
+
 	/// @brief トランスフォームを取得する
 	/// @return ボスのトランスフォーム
 	Transform& GetBossTransform();
@@ -98,9 +155,21 @@ protected:
 
 	void ImGuiDebug() override;
 private:
-	/// @brief どのアクションにも共通する遷移
-	void CommmonCheckTransition();
+	/// @brief ワープモーションによる更新処理
+	void WarpMotionUpdate();
 
+	/// @brief 次のワープモーションに入るか移行するか確認する
+	/// @param _animRatio 次のアニメーション割合
+	void CheckTransNextWarp(float _animRatio);
+
+	// ワープモーションに関するImGui編集
+	void ImGuiWarpDebug();
+
+	// ワープモーション関連のセーブ
+	nlohmann::json SaveWarpParameters();
+
+	// ワープモーション関連のロード
+	void LoadWarpParameters(const nlohmann::json& _warpData);
 protected:
 	// パラメータ
 	/// @brief 移動速度のアニメーションパラメータ名

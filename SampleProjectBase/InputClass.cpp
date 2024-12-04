@@ -3,8 +3,6 @@
 
 using namespace DirectX::SimpleMath;
 
-constexpr float STICK_DEADZONE(0.2f);	// 移動判定となるスティックのデッドゾーン
-
 InputClass::InputClass()
 {
 	gamePad = std::make_unique<GamePad>();
@@ -24,35 +22,58 @@ void InputClass::Update()
 {
 	gamePad->InputUpdate();
 	keyboard->InputUpdate();
+}
 
+bool InputClass::GetInputTriggerDir(InputDirection _getDir) const
+{
+	// コントローラの入力
 	if (gamePad->GetConnecting())
 	{
 		using enum GamePad::Value;
-		using enum GamePad::Button;
+		using enum GamePad::PadFlag;
 
-		// 上
-		u_int id = static_cast<u_int>(Move_Value::Up);
-		moveFlags[id] =
-			gamePad->GetValue(StickL_Y) > STICK_DEADZONE || gamePad->ButtonDown(Arrow_Up);
+		switch (_getDir)
+		{
+		case InputClass::InputDirection::Up:
+			return gamePad->InputTrigger(StickL_Up) ||
+				gamePad->InputTrigger(Arrow_Up);
 
-		// 下
-		id = static_cast<u_int>(Move_Value::Down);
-		moveFlags[id] =
-			gamePad->GetValue(StickL_Y) < -STICK_DEADZONE || gamePad->ButtonDown(Arrow_Down);
+		case InputClass::InputDirection::Down:
+			return  gamePad->InputTrigger(StickL_Down) ||
+				gamePad->InputTrigger(Arrow_Down);
 
-		// 右
-		id = static_cast<u_int>(Move_Value::Right);
-		moveFlags[id] =
-			gamePad->GetValue(StickL_X) > STICK_DEADZONE || gamePad->ButtonDown(Arrow_Right);
+		case InputClass::InputDirection::Right:
+			return gamePad->InputTrigger(StickL_Right) ||
+				gamePad->InputTrigger(Arrow_Right);
 
-		// 左
-		id = static_cast<u_int>(Move_Value::Left);
-		moveFlags[id] =
-			gamePad->GetValue(StickL_X) < -STICK_DEADZONE || gamePad->ButtonDown(Arrow_Left);
+		case InputClass::InputDirection::Left:
+			return gamePad->InputTrigger(StickL_Left) ||
+				gamePad->InputTrigger(Arrow_Left);
+
+		default:
+			break;
+		}
 	}
-	else
+	else	// キーボード入力
 	{
-		u_int id = static_cast<u_int>(Move_Value::Up);
-		moveFlags[id] = keyboard->GetKeyDown(DIK_UPARROW);
+		switch (_getDir)
+		{
+		case InputClass::InputDirection::Up:
+			return keyboard->GetKeyDown(DIK_UP);
+
+		case InputClass::InputDirection::Down:
+			return keyboard->GetKeyDown(DIK_DOWN);
+
+		case InputClass::InputDirection::Right:
+			return keyboard->GetKeyDown(DIK_RIGHT);
+
+		case InputClass::InputDirection::Left:
+			return keyboard->GetKeyDown(DIK_LEFT);
+
+		default:
+			break;
+		}
 	}
+
+	return false;
 }

@@ -68,7 +68,7 @@ DirectX::SimpleMath::Vector2 GameInput::GetValue(ValueType _valueType)
 void GameInput::DefaultSetting()
 {
 	using enum ButtonType;
-	using enum GamePad::Button;
+	using enum GamePad::PadFlag;
 	buttonLinks[static_cast<u_int>(Player_Attack)] = { Sankaku, DIK_RETURN };
 	buttonLinks[static_cast<u_int>(Player_Jump)] = { Batsu, DIK_SPACE };
 	buttonLinks[static_cast<u_int>(Player_Rolling)] = { Shikaku, DIK_LSHIFT };
@@ -111,7 +111,7 @@ void GameInput::ButtonUpdate()
 		const GamePad& pad = input.GetGamePad();
 		for (u_int b_i = 0; b_i < BUTTON_TYPE_CNT; b_i++)
 		{
-			c_buttonState[b_i] = pad.ButtonPress(buttonLinks[b_i].padType);
+			c_buttonState[b_i] = pad.Input(buttonLinks[b_i].padType);
 		}
 	}
 	else	// キーボード

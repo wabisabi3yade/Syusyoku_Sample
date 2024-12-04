@@ -9,7 +9,7 @@ class CP_ButtonGroup : public Component
 	u_int defaultSelectButtonId;
 
 	/// @brief 移動することができるか
-	bool canSelectMove;
+	bool canInput;
 protected:
 	/// @brief ボタンのグループ
 	std::vector<CP_Button*> buttonGroup;
@@ -17,11 +17,17 @@ protected:
 	/// @brief ボタンのコンポーネントを持つオブジェクト
 	std::vector<std::string> buttonObjNames;
 
-	/// @brief セレクトしてる時のボタンのイメージ
+	/// @brief セレクトしてる時の画像
 	CP_UIRenderer* pSelectBackImage;
 
+	/// @brief セレクトしてる時の画像オブジェクト名
+	std::string backImageObjName;
+
 	/// @brief 現在選んでいるボタンのID
-	u_int curSelectButtonId;
+	int curSelectButtonId;
+
+	/// @brief ボタンの数
+	int maxButtonCnt;
 
 	/// @brief 縦入力で移動するボタンの数
 	int vertMoveSpeed;
@@ -41,8 +47,13 @@ public:
 protected:
 	void Start() override;
 
+	void Update() override;
+
 	/// @brief 入力で選択ボタンを移動する
 	void MoveButton();
+
+	/// @brief ボタンを押す
+	void DecideButton();
 
 	/// @brief セレクトの背景イメージを選択中のボタンへ移動
 	void MoveSelectBackImage();

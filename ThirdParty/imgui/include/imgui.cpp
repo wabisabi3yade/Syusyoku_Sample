@@ -843,7 +843,7 @@ CODE
  - 2015/06/14 (1.41) - changed Selectable() API from (label, selected, size) to (label, selected, flags, size). Size override should have been rarely used. Sorry!
  - 2015/05/31 (1.40) - renamed GetWindowCollapsed() to IsWindowCollapsed() for consistency. Kept inline redirection function (will obsolete).
  - 2015/05/31 (1.40) - renamed IsRectClipped() to IsRectVisible() for consistency. Note that return value is opposite! Kept inline redirection function (will obsolete).
- - 2015/05/27 (1.40) - removed the third 'repeat_if_held' parameter from Button() - sorry! it was rarely used and inconsistent. Use PushButtonRepeat(true) / PopButtonRepeat() to enable repeat on desired buttons.
+ - 2015/05/27 (1.40) - removed the third 'repeat_if_held' parameter from PadFlag() - sorry! it was rarely used and inconsistent. Use PushButtonRepeat(true) / PopButtonRepeat() to enable repeat on desired buttons.
  - 2015/05/11 (1.40) - changed BeginPopup() API, takes a string identifier instead of a bool. ImGui needs to manage the open/closed state of popups. Call OpenPopup() to actually set the "open" state of a popup. BeginPopup() returns true if the popup is opened.
  - 2015/05/03 (1.40) - removed style.AutoFitPadding, using style.WindowPadding makes more sense (the default values were already the same).
  - 2015/04/13 (1.38) - renamed IsClipped() to IsRectClipped(). Kept inline redirection function until 1.50.
@@ -3455,7 +3455,7 @@ void ImGui::RenderTextClipped(const ImVec2& pos_min, const ImVec2& pos_max, cons
 
 // Another overly complex function until we reorganize everything into a nice all-in-one helper.
 // This is made more complex because we have dissociated the layout rectangle (pos_min..pos_max) which define _where_ the ellipsis is, from actual clipping of text and limit of the ellipsis display.
-// This is because in the context of tabs we selectively hide part of the text when the Close Button appears, but we don't want the ellipsis to move.
+// This is because in the context of tabs we selectively hide part of the text when the Close PadFlag appears, but we don't want the ellipsis to move.
 void ImGui::RenderTextEllipsis(ImDrawList* draw_list, const ImVec2& pos_min, const ImVec2& pos_max, float clip_max_x, float ellipsis_max_x, const char* text, const char* text_end_full, const ImVec2* text_size_if_known)
 {
     ImGuiContext& g = *GImGui;
@@ -5380,7 +5380,7 @@ bool ImGui::IsItemFocused()
     return true;
 }
 
-// Important: this can be useful but it is NOT equivalent to the behavior of e.g.Button()!
+// Important: this can be useful but it is NOT equivalent to the behavior of e.g.PadFlag()!
 // Most widgets have specific reactions based on mouse-up/down state, mouse position etc.
 bool ImGui::IsItemClicked(ImGuiMouseButton mouse_button)
 {
@@ -15927,7 +15927,7 @@ static int StackToolFormatLevelInfo(ImGuiIDStackTool* tool, int n, bool format_f
     ImGuiWindow* window = (info->Desc[0] == 0 && n == 0) ? ImGui::FindWindowByID(info->ID) : NULL;
     if (window)                                                                 // Source: window name (because the root ID don't call GetID() and so doesn't get hooked)
         return ImFormatString(buf, buf_size, format_for_ui ? "\"%s\" [window]" : "%s", window->Name);
-    if (info->QuerySuccess)                                                     // Source: GetID() hooks (prioritize over ItemInfo() because we frequently use patterns like: PushID(str), Button("") where they both have same id)
+    if (info->QuerySuccess)                                                     // Source: GetID() hooks (prioritize over ItemInfo() because we frequently use patterns like: PushID(str), PadFlag("") where they both have same id)
         return ImFormatString(buf, buf_size, (format_for_ui && info->DataType == ImGuiDataType_String) ? "\"%s\"" : "%s", info->Desc);
     if (tool->StackLevel < tool->Results.Size)                                  // Only start using fallback below when all queries are done, so during queries we don't flickering ??? markers.
         return (*buf = 0);

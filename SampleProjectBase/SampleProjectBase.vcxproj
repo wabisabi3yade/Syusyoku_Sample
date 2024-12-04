@@ -167,8 +167,8 @@
     <ClCompile Include="AnimationData.cpp" />
     <ClCompile Include="AnimationNotifyEvent.cpp" />
     <ClCompile Include="AnimationNotifyState.cpp" />
-    <ClCompile Include="AnimationTrack.cpp" />
     <ClCompile Include="AnimTransitionArrow.cpp" />
+    <ClCompile Include="ANS_WarpMotion.cpp" />
     <ClCompile Include="AssetPath_Base.cpp" />
     <ClCompile Include="AssetSaveLoad.cpp" />
     <ClCompile Include="AttackInformation.cpp" />
@@ -401,8 +401,8 @@
     <ClInclude Include="AnimationData.h" />
     <ClInclude Include="AnimationNotifyEvent.h" />
     <ClInclude Include="AnimationNotifyState.h" />
-    <ClInclude Include="AnimationTrack.h" />
     <ClInclude Include="AnimTransitionArrow.h" />
+    <ClInclude Include="ANS_WarpMotion.h" />
     <ClInclude Include="AssetConcept.h" />
     <ClInclude Include="AssetPath_Base.h" />
     <ClInclude Include="AssetSaveLoad.h" />

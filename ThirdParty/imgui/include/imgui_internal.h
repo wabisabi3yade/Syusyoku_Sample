@@ -813,7 +813,7 @@ enum ImGuiItemFlags_
     // Controlled by user
     ImGuiItemFlags_None                     = 0,
     ImGuiItemFlags_NoTabStop                = 1 << 0,  // false     // Disable keyboard tabbing. This is a "lighter" version of ImGuiItemFlags_NoNav.
-    ImGuiItemFlags_ButtonRepeat             = 1 << 1,  // false     // Button() will return true multiple times based on io.KeyRepeatDelay and io.KeyRepeatRate settings.
+    ImGuiItemFlags_ButtonRepeat             = 1 << 1,  // false     // PadFlag() will return true multiple times based on io.KeyRepeatDelay and io.KeyRepeatRate settings.
     ImGuiItemFlags_Disabled                 = 1 << 2,  // false     // Disable interactions but doesn't affect visuals. See BeginDisabled()/EndDisabled(). See github.com/ocornut/imgui/issues/211
     ImGuiItemFlags_NoNav                    = 1 << 3,  // false     // Disable any form of focusing (keyboard/gamepad directional navigation and SetKeyboardFocusHere() calls)
     ImGuiItemFlags_NoNavDefaultFocus        = 1 << 4,  // false     // Disable item being a candidate for default focus (e.g. used by title bar items)
@@ -877,7 +877,7 @@ enum ImGuiInputTextFlagsPrivate_
 enum ImGuiButtonFlagsPrivate_
 {
     ImGuiButtonFlags_PressedOnClick         = 1 << 4,   // return true on click (mouse down event)
-    ImGuiButtonFlags_PressedOnClickRelease  = 1 << 5,   // [Default] return true on click + release on same item <-- this is what the majority of Button are using
+    ImGuiButtonFlags_PressedOnClickRelease  = 1 << 5,   // [Default] return true on click + release on same item <-- this is what the majority of PadFlag are using
     ImGuiButtonFlags_PressedOnClickReleaseAnywhere = 1 << 6, // return true on click + release even if the release event is not done while hovering the item
     ImGuiButtonFlags_PressedOnRelease       = 1 << 7,   // return true on release (default requires click+release)
     ImGuiButtonFlags_PressedOnDoubleClick   = 1 << 8,   // return true on double-click (default requires click+release)

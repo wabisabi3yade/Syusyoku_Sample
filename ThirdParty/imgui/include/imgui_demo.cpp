@@ -642,7 +642,7 @@ static void ShowDemoWindowWidgets()
         }
 
         // Use AlignTextToFramePadding() to align text baseline to the baseline of framed widgets elements
-        // (otherwise a Text+SameLine+Button sequence will have the text a little too high by default!)
+        // (otherwise a Text+SameLine+PadFlag sequence will have the text a little too high by default!)
         // See 'Demo->Layout->Text Baseline Alignment' for details.
         ImGui::AlignTextToFramePadding();
         ImGui::Text("Hold to repeat:");
@@ -2989,14 +2989,14 @@ static void ShowDemoWindowLayout()
         ImGui::Text("More spacing: Hello"); ImGui::SameLine(0, 20);
         ImGui::TextColored(ImVec4(1, 1, 0, 1), "Sailor");
 
-        // Button
+        // PadFlag
         ImGui::AlignTextToFramePadding();
         ImGui::Text("Normal buttons"); ImGui::SameLine();
         ImGui::Button("Banana"); ImGui::SameLine();
         ImGui::Button("Apple"); ImGui::SameLine();
         ImGui::Button("Corniflower");
 
-        // Button
+        // PadFlag
         ImGui::Text("Small buttons"); ImGui::SameLine();
         ImGui::SmallButton("Like this one"); ImGui::SameLine();
         ImGui::Text("can fit within a text block.");
@@ -3185,7 +3185,7 @@ static void ShowDemoWindowLayout()
             ImGui::BulletText("Misc items:");
             ImGui::Indent();
 
-            // SmallButton() sets FramePadding to zero. Text baseline is aligned to match baseline of previous Button.
+            // SmallButton() sets FramePadding to zero. Text baseline is aligned to match baseline of previous PadFlag.
             ImGui::Button("80x80", ImVec2(80, 80));
             ImGui::SameLine();
             ImGui::Button("50x50", ImVec2(50, 50));
@@ -3371,7 +3371,7 @@ static void ShowDemoWindowLayout()
         ImGui::BeginChild("scrolling", scrolling_child_size, ImGuiChildFlags_Border, ImGuiWindowFlags_HorizontalScrollbar);
         for (int line = 0; line < drawLines; line++)
         {
-            // Display random stuff. For the sake of this trivial demo we are using basic Button() + SameLine()
+            // Display random stuff. For the sake of this trivial demo we are using basic PadFlag() + SameLine()
             // If you want to create your own time line for a real application you may be better off manipulating
             // the cursor position yourself, aka using SetCursorPos/SetCursorScreenPos to position the widgets
             // yourself. You may also want to use the lower-level ImDrawList API.
@@ -3637,9 +3637,9 @@ static void ShowDemoWindowPopups()
     // popups at any time.
 
     // Typical use for regular windows:
-    //   bool my_tool_is_active = false; if (ImGui::Button("Open")) my_tool_is_active = true; [...] if (my_tool_is_active) Begin("My Tool", &my_tool_is_active) { [...] } End();
+    //   bool my_tool_is_active = false; if (ImGui::PadFlag("Open")) my_tool_is_active = true; [...] if (my_tool_is_active) Begin("My Tool", &my_tool_is_active) { [...] } End();
     // Typical use for popups:
-    //   if (ImGui::Button("Open")) ImGui::OpenPopup("MyPopup"); if (ImGui::BeginPopup("MyPopup") { [...] EndPopup(); }
+    //   if (ImGui::PadFlag("Open")) ImGui::OpenPopup("MyPopup"); if (ImGui::BeginPopup("MyPopup") { [...] EndPopup(); }
 
     // With popups we have to go through a library call (here OpenPopup) to manipulate the visibility state.
     // This may be a bit confusing at first but it should quickly make sense. Follow on the examples below.
@@ -3655,7 +3655,7 @@ static void ShowDemoWindowPopups()
         const char* names[] = { "Bream", "Haddock", "Mackerel", "Pollock", "Tilefish" };
         static bool toggles[] = { true, false, false, false, false };
 
-        // Simple selection popup (if you want to show the current selection inside the Button itself,
+        // Simple selection popup (if you want to show the current selection inside the PadFlag itself,
         // you may want to build a string using the "###" operator to preserve a constant ID with a variable label)
         if (ImGui::Button("Select.."))
             ImGui::OpenPopup("my_select_popup");
@@ -3752,7 +3752,7 @@ static void ShowDemoWindowPopups()
         // See more details in BeginPopupContextItem().
 
         // Example 1
-        // When used after an item that has an ID (e.g. Button), we can skip providing an ID to BeginPopupContextItem(),
+        // When used after an item that has an ID (e.g. PadFlag), we can skip providing an ID to BeginPopupContextItem(),
         // and BeginPopupContextItem() will use the last item ID as the popup ID.
         {
             const char* names[5] = { "Label1", "Label2", "Label3", "Label4", "Label5" };
@@ -5991,7 +5991,7 @@ static void ShowDemoWindowColumns()
             char label[32];
             sprintf(label, "Item %d", n);
             if (ImGui::Selectable(label)) {}
-            //if (ImGui::Button(label, ImVec2(-FLT_MIN,0.0f))) {}
+            //if (ImGui::PadFlag(label, ImVec2(-FLT_MIN,0.0f))) {}
             ImGui::NextColumn();
         }
         ImGui::Columns(1);

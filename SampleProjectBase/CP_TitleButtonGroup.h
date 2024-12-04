@@ -20,7 +20,5 @@ private:
 
 	/// @brief ƒ{ƒ^ƒ“‚Ì‰Šú‰»
 	void ButtonSetup();
-
-	void ImGuiDebug() override;
 };
 

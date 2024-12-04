@@ -13,8 +13,13 @@ class AnimationNotifyState : public AnimationNotify_Base
 	float endEventRatio;
 	/// @brief 終了イベントフレーム
 	u_int endEventFrame;
-public:
 
+	/// @brief 現在の再生割合
+	float curPlayRatio;
+
+	/// @brief 1フレーム前のの再生割合
+	float lastPlayRatio;
+public:
 	/// @brief コンストラクタ
 	/// @param _notifyType 通知イベント種類
 	AnimationNotifyState(NotifyType _notifyType);
@@ -43,6 +48,22 @@ protected:
 
 	/// @brief イベント終了処理
 	virtual void End() = 0;
+
+	/// @brief 開始のイベント割合を取得
+	/// @return 開始イベント割合
+	float GetStartEventRatio() const;
+
+	/// @brief 終了のイベント割合を取得
+	/// @return 終了イベント割合
+	float GetEndEventRatio() const;
+
+	/// @brief 現在の再生割合を取得する
+	/// @return 現在の割合
+	float GetCurrentRatio() const;
+
+	/// @brief 1フレーム前の再生割合を取得
+	/// @return 1フレーム前の割合
+	float GetLastRatio() const;
 
 	void ImGuiDebug() override;
 };

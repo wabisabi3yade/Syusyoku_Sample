@@ -63,3 +63,9 @@
 #include "MainApplication.h"
 #include "HashiTaku_Random.h"	// 乱数クラス
 #include "Direct3D11.h"	// 自前のDirectX11クラス
+
+// 名前空間定義
+namespace HashiTaku
+{
+	namespace DXSimp = DirectX::SimpleMath;
+}

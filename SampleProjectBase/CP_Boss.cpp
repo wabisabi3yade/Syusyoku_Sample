@@ -173,6 +173,8 @@ void CP_Boss::OnDeathBehavior()
 
 void CP_Boss::ImGuiDebug()
 {
+	if (!ImGui::Begin("Boss")) return;
+
 	CP_Enemy::ImGuiDebug();
 
 	// オブジェクト名をセット
@@ -188,4 +190,6 @@ void CP_Boss::ImGuiDebug()
 		hpBarObjName = input;
 
 	pActionController->ImGuiCall();
+
+	ImGui::End();
 }

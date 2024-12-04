@@ -169,18 +169,6 @@ void AnimControllPlayer::TransitionUpdate()
 {
 	// 現在はクロスフェードしか対応していない
 	CrossFadeUpdate();
-
-	/*switch (curTransitonKind)
-	{
-	case HashiTaku::CrossFade:
-		CrossFadeUpdate();
-		break;
-	case HashiTaku::Inertialization:
-		InertializationUpdate();
-		break;
-	default:
-		break;
-	}*/
 }
 
 void AnimControllPlayer::CrossFadeUpdate()
@@ -304,13 +292,12 @@ void AnimControllPlayer::ImGuiDebug()
 {
 	ImGui::Text(std::to_string(static_cast<int>(updateState)).c_str());
 
-	if (ImGuiMethod::TreeNode("Current Play"))
+	if (ImGuiMethod::TreeNode("Node Play"))
 	{
 		std::string text = "Name:" + pCurNodePlayer->GetNodeName();	ImGui::Text(text.c_str());
 		pCurNodePlayer->ImGuiCall();
 		ImGui::TreePop();
 	}
-
 
 	ImGui::DragFloat("controllPlaySpeed", &playSpeed, 0.01f, 0.0f, 100.0f);
 	pCopyAnimParameters->ImGuiCall();

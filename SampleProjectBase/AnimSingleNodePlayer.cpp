@@ -40,10 +40,13 @@ void AnimSingleNodePlayer::CalcRootMotionPosSpeed()
 	// コントローラーの
 	const SingleAnimationNode& singleNode = static_cast<const SingleAnimationNode&>(*pPlayAnimNode);
 
-	rootMotionPosSpeedPerSec = singleNode.GetRootMotionPosSpeed() * 
-		pAssetBoneList->GetLoadScale()
-		* allPlaySpeed
-		/ GetNodePlaySpeed();
+	float nodePlaySpeed = std::max(GetNodePlaySpeed(), Mathf::epsilon);
+
+	rootMotionPosSpeedPerSec = 
+		singleNode.GetRootMotionPosSpeed() * 
+		pObjectTransform->GetScale() *
+		pAssetBoneList->GetLoadScale() *
+		(allPlaySpeed / nodePlaySpeed);
 }
 
 DirectX::SimpleMath::Vector3 AnimSingleNodePlayer::GetRootMotionPos(float _ratio, bool _isLoadScaling) const

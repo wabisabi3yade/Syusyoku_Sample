@@ -214,7 +214,7 @@
                                 "isLoop": true,
                                 "isTrimming": true,
                                 "name": "VisualEffect",
-                                "playSpeed": 0.7540000081062317,
+                                "playSpeed": 0.7680000066757202,
                                 "priority": 0,
                                 "startFrame": 23,
                                 "vfxName": "Fire01"
@@ -232,12 +232,12 @@
                             ],
                             "rotation": [
                                 -0.0,
-                                -0.06104859709739685,
+                                -0.06104860454797745,
                                 -0.0,
-                                0.9981348514556885
+                                0.9981347918510437
                             ],
                             "scale": [
-                                0.8999999761581421,
+                                0.6000000238418579,
                                 0.800000011920929,
                                 0.699999988079071
                             ]
@@ -324,31 +324,74 @@
             }
         },
         {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "image": "UI_TitleImage.png",
+                        "name": "UIRenderer",
+                        "priority": 0
+                    }
+                ],
+                "layer": 2,
+                "name": "TitleImage",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        640.0,
+                        159.39999389648438,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1100.0,
+                        220.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
             "childs": [
                 {
                     "childs": null,
                     "gameObject": {
                         "active": true,
-                        "components": null,
-                        "layer": 0,
+                        "components": [
+                            {
+                                "enable": true,
+                                "image": "UI_GageBar_R.png",
+                                "name": "UIRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 2,
                         "name": "SelectBackImage",
                         "tag": 0,
                         "transform": {
                             "child": null,
                             "pos": [
-                                0.0,
-                                0.0,
-                                0.0
+                                206.5,
+                                462.1000061035156,
+                                0.20000000298023224
                             ],
                             "rotation": [
+                                -0.0,
                                 0.0,
-                                0.0,
-                                0.0,
+                                -0.0,
                                 1.0
                             ],
                             "scale": [
-                                1.0,
-                                1.0,
+                                400.0,
+                                100.0,
                                 1.0
                             ]
                         }
@@ -420,7 +463,7 @@
                             "pos": [
                                 198.6999969482422,
                                 569.5,
-                                0.0
+                                -0.20000000298023224
                             ],
                             "rotation": [
                                 -0.0,
@@ -441,15 +484,20 @@
                 "active": true,
                 "components": [
                     {
+                        "backObjName": "SelectBackImage",
+                        "buttonObjNames": [
+                            "StartImage",
+                            "EndImage"
+                        ],
                         "defaultId": 0,
                         "enable": true,
                         "horiSpeed": 0,
-                        "name": "ButtonGroup",
+                        "name": "TitleButtonGroup",
                         "priority": 0,
-                        "vertSpeed": 0
+                        "vertSpeed": -1
                     }
                 ],
-                "layer": 0,
+                "layer": 2,
                 "name": "ButtonGroup",
                 "tag": 0,
                 "transform": {
@@ -472,42 +520,6 @@
                     "scale": [
                         1.0,
                         1.0,
-                        1.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "image": "UI_TitleImage.png",
-                        "name": "UIRenderer",
-                        "priority": 0
-                    }
-                ],
-                "layer": 2,
-                "name": "TitleImage",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        640.0,
-                        159.39999389648438,
-                        0.0
-                    ],
-                    "rotation": [
-                        -0.0,
-                        0.0,
-                        -0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1100.0,
-                        220.0,
                         1.0
                     ]
                 }
