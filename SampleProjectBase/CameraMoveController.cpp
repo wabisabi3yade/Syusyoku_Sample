@@ -11,8 +11,13 @@ namespace DXSimp = DirectX::SimpleMath;
 constexpr float INIT_PREV_SHAKEELAPSETIME(-10000.0f);
 
 CameraMoveController::CameraMoveController() :
-	StateMachine_Base("CameraMove"), pTargetTransform(nullptr), pLookAtTransform(nullptr),
-	shakeTime(0.0f), shakeElapsedTime(0.0f), prevShakeElapsedTime(0.0f), isShaking(false)
+	StateMachine_Base("CameraMove"), 
+	pFollowTransform(nullptr), 
+	pLookAtTransform(nullptr),
+	shakeTime(0.0f),
+	shakeElapsedTime(0.0f),
+	prevShakeElapsedTime(0.0f),
+	isShaking(false)
 {
 	using enum CameraMoveState_Base::CameraState;
 
@@ -27,6 +32,8 @@ CameraMoveController::CameraMoveController() :
 void CameraMoveController::Begin(CP_Camera& _camera)
 {
 	pCamera = &_camera;
+
+	InitCameraPos();
 
 	StateMachine_Base::Begin();
 }
@@ -43,6 +50,10 @@ void CameraMoveController::Update()
 
 	// 最終的なカメラの座標を更新
 	UpdateFinalPos();
+
+	// 次フレームのために追従先の座標取得
+	if (GetHasFollowObject())
+		prevFollowPos = pFollowTransform->GetPosition();
 }
 
 void CameraMoveController::ShakeUpdate()
@@ -92,7 +103,7 @@ void CameraMoveController::ChangeState(CameraMoveState_Base::CameraState _camera
 
 void CameraMoveController::SetFollowTransform(const Transform* _pTransform)
 {
-	pTargetTransform = _pTransform;
+	pFollowTransform = _pTransform;
 }
 
 void CameraMoveController::SetLookAtObject(const ITargetAccepter* _pTransform)
@@ -143,14 +154,24 @@ const DirectX::SimpleMath::Vector3& CameraMoveController::GetCameraBasePos()
 	return curBaseCameraPos;
 }
 
+const DirectX::SimpleMath::Vector3& CameraMoveController::GetPrevFollowPos() const
+{
+	return prevFollowPos;
+}
+
+bool CameraMoveController::GetHasFollowObject() const
+{
+	return pFollowTransform != nullptr;
+}
+
 const Transform* CameraMoveController::GetFollowTransform() const
 {
-	return pTargetTransform;
+	return pFollowTransform;
 }
 
 bool CameraMoveController::GetHaveTarget() const
 {
-	return pTargetTransform != nullptr;
+	return pFollowTransform != nullptr;
 }
 
 const DirectX::SimpleMath::Vector3& CameraMoveController::GetLookAtWorldPos() const
@@ -212,6 +233,24 @@ void CameraMoveController::Load(const nlohmann::json& _data)
 			HashiTaku::LoadJsonFloat("power", shLvParam.power, shData);
 			levelId++;
 		}
+	}
+}
+
+void CameraMoveController::InitCameraPos()
+{
+	if (!GetHasFollowObject())
+	{
+		HASHI_DEBUG_LOG("先に追従先を追加してください");
+		return;
+	}
+
+	DXSimp::Vector3 initPos;
+
+	// 通常移動カメラからカメラのトランスフォームを初期化
+	auto& stateNode = stateNodeList[CameraMoveState_Base::CameraState::Move];
+	if (auto moveState = dynamic_cast<CameraOnMoveState*>(stateNode.get()))
+	{
+		moveState->InitCameraTransform();
 	}
 }
 

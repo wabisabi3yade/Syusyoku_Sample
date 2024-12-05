@@ -664,8 +664,8 @@
                                                 {
                                                     "interp": 0,
                                                     "time": 0.5569999814033508,
-                                                    "value": 1.0,
-                                                    "vector": 0.0
+                                                    "value": 0.9309999942779541,
+                                                    "vector": 0.2871125042438507
                                                 }
                                             ],
                                             "startInterp": 1,
@@ -881,10 +881,15 @@
                             "stateDatas": [
                                 {
                                     "parameter": {
+                                        "canFovMovement": 4.0,
                                         "centerAngle": -90.0,
                                         "currentHeight": 3.0,
                                         "disHorizon": 8.0,
+                                        "fovChangeRate": 3.0,
+                                        "horiSpeed": 20.0,
                                         "lookOffsetY": 2.4000000953674316,
+                                        "moveFov": 58.0,
+                                        "normalFov": 50.0,
                                         "rotateSpeed": 120.0
                                     },
                                     "stateType": 0
@@ -897,7 +902,11 @@
                                         "LookSpeed": 30.0,
                                         "MaxHeight": 3.0,
                                         "MinHeight": 2.0,
-                                        "MoveSpeed": 30.0
+                                        "MoveSpeed": 30.0,
+                                        "canFovMovement": 1.0,
+                                        "fovChangeRate": 3.0,
+                                        "moveFov": 65.0,
+                                        "normalFov": 50.0
                                     },
                                     "stateType": 1
                                 }
@@ -1136,7 +1145,7 @@
                             "actData": [
                                 {
                                     "data": {
-                                        "isIdleOnly": false,
+                                        "isIdleOnly": true,
                                         "warpMotion": {
                                             "useWarp": false
                                         }
@@ -1145,11 +1154,9 @@
                                 },
                                 {
                                     "data": {
-                                        "farDis": 10.0,
                                         "moveAcceleration": 7.300000190734863,
                                         "moveMaxSpeed": 2.200000047683716,
                                         "moveRotateSpeed": 10.0,
-                                        "transNearDistance": 2.0,
                                         "warpMotion": {
                                             "useWarp": false
                                         }
@@ -1161,7 +1168,6 @@
                                         "moveAcceleration": 6.599999904632568,
                                         "moveMaxSpeed": 8.899999618530273,
                                         "moveRotateSpeed": 10.0,
-                                        "transNearDistance": 2.0,
                                         "warpMotion": {
                                             "useWarp": false
                                         }
@@ -1213,13 +1219,13 @@
                                                 {
                                                     "interp": 1,
                                                     "time": 0.1679999977350235,
-                                                    "value": 0.0,
+                                                    "value": 0.10000000149011612,
                                                     "vector": 0.0
                                                 },
                                                 {
                                                     "interp": 1,
                                                     "time": 0.3149999976158142,
-                                                    "value": 0.0,
+                                                    "value": 0.10000000149011612,
                                                     "vector": 0.0
                                                 },
                                                 {
@@ -1237,13 +1243,13 @@
                                                 {
                                                     "interp": 1,
                                                     "time": 0.4620000123977661,
-                                                    "value": 0.0,
+                                                    "value": 0.10000000149011612,
                                                     "vector": 0.0
                                                 },
                                                 {
                                                     "interp": 1,
-                                                    "time": 0.546999990940094,
-                                                    "value": 0.0,
+                                                    "time": 0.8420000076293945,
+                                                    "value": 0.10000000149011612,
                                                     "vector": 0.0
                                                 }
                                             ],
@@ -1272,7 +1278,8 @@
                                                         "startVector": 0.0,
                                                         "useHermite": true
                                                     },
-                                                    "movementXZ": 2.4000000953674316
+                                                    "movementXZ": 5.0,
+                                                    "targetOffset": -1.0
                                                 },
                                                 {
                                                     "beginRatio": 0.31200000643730164,
@@ -1288,7 +1295,8 @@
                                                         "startVector": 0.0,
                                                         "useHermite": true
                                                     },
-                                                    "movementXZ": 2.7699999809265137
+                                                    "movementXZ": 5.0,
+                                                    "targetOffset": -1.0
                                                 },
                                                 {
                                                     "beginRatio": 0.5429999828338623,
@@ -1304,7 +1312,8 @@
                                                         "startVector": 0.0,
                                                         "useHermite": true
                                                     },
-                                                    "movementXZ": 2.3399999141693115
+                                                    "movementXZ": 5.0,
+                                                    "targetOffset": -1.0
                                                 }
                                             ]
                                         }

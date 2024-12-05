@@ -669,7 +669,7 @@
                         },
                         "isLoop": false,
                         "isRMR": false,
-                        "isRMXZ": true,
+                        "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.159999966621399
                     },
@@ -6573,9 +6573,8 @@
                                 ],
                                 "notifyName": "ANS_CanCancel",
                                 "parameterNames": [
-                                    "canCancel",
-                                    "canMove",
-                                    "canAttack"
+                                    "canAttack",
+                                    "canCancel"
                                 ],
                                 "setParameter": [
                                     false,
@@ -6584,6 +6583,31 @@
                                     true
                                 ],
                                 "startFrame": 43,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 70,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_CanMove",
+                                "parameterNames": [
+                                    "canMove"
+                                ],
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 47,
                                 "useFrame": true
                             },
                             "notifyType": 3

@@ -28,6 +28,9 @@ class CameraOnMoveState : public CameraMoveState_Base
 	/// @brief 回転速度
 	float rotateSpeed;
 
+	/// @brief 横軸の目標への移動速度
+	float horiSpeedToTarget;
+
 	/// @brief 中心との角度
 	float centerAngle;
 
@@ -36,10 +39,12 @@ class CameraOnMoveState : public CameraMoveState_Base
 
 	/// @brief ターゲットからY座標の注視点
 	float lookTargetOffsetY;
-
 public :
 	CameraOnMoveState();
 	~CameraOnMoveState() {}
+
+	/// @brief 初期座標を渡す
+	void InitCameraTransform();
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

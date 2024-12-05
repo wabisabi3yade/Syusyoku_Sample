@@ -72,6 +72,28 @@ void BossActState_Base::OnDamage()
 	ChangeState(BossState::Damage_Small, true);
 }
 
+void BossActState_Base::DebugDisplay()
+{
+#ifdef EDIT
+	if (!isWarpMoving) return;
+
+	constexpr float scale = 0.4f;
+
+	// ワープモーションのデバッグ
+	// 目標座標
+	Geometory::SetPosition(warpStartPos + disToWarpTargePos);
+	Geometory::SetScale(DXSimp::Vector3::One * scale);
+	Geometory::SetColor({ 1, 0, 1 });
+	Geometory::DrawSphere();
+
+	// ボスの座標
+	Geometory::SetPosition(GetBossTransform().GetPosition());
+	Geometory::SetScale(DXSimp::Vector3::One * scale);
+	Geometory::SetColor({ 0, 1, 1 });
+	Geometory::DrawSphere();
+#endif // EDIT
+}
+
 nlohmann::json BossActState_Base::Save()
 {
 	nlohmann::json data;
@@ -99,16 +121,26 @@ void BossActState_Base::CalcWarpDistance(const DirectX::SimpleMath::Vector3& _ta
 {
 	if (!isUseWarpMotion) return;
 
+#ifdef EDIT
+	warpStartPos = GetBossTransform().GetPosition();
+#endif // EDIT
+
+	WarpMotionParam& curWarp = warpMotionParams[curWarpStep - 1];
+
 	// 距離を求める
 	disToWarpTargePos = _targetWorldPos - GetBossTransform().GetPosition();
 
+	// オフセット値を反映する
+	DXSimp::Vector2 distanceXZ = { disToWarpTargePos.x, disToWarpTargePos.z };
+	DXSimp::Vector2 offsetDisXZ; distanceXZ.Normalize(offsetDisXZ);
+	offsetDisXZ = offsetDisXZ * curWarp.targetPosOffset;
+	disToWarpTargePos.x += offsetDisXZ.x; disToWarpTargePos.z += offsetDisXZ.y;
+
 	// 距離制限を掛ける(マイナスは無制限)
-	float maxMovement = warpMotionParams[curWarpStep - 1].maxMovementXZ;
+	float maxMovement = curWarp.maxMovementXZ;
 	if (maxMovement < 0.0f) return;
 
-	DXSimp::Vector2 distanceXZ = { disToWarpTargePos.x, disToWarpTargePos.z };
 	float disLength = distanceXZ.Length();
-
 	if (disLength > maxMovement)
 	{
 		float times = maxMovement / disLength;
@@ -175,7 +207,7 @@ void BossActState_Base::WarpMotionUpdate()
 	const WarpMotionParam& curWarp = warpMotionParams[curWarpStep - 1];
 
 	// 現在の距離の進行割合を求める
-	float curProgressRatio = 0.0f;	
+	float curProgressRatio = 0.0f;
 	if (curWarp.isFromRootMotion) // ルートモーションから求めるなら
 	{
 		// 現在は正面の移動にのみ適用
@@ -187,7 +219,7 @@ void BossActState_Base::WarpMotionUpdate()
 		// 区間内の進行割合を求めて、カーブ値を取得
 		float curProgressRatio = (animRatio - curWarp.beginAnimRatio) /
 			(curWarp.endAnimRatio - curWarp.beginAnimRatio);
-		curProgressRatio = curWarp.horiMovementCurve.GetValue(curProgressRatio);
+		curProgressRatio = curWarp.pHoriMovementCurve->GetValue(curProgressRatio);
 	}
 
 	// 前回からの差を求める
@@ -277,11 +309,13 @@ void BossActState_Base::ImGuiWarpDebug()
 			1.0f);
 
 		ImGui::DragFloat("maxDisXZ", &param.maxMovementXZ, 0.01f, -10.0f, 1000.0f);
+		ImGui::DragFloat("offsetXZ", &param.targetPosOffset, 0.01f, -1000.0f, 1000.0f);
 
 		if (!param.isFromRootMotion)
 		{
 			ImGuiMethod::LineSpaceSmall();
-			param.horiMovementCurve.ImGuiCall();
+			if (param.pHoriMovementCurve)
+				param.pHoriMovementCurve->ImGuiCall();
 		}
 
 		//// 縦移動するときのみ表示
@@ -323,8 +357,10 @@ nlohmann::json BossActState_Base::SaveWarpParameters()
 		paramData["endRatio"] = warpParam.endAnimRatio;
 
 		// 横移動
-		paramData["moveCurveXZ"] = warpParam.horiMovementCurve.Save();
+		if (warpParam.pHoriMovementCurve)
+			paramData["moveCurveXZ"] = warpParam.pHoriMovementCurve->Save();
 		paramData["movementXZ"] = warpParam.maxMovementXZ;
+		paramData["targetOffset"] = warpParam.targetPosOffset;
 
 		//// 縦移動
 		//paramData["useVert"] = warpParam.isUseVertical;
@@ -357,6 +393,7 @@ void BossActState_Base::LoadWarpParameters(const nlohmann::json& _warpData)
 	{
 		const nlohmann::json& paramData = warpStructDatas[d_i];
 		WarpMotionParam& warpParam = warpMotionParams[d_i];
+		warpParam.pHoriMovementCurve = std::make_unique<AnimationCurve>();
 
 		HashiTaku::LoadJsonBoolean("fromRootMotion", warpParam.isFromRootMotion, paramData);
 
@@ -367,9 +404,11 @@ void BossActState_Base::LoadWarpParameters(const nlohmann::json& _warpData)
 		// 横移動
 		if (HashiTaku::IsJsonContains(paramData, "moveCurveXZ"))
 		{
-			warpParam.horiMovementCurve.Load(paramData["moveCurveXZ"]);
+			warpParam.pHoriMovementCurve->Load(paramData["moveCurveXZ"]);
 		}
 		HashiTaku::LoadJsonFloat("movementXZ", warpParam.maxMovementXZ, paramData);
+		HashiTaku::LoadJsonFloat("targetOffset", warpParam.targetPosOffset, paramData);
+
 
 		//// 縦移動
 		//HashiTaku::LoadJsonBoolean("useVert", warpParam.isUseVertical, paramData);

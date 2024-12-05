@@ -13,25 +13,28 @@ protected:
 	struct WarpMotionParam
 	{
 		/// @brief ワープモーションで移動する割合(XZ成分)
-		AnimationCurve horiMovementCurve;
-
-		/*/// @brief ワープモーションで移動する割合(Y成分)
-		AnimationCurve vertMovementCurve;*/
+		std::unique_ptr<AnimationCurve> pHoriMovementCurve;
 
 		/// @brief 移動するXZ最大距離(0未満なら制限なしとする)
 		float maxMovementXZ{ -10.0f };
 
-		/*	/// @brief 移動するY最大距離(0未満なら制限なしとする)
-			float maxMovementY{ -10.0f };*/
+		/// @brief ターゲットとする座標からの差分へ向かうようにするオフセット
+		float targetPosOffset{ 0.0f };
 
-			/// @brief 開始する割合
+		/// @brief 開始する割合
 		float beginAnimRatio{ 0.0f };
 
 		/// @brief 終了する割合
-		float endAnimRatio{ 0.0f };
+		float endAnimRatio{ 1.0f };
 
 		/// @brief ルートモーションの割合から移動割合を求める
 		bool isFromRootMotion{ true };
+
+		/*/// @brief ワープモーションで移動する割合(Y成分)
+		AnimationCurve vertMovementCurve;*/
+
+		/*	/// @brief 移動するY最大距離(0未満なら制限なしとする)
+		float maxMovementY{ -10.0f };*/
 
 		/*/// @brief Y移動させるか？
 		bool isUseVertical{ false };*/
@@ -90,6 +93,11 @@ private:
 
 	/// @brief ワープモーション中か？
 	bool isWarpMoving;
+
+#ifdef EDIT
+	// ワープモーション開始時の座標
+	DirectX::SimpleMath::Vector3 warpStartPos;
+#endif
 protected:
 	/// @brief アクションコントローラー
 	BossActionController* pActionController;
@@ -113,6 +121,9 @@ public:
 
 	/// @brief ダメージ時処理
 	void OnDamage();
+
+	/// @brief デバッグ描画
+	void DebugDisplay();
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

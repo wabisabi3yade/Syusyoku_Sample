@@ -5,6 +5,9 @@
 
 namespace DXSimp = DirectX::SimpleMath;
 
+// uŽž‚ÉŒ©‚é‚Ì‚ð”½‰f‚·‚é“G‚Æ‚Ì‹——£
+constexpr float INSTANTLOOK_DISTANCE(4.0f);
+
 PlayerAttackState::PlayerAttackState() :
 	pIsReAttack(nullptr),
 	nextCombAtkState(PlayerState::None),
@@ -35,11 +38,19 @@ void PlayerAttackState::OnStartBehavior()
 	// “G‚ÌÀ•W‚ðŽæ“¾
 	DXSimp::Vector3 atkPos = GetAtkEnemyPos();
 
-	// i‚Þ‹——£‚ð‹‚ß‚é
-	CalcProgressDis(atkPos);
+	// i‚Þ‹——£
+	curAtkProgressDis = atkMaxDistance;
 
-	// “G‚Ì•ûŒü‚ðŒ©‚é
-	LookAtEnemyInstant(atkPos);
+	// ‹——£‚ðŒ©‚Ä“G‚ÖŒü‚©‚í‚¹‚é‚©”»’f
+	DXSimp::Vector3 vecToEnemy = atkPos - GetTransform().GetPosition(); vecToEnemy.y = 0.0f;
+	if (pActionController->GetIsTargeting() || vecToEnemy.Length() < INSTANTLOOK_DISTANCE)
+	{
+		// i‚Þ‹——£‚ð‹‚ß‚é
+		CalcProgressDis(atkPos);
+
+		// “G‚Ì•ûŒü‚ðŒ©‚é
+		LookAtEnemyInstant(atkPos);
+	}
 
 	// UŒ‚î•ñ‚ðXV
 	UpdateAttackInfo();

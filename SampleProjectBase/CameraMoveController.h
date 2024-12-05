@@ -44,11 +44,14 @@ private:
 	/// @brief 現在のカメラ揺れでずらしているオフセット座標
 	DirectX::SimpleMath::Vector3 curShakeOffset;
 
+	/// @brief 前フレームのフォローしている座標
+	DirectX::SimpleMath::Vector3 prevFollowPos;
+
 	/// @brief カメラコンポーネント
 	CP_Camera* pCamera;
 
 	/// @brief カメラの追従オブジェクト
-	const Transform* pTargetTransform;
+	const Transform* pFollowTransform;
 
 	/// @brief カメラの注視オブジェクト
 	const ITargetAccepter* pLookAtTransform;
@@ -121,6 +124,14 @@ public:
 	/// @return カメラ揺れを考慮しないカメラ座標
 	const DirectX::SimpleMath::Vector3& GetCameraBasePos();
 
+	/// @brief 前フレームの追従先座標を取得
+	/// @return 前フレームの追従先座標
+	const DirectX::SimpleMath::Vector3& GetPrevFollowPos() const;
+
+	/// @brief 追従先のオブジェクトを所持しているか取得
+	/// @return 所持しているか？
+	bool GetHasFollowObject() const;
+
 	/// @brief 対象オブジェクトを取得
 	/// @return 対象オブジェクト
 	const Transform* GetFollowTransform() const;
@@ -136,6 +147,9 @@ public:
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
 private:
+	/// @brief カメラの座標を初期化
+	void InitCameraPos();
+
 	/// @brief 更新処理
 	void Update() override;
 

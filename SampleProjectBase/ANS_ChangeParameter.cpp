@@ -123,13 +123,21 @@ void ANS_ChangeParameter::ImGuiDebug()
 
 	// 今追加されているパラメータ
 	auto paramItr = changeParamNames.begin();
+	u_int loop = 0;
 	for (; paramItr != changeParamNames.end();)
 	{
+		ImGui::PushID(loop);
+
 		ImGui::Text((*paramItr).c_str());
 		ImGui::SameLine();
 		// 削除
-		if (ImGui::Button("X")) paramItr = changeParamNames.erase(paramItr);
-		else ++paramItr;
+		if (ImGui::Button("X"))
+			paramItr = changeParamNames.erase(paramItr);
+		else
+			++paramItr;
+
+		loop++;
+		ImGui::PopID();
 	}
 
 	// パラメータ名を追加

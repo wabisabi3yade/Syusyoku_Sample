@@ -17,6 +17,18 @@ public:
 		None
 	};
 
+private:
+	/// @brief ターゲット移動時のfov
+	float moveFov;
+
+	/// @brief 通常時Fov
+	float normalFov;
+
+	/// @brief fovの変動率
+	float fovChangeRate;
+
+	/// @brief fov変動する追従先の移動量
+	float canFovChangeMovement;
 protected:
 	/// @brief カメラの行動コントローラ
 	CameraMoveController* pCamController;
@@ -42,7 +54,7 @@ public:
 	void OnEnd() override;
 
 	nlohmann::json Save() override;
-	void Load(const nlohmann::json& _data) override {};
+	void Load(const nlohmann::json& _data) override;
 protected:
 	/// @brief 開始処理の振る舞い
 	virtual void OnStartBehavior() {}
@@ -68,8 +80,8 @@ protected:
 	/// @return カメラ
 	CP_Camera& GetCamera();
 
-	/// @brief ターゲットとする座標を取得する
-	/// @return ターゲットのワールド座座標
+	/// @brief 追従先の座標を取得する
+	/// @return  追従先の座標
 	const DirectX::SimpleMath::Vector3& GetFollowPosition() const;
 
 	/// @brief ベースとなる座標を取得する
@@ -80,6 +92,10 @@ protected:
 	/// @return 経過時間
 	float DeltaTime() const;
 
-	void ImGuiDebug() override {}
+	void ImGuiDebug() override;
+
+private:
+	/// @brief 視野角の更新処理
+	void FovUpdate();
 };
 

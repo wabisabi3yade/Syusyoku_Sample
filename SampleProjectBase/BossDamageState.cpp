@@ -6,6 +6,8 @@
 
 namespace DXSimp = DirectX::SimpleMath;
 
+constexpr auto DAMAGE_ANIM_NAME("KnockSmall");
+
 BossDamageState::BossDamageState()
 {
 }
@@ -25,7 +27,7 @@ void BossDamageState::OnStartBehavior()
 
 void BossDamageState::OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName)
 {
-	if (_toAnimNodeName == IDLE_ANIM_NAME)
+	if (_toAnimNodeName == IDLE_ANIM_NAME || _fromAnimNodeName == DAMAGE_ANIM_NAME)
 		ChangeState(BossState::Idle);
 }
 

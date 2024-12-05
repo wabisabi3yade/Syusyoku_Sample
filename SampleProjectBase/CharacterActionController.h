@@ -27,7 +27,7 @@ protected:
 	CP_RigidBody* pRigidBody;
 #ifdef EDIT
 	// アクション周りでデバッグ描画するか？
-	bool isDebugDisplay{ false };
+	bool isDebugDisplay{ true };
 #endif // EDIT
 
 public:
