@@ -871,6 +871,12 @@
     <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Jump">
       <UniqueIdentifier>{a1c0647e-c047-4bb8-ba12-c7e1ef113e9a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\Controller\Base">
+      <UniqueIdentifier>{8e1018be-fcdd-47bf-991e-35a65770f867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\PlayerAction">
+      <UniqueIdentifier>{460d29f6-5ad2-41cb-888f-7473ae7841c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1626,6 +1632,12 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="PlayerJumpState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerActionController_Base.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAction.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -2387,6 +2399,12 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="PlayerJumpState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerActionController_Base.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAction.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

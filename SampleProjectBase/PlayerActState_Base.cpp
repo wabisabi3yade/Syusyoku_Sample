@@ -159,6 +159,16 @@ void PlayerActState_Base::ChangeState(PlayerState _nextState)
 	pActionController->ChangeState(_nextState);
 }
 
+void PlayerActState_Base::ClearVelocity(bool _applyY)
+{
+	DXSimp::Vector3 set;
+	if (!_applyY) // yŽ²”½‰f‚³‚¹‚½‚­‚È‚¢‚È‚ç
+	{
+		set.y = GetRB().GetVelocity().y;
+	}
+	GetRB().SetVelocity(set);
+}
+
 void PlayerActState_Base::SetTargetAtEnemy(bool _isLook)
 {
 	isTargetLookAtEnemy = _isLook;

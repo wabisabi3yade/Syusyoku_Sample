@@ -55,6 +55,7 @@ protected:
 	// State‹¤’Êˆ—
 	void OnStartBehavior() override;
 	void UpdateBehavior() override;
+	void OnEndBehavior() override;
 	void TransitionCheckUpdate() override;
 
 	void ImGuiDebug() override;

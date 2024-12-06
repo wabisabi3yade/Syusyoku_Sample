@@ -250,6 +250,8 @@
     <ClCompile Include="MaterialCreater.cpp" />
     <ClCompile Include="AnimNodePlayer_Base.cpp" />
     <ClCompile Include="MyClass2.cpp" />
+    <ClCompile Include="PlayerAction.cpp" />
+    <ClCompile Include="PlayerActionController_Base.cpp" />
     <ClCompile Include="PlayerDamageState.cpp" />
     <ClCompile Include="PlayerGroundAttack.cpp" />
     <ClCompile Include="PlayerGuardState.cpp" />
@@ -495,6 +497,8 @@
     <ClInclude Include="AnimNodePlayer_Base.h" />
     <ClInclude Include="MyClass2.h" />
     <ClInclude Include="NullTransform.h" />
+    <ClInclude Include="PlayerAction.h" />
+    <ClInclude Include="PlayerActionController_Base.h" />
     <ClInclude Include="PlayerDamageState.h" />
     <ClInclude Include="PlayerGroundAttack.h" />
     <ClInclude Include="PlayerGuardState.h" />

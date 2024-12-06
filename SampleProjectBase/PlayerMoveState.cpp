@@ -49,6 +49,8 @@ void PlayerMoveState::UpdateBehavior()
 
 void PlayerMoveState::OnEndBehavior()
 {
+	ClearVelocity(false);
+
 	pActionController->SetAnimationFloat(SPEEDRATIO_PARAMNAME, 0.0f);
 }
 

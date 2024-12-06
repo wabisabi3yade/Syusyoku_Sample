@@ -152,6 +152,10 @@ protected:
 	/// @param _changeSate 遷移先の状態
 	void ChangeState(PlayerState _nextState);
 
+	/// @brief 速度をクリアする
+	/// @param _applyY Y軸にも反映させるか
+	void ClearVelocity(bool _applyY = true);
+
 	/// @brief その行動はターゲットを見るのかセット
 	/// @param _isLook 見るのか？
 	void SetTargetAtEnemy(bool _isLook);
