@@ -72,11 +72,13 @@ void Scene::SceneDraw()
 	Geometory::DrawLine();
 
 	// シーン内の描画処理
-	sceneObjects.Draw();
+	sceneObjects.ObjectDraw();
 
 	// エフェクト描画
 	pEffectManager->EffectDraw();
 
+	// シーン内の描画処理
+	sceneObjects.UIDraw();
 }
 
 void Scene::SceneLoad()

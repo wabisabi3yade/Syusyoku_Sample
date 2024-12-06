@@ -12,8 +12,11 @@ constexpr float LOOKMOMENT_DEGREE_RANGE{ 20.0f };
 constexpr float CAN_LOOKMOMENT_HORICURVE_VAL{ 0.5f };
 
 BossJumpAttack::BossJumpAttack() :
-	maxHoriSpeed(12.0f), maxJumpHeight(5.0f), prevJumpHeight(0.0f), rotSpeedOnJump(10.0f),
-	horiSpeedCofficient(2.0f), fallPosOffset(0.0f)
+	maxHoriSpeed(12.0f), 
+	maxJumpHeight(5.0f),
+	prevJumpHeight(0.0f),
+	horiSpeedCofficient(2.0f),
+	fallPosOffset(0.0f)
 {
 }
 
@@ -52,7 +55,6 @@ nlohmann::json BossJumpAttack::Save()
 	data["fallOffset"] = fallPosOffset;
 	data["maxHoriSpeed"] = maxHoriSpeed;
 	data["speedCof"] = horiSpeedCofficient;
-	data["rotSpeed"] = rotSpeedOnJump;
 	data["jumpHoriCurve"] = horiSpeedCofficientCurve.Save();
 
 	return data;
@@ -66,7 +68,6 @@ void BossJumpAttack::Load(const nlohmann::json& _data)
 	HashiTaku::LoadJsonFloat("jumpHeight", maxJumpHeight, _data);
 	HashiTaku::LoadJsonFloat("maxHoriSpeed", maxHoriSpeed, _data);
 	HashiTaku::LoadJsonFloat("speedCof", horiSpeedCofficient, _data);
-	HashiTaku::LoadJsonFloat("rotSpeed", rotSpeedOnJump, _data);
 
 	nlohmann::json curveData;
 	if (HashiTaku::LoadJsonData("jumpHeightCurve", curveData, _data))
@@ -127,27 +128,6 @@ void BossJumpAttack::HorizonMove()
 	// 移動速度を求める（XZ成分だけセット）
 	DXSimp::Vector3 moveSpeedXZ = toPlayerVec * speed;
 	curMoveSpeed.x = moveSpeedXZ.x; curMoveSpeed.z = moveSpeedXZ.z;
-
-	// ボスをプレイヤーに向ける
-	// 差分を求める
-	DXSimp::Quaternion bossRot = bossTrans.GetRotation();
-	DXSimp::Quaternion toPlayerRot = Quat::RotateToVector(toPlayerVec);
-	DXSimp::Quaternion diffRot = Quat::RotationDifference(bossRot, toPlayerRot);
-
-	//// 向きとの差がないなら瞬時に振り向く
-	//if (abs(diffRot.ToEuler().y) <  LOOKMOMENT_DEGREE_RANGE * Mathf::degToRad  &&
-	//	curSpeedCofficient >0.0f)
-	//{
-	//	bossTrans.SetRotation(toPlayerRot);
-	//}
-	//else // 滑らかに向ける
-	{
-		bossRot = DXSimp::Quaternion::Slerp(	// 回転
-			bossTrans.GetRotation(),
-			toPlayerRot,
-			rotSpeedOnJump * deltaTime * curSpeedCofficient);
-		bossTrans.SetRotation(bossRot);
-	}
 }
 
 void BossJumpAttack::VertivalMove()
@@ -178,7 +158,6 @@ void BossJumpAttack::ImGuiDebug()
 	ImGui::DragFloat("FallOffset", &fallPosOffset, 0.01f);
 	ImGui::DragFloat("MaxHoriSpd", &maxHoriSpeed, 1.0f, 0.0f, 1000.0f);
 	ImGui::DragFloat("HoriSpeed", &horiSpeedCofficient, 1.0f, 0.0f, 1000.0f);
-	ImGui::DragFloat("RotSpeed", &rotSpeedOnJump, 0.0f, 1000.0f);
 	horiSpeedCofficientCurve.ImGuiCall();
 
 	// Vert

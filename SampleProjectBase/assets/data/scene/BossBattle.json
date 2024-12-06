@@ -436,29 +436,8 @@
                                     "typeString": "TargetMove"
                                 },
                                 {
-                                    "data": {
-                                        "attackCnt": 1,
-                                        "attackInfos": [
-                                            {
-                                                "damage": 0.0,
-                                                "level": 0
-                                            }
-                                        ],
-                                        "forwardCurve": {
-                                            "easeKind": 0,
-                                            "endValue": 1.0,
-                                            "endVector": 0.0,
-                                            "plotDatas": null,
-                                            "startInterp": 0,
-                                            "startValue": 0.0,
-                                            "startVector": 0.0,
-                                            "useHermite": false
-                                        },
-                                        "isMoveFwd": false,
-                                        "maxDistance": 10.0,
-                                        "nextCombAttack": 21
-                                    },
-                                    "typeString": "Attack11"
+                                    "data": null,
+                                    "typeString": "BeginJump"
                                 },
                                 {
                                     "data": {
@@ -534,7 +513,32 @@
                                         "attackCnt": 1,
                                         "attackInfos": [
                                             {
-                                                "damage": 0.0,
+                                                "damage": 2.5999999046325684,
+                                                "level": 0
+                                            }
+                                        ],
+                                        "forwardCurve": {
+                                            "easeKind": 0,
+                                            "endValue": 1.0,
+                                            "endVector": 0.0,
+                                            "plotDatas": null,
+                                            "startInterp": 0,
+                                            "startValue": 0.0,
+                                            "startVector": 0.0,
+                                            "useHermite": false
+                                        },
+                                        "isMoveFwd": false,
+                                        "maxDistance": 10.0,
+                                        "nextCombAttack": 21
+                                    },
+                                    "typeString": "Attack11"
+                                },
+                                {
+                                    "data": {
+                                        "attackCnt": 1,
+                                        "attackInfos": [
+                                            {
+                                                "damage": 2.9000000953674316,
                                                 "level": 0
                                             }
                                         ],
@@ -559,7 +563,7 @@
                                         "attackCnt": 1,
                                         "attackInfos": [
                                             {
-                                                "damage": 0.0,
+                                                "damage": 4.0,
                                                 "level": 0
                                             }
                                         ],
@@ -597,7 +601,7 @@
                                         "attackCnt": 1,
                                         "attackInfos": [
                                             {
-                                                "damage": 0.0,
+                                                "damage": 3.299999952316284,
                                                 "level": 0
                                             }
                                         ],
@@ -635,7 +639,7 @@
                                         "attackCnt": 1,
                                         "attackInfos": [
                                             {
-                                                "damage": 0.0,
+                                                "damage": 2.0,
                                                 "level": 0
                                             }
                                         ],
@@ -664,8 +668,8 @@
                                                 {
                                                     "interp": 0,
                                                     "time": 0.5569999814033508,
-                                                    "value": 1.0,
-                                                    "vector": 0.0
+                                                    "value": 0.9309999942779541,
+                                                    "vector": 0.2871125042438507
                                                 }
                                             ],
                                             "startInterp": 1,
@@ -684,10 +688,14 @@
                                 },
                                 {
                                     "data": {
-                                        "attackCnt": 1,
+                                        "attackCnt": 2,
                                         "attackInfos": [
                                             {
-                                                "damage": 0.0,
+                                                "damage": 4.199999809265137,
+                                                "level": 0
+                                            },
+                                            {
+                                                "damage": 6.199999809265137,
                                                 "level": 0
                                             }
                                         ],
@@ -713,7 +721,7 @@
                         "enable": true,
                         "guardBarObjName": "Player_GuardBar",
                         "hpBarObjName": "Player_HpBar",
-                        "maxHp": 1.0,
+                        "maxHp": 100.0,
                         "name": "Player",
                         "priority": 0,
                         "weaponObjName": "Weapon"
@@ -813,7 +821,7 @@
                         "enable": true,
                         "name": "BattleManager",
                         "priority": 0,
-                        "radius": 23.5
+                        "radius": 66.69999694824219
                     }
                 ],
                 "layer": 0,
@@ -877,10 +885,15 @@
                             "stateDatas": [
                                 {
                                     "parameter": {
+                                        "canFovMovement": 4.0,
                                         "centerAngle": -90.0,
                                         "currentHeight": 3.0,
                                         "disHorizon": 8.0,
+                                        "fovChangeRate": 3.0,
+                                        "horiSpeed": 20.0,
                                         "lookOffsetY": 2.4000000953674316,
+                                        "moveFov": 58.0,
+                                        "normalFov": 50.0,
                                         "rotateSpeed": 120.0
                                     },
                                     "stateType": 0
@@ -893,7 +906,11 @@
                                         "LookSpeed": 30.0,
                                         "MaxHeight": 3.0,
                                         "MinHeight": 2.0,
-                                        "MoveSpeed": 30.0
+                                        "MoveSpeed": 30.0,
+                                        "canFovMovement": 1.0,
+                                        "fovChangeRate": 3.0,
+                                        "moveFov": 65.0,
+                                        "normalFov": 50.0
                                     },
                                     "stateType": 1
                                 }
@@ -910,19 +927,19 @@
                 "transform": {
                     "child": null,
                     "pos": [
-                        0.0,
-                        2.700000047683716,
-                        -20.200000762939453
+                        31.0,
+                        2.0999999046325684,
+                        -4.099999904632568
                     ],
                     "rotation": [
-                        -0.0,
-                        0.0,
-                        -9.525543731569996e-08,
-                        1.0
+                        -6.735596969065227e-08,
+                        0.7071069478988647,
+                        6.735592705808813e-08,
+                        -0.7071065306663513
                     ],
                     "scale": [
                         1.0,
-                        1.0000001192092896,
+                        1.0,
                         0.9999998807907104
                     ]
                 }
@@ -952,20 +969,20 @@
                                         "transform": {
                                             "child": null,
                                             "pos": [
-                                                0.5639988780021667,
-                                                0.019985197111964226,
-                                                3.2199981212615967
+                                                0.6579986214637756,
+                                                -0.010017452761530876,
+                                                7.689996242523193
                                             ],
                                             "rotation": [
                                                 -0.6008124947547913,
                                                 0.7962931990623474,
-                                                -0.050468795001506805,
-                                                -0.04893164709210396
+                                                -0.05046877637505531,
+                                                -0.04893164336681366
                                             ],
                                             "scale": [
-                                                1.4400008916854858,
-                                                1.4399991035461426,
-                                                1.4400004148483276
+                                                1.6800007820129395,
+                                                1.679998755455017,
+                                                1.68000066280365
                                             ]
                                         }
                                     }
@@ -1024,20 +1041,20 @@
                                         "Boss_WeaponModel"
                                     ],
                                     "pos": [
-                                        0.5640002489089966,
-                                        0.019989043474197388,
-                                        3.2199981212615967
+                                        0.6580001711845398,
+                                        -0.01001274585723877,
+                                        7.689997673034668
                                     ],
                                     "rotation": [
                                         -0.6008126139640808,
                                         0.7962931990623474,
-                                        -0.05046879127621651,
-                                        -0.048931784927845
+                                        -0.05046878382563591,
+                                        -0.0489317812025547
                                     ],
                                     "scale": [
-                                        1.2000007629394531,
-                                        1.1999999284744263,
-                                        1.200000524520874
+                                        1.4000006914138794,
+                                        1.399999976158142,
+                                        1.4000006914138794
                                     ]
                                 }
                             }
@@ -1061,9 +1078,9 @@
                                 "Boss_Weapon"
                             ],
                             "pos": [
-                                0.6000004410743713,
-                                -0.1600082367658615,
-                                3.159998893737793
+                                0.7000004053115845,
+                                -0.22000955045223236,
+                                7.619998931884766
                             ],
                             "rotation": [
                                 0.0,
@@ -1072,9 +1089,9 @@
                                 -4.76837158203125e-07
                             ],
                             "scale": [
-                                1.1999998092651367,
-                                1.1999998092651367,
-                                1.1999998092651367
+                                1.3999996185302734,
+                                1.3999996185302734,
+                                1.3999996185302734
                             ]
                         }
                     }
@@ -1132,49 +1149,178 @@
                             "actData": [
                                 {
                                     "data": {
-                                        "isIdleOnly": false
+                                        "isIdleOnly": true,
+                                        "warpMotion": {
+                                            "useWarp": false
+                                        }
                                     },
                                     "typeString": "Idle"
                                 },
                                 {
                                     "data": {
-                                        "moveAcceleration": 4.0,
-                                        "moveMaxSpeed": 5.0,
+                                        "moveAcceleration": 7.300000190734863,
+                                        "moveMaxSpeed": 2.200000047683716,
                                         "moveRotateSpeed": 10.0,
-                                        "transNearDistance": 2.0
+                                        "warpMotion": {
+                                            "useWarp": false
+                                        }
                                     },
                                     "typeString": "Walk"
                                 },
                                 {
                                     "data": {
-                                        "moveAcceleration": 4.0,
-                                        "moveMaxSpeed": 9.0,
+                                        "moveAcceleration": 6.599999904632568,
+                                        "moveMaxSpeed": 8.899999618530273,
                                         "moveRotateSpeed": 10.0,
-                                        "transNearDistance": 2.0
+                                        "warpMotion": {
+                                            "useWarp": false
+                                        }
                                     },
                                     "typeString": "Run"
                                 },
                                 {
-                                    "data": null,
+                                    "data": {
+                                        "warpMotion": {
+                                            "useWarp": false
+                                        }
+                                    },
                                     "typeString": "Damage_Small"
                                 },
                                 {
                                     "data": {
                                         "atkInfos": [
                                             {
-                                                "damage": 0.0,
+                                                "damage": 1.0,
                                                 "level": 0
                                             },
                                             {
-                                                "damage": 0.0,
+                                                "damage": 2.0999999046325684,
                                                 "level": 0
                                             },
                                             {
-                                                "damage": 0.0,
+                                                "damage": 5.099999904632568,
                                                 "level": 3
                                             }
                                         ],
-                                        "atkTimeCnt": 3
+                                        "atkTimeCnt": 3,
+                                        "rotCurve": {
+                                            "easeKind": 0,
+                                            "endValue": 0.0,
+                                            "endVector": 0.0,
+                                            "plotDatas": [
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.1080000028014183,
+                                                    "value": 1.0,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.1599999964237213,
+                                                    "value": 1.0,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.1679999977350235,
+                                                    "value": 0.10000000149011612,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.3149999976158142,
+                                                    "value": 0.10000000149011612,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.34299999475479126,
+                                                    "value": 1.0,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.4320000112056732,
+                                                    "value": 1.0,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.4620000123977661,
+                                                    "value": 0.10000000149011612,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.8420000076293945,
+                                                    "value": 0.10000000149011612,
+                                                    "vector": 0.0
+                                                }
+                                            ],
+                                            "startInterp": 1,
+                                            "startValue": 0.0,
+                                            "startVector": 0.0,
+                                            "useHermite": true
+                                        },
+                                        "rotTimes": 5.0,
+                                        "useRotCurve": true,
+                                        "warpMotion": {
+                                            "allWarpStep": 3,
+                                            "useWarp": true,
+                                            "warpStructs": [
+                                                {
+                                                    "beginRatio": 0.0,
+                                                    "endRatio": 0.3109999895095825,
+                                                    "fromRootMotion": true,
+                                                    "moveCurveXZ": {
+                                                        "easeKind": 0,
+                                                        "endValue": 1.0,
+                                                        "endVector": 0.0,
+                                                        "plotDatas": null,
+                                                        "startInterp": 1,
+                                                        "startValue": 1.0,
+                                                        "startVector": 0.0,
+                                                        "useHermite": true
+                                                    },
+                                                    "movementXZ": 5.0,
+                                                    "targetOffset": -1.0
+                                                },
+                                                {
+                                                    "beginRatio": 0.31200000643730164,
+                                                    "endRatio": 0.5419999957084656,
+                                                    "fromRootMotion": true,
+                                                    "moveCurveXZ": {
+                                                        "easeKind": 0,
+                                                        "endValue": 1.0,
+                                                        "endVector": 0.0,
+                                                        "plotDatas": null,
+                                                        "startInterp": 1,
+                                                        "startValue": 1.0,
+                                                        "startVector": 0.0,
+                                                        "useHermite": true
+                                                    },
+                                                    "movementXZ": 5.0,
+                                                    "targetOffset": -1.0
+                                                },
+                                                {
+                                                    "beginRatio": 0.5429999828338623,
+                                                    "endRatio": 1.0,
+                                                    "fromRootMotion": true,
+                                                    "moveCurveXZ": {
+                                                        "easeKind": 0,
+                                                        "endValue": 1.0,
+                                                        "endVector": 0.0,
+                                                        "plotDatas": null,
+                                                        "startInterp": 1,
+                                                        "startValue": 1.0,
+                                                        "startVector": 0.0,
+                                                        "useHermite": true
+                                                    },
+                                                    "movementXZ": 5.0,
+                                                    "targetOffset": -1.0
+                                                }
+                                            ]
+                                        }
                                     },
                                     "typeString": "CombAttack1"
                                 },
@@ -1182,7 +1328,7 @@
                                     "data": {
                                         "atkInfos": [
                                             {
-                                                "damage": 1.7000000476837158,
+                                                "damage": 15.0,
                                                 "level": 3
                                             }
                                         ],
@@ -1253,21 +1399,61 @@
                                             "useHermite": true
                                         },
                                         "maxHoriSpeed": 500.0,
-                                        "rotSpeed": 2.0,
-                                        "speedCof": 2.0
+                                        "rotCurve": {
+                                            "easeKind": 0,
+                                            "endValue": 0.0,
+                                            "endVector": 0.0,
+                                            "plotDatas": [
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.19599999487400055,
+                                                    "value": 1.0,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.2150000035762787,
+                                                    "value": 0.5,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.3720000088214874,
+                                                    "value": 0.5,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.37400001287460327,
+                                                    "value": 0.0,
+                                                    "vector": 0.0
+                                                }
+                                            ],
+                                            "startInterp": 1,
+                                            "startValue": 0.0,
+                                            "startVector": 0.0,
+                                            "useHermite": true
+                                        },
+                                        "rotTimes": 15.0,
+                                        "speedCof": 2.0,
+                                        "useRotCurve": true,
+                                        "warpMotion": {
+                                            "useWarp": false
+                                        }
                                     },
                                     "typeString": "JumpAttack"
                                 }
                             ],
                             "defaultState": 0,
                             "disLengthList": [
-                                2.0,
                                 4.0,
-                                6.0
+                                8.0,
+                                10.0
                             ]
                         },
                         "enable": true,
-                        "maxHp": 1.0,
+                        "hpBarName": "Enemy_GageBar",
+                        "maxHp": 100.0,
                         "name": "Boss",
                         "priority": 0,
                         "weaponName": "Boss_Weapon"
@@ -1283,7 +1469,7 @@
                     "pos": [
                         0.0,
                         0.20000000298023224,
-                        2.200000047683716
+                        6.5
                     ],
                     "rotation": [
                         0.0,
@@ -1292,9 +1478,44 @@
                         -4.76837158203125e-07
                     ],
                     "scale": [
-                        1.2000000476837158,
-                        1.2000000476837158,
-                        1.2000000476837158
+                        1.399999976158142,
+                        1.399999976158142,
+                        1.399999976158142
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "name": "EffectCreater",
+                        "priority": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "EffectCreater",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
                     ]
                 }
             }
@@ -1325,7 +1546,7 @@
                                     "child": null,
                                     "pos": [
                                         20.069549560546875,
-                                        61.64879608154297,
+                                        57.348793029785156,
                                         0.7999987006187439
                                     ],
                                     "rotation": [
@@ -1362,7 +1583,7 @@
                             ],
                             "pos": [
                                 288.79998779296875,
-                                60.39999771118164,
+                                56.099998474121094,
                                 0.8999999761581421
                             ],
                             "rotation": [
@@ -1403,8 +1624,8 @@
                                     "child": null,
                                     "pos": [
                                         19.439682006835938,
-                                        93.72188568115234,
-                                        0.5999999046325684
+                                        89.42188262939453,
+                                        0.5999998450279236
                                     ],
                                     "rotation": [
                                         -0.0,
@@ -1414,8 +1635,8 @@
                                     ],
                                     "scale": [
                                         257.4460144042969,
-                                        17.804698944091797,
-                                        0.9999999403953552
+                                        17.804697036743164,
+                                        0.9999998807907104
                                     ]
                                 }
                             }
@@ -1440,7 +1661,7 @@
                             ],
                             "pos": [
                                 147.89999389648438,
-                                93.69999694824219,
+                                89.4000015258789,
                                 0.699999988079071
                             ],
                             "rotation": [
@@ -1471,7 +1692,7 @@
                     ],
                     "pos": [
                         0.0,
-                        -12.300000190734863,
+                        -16.600000381469727,
                         0.0
                     ],
                     "rotation": [
@@ -1483,6 +1704,151 @@
                     "scale": [
                         1.0,
                         1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": [
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "image": "UI_GageFrame_R.png",
+                                "name": "UIRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 2,
+                        "name": "Enemy_GageFrame",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                634.7699584960938,
+                                684.1199951171875,
+                                0.30000001192092896
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                900.0,
+                                56.0,
+                                1.0
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "image": "UI_GageBack.png",
+                                "name": "UIRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 2,
+                        "name": "Enemy_GageBack",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                632.969970703125,
+                                682.679931640625,
+                                0.20000000298023224
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                846.0,
+                                44.47999954223633,
+                                1.0
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "currentValue": 1.0,
+                                "enable": true,
+                                "image": "UI_GageBar_R.png",
+                                "maxValue": 1.0,
+                                "minValue": 0.0,
+                                "name": "UISlider",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 2,
+                        "name": "Enemy_GageBar",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                213.1199951171875,
+                                680.8399658203125,
+                                0.10000000149011612
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                840.7799682617188,
+                                37.76000213623047,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            ],
+            "gameObject": {
+                "active": true,
+                "components": null,
+                "layer": 2,
+                "name": "EnemyGage",
+                "tag": 0,
+                "transform": {
+                    "child": [
+                        "Enemy_GageFrame",
+                        "Enemy_GageBack",
+                        "Enemy_GageBar"
+                    ],
+                    "pos": [
+                        58.5,
+                        147.39999389648438,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        0.8999999761581421,
+                        0.800000011920929,
                         1.0
                     ]
                 }

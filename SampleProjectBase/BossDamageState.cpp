@@ -4,7 +4,9 @@
 #include "CP_Boss.h"
 #include "CP_Player.h"
 
-namespace DX = DirectX::SimpleMath;
+namespace DXSimp = DirectX::SimpleMath;
+
+constexpr auto DAMAGE_ANIM_NAME("KnockSmall");
 
 BossDamageState::BossDamageState()
 {
@@ -25,7 +27,7 @@ void BossDamageState::OnStartBehavior()
 
 void BossDamageState::OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName)
 {
-	if (_toAnimNodeName == IDLE_ANIM_NAME)
+	if (_toAnimNodeName == IDLE_ANIM_NAME || _fromAnimNodeName == DAMAGE_ANIM_NAME)
 		ChangeState(BossState::Idle);
 }
 
@@ -33,9 +35,9 @@ void BossDamageState::LookPlayer()
 {
 	// •ûŒüƒxƒNƒgƒ‹‚ð‹‚ß‚é(y‚Í–³Ž‹)
 	Transform& myTransform = pActionController->GetCharacter().GetTransform();
-	DX::Vector3 playerPos = pActionController->GetPlayer().GetTransform().GetPosition();
-	DX::Vector3 bossPos = myTransform.GetPosition();
-	DX::Vector3 targetVec = playerPos - bossPos;
+	DXSimp::Vector3 playerPos = pActionController->GetPlayer().GetTransform().GetPosition();
+	DXSimp::Vector3 bossPos = myTransform.GetPosition();
+	DXSimp::Vector3 targetVec = playerPos - bossPos;
 	targetVec.y = 0.0f;
 	targetVec.Normalize();
 

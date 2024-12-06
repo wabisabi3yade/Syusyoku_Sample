@@ -39,6 +39,7 @@
 // 外部ライブラリ
 #include <DirectXMath.h>	// 数学系の機能
 #include <SimpleMath.h>	// DirectXTKの数学系
+#include <Audio.h>	// XAudio2をXTKでラップしたファイル
 #pragma comment(lib, "DirectXTK.lib")	// DirectXTKライブラリ
 #include <nlohmann/json.hpp>	// json書き出し
 #include <magic_enum.hpp>
@@ -63,3 +64,10 @@
 #include "MainApplication.h"
 #include "HashiTaku_Random.h"	// 乱数クラス
 #include "Direct3D11.h"	// 自前のDirectX11クラス
+
+// 名前空間定義
+namespace HashiTaku
+{
+	namespace DX = DirectX;
+	namespace DXSimp = DirectX::SimpleMath;
+}

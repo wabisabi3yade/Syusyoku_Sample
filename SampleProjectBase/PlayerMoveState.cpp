@@ -38,14 +38,8 @@ void PlayerMoveState::Load(const nlohmann::json& _data)
 	LoadJsonFloat("rotateSpeed", rotateSpeed, _data);
 }
 
-void PlayerMoveState::OnStartBehavior()
-{
-	HASHI_DEBUG_LOG("aaaa");
-}
-
 void PlayerMoveState::UpdateBehavior()
 {
-
 	Move();
 
 	ApplyRootMotion();
@@ -126,8 +120,11 @@ void PlayerMoveState::Move()
 
 	Vector3 moveSpeed = moveVector * currentSpeed * deltaSpeed;
 
+	CP_RigidBody& rb =  GetRB();
+	moveSpeed.y = rb.GetVelocity().y;
+
 	// 移動
-	GetRB().SetVelocity(moveSpeed);
+	rb.SetVelocity(moveSpeed);
 
 	// アニメーションのブレンド割合をセット
 	pActionController->SetAnimationFloat(SPEEDRATIO_PARAMNAME, currentSpeed / maxSpeed);

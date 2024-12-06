@@ -12,7 +12,7 @@ class ComponentFactory : public Singleton_Base<ComponentFactory>
 {
 	friend class Singleton_Base<ComponentFactory>;
 
-	std::unordered_map<std::string, std::unique_ptr<ComponentRespawner_Base>> pComponents1;
+	std::unordered_map<std::string, std::unique_ptr<ComponentRespawner_Base>> pComponents;
 public:
 	/// @brief 初期化処理
 	void Init();
@@ -47,7 +47,10 @@ private:
 template<HashiTaku::ComponentConcept T>
 inline std::unique_ptr<T> ComponentFactory::Create()
 {
-	std::unique_ptr<T> createComp = CreateByName(GetComponentName<T>());
+	std::unique_ptr<Component> createBaseComp = CreateByName(GetComponentName<T>());
+
+	// ダウンキャストする
+	std::unique_ptr<T> createComp = std::unique_ptr<T>(static_cast<T*>(createBaseComp.release()));
 
 	// 名前セット
 	Component& comp = *createComp;
@@ -62,7 +65,7 @@ inline void ComponentFactory::ResistComponnent()
 	std::string name = GetComponentName<T>();
 	HASHI_DEBUG_LOG(name + " 作成");
 
-	pComponents1[name] = std::make_unique<ComponentRespawner<T>>();
+	pComponents[name] = std::make_unique<ComponentRespawner<T>>();
 }
 
 template<HashiTaku::ComponentConcept T>

@@ -33,7 +33,7 @@ public:
 
 	/// @brief 最大体力をセット
 	/// @param _hitPoint セットする体力
-	void SetMaxHP(float _hitPoint);
+	virtual void SetMaxHP(float _hitPoint);
 
 	/// @brief 無敵フラグをセット
 	/// @param _isInvicible 無敵フラグ
@@ -46,6 +46,10 @@ public:
 	/// @brief 無敵フラグを取得
 	/// @return 無敵か？
 	bool GetIsInvicible() const;
+
+	/// @brief 死んでいるか取得
+	/// @return 死んでいるか？
+	bool GetDead() const;
 
 	/// @brief ダメージを受けたときの処理
 	/// @param _attackInfo 攻撃情報
@@ -78,6 +82,14 @@ protected:
 	/// @brief ヒットストップを開始する
 	/// @param _hitStopFlame ヒットストップのフレーム数
 	void BeginHitStop(u_int _hitStopFlame);
+
+	/// @brief 体力をセット
+	/// @param _setHp 体力
+	virtual void SetCurrentHP(float _setHp);
+
+	/// @brief HPを減らす
+	/// @param _damageVal ダメージ値
+	void DecadeHp(float _damageVal);
 
 	/// @brief 各クラスのダメージを受けたときの処理
 	/// @param _attackInfo 攻撃情報

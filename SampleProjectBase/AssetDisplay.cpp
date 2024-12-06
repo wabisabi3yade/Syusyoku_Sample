@@ -28,14 +28,14 @@ void AssetDisplay::Draw()
 		DisplayAnimation();
 		DisplayBoneList();
 		DisplayAnimationController();
-
+		DisplaySound();
 		ImGui::TreePop();
 	}
 
 #endif // EDIT
 }
 
-void AssetDisplay::Display(const std::unordered_map<std::string, std::unique_ptr<Asset_Base>>& _assets)
+void AssetDisplay::Display(const std::map<std::string, std::unique_ptr<Asset_Base>>& _assets)
 {
 	// アセットの名前を表示
 	for (auto itr = _assets.begin(); itr != _assets.end(); itr++)
@@ -239,6 +239,30 @@ void AssetDisplay::DisplayAnimationController()
 	DeleteInputAsset();
 	if (ImGui::Button("Delete"))
 		pAssetCollection->DeleteAsset<AnimationController>(inputText);
+
+	ImGui::TreePop();
+}
+
+void AssetDisplay::DisplaySound()
+{
+	if (!ImGuiMethod::TreeNode("Sound")) return;
+
+	// 表示
+	AssetList& assets = pAssetCollection->GetAssetList<SoundAsset>();
+	Display(assets);
+
+	// ロードする
+	static char soundPath[IM_INPUT_BUF];
+	ImGui::InputText("##createSound", soundPath, IM_INPUT_BUF);
+	if (ImGui::Button("Create"))
+	{
+		AssetLoader::LoadSound(soundPath);
+	}
+
+	// 削除
+	DeleteInputAsset();
+	if (ImGui::Button("Delete"))
+		pAssetCollection->DeleteAsset<SoundAsset>(inputText);
 
 	ImGui::TreePop();
 }

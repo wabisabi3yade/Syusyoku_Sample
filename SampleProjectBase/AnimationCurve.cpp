@@ -15,7 +15,7 @@ constexpr double MAX_VAL(10000.0);	// 最大値
 constexpr double DISPLAY_OFFSET(0.2);	// グラフ表示の周りの余白の長さ
 
 AnimationCurve::AnimationCurve()
-	: easeKind(HashiTaku::EaseKind::Linear), isUseHermite(true)
+	: easeKind(HashiTaku::EaseKind::Linear), isUsePlot(true)
 {
 	plotPoints =
 	{
@@ -37,7 +37,7 @@ float AnimationCurve::GetValue(float _time) const
 
 	_time = std::clamp(_time, MIN_TIME, MAX_TIME);
 
-	if (isUseHermite)
+	if (isUsePlot)
 	{
 		// 前と後を見つける
 		auto prevItr = plotPoints.begin();
@@ -207,25 +207,39 @@ void AnimationCurve::ImGuiDebug()
 
 	// イージング選択
 	HashiTaku::Easing::ImGuiSelect(easeKind);
-	ImGui::Checkbox("UseHermite", &isUseHermite);
+	ImGui::Checkbox("UseHermite", &isUsePlot);
 
 	// データに基づいた表示範囲を設定
-	auto rect = GetPlotRect();
+	if (isUsePlot)
+	{
+		auto rect = GetPlotRect();
 
-	double offsetX = std::max(DISPLAY_OFFSET * rect.Size().x, DISPLAY_OFFSET);
-	double offsetY = std::max(DISPLAY_OFFSET * rect.Size().y, DISPLAY_OFFSET);
+		double offsetX = std::max(DISPLAY_OFFSET * rect.Size().x, DISPLAY_OFFSET);
+		double offsetY = std::max(DISPLAY_OFFSET * rect.Size().y, DISPLAY_OFFSET);
 
-	ImPlot::SetNextAxesLimits(rect.X.Min - offsetX,
-		rect.X.Max + offsetX,
-		rect.Y.Min - offsetY,
-		rect.Y.Max + offsetY,
-		ImGuiCond_Always);
+		ImPlot::SetNextAxesLimits(
+			rect.X.Min - offsetX,
+			rect.X.Max + offsetX,
+			rect.Y.Min - offsetY,
+			rect.Y.Max + offsetY,
+			ImGuiCond_Always);
+	}
+	else
+	{
+		ImPlot::SetNextAxesLimits(
+			MIN_TIME - DISPLAY_OFFSET,
+			MAX_TIME + DISPLAY_OFFSET,
+			MIN_VAL - DISPLAY_OFFSET,
+			1.0f + DISPLAY_OFFSET,
+			ImGuiCond_Always);
+	}
+	
 
 	if (ImPlot::BeginPlot("##Animation Curve"))
 	{
 		ImPlot::SetupAxes("##Time", "##Value", ImPlotAxisFlags_AutoFit, ImPlotAxisFlags_AutoFit);
 
-		if (isUseHermite)
+		if (isUsePlot)
 		{
 			// ベクトル点を編集
 			ImEditVectorPoint();
@@ -380,7 +394,7 @@ void AnimationCurve::ImDrawGraph()
 	float timePoints[DRAW_POINT_CNT];
 	float valuePoints[DRAW_POINT_CNT];
 
-	if (isUseHermite)
+	if (isUsePlot)
 	{
 		// 前と後のプロット点を取得
 		auto prevProtItr = plotPoints.begin();
@@ -446,7 +460,7 @@ void AnimationCurve::ImAddPopPlot()
 		{
 			if (!IsStartOrEndPlot(editingPlot))
 			{
-				if (ImGui::DragFloat("Time", &editingPlot->time, 0.001f, 0.0f, 1.0f))
+				if (ImGui::DragFloat("Time", &editingPlot->time, 0.001f, 0.0f, MAX_TIME - Mathf::smallValue))
 				{
 					plotPoints.sort(SortPointTime);
 				}
@@ -497,7 +511,7 @@ nlohmann::json AnimationCurve::Save()
 	nlohmann::json data;
 
 	data["easeKind"] = easeKind;
-	data["useHermite"] = isUseHermite;
+	data["useHermite"] = isUsePlot;
 
 	auto& plotDatas = data["plotDatas"];
 	for (const auto& plot : plotPoints)
@@ -538,7 +552,7 @@ void AnimationCurve::Load(const nlohmann::json& _data)
 	LoadJsonEnum<EaseKind>("easeKind", loadEase, _data);
 	SetEase(loadEase);
 
-	LoadJsonBoolean("useHermite", isUseHermite, _data);
+	LoadJsonBoolean("useHermite", isUsePlot, _data);
 
 	nlohmann::json plotDatas;
 	if (LoadJsonDataArray("plotDatas", plotDatas, _data))

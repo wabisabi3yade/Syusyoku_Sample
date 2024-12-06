@@ -58,19 +58,15 @@ bool DX11EffecseerManager::ExistEffect(Effekseer::Handle _vfxHandle) const
 
 Effekseer::Handle DX11EffecseerManager::Play(const Effekseer::EffectRef& _effect,
 	const DirectX::SimpleMath::Vector3& _pos,
-	const DirectX::SimpleMath::Vector3& _scale)
+	const DirectX::SimpleMath::Vector3& _scale,
+	int _startFrame)
 {
-	Effekseer::Handle handle = manager->Play(_effect, 0.0f, 0.0f, 0.0f);
+	// Effekseer側で再生を行う
+	Effekseer::Vector3D pos = { _pos.x, _pos.y, _pos.z };
+	Effekseer::Handle handle = manager->Play(_effect, pos, _startFrame);
 
-	// 座標・スケール反映
-	Effekseer::Matrix43 transformMatrix;
-	transformMatrix.Value[0][0] = _scale.x;
-	transformMatrix.Value[1][1] = _scale.y;
-	transformMatrix.Value[2][2] = _scale.z;
-	transformMatrix.Value[3][0] = _pos.x;
-	transformMatrix.Value[3][1] = _pos.y;
-	transformMatrix.Value[3][2] = _pos.z;
-	manager->SetMatrix(handle, transformMatrix);
+	// スケール設定
+	manager->SetScale(handle, _scale.x, _scale.y, _scale.z);
 
 	return  handle;
 }

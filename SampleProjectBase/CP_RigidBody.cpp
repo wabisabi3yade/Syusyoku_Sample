@@ -4,7 +4,7 @@
 #include "InSceneSystemManager.h"
 
 using namespace HashiTaku;
-namespace DX = DirectX::SimpleMath;
+namespace DXSimp = DirectX::SimpleMath;
 
 constexpr float SLEEP_LINEAR(0.01f);	// これ以下の移動速度なら静的オブジェクトに変更する
 constexpr float SLEEP_ANGLE(0.01f);	// これ以下の回転速度なら静的オブジェクトに変更する
@@ -40,6 +40,12 @@ void CP_RigidBody::OnEnableFalse()
 {
 	if (!collider) return;
 	DX11BulletPhisics::GetInstance()->RemoveCollObj(*this);
+}
+
+void CP_RigidBody::AddImpulse(const DirectX::SimpleMath::Vector3& _power)
+{
+	if (!collider || isTrigger) return;
+	CastRigidBody().applyCentralImpulse(Bullet::ToBtVector3(_power));
 }
 
 void CP_RigidBody::SetColliderShape(CP_Collider& _setCollider)
@@ -195,7 +201,7 @@ CollisionTypeJudge& CP_RigidBody::GetColTypeJudge() const
 
 DirectX::SimpleMath::Vector3 CP_RigidBody::GetVelocity() const
 {
-	if (!collider || isTrigger) return DX::Vector3::Zero;
+	if (!collider || isTrigger) return DXSimp::Vector3::Zero;
 
 	btRigidBody& btRb = static_cast<btRigidBody&>(*collider->pCollisionObject);
 	return Bullet::ToDXVector3(btRb.getLinearVelocity());

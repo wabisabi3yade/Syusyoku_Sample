@@ -16,7 +16,7 @@ SceneManager::SceneManager() : nowSceneName("")
 {
 	Setup();
 
-	ChangeScene("enemyTest", true);
+	ChangeScene("BossBattle", true);
 }
 
 SceneManager::~SceneManager()

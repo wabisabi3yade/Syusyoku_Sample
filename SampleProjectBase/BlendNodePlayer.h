@@ -79,13 +79,9 @@ private:
 
 	/// @brief ルートモーションを取得する（内部で必要な計算を行う）
 	/// @param 現在の再生割合
+	/// @param _isWorldScaling ワールド軸に対応するスケーリングするか？
 	/// @return 現在の割合のルートモーション座標
-	DirectX::SimpleMath::Vector3 GetRootMotionPos(float _ratio, bool _isLoadScaling = true) const override;
-
-	/// @brief ルートモーションを取得する（内部で必要な計算を行う）
-	/// @param 現在の再生割合
-	/// @return 現在の割合のルートモーション回転量
-	DirectX::SimpleMath::Quaternion GetRootMotionRot(float _ratio, bool _isLoadScaling = true) const override;
+	DirectX::SimpleMath::Vector3 GetRootMotionPos(float _ratio, bool _isWorldScaling = true) const override;
 
 	void ImGuiDebug() override;
 	// ImGuiで軸のパラメータを表示

@@ -43,7 +43,8 @@ void AnimTransitionChecker::CreateInfo(const AnimationParameters& _animParams, c
 	transitionInfos.push_back(std::move(transInfo));
 }
 
-const AnimTransitionArrow* AnimTransitionChecker::TransitonCheck(float _curRatio, float _lastRatio)
+const AnimTransitionArrow* AnimTransitionChecker::TransitonCheck(float _curRatio,
+	float _lastRatio)
 {
 	for (auto& transInfo : transitionInfos)	// –îˆó‚Ì”
 	{

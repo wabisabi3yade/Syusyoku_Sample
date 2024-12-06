@@ -14,7 +14,7 @@
                         "viewSlot": 0
                     },
                     {
-                        "enable": false,
+                        "enable": true,
                         "moveController": {
                             "shakeLevels": [
                                 {
@@ -669,7 +669,7 @@
                         "enable": true,
                         "guardBarObjName": "",
                         "hpBarObjName": "Player_HpBar",
-                        "maxHp": 12.100000381469727,
+                        "maxHp": 50000.0,
                         "name": "Player",
                         "priority": 0,
                         "weaponObjName": "Weapon"
@@ -808,7 +808,7 @@
                                             2
                                         ],
                                         "enable": true,
-                                        "isDebugDisplay": true,
+                                        "isDebugDisplay": false,
                                         "name": "Weapon",
                                         "priority": 0
                                     }
@@ -929,7 +929,10 @@
                             "actData": [
                                 {
                                     "data": {
-                                        "isIdleOnly": true
+                                        "isIdleOnly": true,
+                                        "warpMotion": {
+                                            "useWarp": false
+                                        }
                                     },
                                     "typeString": "Idle"
                                 },
@@ -938,7 +941,10 @@
                                         "moveAcceleration": 4.0,
                                         "moveMaxSpeed": 5.0,
                                         "moveRotateSpeed": 10.0,
-                                        "transNearDistance": 2.0
+                                        "transNearDistance": 2.0,
+                                        "warpMotion": {
+                                            "useWarp": false
+                                        }
                                     },
                                     "typeString": "Walk"
                                 },
@@ -947,12 +953,19 @@
                                         "moveAcceleration": 4.0,
                                         "moveMaxSpeed": 9.0,
                                         "moveRotateSpeed": 10.0,
-                                        "transNearDistance": 2.0
+                                        "transNearDistance": 2.0,
+                                        "warpMotion": {
+                                            "useWarp": false
+                                        }
                                     },
                                     "typeString": "Run"
                                 },
                                 {
-                                    "data": null,
+                                    "data": {
+                                        "warpMotion": {
+                                            "useWarp": false
+                                        }
+                                    },
                                     "typeString": "Damage_Small"
                                 },
                                 {
@@ -971,7 +984,10 @@
                                                 "level": 0
                                             }
                                         ],
-                                        "atkTimeCnt": 3
+                                        "atkTimeCnt": 3,
+                                        "warpMotion": {
+                                            "useWarp": false
+                                        }
                                     },
                                     "typeString": "CombAttack1"
                                 },
@@ -1051,7 +1067,10 @@
                                         },
                                         "maxHoriSpeed": 500.0,
                                         "rotSpeed": 2.0,
-                                        "speedCof": 2.0
+                                        "speedCof": 2.0,
+                                        "warpMotion": {
+                                            "useWarp": false
+                                        }
                                     },
                                     "typeString": "JumpAttack"
                                 }
@@ -1064,6 +1083,7 @@
                             ]
                         },
                         "enable": true,
+                        "hpBarName": "",
                         "maxHp": 1.0,
                         "name": "Boss",
                         "priority": 0,
@@ -1140,7 +1160,7 @@
                         "enable": true,
                         "name": "BattleManager",
                         "priority": 0,
-                        "radius": 12.100000381469727
+                        "radius": 500.0
                     }
                 ],
                 "layer": 0,
@@ -1177,7 +1197,7 @@
                         "name": "SpriteRenderer",
                         "priority": 0,
                         "sprite": {
-                            "texName": "ground.png",
+                            "texName": "ground1_Diffuse.png",
                             "uvDivNum": [
                                 0.0,
                                 0.0

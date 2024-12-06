@@ -49,7 +49,6 @@ protected:
 
 	void ImGuiDebug() override;
 private:
-	void OnStartBehavior() override;
 	void UpdateBehavior() override;
 	void OnEndBehavior() override;
 

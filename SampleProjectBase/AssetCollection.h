@@ -12,6 +12,8 @@ class AnimationData;
 class VisualEffect;
 class BoneList;
 class AnimationController;
+class SoundAsset;
+
 
 // アセット管理にアクセスするクラス
 class AssetLoader;
@@ -21,7 +23,7 @@ class AssetSetter;
 class AssetSaveLoader;
 
 // アセットの管理配列
-using AssetList = std::unordered_map<std::string, std::unique_ptr<Asset_Base>>;
+using AssetList = std::map<std::string, std::unique_ptr<Asset_Base>>;
 
 // ゲーム内での利用するアセットを管理するクラス
 // 管理クラスはユーザーからアクセスできてしまうとアセットを無造作に入れられたりする
@@ -55,6 +57,9 @@ class AssetCollection
 
 	/// @brief アニメーションコントローラー
 	AssetList animControllerAssets;
+
+	/// @brief サウンド
+	AssetList soundAssets;
 
 	/// @brief アセットを追加する
 	/// @tparam T アセットの型名
@@ -196,6 +201,9 @@ inline AssetList& AssetCollection::GetAssetList()
 
 	else if constexpr (std::is_same<T, AnimationController>::value)
 		return animControllerAssets;
+
+	else if constexpr (std::is_same<T, SoundAsset>::value)
+		return soundAssets;
 
 	assert(!"アセット配列取得で不正な型名です");
 	return textureAssets;

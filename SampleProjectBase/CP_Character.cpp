@@ -4,7 +4,7 @@
 #include "GameObject.h"
 
 CP_Character::CP_Character() :
-	currentHP(0.0f), maxHP(1.0f), hsBeforeDeltaTime(0.0f), isDead(false), 
+	currentHP(0.0f), maxHP(1.0f), hsBeforeDeltaTime(0.0f), isDead(false),
 	isHitStopping(false), isInvicible(false)
 
 {
@@ -28,6 +28,11 @@ float CP_Character::GetCurrentHP() const
 bool CP_Character::GetIsInvicible() const
 {
 	return isInvicible;
+}
+
+bool CP_Character::GetDead() const
+{
+	return isDead;
 }
 
 void CP_Character::OnDamage(const HashiTaku::AttackInformation& _attackInfo,
@@ -104,9 +109,24 @@ void  CP_Character::BeginHitStop(u_int _hitStopFlame)
 	}
 }
 
+void CP_Character::SetCurrentHP(float _setHp)
+{
+	// ç≈ëÂílÇí¥Ç¶Ç»Ç¢ÇÊÇ§Ç…
+	currentHP = std::min(_setHp, maxHP);
+}
+
+void CP_Character::DecadeHp(float _damageVal)
+{
+	float setHp = currentHP - _damageVal;
+	SetCurrentHP(setHp);
+}
+
 void  CP_Character::ImGuiDebug()
 {
 	ImGui::Checkbox("IsInvicible", &isInvicible);
-	ImGui::DragFloat("CurrentHP", &currentHP, 0.1f, 0.0f, MAXLIMIT_HP);
+	if (ImGui::DragFloat("CurrentHP", &currentHP, 0.1f, 0.0f, MAXLIMIT_HP))
+	{
+		SetCurrentHP(currentHP);
+	}
 	ImGui::DragFloat("MaxHP", &maxHP, 0.1f, 0.0f, MAXLIMIT_HP);
 }

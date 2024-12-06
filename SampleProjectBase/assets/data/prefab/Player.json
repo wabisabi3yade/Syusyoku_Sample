@@ -311,7 +311,7 @@
                                 "attackCnt": 1,
                                 "attackInfos": [
                                     {
-                                        "damage": 0.0,
+                                        "damage": 2.5999999046325684,
                                         "level": 0
                                     }
                                 ],
@@ -395,7 +395,8 @@
                         },
                         {
                             "data": {
-                                "canParryTime": 12
+                                "canParryTime": 12,
+                                "parryAngle": 180.0
                             },
                             "typeString": "Guard"
                         },
@@ -404,7 +405,7 @@
                                 "attackCnt": 1,
                                 "attackInfos": [
                                     {
-                                        "damage": 0.0,
+                                        "damage": 2.9000000953674316,
                                         "level": 0
                                     }
                                 ],
@@ -429,7 +430,7 @@
                                 "attackCnt": 1,
                                 "attackInfos": [
                                     {
-                                        "damage": 0.0,
+                                        "damage": 4.0,
                                         "level": 0
                                     }
                                 ],
@@ -467,7 +468,7 @@
                                 "attackCnt": 1,
                                 "attackInfos": [
                                     {
-                                        "damage": 0.0,
+                                        "damage": 3.299999952316284,
                                         "level": 0
                                     }
                                 ],
@@ -505,7 +506,7 @@
                                 "attackCnt": 1,
                                 "attackInfos": [
                                     {
-                                        "damage": 0.0,
+                                        "damage": 2.0,
                                         "level": 0
                                     }
                                 ],
@@ -554,10 +555,14 @@
                         },
                         {
                             "data": {
-                                "attackCnt": 1,
+                                "attackCnt": 2,
                                 "attackInfos": [
                                     {
-                                        "damage": 0.0,
+                                        "damage": 4.199999809265137,
+                                        "level": 0
+                                    },
+                                    {
+                                        "damage": 6.199999809265137,
                                         "level": 0
                                     }
                                 ],
@@ -581,9 +586,9 @@
                 },
                 "camObjName": "Camera",
                 "enable": true,
-                "guardBarObjName": "",
+                "guardBarObjName": "Player_GuardBar",
                 "hpBarObjName": "Player_HpBar",
-                "maxHp": 1.0,
+                "maxHp": 100.0,
                 "name": "Player",
                 "priority": 0,
                 "weaponObjName": "Weapon"

@@ -30,7 +30,7 @@ private:
 	// ‘Î‰žƒ{ƒ^ƒ“
 	struct ButtonLink
 	{
-		GamePad::Button padType;
+		GamePad::PadFlag padType;
 		int keyType;
 	};
 

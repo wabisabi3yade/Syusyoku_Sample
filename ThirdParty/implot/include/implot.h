@@ -777,7 +777,7 @@ IMPLOT_API void SetupFinish();
 // rich as the Setup API, most common needs are provided. These functions can be
 // called anwhere except for inside of `Begin/EndPlot`. For example:
 
-// if (ImGui::Button("Center Plot"))
+// if (ImGui::PadFlag("Center Plot"))
 //     ImPlot::SetNextPlotLimits(-1,1,-1,1);
 // if (ImPlot::BeginPlot(...)) {
 //     ...

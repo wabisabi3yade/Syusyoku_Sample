@@ -6,6 +6,7 @@
 #include "ShaderCollection.h"
 #include "DX11BulletPhisics.h"
 #include "DX11EffecseerManager.h"
+#include "DXSoundManager.h"
 
 // Asset関連
 #include "AssetContacter.h"
@@ -39,6 +40,7 @@ void MainApplication::Release()
 
 	// シングルトンインスタンスを解放
 	SceneManager::Delete();
+	HashiTaku::DXSoundManager::Delete();
 	DX11EffecseerManager::Delete();
 	ShaderCollection::Delete();
 	Direct3D11::Delete();
@@ -103,6 +105,9 @@ void MainApplication::Init(HINSTANCE _hInst)
 
 	// エフェクシア初期化
 	DX11EffecseerManager::GetInstance()->Init();
+
+	// サウンド初期化
+	HashiTaku::DXSoundManager::GetInstance()->Init();
 
 	AssetSysytemSetup();
 

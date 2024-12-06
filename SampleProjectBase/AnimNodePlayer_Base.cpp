@@ -45,7 +45,7 @@ void AnimNodePlayer_Base::CopyNotifys(const std::list<std::unique_ptr<AnimationN
 void AnimNodePlayer_Base::UpdateCall(std::vector<BoneTransform>& _outTransforms, float _deltaTime, float _controllerSpeed)
 {
 	deltaTime = _deltaTime;
-
+	lastPlayRatio = curPlayRatio;
 	if (!isPlaying)
 	{
 		Update(_outTransforms);
@@ -76,6 +76,8 @@ void AnimNodePlayer_Base::ApplyRootMotion(const DirectX::SimpleMath::Vector3& _r
 void AnimNodePlayer_Base::OnInterpolateUpdate(std::vector<BoneTransform>& _outTransforms, float _deltaTime, float _controllerSpeed)
 {
 	deltaTime = _deltaTime;
+	lastPlayRatio = curPlayRatio;
+
 	if (!isPlaying)
 	{
 		Update(_outTransforms);
@@ -124,11 +126,6 @@ float AnimNodePlayer_Base::GetLastPlayRatio() const
 float AnimNodePlayer_Base::GetNodePlaySpeed() const
 {
 	return playerSpeedTimes;
-}
-
-void AnimNodePlayer_Base::GetDeltaRootPos(DirectX::SimpleMath::Vector3& _outPos) const
-{
-	_outPos = GetRootMotionPos(curPlayRatio) - p_RootMotionPos;
 }
 
 void AnimNodePlayer_Base::GetCurrentRootPos(DirectX::SimpleMath::Vector3& _outPos, bool _isLoadScaling) const
@@ -220,7 +217,7 @@ DirectX::SimpleMath::Vector3 AnimNodePlayer_Base::CalcRootMotionToTransform()
 	Vector3 curPos = GetRootMotionPos(curPlayRatio);
 	Vector3 posRootMovemrnt = curPos - p_RootMotionPos;
 
-	// ループ時に前回の再生割合からアニメーション最後までのルートモーションの座標移動
+	// ループ時に前回の再生割合からアニメーション1.0までのルートモーションの座標移動を足す
 	Vector3 loopDeadRMDistabce;
 	if (isJustLoop)
 	{
@@ -258,6 +255,8 @@ void AnimNodePlayer_Base::ApplyLoadTransform(DirectX::SimpleMath::Vector3& _root
 
 	_rootMotionPos *= pAssetBoneList->GetLoadScale();
 	_rootMotionPos = Vector3::Transform(_rootMotionPos, Matrix::CreateFromQuaternion(pAssetBoneList->GetLoadRotation()));
+
+	_rootMotionPos *= pObjectTransform->GetScale();
 }
 
 void AnimNodePlayer_Base::ImGuiDebug()
@@ -267,4 +266,5 @@ void AnimNodePlayer_Base::ImGuiDebug()
 	float curveSpeed = pPlayAnimNode->GetCurveValue(curPlayRatio);
 	ImGui::Text("curveSpeed:%f", curveSpeed);
 	ImGui::SliderFloat("Ratio", &curPlayRatio, 0.0f, 1.0f);
+	ImGui::Text("LastRatio:%f", lastPlayRatio);
 }

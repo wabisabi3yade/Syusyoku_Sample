@@ -105,15 +105,17 @@ public:
 	/// @return ノード再生速度
 	float GetNodePlaySpeed() const;
 
-	/// @brief ルートモーションの前回からの差分移動値
-	/// @param _outPos 結果
-	void GetDeltaRootPos(DirectX::SimpleMath::Vector3& _outPos) const;
+	/// @brief ルートモーションを取得する（内部で必要な計算を行う）
+	/// @param 現在の再生割合
+	/// @param _isWorldScaling ワールド軸に対応するスケーリングするか？
+	/// @return 現在の割合のルートモーション座標
+	virtual DirectX::SimpleMath::Vector3 GetRootMotionPos(float _ratio, bool _isWorldScaling = true) const = 0;
 
 	/// @brief ルートモーションを取得する（内部で必要な計算を行う）
 	/// @param 現在の再生割合
-	/// @param _isLoadScaling ロード時のスケールを反映するか
+	/// @param _isWorldScaling ワールド軸に対応するスケーリングするか？
 	/// @return 現在の割合のルートモーション座標
-	void GetCurrentRootPos(DirectX::SimpleMath::Vector3& _outPos, bool _isLoadScaling) const;
+	void GetCurrentRootPos(DirectX::SimpleMath::Vector3& _outPos, bool _isWorldScaling) const;
 
 	/// @brief 再生しているノード名を取得
 	/// @return ノード名
@@ -136,18 +138,6 @@ protected:
 
 	/// @brief ルートモーションの座標移動速度を計算する
 	virtual void CalcRootMotionPosSpeed() = 0;
-
-	/// @brief ルートモーションを取得する（内部で必要な計算を行う）
-	/// @param 現在の再生割合
-	/// @param _isLoadScaling ロード時のスケールを反映するか
-	/// @return 現在の割合のルートモーション座標
-	virtual DirectX::SimpleMath::Vector3 GetRootMotionPos(float _ratio, bool _isLoadScaling = true) const = 0;
-
-	/// @brief ルートモーションを取得する（内部で必要な計算を行う）
-	/// @param 現在の再生割合
-	/// @param _isLoadScaling ロード時のスケールを反映するか
-	/// @return 現在の割合のルートモーション回転量
-	virtual DirectX::SimpleMath::Quaternion GetRootMotionRot(float _ratio, bool _isLoadScaling = true) const = 0;
 
 	/// @brief ルートモーションをロード時のスケール・回転量を反映
 	/// @param _rootMotionPos 反映させたいルートモーション

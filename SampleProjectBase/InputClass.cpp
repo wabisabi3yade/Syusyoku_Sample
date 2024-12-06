@@ -7,9 +7,6 @@ InputClass::InputClass()
 {
 	gamePad = std::make_unique<GamePad>();
 	keyboard = std::make_unique<GameKey>();
-
-	inputValue.emplace("Left", Vector2::Zero);
-	inputValue.emplace("Right", Vector2::Zero);
 }
 
 InputClass::~InputClass()
@@ -25,67 +22,58 @@ void InputClass::Update()
 {
 	gamePad->InputUpdate();
 	keyboard->InputUpdate();
+}
 
-	// スティック値を更新する
-	Vector2 vecR;
-	Vector2 vecL;
-	if (gamePad->GetConnecting())	// ゲームパッドが繋がっている
+bool InputClass::GetInputTriggerDir(InputDirection _getDir) const
+{
+	// コントローラの入力
+	if (gamePad->GetConnecting())
 	{
-		vecR.x = gamePad->GetValue(GamePad::Value::StickR_X);
-		vecR.y = gamePad->GetValue(GamePad::Value::StickR_Y);
+		using enum GamePad::Value;
+		using enum GamePad::PadFlag;
 
-		vecL.x = gamePad->GetValue(GamePad::Value::StickL_X);
-		vecL.y = gamePad->GetValue(GamePad::Value::StickL_Y);
+		switch (_getDir)
+		{
+		case InputClass::InputDirection::Up:
+			return gamePad->InputTrigger(StickL_Up) ||
+				gamePad->InputTrigger(Arrow_Up);
+
+		case InputClass::InputDirection::Down:
+			return  gamePad->InputTrigger(StickL_Down) ||
+				gamePad->InputTrigger(Arrow_Down);
+
+		case InputClass::InputDirection::Right:
+			return gamePad->InputTrigger(StickL_Right) ||
+				gamePad->InputTrigger(Arrow_Right);
+
+		case InputClass::InputDirection::Left:
+			return gamePad->InputTrigger(StickL_Left) ||
+				gamePad->InputTrigger(Arrow_Left);
+
+		default:
+			break;
+		}
 	}
 	else	// キーボード入力
 	{
-		// Rスティックと同様
-		if (keyboard->GetKey(DIK_UP))
+		switch (_getDir)
 		{
-			vecR.y += 1.0f;
-		}
-		if ((keyboard->GetKey(DIK_DOWN)))
-		{
-			vecR.y += -1.0f;
-		}
-		if ((keyboard->GetKey(DIK_RIGHT)))
-		{
-			vecR.x += 1.0f;
-		}
-		if ((keyboard->GetKey(DIK_LEFT)))
-		{
-			vecR.x += -1.0f;
-		}
-		// Lスティックと同様
-		if (keyboard->GetKey(DIK_W))
-		{
-			vecL.y += 1.0f;
-		}
-		if ((keyboard->GetKey(DIK_S)))
-		{
-			vecL.y += -1.0f;
-		}
-		if ((keyboard->GetKey(DIK_D)))
-		{
-			vecL.x += 1.0f;
-		}
-		if ((keyboard->GetKey(DIK_A)))
-		{
-			vecL.x += -1.0f;
+		case InputClass::InputDirection::Up:
+			return keyboard->GetKeyDown(DIK_UP);
+
+		case InputClass::InputDirection::Down:
+			return keyboard->GetKeyDown(DIK_DOWN);
+
+		case InputClass::InputDirection::Right:
+			return keyboard->GetKeyDown(DIK_RIGHT);
+
+		case InputClass::InputDirection::Left:
+			return keyboard->GetKeyDown(DIK_LEFT);
+
+		default:
+			break;
 		}
 	}
-	// 値代入
-	inputValue["Right"] = vecR;
-	inputValue["Left"] = vecL;
-}
 
-Vector2 InputClass::GetValue(const std::string& _getType) const
-{
-	if (!inputValue.contains(_getType))
-	{
-		HASHI_DEBUG_LOG("入力値の取得名が間違っています");
-		return Vector2::Zero;
-	}
-
-	return inputValue.at(_getType);
+	return false;
 }

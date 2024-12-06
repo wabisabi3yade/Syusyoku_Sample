@@ -2,14 +2,22 @@
 #include "AnimationNotifyState.h"
 
 AnimationNotifyState::AnimationNotifyState(NotifyType _notifyType) :
-	AnimationNotify_Base(_notifyType), startEventRatio(0.0f),
-	endEventRatio(0.0f), startEventFrame(0), endEventFrame()
+	AnimationNotify_Base(_notifyType), 
+	startEventRatio(0.0f),
+	endEventRatio(0.0f), 
+	startEventFrame(0),
+	endEventFrame(0),
+	curPlayRatio(0.0f),
+	lastPlayRatio(-Mathf::smallValue)
 {
 }
 
 void AnimationNotifyState::Update(const float _lastPlayingRatio, const float _curPlayingRatio, const bool _isLoop)
 {
 	if (!GetIsActive()) return;
+
+	lastPlayRatio = _lastPlayingRatio;
+	curPlayRatio = _curPlayingRatio;
 
 	if (_isLoop)
 	{
@@ -88,6 +96,26 @@ void AnimationNotifyState::Load(const nlohmann::json& _data)
 		HashiTaku::LoadJsonFloat("end", endEventRatio, _data);
 	}
 
+}
+
+float AnimationNotifyState::GetStartEventRatio() const
+{
+	return startEventRatio;
+}
+
+float AnimationNotifyState::GetEndEventRatio() const
+{
+	return endEventRatio;
+}
+
+float AnimationNotifyState::GetCurrentRatio() const
+{
+	return curPlayRatio;
+}
+
+float AnimationNotifyState::GetLastRatio() const
+{
+	return lastPlayRatio;
 }
 
 void AnimationNotifyState::ImGuiDebug()

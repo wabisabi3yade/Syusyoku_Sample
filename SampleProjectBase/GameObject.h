@@ -237,12 +237,12 @@ inline T* GameObject::AddComponent()
 {
 	// コンポーネントファクトリーから取得
 	std::unique_ptr<T> createComp = ComponentFactory::GetInstance()->Create<T>();
-	T& comp = *createComp;
+	T* comp = createComp.get();
 	
 	// コンポーネント追加処理
 	SetComponent(std::move(createComp));
 
-	return &comp;
+	return comp;
 }
 
 template<class T>

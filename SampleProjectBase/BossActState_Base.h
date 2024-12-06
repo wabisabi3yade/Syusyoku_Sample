@@ -8,6 +8,38 @@ class BossActionController;
 /// @brief ボスのステートノード基底
 class BossActState_Base : public EnemyActState_Base
 {
+protected:
+	/// @brief  ワープモーションで必要なパラメータ
+	struct WarpMotionParam
+	{
+		/// @brief ワープモーションで移動する割合(XZ成分)
+		std::unique_ptr<AnimationCurve> pHoriMovementCurve;
+
+		/// @brief 移動するXZ最大距離(0未満なら制限なしとする)
+		float maxMovementXZ{ -10.0f };
+
+		/// @brief ターゲットとする座標からの差分へ向かうようにするオフセット
+		float targetPosOffset{ 0.0f };
+
+		/// @brief 開始する割合
+		float beginAnimRatio{ 0.0f };
+
+		/// @brief 終了する割合
+		float endAnimRatio{ 1.0f };
+
+		/// @brief ルートモーションの割合から移動割合を求める
+		bool isFromRootMotion{ true };
+
+		/*/// @brief ワープモーションで移動する割合(Y成分)
+		AnimationCurve vertMovementCurve;*/
+
+		/*	/// @brief 移動するY最大距離(0未満なら制限なしとする)
+		float maxMovementY{ -10.0f };*/
+
+		/*/// @brief Y移動させるか？
+		bool isUseVertical{ false };*/
+	};
+
 public:
 	// ボスのステートタイプ
 	enum class BossState
@@ -23,18 +55,54 @@ public:
 		// 攻撃
 		CombAttack1 = 100,	// コンビネーション攻撃
 		JumpAttack,	// ジャンプ攻撃
+		SlidingAttack,
+		CombAttack2,
 
 		// 最後
 		None
 	};
 
 private:
+	/// @brief ワープモーションのパラメータ郡
+	std::vector<WarpMotionParam> warpMotionParams;
+
+	/// @brief ワープモーションのターゲット先のポインタ
+	const DirectX::SimpleMath::Vector3* pWarpTargetPos;
+
+	/// @brief ワープモーションで移動するときのターゲット座標との距離
+	DirectX::SimpleMath::Vector3 disToWarpTargePos;
+
+	/// @brief 最後のワープモーションで求めた進行度(0.0～1.0)
+	float lastProgressRatio;
+
 	/// @brief ボスのステート
 	BossState stateType;
+
+	/// @brief 全てで何回ワープさせるか？
+	u_int allWarpSteps;
+
+	/// @brief 現在のワープ回数
+	u_int curWarpStep;
+
+	/// @brief ワープ開始時のルートモーション座標
+	DirectX::SimpleMath::Vector3 startRMPos;
+
+	/// @brief ワープ終了時のルートモーション座標
+	DirectX::SimpleMath::Vector3 endRMPos;
+
+	/// @brief ワープモーションさせるか？
+	bool isUseWarpMotion;
+
+	/// @brief ワープモーション中か？
+	bool isWarpMoving;
+
+#ifdef EDIT
+	// ワープモーション開始時の座標
+	DirectX::SimpleMath::Vector3 warpStartPos;
+#endif
 protected:
 	/// @brief アクションコントローラー
 	BossActionController* pActionController;
-
 public:
 	BossActState_Base();
 	virtual ~BossActState_Base() {}
@@ -56,6 +124,9 @@ public:
 	/// @brief ダメージ時処理
 	void OnDamage();
 
+	/// @brief デバッグ描画
+	void DebugDisplay();
+
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
 protected:
@@ -75,6 +146,14 @@ protected:
 	/// @param _nextState 次の遷移
 	/// @param _isForce　強制切り替え
 	void ChangeState(BossState _nextState, bool _isForce = false);
+
+	/// @brief ワープモーションのターゲットの座標をセット
+	/// @param _targetWorldPos ターゲットの座標
+	void CalcWarpDistance(const DirectX::SimpleMath::Vector3& _targetWorldPos);
+
+	/// @brief ワープモーションのターゲットの座標の参照をセット
+	/// @param _targetWorldPos ターゲットの座標の参照
+	void SetWarpTargetPosReference(const DirectX::SimpleMath::Vector3& _targetPosRef);
 
 	/// @brief トランスフォームを取得する
 	/// @return ボスのトランスフォーム
@@ -98,9 +177,21 @@ protected:
 
 	void ImGuiDebug() override;
 private:
-	/// @brief どのアクションにも共通する遷移
-	void CommmonCheckTransition();
+	/// @brief ワープモーションによる更新処理
+	void WarpMotionUpdate();
 
+	/// @brief 次のワープモーションに入るか移行するか確認する
+	/// @param _animRatio 次のアニメーション割合
+	void CheckTransNextWarp(float _animRatio);
+
+	// ワープモーションに関するImGui編集
+	void ImGuiWarpDebug();
+
+	// ワープモーション関連のセーブ
+	nlohmann::json SaveWarpParameters();
+
+	// ワープモーション関連のロード
+	void LoadWarpParameters(const nlohmann::json& _warpData);
 protected:
 	// パラメータ
 	/// @brief 移動速度のアニメーションパラメータ名

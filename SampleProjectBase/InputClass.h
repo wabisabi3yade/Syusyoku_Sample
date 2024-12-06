@@ -5,11 +5,21 @@
 // ゲームの入力全てをラップするクラス
 class InputClass
 {
+public:
+	/// @brief 入力方向
+	enum class InputDirection
+	{
+		Up,
+		Down,
+		Right,
+		Left,
+		MaxNum
+	};
+
+private:
 	std::unique_ptr<GamePad> gamePad;	// ゲームパッド
 	std::unique_ptr<GameKey> keyboard;	// キーボード
-
-	// パッドとキーボード入力の両対応させた入力値を格納する
-	std::unordered_map<std::string, DirectX::SimpleMath::Vector2> inputValue;
+	
 public:
 	InputClass();	
 	~InputClass();
@@ -21,7 +31,10 @@ public:
 	const GamePad& GetGamePad()const { return *gamePad.get(); }	// コントローラ入力
 
 	const GameKey& GetKeyboard()const { return *keyboard.get(); }	// キーボード入力
-	
-	DirectX::SimpleMath::Vector2 GetValue(const std::string& _getType)const;
+
+	/// @brief 入力で方向のボタンが押されたか取得する
+	/// @param _getDir 取得したい方向
+	/// @return 押した瞬間か？
+	bool GetInputTriggerDir(InputDirection _getDir) const;
 };
 

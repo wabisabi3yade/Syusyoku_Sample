@@ -14,7 +14,7 @@ public:
 	static void Draw();
 
 private:
-	static void Display(const std::unordered_map<std::string, std::unique_ptr<Asset_Base>>& _assets);
+	static void Display(const std::map<std::string, std::unique_ptr<Asset_Base>>& _assets);
 	static void DisplayTexture();
 	static void DisplayModel();
 	static void DisplayMaterial();
@@ -22,5 +22,6 @@ private:
 	static void DisplayAnimation();
 	static void DisplayBoneList();
 	static void DisplayAnimationController();
+	static void DisplaySound();
 	static void DeleteInputAsset();
 };

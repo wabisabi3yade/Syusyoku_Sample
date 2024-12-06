@@ -206,8 +206,29 @@ const DirectX::SimpleMath::Vector3& CP_Animation::GetMotionPosSpeedPerSec() cons
 	return pAnimConPlayer->GetCurNodePlayer().GetRootMotionSpeed();
 }
 
+DirectX::SimpleMath::Vector3 CP_Animation::GetCurAnimRMPos(float _ratio)
+{
+#ifdef EDIT
+		if (!pAnimConPlayer)
+		{
+			HASHI_DEBUG_LOG("アニメーション再生が作成されていません");
+			return Vector3::Zero;
+		}
+#endif // EDIT
+
+	return pAnimConPlayer->GetCurNodePlayer().GetRootMotionPos(_ratio, true);
+}
+
 float CP_Animation::GetControllerPlaySpeed() const
 {
+#ifdef EDIT
+		if (!pAnimConPlayer)
+		{
+			HASHI_DEBUG_LOG("アニメーション再生が作成されていません");
+			return 0.0f;
+		}
+#endif // EDIT
+
 	return pAnimConPlayer->GetCurrentPlaySpeed();
 }
 

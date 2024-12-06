@@ -70,7 +70,6 @@ public:
 	/// @param _parent 親トランスフォームの参照
 	virtual void SetParent(Transform& _parent);
 
-
 	/// @brief 子トランスフォームを設定する
 	/// @param _parent 子トランスフォームの参照
 	virtual void SetChild(Transform& _child);

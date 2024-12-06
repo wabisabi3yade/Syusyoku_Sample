@@ -87,6 +87,10 @@ private:
 	/// @return 攻撃できるか？
 	bool CheckAttackedRb(const CP_RigidBody& _targetRb);
 
+	/// @brief ヒットエフェクトを出す
+	/// @param 当たり判定の衝突地点
+	void CreateHitEffect(const DirectX::SimpleMath::Vector3& _contactPos);
+
 	// デバッグ用攻撃フラグが立っているか見るための描画
 	void DebugAttackFlag();
 

@@ -29,8 +29,12 @@
 #include "DX11EffecseerManager.h"
 #include "VisualEffect.h"
 
+// サウンド
+#include "DXSoundManager.h"
+
 namespace fs = std::filesystem;
 
+namespace DX = DirectX;
 using namespace DirectX::SimpleMath;
 
 /// @brief aiVector3D型をSimpleMathのVector3に変換
@@ -369,7 +373,7 @@ Mesh_Group* AssetLoader::ModelLoad(const std::string& _modelPath, float _scale, 
 	if (_isRightHand)
 		flag |= aiProcess_ConvertToLeftHanded;	// 左手系変更オプションがまとまったもの
 
-	
+
 	// シーン情報を構築
 	const aiScene* pScene = importer.ReadFile(
 		_modelPath.c_str(),
@@ -596,7 +600,7 @@ VisualEffect* AssetLoader::VFXLoadForEffekseer(const std::string& _pathName, flo
 	}
 
 	// エフェクトを作成
-	std::unique_ptr<VisualEffect> pCreateVFX = 
+	std::unique_ptr<VisualEffect> pCreateVFX =
 		std::make_unique<VisualEffect>(effect, _loadScale);
 	VisualEffect* pRetPtr = pCreateVFX.get();
 
@@ -608,6 +612,36 @@ VisualEffect* AssetLoader::VFXLoadForEffekseer(const std::string& _pathName, flo
 	SendAsset<VisualEffect>(vfxName, std::move(pCreateVFX));
 
 	return pRetPtr;
+}
+
+SoundAsset* AssetLoader::LoadSound(const std::string& _pathName)
+{
+	HashiTaku::DXSoundManager* pSoundManager = HashiTaku::DXSoundManager::GetInstance();
+	auto& audioEngine = pSoundManager->GetEngine();
+
+	std::unique_ptr<DX::SoundEffect> loadSoundData;
+	// wcha_t型に変換
+	std::wstring wstr(_pathName.begin(), _pathName.end());
+	try
+	{
+		loadSoundData = std::make_unique<DX::SoundEffect>(&audioEngine, wstr.c_str());
+	}
+	catch (...) // 失敗処理
+	{
+		HASHI_DEBUG_LOG(_pathName + "サウンドロード失敗");
+		return nullptr;
+	}
+
+	// 自作アセットに移行
+	auto soundAsset = std::make_unique<SoundAsset>();
+	soundAsset->SetSoundData(std::move(loadSoundData));
+	soundAsset->SetPathName(_pathName);
+
+	// アセット名
+	std::string assetName = PathToFileName(_pathName);
+
+	// アセット管理に送る
+	return SendAsset<SoundAsset>(assetName, std::move(soundAsset));
 }
 
 std::unique_ptr<Mesh_Group> AssetLoader::CreateMeshGroup(const aiScene* _pScene, const std::string& _assetName, float _loadScale, const DirectX::SimpleMath::Vector3& _loadAngles)

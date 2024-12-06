@@ -22,7 +22,7 @@ public:
 		// 移動
 		Move,
 		TargetMove,
-		Jump,
+		BeginJump,
 		Rolling,
 		Damage_S,	// ダメージ小のけぞり
 		Damage_L,	// ダメージ大のけぞり

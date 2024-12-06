@@ -2,6 +2,7 @@
 #include "CP_Weapon.h"
 #include "CP_RigidBody.h"
 #include "GameObject.h"
+#include "CP_EffectCreater.h"
 
 #ifdef EDIT
 #include "Geometory.h"
@@ -40,11 +41,13 @@ void CP_Weapon::OnCollisionStay(const HashiTaku::CollisionInfo& _otherColInfo)
 	HashiTaku::IDamageable* pDamager = gameObject.GetComponent<HashiTaku::IDamageable>();
 	if (!pDamager) return;
 
-	
+
 	// 攻撃処理
 	DXSimp::Vector3 haveObjPos;	// 所有オブジェクトの座標を取得する
 	if (pHaveObjectPos) haveObjPos = *pHaveObjectPos;
 	OnAttack(*pDamager, haveObjPos);
+
+
 
 	// 追加する
 	AddAttackedRb(*_otherColInfo.pRigidBodyCp);
@@ -110,7 +113,7 @@ void CP_Weapon::Load(const nlohmann::json& _data)
 
 }
 
-void CP_Weapon::OnAttack(HashiTaku::IDamageable& _damager, 
+void CP_Weapon::OnAttack(HashiTaku::IDamageable& _damager,
 	const DirectX::SimpleMath::Vector3& _haveObjPos)
 {
 	// ダメージを与える
@@ -147,6 +150,15 @@ bool CP_Weapon::CheckAttackedRb(const CP_RigidBody& _targetRb)
 	}
 
 	return true;
+}
+
+void CP_Weapon::CreateHitEffect(const DirectX::SimpleMath::Vector3& _contactPos)
+{
+	CP_EffectCreater* pCreate = CP_EffectCreater::GetInstance();
+	if (!pCreate) return;
+
+	// 衝突地点にエフェクトを出す
+	pCreate->Create(atkInfomation.GetHitVfxName(), _contactPos);
 }
 
 void CP_Weapon::DebugAttackFlag()

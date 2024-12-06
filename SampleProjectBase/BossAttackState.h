@@ -5,7 +5,16 @@
 /// @brief ボスのs攻撃ステート
 class BossAttackState : public BossActState_Base
 {
-protected:
+	/// @brief 回転速度カーブ
+	AnimationCurve rotSpeedCurve;
+
+	/// @brief 回転速度倍率
+	float rotSpeedTimes;
+
+	/// @brief カーブで回転移動させるか？
+	bool isUseRotateCurve;
+
+protected :
 	/// @brief 攻撃情報リスト(単発なら最初の情報を使用する)
 	std::vector<HashiTaku::AttackInformation> attackInfos;
 
@@ -27,8 +36,9 @@ public:
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
 protected:
-	void ImGuiDebug() override;
+	void RotateUpdate();
 
+	void ImGuiDebug() override;
 protected:
 	/// @brief リアタックするときに呼び出す変数
 	static constexpr auto REATTACK_PARAMNAME{ "isReAttack" };

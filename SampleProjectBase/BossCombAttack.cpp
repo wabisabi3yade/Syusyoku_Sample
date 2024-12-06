@@ -17,6 +17,9 @@ void BossCombAttack::OnStartBehavior()
 
 	// 初期化
 	curAttackTime = 1;	// 1段目から入る
+
+	// プレイヤーめがけてワープするようにする
+	SetWarpTargetPosReference(GetPlayerTransform().GetPosition());
 }
 
 void BossCombAttack::UpdateBehavior()
@@ -50,15 +53,15 @@ void BossCombAttack::UpdateReAttack()
 	// リアタックフラグを降ろす
 	GetAnimation()->SetBool(REATTACK_PARAMNAME, false);
 
+	// リアタック更新
+	curAttackTime++;
+
 	// 総攻撃回数を超えるなら
-	if(curAttackTime + 1 > attackTimeCnt)	
+	if(curAttackTime > attackTimeCnt)	
 	{
 		HASHI_DEBUG_LOG("エラー：総攻撃回数を超えています");
 		curAttackTime = attackTimeCnt;
 	}
-
-	// リアタック更新
-	curAttackTime++;
 
 	assert(static_cast<u_int>(attackInfos.size()) >= curAttackTime && 
 		"攻撃情報が攻撃回数以下です");
@@ -84,7 +87,6 @@ void BossCombAttack::SetAttackTimeCnt(u_int _attackTime)
 void BossCombAttack::ImGuiDebug()
 {
 	BossAttackState::ImGuiDebug();
-
 	// 攻撃回数
 	int imInt = static_cast<u_int>(attackTimeCnt);
 	if (ImGui::DragInt("attackCnt", &imInt, 1, 1, 100))

@@ -93,6 +93,11 @@ public:
 	/// @return ロードしたエフェクト
 	static VisualEffect* VFXLoadForEffekseer(const std::string& _pathName, float _loadScale);
 
+	/// @brief サウンドをロードする
+	/// @param _pathName サウンドのパス名
+	/// @return サウンド
+	static SoundAsset* LoadSound(const std::string& _pathName);
+
 private:	// 便利関数
 
 	/// @brief スタティックかスケルタルを判断して作成する

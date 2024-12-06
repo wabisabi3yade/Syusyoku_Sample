@@ -17,6 +17,9 @@ public:
 		ANE_ChangeParameter,
 		ANS_ChangeParameter,
 
+		// ワープモーション
+		//ANS_WarpMotion,
+
 		None
 	};
 

@@ -63,6 +63,10 @@ public:
 	void OnEnableTrue() override;
 	void OnEnableFalse() override;
 
+	/// @brief 衝撃を加える
+	/// @param _power パワー
+	void AddImpulse(const DirectX::SimpleMath::Vector3& _power);
+
 	/// @brief コライダーをセットする
 	/// @param _setCollider セットするコライダーコンポーネント
 	void SetColliderShape(CP_Collider& _setCollider);

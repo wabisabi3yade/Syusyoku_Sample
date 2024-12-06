@@ -3,11 +3,17 @@
 #include "BossActionController.h"
 #include "CP_Animation.h"
 
-BossAttackState::BossAttackState()
+namespace DXSimp = DirectX::SimpleMath;
+
+BossAttackState::BossAttackState() : rotSpeedTimes(1.0f), isUseRotateCurve(false)
 {
 	// 1つは用意する
 	HashiTaku::AttackInformation attackInfo;
 	attackInfos.push_back(attackInfo);
+
+#ifdef EDIT
+	rotSpeedCurve.SetCurveName("Rotate Speed");
+#endif // EDIT
 }
 
 void BossAttackState::OnStartBehavior()
@@ -23,6 +29,8 @@ void BossAttackState::OnStartBehavior()
 
 void BossAttackState::UpdateBehavior()
 {
+	RotateUpdate();
+
 	BossActState_Base::UpdateBehavior();
 }
 
@@ -44,6 +52,14 @@ nlohmann::json BossAttackState::Save()
 		atkInfoData.push_back(saveAtkInfo.Save());
 	}
 
+	data["useRotCurve"] = isUseRotateCurve;
+	if (isUseRotateCurve)
+	{
+		data["rotTimes"] = rotSpeedTimes;
+		data["rotCurve"] = rotSpeedCurve.Save();
+	}
+
+
 	return data;
 }
 
@@ -63,6 +79,35 @@ void BossAttackState::Load(const nlohmann::json& _data)
 			attackInfos.push_back(atkInfo);
 		}
 	}
+
+	HashiTaku::LoadJsonBoolean("useRotCurve", isUseRotateCurve, _data);
+	if (isUseRotateCurve)
+	{
+		HashiTaku::LoadJsonFloat("rotTimes", rotSpeedTimes, _data);
+
+		if (HashiTaku::IsJsonContains(_data, "rotCurve"))
+			rotSpeedCurve.Load(_data["rotCurve"]);
+	}
+}
+
+void BossAttackState::RotateUpdate()
+{
+	if (!isUseRotateCurve) return;
+	float animRatio = GetAnimation()->GetCurrentPlayRatio();
+	Transform& bossTransform = GetBossTransform();
+
+	float rotSpeed = rotSpeedCurve.GetValue(animRatio);
+
+	// プレイヤーへのベクトルを求める
+	DXSimp::Vector3 vecToPlayer = GetPlayerTransform().GetPosition() - bossTransform.GetPosition();
+	vecToPlayer.y = 0.0f;
+	vecToPlayer.Normalize();
+	DXSimp::Quaternion targetRot = Quat::RotateToVector(vecToPlayer);
+
+	// 回転
+	DXSimp::Quaternion bossRot = bossTransform.GetRotation();
+	bossRot = DXSimp::Quaternion::Slerp(bossRot, targetRot, rotSpeed * rotSpeedTimes * DeltaTime());
+	bossTransform.SetRotation(bossRot);
 }
 
 void BossAttackState::ImGuiDebug()
@@ -82,4 +127,14 @@ void BossAttackState::ImGuiDebug()
 
 		ImGui::PopID();
 	}
+
+	ImGuiMethod::LineSpaceSmall();
+
+	ImGui::Checkbox("UseRotateCurve", &isUseRotateCurve);
+	if (isUseRotateCurve)
+	{
+		ImGui::DragFloat("Times", &rotSpeedTimes, 0.01f, 0.0f, 10.0f);
+		rotSpeedCurve.ImGuiCall();
+	}
+
 }

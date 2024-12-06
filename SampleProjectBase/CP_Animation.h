@@ -116,6 +116,10 @@ public:
 	/// @return 座標移動速度(s)
 	const DirectX::SimpleMath::Vector3& GetMotionPosSpeedPerSec() const;
 
+	/// @brief 現在のアニメーションのルートモーション座標を取得
+	/// @param 取得する割合
+	DirectX::SimpleMath::Vector3 GetCurAnimRMPos(float _ratio);
+
 	/// @brief プレイヤー再生速度を取得する
 	/// @return 現在の再生速度
 	float GetControllerPlaySpeed() const;

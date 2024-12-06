@@ -390,9 +390,6 @@
     <Filter Include="ソース ファイル\Animation\AnimationNotify\State">
       <UniqueIdentifier>{36bcc241-e81b-40e3-a9e6-ef31c64e4aad}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Animation\AnimationTrack">
-      <UniqueIdentifier>{8ea5adef-6d5d-44f9-913e-8db23e1808ee}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Animation\AnimationNotify\IAnimationNotify">
       <UniqueIdentifier>{a22e08c0-d965-436f-8b63-e3e75d37df5f}</UniqueIdentifier>
     </Filter>
@@ -615,9 +612,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Shader\Base">
       <UniqueIdentifier>{54f60261-d464-492f-94cd-725c9e08a910}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Shadow">
-      <UniqueIdentifier>{0d77d069-9eb9-421f-8297-2f15797cd4fd}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Shader\Vertex\VS_Object">
       <UniqueIdentifier>{479e427c-5306-4063-a9e5-ffb5d3e8f05a}</UniqueIdentifier>
@@ -843,6 +837,39 @@
     </Filter>
     <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Parry">
       <UniqueIdentifier>{616e5f7a-1534-4693-b588-9286886260a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\EffectCreater">
+      <UniqueIdentifier>{699f964f-7cc8-4a7a-8e53-a2ce27970312}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Button">
+      <UniqueIdentifier>{b54bed7e-988f-4559-b2fe-3e38781386c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\ButtonGroup">
+      <UniqueIdentifier>{d2e90e45-216a-4261-a7af-78ed16dfa6e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\ButtonGroup\Title">
+      <UniqueIdentifier>{744eef72-07b5-42ee-9904-0bd13a0b0957}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shadow">
+      <UniqueIdentifier>{0d77d069-9eb9-421f-8297-2f15797cd4fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\WarpMotion">
+      <UniqueIdentifier>{e8ab12bb-5bc1-48f9-851b-998e3219f3e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Sound">
+      <UniqueIdentifier>{ec9e47da-f6b6-4a9d-a6c9-2dcd1e18a81f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Sound\Manager">
+      <UniqueIdentifier>{d47ed0d5-505e-4dfe-b88f-29feabbf5da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Sound\Asset">
+      <UniqueIdentifier>{53e3975b-510e-4e97-80f4-7af7828cb900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\Walk">
+      <UniqueIdentifier>{43127128-d05d-4723-b8cf-79f2d8d619ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Jump">
+      <UniqueIdentifier>{a1c0647e-c047-4bb8-ba12-c7e1ef113e9a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1292,9 +1319,6 @@
     <ClCompile Include="BulletTest.cpp">
       <Filter>ソース ファイル\Bullet\Test</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationTrack.cpp">
-      <Filter>ソース ファイル\Animation\AnimationTrack</Filter>
-    </ClCompile>
     <ClCompile Include="AnimationNotify_Base.cpp">
       <Filter>ソース ファイル\Animation\AnimationNotify\IAnimationNotify</Filter>
     </ClCompile>
@@ -1496,9 +1520,6 @@
     <ClCompile Include="CP_Boss.cpp">
       <Filter>ソース ファイル\Component\InGame\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="BossGroundMove.cpp">
-      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Ground</Filter>
-    </ClCompile>
     <ClCompile Include="ANE_ChangeParameter.cpp">
       <Filter>ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter</Filter>
     </ClCompile>
@@ -1575,6 +1596,36 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="PlayerGuardState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_EffectCreater.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Button.cpp">
+      <Filter>ソース ファイル\Component\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_ButtonGroup.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_TitleButtonGroup.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ANS_WarpMotion.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DXSoundManager.cpp">
+      <Filter>ソース ファイル\Sound\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundAsset.cpp">
+      <Filter>ソース ファイル\Sound\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="BossGroundMove.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="BossWalkState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerJumpState.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -2005,9 +2056,6 @@
     <ClInclude Include="BulletTest.h">
       <Filter>ソース ファイル\Bullet\Test</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationTrack.h">
-      <Filter>ソース ファイル\Animation\AnimationTrack</Filter>
-    </ClInclude>
     <ClInclude Include="AnimationNotify_Base.h">
       <Filter>ソース ファイル\Animation\AnimationNotify\IAnimationNotify</Filter>
     </ClInclude>
@@ -2227,9 +2275,6 @@
     <ClInclude Include="CP_BattleManager.h">
       <Filter>ソース ファイル\Component\InGame\BattleManager</Filter>
     </ClInclude>
-    <ClInclude Include="BossGroundMove.h">
-      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Ground</Filter>
-    </ClInclude>
     <ClInclude Include="BossGroundState.h">
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Ground</Filter>
     </ClInclude>
@@ -2313,6 +2358,36 @@
     </ClInclude>
     <ClInclude Include="IUISlider.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_EffectCreater.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Button.h">
+      <Filter>ソース ファイル\Component\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_ButtonGroup.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_TitleButtonGroup.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ANS_WarpMotion.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DXSoundManager.h">
+      <Filter>ソース ファイル\Sound\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundAsset.h">
+      <Filter>ソース ファイル\Sound\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="BossGroundMove.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="BossWalkState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerJumpState.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

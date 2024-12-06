@@ -59,8 +59,8 @@ void CP_CameraMove::Start()
 	if (pCamera == nullptr)
 		assert(!"Cameraコンポーネントをつけてください");
 
-	pMoveController->Begin(*pCamera);	// 初期処理
 	pMoveController->SetFollowTransform(pFollowTransform);
+	pMoveController->Begin(*pCamera);	// 初期処理
 }
 
 void CP_CameraMove::LateUpdate()

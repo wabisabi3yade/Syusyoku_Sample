@@ -1,6 +1,10 @@
 #pragma once
 #include "StateMachine.h"
 
+#ifdef EDIT
+#include "Geometory.h"
+#endif // EDIT
+
 /// @brief キャラクタのアクションステート基底
 class CharacterActState_Base : 
 	public HashiTaku::StateNode_Base, public HashiTaku::IImGuiUser,

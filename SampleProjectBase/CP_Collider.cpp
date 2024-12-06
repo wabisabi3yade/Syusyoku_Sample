@@ -4,7 +4,7 @@
 
 #include "InSceneSystemManager.h"
 
-namespace DX = DirectX::SimpleMath;
+namespace DXSimp = DirectX::SimpleMath;
 using namespace HashiTaku;
 
 CP_Collider::CP_Collider(ShapeType _type) : type(_type), isCreateCompound(false)
