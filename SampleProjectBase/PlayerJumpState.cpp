@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "PlayerJumpState.h"
 
+constexpr auto JUMPTRIGGER_ANIMPARAM("jumpTrigger");
+
 PlayerJumpState::PlayerJumpState() :
 	jumpPower(10.0f),
 	crouchTime(0.3f),
@@ -15,6 +17,9 @@ PlayerJumpState::~PlayerJumpState()
 
 void PlayerJumpState::OnStartBehavior()
 {
+	// ジャンプトリガーを入れる
+	GetAnimation()->SetTrigger(JUMPTRIGGER_ANIMPARAM);
+
 	stateElapsedTime = 0.0f;
 	isAlreadyJump = false;
 }

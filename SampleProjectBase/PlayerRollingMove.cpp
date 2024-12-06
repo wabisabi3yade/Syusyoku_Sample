@@ -35,6 +35,7 @@ void PlayerRollingMove::UpdateBehavior()
 
 void PlayerRollingMove::OnEndBehavior()
 {
+	ClearVelocity(false);
 	GetPlayer().SetIsInvicible(false);
 }
 

@@ -75,6 +75,11 @@ void PlayerAttackState::UpdateBehavior()
 	UpdateCombInput();
 }
 
+void PlayerAttackState::OnEndBehavior()
+{
+	ClearVelocity(false);
+}
+
 void PlayerAttackState::TransitionCheckUpdate()
 {
 	// 攻撃入力されたらステート遷移する

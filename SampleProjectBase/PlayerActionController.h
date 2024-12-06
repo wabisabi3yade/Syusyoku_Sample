@@ -4,7 +4,6 @@
 #include "ChangeAnimObserver.h"
 #include "ITargetAccepter.h"
 
-class PlayerChangeAnimObserver;
 class CP_Player;
 class CP_BattleManager;
 

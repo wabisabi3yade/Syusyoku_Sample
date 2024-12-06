@@ -39,7 +39,7 @@ void PlayerTargetMove::UpdateBehavior()
 
 void PlayerTargetMove::OnEndBehavior()
 {
-	pActionController->GetAnimation()->SetFloat(SPEEDRATIO_PARAMNAME, 0.0f);
+	PlayerMoveState::OnEndBehavior();
 }
 
 void PlayerTargetMove::TransitionCheckUpdate()
