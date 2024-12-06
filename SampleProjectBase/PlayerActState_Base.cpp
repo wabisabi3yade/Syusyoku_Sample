@@ -62,7 +62,7 @@ void PlayerActState_Base::Update()
 void PlayerActState_Base::OnEnd()
 {
 	// 前の慣性はなくす
-	GetRB().SetVelocity(DXSimp::Vector3::Zero);
+	//GetRB().SetVelocity(DXSimp::Vector3::Zero);
 
 	OnEndBehavior();
 }
@@ -98,7 +98,7 @@ void PlayerActState_Base::CheckInputUpdate()
 {
 	if (!pActionController->GetCanInput()) return;	// 入力受け付けていないなら
 
-	// ローリングボタンを押す　かつ　左スティックの傾きが足りる
+	// ガード
 	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Guard))
 	{
 		atkReserveState = PlayerState::None;
@@ -109,6 +109,13 @@ void PlayerActState_Base::CheckInputUpdate()
 	{
 		atkReserveState = PlayerState::None;
 		cancelReserveState = PlayerState::Rolling;
+	}
+
+	// ジャンプ
+	else if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Jump))
+	{
+		atkReserveState = PlayerState::None;
+		cancelReserveState = PlayerState::BeginJump;
 	}
 
 	// 前突進攻撃
@@ -209,7 +216,6 @@ bool PlayerActState_Base::IsInputVector(InputVector _checkVector)
 		inputVec.y * camTrans.Forward();
 	inputVec = { inputVecByCam.x, inputVecByCam.z };
 	inputVec.Normalize();
-
 
 	// 向きを取得
 	DXSimp::Vector3 baseVec;

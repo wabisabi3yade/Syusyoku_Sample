@@ -436,29 +436,8 @@
                                     "typeString": "TargetMove"
                                 },
                                 {
-                                    "data": {
-                                        "attackCnt": 1,
-                                        "attackInfos": [
-                                            {
-                                                "damage": 2.5999999046325684,
-                                                "level": 0
-                                            }
-                                        ],
-                                        "forwardCurve": {
-                                            "easeKind": 0,
-                                            "endValue": 1.0,
-                                            "endVector": 0.0,
-                                            "plotDatas": null,
-                                            "startInterp": 0,
-                                            "startValue": 0.0,
-                                            "startVector": 0.0,
-                                            "useHermite": false
-                                        },
-                                        "isMoveFwd": false,
-                                        "maxDistance": 10.0,
-                                        "nextCombAttack": 21
-                                    },
-                                    "typeString": "Attack11"
+                                    "data": null,
+                                    "typeString": "BeginJump"
                                 },
                                 {
                                     "data": {
@@ -528,6 +507,31 @@
                                         "parryAngle": 180.0
                                     },
                                     "typeString": "Guard"
+                                },
+                                {
+                                    "data": {
+                                        "attackCnt": 1,
+                                        "attackInfos": [
+                                            {
+                                                "damage": 2.5999999046325684,
+                                                "level": 0
+                                            }
+                                        ],
+                                        "forwardCurve": {
+                                            "easeKind": 0,
+                                            "endValue": 1.0,
+                                            "endVector": 0.0,
+                                            "plotDatas": null,
+                                            "startInterp": 0,
+                                            "startValue": 0.0,
+                                            "startVector": 0.0,
+                                            "useHermite": false
+                                        },
+                                        "isMoveFwd": false,
+                                        "maxDistance": 10.0,
+                                        "nextCombAttack": 21
+                                    },
+                                    "typeString": "Attack11"
                                 },
                                 {
                                     "data": {

@@ -868,6 +868,9 @@
     <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\Walk">
       <UniqueIdentifier>{43127128-d05d-4723-b8cf-79f2d8d619ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Jump">
+      <UniqueIdentifier>{a1c0647e-c047-4bb8-ba12-c7e1ef113e9a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1620,6 +1623,9 @@
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Move</Filter>
     </ClCompile>
     <ClCompile Include="BossWalkState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerJumpState.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -2378,6 +2384,9 @@
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Move</Filter>
     </ClInclude>
     <ClInclude Include="BossWalkState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerJumpState.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

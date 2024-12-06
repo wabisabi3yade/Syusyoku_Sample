@@ -14,6 +14,8 @@
 #include "PlayerRushAttack.h"
 #include "PlayerDamageState.h"
 
+#include "PlayerJumpState.h"
+
 using PlayerState = PlayerActState_Base::PlayerState;
 namespace DXSimp = DirectX::SimpleMath;
 
@@ -40,6 +42,7 @@ PlayerActionController::PlayerActionController(CP_Player& _player) :
 	CreateState<PlayerIdleState>(Idle);
 	CreateState<PlayerMoveState>(Move);
 	CreateState<PlayerTargetMove>(TargetMove);
+	CreateState<PlayerJumpState>(BeginJump);
 	CreateState<PlayerRollingMove>(Rolling);
 	CreateState<PlayerDamageState>(Damage_S);
 	CreateState<PlayerDamageState>(Damage_L);

@@ -55,6 +55,8 @@ public:
 		// 攻撃
 		CombAttack1 = 100,	// コンビネーション攻撃
 		JumpAttack,	// ジャンプ攻撃
+		SlidingAttack,
+		CombAttack2,
 
 		// 最後
 		None

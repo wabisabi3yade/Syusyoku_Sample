@@ -253,6 +253,7 @@
     <ClCompile Include="PlayerDamageState.cpp" />
     <ClCompile Include="PlayerGroundAttack.cpp" />
     <ClCompile Include="PlayerGuardState.cpp" />
+    <ClCompile Include="PlayerJumpState.cpp" />
     <ClCompile Include="PlayerRollingMove.cpp" />
     <ClCompile Include="PlayerRushAttack.cpp" />
     <ClCompile Include="PlayerTargetMove.cpp" />
@@ -497,6 +498,7 @@
     <ClInclude Include="PlayerDamageState.h" />
     <ClInclude Include="PlayerGroundAttack.h" />
     <ClInclude Include="PlayerGuardState.h" />
+    <ClInclude Include="PlayerJumpState.h" />
     <ClInclude Include="PlayerRollingMove.h" />
     <ClInclude Include="PlayerRushAttack.h" />
     <ClInclude Include="PlayerTargetMove.h" />

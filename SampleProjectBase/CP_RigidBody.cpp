@@ -42,6 +42,12 @@ void CP_RigidBody::OnEnableFalse()
 	DX11BulletPhisics::GetInstance()->RemoveCollObj(*this);
 }
 
+void CP_RigidBody::AddImpulse(const DirectX::SimpleMath::Vector3& _power)
+{
+	if (!collider || isTrigger) return;
+	CastRigidBody().applyCentralImpulse(Bullet::ToBtVector3(_power));
+}
+
 void CP_RigidBody::SetColliderShape(CP_Collider& _setCollider)
 {
 	if (collider) return;
