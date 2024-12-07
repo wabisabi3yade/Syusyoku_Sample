@@ -258,7 +258,7 @@ void ImGuiMethod::Text(const DirectX::SimpleMath::Quaternion& _q)
 void ImGuiMethod::Text(const std::string& _text, const bool _b)
 {
 	std::string statusStr = _b ? "true" : "false";
-	std::string text = _text + " " + statusStr;
+	std::string text = _text + ":" + statusStr;
 	ImGui::Text(text.c_str());
 }
 

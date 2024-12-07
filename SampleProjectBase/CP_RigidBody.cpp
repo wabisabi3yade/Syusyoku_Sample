@@ -56,7 +56,7 @@ void CP_RigidBody::SetColliderShape(CP_Collider& _setCollider)
 	collider = std::make_unique<CollPair>();
 	collider->pColliderComp = &_setCollider;
 	// 衝突判定タイプを作成
-	collider->pColTypeJudge = std::make_unique<CollisionTypeJudge>();
+	collider->pColTypeJudge = std::make_unique<CollisionTypeJudge>(*this);
 
 	if (isTrigger)
 		CreateGhost();
@@ -429,4 +429,10 @@ void CP_RigidBody::ReCreateCollider()
 
 	// 現在のパラメータで作り直す
 	SetColliderShape(colliderComp);
+}
+
+void CP_RigidBody::AddCurrentCollision(CP_RigidBody& _addRb)
+{
+	if (!collider) return;
+	collider->pColTypeJudge->AddCurrentColRb(_addRb);
 }

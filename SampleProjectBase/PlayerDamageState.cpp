@@ -15,7 +15,7 @@ void PlayerDamageState::SetKnockVec(const DirectX::SimpleMath::Vector3& _knockVe
 
 nlohmann::json PlayerDamageState::Save()
 {
-	auto data = PlayerActState_Base::Save();
+	auto data = PlayerGroundState::Save();
 
 	data["knockDis"] = maxKnockMoveSpeed;
 	data["knockCurve"] = knockSpeedCurve.Save();
@@ -25,7 +25,7 @@ nlohmann::json PlayerDamageState::Save()
 
 void PlayerDamageState::Load(const nlohmann::json& _data)
 {
-	PlayerActState_Base::Load(_data);
+	PlayerGroundState::Load(_data);
 
 	HashiTaku::LoadJsonFloat("knockDis", maxKnockMoveSpeed, _data);
 	if (HashiTaku::IsJsonContains(_data, "knockCurve"))

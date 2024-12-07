@@ -13,7 +13,7 @@ PlayerRollingMove::PlayerRollingMove() :
 
 void PlayerRollingMove::OnStartBehavior()
 {
-	PlayerActState_Base::OnStartBehavior();
+	PlayerGroundState::OnStartBehavior();
 
 	// “ü—Í‚ÌŒü‚«‚É‘¦Žž‚ÉŒü‚¯‚é
 	TurnInputVec();
@@ -24,7 +24,7 @@ void PlayerRollingMove::OnStartBehavior()
 void PlayerRollingMove::UpdateBehavior()
 {
 	using namespace DirectX::SimpleMath;
-	PlayerActState_Base::UpdateBehavior();
+	PlayerGroundState::UpdateBehavior();
 
 	// ˆÚ“®
 	Move();
@@ -113,7 +113,7 @@ void PlayerRollingMove::UpdateInvicible()
 
 void PlayerRollingMove::ImGuiDebug()
 {
-	PlayerActState_Base::ImGuiDebug();
+	PlayerGroundState::ImGuiDebug();
 
 	ImGui::DragFloat("Distance", &rollingDistance, 0.1f, 0.0f, 1000.0f);
 	ImGui::DragFloat("InvicibleTime", &invicibleTime, 0.01f, 0.0f, 5.0f);
@@ -122,7 +122,7 @@ void PlayerRollingMove::ImGuiDebug()
 
 nlohmann::json PlayerRollingMove::Save()
 {
-	auto data = PlayerActState_Base::Save();
+	auto data = PlayerGroundState::Save();
 
 	data["rollingDistance"] = rollingDistance;
 	data["invicibleTime"] = invicibleTime;
@@ -135,7 +135,7 @@ void PlayerRollingMove::Load(const nlohmann::json& _data)
 {
 	using namespace HashiTaku;
 
-	PlayerActState_Base::Load(_data);
+	PlayerGroundState::Load(_data);
 
 	LoadJsonFloat("rollingDistance", rollingDistance, _data);
 	LoadJsonFloat("invicibleTime", invicibleTime, _data);

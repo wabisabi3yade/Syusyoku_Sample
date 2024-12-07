@@ -7,6 +7,8 @@ class CP_Collider;
 
 class CP_RigidBody : public Component
 {
+	friend class CollisionTypeJudge;
+
 	/// @brief 当たり判定形状タイプ
 	enum ShapeType
 	{
@@ -151,6 +153,10 @@ private:
 
 	/// @brief 再度コライダーを作り直す（RigidBodyからGhpstObjectにしたいときとか）
 	void ReCreateCollider();
+
+	/// @brief 衝突中のRbリストに相手方から追加する
+	/// @param _addRb 追加したRb
+	void AddCurrentCollision(CP_RigidBody& _addRb);
 
 	/// @brief BulletのTransformを取得する
 	/// @param _btTrans 結果

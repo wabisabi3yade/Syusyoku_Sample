@@ -1,12 +1,8 @@
 #pragma once
 #include "ISaveLoad.h"
+#include "CollisionInfo.h"
 
 class GameObject;
-
-namespace HashiTaku
-{
-	struct CollisionInfo;
-}
 
 // ゲームのサブシステムとなるコンポーネントの基底クラス
 class Component : public HashiTaku::ISaveLoad, public HashiTaku::IImGuiUser

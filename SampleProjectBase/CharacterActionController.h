@@ -49,6 +49,14 @@ public:
 	/// @return アニメーション変更オブザーバー
 	CharacterChangeAnimObserver& GetChangeAnimObserver();
 
+	/// @brief キャラクターコンポーネントを取得
+	/// @return キャラクターコンポーネント
+	CP_Character& GetCharacter();
+
+	/// @brief 自身のオブジェクトのトランスフォーム
+	/// @return オブジェクトのトランスフォーム
+	Transform& GetMyTransform();
+
 	/// @brief RigidBodyを取得
 	/// @return RigidBody
 	CP_RigidBody* GetRB();
@@ -93,10 +101,6 @@ public:
 	/// @param _paramName パラメーター名
 	/// @param _floatVal 取得する値
 	float GetAnimationFloat(const std::string& _paramName);
-
-	/// @brief キャラクターコンポーネントを取得
-	/// @return キャラクターコンポーネント
-	CP_Character& GetCharacter();
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

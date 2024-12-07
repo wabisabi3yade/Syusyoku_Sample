@@ -1,81 +1,27 @@
 #pragma once
-
 #include "CharacterActState_Base.h"
 #include "GameInput.h"
 #include "CP_Camera.h"
 #include "CP_RigidBody.h"
 #include "CP_Animation.h"
+#include "ITargetAccepter.h"
 
 class CP_Player;
-class PlayerActionController;
+class PlayerActionController_Base;
 
 /// @brief プレイヤーの行動ステート基底クラス
 class PlayerActState_Base : public CharacterActState_Base
 {
 public:
-	/// @brief  プレイヤーの行動状態
-	enum class PlayerState
-	{
-		// 待機
-		Idle,
-
-		// 移動
-		Move,
-		TargetMove,
-		BeginJump,
-		Rolling,
-		Damage_S,	// ダメージ小のけぞり
-		Damage_L,	// ダメージ大のけぞり
-		Guard,	// ガード開始
-		Guard_Parry,	// パリィ処理
-
-		// 地上コンビネーション攻撃
-		Attack11 = 20,
-		Attack12,
-		Attack13,
-		Attack14,
-
-		// 地上必殺攻撃
-		SpecialAtkHi = 30,
-		SpecialAtkLow,
-		SpecialAtkGuard,	// ガードパリィ時の攻撃
-
-		// 最後
-		None = 99
-	};
-
-	/// @brief アクションの場所属性
-	enum class ActPlaceElement
-	{
-		Ground,
-		Air
-	};
-
 	/// @brief プレイヤーから見た入力の方向
 	enum class InputVector
 	{
 		Forward,	// 前方向
 		Back	// 後ろ
 	};
-
-#ifdef EDIT
-	// ステート一覧の文字列
-	inline static const std::vector<std::string> playerCombAtkList =
-	{
-		// 地上コンビネーション攻撃
-		"Attack11",
-		"Attack12",
-		"Attack13",
-		"Attack14",
-	};
-#endif // EDIT
-
 private:
-	/// @brief この行動クラスのステートタイプ
-	PlayerState stateType;
-
-	/// @brief 行動の場所属性
-	ActPlaceElement placeElement;
+	///// @brief この行動クラスのステートタイプ
+	//PlayerState stateType;
 
 	/// @brief ターゲットを見るときの回転速度
 	float targetLookRotateSpeed;
@@ -87,16 +33,16 @@ private:
 	bool isTargetLookAtEnemy;
 protected:
 	/// @brief キャンセルして繰り出す状態
-	PlayerState cancelReserveState;
+	int actionReserveState;
 
 	/// @brief キャンセルして繰り出す状態
-	PlayerState atkReserveState;
+	int atkReserveState;
 
 	/// @brief キャンセルして繰り出す状態
-	PlayerState moveReserveState;
+	int moveReserveState;
 
-	/// @brief プレイヤー
-	PlayerActionController* pActionController;
+	/// @brief プレイヤーアクションコントローラー
+	PlayerActionController_Base* pActionController;
 
 	/// @brief ゲーム入力クラス
 	static GameInput* pPlayerInput;
@@ -105,10 +51,8 @@ public:
 	virtual ~PlayerActState_Base() {}
 
 	/// @brief 初期化処理
-	/// @param _stateType　状態
 	/// @param _actController　プレイヤーコンポーネント
-	/// @param _changeObserver ステート遷移オブザーバー
-	void Init(PlayerState _stateType, PlayerActionController& _actController);
+	void Init(PlayerActionController_Base& _actController);
 
 	/// @brief 開始処理呼び出し
 	void OnStart() override;
@@ -119,9 +63,6 @@ public:
 	/// @brief  終了処理呼び出し
 	void OnEnd() override;
 
-	// ステートタイプを取得
-	PlayerState GetActStateType() const;
-
 	/// @brief セーブする
 	/// @return セーブデータ
 	nlohmann::json Save() override;
@@ -130,27 +71,8 @@ public:
 	/// @param _data ロードするデータ 
 	void Load(const nlohmann::json& _data) override;
 protected:
-	/// @brief 各状態の開始処理
-	virtual void OnStartBehavior() {};
-
-	/// @brief 更新処理
-	virtual void UpdateBehavior() {};
-
-	/// @brief 各状態の終了処理
-	virtual void OnEndBehavior() {};
-
-	/// @brief ステート遷移条件のチェック処理
-	virtual void TransitionCheckUpdate();
-
 	/// @brief 入力のフラグをクリア
 	void ParameterClear();
-
-	/// @brief 入力確認の更新
-	virtual void CheckInputUpdate();
-
-	/// @brief 状態を遷移する
-	/// @param _changeSate 遷移先の状態
-	void ChangeState(PlayerState _nextState);
 
 	/// @brief 速度をクリアする
 	/// @param _applyY Y軸にも反映させるか
@@ -164,6 +86,10 @@ protected:
 	/// @param _isInvicible 無敵
 	void SetInvicible(bool _isInvicible);
 
+	/// @brief プレイヤーを取得する
+	/// @return プレイヤー
+	CP_Player& GetPlayer();
+
 	/// @brief RigidBodyを取得
 	/// @return RigidBody
 	CP_RigidBody& GetRB();
@@ -176,9 +102,9 @@ protected:
 	/// @return アニメーション
 	CP_Animation* GetAnimation();
 
-	/// @brief プレイヤーコンポーネントを取得する
-	/// @return プレイヤーコンポーネント
-	CP_Player& GetPlayer();
+	/// @brief ターゲット先のポインタを取得
+	/// @return ターゲット先のポインタ
+	const ITargetAccepter* GetTargetAccepter();
 
 	/// @brief Δtを取得
 	/// @return Δt
@@ -206,15 +132,7 @@ protected:
 	/// @return  必殺技できるか？
 	bool IsSpecialAtkInput(InputVector _inputVecter);
 
-	/// @brief ImGui処理
-	void ImGuiDebug() override;
-
-	/// @brief ImGuiによるコンボボックス
-	/// @param _caption キャプション
-	/// @param _currentState 現在のステート
-	/// @return 変更したか？
-	static bool ImGuiComboAttack(const std::string& _caption, PlayerState& _currentState);
-
+	void ImGuiDebug() override {};
 private:
 	/// @brief ターゲットの方向を見る
 	void UpdateTargetLook();
@@ -223,13 +141,12 @@ private:
 	void CancelTransitionUpdate();
 protected:
 	// アニメーションコントローラ内のプレイヤー名
-	constexpr static auto SPEEDRATIO_PARAMNAME = "speed";	// 移動速度
-	constexpr static auto MOVEAXIS_X_PARAMNAME = "axisX";	// X移動
-	constexpr static auto MOVEAXIS_Y_PARAMNAME = "axisY";	// Y移動
-	// 攻撃トリガー
-	constexpr static auto DAMAGETRIGGER_PARAMNAME = "damageTrigger";
+	constexpr static auto SPEEDRATIO_PARAMNAME{ "speed" };
+	constexpr static auto MOVEAXIS_X_PARAMNAME{ "axisX" };	// X移動
+	constexpr static auto MOVEAXIS_Y_PARAMNAME{ "axisY" };	// Y移動
+	constexpr static auto DAMAGETRIGGER_PARAMNAME{ "damageTrigger" };	// 攻撃トリガー
 
 	// アニメーション名
-	constexpr static auto IDLE_ANIM_NAME = "Idle";	// 待機状態
+	constexpr static auto IDLE_ANIM_NAME{ "Idle" };	// 待機状態
 };
 

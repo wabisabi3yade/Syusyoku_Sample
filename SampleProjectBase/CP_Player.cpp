@@ -40,7 +40,7 @@ void CP_Player::Init()
 	CP_Character::Init();
 
 	// アクションコントローラー作成
-	pActionController = std::make_unique<PlayerActionController>(*this);
+	pAction = std::make_unique<PlayerAction>(*this);
 }
 
 void CP_Player::Awake()
@@ -66,11 +66,8 @@ void CP_Player::Start()
 	pAnimation = gameObject->GetComponent<CP_Animation>();
 	pAttackCollisionFlag = pAnimation->GetParameterPointer<bool>(ATKCOL_ANIMPARAM);
 
-	// アニメーション変更オブザーバーを追加
-	pAnimation->AddChangeAnimObserver(pActionController->GetChangeAnimObserver());
-
 	// アクションコントローラー開始処理
-	pActionController->Init(pAnimation, pRb, pCameraMove);
+	pAction->Init(pAnimation, pRb);
 }
 
 void CP_Player::Update()
@@ -80,7 +77,7 @@ void CP_Player::Update()
 	CP_Character::Update();
 
 	// アクション周りを更新
-	pActionController->UpdateCall();
+	pAction->Update();
 
 	// 武器の当たり判定を更新
 	SetWeaponAttackFlag();
@@ -171,20 +168,16 @@ void CP_Player::ResetGuardGage()
 
 void CP_Player::ImGuiDebug()
 {
+	CP_Character::ImGuiDebug();
 	ImGuiFindObj();
 
 	static bool isWindow = true;
-
 	if (ImGui::Button("Window"))
 		isWindow = !isWindow;
-
 	if (!isWindow) return;
 
-	ImGui::Begin("Player", &isWindow);
-
-	CP_Character::ImGuiDebug();
-	pActionController->ImGuiCall();
-
+	ImGui::Begin("Action", &isWindow);
+	pAction->ImGuiCall();
 	ImGui::End();
 }
 
@@ -235,7 +228,7 @@ bool CP_Player::GetIsAttackFlag() const
 nlohmann::json CP_Player::Save()
 {
 	auto data = CP_Character::Save();
-	data["actionController"] = pActionController->Save();
+	data["action"] = pAction->Save();
 
 	data["weaponObjName"] = weaponObjName;
 	data["camObjName"] = cameraObjName;
@@ -249,9 +242,9 @@ void CP_Player::Load(const nlohmann::json& _data)
 {
 	CP_Character::Load(_data);
 
-	nlohmann::json actionControllerData;
-	if (HashiTaku::LoadJsonData("actionController", actionControllerData, _data))
-		pActionController->Load(actionControllerData);
+	nlohmann::json actionData;
+	if (HashiTaku::LoadJsonData("action", actionData, _data))
+		pAction->Load(actionData);
 
 	HashiTaku::LoadJsonString("weaponObjName", weaponObjName, _data);
 	HashiTaku::LoadJsonString("camObjName", cameraObjName, _data);
@@ -283,7 +276,7 @@ void CP_Player::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo
 	const DirectX::SimpleMath::Vector3& _attackerPos)
 {
 	bool isAcceptDamage = false;	// アクション内でダメージ受けているかチェック
-	pActionController->OnDamage(_attackInfo, _attackerPos, &isAcceptDamage);
+	pAction->OnDamage(_attackInfo, _attackerPos, &isAcceptDamage);
 
 	// ダメージ受けていたら
 	if (isAcceptDamage)

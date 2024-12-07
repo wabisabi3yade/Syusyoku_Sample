@@ -89,7 +89,7 @@ public:
 	/// @brief 入力スティックの数値を取得する
 	/// @param _valueType ゲーム内スティックの種類
 	/// @return 入力数値
-	DirectX::SimpleMath::Vector2 GetValue(ValueType _valueType);
+	const DirectX::SimpleMath::Vector2& GetValue(ValueType _valueType);
 
 private:
 	/// @brief デフォルトの設定にする

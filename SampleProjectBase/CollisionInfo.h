@@ -1,5 +1,7 @@
 #pragma once
 
+class CP_RigidBody;
+
 namespace HashiTaku
 {
 	/// @brief コンポーネントに渡す衝突した情報

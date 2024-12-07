@@ -1,8 +1,8 @@
 #pragma once
-#include"PlayerActState_Base.h"
+#include"PlayerGroundState.h"
 
 /// @brief プレイヤージャンプステート
-class PlayerJumpState : public PlayerActState_Base
+class PlayerJumpState : public PlayerGroundState
 {
 	/// @brief ジャンプの力
 	float jumpPower;

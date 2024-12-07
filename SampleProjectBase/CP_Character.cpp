@@ -4,9 +4,16 @@
 #include "GameObject.h"
 
 CP_Character::CP_Character() :
-	currentHP(0.0f), maxHP(1.0f), hsBeforeDeltaTime(0.0f), isDead(false),
-	isHitStopping(false), isInvicible(false)
+	currentHP(0.0f), 
+	maxHP(1.0f),
+	hsBeforeDeltaTime(0.0f),
+	isDead(false),
+	isHitStopping(false),
+	isInvicible(false)
+{
+}
 
+void CP_Character::OnDestroy()
 {
 }
 
@@ -83,7 +90,6 @@ nlohmann::json CP_Character::Save()
 void CP_Character::Load(const nlohmann::json& _data)
 {
 	Component::Load(_data);
-
 	HashiTaku::LoadJsonFloat("maxHp", maxHP, _data);
 }
 
@@ -123,10 +129,12 @@ void CP_Character::DecadeHp(float _damageVal)
 
 void  CP_Character::ImGuiDebug()
 {
+#ifdef EDIT
 	ImGui::Checkbox("IsInvicible", &isInvicible);
 	if (ImGui::DragFloat("CurrentHP", &currentHP, 0.1f, 0.0f, MAXLIMIT_HP))
 	{
 		SetCurrentHP(currentHP);
 	}
 	ImGui::DragFloat("MaxHP", &maxHP, 0.1f, 0.0f, MAXLIMIT_HP);
+#endif // EDIT
 }

@@ -35,6 +35,7 @@ void ComponentFactory::Init()
 
 	// キャラクター共通
 	ResistComponnent<CP_Weapon>();
+	ResistComponnent<CP_GroundCheck>();
 
 	// インゲーム内
 	ResistComponnent<CP_HitStopManager>();

@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "PlayerAttackState.h"
-#include "PlayerActionController.h"
+#include "PlayerGroundActionController.h"
 #include "GameObject.h"
 
 namespace DXSimp = DirectX::SimpleMath;
 
 // 瞬時に見るのを反映する敵との距離
-constexpr float INSTANTLOOK_DISTANCE(4.0f);
+constexpr float INSTANTLOOK_DISTANCE(8.0f);
 
 PlayerAttackState::PlayerAttackState() :
 	pIsReAttack(nullptr),
@@ -86,7 +86,14 @@ void PlayerAttackState::TransitionCheckUpdate()
 	if (GetCanCombAttack())
 		ChangeState(curChangeAtkState);
 
-	PlayerActState_Base::TransitionCheckUpdate();
+	PlayerGroundState::TransitionCheckUpdate();
+}
+
+void PlayerAttackState::OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName)
+{
+	// アニメーションの遷移先が待機状態なら待機に戻す
+	if (_toAnimNodeName == IDLE_ANIM_NAME)
+		ChangeState(PlayerState::Idle);
 }
 
 void PlayerAttackState::UpdateAttackInfo()
@@ -140,9 +147,9 @@ void PlayerAttackState::CalcProgressDis(const DirectX::SimpleMath::Vector3& _atk
 
 void PlayerAttackState::ImGuiDebug()
 {
-	PlayerActState_Base::ImGuiDebug();
+	PlayerGroundState::ImGuiDebug();
 
-	ImGuiComboAttack("nextCombo", nextCombAtkState);
+	ImGuiCombAttack();
 
 	// 攻撃情報
 	ImGui::Text("AtkInfo");
@@ -234,9 +241,9 @@ DirectX::SimpleMath::Vector3 PlayerAttackState::GetAtkEnemyPos()
 	if (static_cast<u_int>(enemyList.size()) == 0) return DXSimp::Vector3::Zero;
 
 	DXSimp::Vector3 atkEnemyPos;
-	ITargetAccepter* pAtkEnemy = nullptr;
+	const ITargetAccepter* pAtkEnemy = nullptr;
 	// ターゲット先がいるなら
-	if (pAtkEnemy = pActionController->GetTargetObject())
+	if (pAtkEnemy = GetTargetAccepter())
 	{
 		atkEnemyPos = pAtkEnemy->GetWorldPosByTargetObj();
 	}
@@ -249,9 +256,29 @@ DirectX::SimpleMath::Vector3 PlayerAttackState::GetAtkEnemyPos()
 	return atkEnemyPos;
 }
 
+void PlayerAttackState::ImGuiCombAttack()
+{
+#ifdef EDIT
+	// コンポボックスで変更
+	std::string curStateStr = std::string(magic_enum::enum_name(nextCombAtkState));
+	bool isChange = ImGuiMethod::ComboBox("NextCombAtk", curStateStr, combAtkState);
+
+	if (isChange)
+	{
+		// 文字列から列挙型
+		auto changeState = magic_enum::enum_cast<PlayerState>(curStateStr);
+		if (changeState.has_value())
+		{
+			nextCombAtkState = changeState.value();
+			return;
+		}
+	}
+#endif EDIT
+}
+
 nlohmann::json PlayerAttackState::Save()
 {
-	auto data = PlayerActState_Base::Save();
+	auto data = PlayerGroundState::Save();
 
 	data["nextCombAttack"] = nextCombAtkState;
 	data["maxDistance"] = atkMaxDistance;
@@ -272,7 +299,7 @@ nlohmann::json PlayerAttackState::Save()
 void PlayerAttackState::Load(const nlohmann::json& _data)
 {
 	using namespace HashiTaku;
-	PlayerActState_Base::Load(_data);
+	PlayerGroundState::Load(_data);
 
 	LoadJsonEnum<PlayerState>("nextCombAttack", nextCombAtkState, _data);
 	LoadJsonFloat("maxDistance", atkMaxDistance, _data);

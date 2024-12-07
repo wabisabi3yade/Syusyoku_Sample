@@ -1,11 +1,11 @@
 #pragma once
-#include "PlayerActState_Base.h"
+#include "PlayerGroundState.h"
 #include "AnimationCurve.h"
 
 class CP_Camera;
 
 /// @brief ƒvƒŒƒCƒ„[ˆÚ“®ˆ—
-class PlayerMoveState : public PlayerActState_Base
+class PlayerMoveState : public PlayerGroundState
 {
 protected:
 	/// @brief ˆÚ“®•ûŒü

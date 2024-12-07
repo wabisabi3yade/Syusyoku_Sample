@@ -1,9 +1,9 @@
 #pragma once
-#include "PlayerActState_Base.h"
+#include "PlayerGroundState.h"
 #include "AnimationCurve.h"
 
 /// @brief ダメージ処理
-class PlayerDamageState : public PlayerActState_Base
+class PlayerDamageState : public PlayerGroundState
 {
 	/// @brief 移動速度のアニメーショカーブ
 	AnimationCurve knockSpeedCurve;

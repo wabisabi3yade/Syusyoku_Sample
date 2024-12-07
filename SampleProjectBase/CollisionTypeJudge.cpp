@@ -1,22 +1,25 @@
 #include "pch.h"
 #include "CollisionTypeJudge.h"
+#include "CP_RigidBody.h"
 
-CollisionTypeJudge::CollisionTypeJudge()
+CollisionTypeJudge::CollisionTypeJudge(CP_RigidBody& _rb)
 {
+	pMyRb = &_rb;
 }
 
 CollisionTypeJudge::~CollisionTypeJudge()
 {
 }
 
-CollisionTypeJudge::ColType CollisionTypeJudge::JudgeColKind(const CP_RigidBody& _colRbCp)
-{	
+CollisionTypeJudge::ColType CollisionTypeJudge::JudgeColKind(CP_RigidBody& _colRbCp)
+{
 	auto curItr = std::find(curColRigidBodyCp.begin(), curColRigidBodyCp.end(), &_colRbCp);
 	if (curItr != curColRigidBodyCp.end())	// 既にこのフレームで衝突処理を行われているなら
 		return ColType::Already;
 
-	// 追加
+	// 自分と相手に追加
 	curColRigidBodyCp.emplace(&_colRbCp);
+	_colRbCp.AddCurrentCollision(*pMyRb);
 
 	// 前フレームでも当たっていたなら
 	auto prevItr = std::find(prevColRigidBodyCp.begin(), prevColRigidBodyCp.end(), &_colRbCp);
@@ -40,6 +43,11 @@ void CollisionTypeJudge::GetExitObjectList(std::vector<const CP_RigidBody*>& _ou
 			_outRbComponents.push_back(prevObj);
 		}
 	}
+}
+
+void CollisionTypeJudge::AddCurrentColRb(CP_RigidBody& _colRbCp)
+{
+	curColRigidBodyCp.emplace(&_colRbCp);
 }
 
 void CollisionTypeJudge::SetupForNextFrame()

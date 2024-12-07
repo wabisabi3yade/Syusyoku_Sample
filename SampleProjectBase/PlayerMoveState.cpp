@@ -50,13 +50,11 @@ void PlayerMoveState::UpdateBehavior()
 void PlayerMoveState::OnEndBehavior()
 {
 	ClearVelocity(false);
-
-	pActionController->SetAnimationFloat(SPEEDRATIO_PARAMNAME, 0.0f);
 }
 
 void PlayerMoveState::TransitionCheckUpdate()
 {
-	PlayerActState_Base::TransitionCheckUpdate();
+	PlayerGroundState::TransitionCheckUpdate();
 
 	if (currentSpeed <= Mathf::epsilon)	// 移動速度が0以下になると
 	{
@@ -130,6 +128,7 @@ void PlayerMoveState::Move()
 
 	// アニメーションのブレンド割合をセット
 	pActionController->SetAnimationFloat(SPEEDRATIO_PARAMNAME, currentSpeed / maxSpeed);
+	HASHI_DEBUG_LOG(std::to_string(currentSpeed));
 }
 
 void PlayerMoveState::ApplyRootMotion()

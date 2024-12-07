@@ -1,7 +1,7 @@
 #pragma once
-#include "PlayerActState_Base.h"
+#include "PlayerGroundState.h"
 
-class PlayerGuardState : public PlayerActState_Base
+class PlayerGuardState : public PlayerGroundState
 {
 	/// @brief ƒpƒŠƒB‚Å‚«‚éó‘Ô‚Ì‘±ŠÔ
 	u_int sustainParryFrame;

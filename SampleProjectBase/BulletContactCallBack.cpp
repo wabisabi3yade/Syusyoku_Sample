@@ -20,13 +20,14 @@ btScalar BulletContactCallBack::addSingleResult(btManifoldPoint& cp, const btCol
 	infoA.pRigidBodyCp = static_cast<CP_RigidBody*>(objA.getUserPointer());
 	infoA.contactPoint = ToDXVector3(cp.getPositionWorldOnA());
 	CollisionInfo infoB;
-	infoB.pRigidBodyCp = static_cast<CP_RigidBody*>(objB.getUserPointer());
+	CP_RigidBody& bRb = *static_cast<CP_RigidBody*>(objB.getUserPointer());
+	infoB.pRigidBodyCp = &bRb;
 	infoB.contactPoint = ToDXVector3(cp.getPositionWorldOnB());
 
 	// 衝突タイプを判定してそれぞれの処理を行わせる
 	GameObject& gameObjA = infoA.pRigidBodyCp->GetGameObject();
 	GameObject& gameObjB = infoB.pRigidBodyCp->GetGameObject();
-	CollisionTypeJudge::ColType colType = infoA.pRigidBodyCp->GetColTypeJudge().JudgeColKind(*infoB.pRigidBodyCp);
+	CollisionTypeJudge::ColType colType = infoA.pRigidBodyCp->GetColTypeJudge().JudgeColKind(bRb);
 
 	// 衝突タイプによる処理
 	switch (colType)
