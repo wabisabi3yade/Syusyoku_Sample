@@ -7,6 +7,8 @@ class CP_Collider;
 
 class CP_RigidBody : public Component
 {
+	friend class CollisionTypeJudge;
+
 	/// @brief 当たり判定形状タイプ
 	enum ShapeType
 	{
@@ -66,6 +68,10 @@ public:
 	/// @brief 衝撃を加える
 	/// @param _power パワー
 	void AddImpulse(const DirectX::SimpleMath::Vector3& _power);
+
+	/// @brief 力を加える
+	/// @param _power パワー
+	void AddForce(const DirectX::SimpleMath::Vector3& _power);
 
 	/// @brief コライダーをセットする
 	/// @param _setCollider セットするコライダーコンポーネント
@@ -151,6 +157,10 @@ private:
 
 	/// @brief 再度コライダーを作り直す（RigidBodyからGhpstObjectにしたいときとか）
 	void ReCreateCollider();
+
+	/// @brief 衝突中のRbリストに相手方から追加する
+	/// @param _addRb 追加したRb
+	void AddCurrentCollision(CP_RigidBody& _addRb);
 
 	/// @brief BulletのTransformを取得する
 	/// @param _btTrans 結果

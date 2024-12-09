@@ -49,14 +49,12 @@ void PlayerMoveState::UpdateBehavior()
 
 void PlayerMoveState::OnEndBehavior()
 {
-	ClearVelocity(false);
-
-	pActionController->SetAnimationFloat(SPEEDRATIO_PARAMNAME, 0.0f);
+	/*ClearVelocity(false);*/
 }
 
 void PlayerMoveState::TransitionCheckUpdate()
 {
-	PlayerActState_Base::TransitionCheckUpdate();
+	PlayerGroundState::TransitionCheckUpdate();
 
 	if (currentSpeed <= Mathf::epsilon)	// ˆÚ“®‘¬“x‚ª0ˆÈ‰º‚É‚È‚é‚Æ
 	{
@@ -73,7 +71,7 @@ bool PlayerMoveState::IsRunning()
 
 void PlayerMoveState::ImGuiDebug()
 {
-	PlayerActState_Base::ImGuiDebug();
+	PlayerGroundState::ImGuiDebug();
 
 	std::string text = TO_UTF8("speed") + std::to_string(currentSpeed);
 	ImGui::Text(text.c_str());

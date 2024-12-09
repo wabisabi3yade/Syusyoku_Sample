@@ -7,6 +7,7 @@
 using namespace HashiTaku;
 
 constexpr int  DEFAULT_MAX_SUBSTEPS(10);	// デフォルト最大サブステップ数
+constexpr float DEFAULT_GRAVITY_Y(-9.80665f);	// デフォルト重力加速度
 
 bool DX11BulletPhisics::GetDisplay() const
 {
@@ -22,7 +23,7 @@ DirectX::SimpleMath::Vector3 DX11BulletPhisics::GetGravityValue() const
 	return gravityValue;
 }
 
-DX11BulletPhisics::DX11BulletPhisics() : maxSubSteps(DEFAULT_MAX_SUBSTEPS), gravityValue(0.0f, Mathf::gravity, 0.0f)
+DX11BulletPhisics::DX11BulletPhisics() : maxSubSteps(DEFAULT_MAX_SUBSTEPS), gravityValue(0.0f, DEFAULT_GRAVITY_Y, 0.0f)
 {
 }
 
@@ -234,6 +235,12 @@ void DX11BulletPhisics::UpdateTransformDxToBt()
 		pRbCp->SetToBtTransform();
 }
 
+void DX11BulletPhisics::SetGravity(float _gravityY)
+{
+	gravityValue.y = _gravityY;
+	pDynamicsWorld->setGravity(Bullet::ToBtVector3(gravityValue));
+}
+
 void DX11BulletPhisics::SetDisplay(bool _setBool)
 {
 #ifdef EDIT
@@ -244,4 +251,9 @@ void DX11BulletPhisics::SetDisplay(bool _setBool)
 u_int DX11BulletPhisics::GetCollObjCnt() const
 {
 	return pDynamicsWorld->getNumCollisionObjects();
+}
+
+float DX11BulletPhisics::GetGravity() const
+{
+	return gravityValue.y;
 }

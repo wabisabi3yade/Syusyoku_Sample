@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "PlayerAttackState.h"
-#include "PlayerActionController.h"
+#include "PlayerGroundActionController.h"
 #include "GameObject.h"
 
 namespace DXSimp = DirectX::SimpleMath;
 
 // u‚ÉŒ©‚é‚Ì‚ğ”½‰f‚·‚é“G‚Æ‚Ì‹——£
-constexpr float INSTANTLOOK_DISTANCE(4.0f);
+constexpr float INSTANTLOOK_DISTANCE(8.0f);
 
 PlayerAttackState::PlayerAttackState() :
 	pIsReAttack(nullptr),
@@ -42,7 +42,7 @@ void PlayerAttackState::OnStartBehavior()
 	curAtkProgressDis = atkMaxDistance;
 
 	// ‹——£‚ğŒ©‚Ä“G‚ÖŒü‚©‚í‚¹‚é‚©”»’f
-	DXSimp::Vector3 vecToEnemy = atkPos - GetTransform().GetPosition(); vecToEnemy.y = 0.0f;
+	DXSimp::Vector3 vecToEnemy = atkPos - GetMyTransform().GetPosition(); vecToEnemy.y = 0.0f;
 	if (pActionController->GetIsTargeting() || vecToEnemy.Length() < INSTANTLOOK_DISTANCE)
 	{
 		// i‚Ş‹——£‚ğ‹‚ß‚é
@@ -86,7 +86,14 @@ void PlayerAttackState::TransitionCheckUpdate()
 	if (GetCanCombAttack())
 		ChangeState(curChangeAtkState);
 
-	PlayerActState_Base::TransitionCheckUpdate();
+	PlayerGroundState::TransitionCheckUpdate();
+}
+
+void PlayerAttackState::OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName)
+{
+	// ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‘JˆÚæ‚ª‘Ò‹@ó‘Ô‚È‚ç‘Ò‹@‚É–ß‚·
+	if (_toAnimNodeName == IDLE_ANIM_NAME)
+		ChangeState(PlayerState::Idle);
 }
 
 void PlayerAttackState::UpdateAttackInfo()
@@ -131,7 +138,7 @@ void PlayerAttackState::CalcProgressDis(const DirectX::SimpleMath::Vector3& _atk
 	if (!isMoveForward) return;
 
 	// Å‘å‹——£‚ğ’´‚¦‚È‚¢‚É‹——£‚ğ‹‚ß‚é
-	DXSimp::Vector3 distance = _atkEnemyPos - GetTransform().GetPosition();
+	DXSimp::Vector3 distance = _atkEnemyPos - GetMyTransform().GetPosition();
 	distance.y = 0.0f;
 	curAtkProgressDis = distance.Length();
 	if (curAtkProgressDis > atkMaxDistance)
@@ -140,9 +147,9 @@ void PlayerAttackState::CalcProgressDis(const DirectX::SimpleMath::Vector3& _atk
 
 void PlayerAttackState::ImGuiDebug()
 {
-	PlayerActState_Base::ImGuiDebug();
+	PlayerGroundState::ImGuiDebug();
 
-	ImGuiComboAttack("nextCombo", nextCombAtkState);
+	ImGuiCombAttack();
 
 	// UŒ‚î•ñ
 	ImGui::Text("AtkInfo");
@@ -182,7 +189,7 @@ void PlayerAttackState::InitParameter()
 void PlayerAttackState::LookAtEnemyInstant(DirectX::SimpleMath::Vector3 _atkEnemyPos)
 {
 	// “G‚Ì•ûŒü‚ğŒ©‚é
-	Transform& trans = GetTransform();
+	Transform& trans = GetMyTransform();
 	_atkEnemyPos.y = trans.GetPosition().y;	// y²‰ñ“]‚Ì‚İ‚·‚é
 
 	trans.LookAt(_atkEnemyPos);
@@ -234,9 +241,9 @@ DirectX::SimpleMath::Vector3 PlayerAttackState::GetAtkEnemyPos()
 	if (static_cast<u_int>(enemyList.size()) == 0) return DXSimp::Vector3::Zero;
 
 	DXSimp::Vector3 atkEnemyPos;
-	ITargetAccepter* pAtkEnemy = nullptr;
+	const ITargetAccepter* pAtkEnemy = nullptr;
 	// ƒ^[ƒQƒbƒgæ‚ª‚¢‚é‚È‚ç
-	if (pAtkEnemy = pActionController->GetTargetObject())
+	if (pAtkEnemy = GetTargetAccepter())
 	{
 		atkEnemyPos = pAtkEnemy->GetWorldPosByTargetObj();
 	}
@@ -249,9 +256,29 @@ DirectX::SimpleMath::Vector3 PlayerAttackState::GetAtkEnemyPos()
 	return atkEnemyPos;
 }
 
+void PlayerAttackState::ImGuiCombAttack()
+{
+#ifdef EDIT
+	// ƒRƒ“ƒ|ƒ{ƒbƒNƒX‚Å•ÏX
+	std::string curStateStr = std::string(magic_enum::enum_name(nextCombAtkState));
+	bool isChange = ImGuiMethod::ComboBox("NextCombAtk", curStateStr, combAtkState);
+
+	if (isChange)
+	{
+		// •¶š—ñ‚©‚ç—ñ‹“Œ^
+		auto changeState = magic_enum::enum_cast<PlayerState>(curStateStr);
+		if (changeState.has_value())
+		{
+			nextCombAtkState = changeState.value();
+			return;
+		}
+	}
+#endif EDIT
+}
+
 nlohmann::json PlayerAttackState::Save()
 {
-	auto data = PlayerActState_Base::Save();
+	auto data = PlayerGroundState::Save();
 
 	data["nextCombAttack"] = nextCombAtkState;
 	data["maxDistance"] = atkMaxDistance;
@@ -272,7 +299,7 @@ nlohmann::json PlayerAttackState::Save()
 void PlayerAttackState::Load(const nlohmann::json& _data)
 {
 	using namespace HashiTaku;
-	PlayerActState_Base::Load(_data);
+	PlayerGroundState::Load(_data);
 
 	LoadJsonEnum<PlayerState>("nextCombAttack", nextCombAtkState, _data);
 	LoadJsonFloat("maxDistance", atkMaxDistance, _data);

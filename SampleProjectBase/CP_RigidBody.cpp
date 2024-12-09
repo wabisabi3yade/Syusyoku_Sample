@@ -48,6 +48,12 @@ void CP_RigidBody::AddImpulse(const DirectX::SimpleMath::Vector3& _power)
 	CastRigidBody().applyCentralImpulse(Bullet::ToBtVector3(_power));
 }
 
+void CP_RigidBody::AddForce(const DirectX::SimpleMath::Vector3& _power)
+{
+	if (!collider || isTrigger) return;
+	CastRigidBody().applyCentralForce(Bullet::ToBtVector3(_power));
+}
+
 void CP_RigidBody::SetColliderShape(CP_Collider& _setCollider)
 {
 	if (collider) return;
@@ -56,7 +62,7 @@ void CP_RigidBody::SetColliderShape(CP_Collider& _setCollider)
 	collider = std::make_unique<CollPair>();
 	collider->pColliderComp = &_setCollider;
 	// 衝突判定タイプを作成
-	collider->pColTypeJudge = std::make_unique<CollisionTypeJudge>();
+	collider->pColTypeJudge = std::make_unique<CollisionTypeJudge>(*this);
 
 	if (isTrigger)
 		CreateGhost();
@@ -355,7 +361,7 @@ void CP_RigidBody::CreateRigidBody()
 
 	btRigidBody& btRigid = CastRigidBody();
 	btRigid.setFriction(friction);
-	btRigid.setDamping(0.9f, 0.9f);  // 線形ダンピングと回転ダンピングを追加
+	btRigid.setDamping(0.0f, 0.0f);  // 線形ダンピングと回転ダンピングを追加
 	btRigid.setRestitution(0.0f);
 
 
@@ -429,4 +435,10 @@ void CP_RigidBody::ReCreateCollider()
 
 	// 現在のパラメータで作り直す
 	SetColliderShape(colliderComp);
+}
+
+void CP_RigidBody::AddCurrentCollision(CP_RigidBody& _addRb)
+{
+	if (!collider) return;
+	collider->pColTypeJudge->AddCurrentColRb(_addRb);
 }

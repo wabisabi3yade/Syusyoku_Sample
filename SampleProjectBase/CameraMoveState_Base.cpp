@@ -68,7 +68,7 @@ void CameraMoveState_Base::CheckTransitionUpdate()
 {
 	/*if(pInput->GetButtonDown(GameInput::ButtonType::Player_RockOn))
 	{
-		ChangeState(CameraState::Target);
+		ChangeGroundState(CameraState::Target);
 	}*/
 }
 

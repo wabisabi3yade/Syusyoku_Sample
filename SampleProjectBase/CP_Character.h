@@ -31,6 +31,9 @@ public:
 	CP_Character();
 	virtual ~CP_Character() {}
 
+	/// @brief オブジェクト削除時の行動
+	void OnDestroy() override;
+
 	/// @brief 最大体力をセット
 	/// @param _hitPoint セットする体力
 	virtual void SetMaxHP(float _hitPoint);

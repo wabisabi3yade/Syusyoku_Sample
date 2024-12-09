@@ -52,6 +52,11 @@ void GameObject::ImGuiSetParent()
 		if (!parentObj) return;
 		pTransform->SetParent(parentObj->GetTransform());
 	}
+
+	if (ImGui::Button("Remove Parent"))
+	{
+		pTransform->RemoveParent();
+	}
 }
 
 bool GameObject::IsExistComponent(const Component& _pCheckComponent)

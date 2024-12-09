@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "PlayerActState_Base.h"
-#include "PlayerActionController.h"
+#include "PlayerActionController_Base.h"
 #include "InSceneSystemManager.h"
 
 GameInput* PlayerActState_Base::pPlayerInput = nullptr;
@@ -13,16 +13,16 @@ constexpr float INPUT_VECTOR_DOT(0.6f);
 constexpr float CAN_MOVECANCEL_INPUT(0.3f);
 // キャンセル入力で予約した状態の有効期限時間（超えると予約した状態はリセットされる）
 constexpr float CANCEL_RESERVE_VALIED_TIME(0.3f);
+// None状態のID(統一させる)
+constexpr int STATE_NONE_ID(99);
 
 namespace DXSimp = DirectX::SimpleMath;
 
 PlayerActState_Base::PlayerActState_Base() :
 	pActionController(nullptr),
-	stateType(PlayerState::None),
-	cancelReserveState(PlayerState::None),
-	atkReserveState(PlayerState::None),
-	moveReserveState(PlayerState::None),
-	placeElement(ActPlaceElement::Ground),
+	actionReserveState(0),
+	atkReserveState(0),
+	moveReserveState(0),
 	targetLookRotateSpeed(40.0f),
 	lastCancelReserveElapse(0.0f),
 	isTargetLookAtEnemy(false)
@@ -30,9 +30,8 @@ PlayerActState_Base::PlayerActState_Base() :
 	pPlayerInput = &InSceneSystemManager::GetInstance()->GetInput();
 }
 
-void PlayerActState_Base::Init(PlayerState _stateType, PlayerActionController& _actController)
+void PlayerActState_Base::Init(PlayerActionController_Base& _actController)
 {
-	stateType = _stateType;
 	pActionController = &_actController;
 }
 
@@ -40,36 +39,16 @@ void PlayerActState_Base::OnStart()
 {
 	// 入力フラグのクリア
 	ParameterClear();
-
-	OnStartBehavior();
 }
 
 void PlayerActState_Base::Update()
 {
-	// 入力更新
-	CheckInputUpdate();
-
 	// ターゲットの方向を見る
 	UpdateTargetLook();
-
-	// 各アクション更新
-	UpdateBehavior();
-
-	// ステート遷移をチェック
-	TransitionCheckUpdate();
 }
 
 void PlayerActState_Base::OnEnd()
 {
-	// 前の慣性はなくす
-	//GetRB().SetVelocity(DXSimp::Vector3::Zero);
-
-	OnEndBehavior();
-}
-
-PlayerActState_Base::PlayerState PlayerActState_Base::GetActStateType() const
-{
-	return stateType;
 }
 
 nlohmann::json PlayerActState_Base::Save()
@@ -81,82 +60,11 @@ void PlayerActState_Base::Load(const nlohmann::json& _data)
 {
 }
 
-void PlayerActState_Base::TransitionCheckUpdate()
-{
-	// キャンセルによる遷移変更
-	CancelTransitionUpdate();
-}
-
 void PlayerActState_Base::ParameterClear()
 {
-	cancelReserveState = PlayerState::None;
-	atkReserveState = PlayerState::None;
-	moveReserveState = PlayerState::None;
-}
-
-void PlayerActState_Base::CheckInputUpdate()
-{
-	if (!pActionController->GetCanInput()) return;	// 入力受け付けていないなら
-
-	// ガード
-	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Guard))
-	{
-		atkReserveState = PlayerState::None;
-		cancelReserveState = PlayerState::Guard;
-	}
-	// ローリングボタンを押す　かつ　左スティックの傾きが足りる
-	else if (IsRollingInput())
-	{
-		atkReserveState = PlayerState::None;
-		cancelReserveState = PlayerState::Rolling;
-	}
-
-	// ジャンプ
-	else if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Jump))
-	{
-		atkReserveState = PlayerState::None;
-		cancelReserveState = PlayerState::BeginJump;
-	}
-
-	// 前突進攻撃
-	else if (IsSpecialAtkInput(InputVector::Forward))
-	{
-		cancelReserveState = PlayerState::None;
-		atkReserveState = PlayerState::SpecialAtkHi;
-	}
-
-	// 攻撃
-	else if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
-	{
-		cancelReserveState = PlayerState::None;
-		atkReserveState = PlayerState::Attack11;
-	}
-
-	// 移動キャンセル
-	else
-	{
-		// 入力量
-		float inputMag = std::min(1.0f,
-			pPlayerInput->GetValue(GameInput::ValueType::Player_Move).Length());
-
-		// スティックの入力量が大きければ
-		if (inputMag > CAN_MOVECANCEL_INPUT)	
-		{
-			PlayerState curState = pActionController->GetCurrentState();
-			bool isTarget = pActionController->GetIsTargeting();
-			// 同じ種類の移動→移動はしないようにする
-			// ターゲット時ならターゲット移動
-			if(isTarget && curState != PlayerState::TargetMove)
-				moveReserveState = PlayerState::TargetMove;
-			else if (!isTarget && curState != PlayerState::Move)
-				moveReserveState = PlayerState::Move;				
-		}
-	}
-}
-
-void PlayerActState_Base::ChangeState(PlayerState _nextState)
-{
-	pActionController->ChangeState(_nextState);
+	actionReserveState = STATE_NONE_ID;
+	atkReserveState = STATE_NONE_ID;
+	moveReserveState = STATE_NONE_ID;
 }
 
 void PlayerActState_Base::ClearVelocity(bool _applyY)
@@ -184,14 +92,19 @@ CP_RigidBody& PlayerActState_Base::GetRB()
 	return *pActionController->GetRB();
 }
 
-Transform& PlayerActState_Base::GetTransform()
+Transform& PlayerActState_Base::GetMyTransform()
 {
-	return GetPlayer().GetTransform();
+	return pActionController->GetMyTransform();
 }
 
 CP_Animation* PlayerActState_Base::GetAnimation()
 {
 	return pActionController->GetAnimation();
+}
+
+const ITargetAccepter* PlayerActState_Base::GetTargetAccepter()
+{
+	return pActionController->GetTargetAccepter();
 }
 
 CP_Player& PlayerActState_Base::GetPlayer()
@@ -214,6 +127,21 @@ DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStick() const
 	return pPlayerInput->GetValue(GameInput::ValueType::Player_Move);
 }
 
+DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStickFromCam() const
+{
+	// 入力値を取得
+	DXSimp::Vector2 inputVec = GetInputLeftStick();
+
+	// カメラから見た入力とする
+	const Transform& camTrans = pActionController->GetCamera().GetTransform();
+	DXSimp::Vector3 inputVecByCam = inputVec.x * camTrans.Right() +
+		inputVec.y * camTrans.Forward();
+	inputVec = { inputVecByCam.x, inputVecByCam.z };
+	inputVec.Normalize();
+
+	return inputVec;
+}
+
 bool PlayerActState_Base::IsInputVector(InputVector _checkVector)
 {
 	// 入力値を取得
@@ -232,11 +160,11 @@ bool PlayerActState_Base::IsInputVector(InputVector _checkVector)
 
 	// ターゲット時で敵がいるなら　敵の方向ベクトルを基準ベクトルに
 	if (pActionController->GetIsTargeting() &&
-		pActionController->GetTargetObject())
+		GetTargetAccepter())
 	{
 		DXSimp::Vector3 targetObjVec =
-			pActionController->GetTargetObject()->GetWorldPosByTargetObj() -
-			GetTransform().GetPosition();
+			GetTargetAccepter()->GetWorldPosByTargetObj() -
+			GetMyTransform().GetPosition();
 
 		targetObjVec.Normalize(baseVec);
 	}
@@ -276,44 +204,15 @@ bool PlayerActState_Base::IsSpecialAtkInput(InputVector _inputVecter)
 	return true;
 }
 
-void PlayerActState_Base::ImGuiDebug()
-{
-}
-
-bool PlayerActState_Base::ImGuiComboAttack(const std::string& _caption, PlayerState& _currentState)
-{
-#ifdef EDIT
-
-	// コンポボックスで変更
-	std::string curStateStr = std::string(magic_enum::enum_name(_currentState));
-	bool isChange = ImGuiMethod::ComboBox(_caption, curStateStr, playerCombAtkList);
-
-	if (isChange)
-	{
-		// 文字列から列挙型
-		auto changeState = magic_enum::enum_cast<PlayerState>(curStateStr);
-		if (changeState.has_value())
-		{
-			_currentState = changeState.value();
-			return true;
-		}
-		else
-			return false;
-	}
-#endif EDIT
-
-	return false;
-}
-
 void PlayerActState_Base::UpdateTargetLook()
 {
 	// ターゲットの方向見ないなら
 	if (!isTargetLookAtEnemy) return;
 
-	ITargetAccepter* pTargetObj = pActionController->GetTargetObject();
+	const ITargetAccepter* pTargetObj = pActionController->GetTargetAccepter();
 	if (!pTargetObj) return;	// ターゲットがいないなら
 
-	Transform& transform = pActionController->GetPlayer().GetTransform();
+	Transform& transform = pActionController->GetMyTransform();
 
 	// ターゲットへのベクトルを求める
 	const DXSimp::Vector3& playerPos = transform.GetPosition();
@@ -331,24 +230,4 @@ void PlayerActState_Base::UpdateTargetLook()
 
 void PlayerActState_Base::CancelTransitionUpdate()
 {
-	//キャンセルフラグ
-	if (pActionController->GetIsCanCancel() && cancelReserveState != PlayerState::None)
-	{
-		// キャンセルの動きに変更
-		ChangeState(cancelReserveState);
-		return;
-	}
-	if (pActionController->GetCanAttack() && atkReserveState != PlayerState::None)
-	{
-		// 攻撃の動きに変更
-		ChangeState(atkReserveState);
-		return;
-	}
-	if (pActionController->GetCanMove() && moveReserveState != PlayerState::None)
-	{
-		// 移動の動きに変更
-		ChangeState(moveReserveState);
-		return;
-	}
-	
 }

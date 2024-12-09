@@ -15,7 +15,7 @@ void PlayerDamageState::SetKnockVec(const DirectX::SimpleMath::Vector3& _knockVe
 
 nlohmann::json PlayerDamageState::Save()
 {
-	auto data = PlayerActState_Base::Save();
+	auto data = PlayerGroundState::Save();
 
 	data["knockDis"] = maxKnockMoveSpeed;
 	data["knockCurve"] = knockSpeedCurve.Save();
@@ -25,7 +25,7 @@ nlohmann::json PlayerDamageState::Save()
 
 void PlayerDamageState::Load(const nlohmann::json& _data)
 {
-	PlayerActState_Base::Load(_data);
+	PlayerGroundState::Load(_data);
 
 	HashiTaku::LoadJsonFloat("knockDis", maxKnockMoveSpeed, _data);
 	if (HashiTaku::IsJsonContains(_data, "knockCurve"))
@@ -86,7 +86,7 @@ void PlayerDamageState::KnockMove()
 
 	// ˆÚ“®‘¬“x‚ğ‹‚ß‚é(Œã‚ë‚ÉˆÚ“®)
 	DXSimp::Vector3 moveSpeed =
-		-GetTransform().Forward() * curKnockSpeed;
+		-GetMyTransform().Forward() * curKnockSpeed;
 	GetRB().SetVelocity(moveSpeed);
 
 	prevAnimRatio = animRatio;
@@ -97,7 +97,7 @@ void PlayerDamageState::LookEnemy()
 	// “G‚Ì•ûŒü‚ğŒ©‚é
 	knockVector *= -1;
 	auto rot = Quat::RotateToVector(knockVector);
-	GetTransform().SetRotation(rot);
+	GetMyTransform().SetRotation(rot);
 }
 
 void PlayerDamageState::ImGuiDebug()

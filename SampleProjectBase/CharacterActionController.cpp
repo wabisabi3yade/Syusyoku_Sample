@@ -31,25 +31,27 @@ CharacterChangeAnimObserver& CharacterActionController::GetChangeAnimObserver()
 	return *pChangeAnimObserver;
 }
 
+Transform& CharacterActionController::GetMyTransform()
+{
+	return pCharacter->GetTransform();
+}
+
 CP_RigidBody* CharacterActionController::GetRB()
 {
 	return pRigidBody;
 }
 
-#ifdef EDIT
 void CharacterActionController::DebugDisplay()
 {
+#ifdef EDIT
 	if (!isDebugDisplay) return;
 
 	// デバッグ描画を行う
 	if (pCurrentNode)
 		static_cast<CharacterActState_Base&>(*pCurrentNode).DebugDisplay();
-}
-#else
-void CharacterActionController::DebugDisplay()
-{
-}
 #endif // EDIT
+}
+
 
 void CharacterActionController::SetAnimationBool(const std::string& _paramName, bool _isBool)
 {

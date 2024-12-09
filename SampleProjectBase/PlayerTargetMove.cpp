@@ -44,9 +44,7 @@ void PlayerTargetMove::OnEndBehavior()
 
 void PlayerTargetMove::TransitionCheckUpdate()
 {
-	PlayerActState_Base::TransitionCheckUpdate();
-	if (!IsRunning())
-		ChangeState(PlayerState::Idle);
+	PlayerMoveState::TransitionCheckUpdate();
 }
 
 void PlayerTargetMove::ApplyBlendAnim()

@@ -1,16 +1,16 @@
 #pragma once
-#include "PlayerGroundAttack.h"
+#include "PlayerAttackState.h"
 
 class ITargetAccepter;
 
 /// @brief 前突進攻撃
-class PlayerRushAttack : public PlayerGroundAttack
+class PlayerRushAttack : public PlayerAttackState
 {
 	/// @brief 横移動カーブ
 	AnimationCurve distanceHoriCurve;
 
 	/// @brief ターゲット先のオブジェクト
-	ITargetAccepter* pTargetObj;
+	const ITargetAccepter* pTargetObj;
 
 	/// @brief 横移動する距離の長さ
 	float progressLengthHori;

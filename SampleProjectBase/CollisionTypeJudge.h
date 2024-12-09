@@ -15,24 +15,32 @@ public:
 	};
 
 private:
+	CP_RigidBody* pMyRb;
+
 	/// @brief 前回フレームの衝突したゲームオブジェクトリスト
-	std::unordered_set<const CP_RigidBody*> prevColRigidBodyCp;
+	std::unordered_set<CP_RigidBody*> prevColRigidBodyCp;
 
 	/// @brief 今回フレームの衝突したゲームオブジェクトリスト
-	std::unordered_set<const CP_RigidBody*> curColRigidBodyCp;
+	std::unordered_set<CP_RigidBody*> curColRigidBodyCp;
 
 public:
-	CollisionTypeJudge();
+	/// @brief コンストラクタ
+	/// @param _rb 自身のRb
+	CollisionTypeJudge(CP_RigidBody& _rb);
 	~CollisionTypeJudge();
 
 	/// @brief 衝突処理を行う種類を判断する
 	/// @param _colRbCp 衝突相手のRbコンポーネント
 	/// @return 衝突の種類
-	ColType JudgeColKind(const CP_RigidBody& _colRbCp);
+	ColType JudgeColKind(CP_RigidBody& _colRbCp);
 
 	/// @brief 衝突終了したゲームオブジェクトを取得する
 	/// @param _outGameObjects 結果配列
 	void GetExitObjectList(std::vector<const CP_RigidBody*>& _outRbComponents);
+
+	/// @brief 相手方から追加する
+	/// @param _colRbCp 相手方Rb
+	void AddCurrentColRb(CP_RigidBody& _colRbCp);
 
 	/// @brief 次フレームの為の準備をする
 	void SetupForNextFrame();

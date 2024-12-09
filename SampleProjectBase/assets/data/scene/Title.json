@@ -45,7 +45,6 @@
                 "components": [
                     {
                         "enable": true,
-                        "meshName": "rock2.fbx",
                         "name": "MeshRenderer",
                         "priority": 0
                     }
@@ -131,7 +130,7 @@
                 "components": [
                     {
                         "enable": true,
-                        "meshName": "rock1.fbx",
+                        "meshName": "Knight.fbx",
                         "name": "MeshRenderer",
                         "priority": 0
                     }
@@ -142,20 +141,20 @@
                 "transform": {
                     "child": null,
                     "pos": [
-                        13.800000190734863,
-                        2.4000000953674316,
+                        9.899999618530273,
+                        -3.0999999046325684,
                         1.100000023841858
                     ],
                     "rotation": [
                         0.6934794783592224,
-                        0.23311308026313782,
-                        -0.25011658668518066,
+                        0.233113095164299,
+                        -0.25011661648750305,
                         0.6341814994812012
                     ],
                     "scale": [
                         2.0,
                         2.0,
-                        2.0
+                        1.999999761581421
                     ]
                 }
             }

@@ -1,6 +1,6 @@
 #pragma once
 #include "CP_Character.h"
-#include "PlayerActionController.h"
+#include "PlayerAction.h"
 #include "AttackInformation.h"
 #include "IUISlider.h"
 
@@ -21,8 +21,8 @@ class CP_Player : public CP_Character
 	/// @brief ガードスライダーオブジェクト名
 	std::string guardBarObjName;
 
-	/// @brief アクションコントローラー
-	std::unique_ptr<PlayerActionController> pActionController;
+	/// @brief アクション変数
+	std::unique_ptr<PlayerAction> pAction;
 
 	/// @brief アニメーション
 	CP_Animation* pAnimation;

@@ -31,6 +31,7 @@
 
 // キャラクター共通
 #include "CP_Weapon.h"
+#include "CP_GroundCheck.h"
 
 // インゲーム内
 #include "CP_HitStopManager.h"

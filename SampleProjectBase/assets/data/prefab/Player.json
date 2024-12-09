@@ -255,6 +255,72 @@
                     ]
                 }
             }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "friction": 0.5,
+                        "isAwake": false,
+                        "isFreezeRot": [
+                            false,
+                            false,
+                            false
+                        ],
+                        "isKinematic": false,
+                        "isTrigger": true,
+                        "mass": 1.0,
+                        "name": "RigidBody",
+                        "priority": 0
+                    },
+                    {
+                        "angles": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "center": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "enable": true,
+                        "name": "SphereCollider",
+                        "priority": 0,
+                        "radius": 0.20000000298023224
+                    },
+                    {
+                        "enable": true,
+                        "name": "GroundCheck",
+                        "priority": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "PlayerGroundCollision",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        0.009999999776482582,
+                        -11.600000381469727
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
         }
     ],
     "gameObject": {
@@ -268,7 +334,7 @@
             },
             {
                 "enable": true,
-                "friction": 0.5,
+                "friction": 1.0,
                 "isAwake": true,
                 "isFreezeRot": [
                     true,
@@ -282,307 +348,318 @@
                 "priority": 0
             },
             {
-                "actionController": {
-                    "actData": [
-                        {
-                            "data": null,
-                            "typeString": "Idle"
-                        },
-                        {
-                            "data": {
-                                "acceleration": 60.0,
-                                "decade": 100.0,
-                                "maxSpeed": 9.199999809265137,
-                                "rotateSpeed": 10.0
+                "action": {
+                    "air": {
+                        "actData": [
+                            {
+                                "data": {
+                                    "acceleration": 40.0,
+                                    "decade": 100.0,
+                                    "maxSpeed": 10.0,
+                                    "rotateSpeed": 7.0
+                                },
+                                "typeString": "Move"
+                            }
+                        ],
+                        "downForcePower": -10.0
+                    },
+                    "ground": {
+                        "actData": [
+                            {
+                                "data": null,
+                                "typeString": "Idle"
                             },
-                            "typeString": "Move"
-                        },
-                        {
-                            "data": {
-                                "acceleration": 40.0,
-                                "decade": 100.0,
-                                "maxSpeed": 5.0,
-                                "rotateSpeed": 40.0
+                            {
+                                "data": {
+                                    "acceleration": 60.0,
+                                    "decade": 100.0,
+                                    "maxSpeed": 10.0,
+                                    "rotateSpeed": 10.0
+                                },
+                                "typeString": "Move"
                             },
-                            "typeString": "TargetMove"
-                        },
-                        {
-                            "data": {
-                                "attackCnt": 1,
-                                "attackInfos": [
-                                    {
-                                        "damage": 2.5999999046325684,
-                                        "level": 0
+                            {
+                                "data": {
+                                    "acceleration": 40.0,
+                                    "decade": 100.0,
+                                    "maxSpeed": 5.0,
+                                    "rotateSpeed": 40.0
+                                },
+                                "typeString": "TargetMove"
+                            },
+                            {
+                                "data": {
+                                    "crouchTime": 0.10000000149011612,
+                                    "jumpPower": 18.0
+                                },
+                                "typeString": "BeginJump"
+                            },
+                            {
+                                "data": {
+                                    "invicibleTime": 0.4000000059604645,
+                                    "rollingDistance": 8.0,
+                                    "speedCurve": {
+                                        "easeKind": 5,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": false
                                     }
-                                ],
-                                "forwardCurve": {
-                                    "easeKind": 0,
-                                    "endValue": 1.0,
-                                    "endVector": 0.0,
-                                    "plotDatas": null,
-                                    "startInterp": 0,
-                                    "startValue": 0.0,
-                                    "startVector": 0.0,
-                                    "useHermite": false
                                 },
-                                "isMoveFwd": false,
-                                "maxDistance": 10.0,
-                                "nextCombAttack": 21
+                                "typeString": "Rolling"
                             },
-                            "typeString": "Attack11"
-                        },
-                        {
-                            "data": {
-                                "invicibleTime": 0.4000000059604645,
-                                "rollingDistance": 8.0,
-                                "speedCurve": {
-                                    "easeKind": 0,
-                                    "endValue": 1.0,
-                                    "endVector": 0.0,
-                                    "plotDatas": null,
-                                    "startInterp": 0,
-                                    "startValue": 0.0,
-                                    "startVector": 2.0,
-                                    "useHermite": true
-                                }
-                            },
-                            "typeString": "Rolling"
-                        },
-                        {
-                            "data": {
-                                "knockCurve": {
-                                    "easeKind": 0,
-                                    "endValue": 1.0,
-                                    "endVector": 0.0,
-                                    "plotDatas": null,
-                                    "startInterp": 0,
-                                    "startValue": 0.0,
-                                    "startVector": 0.0,
-                                    "useHermite": false
-                                },
-                                "knockDis": 0.0
-                            },
-                            "typeString": "Damage_S"
-                        },
-                        {
-                            "data": {
-                                "knockCurve": {
-                                    "easeKind": 0,
-                                    "endValue": 0.0,
-                                    "endVector": 0.0,
-                                    "plotDatas": [
-                                        {
-                                            "interp": 0,
-                                            "time": 0.37599998712539673,
-                                            "value": 1.0,
-                                            "vector": 0.0
-                                        },
-                                        {
-                                            "interp": 0,
-                                            "time": 0.5180000066757202,
-                                            "value": 0.0,
-                                            "vector": 0.0
-                                        }
-                                    ],
-                                    "startInterp": 1,
-                                    "startValue": 1.0,
-                                    "startVector": 0.0,
-                                    "useHermite": true
-                                },
-                                "knockDis": 18.100000381469727
-                            },
-                            "typeString": "Damage_L"
-                        },
-                        {
-                            "data": {
-                                "canParryTime": 12,
-                                "parryAngle": 180.0
-                            },
-                            "typeString": "Guard"
-                        },
-                        {
-                            "data": {
-                                "attackCnt": 1,
-                                "attackInfos": [
-                                    {
-                                        "damage": 2.9000000953674316,
-                                        "level": 0
-                                    }
-                                ],
-                                "forwardCurve": {
-                                    "easeKind": 0,
-                                    "endValue": 1.0,
-                                    "endVector": 0.0,
-                                    "plotDatas": null,
-                                    "startInterp": 0,
-                                    "startValue": 0.0,
-                                    "startVector": 0.0,
-                                    "useHermite": false
-                                },
-                                "isMoveFwd": false,
-                                "maxDistance": 10.0,
-                                "nextCombAttack": 22
-                            },
-                            "typeString": "Attack12"
-                        },
-                        {
-                            "data": {
-                                "attackCnt": 1,
-                                "attackInfos": [
-                                    {
-                                        "damage": 4.0,
-                                        "level": 0
-                                    }
-                                ],
-                                "forwardCurve": {
-                                    "easeKind": 0,
-                                    "endValue": 1.0,
-                                    "endVector": 0.0,
-                                    "plotDatas": [
-                                        {
-                                            "interp": 1,
-                                            "time": 0.3230000138282776,
-                                            "value": 1.0,
-                                            "vector": 0.0
-                                        },
-                                        {
-                                            "interp": 1,
-                                            "time": 0.7176470756530762,
-                                            "value": 1.0,
-                                            "vector": 0.0
-                                        }
-                                    ],
-                                    "startInterp": 0,
-                                    "startValue": 0.0,
-                                    "startVector": 1.9990713596343994,
-                                    "useHermite": true
-                                },
-                                "isMoveFwd": false,
-                                "maxDistance": 10.0,
-                                "nextCombAttack": 23
-                            },
-                            "typeString": "Attack13"
-                        },
-                        {
-                            "data": {
-                                "attackCnt": 1,
-                                "attackInfos": [
-                                    {
-                                        "damage": 3.299999952316284,
-                                        "level": 0
-                                    }
-                                ],
-                                "forwardCurve": {
-                                    "easeKind": 0,
-                                    "endValue": 1.0,
-                                    "endVector": 0.0,
-                                    "plotDatas": [
-                                        {
-                                            "interp": 0,
-                                            "time": 0.2720000147819519,
-                                            "value": 0.0,
-                                            "vector": 2.0
-                                        },
-                                        {
-                                            "interp": 1,
-                                            "time": 0.6000000238418579,
-                                            "value": 1.0,
-                                            "vector": 0.0
-                                        }
-                                    ],
-                                    "startInterp": 1,
-                                    "startValue": 0.0,
-                                    "startVector": 0.0,
-                                    "useHermite": true
-                                },
-                                "isMoveFwd": true,
-                                "maxDistance": 2.700000047683716,
-                                "nextCombAttack": 99
-                            },
-                            "typeString": "Attack14"
-                        },
-                        {
-                            "data": {
-                                "attackCnt": 1,
-                                "attackInfos": [
-                                    {
-                                        "damage": 2.0,
-                                        "level": 0
-                                    }
-                                ],
-                                "cancelAnim": 0.3799999952316284,
-                                "forwardCurve": {
-                                    "easeKind": 0,
-                                    "endValue": 1.0,
-                                    "endVector": 0.0,
-                                    "plotDatas": null,
-                                    "startInterp": 0,
-                                    "startValue": 0.0,
-                                    "startVector": 0.0,
-                                    "useHermite": false
-                                },
-                                "horiCurve": {
-                                    "easeKind": 0,
-                                    "endValue": 1.0,
-                                    "endVector": 0.0,
-                                    "plotDatas": [
-                                        {
-                                            "interp": 0,
-                                            "time": 0.20000000298023224,
-                                            "value": 0.0,
-                                            "vector": 1.6519999504089355
-                                        },
-                                        {
-                                            "interp": 0,
-                                            "time": 0.5569999814033508,
-                                            "value": 1.0,
-                                            "vector": 0.0
-                                        }
-                                    ],
-                                    "startInterp": 1,
-                                    "startValue": 0.0,
-                                    "startVector": 0.0,
-                                    "useHermite": true
-                                },
-                                "horiDis": 11.0,
-                                "isMoveFwd": false,
-                                "maxDistance": 10.0,
-                                "nextCombAttack": 99,
-                                "slashAnim": 0.4429999887943268,
-                                "slashBegin": 2.200000047683716
-                            },
-                            "typeString": "SpecialAtkHi"
-                        },
-                        {
-                            "data": {
-                                "attackCnt": 2,
-                                "attackInfos": [
-                                    {
-                                        "damage": 4.199999809265137,
-                                        "level": 0
+                            {
+                                "data": {
+                                    "knockCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": false
                                     },
-                                    {
-                                        "damage": 6.199999809265137,
-                                        "level": 0
-                                    }
-                                ],
-                                "forwardCurve": {
-                                    "easeKind": 0,
-                                    "endValue": 1.0,
-                                    "endVector": 0.0,
-                                    "plotDatas": null,
-                                    "startInterp": 0,
-                                    "startValue": 0.0,
-                                    "startVector": 0.0,
-                                    "useHermite": false
+                                    "knockDis": 0.0
                                 },
-                                "isMoveFwd": false,
-                                "maxDistance": 10.0,
-                                "nextCombAttack": 99
+                                "typeString": "Damage_S"
                             },
-                            "typeString": "SpecialAtkGuard"
-                        }
-                    ]
+                            {
+                                "data": {
+                                    "knockCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 0.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": [
+                                            {
+                                                "interp": 0,
+                                                "time": 0.37599998712539673,
+                                                "value": 1.0,
+                                                "vector": 0.0
+                                            },
+                                            {
+                                                "interp": 1,
+                                                "time": 0.5180000066757202,
+                                                "value": 0.0,
+                                                "vector": 0.0
+                                            }
+                                        ],
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "knockDis": 18.100000381469727
+                                },
+                                "typeString": "Damage_L"
+                            },
+                            {
+                                "data": {
+                                    "canParryTime": 12,
+                                    "parryAngle": 180.0
+                                },
+                                "typeString": "Guard"
+                            },
+                            {
+                                "data": {
+                                    "attackCnt": 1,
+                                    "attackInfos": [
+                                        {
+                                            "damage": 2.0,
+                                            "level": 0
+                                        }
+                                    ],
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "isMoveFwd": false,
+                                    "maxDistance": 10.0,
+                                    "nextCombAttack": 21
+                                },
+                                "typeString": "Attack11"
+                            },
+                            {
+                                "data": {
+                                    "attackCnt": 1,
+                                    "attackInfos": [
+                                        {
+                                            "damage": 2.9000000953674316,
+                                            "level": 0
+                                        }
+                                    ],
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "isMoveFwd": false,
+                                    "maxDistance": 10.0,
+                                    "nextCombAttack": 22
+                                },
+                                "typeString": "Attack12"
+                            },
+                            {
+                                "data": {
+                                    "attackCnt": 1,
+                                    "attackInfos": [
+                                        {
+                                            "damage": 4.0,
+                                            "level": 0
+                                        }
+                                    ],
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "isMoveFwd": false,
+                                    "maxDistance": 10.0,
+                                    "nextCombAttack": 23
+                                },
+                                "typeString": "Attack13"
+                            },
+                            {
+                                "data": {
+                                    "attackCnt": 1,
+                                    "attackInfos": [
+                                        {
+                                            "damage": 3.299999952316284,
+                                            "level": 0
+                                        }
+                                    ],
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": [
+                                            {
+                                                "interp": 0,
+                                                "time": 0.2720000147819519,
+                                                "value": 0.0,
+                                                "vector": 2.0
+                                            },
+                                            {
+                                                "interp": 1,
+                                                "time": 0.6000000238418579,
+                                                "value": 1.0,
+                                                "vector": 0.0
+                                            }
+                                        ],
+                                        "startInterp": 1,
+                                        "startValue": 0.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "isMoveFwd": true,
+                                    "maxDistance": 2.700000047683716,
+                                    "nextCombAttack": 99
+                                },
+                                "typeString": "Attack14"
+                            },
+                            {
+                                "data": {
+                                    "attackCnt": 1,
+                                    "attackInfos": [
+                                        {
+                                            "damage": 2.0,
+                                            "level": 0
+                                        }
+                                    ],
+                                    "cancelAnim": 0.3799999952316284,
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "horiCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": [
+                                            {
+                                                "interp": 0,
+                                                "time": 0.20000000298023224,
+                                                "value": 0.0,
+                                                "vector": 1.6519999504089355
+                                            },
+                                            {
+                                                "interp": 0,
+                                                "time": 0.5569999814033508,
+                                                "value": 0.9309999942779541,
+                                                "vector": 0.28700000047683716
+                                            }
+                                        ],
+                                        "startInterp": 1,
+                                        "startValue": 0.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "horiDis": 11.0,
+                                    "isMoveFwd": false,
+                                    "maxDistance": 10.0,
+                                    "nextCombAttack": 99,
+                                    "slashAnim": 0.4429999887943268,
+                                    "slashBegin": 2.200000047683716
+                                },
+                                "typeString": "SpecialAtkHi"
+                            },
+                            {
+                                "data": {
+                                    "attackCnt": 2,
+                                    "attackInfos": [
+                                        {
+                                            "damage": 4.199999809265137,
+                                            "level": 0
+                                        },
+                                        {
+                                            "damage": 6.199999809265137,
+                                            "level": 0
+                                        }
+                                    ],
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "isMoveFwd": false,
+                                    "maxDistance": 10.0,
+                                    "nextCombAttack": 99
+                                },
+                                "typeString": "SpecialAtkGuard"
+                            }
+                        ]
+                    },
+                    "groundCheckName": "PlayerGroundCollision"
                 },
                 "camObjName": "Camera",
                 "enable": true,
@@ -623,7 +700,8 @@
         "transform": {
             "child": [
                 "Player_LeftHand",
-                "Player_RightHand"
+                "Player_RightHand",
+                "PlayerGroundCollision"
             ],
             "pos": [
                 0.0,

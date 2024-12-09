@@ -20,7 +20,7 @@ bool PlayerGuardState::GetCanParry(const DirectX::SimpleMath::Vector3& _enemyPos
 
 	// 攻撃を正面で受けれているか確認(敵との座標)
 	// プレイヤーの正面に敵がいるか確認
-	Transform& transform = GetTransform();
+	Transform& transform = GetMyTransform();
 	DXSimp::Vector3 toEnemyVec = _enemyPos - transform.GetPosition();
 	toEnemyVec.y = 0.0f; toEnemyVec.Normalize();
 	float dot = toEnemyVec.Dot(transform.Forward());
@@ -32,6 +32,8 @@ bool PlayerGuardState::GetCanParry(const DirectX::SimpleMath::Vector3& _enemyPos
 
 void PlayerGuardState::OnParry()
 {
+
+
 	// パリィでガードゲージを増やす
 	GetPlayer().AddGuardGage(parryAddGuardGage);
 
@@ -50,7 +52,7 @@ void PlayerGuardState::OnParry()
 
 nlohmann::json PlayerGuardState::Save()
 {
-	auto data = PlayerActState_Base::Save();
+	auto data = PlayerGroundState::Save();
 	data["canParryTime"] = sustainParryFrame;
 	data["parryAngle"] = canParryForwardAngle;
 	return data;
@@ -58,7 +60,7 @@ nlohmann::json PlayerGuardState::Save()
 
 void PlayerGuardState::Load(const nlohmann::json& _data)
 {
-	PlayerActState_Base::Load(_data);
+	PlayerGroundState::Load(_data);
 	HashiTaku::LoadJsonUnsigned("canParryTime", sustainParryFrame, _data);
 	HashiTaku::LoadJsonFloat("parryAngle", canParryForwardAngle, _data);
 }
@@ -130,7 +132,7 @@ void PlayerGuardState::GuardParry()
 
 void PlayerGuardState::ImGuiDebug()
 {
-	PlayerActState_Base::ImGuiDebug();
+	PlayerGroundState::ImGuiDebug();
 
 	// パリィフレーム
 	int imInt = static_cast<int>(sustainParryFrame);

@@ -1,10 +1,10 @@
 #pragma once
-#include "PlayerActState_Base.h"
+#include "PlayerGroundState.h"
 #include "AttackInformation.h"
 #include "AnimationCurve.h"
 
 /// @brief プレイヤー攻撃のゲーム内処理
-class PlayerAttackState : public PlayerActState_Base
+class PlayerAttackState : public PlayerGroundState
 {
 private:
 	/// @brief コンビネーション攻撃の先
@@ -58,6 +58,8 @@ protected:
 	void OnEndBehavior() override;
 	void TransitionCheckUpdate() override;
 
+	void OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName) override;
+
 	void ImGuiDebug() override;
 private:
 	/// @brief パラメータを初期化
@@ -90,6 +92,19 @@ private:
 	/// @brief 攻撃する敵の座標を取得する
 	/// @return 敵の座標
 	DirectX::SimpleMath::Vector3 GetAtkEnemyPos();
+
+	void ImGuiCombAttack();
+private:
+#ifdef EDIT
+	// コンビネーション攻撃ができるステート
+	inline static std::vector<std::string> combAtkState
+	{
+		"Attack11",
+		"Attack12",
+		"Attack13",
+		"Attack14"
+	};
+#endif // EDIT
 public:
 	/// @brief 攻撃トリガー
 	constexpr static auto ATTACKTRIGGER_PARAMNAME{ "attackTrigger" };

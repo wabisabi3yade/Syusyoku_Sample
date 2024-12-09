@@ -1,9 +1,9 @@
 #pragma once
-#include "PlayerActState_Base.h"
+#include "PlayerGroundState.h"
 #include "AnimationCurve.h"
 
 /// @brief プレイヤーのローリング処理
-class PlayerRollingMove : public PlayerActState_Base
+class PlayerRollingMove : public PlayerGroundState
 {
 	/// @brief 移動距離の変位アニメーションカーブ
 	std::unique_ptr<AnimationCurve> pDistanceCurve;

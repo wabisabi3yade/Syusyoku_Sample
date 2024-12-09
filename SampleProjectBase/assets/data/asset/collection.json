@@ -4530,6 +4530,11 @@
                 {
                     "name": "jumpTrigger",
                     "type": 3
+                },
+                {
+                    "name": "isGround",
+                    "type": 0,
+                    "value": false
                 }
             ],
             "assetName": "ANC_Player",
@@ -4701,18 +4706,11 @@
                                 "conditionList": [
                                     {
                                         "condition": {
-                                            "fCompare": 0.0,
-                                            "fJudgeType": 0
+                                            "iCompare": 2,
+                                            "iJudgeType": 2
                                         },
-                                        "paramName": "speed",
-                                        "typeKind": 2
-                                    },
-                                    {
-                                        "condition": {
-                                            "bJudgeType": 0
-                                        },
-                                        "paramName": "targeting",
-                                        "typeKind": 0
+                                        "paramName": "state",
+                                        "typeKind": 1
                                     }
                                 ],
                                 "exitRatio": 1.0,
@@ -4730,11 +4728,11 @@
                                 "conditionList": [
                                     {
                                         "condition": {
-                                            "fCompare": 0.0,
-                                            "fJudgeType": 0
+                                            "iCompare": 1,
+                                            "iJudgeType": 2
                                         },
-                                        "paramName": "speed",
-                                        "typeKind": 2
+                                        "paramName": "state",
+                                        "typeKind": 1
                                     }
                                 ],
                                 "exitRatio": 1.0,
@@ -4942,6 +4940,10 @@
                     "name": "Move"
                 },
                 {
+                    "arrows": null,
+                    "name": "AirMove"
+                },
+                {
                     "arrows": [
                         {
                             "param": {
@@ -5094,18 +5096,11 @@
                                 "conditionList": [
                                     {
                                         "condition": {
-                                            "bJudgeType": 0
+                                            "iCompare": 2,
+                                            "iJudgeType": 2
                                         },
-                                        "paramName": "targeting",
-                                        "typeKind": 0
-                                    },
-                                    {
-                                        "condition": {
-                                            "fCompare": 0.0,
-                                            "fJudgeType": 0
-                                        },
-                                        "paramName": "speed",
-                                        "typeKind": 2
+                                        "paramName": "state",
+                                        "typeKind": 1
                                     }
                                 ],
                                 "exitRatio": 1.0,
@@ -5123,11 +5118,11 @@
                                 "conditionList": [
                                     {
                                         "condition": {
-                                            "fCompare": 0.0,
-                                            "fJudgeType": 0
+                                            "iCompare": 1,
+                                            "iJudgeType": 2
                                         },
-                                        "paramName": "speed",
-                                        "typeKind": 2
+                                        "paramName": "state",
+                                        "typeKind": 1
                                     }
                                 ],
                                 "exitRatio": 1.0,
@@ -5163,6 +5158,27 @@
                                 "transTime": 0.0
                             },
                             "toNode": "Dead"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 1
+                                        },
+                                        "paramName": "isGround",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 63,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toNode": "Fall_Loop"
                         },
                         {
                             "param": {
@@ -5317,18 +5333,11 @@
                                 "conditionList": [
                                     {
                                         "condition": {
-                                            "bJudgeType": 0
+                                            "iCompare": 2,
+                                            "iJudgeType": 2
                                         },
-                                        "paramName": "targeting",
-                                        "typeKind": 0
-                                    },
-                                    {
-                                        "condition": {
-                                            "fCompare": 0.0,
-                                            "fJudgeType": 0
-                                        },
-                                        "paramName": "speed",
-                                        "typeKind": 2
+                                        "paramName": "state",
+                                        "typeKind": 1
                                     }
                                 ],
                                 "exitRatio": 1.0,
@@ -5346,11 +5355,11 @@
                                 "conditionList": [
                                     {
                                         "condition": {
-                                            "fCompare": 0.0,
-                                            "fJudgeType": 0
+                                            "iCompare": 1,
+                                            "iJudgeType": 2
                                         },
-                                        "paramName": "speed",
-                                        "typeKind": 2
+                                        "paramName": "state",
+                                        "typeKind": 1
                                     }
                                 ],
                                 "exitRatio": 1.0,
@@ -5471,7 +5480,7 @@
                                 "exitRatio": 1.0,
                                 "interpolate": 0,
                                 "isHaveExit": false,
-                                "priority": 0,
+                                "priority": 5,
                                 "targetRatio": 0.0,
                                 "transEase": 0.0,
                                 "transTime": 0.20000000298023224
@@ -5608,28 +5617,6 @@
                                 "conditionList": [
                                     {
                                         "condition": {
-                                            "fCompare": 0.0,
-                                            "fJudgeType": 2
-                                        },
-                                        "paramName": "speed",
-                                        "typeKind": 2
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
-                                "priority": 0,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.10999999940395355
-                            },
-                            "toName": "Idle"
-                        },
-                        {
-                            "arrowParam": {
-                                "conditionList": [
-                                    {
-                                        "condition": {
                                             "bJudgeType": 0
                                         },
                                         "paramName": "targeting",
@@ -5647,12 +5634,34 @@
                                 "exitRatio": 1.0,
                                 "interpolate": 0,
                                 "isHaveExit": false,
-                                "priority": 0,
+                                "priority": 5,
                                 "targetRatio": 0.0,
                                 "transEase": 0.0,
                                 "transTime": 0.10000000149011612
                             },
                             "toName": "TargetMove"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "fCompare": 0.0,
+                                            "fJudgeType": 2
+                                        },
+                                        "paramName": "speed",
+                                        "typeKind": 2
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10999999940395355
+                            },
+                            "toName": "Idle"
                         }
                     ],
                     "groupArrowName": "Move",
@@ -7866,11 +7875,11 @@
                             "startVector": 0.0,
                             "useHermite": true
                         },
-                        "isLoop": true,
+                        "isLoop": false,
                         "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
-                        "speed": 1.0
+                        "speed": 5.650000095367432
                     },
                     "arrowDataList": [
                         {
@@ -7903,8 +7912,7 @@
                                 ],
                                 "notifyName": "ANS_ChangeParameter",
                                 "parameterNames": [
-                                    "canInput",
-                                    "canMove"
+                                    "canInput"
                                 ],
                                 "setParameter": [
                                     false,
@@ -7941,20 +7949,225 @@
                     "arrowDataList": [
                         {
                             "arrowParam": {
-                                "conditionList": null,
-                                "exitRatio": 1.0,
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 1
+                                        },
+                                        "paramName": "isGround",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 0.1599999964237213,
                                 "interpolate": 0,
                                 "isHaveExit": true,
                                 "priority": 0,
                                 "targetRatio": 0.0,
                                 "transEase": 0.0,
-                                "transTime": 0.10000000149011612
+                                "transTime": 0.20000000298023224
                             },
-                            "toName": "Idle"
+                            "toName": "Fall_Loop"
                         }
                     ],
                     "groupArrowName": "",
                     "nodeName": "Jump_Begin",
+                    "nodeType": 0,
+                    "notifyList": [
+                        {
+                            "notifyParam": {
+                                "endFrame": 2,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    false,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_CanInput",
+                                "parameterNames": [
+                                    "canInput"
+                                ],
+                                "setParameter": [
+                                    false,
+                                    false,
+                                    true,
+                                    true
+                                ],
+                                "startFrame": 0,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        }
+                    ]
+                },
+                {
+                    "animNode": {
+                        "animName": "knight_FallLoop.fbx",
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startInterp": 1,
+                            "startValue": 1.0,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "isLoop": true,
+                        "isRMR": false,
+                        "isRMXZ": false,
+                        "isRMY": false,
+                        "speed": 0.6000000238418579
+                    },
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "isGuard",
+                                        "typeKind": 0
+                                    },
+                                    {
+                                        "condition": {
+                                            "fCompare": 0.0,
+                                            "fJudgeType": 0
+                                        },
+                                        "paramName": "speed",
+                                        "typeKind": 2
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 1,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "Fall_LandForward"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "isGround",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Fall_Land"
+                        }
+                    ],
+                    "groupArrowName": "",
+                    "nodeName": "Fall_Loop",
+                    "nodeType": 0,
+                    "notifyList": null
+                },
+                {
+                    "animNode": {
+                        "animName": "knight_FallLanding.fbx",
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": [
+                                {
+                                    "interp": 1,
+                                    "time": 0.28600001335144043,
+                                    "value": 1.0,
+                                    "vector": -2.0
+                                }
+                            ],
+                            "startInterp": 0,
+                            "startValue": 2.0,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "isLoop": false,
+                        "isRMR": false,
+                        "isRMXZ": false,
+                        "isRMY": false,
+                        "speed": 1.600000023841858
+                    },
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 0.6200000047683716,
+                                "interpolate": 0,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.14000000059604645
+                            },
+                            "toName": "Idle"
+                        }
+                    ],
+                    "groupArrowName": "Action",
+                    "nodeName": "Fall_Land",
+                    "nodeType": 0,
+                    "notifyList": [
+                        {
+                            "notifyParam": {
+                                "endFrame": 0,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    false,
+                                    false,
+                                    true
+                                ],
+                                "notifyName": "ANS_CanMove",
+                                "parameterNames": [],
+                                "setParameter": [
+                                    false,
+                                    false,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 0,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        }
+                    ]
+                },
+                {
+                    "animNode": {
+                        "animName": "knight_FallLandForward.fbx",
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startInterp": 1,
+                            "startValue": 1.0,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "isLoop": true,
+                        "isRMR": false,
+                        "isRMXZ": false,
+                        "isRMY": false,
+                        "speed": 1.0
+                    },
+                    "arrowDataList": null,
+                    "groupArrowName": "",
+                    "nodeName": "Fall_LandForward",
                     "nodeType": 0,
                     "notifyList": null
                 }
@@ -8150,6 +8363,24 @@
             "rightHand": true
         },
         {
+            "assetName": "knight_FallLandForward.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_FallLandForward.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_FallLanding.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_FallLanding.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_FallLoop.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_FallLoop.fbx",
+            "rightHand": true
+        },
+        {
             "assetName": "knight_GuardKnock.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_GuardKnock.fbx",
@@ -8255,12 +8486,6 @@
             "assetName": "knight_SlashDown2.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_SlashDown2.fbx",
-            "rightHand": true
-        },
-        {
-            "assetName": "knight_SlashStamp.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_SlashStamp.fbx",
             "rightHand": true
         },
         {
@@ -8434,6 +8659,17 @@
             "rightHand": true
         },
         {
+            "assetName": "Pillar1.fbx",
+            "flipY": true,
+            "getSize": false,
+            "loadScale": 1.0,
+            "matDiffuse": [
+                "Pillar1.png"
+            ],
+            "pathName": "assets/model/rock/3/Pillar1.fbx",
+            "rightHand": true
+        },
+        {
             "assetName": "Sword15_FBX.fbx",
             "flipY": true,
             "getSize": false,
@@ -8467,25 +8703,25 @@
             "rightHand": true
         },
         {
-            "assetName": "rock1.fbx",
+            "assetName": "desertRock11.fbx",
             "flipY": true,
             "getSize": false,
             "loadScale": 1.0,
             "matDiffuse": [
-                "rock1.png"
+                "desertRock11.jpg"
             ],
-            "pathName": "assets/model/rock/1/rock1.fbx",
+            "pathName": "assets/model/rock/2/desertRock11.fbx",
             "rightHand": true
         },
         {
-            "assetName": "rock2.fbx",
+            "assetName": "desertRock15.fbx",
             "flipY": true,
             "getSize": false,
-            "loadScale": 0.0010000000474974513,
+            "loadScale": 1.0,
             "matDiffuse": [
-                "solkaya_DefaultMaterial_BaseColor.png"
+                "desertRock15.jpg"
             ],
-            "pathName": "assets/model/rock/2/rock2.fbx",
+            "pathName": "assets/model/rock/1/desertRock15.fbx",
             "rightHand": true
         },
         {
@@ -8503,6 +8739,10 @@
     "textures": [
         {
             "assetName": "FarbPalette256x256.png",
+            "pathName": ""
+        },
+        {
+            "assetName": "Pillar1.png",
             "pathName": ""
         },
         {
@@ -8582,6 +8822,14 @@
             "pathName": ""
         },
         {
+            "assetName": "desertRock11.jpg",
+            "pathName": ""
+        },
+        {
+            "assetName": "desertRock15.jpg",
+            "pathName": ""
+        },
+        {
             "assetName": "ground.png",
             "pathName": "assets/texture/ground.png"
         },
@@ -8590,15 +8838,7 @@
             "pathName": "assets/texture/ground/ground1_Diffuse.png"
         },
         {
-            "assetName": "rock1.png",
-            "pathName": ""
-        },
-        {
             "assetName": "shield1.png",
-            "pathName": ""
-        },
-        {
-            "assetName": "solkaya_DefaultMaterial_BaseColor.png",
             "pathName": ""
         }
     ],

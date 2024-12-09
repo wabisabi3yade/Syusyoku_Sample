@@ -6,7 +6,6 @@
 void AppSystemDraw::Init(VariableFrameRate& _variabeFrameRate)
 {
 	pFrameRate = &_variabeFrameRate;
-
 }
 
 AppSystemDraw::AppSystemDraw() : pFrameRate(nullptr)
@@ -25,8 +24,12 @@ void AppSystemDraw::ImGuiDebug()
 	if (ImGuiMethod::TreeNode("Phisics"))
 	{
 		bool isDisplay = pBulletEngine->GetDisplay();
-		ImGui::Checkbox("Display", &isDisplay);
-		pBulletEngine->SetDisplay(isDisplay);
+		if (ImGui::Checkbox("Display", &isDisplay))
+			pBulletEngine->SetDisplay(isDisplay);
+
+		float gravity = pBulletEngine->GetGravity();
+		if (ImGui::DragFloat("Gravity", &gravity, 0.01f, -1000.0f, -9.81f));
+			pBulletEngine->SetGravity(gravity);
 
 		ImGui::TreePop();
 	}
