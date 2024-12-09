@@ -2,6 +2,7 @@
 #include "PlayerActionController_Base.h"
 #include "PlayerGroundState.h"
 
+/// @brief プレイヤーの地上行動を継承しているかコンセプト
 template<typename T>
 concept PlayerGroundConcept =
 std::is_base_of_v<PlayerGroundState, T>;
@@ -9,8 +10,9 @@ std::is_base_of_v<PlayerGroundState, T>;
 /// @brief プレイヤーの地上行動コントローラー
 class PlayerGroundActionController : public PlayerActionController_Base
 {
-	using GroundState = PlayerGroundState::PlayerState;
 public:
+	using GroundState = PlayerGroundState::PlayerState;
+
 	/// @brief コンストラクタ
 	/// @param _player プレイヤーコンポーネント
 	PlayerGroundActionController(PlayerAction& _pAction, CP_Player& _player);
@@ -57,6 +59,9 @@ public:
 	/// @return 状態のID
 	int GetStateId(const std::string& _stateName);
 private:
+	/// @brief 現在の更新処理
+	void Update() override;
+
 	/// @brief 新しくStateを生成
 	/// @tparam T 対応している行動クラス
 	/// @param _actionState アクション名
@@ -65,9 +70,6 @@ private:
 	/// @brief 更新できるか取得
 	/// @return 更新できるか？
 	bool GetCanUpdate();
-
-	/// @brief 現在の更新処理
-	void Update() override;
 
 	/// @brief パリィできているか確認
 	/// @param _enemyPos 敵座標

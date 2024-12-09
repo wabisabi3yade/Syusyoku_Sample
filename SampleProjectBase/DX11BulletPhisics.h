@@ -30,7 +30,7 @@ class DX11BulletPhisics : public Singleton_Base<DX11BulletPhisics>
 	std::unique_ptr<btSequentialImpulseConstraintSolver> pSolver;
 
 	/// @brief 物理シミュレーション全体を管理する
-	std::unique_ptr<btDiscreteDynamicsWorld> pDynamicsWorld; 
+	std::unique_ptr<btDiscreteDynamicsWorld> pDynamicsWorld;
 
 	/// @brief GhostObjectのラップ検知を効率化するクラス
 	std::unique_ptr<btGhostPairCallback> pGhostPairCallback;
@@ -76,12 +76,20 @@ public:
 	/// @brief シーン内衝突オブジェクトの座標を更新する(Dx→Bt)
 	void UpdateTransformDxToBt();
 
+	/// @brief 重力加速度を取得する
+	/// @return 重力加速度
+	void SetGravity(float _gravityY);
+
 	/// @brief 表示させるかセットする
 	/// @param _setBool 表示させるかフラグ
 	void SetDisplay(bool _setBool);
 
 	// 衝突オブジェクトをチェック
 	u_int GetCollObjCnt() const;
+
+	/// @brief 重力加速度を取得する
+	/// @return 重力加速度
+	float GetGravity() const;
 
 	/// @brief 表示させるか取得
 	/// @return 表示させるか？ 

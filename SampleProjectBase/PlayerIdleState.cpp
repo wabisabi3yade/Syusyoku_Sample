@@ -4,6 +4,7 @@
 
 PlayerIdleState::PlayerIdleState()
 {
+	SetTargetAtEnemy(true);
 }
 
 void PlayerIdleState::OnStartBehavior()

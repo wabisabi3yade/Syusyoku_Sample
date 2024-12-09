@@ -886,6 +886,12 @@
     <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Air\Move">
       <UniqueIdentifier>{24cb22a4-16d7-48fa-9b25-86f76088602e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Air\Base">
+      <UniqueIdentifier>{3046ecd3-fd1e-48ef-9433-c9b2382b0c01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\Base">
+      <UniqueIdentifier>{b19bf90d-078f-4f5e-9ee9-86196e4d3e13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1649,14 +1655,17 @@
     <ClCompile Include="PlayerAction.cpp">
       <Filter>ソース ファイル\InGame\Player\Action</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerGroundState.cpp">
-      <Filter>ソース ファイル\InGame\Player\Action\Controller\Ground</Filter>
-    </ClCompile>
     <ClCompile Include="CP_GroundCheck.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerGroundState.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Base</Filter>
+    </ClCompile>
     <ClCompile Include="PlayerAirState.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Air\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAirMove.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Air\Move</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2425,17 +2434,20 @@
     <ClInclude Include="PlayerAction.h">
       <Filter>ソース ファイル\InGame\Player\Action</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerGroundState.h">
-      <Filter>ソース ファイル\InGame\Player\Action\Controller\Ground</Filter>
-    </ClInclude>
     <ClInclude Include="CP_GroundCheck.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="IGroundNotifyer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerGroundState.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Base</Filter>
+    </ClInclude>
     <ClInclude Include="PlayerAirState.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Air\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAirMove.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Air\Move</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

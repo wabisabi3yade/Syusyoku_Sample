@@ -48,6 +48,12 @@ void CP_RigidBody::AddImpulse(const DirectX::SimpleMath::Vector3& _power)
 	CastRigidBody().applyCentralImpulse(Bullet::ToBtVector3(_power));
 }
 
+void CP_RigidBody::AddForce(const DirectX::SimpleMath::Vector3& _power)
+{
+	if (!collider || isTrigger) return;
+	CastRigidBody().applyCentralForce(Bullet::ToBtVector3(_power));
+}
+
 void CP_RigidBody::SetColliderShape(CP_Collider& _setCollider)
 {
 	if (collider) return;
@@ -355,7 +361,7 @@ void CP_RigidBody::CreateRigidBody()
 
 	btRigidBody& btRigid = CastRigidBody();
 	btRigid.setFriction(friction);
-	btRigid.setDamping(0.9f, 0.9f);  // 線形ダンピングと回転ダンピングを追加
+	btRigid.setDamping(0.0f, 0.0f);  // 線形ダンピングと回転ダンピングを追加
 	btRigid.setRestitution(0.0f);
 
 

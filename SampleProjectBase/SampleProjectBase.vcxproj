@@ -254,6 +254,7 @@
     <ClCompile Include="PlayerAction.cpp" />
     <ClCompile Include="PlayerActionController_Base.cpp" />
     <ClCompile Include="PlayerAirActionController.cpp" />
+    <ClCompile Include="PlayerAirMove.cpp" />
     <ClCompile Include="PlayerAirState.cpp" />
     <ClCompile Include="PlayerDamageState.cpp" />
     <ClCompile Include="PlayerGroundState.cpp" />
@@ -505,6 +506,7 @@
     <ClInclude Include="PlayerAction.h" />
     <ClInclude Include="PlayerActionController_Base.h" />
     <ClInclude Include="PlayerAirActionController.h" />
+    <ClInclude Include="PlayerAirMove.h" />
     <ClInclude Include="PlayerAirState.h" />
     <ClInclude Include="PlayerDamageState.h" />
     <ClInclude Include="PlayerGroundState.h" />

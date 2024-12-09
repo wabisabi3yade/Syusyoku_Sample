@@ -124,7 +124,7 @@ bool PlayerRushAttack::CheckDistanceToEnemy(float _currentPlayRatio)
 	if (_currentPlayRatio < cancelBeginRatio) return false;
 	if (_currentPlayRatio > slashBeginAnimRatio) return false;
 
-	DXSimp::Vector3 distance = GetTransform().GetPosition() -
+	DXSimp::Vector3 distance = GetMyTransform().GetPosition() -
 		pTargetObj->GetWorldPosByTargetObj();
 	distance.y = 0.0f;	// yÇÕçló∂ÇµÇ»Ç¢
 

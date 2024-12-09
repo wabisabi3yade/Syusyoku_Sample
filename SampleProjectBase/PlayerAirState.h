@@ -18,7 +18,7 @@ public:
 
 		// 移動
 		Move,
-		Damage,	// ダメージ大のけぞり
+		Damage,	// ダメージのけぞり
 		Guard,	// ガード開始
 
 		// コンビネーション攻撃
@@ -33,10 +33,19 @@ public:
 	};
 
 protected:
+	/// @brief 開始処理呼び出し
+	void OnStart() override;
+
+	/// @brief 更新処理呼び出し
+	void Update() override;
+
+	/// @brief  終了処理呼び出し
+	void OnEnd() override;
+
 	/// @brief 各状態の開始処理
 	virtual void OnStartBehavior() {};
 
-	/// @brief 更新処理
+	/// @brief 各状態の更新処理
 	virtual void UpdateBehavior() {};
 
 	/// @brief 各状態の終了処理
@@ -55,5 +64,12 @@ protected:
 	void ChangeState(PlayerState _nextState, bool _isForce = false);
 
 	void ImGuiDebug() override;
+
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
+private:
+	/// @brief 入力更新
+	void InputUpdate();
+
 };
 

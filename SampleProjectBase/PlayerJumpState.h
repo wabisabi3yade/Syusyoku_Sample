@@ -18,7 +18,9 @@ class PlayerJumpState : public PlayerGroundState
 public:
 	PlayerJumpState();
 	~PlayerJumpState();
-	
+
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
 private:
 	void OnStartBehavior() override;
 	void UpdateBehavior() override;
@@ -26,5 +28,10 @@ private:
 
 	/// @brief ジャンプ開始するときの処理
 	void OnBeginJump();
+
+	/// @brief 入力方向に即時に向ける
+	void LookInputVectorInstant();
+
+	void ImGuiDebug() override;
 };
 

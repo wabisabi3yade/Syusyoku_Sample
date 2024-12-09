@@ -42,11 +42,6 @@ public:
 	PlayerGroundState();
 	virtual  ~PlayerGroundState() {}
 
-	/// @brief 地上行動の初期化処理
-	/// @param _stateType ステート
-	/// @param _actController アクションコントローラー
-	void Init(PlayerActionController_Base& _actController);
-
 	/// @brief 開始処理呼び出し
 	void OnStart() override;
 
@@ -56,12 +51,7 @@ public:
 	/// @brief  終了処理呼び出し
 	void OnEnd() override;
 
-	/// @brief セーブする
-	/// @return セーブデータ
 	nlohmann::json Save() override;
-
-	/// @brief ロードする
-	/// @param _data ロードするデータ 
 	void Load(const nlohmann::json& _data) override;
 protected:
 	/// @brief 各状態の開始処理

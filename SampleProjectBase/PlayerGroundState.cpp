@@ -9,11 +9,6 @@ PlayerGroundState::PlayerGroundState()
 {
 }
 
-void PlayerGroundState::Init(PlayerActionController_Base& _actController)
-{
-	pActionController = &_actController;
-}
-
 void PlayerGroundState::OnStart()
 {
 	PlayerActState_Base::OnStart();

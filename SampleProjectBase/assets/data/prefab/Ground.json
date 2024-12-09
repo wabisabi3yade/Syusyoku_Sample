@@ -12,13 +12,13 @@
                 ],
                 "center": [
                     0.0,
-                    -0.10000000149011612,
+                    -5.0,
                     0.0
                 ],
                 "enable": true,
                 "length": [
                     1.0,
-                    0.20000000298023224,
+                    10.0,
                     1.0
                 ],
                 "name": "BoxCollider",
@@ -26,7 +26,7 @@
             },
             {
                 "enable": true,
-                "friction": 0.0,
+                "friction": 10.0,
                 "isAwake": false,
                 "isFreezeRot": [
                     false,
@@ -44,7 +44,7 @@
                 "name": "SpriteRenderer",
                 "priority": 0,
                 "sprite": {
-                    "texName": "ground.png",
+                    "texName": "ground1_Diffuse.png",
                     "uvDivNum": [
                         0.0,
                         0.0
@@ -62,7 +62,7 @@
         ],
         "layer": 0,
         "name": "Ground",
-        "tag": 0,
+        "tag": 4,
         "transform": {
             "child": null,
             "pos": [

@@ -9,6 +9,8 @@ constexpr float CAN_ACTION_STICKINPUT(0.7f);
 //constexpr auto SPEEDRATIO_PARAMNAME{ "speed" };
 // ターゲット中を表すアニメーションパラメータ
 constexpr auto TARGET_PARAMNAME{ "targeting" };
+// 接地しているかを表すアニメーションパラメータ
+constexpr auto GROUND_PARAMNAME{ "isGround" };
 // キャンセルできるかを表すアニメーションパラメータ
 constexpr auto CANCEL_PARAMNAME{ "canCancel" };
 // 先行入力できるかを表すアニメーションパラメータ
@@ -30,7 +32,9 @@ PlayerAction::PlayerAction(CP_Player& _player) :
 	pIsCanCancel(nullptr),
 	pIsCanMove(nullptr),
 	isGround(true),
-	reserveTransition(PlaceTransition::None),
+	prevIsGround(true),
+	reserveAirTransition(GroundToAir::ToAirMove),
+	reserveGroundTransition(AirToGround::AirToLanding),
 	isTargeting(false),
 	prevIsTargeting(false)
 {
@@ -75,7 +79,7 @@ void PlayerAction::Init(CP_Animation* _pAnimation, CP_RigidBody* _pRigidBody)
 
 	// アクション初期化
 	pGroundController->Init(pAnimation, _pRigidBody);
-	//	pAirController->Init(pAnimation, _pRigidBody);
+	pAirController->Init(pAnimation, _pRigidBody);
 
 	pCurrentController = pGroundController.get();
 	currentPlace = ActionPlace::Ground;
@@ -86,11 +90,12 @@ void PlayerAction::Update()
 	pCurrentController->UpdateCall();
 
 	UpdateTargeting();
+
+	UpdateGround();
 }
 
-void PlayerAction::ChangePlace(PlaceTransition _setPlaceTransition)
+void PlayerAction::OnChangePlace()
 {
-
 }
 
 CP_Camera& PlayerAction::GetCamera()
@@ -179,13 +184,23 @@ void PlayerAction::OnDamage(const HashiTaku::AttackInformation& _atkInfo,
 
 void PlayerAction::OnGroundEnter()
 {
+	// 接地フラグとアニメーションの方をtrueする
 	isGround = true;
+	if (pAnimation)
+	{
+		pAnimation->SetBool(GROUND_PARAMNAME, isGround);
+	}
 	HASHI_DEBUG_LOG("着地");
 }
 
 void PlayerAction::OnGroundExit()
 {
+	// 接地フラグとアニメーションの方をfalseする
 	isGround = false;
+	if (pAnimation)
+	{
+		pAnimation->SetBool(GROUND_PARAMNAME, isGround);
+	}
 	HASHI_DEBUG_LOG("離陸");
 }
 
@@ -196,7 +211,7 @@ nlohmann::json PlayerAction::Save()
 	data["groundCheckName"] = groundCheckerName;
 
 	data["ground"] = pGroundController->Save();
-	//data["air"] = pAirController->Save();
+	data["air"] = pAirController->Save();
 
 	return data;
 }
@@ -210,10 +225,10 @@ void PlayerAction::Load(const nlohmann::json& _data)
 	{
 		pGroundController->Load(loadData);
 	}
-	//if (HashiTaku::LoadJsonData("air", loadData, _data))
-	//{
-	//	pAirController->Load(loadData);
-	//}
+	if (HashiTaku::LoadJsonData("air", loadData, _data))
+	{
+		pAirController->Load(loadData);
+	}
 }
 
 void PlayerAction::FindGroundChecker()
@@ -301,9 +316,72 @@ void PlayerAction::UpdateTargeting()
 	prevIsTargeting = isTargeting;
 }
 
+void PlayerAction::UpdateGround()
+{
+	// 前フレームと同じなら処理しない
+	if (isGround == prevIsGround) return;
+
+	// 変更前の終了処理
+	pCurrentController->OnEnd();
+
+	if (isGround) 	// 地上へ移行
+		OnAirToGround();
+	else	// 空中へ移行
+		OnGroundToAir();
+
+	prevIsGround = isGround;	// 更新
+}
+
+void PlayerAction::OnGroundToAir()
+{
+	currentPlace = ActionPlace::Air;
+
+	// 現在のコントローラーを変更
+	pCurrentController = pAirController.get();
+
+	// 空中のエントリー状態をを設定
+	switch (reserveAirTransition)
+	{
+	case PlayerAction::GroundToAir::ToAirMove:
+		pAirController->ChangeAirState(PlayerAirActionController::AirState::Move);
+		break;
+
+	default:
+		break;
+	}
+
+	// デフォルトに戻す
+	reserveAirTransition = GroundToAir::ToAirMove;
+}
+
+void PlayerAction::OnAirToGround()
+{
+	currentPlace = ActionPlace::Ground;
+
+	// 現在のコントローラーを変更
+	pCurrentController = pGroundController.get();
+
+	// 地上のエントリー状態をを設定
+	switch (reserveGroundTransition)
+	{
+	case AirToGround::AirToLanding:
+		pGroundController->
+			ChangeGroundState(PlayerGroundActionController::GroundState::Idle, true);
+		break;
+	case AirToGround::AirToGroundKnock:
+		pGroundController->
+			ChangeGroundState(PlayerGroundActionController::GroundState::Move, true);
+		break;
+	default:
+		break;
+	}
+
+	// デフォルトに戻す
+	reserveGroundTransition = AirToGround::AirToLanding;
+}
+
 void PlayerAction::ImGuiDebug()
 {
-	ImGuiGroundChecker();
 	ImGuiMethod::Text("isGround", isGround);
 	ImGuiMethod::Text("IsTargeting", isTargeting);
 	ImGui::Text("Place:%s", std::string(magic_enum::enum_name(currentPlace)).c_str());

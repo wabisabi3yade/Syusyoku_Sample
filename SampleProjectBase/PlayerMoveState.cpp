@@ -49,7 +49,7 @@ void PlayerMoveState::UpdateBehavior()
 
 void PlayerMoveState::OnEndBehavior()
 {
-	ClearVelocity(false);
+	/*ClearVelocity(false);*/
 }
 
 void PlayerMoveState::TransitionCheckUpdate()
@@ -71,7 +71,7 @@ bool PlayerMoveState::IsRunning()
 
 void PlayerMoveState::ImGuiDebug()
 {
-	PlayerActState_Base::ImGuiDebug();
+	PlayerGroundState::ImGuiDebug();
 
 	std::string text = TO_UTF8("speed") + std::to_string(currentSpeed);
 	ImGui::Text(text.c_str());
@@ -128,7 +128,6 @@ void PlayerMoveState::Move()
 
 	// アニメーションのブレンド割合をセット
 	pActionController->SetAnimationFloat(SPEEDRATIO_PARAMNAME, currentSpeed / maxSpeed);
-	HASHI_DEBUG_LOG(std::to_string(currentSpeed));
 }
 
 void PlayerMoveState::ApplyRootMotion()

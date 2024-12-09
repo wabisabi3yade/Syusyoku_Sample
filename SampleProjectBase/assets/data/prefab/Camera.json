@@ -35,10 +35,15 @@
                     "stateDatas": [
                         {
                             "parameter": {
+                                "canFovMovement": 4.0,
                                 "centerAngle": -90.0,
                                 "currentHeight": 3.0,
                                 "disHorizon": 8.0,
+                                "fovChangeRate": 3.0,
+                                "horiSpeed": 20.0,
                                 "lookOffsetY": 2.4000000953674316,
+                                "moveFov": 58.0,
+                                "normalFov": 50.0,
                                 "rotateSpeed": 120.0
                             },
                             "stateType": 0
@@ -51,7 +56,11 @@
                                 "LookSpeed": 30.0,
                                 "MaxHeight": 3.0,
                                 "MinHeight": 2.0,
-                                "MoveSpeed": 30.0
+                                "MoveSpeed": 30.0,
+                                "canFovMovement": 1.0,
+                                "fovChangeRate": 3.0,
+                                "moveFov": 65.0,
+                                "normalFov": 50.0
                             },
                             "stateType": 1
                         }
@@ -69,19 +78,19 @@
             "child": null,
             "pos": [
                 0.0,
-                11.399999618530273,
-                20.0
+                2.299999952316284,
+                -20.200000762939453
             ],
             "rotation": [
-                -1.0320650289941113e-07,
-                0.9762959480285645,
-                -0.21643970906734467,
-                -4.6553415700145706e-07
+                -0.0,
+                0.0,
+                -9.525579258706784e-08,
+                1.0
             ],
             "scale": [
-                4.199999809265137,
-                0.9999996423721313,
-                0.9999997615814209
+                1.0,
+                1.0,
+                0.9999998807907104
             ]
         }
     }

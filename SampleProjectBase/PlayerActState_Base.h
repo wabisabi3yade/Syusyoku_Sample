@@ -96,7 +96,7 @@ protected:
 
 	/// @brief プレイヤーのトランスフォームを取得
 	/// @return トランスフォーム
-	Transform& GetTransform();
+	Transform& GetMyTransform();
 
 	/// @brief アニメーションを取得する
 	/// @return アニメーション
@@ -117,6 +117,10 @@ protected:
 	/// @brief コントローラーの左スティックの入力を取得
 	/// @return 左スティックの入力
 	DirectX::SimpleMath::Vector2 GetInputLeftStick() const;
+
+	/// @brief カメラから見たコントローラーの左スティックの入力を取得
+	/// @return カメラから見た左スティックの入力(yにZ軸成分)
+	DirectX::SimpleMath::Vector2 GetInputLeftStickFromCam() const;
 
 	/// @brief その方向に入力できているか確認する
 	/// @param _checkVector 確認したい方向

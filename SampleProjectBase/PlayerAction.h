@@ -23,17 +23,17 @@ public:
 		Back	// 後ろ
 	};
 
-	/// @brief コントローラーの場所が変更するときの遷移先状態
-	enum class PlaceTransition
+	// 空中　→　地上
+	enum class AirToGround
 	{
-		// 地上　→　空中
-		ToAirMove,	// 空中移動へ
-
-		// 空中　→　地上
-		AirToGroundMove,	// 地上移動へ
+		AirToLanding,	// 着地
 		AirToGroundKnock,	// 地上ノックへ
+	};
 
-		None	// 何もなし
+	// 地上　→　空中
+	enum class GroundToAir
+	{
+		ToAirMove,	// 空中移動へ	
 	};
 
 private:
@@ -90,11 +90,17 @@ private:
 	/// @brief 現在の場所属性
 	ActionPlace currentPlace;
 
-	/// @brief 場所が変更したときにどの状態へ繋げるか変数
-	PlaceTransition reserveTransition;
+	/// @brief 空中に変更したときにどの状態へ繋げるか変数
+	GroundToAir reserveAirTransition;
+
+	/// @brief 地上に変更したときにどの状態へ繋げるか変数
+	AirToGround reserveGroundTransition;
 
 	/// @brief 地上かどうか？
 	bool isGround;
+
+	/// @brief 1フレーム前の接地状態
+	bool prevIsGround;
 
 	/// @brief ターゲット中かどうか
 	bool isTargeting;
@@ -115,7 +121,7 @@ public:
 
 	/// @brief アクションの場所を変更する
 	/// @param _setPlaceTransition どう変更するか指定する
-	void ChangePlace(PlaceTransition _setPlaceTransition);
+	void OnChangePlace();
 
 	/// @brief カメラ取得
 	/// @return カメラ
@@ -201,6 +207,15 @@ private:
 
 	/// @brief ターゲットの更新処理
 	void UpdateTargeting();
+
+	/// @brief 接地状態の更新処理
+	void UpdateGround();
+
+	/// @brief 地上から空中への処理
+	void OnGroundToAir();
+
+	/// @brief 空中から地上への処理
+	void OnAirToGround();
 
 	void ImGuiDebug() override;
 

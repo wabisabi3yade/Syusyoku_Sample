@@ -42,7 +42,7 @@ void PlayerAttackState::OnStartBehavior()
 	curAtkProgressDis = atkMaxDistance;
 
 	// ‹——£‚ðŒ©‚Ä“G‚ÖŒü‚©‚í‚¹‚é‚©”»’f
-	DXSimp::Vector3 vecToEnemy = atkPos - GetTransform().GetPosition(); vecToEnemy.y = 0.0f;
+	DXSimp::Vector3 vecToEnemy = atkPos - GetMyTransform().GetPosition(); vecToEnemy.y = 0.0f;
 	if (pActionController->GetIsTargeting() || vecToEnemy.Length() < INSTANTLOOK_DISTANCE)
 	{
 		// i‚Þ‹——£‚ð‹‚ß‚é
@@ -138,7 +138,7 @@ void PlayerAttackState::CalcProgressDis(const DirectX::SimpleMath::Vector3& _atk
 	if (!isMoveForward) return;
 
 	// Å‘å‹——£‚ð’´‚¦‚È‚¢‚É‹——£‚ð‹‚ß‚é
-	DXSimp::Vector3 distance = _atkEnemyPos - GetTransform().GetPosition();
+	DXSimp::Vector3 distance = _atkEnemyPos - GetMyTransform().GetPosition();
 	distance.y = 0.0f;
 	curAtkProgressDis = distance.Length();
 	if (curAtkProgressDis > atkMaxDistance)
@@ -189,7 +189,7 @@ void PlayerAttackState::InitParameter()
 void PlayerAttackState::LookAtEnemyInstant(DirectX::SimpleMath::Vector3 _atkEnemyPos)
 {
 	// “G‚Ì•ûŒü‚ðŒ©‚é
-	Transform& trans = GetTransform();
+	Transform& trans = GetMyTransform();
 	_atkEnemyPos.y = trans.GetPosition().y;	// yŽ²‰ñ“]‚Ì‚Ý‚·‚é
 
 	trans.LookAt(_atkEnemyPos);

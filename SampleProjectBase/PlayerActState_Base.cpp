@@ -92,7 +92,7 @@ CP_RigidBody& PlayerActState_Base::GetRB()
 	return *pActionController->GetRB();
 }
 
-Transform& PlayerActState_Base::GetTransform()
+Transform& PlayerActState_Base::GetMyTransform()
 {
 	return pActionController->GetMyTransform();
 }
@@ -127,6 +127,21 @@ DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStick() const
 	return pPlayerInput->GetValue(GameInput::ValueType::Player_Move);
 }
 
+DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStickFromCam() const
+{
+	// “ü—Í’l‚ðŽæ“¾
+	DXSimp::Vector2 inputVec = GetInputLeftStick();
+
+	// ƒJƒƒ‰‚©‚çŒ©‚½“ü—Í‚Æ‚·‚é
+	const Transform& camTrans = pActionController->GetCamera().GetTransform();
+	DXSimp::Vector3 inputVecByCam = inputVec.x * camTrans.Right() +
+		inputVec.y * camTrans.Forward();
+	inputVec = { inputVecByCam.x, inputVecByCam.z };
+	inputVec.Normalize();
+
+	return inputVec;
+}
+
 bool PlayerActState_Base::IsInputVector(InputVector _checkVector)
 {
 	// “ü—Í’l‚ðŽæ“¾
@@ -149,7 +164,7 @@ bool PlayerActState_Base::IsInputVector(InputVector _checkVector)
 	{
 		DXSimp::Vector3 targetObjVec =
 			GetTargetAccepter()->GetWorldPosByTargetObj() -
-			GetTransform().GetPosition();
+			GetMyTransform().GetPosition();
 
 		targetObjVec.Normalize(baseVec);
 	}

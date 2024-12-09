@@ -69,6 +69,10 @@ public:
 	/// @param _power パワー
 	void AddImpulse(const DirectX::SimpleMath::Vector3& _power);
 
+	/// @brief 力を加える
+	/// @param _power パワー
+	void AddForce(const DirectX::SimpleMath::Vector3& _power);
+
 	/// @brief コライダーをセットする
 	/// @param _setCollider セットするコライダーコンポーネント
 	void SetColliderShape(CP_Collider& _setCollider);

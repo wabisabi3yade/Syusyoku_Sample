@@ -11,8 +11,7 @@ namespace Mathf
 	constexpr float degToRad = 0.0174533f;	//　角度→ラジアン
 	constexpr float epsilon = std::numeric_limits<float>::epsilon();	// 最小正数
 	constexpr float smallValue = 0.000001f;	// 小さい値
-	constexpr float PI = std::numbers::pi_v<float>;	// π
-	constexpr float gravity = -9.80665f * 2.0f;	// このゲーム内の重力加速度(m/s^2)
+	constexpr float PI = std::numbers::pi_v<float>;	// 
 
 	/// @brief 値を0から最大値までで正規化する
 	/// @param _t 正規化する値

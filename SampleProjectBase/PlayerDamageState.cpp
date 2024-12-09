@@ -86,7 +86,7 @@ void PlayerDamageState::KnockMove()
 
 	// ˆÚ“®‘¬“x‚ğ‹‚ß‚é(Œã‚ë‚ÉˆÚ“®)
 	DXSimp::Vector3 moveSpeed =
-		-GetTransform().Forward() * curKnockSpeed;
+		-GetMyTransform().Forward() * curKnockSpeed;
 	GetRB().SetVelocity(moveSpeed);
 
 	prevAnimRatio = animRatio;
@@ -97,7 +97,7 @@ void PlayerDamageState::LookEnemy()
 	// “G‚Ì•ûŒü‚ğŒ©‚é
 	knockVector *= -1;
 	auto rot = Quat::RotateToVector(knockVector);
-	GetTransform().SetRotation(rot);
+	GetMyTransform().SetRotation(rot);
 }
 
 void PlayerDamageState::ImGuiDebug()

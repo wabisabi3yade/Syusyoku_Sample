@@ -30,7 +30,13 @@ public:
 	PlayerActionController_Base(PlayerAction& _pAction, CP_Player& _player, const std::string& _controllerName);
 	virtual ~PlayerActionController_Base() {}
 
+	/// @brief 初期化処理
+	/// @param _pAnimation アニメーション
+	/// @param _pRigidBody Rb
 	void Init(CP_Animation* _pAnimation, CP_RigidBody* _pRigidBody) override;
+
+	/// @brief  終了処理
+	void OnEnd();
 
 	const ITargetAccepter* GetTargetAccepter() const;
 
@@ -79,12 +85,12 @@ private:
 	/// @brief 各Stateの文字列を取得する
 	/// @param _stateId 状態のID
 	/// @return 文字列
-	std::string GetStateStr(int _stateId) override;
+	virtual std::string GetStateStr(int _stateId) = 0;
 
 	/// @brief 各StateのIDを取得する
 	/// @param _stateName　状態名
 	/// @return 状態のID
-	int GetStateId(const std::string& _stateName);
+	virtual int GetStateId(const std::string& _stateName) = 0;
 };
 
 template<class T>
