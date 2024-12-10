@@ -11,15 +11,12 @@ constexpr float INSTANTLOOK_DISTANCE(8.0f);
 PlayerAttackState::PlayerAttackState() :
 	pIsReAttack(nullptr),
 	nextCombAtkState(PlayerState::None),
-	curChangeAtkState(PlayerState::None),
 	atkMaxDistance(10.0f),
-	lookRotateSpeed(0.0f),
 	curAtkProgressDis(0.0f),
 	prevProgressDistance(0.0f),
 	curAttackTime(1),
 	attackTimeCnt(1),
-	isMoveForward(false),
-	isAttackCollisionBefore(false)
+	isMoveForward(false)
 {
 
 	attackInfos.resize(1);	// 攻撃情報を最低1作成しておく
@@ -60,7 +57,6 @@ void PlayerAttackState::OnStartBehavior()
 
 	// パラメータリセット
 	prevProgressDistance = 0.0f;
-	curChangeAtkState = PlayerState::None;
 }
 
 void PlayerAttackState::UpdateBehavior()
@@ -78,15 +74,6 @@ void PlayerAttackState::UpdateBehavior()
 void PlayerAttackState::OnEndBehavior()
 {
 	ClearVelocity(false);
-}
-
-void PlayerAttackState::TransitionCheckUpdate()
-{
-	// 攻撃入力されたらステート遷移する
-	if (GetCanCombAttack())
-		ChangeState(curChangeAtkState);
-
-	PlayerGroundState::TransitionCheckUpdate();
 }
 
 void PlayerAttackState::OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName)
@@ -126,11 +113,11 @@ void PlayerAttackState::UpdateCombInput()
 {
 	if (!pActionController->GetCanInput()) return;	// 入力受け付けていないなら
 
-	if (IsSpecialAtkInput(InputVector::Forward))
-		curChangeAtkState = PlayerState::SpecialAtkHi;
-
-	else if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
-		curChangeAtkState = nextCombAtkState;
+	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
+		pActionController->SetReserveState(
+			static_cast<int>(nextCombAtkState),
+			PlayerActionController_Base::CancelType::Attack
+		);
 }
 
 void PlayerAttackState::CalcProgressDis(const DirectX::SimpleMath::Vector3& _atkEnemyPos)
@@ -219,41 +206,6 @@ void PlayerAttackState::ForwardProgressMove()
 	GetRB().SetVelocity(transform.Forward() * curSpeed);
 
 	prevProgressDistance = curDis;
-}
-
-bool PlayerAttackState::GetCanCombAttack()
-{
-	if (curChangeAtkState == PlayerState::None) return false;
-	if (!pActionController->GetCanAttack()) return false;
-
-	return true;
-}
-
-DirectX::SimpleMath::Vector3 PlayerAttackState::GetAtkEnemyPos()
-{
-	CP_BattleManager* pBattle = CP_BattleManager::GetInstance();
-	if (!pBattle) return DXSimp::Vector3::Zero;
-
-	// 敵リストを取得する
-	const auto& enemyList = pBattle->GetEnemyList();
-
-	// 敵がいないなら
-	if (static_cast<u_int>(enemyList.size()) == 0) return DXSimp::Vector3::Zero;
-
-	DXSimp::Vector3 atkEnemyPos;
-	const ITargetAccepter* pAtkEnemy = nullptr;
-	// ターゲット先がいるなら
-	if (pAtkEnemy = GetTargetAccepter())
-	{
-		atkEnemyPos = pAtkEnemy->GetWorldPosByTargetObj();
-	}
-	else if (pAtkEnemy = (*enemyList.begin()))
-	{
-		// 本来は一番近くの敵を取得する
-		atkEnemyPos = pAtkEnemy->GetWorldPosByTargetObj();
-	}
-
-	return atkEnemyPos;
 }
 
 void PlayerAttackState::ImGuiCombAttack()

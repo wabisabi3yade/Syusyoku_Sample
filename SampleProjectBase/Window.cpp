@@ -4,7 +4,7 @@
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 constexpr SIZE DEFAULT_SIZE = { 1280, 720 };
-constexpr char CLASS_NAME[] = "ウィンドウ";
+constexpr char CLASS_NAME[] = "Duel Knight";
 
 Window::Window()
 {

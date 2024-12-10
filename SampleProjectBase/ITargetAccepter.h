@@ -12,7 +12,7 @@ public:
 
 	/// @brief そのオブジェクトのワールド座標を取得
 	/// @return ワールド座標を取得
-	virtual const DirectX::SimpleMath::Vector3& GetWorldPosByTargetObj() const = 0;
+	virtual const DirectX::SimpleMath::Vector3& GetWorldPos() const = 0;
 
 	/// @brief ターゲットする側を取得する
 	/// @param _targeter ターゲットする側

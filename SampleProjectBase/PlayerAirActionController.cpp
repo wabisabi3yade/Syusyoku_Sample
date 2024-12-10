@@ -1,17 +1,21 @@
 #include "pch.h"
 #include "PlayerAirActionController.h"
+#include "PlayerAction.h"
 
 #include "PlayerAirMove.h"
+#include "PlayerAirAttack.h"
 
 PlayerAirActionController::PlayerAirActionController(PlayerAction& _pAction, CP_Player& _player) :
 	PlayerActionController_Base(_pAction, _player, "playerAirController"),
-	downForcePower(0.0f)
+	downForcePower(0.0f),
+	isDownForce(true)
 {
 	place = ActionPlace::Air;
 
 	// 行動クラスを生成
 	using enum AirState;
 	CreateState<PlayerAirMove>(Move);
+	CreateState<PlayerAirAttack>(Attack11);
 
 	// デフォルト状態をセット
 	SetDefaultNode(static_cast<int>(Move));
@@ -19,15 +23,20 @@ PlayerAirActionController::PlayerAirActionController(PlayerAction& _pAction, CP_
 
 void PlayerAirActionController::Update()
 {
-	PlayerActionController_Base::Update();
-
 	// 下向きに力を加える
 	AddDownForce();
+
+	PlayerActionController_Base::Update();
 }
 
 bool PlayerAirActionController::ChangeAirState(const AirState& _nextActionState, bool _isForce)
 {
 	return ChangeState(static_cast<int>(_nextActionState), _isForce);
+}
+
+void PlayerAirActionController::SetIsDownForce(bool _isDown)
+{
+	isDownForce = _isDown;
 }
 
 std::string PlayerAirActionController::GetStateStr(int _stateId)
@@ -67,8 +76,12 @@ void PlayerAirActionController::Load(const nlohmann::json& _data)
 
 void PlayerAirActionController::AddDownForce()
 {
+	if (!isDownForce) return;
+
 	// 下向きに力を加える
 	GetRB()->AddForce(Vec3::Up * downForcePower);
+
+	HASHI_DEBUG_LOG("down");
 }
 
 void PlayerAirActionController::ImGuiDebug()

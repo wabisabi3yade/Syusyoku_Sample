@@ -15,13 +15,14 @@ using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
 
 
-BlendAnimationNode::BlendAnimationNode(const AnimationParameters& _animParams, std::string _nodeName)
+BlendAnimationNode::BlendAnimationNode(const AnimationParameters& _animParams, 
+	const std::string& _nodeName)
 	: AnimationNode_Base(_nodeName, NodeType::Blend), pAnimParameters(&_animParams), isUseBlend(true)
 {
 	SetAnimationTime(1.0f);
 }
 
-void BlendAnimationNode::SetAnimationData(const std::string& _animName)
+void BlendAnimationNode::AddAnimationData(const std::string& _animName)
 {
 	AnimPointData createData;
 
@@ -282,7 +283,7 @@ void BlendAnimationNode::ImGuiDebug()
 	AssetGetter::ImGuiGetCombobox<AnimationData>("AddAnimation", str);
 
 	if (ImGui::Button("Add Blend"))
-		SetAnimationData(str);
+		AddAnimationData(str);
 }
 
 void BlendAnimationNode::ImGuiAnimationInBlend()

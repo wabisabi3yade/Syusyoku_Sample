@@ -22,19 +22,6 @@ AnimationController::AnimationController()
 	pNotifyFactory = std::make_unique<AnimationNotifyFactory>(*pAnimParameters);
 }
 
-void AnimationController::CreateSingleNode(const std::string& _nodeName, const std::string& _animName)
-{
-	// 同じアニメーションがあったら
-	if (IsHaveNode(_animName))	return;
-
-	// アニメーションをセットし。ノードを配列に入れる
-	std::unique_ptr<AnimNodeInfo> pCreateInfo = std::make_unique<AnimNodeInfo>();
-	pCreateInfo->pAnimNode = std::make_unique<SingleAnimationNode>(_nodeName);
-	pCreateInfo->pAnimNode->SetAnimationData(_animName);
-
-	animNodeInfos.push_back(std::move(pCreateInfo));
-}
-
 AnimTransitionArrow* AnimationController::CreateTransitionArrow(const std::string& _fromNodeName, const std::string& _toNodeName)
 {
 	AnimNodeInfo* fromNodeInfo = GetNodeInfo(_fromNodeName);

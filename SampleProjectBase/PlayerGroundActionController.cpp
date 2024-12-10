@@ -14,28 +14,33 @@
 
 namespace DXSimp = DirectX::SimpleMath;
 
-PlayerGroundActionController::PlayerGroundActionController(PlayerAction& _pAction, CP_Player& _player) :
+PlayerGroundActionController::PlayerGroundActionController(
+	PlayerAction& _pAction,
+	CP_Player& _player) :
 	PlayerActionController_Base(_pAction, _player, "playerGroundController")
 {
 	place = ActionPlace::Ground;
 
-	// 行動クラスを生成
+	// 行動クラスを生成(下に行くほど優先度高め)
 	using enum GroundState;
 	CreateState<PlayerIdleState>(Idle);
+
 	CreateState<PlayerMoveState>(Move);
 	CreateState<PlayerTargetMove>(TargetMove);
-	CreateState<PlayerJumpState>(BeginJump);
-	CreateState<PlayerRollingMove>(Rolling);
-	CreateState<PlayerDamageState>(Damage_S);
-	CreateState<PlayerDamageState>(Damage_L);
-	CreateState<PlayerRollingMove>(Rolling);
-	CreateState<PlayerGuardState>(Guard);
+
 	CreateState<PlayerAttackState>(Attack11);
 	CreateState<PlayerAttackState>(Attack12);
 	CreateState<PlayerAttackState>(Attack13);
 	CreateState<PlayerAttackState>(Attack14);
 	CreateState<PlayerRushAttack>(SpecialAtkHi);
 	CreateState<PlayerAttackState>(SpecialAtkGuard);
+
+	CreateState<PlayerJumpState>(BeginJump);
+	CreateState<PlayerGuardState>(Guard);
+	CreateState<PlayerRollingMove>(Rolling);
+
+	CreateState<PlayerDamageState>(Damage_S);
+	CreateState<PlayerDamageState>(Damage_L);
 
 	// デフォルト状態をセット
 	SetDefaultNode(static_cast<int>(Idle));
@@ -44,6 +49,7 @@ PlayerGroundActionController::PlayerGroundActionController(PlayerAction& _pActio
 PlayerGroundActionController::~PlayerGroundActionController()
 {
 }
+
 void PlayerGroundActionController::Init(CP_Animation* _animationController,
 	CP_RigidBody* _pRigidBody)
 {

@@ -20,27 +20,15 @@ public:
 		Back	// 後ろ
 	};
 private:
-	///// @brief この行動クラスのステートタイプ
-	//PlayerState stateType;
-
 	/// @brief ターゲットを見るときの回転速度
 	float targetLookRotateSpeed;
 
-	/// @brief 最後にキャンセル予約してからの経過時間
-	float lastCancelReserveElapse;
+	/// @brief 行動が起きる優先順位(大きい方が優先)
+	int statePriority;
 
 	/// @brief ターゲット時に敵を見る行動にするか？
 	bool isTargetLookAtEnemy;
 protected:
-	/// @brief キャンセルして繰り出す状態
-	int actionReserveState;
-
-	/// @brief キャンセルして繰り出す状態
-	int atkReserveState;
-
-	/// @brief キャンセルして繰り出す状態
-	int moveReserveState;
-
 	/// @brief プレイヤーアクションコントローラー
 	PlayerActionController_Base* pActionController;
 
@@ -52,16 +40,15 @@ public:
 
 	/// @brief 初期化処理
 	/// @param _actController　プレイヤーコンポーネント
-	void Init(PlayerActionController_Base& _actController);
-
-	/// @brief 開始処理呼び出し
-	void OnStart() override;
+	/// @param _priority　優先度
+	void Init(PlayerActionController_Base& _actController, int _priority);
 
 	/// @brief 更新処理呼び出し
 	void Update() override;
 
-	/// @brief  終了処理呼び出し
-	void OnEnd() override;
+	/// @brief 優先度を取得する
+	/// @return 優先度
+	int GetPriority() const;
 
 	/// @brief セーブする
 	/// @return セーブデータ
@@ -71,9 +58,6 @@ public:
 	/// @param _data ロードするデータ 
 	void Load(const nlohmann::json& _data) override;
 protected:
-	/// @brief 入力のフラグをクリア
-	void ParameterClear();
-
 	/// @brief 速度をクリアする
 	/// @param _applyY Y軸にも反映させるか
 	void ClearVelocity(bool _applyY = true);
@@ -122,6 +106,10 @@ protected:
 	/// @return カメラから見た左スティックの入力(yにZ軸成分)
 	DirectX::SimpleMath::Vector2 GetInputLeftStickFromCam() const;
 
+	/// @brief 攻撃する敵の座標を取得する
+	/// @return 敵の座標
+	DirectX::SimpleMath::Vector3 GetAtkEnemyPos();
+
 	/// @brief その方向に入力できているか確認する
 	/// @param _checkVector 確認したい方向
 	/// @return できているか？
@@ -140,15 +128,14 @@ protected:
 private:
 	/// @brief ターゲットの方向を見る
 	void UpdateTargetLook();
-
-	/// @brief キャンセルに合わせてアクションを変更するかチェック
-	void CancelTransitionUpdate();
 protected:
 	// アニメーションコントローラ内のプレイヤー名
 	constexpr static auto SPEEDRATIO_PARAMNAME{ "speed" };
 	constexpr static auto MOVEAXIS_X_PARAMNAME{ "axisX" };	// X移動
 	constexpr static auto MOVEAXIS_Y_PARAMNAME{ "axisY" };	// Y移動
-	constexpr static auto DAMAGETRIGGER_PARAMNAME{ "damageTrigger" };	// 攻撃トリガー
+	constexpr static auto DAMAGETRIGGER_PARAMNAME{ "damageTrigger" };	// 受けダメージトリガー
+	constexpr static auto ATTACKTRIGGER_PARAMNAME{ "attackTrigger" };	// 攻撃トリガー
+	constexpr static auto REATTACK_PARAMNAME{ "isReAttack" };	// リアタック時bool
 
 	// アニメーション名
 	constexpr static auto IDLE_ANIM_NAME{ "Idle" };	// 待機状態

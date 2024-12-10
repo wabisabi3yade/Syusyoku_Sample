@@ -259,9 +259,6 @@ void GameObject::DrawCall()
 {
 	if (!isActive) return;
 
-	// 方向ベクトルを更新する
-	pTransform->UpdateVector();
-
 	for (auto& itr : pActiveComponents)
 	{
 		itr->DrawCall();

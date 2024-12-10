@@ -58,11 +58,6 @@ public:
 	AnimationController();
 	~AnimationController() {}
 
-	/// @brief シングルノードを作成
-	/// @param _nodeName ノード名
-	/// @param _animName セットするアニメーション名
-	void CreateSingleNode(const std::string& _nodeName, const std::string& _animName);
-
 	/// @brief アニメーション遷移の矢印を作成する
 	/// @param _fromNodeName 遷移元アニメーション
 	/// @param _toNodeName 遷移先アニメーション

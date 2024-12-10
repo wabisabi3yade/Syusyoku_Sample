@@ -10,11 +10,8 @@ public:
 	/// @brief  プレイヤーの行動状態
 	enum class PlayerState
 	{
-		// 無し
-		None = 99,
-
 		// 待機
-		Idle = 100,
+		Idle = 1,
 
 		// 移動
 		Move,
@@ -22,14 +19,16 @@ public:
 		Guard,	// ガード開始
 
 		// コンビネーション攻撃
-		Attack11 = 120,
+		Attack11 = 20,
 		Attack12,
 		Attack13,
-		Attack14,
 
 		// 必殺攻撃
-		HelmBreaker = 140,	// 兜割り
+		HelmBreaker = 40,	// 兜割り
 		SpecialAtkGuard,	// ガードパリィ時の攻撃
+
+		// 無し
+		None = 99
 	};
 
 protected:
@@ -71,5 +70,8 @@ private:
 	/// @brief 入力更新
 	void InputUpdate();
 
+protected:
+	// 空中行動から戻るとき先アニメーション名
+	static constexpr auto FALLLOOP_ANIM_NAME{ "Fall_Loop" };
 };
 

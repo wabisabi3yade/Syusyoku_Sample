@@ -10,9 +10,6 @@ private:
 	/// @brief コンビネーション攻撃の先
 	PlayerState nextCombAtkState;
 
-	/// @brief 遷移する先の攻撃
-	PlayerState curChangeAtkState;
-
 	/// @brief 攻撃情報リスト(単発なら最初の情報を使用する)
 	std::vector<HashiTaku::AttackInformation> attackInfos;
 
@@ -31,9 +28,6 @@ private:
 	/// @brief 前フレームまでに進んだ距離
 	float prevProgressDistance;
 
-	/// @brief 最初に見る回転速度
-	float lookRotateSpeed;
-
 	/// @brief 攻撃情報何個目か
 	u_int curAttackTime;
 
@@ -42,9 +36,6 @@ private:
 
 	/// @brief 前へ進むか？
 	bool isMoveForward;
-
-	/// @brief 攻撃判定出る前か？
-	bool isAttackCollisionBefore;
 public:
 	PlayerAttackState();
 	virtual ~PlayerAttackState() {}
@@ -56,7 +47,6 @@ protected:
 	void OnStartBehavior() override;
 	void UpdateBehavior() override;
 	void OnEndBehavior() override;
-	void TransitionCheckUpdate() override;
 
 	void OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName) override;
 
@@ -85,14 +75,6 @@ private:
 	/// @brief 攻撃時に前へ進む
 	void ForwardProgressMove();
 
-	/// @brief 攻撃できるか取得する
-	/// @return 攻撃できるか？
-	bool GetCanCombAttack();
-
-	/// @brief 攻撃する敵の座標を取得する
-	/// @return 敵の座標
-	DirectX::SimpleMath::Vector3 GetAtkEnemyPos();
-
 	void ImGuiCombAttack();
 private:
 #ifdef EDIT
@@ -105,10 +87,4 @@ private:
 		"Attack14"
 	};
 #endif // EDIT
-public:
-	/// @brief 攻撃トリガー
-	constexpr static auto ATTACKTRIGGER_PARAMNAME{ "attackTrigger" };
-
-	/// @brief リアタックするときに呼び出す変数
-	static constexpr auto REATTACK_PARAMNAME{ "isReAttack" };
 };

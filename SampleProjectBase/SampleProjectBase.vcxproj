@@ -248,12 +248,14 @@
     <ClCompile Include="IObserever.cpp" />
     <ClCompile Include="ISetTargeterForCam.cpp" />
     <ClCompile Include="ITargetAccepter.cpp" />
+    <ClCompile Include="LayerdAnimationNode.cpp" />
     <ClCompile Include="MaterialCreater.cpp" />
     <ClCompile Include="AnimNodePlayer_Base.cpp" />
     <ClCompile Include="MyClass2.cpp" />
     <ClCompile Include="PlayerAction.cpp" />
     <ClCompile Include="PlayerActionController_Base.cpp" />
     <ClCompile Include="PlayerAirActionController.cpp" />
+    <ClCompile Include="PlayerAirAttack.cpp" />
     <ClCompile Include="PlayerAirMove.cpp" />
     <ClCompile Include="PlayerAirState.cpp" />
     <ClCompile Include="PlayerDamageState.cpp" />
@@ -499,6 +501,7 @@
     <ClInclude Include="ISaveLoad.h" />
     <ClInclude Include="ISetTargeterForCam.h" />
     <ClInclude Include="ITargetAccepter.h" />
+    <ClInclude Include="LayerdAnimationNode.h" />
     <ClInclude Include="MaterialCreater.h" />
     <ClInclude Include="AnimNodePlayer_Base.h" />
     <ClInclude Include="MyClass2.h" />
@@ -506,6 +509,7 @@
     <ClInclude Include="PlayerAction.h" />
     <ClInclude Include="PlayerActionController_Base.h" />
     <ClInclude Include="PlayerAirActionController.h" />
+    <ClInclude Include="PlayerAirAttack.h" />
     <ClInclude Include="PlayerAirMove.h" />
     <ClInclude Include="PlayerAirState.h" />
     <ClInclude Include="PlayerDamageState.h" />

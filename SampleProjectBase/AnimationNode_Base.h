@@ -13,6 +13,7 @@ public:
 	{
 		Single,	// 一つだけのアニメーション
 		Blend,	// ブレンドされているアニメーション
+		Layerd,	// 部位ごと
 	};
 
 #ifdef EDIT
@@ -56,15 +57,12 @@ private:
 	/// @brief 回転量のルートモーションを適用するか
 	bool isRootMotionRot;
 public:
-	AnimationNode_Base(std::string _nodeName, NodeType _type);
+	AnimationNode_Base(const std::string& _nodeName,
+		NodeType _type);
 	virtual ~AnimationNode_Base() {}
 
 	// 再生中のときに表示
 	virtual void ImGuiPlaying();
-
-	/// @brief アニメーションを追加する
-	/// @param _animData アニメーション名
-	virtual void SetAnimationData(const std::string& _animName) = 0;
 
 	// ノード名をセット
 	void SetNodeName(const std::string& _nodeName);

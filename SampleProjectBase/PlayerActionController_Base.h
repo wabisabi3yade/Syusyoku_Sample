@@ -17,6 +17,22 @@ public:
 		Air	// 空中
 	};
 
+	/// @brief キャンセルの種類
+	enum class CancelType
+	{
+		Action,	// アクション(ローリングなど)
+		Attack,	// 攻撃
+		Move,	// 移動
+		MaxNum
+	};
+
+private:
+	/// @brief キャンセル可能になったときの変更先のステート(予約)
+	std::array<int, static_cast<u_int>(CancelType::MaxNum)> reserveCancelStates;
+
+	/// @brief 現在のフレームで各キャンセルタイプが予約されたか？
+	std::array<bool, static_cast<u_int>(CancelType::MaxNum)> isReservedCurFrame;
+
 protected:
 	/// @brief どの場所のコントローラーか
 	ActionPlace place;
@@ -35,8 +51,16 @@ public:
 	/// @param _pRigidBody Rb
 	void Init(CP_Animation* _pAnimation, CP_RigidBody* _pRigidBody) override;
 
+	/// @brief 更新処理
+	void Update() override;
+
 	/// @brief  終了処理
 	void OnEnd();
+
+	/// @brief 予約状態をセットする
+	/// @param _setState 予約する状態
+	/// @param _cancelState どのキャンセルか？
+	void SetReserveState(int _setState, CancelType _cancelState);
 
 	const ITargetAccepter* GetTargetAccepter() const;
 
@@ -76,11 +100,25 @@ protected:
 	/// @brief 状態を遷移
 	/// @param _nextActionState アクションのID
 	/// @param _isForce 強制して変更するか？
-	bool ChangeState(int _nextActionState, bool _isForce);
+	bool ChangeState(int _nextActionState, bool _isForce = false);
 private:
 	/// @brief 更新できるか取得
 	/// @return 更新できるか？
 	bool GetCanUpdate();
+
+	/// @brief 指定したステートの優先度を取得
+	/// @param _stateId ステートのId
+	/// @return ステートの優先度(なければ-99)
+	int GetStatePriority(int _stateId) const;
+
+	/// @brief 予約状態からステートを変更する更新処理
+	void ChangeStateFromReserve();
+
+	/// @brief 予約状態をリセット
+	void ResetReserveState();
+
+	/// @brief 毎ループ初めに予約状態フラグをリセット行う
+	void ResetReservedFlag();
 
 	/// @brief 各Stateの文字列を取得する
 	/// @param _stateId 状態のID
@@ -96,8 +134,11 @@ private:
 template<class T>
 inline void PlayerActionController_Base::CreateState(int _actionState)
 {
+	int hasStateCnt = static_cast<int>(stateNodeList.size());
+
 	std::unique_ptr<PlayerActState_Base> createState = std::make_unique<T>();
-	createState->Init(*this);
+	// ステートの数から優先度をつけていく
+	createState->Init(*this, hasStateCnt);
 
 	AddNode(static_cast<int>(_actionState), std::move(createState));
 }

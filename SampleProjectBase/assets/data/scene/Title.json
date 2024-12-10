@@ -129,42 +129,6 @@
                 "active": true,
                 "components": [
                     {
-                        "enable": true,
-                        "meshName": "Knight.fbx",
-                        "name": "MeshRenderer",
-                        "priority": 0
-                    }
-                ],
-                "layer": 0,
-                "name": "Rock1_1",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        9.899999618530273,
-                        -3.0999999046325684,
-                        1.100000023841858
-                    ],
-                    "rotation": [
-                        0.6934794783592224,
-                        0.233113095164299,
-                        -0.25011661648750305,
-                        0.6341814994812012
-                    ],
-                    "scale": [
-                        2.0,
-                        2.0,
-                        1.999999761581421
-                    ]
-                }
-            }
-        },
-        {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
                         "X_Left": "Sunset_left.png",
                         "X_Right": "Sunset_right.png",
                         "Y_Bottom": "Sunset_down.png",

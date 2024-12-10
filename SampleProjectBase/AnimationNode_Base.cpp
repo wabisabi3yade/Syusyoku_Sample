@@ -11,7 +11,7 @@ std::vector<std::string> AnimationNode_Base::edit_nodeTypeStrings =
 };
 #endif // EDIT
 
-AnimationNode_Base::AnimationNode_Base(std::string _nodeName, NodeType _type)
+AnimationNode_Base::AnimationNode_Base(const std::string& _nodeName, NodeType _type)
 	: nodeName(_nodeName), nodeType(_type), curPlayingRatio(0.0f), lastPlayingRatio(0.0f), playNodeSpeedTimes(1.0f), animationTime(1.0f), isLoop(true), isFinish(false), isRootMotionPosXZ(false), isRootMotionPosY(false), isRootMotionRot(false)
 {
 	pCurveSpeed = std::make_unique<AnimationCurve>();

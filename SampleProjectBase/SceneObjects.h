@@ -13,9 +13,11 @@ class SceneObjects : public HashiTaku::IImGuiUser
 
 	// シーンで使用するオブジェクト配列（オブジェクトの名前がキー値）
 	SceneObjectList objList;
+	//std::list<GameObject*> activeObjList;
 
 	// UI用のリスト(描画を上のリストより後にするため)
 	SceneObjectList uiList;
+	//std::list<GameObject*> activeUIList;
 
 	/// @brief z座標の値でソートした描画UIリスト
 	std::list<GameObject*> drawUiList;
