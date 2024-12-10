@@ -10,11 +10,6 @@
 
 using namespace DirectX::SimpleMath;
 
-void SingleAnimationNode::ImGuiPlaying()
-{
-	AnimationNode_Base::ImGuiPlaying();
-}
-
 void SingleAnimationNode::SetAnimationData(const std::string& _animName)
 {
 	AnimationData* pData = AssetGetter::GetAsset<AnimationData>(_animName);

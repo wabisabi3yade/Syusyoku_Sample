@@ -39,9 +39,6 @@ public:
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
-
-	// Ä¶‚É•\¦‚·‚é
-	void ImGuiPlaying() override;
 private:
 	void ImGuiDebug() override;
 };

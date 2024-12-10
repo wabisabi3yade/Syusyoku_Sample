@@ -898,6 +898,9 @@
     <Filter Include="ソース ファイル\Animation\AnimNode\Layerd">
       <UniqueIdentifier>{ef3d9ba5-0661-41f2-816f-409d2fb0742b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimControllPlayer\NodePlayer\LayerdNodePlayer">
+      <UniqueIdentifier>{58f3bed1-2d37-455b-9e55-1fb49d1fa172}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1677,7 +1680,10 @@
       <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Air\Attack</Filter>
     </ClCompile>
     <ClCompile Include="LayerdAnimationNode.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Animation\AnimNode\Layerd</Filter>
+    </ClCompile>
+    <ClCompile Include="LayerdNodePlayer.cpp">
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\LayerdNodePlayer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2465,7 +2471,10 @@
       <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Air\Attack</Filter>
     </ClInclude>
     <ClInclude Include="LayerdAnimationNode.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Animation\AnimNode\Layerd</Filter>
+    </ClInclude>
+    <ClInclude Include="LayerdNodePlayer.h">
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\LayerdNodePlayer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

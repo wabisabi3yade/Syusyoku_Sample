@@ -47,7 +47,7 @@ private:
 	/// @brief 最初に始めるノード情報
 	AnimNodeInfo* pDefaultNodeInfo;
 
-	/// @brief 動かすボーン配列
+	/// @brief	対応しているボーン配列
 	BoneList* pAssetBoneList;
 
 	/// @brief 再生速度

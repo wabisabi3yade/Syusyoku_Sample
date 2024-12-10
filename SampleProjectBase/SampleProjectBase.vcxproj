@@ -249,6 +249,7 @@
     <ClCompile Include="ISetTargeterForCam.cpp" />
     <ClCompile Include="ITargetAccepter.cpp" />
     <ClCompile Include="LayerdAnimationNode.cpp" />
+    <ClCompile Include="LayerdNodePlayer.cpp" />
     <ClCompile Include="MaterialCreater.cpp" />
     <ClCompile Include="AnimNodePlayer_Base.cpp" />
     <ClCompile Include="MyClass2.cpp" />
@@ -502,6 +503,7 @@
     <ClInclude Include="ISetTargeterForCam.h" />
     <ClInclude Include="ITargetAccepter.h" />
     <ClInclude Include="LayerdAnimationNode.h" />
+    <ClInclude Include="LayerdNodePlayer.h" />
     <ClInclude Include="MaterialCreater.h" />
     <ClInclude Include="AnimNodePlayer_Base.h" />
     <ClInclude Include="MyClass2.h" />

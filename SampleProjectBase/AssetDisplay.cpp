@@ -193,7 +193,9 @@ void AssetDisplay::DisplayBoneList()
 		// ボーンの名前表示
 		for (u_int b_i = 0; b_i < boneList.GetBoneCnt(); b_i++)
 		{
-			std::string boneName = boneList.GetBone(b_i)->GetBoneName();
+			ImGui::Text(std::to_string(b_i).c_str());
+			ImGui::SameLine();
+			std::string boneName = " " + boneList.GetBone(b_i)->GetBoneName();
 			ImGui::Text(boneName.c_str());
 		}
 

@@ -30,12 +30,6 @@ private:
 	/// @brief ノードの種類
 	NodeType nodeType;
 
-	/// @brief 現在の再生時間
-	float curPlayingRatio;
-
-	/// @brief 現在の再生時間
-	float lastPlayingRatio;
-
 	/// @brief ノードの再生速度倍率(1.0は等速)
 	float playNodeSpeedTimes;
 
@@ -54,15 +48,10 @@ private:
 	/// @brief 移動座標のルートモーションを適用するか(Y座標)
 	bool isRootMotionPosY;
 
-	/// @brief 回転量のルートモーションを適用するか
-	bool isRootMotionRot;
 public:
 	AnimationNode_Base(const std::string& _nodeName,
 		NodeType _type);
 	virtual ~AnimationNode_Base() {}
-
-	// 再生中のときに表示
-	virtual void ImGuiPlaying();
 
 	// ノード名をセット
 	void SetNodeName(const std::string& _nodeName);
@@ -78,13 +67,6 @@ public:
 
 	// ノードの種類を取得
 	NodeType GetNodeType() const;
-
-	// 現在の再生割合を取得
-	float GetCurPlayRatio() const;
-
-	/// @brief 1フレーム前の再生割合を取得
-	float GetLastPlayRatio() const;
-
 	// 再生時間を取得
 	float GetAnimationTime() const;
 
@@ -107,10 +89,6 @@ public:
 	/// @return 移動するか？
 	bool GetIsRootMotionY() const;
 
-	/// @brief ルートモーションで回転するか？
-	/// @return 回転するか？
-	bool GetIsRootMotionRot() const;
-
 	/// @brief アニメーションのトランスフォーム取得
 	/// @param _outTransform 格納するボーントランスフォーム
 	/// @param _boneId ボーンのID
@@ -129,8 +107,6 @@ public:
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
 private:
-	void Copy(const AnimationNode_Base& _other);
-
 	// ノードのパラメーター設定
 	void ImGuiSetParameter();
 protected:

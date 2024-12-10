@@ -20,6 +20,22 @@ public:
 	LayerdAnimationNode(const std::string& _nodeName);
 	~LayerdAnimationNode() {}
 
+	/// @brief アニメーションのトランスフォーム取得
+	/// @param _outTransform 格納するボーントランスフォーム
+	/// @param _boneId ボーンのID
+	/// @param _requestRatio 取得する指定のアニメーション割合
+	void GetAnimTransform(BoneTransform& _outTransform, u_int _boneId, float _requestRatio) const override;
 
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
+private:
+	/// @brief 機能できているか確認する
+	/// @return 機能できているか？
+	bool CanWarking() const;
+
+	void ImGuiDebug() override;
+
+	// ブレンドのボーIDを取得する
+	void ImGuiGetBlendBoneId();
 };
 

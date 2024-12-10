@@ -271,7 +271,7 @@ void BlendAnimationNode::ImGuiDebug()
 {
 	AnimationNode_Base::ImGuiDebug();
 
-	ImGui::Checkbox("UseBlend", &isUseBlend);
+	//ImGui::Checkbox("UseBlend", &isUseBlend);
 
 	ImGuiAxisParam();
 
