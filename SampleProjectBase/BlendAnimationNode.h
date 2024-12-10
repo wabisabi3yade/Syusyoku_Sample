@@ -71,12 +71,12 @@ private:
 	/// @brief アニメーション間でブレンドする(しない場合、ウェイトが大きいアニメーションだけ)
 	bool isUseBlend;
 public:
-	BlendAnimationNode(const AnimationParameters& _animParams, std::string _nodeName);
+	BlendAnimationNode(const AnimationParameters& _animParams, const std::string& _nodeName);
 	~BlendAnimationNode() {}
 
 	/// @brief アニメーションを追加する
 	/// @param _animData アニメーションデータ
-	void SetAnimationData(const std::string& _animName) override;
+	void AddAnimationData(const std::string& _animName);
 
 	/// @brief ブレンド値とするアニメーションパラメータ名を取得
 	/// @param _axisIdx 軸番号(0はX、1はY)

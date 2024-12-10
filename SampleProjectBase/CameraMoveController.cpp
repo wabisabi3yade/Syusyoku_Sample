@@ -178,7 +178,7 @@ const DirectX::SimpleMath::Vector3& CameraMoveController::GetLookAtWorldPos() co
 {
 	if (!pLookAtTransform) return DirectX::SimpleMath::Vector3::Zero;
 
-	return pLookAtTransform->GetWorldPosByTargetObj();
+	return pLookAtTransform->GetWorldPos();
 }
 
 nlohmann::json CameraMoveController::Save()

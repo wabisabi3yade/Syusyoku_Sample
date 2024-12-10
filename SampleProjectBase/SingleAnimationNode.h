@@ -7,13 +7,13 @@ class SingleAnimationNode : public AnimationNode_Base
 	/// @brief アニメーションデータ
 	AnimationData* pAnimationData;
 public:
-	SingleAnimationNode(std::string _nodeName) : AnimationNode_Base(_nodeName, NodeType::Single), pAnimationData(nullptr) {}
+	SingleAnimationNode(const std::string& _nodeName) : AnimationNode_Base(_nodeName, NodeType::Single), pAnimationData(nullptr) {}
 
 	~SingleAnimationNode() {}
 
 	/// @brief アニメーション
 	/// @param _animData アニメーションデータ
-	void SetAnimationData(const std::string& _animName) override;
+	void SetAnimationData(const std::string& _animName);
 
 	// アニメーションデータを取得する
 	const AnimationData& GetAnimationData() const;
@@ -39,9 +39,6 @@ public:
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
-
-	// 再生時に表示する
-	void ImGuiPlaying() override;
 private:
 	void ImGuiDebug() override;
 };

@@ -17,23 +17,23 @@
                     "value": 0
                 },
                 {
-                    "name": "damageTrigger",
-                    "type": 3
-                },
-                {
                     "name": "isReAttack",
                     "type": 0,
                     "value": false
                 },
                 {
-                    "name": "attackCollision",
-                    "type": 0,
-                    "value": false
+                    "name": "damageTrigger",
+                    "type": 3
                 },
                 {
                     "name": "canKnock",
                     "type": 0,
                     "value": true
+                },
+                {
+                    "name": "attackCollision",
+                    "type": 0,
+                    "value": false
                 },
                 {
                     "name": "deadTrigger",
@@ -43,6 +43,49 @@
             "assetName": "ANC_Boss",
             "defaultNode": "Idle",
             "groupArrows": [
+                {
+                    "arrows": [
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "deadTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 70,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toNode": "Dead"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toNode": "KnockSmall"
+                        }
+                    ],
+                    "name": "Attack"
+                },
                 {
                     "arrows": [
                         {
@@ -112,49 +155,6 @@
                         }
                     ],
                     "name": "MoveToAttack"
-                },
-                {
-                    "arrows": [
-                        {
-                            "param": {
-                                "conditionList": [
-                                    {
-                                        "condition": null,
-                                        "paramName": "deadTrigger",
-                                        "typeKind": 3
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
-                                "priority": 70,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.0
-                            },
-                            "toNode": "Dead"
-                        },
-                        {
-                            "param": {
-                                "conditionList": [
-                                    {
-                                        "condition": null,
-                                        "paramName": "damageTrigger",
-                                        "typeKind": 3
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
-                                "priority": 0,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.0
-                            },
-                            "toNode": "KnockSmall"
-                        }
-                    ],
-                    "name": "Attack"
                 }
             ],
             "nodeInfoData": [
@@ -172,7 +172,6 @@
                             "useHermite": true
                         },
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.409999966621399
@@ -309,7 +308,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 0.800000011920929
@@ -461,7 +459,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.100000023841858
@@ -570,7 +567,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -668,7 +664,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.159999966621399
@@ -904,7 +899,6 @@
                             "useHermite": true
                         },
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
                         "speed": 1.0
@@ -953,7 +947,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
                         "speed": 1.0
@@ -1015,7 +1008,6 @@
                             "useHermite": true
                         },
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.100000023841858
@@ -1103,7 +1095,6 @@
                             "useHermite": true
                         },
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -1157,7 +1148,6 @@
                             }
                         ],
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0,
@@ -1205,7 +1195,6 @@
                             }
                         ],
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0,
@@ -1251,14 +1240,14 @@
                     "value": 0
                 },
                 {
-                    "name": "targeting",
-                    "type": 0,
-                    "value": false
-                },
-                {
                     "name": "speed",
                     "type": 2,
                     "value": 0.0
+                },
+                {
+                    "name": "targeting",
+                    "type": 0,
+                    "value": false
                 },
                 {
                     "name": "canCancel",
@@ -1275,14 +1264,14 @@
                     "value": 0.0
                 },
                 {
-                    "name": "attackCollision",
-                    "type": 0,
-                    "value": false
-                },
-                {
                     "name": "axisY",
                     "type": 2,
                     "value": 0.0
+                },
+                {
+                    "name": "attackCollision",
+                    "type": 0,
+                    "value": false
                 },
                 {
                     "name": "rollingTrigger",
@@ -2179,7 +2168,6 @@
                             }
                         ],
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0,
@@ -2257,7 +2245,6 @@
                             "useHermite": true
                         },
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -2333,7 +2320,6 @@
                             }
                         ],
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0,
@@ -2411,7 +2397,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
                         "speed": 1.0
@@ -2603,7 +2588,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
                         "speed": 1.0
@@ -2793,7 +2777,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -2985,7 +2968,6 @@
                             "useHermite": true
                         },
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -3054,7 +3036,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.9199999570846558
@@ -3171,7 +3152,6 @@
                             "useHermite": true
                         },
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -3328,7 +3308,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -3468,7 +3447,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -3554,7 +3532,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
                         "speed": 1.7899999618530273
@@ -3640,7 +3617,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
                         "speed": 2.990000009536743
@@ -3726,7 +3702,6 @@
                             "useHermite": true
                         },
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -3820,7 +3795,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
                         "speed": 2.0
@@ -3965,7 +3939,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
                         "speed": 1.2400000095367432
@@ -4131,7 +4104,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
                         "speed": 2.380000114440918
@@ -4241,7 +4213,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
                         "speed": 1.0
@@ -4431,7 +4402,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -4453,14 +4423,14 @@
                     "value": 0
                 },
                 {
-                    "name": "targeting",
-                    "type": 0,
-                    "value": false
-                },
-                {
                     "name": "speed",
                     "type": 2,
                     "value": 0.0
+                },
+                {
+                    "name": "targeting",
+                    "type": 0,
+                    "value": false
                 },
                 {
                     "name": "canCancel",
@@ -4477,14 +4447,14 @@
                     "value": 0.0
                 },
                 {
-                    "name": "attackCollision",
-                    "type": 0,
-                    "value": false
-                },
-                {
                     "name": "axisY",
                     "type": 2,
                     "value": 0.0
+                },
+                {
+                    "name": "attackCollision",
+                    "type": 0,
+                    "value": false
                 },
                 {
                     "name": "rollingTrigger",
@@ -4940,10 +4910,6 @@
                     "name": "Move"
                 },
                 {
-                    "arrows": null,
-                    "name": "AirMove"
-                },
-                {
                     "arrows": [
                         {
                             "param": {
@@ -5137,6 +5103,59 @@
                         }
                     ],
                     "name": "Guard"
+                },
+                {
+                    "arrows": [
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "isGround",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 50,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toNode": "Fall_Land"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    },
+                                    {
+                                        "condition": {
+                                            "iCompare": 20,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toNode": "AirAttack1"
+                        }
+                    ],
+                    "name": "AirMove"
                 },
                 {
                     "arrows": [
@@ -5393,6 +5412,32 @@
                         }
                     ],
                     "name": "Action"
+                },
+                {
+                    "arrows": [
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "isGround",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toNode": "Fall_Land"
+                        }
+                    ],
+                    "name": "AirAttack"
                 }
             ],
             "nodeInfoData": [
@@ -5451,7 +5496,6 @@
                             }
                         ],
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0,
@@ -5529,7 +5573,6 @@
                             "useHermite": true
                         },
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -5605,7 +5648,6 @@
                             }
                         ],
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0,
@@ -5708,7 +5750,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
                         "speed": 1.0
@@ -5925,7 +5966,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
                         "speed": 1.0
@@ -6152,7 +6192,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -6344,7 +6383,6 @@
                             "useHermite": true
                         },
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -6413,7 +6451,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.9199999570846558
@@ -6530,7 +6567,6 @@
                             "useHermite": true
                         },
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -6711,7 +6747,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -6851,7 +6886,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -6937,7 +6971,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
                         "speed": 1.7899999618530273
@@ -7023,7 +7056,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
                         "speed": 2.990000009536743
@@ -7109,7 +7141,6 @@
                             "useHermite": true
                         },
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -7203,7 +7234,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
                         "speed": 2.0
@@ -7348,7 +7378,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
                         "speed": 1.2400000095367432
@@ -7514,7 +7543,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
                         "speed": 2.380000114440918
@@ -7661,7 +7689,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
                         "speed": 1.0
@@ -7851,7 +7878,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -7876,10 +7902,9 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
-                        "speed": 5.650000095367432
+                        "speed": 6.820000171661377
                     },
                     "arrowDataList": [
                         {
@@ -7941,7 +7966,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -7958,7 +7982,7 @@
                                         "typeKind": 0
                                     }
                                 ],
-                                "exitRatio": 0.1599999964237213,
+                                "exitRatio": 0.3199999928474426,
                                 "interpolate": 0,
                                 "isHaveExit": true,
                                 "priority": 0,
@@ -7967,6 +7991,40 @@
                                 "transTime": 0.20000000298023224
                             },
                             "toName": "Fall_Loop"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 1
+                                        },
+                                        "paramName": "isGround",
+                                        "typeKind": 0
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    },
+                                    {
+                                        "condition": {
+                                            "iCompare": 20,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "AirAttack1"
                         }
                     ],
                     "groupArrowName": "",
@@ -8014,64 +8072,12 @@
                             "useHermite": true
                         },
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 0.6000000238418579
                     },
-                    "arrowDataList": [
-                        {
-                            "arrowParam": {
-                                "conditionList": [
-                                    {
-                                        "condition": {
-                                            "bJudgeType": 0
-                                        },
-                                        "paramName": "isGuard",
-                                        "typeKind": 0
-                                    },
-                                    {
-                                        "condition": {
-                                            "fCompare": 0.0,
-                                            "fJudgeType": 0
-                                        },
-                                        "paramName": "speed",
-                                        "typeKind": 2
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
-                                "priority": 1,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.20000000298023224
-                            },
-                            "toName": "Fall_LandForward"
-                        },
-                        {
-                            "arrowParam": {
-                                "conditionList": [
-                                    {
-                                        "condition": {
-                                            "bJudgeType": 0
-                                        },
-                                        "paramName": "isGround",
-                                        "typeKind": 0
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
-                                "priority": 0,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.10000000149011612
-                            },
-                            "toName": "Fall_Land"
-                        }
-                    ],
-                    "groupArrowName": "",
+                    "arrowDataList": null,
+                    "groupArrowName": "AirMove",
                     "nodeName": "Fall_Loop",
                     "nodeType": 0,
                     "notifyList": null
@@ -8097,7 +8103,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.600000023841858
@@ -8148,7 +8153,7 @@
                 },
                 {
                     "animNode": {
-                        "animName": "knight_FallLandForward.fbx",
+                        "animName": "knight_TwinAttack1.fbx",
                         "animationCurve": {
                             "easeKind": 0,
                             "endValue": 1.0,
@@ -8159,15 +8164,28 @@
                             "startVector": 0.0,
                             "useHermite": true
                         },
-                        "isLoop": true,
-                        "isRMR": false,
+                        "isLoop": false,
                         "isRMXZ": false,
                         "isRMY": false,
-                        "speed": 1.0
+                        "speed": 3.700000047683716
                     },
-                    "arrowDataList": null,
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "Fall_Loop"
+                        }
+                    ],
                     "groupArrowName": "",
-                    "nodeName": "Fall_LandForward",
+                    "nodeName": "AirAttack1",
                     "nodeType": 0,
                     "notifyList": null
                 }
@@ -8199,7 +8217,6 @@
                             "useHermite": true
                         },
                         "isLoop": true,
-                        "isRMR": false,
                         "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
@@ -8244,7 +8261,6 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMR": false,
                         "isRMXZ": true,
                         "isRMY": false,
                         "speed": 1.0

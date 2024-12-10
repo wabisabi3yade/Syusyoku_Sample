@@ -47,7 +47,7 @@ private:
 	/// @brief 最初に始めるノード情報
 	AnimNodeInfo* pDefaultNodeInfo;
 
-	/// @brief 動かすボーン配列
+	/// @brief	対応しているボーン配列
 	BoneList* pAssetBoneList;
 
 	/// @brief 再生速度
@@ -57,11 +57,6 @@ public:
 	/// @param _setType コントローラーの種類
 	AnimationController();
 	~AnimationController() {}
-
-	/// @brief シングルノードを作成
-	/// @param _nodeName ノード名
-	/// @param _animName セットするアニメーション名
-	void CreateSingleNode(const std::string& _nodeName, const std::string& _animName);
 
 	/// @brief アニメーション遷移の矢印を作成する
 	/// @param _fromNodeName 遷移元アニメーション

@@ -96,13 +96,13 @@ void AnimBlendNodePlayer::AnimationUpdate(std::vector<BoneTransform>& _outTransf
 		pBlendNode->FindBlendPairTwoAxis(curBlendValues, blendingAnimData);
 	}
 
-	// ブレンドしなかったら
-	if (!pBlendNode->GetIsUseBlend())
-	{
-		// 一番ウェイトが大きいものだけを残す
-		blendingAnimData.erase(blendingAnimData.begin() + 1, blendingAnimData.end());
-		blendingAnimData[0].blendWeight = 1.0f;
-	}
+	//// ブレンドしなかったら
+	//if (!pBlendNode->GetIsUseBlend())
+	//{
+	//	// 一番ウェイトが大きいものだけを残す
+	//	blendingAnimData.erase(blendingAnimData.begin() + 1, blendingAnimData.end());
+	//	blendingAnimData[0].blendWeight = 1.0f;
+	//}
 
 	u_int blendAnimCnt = static_cast<u_int>(blendingAnimData.size());
 	_outTransforms.resize(pAssetBoneList->GetBoneCnt());

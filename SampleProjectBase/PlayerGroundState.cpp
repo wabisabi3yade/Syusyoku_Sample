@@ -5,7 +5,7 @@
 // 移動でキャンセルができるスティックの入力量
 constexpr float CAN_MOVECANCEL_INPUT(0.3f);
 
-PlayerGroundState::PlayerGroundState() 
+PlayerGroundState::PlayerGroundState()
 {
 }
 
@@ -44,26 +44,6 @@ void PlayerGroundState::Load(const nlohmann::json& _data)
 	PlayerActState_Base::Load(_data);
 }
 
-void PlayerGroundState::TransitionCheckUpdate()
-{
-	using enum PlayerState;
-	if (pActionController->GetCanAttack() && atkReserveState != static_cast<int>(None))
-	{
-		ChangeState(static_cast<PlayerState>(atkReserveState));
-		return;
-	}
-	if (pActionController->GetCanAction() && actionReserveState != static_cast<int>(None))
-	{
-		ChangeState(static_cast<PlayerState>(actionReserveState));
-		return;
-	}
-	if (pActionController->GetCanMove() && moveReserveState != static_cast<int>(None))
-	{
-		ChangeState(static_cast<PlayerState>(moveReserveState));
-		return;
-	}
-}
-
 void PlayerGroundState::ChangeState(PlayerState _nextState, bool _isForce)
 {
 	CastGroundController().ChangeGroundState(_nextState, _isForce);
@@ -79,54 +59,63 @@ void PlayerGroundState::InputUpdate()
 	if (!pActionController->GetCanInput()) return;	// 入力受け付けていないなら
 
 	using enum PlayerState;
+	using CancelType = PlayerActionController_Base::CancelType;
+
+	// アクションキャンセル
 	// ガード
 	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Guard))
 	{
-		atkReserveState = static_cast<int>(None);
-		actionReserveState = static_cast<int>(Guard);
+		pActionController->SetReserveState(static_cast<int>(Guard),
+			CancelType::Action);
 	}
 	// ローリングボタンを押す　かつ　左スティックの傾きが足りる
-	else if (IsRollingInput())
+	if (IsRollingInput())
 	{
-		atkReserveState = static_cast<int>(None);
-		actionReserveState = static_cast<int>(Rolling);
+		pActionController->SetReserveState(static_cast<int>(Rolling),
+			CancelType::Action);
 	}
 	// ジャンプ
-	else if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Jump))
+	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Jump))
 	{
-		atkReserveState = static_cast<int>(None);
-		actionReserveState = static_cast<int>(BeginJump);
+		pActionController->SetReserveState(static_cast<int>(BeginJump),
+			CancelType::Action);
 	}
+
+	// 攻撃キャンセル
 	// 前突進攻撃
-	else if (IsSpecialAtkInput(InputVector::Forward))
+	if (IsSpecialAtkInput(InputVector::Forward))
 	{
-		actionReserveState = static_cast<int>(None);
-		atkReserveState = static_cast<int>(SpecialAtkHi);
+		pActionController->SetReserveState(static_cast<int>(SpecialAtkHi),
+			CancelType::Attack);
 	}
 	// 攻撃
-	else if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
+	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
 	{
-		actionReserveState = static_cast<int>(None);
-		atkReserveState = static_cast<int>(Attack11);
+		pActionController->SetReserveState(static_cast<int>(Attack11),
+			CancelType::Attack);
 	}
-	// 移動キャンセル
-	else
-	{
-		// 入力量
-		float inputMag = std::min(1.0f,
-			pPlayerInput->GetValue(GameInput::ValueType::Player_Move).Length());
 
-		// スティックの入力量が大きければ
-		if (inputMag > CAN_MOVECANCEL_INPUT)
+	// 移動キャンセル
+	// 入力量
+	float inputMag = std::min(1.0f,
+		pPlayerInput->GetValue(GameInput::ValueType::Player_Move).Length());
+
+	// スティックの入力量が大きければ
+	if (inputMag > CAN_MOVECANCEL_INPUT)
+	{
+		PlayerState curState = CastGroundController().GetCurrentState();
+		bool isTarget = pActionController->GetIsTargeting();
+		// 同じ種類の移動→移動はしないようにする
+		// ターゲット時ならターゲット移動
+		if (isTarget && curState != PlayerState::TargetMove)
 		{
-			PlayerState curState = CastGroundController().GetCurrentState();
-			bool isTarget = pActionController->GetIsTargeting();
-			// 同じ種類の移動→移動はしないようにする
-			// ターゲット時ならターゲット移動
-			if (isTarget && curState != PlayerState::TargetMove)
-				moveReserveState = static_cast<int>(TargetMove);
-			else if (!isTarget && curState != PlayerState::Move)
-				moveReserveState = static_cast<int>(Move);
+			pActionController->SetReserveState(static_cast<int>(TargetMove),
+				CancelType::Move);
+		}
+		else if (!isTarget && curState != PlayerState::Move)
+		{
+			pActionController->SetReserveState(static_cast<int>(Move),
+				CancelType::Move);
 		}
 	}
 }

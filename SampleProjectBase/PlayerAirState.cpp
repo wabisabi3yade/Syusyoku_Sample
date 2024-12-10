@@ -29,9 +29,6 @@ void PlayerAirState::OnEnd()
 
 void PlayerAirState::TransitionCheckUpdate()
 {
-	PlayerActState_Base::OnEnd();
-
-	OnEndBehavior();
 }
 
 PlayerAirActionController& PlayerAirState::CastAirController()
@@ -61,4 +58,16 @@ void PlayerAirState::Load(const nlohmann::json& _data)
 
 void PlayerAirState::InputUpdate()
 {
+	if (!pActionController->GetCanInput()) return;
+
+	using enum GameInput::ButtonType;
+	using CancelType = PlayerActionController_Base::CancelType;
+
+
+	// UŒ‚ƒLƒƒƒ“ƒZƒ‹
+	if (pPlayerInput->GetButtonDown(Player_Attack))
+	{
+		pActionController->SetReserveState(static_cast<int>(PlayerState::Attack11),
+			CancelType::Attack);
+	}
 }

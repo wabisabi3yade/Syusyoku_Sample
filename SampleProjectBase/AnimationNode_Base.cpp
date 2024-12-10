@@ -6,23 +6,21 @@ using namespace HashiTaku;
 #ifdef EDIT
 std::vector<std::string> AnimationNode_Base::edit_nodeTypeStrings =
 {
-		"Single",
-		"Blend"
+	
 };
 #endif // EDIT
 
-AnimationNode_Base::AnimationNode_Base(std::string _nodeName, NodeType _type)
-	: nodeName(_nodeName), nodeType(_type), curPlayingRatio(0.0f), lastPlayingRatio(0.0f), playNodeSpeedTimes(1.0f), animationTime(1.0f), isLoop(true), isFinish(false), isRootMotionPosXZ(false), isRootMotionPosY(false), isRootMotionRot(false)
+AnimationNode_Base::AnimationNode_Base(const std::string& _nodeName, NodeType _type)
+	: nodeName(_nodeName),
+	nodeType(_type), 
+	playNodeSpeedTimes(1.0f),
+	animationTime(1.0f), 
+	isLoop(true), 
+	isFinish(false),
+	isRootMotionPosXZ(false),
+	isRootMotionPosY(false)
 {
 	pCurveSpeed = std::make_unique<AnimationCurve>();
-}
-
-void AnimationNode_Base::ImGuiPlaying()
-{
-#ifdef EDIT
-	ImGui::Text(std::string("NodeName:" + nodeName).c_str());
-	ImGui::SliderFloat("PlayRatio", &curPlayingRatio, 0.0f, 1.0f);
-#endif // EDIT
 }
 
 void AnimationNode_Base::SetNodeName(const std::string& _nodeName)
@@ -51,16 +49,6 @@ const std::string& AnimationNode_Base::GetNodeName() const
 AnimationNode_Base::NodeType AnimationNode_Base::GetNodeType() const
 {
 	return nodeType;
-}
-
-float AnimationNode_Base::GetCurPlayRatio() const
-{
-	return curPlayingRatio;
-}
-
-float AnimationNode_Base::GetLastPlayRatio() const
-{
-	return lastPlayingRatio;
 }
 
 float AnimationNode_Base::GetAnimationTime() const
@@ -94,11 +82,6 @@ bool AnimationNode_Base::GetIsRootMotionY() const
 	return isRootMotionPosY;
 }
 
-bool AnimationNode_Base::GetIsRootMotionRot() const
-{
-	return isRootMotionRot;
-}
-
 float AnimationNode_Base::GetPlaySpeedTimes() const
 {
 	return playNodeSpeedTimes;
@@ -117,7 +100,6 @@ nlohmann::json AnimationNode_Base::Save()
 	nodeData["isLoop"] = isLoop;
 	nodeData["isRMXZ"] = isRootMotionPosXZ;
 	nodeData["isRMY"] = isRootMotionPosY;
-	nodeData["isRMR"] = isRootMotionRot;
 	nodeData["animationCurve"] = pCurveSpeed->Save();
 	return nodeData;
 }
@@ -128,19 +110,12 @@ void AnimationNode_Base::Load(const nlohmann::json& _data)
 	LoadJsonBoolean("isLoop", isLoop, _data);
 	LoadJsonBoolean("isRMXZ", isRootMotionPosXZ, _data);
 	LoadJsonBoolean("isRMY", isRootMotionPosY, _data);
-	LoadJsonBoolean("isRMR", isRootMotionRot, _data);
 
 	nlohmann::json loadData;
 	if (LoadJsonData("animationCurve", loadData, _data))
 	{
 		pCurveSpeed->Load(loadData);
 	}
-}
-
-void AnimationNode_Base::Copy(const AnimationNode_Base& _other)
-{
-	if (this == &_other) return;
-
 }
 
 void AnimationNode_Base::ImGuiSetParameter()
@@ -162,16 +137,11 @@ void AnimationNode_Base::ImGuiSetParameter()
 	ImGui::Text("RootMotion");
 	ImGui::Checkbox("XZ", &isRootMotionPosXZ); ImGui::SameLine();
 	ImGui::Checkbox("Y", &isRootMotionPosY); ImGui::SameLine();
-	/*ImGui::Checkbox("Rot", &isRootMotionRot);*/
 
 	ImGuiMethod::PushItemSmallWidth();
-	float animPlayTime = animationTime / playNodeSpeedTimes;
-	ImGui::Text("Time:%f", animPlayTime);
 	ImGui::DragFloat("Speed", &playNodeSpeedTimes, 0.01f, 0.0f, 100.0f);
 	pCurveSpeed->ImGuiCall();
 	ImGui::PopItemWidth();
-
-	ImGui::Text("AnimationTime:%f", animationTime);
 #endif // EDIT
 }
 

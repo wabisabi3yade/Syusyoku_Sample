@@ -13,42 +13,35 @@ constexpr float INPUT_VECTOR_DOT(0.6f);
 constexpr float CAN_MOVECANCEL_INPUT(0.3f);
 // キャンセル入力で予約した状態の有効期限時間（超えると予約した状態はリセットされる）
 constexpr float CANCEL_RESERVE_VALIED_TIME(0.3f);
-// None状態のID(統一させる)
-constexpr int STATE_NONE_ID(99);
 
 namespace DXSimp = DirectX::SimpleMath;
 
 PlayerActState_Base::PlayerActState_Base() :
 	pActionController(nullptr),
-	actionReserveState(0),
-	atkReserveState(0),
-	moveReserveState(0),
+	statePriority(-1),
 	targetLookRotateSpeed(40.0f),
-	lastCancelReserveElapse(0.0f),
 	isTargetLookAtEnemy(false)
 {
 	pPlayerInput = &InSceneSystemManager::GetInstance()->GetInput();
 }
 
-void PlayerActState_Base::Init(PlayerActionController_Base& _actController)
+void PlayerActState_Base::Init(PlayerActionController_Base& _actController, int _priority)
 {
 	pActionController = &_actController;
-}
-
-void PlayerActState_Base::OnStart()
-{
-	// 入力フラグのクリア
-	ParameterClear();
+	statePriority = _priority;
 }
 
 void PlayerActState_Base::Update()
 {
+	CharacterActState_Base::Update();
+
 	// ターゲットの方向を見る
 	UpdateTargetLook();
 }
 
-void PlayerActState_Base::OnEnd()
+int PlayerActState_Base::GetPriority() const
 {
+	return statePriority;
 }
 
 nlohmann::json PlayerActState_Base::Save()
@@ -58,13 +51,6 @@ nlohmann::json PlayerActState_Base::Save()
 
 void PlayerActState_Base::Load(const nlohmann::json& _data)
 {
-}
-
-void PlayerActState_Base::ParameterClear()
-{
-	actionReserveState = STATE_NONE_ID;
-	atkReserveState = STATE_NONE_ID;
-	moveReserveState = STATE_NONE_ID;
 }
 
 void PlayerActState_Base::ClearVelocity(bool _applyY)
@@ -142,6 +128,34 @@ DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStickFromCam() con
 	return inputVec;
 }
 
+DirectX::SimpleMath::Vector3 PlayerActState_Base::GetAtkEnemyPos()
+{
+	// ターゲットしているなら
+	if (pActionController->GetIsTargeting())
+	{
+		return pActionController->GetTargetAccepter()->GetWorldPos();
+	}
+
+	// 近くの敵を探す
+	CP_BattleManager* pBattle = CP_BattleManager::GetInstance();
+	if (!pBattle) return DXSimp::Vector3::Zero;
+
+	// 敵リストを取得する
+	const auto& enemyList = pBattle->GetEnemyList();
+
+	// 敵がいないなら
+	if (static_cast<u_int>(enemyList.size()) == 0) return DXSimp::Vector3::Zero;
+
+	// 敵の攻撃座標
+	DXSimp::Vector3 atkEnemyPos;
+	const ITargetAccepter* pAtkEnemy = (*enemyList.begin());
+
+	// 本来は一番近くの敵を取得する
+	atkEnemyPos = pAtkEnemy->GetWorldPos();
+
+	return atkEnemyPos;
+}
+
 bool PlayerActState_Base::IsInputVector(InputVector _checkVector)
 {
 	// 入力値を取得
@@ -163,7 +177,7 @@ bool PlayerActState_Base::IsInputVector(InputVector _checkVector)
 		GetTargetAccepter())
 	{
 		DXSimp::Vector3 targetObjVec =
-			GetTargetAccepter()->GetWorldPosByTargetObj() -
+			GetTargetAccepter()->GetWorldPos() -
 			GetMyTransform().GetPosition();
 
 		targetObjVec.Normalize(baseVec);
@@ -216,7 +230,7 @@ void PlayerActState_Base::UpdateTargetLook()
 
 	// ターゲットへのベクトルを求める
 	const DXSimp::Vector3& playerPos = transform.GetPosition();
-	const DXSimp::Vector3& targetPos = pTargetObj->GetWorldPosByTargetObj();
+	const DXSimp::Vector3& targetPos = pTargetObj->GetWorldPos();
 	DXSimp::Vector3 vector = targetPos - playerPos;
 	vector.y = 0.0f; vector.Normalize();
 
@@ -226,8 +240,4 @@ void PlayerActState_Base::UpdateTargetLook()
 	myRot = DXSimp::Quaternion::Slerp(myRot, targetRot, targetLookRotateSpeed * DeltaTime());
 
 	transform.SetRotation(myRot);
-}
-
-void PlayerActState_Base::CancelTransitionUpdate()
-{
 }
