@@ -49,7 +49,7 @@ void TreeNode::SetBone(Bone& _bone)
     pLinkBone = &_bone;
 }
 
-TreeNode* TreeNode::GetChild(u_int _arrayIdx)
+const TreeNode* TreeNode::GetChild(u_int _arrayIdx) const
 {
     if (_arrayIdx >= GetChildNum())
     {
@@ -72,7 +72,7 @@ u_int TreeNode::GetChildNum() const
     return static_cast<u_int>(pChildNodes.size());
 }
 
-std::string TreeNode::GetName() const
+const std::string& TreeNode::GetName() const
 {
     return nodeName;
 }
@@ -82,7 +82,7 @@ u_int TreeNode::GetBoneIdx() const
     return pLinkBone->GetIndex();
 }
 
-DirectX::SimpleMath::Matrix TreeNode::GetTransformMtx() const
+const DirectX::SimpleMath::Matrix& TreeNode::GetTransformMtx() const
 {
     return transformMtx;
 }

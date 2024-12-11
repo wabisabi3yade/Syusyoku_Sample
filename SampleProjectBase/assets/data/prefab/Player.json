@@ -7,7 +7,7 @@
                         {
                             "childs": null,
                             "gameObject": {
-                                "active": true,
+                                "active": false,
                                 "components": [
                                     {
                                         "enable": true,
@@ -22,27 +22,27 @@
                                 "transform": {
                                     "child": null,
                                     "pos": [
-                                        0.09351885318756104,
-                                        0.00999921653419733,
-                                        -11.521551132202148
+                                        -0.09351905435323715,
+                                        0.00999921839684248,
+                                        -11.678449630737305
                                     ],
                                     "rotation": [
-                                        -0.1373487263917923,
-                                        0.08612002432346344,
-                                        0.7228975892066956,
-                                        0.6716679334640503
+                                        0.7228977084159851,
+                                        0.6716678738594055,
+                                        0.13734832406044006,
+                                        -0.08612040430307388
                                     ],
                                     "scale": [
-                                        1.0000005960464478,
-                                        0.8000009059906006,
-                                        1.0
+                                        1.0000004768371582,
+                                        0.8000007271766663,
+                                        0.9999995231628418
                                     ]
                                 }
                             }
                         }
                     ],
                     "gameObject": {
-                        "active": true,
+                        "active": false,
                         "components": null,
                         "layer": 0,
                         "name": "Shield",
@@ -52,15 +52,15 @@
                                 "Shield_Mesh"
                             ],
                             "pos": [
-                                0.0,
+                                -3.324689714645501e-07,
                                 0.00999924261122942,
-                                -11.600000381469727
+                                -11.599996566772461
                             ],
                             "rotation": [
-                                -0.0,
-                                -0.04361940547823906,
-                                -0.0,
-                                0.9990482330322266
+                                0.0,
+                                0.9990482330322266,
+                                0.0,
+                                0.04361894354224205
                             ],
                             "scale": [
                                 1.0000007152557373,
@@ -94,10 +94,10 @@
                         -11.600000381469727
                     ],
                     "rotation": [
-                        -0.0,
-                        -0.04361940547823906,
-                        -0.0,
-                        0.9990482330322266
+                        0.0,
+                        0.9990482330322266,
+                        0.0,
+                        0.04361885413527489
                     ],
                     "scale": [
                         1.0000007152557373,
@@ -114,7 +114,7 @@
                         {
                             "childs": null,
                             "gameObject": {
-                                "active": true,
+                                "active": false,
                                 "components": [
                                     {
                                         "enable": true,
@@ -129,19 +129,19 @@
                                 "transform": {
                                     "child": null,
                                     "pos": [
-                                        0.2000027298927307,
-                                        0.16000127792358398,
-                                        -11.600003242492676
+                                        -0.20000103116035461,
+                                        0.1600010097026825,
+                                        -11.599987983703613
                                     ],
                                     "rotation": [
-                                        0.16874909400939941,
-                                        0.16177423298358917,
-                                        -0.6181158423423767,
-                                        0.7505236268043518
+                                        -0.618116021156311,
+                                        0.7505234479904175,
+                                        -0.16874882578849792,
+                                        -0.16177460551261902
                                     ],
                                     "scale": [
-                                        1.2000007629394531,
-                                        1.2000008821487427,
+                                        1.2000010013580322,
+                                        1.2000011205673218,
                                         1.2000011205673218
                                     ]
                                 }
@@ -149,7 +149,7 @@
                         }
                     ],
                     "gameObject": {
-                        "active": true,
+                        "active": false,
                         "components": [
                             {
                                 "attackableTags": [
@@ -201,20 +201,20 @@
                                 "Weapon_Model"
                             ],
                             "pos": [
-                                0.20000267028808594,
+                                -0.20000267028808594,
                                 0.15999996662139893,
-                                -11.60000228881836
+                                -11.599996566772461
                             ],
                             "rotation": [
-                                0.168749138712883,
-                                0.1617741733789444,
-                                -0.6181161403656006,
-                                0.7505233883857727
+                                -0.6181161999702454,
+                                0.7505232095718384,
+                                -0.1687488704919815,
+                                -0.16177453100681305
                             ],
                             "scale": [
                                 1.0000001192092896,
                                 1.0000001192092896,
-                                1.0
+                                0.9999999403953552
                             ]
                         }
                     }
@@ -243,10 +243,10 @@
                         -11.600000381469727
                     ],
                     "rotation": [
-                        -0.0,
                         0.0,
-                        -0.0,
-                        1.0
+                        1.0,
+                        0.0,
+                        -4.76837158203125e-07
                     ],
                     "scale": [
                         1.0,
@@ -309,10 +309,10 @@
                         -11.600000381469727
                     ],
                     "rotation": [
-                        -0.0,
                         0.0,
-                        -0.0,
-                        1.0
+                        1.0,
+                        0.0,
+                        -4.76837158203125e-07
                     ],
                     "scale": [
                         1.0,
@@ -343,7 +343,7 @@
                 ],
                 "isKinematic": false,
                 "isTrigger": false,
-                "mass": 1.0,
+                "mass": 1.059999942779541,
                 "name": "RigidBody",
                 "priority": 0
             },
@@ -353,15 +353,19 @@
                         "actData": [
                             {
                                 "data": {
-                                    "acceleration": 40.0,
+                                    "acceleration": 20.0,
                                     "decade": 100.0,
-                                    "maxSpeed": 10.0,
+                                    "maxSpeed": 15.0,
                                     "rotateSpeed": 7.0
                                 },
                                 "typeString": "Move"
+                            },
+                            {
+                                "data": null,
+                                "typeString": "Attack11"
                             }
                         ],
-                        "downForcePower": -10.0
+                        "downForcePower": -45.0
                     },
                     "ground": {
                         "actData": [
@@ -386,82 +390,6 @@
                                     "rotateSpeed": 40.0
                                 },
                                 "typeString": "TargetMove"
-                            },
-                            {
-                                "data": {
-                                    "crouchTime": 0.10000000149011612,
-                                    "jumpPower": 18.0
-                                },
-                                "typeString": "BeginJump"
-                            },
-                            {
-                                "data": {
-                                    "invicibleTime": 0.4000000059604645,
-                                    "rollingDistance": 8.0,
-                                    "speedCurve": {
-                                        "easeKind": 5,
-                                        "endValue": 1.0,
-                                        "endVector": 0.0,
-                                        "plotDatas": null,
-                                        "startInterp": 1,
-                                        "startValue": 1.0,
-                                        "startVector": 0.0,
-                                        "useHermite": false
-                                    }
-                                },
-                                "typeString": "Rolling"
-                            },
-                            {
-                                "data": {
-                                    "knockCurve": {
-                                        "easeKind": 0,
-                                        "endValue": 1.0,
-                                        "endVector": 0.0,
-                                        "plotDatas": null,
-                                        "startInterp": 1,
-                                        "startValue": 1.0,
-                                        "startVector": 0.0,
-                                        "useHermite": false
-                                    },
-                                    "knockDis": 0.0
-                                },
-                                "typeString": "Damage_S"
-                            },
-                            {
-                                "data": {
-                                    "knockCurve": {
-                                        "easeKind": 0,
-                                        "endValue": 0.0,
-                                        "endVector": 0.0,
-                                        "plotDatas": [
-                                            {
-                                                "interp": 0,
-                                                "time": 0.37599998712539673,
-                                                "value": 1.0,
-                                                "vector": 0.0
-                                            },
-                                            {
-                                                "interp": 1,
-                                                "time": 0.5180000066757202,
-                                                "value": 0.0,
-                                                "vector": 0.0
-                                            }
-                                        ],
-                                        "startInterp": 1,
-                                        "startValue": 1.0,
-                                        "startVector": 0.0,
-                                        "useHermite": true
-                                    },
-                                    "knockDis": 18.100000381469727
-                                },
-                                "typeString": "Damage_L"
-                            },
-                            {
-                                "data": {
-                                    "canParryTime": 12,
-                                    "parryAngle": 180.0
-                                },
-                                "typeString": "Guard"
                             },
                             {
                                 "data": {
@@ -512,6 +440,58 @@
                                     "nextCombAttack": 22
                                 },
                                 "typeString": "Attack12"
+                            },
+                            {
+                                "data": {
+                                    "attackCnt": 1,
+                                    "attackInfos": [
+                                        {
+                                            "damage": 2.0,
+                                            "level": 0
+                                        }
+                                    ],
+                                    "cancelAnim": 0.3799999952316284,
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "horiCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": [
+                                            {
+                                                "interp": 0,
+                                                "time": 0.20000000298023224,
+                                                "value": 0.0,
+                                                "vector": 1.6519999504089355
+                                            },
+                                            {
+                                                "interp": 0,
+                                                "time": 0.5569999814033508,
+                                                "value": 0.9309999942779541,
+                                                "vector": 0.28700000047683716
+                                            }
+                                        ],
+                                        "startInterp": 1,
+                                        "startValue": 0.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "horiDis": 11.0,
+                                    "isMoveFwd": false,
+                                    "maxDistance": 10.0,
+                                    "nextCombAttack": 99,
+                                    "slashAnim": 0.4429999887943268,
+                                    "slashBegin": 2.200000047683716
+                                },
+                                "typeString": "SpecialAtkHi"
                             },
                             {
                                 "data": {
@@ -578,58 +558,6 @@
                             },
                             {
                                 "data": {
-                                    "attackCnt": 1,
-                                    "attackInfos": [
-                                        {
-                                            "damage": 2.0,
-                                            "level": 0
-                                        }
-                                    ],
-                                    "cancelAnim": 0.3799999952316284,
-                                    "forwardCurve": {
-                                        "easeKind": 0,
-                                        "endValue": 1.0,
-                                        "endVector": 0.0,
-                                        "plotDatas": null,
-                                        "startInterp": 1,
-                                        "startValue": 1.0,
-                                        "startVector": 0.0,
-                                        "useHermite": true
-                                    },
-                                    "horiCurve": {
-                                        "easeKind": 0,
-                                        "endValue": 1.0,
-                                        "endVector": 0.0,
-                                        "plotDatas": [
-                                            {
-                                                "interp": 0,
-                                                "time": 0.20000000298023224,
-                                                "value": 0.0,
-                                                "vector": 1.6519999504089355
-                                            },
-                                            {
-                                                "interp": 0,
-                                                "time": 0.5569999814033508,
-                                                "value": 0.9309999942779541,
-                                                "vector": 0.28700000047683716
-                                            }
-                                        ],
-                                        "startInterp": 1,
-                                        "startValue": 0.0,
-                                        "startVector": 0.0,
-                                        "useHermite": true
-                                    },
-                                    "horiDis": 11.0,
-                                    "isMoveFwd": false,
-                                    "maxDistance": 10.0,
-                                    "nextCombAttack": 99,
-                                    "slashAnim": 0.4429999887943268,
-                                    "slashBegin": 2.200000047683716
-                                },
-                                "typeString": "SpecialAtkHi"
-                            },
-                            {
-                                "data": {
                                     "attackCnt": 2,
                                     "attackInfos": [
                                         {
@@ -656,6 +584,82 @@
                                     "nextCombAttack": 99
                                 },
                                 "typeString": "SpecialAtkGuard"
+                            },
+                            {
+                                "data": {
+                                    "crouchTime": 0.10000000149011612,
+                                    "jumpPower": 20.0
+                                },
+                                "typeString": "BeginJump"
+                            },
+                            {
+                                "data": {
+                                    "canParryTime": 12,
+                                    "parryAngle": 180.0
+                                },
+                                "typeString": "Guard"
+                            },
+                            {
+                                "data": {
+                                    "invicibleTime": 0.4000000059604645,
+                                    "rollingDistance": 10.0,
+                                    "speedCurve": {
+                                        "easeKind": 5,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": false
+                                    }
+                                },
+                                "typeString": "Rolling"
+                            },
+                            {
+                                "data": {
+                                    "knockCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": false
+                                    },
+                                    "knockDis": 0.0
+                                },
+                                "typeString": "Damage_S"
+                            },
+                            {
+                                "data": {
+                                    "knockCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 0.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": [
+                                            {
+                                                "interp": 0,
+                                                "time": 0.37599998712539673,
+                                                "value": 1.0,
+                                                "vector": 0.0
+                                            },
+                                            {
+                                                "interp": 1,
+                                                "time": 0.5180000066757202,
+                                                "value": 0.0,
+                                                "vector": 0.0
+                                            }
+                                        ],
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "knockDis": 18.100000381469727
+                                },
+                                "typeString": "Damage_L"
                             }
                         ]
                     },
@@ -709,10 +713,10 @@
                 -11.600000381469727
             ],
             "rotation": [
-                -0.0,
                 0.0,
-                -0.0,
-                1.0
+                1.0,
+                0.0,
+                -4.76837158203125e-07
             ],
             "scale": [
                 1.0,

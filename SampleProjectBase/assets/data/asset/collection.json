@@ -17,18 +17,13 @@
                     "value": 0
                 },
                 {
-                    "name": "isReAttack",
-                    "type": 0,
-                    "value": false
-                },
-                {
                     "name": "damageTrigger",
                     "type": 3
                 },
                 {
-                    "name": "canKnock",
+                    "name": "isReAttack",
                     "type": 0,
-                    "value": true
+                    "value": false
                 },
                 {
                     "name": "attackCollision",
@@ -36,56 +31,19 @@
                     "value": false
                 },
                 {
+                    "name": "canKnock",
+                    "type": 0,
+                    "value": true
+                },
+                {
                     "name": "deadTrigger",
                     "type": 3
                 }
             ],
             "assetName": "ANC_Boss",
+            "boneList": "Uriel A Plotexia.fbx",
             "defaultNode": "Idle",
             "groupArrows": [
-                {
-                    "arrows": [
-                        {
-                            "param": {
-                                "conditionList": [
-                                    {
-                                        "condition": null,
-                                        "paramName": "deadTrigger",
-                                        "typeKind": 3
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
-                                "priority": 70,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.0
-                            },
-                            "toNode": "Dead"
-                        },
-                        {
-                            "param": {
-                                "conditionList": [
-                                    {
-                                        "condition": null,
-                                        "paramName": "damageTrigger",
-                                        "typeKind": 3
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
-                                "priority": 0,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.0
-                            },
-                            "toNode": "KnockSmall"
-                        }
-                    ],
-                    "name": "Attack"
-                },
                 {
                     "arrows": [
                         {
@@ -155,6 +113,49 @@
                         }
                     ],
                     "name": "MoveToAttack"
+                },
+                {
+                    "arrows": [
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "deadTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 70,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toNode": "Dead"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "damageTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.0
+                            },
+                            "toNode": "KnockSmall"
+                        }
+                    ],
+                    "name": "Attack"
                 }
             ],
             "nodeInfoData": [
@@ -1240,14 +1241,14 @@
                     "value": 0
                 },
                 {
-                    "name": "speed",
-                    "type": 2,
-                    "value": 0.0
-                },
-                {
                     "name": "targeting",
                     "type": 0,
                     "value": false
+                },
+                {
+                    "name": "speed",
+                    "type": 2,
+                    "value": 0.0
                 },
                 {
                     "name": "canCancel",
@@ -1264,14 +1265,14 @@
                     "value": 0.0
                 },
                 {
-                    "name": "axisY",
-                    "type": 2,
-                    "value": 0.0
-                },
-                {
                     "name": "attackCollision",
                     "type": 0,
                     "value": false
+                },
+                {
+                    "name": "axisY",
+                    "type": 2,
+                    "value": 0.0
                 },
                 {
                     "name": "rollingTrigger",
@@ -1316,6 +1317,7 @@
                 }
             ],
             "assetName": "ANC_MixiamoPlayer",
+            "boneList": "Knight.fbx",
             "defaultNode": "Idle",
             "groupArrows": [
                 {
@@ -4423,14 +4425,14 @@
                     "value": 0
                 },
                 {
-                    "name": "speed",
-                    "type": 2,
-                    "value": 0.0
-                },
-                {
                     "name": "targeting",
                     "type": 0,
                     "value": false
+                },
+                {
+                    "name": "speed",
+                    "type": 2,
+                    "value": 0.0
                 },
                 {
                     "name": "canCancel",
@@ -4447,14 +4449,14 @@
                     "value": 0.0
                 },
                 {
-                    "name": "axisY",
-                    "type": 2,
-                    "value": 0.0
-                },
-                {
                     "name": "attackCollision",
                     "type": 0,
                     "value": false
+                },
+                {
+                    "name": "axisY",
+                    "type": 2,
+                    "value": 0.0
                 },
                 {
                     "name": "rollingTrigger",
@@ -4508,7 +4510,8 @@
                 }
             ],
             "assetName": "ANC_Player",
-            "defaultNode": "Idle",
+            "boneList": "Knight.fbx",
+            "defaultNode": "Test",
             "groupArrows": [
                 {
                     "arrows": [
@@ -4915,6 +4918,59 @@
                             "param": {
                                 "conditionList": [
                                     {
+                                        "condition": {
+                                            "bJudgeType": 0
+                                        },
+                                        "paramName": "isGround",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 50,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toNode": "Fall_Land"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    },
+                                    {
+                                        "condition": {
+                                            "iCompare": 20,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toNode": "AirAttack1"
+                        }
+                    ],
+                    "name": "AirMove"
+                },
+                {
+                    "arrows": [
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
                                         "condition": null,
                                         "paramName": "deadTrigger",
                                         "typeKind": 3
@@ -5120,42 +5176,15 @@
                                 "exitRatio": 1.0,
                                 "interpolate": 0,
                                 "isHaveExit": false,
-                                "priority": 50,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.10000000149011612
-                            },
-                            "toNode": "Fall_Land"
-                        },
-                        {
-                            "param": {
-                                "conditionList": [
-                                    {
-                                        "condition": null,
-                                        "paramName": "attackTrigger",
-                                        "typeKind": 3
-                                    },
-                                    {
-                                        "condition": {
-                                            "iCompare": 20,
-                                            "iJudgeType": 2
-                                        },
-                                        "paramName": "state",
-                                        "typeKind": 1
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
                                 "priority": 0,
                                 "targetRatio": 0.0,
                                 "transEase": 0.0,
                                 "transTime": 0.10000000149011612
                             },
-                            "toNode": "AirAttack1"
+                            "toNode": "Fall_Land"
                         }
                     ],
-                    "name": "AirMove"
+                    "name": "AirAttack"
                 },
                 {
                     "arrows": [
@@ -5412,32 +5441,6 @@
                         }
                     ],
                     "name": "Action"
-                },
-                {
-                    "arrows": [
-                        {
-                            "param": {
-                                "conditionList": [
-                                    {
-                                        "condition": {
-                                            "bJudgeType": 0
-                                        },
-                                        "paramName": "isGround",
-                                        "typeKind": 0
-                                    }
-                                ],
-                                "exitRatio": 1.0,
-                                "interpolate": 0,
-                                "isHaveExit": false,
-                                "priority": 0,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.10000000149011612
-                            },
-                            "toNode": "Fall_Land"
-                        }
-                    ],
-                    "name": "AirAttack"
                 }
             ],
             "nodeInfoData": [
@@ -8153,7 +8156,7 @@
                 },
                 {
                     "animNode": {
-                        "animName": "knight_TwinAttack1.fbx",
+                        "animName": "knight_TitleStandUp.fbx",
                         "animationCurve": {
                             "easeKind": 0,
                             "endValue": 1.0,
@@ -8186,6 +8189,95 @@
                     ],
                     "groupArrowName": "",
                     "nodeName": "AirAttack1",
+                    "nodeType": 0,
+                    "notifyList": null
+                },
+                {
+                    "animNode": {
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startInterp": 1,
+                            "startValue": 1.0,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "baseAnim": "knight_AirDownBody.fbx",
+                        "beginBoneId": 1,
+                        "blendAnim": "knight_SlashUp.fbx",
+                        "blendBeginFrame": 0,
+                        "blendCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startInterp": 1,
+                            "startValue": 1.0,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "isLoop": false,
+                        "isRMXZ": false,
+                        "isRMY": false,
+                        "speed": 1.0
+                    },
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "Test"
+                        }
+                    ],
+                    "groupArrowName": "",
+                    "nodeName": "AAA",
+                    "nodeType": 2,
+                    "notifyList": null
+                },
+                {
+                    "animNode": {
+                        "animName": "knight_Idle1.fbx",
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startInterp": 1,
+                            "startValue": 1.0,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "isLoop": false,
+                        "isRMXZ": false,
+                        "isRMY": false,
+                        "speed": 1.0
+                    },
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 0.800000011920929,
+                                "interpolate": 0,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.18000000715255737,
+                                "transEase": 0.18000000715255737,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "AAA"
+                        }
+                    ],
+                    "groupArrowName": "",
+                    "nodeName": "Test",
                     "nodeType": 0,
                     "notifyList": null
                 }
@@ -8367,6 +8459,18 @@
             "rightHand": true
         },
         {
+            "assetName": "knight_AirDownBody.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_AirDownBody.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_AirSlash1.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_AirSlash1.fbx",
+            "rightHand": true
+        },
+        {
             "assetName": "knight_CrouchStart.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_CrouchStart.fbx",
@@ -8448,18 +8552,6 @@
             "assetName": "knight_Knock_S.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_Knock_S.fbx",
-            "rightHand": true
-        },
-        {
-            "assetName": "knight_RollAttack.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_RollAttack.fbx",
-            "rightHand": true
-        },
-        {
-            "assetName": "knight_RollSlash.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_RollSlash.fbx",
             "rightHand": true
         },
         {

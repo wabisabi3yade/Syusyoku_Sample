@@ -6,7 +6,9 @@ using namespace HashiTaku;
 #ifdef EDIT
 std::vector<std::string> AnimationNode_Base::edit_nodeTypeStrings =
 {
-	
+	"Single",
+	"Blend",
+	"Layerd"
 };
 #endif // EDIT
 

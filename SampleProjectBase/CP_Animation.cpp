@@ -15,7 +15,6 @@ constexpr int SHBUFFER_BONE_SLOT(1);
 
 CP_Animation::CP_Animation() :
 	pSkeletalMesh(nullptr), pAnimController(nullptr), boneCnt(0)
-
 {
 }
 
@@ -334,7 +333,7 @@ bool CP_Animation::IsExistCopyAnimParameter()
 
 void CP_Animation::UpdateBoneCombMtx()
 {
-	TreeNode& pRootNode = pSkeletalMesh->GetRootNode();
+	const TreeNode* pRootNode = pSkeletalMesh->GetRootNode();
 
 	// ルートポジション座標を引いて、メッシュを移動させないようにする(y座標は反映しない)
 	Vector3 rootPos;
@@ -350,10 +349,10 @@ void CP_Animation::UpdateBoneCombMtx()
 		Matrix::CreateScale(Vector3::One * loadScales) * Mtx::CreateRoratateMtx(loadAngles);
 
 	// ノードを辿って全体のコンビネーション行列を更新していく
-	UpdateNodeHierarchy(pRootNode, posMtx);
+	UpdateNodeHierarchy(*pRootNode, posMtx);
 }
 
-void CP_Animation::UpdateNodeHierarchy(TreeNode& _treeNode, const Matrix& _parentMtx)
+void CP_Animation::UpdateNodeHierarchy(const TreeNode& _treeNode, const Matrix& _parentMtx)
 {
 	Matrix nodeMatrix = Matrix::Identity;
 

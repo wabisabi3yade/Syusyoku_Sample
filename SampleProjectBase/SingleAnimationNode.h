@@ -22,7 +22,7 @@ public:
 	/// @param _outTransform 格納するボーントランスフォーム
 	/// @param _boneId ボーンのID
 	/// @param _requestRatio 取得する指定のアニメーション割合
-	void GetAnimTransform(BoneTransform& _outTransform, u_int _boneId, float _requestRatio) const override;
+	void GetAnimTransform(BoneTransform& _outTransform, u_int _boneId, float _requestRatio) const;
 
 	/// @brief 割合からキー数を求める
 	/// @param _ratio 割合

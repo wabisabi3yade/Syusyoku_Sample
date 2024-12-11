@@ -80,7 +80,7 @@ public:
 	void OnInterpolateUpdate(std::vector<BoneTransform>& _outTransforms, float _deltaTime, float _controllerSpeed);
 
 	/// @brief 再生割合を進める
-	void ProgressPlayRatio(float _controllerSpeed);
+	virtual void ProgressPlayRatio(float _controllerSpeed);
 
 	/// @brief 変更前終了処理
 	void OnTerminal();
@@ -142,6 +142,10 @@ protected:
 	/// @brief ルートモーションをロード時のスケール・回転量を反映
 	/// @param _rootMotionPos 反映させたいルートモーション
 	void ApplyLoadTransform(DirectX::SimpleMath::Vector3& _rootMotionPos) const;
+
+	/// @brief プレイヤー再生速度を取得する
+	/// @return プレイヤーの再生速度
+	float GetPlayerSpeed() const;
 
 	void ImGuiDebug() override;
 };

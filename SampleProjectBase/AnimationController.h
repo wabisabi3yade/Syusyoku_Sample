@@ -143,6 +143,9 @@ private:
 	// ImGuiで遷移矢印
 	void ImGuiTransArrow(AnimNodeInfo& _nodeInfo, const std::vector<std::string>& _nodeNames);
 
+	// ImGuifでボーンリストをセット
+	void ImGuiSetBoneList();
+
 	// ImGuiでデフォルトノード設定
 	void ImGuiSetDefaultNode(const std::vector<std::string>& _nodeNames);
 

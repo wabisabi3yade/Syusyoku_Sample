@@ -163,7 +163,7 @@ private:
 	/// @brief 子ノードのコンビネーション行列を更新する（再帰関数）
 	/// @param _treeNode 更新するノード
 	/// @param _parentMtx ワールド変換するための親までの行列
-	void UpdateNodeHierarchy(TreeNode& _treeNode, const DirectX::SimpleMath::Matrix& _parentMtx);
+	void UpdateNodeHierarchy(const TreeNode& _treeNode, const DirectX::SimpleMath::Matrix& _parentMtx);
 
 	/// @brief ボーンのコンビネーション行列を更新
 	void UpdateAnimationMtx();
