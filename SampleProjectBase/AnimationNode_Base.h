@@ -89,12 +89,6 @@ public:
 	/// @return 移動するか？
 	bool GetIsRootMotionY() const;
 
-	/// @brief アニメーションのトランスフォーム取得
-	/// @param _outTransform 格納するボーントランスフォーム
-	/// @param _boneId ボーンのID
-	/// @param _requestRatio 取得する指定のアニメーション割合
-	virtual void GetAnimTransform(BoneTransform& _outTransform, u_int _boneId, float _requestRatio) const {};
-
 	/// @brief 再生速度倍率を求める
 	/// @return 再生速度倍率
 	float GetPlaySpeedTimes() const;

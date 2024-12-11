@@ -20,7 +20,6 @@ class TreeNode
 
 	/// @brief 対応したボーン
 	Bone* pLinkBone;
-
 public:
 	TreeNode() : nodeName(""), pParentNode(nullptr), pLinkBone(nullptr) {}
 	~TreeNode() {}
@@ -53,18 +52,18 @@ public:
 	/// @brief 子ノードを取得
 	/// @param _arrayIdx 配列インデックス
 	/// @return 子ノード
-	TreeNode* GetChild(u_int _arrayIdx);
+	const TreeNode* GetChild(u_int _arrayIdx) const;
 
 	// 子ノードの数取得
 	u_int GetChildNum() const;
 
 	// 名前を取得する
-	std::string GetName() const;
+	const std::string& GetName() const;
 
 	/// @brief ボーンIDを取得
 	/// @return ボーンID
 	u_int GetBoneIdx() const;
 
 	// ローカル座標までの移動行列を取得
-	DirectX::SimpleMath::Matrix GetTransformMtx() const;
+	const DirectX::SimpleMath::Matrix& GetTransformMtx() const;
 };

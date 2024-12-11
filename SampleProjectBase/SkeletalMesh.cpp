@@ -8,7 +8,7 @@ void SkeletalMesh::SetAssetBoneList(BoneList* _pBones)
 
 void SkeletalMesh::SetRootNode(std::unique_ptr<TreeNode> _pRootNode)
 {
-	pRootNode = std::move(_pRootNode);
+	pAssetBoneList->SetRootNode(std::move(_pRootNode));
 }
 
 Bone* SkeletalMesh::GetBoneByName(const std::string& _name)
@@ -16,14 +16,14 @@ Bone* SkeletalMesh::GetBoneByName(const std::string& _name)
 	return pAssetBoneList->FindBone(_name);
 }
 
-u_int SkeletalMesh::GetBoneCnt()
+u_int SkeletalMesh::GetBoneCnt() const
 {
 	return pAssetBoneList->GetBoneCnt();
 }
 
-TreeNode& SkeletalMesh::GetRootNode()
+const TreeNode* SkeletalMesh::GetRootNode() const
 {
-	return *pRootNode.get();
+	return pAssetBoneList->GetRootNode();
 }
 
 BoneList& SkeletalMesh::GetBoneList()
@@ -62,6 +62,11 @@ Bone* BoneList::FindBone(const std::string& _boneName)
 	}
 
 	return nullptr;
+}
+
+void BoneList::SetRootNode(std::unique_ptr<TreeNode> _pRootNode)
+{
+	pRootNode = std::move(_pRootNode);
 }
 
 Bone* BoneList::GetBone(u_int _boneId)
@@ -107,6 +112,11 @@ u_int BoneList::GetBoneCnt() const
 u_int BoneList::GetRootBoneId() const
 {
 	return 0;
+}
+
+const TreeNode* BoneList::GetRootNode() const
+{
+	return pRootNode.get();
 }
 
 float BoneList::GetLoadScale() const

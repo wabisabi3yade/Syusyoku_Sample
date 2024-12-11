@@ -2,7 +2,8 @@
 #include "AnimControllPlayer.h"
 #include "AnimationController.h"
 #include "AnimSingleNodePlayer.h"
-#include "BlendNodePlayer.h"
+#include "AnimBlendNodePlayer.h"
+#include "AnimLayerdNodePlayer.h"
 
 AnimControllPlayer::AnimControllPlayer(const AnimationController& _animController, BoneList& _boneList, Transform& _transform): 
 	pAnimController(&_animController), pAssetBoneList(&_boneList), 
@@ -130,7 +131,15 @@ void AnimControllPlayer::ChangeNodePlayer(const AnimationNode_Base& _changeNode)
 		break;
 
 	case AnimationNode_Base::NodeType::Blend:	// ブレンドスペース
-		pCurNodePlayer = std::make_unique<AnimBlendNodePlayer>(*pCopyAnimParameters, animNode, *pAssetBoneList, *pObjectTransform);
+		pCurNodePlayer = std::make_unique<AnimBlendNodePlayer>(
+			*pCopyAnimParameters, 
+			animNode,
+			*pAssetBoneList, 
+			*pObjectTransform);
+		break;
+
+	case AnimationNode_Base::NodeType::Layerd:	// ブレンドスペース
+		pCurNodePlayer = std::make_unique<AnimLayerdNodePlayer>(animNode, *pAssetBoneList, *pObjectTransform);
 		break;
 
 	default:

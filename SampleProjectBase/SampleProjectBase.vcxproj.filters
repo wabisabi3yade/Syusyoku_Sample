@@ -1415,7 +1415,7 @@
     <ClCompile Include="CopyAnimationParameters.cpp">
       <Filter>ソース ファイル\Animation\AnimationPameters\Copy</Filter>
     </ClCompile>
-    <ClCompile Include="BlendNodePlayer.cpp">
+    <ClCompile Include="AnimBlendNodePlayer.cpp">
       <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\BlendNodePlayer</Filter>
     </ClCompile>
     <ClCompile Include="PlayerIdleState.cpp">
@@ -1682,7 +1682,7 @@
     <ClCompile Include="LayerdAnimationNode.cpp">
       <Filter>ソース ファイル\Animation\AnimNode\Layerd</Filter>
     </ClCompile>
-    <ClCompile Include="LayerdNodePlayer.cpp">
+    <ClCompile Include="AnimLayerdNodePlayer.cpp">
       <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\LayerdNodePlayer</Filter>
     </ClCompile>
   </ItemGroup>
@@ -2200,7 +2200,7 @@
     <ClInclude Include="CopyAnimationParameters.h">
       <Filter>ソース ファイル\Animation\AnimationPameters\Copy</Filter>
     </ClInclude>
-    <ClInclude Include="BlendNodePlayer.h">
+    <ClInclude Include="AnimBlendNodePlayer.h">
       <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\BlendNodePlayer</Filter>
     </ClInclude>
     <ClInclude Include="PlayerIdleState.h">
@@ -2473,7 +2473,7 @@
     <ClInclude Include="LayerdAnimationNode.h">
       <Filter>ソース ファイル\Animation\AnimNode\Layerd</Filter>
     </ClInclude>
-    <ClInclude Include="LayerdNodePlayer.h">
+    <ClInclude Include="AnimLayerdNodePlayer.h">
       <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\LayerdNodePlayer</Filter>
     </ClInclude>
   </ItemGroup>

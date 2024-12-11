@@ -172,7 +172,7 @@
     <ClCompile Include="AssetPath_Base.cpp" />
     <ClCompile Include="AssetSaveLoad.cpp" />
     <ClCompile Include="AttackInformation.cpp" />
-    <ClCompile Include="BlendNodePlayer.cpp" />
+    <ClCompile Include="AnimBlendNodePlayer.cpp" />
     <ClCompile Include="BoolTransCondition.cpp" />
     <ClCompile Include="BossActionController.cpp" />
     <ClCompile Include="BossActState_Base.cpp" />
@@ -249,7 +249,7 @@
     <ClCompile Include="ISetTargeterForCam.cpp" />
     <ClCompile Include="ITargetAccepter.cpp" />
     <ClCompile Include="LayerdAnimationNode.cpp" />
-    <ClCompile Include="LayerdNodePlayer.cpp" />
+    <ClCompile Include="AnimLayerdNodePlayer.cpp" />
     <ClCompile Include="MaterialCreater.cpp" />
     <ClCompile Include="AnimNodePlayer_Base.cpp" />
     <ClCompile Include="MyClass2.cpp" />
@@ -420,7 +420,7 @@
     <ClInclude Include="AssetPath_Base.h" />
     <ClInclude Include="AssetSaveLoad.h" />
     <ClInclude Include="AttackInformation.h" />
-    <ClInclude Include="BlendNodePlayer.h" />
+    <ClInclude Include="AnimBlendNodePlayer.h" />
     <ClInclude Include="BoolTransCondition.h" />
     <ClInclude Include="BossActionController.h" />
     <ClInclude Include="BossActState_Base.h" />
@@ -503,7 +503,7 @@
     <ClInclude Include="ISetTargeterForCam.h" />
     <ClInclude Include="ITargetAccepter.h" />
     <ClInclude Include="LayerdAnimationNode.h" />
-    <ClInclude Include="LayerdNodePlayer.h" />
+    <ClInclude Include="AnimLayerdNodePlayer.h" />
     <ClInclude Include="MaterialCreater.h" />
     <ClInclude Include="AnimNodePlayer_Base.h" />
     <ClInclude Include="MyClass2.h" />

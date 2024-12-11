@@ -22,16 +22,17 @@ u_int AnimSingleNodePlayer::GetAllFrame() const
 void AnimSingleNodePlayer::Update(std::vector<BoneTransform>& _outTransforms)
 {
 	float playingRatio = GetCurPlayRatio();
-
+	
 	// 再生キーに反映
 	playingFrame = static_cast<u_int>(playingRatio * GetAllFrame());
 
+	// ボーンのトランスフォームを取得
+	const SingleAnimationNode& singleNode = static_cast<const SingleAnimationNode&>(*pPlayAnimNode);
 	_outTransforms.resize(pAssetBoneList->GetBoneCnt());
-	//ボーン数ループ
 	for (unsigned int b_i = 0; b_i < pAssetBoneList->GetBoneCnt(); b_i++)
 	{
 		// 再生時間から各パラメータを取得
-		pPlayAnimNode->GetAnimTransform(_outTransforms[b_i], b_i, playingRatio);
+		singleNode.GetAnimTransform(_outTransforms[b_i], b_i, playingRatio);
 	}
 }
 

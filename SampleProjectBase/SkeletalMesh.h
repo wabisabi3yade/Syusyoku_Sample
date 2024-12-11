@@ -15,6 +15,9 @@ class BoneList : public Asset_Base
 	/// @brief ロード時のオフセット回転量
 	DirectX::SimpleMath::Quaternion loadOffsetRotation;
 
+	/// @brief ノード情報の元ノードを持つ
+	std::unique_ptr<TreeNode> pRootNode;
+
 	/// @brief ロード時のスケール
 	float loadScale;
 	
@@ -34,6 +37,10 @@ public:
 	/// @return ボーン
 	Bone* FindBone(const std::string& _boneName);
 
+	/// @brief ルートノードをセット
+	/// @param スケルタルメッシュのルートノードを取得
+	void SetRootNode(std::unique_ptr<TreeNode> _pRootNode);
+
 	// 要素数からボーンを取得
 	Bone* GetBone(u_int _arrayIdx);
 
@@ -48,6 +55,10 @@ public:
 	/// @brief ルートボーンのIDを取得する
 	/// @return ルートボーンのID
 	u_int GetRootBoneId() const;
+
+	/// @brief ルートノードを取得する
+	/// @return ルートノード
+	const TreeNode* GetRootNode() const;
 
 	/// @brief ロード時のスケール倍率を取得
 	/// @return ロード時のスケール倍率
@@ -69,9 +80,6 @@ class SkeletalMesh : public Mesh_Group
 	/// @brief このスケルタルメッシュで使用するボーンリストのポインタ(アセット管理にある)
 	BoneList* pAssetBoneList;
 
-	/// @brief ノード情報の元ノードを持つ
-	std::unique_ptr<TreeNode> pRootNode;
-
 public:
 	SkeletalMesh() : Mesh_Group(MeshType::SK), pAssetBoneList(nullptr) {}
 	~SkeletalMesh() {}
@@ -82,10 +90,11 @@ public:
 	Bone* GetBoneByName(const std::string& _name);
 
 	// ボーンの数を取得
-	u_int GetBoneCnt();
+	u_int GetBoneCnt() const;
 
-	// ルートノードを取得
-	TreeNode& GetRootNode();
+	/// @brief ルートノードを取得する
+	/// @return ルートノード
+	const TreeNode* GetRootNode() const;
 
 	// ボーンリストを取得(これは動かさないようにする)
 	BoneList& GetBoneList();

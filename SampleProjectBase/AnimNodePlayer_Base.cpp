@@ -156,13 +156,11 @@ void AnimNodePlayer_Base::ProgressPlayRatio(float _controllerSpeed)
 	アニメーションカーブでの速度　×
 	ノードの速度倍率
 	*/
-	allPlaySpeed = _controllerSpeed * playerSpeedTimes * 
-		pPlayAnimNode->GetPlaySpeedTimes() * animCurveSpeed;
+	allPlaySpeed = _controllerSpeed * playerSpeedTimes *
+		animCurveSpeed * pPlayAnimNode->GetPlaySpeedTimes();
 
 	// 0徐算防止
-	float divideVal = _controllerSpeed;
-	if (divideVal < Mathf::epsilon)
-		divideVal = Mathf::epsilon;
+	float divideVal = std::max(_controllerSpeed, Mathf::epsilon);
 
 	// deltaTimeにcontrollerSpeedが掛けてあるので
 	float deltaRemoveConSpeed = deltaTime / divideVal;
@@ -249,6 +247,7 @@ void AnimNodePlayer_Base::NotifyUpdate()
 	}
 }
 
+
 void AnimNodePlayer_Base::ApplyLoadTransform(DirectX::SimpleMath::Vector3& _rootMotionPos) const
 {
 	using namespace DirectX::SimpleMath;
@@ -257,6 +256,11 @@ void AnimNodePlayer_Base::ApplyLoadTransform(DirectX::SimpleMath::Vector3& _root
 	_rootMotionPos = Vector3::Transform(_rootMotionPos, Matrix::CreateFromQuaternion(pAssetBoneList->GetLoadRotation()));
 
 	_rootMotionPos *= pObjectTransform->GetScale();
+}
+
+float AnimNodePlayer_Base::GetPlayerSpeed() const
+{
+	return playerSpeedTimes;
 }
 
 void AnimNodePlayer_Base::ImGuiDebug()

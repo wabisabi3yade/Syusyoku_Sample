@@ -4,6 +4,7 @@
 // ノード種類
 #include "SingleAnimationNode.h"
 #include "BlendAnimationNode.h"
+#include "LayerdAnimationNode.h"
 
 // アセット
 #include "AssetGetter.h"
@@ -149,6 +150,9 @@ nlohmann::json AnimationController::Save()
 	auto data = Asset_Base::Save();
 	data["playSpeed"] = playSpeed;
 
+	if (pAssetBoneList)
+		data["boneList"] = pAssetBoneList->GetAssetName();
+
 	nlohmann::json nodeInfoData;
 	for (auto& nodeInfo : animNodeInfos)
 	{
@@ -169,6 +173,14 @@ void AnimationController::Load(const nlohmann::json& _data)
 {
 	Asset_Base::Load(_data);
 	LoadJsonFloat("playSpeed", playSpeed, _data);
+
+	// ボーンリストを取得
+	std::string loadStr;
+	if (LoadJsonString("boneList", loadStr, _data))
+	{
+		pAssetBoneList = AssetGetter::GetAsset<BoneList>(loadStr);
+	}
+
 
 	// パラメーター
 	nlohmann::json loadData;
@@ -201,10 +213,9 @@ void AnimationController::Load(const nlohmann::json& _data)
 	}
 
 	// デフォルトノードをロード
-	std::string defaultNodeName = "";
-	if (LoadJsonString("defaultNode", defaultNodeName, _data))
+	if (LoadJsonString("defaultNode", loadStr, _data))
 	{
-		pDefaultNodeInfo = GetNodeInfo(defaultNodeName);
+		pDefaultNodeInfo = GetNodeInfo(loadStr);
 	}
 }
 
@@ -479,8 +490,6 @@ AnimNodeInfo* AnimationController::CreateNodeInfoByType(AnimationNode_Base::Node
 	NotDuplicateNodeName(nodeName);	// コントローラー内で重複しないようなノード名を作成する
 
 	std::unique_ptr<AnimNodeInfo> pAnimNodeInfo = std::make_unique<AnimNodeInfo>();
-
-	pAnimNodeInfo->pAnimNode = std::make_unique<SingleAnimationNode>(_nodeName);
 	using enum  AnimationNode_Base::NodeType;
 	switch (_nodeType)
 	{
@@ -490,6 +499,16 @@ AnimNodeInfo* AnimationController::CreateNodeInfoByType(AnimationNode_Base::Node
 
 	case Blend:
 		pAnimNodeInfo->pAnimNode = std::make_unique<BlendAnimationNode>(*pAnimParameters, _nodeName);
+		break;
+
+	case Layerd:
+		if (!pAssetBoneList)
+		{
+			HASHI_DEBUG_LOG("ボーンリストを設定してください");
+			return nullptr;
+		}
+
+		pAnimNodeInfo->pAnimNode = std::make_unique<LayerdAnimationNode>(*pAssetBoneList, _nodeName);
 		break;
 
 	default:
@@ -576,6 +595,9 @@ void AnimationController::LoadGroupArrow(const nlohmann::json& _groupArrowData)
 void AnimationController::ImGuiDebug()
 {
 	ImGui::DragFloat("PlaySpeed", &playSpeed, 0.01f, 0.0f, 1000.0f);
+
+	// ボーンリストをセット
+	ImGuiSetBoneList();
 
 	std::vector<std::string> nodeNames;	// 全ノード名を取得しておく
 	for (auto& ni : animNodeInfos)
@@ -684,12 +706,7 @@ void AnimationController::ImGuiCreateNode()
 	// ノードタイプ
 	static u_int selectId = 0;
 
-	std::vector<std::string> typeNames =
-	{
-		"Single",
-		"Blend"
-	};
-	ImGuiMethod::ComboBox("NodeType", selectId, typeNames);
+	ImGuiMethod::ComboBox("NodeType", selectId, AnimationNode_Base::edit_nodeTypeStrings);
 	ImGui::SameLine();
 
 	if (ImGui::Button("+"))
@@ -748,4 +765,18 @@ void AnimationController::ImGuiTransArrow(AnimNodeInfo& _nodeInfo, const std::ve
 		CreateTransitionArrow(fromName, selectToNode);
 	}
 #endif // EDIT
+}
+
+void AnimationController::ImGuiSetBoneList()
+{
+	// ボーンリスト名
+	std::string boneListName;
+	if (pAssetBoneList)
+		boneListName = pAssetBoneList->GetAssetName();
+
+	// ボーンリストを変更
+	if (AssetGetter::ImGuiGetCombobox<BoneList>("BoneList", boneListName))
+	{
+		pAssetBoneList = AssetGetter::GetAsset<BoneList>(boneListName);
+	}
 }

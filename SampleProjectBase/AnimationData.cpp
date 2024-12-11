@@ -213,14 +213,6 @@ DirectX::SimpleMath::Vector3 AnimationData::GetPositionByRatio(u_int _boneId, fl
 	// äÑçá
 	float ratio = (playingKeyNum - prevKey.startKeyNum) / deltaKeyNum;
 
-	/*u_int prevprevKeyNum = channel->GetNextPosKey(prevKeyNum, -1);
-	u_int nextnextKeyNum = channel->GetNextPosKey(prevKeyNum, 2);
-
-	const AnimKey_V3& prevprevKey = channel->GetPosKey(prevprevKeyNum);
-	const AnimKey_V3& nextnextKey = channel->GetPosKey(nextnextKeyNum);
-
-	Vector3 calcPos = CatmulSplineInterp::CalcVector3(prevKey.parameter, nextKey.parameter, prevprevKey.parameter, nextnextKey.parameter, ratio);*/
-
 	//// ê¸å`ï‚ä‘
 	Vector3 calcPos = Vector3::Lerp(prevKey.parameter, nextKey.parameter, ratio);
 
