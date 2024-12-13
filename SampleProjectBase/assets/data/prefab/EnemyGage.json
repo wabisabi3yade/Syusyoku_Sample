@@ -1,0 +1,177 @@
+{
+    "childs": [
+        {
+            "childs": [
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "image": "UI_BarFrame.png",
+                                "name": "UIRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 2,
+                        "name": "Enemy_GageFrame",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                640.2222290039063,
+                                694.9249877929688,
+                                0.0
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                965.3333740234375,
+                                42.70499801635742,
+                                0.699999988079071
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "image": "UI_BarBack.png",
+                                "name": "UIRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 2,
+                        "name": "Enemy_GageBack",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                640.0,
+                                694.5999755859375,
+                                0.20000000298023224
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                938.888916015625,
+                                22.75,
+                                1.0
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "currentValue": 1.0,
+                                "enable": true,
+                                "image": "UI_EnemyHpBar.png",
+                                "maxValue": 1.0,
+                                "minValue": 0.0,
+                                "name": "UISlider",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 2,
+                        "name": "Enemy_GageBar",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                171.77777099609375,
+                                694.5999755859375,
+                                0.09000000357627869
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                936.7777709960938,
+                                23.919998168945313,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            ],
+            "gameObject": {
+                "active": true,
+                "components": null,
+                "layer": 2,
+                "name": "Enemy_HpGage",
+                "tag": 0,
+                "transform": {
+                    "child": [
+                        "Enemy_GageFrame",
+                        "Enemy_GageBack",
+                        "Enemy_GageBar"
+                    ],
+                    "pos": [
+                        640.0,
+                        694.5999755859375,
+                        0.10000000149011612
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.1111111640930176,
+                        0.6499999761581421,
+                        1.0
+                    ]
+                }
+            }
+        }
+    ],
+    "gameObject": {
+        "active": true,
+        "components": null,
+        "layer": 2,
+        "name": "EnemyGage",
+        "tag": 0,
+        "transform": {
+            "child": [
+                "Enemy_HpGage"
+            ],
+            "pos": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                -0.0,
+                0.0,
+                -0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        }
+    }
+}

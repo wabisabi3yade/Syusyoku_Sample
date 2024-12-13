@@ -30,14 +30,12 @@ private:
 	/// @brief 敵全体リスト
 	EnemyList enemyList;
 
-	/// @brief 移動範囲の中心座標
-	DirectX::SimpleMath::Vector3 moveAreaCenterPos;
-
 	/// @brief 現在のバトルの状態
 	BattleState curBattleState{ BattleState::Start };
 
-	/// @brief 移動範囲の半径
-	float moveAreaRadius{ 0.0f };
+	/// @brief XZ座標のエリア制限
+	// x : X_R,	y: X_L, z : Y_T, w : Y_B
+	DirectX::SimpleMath::Vector4 moveAreaRect;
 
 #ifdef EDIT
 	bool isDebugDisplay{ false };

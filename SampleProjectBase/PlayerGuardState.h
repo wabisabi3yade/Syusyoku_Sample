@@ -3,7 +3,13 @@
 
 class PlayerGuardState : public PlayerGroundState
 {
-	/// @brief パリィできる状態の持続時間
+	/// @brief パリィ時のエフェクト情報
+	CreateVfxInfo parryEffectInfo;
+
+	/// @brief パリィエフェクトを生成する場所のオフセット(オブジェクトから)
+	DirectX::SimpleMath::Vector3 createVfxOffset;
+
+	/// @brief パリィできる状態の持続時間W
 	u_int sustainParryFrame;
 
 	/// @brief 経過時間
@@ -59,6 +65,9 @@ private:
 
 	/// @brief パリィ時の行動
 	void GuardParry();
+
+	/// @brief パリィエフェクトを生成
+	void CreateParryVfx();
 
 	void ImGuiDebug() override;
 private:

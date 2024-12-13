@@ -30,7 +30,6 @@ bool HashiTaku::LoadJsonData(const std::string& _s, nlohmann::json& _d, const nl
 #ifdef EDIT
 	if (!_j[_s].is_object())
 	{
-		HASHI_DEBUG_LOG(_s + "はjsonオブジェクトではありません");
 		return false;
 	}
 #endif
@@ -46,8 +45,7 @@ bool HashiTaku::LoadJsonDataArray(const std::string& _s, nlohmann::json& _d, con
 #ifdef EDIT
 	if (!_j[_s].is_array() && !_j[_s].is_object())
 	{
-		HASHI_DEBUG_LOG(_s + "はjson配列ではありません");
-		/*return false;*/
+		return false;
 	}
 #endif
 
@@ -62,7 +60,6 @@ bool HashiTaku::LoadJsonBoolean(const std::string& _s, bool& _b, const nlohmann:
 #ifdef EDIT
 	if (!_j[_s].is_boolean())
 	{
-		HASHI_DEBUG_LOG(_s + "はboolではありません");
 		return false;
 	}
 #endif
@@ -78,7 +75,6 @@ bool HashiTaku::LoadJsonInteger(const std::string& _s, int& _i, const nlohmann::
 #ifdef EDIT
 	if (!_j[_s].is_number_integer())
 	{
-		HASHI_DEBUG_LOG(_s + "はintではありません");
 		return false;
 	}
 #endif
@@ -94,7 +90,6 @@ bool HashiTaku::LoadJsonUnsigned(const std::string& _s, u_int& _u, const nlohman
 #ifdef EDIT
 	if (!_j[_s].is_number_unsigned())
 	{
-		HASHI_DEBUG_LOG(_s + "はu_intではありません");
 		return false;
 	}
 #endif
@@ -109,7 +104,6 @@ bool HashiTaku::LoadJsonFloat(const std::string& _s, float& _f, const nlohmann::
 #ifdef EDIT
 	if (!_j[_s].is_number_float())
 	{
-		HASHI_DEBUG_LOG(_s + "はfloatではありません");
 		return false;
 	}
 #endif
@@ -124,7 +118,6 @@ bool HashiTaku::LoadJsonString(const std::string& _s, std::string& _str, const n
 #ifdef EDIT
 	if (!_j[_s].is_string())
 	{
-		HASHI_DEBUG_LOG(_s + "はstringではありません");
 		return false;
 	}
 #endif
@@ -139,7 +132,6 @@ bool HashiTaku::LoadJsonVector2(const std::string& _s, DirectX::SimpleMath::Vect
 #ifdef EDIT
 	if (!_j[_s].is_array())
 	{
-		HASHI_DEBUG_LOG(_s + "は配列ではありません");
 		return false;
 	}
 #endif
@@ -155,7 +147,6 @@ bool HashiTaku::LoadJsonVector3(const std::string& _s, DirectX::SimpleMath::Vect
 #ifdef EDIT
 	if (!_j[_s].is_array())
 	{
-		HASHI_DEBUG_LOG(_s + "は配列ではありません");
 		return false;
 	}
 #endif
@@ -172,7 +163,6 @@ bool HashiTaku::LoadJsonVector4(const std::string& _s, DirectX::SimpleMath::Vect
 #ifdef EDIT
 	if (!_j[_s].is_array())
 	{
-		HASHI_DEBUG_LOG(_s + "は配列ではありません");
 		return false;
 	}
 #endif
@@ -190,7 +180,6 @@ bool HashiTaku::LoadJsonQuaternion(const std::string& _s, DirectX::SimpleMath::Q
 #ifdef EDIT
 	if (!_j[_s].is_array())
 	{
-		HASHI_DEBUG_LOG(_s + "は配列ではありません");
 		return false;
 	}
 #endif
@@ -208,7 +197,6 @@ bool HashiTaku::LoadJsonColor(const std::string& _s, DirectX::SimpleMath::Color&
 #ifdef EDIT
 	if (!_j[_s].is_array())
 	{
-		HASHI_DEBUG_LOG(_s + "は配列ではありません");
 		return false;
 	}
 #endif
@@ -221,10 +209,8 @@ bool HashiTaku::LoadJsonColor(const std::string& _s, DirectX::SimpleMath::Color&
 
 bool HashiTaku::IsJsonContains(const nlohmann::json& _j, const std::string& _elementStr)
 {
-
 	if (!_j.contains(_elementStr))
 	{
-		HASHI_DEBUG_LOG(_elementStr + "がロードデータにありませんでした");
 		return false;
 	}
 	return true;

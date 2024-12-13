@@ -92,7 +92,7 @@ void BossJumpAttack::JumpMove()
 	VertivalMove();
 
 	// ‘¬“x‚ðRb‚É“n‚·
-	GetRB()->SetVelocity(curMoveSpeed);
+	GetRB().SetVelocity(curMoveSpeed);
 }
 
 void BossJumpAttack::HorizonMove()

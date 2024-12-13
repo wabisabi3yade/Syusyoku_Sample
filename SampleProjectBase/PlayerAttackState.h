@@ -1,6 +1,6 @@
 #pragma once
 #include "PlayerGroundState.h"
-#include "AttackInformation.h"
+#include "PlayerAttackInformation.h"
 #include "AnimationCurve.h"
 
 /// @brief プレイヤー攻撃のゲーム内処理
@@ -11,7 +11,7 @@ private:
 	PlayerState nextCombAtkState;
 
 	/// @brief 攻撃情報リスト(単発なら最初の情報を使用する)
-	std::vector<HashiTaku::AttackInformation> attackInfos;
+	std::vector<HashiTaku::PlayerAttackInformation> attackInfos;
 
 	/// @brief 前に進む距離カーブ
 	AnimationCurve progressDistanceCurve;

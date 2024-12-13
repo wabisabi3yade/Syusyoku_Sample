@@ -31,6 +31,11 @@ void HashiTaku::AttackInformation::SetAttackLevel(AttackLevel _atkLevel)
 	ApplyFromAttackLevel();
 }
 
+const CreateVfxInfo& HashiTaku::AttackInformation::GetHitVfxInfo() const
+{
+	return hitVfxInfo;
+}
+
 
 float HashiTaku::AttackInformation::GetDamageValue() const
 {
@@ -47,15 +52,11 @@ HashiTaku::AttackInformation::AttackLevel HashiTaku::AttackInformation::GetAttac
 	return atkLevel;
 }
 
-const std::string& HashiTaku::AttackInformation::GetHitVfxName() const
-{
-	return hitVfxName;
-}
-
 nlohmann::json HashiTaku::AttackInformation::Save()
 {
 	nlohmann::json data;
 
+	data["hitVfx"] = hitVfxInfo.Save();
 	data["damage"] = atkDamage;
 	data["level"] = atkLevel;
 
@@ -64,6 +65,12 @@ nlohmann::json HashiTaku::AttackInformation::Save()
 
 void HashiTaku::AttackInformation::Load(const nlohmann::json& _data)
 {
+	nlohmann::json hitVfxData;
+	if (LoadJsonData("hitVfx", hitVfxData, _data))
+	{
+		hitVfxInfo.Load(hitVfxData);
+	}
+
 	LoadJsonFloat("damage", atkDamage, _data);
 	
 	if (LoadJsonEnum<AttackLevel>("level", atkLevel, _data))
@@ -112,8 +119,5 @@ void HashiTaku::AttackInformation::ImGuiDebug()
 		SetAttackLevel(static_cast<AttackLevel>(id));
 	}
 
-	// ヒット時エフェクト
-	AssetGetter::ImGuiGetCombobox<VisualEffect>("HitVfx", hitVfxName);
-	if (ImGui::Button("Clear"))
-		hitVfxName = "";
+	hitVfxInfo.ImGuiCall();
 }

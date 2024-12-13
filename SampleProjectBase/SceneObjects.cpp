@@ -148,7 +148,7 @@ void SceneObjects::SetDrawUIList(GameObject& _uiObj)
 	
 	drawUiList.push_back(&_uiObj);	// ’Ç‰Á
 
-	drawUiList.sort(SortUIPosZFunction);	// z’l‡‚É•À‚×‚é
+	SortUiList();	// z’l‡‚É•À‚×‚é
 }
 
 void SceneObjects::RemoveDrawUIList(GameObject& _uiObj)

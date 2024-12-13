@@ -12,7 +12,7 @@ PlayerAirAttack::PlayerAirAttack() :
 	attackTimeCnt(1)
 {
 	attackInfos.resize(1);	// UŒ‚î•ñ‚ğÅ’á1ì¬‚µ‚Ä‚¨‚­
-	HashiTaku::AttackInformation atkInfo;
+	HashiTaku::PlayerAttackInformation atkInfo;
 	attackInfos.push_back(atkInfo);
 }
 

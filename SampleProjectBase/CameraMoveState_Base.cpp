@@ -66,10 +66,6 @@ void CameraMoveState_Base::Load(const nlohmann::json& _data)
 
 void CameraMoveState_Base::CheckTransitionUpdate()
 {
-	/*if(pInput->GetButtonDown(GameInput::ButtonType::Player_RockOn))
-	{
-		ChangeGroundState(CameraState::Target);
-	}*/
 }
 
 void CameraMoveState_Base::ChangeState(CameraState _camState, bool _isForce)

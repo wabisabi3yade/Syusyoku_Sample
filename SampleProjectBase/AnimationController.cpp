@@ -77,6 +77,16 @@ void AnimationController::RemoveNode(const std::string& _nodeName)
 			});
 	}
 
+
+	// グループ矢印も
+	for (auto& arrows : groupArrows)
+	{
+		std::erase_if(arrows.second, [&](const std::unique_ptr<AnimTransitionArrow>& arrow)
+			{
+				return  pDelete->pAnimNode.get() == &arrow->GetToNode();
+			});
+	}
+
 	// ノードを削除する
 	auto itr = std::erase_if(animNodeInfos, [&](const std::unique_ptr<AnimNodeInfo>& _nodeInfo)
 		{

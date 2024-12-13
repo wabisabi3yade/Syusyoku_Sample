@@ -1,6 +1,6 @@
 #pragma once
 #include "PlayerAirState.h"
-#include "AttackInformation.h"
+#include "PlayerAttackInformation.h"
 
 /// @brief プレイヤーの空中攻撃
 class PlayerAirAttack : public PlayerAirState
@@ -9,7 +9,7 @@ class PlayerAirAttack : public PlayerAirState
 	PlayerState nextCombAtkState;
 
 	/// @brief 攻撃情報リスト(単発なら最初の情報を使用する)
-	std::vector<HashiTaku::AttackInformation> attackInfos;
+	std::vector<HashiTaku::PlayerAttackInformation> attackInfos;
 
 	/// @brief 全体の攻撃情報何個あるか
 	u_int attackTimeCnt;

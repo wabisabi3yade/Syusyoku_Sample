@@ -133,7 +133,9 @@ DirectX::SimpleMath::Vector3 PlayerActState_Base::GetAtkEnemyPos()
 	// ƒ^[ƒQƒbƒg‚µ‚Ä‚¢‚é‚È‚ç
 	if (pActionController->GetIsTargeting())
 	{
-		return pActionController->GetTargetAccepter()->GetWorldPos();
+		auto* pAccepter = pActionController->GetTargetAccepter();
+		if (pAccepter)
+			return pAccepter->GetWorldPos();
 	}
 
 	// ‹ß‚­‚Ì“G‚ð’T‚·

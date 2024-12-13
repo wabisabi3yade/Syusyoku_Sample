@@ -6,6 +6,41 @@
                 "active": true,
                 "components": [
                     {
+                        "enable": true,
+                        "name": "MeshRenderer",
+                        "priority": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "Rock2_1",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        4.599999904632568,
+                        -4.900000095367432,
+                        -4.900000095367432
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.9170603156089783,
+                        0.0,
+                        0.39874863624572754
+                    ],
+                    "scale": [
+                        10.000001907348633,
+                        10.0,
+                        10.000001907348633
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
                         "distance": 1000.0,
                         "enable": true,
                         "fov": 45.0,
@@ -34,41 +69,6 @@
                         1.0,
                         1.0,
                         1.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "name": "MeshRenderer",
-                        "priority": 0
-                    }
-                ],
-                "layer": 0,
-                "name": "Rock2_1",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        4.599999904632568,
-                        -4.900000095367432,
-                        -4.900000095367432
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.9170603156089783,
-                        0.0,
-                        0.39874863624572754
-                    ],
-                    "scale": [
-                        10.000001907348633,
-                        10.0,
-                        10.000001907348633
                     ]
                 }
             }
@@ -165,48 +165,6 @@
             }
         },
         {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "meshName": "Knight.fbx",
-                        "name": "MeshRenderer",
-                        "priority": 0
-                    },
-                    {
-                        "animConName": "ANC_TitlePlayer",
-                        "enable": true,
-                        "name": "Animation",
-                        "priority": 0
-                    }
-                ],
-                "layer": 0,
-                "name": "Player",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        1.5,
-                        -5.0,
-                        -12.699999809265137
-                    ],
-                    "rotation": [
-                        -0.0,
-                        -0.38268357515335083,
-                        -0.0,
-                        0.9238794445991516
-                    ],
-                    "scale": [
-                        0.9999998807907104,
-                        1.0,
-                        0.9999998807907104
-                    ]
-                }
-            }
-        },
-        {
             "childs": [
                 {
                     "childs": null,
@@ -293,6 +251,48 @@
                 "components": [
                     {
                         "enable": true,
+                        "meshName": "Knight.fbx",
+                        "name": "MeshRenderer",
+                        "priority": 0
+                    },
+                    {
+                        "animConName": "ANC_TitlePlayer",
+                        "enable": true,
+                        "name": "Animation",
+                        "priority": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "Player",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        1.5,
+                        -5.0,
+                        -12.699999809265137
+                    ],
+                    "rotation": [
+                        -0.0,
+                        -0.38268357515335083,
+                        -0.0,
+                        0.9238794445991516
+                    ],
+                    "scale": [
+                        0.9999998807907104,
+                        1.0,
+                        0.9999998807907104
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
                         "image": "UI_TitleImage.png",
                         "name": "UIRenderer",
                         "priority": 0
@@ -327,11 +327,10 @@
                 {
                     "childs": null,
                     "gameObject": {
-                        "active": true,
+                        "active": false,
                         "components": [
                             {
                                 "enable": true,
-                                "image": "UI_GageBar_R.png",
                                 "name": "UIRenderer",
                                 "priority": 0
                             }

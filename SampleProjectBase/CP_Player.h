@@ -18,9 +18,6 @@ class CP_Player : public CP_Character
 	/// @brief HPスライダーオブジェクト名
 	std::string hpBarObjName;
 
-	/// @brief ガードスライダーオブジェクト名
-	std::string guardBarObjName;
-
 	/// @brief アクション変数
 	std::unique_ptr<PlayerAction> pAction;
 
@@ -36,20 +33,11 @@ class CP_Player : public CP_Character
 	/// @brief hpゲージ
 	IUISlider* pHpSlider;
 
-	/// @brief ガードゲージ
-	IUISlider* pGuardSlider;
-
 	/// @brief 攻撃フラグ
 	const bool* pAttackCollisionFlag;
 
 	/// @brief ヒットストップする前の再生速度
 	float hitStopBeforeAnimSpeed;
-
-	/// @brief 現在のガードゲージ
-	float curGuardGage;
-
-	/// @brief 最大のガードゲージ
-	float maxGuardGage;
 public:
 	CP_Player();
 	~CP_Player() {}
@@ -62,12 +50,6 @@ public:
 
 	/// @brief ヒットストップ終了した時の処理
 	void OnHitStopEnd() override;
-
-	/// @brief ガードゲージを増やす
-	void AddGuardGage(float _addGage);
-
-	/// @brief ガードゲージをリセット
-	void ResetGuardGage();
 
 	/// @brief 攻撃情報をセットする
 	/// @param _setAttackInfo 攻撃情報

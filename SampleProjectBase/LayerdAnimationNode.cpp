@@ -5,6 +5,8 @@
 
 constexpr int NOT_SET_BONEID(-1);	// ボーンを指定していない時のボーンID
 
+namespace DXSimp = HashiTaku::DXSimp;
+
 LayerdAnimationNode::LayerdAnimationNode(const BoneList& _boneList, const std::string& _nodeName) :
 	AnimationNode_Base(_nodeName, NodeType::Layerd),
 	pBoneList(&_boneList),
@@ -38,6 +40,24 @@ void LayerdAnimationNode::GetAnimTransform(std::vector<BoneTransform>& _outTrans
 	}
 }
 
+u_int LayerdAnimationNode::GetAllKeyFrame() const
+{
+#ifdef EDIT
+	if (!pBlendAnimation) return 1;
+#endif // EDIT
+
+	return pBlendAnimation->GetAllAnimationFrame();
+}
+
+u_int LayerdAnimationNode::GetBlendAllKeyFrame() const
+{
+#ifdef EDIT
+	if (!pBlendAnimation) return 1;
+#endif // EDIT
+
+	return pBlendAnimation->GetAllAnimationFrame();
+}
+
 float LayerdAnimationNode::GetBlendCurveSpeed(float _playRatio) const
 {
 	return blendSpeedCurve.GetValue(_playRatio);
@@ -45,20 +65,43 @@ float LayerdAnimationNode::GetBlendCurveSpeed(float _playRatio) const
 
 float LayerdAnimationNode::GetBlendAnimationTime() const
 {
+#ifdef EDIT
 	if (!pBlendAnimation) return 1.0f;
+#endif // EDIT
 
 	return pBlendAnimation->GetAnimationTime();
 }
 
 float LayerdAnimationNode::GetBeginBlendPlayRatio() const
 {
+#ifdef EDIT
 	if (!pBlendAnimation) return 0.0f;
+#endif // EDIT
+
 	return static_cast<float>(beginBlendPlayFrame) / pBlendAnimation->GetAllAnimationFrame();
 }
 
 int LayerdAnimationNode::GetBeginBlendBoneId() const
 {
 	return beginBlendBoneId;
+}
+
+const DirectX::SimpleMath::Vector3& LayerdAnimationNode::GetRootMotionPos(float _ratio) const
+{
+#ifdef EDIT
+	if (!pBaseAnimation) return  DXSimp::Vector3::Zero;
+#endif // EDIT
+
+	return pBaseAnimation->GetRootMotionPos(_ratio);
+}
+
+const DirectX::SimpleMath::Vector3& LayerdAnimationNode::GetRootMotionPerSpeed() const
+{
+#ifdef EDIT
+	if (!pBaseAnimation) return  DXSimp::Vector3::Zero;
+#endif // EDIT
+
+	return pBaseAnimation->GetRootMotionPosSpeedPerSec();
 }
 
 nlohmann::json LayerdAnimationNode::Save()

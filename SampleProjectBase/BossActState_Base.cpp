@@ -4,6 +4,8 @@
 #include "CP_Boss.h"
 #include "CP_Player.h"
 
+#include "BossBreakEndKnock.h"
+
 namespace DXSimp = DirectX::SimpleMath;
 
 constexpr u_int MAX_WARP_STEPS(10);	//	ワープモーションの最大回数
@@ -53,23 +55,19 @@ void BossActState_Base::OnEnd()
 	EnemyActState_Base::OnEnd();
 
 	OnEndBehavior();
-
-	// 速度をリセット
-	if (CP_RigidBody* pRb = GetRB())
-	{
-		pRb->SetVelocity({ 0.0f,0.0f,0.0f });
-	}
-
 	isWarpMoving = false;
 }
 
 void BossActState_Base::OnDamage()
 {
-	// のけぞらないなら終える
-	if (!pActionController->GetCanKnock()) return;
+	// ブレイク中にのみのけぞる
+	if (!pActionController->GetIsBreaking()) return;
 
-	// のけぞるように
-	ChangeState(BossState::Damage_Small, true);
+	// ブレイク終了ノックできるか確認
+	if (GetCanBreakEndKdnock())
+		ChangeState(BossState::BreakEnd_Knock, true);
+	else // 通常のけぞり
+		ChangeState(BossState::Damage_Small, true);		
 }
 
 void BossActState_Base::DebugDisplay()
@@ -110,6 +108,10 @@ void BossActState_Base::Load(const nlohmann::json& _data)
 	{
 		LoadWarpParameters(warpData);
 	}
+}
+
+void BossActState_Base::TransitionCheckUpdate()
+{
 }
 
 void BossActState_Base::ChangeState(BossState _nextState, bool _isForce)
@@ -154,6 +156,11 @@ void BossActState_Base::SetWarpTargetPosReference(const DirectX::SimpleMath::Vec
 	pWarpTargetPos = &_targetPosRef;
 }
 
+void BossActState_Base::SetWarpTargetPos(const DirectX::SimpleMath::Vector3& _targetPos)
+{
+	warpTargetPos = _targetPos;
+}
+
 Transform& BossActState_Base::GetBossTransform()
 {
 	return pActionController->GetBoss().GetTransform();
@@ -169,9 +176,9 @@ CP_Animation* BossActState_Base::GetAnimation()
 	return pActionController->GetAnimation();
 }
 
-CP_RigidBody* BossActState_Base::GetRB()
+CP_RigidBody& BossActState_Base::GetRB()
 {
-	return pActionController->GetRB();
+	return *pActionController->GetRB();
 }
 
 float BossActState_Base::DeltaTime() const
@@ -229,7 +236,7 @@ void BossActState_Base::WarpMotionUpdate()
 	// 今回進む距離を求め、秒速に変換してRBに速度を渡す
 	DXSimp::Vector3 moveSpeed = disToWarpTargePos * diffCurveValue / deltaTime;
 	moveSpeed.y = 0.0f;
-	GetRB()->SetVelocity(moveSpeed);
+	GetRB().SetVelocity(moveSpeed);
 }
 
 void BossActState_Base::CheckTransNextWarp(float _animRatio)
@@ -255,14 +262,32 @@ void BossActState_Base::CheckTransNextWarp(float _animRatio)
 		// ポインタ設定されているなら
 		if (pWarpTargetPos)
 			CalcWarpDistance(*pWarpTargetPos);
+		else
+			CalcWarpDistance(warpTargetPos);
 	}
 
 	// 移動中　かつ　現在のワープが終わっているなら
 	if (isWarpMoving && _animRatio > warpMotionParams[curWarpStep - 1].endAnimRatio)
 	{
 		isWarpMoving = false;
-		GetRB()->SetVelocity(DXSimp::Vector3::Zero);	// 前の慣性を消す
+		//CP_RigidBody* rb = GetRB();
+		//rb.SetVelocity(DXSimp::Vector3::Zero);
+		//GetRB()->SetVelocity(DXSimp::Vector3::Zero);	// 前の慣性を消す
 	}
+}
+
+bool BossActState_Base::GetCanBreakEndKdnock()
+{
+	// ブレイク終了できるブレイク値を取得する
+	StateNode_Base* pState = pActionController->GetNode(static_cast<int>(BossState::BreakEnd_Knock));
+	if (!pState) return false;
+
+	// 今ブレイクできるか
+	const BossBreakEndKnock& breakKnock = static_cast<const BossBreakEndKnock&>(*pState);
+	if (pActionController->GetBoss().GetBreakValue() > breakKnock.GetCanBreakValue())
+		return false;
+
+	return true;
 }
 
 void BossActState_Base::ImGuiWarpDebug()

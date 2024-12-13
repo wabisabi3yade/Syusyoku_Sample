@@ -8,6 +8,8 @@ class CP_Boss;
 /// @brief ボスのアクションコントローラー
 class BossActionController : public EnemyActionController
 {
+	using BossState = BossActState_Base::BossState;
+
 public:
 	// 行動の距離タイプ
 	enum class ActDistance
@@ -19,6 +21,18 @@ public:
 	};
 
 private:
+	/// @brief 近距離行動のアクションリスト
+	std::vector<BossActState_Base::BossState> shortRangeActions;
+
+	/// @brief 中距離行動のアクションリスト
+	std::vector<BossActState_Base::BossState> midRangeActions;
+
+	/// @brief 遠距離行動のアクションリスト
+	std::vector<BossActState_Base::BossState> farRangeActions;
+
+	/// @brief それぞれの距離を指定する
+	std::array<float, static_cast<u_int>(ActDistance::MaxNum)> disLengthList;
+
 	/// @brief プレイヤーオブジェクト
 	CP_Player* pPlayerObject;
 
@@ -27,18 +41,6 @@ private:
 
 	/// @brief デフォルト状態設定
 	BossActState_Base::BossState defaultState;
-
-	/// @brief それぞれの距離を指定する
-	std::array<float, static_cast<u_int>(ActDistance::MaxNum)> disLengthList;
-
-	/// @brief 近距離行動のアクションリスト
-	std::vector<BossActState_Base::BossState> shortRangeActions;
-	
-	/// @brief 中距離行動のアクションリスト
-	std::vector<BossActState_Base::BossState> midRangeActions;
-
-	/// @brief 遠距離行動のアクションリスト
-	std::vector<BossActState_Base::BossState> farRangeActions;
 public:
 	BossActionController(CP_Boss& _boss);
 	~BossActionController() {}
@@ -81,6 +83,10 @@ public:
 	/// @brief プレイヤーを取得する
 	/// @return プレイヤーオブジェクト
 	CP_Player& GetPlayer();
+
+	/// @brief ブレイクしているか取得
+	/// @return ブレイク処理
+	bool GetIsBreaking();
 
 	/// @brief のけぞることができるか取得
 	/// @return のけぞりできるか？

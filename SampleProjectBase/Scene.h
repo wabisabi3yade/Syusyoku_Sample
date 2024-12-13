@@ -1,7 +1,6 @@
 #pragma once
 #include "BulletTest.h"
 #include "InSceneSystemManager.h"
-#include "DX11EffecseerManager.h"
 
 // 1シーンクラス
 class Scene

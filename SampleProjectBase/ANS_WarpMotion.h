@@ -9,7 +9,7 @@
 //	AnimationCurve moveRatioCurve;
 //
 //	/// @brief ターゲットの座標
-//	DirectX::SimpleMath::Vector3 targetPos;
+//	DirectX::SimpleMath::Vector3 followPos;
 //	
 //	/// @brief 1フレーム前の座標
 //	DirectX::SimpleMath::Vector3 lastPos;

@@ -3,6 +3,7 @@
 #include "CP_RigidBody.h"
 #include "GameObject.h"
 #include "CP_EffectCreater.h"
+#include "AssetGetter.h"
 
 #ifdef EDIT
 #include "Geometory.h"
@@ -13,7 +14,11 @@ constexpr DirectX::SimpleMath::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 
 namespace DXSimp = DirectX::SimpleMath;
 
-CP_Weapon::CP_Weapon() : isAttackCollision(false), attackTagCnt(0), pHaveObjectPos(nullptr)
+CP_Weapon::CP_Weapon() : 
+	pHaveObjectPos(nullptr),
+	pAtkInfomation(nullptr),
+	attackTagCnt(0),
+	isAttackCollision(false)
 {
 	// 初期化
 	for (u_int t_i = 0; t_i < ATTACK_TAG_MAX; t_i++)
@@ -29,25 +34,28 @@ void CP_Weapon::Draw()
 
 void CP_Weapon::OnCollisionStay(const HashiTaku::CollisionInfo& _otherColInfo)
 {
-	// 攻撃フラグがついていないなら
-	if (!isAttackCollision) return;
+	// 攻撃できるかチェック
+	if (!CanAttack()) return;
 
-	// 攻撃できるか確認
 	GameObject& gameObject = _otherColInfo.pRigidBodyCp->GetGameObject();
 	if (!CheckAttackableTag(gameObject)) return;	// タグチェック
 	if (!CheckAttackedRb(*_otherColInfo.pRigidBodyCp)) return;	// 攻撃済みチェック
 
-	// ダメージを受けるインターフェースがあるか確認
+	// ダメージインターフェースあるかチェック
 	HashiTaku::IDamageable* pDamager = gameObject.GetComponent<HashiTaku::IDamageable>();
 	if (!pDamager) return;
-
 
 	// 攻撃処理
 	DXSimp::Vector3 haveObjPos;	// 所有オブジェクトの座標を取得する
 	if (pHaveObjectPos) haveObjPos = *pHaveObjectPos;
+	else
+		HASHI_DEBUG_LOG("所有オブジェクトの座標が設定されていません");
+
+	// 攻撃する
 	OnAttack(*pDamager, haveObjPos);
 
-
+	// ヒットエフェクトを生成
+	CreateHitVfx(_otherColInfo.contactPoint);
 
 	// 追加する
 	AddAttackedRb(*_otherColInfo.pRigidBodyCp);
@@ -55,7 +63,7 @@ void CP_Weapon::OnCollisionStay(const HashiTaku::CollisionInfo& _otherColInfo)
 
 void CP_Weapon::SetAttackInfo(const HashiTaku::AttackInformation& _attackInformation)
 {
-	atkInfomation = _attackInformation;
+	pAtkInfomation = &_attackInformation;
 	// 攻撃済みをクリア
 	ClearAttackedRb();
 }
@@ -113,11 +121,19 @@ void CP_Weapon::Load(const nlohmann::json& _data)
 
 }
 
+bool CP_Weapon::CanAttack() const
+{
+	if (!isAttackCollision) return false; // 攻撃フラグがついていないなら
+	if (!pAtkInfomation) return false;	// 攻撃情報が無かったら
+
+	return true;
+}
+
 void CP_Weapon::OnAttack(HashiTaku::IDamageable& _damager,
 	const DirectX::SimpleMath::Vector3& _haveObjPos)
 {
 	// ダメージを与える
-	_damager.OnDamage(atkInfomation, _haveObjPos);
+	_damager.OnDamage(*pAtkInfomation, _haveObjPos);
 }
 
 void CP_Weapon::AddAttackedRb(const CP_RigidBody& _rb)
@@ -126,7 +142,7 @@ void CP_Weapon::AddAttackedRb(const CP_RigidBody& _rb)
 	attackedRbs.push_back(&_rb);
 }
 
-bool CP_Weapon::CheckAttackableTag(GameObject& _targetObject)
+bool CP_Weapon::CheckAttackableTag(GameObject& _targetObject) const
 {
 	// 攻撃タグと一緒か
 	HashiTaku::Tag::Type objTag = _targetObject.GetTag();
@@ -139,7 +155,7 @@ bool CP_Weapon::CheckAttackableTag(GameObject& _targetObject)
 	return false;
 }
 
-bool CP_Weapon::CheckAttackedRb(const CP_RigidBody& _targetRb)
+bool CP_Weapon::CheckAttackedRb(const CP_RigidBody& _targetRb) const
 {
 	// 既に攻撃されているところに入っているか
 	u_int attackedRbCnt = static_cast<u_int>(attackedRbs.size());
@@ -152,13 +168,16 @@ bool CP_Weapon::CheckAttackedRb(const CP_RigidBody& _targetRb)
 	return true;
 }
 
-void CP_Weapon::CreateHitEffect(const DirectX::SimpleMath::Vector3& _contactPos)
+void CP_Weapon::CreateHitVfx(const DirectX::SimpleMath::Vector3& _contactPos)
 {
-	CP_EffectCreater* pCreate = CP_EffectCreater::GetInstance();
-	if (!pCreate) return;
+	const CreateVfxInfo& hitVfxInfo = pAtkInfomation->GetHitVfxInfo();
 
-	// 衝突地点にエフェクトを出す
-	pCreate->Create(atkInfomation.GetHitVfxName(), _contactPos);
+	// 攻撃情報からエフェクトを取得する
+	auto* pVfx = hitVfxInfo.pHitVfx;
+	if (!pVfx) return;
+
+	// 再生
+	DX11EffecseerManager::GetInstance()->Play(hitVfxInfo, _contactPos);
 }
 
 void CP_Weapon::DebugAttackFlag()

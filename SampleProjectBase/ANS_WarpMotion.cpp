@@ -7,7 +7,7 @@
 //
 //void ANS_WarpMotion::SetTargetPosition(const DirectX::SimpleMath::Vector3& _targetPos)
 //{
-//	targetPos = _targetPos;
+//	followPos = _targetPos;
 //}
 //
 //void ANS_WarpMotion::Begin()

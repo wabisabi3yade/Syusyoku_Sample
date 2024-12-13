@@ -17,7 +17,7 @@ class LayerdAnimationNode : public AnimationNode_Base
 	/// @brief ブレンド側のアニメーションを反映するボーンのId
 	std::vector<int> blendBoneIds;
 
-	/// @brief 基礎となるアニメーション(ルートボーンはこっち)
+	/// @brief ベースとなるアニメーション(ルートボーンはこっち)
 	AnimationData* pBaseAnimation;
 
 	/// @brief ブレンドするアニメーション
@@ -44,6 +44,14 @@ public:
 	/// @param _blendRatio ブレンド側のアニメーション割合
 	void GetAnimTransform(std::vector<BoneTransform>& _outTransforms, float _baseRatio, float _blendRatio) const;
 
+	/// @brief ベース側のアニメーション全体キー数を求める
+	/// @return 全体のキー数
+	u_int GetAllKeyFrame() const override;
+
+	/// @brief ブレンド側のアニメーション全体キー数を求める
+	/// @return 全体のキー数
+	u_int GetBlendAllKeyFrame() const;
+
 	/// @brief ブレンド側のアニメーションカーブ速度を求める
 	/// @param _playRatio 再生割合
 	/// @return 再生割合
@@ -60,6 +68,14 @@ public:
 	/// @brief ブレンド開始するボーンIDを取得
 	/// @return ブレンド開始するボーンID
 	int GetBeginBlendBoneId() const;
+
+	/// @brief 指定した割合のルートモーションの移動座標を取得
+	/// @return ルートモーションの移動座標
+	const DirectX::SimpleMath::Vector3& GetRootMotionPos(float _ratio) const;
+
+	/// @brief ルートモーション秒速を取得
+	/// @return ルートモーション秒速
+	const DirectX::SimpleMath::Vector3& GetRootMotionPerSpeed() const;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;

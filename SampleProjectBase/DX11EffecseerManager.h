@@ -1,11 +1,14 @@
 #pragma once
 #include "Singleton_Base.h"
 
+class CreateVfxInfo;
 class InSceneSystemManager;
+class VisualEffect;
 
 /// @brief DX11環境で初期化や解放などを行うクラス
 class DX11EffecseerManager : public Singleton_Base<DX11EffecseerManager>
 {
+private:
 	friend class Singleton_Base<DX11EffecseerManager>;
 
 	/// @brief エフェクシアの描画変数
@@ -39,15 +42,23 @@ public:
 
 	/// @brief エフェクトを再生する
 	/// @param _effect 再生するエフェクト
+	/// @param _playSpeed 再生速度
 	/// @param _pos 座標
 	/// @param _scale スケール
+	/// @param _eularAngles 角度
 	/// @param _startFrame 再生開始フレーム
 	/// @return 再生しているハンドル
 	Effekseer::Handle Play(
 		const Effekseer::EffectRef& _effect,
+		float _playSpeed,
 		const DirectX::SimpleMath::Vector3& _pos,
 		const DirectX::SimpleMath::Vector3& _scale = DirectX::SimpleMath::Vector3::One,
+		const DirectX::SimpleMath::Vector3& _eularAngles = DirectX::SimpleMath::Vector3::Zero,
 		int _startFrame = 0);
+
+	Effekseer::Handle Play(const CreateVfxInfo& _createVfx,
+		const DirectX::SimpleMath::Vector3& _pos, 
+		const DirectX::SimpleMath::Vector3& _eularAngles = DirectX::SimpleMath::Vector3::Zero);
 
 	/// @brief マネジャーを取得
 	/// @return エフェクシアマネジャー変数
@@ -71,3 +82,24 @@ private:
 	Effekseer::Vector3D CreateEffekseerVector3(const DirectX::SimpleMath::Vector3& _dxVec3);
 };
 
+/// @brief エフェクト生成情報
+class CreateVfxInfo : public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
+{
+public:
+	/// @brief エフェクト名
+	VisualEffect* pHitVfx{ nullptr };
+
+	/// @brief  スケール
+	float scale{ 1.0f };
+
+	/// @brief 速度
+	float speed{ 1.0f };
+
+	/// @brief 開始フレーム
+	int startFrame{ 0 };
+
+	nlohmann::json Save() override;
+	void Load(const nlohmann::json& _data) override;
+
+	void ImGuiDebug() override;
+};

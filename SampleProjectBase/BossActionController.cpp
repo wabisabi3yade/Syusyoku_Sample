@@ -6,7 +6,8 @@
 
 #include "BossIdleState.h"
 #include "BossWalkState.h"
-#include "BossDamageState.h"
+#include "BossBreakEndKnock.h"
+#include "BossBreakIdle.h"
 #include "BossCombAttack.h"
 #include "BossJumpAttack.h"
 
@@ -18,8 +19,6 @@ namespace DXSimp = DirectX::SimpleMath;
 
 // 状態を表すアニメーションパラメータ名
 constexpr auto STATE_PARAM_NAME("state");
-// のけぞりができるかアニメーションパラメータ名
-constexpr auto CAN_KNOCK_PARAM_NAME("canKnock");
 
 BossActionController::BossActionController(CP_Boss& _boss) :
 	EnemyActionController(_boss, "bossActCon"), pPlayerObject(nullptr), pCanKnock(nullptr),
@@ -36,6 +35,8 @@ BossActionController::BossActionController(CP_Boss& _boss) :
 	CreateState<BossGroundMove>(Run, { ActDistance::Far });
 
 	CreateState<BossDamageState>(Damage_Small, {});
+	CreateState<BossBreakEndKnock>(BreakEnd_Knock, {});
+	CreateState<BossBreakIdle>(Break_Idle, {});
 
 	CreateState<BossCombAttack>(CombAttack1, { ActDistance::Short });
 	CreateState<BossJumpAttack>(JumpAttack, { ActDistance::Far });
@@ -74,8 +75,6 @@ void BossActionController::OnDamage(const HashiTaku::AttackInformation& _atkInfo
 	const DirectX::SimpleMath::Vector3& _attackerPos, bool* _pAcceptDamage)
 {
 	assert(pCurrentNode && "現在のノードが設定されていません");
-
-	// 現在のノードにダメージ処理を伝える
 	CastBossAct(pCurrentNode)->OnDamage();
 }
 
@@ -130,11 +129,9 @@ CP_Player& BossActionController::GetPlayer()
 	return *pPlayerObject;
 }
 
-const bool BossActionController::GetCanKnock() const
+bool BossActionController::GetIsBreaking()
 {
-	if (!pCanKnock) return false;
-
-	return *pCanKnock;
+	return GetBoss().GetIsBreaking();
 }
 
 float BossActionController::GetActDistanceLength(ActDistance _actDistance)
@@ -240,8 +237,6 @@ BossActState_Base::BossState BossActionController::RandState(ActDistance _actDis
 
 void BossActionController::GetAnimationParam()
 {
-	// のけぞりできるか？
-	pCanKnock = pAnimation->GetParameterPointer<bool>(CAN_KNOCK_PARAM_NAME);
 }
 
 bool BossActionController::IsCanBossUpdate()

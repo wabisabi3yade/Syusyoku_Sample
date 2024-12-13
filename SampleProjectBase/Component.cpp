@@ -69,9 +69,11 @@ void Component::Load(const nlohmann::json& _componentData)
 {
     HashiTaku::LoadJsonInteger("priority", priority, _componentData);
 
-    bool loadEnable;
-    HashiTaku::LoadJsonBoolean("enable", loadEnable, _componentData);
-    SetEnable(loadEnable);
+    HashiTaku::LoadJsonBoolean("enable", isEnable, _componentData);
+    if (isEnable)   // Šˆ“®ó‘Ô‚É‚È‚Á‚½‚ç‚È‚ç
+        OnEnableTrueCall();
+    else
+        OnEnableFalseCall();
 }
 
 void Component::OnEnableTrueCall()

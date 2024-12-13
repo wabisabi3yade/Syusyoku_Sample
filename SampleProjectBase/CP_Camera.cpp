@@ -128,6 +128,8 @@ void CP_Camera::Load(const nlohmann::json& _data)
 	LoadJsonFloat("fov", fov, _data);
 	LoadJsonFloat("distance", distance, _data);
 	LoadJsonUnsigned("viewSlot", viewPortSlot, _data);
+
+	GetTransform().UpdateVector();
 }
 
 void CP_Camera::UpdateProjection()

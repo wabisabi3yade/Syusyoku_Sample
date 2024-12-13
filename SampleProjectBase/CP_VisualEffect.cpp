@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "CP_VisualEffect.h"
-#include "DX11EffecseerManager.h"
 #include "AssetGetter.h"
 #include "GameObject.h"
 
@@ -134,8 +133,10 @@ void CP_VisualEffect::BeginPlayVFX()
 	// Ä¶‚µ‚Äƒnƒ“ƒhƒ‹‚ðŽæ“¾
 	Transform& transform = GetTransform();
 	vfxHandle = pDxVfxManager->Play(pVFX->GetEffect(),
+		playSpeed,
 		transform.GetPosition(),
 		transform.GetScale(),
+		transform.GetEularAngles(),
 		playStartFrame);
 
 	currentPlayFrame = static_cast<float>(playStartFrame);

@@ -5,7 +5,6 @@
 #include "AssetCollection.h"
 #include "ShaderCollection.h"
 #include "DX11BulletPhisics.h"
-#include "DX11EffecseerManager.h"
 #include "DXSoundManager.h"
 
 // AssetŠÖ˜A

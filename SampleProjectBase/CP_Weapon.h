@@ -13,7 +13,7 @@ class CP_Weapon : public Component
 	static constexpr u_int ATTACK_TAG_MAX{ 3 };
 
 	/// @brief 攻撃情報
-	HashiTaku::AttackInformation atkInfomation;
+	const HashiTaku::AttackInformation* pAtkInfomation;
 
 	/// @brief 攻撃にあたるタグ
 	std::array<HashiTaku::Tag::Type, ATTACK_TAG_MAX> attackableTags;
@@ -67,6 +67,10 @@ public:
 	/// @param _data ロードするシーンデータ 
 	void Load(const nlohmann::json& _data) override;
 private:
+	/// @brief 攻撃できるか取得
+	/// @return 攻撃できるか？
+	bool CanAttack() const;
+
 	/// @brief 攻撃処理
 	/// @param _damager 攻撃与える対象
 	/// @param _haveObjPos 所有オブジェクトの座標
@@ -80,16 +84,16 @@ private:
 	/// @brief 攻撃できるか確認
 	/// @param _targetObject 対象のオブジェクト
 	/// @return 攻撃できるか？
-	bool CheckAttackableTag(GameObject& _targetObject);
+	bool CheckAttackableTag(GameObject& _targetObject) const;
 
 	/// @brief 攻撃できるか確認
 	/// @param  _targetRb 対象のオブジェクト
 	/// @return 攻撃できるか？
-	bool CheckAttackedRb(const CP_RigidBody& _targetRb);
+	bool CheckAttackedRb(const CP_RigidBody& _targetRb) const;
 
 	/// @brief ヒットエフェクトを出す
 	/// @param 当たり判定の衝突地点
-	void CreateHitEffect(const DirectX::SimpleMath::Vector3& _contactPos);
+	void CreateHitVfx(const DirectX::SimpleMath::Vector3& _contactPos);
 
 	// デバッグ用攻撃フラグが立っているか見るための描画
 	void DebugAttackFlag();

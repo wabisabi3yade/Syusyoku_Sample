@@ -14,10 +14,6 @@ BossDamageState::BossDamageState()
 
 void BossDamageState::OnStartBehavior()
 {
-	BossActState_Base::OnStartBehavior();
-
-	HASHI_DEBUG_LOG("a");
-
 	// ダメージトリガーをONにする
 	pActionController->SetAnimationTrigger(DAMAGETRIGGER_ANIMPARAM_NAME);
 
@@ -28,7 +24,7 @@ void BossDamageState::OnStartBehavior()
 void BossDamageState::OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName)
 {
 	if (_toAnimNodeName == IDLE_ANIM_NAME || _fromAnimNodeName == DAMAGE_ANIM_NAME)
-		ChangeState(BossState::Idle);
+		ChangeState(BossState::Break_Idle);
 }
 
 void BossDamageState::LookPlayer()

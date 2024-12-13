@@ -7,11 +7,17 @@ class CameraOnMoveState : public CameraMoveState_Base
 	/// @brief カメラポジション
 	DirectX::SimpleMath::Vector3 cameraPos;
 
-	/// @brief ターゲットのワールド座標
-	DirectX::SimpleMath::Vector3 targetPos;
+	/// @brief 追従のワールド座標
+	DirectX::SimpleMath::Vector3 followPos;
 
 	/// @brief 入力数値
 	DirectX::SimpleMath::Vector2 inputVal;
+
+	/// @brief スティックを倒したときの遊びの大きさ
+	DirectX::SimpleMath::Vector2 inpDeadZone;
+
+	/// @brief 何も入力なしのときの高さ
+	float idleHeight;
 
 	/// @brief 現在のy距離
 	float currentHeight;
@@ -24,6 +30,9 @@ class CameraOnMoveState : public CameraMoveState_Base
 
 	/// @brief 縦方向の速度
 	float verticalSpeed;
+
+	/// @brief 待機の高さに戻るときの速度割合
+	float returnVertRatio;
 
 	/// @brief 回転速度
 	float rotateSpeed;
@@ -50,13 +59,16 @@ public :
 	void Load(const nlohmann::json& _data) override;
 private:
 	/// @brief 開始処理
-	void OnStartBehavior();
+	void OnStartBehavior() override;
 
 	/// @brief 更新処理
-	void UpdateBehavior();
+	void UpdateBehavior() override;
 
 	/// @brief 終了処理
-	void OnEndBehavior();
+	void OnEndBehavior() override;
+
+	/// @brief 遷移確認
+	void CheckTransitionUpdate() override;
 
 	/// @brief 縦軸の移動
 	void VerticalMove();

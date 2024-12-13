@@ -2,6 +2,7 @@
 #include "DX11EffecseerManager.h"
 #include "InSceneSystemManager.h"
 #include "CP_Camera.h"
+#include "AssetGetter.h"
 
 constexpr u_int EFFECT_DRAW_MAX(2000);	// 最大のエフェクト描画数
 
@@ -57,8 +58,10 @@ bool DX11EffecseerManager::ExistEffect(Effekseer::Handle _vfxHandle) const
 }
 
 Effekseer::Handle DX11EffecseerManager::Play(const Effekseer::EffectRef& _effect,
+	float _playSpeed,
 	const DirectX::SimpleMath::Vector3& _pos,
 	const DirectX::SimpleMath::Vector3& _scale,
+	const DirectX::SimpleMath::Vector3& _eularAngles,
 	int _startFrame)
 {
 	// Effekseer側で再生を行う
@@ -68,7 +71,27 @@ Effekseer::Handle DX11EffecseerManager::Play(const Effekseer::EffectRef& _effect
 	// スケール設定
 	manager->SetScale(handle, _scale.x, _scale.y, _scale.z);
 
+	// 角度
+	manager->SetRotation(handle,
+		_eularAngles.x * Mathf::degToRad,
+		_eularAngles.y * Mathf::degToRad,
+		_eularAngles.z * Mathf::degToRad);
+
+	// 速度
+	manager->SetSpeed(handle, _playSpeed);
+
 	return  handle;
+}
+
+Effekseer::Handle DX11EffecseerManager::Play(const CreateVfxInfo& _createVfx, const DirectX::SimpleMath::Vector3& _pos,
+	const DirectX::SimpleMath::Vector3& _eularAngles)
+{
+	return Play(_createVfx.pHitVfx->GetEffect(),
+		_createVfx.speed,
+		_pos,
+		_createVfx.scale * DXSimp::Vector3::One,
+		_eularAngles,
+		_createVfx.startFrame);
 }
 
 const Effekseer::ManagerRef& DX11EffecseerManager::GetManager() const
@@ -133,4 +156,56 @@ void DX11EffecseerManager::CreateEffekseerMtx(const DirectX::SimpleMath::Matrix&
 Effekseer::Vector3D DX11EffecseerManager::CreateEffekseerVector3(const DirectX::SimpleMath::Vector3& _dxVec3)
 {
 	return Effekseer::Vector3D(_dxVec3.x, _dxVec3.y, _dxVec3.z);
+}
+
+nlohmann::json CreateVfxInfo::Save()
+{
+	nlohmann::json vfxData;
+
+	if (pHitVfx)
+		vfxData["name"] = pHitVfx->GetAssetName();
+
+	vfxData["scale"] = scale;
+	vfxData["speed"] = speed;
+	vfxData["startFrame"] = startFrame;
+
+	return vfxData;
+}
+
+void CreateVfxInfo::Load(const nlohmann::json& _data)
+{
+	std::string vfxName;
+	if (HashiTaku::LoadJsonString("name", vfxName, _data))
+	{
+		pHitVfx = AssetGetter::GetAsset<VisualEffect>(vfxName);
+	}
+
+	HashiTaku::LoadJsonFloat("scale", scale, _data);
+	HashiTaku::LoadJsonFloat("speed", speed, _data);
+	HashiTaku::LoadJsonInteger("startFrame", startFrame, _data);
+}
+
+void CreateVfxInfo::ImGuiDebug()
+{
+#ifdef EDIT
+	if (!ImGuiMethod::TreeNode("Vfx Info")) return;
+
+	// ヒット時エフェクト
+	if (ImGui::Button("Clear"))
+		pHitVfx = nullptr;
+	std::string vfxName = "Null";
+	if (pHitVfx)
+		vfxName = pHitVfx->GetAssetName();
+	if (AssetGetter::ImGuiGetCombobox<VisualEffect>("HitVfx", vfxName))
+	{
+		pHitVfx = AssetGetter::GetAsset<VisualEffect>(vfxName);
+	}
+
+	// 各パラメータ
+	ImGui::DragFloat("Scale", &scale, 0.01f, 0.0f, 1000.0f);
+	ImGui::DragFloat("Speed", &speed, 0.01f, 0.0f, 1000.0f);
+	ImGui::DragInt("StartFrame", &startFrame, 1.0f, 0, 200);
+
+	ImGui::TreePop();
+#endif
 }

@@ -176,6 +176,8 @@
     <ClCompile Include="BoolTransCondition.cpp" />
     <ClCompile Include="BossActionController.cpp" />
     <ClCompile Include="BossActState_Base.cpp" />
+    <ClCompile Include="BossBreakEndKnock.cpp" />
+    <ClCompile Include="BossBreakIdle.cpp" />
     <ClCompile Include="BossCombAttack.cpp" />
     <ClCompile Include="BossDamageState.cpp" />
     <ClCompile Include="BossAttackState.cpp" />
@@ -259,6 +261,7 @@
     <ClCompile Include="PlayerAirAttack.cpp" />
     <ClCompile Include="PlayerAirMove.cpp" />
     <ClCompile Include="PlayerAirState.cpp" />
+    <ClCompile Include="PlayerAttackInformation.cpp" />
     <ClCompile Include="PlayerDamageState.cpp" />
     <ClCompile Include="PlayerGroundState.cpp" />
     <ClCompile Include="PlayerGuardState.cpp" />
@@ -424,6 +427,8 @@
     <ClInclude Include="BoolTransCondition.h" />
     <ClInclude Include="BossActionController.h" />
     <ClInclude Include="BossActState_Base.h" />
+    <ClInclude Include="BossBreakEndKnock.h" />
+    <ClInclude Include="BossBreakIdle.h" />
     <ClInclude Include="BossCombAttack.h" />
     <ClInclude Include="BossDamageState.h" />
     <ClInclude Include="BossAttackState.h" />
@@ -514,6 +519,7 @@
     <ClInclude Include="PlayerAirAttack.h" />
     <ClInclude Include="PlayerAirMove.h" />
     <ClInclude Include="PlayerAirState.h" />
+    <ClInclude Include="PlayerAttackInformation.h" />
     <ClInclude Include="PlayerDamageState.h" />
     <ClInclude Include="PlayerGroundState.h" />
     <ClInclude Include="PlayerGuardState.h" />

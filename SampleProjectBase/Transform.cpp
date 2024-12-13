@@ -118,6 +118,10 @@ void Transform::SetPosition(const DirectX::SimpleMath::Vector3& _pos)
 
 	// オブジェクト側に変更したことを伝える
 	ChangePosNotify();
+
+	// UiだったらシーンオブジェクトにZ座標ソートしてもらう
+	if (pGameObject->GetLayer() != Layer::UI) return;
+	InSceneSystemManager::GetInstance()->GetSceneObjects().SortUiList();
 }
 
 void Transform::SetScale(const DirectX::SimpleMath::Vector3& _scale)
@@ -128,7 +132,6 @@ void Transform::SetScale(const DirectX::SimpleMath::Vector3& _scale)
 	UpdateLocalMatrix();
 
 	UpdateWorldMatrix(pParent->GetWorldMatrix());
-
 
 	// オブジェクト側に変更したことを伝える
 	ChangeScaleNotify();
@@ -141,8 +144,6 @@ void Transform::SetEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
 	localRotation = Quat::Multiply(Quat::ToQuaternion(_eularAngles), invParentRot);
 
 	localEularAngles = localRotation.ToEuler() * Mathf::radToDeg;
-
-	UpdateVector();
 
 	UpdateLocalMatrix();
 
@@ -158,8 +159,6 @@ void Transform::SetRotation(const DirectX::SimpleMath::Quaternion& _quaternion)
 	localRotation = Quat::Multiply(_quaternion, invParentRot);
 
 	localEularAngles = localRotation.ToEuler() * Mathf::radToDeg;
-
-	UpdateVector();
 
 	UpdateLocalMatrix();
 
@@ -180,6 +179,10 @@ void Transform::SetLocalPosition(const DirectX::SimpleMath::Vector3& _localPos)
 
 	// オブジェクト側に変更したことを伝える
 	ChangePosNotify();
+
+	// UiだったらシーンオブジェクトにZ座標ソートしてもらう
+	if (pGameObject->GetLayer() != Layer::UI) return;
+	InSceneSystemManager::GetInstance()->GetSceneObjects().SortUiList();
 }
 
 void Transform::SetLocalScale(const DirectX::SimpleMath::Vector3& _scale)
@@ -211,7 +214,6 @@ void Transform::SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quatern
 	localRotation = _quaternion;
 	localEularAngles = localRotation.ToEuler() * Mathf::radToDeg;
 
-	UpdateVector();
 	UpdateLocalMatrix();
 	UpdateWorldMatrix(pParent->GetWorldMatrix());
 
@@ -407,10 +409,6 @@ void Transform::ChangePosNotify()
 	{
 		child->ChangePosNotify();
 	}
-
-	// UiだったらシーンオブジェクトにZ座標ソートしてもらう
-	if (pGameObject->GetLayer() != Layer::UI) return;
-	InSceneSystemManager::GetInstance()->GetSceneObjects().SortUiList();
 }
 
 void Transform::ChangeScaleNotify()

@@ -47,7 +47,6 @@ void CP_BattleManager::OnPlayerWin()
 	if (curBattleState == BattleState::Lose) return;
 
 	curBattleState = BattleState::Win;
-
 	HASHI_DEBUG_LOG("プレイヤー勝ち");
 }
 
@@ -64,8 +63,7 @@ nlohmann::json CP_BattleManager::Save()
 {
 	auto data = SingletonComponent::Save();
 
-	HashiTaku::LoadJsonVector3("centerPos", moveAreaCenterPos, data);
-	data["radius"] = moveAreaRadius;
+	HashiTaku::SaveJsonVector4("moveAreaRect", moveAreaRect, data);
 
 	return data;
 }
@@ -74,8 +72,7 @@ void CP_BattleManager::Load(const nlohmann::json& _data)
 {
 	SingletonComponent::Load(_data);
 
-	HashiTaku::LoadJsonVector3("centerPos", moveAreaCenterPos, _data);
-	HashiTaku::LoadJsonFloat("radius", moveAreaRadius, _data);
+	HashiTaku::LoadJsonVector4("moveAreaRect", moveAreaRect, _data);
 }
 
 void CP_BattleManager::LateUpdate()
@@ -88,11 +85,19 @@ void CP_BattleManager::Draw()
 {
 #ifdef EDIT
 	if (!isDebugDisplay) return;
-	
-	Geometory::SetPosition(moveAreaCenterPos);
-	Geometory::SetScale(DXSimp::Vector3::One * moveAreaRadius * 2);
-	Geometory::SetColor(DXSimp::Color(1, 1, 1, 0.2f));
-	Geometory::DrawSphere();
+
+	constexpr float height = 0.3f;
+	DXSimp::Color c = DXSimp::Color(1, 0, 0);
+
+	DXSimp::Vector3 RT = { moveAreaRect.x, height, moveAreaRect.z };
+	DXSimp::Vector3 RB = { moveAreaRect.x, height, moveAreaRect.w };
+	DXSimp::Vector3 LT = { moveAreaRect.y, height, moveAreaRect.z };
+	DXSimp::Vector3 LB = { moveAreaRect.y, height, moveAreaRect.w };
+
+	Geometory::AddLine(RT, RB, c);
+	Geometory::AddLine(RB, LB, c);
+	Geometory::AddLine(LB, LT, c);
+	Geometory::AddLine(LT, RT, c);
 #endif // EDIT
 }
 
@@ -112,30 +117,18 @@ void CP_BattleManager::MoveAreaUpdate()
 void CP_BattleManager::PositionClamp(Transform& _charaTransform)
 {
 	//　y座標を考慮しない距離を求める
-	DXSimp::Vector3 distance = _charaTransform.GetPosition() - moveAreaCenterPos;
-	distance.y = 0.0f;
-	float disLength = distance.Length();
+	DXSimp::Vector3 pos = _charaTransform.GetPosition();
+	
+	pos.x = std::clamp(pos.x, moveAreaRect.y, moveAreaRect.x);
+	pos.z = std::clamp(pos.z, moveAreaRect.w, moveAreaRect.z);
 
-	// 範囲から超えていたら
-	if (disLength > moveAreaRadius)	
-	{
-		// 単位ベクトルを求める
-		DXSimp::Vector3 vec;
-		distance.Normalize(vec);
-
-		// 範囲内に移動させる
-		float posY = _charaTransform.GetPosition().y;
-		DXSimp::Vector3 clampPos = moveAreaCenterPos + vec * moveAreaRadius;
-		clampPos.y = posY;
-		_charaTransform.SetPosition(clampPos);
-	}
+	_charaTransform.SetPosition(pos);
 }
 
 void CP_BattleManager::ImGuiDebug()
 {
 #ifdef EDIT
 	ImGui::Checkbox("IsDisplay", &isDebugDisplay);
-	ImGui::DragFloat("AreaRadius", &moveAreaRadius, 0.1f, 0.0f, 10000.0f);
-	ImGuiMethod::DragFloat3(moveAreaCenterPos, "AreaCenter", 0.1f);
+	ImGui::DragFloat4("AreaRect", &moveAreaRect.x, 0.01f);
 #endif // EDIT
 }

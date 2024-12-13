@@ -91,9 +91,9 @@ void BossGroundMove::Move()
 	Vector3 movement = myTransform.Forward() * currentSpeed;
 
 	// ˆÚ“®‚·‚é(yÀ•W‚Í”½‰f‚³‚¹‚È‚¢)
-	auto* pRb = GetRB();
-	movement.y = pRb->GetVelocity().y;
-	pRb->SetVelocity(movement);
+	auto& pRb = GetRB();
+	movement.y = pRb.GetVelocity().y;
+	pRb.SetVelocity(movement);
 
 	CP_Animation* pAnimation = GetAnimation();
 	if (!pAnimation) return;

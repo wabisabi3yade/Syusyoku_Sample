@@ -370,11 +370,11 @@ void GameObject::RemoveActiveComponent(Component& _removeComonent)
 	pActiveComponents.remove(&_removeComonent);
 
 	// Awakeˆ—‚ª‚Ü‚¾‚È‚ç
-	if (_removeComonent.GetIsAlreadyAwake())
+	if (!_removeComonent.GetIsAlreadyAwake())
 		pAwakeComponents.remove(&_removeComonent);
 
 	// Startˆ—‚ª‚Ü‚¾‚È‚ç
-	if (_removeComonent.GetIsAlreadyStart())
+	if (!_removeComonent.GetIsAlreadyStart())
 		pStartComponents.remove(&_removeComonent);
 }
 
@@ -424,7 +424,6 @@ void GameObject::OnActiveFalse()
 
 void GameObject::ImGuiDebug()
 {
-
 	ImGuiMethod::PushItemSmallWidth();
 	// ƒ^ƒOÝ’è
 	HashiTaku::Tag::Type curTag = tag.GetType();
@@ -563,6 +562,8 @@ void GameObject::LateLode(const nlohmann::json& _data)
 		const auto& componentsData = _data["components"];
 		LoadComponentParameter(componentsData);
 	}
+
+	InSceneSystemManager::GetInstance()->GetSceneObjects().SortUiList();
 }
 
 void GameObject::SetName(const std::string& _name)

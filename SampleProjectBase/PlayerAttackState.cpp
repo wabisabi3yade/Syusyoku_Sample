@@ -20,7 +20,7 @@ PlayerAttackState::PlayerAttackState() :
 {
 
 	attackInfos.resize(1);	// 攻撃情報を最低1作成しておく
-	HashiTaku::AttackInformation atkInfo;
+	HashiTaku::PlayerAttackInformation atkInfo;
 	attackInfos.push_back(atkInfo);
 
 	// カーブ名をセット

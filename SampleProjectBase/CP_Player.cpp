@@ -18,11 +18,8 @@ CP_Player::CP_Player() :
 	pWeapon(nullptr),
 	pCameraMove(nullptr),
 	pHpSlider(nullptr),
-	pGuardSlider(nullptr),
 	pAttackCollisionFlag(nullptr),
-	hitStopBeforeAnimSpeed(0.0f),
-	curGuardGage(0.0f),
-	maxGuardGage(100.0f)
+	hitStopBeforeAnimSpeed(0.0f)
 {
 }
 
@@ -127,16 +124,6 @@ void CP_Player::SetRequireObject()
 		pHpSlider->SetMaxValue(maxHP);
 		pHpSlider->SetCurrentValue(currentHP);
 	}
-
-	// ガードバー
-	pFindObj = sceneObjs.GetSceneObject(guardBarObjName);
-	if (pFindObj)
-	{
-		pGuardSlider = pFindObj->GetComponent<IUISlider>();
-		pGuardSlider->SetMaxValue(maxGuardGage);
-		pGuardSlider->SetCurrentValue(curGuardGage);
-	}
-
 }
 
 void CP_Player::OnHitStopBegin()
@@ -147,23 +134,6 @@ void CP_Player::OnHitStopBegin()
 void CP_Player::OnHitStopEnd()
 {
 	CP_Character::OnHitStopEnd();
-}
-
-void CP_Player::AddGuardGage(float _addGage)
-{
-	curGuardGage += _addGage;	// 足す
-	curGuardGage = std::clamp(curGuardGage, 0.0f, maxGuardGage);
-
-	if (pGuardSlider)
-		pGuardSlider->SetCurrentValue(curGuardGage);
-}
-
-void CP_Player::ResetGuardGage()
-{
-	curGuardGage = 0.0f;
-
-	if (pGuardSlider)
-		pGuardSlider->SetCurrentValue(0.0f);
 }
 
 void CP_Player::ImGuiDebug()
@@ -209,14 +179,6 @@ void CP_Player::ImGuiFindObj()
 	{
 		hpBarObjName = input;
 	}
-
-	text = "GuardBar:" + guardBarObjName;
-	ImGui::Text(text.c_str());
-	if (ImGui::Button("Set GuardBar"))
-	{
-		guardBarObjName = input;
-	}
-
 #endif //  EDIT
 }
 
@@ -233,8 +195,6 @@ nlohmann::json CP_Player::Save()
 	data["weaponObjName"] = weaponObjName;
 	data["camObjName"] = cameraObjName;
 	data["hpBarObjName"] = hpBarObjName;
-	data["guardBarObjName"] = guardBarObjName;
-
 	return data;
 }
 
@@ -249,7 +209,6 @@ void CP_Player::Load(const nlohmann::json& _data)
 	HashiTaku::LoadJsonString("weaponObjName", weaponObjName, _data);
 	HashiTaku::LoadJsonString("camObjName", cameraObjName, _data);
 	HashiTaku::LoadJsonString("hpBarObjName", hpBarObjName, _data);
-	HashiTaku::LoadJsonString("guardBarObjName", guardBarObjName, _data);
 }
 
 void CP_Player::SetWeaponAttackFlag()

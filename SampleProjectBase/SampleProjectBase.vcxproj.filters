@@ -901,6 +901,15 @@
     <Filter Include="ソース ファイル\Animation\AnimControllPlayer\NodePlayer\LayerdNodePlayer">
       <UniqueIdentifier>{58f3bed1-2d37-455b-9e55-1fb49d1fa172}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\InGame\Attack\Information\Player">
+      <UniqueIdentifier>{034b2e9c-2b2f-4300-8ac0-ce826389cbf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\BreakIdle">
+      <UniqueIdentifier>{2efe6b2e-9db3-472d-9f74-4b8c488d254b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\BreakEndKnock">
+      <UniqueIdentifier>{922b5564-1ad2-47a7-91cf-4f4a9df35690}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1684,6 +1693,15 @@
     </ClCompile>
     <ClCompile Include="AnimLayerdNodePlayer.cpp">
       <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\LayerdNodePlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAttackInformation.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BossBreakEndKnock.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\BreakEndKnock</Filter>
+    </ClCompile>
+    <ClCompile Include="BossBreakIdle.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\BreakIdle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2475,6 +2493,15 @@
     </ClInclude>
     <ClInclude Include="AnimLayerdNodePlayer.h">
       <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\LayerdNodePlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAttackInformation.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BossBreakEndKnock.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\BreakEndKnock</Filter>
+    </ClInclude>
+    <ClInclude Include="BossBreakIdle.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\BreakIdle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

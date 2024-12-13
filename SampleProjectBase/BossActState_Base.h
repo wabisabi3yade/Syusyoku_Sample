@@ -51,6 +51,8 @@ public:
 
 		// 振る舞い
 		Damage_Small,	// 小ダメージ
+		BreakEnd_Knock,	// ブレイク終了ノック
+		Break_Idle,	// ブレイク時待機
 
 		// 攻撃
 		CombAttack1 = 100,	// コンビネーション攻撃
@@ -68,6 +70,9 @@ private:
 
 	/// @brief ワープモーションのターゲット先のポインタ
 	const DirectX::SimpleMath::Vector3* pWarpTargetPos;
+
+	/// @brief ワープモーションのターゲット先座標
+	DirectX::SimpleMath::Vector3 warpTargetPos;
 
 	/// @brief ワープモーションで移動するときのターゲット座標との距離
 	DirectX::SimpleMath::Vector3 disToWarpTargePos;
@@ -122,7 +127,7 @@ public:
 	void OnEnd() override;
 
 	/// @brief ダメージ時処理
-	void OnDamage();
+	virtual void OnDamage();
 
 	/// @brief デバッグ描画
 	void DebugDisplay();
@@ -140,20 +145,20 @@ protected:
 	virtual void OnEndBehavior() {}
 
 	/// @brief 遷移切り替え確認
-	virtual void TransitionCheckUpdate() {}
+	virtual void TransitionCheckUpdate();
 
 	/// @brief 遷移する
 	/// @param _nextState 次の遷移
 	/// @param _isForce　強制切り替え
 	void ChangeState(BossState _nextState, bool _isForce = false);
 
-	/// @brief ワープモーションのターゲットの座標をセット
-	/// @param _targetWorldPos ターゲットの座標
-	void CalcWarpDistance(const DirectX::SimpleMath::Vector3& _targetWorldPos);
-
 	/// @brief ワープモーションのターゲットの座標の参照をセット
 	/// @param _targetWorldPos ターゲットの座標の参照
 	void SetWarpTargetPosReference(const DirectX::SimpleMath::Vector3& _targetPosRef);
+
+	/// @brief ワープモーションのターゲットの座標をセット
+	/// @param _targetWorldPos ターゲットの座標
+	void SetWarpTargetPos(const DirectX::SimpleMath::Vector3& _targetPos);
 
 	/// @brief トランスフォームを取得する
 	/// @return ボスのトランスフォーム
@@ -169,7 +174,7 @@ protected:
 
 	/// @brief Rbを取得
 	/// @return Rbコンポーネント
-	CP_RigidBody* GetRB();
+	CP_RigidBody& GetRB();
 
 	/// @brief 経過時間を取得する
 	/// @return 経過時間
@@ -183,6 +188,14 @@ private:
 	/// @brief 次のワープモーションに入るか移行するか確認する
 	/// @param _animRatio 次のアニメーション割合
 	void CheckTransNextWarp(float _animRatio);
+
+	/// @brief ワープモーションのターゲットの座標をセット
+	/// @param _targetWorldPos ターゲットの座標
+	void CalcWarpDistance(const DirectX::SimpleMath::Vector3& _targetWorldPos);
+
+	/// @brief ブレイク終了ノックができるか取得する
+	/// @return ブレイク終了ノックできるか？
+	bool GetCanBreakEndKdnock();
 
 	// ワープモーションに関するImGui編集
 	void ImGuiWarpDebug();

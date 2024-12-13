@@ -2,12 +2,22 @@
 #include "CP_Boss.h"
 #include "GameObject.h"
 #include "InSceneSystemManager.h"
+#include "PlayerAttackInformation.h"
 
 constexpr auto CAN_ATTACK_ANIMPARAM("attackCollision");	// 攻撃可能フラグのアニメパラム名
 constexpr auto DEAD_ANIMPARAM("deadTrigger");	// 死んだときのアニメパラム名
+constexpr auto BREAK_ANIMPARAM("isBreaking");	// ブレイク状態のアニメパラム名
 
 CP_Boss::CP_Boss() :
-	pAnimation(nullptr), pWeapon(nullptr), pHpBar(nullptr), pCanAttack(nullptr)
+	pAnimation(nullptr), 
+	pWeapon(nullptr), 
+	pHpBar(nullptr),
+	pBreakBar(nullptr),
+	pCanAttack(nullptr),
+	curBreakValue(0.0f),
+	decadeBreakSpeed(10.0f),
+	maxBreakValue(100.0f),
+	isBreaking(false)
 {
 }
 
@@ -25,6 +35,11 @@ void CP_Boss::SetAttackInfo(const HashiTaku::AttackInformation& _attackInfo)
 	pWeapon->SetAttackInfo(_attackInfo);
 }
 
+bool CP_Boss::GetIsBreaking() const
+{
+	return isBreaking;
+}
+
 nlohmann::json CP_Boss::Save()
 {
 	auto data = CP_Enemy::Save();
@@ -32,6 +47,7 @@ nlohmann::json CP_Boss::Save()
 	data["actionController"] = pActionController->Save();
 	data["weaponName"] = weaponObjName;
 	data["hpBarName"] = hpBarObjName;
+	data["breakBarName"] = breakBarObjName;
 
 	return data;
 }
@@ -42,6 +58,7 @@ void CP_Boss::Load(const nlohmann::json& _data)
 
 	HashiTaku::LoadJsonString("weaponName", weaponObjName, _data);
 	HashiTaku::LoadJsonString("hpBarName", hpBarObjName, _data);
+	HashiTaku::LoadJsonString("breakBarName", breakBarObjName, _data);
 
 	nlohmann::json actionControllerData;
 	if (HashiTaku::LoadJsonData("actionController", actionControllerData, _data))
@@ -85,6 +102,9 @@ void CP_Boss::Update()
 
 	pActionController->UpdateCall();
 
+	// ブレイク更新
+	BreakUpdate();
+
 	// 攻撃判定を更新
 	UpdateAttackCollision();
 }
@@ -116,6 +136,24 @@ void CP_Boss::UpdateAttackCollision()
 	pWeapon->SetIsAttackCollision(*pCanAttack);
 }
 
+void CP_Boss::BreakUpdate()
+{
+	if (!isBreaking) return;
+
+	// 減らしていく
+	curBreakValue -= decadeBreakSpeed * DeltaTime();
+
+	// 0になったら
+	if (curBreakValue < 0.0f)
+	{
+		curBreakValue = 0.0f;
+		OnBreakEnd();
+	}
+
+	// スライダーに反映
+	pBreakBar->SetCurrentValue(curBreakValue);
+}
+
 void CP_Boss::FindRequaireObject()
 {
 	SceneObjects& sceneObjs = InSceneSystemManager::GetInstance()->GetSceneObjects();
@@ -133,8 +171,22 @@ void CP_Boss::FindRequaireObject()
 	if (pFindObj = sceneObjs.GetSceneObject(hpBarObjName))
 	{
 		pHpBar = pFindObj->GetComponent<IUISlider>();
-		pHpBar->SetMaxValue(maxHP);
-		pHpBar->SetCurrentValue(currentHP);
+		if (pHpBar)
+		{
+			pHpBar->SetMaxValue(maxHP);
+			pHpBar->SetCurrentValue(currentHP);
+		}
+	}
+
+	// ブレイクバー
+	if (pFindObj = sceneObjs.GetSceneObject(breakBarObjName))
+	{
+		pBreakBar = pFindObj->GetComponent<IUISlider>();
+		if (pBreakBar)
+		{
+			pBreakBar->SetMaxValue(maxBreakValue);
+			pBreakBar->SetCurrentValue(curBreakValue);
+		}
 	}
 }
 
@@ -147,10 +199,56 @@ void CP_Boss::SetCurrentHP(float _setHp)
 		pHpBar->SetCurrentValue(currentHP);
 }
 
+void CP_Boss::AddBreakValue(float _add)
+{
+	// ブレイク中は加算しない
+	if (isBreaking) return;
+
+	curBreakValue += _add;
+	SetBreakValue(curBreakValue);
+}
+
+void CP_Boss::SetBreakValue(float _set)
+{
+	// セットする
+	curBreakValue = _set;
+
+	if (curBreakValue >= maxBreakValue)
+	{
+		curBreakValue = maxBreakValue;
+		OnBreak();
+	}
+	else if (curBreakValue <= Mathf::epsilon)	// 0になったら
+	{
+		curBreakValue = 0.0f;
+		OnBreakEnd();
+	}
+
+	// スライダーに反映
+	pBreakBar->SetCurrentValue(curBreakValue);
+}
+
+void CP_Boss::OnBreak()
+{
+	isBreaking = true;
+	pAnimation->SetBool(BREAK_ANIMPARAM, true);
+}
+
+void CP_Boss::OnBreakEnd()
+{
+	isBreaking = false;
+	pAnimation->SetBool(BREAK_ANIMPARAM, false);
+}
+
 void CP_Boss::OnDamageBehavior(const HashiTaku::AttackInformation& _attackInfo,
 	const DirectX::SimpleMath::Vector3& _attackerPos)
 {
 	CP_Enemy::OnDamageBehavior(_attackInfo, _attackerPos);
+
+	// ブレイク値を加算
+	const HashiTaku::PlayerAttackInformation* pPlayerAtkInfo =
+		static_cast<const HashiTaku::PlayerAttackInformation*>(&_attackInfo);
+	AddBreakValue(pPlayerAtkInfo->GetBreakValue());
 
 	pActionController->OnDamage(_attackInfo, _attackerPos);
 }
@@ -171,23 +269,34 @@ void CP_Boss::OnDeathBehavior()
 
 }
 
+float CP_Boss::GetBreakValue() const
+{
+	return curBreakValue;
+}
+
 void CP_Boss::ImGuiDebug()
 {
+	// オブジェクト名をセット
+	static char input[IM_INPUT_BUF];
+	ImGui::InputText("ObjName", input, IM_INPUT_BUF);
+
+	ImGui::Text("Weapon:%s", weaponObjName.c_str());
+	if (ImGui::Button("Weapon"))
+		weaponObjName = input;
+
+	ImGui::Text("HpBar:%s", hpBarObjName.c_str());
+	if (ImGui::Button("HpBar"))
+		hpBarObjName = input;
+
+	ImGui::Text("BreakBar:%s", breakBarObjName.c_str());
+	if (ImGui::Button("BreakBar"))
+		breakBarObjName = input;
+
 	if (ImGui::Begin("Boss"))
 	{
 		CP_Enemy::ImGuiDebug();
 
-		// オブジェクト名をセット
-		static char input[IM_INPUT_BUF];
-		ImGui::InputText("ObjName", input, IM_INPUT_BUF);
-
-		ImGui::Text("Weapon:%s", weaponObjName.c_str());
-		if (ImGui::Button("Weapon"))
-			weaponObjName = input;
-
-		ImGui::Text("HpBar:%s", hpBarObjName.c_str());
-		if (ImGui::Button("HpBar"))
-			hpBarObjName = input;
+		ImGuiMethod::Text("IsBreaking", isBreaking);
 
 		pActionController->ImGuiCall();
 

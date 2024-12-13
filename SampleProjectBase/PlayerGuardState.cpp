@@ -32,11 +32,6 @@ bool PlayerGuardState::GetCanParry(const DirectX::SimpleMath::Vector3& _enemyPos
 
 void PlayerGuardState::OnParry()
 {
-
-
-	// パリィでガードゲージを増やす
-	GetPlayer().AddGuardGage(parryAddGuardGage);
-
 	// パリィトリガーをtrue
 	GetAnimation()->SetTrigger(PARRYTRIGGER_NAME);
 
@@ -55,6 +50,8 @@ nlohmann::json PlayerGuardState::Save()
 	auto data = PlayerGroundState::Save();
 	data["canParryTime"] = sustainParryFrame;
 	data["parryAngle"] = canParryForwardAngle;
+	HashiTaku::SaveJsonVector3("vfxOffset", createVfxOffset, data);
+	data["vfxInfo"] = parryEffectInfo.Save();
 	return data;
 }
 
@@ -63,6 +60,12 @@ void PlayerGuardState::Load(const nlohmann::json& _data)
 	PlayerGroundState::Load(_data);
 	HashiTaku::LoadJsonUnsigned("canParryTime", sustainParryFrame, _data);
 	HashiTaku::LoadJsonFloat("parryAngle", canParryForwardAngle, _data);
+	HashiTaku::LoadJsonVector3("vfxOffset", createVfxOffset, _data);
+	nlohmann::json vfxData;
+	if (HashiTaku::LoadJsonData("vfxInfo", vfxData, _data))
+	{
+		parryEffectInfo.Load(vfxData);
+	}
 }
 
 void PlayerGuardState::OnStartBehavior()
@@ -119,15 +122,29 @@ void PlayerGuardState::ParryTimeUpdate()
 
 void PlayerGuardState::ReleaseAttack()
 {
-	// ガードゲージを消費して
-	GetPlayer().ResetGuardGage();
-
 	// 攻撃に変更
 	ChangeState(PlayerState::SpecialAtkGuard);
 }
 
 void PlayerGuardState::GuardParry()
 {
+	CreateParryVfx();
+}
+
+void PlayerGuardState::CreateParryVfx()
+{
+	Transform& transform = GetMyTransform();
+
+	// パリィエフェクトを出す場所を求める
+	DXSimp::Vector3 createVfxPos = transform.GetPosition();
+	createVfxPos += transform.Right() * createVfxOffset.x;
+	createVfxPos += transform.Up() * createVfxOffset.y;
+	createVfxPos += transform.Forward() * createVfxOffset.z;
+
+	// 再生
+	DX11EffecseerManager::GetInstance()->Play(parryEffectInfo,
+		createVfxPos, 
+		transform.GetEularAngles());
 }
 
 void PlayerGuardState::ImGuiDebug()
@@ -140,4 +157,9 @@ void PlayerGuardState::ImGuiDebug()
 	sustainParryFrame = static_cast<u_int>(imInt);
 
 	ImGui::DragFloat("parryAngle", &canParryForwardAngle, 0.1f, 0.0f, 360.0f);
+
+	// エフェクト
+	ImGui::Text("Parry Vfx");
+	ImGui::DragFloat3("offset", &createVfxOffset.x, 0.01f);
+	parryEffectInfo.ImGuiCall();
 }
