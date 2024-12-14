@@ -12,11 +12,11 @@
 
 namespace fs = std::filesystem;
 
-SceneManager::SceneManager() : nowSceneName("")
+SceneManager::SceneManager() : isChange(false)
 {
 	Setup();
 
-	ChangeScene("BossBattle", true);
+	ChangeScene("Title", true);
 }
 
 SceneManager::~SceneManager()
@@ -141,10 +141,30 @@ void SceneManager::Exec()
 	pNowScene->Exec();
 
 	ImGuiCall();
+
+	// リクエストされているなら
+	if (isChange)
+		ChangeScene(nextSceneName);
+}
+
+void SceneManager::ChangeSceneRequest(const std::string& _sceneName)
+{
+	auto itr = std::find(sceneList.begin(), sceneList.end(), _sceneName);
+
+	if (itr == sceneList.end())	// シーン名がないなら
+	{
+		HASHI_DEBUG_LOG(_sceneName + "シーン名がありません");
+		return;
+	}
+
+	nextSceneName = _sceneName;
+	isChange = true;
 }
 
 void SceneManager::ChangeScene(const std::string& _sceneName, bool _isEditScene)
 {
+	isChange = false;
+
 	auto itr = std::find(sceneList.begin(), sceneList.end(), _sceneName);
 
 	if (itr == sceneList.end())	// シーン名がないなら

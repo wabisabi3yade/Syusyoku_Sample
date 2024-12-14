@@ -41,7 +41,7 @@ protected:
 	};
 
 public:
-	// ボスのステートタイプ
+	// ボスのステートタイプ(大体追加順)
 	enum class BossState
 	{
 		// 移動
@@ -57,8 +57,9 @@ public:
 		// 攻撃
 		CombAttack1 = 100,	// コンビネーション攻撃
 		JumpAttack,	// ジャンプ攻撃
-		SlidingAttack,
-		CombAttack2,
+		SlidingAttack,	// スライディング攻撃
+		CombAttack2,	// コンビネーション攻撃
+		CombAttack3,	// コンビネーション攻撃
 
 		// 最後
 		None
@@ -205,7 +206,7 @@ private:
 
 	// ワープモーション関連のロード
 	void LoadWarpParameters(const nlohmann::json& _warpData);
-protected:
+public:
 	// パラメータ
 	/// @brief 移動速度のアニメーションパラメータ名
 	static constexpr auto SPEED_ANIMPARAM_NAME{ "speed" };
@@ -213,6 +214,8 @@ protected:
 	static constexpr auto ATTACKTRIGGER_ANIMPARAM_NAME{ "attackTrigger" };
 	/// @brief 攻撃トリガーのアニメーションパラメータ名
 	static constexpr auto DAMAGETRIGGER_ANIMPARAM_NAME{ "damageTrigger" };
+	// リアタックするときに呼び出す変数
+	static constexpr auto REATTACK_PARAMNAME{ "isReAttack" };
 
 	// アニメーション
 	/// @brief 待機状態のアニメーション名

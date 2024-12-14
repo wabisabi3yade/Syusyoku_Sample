@@ -9,30 +9,6 @@
 
 using namespace DirectX::SimpleMath;
 
-GameObject& GameObject::Copy(const GameObject& _other)
-{
-	// 同じなら処理しない
-	if (this == &_other) return *this;
-
-	// パラメータ代入
-	pTransform = std::make_unique<Transform>(*_other.pTransform);
-	isActive = _other.isActive;
-	name = _other.name;
-	tag = _other.tag;
-	layer = _other.layer;
-
-	// コンポーネントをコピー
-	for (auto& comp : _other.components)
-	{
-		CloneComponentBase* clone = dynamic_cast<CloneComponentBase*>(comp.get());
-
-		if (clone)
-			SetComponent(clone->Clone());
-	}
-
-	return *this;
-}
-
 void GameObject::UpdateDeltaTime()
 {
 	deltaTime = deltaTimeSpeed * MainApplication::DeltaTime();
@@ -189,16 +165,6 @@ GameObject::GameObject() :
 	isDestroy(false)
 {
 	pTransform = std::make_unique<Transform>(this);
-}
-
-GameObject::GameObject(const GameObject& _other)
-{
-	Copy(_other);
-}
-
-GameObject& GameObject::operator=(const GameObject& _other)
-{
-	return Copy(_other);
 }
 
 GameObject::~GameObject()

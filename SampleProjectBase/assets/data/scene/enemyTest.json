@@ -37,25 +37,26 @@
                             "stateDatas": [
                                 {
                                     "parameter": {
+                                        "canFovMovement": 1.0,
                                         "centerAngle": -90.0,
-                                        "currentHeight": 3.0,
+                                        "deadZone": [
+                                            0.0,
+                                            0.0
+                                        ],
                                         "disHorizon": 8.0,
+                                        "fovChangeRate": 3.0,
+                                        "heightMax": 7.0,
+                                        "heightMin": 1.0,
+                                        "horiSpeed": 10.0,
+                                        "idleHeight": 2.0,
                                         "lookOffsetY": 2.4000000953674316,
-                                        "rotateSpeed": 120.0
+                                        "moveFov": 65.0,
+                                        "normalFov": 50.0,
+                                        "returnVert": 3.0,
+                                        "rotateSpeed": 120.0,
+                                        "verticalSpeed": 10.0
                                     },
                                     "stateType": 0
-                                },
-                                {
-                                    "parameter": {
-                                        "Distance": 8.0,
-                                        "FollowOffsetY": 2.0,
-                                        "LookOffsetY": 2.0,
-                                        "LookSpeed": 30.0,
-                                        "MaxHeight": 3.0,
-                                        "MinHeight": 2.0,
-                                        "MoveSpeed": 30.0
-                                    },
-                                    "stateType": 1
                                 }
                             ]
                         },
@@ -84,643 +85,6 @@
                         4.200000286102295,
                         0.9999996423721313,
                         0.9999998807907104
-                    ]
-                }
-            }
-        },
-        {
-            "childs": [
-                {
-                    "childs": [
-                        {
-                            "childs": [
-                                {
-                                    "childs": null,
-                                    "gameObject": {
-                                        "active": true,
-                                        "components": [
-                                            {
-                                                "enable": true,
-                                                "meshName": "shield1.fbx",
-                                                "name": "MeshRenderer",
-                                                "priority": 0
-                                            }
-                                        ],
-                                        "layer": 0,
-                                        "name": "Shield_Mesh",
-                                        "tag": 0,
-                                        "transform": {
-                                            "child": null,
-                                            "pos": [
-                                                0.09351889044046402,
-                                                0.009999222122132778,
-                                                -13.921552658081055
-                                            ],
-                                            "rotation": [
-                                                -0.13734863698482513,
-                                                0.08612008392810822,
-                                                0.7228975892066956,
-                                                0.6716679334640503
-                                            ],
-                                            "scale": [
-                                                1.0000005960464478,
-                                                0.8000007271766663,
-                                                0.9999994039535522
-                                            ]
-                                        }
-                                    }
-                                }
-                            ],
-                            "gameObject": {
-                                "active": true,
-                                "components": null,
-                                "layer": 0,
-                                "name": "Shield",
-                                "tag": 0,
-                                "transform": {
-                                    "child": [
-                                        "Shield_Mesh"
-                                    ],
-                                    "pos": [
-                                        -1.78133618078391e-07,
-                                        0.009999245405197144,
-                                        -14.0
-                                    ],
-                                    "rotation": [
-                                        -0.0,
-                                        -0.04361940547823906,
-                                        -0.0,
-                                        0.9990482330322266
-                                    ],
-                                    "scale": [
-                                        1.0000007152557373,
-                                        1.0,
-                                        1.0000007152557373
-                                    ]
-                                }
-                            }
-                        }
-                    ],
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "grabName": "mixamorig:LeftHand",
-                                "name": "Rig",
-                                "priority": 0
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Player_LeftHand",
-                        "tag": 0,
-                        "transform": {
-                            "child": [
-                                "Shield"
-                            ],
-                            "pos": [
-                                0.0,
-                                0.00999925471842289,
-                                -14.0
-                            ],
-                            "rotation": [
-                                -0.0,
-                                -0.04361940547823906,
-                                -0.0,
-                                0.9990482330322266
-                            ],
-                            "scale": [
-                                1.0000007152557373,
-                                1.0,
-                                1.0000007152557373
-                            ]
-                        }
-                    }
-                },
-                {
-                    "childs": [
-                        {
-                            "childs": [
-                                {
-                                    "childs": null,
-                                    "gameObject": {
-                                        "active": true,
-                                        "components": [
-                                            {
-                                                "enable": true,
-                                                "meshName": "Knight_Sword.fbx",
-                                                "name": "MeshRenderer",
-                                                "priority": 0
-                                            }
-                                        ],
-                                        "layer": 0,
-                                        "name": "Weapon_Model",
-                                        "tag": 0,
-                                        "transform": {
-                                            "child": null,
-                                            "pos": [
-                                                0.2000024914741516,
-                                                0.16000105440616608,
-                                                -14.000004768371582
-                                            ],
-                                            "rotation": [
-                                                0.16874916851520538,
-                                                0.16177423298358917,
-                                                -0.6181161403656006,
-                                                0.7505233883857727
-                                            ],
-                                            "scale": [
-                                                1.2000017166137695,
-                                                1.2000011205673218,
-                                                1.2000017166137695
-                                            ]
-                                        }
-                                    }
-                                }
-                            ],
-                            "gameObject": {
-                                "active": true,
-                                "components": [
-                                    {
-                                        "attackableTags": [
-                                            3
-                                        ],
-                                        "enable": true,
-                                        "isDebugDisplay": false,
-                                        "name": "Weapon",
-                                        "priority": 0
-                                    },
-                                    {
-                                        "angles": [
-                                            0.0,
-                                            0.0,
-                                            0.0
-                                        ],
-                                        "center": [
-                                            0.0,
-                                            1.100000023841858,
-                                            0.0
-                                        ],
-                                        "enable": true,
-                                        "height": 1.5399999618530273,
-                                        "name": "CapsuleCollider",
-                                        "priority": 0,
-                                        "radius": 0.5
-                                    },
-                                    {
-                                        "enable": true,
-                                        "friction": 0.0,
-                                        "isAwake": false,
-                                        "isFreezeRot": [
-                                            false,
-                                            false,
-                                            false
-                                        ],
-                                        "isKinematic": false,
-                                        "isTrigger": true,
-                                        "mass": 1.0,
-                                        "name": "RigidBody",
-                                        "priority": 0
-                                    }
-                                ],
-                                "layer": 0,
-                                "name": "Weapon",
-                                "tag": 0,
-                                "transform": {
-                                    "child": [
-                                        "Weapon_Model"
-                                    ],
-                                    "pos": [
-                                        0.20000267028808594,
-                                        0.15999996662139893,
-                                        -14.000001907348633
-                                    ],
-                                    "rotation": [
-                                        0.1687491536140442,
-                                        0.1617741882801056,
-                                        -0.618116021156311,
-                                        0.7505235075950623
-                                    ],
-                                    "scale": [
-                                        1.0000004768371582,
-                                        1.0000008344650269,
-                                        1.0
-                                    ]
-                                }
-                            }
-                        }
-                    ],
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "grabName": "mixamorig:RightHand",
-                                "name": "Rig",
-                                "priority": 0
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Player_RightHand",
-                        "tag": 0,
-                        "transform": {
-                            "child": [
-                                "Weapon"
-                            ],
-                            "pos": [
-                                0.0,
-                                0.009999969974160194,
-                                -14.0
-                            ],
-                            "rotation": [
-                                -0.0,
-                                0.0,
-                                -0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ]
-                        }
-                    }
-                }
-            ],
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "meshName": "Knight.fbx",
-                        "name": "MeshRenderer",
-                        "priority": 0
-                    },
-                    {
-                        "enable": true,
-                        "friction": 2.0,
-                        "isAwake": true,
-                        "isFreezeRot": [
-                            true,
-                            true,
-                            true
-                        ],
-                        "isKinematic": false,
-                        "isTrigger": false,
-                        "mass": 1.0,
-                        "name": "RigidBody",
-                        "priority": 0
-                    },
-                    {
-                        "actionController": {
-                            "actData": [
-                                {
-                                    "data": null,
-                                    "typeString": "Idle"
-                                },
-                                {
-                                    "data": {
-                                        "acceleration": 60.0,
-                                        "decade": 100.0,
-                                        "maxSpeed": 9.199999809265137,
-                                        "rotateSpeed": 10.0
-                                    },
-                                    "typeString": "Move"
-                                },
-                                {
-                                    "data": {
-                                        "acceleration": 40.0,
-                                        "decade": 100.0,
-                                        "maxSpeed": 5.0,
-                                        "rotateSpeed": 40.0
-                                    },
-                                    "typeString": "TargetMove"
-                                },
-                                {
-                                    "data": {
-                                        "attackCnt": 2,
-                                        "attackInfos": [
-                                            {
-                                                "damage": 0.0,
-                                                "level": 0
-                                            },
-                                            {
-                                                "damage": 3.700000047683716,
-                                                "level": 0
-                                            }
-                                        ],
-                                        "forwardCurve": {
-                                            "easeKind": 0,
-                                            "endValue": 1.0,
-                                            "endVector": 0.0,
-                                            "plotDatas": null,
-                                            "startInterp": 0,
-                                            "startValue": 0.0,
-                                            "startVector": 0.0,
-                                            "useHermite": false
-                                        },
-                                        "isMoveFwd": false,
-                                        "maxDistance": 10.0,
-                                        "nextCombAttack": 21
-                                    },
-                                    "typeString": "Attack11"
-                                },
-                                {
-                                    "data": {
-                                        "invicibleTime": 0.4000000059604645,
-                                        "rollingDistance": 8.0,
-                                        "speedCurve": {
-                                            "easeKind": 0,
-                                            "endValue": 1.0,
-                                            "endVector": 0.0,
-                                            "plotDatas": null,
-                                            "startInterp": 0,
-                                            "startValue": 0.0,
-                                            "startVector": 2.0,
-                                            "useHermite": true
-                                        }
-                                    },
-                                    "typeString": "Rolling"
-                                },
-                                {
-                                    "data": {
-                                        "knockCurve": {
-                                            "easeKind": 0,
-                                            "endValue": 1.0,
-                                            "endVector": 0.0,
-                                            "plotDatas": null,
-                                            "startInterp": 0,
-                                            "startValue": 0.0,
-                                            "startVector": 0.0,
-                                            "useHermite": false
-                                        },
-                                        "knockDis": 0.0
-                                    },
-                                    "typeString": "Damage_S"
-                                },
-                                {
-                                    "data": {
-                                        "knockCurve": {
-                                            "easeKind": 0,
-                                            "endValue": 0.0,
-                                            "endVector": 0.0,
-                                            "plotDatas": [
-                                                {
-                                                    "interp": 0,
-                                                    "time": 0.37599998712539673,
-                                                    "value": 1.0,
-                                                    "vector": 0.0
-                                                },
-                                                {
-                                                    "interp": 0,
-                                                    "time": 0.5180000066757202,
-                                                    "value": 0.0,
-                                                    "vector": 0.0
-                                                }
-                                            ],
-                                            "startInterp": 1,
-                                            "startValue": 1.0,
-                                            "startVector": 0.0,
-                                            "useHermite": true
-                                        },
-                                        "knockDis": 18.100000381469727
-                                    },
-                                    "typeString": "Damage_L"
-                                },
-                                {
-                                    "data": {
-                                        "canParryTime": 8,
-                                        "parryAngle": 180.0
-                                    },
-                                    "typeString": "Guard"
-                                },
-                                {
-                                    "data": {
-                                        "attackCnt": 1,
-                                        "attackInfos": [
-                                            {
-                                                "damage": 0.0,
-                                                "level": 0
-                                            }
-                                        ],
-                                        "forwardCurve": {
-                                            "easeKind": 0,
-                                            "endValue": 1.0,
-                                            "endVector": 0.0,
-                                            "plotDatas": null,
-                                            "startInterp": 0,
-                                            "startValue": 0.0,
-                                            "startVector": 0.0,
-                                            "useHermite": false
-                                        },
-                                        "isMoveFwd": false,
-                                        "maxDistance": 10.0,
-                                        "nextCombAttack": 22
-                                    },
-                                    "typeString": "Attack12"
-                                },
-                                {
-                                    "data": {
-                                        "attackCnt": 1,
-                                        "attackInfos": [
-                                            {
-                                                "damage": 0.0,
-                                                "level": 0
-                                            }
-                                        ],
-                                        "forwardCurve": {
-                                            "easeKind": 0,
-                                            "endValue": 1.0,
-                                            "endVector": 0.0,
-                                            "plotDatas": null,
-                                            "startInterp": 0,
-                                            "startValue": 0.0,
-                                            "startVector": 0.0,
-                                            "useHermite": false
-                                        },
-                                        "isMoveFwd": false,
-                                        "maxDistance": 10.0,
-                                        "nextCombAttack": 23
-                                    },
-                                    "typeString": "Attack13"
-                                },
-                                {
-                                    "data": {
-                                        "attackCnt": 1,
-                                        "attackInfos": [
-                                            {
-                                                "damage": 0.0,
-                                                "level": 0
-                                            }
-                                        ],
-                                        "forwardCurve": {
-                                            "easeKind": 0,
-                                            "endValue": 1.0,
-                                            "endVector": 0.0,
-                                            "plotDatas": [
-                                                {
-                                                    "interp": 0,
-                                                    "time": 0.25099998712539673,
-                                                    "value": 0.0,
-                                                    "vector": 1.9893792867660522
-                                                },
-                                                {
-                                                    "interp": 1,
-                                                    "time": 0.6000000238418579,
-                                                    "value": 1.0,
-                                                    "vector": 0.0
-                                                }
-                                            ],
-                                            "startInterp": 1,
-                                            "startValue": 0.0,
-                                            "startVector": 0.0,
-                                            "useHermite": true
-                                        },
-                                        "isMoveFwd": true,
-                                        "maxDistance": 3.0,
-                                        "nextCombAttack": 99
-                                    },
-                                    "typeString": "Attack14"
-                                },
-                                {
-                                    "data": {
-                                        "attackCnt": 1,
-                                        "attackInfos": [
-                                            {
-                                                "damage": 0.0,
-                                                "level": 0
-                                            }
-                                        ],
-                                        "cancelAnim": 0.3799999952316284,
-                                        "forwardCurve": {
-                                            "easeKind": 0,
-                                            "endValue": 1.0,
-                                            "endVector": 0.0,
-                                            "plotDatas": null,
-                                            "startInterp": 0,
-                                            "startValue": 0.0,
-                                            "startVector": 0.0,
-                                            "useHermite": false
-                                        },
-                                        "horiCurve": {
-                                            "easeKind": 0,
-                                            "endValue": 1.0,
-                                            "endVector": 0.0,
-                                            "plotDatas": [
-                                                {
-                                                    "interp": 0,
-                                                    "time": 0.24300000071525574,
-                                                    "value": 0.0,
-                                                    "vector": 1.6519999504089355
-                                                },
-                                                {
-                                                    "interp": 0,
-                                                    "time": 0.5569999814033508,
-                                                    "value": 1.0,
-                                                    "vector": 0.0
-                                                }
-                                            ],
-                                            "startInterp": 1,
-                                            "startValue": 0.0,
-                                            "startVector": 0.0,
-                                            "useHermite": true
-                                        },
-                                        "horiDis": 11.0,
-                                        "isMoveFwd": false,
-                                        "maxDistance": 10.0,
-                                        "nextCombAttack": 22,
-                                        "slashAnim": 0.4429999887943268,
-                                        "slashBegin": 2.200000047683716
-                                    },
-                                    "typeString": "SpecialAtkHi"
-                                },
-                                {
-                                    "data": {
-                                        "attackCnt": 2,
-                                        "attackInfos": [
-                                            {
-                                                "damage": 0.0,
-                                                "level": 3
-                                            },
-                                            {
-                                                "damage": 0.0,
-                                                "level": 3
-                                            }
-                                        ],
-                                        "forwardCurve": {
-                                            "easeKind": 0,
-                                            "endValue": 1.0,
-                                            "endVector": 0.0,
-                                            "plotDatas": null,
-                                            "startInterp": 0,
-                                            "startValue": 0.0,
-                                            "startVector": 0.0,
-                                            "useHermite": false
-                                        },
-                                        "isMoveFwd": false,
-                                        "maxDistance": 10.0,
-                                        "nextCombAttack": 23
-                                    },
-                                    "typeString": "SpecialAtkGuard"
-                                }
-                            ]
-                        },
-                        "camObjName": "Camera",
-                        "enable": true,
-                        "guardBarObjName": "",
-                        "hpBarObjName": "Player_HpBar",
-                        "maxHp": 50000.0,
-                        "name": "Player",
-                        "priority": 0,
-                        "weaponObjName": "Weapon"
-                    },
-                    {
-                        "animConName": "ANC_Player",
-                        "enable": true,
-                        "name": "Animation",
-                        "priority": 1
-                    },
-                    {
-                        "angles": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "center": [
-                            0.0,
-                            1.0499999523162842,
-                            0.0
-                        ],
-                        "enable": true,
-                        "height": 1.1399999856948853,
-                        "name": "CapsuleCollider",
-                        "priority": 0,
-                        "radius": 0.49000000953674316
-                    }
-                ],
-                "layer": 1,
-                "name": "Player",
-                "tag": 2,
-                "transform": {
-                    "child": [
-                        "Player_LeftHand",
-                        "Player_RightHand"
-                    ],
-                    "pos": [
-                        0.0,
-                        0.009999999776482582,
-                        -14.0
-                    ],
-                    "rotation": [
-                        -0.0,
-                        0.0,
-                        -0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
                     ]
                 }
             }
@@ -808,7 +172,7 @@
                                             2
                                         ],
                                         "enable": true,
-                                        "isDebugDisplay": false,
+                                        "isDebugDisplay": true,
                                         "name": "Weapon",
                                         "priority": 0
                                     }
@@ -941,7 +305,6 @@
                                         "moveAcceleration": 4.0,
                                         "moveMaxSpeed": 5.0,
                                         "moveRotateSpeed": 10.0,
-                                        "transNearDistance": 2.0,
                                         "warpMotion": {
                                             "useWarp": false
                                         }
@@ -953,7 +316,6 @@
                                         "moveAcceleration": 4.0,
                                         "moveMaxSpeed": 9.0,
                                         "moveRotateSpeed": 10.0,
-                                        "transNearDistance": 2.0,
                                         "warpMotion": {
                                             "useWarp": false
                                         }
@@ -973,18 +335,34 @@
                                         "atkInfos": [
                                             {
                                                 "damage": 3.5999999046325684,
+                                                "hitVfx": {
+                                                    "scale": 1.0,
+                                                    "speed": 1.0,
+                                                    "startFrame": 0
+                                                },
                                                 "level": 0
                                             },
                                             {
                                                 "damage": 5.400000095367432,
+                                                "hitVfx": {
+                                                    "scale": 1.0,
+                                                    "speed": 1.0,
+                                                    "startFrame": 0
+                                                },
                                                 "level": 0
                                             },
                                             {
                                                 "damage": 7.0,
+                                                "hitVfx": {
+                                                    "scale": 1.0,
+                                                    "speed": 1.0,
+                                                    "startFrame": 0
+                                                },
                                                 "level": 0
                                             }
                                         ],
                                         "atkTimeCnt": 3,
+                                        "useRotCurve": false,
                                         "warpMotion": {
                                             "useWarp": false
                                         }
@@ -993,12 +371,78 @@
                                 },
                                 {
                                     "data": {
+                                        "canBreak": 10.0,
+                                        "knockDistance": 4.0,
+                                        "warpMotion": {
+                                            "useWarp": false
+                                        }
+                                    },
+                                    "typeString": "BreakEnd_Knock"
+                                },
+                                {
+                                    "data": {
+                                        "warpMotion": {
+                                            "useWarp": false
+                                        }
+                                    },
+                                    "typeString": "Break_Idle"
+                                },
+                                {
+                                    "data": {
+                                        "atkInfos": [
+                                            {
+                                                "damage": 0.0,
+                                                "hitVfx": {
+                                                    "scale": 1.0,
+                                                    "speed": 1.0,
+                                                    "startFrame": 0
+                                                },
+                                                "level": 0
+                                            }
+                                        ],
+                                        "atkTimeCnt": 1,
+                                        "useRotCurve": false,
+                                        "warpMotion": {
+                                            "useWarp": false
+                                        }
+                                    },
+                                    "typeString": "CombAttack2"
+                                },
+                                {
+                                    "data": {
+                                        "atkInfos": [
+                                            {
+                                                "damage": 0.0,
+                                                "hitVfx": {
+                                                    "scale": 1.0,
+                                                    "speed": 1.0,
+                                                    "startFrame": 0
+                                                },
+                                                "level": 0
+                                            }
+                                        ],
+                                        "atkTimeCnt": 1,
+                                        "useRotCurve": false,
+                                        "warpMotion": {
+                                            "useWarp": false
+                                        }
+                                    },
+                                    "typeString": "CombAttack3"
+                                },
+                                {
+                                    "data": {
                                         "atkInfos": [
                                             {
                                                 "damage": 6.699999809265137,
+                                                "hitVfx": {
+                                                    "scale": 1.0,
+                                                    "speed": 1.0,
+                                                    "startFrame": 0
+                                                },
                                                 "level": 3
                                             }
                                         ],
+                                        "atkTimeCnt": 1,
                                         "fallOffset": 1.100000023841858,
                                         "jumpHeight": 2.4000000953674316,
                                         "jumpHeightCurve": {
@@ -1066,8 +510,8 @@
                                             "useHermite": true
                                         },
                                         "maxHoriSpeed": 500.0,
-                                        "rotSpeed": 2.0,
                                         "speedCof": 2.0,
+                                        "useRotCurve": false,
                                         "warpMotion": {
                                             "useWarp": false
                                         }
@@ -1082,6 +526,7 @@
                                 6.0
                             ]
                         },
+                        "breakBarName": "",
                         "enable": true,
                         "hpBarName": "",
                         "maxHp": 1.0,
@@ -1122,13 +567,19 @@
                 "active": true,
                 "components": [
                     {
+                        "X_Left": "Sunset_left.png",
+                        "X_Right": "Sunset_right.png",
+                        "Y_Bottom": "Sunset_down.png",
+                        "Y_Top": "Sunset_up.png",
+                        "Z_Back": "Sunset_back.png",
+                        "Z_Front": "Sunset_front.png",
                         "enable": true,
-                        "name": "HitStopManager",
+                        "name": "SkyBox",
                         "priority": 0
                     }
                 ],
                 "layer": 0,
-                "name": "HitStopManager",
+                "name": "SkyBox",
                 "tag": 0,
                 "transform": {
                     "child": null,
@@ -1157,42 +608,7 @@
                 "active": true,
                 "components": [
                     {
-                        "enable": true,
-                        "name": "BattleManager",
-                        "priority": 0,
-                        "radius": 500.0
-                    }
-                ],
-                "layer": 0,
-                "name": "BattleManager",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
+                        "alpha": 1.0,
                         "enable": true,
                         "name": "SpriteRenderer",
                         "priority": 0,
@@ -1279,19 +695,13 @@
                 "active": true,
                 "components": [
                     {
-                        "X_Left": "Sunset_left.png",
-                        "X_Right": "Sunset_right.png",
-                        "Y_Bottom": "Sunset_down.png",
-                        "Y_Top": "Sunset_up.png",
-                        "Z_Back": "Sunset_back.png",
-                        "Z_Front": "Sunset_front.png",
                         "enable": true,
-                        "name": "SkyBox",
+                        "name": "HitStopManager",
                         "priority": 0
                     }
                 ],
                 "layer": 0,
-                "name": "SkyBox",
+                "name": "HitStopManager",
                 "tag": 0,
                 "transform": {
                     "child": null,

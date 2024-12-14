@@ -11,6 +11,9 @@ class CP_SpriteRenderer : public CP_Renderer
 	// スプライト
 	std::unique_ptr<Sprite> pSprite;
 
+	/// @brief α値
+	float alpha;
+
 	// マテリアル
 	Material* pMaterial{ nullptr };
 
@@ -22,23 +25,26 @@ class CP_SpriteRenderer : public CP_Renderer
 
 public:
 	CP_SpriteRenderer();
-	CP_SpriteRenderer(const CP_SpriteRenderer& _other);
-	CP_SpriteRenderer& operator=(const CP_SpriteRenderer& _other);
-	
+
 	void Init() override;
 
 	void Draw() override;
-
-	void ImGuiDebug() override;
 
 	void SetTexture(Texture& _texture);
 
 	void SetMaterial(Material& _material);
 
+	/// @brief α値をセット
+	/// @param _alpha α値
+	void SetAlpha(float _alpha);
+
+	/// @brief α値を取得する
+	/// @return α値
+	float GetAlpha() const;
+
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
+
 private:
-
-	void Copy(const CP_SpriteRenderer& _other);
+	void ImGuiDebug() override;
 };
-

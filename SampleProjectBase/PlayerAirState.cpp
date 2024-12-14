@@ -64,10 +64,10 @@ void PlayerAirState::InputUpdate()
 	using CancelType = PlayerActionController_Base::CancelType;
 
 
-	// UŒ‚ƒLƒƒƒ“ƒZƒ‹
-	if (pPlayerInput->GetButtonDown(Player_Attack))
-	{
-		pActionController->SetReserveState(static_cast<int>(PlayerState::Attack11),
-			CancelType::Attack);
-	}
+	//// UŒ‚ƒLƒƒƒ“ƒZƒ‹
+	//if (pPlayerInput->GetButtonDown(Player_Attack))
+	//{
+	//	pActionController->SetReserveState(static_cast<int>(PlayerState::Attack11),
+	//		CancelType::Attack);
+	//}
 }

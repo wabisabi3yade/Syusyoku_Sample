@@ -86,7 +86,7 @@ int LayerdAnimationNode::GetBeginBlendBoneId() const
 	return beginBlendBoneId;
 }
 
-const DirectX::SimpleMath::Vector3& LayerdAnimationNode::GetRootMotionPos(float _ratio) const
+DirectX::SimpleMath::Vector3 LayerdAnimationNode::GetRootMotionPos(float _ratio) const
 {
 #ifdef EDIT
 	if (!pBaseAnimation) return  DXSimp::Vector3::Zero;

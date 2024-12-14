@@ -74,13 +74,13 @@ namespace HashiTaku
 		static constexpr u_int LOW_HITSTOP = 0;
 
 		// Mid
-		static constexpr u_int MID_HITSTOP = 2;
+		static constexpr u_int MID_HITSTOP = 3;
 
 		// High
-		static constexpr u_int HIGH_HITSTOP = 4;
+		static constexpr u_int HIGH_HITSTOP = 5;
 
 		// SuperHigh
-		static constexpr u_int SUPERHIGH_HITSTOP = 6;
+		static constexpr u_int SUPERHIGH_HITSTOP = 8;
 	};
 }
 

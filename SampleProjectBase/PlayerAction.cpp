@@ -1,24 +1,10 @@
 #include "pch.h"
 #include "PlayerAction.h"
 #include "InSceneSystemManager.h"
+#include "PlayerAnimReference.h"
 
 // アクションできる左スティックの入力量
 constexpr float CAN_ACTION_STICKINPUT(0.7f);
-
-// 移動速度
-//constexpr auto SPEEDRATIO_PARAMNAME{ "speed" };
-// ターゲット中を表すアニメーションパラメータ
-constexpr auto TARGET_PARAMNAME{ "targeting" };
-// 接地しているかを表すアニメーションパラメータ
-constexpr auto GROUND_PARAMNAME{ "isGround" };
-// キャンセルできるかを表すアニメーションパラメータ
-constexpr auto CANCEL_PARAMNAME{ "canCancel" };
-// 先行入力できるかを表すアニメーションパラメータ
-constexpr auto INPUT_PARAMNAME{ "canInput" };
-// 攻撃できるかを表すアニメーションパラメータ
-constexpr auto CANATK_PARAMNAME{ "canAttack" };
-// 移動できるかを表すアニメーションパラメータ
-constexpr auto CANMOVE_PARAMNAME{ "canMove" };
 
 PlayerAction::PlayerAction(CP_Player& _player) :
 	pGroundChecker(nullptr),

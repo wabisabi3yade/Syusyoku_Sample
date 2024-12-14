@@ -5,6 +5,7 @@
 #include "CP_RigidBody.h"
 #include "CP_Animation.h"
 #include "ITargetAccepter.h"
+#include "PlayerAnimReference.h"
 
 class CP_Player;
 class PlayerActionController_Base;
@@ -136,6 +137,8 @@ protected:
 	constexpr static auto DAMAGETRIGGER_PARAMNAME{ "damageTrigger" };	// 受けダメージトリガー
 	constexpr static auto ATTACKTRIGGER_PARAMNAME{ "attackTrigger" };	// 攻撃トリガー
 	constexpr static auto REATTACK_PARAMNAME{ "isReAttack" };	// リアタック時bool
+	// キャンセルできるかを表すアニメーションパラメータ
+	constexpr static auto CANCEL_PARAMNAME{ "canCancel" };	
 
 	// アニメーション名
 	constexpr static auto IDLE_ANIM_NAME{ "Idle" };	// 待機状態

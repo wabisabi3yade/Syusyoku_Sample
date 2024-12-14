@@ -42,6 +42,8 @@ void BossGroundMove::OnEndBehavior()
 {
 	// ブレンドアニメーションの速度を渡す
 	pActionController->GetAnimation()->SetFloat(SPEED_ANIMPARAM_NAME, 0.0f);
+
+	GetRB().SetVelocity({ 0.0f, 0.0f ,0.0f });
 }
 
 void BossGroundMove::TransitionCheckUpdate()
@@ -123,7 +125,7 @@ bool BossGroundMove::CheckNearTransition()
 	float distanceLen = playerToDis.Length();
 
 	// 範囲外なら
-	float shortDis = 
+	float shortDis =
 		pActionController->GetActDistanceLength(BossActionController::ActDistance::Short);
 	if (distanceLen > shortDis) return false;
 

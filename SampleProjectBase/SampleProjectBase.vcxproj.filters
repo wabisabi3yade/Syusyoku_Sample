@@ -805,9 +805,6 @@
     <Filter Include="ソース ファイル\InGame\Camera\State\Target">
       <UniqueIdentifier>{c103a246-7170-4072-8df8-012169b25b52}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\EffectCreater">
-      <UniqueIdentifier>{699f964f-7cc8-4a7a-8e53-a2ce27970312}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Component\Button">
       <UniqueIdentifier>{b54bed7e-988f-4559-b2fe-3e38781386c9}</UniqueIdentifier>
     </Filter>
@@ -909,6 +906,12 @@
     </Filter>
     <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\BreakEndKnock">
       <UniqueIdentifier>{922b5564-1ad2-47a7-91cf-4f4a9df35690}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\UI\Fade">
+      <UniqueIdentifier>{392f792b-0e3e-4e36-8adb-a11e4154b468}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera\CameraGameOverState">
+      <UniqueIdentifier>{4584bff5-e608-4dea-813f-72cdd9d104ef}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1702,6 +1705,12 @@
     </ClCompile>
     <ClCompile Include="BossBreakIdle.cpp">
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\BreakIdle</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Fade.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraGameOverState.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2502,6 +2511,15 @@
     </ClInclude>
     <ClInclude Include="BossBreakIdle.h">
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\BreakIdle</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Fade.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAnimReference.h">
+      <Filter>ソース ファイル\InGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraGameOverState.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -16,6 +16,12 @@ class SceneManager : public Singleton_Base<SceneManager>, public HashiTaku::IImG
 	/// @brief 現在再生しているシーン
 	std::unique_ptr<Scene> pNowScene;
 
+	/// @brief 次のシーン名
+	std::string nextSceneName;
+
+	/// @brief 変更するか？
+	bool isChange;
+
 	SceneManager();
 	~SceneManager();
 	
@@ -23,10 +29,9 @@ public:
 	// 実行関数
 	void Exec();
 
-	/// @brief シーンを変更する
+	/// @brief シーンを変更するようにリクエストする
 	/// @param _sceneName シーン名
-	/// @param _isEditScene EditSceneか？
-	void ChangeScene(const std::string& _sceneName, bool _isEditScene = false);
+	void ChangeSceneRequest(const std::string& _sceneName);
 
 private:
 	/// @brief  準備
@@ -40,6 +45,11 @@ private:
 
 	/// @brief マテリアルの準備
 	void MaterialSetup();
+
+	/// @brief シーンを変更する
+	/// @param _sceneName シーン名
+	/// @param _isEditScene EditSceneか？
+	void ChangeScene(const std::string& _sceneName, bool _isEditScene = false);
 
 	// 解放処理
 	void Release();

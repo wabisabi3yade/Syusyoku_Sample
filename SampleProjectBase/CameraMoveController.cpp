@@ -3,7 +3,7 @@
 #include "GameObject.h"
 
 #include "CameraOnMoveState.h"
-#include "CameraTargetMove.h"
+#include "CameraGameOverState.h"
 
 namespace DXSimp = DirectX::SimpleMath;
 
@@ -19,11 +19,12 @@ CameraMoveController::CameraMoveController() :
 	prevShakeElapsedTime(0.0f),
 	isShaking(false)
 {
-	using enum CameraMoveState_Base::CameraState;
+	using enum CameraState;
 
 	// ステートを作成
 	CreateState<CameraOnMoveState>(Move);
-	CreateState<CameraTargetMove>(Target);
+	CreateState<CameraGameOverState>(Win);
+	CreateState<CameraGameOverState>(Lose);
 
 	// デフォルト状態をセット
 	SetDefaultNode(Move);
@@ -61,7 +62,7 @@ void CameraMoveController::ShakeUpdate()
 	if (!isShaking) return;
 
 	// 揺らす間隔を取得
-	ShakeLevelParam& param = shakeLevelParameter[static_cast<u_int>(curShakeLevel)];
+	CameraShakeParameter& param = shakeLevelParameter[static_cast<u_int>(curShakeLevel)];
 
 	/// 経過時間を加算
 	shakeElapsedTime += GetCamera().DeltaTime();
@@ -133,6 +134,17 @@ void CameraMoveController::BeginShake(ShakeLevel _level, ShakeType _type, float 
 
 	// 揺れを開始
 	isShaking = true;
+}
+
+void CameraMoveController::OnPlayerWin(const Transform& _targetTransform)
+{
+	HashiTaku::StateNode_Base* pState = GetNode(CameraState::Win);
+	if (!pState) return;
+
+	CameraGameOverState* pGameOver = static_cast<CameraGameOverState*>(pState);
+	pGameOver->SetTargetTransform(_targetTransform);
+
+	ChangeState(CameraState::Win, true);
 }
 
 float CameraMoveController::GetFov() const
@@ -273,7 +285,7 @@ DirectX::SimpleMath::Vector3 CameraMoveController::CalcShakeOffset(ShakeLevel _l
 
 	// 揺らす大きさ取得
 	u_int levelId = static_cast<u_int>(curShakeLevel);
-	ShakeLevelParam& param = shakeLevelParameter[levelId];
+	CameraShakeParameter& param = shakeLevelParameter[levelId];
 
 	// 乱数で揺れのオフセット値を取得
 	switch (_type)

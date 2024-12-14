@@ -29,10 +29,11 @@ void CP_SpriteRenderer::MaterialSetup()
 
 void CP_SpriteRenderer::DrawSetup()
 {
-	struct TexEnable
+	struct TexParam
 	{
 		int isTexEnable;
-		float dummy[3];
+		float alpha;
+		float dummy[2];
 	};
 
 	// ƒŒƒ“ƒ_ƒ‰[Žæ“¾
@@ -55,8 +56,9 @@ void CP_SpriteRenderer::DrawSetup()
 	pVs.UpdateSubResource(0, &wvp);
 	pVs.UpdateSubResource(1, &materialParam);
 
-	TexEnable texEnable;
+	TexParam texEnable;
 	texEnable.isTexEnable = materialParam.isTextureEnable;
+	texEnable.alpha = alpha;
 	pPs.UpdateSubResource(0, &texEnable);
 	pPs.SetTexture(0, pTex);
 
@@ -64,20 +66,8 @@ void CP_SpriteRenderer::DrawSetup()
 	pPs.SetGPU();
 }
 
-CP_SpriteRenderer::CP_SpriteRenderer()
+CP_SpriteRenderer::CP_SpriteRenderer() : alpha(1.0f)
 {
-}
-
-CP_SpriteRenderer::CP_SpriteRenderer(const CP_SpriteRenderer& _other)
-{
-	Copy(_other);
-}
-
-CP_SpriteRenderer& CP_SpriteRenderer::operator=(const CP_SpriteRenderer& _other)
-{
-	Copy(_other);
-
-	return *this;
 }
 
 void CP_SpriteRenderer::Init()
@@ -100,7 +90,9 @@ void CP_SpriteRenderer::Draw()
 
 void CP_SpriteRenderer::ImGuiDebug()
 {
-	std::string texName;
+	ImGui::SliderFloat("Alpha", &alpha, 0.0f, 1.0f);
+
+		std::string texName;
 	if (pSprite->GetIsTexEnable())
 		texName = pSprite->GetTexture()->GetAssetName();
 
@@ -122,11 +114,22 @@ void CP_SpriteRenderer::SetMaterial(Material& _material)
 	pMaterial = &_material;
 }
 
+void CP_SpriteRenderer::SetAlpha(float _alpha)
+{
+	alpha = std::clamp(alpha, 0.0f, 1.0f);
+}
+
+float CP_SpriteRenderer::GetAlpha() const
+{
+	return alpha;
+}
+
 nlohmann::json CP_SpriteRenderer::Save()
 {
 	auto data = CP_Renderer::Save();
 
 	data["sprite"] = pSprite->Save();
+	data["alpha"] = alpha;
 
 	return data;
 }
@@ -135,20 +138,11 @@ void CP_SpriteRenderer::Load(const nlohmann::json& _data)
 {
 	CP_Renderer::Load(_data);
 
-	if (!HashiTaku::IsJsonContains(_data, "sprite")) return;
+	HashiTaku::LoadJsonFloat("alpha", alpha, _data);
 
-	pSprite->Load(_data["sprite"]);
-}
+	if (HashiTaku::IsJsonContains(_data, "sprite"))
+	{
+		pSprite->Load(_data["sprite"]);
+	}
 
-void CP_SpriteRenderer::Copy(const CP_SpriteRenderer& _other)
-{
-	if (this == &_other) return;
-
-	CP_Renderer::operator=(_other);
-
-	if (_other.pSprite)
-		pSprite = std::make_unique<Sprite>(*_other.pSprite);
-
-	if (_other.pMaterial)
-		pMaterial = _other.pMaterial;
 }

@@ -189,6 +189,7 @@
     <ClCompile Include="BulletContactCallBack.cpp" />
     <ClCompile Include="BulletTest.cpp" />
     <ClCompile Include="ButtonTransArrow.cpp" />
+    <ClCompile Include="CameraGameOverState.cpp" />
     <ClCompile Include="CameraMoveController.cpp" />
     <ClCompile Include="CameraMoveState_Base.cpp" />
     <ClCompile Include="CameraOnMoveState.cpp" />
@@ -196,6 +197,7 @@
     <ClCompile Include="ChangeAnimObserver.cpp" />
     <ClCompile Include="CharacterActionController.cpp" />
     <ClCompile Include="CharacterActState_Base.cpp" />
+    <ClCompile Include="CP_Fade.cpp" />
     <ClCompile Include="CP_GroundCheck.cpp" />
     <ClCompile Include="CP_BattleManager.cpp" />
     <ClCompile Include="CP_Boss.cpp" />
@@ -440,6 +442,7 @@
     <ClInclude Include="BulletContactCallBack.h" />
     <ClInclude Include="BulletTest.h" />
     <ClInclude Include="ButtonTransArrow.h" />
+    <ClInclude Include="CameraGameOverState.h" />
     <ClInclude Include="CameraMoveController.h" />
     <ClInclude Include="CameraMoveState_Base.h" />
     <ClInclude Include="CameraOnMoveState.h" />
@@ -447,6 +450,7 @@
     <ClInclude Include="ChangeAnimObserver.h" />
     <ClInclude Include="CharacterActionController.h" />
     <ClInclude Include="CharacterActState_Base.h" />
+    <ClInclude Include="CP_Fade.h" />
     <ClInclude Include="CP_GroundCheck.h" />
     <ClInclude Include="CP_BattleManager.h" />
     <ClInclude Include="CP_Boss.h" />
@@ -519,6 +523,7 @@
     <ClInclude Include="PlayerAirAttack.h" />
     <ClInclude Include="PlayerAirMove.h" />
     <ClInclude Include="PlayerAirState.h" />
+    <ClInclude Include="PlayerAnimReference.h" />
     <ClInclude Include="PlayerAttackInformation.h" />
     <ClInclude Include="PlayerDamageState.h" />
     <ClInclude Include="PlayerGroundState.h" />

@@ -1,7 +1,6 @@
 #pragma once
-#include "CloneComponent.h"
-class CP_BoxAnimation :
-    public Component, public CloneComponent<CP_BoxAnimation> 
+#include "Component.h"
+class CP_BoxAnimation : public Component
 {
     /// @brief ‘JˆÚî•ñ
     struct TransitionBase

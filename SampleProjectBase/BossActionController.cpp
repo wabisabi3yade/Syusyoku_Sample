@@ -18,10 +18,11 @@
 namespace DXSimp = DirectX::SimpleMath;
 
 // 状態を表すアニメーションパラメータ名
-constexpr auto STATE_PARAM_NAME("state");
+constexpr auto STATE_PARAM_NAME{ "state" };
 
 BossActionController::BossActionController(CP_Boss& _boss) :
-	EnemyActionController(_boss, "bossActCon"), pPlayerObject(nullptr), pCanKnock(nullptr),
+	EnemyActionController(_boss, "bossActCon"),
+	pPlayerObject(nullptr),
 	defaultState(BossActState_Base::BossState::Idle)
 {
 	// 初期化
@@ -38,8 +39,11 @@ BossActionController::BossActionController(CP_Boss& _boss) :
 	CreateState<BossBreakEndKnock>(BreakEnd_Knock, {});
 	CreateState<BossBreakIdle>(Break_Idle, {});
 
-	CreateState<BossCombAttack>(CombAttack1, { ActDistance::Short });
+	CreateState<BossAttackState>(CombAttack1, { ActDistance::Short });
+	CreateState<BossAttackState>(CombAttack2, { ActDistance::Short, ActDistance::Mid });
+	CreateState<BossAttackState>(CombAttack3, { ActDistance::Short });
 	CreateState<BossJumpAttack>(JumpAttack, { ActDistance::Far });
+	//CreateState<BossJumpAttack>(SlidingAttack, { ActDistance::Mid, ActDistance::Far });
 
 	// デフォルトノード設定
 	SetDefaultNode(static_cast<int>(defaultState));
@@ -132,6 +136,13 @@ CP_Player& BossActionController::GetPlayer()
 bool BossActionController::GetIsBreaking()
 {
 	return GetBoss().GetIsBreaking();
+}
+
+bool BossActionController::GetReAttack()
+{
+	if (!pIsReAttack) return false;
+
+	return *pIsReAttack;
 }
 
 float BossActionController::GetActDistanceLength(ActDistance _actDistance)
@@ -237,6 +248,7 @@ BossActState_Base::BossState BossActionController::RandState(ActDistance _actDis
 
 void BossActionController::GetAnimationParam()
 {
+	pIsReAttack = GetAnimation()->GetParameterPointer<bool>(BossActState_Base::REATTACK_PARAMNAME);
 }
 
 bool BossActionController::IsCanBossUpdate()

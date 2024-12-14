@@ -12,7 +12,7 @@ class ComponentFactory : public Singleton_Base<ComponentFactory>
 {
 	friend class Singleton_Base<ComponentFactory>;
 
-	std::unordered_map<std::string, std::unique_ptr<ComponentRespawner_Base>> pComponents;
+	std::map<std::string, std::unique_ptr<ComponentRespawner_Base>> pComponents;
 public:
 	/// @brief ‰Šú‰»ˆ—
 	void Init();

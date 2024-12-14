@@ -115,6 +115,60 @@
                                 "transTime": 0.18000000715255737
                             },
                             "toNode": "CombAttack1"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    },
+                                    {
+                                        "condition": {
+                                            "iCompare": 103,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.14000000059604645,
+                                "transEase": 0.14000000059604645,
+                                "transTime": 0.11999999731779099
+                            },
+                            "toNode": "CombAttack2"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    },
+                                    {
+                                        "condition": {
+                                            "iCompare": 104,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.05999999865889549,
+                                "transEase": 0.05999999865889549,
+                                "transTime": 0.12999999523162842
+                            },
+                            "toNode": "CombAttack3"
                         }
                     ],
                     "name": "MoveToAttack"
@@ -248,7 +302,7 @@
                                         "typeKind": 0
                                     }
                                 ],
-                                "exitRatio": 1.0,
+                                "exitRatio": 0.0,
                                 "interpolate": 0,
                                 "isHaveExit": false,
                                 "priority": 5,
@@ -889,18 +943,57 @@
                             "useHermite": true
                         },
                         "isLoop": true,
-                        "isRMXZ": true,
+                        "isRMXZ": false,
                         "isRMY": false,
                         "speed": 1.0
                     },
-                    "arrowDataList": null,
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 0.9200000166893005,
+                                "interpolate": 0,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.2199999988079071
+                            },
+                            "toName": "Idle"
+                        }
+                    ],
                     "groupArrowName": "Attack",
                     "nodeName": "CombAttack2",
                     "nodeType": 0,
                     "notifyList": [
                         {
                             "notifyParam": {
-                                "endFrame": 0,
+                                "endFrame": 65,
+                                "isActive": true,
+                                "isUse": [
+                                    false,
+                                    true,
+                                    true,
+                                    false
+                                ],
+                                "notifyName": "ANS_AttackCollision",
+                                "parameterNames": [
+                                    "attackCollision"
+                                ],
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    false
+                                ],
+                                "startFrame": 56,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 94,
                                 "isActive": true,
                                 "isUse": [
                                     false,
@@ -908,18 +1001,31 @@
                                     true,
                                     true
                                 ],
-                                "notifyName": "ANS_AttackCollision",
-                                "parameterNames": [],
+                                "notifyName": "ANS_AttackCollision2",
+                                "parameterNames": [
+                                    "attackCollision"
+                                ],
                                 "setParameter": [
                                     false,
                                     true,
                                     false,
                                     false
                                 ],
-                                "startFrame": 0,
+                                "startFrame": 85,
                                 "useFrame": true
                             },
                             "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "eventFrame": 73,
+                                "isActive": true,
+                                "notifyName": "ANE_ReAttack",
+                                "paramName": "isReAttack",
+                                "setParam": true,
+                                "useFrame": true
+                            },
+                            "notifyType": 2
                         }
                     ]
                 },
@@ -928,24 +1034,155 @@
                         "animName": "boss_CombAttack3.fbx",
                         "animationCurve": {
                             "easeKind": 0,
-                            "endValue": 1.0,
+                            "endValue": 0.699999988079071,
                             "endVector": 0.0,
-                            "plotDatas": null,
+                            "plotDatas": [
+                                {
+                                    "interp": 0,
+                                    "time": 0.2669999897480011,
+                                    "value": 0.800000011920929,
+                                    "vector": -0.1743766963481903
+                                },
+                                {
+                                    "interp": 0,
+                                    "time": 0.3269999921321869,
+                                    "value": 2.0,
+                                    "vector": 0.6930000185966492
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.41499999165534973,
+                                    "value": 2.0,
+                                    "vector": -0.6540281176567078
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.41600000858306885,
+                                    "value": 1.0,
+                                    "vector": -0.3270140588283539
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.47600001096725464,
+                                    "value": 0.800000011920929,
+                                    "vector": -0.16350702941417694
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.5600000023841858,
+                                    "value": 0.8999999761581421,
+                                    "vector": -0.08175351470708847
+                                },
+                                {
+                                    "interp": 0,
+                                    "time": 0.5609999895095825,
+                                    "value": 1.7999999523162842,
+                                    "vector": 0.5062811374664307
+                                },
+                                {
+                                    "interp": 0,
+                                    "time": 0.6679999828338623,
+                                    "value": 1.7000000476837158,
+                                    "vector": -0.059529099613428116
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.7099999785423279,
+                                    "value": 0.699999988079071,
+                                    "vector": -1.9400060176849365
+                                }
+                            ],
                             "startInterp": 1,
-                            "startValue": 1.0,
+                            "startValue": 0.800000011920929,
                             "startVector": 0.0,
                             "useHermite": true
                         },
                         "isLoop": false,
                         "isRMXZ": true,
                         "isRMY": false,
-                        "speed": 1.0
+                        "speed": 1.0499999523162842
                     },
-                    "arrowDataList": null,
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "Idle"
+                        }
+                    ],
                     "groupArrowName": "Attack",
                     "nodeName": "CombAttack3",
                     "nodeType": 0,
-                    "notifyList": null
+                    "notifyList": [
+                        {
+                            "notifyParam": {
+                                "endFrame": 34,
+                                "isActive": true,
+                                "isUse": [
+                                    false,
+                                    true,
+                                    true,
+                                    false
+                                ],
+                                "notifyName": "ANS_AttackCollision1",
+                                "parameterNames": [
+                                    "attackCollision"
+                                ],
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    false
+                                ],
+                                "startFrame": 29,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 56,
+                                "isActive": true,
+                                "isUse": [
+                                    false,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_AttackCollision2",
+                                "parameterNames": [
+                                    "attackCollision"
+                                ],
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    false
+                                ],
+                                "startFrame": 48,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "eventFrame": 47,
+                                "isActive": true,
+                                "notifyName": "ANE_ReAttack",
+                                "paramName": "isReAttack",
+                                "setParam": true,
+                                "useFrame": true
+                            },
+                            "notifyType": 2
+                        }
+                    ]
                 },
                 {
                     "animNode": {
@@ -7673,11 +7910,11 @@
                                     false,
                                     true
                                 ],
-                                "notifyName": "ANS_Cancel",
+                                "notifyName": "ANS_CanMove",
                                 "parameterNames": [
                                     "canCancel",
-                                    "canAttack",
-                                    "canMove"
+                                    "canMove",
+                                    "canAttack"
                                 ],
                                 "setParameter": [
                                     false,
@@ -7932,7 +8169,7 @@
                             "useHermite": true
                         },
                         "isLoop": false,
-                        "isRMXZ": false,
+                        "isRMXZ": true,
                         "isRMY": false,
                         "speed": 1.0
                     },
@@ -8931,8 +9168,28 @@
             "pathName": "assets/texture/ui/UI_EnemyText.png"
         },
         {
+            "assetName": "UI_GameOver.png",
+            "pathName": "assets/texture/ui/UI_GameOver.png"
+        },
+        {
+            "assetName": "UI_GameStart.png",
+            "pathName": "assets/texture/ui/UI_GameStart.png"
+        },
+        {
+            "assetName": "UI_Menu.png",
+            "pathName": "assets/texture/ui/UI_Menu.png"
+        },
+        {
             "assetName": "UI_PlayerHpBar.png",
             "pathName": "assets/texture/ui/UI_PlayerHpBar.png"
+        },
+        {
+            "assetName": "UI_Retry.png",
+            "pathName": "assets/texture/ui/UI_Retry.png"
+        },
+        {
+            "assetName": "UI_SelectImage.png",
+            "pathName": "assets/texture/ui/UI_SelectImage.png"
         },
         {
             "assetName": "UI_StartText.png",
@@ -8941,6 +9198,14 @@
         {
             "assetName": "UI_TitleImage.png",
             "pathName": "assets/texture/ui/UI_TitleImage.png"
+        },
+        {
+            "assetName": "UI_Win.png",
+            "pathName": "assets/texture/ui/UI_Win.png"
+        },
+        {
+            "assetName": "black.png",
+            "pathName": "assets/texture/ui/black.png"
         },
         {
             "assetName": "campfire.jpg",
@@ -8953,10 +9218,6 @@
         {
             "assetName": "desertRock15.jpg",
             "pathName": ""
-        },
-        {
-            "assetName": "ground.png",
-            "pathName": "assets/texture/ground.png"
         },
         {
             "assetName": "ground1_Diffuse.png",

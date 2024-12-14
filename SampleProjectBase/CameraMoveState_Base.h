@@ -13,7 +13,8 @@ public:
 	enum  class CameraState
 	{
 		Move,	// 移動時
-		Target,	// ターゲット時
+		Win,	// プレイヤー勝利
+		Lose,	// プレイヤー負け
 		None
 	};
 

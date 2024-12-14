@@ -156,7 +156,12 @@ void CP_SkyBox::FaceDraw(u_int _faceNum)
 	FaceTransform(facePlace, pos, scale, angles);
 
 	// •`‰æ‚·‚é
-	pSpriteDrawer->DrawSprite(*pFaces[_faceNum], *pMaterial, pos, scale, Quat::ToQuaternion(angles));
+	pSpriteDrawer->DrawSprite(*pFaces[_faceNum],
+		*pMaterial,
+		pos,
+		scale,
+		Quat::ToQuaternion(angles),
+		1.0f);
 }
 
 void CP_SkyBox::FaceTransform(FaceKind _facePlace, DirectX::SimpleMath::Vector3& _outPos, DirectX::SimpleMath::Vector3& _outScale, DirectX::SimpleMath::Vector3& _outAngles)

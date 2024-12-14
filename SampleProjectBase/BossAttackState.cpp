@@ -5,7 +5,13 @@
 
 namespace DXSimp = DirectX::SimpleMath;
 
-BossAttackState::BossAttackState() : rotSpeedTimes(1.0f), isUseRotateCurve(false)
+
+
+BossAttackState::BossAttackState() : 
+	rotSpeedTimes(1.0f),
+	attackTimeCnt(1),
+	curAttackTime(1),
+	isUseRotateCurve(false)
 {
 	// 1つは用意する
 	HashiTaku::AttackInformation attackInfo;
@@ -25,10 +31,18 @@ void BossAttackState::OnStartBehavior()
 
 	// 攻撃情報をセットする
 	pActionController->SetAttackInfo(attackInfos[0]);
+
+	// 初期化
+	curAttackTime = 1;	// 1段目から入る
+
+	// プレイヤーめがけてワープするようにする
+	SetWarpTargetPosReference(GetPlayerTransform().GetPosition());
 }
 
 void BossAttackState::UpdateBehavior()
 {
+	UpdateReAttack();
+
 	RotateUpdate();
 
 	BossActState_Base::UpdateBehavior();
@@ -44,6 +58,8 @@ void BossAttackState::OnAnimationEnd(const std::string& _fromAnimNodeName, const
 nlohmann::json BossAttackState::Save()
 {
 	auto data = BossActState_Base::Save();
+
+	data["atkTimeCnt"] = attackTimeCnt;
 
 	// 攻撃情報をセーブ
 	auto& atkInfoData = data["atkInfos"];
@@ -66,6 +82,8 @@ nlohmann::json BossAttackState::Save()
 void BossAttackState::Load(const nlohmann::json& _data)
 {
 	BossActState_Base::Load(_data);
+
+	HashiTaku::LoadJsonUnsigned("atkTimeCnt", attackTimeCnt, _data);
 
 	// 攻撃情報をロード
 	nlohmann::json atkLoadDatas;
@@ -137,4 +155,49 @@ void BossAttackState::ImGuiDebug()
 		rotSpeedCurve.ImGuiCall();
 	}
 
+	// 攻撃回数
+	int imInt = static_cast<u_int>(attackTimeCnt);
+	if (ImGui::DragInt("attackCnt", &imInt, 1, 1, 100))
+	{
+		SetAttackTimeCnt(imInt);
+	}
+}
+
+void BossAttackState::UpdateReAttack()
+{
+	// リアタックのタイミングでないなら
+	if (!(pActionController->GetReAttack())) return;
+
+	// リアタックフラグを降ろす
+	GetAnimation()->SetBool(REATTACK_PARAMNAME, false);
+
+	// リアタック更新
+	curAttackTime++;
+
+	// 総攻撃回数を超えるなら
+	if (curAttackTime > attackTimeCnt)
+	{
+		HASHI_DEBUG_LOG("エラー：総攻撃回数を超えています");
+		curAttackTime = attackTimeCnt;
+	}
+
+	assert(static_cast<u_int>(attackInfos.size()) >= curAttackTime &&
+		"攻撃情報が攻撃回数以下です");
+
+	// 対応した攻撃情報をセットする
+	pActionController->SetAttackInfo(attackInfos[curAttackTime - 1]);
+}
+
+void BossAttackState::SetAttackTimeCnt(u_int _attackTime)
+{
+#ifdef EDIT
+	if (_attackTime == 0)
+	{
+		HASHI_DEBUG_LOG("1以上を設定してください");
+		return;
+	}
+#endif // EDIT
+
+	attackTimeCnt = _attackTime;
+	attackInfos.resize(_attackTime);	// 攻撃情報も合わせる
 }

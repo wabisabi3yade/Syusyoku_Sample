@@ -9,13 +9,15 @@ void SpriteDrawer::DrawSprite(
 	Material& _material,
 	const DirectX::SimpleMath::Vector3& _pos,
 	const DirectX::SimpleMath::Vector3& _scale,
-	const DirectX::SimpleMath::Quaternion& _rotation
+	const DirectX::SimpleMath::Quaternion& _rotation,
+	float _alpha
 )
 {
 	struct TexEnable
 	{
 		int isTexEnable = 0;
-		int dummy[3];
+		float alpha = 1.0f;
+		int dummy[2];
 	};
 
 	// ÉåÉìÉ_ÉâÅ[éÊìæ
@@ -29,8 +31,11 @@ void SpriteDrawer::DrawSprite(
 	VertexShader& pVs = _material.GetVertexShader();
 	PixelShader& pPs = _material.GetPixelShader();
 	MaterialParameter& materialParam = _material.GetMaterialParameter();
+
 	TexEnable texEnable;
 	texEnable.isTexEnable = _sprite.GetIsTexEnable();
+	texEnable.alpha = _alpha;
+
 	Texture* pTex = _sprite.GetTexture();
 	pVs.UpdateSubResource(0, &wvp);
 	pVs.UpdateSubResource(1, &materialParam);

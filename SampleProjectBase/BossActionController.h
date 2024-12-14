@@ -36,8 +36,8 @@ private:
 	/// @brief プレイヤーオブジェクト
 	CP_Player* pPlayerObject;
 
-	/// @brief のけぞることはできるのか？(アニメーションパラメータ)
-	const bool* pCanKnock;
+	/// @brief リアタックをするトリガー
+	const bool* pIsReAttack;
 
 	/// @brief デフォルト状態設定
 	BossActState_Base::BossState defaultState;
@@ -88,9 +88,9 @@ public:
 	/// @return ブレイク処理
 	bool GetIsBreaking();
 
-	/// @brief のけぞることができるか取得
-	/// @return のけぞりできるか？
-	const bool GetCanKnock() const;
+	/// @brief リアタックづるか取得する
+	/// @return リアタック
+	bool GetReAttack();
 
 	/// @brief 行動の距離を取得
 	/// @param _actDistance 取得したい距離の種類

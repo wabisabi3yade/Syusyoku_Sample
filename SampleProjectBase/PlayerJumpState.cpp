@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "PlayerJumpState.h"
+#include "CP_Player.h"
 
 constexpr auto JUMPTRIGGER_ANIMPARAM("jumpTrigger");
 
@@ -43,6 +44,8 @@ void PlayerJumpState::OnStartBehavior()
 	// ジャンプトリガーを入れる
 	GetAnimation()->SetTrigger(JUMPTRIGGER_ANIMPARAM);
 
+	GetPlayer().SetIsInvicible(true);
+
 	stateElapsedTime = 0.0f;
 	isAlreadyJump = false;
 }
@@ -62,6 +65,7 @@ void PlayerJumpState::UpdateBehavior()
 
 void PlayerJumpState::OnEndBehavior()
 {
+	GetPlayer().SetIsInvicible(false);
 }
 
 void PlayerJumpState::OnBeginJump()

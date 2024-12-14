@@ -48,6 +48,9 @@ class CameraOnMoveState : public CameraMoveState_Base
 
 	/// @brief ターゲットからY座標の注視点
 	float lookTargetOffsetY;
+	
+	/// @brief ターゲット処理するか？
+	bool isTargeting;
 public :
 	CameraOnMoveState();
 	~CameraOnMoveState() {}
@@ -64,11 +67,18 @@ private:
 	/// @brief 更新処理
 	void UpdateBehavior() override;
 
+	void NormalUpdate();
+
+	void TargetUpdate();
+
 	/// @brief 終了処理
 	void OnEndBehavior() override;
 
 	/// @brief 遷移確認
 	void CheckTransitionUpdate() override;
+
+	/// @brief 入力更新
+	void InputUpdate();
 
 	/// @brief 縦軸の移動
 	void VerticalMove();

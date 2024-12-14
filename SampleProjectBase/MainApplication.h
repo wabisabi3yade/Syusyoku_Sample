@@ -34,6 +34,9 @@ class MainApplication
 	/// @brief アプリケーション終了するか確認中
 	static bool isEscapeChecking;
 
+	/// @brief アプリケーション終了するフラグ
+	static bool isExit;
+
 	MainApplication() {};
 	~MainApplication() {};
 
@@ -45,10 +48,12 @@ class MainApplication
 	static void SystemDraw();
 
 public:
-
 	/// @brief 初期化
 	/// @param _hInst ハンドルインスタンス 
 	static void Init(HINSTANCE _hInst);
+
+	/// @brief アプリケーション終了するように依頼する
+	static void ExitRequest();
 
 	/// @brief ゲームループ
 	static void GameLoop();

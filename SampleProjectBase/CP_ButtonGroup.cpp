@@ -8,6 +8,7 @@ CP_ButtonGroup::CP_ButtonGroup() :
 	pSelectBackImage(nullptr),
 	curSelectButtonId(0),
 	defaultSelectButtonId(0),
+	maxButtonCnt(0),
 	vertMoveSpeed(0),
 	horiMoveSpeed(0),
 	canInput(true)
@@ -28,6 +29,15 @@ nlohmann::json CP_ButtonGroup::Save()
 	data["horiSpeed"] = horiMoveSpeed;
 	data["buttonObjNames"] = buttonObjNames;
 	data["backObjName"] = backImageObjName;
+
+	auto& targetData = data["selectTargetPos"];
+	for (int b_i = 0; b_i < maxButtonCnt; b_i++)
+	{
+		nlohmann::json posData;
+		HashiTaku::SaveJsonVector3("target", selectTargetPos[b_i], posData);
+		targetData.push_back(posData);
+	}
+
 	return data;
 }
 
@@ -49,7 +59,21 @@ void CP_ButtonGroup::Load(const nlohmann::json& _data)
 			if (idx >= maxButtonCnt) break;
 			buttonObjNames[idx] = nameData.get<std::string>();
 			idx++;
-		}	
+		}
+	}
+
+	// 座標
+	nlohmann::json targetData;
+	if (HashiTaku::LoadJsonDataArray("selectTargetPos", targetData, _data))
+	{
+		int i = 0;
+		for (auto& posData : targetData)
+		{
+			DXSimp::Vector3 pos;
+			HashiTaku::LoadJsonVector3("target", pos, posData);
+			selectTargetPos[i] = pos;
+			i++;
+		}
 	}
 }
 
@@ -92,7 +116,7 @@ void CP_ButtonGroup::Start()
 
 void CP_ButtonGroup::Update()
 {
-	
+
 	if (maxButtonCnt == 0) return;	// ボタンが1つも設定されていないなら
 	if (!canInput) return;	// 操作できないなら抜ける
 
@@ -155,7 +179,7 @@ void CP_ButtonGroup::DecideButton()
 	}
 	else // キーボード
 	{
-		
+
 		isDecide = gameInput.GetKeyboard().GetKeyDown(DIK_RETURN);
 	}
 
@@ -176,17 +200,25 @@ void CP_ButtonGroup::MoveSelectBackImage()
 
 	// 選択されているボタンの座標を取得
 	Transform& backImageTrans = pSelectBackImage->GetTransform();
-	DXSimp::Vector3 buttonPos =
-		buttonGroup[curSelectButtonId]->GetTransform().GetPosition();
+	DXSimp::Vector3 buttonPos = selectTargetPos[curSelectButtonId];
 
 	// Z座標以外を反映させる
 	buttonPos.z = backImageTrans.GetPosition().z;
 	backImageTrans.SetPosition(buttonPos);
 }
 
+void CP_ButtonGroup::SetMaxButtonCnt(int _max)
+{
+	maxButtonCnt = _max;
+	buttonGroup.resize(maxButtonCnt);
+	buttonObjNames.resize(maxButtonCnt);
+	selectTargetPos.resize(maxButtonCnt);
+}
+
 void CP_ButtonGroup::ImGuiDebug()
 {
 #ifdef EDIT
+	ImGuiMethod::Text("CanInput", canInput);
 	ImGui::DragInt("VertSpeed", &vertMoveSpeed);
 	ImGui::DragInt("HoriSpeed", &horiMoveSpeed);
 
@@ -197,14 +229,18 @@ void CP_ButtonGroup::ImGuiDebug()
 	ImGui::SameLine();
 	if (ImGui::Button("Set"))
 		backImageObjName = inputText;
-	
+
 	for (int b_i = 0; b_i < maxButtonCnt; b_i++)
 	{
 		ImGui::PushID(b_i);
+
 		ImGui::Text("%d:%s", b_i, buttonObjNames[b_i].c_str());
 		ImGui::SameLine();
 		if (ImGui::Button("Set"))
 			buttonObjNames[b_i] = inputText;
+
+		ImGui::DragFloat3("Pos", &selectTargetPos[b_i].x);
+
 		ImGui::PopID();
 	}
 #endif // EDIT

@@ -38,6 +38,13 @@ void PlayerGuardState::OnParry()
 	// アニメーション
 	GetAnimation()->SetBool(GUARD_PARAMNAME, false);
 
+	// キャンセル全てできるようにする
+	GetAnimation()->SetBool(CANCEL_PARAMNAME, true);
+	GetAnimation()->SetBool(CANATK_PARAMNAME, false);
+
+	// エフェクトを出す
+	CreateParryVfx();
+
 	// 前入力されていたら
 	if (IsInputVector(InputVector::Forward))
 		ReleaseAttack();	// 攻撃に派生
@@ -128,7 +135,6 @@ void PlayerGuardState::ReleaseAttack()
 
 void PlayerGuardState::GuardParry()
 {
-	CreateParryVfx();
 }
 
 void PlayerGuardState::CreateParryVfx()

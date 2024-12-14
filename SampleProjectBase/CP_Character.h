@@ -10,11 +10,14 @@ private:
 	/// @brief 死んだフラグ
 	bool isDead;
 
+	/// @brief 死んだフラグ
+	bool isMove;
+
 	/// @brief ヒットストップ中か？
 	bool isHitStopping;
 
 	/// @brief 無敵フラグ
-	bool isInvicible;
+	bool isInvicible;;
 protected:
 	/// @brief 現在の体力
 	float currentHP;

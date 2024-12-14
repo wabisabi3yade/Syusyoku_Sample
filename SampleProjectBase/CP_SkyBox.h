@@ -1,5 +1,5 @@
 #pragma once
-#include "CloneComponent.h"
+#include "Component.h"
 #include "PlaneMesh.h"
 #include "Sprite.h"
 #include "SpriteDrawer.h"
@@ -9,7 +9,7 @@ class Material;
 class CP_Camera;
 
 /// @brief スカイボックスを描画する
-class CP_SkyBox : public Component, public CloneComponent<CP_SkyBox>
+class CP_SkyBox : public Component
 {
 public:
 	/// @brief ボックスの面の場所

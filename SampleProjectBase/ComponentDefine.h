@@ -42,6 +42,7 @@
 #include "CP_UISlider.h"
 #include "CP_Button.h"
 #include "CP_TitleButtonGroup.h"
+#include "CP_Fade.h"
 
 // エフェクト
 #include "CP_VisualEffect.h"

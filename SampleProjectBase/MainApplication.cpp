@@ -22,6 +22,7 @@ std::unique_ptr<VariableFrameRate> MainApplication::pVariableFps = nullptr;
 std::unique_ptr<InputClass> MainApplication::pInput = nullptr;
 std::unique_ptr<AssetCollection> MainApplication::pAssetCollection = nullptr;
 bool MainApplication::isEscapeChecking = false;
+bool MainApplication::isExit = false;
 
 void MainApplication::Release()
 {
@@ -115,6 +116,11 @@ void MainApplication::Init(HINSTANCE _hInst)
 	SceneManagerSetup();
 }
 
+void MainApplication::ExitRequest()
+{
+	isExit = true;
+}
+
 void MainApplication::GameLoop()
 {
 	// ‘O‰ñŽžŠÔ‚Ì‰Šú‰»
@@ -147,6 +153,9 @@ void MainApplication::GameLoop()
 		Direct3D11::GetInstance()->GetRenderer()->Swap();
 
 		pVariableFps->ProcessEnd();
+
+		if (isExit)
+			return;
 	}
 }
 

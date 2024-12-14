@@ -15,7 +15,8 @@ CameraOnMoveState::CameraOnMoveState() :
 	horiSpeedToTarget(10.0f),
 	centerAngle(-90.0f),
 	distanceHorizon(5.0f),
-	lookTargetOffsetY(2.0f)
+	lookTargetOffsetY(2.0f),
+	isTargeting(false)
 {
 	pInput = &InSceneSystemManager::GetInstance()->GetInput();
 }
@@ -90,13 +91,15 @@ void CameraOnMoveState::UpdateBehavior()
 	cameraPos = GetBasePosition();
 	followPos = GetFollowPosition();
 
-	inputVal = pInput->GetValue(GameInput::ValueType::Camera_Move);
+	InputUpdate();
 
 	// 縦軸の移動
 	VerticalMove();
 
-	// オブジェクトを中心に回転移動
-	RotationMove();
+	if (isTargeting)
+		TargetUpdate();
+	else
+		NormalUpdate();
 
 	// カメラの座標更新する
 	SetBasePosition(cameraPos);
@@ -106,16 +109,59 @@ void CameraOnMoveState::UpdateBehavior()
 
 }
 
+void CameraOnMoveState::NormalUpdate()
+{
+	// オブジェクトを中心に回転移動
+	RotationMove();
+}
+
+void CameraOnMoveState::TargetUpdate()
+{
+	const DXSimp::Vector3& followPos = GetFollowPosition();
+	const DXSimp::Vector3& lookAtPos = pCamController->GetLookAtWorldPos();
+
+	// 追従先から見た注視先と真逆にカメラを位置させる
+	DXSimp::Vector3 lookToFollowVec = followPos - lookAtPos;
+	lookToFollowVec.y = 0.0f;
+	lookToFollowVec.Normalize();
+
+	DXSimp::Vector3 disFromFollow = lookToFollowVec * distanceHorizon;
+	disFromFollow.y = currentHeight;
+
+	DXSimp::Vector3 targetCamPos = followPos + disFromFollow;
+
+	// カメラを移動させる
+	cameraPos = DXSimp::Vector3::Lerp(cameraPos, targetCamPos, horiSpeedToTarget * DeltaTime());
+
+	centerAngle = atan2f(lookToFollowVec.z, lookToFollowVec.x) * Mathf::radToDeg;
+}
+
 void CameraOnMoveState::OnEndBehavior()
 {
 }
 
 void CameraOnMoveState::CheckTransitionUpdate()
 {
-	if (pInput->GetButtonDown(GameInput::ButtonType::Player_RockOn))
-	{
-		ChangeState(CameraState::Target);
-	}
+}
+
+void CameraOnMoveState::InputUpdate()
+{
+	isTargeting = pInput->GetButton(GameInput::ButtonType::Player_RockOn);
+
+	inputVal = pInput->GetValue(GameInput::ValueType::Camera_Move);
+
+	int vecX = 1;
+	if (inputVal.x < 0.0f)
+		vecX = -1;
+
+	int vecY = 1;
+	if (inputVal.y < 0.0f)
+		vecY = -1;
+
+	inputVal = inputVal * inputVal;
+
+	inputVal.x *= vecX;
+	inputVal.y *= vecY;
 }
 
 void CameraOnMoveState::VerticalMove()

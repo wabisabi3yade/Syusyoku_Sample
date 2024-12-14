@@ -224,9 +224,12 @@ void BossActState_Base::WarpMotionUpdate()
 	else // カーブから求めるなら
 	{
 		// 区間内の進行割合を求めて、カーブ値を取得
-		float curProgressRatio = (animRatio - curWarp.beginAnimRatio) /
+		float curAnimRatioOnSplit = (animRatio - curWarp.beginAnimRatio) /
 			(curWarp.endAnimRatio - curWarp.beginAnimRatio);
-		curProgressRatio = curWarp.pHoriMovementCurve->GetValue(curProgressRatio);
+
+		curProgressRatio = curWarp.pHoriMovementCurve->GetValue(curAnimRatioOnSplit);
+
+		HASHI_DEBUG_LOG(std::to_string(curAnimRatioOnSplit));
 	}
 
 	// 前回からの差を求める
@@ -270,9 +273,6 @@ void BossActState_Base::CheckTransNextWarp(float _animRatio)
 	if (isWarpMoving && _animRatio > warpMotionParams[curWarpStep - 1].endAnimRatio)
 	{
 		isWarpMoving = false;
-		//CP_RigidBody* rb = GetRB();
-		//rb.SetVelocity(DXSimp::Vector3::Zero);
-		//GetRB()->SetVelocity(DXSimp::Vector3::Zero);	// 前の慣性を消す
 	}
 }
 

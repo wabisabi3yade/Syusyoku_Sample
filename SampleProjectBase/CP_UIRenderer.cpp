@@ -13,7 +13,7 @@ constexpr auto PS_NAME("PS_UI");	// ピクセルシェーダー名
 
 namespace DXSimp = DirectX::SimpleMath;
 
-CP_UIRenderer::CP_UIRenderer() : pTexture(nullptr)
+CP_UIRenderer::CP_UIRenderer() : pTexture(nullptr), alpha(1.0f)
 {
 	// 2Dポリゴン作成
 	pPolygon = std::make_unique<Polygon2D>();
@@ -63,9 +63,21 @@ void CP_UIRenderer::SetUV(const DirectX::SimpleMath::Vector2& _startUV, const Di
 	pPolygon->SetUV(_startUV, _endUV);
 }
 
+void CP_UIRenderer::SetAlpha(float _alpha)
+{
+	alpha = std::clamp(_alpha, 0.0f, 1.0f);
+}
+
+float CP_UIRenderer::GetAlpha() const
+{
+	return alpha;
+}
+
 nlohmann::json CP_UIRenderer::Save()
 {
 	auto data = CP_Renderer::Save();
+
+	data["alpha"] = alpha;
 
 	if (pTexture)
 		data["image"] = pTexture->GetAssetName();
@@ -78,6 +90,8 @@ void CP_UIRenderer::Load(const nlohmann::json& _data)
 	CP_Renderer::Load(_data);
 
 	ReCreatePolygon();
+
+	HashiTaku::LoadJsonFloat("alpha", alpha, _data);
 
 	std::string texName;
 	if (HashiTaku::LoadJsonString("image", texName, _data))
@@ -101,7 +115,8 @@ void CP_UIRenderer::DrawSetup()
 	struct TexEnable
 	{
 		int isTexEnable = 0;
-		int dummy[3];
+		float alpha = 1.0f;
+		int dummy[2];
 	};
 
 	// レンダラー取得
@@ -110,6 +125,7 @@ void CP_UIRenderer::DrawSetup()
 	// シェーダーの設定
 	TexEnable texEnable;
 	texEnable.isTexEnable = pTexture != nullptr;
+	texEnable.alpha = alpha;
 
 	// 投影
 	DXSimp::Matrix projection = renderer.GetParameter().GetProjectionMatrix();
@@ -131,6 +147,8 @@ void CP_UIRenderer::ReCreatePolygon()
 
 void CP_UIRenderer::ImGuiDebug()
 {
+	ImGui::SliderFloat("Alpha", &alpha, 0.0f, 1.0f);
+
 	std::string texName;
 	if (pTexture)
 		texName = pTexture->GetAssetName();

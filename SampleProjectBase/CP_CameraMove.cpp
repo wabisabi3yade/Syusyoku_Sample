@@ -20,6 +20,11 @@ CP_CameraMove::~CP_CameraMove()
 {
 	if (pTargetObject)
 		pTargetObject->RemoveTargeter(*this);
+
+	if (CP_BattleManager* pBattle = CP_BattleManager::GetInstance())
+	{
+		pBattle->RemoveCamMove(*this);
+	}
 }
 
 void CP_CameraMove::Init()
@@ -47,6 +52,14 @@ void CP_CameraMove::FindFollowObject()
 
 	if (go)	// あったらトランスフォームを取得
 		pFollowTransform = &go->GetConstTransform();
+}
+
+void CP_CameraMove::Awake()
+{
+	if (CP_BattleManager* pBattle = CP_BattleManager::GetInstance())
+	{
+		pBattle->SetCameraMove(*this);
+	}
 }
 
 void CP_CameraMove::Start()
@@ -92,6 +105,11 @@ void CP_CameraMove::RemoveNotify(const ITargetAccepter& _removeObj)
 
 	pTargetObject = nullptr;
 	pMoveController->SetLookAtObject(nullptr);
+}
+
+void CP_CameraMove::OnPlayerWin(const Transform& _targetTransform)
+{
+	pMoveController->OnPlayerWin(_targetTransform);
 }
 
 void CP_CameraMove::ImGuiDebug()

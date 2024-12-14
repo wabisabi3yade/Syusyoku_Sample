@@ -11,6 +11,12 @@ class BossAttackState : public BossActState_Base
 	/// @brief 回転速度倍率
 	float rotSpeedTimes;
 
+	/// @brief コンビネーション攻撃の攻撃回数
+	u_int attackTimeCnt;
+
+	/// @brief 現在、攻撃の何段目か
+	u_int curAttackTime;
+
 	/// @brief カーブで回転移動させるか？
 	bool isUseRotateCurve;
 
@@ -36,11 +42,17 @@ public:
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
 protected:
+	/// @brief 向きを更新する
 	void RotateUpdate();
 
 	void ImGuiDebug() override;
-protected:
-	/// @brief リアタックするときに呼び出す変数
-	static constexpr auto REATTACK_PARAMNAME{ "isReAttack" };
+
+private:
+	/// @brief コンビネーション攻撃の攻撃に合わせて攻撃情報を更新する
+	void UpdateReAttack();
+
+	/// @brief 攻撃回数をセット
+	/// @param _attackTime 攻撃回数
+	void SetAttackTimeCnt(u_int _attackTime);
 };
 

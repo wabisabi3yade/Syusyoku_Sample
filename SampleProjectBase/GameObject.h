@@ -56,8 +56,6 @@ class GameObject : public HashiTaku::ISaveLoad, public HashiTaku::IImGuiUser
 	bool isDestroy;
 public:
 	GameObject();
-	GameObject(const GameObject& _other);
-	GameObject& operator=(const GameObject& _other);
 	~GameObject();
 
 	/// @brief 必ず最初に呼び出される処理
@@ -172,8 +170,6 @@ public:
 	/// @return レイヤーの種類
 	HashiTaku::Layer::Type GetLayer() const;
 private:
-	virtual GameObject& Copy(const GameObject& _other);
-
 	/// @brief 経過時間を更新する
 	void UpdateDeltaTime();
 

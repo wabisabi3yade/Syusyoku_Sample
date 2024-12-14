@@ -7,6 +7,8 @@ class CameraMoveController :
 	public HashiTaku::StateMachine_Base<CameraMoveState_Base::CameraState>,
 	public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
 {
+	using CameraState = CameraMoveState_Base::CameraState;
+
 public:
 	/// @brief カメラの揺れの強さ
 	enum class ShakeLevel
@@ -27,16 +29,16 @@ public:
 		MaxNum
 	};
 
-private:
 	/// @brief レベルごとに設定するパラメータ
-	struct ShakeLevelParam
+	struct CameraShakeParameter
 	{
 		float power{ 0.2f };	// 揺れの強さ
 		float duration{ 0.3f };	// 揺れの間隔時間(s)
 	};
+private:
 
 	/// @brief 各レベルの揺れの強さ
-	std::array<ShakeLevelParam, static_cast<u_int>(ShakeLevel::MaxNum)> shakeLevelParameter;
+	std::array<CameraShakeParameter, static_cast<u_int>(ShakeLevel::MaxNum)> shakeLevelParameter;
 
 	/// @brief カメラの現在の座標(カメラ揺れを実装するのでオブジェクトと別で持っておく)
 	DirectX::SimpleMath::Vector3 curBaseCameraPos;
@@ -111,6 +113,10 @@ public:
 	/// @param _type 揺れの種類
 	/// @param _time 揺れの時間
 	void BeginShake(ShakeLevel _level, ShakeType _type, float _time);
+
+	/// @brief プレイヤー勝利時の処理
+	/// @param _targetTransform ターゲットのトランスフォーム
+	void OnPlayerWin(const Transform& _targetTransform);
 
 	/// @brief 視野角を取得(単位：deg)
 	/// @return 視野角

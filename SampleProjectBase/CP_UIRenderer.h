@@ -20,6 +20,9 @@ class CP_UIRenderer : public CP_Renderer
 	/// @brief 表示するテクスチャ
 	const Texture* pTexture;
 
+	/// @brief α値
+	float alpha;
+
 protected:
 	/// @brief テクスチャを貼るポリゴン
 	std::unique_ptr<Polygon2D> pPolygon;
@@ -41,6 +44,14 @@ public:
 	/// @param _startUV 開始UV
 	/// @param _endUV 終点UV
 	void SetUV(const DirectX::SimpleMath::Vector2& _startUV, const DirectX::SimpleMath::Vector2& _endUV);
+
+	/// @brief α値をセット
+	/// @param _alpha α値
+	void SetAlpha(float _alpha);
+
+	/// @brief α値をセット
+	/// @return α値
+	float GetAlpha() const;
 
 	/// @brief セーブする
 	/// @param _data セーブシーンデータ

@@ -39,11 +39,16 @@ public:
 	/// @param _removeObj 死んだターゲットオブジェクト
 	void RemoveNotify(const ITargetAccepter& _removeObj) override;
 
+	/// @brief プレイヤー勝利時の処理
+	/// @param _targetTransform 映す対象トランスフォーム
+	void OnPlayerWin(const Transform& _targetTransform);
+
 	virtual void ImGuiDebug() override;
 
 	nlohmann::json Save() override;
 	void Load(const nlohmann::json& _data) override;
 private:
+	void Awake() override;
 	void Start() override;
 	void LateUpdate() override;
 

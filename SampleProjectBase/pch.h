@@ -12,11 +12,11 @@
 // max min関数を無効にする
 #define NOMINMAX
 
-// ImGuiを表示する定義
+// //ImGuiを表示する定義
 //#define EDIT_DISPLAY
-#if defined(_DEBUG) || defined(EDIT_DISPLAY)
-#define EDIT
-#endif
+//#if defined(_DEBUG) || defined(EDIT_DISPLAY)
+//#define EDIT
+//#endif
 
 // インクルードファイル /////////////////
 #include <iostream>	// std使うために

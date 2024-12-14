@@ -15,7 +15,7 @@ PlayerAirActionController::PlayerAirActionController(PlayerAction& _pAction, CP_
 	// 行動クラスを生成
 	using enum AirState;
 	CreateState<PlayerAirMove>(Move);
-	CreateState<PlayerAirAttack>(Attack11);
+	//CreateState<PlayerAirAttack>(Attack11);
 
 	// デフォルト状態をセット
 	SetDefaultNode(static_cast<int>(Move));

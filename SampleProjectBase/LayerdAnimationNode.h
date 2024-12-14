@@ -71,7 +71,7 @@ public:
 
 	/// @brief 指定した割合のルートモーションの移動座標を取得
 	/// @return ルートモーションの移動座標
-	const DirectX::SimpleMath::Vector3& GetRootMotionPos(float _ratio) const;
+	DirectX::SimpleMath::Vector3 GetRootMotionPos(float _ratio) const;
 
 	/// @brief ルートモーション秒速を取得
 	/// @return ルートモーション秒速

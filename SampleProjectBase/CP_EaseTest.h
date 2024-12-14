@@ -1,8 +1,8 @@
 #pragma once
-#include "CloneComponent.h"
+#include "Component.h"
 
 /// @brief イージングテスト用
-class CP_EaseTest :public Component, public CloneComponent<CP_EaseTest>
+class CP_EaseTest : public Component
 {
 	DirectX::SimpleMath::Color color;
 

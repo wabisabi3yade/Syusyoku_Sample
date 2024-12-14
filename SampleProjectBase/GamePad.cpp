@@ -2,6 +2,7 @@
 #include "GamePad.h"
 
 constexpr int STICK_FLAG_THRESHOLD(10000);	// スティックのフラグが倒れたとする閾値
+constexpr int VIBRATION_MAX(65535);	// バイブレーションの最大値
 
 GamePad::GamePad() :isResult(ERROR_SUCCESS)
 {
@@ -188,6 +189,22 @@ bool GamePad::InputRelease(const PadFlag& _getButton) const
 		return false;
 	}
 	return (!buttonState[_getButton] && o_buttonState[_getButton]);
+}
+
+void GamePad::SetVibration(float _power, float _time)
+{
+
+	WORD moterPower = static_cast<WORD>(VIBRATION_MAX * _power);
+
+	XINPUT_VIBRATION vibration = {};
+	vibration.wLeftMotorSpeed = moterPower;
+	vibration.wRightMotorSpeed = moterPower;
+
+	// 振動を設定
+	if (XInputSetState(0, &vibration) != ERROR_SUCCESS) 
+	{
+		HASHI_DEBUG_LOG("コントローラーが振動できません");
+	}
 }
 
 float GamePad::GetValue(const Value& _getValue) const

@@ -17,12 +17,14 @@ public:
 	/// @param _pos ワールド座標
 	/// @param _scale ワールドスケール
 	/// @param _rotation ワールド回転量
+	/// @param _alpha α値
 	void DrawSprite(
 		const Sprite& _sprite, 
 		Material& _material, 
 		const DirectX::SimpleMath::Vector3& _pos,
 		const DirectX::SimpleMath::Vector3& _scale, 
-		const DirectX::SimpleMath::Quaternion& _rotation
+		const DirectX::SimpleMath::Quaternion& _rotation,
+		float _alpha
 	);
 };
 
