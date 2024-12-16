@@ -1,16 +1,18 @@
 #pragma once
 #include "TransCondition_Base.h"
 
-/// @brief ƒgƒŠƒK[Œ^•Ï”‚ğŒ©‚ÄA‘JˆÚğŒ’B¬‚µ‚Ä‚¢‚é‚©
-class TriggerTransCondition : public TransCondition_Base
+namespace HashiTaku
 {
-public:
-	TriggerTransCondition(const std::string& _parameterName);
-	~TriggerTransCondition() {}
+	/// @brief ƒgƒŠƒK[Œ^•Ï”‚ğŒ©‚ÄA‘JˆÚğŒ’B¬‚µ‚Ä‚¢‚é‚©
+	class TriggerTransCondition : public TransCondition_Base
+	{
+	public:
+		TriggerTransCondition(const std::string& _parameterName);
+		~TriggerTransCondition() {}
 
-	bool IsCondition(HashiTaku::AnimParam::conditionValType _checkValue)const override;
+		bool IsCondition(AnimParam::conditionValType _checkValue)const override;
 
-	nlohmann::json Save() override;
-	void Load(const nlohmann::json& _data) override;
-};
-
+		nlohmann::json Save() override;
+		void Load(const nlohmann::json& _data) override;
+	};
+}

@@ -1,64 +1,66 @@
 #pragma once
 #include "Component.h"
 
-class Bone;
-class BoneList;
-
-/// @brief 武器につけるコンポーネント
-class CP_Rig : public Component
+namespace HashiTaku
 {
-	std::string grabBoneName;
+	class Bone;
+	class BoneList;
 
-	/// @brief 武器をもつボーン
-	const Bone* pGrabBone;
+	/// @brief 武器につけるコンポーネント
+	class CP_Rig : public Component
+	{
+		std::string grabBoneName;
 
-	/// @brief ロード時の角度
-	DirectX::SimpleMath::Quaternion loadMeshRot;
+		/// @brief 武器をもつボーン
+		const Bone* pGrabBone;
 
-	/// @brief ロード時のスケール
-	float loadMeshScale;
+		/// @brief ロード時の角度
+		DirectX::SimpleMath::Quaternion loadMeshRot;
 
-	/// @brief ボーン座標を表示する
-	bool isDisplayPos;
-public:
-	CP_Rig();
-	~CP_Rig() {}
+		/// @brief ロード時のスケール
+		float loadMeshScale;
 
-	void Init() override;
+		/// @brief ボーン座標を表示する
+		bool isDisplayPos;
+	public:
+		CP_Rig();
+		~CP_Rig() {}
 
-	void Start() override;
+		void Init() override;
 
-	void LateUpdate() override;
+		void Start() override;
 
-	void Draw() override;
+		void LateUpdate() override;
 
-	void ImGuiDebug() override;
+		void Draw() override;
 
-	// 武器をもつボーンを取得する
-	void SetGrabBone(const Bone* _grabBone);
+		void ImGuiDebug() override;
 
-	// ボーン名セット
-	void SetGrabBoneName(const std::string& _grabName);
+		// 武器をもつボーンを取得する
+		void SetGrabBone(const Bone* _grabBone);
 
-	/// @brief スケルタルメッシュから情報を取得する
-	/// @param _skeletalMesh 反映するスケルタルメッシュ
-	void SetSkeletalMeshData(BoneList& _skeletalMesh);
+		// ボーン名セット
+		void SetGrabBoneName(const std::string& _grabName);
 
-	// ボーン名取得
-	std::string GetGrabBoneName() const;
+		/// @brief スケルタルメッシュから情報を取得する
+		/// @param _skeletalMesh 反映するスケルタルメッシュ
+		void SetSkeletalMeshData(BoneList& _skeletalMesh);
 
-	nlohmann::json Save() override;
-	void Load(const nlohmann::json& _data) override;
-private:
-	/// @brief ボーンから座標を更新する
-	void UpdateTransform();
+		// ボーン名取得
+		std::string GetGrabBoneName() const;
 
-	void ImGuiSetBone();
+		nlohmann::json Save() override;
+		void Load(const nlohmann::json& _data) override;
+	private:
+		/// @brief ボーンから座標を更新する
+		void UpdateTransform();
 
-	/// @brief 更新できる状態か確認
-	/// @return 更新できるか？
-	bool IsCanUpdate();
+		void ImGuiSetBone();
 
-	void SetBoneFromParent();
-};
+		/// @brief 更新できる状態か確認
+		/// @return 更新できるか？
+		bool IsCanUpdate();
 
+		void SetBoneFromParent();
+	};
+}

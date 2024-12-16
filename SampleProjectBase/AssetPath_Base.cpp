@@ -1,28 +1,31 @@
 #include "pch.h"
 #include "AssetPath_Base.h"
 
-void AssetPath_Base::SetPathName(const std::string& _pathName)
+namespace HashiTaku
 {
-	pathName = _pathName;
-}
+	void AssetPath_Base::SetPathName(const std::string& _pathName)
+	{
+		pathName = _pathName;
+	}
 
-std::string AssetPath_Base::GetPathName() const
-{
-	return pathName;
-}
+	std::string AssetPath_Base::GetPathName() const
+	{
+		return pathName;
+	}
 
-nlohmann::json AssetPath_Base::Save()
-{
-	auto data = Asset_Base::Save();
-	
-	data["pathName"] = pathName;
+	nlohmann::json AssetPath_Base::Save()
+	{
+		auto data = Asset_Base::Save();
 
-	return data;
-}
+		data["pathName"] = pathName;
 
-void AssetPath_Base::Load(const nlohmann::json& _data)
-{
-	Asset_Base::Load(_data);
+		return data;
+	}
 
-	HashiTaku::LoadJsonString("pathName", pathName, _data);
+	void AssetPath_Base::Load(const nlohmann::json& _data)
+	{
+		Asset_Base::Load(_data);
+
+		LoadJsonString("pathName", pathName, _data);
+	}
 }

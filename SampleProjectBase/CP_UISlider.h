@@ -2,60 +2,62 @@
 #include "CP_UIRenderer.h"
 #include "IUISlider.h"
 
-class CP_UIRenderer;
-
-/// @brief UIのスライダー処理を行うクラス
-class CP_UISlider : public CP_UIRenderer, public IUISlider
+namespace HashiTaku
 {
-	/// @brief スライダー画像の中心座標
-	DirectX::SimpleMath::Vector3 sliderCenterPos;
+	class CP_UIRenderer;
 
-	/// @brief スライダー画像のスケール
-	DirectX::SimpleMath::Vector2 sliderScale;
+	/// @brief UIのスライダー処理を行うクラス
+	class CP_UISlider : public CP_UIRenderer, public IUISlider
+	{
+		/// @brief スライダー画像の中心座標
+		DirectX::SimpleMath::Vector3 sliderCenterPos;
 
-	/// @brief 現在の値
-	float currentValue;
+		/// @brief スライダー画像のスケール
+		DirectX::SimpleMath::Vector2 sliderScale;
 
-	/// @brief 最大値
-	float maxValue;
+		/// @brief 現在の値
+		float currentValue;
 
-	/// @brief 最小値
-	float minValue;
-public:
-	CP_UISlider();
-	~CP_UISlider() {}
+		/// @brief 最大値
+		float maxValue;
 
-	void Init() override;
-	void OnChangeScale() override;
-	void OnChangePosition() override;
-	void OnChangeRotation() override;
+		/// @brief 最小値
+		float minValue;
+	public:
+		CP_UISlider();
+		~CP_UISlider() {}
 
-	/// @brief 現在の値を割合でセット(0.0～1.0)
-	/// @param _curRatio 現在の割合
-	void SetCurrentRatio(float _curRatio);
+		void Init() override;
+		void OnChangeScale() override;
+		void OnChangePosition() override;
+		void OnChangeRotation() override;
 
-	/// @brief 現在の値をセット
-	/// @param _curVal 現在の値
-	void SetCurrentValue(float _curVal);
+		/// @brief 現在の値を割合でセット(0.0～1.0)
+		/// @param _curRatio 現在の割合
+		void SetCurrentRatio(float _curRatio);
 
-	/// @brief 最大値をセット
-	/// @param _maxVal 最大値
-	void SetMaxValue(float _maxVal);
+		/// @brief 現在の値をセット
+		/// @param _curVal 現在の値
+		void SetCurrentValue(float _curVal);
 
-	/// @brief 最小値をセット
-	/// @param _minVal 最小値
-	void SetMinValue(float _minVal);
+		/// @brief 最大値をセット
+		/// @param _maxVal 最大値
+		void SetMaxValue(float _maxVal);
 
-	nlohmann::json Save() override;
-	void Load(const nlohmann::json& _data) override;
+		/// @brief 最小値をセット
+		/// @param _minVal 最小値
+		void SetMinValue(float _minVal);
 
-private:
-	/// @brief スライダー画像に適用する
-	void ApplySlider();
+		nlohmann::json Save() override;
+		void Load(const nlohmann::json& _data) override;
 
-	/// @brief ポリゴン再生性
-	void ReCreatePolygon() override;
+	private:
+		/// @brief スライダー画像に適用する
+		void ApplySlider();
 
-	void ImGuiDebug() override;
-};
+		/// @brief ポリゴン再生性
+		void ReCreatePolygon() override;
 
+		void ImGuiDebug() override;
+	};
+}

@@ -9,27 +9,31 @@ struct PS_IN
 };
 
 // テクスチャ使用
-struct TexEnable
+struct TexParam
 {
     int isTextureEnable; // テクスチャ使用
-    float3 dummy;
+    float alpha;    // α値
+    float2 dummy;
 };
 
 
-cbuffer BufTexEnable : register(b0)
+cbuffer BufTexParam : register(b0)
 {
-    TexEnable texEnable;
+    TexParam texParam;
 }
 
 float4 main(PS_IN pin) : SV_TARGET
 {
     float4 color = pin.color;
- 
+    color.a = texParam.alpha;
+    
     // テクスチャが使用されているなら
-    if (texEnable.isTextureEnable != 0)
+    if (texParam.isTextureEnable != 0)
     {
         color *= myTexture.Sample(mySampler, pin.uv);
     }
+    
+  
     
     return color;
 }

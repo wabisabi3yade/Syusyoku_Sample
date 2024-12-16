@@ -12,8 +12,8 @@
 // max min関数を無効にする
 #define NOMINMAX
 
-// ImGuiを表示する定義
-//#define EDIT_DISPLAY
+// //ImGuiを表示する定義
+#define EDIT_DISPLAY
 #if defined(_DEBUG) || defined(EDIT_DISPLAY)
 #define EDIT
 #endif
@@ -63,7 +63,9 @@
 #include "Transform.h"	// 座標・回転・スケールのクラス
 #include "MainApplication.h"
 #include "HashiTaku_Random.h"	// 乱数クラス
-#include "Direct3D11.h"	// 自前のDirectX11クラス
+#include "Direct3D11.h"	// 自前のDirectX11
+#include "DX11BulletPhisics.h"	// DX11物理エンジン
+#include "DX11EffecseerManager.h"	// エフェクトマネジャー
 
 // 名前空間定義
 namespace HashiTaku

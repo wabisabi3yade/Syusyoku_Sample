@@ -3,30 +3,32 @@
 #include "btBulletDynamicsCommon.h"
 #include "BulletDebugDraw.h"
 
-class BulletTest
+namespace HashiTaku
 {
-	btDefaultCollisionConfiguration* collisionConfiguration;
+	class BulletTest
+	{
+		btDefaultCollisionConfiguration* collisionConfiguration;
 
-	///use the default collision dispatcher. For parallel processing you can use a diffent dispatcher (see Extras/BulletMultiThreaded)
-	btCollisionDispatcher* dispatcher;
+		///use the default collision dispatcher. For parallel processing you can use a diffent dispatcher (see Extras/BulletMultiThreaded)
+		btCollisionDispatcher* dispatcher;
 
-	///btDbvtBroadphase is a good general purpose broadphase. You can also try out btAxis3Sweep.
-	btBroadphaseInterface* overlappingPairCache;
+		///btDbvtBroadphase is a good general purpose broadphase. You can also try out btAxis3Sweep.
+		btBroadphaseInterface* overlappingPairCache;
 
-	///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
-	btSequentialImpulseConstraintSolver* solver;
-	btDiscreteDynamicsWorld* dynamicsWorld;
+		///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
+		btSequentialImpulseConstraintSolver* solver;
+		btDiscreteDynamicsWorld* dynamicsWorld;
 
-	btAlignedObjectArray<btCollisionShape*> collisionShapes;
+		btAlignedObjectArray<btCollisionShape*> collisionShapes;
 
-	BulletDebugDraw* debugDraw;
+		BulletDebugDraw* debugDraw;
 
-public:
-	BulletTest();
-	~BulletTest();
+	public:
+		BulletTest();
+		~BulletTest();
 
-	void Update();
+		void Update();
 
 
-};
-
+	};
+}

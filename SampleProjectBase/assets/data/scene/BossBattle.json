@@ -1,342 +1,6 @@
 {
     "objects": [
         {
-            "childs": [
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "endFrame": 32,
-                                "isLoop": true,
-                                "isTrimming": true,
-                                "name": "VisualEffect",
-                                "playSpeed": 0.800000011920929,
-                                "priority": 0,
-                                "startFrame": 20,
-                                "vfxName": "Fire01"
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Fire3",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                -19.999998092651367,
-                                6.0,
-                                19.89999771118164
-                            ],
-                            "rotation": [
-                                -0.0,
-                                0.0,
-                                -0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.2999999523162842,
-                                2.4000000953674316,
-                                1.2999999523162842
-                            ]
-                        }
-                    }
-                }
-            ],
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "meshName": "Pillar1.fbx",
-                        "name": "MeshRenderer",
-                        "priority": 0
-                    },
-                    {
-                        "enable": true,
-                        "friction": 0.0,
-                        "isAwake": false,
-                        "isFreezeRot": [
-                            false,
-                            false,
-                            false
-                        ],
-                        "isKinematic": true,
-                        "isTrigger": false,
-                        "mass": 0.0,
-                        "name": "RigidBody",
-                        "priority": 0
-                    },
-                    {
-                        "angles": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "center": [
-                            0.0,
-                            3.0,
-                            -0.10000000149011612
-                        ],
-                        "enable": true,
-                        "height": 5.21999979019165,
-                        "name": "CylinderCollider",
-                        "priority": 0,
-                        "radius": 1.059999942779541
-                    }
-                ],
-                "layer": 0,
-                "name": "Pillar3",
-                "tag": 0,
-                "transform": {
-                    "child": [
-                        "Fire3"
-                    ],
-                    "pos": [
-                        -19.999998092651367,
-                        0.0,
-                        19.999998092651367
-                    ],
-                    "rotation": [
-                        -0.0,
-                        0.0,
-                        -0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.5,
-                        1.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": [
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "endFrame": 32,
-                                "isLoop": true,
-                                "isTrimming": true,
-                                "name": "VisualEffect",
-                                "playSpeed": 0.800000011920929,
-                                "priority": 0,
-                                "startFrame": 20,
-                                "vfxName": "Fire01"
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Fire",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                19.999998092651367,
-                                6.099999904632568,
-                                19.89999771118164
-                            ],
-                            "rotation": [
-                                -0.0,
-                                0.0,
-                                -0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.2999999523162842,
-                                2.4000000953674316,
-                                1.2999999523162842
-                            ]
-                        }
-                    }
-                }
-            ],
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "meshName": "Pillar1.fbx",
-                        "name": "MeshRenderer",
-                        "priority": 0
-                    },
-                    {
-                        "angles": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "center": [
-                            0.0,
-                            3.0,
-                            -0.10000000149011612
-                        ],
-                        "enable": true,
-                        "height": 5.21999979019165,
-                        "name": "CylinderCollider",
-                        "priority": 0,
-                        "radius": 1.059999942779541
-                    },
-                    {
-                        "enable": true,
-                        "friction": 0.0,
-                        "isAwake": false,
-                        "isFreezeRot": [
-                            false,
-                            false,
-                            false
-                        ],
-                        "isKinematic": true,
-                        "isTrigger": false,
-                        "mass": 0.0,
-                        "name": "RigidBody",
-                        "priority": 0
-                    }
-                ],
-                "layer": 0,
-                "name": "Pillar1",
-                "tag": 0,
-                "transform": {
-                    "child": [
-                        "Fire"
-                    ],
-                    "pos": [
-                        19.999998092651367,
-                        0.10000000149011612,
-                        19.999998092651367
-                    ],
-                    "rotation": [
-                        -0.0,
-                        0.0,
-                        -0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.5,
-                        1.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": [
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "endFrame": 32,
-                                "isLoop": true,
-                                "isTrimming": true,
-                                "name": "VisualEffect",
-                                "playSpeed": 0.800000011920929,
-                                "priority": 0,
-                                "startFrame": 20,
-                                "vfxName": "Fire01"
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Fire2",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                -19.999998092651367,
-                                6.0,
-                                -20.099998474121094
-                            ],
-                            "rotation": [
-                                -0.0,
-                                0.0,
-                                -0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.2999999523162842,
-                                2.4000000953674316,
-                                1.2999999523162842
-                            ]
-                        }
-                    }
-                }
-            ],
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "meshName": "Pillar1.fbx",
-                        "name": "MeshRenderer",
-                        "priority": 0
-                    },
-                    {
-                        "enable": true,
-                        "friction": 0.0,
-                        "isAwake": false,
-                        "isFreezeRot": [
-                            false,
-                            false,
-                            false
-                        ],
-                        "isKinematic": true,
-                        "isTrigger": false,
-                        "mass": 0.0,
-                        "name": "RigidBody",
-                        "priority": 0
-                    },
-                    {
-                        "angles": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "center": [
-                            0.0,
-                            3.0,
-                            -0.0
-                        ],
-                        "enable": true,
-                        "height": 5.21999979019165,
-                        "name": "CylinderCollider",
-                        "priority": 0,
-                        "radius": 1.059999942779541
-                    }
-                ],
-                "layer": 0,
-                "name": "Pillar2",
-                "tag": 0,
-                "transform": {
-                    "child": [
-                        "Fire2"
-                    ],
-                    "pos": [
-                        -19.999998092651367,
-                        0.0,
-                        -19.999998092651367
-                    ],
-                    "rotation": [
-                        -0.0,
-                        0.0,
-                        -0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.5,
-                        1.0
-                    ]
-                }
-            }
-        },
-        {
             "childs": null,
             "gameObject": {
                 "active": true,
@@ -372,118 +36,6 @@
                     "scale": [
                         1.0,
                         1.0,
-                        1.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": [
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "endFrame": 32,
-                                "isLoop": true,
-                                "isTrimming": true,
-                                "name": "VisualEffect",
-                                "playSpeed": 0.800000011920929,
-                                "priority": 0,
-                                "startFrame": 20,
-                                "vfxName": "Fire01"
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Fire1",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                19.999998092651367,
-                                6.0,
-                                -20.099998474121094
-                            ],
-                            "rotation": [
-                                -0.0,
-                                0.0,
-                                -0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.2999999523162842,
-                                2.4000000953674316,
-                                1.2999999523162842
-                            ]
-                        }
-                    }
-                }
-            ],
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "meshName": "Pillar1.fbx",
-                        "name": "MeshRenderer",
-                        "priority": 0
-                    },
-                    {
-                        "angles": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "center": [
-                            0.0,
-                            3.0,
-                            -0.10000000149011612
-                        ],
-                        "enable": true,
-                        "height": 5.21999979019165,
-                        "name": "CylinderCollider",
-                        "priority": 0,
-                        "radius": 1.059999942779541
-                    },
-                    {
-                        "enable": true,
-                        "friction": 0.0,
-                        "isAwake": false,
-                        "isFreezeRot": [
-                            false,
-                            false,
-                            false
-                        ],
-                        "isKinematic": true,
-                        "isTrigger": false,
-                        "mass": 0.0,
-                        "name": "RigidBody",
-                        "priority": 0
-                    }
-                ],
-                "layer": 0,
-                "name": "Pillar11",
-                "tag": 0,
-                "transform": {
-                    "child": [
-                        "Fire1"
-                    ],
-                    "pos": [
-                        19.999998092651367,
-                        0.0,
-                        -19.999998092651367
-                    ],
-                    "rotation": [
-                        -0.0,
-                        0.0,
-                        -0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.5,
                         1.0
                     ]
                 }
@@ -850,10 +402,6 @@
                                             "rotateSpeed": 7.0
                                         },
                                         "typeString": "Move"
-                                    },
-                                    {
-                                        "data": null,
-                                        "typeString": "Attack11"
                                     }
                                 ],
                                 "downForcePower": -45.0
@@ -887,7 +435,14 @@
                                             "attackCnt": 1,
                                             "attackInfos": [
                                                 {
+                                                    "break": 5.0,
                                                     "damage": 2.0,
+                                                    "hitVfx": {
+                                                        "name": "hit01",
+                                                        "scale": 0.25,
+                                                        "speed": 0.699999988079071,
+                                                        "startFrame": 2
+                                                    },
                                                     "level": 0
                                                 }
                                             ],
@@ -912,7 +467,14 @@
                                             "attackCnt": 1,
                                             "attackInfos": [
                                                 {
+                                                    "break": 6.0,
                                                     "damage": 2.9000000953674316,
+                                                    "hitVfx": {
+                                                        "name": "hit01",
+                                                        "scale": 0.25,
+                                                        "speed": 0.699999988079071,
+                                                        "startFrame": 2
+                                                    },
                                                     "level": 0
                                                 }
                                             ],
@@ -937,7 +499,14 @@
                                             "attackCnt": 1,
                                             "attackInfos": [
                                                 {
+                                                    "break": 1.0,
                                                     "damage": 2.0,
+                                                    "hitVfx": {
+                                                        "name": "hit01",
+                                                        "scale": 0.30000001192092896,
+                                                        "speed": 0.699999988079071,
+                                                        "startFrame": 2
+                                                    },
                                                     "level": 0
                                                 }
                                             ],
@@ -989,7 +558,14 @@
                                             "attackCnt": 1,
                                             "attackInfos": [
                                                 {
+                                                    "break": 8.0,
                                                     "damage": 4.0,
+                                                    "hitVfx": {
+                                                        "name": "hit01",
+                                                        "scale": 0.30000001192092896,
+                                                        "speed": 0.75,
+                                                        "startFrame": 2
+                                                    },
                                                     "level": 0
                                                 }
                                             ],
@@ -1014,7 +590,14 @@
                                             "attackCnt": 1,
                                             "attackInfos": [
                                                 {
+                                                    "break": 10.0,
                                                     "damage": 3.299999952316284,
+                                                    "hitVfx": {
+                                                        "name": "hit01",
+                                                        "scale": 0.30000001192092896,
+                                                        "speed": 0.699999988079071,
+                                                        "startFrame": 2
+                                                    },
                                                     "level": 0
                                                 }
                                             ],
@@ -1043,7 +626,7 @@
                                             },
                                             "isMoveFwd": true,
                                             "maxDistance": 2.700000047683716,
-                                            "nextCombAttack": 99
+                                            "nextCombAttack": 20
                                         },
                                         "typeString": "Attack14"
                                     },
@@ -1052,12 +635,26 @@
                                             "attackCnt": 2,
                                             "attackInfos": [
                                                 {
-                                                    "damage": 4.199999809265137,
-                                                    "level": 0
+                                                    "break": 15.0,
+                                                    "damage": 5.0,
+                                                    "hitVfx": {
+                                                        "name": "hit01",
+                                                        "scale": 0.4000000059604645,
+                                                        "speed": 0.800000011920929,
+                                                        "startFrame": 0
+                                                    },
+                                                    "level": 2
                                                 },
                                                 {
+                                                    "break": 18.0,
                                                     "damage": 6.199999809265137,
-                                                    "level": 0
+                                                    "hitVfx": {
+                                                        "name": "hit01",
+                                                        "scale": 0.44999998807907104,
+                                                        "speed": 0.800000011920929,
+                                                        "startFrame": 0
+                                                    },
+                                                    "level": 3
                                                 }
                                             ],
                                             "forwardCurve": {
@@ -1086,7 +683,18 @@
                                     {
                                         "data": {
                                             "canParryTime": 12,
-                                            "parryAngle": 180.0
+                                            "parryAngle": 100.0,
+                                            "vfxInfo": {
+                                                "name": "Parry01",
+                                                "scale": 0.800000011920929,
+                                                "speed": 1.600000023841858,
+                                                "startFrame": 0
+                                            },
+                                            "vfxOffset": [
+                                                0.27000001072883606,
+                                                1.4700000286102295,
+                                                0.550000011920929
+                                            ]
                                         },
                                         "typeString": "Guard"
                                     },
@@ -1158,7 +766,6 @@
                         },
                         "camObjName": "Camera",
                         "enable": true,
-                        "guardBarObjName": "Player_GuardBar",
                         "hpBarObjName": "Player_HpBar",
                         "maxHp": 100.0,
                         "name": "Player",
@@ -1259,9 +866,42 @@
                 "components": [
                     {
                         "enable": true,
+                        "fade": "Fade",
+                        "gameOver": "GameOverText",
+                        "gameStartCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.6067706346511841,
+                            "plotDatas": [
+                                {
+                                    "interp": 1,
+                                    "time": 0.25,
+                                    "value": 0.47999998927116394,
+                                    "vector": 0.02830730378627777
+                                },
+                                {
+                                    "interp": 0,
+                                    "time": 0.75,
+                                    "value": 0.5199999809265137,
+                                    "vector": 0.03796174377202988
+                                }
+                            ],
+                            "startInterp": 0,
+                            "startValue": 0.0,
+                            "startVector": 0.9642249345779419,
+                            "useHermite": true
+                        },
+                        "moveAreaRect": [
+                            20.5,
+                            -20.5,
+                            20.5,
+                            -20.5
+                        ],
                         "name": "BattleManager",
                         "priority": 0,
-                        "radius": 66.69999694824219
+                        "start": "GameStartText",
+                        "uiAnim": true,
+                        "win": "WinText"
                     }
                 ],
                 "layer": 0,
@@ -1312,20 +952,20 @@
                                         "transform": {
                                             "child": null,
                                             "pos": [
-                                                0.6579986214637756,
-                                                -0.010017452761530876,
-                                                7.689996242523193
+                                                0.6579986810684204,
+                                                -0.11001741886138916,
+                                                7.689998149871826
                                             ],
                                             "rotation": [
-                                                -0.6008124947547913,
+                                                -0.600812554359436,
                                                 0.7962931990623474,
                                                 -0.05046877637505531,
                                                 -0.04893164336681366
                                             ],
                                             "scale": [
-                                                1.6800007820129395,
-                                                1.679998755455017,
-                                                1.68000066280365
+                                                1.680000901222229,
+                                                1.6799989938735962,
+                                                1.680000901222229
                                             ]
                                         }
                                     }
@@ -1371,7 +1011,7 @@
                                             2
                                         ],
                                         "enable": true,
-                                        "isDebugDisplay": false,
+                                        "isDebugDisplay": true,
                                         "name": "Weapon",
                                         "priority": 0
                                     }
@@ -1385,19 +1025,19 @@
                                     ],
                                     "pos": [
                                         0.6580001711845398,
-                                        -0.01001274585723877,
+                                        -0.11001275479793549,
                                         7.689997673034668
                                     ],
                                     "rotation": [
-                                        -0.6008126139640808,
-                                        0.7962931990623474,
-                                        -0.05046878382563591,
-                                        -0.0489317812025547
+                                        -0.600812554359436,
+                                        0.7962931394577026,
+                                        -0.05046877637505531,
+                                        -0.048931777477264404
                                     ],
                                     "scale": [
                                         1.4000006914138794,
-                                        1.399999976158142,
-                                        1.4000006914138794
+                                        1.4000000953674316,
+                                        1.400000810623169
                                     ]
                                 }
                             }
@@ -1421,8 +1061,8 @@
                                 "Boss_Weapon"
                             ],
                             "pos": [
-                                0.7000004053115845,
-                                -0.22000955045223236,
+                                0.7000004649162292,
+                                -0.3200095593929291,
                                 7.619998931884766
                             ],
                             "rotation": [
@@ -1472,14 +1112,14 @@
                         ],
                         "center": [
                             0.0,
-                            1.149999976158142,
+                            1.0099999904632568,
                             0.0
                         ],
                         "enable": true,
-                        "height": 1.3300000429153442,
+                        "height": 1.1399999856948853,
                         "name": "CapsuleCollider",
                         "priority": 0,
-                        "radius": 0.5299999713897705
+                        "radius": 0.5099999904632568
                     },
                     {
                         "animConName": "ANC_Boss",
@@ -1492,7 +1132,7 @@
                             "actData": [
                                 {
                                     "data": {
-                                        "isIdleOnly": true,
+                                        "isIdleOnly": false,
                                         "warpMotion": {
                                             "useWarp": false
                                         }
@@ -1534,15 +1174,30 @@
                                         "atkInfos": [
                                             {
                                                 "damage": 1.0,
+                                                "hitVfx": {
+                                                    "scale": 1.0,
+                                                    "speed": 1.0,
+                                                    "startFrame": 0
+                                                },
                                                 "level": 0
                                             },
                                             {
                                                 "damage": 2.0999999046325684,
+                                                "hitVfx": {
+                                                    "scale": 1.0,
+                                                    "speed": 1.0,
+                                                    "startFrame": 0
+                                                },
                                                 "level": 0
                                             },
                                             {
                                                 "damage": 5.099999904632568,
-                                                "level": 3
+                                                "hitVfx": {
+                                                    "scale": 1.0,
+                                                    "speed": 1.0,
+                                                    "startFrame": 0
+                                                },
+                                                "level": 2
                                             }
                                         ],
                                         "atkTimeCnt": 3,
@@ -1669,12 +1324,256 @@
                                 },
                                 {
                                     "data": {
+                                        "canBreak": 8.0,
+                                        "knockDistance": 7.0,
+                                        "warpMotion": {
+                                            "allWarpStep": 1,
+                                            "useWarp": true,
+                                            "warpStructs": [
+                                                {
+                                                    "beginRatio": 0.0,
+                                                    "endRatio": 1.0,
+                                                    "fromRootMotion": true,
+                                                    "moveCurveXZ": {
+                                                        "easeKind": 0,
+                                                        "endValue": 1.0,
+                                                        "endVector": 0.0,
+                                                        "plotDatas": null,
+                                                        "startInterp": 1,
+                                                        "startValue": 1.0,
+                                                        "startVector": 0.0,
+                                                        "useHermite": true
+                                                    },
+                                                    "movementXZ": -10.0,
+                                                    "targetOffset": 0.0
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "typeString": "BreakEnd_Knock"
+                                },
+                                {
+                                    "data": {
+                                        "warpMotion": {
+                                            "useWarp": false
+                                        }
+                                    },
+                                    "typeString": "Break_Idle"
+                                },
+                                {
+                                    "data": {
+                                        "atkInfos": [
+                                            {
+                                                "damage": 3.0,
+                                                "hitVfx": {
+                                                    "scale": 1.0,
+                                                    "speed": 1.0,
+                                                    "startFrame": 0
+                                                },
+                                                "level": 1
+                                            },
+                                            {
+                                                "damage": 5.0,
+                                                "hitVfx": {
+                                                    "scale": 1.0,
+                                                    "speed": 1.0,
+                                                    "startFrame": 0
+                                                },
+                                                "level": 2
+                                            }
+                                        ],
+                                        "atkTimeCnt": 2,
+                                        "rotCurve": {
+                                            "easeKind": 0,
+                                            "endValue": 0.0,
+                                            "endVector": 0.0,
+                                            "plotDatas": [
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.38100001215934753,
+                                                    "value": 1.0,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.38199999928474426,
+                                                    "value": 0.10000000149011612,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.4690000116825104,
+                                                    "value": 0.0,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.47099998593330383,
+                                                    "value": 1.0,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.5860000252723694,
+                                                    "value": 1.0,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.5889999866485596,
+                                                    "value": 0.10000000149011612,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.6069999933242798,
+                                                    "value": 0.0,
+                                                    "vector": 0.0
+                                                }
+                                            ],
+                                            "startInterp": 1,
+                                            "startValue": 1.0,
+                                            "startVector": 0.0,
+                                            "useHermite": true
+                                        },
+                                        "rotTimes": 3.0,
+                                        "useRotCurve": true,
+                                        "warpMotion": {
+                                            "allWarpStep": 2,
+                                            "useWarp": true,
+                                            "warpStructs": [
+                                                {
+                                                    "beginRatio": 0.36899998784065247,
+                                                    "endRatio": 0.546999990940094,
+                                                    "fromRootMotion": false,
+                                                    "moveCurveXZ": {
+                                                        "easeKind": 0,
+                                                        "endValue": 1.0,
+                                                        "endVector": 0.0,
+                                                        "plotDatas": null,
+                                                        "startInterp": 0,
+                                                        "startValue": 0.0,
+                                                        "startVector": 2.0,
+                                                        "useHermite": true
+                                                    },
+                                                    "movementXZ": 6.0,
+                                                    "targetOffset": -1.0
+                                                },
+                                                {
+                                                    "beginRatio": 0.5400000214576721,
+                                                    "endRatio": 1.0,
+                                                    "fromRootMotion": false,
+                                                    "moveCurveXZ": {
+                                                        "easeKind": 0,
+                                                        "endValue": 1.0,
+                                                        "endVector": 0.0,
+                                                        "plotDatas": [
+                                                            {
+                                                                "interp": 1,
+                                                                "time": 0.27173912525177,
+                                                                "value": 0.9135135412216187,
+                                                                "vector": 0.43346160650253296
+                                                            }
+                                                        ],
+                                                        "startInterp": 0,
+                                                        "startValue": 0.0,
+                                                        "startVector": 2.0,
+                                                        "useHermite": true
+                                                    },
+                                                    "movementXZ": 6.0,
+                                                    "targetOffset": -1.0
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "typeString": "CombAttack2"
+                                },
+                                {
+                                    "data": {
+                                        "atkInfos": [
+                                            {
+                                                "damage": 8.0,
+                                                "hitVfx": {
+                                                    "scale": 1.0,
+                                                    "speed": 1.0,
+                                                    "startFrame": 0
+                                                },
+                                                "level": 2
+                                            },
+                                            {
+                                                "damage": 8.0,
+                                                "hitVfx": {
+                                                    "scale": 1.0,
+                                                    "speed": 1.0,
+                                                    "startFrame": 0
+                                                },
+                                                "level": 2
+                                            }
+                                        ],
+                                        "atkTimeCnt": 2,
+                                        "rotCurve": {
+                                            "easeKind": 0,
+                                            "endValue": 0.0,
+                                            "endVector": 0.0,
+                                            "plotDatas": [
+                                                {
+                                                    "interp": 0,
+                                                    "time": 0.19099999964237213,
+                                                    "value": 1.0,
+                                                    "vector": 0.22761602699756622
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.2680000066757202,
+                                                    "value": 0.0,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 0,
+                                                    "time": 0.41600000858306885,
+                                                    "value": 0.0,
+                                                    "vector": 1.5187337398529053
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.5590000152587891,
+                                                    "value": 1.0,
+                                                    "vector": 0.0
+                                                },
+                                                {
+                                                    "interp": 1,
+                                                    "time": 0.5609999895095825,
+                                                    "value": 0.0,
+                                                    "vector": 0.0
+                                                }
+                                            ],
+                                            "startInterp": 1,
+                                            "startValue": 1.0,
+                                            "startVector": 0.08959775418043137,
+                                            "useHermite": true
+                                        },
+                                        "rotTimes": 1.0,
+                                        "useRotCurve": true,
+                                        "warpMotion": {
+                                            "useWarp": false
+                                        }
+                                    },
+                                    "typeString": "CombAttack3"
+                                },
+                                {
+                                    "data": {
                                         "atkInfos": [
                                             {
                                                 "damage": 15.0,
+                                                "hitVfx": {
+                                                    "scale": 1.0,
+                                                    "speed": 1.0,
+                                                    "startFrame": 0
+                                                },
                                                 "level": 3
                                             }
                                         ],
+                                        "atkTimeCnt": 1,
                                         "fallOffset": 1.100000023841858,
                                         "jumpHeight": 2.4000000953674316,
                                         "jumpHeightCurve": {
@@ -1794,9 +1693,10 @@
                                 10.0
                             ]
                         },
+                        "breakBarName": "Enemy_BreakGageBar",
                         "enable": true,
                         "hpBarName": "Enemy_GageBar",
-                        "maxHp": 100.0,
+                        "maxHp": 200.0,
                         "name": "Boss",
                         "priority": 0,
                         "weaponName": "Boss_Weapon"
@@ -1811,7 +1711,7 @@
                     ],
                     "pos": [
                         0.0,
-                        0.20000000298023224,
+                        0.10000000149011612,
                         6.5
                     ],
                     "rotation": [
@@ -1850,7 +1750,7 @@
                             "pos": [
                                 1.899999976158142,
                                 1.2999999523162842,
-                                -28.10000228881836
+                                -26.700000762939453
                             ],
                             "rotation": [
                                 -0.07787430286407471,
@@ -1886,18 +1786,18 @@
                             "pos": [
                                 16.799999237060547,
                                 -0.20000000298023224,
-                                -26.899999618530273
+                                -26.30000114440918
                             ],
                             "rotation": [
-                                -0.07015181332826614,
-                                -0.21185840666294098,
-                                -0.1730373650789261,
-                                0.9592980742454529
+                                -0.10188014060258865,
+                                -0.024923162534832954,
+                                -0.15647269785404205,
+                                0.9820975661277771
                             ],
                             "scale": [
                                 9.40000057220459,
                                 11.899999618530273,
-                                2.999999523162842
+                                2.9999992847442627
                             ]
                         }
                     }
@@ -1922,13 +1822,13 @@
                             "pos": [
                                 -15.100000381469727,
                                 -0.4000000059604645,
-                                -35.89999771118164
+                                -35.099998474121094
                             ],
                             "rotation": [
                                 -0.0,
-                                -0.4848098158836365,
+                                -0.6494482755661011,
                                 -0.0,
-                                0.8746196031570435
+                                0.7604057192802429
                             ],
                             "scale": [
                                 9.0,
@@ -1960,41 +1860,6 @@
                         -0.0,
                         0.0,
                         -0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "name": "EffectCreater",
-                        "priority": 0
-                    }
-                ],
-                "layer": 0,
-                "name": "EffectCreater",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
                         1.0
                     ],
                     "scale": [
@@ -2044,32 +1909,54 @@
                                     "parameter": {
                                         "canFovMovement": 4.0,
                                         "centerAngle": -90.0,
-                                        "currentHeight": 3.0,
+                                        "deadZone": [
+                                            0.20000000298023224,
+                                            0.20000000298023224
+                                        ],
                                         "disHorizon": 8.0,
                                         "fovChangeRate": 3.0,
+                                        "heightMax": 7.0,
+                                        "heightMin": 1.0,
                                         "horiSpeed": 20.0,
+                                        "idleHeight": 3.0,
                                         "lookOffsetY": 2.4000000953674316,
                                         "moveFov": 58.0,
                                         "normalFov": 50.0,
-                                        "rotateSpeed": 120.0
+                                        "returnVert": 2.0,
+                                        "rotateSpeed": 150.0,
+                                        "verticalSpeed": 8.0
                                     },
                                     "stateType": 0
                                 },
                                 {
                                     "parameter": {
-                                        "Distance": 8.0,
-                                        "FollowOffsetY": 2.0,
-                                        "LookOffsetY": 2.0,
-                                        "LookSpeed": 30.0,
-                                        "MaxHeight": 3.0,
-                                        "MinHeight": 2.0,
-                                        "MoveSpeed": 30.0,
                                         "canFovMovement": 1.0,
                                         "fovChangeRate": 3.0,
+                                        "height": 3.5,
+                                        "hori": 3.5,
+                                        "lookOffset": [
+                                            0.0,
+                                            0.3799999952316284
+                                        ],
                                         "moveFov": 65.0,
                                         "normalFov": 50.0
                                     },
                                     "stateType": 1
+                                },
+                                {
+                                    "parameter": {
+                                        "canFovMovement": 1.0,
+                                        "fovChangeRate": 3.0,
+                                        "height": 3.0,
+                                        "hori": 3.0,
+                                        "lookOffset": [
+                                            0.0,
+                                            0.0
+                                        ],
+                                        "moveFov": 65.0,
+                                        "normalFov": 50.0
+                                    },
+                                    "stateType": 2
                                 }
                             ]
                         },
@@ -2084,20 +1971,20 @@
                 "transform": {
                     "child": null,
                     "pos": [
-                        0.5,
-                        1.7999999523162842,
-                        -21.0
+                        0.0,
+                        3.009999990463257,
+                        -19.600000381469727
                     ],
                     "rotation": [
-                        -0.0,
-                        0.0,
-                        -9.316335081166471e-08,
-                        1.0
+                        0.03741986304521561,
+                        3.4842670970647305e-09,
+                        -9.310181781074789e-08,
+                        0.9992996454238892
                     ],
                     "scale": [
-                        1.000000238418579,
-                        0.9999998807907104,
-                        1.0000001192092896
+                        1.0,
+                        1.0,
+                        1.0
                     ]
                 }
             }
@@ -2122,14 +2009,14 @@
                         "transform": {
                             "child": null,
                             "pos": [
-                                -27.0,
+                                -25.600000381469727,
                                 -0.4000000059604645,
-                                -16.5
+                                -16.799999237060547
                             ],
                             "rotation": [
-                                -0.11866484582424164,
+                                -0.11866487562656403,
                                 0.517413854598999,
-                                0.07271794229745865,
+                                0.07271794974803925,
                                 0.8443421721458435
                             ],
                             "scale": [
@@ -2158,20 +2045,20 @@
                         "transform": {
                             "child": null,
                             "pos": [
-                                -30.5,
+                                -30.600000381469727,
                                 -3.0,
                                 17.399999618530273
                             ],
                             "rotation": [
-                                0.24039502441883087,
-                                0.6135274767875671,
-                                0.02918069064617157,
-                                0.7516267895698547
+                                0.24039505422115326,
+                                0.6135275363922119,
+                                0.029180696234107018,
+                                0.7516266703605652
                             ],
                             "scale": [
-                                12.600004196166992,
+                                12.600006103515625,
                                 10.300000190734863,
-                                8.200002670288086
+                                8.200004577636719
                             ]
                         }
                     }
@@ -2194,18 +2081,18 @@
                         "transform": {
                             "child": null,
                             "pos": [
-                                -36.79999923706055,
+                                -35.79999923706055,
                                 -0.8999999761581421,
-                                -0.4000000059604645
+                                -0.20000000298023224
                             ],
                             "rotation": [
                                 -0.2714499235153198,
-                                0.16692155599594116,
-                                0.04786400869488716,
+                                0.16692157089710236,
+                                0.047863997519016266,
                                 0.9466578960418701
                             ],
                             "scale": [
-                                12.399999618530273,
+                                12.399998664855957,
                                 14.699999809265137,
                                 14.40000057220459
                             ]
@@ -2247,7 +2134,456 @@
         {
             "childs": [
                 {
-                    "childs": null,
+                    "childs": [
+                        {
+                            "childs": [
+                                {
+                                    "childs": null,
+                                    "gameObject": {
+                                        "active": true,
+                                        "components": [
+                                            {
+                                                "enable": true,
+                                                "endFrame": 32,
+                                                "isLoop": true,
+                                                "isTrimming": true,
+                                                "name": "VisualEffect",
+                                                "playSpeed": 0.800000011920929,
+                                                "priority": 0,
+                                                "startFrame": 20,
+                                                "vfxName": "Fire01"
+                                            }
+                                        ],
+                                        "layer": 0,
+                                        "name": "Fire3",
+                                        "tag": 0,
+                                        "transform": {
+                                            "child": null,
+                                            "pos": [
+                                                -19.999998092651367,
+                                                6.0,
+                                                19.89999771118164
+                                            ],
+                                            "rotation": [
+                                                -0.0,
+                                                0.0,
+                                                -0.0,
+                                                1.0
+                                            ],
+                                            "scale": [
+                                                1.2999999523162842,
+                                                2.4000000953674316,
+                                                1.2999999523162842
+                                            ]
+                                        }
+                                    }
+                                }
+                            ],
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "enable": true,
+                                        "meshName": "Pillar1.fbx",
+                                        "name": "MeshRenderer",
+                                        "priority": 0
+                                    },
+                                    {
+                                        "enable": true,
+                                        "friction": 0.0,
+                                        "isAwake": false,
+                                        "isFreezeRot": [
+                                            false,
+                                            false,
+                                            false
+                                        ],
+                                        "isKinematic": true,
+                                        "isTrigger": false,
+                                        "mass": 0.0,
+                                        "name": "RigidBody",
+                                        "priority": 0
+                                    },
+                                    {
+                                        "angles": [
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
+                                        "center": [
+                                            0.0,
+                                            3.0,
+                                            -0.10000000149011612
+                                        ],
+                                        "enable": true,
+                                        "height": 5.21999979019165,
+                                        "name": "CylinderCollider",
+                                        "priority": 0,
+                                        "radius": 1.059999942779541
+                                    }
+                                ],
+                                "layer": 0,
+                                "name": "Pillar3",
+                                "tag": 0,
+                                "transform": {
+                                    "child": [
+                                        "Fire3"
+                                    ],
+                                    "pos": [
+                                        -19.999998092651367,
+                                        0.0,
+                                        19.999998092651367
+                                    ],
+                                    "rotation": [
+                                        -0.0,
+                                        0.0,
+                                        -0.0,
+                                        1.0
+                                    ],
+                                    "scale": [
+                                        1.0,
+                                        1.5,
+                                        1.0
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "childs": [
+                                {
+                                    "childs": null,
+                                    "gameObject": {
+                                        "active": true,
+                                        "components": [
+                                            {
+                                                "enable": true,
+                                                "endFrame": 32,
+                                                "isLoop": true,
+                                                "isTrimming": true,
+                                                "name": "VisualEffect",
+                                                "playSpeed": 0.800000011920929,
+                                                "priority": 0,
+                                                "startFrame": 20,
+                                                "vfxName": "Fire01"
+                                            }
+                                        ],
+                                        "layer": 0,
+                                        "name": "Fire",
+                                        "tag": 0,
+                                        "transform": {
+                                            "child": null,
+                                            "pos": [
+                                                19.999998092651367,
+                                                6.099999904632568,
+                                                19.89999771118164
+                                            ],
+                                            "rotation": [
+                                                -0.0,
+                                                0.0,
+                                                -0.0,
+                                                1.0
+                                            ],
+                                            "scale": [
+                                                1.2999999523162842,
+                                                2.4000000953674316,
+                                                1.2999999523162842
+                                            ]
+                                        }
+                                    }
+                                }
+                            ],
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "enable": true,
+                                        "meshName": "Pillar1.fbx",
+                                        "name": "MeshRenderer",
+                                        "priority": 0
+                                    },
+                                    {
+                                        "angles": [
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
+                                        "center": [
+                                            0.0,
+                                            3.0,
+                                            -0.10000000149011612
+                                        ],
+                                        "enable": true,
+                                        "height": 5.21999979019165,
+                                        "name": "CylinderCollider",
+                                        "priority": 0,
+                                        "radius": 1.059999942779541
+                                    },
+                                    {
+                                        "enable": true,
+                                        "friction": 0.0,
+                                        "isAwake": false,
+                                        "isFreezeRot": [
+                                            false,
+                                            false,
+                                            false
+                                        ],
+                                        "isKinematic": true,
+                                        "isTrigger": false,
+                                        "mass": 0.0,
+                                        "name": "RigidBody",
+                                        "priority": 0
+                                    }
+                                ],
+                                "layer": 0,
+                                "name": "Pillar1",
+                                "tag": 0,
+                                "transform": {
+                                    "child": [
+                                        "Fire"
+                                    ],
+                                    "pos": [
+                                        19.999998092651367,
+                                        0.10000000149011612,
+                                        19.999998092651367
+                                    ],
+                                    "rotation": [
+                                        -0.0,
+                                        0.0,
+                                        -0.0,
+                                        1.0
+                                    ],
+                                    "scale": [
+                                        1.0,
+                                        1.5,
+                                        1.0
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "childs": [
+                                {
+                                    "childs": null,
+                                    "gameObject": {
+                                        "active": true,
+                                        "components": [
+                                            {
+                                                "enable": true,
+                                                "endFrame": 32,
+                                                "isLoop": true,
+                                                "isTrimming": true,
+                                                "name": "VisualEffect",
+                                                "playSpeed": 0.800000011920929,
+                                                "priority": 0,
+                                                "startFrame": 20,
+                                                "vfxName": "Fire01"
+                                            }
+                                        ],
+                                        "layer": 0,
+                                        "name": "Fire2",
+                                        "tag": 0,
+                                        "transform": {
+                                            "child": null,
+                                            "pos": [
+                                                -19.999998092651367,
+                                                6.0,
+                                                -20.099998474121094
+                                            ],
+                                            "rotation": [
+                                                -0.0,
+                                                0.0,
+                                                -0.0,
+                                                1.0
+                                            ],
+                                            "scale": [
+                                                1.2999999523162842,
+                                                2.4000000953674316,
+                                                1.2999999523162842
+                                            ]
+                                        }
+                                    }
+                                }
+                            ],
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "enable": true,
+                                        "meshName": "Pillar1.fbx",
+                                        "name": "MeshRenderer",
+                                        "priority": 0
+                                    },
+                                    {
+                                        "enable": true,
+                                        "friction": 0.0,
+                                        "isAwake": false,
+                                        "isFreezeRot": [
+                                            false,
+                                            false,
+                                            false
+                                        ],
+                                        "isKinematic": true,
+                                        "isTrigger": false,
+                                        "mass": 0.0,
+                                        "name": "RigidBody",
+                                        "priority": 0
+                                    },
+                                    {
+                                        "angles": [
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
+                                        "center": [
+                                            0.0,
+                                            3.0,
+                                            -0.0
+                                        ],
+                                        "enable": true,
+                                        "height": 5.21999979019165,
+                                        "name": "CylinderCollider",
+                                        "priority": 0,
+                                        "radius": 1.059999942779541
+                                    }
+                                ],
+                                "layer": 0,
+                                "name": "Pillar2",
+                                "tag": 0,
+                                "transform": {
+                                    "child": [
+                                        "Fire2"
+                                    ],
+                                    "pos": [
+                                        -19.999998092651367,
+                                        0.0,
+                                        -19.999998092651367
+                                    ],
+                                    "rotation": [
+                                        -0.0,
+                                        0.0,
+                                        -0.0,
+                                        1.0
+                                    ],
+                                    "scale": [
+                                        1.0,
+                                        1.5,
+                                        1.0
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "childs": [
+                                {
+                                    "childs": null,
+                                    "gameObject": {
+                                        "active": true,
+                                        "components": [
+                                            {
+                                                "enable": true,
+                                                "endFrame": 32,
+                                                "isLoop": true,
+                                                "isTrimming": true,
+                                                "name": "VisualEffect",
+                                                "playSpeed": 0.800000011920929,
+                                                "priority": 0,
+                                                "startFrame": 20,
+                                                "vfxName": "Fire01"
+                                            }
+                                        ],
+                                        "layer": 0,
+                                        "name": "Fire1",
+                                        "tag": 0,
+                                        "transform": {
+                                            "child": null,
+                                            "pos": [
+                                                19.999998092651367,
+                                                6.0,
+                                                -20.099998474121094
+                                            ],
+                                            "rotation": [
+                                                -0.0,
+                                                0.0,
+                                                -0.0,
+                                                1.0
+                                            ],
+                                            "scale": [
+                                                1.2999999523162842,
+                                                2.4000000953674316,
+                                                1.2999999523162842
+                                            ]
+                                        }
+                                    }
+                                }
+                            ],
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "enable": true,
+                                        "meshName": "Pillar1.fbx",
+                                        "name": "MeshRenderer",
+                                        "priority": 0
+                                    },
+                                    {
+                                        "angles": [
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
+                                        "center": [
+                                            0.0,
+                                            3.0,
+                                            -0.10000000149011612
+                                        ],
+                                        "enable": true,
+                                        "height": 5.21999979019165,
+                                        "name": "CylinderCollider",
+                                        "priority": 0,
+                                        "radius": 1.059999942779541
+                                    },
+                                    {
+                                        "enable": true,
+                                        "friction": 0.0,
+                                        "isAwake": false,
+                                        "isFreezeRot": [
+                                            false,
+                                            false,
+                                            false
+                                        ],
+                                        "isKinematic": true,
+                                        "isTrigger": false,
+                                        "mass": 0.0,
+                                        "name": "RigidBody",
+                                        "priority": 0
+                                    }
+                                ],
+                                "layer": 0,
+                                "name": "Pillar11",
+                                "tag": 0,
+                                "transform": {
+                                    "child": [
+                                        "Fire1"
+                                    ],
+                                    "pos": [
+                                        19.999998092651367,
+                                        0.0,
+                                        -19.999998092651367
+                                    ],
+                                    "rotation": [
+                                        -0.0,
+                                        0.0,
+                                        -0.0,
+                                        1.0
+                                    ],
+                                    "scale": [
+                                        1.0,
+                                        1.5,
+                                        1.0
+                                    ]
+                                }
+                            }
+                        }
+                    ],
                     "gameObject": {
                         "active": true,
                         "components": [
@@ -2288,6 +2624,7 @@
                                 "priority": 0
                             },
                             {
+                                "alpha": 1.0,
                                 "enable": true,
                                 "name": "SpriteRenderer",
                                 "priority": 0,
@@ -2312,7 +2649,12 @@
                         "name": "Ground",
                         "tag": 4,
                         "transform": {
-                            "child": null,
+                            "child": [
+                                "Pillar3",
+                                "Pillar1",
+                                "Pillar2",
+                                "Pillar11"
+                            ],
                             "pos": [
                                 0.0,
                                 0.0,
@@ -2338,6 +2680,7 @@
                         "active": true,
                         "components": [
                             {
+                                "alpha": 1.0,
                                 "enable": true,
                                 "name": "SpriteRenderer",
                                 "priority": 0,
@@ -2388,6 +2731,7 @@
                         "active": true,
                         "components": [
                             {
+                                "alpha": 1.0,
                                 "enable": true,
                                 "name": "SpriteRenderer",
                                 "priority": 0,
@@ -2438,6 +2782,7 @@
                         "active": true,
                         "components": [
                             {
+                                "alpha": 1.0,
                                 "enable": true,
                                 "name": "SpriteRenderer",
                                 "priority": 0,
@@ -2488,6 +2833,7 @@
                         "active": true,
                         "components": [
                             {
+                                "alpha": 1.0,
                                 "enable": true,
                                 "name": "SpriteRenderer",
                                 "priority": 0,
@@ -2538,6 +2884,7 @@
                         "active": true,
                         "components": [
                             {
+                                "alpha": 1.0,
                                 "enable": true,
                                 "name": "SpriteRenderer",
                                 "priority": 0,
@@ -2588,6 +2935,7 @@
                         "active": true,
                         "components": [
                             {
+                                "alpha": 1.0,
                                 "enable": true,
                                 "name": "SpriteRenderer",
                                 "priority": 0,
@@ -2638,6 +2986,7 @@
                         "active": true,
                         "components": [
                             {
+                                "alpha": 1.0,
                                 "enable": true,
                                 "name": "SpriteRenderer",
                                 "priority": 0,
@@ -2688,6 +3037,7 @@
                         "active": true,
                         "components": [
                             {
+                                "alpha": 1.0,
                                 "enable": true,
                                 "name": "SpriteRenderer",
                                 "priority": 0,
@@ -2790,7 +3140,7 @@
                         "transform": {
                             "child": null,
                             "pos": [
-                                37.900001525878906,
+                                30.700000762939453,
                                 -0.05000000074505806,
                                 -0.699999988079071
                             ],
@@ -2826,20 +3176,20 @@
                         "transform": {
                             "child": null,
                             "pos": [
-                                26.0,
+                                27.700000762939453,
                                 -1.5,
-                                16.100000381469727
+                                18.700000762939453
                             ],
                             "rotation": [
-                                -0.2063620537519455,
-                                -0.11920646578073502,
-                                -0.025338120758533478,
+                                -0.20636215806007385,
+                                -0.1192064955830574,
+                                -0.02533813565969467,
                                 0.9708565473556519
                             ],
                             "scale": [
-                                2.999999761581421,
-                                10.200000762939453,
-                                9.999999046325684
+                                3.4000000953674316,
+                                10.199999809265137,
+                                7.5
                             ]
                         }
                     }
@@ -2862,20 +3212,20 @@
                         "transform": {
                             "child": null,
                             "pos": [
-                                28.899999618530273,
+                                30.0,
                                 -2.9000000953674316,
                                 -15.399999618530273
                             ],
                             "rotation": [
-                                0.3906514644622803,
+                                0.3906514346599579,
                                 0.8230807185173035,
                                 -0.29094767570495605,
                                 0.2920258045196533
                             ],
                             "scale": [
-                                9.999998092651367,
+                                9.999999046325684,
                                 12.800000190734863,
-                                7.999997138977051
+                                7.999997615814209
                             ]
                         }
                     }
@@ -2898,7 +3248,7 @@
                         "transform": {
                             "child": null,
                             "pos": [
-                                35.900001525878906,
+                                32.0,
                                 -0.699999988079071,
                                 -7.900000095367432
                             ],
@@ -2915,42 +3265,6 @@
                             ]
                         }
                     }
-                },
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "meshName": "desertRock11.fbx",
-                                "name": "MeshRenderer",
-                                "priority": 0
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Rock14",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                34.79999923706055,
-                                0.30000001192092896,
-                                11.100000381469727
-                            ],
-                            "rotation": [
-                                7.797225087813331e-10,
-                                0.2756374776363373,
-                                2.7192144091969794e-09,
-                                0.9612616300582886
-                            ],
-                            "scale": [
-                                4.300000190734863,
-                                8.800000190734863,
-                                2.3999998569488525
-                            ]
-                        }
-                    }
                 }
             ],
             "gameObject": {
@@ -2964,8 +3278,7 @@
                         "Rock3",
                         "Rock2",
                         "Rock",
-                        "Rock12",
-                        "Rock14"
+                        "Rock12"
                     ],
                     "pos": [
                         0.0,
@@ -3008,7 +3321,7 @@
                             "pos": [
                                 -23.600000381469727,
                                 0.0,
-                                30.899999618530273
+                                33.0
                             ],
                             "rotation": [
                                 0.18976379930973053,
@@ -3019,7 +3332,7 @@
                             "scale": [
                                 7.999997138977051,
                                 11.199999809265137,
-                                7.999990463256836
+                                7.999987602233887
                             ]
                         }
                     }
@@ -3042,9 +3355,9 @@
                         "transform": {
                             "child": null,
                             "pos": [
-                                2.799999952316284,
+                                2.5999999046325684,
                                 0.0,
-                                29.100000381469727
+                                26.200000762939453
                             ],
                             "rotation": [
                                 0.5000002384185791,
@@ -3078,9 +3391,9 @@
                         "transform": {
                             "child": null,
                             "pos": [
-                                15.600000381469727,
+                                17.0,
                                 0.0,
-                                26.100000381469727
+                                27.899999618530273
                             ],
                             "rotation": [
                                 -0.0,
@@ -3116,7 +3429,7 @@
                             "pos": [
                                 -7.300000190734863,
                                 0.30000001192092896,
-                                31.0
+                                25.600000381469727
                             ],
                             "rotation": [
                                 -0.0,
@@ -3127,7 +3440,7 @@
                             "scale": [
                                 4.800000190734863,
                                 9.0,
-                                1.0
+                                4.800000190734863
                             ]
                         }
                     }
@@ -3175,9 +3488,84 @@
                                 "active": true,
                                 "components": [
                                     {
+                                        "alpha": 1.0,
+                                        "enable": true,
+                                        "image": "UI_BarFrame.png",
+                                        "name": "UIRenderer",
+                                        "priority": 0
+                                    }
+                                ],
+                                "layer": 2,
+                                "name": "Player_HpFrame",
+                                "tag": 0,
+                                "transform": {
+                                    "child": null,
+                                    "pos": [
+                                        364.1600646972656,
+                                        67.31000518798828,
+                                        0.699999988079071
+                                    ],
+                                    "rotation": [
+                                        -4.833698312722845e-07,
+                                        0.0,
+                                        -0.0,
+                                        1.0
+                                    ],
+                                    "scale": [
+                                        670.0802001953125,
+                                        48.290000915527344,
+                                        1.0
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "childs": null,
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "alpha": 1.0,
+                                        "enable": true,
+                                        "image": "UI_BarBack.png",
+                                        "name": "UIRenderer",
+                                        "priority": 0
+                                    }
+                                ],
+                                "layer": 2,
+                                "name": "Player_HpBack",
+                                "tag": 0,
+                                "transform": {
+                                    "child": null,
+                                    "pos": [
+                                        364.2801513671875,
+                                        67.20001983642578,
+                                        0.9009999632835388
+                                    ],
+                                    "rotation": [
+                                        -0.0,
+                                        0.0,
+                                        -0.0,
+                                        1.0
+                                    ],
+                                    "scale": [
+                                        649.5314331054688,
+                                        23.980003356933594,
+                                        1.0000004768371582
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "childs": null,
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "alpha": 1.0,
                                         "currentValue": 1.0,
                                         "enable": true,
-                                        "image": "UI_hpLine_green.png",
+                                        "image": "UI_PlayerHpBar.png",
                                         "maxValue": 1.0,
                                         "minValue": 0.0,
                                         "name": "UISlider",
@@ -3190,19 +3578,19 @@
                                 "transform": {
                                     "child": null,
                                     "pos": [
-                                        20.069549560546875,
-                                        57.348793029785156,
-                                        0.7999987006187439
+                                        37.649600982666016,
+                                        66.48390197753906,
+                                        0.8999987840652466
                                     ],
                                     "rotation": [
-                                        6.60576915834099e-05,
+                                        -4.790052798853139e-07,
                                         0.0,
                                         -0.0,
                                         1.0
                                     ],
                                     "scale": [
-                                        537.0966796875,
-                                        33.895999908447266,
+                                        650.9065551757813,
+                                        27.4967041015625,
                                         1.0
                                     ]
                                 }
@@ -3211,103 +3599,20 @@
                     ],
                     "gameObject": {
                         "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "image": "UI_hpFrame.png",
-                                "name": "UIRenderer",
-                                "priority": 0
-                            }
-                        ],
+                        "components": null,
                         "layer": 2,
-                        "name": "Player_HpFrame",
+                        "name": "Player_HpGage",
                         "tag": 0,
                         "transform": {
                             "child": [
+                                "Player_HpFrame",
+                                "Player_HpBack",
                                 "Player_HpBar"
                             ],
                             "pos": [
-                                288.79998779296875,
-                                56.099998474121094,
-                                0.8999999761581421
-                            ],
-                            "rotation": [
-                                -4.768378971675702e-07,
-                                0.0,
-                                -0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                546.2000122070313,
-                                44.599998474121094,
-                                1.0
-                            ]
-                        }
-                    }
-                },
-                {
-                    "childs": [
-                        {
-                            "childs": null,
-                            "gameObject": {
-                                "active": true,
-                                "components": [
-                                    {
-                                        "currentValue": 1.0,
-                                        "enable": true,
-                                        "image": "UI_hpLine_red.png",
-                                        "maxValue": 1.0,
-                                        "minValue": 0.0,
-                                        "name": "UISlider",
-                                        "priority": 0
-                                    }
-                                ],
-                                "layer": 2,
-                                "name": "Player_GuardBar",
-                                "tag": 0,
-                                "transform": {
-                                    "child": null,
-                                    "pos": [
-                                        19.439682006835938,
-                                        89.42188262939453,
-                                        0.5999998450279236
-                                    ],
-                                    "rotation": [
-                                        -0.0,
-                                        0.0,
-                                        -0.0,
-                                        1.0
-                                    ],
-                                    "scale": [
-                                        257.4460144042969,
-                                        17.804697036743164,
-                                        0.9999998807907104
-                                    ]
-                                }
-                            }
-                        }
-                    ],
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "image": "UI_hpFrame.png",
-                                "name": "UIRenderer",
-                                "priority": 0
-                            }
-                        ],
-                        "layer": 2,
-                        "name": "Player_GuardFrame",
-                        "tag": 0,
-                        "transform": {
-                            "child": [
-                                "Player_GuardBar"
-                            ],
-                            "pos": [
-                                147.89999389648438,
-                                89.4000015258789,
-                                0.699999988079071
+                                17.600000381469727,
+                                5.599999904632568,
+                                0.20000000298023224
                             ],
                             "rotation": [
                                 -0.0,
@@ -3316,8 +3621,8 @@
                                 1.0
                             ],
                             "scale": [
-                                262.70001220703125,
-                                21.899999618530273,
+                                1.2000000476837158,
+                                1.100000023841858,
                                 1.0
                             ]
                         }
@@ -3332,13 +3637,12 @@
                 "tag": 0,
                 "transform": {
                     "child": [
-                        "Player_HpFrame",
-                        "Player_GuardFrame"
+                        "Player_HpGage"
                     ],
                     "pos": [
-                        0.0,
-                        -16.600000381469727,
-                        0.0
+                        17.600000381469727,
+                        7.5,
+                        0.20000000298023224
                     ],
                     "rotation": [
                         -0.0,
@@ -3357,26 +3661,138 @@
         {
             "childs": [
                 {
-                    "childs": null,
+                    "childs": [
+                        {
+                            "childs": null,
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "alpha": 1.0,
+                                        "enable": true,
+                                        "image": "UI_BarFrame.png",
+                                        "name": "UIRenderer",
+                                        "priority": 0
+                                    }
+                                ],
+                                "layer": 2,
+                                "name": "Enemy_GageFrame",
+                                "tag": 0,
+                                "transform": {
+                                    "child": null,
+                                    "pos": [
+                                        640.2201538085938,
+                                        657.6250610351563,
+                                        0.8000000715255737
+                                    ],
+                                    "rotation": [
+                                        -0.0,
+                                        0.0,
+                                        -0.0,
+                                        1.0
+                                    ],
+                                    "scale": [
+                                        955.6799926757813,
+                                        42.70499801635742,
+                                        0.699999988079071
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "childs": null,
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "alpha": 1.0,
+                                        "enable": true,
+                                        "image": "UI_BarBack.png",
+                                        "name": "UIRenderer",
+                                        "priority": 0
+                                    }
+                                ],
+                                "layer": 2,
+                                "name": "Enemy_GageBack",
+                                "tag": 0,
+                                "transform": {
+                                    "child": null,
+                                    "pos": [
+                                        640.0001220703125,
+                                        657.3001098632813,
+                                        0.9910000562667847
+                                    ],
+                                    "rotation": [
+                                        -0.0,
+                                        0.0,
+                                        -0.0,
+                                        1.0
+                                    ],
+                                    "scale": [
+                                        929.5,
+                                        22.750001907348633,
+                                        1.0
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "childs": null,
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "alpha": 1.0,
+                                        "currentValue": 1.0,
+                                        "enable": true,
+                                        "image": "UI_EnemyHpBar.png",
+                                        "maxValue": 1.0,
+                                        "minValue": 0.0,
+                                        "name": "UISlider",
+                                        "priority": 0
+                                    }
+                                ],
+                                "layer": 2,
+                                "name": "Enemy_GageBar",
+                                "tag": 0,
+                                "transform": {
+                                    "child": null,
+                                    "pos": [
+                                        176.4600830078125,
+                                        657.30029296875,
+                                        0.9900000095367432
+                                    ],
+                                    "rotation": [
+                                        -0.0,
+                                        0.0,
+                                        -0.0,
+                                        1.0
+                                    ],
+                                    "scale": [
+                                        927.4099731445313,
+                                        23.91999626159668,
+                                        1.0
+                                    ]
+                                }
+                            }
+                        }
+                    ],
                     "gameObject": {
                         "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "image": "UI_GageFrame_R.png",
-                                "name": "UIRenderer",
-                                "priority": 0
-                            }
-                        ],
+                        "components": null,
                         "layer": 2,
-                        "name": "Enemy_GageFrame",
+                        "name": "Enemy_HpGage",
                         "tag": 0,
                         "transform": {
-                            "child": null,
+                            "child": [
+                                "Enemy_GageFrame",
+                                "Enemy_GageBack",
+                                "Enemy_GageBar"
+                            ],
                             "pos": [
-                                634.7699584960938,
-                                684.1199951171875,
-                                0.30000001192092896
+                                640.0,
+                                657.300048828125,
+                                0.9000000357627869
                             ],
                             "rotation": [
                                 -0.0,
@@ -3385,73 +3801,146 @@
                                 1.0
                             ],
                             "scale": [
-                                900.0,
-                                56.0,
+                                1.100000023841858,
+                                0.6499999761581421,
                                 1.0
                             ]
                         }
                     }
                 },
                 {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "image": "UI_GageBack.png",
-                                "name": "UIRenderer",
-                                "priority": 0
+                    "childs": [
+                        {
+                            "childs": null,
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "alpha": 1.0,
+                                        "enable": true,
+                                        "image": "UI_BarBack.png",
+                                        "name": "UIRenderer",
+                                        "priority": 0
+                                    }
+                                ],
+                                "layer": 2,
+                                "name": "Enemy_BreakGageBack",
+                                "tag": 0,
+                                "transform": {
+                                    "child": null,
+                                    "pos": [
+                                        640.0,
+                                        694.800048828125,
+                                        0.9120000004768372
+                                    ],
+                                    "rotation": [
+                                        -0.0,
+                                        0.0,
+                                        -0.0,
+                                        1.0
+                                    ],
+                                    "scale": [
+                                        927.5999755859375,
+                                        17.100000381469727,
+                                        1.0
+                                    ]
+                                }
                             }
-                        ],
-                        "layer": 2,
-                        "name": "Enemy_GageBack",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                632.969970703125,
-                                682.679931640625,
-                                0.20000000298023224
-                            ],
-                            "rotation": [
-                                -0.0,
-                                0.0,
-                                -0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                846.0,
-                                44.47999954223633,
-                                1.0
-                            ]
+                        },
+                        {
+                            "childs": null,
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "alpha": 1.0,
+                                        "currentValue": 0.0,
+                                        "enable": true,
+                                        "image": "UI_EnemyStanBar.png",
+                                        "maxValue": 1.0,
+                                        "minValue": 0.0,
+                                        "name": "UISlider",
+                                        "priority": 0
+                                    }
+                                ],
+                                "layer": 2,
+                                "name": "Enemy_BreakGageBar",
+                                "tag": 0,
+                                "transform": {
+                                    "child": null,
+                                    "pos": [
+                                        175.79998779296875,
+                                        694.6000366210938,
+                                        0.9100000262260437
+                                    ],
+                                    "rotation": [
+                                        -0.0,
+                                        0.0,
+                                        -0.0,
+                                        1.0
+                                    ],
+                                    "scale": [
+                                        929.0999755859375,
+                                        14.899999618530273,
+                                        1.0
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "childs": null,
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "alpha": 1.0,
+                                        "enable": true,
+                                        "image": "UI_BarFrame.png",
+                                        "name": "UIRenderer",
+                                        "priority": 0
+                                    }
+                                ],
+                                "layer": 2,
+                                "name": "Enemy_BreakGageFrame",
+                                "tag": 0,
+                                "transform": {
+                                    "child": null,
+                                    "pos": [
+                                        640.0,
+                                        694.300048828125,
+                                        0.8100000023841858
+                                    ],
+                                    "rotation": [
+                                        -0.0,
+                                        0.0,
+                                        -0.0,
+                                        1.0
+                                    ],
+                                    "scale": [
+                                        958.2999877929688,
+                                        31.5,
+                                        1.0
+                                    ]
+                                }
+                            }
                         }
-                    }
-                },
-                {
-                    "childs": null,
+                    ],
                     "gameObject": {
                         "active": true,
-                        "components": [
-                            {
-                                "currentValue": 1.0,
-                                "enable": true,
-                                "image": "UI_GageBar_R.png",
-                                "maxValue": 1.0,
-                                "minValue": 0.0,
-                                "name": "UISlider",
-                                "priority": 0
-                            }
-                        ],
+                        "components": null,
                         "layer": 2,
-                        "name": "Enemy_GageBar",
+                        "name": "Enemy_BreakGage",
                         "tag": 0,
                         "transform": {
-                            "child": null,
+                            "child": [
+                                "Enemy_BreakGageBack",
+                                "Enemy_BreakGageBar",
+                                "Enemy_BreakGageFrame"
+                            ],
                             "pos": [
-                                213.1199951171875,
-                                680.8399658203125,
-                                0.10000000149011612
+                                640.0,
+                                694.300048828125,
+                                0.8100000023841858
                             ],
                             "rotation": [
                                 -0.0,
@@ -3460,8 +3949,8 @@
                                 1.0
                             ],
                             "scale": [
-                                840.7799682617188,
-                                37.76000213623047,
+                                1.0,
+                                1.0,
                                 1.0
                             ]
                         }
@@ -3476,13 +3965,237 @@
                 "tag": 0,
                 "transform": {
                     "child": [
-                        "Enemy_GageFrame",
-                        "Enemy_GageBack",
-                        "Enemy_GageBar"
+                        "Enemy_HpGage",
+                        "Enemy_BreakGage"
                     ],
                     "pos": [
-                        58.5,
-                        147.39999389648438,
+                        0.0,
+                        6.400000095367432,
+                        0.800000011920929
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "alpha": 1.0,
+                        "enable": true,
+                        "image": "UI_EnemyText.png",
+                        "name": "UIRenderer",
+                        "priority": 0
+                    },
+                    {
+                        "closeTime": 1.0,
+                        "enable": true,
+                        "name": "Fade",
+                        "openTime": 1.0,
+                        "priority": 0,
+                        "startOpen": false
+                    }
+                ],
+                "layer": 2,
+                "name": "EnemyText",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        218.6999969482422,
+                        618.2000122070313,
+                        0.699999988079071
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        110.0,
+                        44.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "alpha": 0.0,
+                        "enable": true,
+                        "image": "black.png",
+                        "name": "UIRenderer",
+                        "priority": 0
+                    },
+                    {
+                        "closeTime": 1.0,
+                        "enable": true,
+                        "name": "Fade",
+                        "openTime": 1.0,
+                        "priority": 0,
+                        "startOpen": false
+                    }
+                ],
+                "layer": 2,
+                "name": "Fade",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        640.0,
+                        360.0,
+                        0.6000000238418579
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        2000.0,
+                        5000.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "alpha": 1.0,
+                        "enable": true,
+                        "image": "UI_GameStart.png",
+                        "name": "UIRenderer",
+                        "priority": 0
+                    },
+                    {
+                        "closeTime": 1.0,
+                        "enable": true,
+                        "name": "Fade",
+                        "openTime": 1.0,
+                        "priority": 0,
+                        "startOpen": false
+                    }
+                ],
+                "layer": 2,
+                "name": "GameStartText",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        1700.0,
+                        360.0,
+                        -0.4000000059604645
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        750.0,
+                        200.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "closeTime": 1.0,
+                        "enable": true,
+                        "name": "Fade",
+                        "openTime": 1.0,
+                        "priority": 0,
+                        "startOpen": false
+                    },
+                    {
+                        "alpha": 0.0,
+                        "enable": true,
+                        "image": "UI_GameOver.png",
+                        "name": "UIRenderer",
+                        "priority": 0
+                    }
+                ],
+                "layer": 2,
+                "name": "GameOverText",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        636.4000244140625,
+                        150.0,
+                        0.10000000149011612
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        920.0,
+                        200.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "closeTime": 1.0,
+                        "enable": true,
+                        "name": "Fade",
+                        "openTime": 1.0,
+                        "priority": 0,
+                        "startOpen": false
+                    },
+                    {
+                        "alpha": 0.0,
+                        "enable": true,
+                        "image": "UI_Win.png",
+                        "name": "UIRenderer",
+                        "priority": 0
+                    }
+                ],
+                "layer": 2,
+                "name": "WinText",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        636.0,
+                        150.0,
                         0.0
                     ],
                     "rotation": [
@@ -3492,8 +4205,8 @@
                         1.0
                     ],
                     "scale": [
-                        0.8999999761581421,
-                        0.800000011920929,
+                        475.0,
+                        200.0,
                         1.0
                     ]
                 }

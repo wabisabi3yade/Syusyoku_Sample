@@ -4,107 +4,110 @@
 #include "Bone.h"
 #include "TreeNode.h"
 
-/// @brief ボーンリスト
-class BoneList : public Asset_Base
+namespace HashiTaku
 {
-	friend class AssetLoader;
+	/// @brief ボーンリスト
+	class BoneList : public Asset_Base
+	{
+		friend class AssetLoader;
 
-	/// @brief ボーン配列
-	std::vector<std::unique_ptr<Bone>> pBones;
+		/// @brief ボーン配列
+		std::vector<std::unique_ptr<Bone>> pBones;
 
-	/// @brief ロード時のオフセット回転量
-	DirectX::SimpleMath::Quaternion loadOffsetRotation;
+		/// @brief ロード時のオフセット回転量
+		DirectX::SimpleMath::Quaternion loadOffsetRotation;
 
-	/// @brief ノード情報の元ノードを持つ
-	std::unique_ptr<TreeNode> pRootNode;
+		/// @brief ノード情報の元ノードを持つ
+		std::unique_ptr<TreeNode> pRootNode;
 
-	/// @brief ロード時のスケール
-	float loadScale;
-	
-	/// @brief ボーン配列をセット
-	/// @param _setList ボーン配列
-	void SetAssetBoneList(std::vector<std::unique_ptr<Bone>> _setList);
+		/// @brief ロード時のスケール
+		float loadScale;
 
-public:
-	BoneList();
-	BoneList(const BoneList& _other);
-	~BoneList() {}
+		/// @brief ボーン配列をセット
+		/// @param _setList ボーン配列
+		void SetAssetBoneList(std::vector<std::unique_ptr<Bone>> _setList);
 
-	BoneList& operator=(const BoneList& _other);
+	public:
+		BoneList();
+		BoneList(const BoneList& _other);
+		~BoneList() {}
 
-	/// @brief 名前からボーンを取得する
-	/// @param  _boneName ボーン名
-	/// @return ボーン
-	Bone* FindBone(const std::string& _boneName);
+		BoneList& operator=(const BoneList& _other);
 
-	/// @brief ルートノードをセット
-	/// @param スケルタルメッシュのルートノードを取得
-	void SetRootNode(std::unique_ptr<TreeNode> _pRootNode);
+		/// @brief 名前からボーンを取得する
+		/// @param  _boneName ボーン名
+		/// @return ボーン
+		Bone* FindBone(const std::string& _boneName);
 
-	// 要素数からボーンを取得
-	Bone* GetBone(u_int _arrayIdx);
+		/// @brief ルートノードをセット
+		/// @param スケルタルメッシュのルートノードを取得
+		void SetRootNode(std::unique_ptr<TreeNode> _pRootNode);
 
-	/// @brief 名前からボーンIDを取得する
-	/// @param _boneName ボーン名
-	/// @return ボーンID
-	u_int GetIndex(const std::string& _boneName) const;
+		// 要素数からボーンを取得
+		Bone* GetBone(u_int _arrayIdx);
 
-	// ボーンの数を返す 
-	u_int GetBoneCnt() const;
+		/// @brief 名前からボーンIDを取得する
+		/// @param _boneName ボーン名
+		/// @return ボーンID
+		u_int GetIndex(const std::string& _boneName) const;
 
-	/// @brief ルートボーンのIDを取得する
-	/// @return ルートボーンのID
-	u_int GetRootBoneId() const;
+		// ボーンの数を返す 
+		u_int GetBoneCnt() const;
 
-	/// @brief ルートノードを取得する
-	/// @return ルートノード
-	const TreeNode* GetRootNode() const;
+		/// @brief ルートボーンのIDを取得する
+		/// @return ルートボーンのID
+		u_int GetRootBoneId() const;
 
-	/// @brief ロード時のスケール倍率を取得
-	/// @return ロード時のスケール倍率
-	float GetLoadScale() const;
+		/// @brief ルートノードを取得する
+		/// @return ルートノード
+		const TreeNode* GetRootNode() const;
 
-	/// @brief ロード時のスケール回転量を取得
-	/// @return ロード時のスケール回転量
-	const DirectX::SimpleMath::Quaternion& GetLoadRotation() const;
+		/// @brief ロード時のスケール倍率を取得
+		/// @return ロード時のスケール倍率
+		float GetLoadScale() const;
 
-private:
-	void Copy(const BoneList& _other);
-};
+		/// @brief ロード時のスケール回転量を取得
+		/// @return ロード時のスケール回転量
+		const DirectX::SimpleMath::Quaternion& GetLoadRotation() const;
 
-// スケルタルメッシュクラス
-class SkeletalMesh : public Mesh_Group
-{
-	friend class AssetLoader;
+	private:
+		void Copy(const BoneList& _other);
+	};
 
-	/// @brief このスケルタルメッシュで使用するボーンリストのポインタ(アセット管理にある)
-	BoneList* pAssetBoneList;
+	// スケルタルメッシュクラス
+	class SkeletalMesh : public Mesh_Group
+	{
+		friend class AssetLoader;
 
-public:
-	SkeletalMesh() : Mesh_Group(MeshType::SK), pAssetBoneList(nullptr) {}
-	~SkeletalMesh() {}
+		/// @brief このスケルタルメッシュで使用するボーンリストのポインタ(アセット管理にある)
+		BoneList* pAssetBoneList;
 
-	/// @brief 名前からボーンを探す
-	/// @param _name 探すボーン名
-	/// @return ボーンのポインタ
-	Bone* GetBoneByName(const std::string& _name);
+	public:
+		SkeletalMesh() : Mesh_Group(MeshType::SK), pAssetBoneList(nullptr) {}
+		~SkeletalMesh() {}
 
-	// ボーンの数を取得
-	u_int GetBoneCnt() const;
+		/// @brief 名前からボーンを探す
+		/// @param _name 探すボーン名
+		/// @return ボーンのポインタ
+		Bone* GetBoneByName(const std::string& _name);
 
-	/// @brief ルートノードを取得する
-	/// @return ルートノード
-	const TreeNode* GetRootNode() const;
+		// ボーンの数を取得
+		u_int GetBoneCnt() const;
 
-	// ボーンリストを取得(これは動かさないようにする)
-	BoneList& GetBoneList();
+		/// @brief ルートノードを取得する
+		/// @return ルートノード
+		const TreeNode* GetRootNode() const;
 
-private:
-	/// @brief ルートノードをセット
-	/// @param スケルタルメッシュのルートノードを取得
-	void SetRootNode(std::unique_ptr<TreeNode> _pRootNode);
+		// ボーンリストを取得(これは動かさないようにする)
+		BoneList& GetBoneList();
 
-	/// @brief ボーン配列をセット
-	/// @param _pBones ボーン配列
-	void SetAssetBoneList(BoneList* _pBones);
-};
+	private:
+		/// @brief ルートノードをセット
+		/// @param スケルタルメッシュのルートノードを取得
+		void SetRootNode(std::unique_ptr<TreeNode> _pRootNode);
+
+		/// @brief ボーン配列をセット
+		/// @param _pBones ボーン配列
+		void SetAssetBoneList(BoneList* _pBones);
+	};
+}

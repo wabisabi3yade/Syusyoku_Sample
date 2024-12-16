@@ -1,11 +1,11 @@
 #pragma once
 #include "IObserever.h"
 
-class AnimTransitionArrow;
-class BlendAnimationNode;
-
 namespace HashiTaku
 {
+	class AnimTransitionArrow;
+	class BlendAnimationNode;
+
 	namespace AnimParam
 	{
 		// 変更イベントの種類
@@ -41,7 +41,7 @@ namespace HashiTaku
 		};
 
 		/// @brief アニメーションパラメータに変更があった場合の矢印のオブザーバーパターン
-		class AnimParamObserver : public HashiTaku::IObserver<NotificationData>
+		class AnimParamObserver : public IObserver<NotificationData>
 		{
 			/// @brief オブザーバーを所持する矢印
 			IAnimParamRelater* pInterface;

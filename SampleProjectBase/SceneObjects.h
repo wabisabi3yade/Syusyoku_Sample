@@ -2,154 +2,157 @@
 #include "GameObject.h"
 #include "Light.h"
 
-class SceneFunction::ObjectFunc;
-
-using SceneObjectList = std::unordered_map<std::string, std::unique_ptr<GameObject>>;
-
-// シーンで使用するオブジェクト配列クラス
-class SceneObjects : public HashiTaku::IImGuiUser
+namespace HashiTaku
 {
-	friend class SceneFunction::ObjectFunc;
+	class SceneFunction::ObjectFunc;
 
-	// シーンで使用するオブジェクト配列（オブジェクトの名前がキー値）
-	SceneObjectList objList;
-	//std::list<GameObject*> activeObjList;
+	using SceneObjectList = std::unordered_map<std::string, std::unique_ptr<GameObject>>;
 
-	// UI用のリスト(描画を上のリストより後にするため)
-	SceneObjectList uiList;
-	//std::list<GameObject*> activeUIList;
+	// シーンで使用するオブジェクト配列クラス
+	class SceneObjects : public IImGuiUser
+	{
+		friend class SceneFunction::ObjectFunc;
 
-	/// @brief z座標の値でソートした描画UIリスト
-	std::list<GameObject*> drawUiList;
+		// シーンで使用するオブジェクト配列（オブジェクトの名前がキー値）
+		SceneObjectList objList;
+		//std::list<GameObject*> activeObjList;
 
-	/// @brief オブジェクト配列とUI配列を行き来する為に一時的に格納するリスト
-	std::list<GameObject*> tmpMoveList;
+		// UI用のリスト(描画を上のリストより後にするため)
+		SceneObjectList uiList;
+		//std::list<GameObject*> activeUIList;
 
-	// 配列にオブジェクトを入れる(ObjectFuncからアクセス)
-	GameObject* SetObject(std::unique_ptr<GameObject> _objPtr);
+		/// @brief z座標の値でソートした描画UIリスト
+		std::list<GameObject*> drawUiList;
 
-public:
-	SceneObjects();
-	~SceneObjects();
+		/// @brief オブジェクト配列とUI配列を行き来する為に一時的に格納するリスト
+		std::list<GameObject*> tmpMoveList;
 
-	/// @brief オブジェクトAwake処理
-	void Awake();
+		// 配列にオブジェクトを入れる(ObjectFuncからアクセス)
+		GameObject* SetObject(std::unique_ptr<GameObject> _objPtr);
 
-	/// @brief オブジェクトStart処理
-	void Start();
+	public:
+		SceneObjects();
+		~SceneObjects();
 
-	/// @brief オブジェクトUpdate処理
-	void Update();
+		/// @brief オブジェクトAwake処理
+		void Awake();
 
-	/// @brief オブジェクトLateUpdate処理
-	void LateUpdate();
+		/// @brief オブジェクトStart処理
+		void Start();
 
-	/// @brief オブジェクトDraw処理
-	void ObjectDraw();
+		/// @brief オブジェクトUpdate処理
+		void Update();
 
-	/// @brief UIDraw処理
-	void UIDraw();
+		/// @brief オブジェクトLateUpdate処理
+		void LateUpdate();
 
-	//　配列からゲームオブジェクトを削除する
-	void DeleteGameObject(GameObject& _deleteObj);
+		/// @brief オブジェクトDraw処理
+		void ObjectDraw();
 
-	/// @brief UIとオブジェクトのリスト間を移動する
-	/// @param _targetObj 対象オブジェクト
-	void MoveTmpList(GameObject& _targetObj);
+		/// @brief UIDraw処理
+		void UIDraw();
 
-	/// @brief z値順にUIリストをソートする
-	void SortUiList();
+		//　配列からゲームオブジェクトを削除する
+		void DeleteGameObject(GameObject& _deleteObj);
 
-	// オブジェクトの名前からオブジェクトを返す
-	GameObject* GetSceneObject(const std::string& _objectName);
+		/// @brief UIとオブジェクトのリスト間を移動する
+		/// @param _targetObj 対象オブジェクト
+		void MoveTmpList(GameObject& _targetObj);
 
-	// オブジェクトの数を返す
-	u_int GetObjectsNum()const { return static_cast<u_int>(objList.size()); }
+		/// @brief z値順にUIリストをソートする
+		void SortUiList();
 
-	// シーンオブジェクトをセーブ・ロード
-	nlohmann::json SaveObjectList();
-	void LoadObjectList(const nlohmann::json& _objectsData);
-private:
-	/// @brief オブジェクトの名前があるか確認
-	/// @param _gameObject オブジェクト
-	void CheckEmptyName(GameObject& _gameObject);
+		// オブジェクトの名前からオブジェクトを返す
+		GameObject* GetSceneObject(const std::string& _objectName);
 
-	/// @brief オブジェクトの名前が他に重複しているか確認
-	/// @param _gameObject 
-	void CheckDuplicationName(GameObject& _gameObject, SceneObjectList& _objects);
-	
-	/// @brief オブジェクトを取り出す
-	/// @param _targetObject 対象のオブジェクト
-	/// @param _objectName オブジェクト名
-	/// @param _outObject オブジェクトのインスタンス
-	/// @param _objectList 取り出す対象オブジェクトリスト
-	/// @return 成功したかどうか？
-	bool TakeOutObject(const GameObject& _targetObject, std::string& _objectName, std::unique_ptr<GameObject>& _outObject, SceneObjectList& _objectList);
+		// オブジェクトの数を返す
+		u_int GetObjectsNum()const { return static_cast<u_int>(objList.size()); }
 
-	/// @brief UIかどうか
-	/// @param _gameObject ゲームオブジェクト 
-	/// @return UIフラグ
-	bool IsUI(GameObject& _gameObject);
+		// シーンオブジェクトをセーブ・ロード
+		nlohmann::json SaveObjectList();
+		void LoadObjectList(const nlohmann::json& _objectsData);
+	private:
+		/// @brief オブジェクトの名前があるか確認
+		/// @param _gameObject オブジェクト
+		void CheckEmptyName(GameObject& _gameObject);
 
-	/// @brief UI描画の前の準備
-	void UIDrawSetup();
+		/// @brief オブジェクトの名前が他に重複しているか確認
+		/// @param _gameObject 
+		void CheckDuplicationName(GameObject& _gameObject, SceneObjectList& _objects);
 
-	/// @brief UI描画終了処理
-	void UIDrawEnd();
+		/// @brief オブジェクトを取り出す
+		/// @param _targetObject 対象のオブジェクト
+		/// @param _objectName オブジェクト名
+		/// @param _outObject オブジェクトのインスタンス
+		/// @param _objectList 取り出す対象オブジェクトリスト
+		/// @return 成功したかどうか？
+		bool TakeOutObject(const GameObject& _targetObject, std::string& _objectName, std::unique_ptr<GameObject>& _outObject, SceneObjectList& _objectList);
 
-	/// @brief リスト間で移動するオブジェクトがあるなら移動する
-	void MoveList();
+		/// @brief UIかどうか
+		/// @param _gameObject ゲームオブジェクト 
+		/// @return UIフラグ
+		bool IsUI(GameObject& _gameObject);
 
-	/// @brief UIListに移動させる
-	/// @param _gameObject 対象のゲームオブジェクト
-	void MoveToUIList(GameObject& _gameObject);
+		/// @brief UI描画の前の準備
+		void UIDrawSetup();
 
-	/// @brief ObjListに移動させる
-	/// @param _gameObject 対象のUIオブジェクト
-	void MoveToObjList(GameObject& _gameObject);
+		/// @brief UI描画終了処理
+		void UIDrawEnd();
 
-	/// @brief UI描画リストに追加する
-	/// @param _uiObj 追加するUI
-	void SetDrawUIList(GameObject& _uiObj);
+		/// @brief リスト間で移動するオブジェクトがあるなら移動する
+		void MoveList();
 
-	/// @brief UI描画リストから削除する
-	/// @param _uiObj 削除するUI
-	void RemoveDrawUIList(GameObject& _uiObj);
+		/// @brief UIListに移動させる
+		/// @param _gameObject 対象のゲームオブジェクト
+		void MoveToUIList(GameObject& _gameObject);
 
-	/// @brief プレハブファイルのパス名を取得
-	/// @return プレハブファイルのパス名
-	std::string PrefabFileParh();
+		/// @brief ObjListに移動させる
+		/// @param _gameObject 対象のUIオブジェクト
+		void MoveToObjList(GameObject& _gameObject);
 
-	/// @brief プレハブを生成
-	/// @param _prefabName プレハブ名
-	void CreatePrefab(const std::string& _prefabName);
+		/// @brief UI描画リストに追加する
+		/// @param _uiObj 追加するUI
+		void SetDrawUIList(GameObject& _uiObj);
 
-	void ImGuiDebug() override;
+		/// @brief UI描画リストから削除する
+		/// @param _uiObj 削除するUI
+		void RemoveDrawUIList(GameObject& _uiObj);
 
-	/// @brief オブジェクトをセーブ
-	/// @param _go ゲームオブジェクト
-	/// @return セーブデータ
-	nlohmann::json SaveObject(GameObject& _go);
+		/// @brief プレハブファイルのパス名を取得
+		/// @return プレハブファイルのパス名
+		std::string PrefabFileParh();
 
-	/// @brief オブジェクトをプレハブ化する
-	/// @param _toPrefabObject プレハブ化するオブジェクト
-	void ObjectToPrefab(GameObject& _toPrefabObject);
+		/// @brief プレハブを生成
+		/// @param _prefabName プレハブ名
+		void CreatePrefab(const std::string& _prefabName);
 
-	/// @brief オブジェクトをロードする
-	/// @param _gameObjectData ゲームオブジェクトデータ
-	/// @return 成功したか？
-	bool LoadObject(const nlohmann::json& _gameObjectData);
+		void ImGuiDebug() override;
 
-	/// @brief オブジェクトを遅れたロードする
-	/// @param _gameObjectData ゲームオブジェクトデータ
-	/// @return 成功したか？
-	bool LateLoadObject(const nlohmann::json& _gameObjectData);
+		/// @brief オブジェクトをセーブ
+		/// @param _go ゲームオブジェクト
+		/// @return セーブデータ
+		nlohmann::json SaveObject(GameObject& _go);
 
-	/// @brief ゲームオブジェクトのImGUi表示
-	/// @param _gameObject 表示するゲームオブジェクト
-	/// @return deleteしたか
-	bool ImGuiSettingObject(GameObject& _gameObject);
+		/// @brief オブジェクトをプレハブ化する
+		/// @param _toPrefabObject プレハブ化するオブジェクト
+		void ObjectToPrefab(GameObject& _toPrefabObject);
 
-	/// @brief UIオブジェクトのZ座標
-	static bool SortUIPosZFunction(const GameObject* _a1, const GameObject* _a2);
-};
+		/// @brief オブジェクトをロードする
+		/// @param _gameObjectData ゲームオブジェクトデータ
+		/// @return 成功したか？
+		bool LoadObject(const nlohmann::json& _gameObjectData);
+
+		/// @brief オブジェクトを遅れたロードする
+		/// @param _gameObjectData ゲームオブジェクトデータ
+		/// @return 成功したか？
+		bool LateLoadObject(const nlohmann::json& _gameObjectData);
+
+		/// @brief ゲームオブジェクトのImGUi表示
+		/// @param _gameObject 表示するゲームオブジェクト
+		/// @return deleteしたか
+		bool ImGuiSettingObject(GameObject& _gameObject);
+
+		/// @brief UIオブジェクトのZ座標
+		static bool SortUIPosZFunction(const GameObject* _a1, const GameObject* _a2);
+	};
+}

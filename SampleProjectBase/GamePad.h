@@ -69,6 +69,9 @@ private:
 	bool o_buttonState[static_cast<int>(PadFlag::Button_Num)];	// 1‚Â‘O‚Ìƒ{ƒ^ƒ“ó‘Ô
 
 	float padValue[static_cast<int>(Value::Value_Num)];
+
+	/// @brief U“®ŠÔ
+	float vibeTime;
 public:
 	GamePad();
 	~GamePad();
@@ -77,7 +80,10 @@ public:
 
 	bool Input(const PadFlag& _getButton)const;	// ‰Ÿ‚³‚ê‚Ä‚¢‚é‚©(Œp‘±)
 	bool InputTrigger(const PadFlag& _getButton)const;	// ‰Ÿ‚µ‚½uŠÔ(uŠÔ)
-	bool InputRelease(const PadFlag& _getButton)const;	// —£‚ê‚½uŠÔ(uŠÔ)
+	bool InputRelease(const PadFlag& _getButton)const;	// —£‚ê‚½uŠÔ(uŠÔ)]
+
+
+	void SetVibration(float _power, float _time);
 
 	/// @brief ƒXƒeƒBƒbƒN‚âLRƒgƒŠƒK[‚Ì“ü—Í—Ê‚ğæ“¾‚·‚é
 	/// @param _getValue æ“¾‚·‚éêŠ

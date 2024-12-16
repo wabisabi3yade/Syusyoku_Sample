@@ -1,0 +1,1626 @@
+{
+    "childs": [
+        {
+            "childs": [
+                {
+                    "childs": [
+                        {
+                            "childs": null,
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "enable": true,
+                                        "endFrame": 32,
+                                        "isLoop": true,
+                                        "isTrimming": true,
+                                        "name": "VisualEffect",
+                                        "playSpeed": 0.800000011920929,
+                                        "priority": 0,
+                                        "startFrame": 20,
+                                        "vfxName": "Fire01"
+                                    }
+                                ],
+                                "layer": 0,
+                                "name": "Fire3",
+                                "tag": 0,
+                                "transform": {
+                                    "child": null,
+                                    "pos": [
+                                        -19.999998092651367,
+                                        6.0,
+                                        19.89999771118164
+                                    ],
+                                    "rotation": [
+                                        -0.0,
+                                        0.0,
+                                        -0.0,
+                                        1.0
+                                    ],
+                                    "scale": [
+                                        1.2999999523162842,
+                                        2.4000000953674316,
+                                        1.2999999523162842
+                                    ]
+                                }
+                            }
+                        }
+                    ],
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "meshName": "Pillar1.fbx",
+                                "name": "MeshRenderer",
+                                "priority": 0
+                            },
+                            {
+                                "enable": true,
+                                "friction": 0.0,
+                                "isAwake": false,
+                                "isFreezeRot": [
+                                    false,
+                                    false,
+                                    false
+                                ],
+                                "isKinematic": true,
+                                "isTrigger": false,
+                                "mass": 0.0,
+                                "name": "RigidBody",
+                                "priority": 0
+                            },
+                            {
+                                "angles": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "center": [
+                                    0.0,
+                                    3.0,
+                                    -0.10000000149011612
+                                ],
+                                "enable": true,
+                                "height": 5.21999979019165,
+                                "name": "CylinderCollider",
+                                "priority": 0,
+                                "radius": 1.059999942779541
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "Pillar3",
+                        "tag": 0,
+                        "transform": {
+                            "child": [
+                                "Fire3"
+                            ],
+                            "pos": [
+                                -19.999998092651367,
+                                0.0,
+                                19.999998092651367
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.5,
+                                1.0
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": [
+                        {
+                            "childs": null,
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "enable": true,
+                                        "endFrame": 32,
+                                        "isLoop": true,
+                                        "isTrimming": true,
+                                        "name": "VisualEffect",
+                                        "playSpeed": 0.800000011920929,
+                                        "priority": 0,
+                                        "startFrame": 20,
+                                        "vfxName": "Fire01"
+                                    }
+                                ],
+                                "layer": 0,
+                                "name": "Fire",
+                                "tag": 0,
+                                "transform": {
+                                    "child": null,
+                                    "pos": [
+                                        19.999998092651367,
+                                        6.099999904632568,
+                                        19.89999771118164
+                                    ],
+                                    "rotation": [
+                                        -0.0,
+                                        0.0,
+                                        -0.0,
+                                        1.0
+                                    ],
+                                    "scale": [
+                                        1.2999999523162842,
+                                        2.4000000953674316,
+                                        1.2999999523162842
+                                    ]
+                                }
+                            }
+                        }
+                    ],
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "meshName": "Pillar1.fbx",
+                                "name": "MeshRenderer",
+                                "priority": 0
+                            },
+                            {
+                                "angles": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "center": [
+                                    0.0,
+                                    3.0,
+                                    -0.10000000149011612
+                                ],
+                                "enable": true,
+                                "height": 5.21999979019165,
+                                "name": "CylinderCollider",
+                                "priority": 0,
+                                "radius": 1.059999942779541
+                            },
+                            {
+                                "enable": true,
+                                "friction": 0.0,
+                                "isAwake": false,
+                                "isFreezeRot": [
+                                    false,
+                                    false,
+                                    false
+                                ],
+                                "isKinematic": true,
+                                "isTrigger": false,
+                                "mass": 0.0,
+                                "name": "RigidBody",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "Pillar1",
+                        "tag": 0,
+                        "transform": {
+                            "child": [
+                                "Fire"
+                            ],
+                            "pos": [
+                                19.999998092651367,
+                                0.10000000149011612,
+                                19.999998092651367
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.5,
+                                1.0
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": [
+                        {
+                            "childs": null,
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "enable": true,
+                                        "endFrame": 32,
+                                        "isLoop": true,
+                                        "isTrimming": true,
+                                        "name": "VisualEffect",
+                                        "playSpeed": 0.800000011920929,
+                                        "priority": 0,
+                                        "startFrame": 20,
+                                        "vfxName": "Fire01"
+                                    }
+                                ],
+                                "layer": 0,
+                                "name": "Fire2",
+                                "tag": 0,
+                                "transform": {
+                                    "child": null,
+                                    "pos": [
+                                        -19.999998092651367,
+                                        6.0,
+                                        -20.099998474121094
+                                    ],
+                                    "rotation": [
+                                        -0.0,
+                                        0.0,
+                                        -0.0,
+                                        1.0
+                                    ],
+                                    "scale": [
+                                        1.2999999523162842,
+                                        2.4000000953674316,
+                                        1.2999999523162842
+                                    ]
+                                }
+                            }
+                        }
+                    ],
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "meshName": "Pillar1.fbx",
+                                "name": "MeshRenderer",
+                                "priority": 0
+                            },
+                            {
+                                "enable": true,
+                                "friction": 0.0,
+                                "isAwake": false,
+                                "isFreezeRot": [
+                                    false,
+                                    false,
+                                    false
+                                ],
+                                "isKinematic": true,
+                                "isTrigger": false,
+                                "mass": 0.0,
+                                "name": "RigidBody",
+                                "priority": 0
+                            },
+                            {
+                                "angles": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "center": [
+                                    0.0,
+                                    3.0,
+                                    -0.0
+                                ],
+                                "enable": true,
+                                "height": 5.21999979019165,
+                                "name": "CylinderCollider",
+                                "priority": 0,
+                                "radius": 1.059999942779541
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "Pillar2",
+                        "tag": 0,
+                        "transform": {
+                            "child": [
+                                "Fire2"
+                            ],
+                            "pos": [
+                                -19.999998092651367,
+                                0.0,
+                                -19.999998092651367
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.5,
+                                1.0
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": [
+                        {
+                            "childs": null,
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "enable": true,
+                                        "endFrame": 32,
+                                        "isLoop": true,
+                                        "isTrimming": true,
+                                        "name": "VisualEffect",
+                                        "playSpeed": 0.800000011920929,
+                                        "priority": 0,
+                                        "startFrame": 20,
+                                        "vfxName": "Fire01"
+                                    }
+                                ],
+                                "layer": 0,
+                                "name": "Fire1",
+                                "tag": 0,
+                                "transform": {
+                                    "child": null,
+                                    "pos": [
+                                        19.999998092651367,
+                                        6.0,
+                                        -20.099998474121094
+                                    ],
+                                    "rotation": [
+                                        -0.0,
+                                        0.0,
+                                        -0.0,
+                                        1.0
+                                    ],
+                                    "scale": [
+                                        1.2999999523162842,
+                                        2.4000000953674316,
+                                        1.2999999523162842
+                                    ]
+                                }
+                            }
+                        }
+                    ],
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "meshName": "Pillar1.fbx",
+                                "name": "MeshRenderer",
+                                "priority": 0
+                            },
+                            {
+                                "angles": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "center": [
+                                    0.0,
+                                    3.0,
+                                    -0.10000000149011612
+                                ],
+                                "enable": true,
+                                "height": 5.21999979019165,
+                                "name": "CylinderCollider",
+                                "priority": 0,
+                                "radius": 1.059999942779541
+                            },
+                            {
+                                "enable": true,
+                                "friction": 0.0,
+                                "isAwake": false,
+                                "isFreezeRot": [
+                                    false,
+                                    false,
+                                    false
+                                ],
+                                "isKinematic": true,
+                                "isTrigger": false,
+                                "mass": 0.0,
+                                "name": "RigidBody",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "Pillar11",
+                        "tag": 0,
+                        "transform": {
+                            "child": [
+                                "Fire1"
+                            ],
+                            "pos": [
+                                19.999998092651367,
+                                0.0,
+                                -19.999998092651367
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.5,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            ],
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "AABB": false,
+                        "angles": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "center": [
+                            0.0,
+                            -5.0,
+                            0.0
+                        ],
+                        "enable": true,
+                        "length": [
+                            1.0,
+                            10.0,
+                            1.0
+                        ],
+                        "name": "BoxCollider",
+                        "priority": 0
+                    },
+                    {
+                        "enable": true,
+                        "friction": 20.0,
+                        "isAwake": false,
+                        "isFreezeRot": [
+                            false,
+                            false,
+                            false
+                        ],
+                        "isKinematic": false,
+                        "isTrigger": false,
+                        "mass": 0.0,
+                        "name": "RigidBody",
+                        "priority": 0
+                    },
+                    {
+                        "enable": true,
+                        "name": "SpriteRenderer",
+                        "priority": 0,
+                        "sprite": {
+                            "texName": "ground1_Diffuse.png",
+                            "uvDivNum": [
+                                0.0,
+                                0.0
+                            ],
+                            "uvEnd": [
+                                1.0,
+                                1.0
+                            ],
+                            "uvStart": [
+                                0.0,
+                                0.0
+                            ]
+                        }
+                    }
+                ],
+                "layer": 0,
+                "name": "Ground",
+                "tag": 4,
+                "transform": {
+                    "child": [
+                        "Pillar3",
+                        "Pillar1",
+                        "Pillar2",
+                        "Pillar11"
+                    ],
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        100.0,
+                        1.0,
+                        100.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "name": "SpriteRenderer",
+                        "priority": 0,
+                        "sprite": {
+                            "texName": "ground1_Diffuse.png",
+                            "uvDivNum": [
+                                0.0,
+                                0.0
+                            ],
+                            "uvEnd": [
+                                1.0,
+                                1.0
+                            ],
+                            "uvStart": [
+                                0.0,
+                                0.0
+                            ]
+                        }
+                    }
+                ],
+                "layer": 0,
+                "name": "Ground2",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        0.0,
+                        100.0
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        100.0,
+                        1.0,
+                        100.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "name": "SpriteRenderer",
+                        "priority": 0,
+                        "sprite": {
+                            "texName": "ground1_Diffuse.png",
+                            "uvDivNum": [
+                                0.0,
+                                0.0
+                            ],
+                            "uvEnd": [
+                                1.0,
+                                1.0
+                            ],
+                            "uvStart": [
+                                0.0,
+                                0.0
+                            ]
+                        }
+                    }
+                ],
+                "layer": 0,
+                "name": "Ground1",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        100.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        100.0,
+                        1.0,
+                        100.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "name": "SpriteRenderer",
+                        "priority": 0,
+                        "sprite": {
+                            "texName": "ground1_Diffuse.png",
+                            "uvDivNum": [
+                                0.0,
+                                0.0
+                            ],
+                            "uvEnd": [
+                                1.0,
+                                1.0
+                            ],
+                            "uvStart": [
+                                0.0,
+                                0.0
+                            ]
+                        }
+                    }
+                ],
+                "layer": 0,
+                "name": "Ground3",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        0.0,
+                        -100.0
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        100.0,
+                        1.0,
+                        100.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "name": "SpriteRenderer",
+                        "priority": 0,
+                        "sprite": {
+                            "texName": "ground1_Diffuse.png",
+                            "uvDivNum": [
+                                0.0,
+                                0.0
+                            ],
+                            "uvEnd": [
+                                1.0,
+                                1.0
+                            ],
+                            "uvStart": [
+                                0.0,
+                                0.0
+                            ]
+                        }
+                    }
+                ],
+                "layer": 0,
+                "name": "Ground4",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        -100.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        100.0,
+                        1.0,
+                        100.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "name": "SpriteRenderer",
+                        "priority": 0,
+                        "sprite": {
+                            "texName": "ground1_Diffuse.png",
+                            "uvDivNum": [
+                                0.0,
+                                0.0
+                            ],
+                            "uvEnd": [
+                                1.0,
+                                1.0
+                            ],
+                            "uvStart": [
+                                0.0,
+                                0.0
+                            ]
+                        }
+                    }
+                ],
+                "layer": 0,
+                "name": "Ground6",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        -100.0,
+                        0.0,
+                        100.0
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        100.0,
+                        1.0,
+                        100.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "name": "SpriteRenderer",
+                        "priority": 0,
+                        "sprite": {
+                            "texName": "ground1_Diffuse.png",
+                            "uvDivNum": [
+                                0.0,
+                                0.0
+                            ],
+                            "uvEnd": [
+                                1.0,
+                                1.0
+                            ],
+                            "uvStart": [
+                                0.0,
+                                0.0
+                            ]
+                        }
+                    }
+                ],
+                "layer": 0,
+                "name": "Ground5",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        100.0,
+                        0.0,
+                        100.0
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        100.0,
+                        1.0,
+                        100.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "name": "SpriteRenderer",
+                        "priority": 0,
+                        "sprite": {
+                            "texName": "ground1_Diffuse.png",
+                            "uvDivNum": [
+                                0.0,
+                                0.0
+                            ],
+                            "uvEnd": [
+                                1.0,
+                                1.0
+                            ],
+                            "uvStart": [
+                                0.0,
+                                0.0
+                            ]
+                        }
+                    }
+                ],
+                "layer": 0,
+                "name": "Ground8",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        100.0,
+                        0.0,
+                        -100.0
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        100.0,
+                        1.0,
+                        100.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "name": "SpriteRenderer",
+                        "priority": 0,
+                        "sprite": {
+                            "texName": "ground1_Diffuse.png",
+                            "uvDivNum": [
+                                0.0,
+                                0.0
+                            ],
+                            "uvEnd": [
+                                1.0,
+                                1.0
+                            ],
+                            "uvStart": [
+                                0.0,
+                                0.0
+                            ]
+                        }
+                    }
+                ],
+                "layer": 0,
+                "name": "Ground7",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        -100.0,
+                        0.0,
+                        -100.0
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        100.0,
+                        1.0,
+                        100.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": [
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "meshName": "desertRock15.fbx",
+                                "name": "MeshRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "Rock6",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                -25.600000381469727,
+                                -0.4000000059604645,
+                                -16.799999237060547
+                            ],
+                            "rotation": [
+                                -0.11866487562656403,
+                                0.517413854598999,
+                                0.07271794974803925,
+                                0.8443421721458435
+                            ],
+                            "scale": [
+                                5.000004291534424,
+                                8.100000381469727,
+                                2.3000025749206543
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "meshName": "desertRock11.fbx",
+                                "name": "MeshRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "Rock7",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                -30.600000381469727,
+                                -3.0,
+                                17.399999618530273
+                            ],
+                            "rotation": [
+                                0.24039505422115326,
+                                0.6135275363922119,
+                                0.029180696234107018,
+                                0.7516266703605652
+                            ],
+                            "scale": [
+                                12.600006103515625,
+                                10.300000190734863,
+                                8.200004577636719
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "meshName": "desertRock11.fbx",
+                                "name": "MeshRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "Rock9",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                -35.79999923706055,
+                                -0.8999999761581421,
+                                -0.20000000298023224
+                            ],
+                            "rotation": [
+                                -0.2714499235153198,
+                                0.16692157089710236,
+                                0.047863997519016266,
+                                0.9466578960418701
+                            ],
+                            "scale": [
+                                12.399998664855957,
+                                14.699999809265137,
+                                14.40000057220459
+                            ]
+                        }
+                    }
+                }
+            ],
+            "gameObject": {
+                "active": true,
+                "components": null,
+                "layer": 0,
+                "name": "LeftWall",
+                "tag": 0,
+                "transform": {
+                    "child": [
+                        "Rock6",
+                        "Rock7",
+                        "Rock9"
+                    ],
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": [
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "meshName": "desertRock11.fbx",
+                                "name": "MeshRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "Rock1",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                1.899999976158142,
+                                1.2999999523162842,
+                                -26.700000762939453
+                            ],
+                            "rotation": [
+                                -0.07787430286407471,
+                                -0.009561765007674694,
+                                -0.12149371206760406,
+                                0.9894864559173584
+                            ],
+                            "scale": [
+                                4.999999523162842,
+                                20.0,
+                                4.999999523162842
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "meshName": "desertRock15.fbx",
+                                "name": "MeshRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "Rock5",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                16.799999237060547,
+                                -0.20000000298023224,
+                                -26.30000114440918
+                            ],
+                            "rotation": [
+                                -0.10188014060258865,
+                                -0.024923162534832954,
+                                -0.15647269785404205,
+                                0.9820975661277771
+                            ],
+                            "scale": [
+                                9.40000057220459,
+                                11.899999618530273,
+                                2.9999992847442627
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "meshName": "desertRock15.fbx",
+                                "name": "MeshRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "Rock4",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                -15.100000381469727,
+                                -0.4000000059604645,
+                                -35.099998474121094
+                            ],
+                            "rotation": [
+                                -0.0,
+                                -0.6494482755661011,
+                                -0.0,
+                                0.7604057192802429
+                            ],
+                            "scale": [
+                                9.0,
+                                10.399999618530273,
+                                15.00000286102295
+                            ]
+                        }
+                    }
+                }
+            ],
+            "gameObject": {
+                "active": true,
+                "components": null,
+                "layer": 0,
+                "name": "BackWall",
+                "tag": 0,
+                "transform": {
+                    "child": [
+                        "Rock1",
+                        "Rock5",
+                        "Rock4"
+                    ],
+                    "pos": [
+                        0.0,
+                        0.0,
+                        1.899999976158142
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": [
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "meshName": "desertRock11.fbx",
+                                "name": "MeshRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "Rock3",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                30.700000762939453,
+                                -0.05000000074505806,
+                                -0.699999988079071
+                            ],
+                            "rotation": [
+                                0.4848098158836365,
+                                0.0,
+                                -0.0,
+                                0.8746196031570435
+                            ],
+                            "scale": [
+                                7.199999809265137,
+                                14.0,
+                                8.300000190734863
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "meshName": "desertRock15.fbx",
+                                "name": "MeshRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "Rock2",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                27.700000762939453,
+                                -1.5,
+                                18.700000762939453
+                            ],
+                            "rotation": [
+                                -0.20636215806007385,
+                                -0.1192064955830574,
+                                -0.02533813565969467,
+                                0.9708565473556519
+                            ],
+                            "scale": [
+                                3.4000000953674316,
+                                10.199999809265137,
+                                7.5
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "meshName": "desertRock11.fbx",
+                                "name": "MeshRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "Rock",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                30.0,
+                                -2.9000000953674316,
+                                -15.399999618530273
+                            ],
+                            "rotation": [
+                                0.3906514346599579,
+                                0.8230807185173035,
+                                -0.29094767570495605,
+                                0.2920258045196533
+                            ],
+                            "scale": [
+                                9.999999046325684,
+                                12.800000190734863,
+                                7.999997615814209
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "meshName": "desertRock15.fbx",
+                                "name": "MeshRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "Rock12",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                32.0,
+                                -0.699999988079071,
+                                -7.900000095367432
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                6.599999904632568,
+                                7.5,
+                                3.0
+                            ]
+                        }
+                    }
+                }
+            ],
+            "gameObject": {
+                "active": true,
+                "components": null,
+                "layer": 0,
+                "name": "RightWall",
+                "tag": 0,
+                "transform": {
+                    "child": [
+                        "Rock3",
+                        "Rock2",
+                        "Rock",
+                        "Rock12"
+                    ],
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": [
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "meshName": "desertRock15.fbx",
+                                "name": "MeshRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "Rock8",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                -23.600000381469727,
+                                0.0,
+                                33.0
+                            ],
+                            "rotation": [
+                                0.18976379930973053,
+                                0.9762497544288635,
+                                0.01994485966861248,
+                                0.10260733217000961
+                            ],
+                            "scale": [
+                                7.999997138977051,
+                                11.199999809265137,
+                                7.999987602233887
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "meshName": "desertRock11.fbx",
+                                "name": "MeshRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "Rock10",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                2.5999999046325684,
+                                0.0,
+                                26.200000762939453
+                            ],
+                            "rotation": [
+                                0.5000002384185791,
+                                0.0,
+                                -0.0,
+                                0.8660252690315247
+                            ],
+                            "scale": [
+                                6.0,
+                                10.699999809265137,
+                                6.000000476837158
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "meshName": "desertRock15.fbx",
+                                "name": "MeshRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "Rock11",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                17.0,
+                                0.0,
+                                27.899999618530273
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                5.900000095367432,
+                                20.0,
+                                4.800000190734863
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "enable": true,
+                                "meshName": "desertRock11.fbx",
+                                "name": "MeshRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "Rock13",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                -7.300000190734863,
+                                0.30000001192092896,
+                                25.600000381469727
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                4.800000190734863,
+                                9.0,
+                                4.800000190734863
+                            ]
+                        }
+                    }
+                }
+            ],
+            "gameObject": {
+                "active": true,
+                "components": null,
+                "layer": 0,
+                "name": "FrontWall",
+                "tag": 0,
+                "transform": {
+                    "child": [
+                        "Rock8",
+                        "Rock10",
+                        "Rock11",
+                        "Rock13"
+                    ],
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        }
+    ],
+    "gameObject": {
+        "active": true,
+        "components": null,
+        "layer": 0,
+        "name": "GroundGroup",
+        "tag": 0,
+        "transform": {
+            "child": [
+                "Ground",
+                "Ground2",
+                "Ground1",
+                "Ground3",
+                "Ground4",
+                "Ground6",
+                "Ground5",
+                "Ground8",
+                "Ground7",
+                "LeftWall",
+                "BackWall",
+                "RightWall",
+                "FrontWall"
+            ],
+            "pos": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        }
+    }
+}

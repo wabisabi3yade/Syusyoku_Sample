@@ -3,241 +3,246 @@
 #include "PlayerActionController_Base.h"
 #include "InSceneSystemManager.h"
 
-GameInput* PlayerActState_Base::pPlayerInput = nullptr;
-
-// アクションできる左スティックの入力量
-constexpr float CAN_ACTION_STICKINPUT(0.7f);
-// スティックの方向の内積でこれ以上一致していないなら反応しない
-constexpr float INPUT_VECTOR_DOT(0.6f);
-// 移動でキャンセルができるスティックの入力量
-constexpr float CAN_MOVECANCEL_INPUT(0.3f);
-// キャンセル入力で予約した状態の有効期限時間（超えると予約した状態はリセットされる）
-constexpr float CANCEL_RESERVE_VALIED_TIME(0.3f);
-
-namespace DXSimp = DirectX::SimpleMath;
-
-PlayerActState_Base::PlayerActState_Base() :
-	pActionController(nullptr),
-	statePriority(-1),
-	targetLookRotateSpeed(40.0f),
-	isTargetLookAtEnemy(false)
+namespace HashiTaku
 {
-	pPlayerInput = &InSceneSystemManager::GetInstance()->GetInput();
-}
+	GameInput* PlayerActState_Base::pPlayerInput = nullptr;
 
-void PlayerActState_Base::Init(PlayerActionController_Base& _actController, int _priority)
-{
-	pActionController = &_actController;
-	statePriority = _priority;
-}
+	// アクションできる左スティックの入力量
+	constexpr float CAN_ACTION_STICKINPUT(0.7f);
+	// スティックの方向の内積でこれ以上一致していないなら反応しない
+	constexpr float INPUT_VECTOR_DOT(0.6f);
+	// 移動でキャンセルができるスティックの入力量
+	constexpr float CAN_MOVECANCEL_INPUT(0.3f);
+	// キャンセル入力で予約した状態の有効期限時間（超えると予約した状態はリセットされる）
+	constexpr float CANCEL_RESERVE_VALIED_TIME(0.3f);
 
-void PlayerActState_Base::Update()
-{
-	CharacterActState_Base::Update();
+	namespace DXSimp = DirectX::SimpleMath;
 
-	// ターゲットの方向を見る
-	UpdateTargetLook();
-}
-
-int PlayerActState_Base::GetPriority() const
-{
-	return statePriority;
-}
-
-nlohmann::json PlayerActState_Base::Save()
-{
-	return nlohmann::json();
-}
-
-void PlayerActState_Base::Load(const nlohmann::json& _data)
-{
-}
-
-void PlayerActState_Base::ClearVelocity(bool _applyY)
-{
-	DXSimp::Vector3 set;
-	if (!_applyY) // y軸反映させたくないなら
+	PlayerActState_Base::PlayerActState_Base() :
+		pActionController(nullptr),
+		statePriority(-1),
+		targetLookRotateSpeed(40.0f),
+		isTargetLookAtEnemy(false)
 	{
-		set.y = GetRB().GetVelocity().y;
-	}
-	GetRB().SetVelocity(set);
-}
-
-void PlayerActState_Base::SetTargetAtEnemy(bool _isLook)
-{
-	isTargetLookAtEnemy = _isLook;
-}
-
-void PlayerActState_Base::SetInvicible(bool _isInvicible)
-{
-	GetPlayer().SetIsInvicible(_isInvicible);
-}
-
-CP_RigidBody& PlayerActState_Base::GetRB()
-{
-	return *pActionController->GetRB();
-}
-
-Transform& PlayerActState_Base::GetMyTransform()
-{
-	return pActionController->GetMyTransform();
-}
-
-CP_Animation* PlayerActState_Base::GetAnimation()
-{
-	return pActionController->GetAnimation();
-}
-
-const ITargetAccepter* PlayerActState_Base::GetTargetAccepter()
-{
-	return pActionController->GetTargetAccepter();
-}
-
-CP_Player& PlayerActState_Base::GetPlayer()
-{
-	return pActionController->GetPlayer();
-}
-
-float PlayerActState_Base::DeltaTime() const
-{
-	return pActionController->GetCharacter().DeltaTime();
-}
-
-float PlayerActState_Base::GetDeltaSpeed() const
-{
-	return pActionController->GetCharacter().GetDeltaSpeed();
-}
-
-DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStick() const
-{
-	return pPlayerInput->GetValue(GameInput::ValueType::Player_Move);
-}
-
-DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStickFromCam() const
-{
-	// 入力値を取得
-	DXSimp::Vector2 inputVec = GetInputLeftStick();
-
-	// カメラから見た入力とする
-	const Transform& camTrans = pActionController->GetCamera().GetTransform();
-	DXSimp::Vector3 inputVecByCam = inputVec.x * camTrans.Right() +
-		inputVec.y * camTrans.Forward();
-	inputVec = { inputVecByCam.x, inputVecByCam.z };
-	inputVec.Normalize();
-
-	return inputVec;
-}
-
-DirectX::SimpleMath::Vector3 PlayerActState_Base::GetAtkEnemyPos()
-{
-	// ターゲットしているなら
-	if (pActionController->GetIsTargeting())
-	{
-		return pActionController->GetTargetAccepter()->GetWorldPos();
+		pPlayerInput = &InSceneSystemManager::GetInstance()->GetInput();
 	}
 
-	// 近くの敵を探す
-	CP_BattleManager* pBattle = CP_BattleManager::GetInstance();
-	if (!pBattle) return DXSimp::Vector3::Zero;
-
-	// 敵リストを取得する
-	const auto& enemyList = pBattle->GetEnemyList();
-
-	// 敵がいないなら
-	if (static_cast<u_int>(enemyList.size()) == 0) return DXSimp::Vector3::Zero;
-
-	// 敵の攻撃座標
-	DXSimp::Vector3 atkEnemyPos;
-	const ITargetAccepter* pAtkEnemy = (*enemyList.begin());
-
-	// 本来は一番近くの敵を取得する
-	atkEnemyPos = pAtkEnemy->GetWorldPos();
-
-	return atkEnemyPos;
-}
-
-bool PlayerActState_Base::IsInputVector(InputVector _checkVector)
-{
-	// 入力値を取得
-	DXSimp::Vector2 inputVec = GetInputLeftStick();
-	if (inputVec.Length() < CAN_ACTION_STICKINPUT) return false;	// 傾きが十分でないなら
-
-	// カメラから見た入力とする
-	const Transform& camTrans = pActionController->GetCamera().GetTransform();
-	DXSimp::Vector3 inputVecByCam = inputVec.x * camTrans.Right() +
-		inputVec.y * camTrans.Forward();
-	inputVec = { inputVecByCam.x, inputVecByCam.z };
-	inputVec.Normalize();
-
-	// 向きを取得
-	DXSimp::Vector3 baseVec;
-
-	// ターゲット時で敵がいるなら　敵の方向ベクトルを基準ベクトルに
-	if (pActionController->GetIsTargeting() &&
-		GetTargetAccepter())
+	void PlayerActState_Base::Init(PlayerActionController_Base& _actController, int _priority)
 	{
-		DXSimp::Vector3 targetObjVec =
-			GetTargetAccepter()->GetWorldPos() -
-			GetMyTransform().GetPosition();
-
-		targetObjVec.Normalize(baseVec);
+		pActionController = &_actController;
+		statePriority = _priority;
 	}
-	else // 違うなら　プレイヤーの前ベクトル
-		baseVec = GetPlayer().GetTransform().Forward();
 
-	DXSimp::Vector2 baseVecXZ = { baseVec.x, baseVec.z };
-	baseVecXZ.Normalize();
+	void PlayerActState_Base::Update()
+	{
+		CharacterActState_Base::Update();
 
-	// スティックの方向が一致しているか見る
-	float dot = inputVec.Dot(baseVecXZ);
+		// ターゲットの方向を見る
+		UpdateTargetLook();
+	}
 
-	return dot > INPUT_VECTOR_DOT ? true : false;
-}
+	int PlayerActState_Base::GetPriority() const
+	{
+		return statePriority;
+	}
 
-bool PlayerActState_Base::IsRollingInput() const
-{
-	// ボタン入力
-	if (!pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Rolling)) return false;
+	nlohmann::json PlayerActState_Base::Save()
+	{
+		return nlohmann::json();
+	}
 
-	// ローリングできる左スティックの入力ができていない
-	if (std::min(GetInputLeftStick().Length(), 1.0f) < CAN_ACTION_STICKINPUT) return false;
+	void PlayerActState_Base::Load(const nlohmann::json& _data)
+	{
+	}
 
-	return true;
-}
+	void PlayerActState_Base::ClearVelocity(bool _applyY)
+	{
+		DXSimp::Vector3 set;
+		if (!_applyY) // y軸反映させたくないなら
+		{
+			set.y = GetRB().GetVelocity().y;
+		}
+		GetRB().SetVelocity(set);
+	}
 
-bool PlayerActState_Base::IsSpecialAtkInput(InputVector _inputVecter)
-{
-	// ボタン入力
-	if (!pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack)) return false;
+	void PlayerActState_Base::SetTargetAtEnemy(bool _isLook)
+	{
+		isTargetLookAtEnemy = _isLook;
+	}
 
-	// ターゲットしていないなら
-	if (!pActionController->GetIsTargeting()) return false;
+	void PlayerActState_Base::SetInvicible(bool _isInvicible)
+	{
+		GetPlayer().SetIsInvicible(_isInvicible);
+	}
 
-	if (!IsInputVector(_inputVecter)) return false;
+	CP_RigidBody& PlayerActState_Base::GetRB()
+	{
+		return *pActionController->GetRB();
+	}
 
-	return true;
-}
+	Transform& PlayerActState_Base::GetMyTransform()
+	{
+		return pActionController->GetMyTransform();
+	}
 
-void PlayerActState_Base::UpdateTargetLook()
-{
-	// ターゲットの方向見ないなら
-	if (!isTargetLookAtEnemy) return;
+	CP_Animation* PlayerActState_Base::GetAnimation()
+	{
+		return pActionController->GetAnimation();
+	}
 
-	const ITargetAccepter* pTargetObj = pActionController->GetTargetAccepter();
-	if (!pTargetObj) return;	// ターゲットがいないなら
+	const ITargetAccepter* PlayerActState_Base::GetTargetAccepter()
+	{
+		return pActionController->GetTargetAccepter();
+	}
 
-	Transform& transform = pActionController->GetMyTransform();
+	CP_Player& PlayerActState_Base::GetPlayer()
+	{
+		return pActionController->GetPlayer();
+	}
 
-	// ターゲットへのベクトルを求める
-	const DXSimp::Vector3& playerPos = transform.GetPosition();
-	const DXSimp::Vector3& targetPos = pTargetObj->GetWorldPos();
-	DXSimp::Vector3 vector = targetPos - playerPos;
-	vector.y = 0.0f; vector.Normalize();
+	float PlayerActState_Base::DeltaTime() const
+	{
+		return pActionController->GetCharacter().DeltaTime();
+	}
 
-	// 回転させる
-	DXSimp::Quaternion targetRot = Quat::RotateToVector(vector);
-	DXSimp::Quaternion myRot = transform.GetRotation();
-	myRot = DXSimp::Quaternion::Slerp(myRot, targetRot, targetLookRotateSpeed * DeltaTime());
+	float PlayerActState_Base::GetDeltaSpeed() const
+	{
+		return pActionController->GetCharacter().GetDeltaSpeed();
+	}
 
-	transform.SetRotation(myRot);
+	DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStick() const
+	{
+		return pPlayerInput->GetValue(GameInput::ValueType::Player_Move);
+	}
+
+	DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStickFromCam() const
+	{
+		// 入力値を取得
+		DXSimp::Vector2 inputVec = GetInputLeftStick();
+
+		// カメラから見た入力とする
+		const Transform& camTrans = pActionController->GetCamera().GetTransform();
+		DXSimp::Vector3 inputVecByCam = inputVec.x * camTrans.Right() +
+			inputVec.y * camTrans.Forward();
+		inputVec = { inputVecByCam.x, inputVecByCam.z };
+		inputVec.Normalize();
+
+		return inputVec;
+	}
+
+	DirectX::SimpleMath::Vector3 PlayerActState_Base::GetAtkEnemyPos()
+	{
+		// ターゲットしているなら
+		if (pActionController->GetIsTargeting())
+		{
+			auto* pAccepter = pActionController->GetTargetAccepter();
+			if (pAccepter)
+				return pAccepter->GetWorldPos();
+		}
+
+		// 近くの敵を探す
+		CP_BattleManager* pBattle = CP_BattleManager::GetInstance();
+		if (!pBattle) return DXSimp::Vector3::Zero;
+
+		// 敵リストを取得する
+		const auto& enemyList = pBattle->GetEnemyList();
+
+		// 敵がいないなら
+		if (static_cast<u_int>(enemyList.size()) == 0) return DXSimp::Vector3::Zero;
+
+		// 敵の攻撃座標
+		DXSimp::Vector3 atkEnemyPos;
+		const ITargetAccepter* pAtkEnemy = (*enemyList.begin());
+
+		// 本来は一番近くの敵を取得する
+		atkEnemyPos = pAtkEnemy->GetWorldPos();
+
+		return atkEnemyPos;
+	}
+
+	bool PlayerActState_Base::IsInputVector(InputVector _checkVector)
+	{
+		// 入力値を取得
+		DXSimp::Vector2 inputVec = GetInputLeftStick();
+		if (inputVec.Length() < CAN_ACTION_STICKINPUT) return false;	// 傾きが十分でないなら
+
+		// カメラから見た入力とする
+		const Transform& camTrans = pActionController->GetCamera().GetTransform();
+		DXSimp::Vector3 inputVecByCam = inputVec.x * camTrans.Right() +
+			inputVec.y * camTrans.Forward();
+		inputVec = { inputVecByCam.x, inputVecByCam.z };
+		inputVec.Normalize();
+
+		// 向きを取得
+		DXSimp::Vector3 baseVec;
+
+		// ターゲット時で敵がいるなら　敵の方向ベクトルを基準ベクトルに
+		if (pActionController->GetIsTargeting() &&
+			GetTargetAccepter())
+		{
+			DXSimp::Vector3 targetObjVec =
+				GetTargetAccepter()->GetWorldPos() -
+				GetMyTransform().GetPosition();
+
+			targetObjVec.Normalize(baseVec);
+		}
+		else // 違うなら　プレイヤーの前ベクトル
+			baseVec = GetPlayer().GetTransform().Forward();
+
+		DXSimp::Vector2 baseVecXZ = { baseVec.x, baseVec.z };
+		baseVecXZ.Normalize();
+
+		// スティックの方向が一致しているか見る
+		float dot = inputVec.Dot(baseVecXZ);
+
+		return dot > INPUT_VECTOR_DOT ? true : false;
+	}
+
+	bool PlayerActState_Base::IsRollingInput() const
+	{
+		// ボタン入力
+		if (!pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Rolling)) return false;
+
+		// ローリングできる左スティックの入力ができていない
+		if (std::min(GetInputLeftStick().Length(), 1.0f) < CAN_ACTION_STICKINPUT) return false;
+
+		return true;
+	}
+
+	bool PlayerActState_Base::IsSpecialAtkInput(InputVector _inputVecter)
+	{
+		// ボタン入力
+		if (!pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack)) return false;
+
+		// ターゲットしていないなら
+		if (!pActionController->GetIsTargeting()) return false;
+
+		if (!IsInputVector(_inputVecter)) return false;
+
+		return true;
+	}
+
+	void PlayerActState_Base::UpdateTargetLook()
+	{
+		// ターゲットの方向見ないなら
+		if (!isTargetLookAtEnemy) return;
+
+		const ITargetAccepter* pTargetObj = pActionController->GetTargetAccepter();
+		if (!pTargetObj) return;	// ターゲットがいないなら
+
+		Transform& transform = pActionController->GetMyTransform();
+
+		// ターゲットへのベクトルを求める
+		const DXSimp::Vector3& playerPos = transform.GetPosition();
+		const DXSimp::Vector3& targetPos = pTargetObj->GetWorldPos();
+		DXSimp::Vector3 vector = targetPos - playerPos;
+		vector.y = 0.0f; vector.Normalize();
+
+		// 回転させる
+		DXSimp::Quaternion targetRot = Quat::RotateToVector(vector);
+		DXSimp::Quaternion myRot = transform.GetRotation();
+		myRot = DXSimp::Quaternion::Slerp(myRot, targetRot, targetLookRotateSpeed * DeltaTime());
+
+		transform.SetRotation(myRot);
+	}
 }

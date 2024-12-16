@@ -78,9 +78,6 @@
     <Filter Include="ソース ファイル\Component\Collider\Sphere">
       <UniqueIdentifier>{43f104c6-d005-4633-a3d8-0ae524b6de22}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\Collider\CollisionChecker">
-      <UniqueIdentifier>{ee02f005-9104-4dc7-80e5-56016c5bdf4e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Component\Collider\Base">
       <UniqueIdentifier>{0157a627-13bf-479e-b143-2b1c12827e0c}</UniqueIdentifier>
     </Filter>
@@ -228,9 +225,6 @@
     <Filter Include="ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode">
       <UniqueIdentifier>{d44aa57b-8f2d-4ef1-a0a4-0d076eb8d695}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics\Mesh\SkeletalMesh\MeshTreeNode">
-      <UniqueIdentifier>{f34dc532-0f81-41c8-a776-921bb62f4b26}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\Mesh\MeshGroup">
       <UniqueIdentifier>{092d1475-cec9-4248-840b-91e6725f7546}</UniqueIdentifier>
     </Filter>
@@ -257,9 +251,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Animation\Interpolate\Inertial">
       <UniqueIdentifier>{d4f80aad-a5d1-4b02-a602-d79224bab1b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Method\Interpolation\Ease\Back">
-      <UniqueIdentifier>{0701f74e-b247-4198-b227-cf9b3449b94c}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Method\Interpolation\Ease\Function">
       <UniqueIdentifier>{5a0a1e68-942c-4537-8c48-9c07c48df1d9}</UniqueIdentifier>
@@ -288,9 +279,6 @@
     <Filter Include="ソース ファイル\Method\SaveLoad">
       <UniqueIdentifier>{c41bb637-2180-4783-83dc-6cd1d9c14167}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\Clone">
-      <UniqueIdentifier>{9e9c26aa-1cbe-4a4c-a75f-068f62a5cdeb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Component\InGame\Player">
       <UniqueIdentifier>{8f20992c-476d-48af-ab1a-565fb4cd2840}</UniqueIdentifier>
     </Filter>
@@ -308,9 +296,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Bullet\DebugDraw">
       <UniqueIdentifier>{11045193-0bd7-46a5-a305-506cfbcaff66}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\Test">
-      <UniqueIdentifier>{f2bac984-4244-4f58-8221-3bccd12f183d}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\System\ImGui\Interface">
       <UniqueIdentifier>{64aa98e0-1abe-41e9-ae1b-894e2166dc66}</UniqueIdentifier>
@@ -424,9 +409,6 @@
     <Filter Include="ソース ファイル\Component\Respawner">
       <UniqueIdentifier>{2b656b14-cf49-43bc-b3fb-caedbed283dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Animation\AnimationController\Creater">
-      <UniqueIdentifier>{66359b85-e034-44fe-adf5-2a4dc2d502c4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Animation\TransCondition">
       <UniqueIdentifier>{26d6ccaa-6c1b-4baa-bf76-17945ca88870}</UniqueIdentifier>
     </Filter>
@@ -487,23 +469,8 @@
     <Filter Include="ソース ファイル\Animation\AnimControllPlayer\TransitionChecker">
       <UniqueIdentifier>{f371e2fa-8810-4801-8f37-ee608d7a3298}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\Collider\Test">
-      <UniqueIdentifier>{6774cb9a-dd42-43a1-a66b-0b1c0f8117fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\System\SystemDraw">
       <UniqueIdentifier>{67933a3e-6739-46f8-bc0a-99cbcc12782e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Bullet\CollisionObject">
-      <UniqueIdentifier>{d901bc85-19a8-4f14-bf32-ee07a27321cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Bullet\CollisionObject\RigidBody">
-      <UniqueIdentifier>{d8aee226-f0a9-4e25-89b6-0b94d1b52083}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Bullet\CollisionObject\GhostObject">
-      <UniqueIdentifier>{263c6a30-d9bb-41da-9cb5-98129267f0a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Bullet\CollisionObject\Base">
-      <UniqueIdentifier>{cd05e6a9-bf43-415d-8f04-d27294299ab5}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Bullet\CollisionInfo">
       <UniqueIdentifier>{c0486cea-d8a8-466f-8a36-1798c02af0bf}</UniqueIdentifier>
@@ -682,9 +649,6 @@
     <Filter Include="ソース ファイル\Asset\Creater\Material">
       <UniqueIdentifier>{e6f51b7a-e972-4329-b590-ab33c6425c28}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Asset\Creater\AnimationController">
-      <UniqueIdentifier>{224f1176-7fe3-4e4e-9a1d-1c15263d870e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Asset\AssetSaveLoad">
       <UniqueIdentifier>{e920b94b-d20d-453e-9d2a-5a37f71f5329}</UniqueIdentifier>
     </Filter>
@@ -705,9 +669,6 @@
     </Filter>
     <Filter Include="ソース ファイル\InGame\Player\Action\Controller">
       <UniqueIdentifier>{8007b5fd-3163-4427-92a4-a7ace58b8af8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\InGame\Player\Action\Observer">
-      <UniqueIdentifier>{3c7cea81-6190-47bc-ba54-8d1a1f6f3797}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\InGame\Enemy">
       <UniqueIdentifier>{dc9b3105-0e1c-48a6-9f59-8b3065fa9e87}</UniqueIdentifier>
@@ -744,9 +705,6 @@
     </Filter>
     <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\Idle">
       <UniqueIdentifier>{545b3d9e-caef-4425-959e-398832bdd930}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\CombAttack">
-      <UniqueIdentifier>{261fa268-03f7-4ac3-8b72-0265e47c2420}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\InGame\Character">
       <UniqueIdentifier>{ad09703f-2b45-4a4f-9910-67888da99373}</UniqueIdentifier>
@@ -799,14 +757,8 @@
     <Filter Include="ソース ファイル\Component\Collider\Cylinder">
       <UniqueIdentifier>{9df9eb26-c86d-48da-b9e0-d9754bbb46dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\Collider\Cylinder\JumpAttack">
-      <UniqueIdentifier>{895815e6-92fc-4e24-9814-1d2538ab20f5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\InGame\Camera\State\Target">
       <UniqueIdentifier>{c103a246-7170-4072-8df8-012169b25b52}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\EffectCreater">
-      <UniqueIdentifier>{699f964f-7cc8-4a7a-8e53-a2ce27970312}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Component\Button">
       <UniqueIdentifier>{b54bed7e-988f-4559-b2fe-3e38781386c9}</UniqueIdentifier>
@@ -820,9 +772,6 @@
     <Filter Include="ソース ファイル\Graphics\Shadow">
       <UniqueIdentifier>{0d77d069-9eb9-421f-8297-2f15797cd4fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Animation\AnimationNotify\WarpMotion">
-      <UniqueIdentifier>{e8ab12bb-5bc1-48f9-851b-998e3219f3e4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Sound">
       <UniqueIdentifier>{ec9e47da-f6b6-4a9d-a6c9-2dcd1e18a81f}</UniqueIdentifier>
     </Filter>
@@ -831,9 +780,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Sound\Asset">
       <UniqueIdentifier>{53e3975b-510e-4e97-80f4-7af7828cb900}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\Walk">
-      <UniqueIdentifier>{43127128-d05d-4723-b8cf-79f2d8d619ae}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\InGame\Player\Action\Controller\Base">
       <UniqueIdentifier>{8e1018be-fcdd-47bf-991e-35a65770f867}</UniqueIdentifier>
@@ -900,6 +846,30 @@
     </Filter>
     <Filter Include="ソース ファイル\Animation\AnimControllPlayer\NodePlayer\LayerdNodePlayer">
       <UniqueIdentifier>{58f3bed1-2d37-455b-9e55-1fb49d1fa172}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Attack\Information\Player">
+      <UniqueIdentifier>{034b2e9c-2b2f-4300-8ac0-ce826389cbf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\BreakIdle">
+      <UniqueIdentifier>{2efe6b2e-9db3-472d-9f74-4b8c488d254b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\BreakEndKnock">
+      <UniqueIdentifier>{922b5564-1ad2-47a7-91cf-4f4a9df35690}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\UI\Fade">
+      <UniqueIdentifier>{392f792b-0e3e-4e36-8adb-a11e4154b468}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera\CameraGameOverState">
+      <UniqueIdentifier>{4584bff5-e608-4dea-813f-72cdd9d104ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\JumpAttack">
+      <UniqueIdentifier>{895815e6-92fc-4e24-9814-1d2538ab20f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\Walk">
+      <UniqueIdentifier>{4476129f-e6a0-47a3-8d0c-59c97d9cc743}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationController\Creater">
+      <UniqueIdentifier>{20cccec9-f21a-4a25-bcf5-973c61d832e2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1016,9 +986,6 @@
     <ClCompile Include="VariableFrameRate.cpp">
       <Filter>ソース ファイル\System\Application\FramerRate</Filter>
     </ClCompile>
-    <ClCompile Include="AssetCollection.cpp">
-      <Filter>ソース ファイル\Asset\Collection</Filter>
-    </ClCompile>
     <ClCompile Include="ImGuiMethod.cpp">
       <Filter>ソース ファイル\System\ImGui\ImGuiMethod</Filter>
     </ClCompile>
@@ -1058,9 +1025,6 @@
     <ClCompile Include="Sphere.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\Sphere</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionChecker.cpp">
-      <Filter>ソース ファイル\Component\Collider\CollisionChecker</Filter>
-    </ClCompile>
     <ClCompile Include="MathUseful.cpp">
       <Filter>ソース ファイル\Method\Useful\MathUseful</Filter>
     </ClCompile>
@@ -1078,9 +1042,6 @@
     </ClCompile>
     <ClCompile Include="SF_GameObject.cpp">
       <Filter>ソース ファイル\Scene\SceneFunction\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>ソース ファイル\Graphics\Light</Filter>
     </ClCompile>
     <ClCompile Include="PointLight.cpp">
       <Filter>ソース ファイル\Graphics\Light\PointLight</Filter>
@@ -1142,9 +1103,6 @@
     <ClCompile Include="CP_Collider.cpp">
       <Filter>ソース ファイル\Component\Collider\Base</Filter>
     </ClCompile>
-    <ClCompile Include="AssetGetter.cpp">
-      <Filter>ソース ファイル\Asset\Get</Filter>
-    </ClCompile>
     <ClCompile Include="AssetLoader.cpp">
       <Filter>ソース ファイル\Asset\Loader</Filter>
     </ClCompile>
@@ -1174,9 +1132,6 @@
     </ClCompile>
     <ClCompile Include="IndexBuffer.cpp">
       <Filter>ソース ファイル\Graphics\Buffer\Index</Filter>
-    </ClCompile>
-    <ClCompile Include="AssetSetter.cpp">
-      <Filter>ソース ファイル\Asset\Set</Filter>
     </ClCompile>
     <ClCompile Include="CP_Renderer.cpp">
       <Filter>ソース ファイル\Component\Renderer\Base</Filter>
@@ -1259,9 +1214,6 @@
     <ClCompile Include="GameInput.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
-    <ClCompile Include="IObserever.cpp">
-      <Filter>ソース ファイル\Method\Observe</Filter>
-    </ClCompile>
     <ClCompile Include="IAnimationObserver.cpp">
       <Filter>ソース ファイル\Animation\AnimationObserver</Filter>
     </ClCompile>
@@ -1273,9 +1225,6 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>ソース ファイル\Scene\NewScene</Filter>
-    </ClCompile>
-    <ClCompile Include="CloneComponent.cpp">
-      <Filter>ソース ファイル\Component\Clone</Filter>
     </ClCompile>
     <ClCompile Include="CP_Player.cpp">
       <Filter>ソース ファイル\Component\InGame\Player</Filter>
@@ -1328,14 +1277,8 @@
     <ClCompile Include="SpriteDrawer.cpp">
       <Filter>ソース ファイル\Graphics\Sprite\Drawer</Filter>
     </ClCompile>
-    <ClCompile Include="IAssetCreater.cpp">
-      <Filter>ソース ファイル\Asset\Creater</Filter>
-    </ClCompile>
     <ClCompile Include="CP_SkyBox.cpp">
       <Filter>ソース ファイル\Component\SkyBox</Filter>
-    </ClCompile>
-    <ClCompile Include="CP_BoxAnimation.cpp">
-      <Filter>ソース ファイル\Component\Test</Filter>
     </ClCompile>
     <ClCompile Include="IAnimInterpolate.cpp">
       <Filter>ソース ファイル\Animation\Interpolate\Interface</Filter>
@@ -1358,17 +1301,11 @@
     <ClCompile Include="AnimationNotifyFactory.cpp">
       <Filter>ソース ファイル\Animation\AnimationNotify\AnimationNotifyFactory</Filter>
     </ClCompile>
-    <ClCompile Include="IClassNameGetter.cpp">
-      <Filter>ソース ファイル\Method\TypeName</Filter>
-    </ClCompile>
     <ClCompile Include="ButtonTransArrow.cpp">
       <Filter>ソース ファイル\Animation\AnimTransitionArrow\Button</Filter>
     </ClCompile>
     <ClCompile Include="ComponentRespawner.cpp">
       <Filter>ソース ファイル\Component\Respawner</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimControllerCreater.cpp">
-      <Filter>ソース ファイル\Animation\AnimationController\Creater</Filter>
     </ClCompile>
     <ClCompile Include="TransCondition_Base.cpp">
       <Filter>ソース ファイル\Animation\TransCondition\Base</Filter>
@@ -1387,9 +1324,6 @@
     </ClCompile>
     <ClCompile Include="IntTransCondition.cpp">
       <Filter>ソース ファイル\Animation\TransCondition\Integer</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerActChangeObserver.cpp">
-      <Filter>ソース ファイル\InGame\Player\Action\Observer</Filter>
     </ClCompile>
     <ClCompile Include="TriggerType.cpp">
       <Filter>ソース ファイル\Animation\AnimationPameters\Trigger</Filter>
@@ -1433,9 +1367,6 @@
     <ClCompile Include="AppSystemDraw.cpp">
       <Filter>ソース ファイル\System\SystemDraw</Filter>
     </ClCompile>
-    <ClCompile Include="CP_TestCollider.cpp">
-      <Filter>ソース ファイル\Component\Collider\Test</Filter>
-    </ClCompile>
     <ClCompile Include="CP_RigidBody.cpp">
       <Filter>ソース ファイル\Component\Collider\RigidBody</Filter>
     </ClCompile>
@@ -1460,12 +1391,6 @@
     <ClCompile Include="ANS_ChangeParameter.cpp">
       <Filter>ソース ファイル\Animation\AnimationNotify\State\ChangeParameter</Filter>
     </ClCompile>
-    <ClCompile Include="StateMachine.cpp">
-      <Filter>ソース ファイル\Method\StateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="IAnimParametersSetter.cpp">
-      <Filter>ソース ファイル\Animation\AnimationNotify\IAnimParametersSetter</Filter>
-    </ClCompile>
     <ClCompile Include="CP_UISlider.cpp">
       <Filter>ソース ファイル\Component\UI\Slider</Filter>
     </ClCompile>
@@ -1478,17 +1403,11 @@
     <ClCompile Include="AttackInformation.cpp">
       <Filter>ソース ファイル\InGame\Attack\Information</Filter>
     </ClCompile>
-    <ClCompile Include="IDamageable.cpp">
-      <Filter>ソース ファイル\InGame\Attack\IDamageable</Filter>
-    </ClCompile>
     <ClCompile Include="CP_Weapon.cpp">
       <Filter>ソース ファイル\Component\InGame\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="CP_Character.cpp">
       <Filter>ソース ファイル\Component\InGame\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="SingletonComponent.cpp">
-      <Filter>ソース ファイル\Component\Singleton</Filter>
     </ClCompile>
     <ClCompile Include="CP_HitStopManager.cpp">
       <Filter>ソース ファイル\Component\HitStopManager</Filter>
@@ -1519,9 +1438,6 @@
     </ClCompile>
     <ClCompile Include="CharacterActionController.cpp">
       <Filter>ソース ファイル\InGame\Character\Controller</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterActState_Base.cpp">
-      <Filter>ソース ファイル\InGame\Character\ActionState</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル\System</Filter>
@@ -1565,9 +1481,6 @@
     <ClCompile Include="BossDamageState.cpp">
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Damage</Filter>
     </ClCompile>
-    <ClCompile Include="BossGroundState.cpp">
-      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Ground</Filter>
-    </ClCompile>
     <ClCompile Include="BossIdleState.cpp">
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Idle</Filter>
     </ClCompile>
@@ -1592,20 +1505,11 @@
     <ClCompile Include="PlayerAttackState.cpp">
       <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="BossCombAttack.cpp">
-      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\CombAttack</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerDamageState.cpp">
       <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Damage</Filter>
     </ClCompile>
-    <ClCompile Include="IAttacker.cpp">
-      <Filter>ソース ファイル\InGame\Attack\IAttacker</Filter>
-    </ClCompile>
     <ClCompile Include="BossAttackState.cpp">
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="BossJumpAttack.cpp">
-      <Filter>ソース ファイル\Component\Collider\Cylinder\JumpAttack</Filter>
     </ClCompile>
     <ClCompile Include="CP_CylinderCollider.cpp">
       <Filter>ソース ファイル\Component\Collider\Cylinder</Filter>
@@ -1616,22 +1520,10 @@
     <ClCompile Include="CameraTargetMove.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ISetTargeterForCam.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CP_EffectCreater.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="CP_Button.cpp">
       <Filter>ソース ファイル\Component\Button</Filter>
     </ClCompile>
     <ClCompile Include="CP_ButtonGroup.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CP_TitleButtonGroup.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ANS_WarpMotion.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DXSoundManager.cpp">
@@ -1642,9 +1534,6 @@
     </ClCompile>
     <ClCompile Include="BossGroundMove.cpp">
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Move</Filter>
-    </ClCompile>
-    <ClCompile Include="BossWalkState.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="PlayerActionController_Base.cpp">
       <Filter>ソース ファイル\InGame\Player\Action\Controller\Base</Filter>
@@ -1660,9 +1549,6 @@
     </ClCompile>
     <ClCompile Include="PlayerGroundActionController.cpp">
       <Filter>ソース ファイル\InGame\Player\Action\Controller\Ground</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerAction.cpp">
-      <Filter>ソース ファイル\InGame\Player\Action</Filter>
     </ClCompile>
     <ClCompile Include="CP_GroundCheck.cpp">
       <Filter>ソース ファイル</Filter>
@@ -1684,6 +1570,36 @@
     </ClCompile>
     <ClCompile Include="AnimLayerdNodePlayer.cpp">
       <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\LayerdNodePlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="BossBreakEndKnock.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\BreakEndKnock</Filter>
+    </ClCompile>
+    <ClCompile Include="BossBreakIdle.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\BreakIdle</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraGameOverState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_TitleButtonGroup.cpp">
+      <Filter>ソース ファイル\Component\ButtonGroup\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="BossJumpAttack.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\JumpAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Fade.cpp">
+      <Filter>ソース ファイル\Component\UI\Fade</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAttackInformation.cpp">
+      <Filter>ソース ファイル\InGame\Attack\Information\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAction.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerAction</Filter>
+    </ClCompile>
+    <ClCompile Include="BossWalkState.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Walk</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimControllerCreater.cpp">
+      <Filter>ソース ファイル\Animation\AnimationController\Creater</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1788,9 +1704,6 @@
     </ClInclude>
     <ClInclude Include="Sphere.h">
       <Filter>ソース ファイル\Graphics\Mesh\Sphere</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionChecker.h">
-      <Filter>ソース ファイル\Component\Collider\CollisionChecker</Filter>
     </ClInclude>
     <ClInclude Include="MathUseful.h">
       <Filter>ソース ファイル\Method\Useful\MathUseful</Filter>
@@ -2026,9 +1939,6 @@
     <ClInclude Include="CP_EaseTest.h">
       <Filter>ソース ファイル\Component\InGame\Test</Filter>
     </ClInclude>
-    <ClInclude Include="CloneComponent.h">
-      <Filter>ソース ファイル\Component\Clone</Filter>
-    </ClInclude>
     <ClInclude Include="ISaveLoad.h">
       <Filter>ソース ファイル\Method\SaveLoad</Filter>
     </ClInclude>
@@ -2101,9 +2011,6 @@
     <ClInclude Include="CP_SkyBox.h">
       <Filter>ソース ファイル\Component\SkyBox</Filter>
     </ClInclude>
-    <ClInclude Include="CP_BoxAnimation.h">
-      <Filter>ソース ファイル\Component\Test</Filter>
-    </ClInclude>
     <ClInclude Include="MaterialCreater.h">
       <Filter>ソース ファイル\Asset\Creater\Material</Filter>
     </ClInclude>
@@ -2140,9 +2047,6 @@
     <ClInclude Include="ComponentRespawner.h">
       <Filter>ソース ファイル\Component\Respawner</Filter>
     </ClInclude>
-    <ClInclude Include="AnimControllerCreater.h">
-      <Filter>ソース ファイル\Animation\AnimationController\Creater</Filter>
-    </ClInclude>
     <ClInclude Include="AnimNotifyConcept.h">
       <Filter>ソース ファイル\Animation\AnimationNotify</Filter>
     </ClInclude>
@@ -2169,12 +2073,6 @@
     </ClInclude>
     <ClInclude Include="AnimationParameterType.h">
       <Filter>ソース ファイル\Animation\AnimationPameters</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimConntrollerType.h">
-      <Filter>ソース ファイル\Animation\AnimationController</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerActChangeObserver.h">
-      <Filter>ソース ファイル\InGame\Player\Action\Observer</Filter>
     </ClInclude>
     <ClInclude Include="TriggerType.h">
       <Filter>ソース ファイル\Animation\AnimationPameters\Trigger</Filter>
@@ -2217,9 +2115,6 @@
     </ClInclude>
     <ClInclude Include="AppSystemDraw.h">
       <Filter>ソース ファイル\System\SystemDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="CP_TestCollider.h">
-      <Filter>ソース ファイル\Component\Collider\Test</Filter>
     </ClInclude>
     <ClInclude Include="CP_RigidBody.h">
       <Filter>ソース ファイル\Component\Collider\RigidBody</Filter>
@@ -2377,9 +2272,6 @@
     <ClInclude Include="PlayerAttackState.h">
       <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="BossCombAttack.h">
-      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\CombAttack</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerDamageState.h">
       <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Damage</Filter>
     </ClInclude>
@@ -2390,7 +2282,7 @@
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Attack</Filter>
     </ClInclude>
     <ClInclude Include="BossJumpAttack.h">
-      <Filter>ソース ファイル\Component\Collider\Cylinder\JumpAttack</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\JumpAttack</Filter>
     </ClInclude>
     <ClInclude Include="CP_CylinderCollider.h">
       <Filter>ソース ファイル\Component\Collider\Cylinder</Filter>
@@ -2399,9 +2291,6 @@
       <Filter>ソース ファイル\InGame\Camera\State\Move</Filter>
     </ClInclude>
     <ClInclude Include="CameraTargetMove.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ISetTargeterForCam.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="CP_EffectCreater.h">
@@ -2413,12 +2302,6 @@
     <ClInclude Include="CP_ButtonGroup.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CP_TitleButtonGroup.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ANS_WarpMotion.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="DXSoundManager.h">
       <Filter>ソース ファイル\Sound\Manager</Filter>
     </ClInclude>
@@ -2427,9 +2310,6 @@
     </ClInclude>
     <ClInclude Include="BossGroundMove.h">
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Move</Filter>
-    </ClInclude>
-    <ClInclude Include="BossWalkState.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="PlayerActionController_Base.h">
       <Filter>ソース ファイル\InGame\Player\Action\Controller\Base</Filter>
@@ -2448,9 +2328,6 @@
     </ClInclude>
     <ClInclude Include="PlayerGroundActionController.h">
       <Filter>ソース ファイル\InGame\Player\Action\Controller\Ground</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerAction.h">
-      <Filter>ソース ファイル\InGame\Player\Action</Filter>
     </ClInclude>
     <ClInclude Include="CP_GroundCheck.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -2475,6 +2352,36 @@
     </ClInclude>
     <ClInclude Include="AnimLayerdNodePlayer.h">
       <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\LayerdNodePlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="BossBreakEndKnock.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\BreakEndKnock</Filter>
+    </ClInclude>
+    <ClInclude Include="BossBreakIdle.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\BreakIdle</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAnimReference.h">
+      <Filter>ソース ファイル\InGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraGameOverState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_TitleButtonGroup.h">
+      <Filter>ソース ファイル\Component\ButtonGroup\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Fade.h">
+      <Filter>ソース ファイル\Component\UI\Fade</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAttackInformation.h">
+      <Filter>ソース ファイル\InGame\Attack\Information\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAction.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerAction</Filter>
+    </ClInclude>
+    <ClInclude Include="BossWalkState.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Walk</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimControllerCreater.h">
+      <Filter>ソース ファイル\Animation\AnimationController\Creater</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -44,42 +44,6 @@
                 "active": true,
                 "components": [
                     {
-                        "enable": true,
-                        "name": "BattleManager",
-                        "priority": 0,
-                        "radius": 40.29999923706055
-                    }
-                ],
-                "layer": 0,
-                "name": "BattleManager",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
                         "AABB": false,
                         "angles": [
                             0.0,
@@ -116,6 +80,7 @@
                         "priority": 0
                     },
                     {
+                        "alpha": 1.0,
                         "enable": true,
                         "name": "SpriteRenderer",
                         "priority": 0,
@@ -597,10 +562,6 @@
                                             "rotateSpeed": 7.0
                                         },
                                         "typeString": "Move"
-                                    },
-                                    {
-                                        "data": null,
-                                        "typeString": "Attack11"
                                     }
                                 ],
                                 "downForcePower": -45.0
@@ -634,7 +595,13 @@
                                             "attackCnt": 1,
                                             "attackInfos": [
                                                 {
+                                                    "break": 1.0,
                                                     "damage": 2.0,
+                                                    "hitVfx": {
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
                                                     "level": 0
                                                 }
                                             ],
@@ -659,7 +626,13 @@
                                             "attackCnt": 1,
                                             "attackInfos": [
                                                 {
+                                                    "break": 1.0,
                                                     "damage": 2.9000000953674316,
+                                                    "hitVfx": {
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
                                                     "level": 0
                                                 }
                                             ],
@@ -684,7 +657,13 @@
                                             "attackCnt": 1,
                                             "attackInfos": [
                                                 {
+                                                    "break": 1.0,
                                                     "damage": 2.0,
+                                                    "hitVfx": {
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
                                                     "level": 0
                                                 }
                                             ],
@@ -736,7 +715,13 @@
                                             "attackCnt": 1,
                                             "attackInfos": [
                                                 {
+                                                    "break": 1.0,
                                                     "damage": 4.0,
+                                                    "hitVfx": {
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
                                                     "level": 0
                                                 }
                                             ],
@@ -761,7 +746,13 @@
                                             "attackCnt": 1,
                                             "attackInfos": [
                                                 {
+                                                    "break": 1.0,
                                                     "damage": 3.299999952316284,
+                                                    "hitVfx": {
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
                                                     "level": 0
                                                 }
                                             ],
@@ -799,11 +790,23 @@
                                             "attackCnt": 2,
                                             "attackInfos": [
                                                 {
+                                                    "break": 1.0,
                                                     "damage": 4.199999809265137,
+                                                    "hitVfx": {
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
                                                     "level": 0
                                                 },
                                                 {
+                                                    "break": 1.0,
                                                     "damage": 6.199999809265137,
+                                                    "hitVfx": {
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
                                                     "level": 0
                                                 }
                                             ],
@@ -833,7 +836,17 @@
                                     {
                                         "data": {
                                             "canParryTime": 12,
-                                            "parryAngle": 180.0
+                                            "parryAngle": 180.0,
+                                            "vfxInfo": {
+                                                "scale": 1.0,
+                                                "speed": 1.0,
+                                                "startFrame": 0
+                                            },
+                                            "vfxOffset": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ]
                                         },
                                         "typeString": "Guard"
                                     },
@@ -905,7 +918,6 @@
                         },
                         "camObjName": "Camera",
                         "enable": true,
-                        "guardBarObjName": "Player_GuardBar",
                         "hpBarObjName": "Player_HpBar",
                         "maxHp": 100.0,
                         "name": "Player",

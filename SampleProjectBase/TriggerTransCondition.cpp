@@ -1,24 +1,27 @@
 #include "pch.h"
 #include "TriggerTransCondition.h"
 
-TriggerTransCondition::TriggerTransCondition(const std::string& _parameterName)
-    : TransCondition_Base(_parameterName, HashiTaku::AnimParam::TypeKind::Trigger)
+namespace HashiTaku
 {
-}
+    TriggerTransCondition::TriggerTransCondition(const std::string& _parameterName)
+        : TransCondition_Base(_parameterName, AnimParam::TypeKind::Trigger)
+    {
+    }
 
-bool TriggerTransCondition::IsCondition(HashiTaku::AnimParam::conditionValType _checkValue) const
-{
-    TriggerType* pTrigger = std::get_if<TriggerType>(&_checkValue);
-    assert(pTrigger && "トリガータイプでありません");
+    bool TriggerTransCondition::IsCondition(AnimParam::conditionValType _checkValue) const
+    {
+        TriggerType* pTrigger = std::get_if<TriggerType>(&_checkValue);
+        assert(pTrigger && "トリガータイプでありません");
 
-    return pTrigger->GetIsTrigger();
-}
+        return pTrigger->GetIsTrigger();
+    }
 
-nlohmann::json TriggerTransCondition::Save()
-{
-    return nlohmann::json();
-}
+    nlohmann::json TriggerTransCondition::Save()
+    {
+        return nlohmann::json();
+    }
 
-void TriggerTransCondition::Load(const nlohmann::json& _data)
-{
+    void TriggerTransCondition::Load(const nlohmann::json& _data)
+    {
+    }
 }

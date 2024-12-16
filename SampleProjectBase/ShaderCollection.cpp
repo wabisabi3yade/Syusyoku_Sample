@@ -1,115 +1,115 @@
 #include "ShaderCollection.h"
-
 #include "ShaderDefine.h"
 
-std::vector<const std::string*> ShaderCollection::GetVSNameList()
+namespace HashiTaku
 {
-	std::vector<const std::string*> nameList;
-
-	// 頂点シェーダーの名前を取得
-	for (auto& shader : shaderList)
+	std::vector<const std::string*> ShaderCollection::GetVSNameList()
 	{
-		if (shader.second->GetShaderType() == Shader::Type::Vertex)
-			nameList.push_back(&shader.first);
+		std::vector<const std::string*> nameList;
+
+		// 頂点シェーダーの名前を取得
+		for (auto& shader : shaderList)
+		{
+			if (shader.second->GetShaderType() == Shader::Type::Vertex)
+				nameList.push_back(&shader.first);
+		}
+
+		return nameList;
 	}
 
-	return nameList;
-}
-
-std::vector<const std::string*> ShaderCollection::GetPSNameList()
-{
-	std::vector<const std::string*> nameList;
-
-	// 頂点シェーダーの名前を取得
-	for (auto& shader : shaderList)
+	std::vector<const std::string*> ShaderCollection::GetPSNameList()
 	{
-		if (shader.second->GetShaderType() == Shader::Type::Pixel)
-			nameList.push_back(&shader.first);
+		std::vector<const std::string*> nameList;
+
+		// 頂点シェーダーの名前を取得
+		for (auto& shader : shaderList)
+		{
+			if (shader.second->GetShaderType() == Shader::Type::Pixel)
+				nameList.push_back(&shader.first);
+		}
+
+		return nameList;
 	}
 
-	return nameList;
-}
-
-void ShaderCollection::LoadFromCSO()
-{
-	// 頂点シェーダー
-	LoadShader<VS_Object>("VS_Object.cso");
-	LoadShader<VS_Gouraud>("VS_Gouraud.cso");
-	LoadShader<VS_Primitive>("VS_Primitive.cso");
-	LoadShader<VS_SkinnedAnimation>("VS_SkinAnimation.cso");
-	LoadShader<VertexShader>("VS_Line.cso");
-	LoadShader<VS_WorldPosition>("VS_WorldPosition.cso");
-	LoadShader<VertexShader>("VS_Sprite.cso");
-	LoadShader<VertexShader>("VS_UI.cso");
-	LoadShader<VertexShader>("VS_OutLine.cso");
-	defaultVS = "VS_WorldPosition";
-
-	// ピクセルシェーダー
-	LoadShader<PS_Toon>("PS_Toon.cso");
-	LoadShader<PS_TexColor>("PS_TexColor.cso");
-	LoadShader<PS_Unlit>("PS_Unlit.cso");
-	LoadShader<PixelShader>("PS_Primitive.cso");
-	LoadShader<PixelShader>("PS_Line.cso");
-	LoadShader<PixelShader>("PS_UI.cso");
-	LoadShader<PixelShader>("PS_OutLine.cso");
-	defaultPS = "PS_Unlit";
-}
-
-void ShaderCollection::Init()
-{
-	LoadFromCSO();	// csoファイルをロードする
-}
-
-void ShaderCollection::UniqueUpdateBuffer()
-{
-	// オブジェクトごとに依存しないバッファ更新
-	for (auto& shader : shaderList)
+	void ShaderCollection::LoadFromCSO()
 	{
-		shader.second->OnceUpdateBuffer();
-	}
-}
+		// 頂点シェーダー
+		LoadShader<VS_Object>("VS_Object.cso");
+		LoadShader<VS_Gouraud>("VS_Gouraud.cso");
+		LoadShader<VS_Primitive>("VS_Primitive.cso");
+		LoadShader<VS_SkinnedAnimation>("VS_SkinAnimation.cso");
+		LoadShader<VertexShader>("VS_Line.cso");
+		LoadShader<VS_WorldPosition>("VS_WorldPosition.cso");
+		LoadShader<VertexShader>("VS_Sprite.cso");
+		LoadShader<VertexShader>("VS_UI.cso");
+		LoadShader<VertexShader>("VS_OutLine.cso");
+		defaultVS = "VS_WorldPosition";
 
-VertexShader* ShaderCollection::GetVertexShader(const std::string& _shaderName)
-{
-	auto itr = shaderList.find(_shaderName);
-	if (itr == shaderList.end())	// シェーダーがなければ
-	{
-		HASHI_DEBUG_LOG(_shaderName + " が見つかりませんでした");
-		return nullptr;
+		// ピクセルシェーダー
+		LoadShader<PS_Toon>("PS_Toon.cso");
+		LoadShader<PS_TexColor>("PS_TexColor.cso");
+		LoadShader<PS_Unlit>("PS_Unlit.cso");
+		LoadShader<PixelShader>("PS_Primitive.cso");
+		LoadShader<PixelShader>("PS_Line.cso");
+		LoadShader<PixelShader>("PS_UI.cso");
+		LoadShader<PixelShader>("PS_OutLine.cso");
+		defaultPS = "PS_Unlit";
 	}
 
-	VertexShader* retPtr = dynamic_cast<VertexShader*>(itr->second.get());
+	void ShaderCollection::Init()
+	{
+		LoadFromCSO();	// csoファイルをロードする
+	}
+
+	void ShaderCollection::UniqueUpdateBuffer()
+	{
+		// オブジェクトごとに依存しないバッファ更新
+		for (auto& shader : shaderList)
+		{
+			shader.second->OnceUpdateBuffer();
+		}
+	}
+
+	VertexShader* ShaderCollection::GetVertexShader(const std::string& _shaderName)
+	{
+		auto itr = shaderList.find(_shaderName);
+		if (itr == shaderList.end())	// シェーダーがなければ
+		{
+			HASHI_DEBUG_LOG(_shaderName + " が見つかりませんでした");
+			return nullptr;
+		}
+
+		VertexShader* retPtr = dynamic_cast<VertexShader*>(itr->second.get());
 #ifdef EDIT
-	if (retPtr == nullptr)
-	{
-		HASHI_DEBUG_LOG(_shaderName + "指定したシェーダー名は頂点シェーダーではありません");
-		return nullptr;
-	}
+		if (retPtr == nullptr)
+		{
+			HASHI_DEBUG_LOG(_shaderName + "指定したシェーダー名は頂点シェーダーではありません");
+			return nullptr;
+		}
 #endif
 
-	return retPtr;
-}
-
-PixelShader* ShaderCollection::GetPixelShader(const std::string& _shaderName)
-{
-	auto itr = shaderList.find(_shaderName);
-	if (itr == shaderList.end())	// 同じ名前のシェーダーを見つけたら
-	{
-		HASHI_DEBUG_LOG(_shaderName + " が見つかりませんでした");
-		return nullptr;
+		return retPtr;
 	}
 
-	PixelShader* retPtr = dynamic_cast<PixelShader*>(itr->second.get());
+	PixelShader* ShaderCollection::GetPixelShader(const std::string& _shaderName)
+	{
+		auto itr = shaderList.find(_shaderName);
+		if (itr == shaderList.end())	// 同じ名前のシェーダーを見つけたら
+		{
+			HASHI_DEBUG_LOG(_shaderName + " が見つかりませんでした");
+			return nullptr;
+		}
+
+		PixelShader* retPtr = dynamic_cast<PixelShader*>(itr->second.get());
 #ifdef EDIT
-	if (retPtr == nullptr)
-	{
+		if (retPtr == nullptr)
+		{
 
-		HASHI_DEBUG_LOG(_shaderName + "指定したシェーダーはピクセルシェーダーではありません");
-		return nullptr;
-	}
+			HASHI_DEBUG_LOG(_shaderName + "指定したシェーダーはピクセルシェーダーではありません");
+			return nullptr;
+		}
 #endif
 
-	return retPtr;
+		return retPtr;
+	}
 }
-
-

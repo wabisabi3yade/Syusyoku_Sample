@@ -3,13 +3,16 @@
 
 #include "AnimTransitionArrow.h"
 
-HashiTaku::AnimParam::AnimParamObserver::AnimParamObserver(IAnimParamRelater& _arrow, const std::string& _observerName)
-	: IObserver(_observerName), pInterface(&_arrow)
+namespace HashiTaku
 {
-}
+	AnimParam::AnimParamObserver::AnimParamObserver(IAnimParamRelater& _arrow, const std::string& _observerName)
+		: IObserver(_observerName), pInterface(&_arrow)
+	{
+	}
 
-void HashiTaku::AnimParam::AnimParamObserver::ObserverUpdate(const NotificationData& _notifyData)
-{
-	pInterface->AcceptAnimParamData(_notifyData);
-	HASHI_DEBUG_LOG(GetObserverName() + "‚ª’Ê’m‚³‚ê‚Ü‚µ‚½");
+	void AnimParam::AnimParamObserver::ObserverUpdate(const NotificationData& _notifyData)
+	{
+		pInterface->AcceptAnimParamData(_notifyData);
+		HASHI_DEBUG_LOG(GetObserverName() + "‚ª’Ê’m‚³‚ê‚Ü‚µ‚½");
+	}
 }

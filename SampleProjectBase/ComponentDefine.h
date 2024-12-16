@@ -42,11 +42,7 @@
 #include "CP_UISlider.h"
 #include "CP_Button.h"
 #include "CP_TitleButtonGroup.h"
+#include "CP_Fade.h"
 
 // エフェクト
 #include "CP_VisualEffect.h"
-#include "CP_EffectCreater.h"
-
-// テスト
-#include "CP_EaseTest.h"
-#include "CP_BoxAnimation.h"

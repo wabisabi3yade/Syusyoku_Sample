@@ -1,22 +1,25 @@
 #pragma once
 
-class AssetDisplay;
-class DX11BulletPhisics;
-
-/// @brief ImGuiでシステム関連の描画を行う
-class AppSystemDraw : public Singleton_Base<AppSystemDraw>, public HashiTaku::IImGuiUser
+namespace HashiTaku
 {
-	friend class Singleton_Base<AppSystemDraw>;
+	class AssetDisplay;
+	class DX11BulletPhisics;
 
-	/// @brief 可変フレームレートクラス
-	VariableFrameRate* pFrameRate;
-	
-public:
-	void Init(VariableFrameRate& _variabeFrameRate);
+	/// @brief ImGuiでシステム関連の描画を行う
+	class AppSystemDraw : public Singleton_Base<AppSystemDraw>, public IImGuiUser
+	{
+		friend class Singleton_Base<AppSystemDraw>;
 
-private:
-	AppSystemDraw();
-	~AppSystemDraw() {}
-	void ImGuiDebug() override;
-};
+		/// @brief 可変フレームレートクラス
+		VariableFrameRate* pFrameRate;
+
+	public:
+		void Init(VariableFrameRate& _variabeFrameRate);
+
+	private:
+		AppSystemDraw();
+		~AppSystemDraw() {}
+		void ImGuiDebug() override;
+	};
+}
 

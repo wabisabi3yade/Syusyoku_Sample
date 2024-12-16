@@ -3,9 +3,12 @@
 
 #include "AssetSetter.h"
 
-AnimationController& AnimControllerCreater::CraeteAsset(const std::string& _assetName)
+namespace HashiTaku
 {
-	std::unique_ptr<AnimationController> pCreate = std::make_unique<AnimationController>();
+	AnimationController& AnimControllerCreater::CraeteAsset(const std::string& _assetName)
+	{
+		std::unique_ptr<AnimationController> pCreate = std::make_unique<AnimationController>();
 
-	return *AssetSetter::SetAsset<AnimationController>(_assetName, std::move(pCreate));
+		return *AssetSetter::SetAsset<AnimationController>(_assetName, std::move(pCreate));
+	}
 }

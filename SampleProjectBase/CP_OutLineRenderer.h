@@ -3,42 +3,44 @@
 #include "VertexShader.h"
 #include "PixelShader.h"
 
-class Mesh_Group;
-
-/// @brief アウトライン描画コンポーネント(MeshRendererの後にする)
-class CP_OutLineRenderer : public CP_Renderer
+namespace HashiTaku
 {
-	/// @brief アウトライン頂点シェーダー
-	static VertexShader* pOutLineVS;
+	class Mesh_Group;
 
-	/// @brief アウトラインピクセルシェーダー
-	static PixelShader* pOutLinePS;
+	/// @brief アウトライン描画コンポーネント(MeshRendererの後にする)
+	class CP_OutLineRenderer : public CP_Renderer
+	{
+		/// @brief アウトライン頂点シェーダー
+		static VertexShader* pOutLineVS;
 
-	/// @brief 描画するメッシュ
-	Mesh_Group* pRenderMesh;
-public:
-	CP_OutLineRenderer();
-	~CP_OutLineRenderer() {}
+		/// @brief アウトラインピクセルシェーダー
+		static PixelShader* pOutLinePS;
 
-	/// @brief 初期化
-	void Init() override;
-private:	
-	void Start() override;
+		/// @brief 描画するメッシュ
+		Mesh_Group* pRenderMesh;
+	public:
+		CP_OutLineRenderer();
+		~CP_OutLineRenderer() {}
 
-	/// @brief 描画
-	void Draw() override;
-	void DrawSetup();
+		/// @brief 初期化
+		void Init() override;
+	private:
+		void Start() override;
 
-	/// @brief  アウトラインシェーダーを取得する
-	void GetShader();
+		/// @brief 描画
+		void Draw() override;
+		void DrawSetup();
 
-	/// @brief MeshRendererからメッシュを取得する
-	void GetRenderMesh();
+		/// @brief  アウトラインシェーダーを取得する
+		void GetShader();
 
-	/// @brief ロード行列作成
-	/// @return ロード行列
-	DirectX::SimpleMath::Matrix MakeLoadMatrix();
+		/// @brief MeshRendererからメッシュを取得する
+		void GetRenderMesh();
 
-	void ImGuiDebug() override;
-};
+		/// @brief ロード行列作成
+		/// @return ロード行列
+		DXSimp::Matrix MakeLoadMatrix();
 
+		void ImGuiDebug() override;
+	};
+}

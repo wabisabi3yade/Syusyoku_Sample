@@ -5,40 +5,49 @@
 #include "Sprite.h"
 #include "Material.h"
 
-// スプライトを描画するコンポーネント
-class CP_SpriteRenderer : public CP_Renderer
+namespace HashiTaku
 {
-	// スプライト
-	std::unique_ptr<Sprite> pSprite;
+	// スプライトを描画するコンポーネント
+	class CP_SpriteRenderer : public CP_Renderer
+	{
+		// スプライト
+		std::unique_ptr<Sprite> pSprite;
 
-	// マテリアル
-	Material* pMaterial{ nullptr };
+		/// @brief α値
+		float alpha;
 
-	// マテリアルの準備
-	void MaterialSetup();
+		// マテリアル
+		Material* pMaterial{ nullptr };
 
-	// 描画準備
-	void DrawSetup();
+		// マテリアルの準備
+		void MaterialSetup();
 
-public:
-	CP_SpriteRenderer();
-	CP_SpriteRenderer(const CP_SpriteRenderer& _other);
-	CP_SpriteRenderer& operator=(const CP_SpriteRenderer& _other);
-	
-	void Init() override;
+		// 描画準備
+		void DrawSetup();
 
-	void Draw() override;
+	public:
+		CP_SpriteRenderer();
 
-	void ImGuiDebug() override;
+		void Init() override;
 
-	void SetTexture(Texture& _texture);
+		void Draw() override;
 
-	void SetMaterial(Material& _material);
+		void SetTexture(Texture& _texture);
 
-	nlohmann::json Save() override;
-	void Load(const nlohmann::json& _data) override;
-private:
+		void SetMaterial(Material& _material);
 
-	void Copy(const CP_SpriteRenderer& _other);
-};
+		/// @brief α値をセット
+		/// @param _alpha α値
+		void SetAlpha(float _alpha);
 
+		/// @brief α値を取得する
+		/// @return α値
+		float GetAlpha() const;
+
+		nlohmann::json Save() override;
+		void Load(const nlohmann::json& _data) override;
+
+	private:
+		void ImGuiDebug() override;
+	};
+}

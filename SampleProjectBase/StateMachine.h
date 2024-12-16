@@ -63,6 +63,10 @@ namespace HashiTaku
 		/// @return 現在のノード
 		StateNode_Base* GetCurrentNode();
 
+		/// @brief 指定したノードを取得
+		/// @return 指定したノード
+		StateNode_Base* GetNode(const T& _key);
+
 	protected:
 		/// @brief 開始処理
 		void Begin();
@@ -237,7 +241,7 @@ namespace HashiTaku
 		}
 
 		currentStateKey = _defaultKey;
-		pDefaultNode = stateNodeList[_defaultKey].get();
+		pDefaultNode = stateNodeList.at(_defaultKey).get();
 
 #ifdef EDIT
 		prevStateKey = currentStateKey;
@@ -247,6 +251,13 @@ namespace HashiTaku
 	inline StateNode_Base* StateMachine_Base<T>::GetCurrentNode()
 	{
 		return pCurrentNode;
+	}
+	template<class T>
+	inline StateNode_Base* StateMachine_Base<T>::GetNode(const T& _key)
+	{
+		if (!stateNodeList.contains(_key)) return nullptr;
+
+		return stateNodeList.at(_key).get();
 	}
 }
 

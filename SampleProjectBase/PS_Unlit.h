@@ -1,12 +1,15 @@
 #pragma once
 #include "PixelShader.h"
 
-/// @brief Unlitのピクセルシェーダー
-class PS_Unlit : public PixelShader
+namespace HashiTaku
 {
-public:
-	PS_Unlit();
-	~PS_Unlit() {}
+	/// @brief Unlitのピクセルシェーダー
+	class PS_Unlit : public PixelShader
+	{
+	public:
+		PS_Unlit();
+		~PS_Unlit() {}
 
-	void OnceUpdateBuffer() override;
-};
+		void OnceUpdateBuffer() override;
+	};
+}

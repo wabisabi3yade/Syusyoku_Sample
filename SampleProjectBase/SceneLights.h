@@ -6,66 +6,64 @@
 #include "PointLight.h"
 #include "SpotLight.h"
 
-// バッファクラス
-
-// ライトの最大数
-constexpr u_int  MAX_POINTLIGHT(10);
-constexpr u_int  MAX_SPOTLIGHT(4);
-
-// シーン内の光源のパラメータ
-struct SceneLightsParam
+namespace HashiTaku
 {
-	DirectionLParameter dirParam;
+	// ライトの最大数
+	constexpr u_int  MAX_POINTLIGHT(10);
+	constexpr u_int  MAX_SPOTLIGHT(4);
 
-	/*PointLParameter pointParams[MAX_POINTLIGHT];
+	// シーン内の光源のパラメータ
+	struct SceneLightsParam
+	{
+		DirectionLParameter dirParam;
 
-	SpotLParameter spotParams[MAX_SPOTLIGHT];*/
-};
+		/*PointLParameter pointParams[MAX_POINTLIGHT];
 
-// シーン内の光源リスト
-class SceneLights : public HashiTaku::IImGuiUser
-{
-private:
-	/// @brief シーン内の光源パラメータ
-	std::unique_ptr<SceneLightsParam> pSceneLightsParam;
+		SpotLParameter spotParams[MAX_SPOTLIGHT];*/
+	};
 
-	// ディレクション
-	std::unique_ptr<DirectionLight> pDirection;
+	// シーン内の光源リスト
+	class SceneLights : public IImGuiUser
+	{
+	private:
+		/// @brief シーン内の光源パラメータ
+		std::unique_ptr<SceneLightsParam> pSceneLightsParam;
 
-	// ポイントライト
-	std::list<std::unique_ptr<PointLight>> pPointLights;
+		// ディレクション
+		std::unique_ptr<DirectionLight> pDirection;
 
-	// スポットライト
-	std::list<std::unique_ptr<SpotLight>> pSpotLights;
+		// ポイントライト
+		std::list<std::unique_ptr<PointLight>> pPointLights;
 
-public:
-	SceneLights();
-	~SceneLights() {};
+		// スポットライト
+		std::list<std::unique_ptr<SpotLight>> pSpotLights;
 
-	void Update();
+	public:
+		SceneLights();
+		~SceneLights() {};
 
-	// 各ライトセット
-	DirectionLight* SetDirectionLight(std::unique_ptr<DirectionLight> _direction);
-	PointLight* SetPointLight(std::unique_ptr<PointLight> _point);
-	SpotLight* SetSpotLight(std::unique_ptr<SpotLight> _spot);
+		void Update();
 
-	/// @brief 光源のパラメータを取得する
-	/// @return 光源パラメータ
-	SceneLightsParam& GetLightsParam();
+		// 各ライトセット
+		DirectionLight* SetDirectionLight(std::unique_ptr<DirectionLight> _direction);
+		PointLight* SetPointLight(std::unique_ptr<PointLight> _point);
+		SpotLight* SetSpotLight(std::unique_ptr<SpotLight> _spot);
 
-private:
-	// 光源のパラメータを更新する
-	void UpdateParameter();
+		/// @brief 光源のパラメータを取得する
+		/// @return 光源パラメータ
+		SceneLightsParam& GetLightsParam();
 
-	void ImGuiDebug() override;
+	private:
+		// 光源のパラメータを更新する
+		void UpdateParameter();
 
-	// ImGuiの表示
-	void ImGuiDirection();
-	void ImGuiPoint();
-	void ImGuiSpot();
+		void ImGuiDebug() override;
 
-	void Draw();
-};
+		// ImGuiの表示
+		void ImGuiDirection();
+		void ImGuiPoint();
+		void ImGuiSpot();
 
-
-
+		void Draw();
+	};
+}

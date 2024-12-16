@@ -2,64 +2,77 @@
 #include "CP_Renderer.h"
 #include "Polygon2D.h"
 
-class VertexShader;
-class PixelShader;
-class Texture;
-
-class CP_UIRenderer : public CP_Renderer
+namespace HashiTaku
 {
-	/// @brief UI描画に使用する頂点シェーダー
-	static VertexShader* pVertexShader;
+	class VertexShader;
+	class PixelShader;
+	class Texture;
 
-	/// @brief UI描画に使用するピクセルシェーダー
-	static PixelShader* pPixelShader;
+	class CP_UIRenderer : public CP_Renderer
+	{
+		/// @brief UI描画に使用する頂点シェーダー
+		static VertexShader* pVertexShader;
 
-	/// @brief シェーダーが既にセットされているか？
-	static bool isSetShader;
+		/// @brief UI描画に使用するピクセルシェーダー
+		static PixelShader* pPixelShader;
 
-	/// @brief 表示するテクスチャ
-	const Texture* pTexture;
+		/// @brief シェーダーが既にセットされているか？
+		static bool isSetShader;
 
-protected:
-	/// @brief テクスチャを貼るポリゴン
-	std::unique_ptr<Polygon2D> pPolygon;
+		/// @brief 表示するテクスチャ
+		const Texture* pTexture;
 
-public:
-	CP_UIRenderer();
-	virtual ~CP_UIRenderer(){}
+		/// @brief α値
+		float alpha;
 
-	void Init() override;
-	void OnChangeScale();
-	void OnChangePosition();
-	void OnChangeRotation();
+	protected:
+		/// @brief テクスチャを貼るポリゴン
+		std::unique_ptr<Polygon2D> pPolygon;
 
-	/// @brief テクスチャをセット
-	/// @param _setTexture セットするテクスチャ
-	void SetTexture(const Texture& _setTexture);
+	public:
+		CP_UIRenderer();
+		virtual ~CP_UIRenderer() {}
 
-	/// @brief UV座標をセット
-	/// @param _startUV 開始UV
-	/// @param _endUV 終点UV
-	void SetUV(const DirectX::SimpleMath::Vector2& _startUV, const DirectX::SimpleMath::Vector2& _endUV);
+		void Init() override;
+		void OnChangeScale();
+		void OnChangePosition();
+		void OnChangeRotation();
 
-	/// @brief セーブする
-	/// @param _data セーブシーンデータ
-	nlohmann::json Save() override;
+		/// @brief テクスチャをセット
+		/// @param _setTexture セットするテクスチャ
+		void SetTexture(const Texture& _setTexture);
 
-	/// @brief ロードする
-	/// @param _data ロードするシーンデータ 
-	void Load(const nlohmann::json& _data) override;
+		/// @brief UV座標をセット
+		/// @param _startUV 開始UV
+		/// @param _endUV 終点UV
+		void SetUV(const DirectX::SimpleMath::Vector2& _startUV, const DirectX::SimpleMath::Vector2& _endUV);
 
-protected:
-	/// @brief サイズなど変更するためにポリゴン再生成(トランスフォームから自動で)
-	virtual void ReCreatePolygon();
+		/// @brief α値をセット
+		/// @param _alpha α値
+		void SetAlpha(float _alpha);
 
-	void ImGuiDebug() override;
-private:
-	/// @brief 描画
-	void Draw() override;
+		/// @brief α値をセット
+		/// @return α値
+		float GetAlpha() const;
 
-	/// @brief 描画準備
-	void DrawSetup();
-};
+		/// @brief セーブする
+		/// @param _data セーブシーンデータ
+		nlohmann::json Save() override;
 
+		/// @brief ロードする
+		/// @param _data ロードするシーンデータ 
+		void Load(const nlohmann::json& _data) override;
+
+	protected:
+		/// @brief サイズなど変更するためにポリゴン再生成(トランスフォームから自動で)
+		virtual void ReCreatePolygon();
+
+		void ImGuiDebug() override;
+	private:
+		/// @brief 描画
+		void Draw() override;
+
+		/// @brief 描画準備
+		void DrawSetup();
+	};
+}

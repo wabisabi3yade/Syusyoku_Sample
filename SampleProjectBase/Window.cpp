@@ -3,119 +3,122 @@
 // IMGUIがWindowsAPIのイベントを取得するための関数を外部参照
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-constexpr SIZE DEFAULT_SIZE = { 1280, 720 };
-constexpr char CLASS_NAME[] = "Duel Knight";
-
-Window::Window()
+namespace HashiTaku
 {
-	// ウィンドウサイズを設定
-	sizeWindow = DEFAULT_SIZE;
-}
+	constexpr SIZE DEFAULT_SIZE = { 1280, 720 };
+	constexpr char CLASS_NAME[] = "Duel Knight";
 
-Window::Window(SIZE _sizeWindow)
-{
-	// 引数のサイズを設定
-	sizeWindow = _sizeWindow;
-}
+	Window::Window()
+	{
+		// ウィンドウサイズを設定
+		sizeWindow = DEFAULT_SIZE;
+	}
 
-Window::~Window()
-{
-    Terminate();
-}
+	Window::Window(SIZE _sizeWindow)
+	{
+		// 引数のサイズを設定
+		sizeWindow = _sizeWindow;
+	}
 
-bool Window::Init(HINSTANCE _hInst)
-{
-    // ウインドウ クラスの登録
-    wc.style = CS_HREDRAW | CS_VREDRAW;
-    wc.lpfnWndProc = (WNDPROC)Window::MainWndProc;
-    wc.cbClsExtra = 0;
-    wc.cbWndExtra = 0;
-    wc.hInstance = _hInst;
-    wc.hIcon = LoadIcon(_hInst, IDI_APPLICATION);
-    wc.hCursor = LoadCursor(_hInst, IDC_ARROW);
-    wc.hbrBackground = GetSysColorBrush(COLOR_WINDOW);
-    wc.lpszMenuName = nullptr;
-    wc.lpszClassName = CLASS_NAME;
-    if (!RegisterClass(&wc)) {
-        return false;
-    }
+	Window::~Window()
+	{
+		Terminate();
+	}
 
-    // メイン ウインドウ作成
-    RECT rect;
-    rect.top = 0;
-    rect.left = 0;
-    rect.right = sizeWindow.cx;
-    rect.bottom = sizeWindow.cy;
-    AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
+	bool Window::Init(HINSTANCE _hInst)
+	{
+		// ウインドウ クラスの登録
+		wc.style = CS_HREDRAW | CS_VREDRAW;
+		wc.lpfnWndProc = (WNDPROC)Window::MainWndProc;
+		wc.cbClsExtra = 0;
+		wc.cbWndExtra = 0;
+		wc.hInstance = _hInst;
+		wc.hIcon = LoadIcon(_hInst, IDI_APPLICATION);
+		wc.hCursor = LoadCursor(_hInst, IDC_ARROW);
+		wc.hbrBackground = GetSysColorBrush(COLOR_WINDOW);
+		wc.lpszMenuName = nullptr;
+		wc.lpszClassName = CLASS_NAME;
+		if (!RegisterClass(&wc)) {
+			return false;
+		}
 
-    hWnd = CreateWindow(wc.lpszClassName, CLASS_NAME,
-        WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME,
-        CW_USEDEFAULT, CW_USEDEFAULT,
-        rect.right - rect.left, rect.bottom - rect.top,
-        nullptr, nullptr, _hInst, nullptr);
-    if (hWnd == nullptr) {
-        return false;
-    }
+		// メイン ウインドウ作成
+		RECT rect;
+		rect.top = 0;
+		rect.left = 0;
+		rect.right = sizeWindow.cx;
+		rect.bottom = sizeWindow.cy;
+		AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
 
-    // ウインドウ表示
-    ShowWindow(hWnd, SW_SHOWNORMAL);
-    UpdateWindow(hWnd);
+		hWnd = CreateWindow(wc.lpszClassName, CLASS_NAME,
+			WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME,
+			CW_USEDEFAULT, CW_USEDEFAULT,
+			rect.right - rect.left, rect.bottom - rect.top,
+			nullptr, nullptr, _hInst, nullptr);
+		if (hWnd == nullptr) {
+			return false;
+		}
 
-    return true;
-}
+		// ウインドウ表示
+		ShowWindow(hWnd, SW_SHOWNORMAL);
+		UpdateWindow(hWnd);
 
-void Window::OnResize(UINT width, UINT height)
-{
+		return true;
+	}
 
-}
+	void Window::OnResize(UINT width, UINT height)
+	{
 
-bool Window::MessageLoop()
-{
-    // Windowsメッセージループ処理
-    if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) 
-    {
-        TranslateMessage(&msg); DispatchMessage(&msg);
-    }
+	}
 
-    // アプリケーションが終わるときにmessageがWM_QUITになる 
-    if (msg.message == WM_QUIT) 
-    {
-        return false;
-    }
+	bool Window::MessageLoop()
+	{
+		// Windowsメッセージループ処理
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg); DispatchMessage(&msg);
+		}
 
-    return true;
-}
+		// アプリケーションが終わるときにmessageがWM_QUITになる 
+		if (msg.message == WM_QUIT)
+		{
+			return false;
+		}
 
-bool Window::Terminate()
-{
-    DestroyWindow(hWnd);
+		return true;
+	}
 
-    // ウインドウ クラスの登録解除
-    UnregisterClass(wc.lpszClassName, wc.hInstance);
-    hWnd = nullptr;
-    return true;
-}
+	bool Window::Terminate()
+	{
+		DestroyWindow(hWnd);
 
-LRESULT Window::MainWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-    if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
-        return true;
+		// ウインドウ クラスの登録解除
+		UnregisterClass(wc.lpszClassName, wc.hInstance);
+		hWnd = nullptr;
+		return true;
+	}
 
-    switch (msg)
-    {
-    case WM_DESTROY:// ウィンドウ破棄のメッセージ
-        PostQuitMessage(0);// “WM_QUIT”メッセージを送る　→　アプリ終了
-        break;
+	LRESULT Window::MainWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+	{
+		if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+			return true;
 
-    case WM_CLOSE:  // xボタンが押されたら
-        DestroyWindow(hWnd);  // “WM_DESTROY”メッセージを送る　→　ウィンドウ破棄
-        break;
+		switch (msg)
+		{
+		case WM_DESTROY:// ウィンドウ破棄のメッセージ
+			PostQuitMessage(0);// “WM_QUIT”メッセージを送る　→　アプリ終了
+			break;
 
-    default:
-        // 上のcase以外の場合の処理を実行
-        return DefWindowProc(hWnd, msg, wParam, lParam);
-        break;
-    }
+		case WM_CLOSE:  // xボタンが押されたら
+			DestroyWindow(hWnd);  // “WM_DESTROY”メッセージを送る　→　ウィンドウ破棄
+			break;
 
-    return 0;
+		default:
+			// 上のcase以外の場合の処理を実行
+			return DefWindowProc(hWnd, msg, wParam, lParam);
+			break;
+		}
+
+		return 0;
+	}
 }

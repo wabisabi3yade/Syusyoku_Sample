@@ -6,101 +6,102 @@
 // コンポーネントインクルードヘッダー
 #include "ComponentDefine.h"
 
-using namespace DirectX::SimpleMath;
-using namespace HashiTaku;
-
-CP_BoxCollider::CP_BoxCollider()
-	: CP_Collider(CP_Collider::ShapeType::Box), length(Vector3::One)
+namespace HashiTaku
 {
-}
+	CP_BoxCollider::CP_BoxCollider():
+		CP_Collider(CP_Collider::ShapeType::Box), 
+		length(DXSimp::Vector3::One)
+	{
+	}
 
-void CP_BoxCollider::Init()
-{
-	CP_Collider::Init();
-}
+	void CP_BoxCollider::Init()
+	{
+		CP_Collider::Init();
+	}
 
-void CP_BoxCollider::CreateShape()
-{
-	// ボックス形状作成
-	Vector3 worldLength;
-	CalcWorldLength(worldLength);
+	void CP_BoxCollider::CreateShape()
+	{
+		// ボックス形状作成
+		DXSimp::Vector3 worldLength;
+		CalcWorldLength(worldLength);
 
-	btVector3 btLength;
-	btLength.setValue(worldLength.x, worldLength.y, worldLength.z);
-	pCollisionShape = std::make_unique<btBoxShape>(btLength * 0.5);
-}
+		btVector3 btLength;
+		btLength.setValue(worldLength.x, worldLength.y, worldLength.z);
+		pCollisionShape = std::make_unique<btBoxShape>(btLength * 0.5);
+	}
 
-void CP_BoxCollider::ImGuiDebug()
-{
-	CP_Collider::ImGuiDebug();
+	void CP_BoxCollider::ImGuiDebug()
+	{
+		CP_Collider::ImGuiDebug();
 
-	ImGui::Checkbox("AABB", &isAABB);
+		ImGui::Checkbox("AABB", &isAABB);
 
-	Vector3 changeFloat = length;
-	if (ImGuiMethod::DragFloat3(changeFloat, "length", 0.01f))
-		SetLength(changeFloat);
-}
+		DXSimp::Vector3 changeFloat = length;
+		if (ImGuiMethod::DragFloat3(changeFloat, "length", 0.01f))
+			SetLength(changeFloat);
+	}
 
-void CP_BoxCollider::SetLength(const DirectX::SimpleMath::Vector3& _length)
-{
-	length = _length;
+	void CP_BoxCollider::SetLength(const DirectX::SimpleMath::Vector3& _length)
+	{
+		length = _length;
 
-	RecreateShape();
-}
+		RecreateShape();
+	}
 
-const DirectX::SimpleMath::Vector3& CP_BoxCollider::GetLength() const
-{
-	return length;
-}
+	const DirectX::SimpleMath::Vector3& CP_BoxCollider::GetLength() const
+	{
+		return length;
+	}
 
-nlohmann::json CP_BoxCollider::Save()
-{
-	auto data = CP_Collider::Save();
+	nlohmann::json CP_BoxCollider::Save()
+	{
+		auto data = CP_Collider::Save();
 
-	HashiTaku::SaveJsonVector3("length", length, data);
+		SaveJsonVector3("length", length, data);
 
-	data["AABB"] = isAABB;
+		data["AABB"] = isAABB;
 
-	return data;
-}
+		return data;
+	}
 
-void CP_BoxCollider::Load(const nlohmann::json& _data)
-{	
-	CP_Collider::Load(_data);
+	void CP_BoxCollider::Load(const nlohmann::json& _data)
+	{
+		CP_Collider::Load(_data);
 
-	Vector3 loadLength;
-	if(HashiTaku::LoadJsonVector3("length", loadLength, _data))
-		SetLength(loadLength);
+		DXSimp::Vector3 loadLength;
+		if (LoadJsonVector3("length", loadLength, _data))
+			SetLength(loadLength);
 
-	HashiTaku::LoadJsonBoolean("AABB", isAABB, _data);
-}
+		LoadJsonBoolean("AABB", isAABB, _data);
+	}
 
-void CP_BoxCollider::SizeFromModelSize()
-{
-	// メッシュレンダラーを取得
-	CP_MeshRenderer* pMeshRenderer = gameObject->GetComponent<CP_MeshRenderer>();
+	void CP_BoxCollider::SizeFromModelSize()
+	{
+		// メッシュレンダラーを取得
+		CP_MeshRenderer* pMeshRenderer = gameObject->GetComponent<CP_MeshRenderer>();
 
-	if (pMeshRenderer == nullptr) return;
+		if (pMeshRenderer == nullptr) return;
 
-	const Mesh_Group* pModel = pMeshRenderer->GetRenderMesh();
+		const Mesh_Group* pModel = pMeshRenderer->GetRenderMesh();
 
-	if (pModel == nullptr) return;
+		if (pModel == nullptr) return;
 
-	// サイズ取得
-	Vector3 modelSize = pModel->GetSize();
+		// サイズ取得
+		DXSimp::Vector3 modelSize = pModel->GetSize();
 
-	// サイズを取得していなかったら終わる
-	if (modelSize.x <= Mathf::epsilon) return;
+		// サイズを取得していなかったら終わる
+		if (modelSize.x <= Mathf::epsilon) return;
 
-	length = modelSize;
-	centerOffset = pModel->GetCenterPosition();
-}
+		length = modelSize;
+		centerOffset = pModel->GetCenterPosition();
+	}
 
-void CP_BoxCollider::LengthUpdate()
-{
-}
+	void CP_BoxCollider::LengthUpdate()
+	{
+	}
 
-void CP_BoxCollider::CalcWorldLength(DirectX::SimpleMath::Vector3& _out)
-{
-	_out = GetTransform().GetScale() * length;
+	void CP_BoxCollider::CalcWorldLength(DirectX::SimpleMath::Vector3& _out)
+	{
+		_out = GetTransform().GetScale() * length;
+	}
 }

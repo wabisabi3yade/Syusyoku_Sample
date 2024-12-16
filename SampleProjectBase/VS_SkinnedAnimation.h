@@ -2,10 +2,12 @@
 
 #include "VertexShader.h"
 
-class VS_SkinnedAnimation : public VertexShader
+namespace HashiTaku
 {
-public:
-	VS_SkinnedAnimation();
-	~VS_SkinnedAnimation() {}
-};
-
+	class VS_SkinnedAnimation : public VertexShader
+	{
+	public:
+		VS_SkinnedAnimation();
+		~VS_SkinnedAnimation() {}
+	};
+}

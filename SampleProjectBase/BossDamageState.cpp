@@ -4,43 +4,40 @@
 #include "CP_Boss.h"
 #include "CP_Player.h"
 
-namespace DXSimp = DirectX::SimpleMath;
-
-constexpr auto DAMAGE_ANIM_NAME("KnockSmall");
-
-BossDamageState::BossDamageState()
+namespace HashiTaku
 {
-}
+	constexpr auto DAMAGE_ANIM_NAME("KnockSmall");
 
-void BossDamageState::OnStartBehavior()
-{
-	BossActState_Base::OnStartBehavior();
+	BossDamageState::BossDamageState()
+	{
+	}
 
-	HASHI_DEBUG_LOG("a");
+	void BossDamageState::OnStartBehavior()
+	{
+		// ダメージトリガーをONにする
+		pActionController->SetAnimationTrigger(DAMAGETRIGGER_ANIMPARAM_NAME);
 
-	// ダメージトリガーをONにする
-	pActionController->SetAnimationTrigger(DAMAGETRIGGER_ANIMPARAM_NAME);
+		// プレイヤーに向ける
+		LookPlayer();
+	}
 
-	// プレイヤーに向ける
-	LookPlayer();
-}
+	void BossDamageState::OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName)
+	{
+		if (_toAnimNodeName == IDLE_ANIM_NAME || _fromAnimNodeName == DAMAGE_ANIM_NAME)
+			ChangeState(BossState::Break_Idle);
+	}
 
-void BossDamageState::OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName)
-{
-	if (_toAnimNodeName == IDLE_ANIM_NAME || _fromAnimNodeName == DAMAGE_ANIM_NAME)
-		ChangeState(BossState::Idle);
-}
+	void BossDamageState::LookPlayer()
+	{
+		// 方向ベクトルを求める(yは無視)
+		Transform& myTransform = pActionController->GetCharacter().GetTransform();
+		DXSimp::Vector3 playerPos = pActionController->GetPlayer().GetTransform().GetPosition();
+		DXSimp::Vector3 bossPos = myTransform.GetPosition();
+		DXSimp::Vector3 targetVec = playerPos - bossPos;
+		targetVec.y = 0.0f;
+		targetVec.Normalize();
 
-void BossDamageState::LookPlayer()
-{
-	// 方向ベクトルを求める(yは無視)
-	Transform& myTransform = pActionController->GetCharacter().GetTransform();
-	DXSimp::Vector3 playerPos = pActionController->GetPlayer().GetTransform().GetPosition();
-	DXSimp::Vector3 bossPos = myTransform.GetPosition();
-	DXSimp::Vector3 targetVec = playerPos - bossPos;
-	targetVec.y = 0.0f;
-	targetVec.Normalize();
-
-	// 回転する
-	myTransform.SetRotation(Quat::RotateToVector(targetVec));
+		// 回転する
+		myTransform.SetRotation(Quat::RotateToVector(targetVec));
+	}
 }

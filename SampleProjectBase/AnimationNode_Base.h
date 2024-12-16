@@ -2,112 +2,114 @@
 #include "AnimationData.h"
 #include "AnimationCurve.h"
 
-class BoneList;
-
-/// @brief アニメーションノードに基底クラス
-class AnimationNode_Base : public HashiTaku::IImGuiUser, public HashiTaku::ISaveLoad
+namespace HashiTaku
 {
-public:
-	// ノードの種類
-	enum class NodeType
+	class BoneList;
+
+	/// @brief アニメーションノードに基底クラス
+	class AnimationNode_Base : public IImGuiUser, public ISaveLoad
 	{
-		Single,	// 一つだけのアニメーション
-		Blend,	// ブレンドされているアニメーション
-		Layerd,	// 部位ごと
-	};
+	public:
+		// ノードの種類
+		enum class NodeType
+		{
+			Single,	// 一つだけのアニメーション
+			Blend,	// ブレンドされているアニメーション
+			Layerd,	// 部位ごと
+		};
 
 #ifdef EDIT
-	/// @brief 列挙型を文字列に変換
-	static std::vector<std::string> edit_nodeTypeStrings;
+		/// @brief 列挙型を文字列に変換
+		static std::vector<std::string> edit_nodeTypeStrings;
 #endif // EDIT
-private:
-	/// @brief ノード名
-	std::string nodeName;
+	private:
+		/// @brief ノード名
+		std::string nodeName;
 
-	/// @brief アニメーションカーブ
-	std::unique_ptr<AnimationCurve> pCurveSpeed;
+		/// @brief アニメーションカーブ
+		std::unique_ptr<AnimationCurve> pCurveSpeed;
 
-	/// @brief ノードの種類
-	NodeType nodeType;
+		/// @brief ノードの種類
+		NodeType nodeType;
 
-	/// @brief ノードの再生速度倍率(1.0は等速)
-	float playNodeSpeedTimes;
+		/// @brief ノードの再生速度倍率(1.0は等速)
+		float playNodeSpeedTimes;
 
-	/// @brief アニメーションの時間
-	float animationTime;
+		/// @brief アニメーションの時間
+		float animationTime;
 
-	/// @brief ループ再生するか？
-	bool isLoop;
+		/// @brief ループ再生するか？
+		bool isLoop;
 
-	/// @brief アニメーション終了しているか？
-	bool isFinish;
+		/// @brief アニメーション終了しているか？
+		bool isFinish;
 
-	/// @brief 移動座標のルートモーションを適用するか(XZ座標)
-	bool isRootMotionPosXZ;
+		/// @brief 移動座標のルートモーションを適用するか(XZ座標)
+		bool isRootMotionPosXZ;
 
-	/// @brief 移動座標のルートモーションを適用するか(Y座標)
-	bool isRootMotionPosY;
+		/// @brief 移動座標のルートモーションを適用するか(Y座標)
+		bool isRootMotionPosY;
 
-public:
-	AnimationNode_Base(const std::string& _nodeName,
-		NodeType _type);
-	virtual ~AnimationNode_Base() {}
+	public:
+		AnimationNode_Base(const std::string& _nodeName,
+			NodeType _type);
+		virtual ~AnimationNode_Base() {}
 
-	// ノード名をセット
-	void SetNodeName(const std::string& _nodeName);
+		// ノード名をセット
+		void SetNodeName(const std::string& _nodeName);
 
-	// ループするかセット
-	void SetIsLoop(bool _isLoop);
+		// ループするかセット
+		void SetIsLoop(bool _isLoop);
 
-	/// @brief 終了フラグをセットする
-	void SetFinish();
+		/// @brief 終了フラグをセットする
+		void SetFinish();
 
-	// ノード名取得
-	const std::string& GetNodeName() const;
+		// ノード名取得
+		const std::string& GetNodeName() const;
 
-	// ノードの種類を取得
-	NodeType GetNodeType() const;
-	// 再生時間を取得
-	float GetAnimationTime() const;
+		// ノードの種類を取得
+		NodeType GetNodeType() const;
+		// 再生時間を取得
+		float GetAnimationTime() const;
 
-	/// @brief 全体キー数を求める
-	/// @return 全体のキー数
-	virtual u_int GetAllKeyFrame() const;
+		/// @brief 全体キー数を求める
+		/// @return 全体のキー数
+		virtual u_int GetAllKeyFrame() const;
 
-	/// @brief ループ再生フラグを取得
-	/// @return ループ再生フラグ
-	bool GetIsLoop() const;
+		/// @brief ループ再生フラグを取得
+		/// @return ループ再生フラグ
+		bool GetIsLoop() const;
 
-	// アニメーション終了フラグを取得する
-	bool GetIsFinish() const;
+		// アニメーション終了フラグを取得する
+		bool GetIsFinish() const;
 
-	/// @brief XZ軸をルートモーションで移動するか？
-	/// @return 移動するか？
-	bool GetIsRootMotionXZ() const;
+		/// @brief XZ軸をルートモーションで移動するか？
+		/// @return 移動するか？
+		bool GetIsRootMotionXZ() const;
 
-	/// @brief Y軸をルートモーションで移動するか？
-	/// @return 移動するか？
-	bool GetIsRootMotionY() const;
+		/// @brief Y軸をルートモーションで移動するか？
+		/// @return 移動するか？
+		bool GetIsRootMotionY() const;
 
-	/// @brief 再生速度倍率を求める
-	/// @return 再生速度倍率
-	float GetPlaySpeedTimes() const;
+		/// @brief 再生速度倍率を求める
+		/// @return 再生速度倍率
+		float GetPlaySpeedTimes() const;
 
-	/// @brief アニメーションカーブの値を取得する
-	/// @param _ratio 割合(0.0～1.0)
-	/// @return アニメーションカーブの値(基本的に0.0～1.0)
-	float GetCurveValue(float _ratio) const;
+		/// @brief アニメーションカーブの値を取得する
+		/// @param _ratio 割合(0.0～1.0)
+		/// @return アニメーションカーブの値(基本的に0.0～1.0)
+		float GetCurveValue(float _ratio) const;
 
-	nlohmann::json Save() override;
-	void Load(const nlohmann::json& _data) override;
-private:
-	// ノードのパラメーター設定
-	void ImGuiSetParameter();
-protected:
+		nlohmann::json Save() override;
+		void Load(const nlohmann::json& _data) override;
+	private:
+		// ノードのパラメーター設定
+		void ImGuiSetParameter();
+	protected:
 
-	// 再生時間をセットする
-	void SetAnimationTime(float _time);
+		// 再生時間をセットする
+		void SetAnimationTime(float _time);
 
-	void ImGuiDebug() override;
-};
-
+		void ImGuiDebug() override;
+	};
+}

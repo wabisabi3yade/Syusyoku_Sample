@@ -8,147 +8,144 @@
 
 #include "InSceneSystemManager.h"
 
-void CP_SpriteRenderer::MaterialSetup()
+namespace HashiTaku
 {
-	// デフォルトでマテリアルを設定する
-	const std::string MATERIAL_NAME = "M_SpriteUnlit";
-
-	// 既に作成済みなら
-	if (AssetSetter::CheckImport<Material>(MATERIAL_NAME))
+	void CP_SpriteRenderer::MaterialSetup()
 	{
-		pMaterial = AssetGetter::GetAsset<Material>(MATERIAL_NAME);
-		return;
+		// デフォルトでマテリアルを設定する
+		const std::string MATERIAL_NAME = "M_SpriteUnlit";
+
+		// 既に作成済みなら
+		if (AssetSetter::CheckImport<Material>(MATERIAL_NAME))
+		{
+			pMaterial = AssetGetter::GetAsset<Material>(MATERIAL_NAME);
+			return;
+		}
+
+		// マテリアル作成し、アセットをセットする
+		std::unique_ptr<Material> pCreateMaterial = std::make_unique<Material>();
+		pMaterial = AssetSetter::SetAsset(MATERIAL_NAME, std::move(pCreateMaterial));
+		pMaterial->SetPixelShader("PS_TexColor");
 	}
 
-	// マテリアル作成し、アセットをセットする
-	std::unique_ptr<Material> pCreateMaterial = std::make_unique<Material>();
-	pMaterial = AssetSetter::SetAsset(MATERIAL_NAME, std::move(pCreateMaterial));
-	pMaterial->SetPixelShader("PS_TexColor");
-}
 
-
-void CP_SpriteRenderer::DrawSetup()
-{
-	struct TexEnable
+	void CP_SpriteRenderer::DrawSetup()
 	{
-		int isTexEnable;
-		float dummy[3];
-	};
+		struct TexParam
+		{
+			int isTexEnable;
+			float alpha;
+			float dummy[2];
+		};
 
-	// レンダラー取得
-	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
+		// レンダラー取得
+		D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
 
-	// ワールド変換行列の座標にモデルの座標を入れる
-	RenderParam::WVP wvp = renderer.GetParameter().GetWVP();
-	wvp.world = GetTransform().GetWorldMatrix();
-	wvp.world = wvp.world.Transpose();
+		// ワールド変換行列の座標にモデルの座標を入れる
+		RenderParam::WVP wvp = renderer.GetParameter().GetWVP();
+		wvp.world = GetTransform().GetWorldMatrix();
+		wvp.world = wvp.world.Transpose();
 
-	// シェーダーの設定
-	VertexShader& pVs = pMaterial->GetVertexShader();
-	PixelShader& pPs = pMaterial->GetPixelShader();
+		// シェーダーの設定
+		VertexShader& pVs = pMaterial->GetVertexShader();
+		PixelShader& pPs = pMaterial->GetPixelShader();
 
-	MaterialParameter& materialParam = pMaterial->GetMaterialParameter();
-	materialParam.isTextureEnable = pSprite->GetIsTexEnable();
+		MaterialParameter& materialParam = pMaterial->GetMaterialParameter();
+		materialParam.isTextureEnable = pSprite->GetIsTexEnable();
 
-	Texture* pTex = pSprite->GetTexture();
+		Texture* pTex = pSprite->GetTexture();
 
-	pVs.UpdateSubResource(0, &wvp);
-	pVs.UpdateSubResource(1, &materialParam);
+		pVs.UpdateSubResource(0, &wvp);
+		pVs.UpdateSubResource(1, &materialParam);
 
-	TexEnable texEnable;
-	texEnable.isTexEnable = materialParam.isTextureEnable;
-	pPs.UpdateSubResource(0, &texEnable);
-	pPs.SetTexture(0, pTex);
+		TexParam texEnable;
+		texEnable.isTexEnable = materialParam.isTextureEnable;
+		texEnable.alpha = alpha;
+		pPs.UpdateSubResource(0, &texEnable);
+		pPs.SetTexture(0, pTex);
 
-	pVs.SetGPU();
-	pPs.SetGPU();
-}
-
-CP_SpriteRenderer::CP_SpriteRenderer()
-{
-}
-
-CP_SpriteRenderer::CP_SpriteRenderer(const CP_SpriteRenderer& _other)
-{
-	Copy(_other);
-}
-
-CP_SpriteRenderer& CP_SpriteRenderer::operator=(const CP_SpriteRenderer& _other)
-{
-	Copy(_other);
-
-	return *this;
-}
-
-void CP_SpriteRenderer::Init()
-{
-	// スプライト作成
-	pSprite = std::make_unique<Sprite>();
-
-	// マテリアル初期化
-	MaterialSetup();
-}
-
-void CP_SpriteRenderer::Draw()
-{
-	// 描画準備
-	DrawSetup();
-
-	// 四角形ポリゴンを描画
-	CP_Renderer::DrawMesh(pSprite->GetSquare());
-}
-
-void CP_SpriteRenderer::ImGuiDebug()
-{
-	std::string texName;
-	if (pSprite->GetIsTexEnable())
-		texName = pSprite->GetTexture()->GetAssetName();
-
-	if (AssetGetter::ImGuiGetCombobox<Texture>("texture", texName))
-	{
-		Texture* pTex = AssetGetter::GetAsset<Texture>(texName);
-		pSprite->SetTexture(*pTex);
+		pVs.SetGPU();
+		pPs.SetGPU();
 	}
-}
 
-void CP_SpriteRenderer::SetTexture(Texture& _texture)
-{
-	// スプライトに渡す
-	pSprite->SetTexture(_texture);
-}
+	CP_SpriteRenderer::CP_SpriteRenderer() : alpha(1.0f)
+	{
+	}
 
-void CP_SpriteRenderer::SetMaterial(Material& _material)
-{
-	pMaterial = &_material;
-}
+	void CP_SpriteRenderer::Init()
+	{
+		// スプライト作成
+		pSprite = std::make_unique<Sprite>();
 
-nlohmann::json CP_SpriteRenderer::Save()
-{
-	auto data = CP_Renderer::Save();
+		// マテリアル初期化
+		MaterialSetup();
+	}
 
-	data["sprite"] = pSprite->Save();
+	void CP_SpriteRenderer::Draw()
+	{
+		// 描画準備
+		DrawSetup();
 
-	return data;
-}
+		// 四角形ポリゴンを描画
+		CP_Renderer::DrawMesh(pSprite->GetSquare());
+	}
 
-void CP_SpriteRenderer::Load(const nlohmann::json& _data)
-{
-	CP_Renderer::Load(_data);
+	void CP_SpriteRenderer::ImGuiDebug()
+	{
+		ImGui::SliderFloat("Alpha", &alpha, 0.0f, 1.0f);
 
-	if (!HashiTaku::IsJsonContains(_data, "sprite")) return;
+		std::string texName;
+		if (pSprite->GetIsTexEnable())
+			texName = pSprite->GetTexture()->GetAssetName();
 
-	pSprite->Load(_data["sprite"]);
-}
+		if (AssetGetter::ImGuiGetCombobox<Texture>("texture", texName))
+		{
+			Texture* pTex = AssetGetter::GetAsset<Texture>(texName);
+			pSprite->SetTexture(*pTex);
+		}
+	}
 
-void CP_SpriteRenderer::Copy(const CP_SpriteRenderer& _other)
-{
-	if (this == &_other) return;
+	void CP_SpriteRenderer::SetTexture(Texture& _texture)
+	{
+		// スプライトに渡す
+		pSprite->SetTexture(_texture);
+	}
 
-	CP_Renderer::operator=(_other);
+	void CP_SpriteRenderer::SetMaterial(Material& _material)
+	{
+		pMaterial = &_material;
+	}
 
-	if (_other.pSprite)
-		pSprite = std::make_unique<Sprite>(*_other.pSprite);
+	void CP_SpriteRenderer::SetAlpha(float _alpha)
+	{
+		alpha = std::clamp(alpha, 0.0f, 1.0f);
+	}
 
-	if (_other.pMaterial)
-		pMaterial = _other.pMaterial;
+	float CP_SpriteRenderer::GetAlpha() const
+	{
+		return alpha;
+	}
+
+	nlohmann::json CP_SpriteRenderer::Save()
+	{
+		auto data = CP_Renderer::Save();
+
+		data["sprite"] = pSprite->Save();
+		data["alpha"] = alpha;
+
+		return data;
+	}
+
+	void CP_SpriteRenderer::Load(const nlohmann::json& _data)
+	{
+		CP_Renderer::Load(_data);
+
+		LoadJsonFloat("alpha", alpha, _data);
+
+		if (IsJsonContains(_data, "sprite"))
+		{
+			pSprite->Load(_data["sprite"]);
+		}
+
+	}
 }

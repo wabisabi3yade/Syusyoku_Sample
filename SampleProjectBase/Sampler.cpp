@@ -1,23 +1,26 @@
 #include "pch.h"
 #include "Sampler.h"
-bool Sampler::Init(ID3D11Device& _device)
+
+namespace HashiTaku
 {
-    // サンプラー作成
-    D3D11_SAMPLER_DESC smpDesc;
-
-    ::ZeroMemory(&smpDesc, sizeof(D3D11_SAMPLER_DESC));
-    smpDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-    smpDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-    smpDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-    smpDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-    HRESULT hr = _device.CreateSamplerState(&smpDesc, &pSampler);
-    if (FAILED(hr))
+    bool Sampler::Init(ID3D11Device& _device)
     {
-        HASHI_DEBUG_LOG("サンプラー初期化失敗");
-        return false;
+        // サンプラー作成
+        D3D11_SAMPLER_DESC smpDesc;
+
+        ::ZeroMemory(&smpDesc, sizeof(D3D11_SAMPLER_DESC));
+        smpDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+        smpDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+        smpDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+        smpDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+        HRESULT hr = _device.CreateSamplerState(&smpDesc, &pSampler);
+        if (FAILED(hr))
+        {
+            HASHI_DEBUG_LOG("サンプラー初期化失敗");
+            return false;
+        }
+
+        return true;
+
     }
-
-    return true;
-       
 }
-
