@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component.h"
+
 namespace HashiTaku
 {
 	// コンセプトで取得できるリソースの型を指定

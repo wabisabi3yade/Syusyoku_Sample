@@ -1,9 +1,9 @@
 #pragma once
 
-class VisualEffect;
-
 namespace HashiTaku
 {
+	class VisualEffect;
+
 	/// @brief  UŒ‚‚Ìî•ñ
 	class AttackInformation : public ISaveLoad, public IImGuiUser
 	{

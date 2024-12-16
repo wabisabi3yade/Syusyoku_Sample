@@ -1,14 +1,14 @@
 #pragma once
-// イージング基底クラス
-class IEasing;
-
-// 初期化を任せるクラス
-class MainApplication;
-
-// イージング関数チートシート：https://easings.net/ja
 namespace HashiTaku
 {
-	/// @brief イージングの種類
+	// イージング基底クラス
+	class IEasing;
+
+	// 初期化を任せるクラス
+	class MainApplication;
+
+	// イージング関数チートシート：https://easings.net/ja
+		/// @brief イージングの種類
 	enum class EaseKind
 	{
 		Linear,
@@ -91,4 +91,5 @@ namespace HashiTaku
 		/// @return イージングの種類
 		static EaseKind StrToEase(const std::string& _easeName);
 	};
+
 }

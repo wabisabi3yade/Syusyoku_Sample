@@ -9,11 +9,11 @@ using namespace DirectX::SimpleMath;
 using namespace HashiTaku;
 
 CrossFadeAnimation::CrossFadeAnimation()
-	: pFromNodePlayer(nullptr), pToNodePlayer(nullptr), pAssetBoneList(nullptr), transitionWeight(0.0f), transitionTime(0.0f), elapsedTime(0.0f), easeKind(HashiTaku::EaseKind::InOutCubic)
+	: pFromNodePlayer(nullptr), pToNodePlayer(nullptr), pAssetBoneList(nullptr), transitionWeight(0.0f), transitionTime(0.0f), elapsedTime(0.0f), easeKind(EaseKind::InOutCubic)
 {
 }
 
-void CrossFadeAnimation::Begin(AnimNodePlayer_Base& _fromNode, AnimNodePlayer_Base& _toNode, BoneList& _updateBones, float _transitionTime, HashiTaku::EaseKind _easeKind)
+void CrossFadeAnimation::Begin(AnimNodePlayer_Base& _fromNode, AnimNodePlayer_Base& _toNode, BoneList& _updateBones, float _transitionTime, EaseKind _easeKind)
 {
 	pFromNodePlayer = &_fromNode;
 	pToNodePlayer = &_toNode;

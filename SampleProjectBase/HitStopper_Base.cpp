@@ -2,23 +2,26 @@
 #include "HitStopper_Base.h"
 #include "CP_HitStopManager.h"
 
-HitStopper_Base::~HitStopper_Base()
+namespace HashiTaku
 {
-	RemoveFromHitStopManager();
-}
-
-void HitStopper_Base::AddToHitStopManager()
-{
-	if (CP_HitStopManager* pHitStopManager = CP_HitStopManager::GetInstance())
+	HitStopper_Base::~HitStopper_Base()
 	{
-		pHitStopManager->AddHitStopper(*this);
+		RemoveFromHitStopManager();
 	}
-}
 
-void HitStopper_Base::RemoveFromHitStopManager()
-{
-	if (CP_HitStopManager* pHitStopManager = CP_HitStopManager::GetInstance())
+	void HitStopper_Base::AddToHitStopManager()
 	{
-		pHitStopManager->RemoveHitStopper(*this);
+		if (CP_HitStopManager* pHitStopManager = CP_HitStopManager::GetInstance())
+		{
+			pHitStopManager->AddHitStopper(*this);
+		}
+	}
+
+	void HitStopper_Base::RemoveFromHitStopManager()
+	{
+		if (CP_HitStopManager* pHitStopManager = CP_HitStopManager::GetInstance())
+		{
+			pHitStopManager->RemoveHitStopper(*this);
+		}
 	}
 }

@@ -2,122 +2,123 @@
 #include "CameraTargetMove.h"
 #include "CameraMoveController.h"
 
-namespace DXSimp = DirectX::SimpleMath;
-
-CameraTargetMove::CameraTargetMove() :
-	targetLookRotSpeed(4.0f), horiDisLength(5.0f), followMoveSpeed(10.0f), followOffsetY(2.0f),
-	targetLookOffsetY(0.0f), maxHeight(3.0f), minHeight(0.0f)
+namespace HashiTaku
 {
+	CameraTargetMove::CameraTargetMove() :
+		targetLookRotSpeed(4.0f), horiDisLength(5.0f), followMoveSpeed(10.0f), followOffsetY(2.0f),
+		targetLookOffsetY(0.0f), maxHeight(3.0f), minHeight(0.0f)
+	{
 
-}
+	}
 
-nlohmann::json CameraTargetMove::Save()
-{
-	auto data = CameraMoveState_Base::Save();
+	nlohmann::json CameraTargetMove::Save()
+	{
+		auto data = CameraMoveState_Base::Save();
 
-	data["LookSpeed"] = targetLookRotSpeed;
-	data["Distance"] = horiDisLength;
-	data["MoveSpeed"] = followMoveSpeed;
-	data["FollowOffsetY"] = followOffsetY;
-	data["LookOffsetY"] = targetLookOffsetY;
-	data["MaxHeight"] = maxHeight;
-	data["MinHeight"] = minHeight;
+		data["LookSpeed"] = targetLookRotSpeed;
+		data["Distance"] = horiDisLength;
+		data["MoveSpeed"] = followMoveSpeed;
+		data["FollowOffsetY"] = followOffsetY;
+		data["LookOffsetY"] = targetLookOffsetY;
+		data["MaxHeight"] = maxHeight;
+		data["MinHeight"] = minHeight;
 
-	return data;
-}
+		return data;
+	}
 
-void CameraTargetMove::Load(const nlohmann::json& _data)
-{
-	CameraMoveState_Base::Load(_data);
+	void CameraTargetMove::Load(const nlohmann::json& _data)
+	{
+		CameraMoveState_Base::Load(_data);
 
-	HashiTaku::LoadJsonFloat("LookSpeed", targetLookRotSpeed, _data);
-	HashiTaku::LoadJsonFloat("Distance", horiDisLength, _data);
-	HashiTaku::LoadJsonFloat("MoveSpeed", followMoveSpeed, _data);
-	HashiTaku::LoadJsonFloat("FollowOffsetY", followOffsetY, _data);
-	HashiTaku::LoadJsonFloat("LookOffsetY", targetLookOffsetY, _data);
-	HashiTaku::LoadJsonFloat("MaxHeight", maxHeight, _data);
-	HashiTaku::LoadJsonFloat("MinHeight", minHeight, _data);
-}
+		LoadJsonFloat("LookSpeed", targetLookRotSpeed, _data);
+		LoadJsonFloat("Distance", horiDisLength, _data);
+		LoadJsonFloat("MoveSpeed", followMoveSpeed, _data);
+		LoadJsonFloat("FollowOffsetY", followOffsetY, _data);
+		LoadJsonFloat("LookOffsetY", targetLookOffsetY, _data);
+		LoadJsonFloat("MaxHeight", maxHeight, _data);
+		LoadJsonFloat("MinHeight", minHeight, _data);
+	}
 
-void CameraTargetMove::OnStartBehavior()
-{
+	void CameraTargetMove::OnStartBehavior()
+	{
 
-}
+	}
 
-void CameraTargetMove::UpdateBehavior()
-{
-	if (!CanUpdate()) return;
+	void CameraTargetMove::UpdateBehavior()
+	{
+		if (!CanUpdate()) return;
 
-	FollowMove();
+		FollowMove();
 
-	LookMove();
-}
+		LookMove();
+	}
 
-void CameraTargetMove::OnEndBehavior()
-{
-}
+	void CameraTargetMove::OnEndBehavior()
+	{
+	}
 
-void CameraTargetMove::CheckTransitionUpdate()
-{
-	if (!pInput->GetButton(GameInput::ButtonType::Player_RockOn))
-		ChangeState(CameraState::Move);
-}
+	void CameraTargetMove::CheckTransitionUpdate()
+	{
+		if (!pInput->GetButton(GameInput::ButtonType::Player_RockOn))
+			ChangeState(CameraState::Move);
+	}
 
-bool CameraTargetMove::CanUpdate()
-{
-	if (!pCamController->GetHaveTarget()) return false;
-	return true;
-}
+	bool CameraTargetMove::CanUpdate()
+	{
+		if (!pCamController->GetHaveTarget()) return false;
+		return true;
+	}
 
-void CameraTargetMove::FollowMove()
-{
-	const DXSimp::Vector3& followPos = GetFollowPosition() + Vec3::Up * followOffsetY;
-	const DXSimp::Vector3& lookAtPos = pCamController->GetLookAtWorldPos();
+	void CameraTargetMove::FollowMove()
+	{
+		const DXSimp::Vector3& followPos = GetFollowPosition() + Vec3::Up * followOffsetY;
+		const DXSimp::Vector3& lookAtPos = pCamController->GetLookAtWorldPos();
 
-	// 追従先から見た注視先と真逆にカメラを位置させる
-	DXSimp::Vector3 lookToFollowVec = followPos - lookAtPos;
-	float lookToFollowVecY = lookToFollowVec.y;
-	lookToFollowVec.y = 0.0f;
-	lookToFollowVec.Normalize();
+		// 追従先から見た注視先と真逆にカメラを位置させる
+		DXSimp::Vector3 lookToFollowVec = followPos - lookAtPos;
+		float lookToFollowVecY = lookToFollowVec.y;
+		lookToFollowVec.y = 0.0f;
+		lookToFollowVec.Normalize();
 
-	DXSimp::Vector3 disFromFollow = lookToFollowVec * horiDisLength;
-	disFromFollow.y = lookToFollowVecY * horiDisLength;
-	disFromFollow.y = std::clamp(disFromFollow.y, minHeight, maxHeight);
+		DXSimp::Vector3 disFromFollow = lookToFollowVec * horiDisLength;
+		disFromFollow.y = lookToFollowVecY * horiDisLength;
+		disFromFollow.y = std::clamp(disFromFollow.y, minHeight, maxHeight);
 
-	DXSimp::Vector3 targetCamPos = followPos + disFromFollow;
+		DXSimp::Vector3 targetCamPos = followPos + disFromFollow;
 
-	// カメラを移動させる
-	DXSimp::Vector3 curCamPos = GetBasePosition();
-	curCamPos = DXSimp::Vector3::Lerp(curCamPos, targetCamPos, followMoveSpeed * DeltaTime());
-	SetBasePosition(curCamPos);
-}
+		// カメラを移動させる
+		DXSimp::Vector3 curCamPos = GetBasePosition();
+		curCamPos = DXSimp::Vector3::Lerp(curCamPos, targetCamPos, followMoveSpeed * DeltaTime());
+		SetBasePosition(curCamPos);
+	}
 
-void CameraTargetMove::LookMove()
-{
-	const DXSimp::Vector3& lookAtPos = pCamController->GetLookAtWorldPos() + 
-		Vec3::Up * targetLookOffsetY;
-	Transform& camTrans = GetCamera().GetTransform();
+	void CameraTargetMove::LookMove()
+	{
+		const DXSimp::Vector3& lookAtPos = pCamController->GetLookAtWorldPos() +
+			Vec3::Up * targetLookOffsetY;
+		Transform& camTrans = GetCamera().GetTransform();
 
-	// 注視先までのベクトル
-	DXSimp::Vector3 targetVec = lookAtPos - GetBasePosition();
-	targetVec.Normalize();
+		// 注視先までのベクトル
+		DXSimp::Vector3 targetVec = lookAtPos - GetBasePosition();
+		targetVec.Normalize();
 
-	// 回転させる
-	DXSimp::Quaternion targetRot = Quat::RotateToVector(targetVec);
-	DXSimp::Quaternion camRot = camTrans.GetRotation();
-	camRot = DXSimp::Quaternion::Slerp(camRot, targetRot, targetLookRotSpeed * DeltaTime());
-	camTrans.SetRotation(camRot);
-}
+		// 回転させる
+		DXSimp::Quaternion targetRot = Quat::RotateToVector(targetVec);
+		DXSimp::Quaternion camRot = camTrans.GetRotation();
+		camRot = DXSimp::Quaternion::Slerp(camRot, targetRot, targetLookRotSpeed * DeltaTime());
+		camTrans.SetRotation(camRot);
+	}
 
-void CameraTargetMove::ImGuiDebug()
-{
-	CameraMoveState_Base::ImGuiDebug();
+	void CameraTargetMove::ImGuiDebug()
+	{
+		CameraMoveState_Base::ImGuiDebug();
 
-	ImGui::DragFloat("LookSpeed", &targetLookRotSpeed, 0.01f, 0.0f, 1000.0f);
-	ImGui::DragFloat("HoriDisLength", &horiDisLength, 0.01f, 0.0f, 1000.0f);
-	ImGui::DragFloat("MoveSpeed", &followMoveSpeed, 0.01f, 0.0f, 1000.0f);
-	ImGui::DragFloat("FollowOffsetY", &followOffsetY, 0.01f, 0.0f, 1000.0f);
-	ImGui::DragFloat("LookOffsetY", &targetLookOffsetY, 0.01f, 0.0f, 1000.0f);
-	ImGui::DragFloat("MaxHeight", &maxHeight, 0.01f, 0.0f, 1000.0f);
-	ImGui::DragFloat("MinHeight", &minHeight, 0.01f, 0.0f, 1000.0f);
+		ImGui::DragFloat("LookSpeed", &targetLookRotSpeed, 0.01f, 0.0f, 1000.0f);
+		ImGui::DragFloat("HoriDisLength", &horiDisLength, 0.01f, 0.0f, 1000.0f);
+		ImGui::DragFloat("MoveSpeed", &followMoveSpeed, 0.01f, 0.0f, 1000.0f);
+		ImGui::DragFloat("FollowOffsetY", &followOffsetY, 0.01f, 0.0f, 1000.0f);
+		ImGui::DragFloat("LookOffsetY", &targetLookOffsetY, 0.01f, 0.0f, 1000.0f);
+		ImGui::DragFloat("MaxHeight", &maxHeight, 0.01f, 0.0f, 1000.0f);
+		ImGui::DragFloat("MinHeight", &minHeight, 0.01f, 0.0f, 1000.0f);
+	}
 }

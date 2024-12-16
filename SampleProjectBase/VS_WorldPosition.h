@@ -1,11 +1,13 @@
 #pragma once
 #include "VertexShader.h"
 
-class VS_WorldPosition : public VertexShader
+namespace HashiTaku
 {
+	class VS_WorldPosition : public VertexShader
+	{
 
-public:
-	VS_WorldPosition();
-	~VS_WorldPosition() {}
-};
-
+	public:
+		VS_WorldPosition();
+		~VS_WorldPosition() {}
+	};
+}

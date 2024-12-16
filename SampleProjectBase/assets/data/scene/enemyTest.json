@@ -57,6 +57,36 @@
                                         "verticalSpeed": 10.0
                                     },
                                     "stateType": 0
+                                },
+                                {
+                                    "parameter": {
+                                        "canFovMovement": 1.0,
+                                        "fovChangeRate": 3.0,
+                                        "height": 3.0,
+                                        "hori": 3.0,
+                                        "lookOffset": [
+                                            0.0,
+                                            0.0
+                                        ],
+                                        "moveFov": 65.0,
+                                        "normalFov": 50.0
+                                    },
+                                    "stateType": 1
+                                },
+                                {
+                                    "parameter": {
+                                        "canFovMovement": 1.0,
+                                        "fovChangeRate": 3.0,
+                                        "height": 3.0,
+                                        "hori": 3.0,
+                                        "lookOffset": [
+                                            0.0,
+                                            0.0
+                                        ],
+                                        "moveFov": 65.0,
+                                        "normalFov": 50.0
+                                    },
+                                    "stateType": 2
                                 }
                             ]
                         },

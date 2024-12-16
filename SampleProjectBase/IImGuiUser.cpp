@@ -1,8 +1,11 @@
 #include "pch.h"
 
-void HashiTaku::IImGuiUser::ImGuiCall()
+namespace HashiTaku
 {
+	void IImGuiUser::ImGuiCall()
+	{
 #ifdef EDIT
-	ImGuiDebug();
+		ImGuiDebug();
 #endif // EDIT
+	}
 }

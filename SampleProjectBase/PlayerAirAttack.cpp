@@ -2,94 +2,95 @@
 #include "PlayerAirAttack.h"
 #include "CP_Player.h"
 
-namespace DXSimp = DirectX::SimpleMath;
-
-// 瞬時に見るのを反映する敵との距離
-constexpr float INSTANTLOOK_DISTANCE(8.0f);
-
-PlayerAirAttack::PlayerAirAttack() :
-	nextCombAtkState(PlayerState::None),
-	attackTimeCnt(1)
+namespace HashiTaku
 {
-	attackInfos.resize(1);	// 攻撃情報を最低1作成しておく
-	HashiTaku::PlayerAttackInformation atkInfo;
-	attackInfos.push_back(atkInfo);
-}
+	// 瞬時に見るのを反映する敵との距離
+	constexpr float INSTANTLOOK_DISTANCE(8.0f);
 
-void PlayerAirAttack::OnStartBehavior()
-{
-	// 範囲内なら敵を見る
-	LookAtEnemy();
+	PlayerAirAttack::PlayerAirAttack() :
+		nextCombAtkState(PlayerState::None),
+		attackTimeCnt(1)
+	{
+		attackInfos.resize(1);	// 攻撃情報を最低1作成しておく
+		PlayerAttackInformation atkInfo;
+		attackInfos.push_back(atkInfo);
+	}
 
-	// 攻撃情報を更新
-	UpdateAttackInfo();
+	void PlayerAirAttack::OnStartBehavior()
+	{
+		// 範囲内なら敵を見る
+		LookAtEnemy();
 
-	// 攻撃フラグを立てる
-	pActionController->SetAnimationTrigger(ATTACKTRIGGER_PARAMNAME);
+		// 攻撃情報を更新
+		UpdateAttackInfo();
 
-	// 下に落ちなくする
-	CastAirController().SetIsDownForce(false);
-	ClearVelocity(true);
-}
+		// 攻撃フラグを立てる
+		pActionController->SetAnimationTrigger(ATTACKTRIGGER_PARAMNAME);
 
-void PlayerAirAttack::UpdateBehavior()
-{
-	// コンビネーション攻撃の入力
-	UpdateCombInput();
+		// 下に落ちなくする
+		CastAirController().SetIsDownForce(false);
+		ClearVelocity(true);
+	}
 
-	// y軸速度だけ0に
-	ClearVelocityY();
-}
+	void PlayerAirAttack::UpdateBehavior()
+	{
+		// コンビネーション攻撃の入力
+		UpdateCombInput();
 
-void PlayerAirAttack::OnEndBehavior()
-{
-	// 落ちるようにする
-	CastAirController().SetIsDownForce(true);
-}
+		// y軸速度だけ0に
+		ClearVelocityY();
+	}
 
-void PlayerAirAttack::OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName)
-{
-	if (_toAnimNodeName == FALLLOOP_ANIM_NAME)
-		ChangeState(PlayerState::Move);
-}
+	void PlayerAirAttack::OnEndBehavior()
+	{
+		// 落ちるようにする
+		CastAirController().SetIsDownForce(true);
+	}
 
-void PlayerAirAttack::UpdateCombInput()
-{
-	if (!pActionController->GetCanInput()) return;	// 入力受け付けていないなら
+	void PlayerAirAttack::OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName)
+	{
+		if (_toAnimNodeName == FALLLOOP_ANIM_NAME)
+			ChangeState(PlayerState::Move);
+	}
 
-	// 予約状態にセット
-	if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
-		 pActionController->SetReserveState(
-			 static_cast<int>(nextCombAtkState), 
-			 PlayerActionController_Base::CancelType::Attack
-		 );
-}
+	void PlayerAirAttack::UpdateCombInput()
+	{
+		if (!pActionController->GetCanInput()) return;	// 入力受け付けていないなら
 
-void PlayerAirAttack::LookAtEnemy()
-{
-	Transform& playerTrans = GetMyTransform();
+		// 予約状態にセット
+		if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
+			pActionController->SetReserveState(
+				static_cast<int>(nextCombAtkState),
+				PlayerActionController_Base::CancelType::Attack
+			);
+	}
 
-	// 敵座標とのベクトルを取得
-	DXSimp::Vector3 atkPos = GetAtkEnemyPos();
-	DXSimp::Vector3 vecToEnemy = atkPos - playerTrans.GetPosition();
+	void PlayerAirAttack::LookAtEnemy()
+	{
+		Transform& playerTrans = GetMyTransform();
 
-	// 向く範囲内でないなら処理しない
-	if (vecToEnemy.Length() > INSTANTLOOK_DISTANCE)
-		return;
+		// 敵座標とのベクトルを取得
+		DXSimp::Vector3 atkPos = GetAtkEnemyPos();
+		DXSimp::Vector3 vecToEnemy = atkPos - playerTrans.GetPosition();
 
-	// 敵の方向を見る(y軸回転のみする)
-	atkPos.y = playerTrans.GetPosition().y;	
-	playerTrans.LookAt(atkPos);
-}
+		// 向く範囲内でないなら処理しない
+		if (vecToEnemy.Length() > INSTANTLOOK_DISTANCE)
+			return;
 
-void PlayerAirAttack::UpdateAttackInfo()
-{
-	// 現在の攻撃回数目の情報を送る
-	GetPlayer().SetAttackInfo(attackInfos[0]);
-}
+		// 敵の方向を見る(y軸回転のみする)
+		atkPos.y = playerTrans.GetPosition().y;
+		playerTrans.LookAt(atkPos);
+	}
 
-void PlayerAirAttack::ClearVelocityY()
-{
-	CP_RigidBody& rb = GetRB();
-	rb.ClearVelocity();
+	void PlayerAirAttack::UpdateAttackInfo()
+	{
+		// 現在の攻撃回数目の情報を送る
+		GetPlayer().SetAttackInfo(attackInfos[0]);
+	}
+
+	void PlayerAirAttack::ClearVelocityY()
+	{
+		CP_RigidBody& rb = GetRB();
+		rb.ClearVelocity();
+	}
 }

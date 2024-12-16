@@ -1,31 +1,33 @@
 #pragma once
 #include "Component.h"
 
-/// @brief イージングテスト用
-class CP_EaseTest : public Component
+namespace HashiTaku
 {
-	DirectX::SimpleMath::Color color;
+	/// @brief イージングテスト用
+	class CP_EaseTest : public Component
+	{
+		DirectX::SimpleMath::Color color;
 
-	HashiTaku::EaseKind nowEase;
+		EaseKind nowEase;
 
-	float magnitude{ 15.0f };
-	float time = 1.0f;
-	float elapsedTime = 0.0f;
-	short int vec = 1;
-	float p = 0;
-public:
-	CP_EaseTest();
-	~CP_EaseTest() {}
+		float magnitude{ 15.0f };
+		float time = 1.0f;
+		float elapsedTime = 0.0f;
+		short int vec = 1;
+		float p = 0;
+	public:
+		CP_EaseTest();
+		~CP_EaseTest() {}
 
-	void Start()override;
+		void Start()override;
 
-	void Update()override;
+		void Update()override;
 
-	void Draw()override;
+		void Draw()override;
 
-	void ImGuiDebug()override;
+		void ImGuiDebug()override;
 
-	nlohmann::json Save() override;
-	void Load(const nlohmann::json& _data) override;
-};
-
+		nlohmann::json Save() override;
+		void Load(const nlohmann::json& _data) override;
+	};
+}

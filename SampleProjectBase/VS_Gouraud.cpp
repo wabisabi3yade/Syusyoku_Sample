@@ -4,22 +4,25 @@
 // カメラ・ライトなど
 #include "InSceneSystemManager.h"
 
-constexpr u_int BUFFER_NUM(3);	// バッファの数
-constexpr u_int LIGHT_SLOT(2);	// ライトのスロット
-
-VS_Gouraud::VS_Gouraud()
+namespace HashiTaku
 {
-	bufferTypes.resize(BUFFER_NUM);
-	bufferTypes[0] = BufferType::WVP;
-	bufferTypes[1] = BufferType::Material;
-	bufferTypes[2] = BufferType::Light;
-}
+	constexpr u_int BUFFER_NUM(3);	// バッファの数
+	constexpr u_int LIGHT_SLOT(2);	// ライトのスロット
 
-void VS_Gouraud::OnceUpdateBuffer()
-{
-	InSceneSystemManager* pSceneSystem = InSceneSystemManager::GetInstance();
+	VS_Gouraud::VS_Gouraud()
+	{
+		bufferTypes.resize(BUFFER_NUM);
+		bufferTypes[0] = BufferType::WVP;
+		bufferTypes[1] = BufferType::Material;
+		bufferTypes[2] = BufferType::Light;
+	}
 
-	// ライトの更新
-	SceneLightsParam& lightParam = pSceneSystem->GetSceneLights().GetLightsParam();
-	UpdateSubResource(LIGHT_SLOT, &lightParam);
+	void VS_Gouraud::OnceUpdateBuffer()
+	{
+		InSceneSystemManager* pSceneSystem = InSceneSystemManager::GetInstance();
+
+		// ライトの更新
+		SceneLightsParam& lightParam = pSceneSystem->GetSceneLights().GetLightsParam();
+		UpdateSubResource(LIGHT_SLOT, &lightParam);
+	}
 }

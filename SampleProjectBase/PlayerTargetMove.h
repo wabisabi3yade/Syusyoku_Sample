@@ -1,33 +1,35 @@
 #pragma once
 #include "PlayerMoveState.h"
 
-class PlayerTargetMove : public PlayerMoveState
+namespace HashiTaku
 {
-	/// @brief 回転速度
-	float rotateSpeed;
+	class PlayerTargetMove : public PlayerMoveState
+	{
+		/// @brief 回転速度
+		float rotateSpeed;
 
-public:
-	PlayerTargetMove();
-	~PlayerTargetMove() {}
+	public:
+		PlayerTargetMove();
+		~PlayerTargetMove() {}
 
-	/// @brief セーブする
-	/// @return セーブデータ
-	nlohmann::json Save() override;
+		/// @brief セーブする
+		/// @return セーブデータ
+		nlohmann::json Save() override;
 
-	/// @brief ロードする
-	/// @param _data ロードするデータ 
-	void Load(const nlohmann::json& _data) override;
-private:
-	void UpdateBehavior() override;
-	void OnEndBehavior() override;
-	void TransitionCheckUpdate() override;
+		/// @brief ロードする
+		/// @param _data ロードするデータ 
+		void Load(const nlohmann::json& _data) override;
+	private:
+		void UpdateBehavior() override;
+		void OnEndBehavior() override;
+		void TransitionCheckUpdate() override;
 
-	/// @brief ブレンド割合をセット
-	void ApplyBlendAnim();
+		/// @brief ブレンド割合をセット
+		void ApplyBlendAnim();
 
-	/// @brief ルートモーションをセット
-	void ApplyRootMotion();
+		/// @brief ルートモーションをセット
+		void ApplyRootMotion();
 
-	void ImGuiDebug() override;
-};
-
+		void ImGuiDebug() override;
+	};
+}

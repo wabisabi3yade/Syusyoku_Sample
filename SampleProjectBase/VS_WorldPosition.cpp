@@ -1,7 +1,10 @@
 #include "pch.h"
 #include "VS_WorldPosition.h"
 
-VS_WorldPosition::VS_WorldPosition()
+namespace HashiTaku
 {
-	bufferTypes.push_back(BufferType::WVP);
+	VS_WorldPosition::VS_WorldPosition()
+	{
+		bufferTypes.push_back(BufferType::WVP);
+	}
 }

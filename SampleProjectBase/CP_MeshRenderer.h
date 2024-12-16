@@ -4,76 +4,78 @@
 // 描画に必要
 #include "Mesh_Group.h"
 
-// メッシュ描画コンポーネント
-class CP_MeshRenderer : public CP_Renderer
+namespace HashiTaku
 {
-	/// @brief 描画するメッシュ群
-	Mesh_Group* pRenderMesh{ nullptr };
+	// メッシュ描画コンポーネント
+	class CP_MeshRenderer : public CP_Renderer
+	{
+		/// @brief 描画するメッシュ群
+		Mesh_Group* pRenderMesh{ nullptr };
 
-	/// @brief 使用するマテリアル（ないときはメッシュのマテリアルを使用する）
-	std::vector<Material*> setMaterials;
+		/// @brief 使用するマテリアル（ないときはメッシュのマテリアルを使用する）
+		std::vector<Material*> setMaterials;
 
-	/// @brief オブジェクトの原点を表示するか
-	bool isOriginDisplay;
-public:
-	CP_MeshRenderer();
-	~CP_MeshRenderer() {}
+		/// @brief オブジェクトの原点を表示するか
+		bool isOriginDisplay;
+	public:
+		CP_MeshRenderer();
+		~CP_MeshRenderer() {}
 
-	/// @brief 描画するメッシュをセット
-	/// @param _renderMesh メッシュ群
-	void SetRenderMesh(Mesh_Group& _renderMesh);
+		/// @brief 描画するメッシュをセット
+		/// @param _renderMesh メッシュ群
+		void SetRenderMesh(Mesh_Group& _renderMesh);
 
-	/// @brief 描画するメッシュをセット
-	/// @param _assetName メッシュ名
-	void SetRenderMesh(const std::string& _assetName);
-	
-	// シェーダーの名前からシェーダーを変更する
-	void SetVertexShader(const std::string& _vsName);
-	void SetPixelShader(const std::string& _psName);
+		/// @brief 描画するメッシュをセット
+		/// @param _assetName メッシュ名
+		void SetRenderMesh(const std::string& _assetName);
 
-	/// @brief 描画するメッシュを取得
-	/// @return メッシュ群
-	Mesh_Group* GetRenderMesh();
+		// シェーダーの名前からシェーダーを変更する
+		void SetVertexShader(const std::string& _vsName);
+		void SetPixelShader(const std::string& _psName);
 
-	nlohmann::json Save() override;
-	void Load(const nlohmann::json& _data) override;
-private:
-	// コンポーネント共通関数
-	void Start() override;
-	void Draw() override;
+		/// @brief 描画するメッシュを取得
+		/// @return メッシュ群
+		Mesh_Group* GetRenderMesh();
 
-	/// @brief 描画できるのか返す
-	/// @return 描画できるか？
-	bool IsCanDraw();
+		nlohmann::json Save() override;
+		void Load(const nlohmann::json& _data) override;
+	private:
+		// コンポーネント共通関数
+		void Start() override;
+		void Draw() override;
 
-	/// @brief ロード時のオフセット行列計算
-	/// @return ロード行列
-	DirectX::SimpleMath::Matrix CalcLoadMtx();
+		/// @brief 描画できるのか返す
+		/// @return 描画できるか？
+		bool IsCanDraw();
 
-	/// @brief メッシュを描画
-	void DrawMesh(RenderParam::WVP& _wvp);
+		/// @brief ロード時のオフセット行列計算
+		/// @return ロード行列
+		DirectX::SimpleMath::Matrix CalcLoadMtx();
 
-	/// @brief 影描画
-	void DrawShadow();
+		/// @brief メッシュを描画
+		void DrawMesh(RenderParam::WVP& _wvp);
 
-	/// @brief マテリアルの準備
-	/// @param _wvp wvp行列
-	/// @param _pMaterial　マテリアル
-	void MaterialSetup(RenderParam::WVP& _wvp, Material* _pMaterial);
+		/// @brief 影描画
+		void DrawShadow();
 
-	/// @brief シェーダーの準備
-	/// @param _shader シェーダー
-	/// @param _wvp wvp行列
-	/// @param _material マテリアル
-	void ShaderSetup(Shader& _shader, RenderParam::WVP& _wvp, Material& _material);
+		/// @brief マテリアルの準備
+		/// @param _wvp wvp行列
+		/// @param _pMaterial　マテリアル
+		void MaterialSetup(RenderParam::WVP& _wvp, Material* _pMaterial);
 
-	/// @brief ローカル軸を考慮したオフセットに変換
-	/// @param _worldOffset 変換したいオフセット
-	DirectX::SimpleMath::Vector3 WorldOffset(const DirectX::SimpleMath::Vector3& _offset);
+		/// @brief シェーダーの準備
+		/// @param _shader シェーダー
+		/// @param _wvp wvp行列
+		/// @param _material マテリアル
+		void ShaderSetup(Shader& _shader, RenderParam::WVP& _wvp, Material& _material);
 
-	/// @brief 原点表示
-	void OriginDisplay();
+		/// @brief ローカル軸を考慮したオフセットに変換
+		/// @param _worldOffset 変換したいオフセット
+		DirectX::SimpleMath::Vector3 WorldOffset(const DirectX::SimpleMath::Vector3& _offset);
 
-	void ImGuiDebug() override;
-};
+		/// @brief 原点表示
+		void OriginDisplay();
 
+		void ImGuiDebug() override;
+	};
+}

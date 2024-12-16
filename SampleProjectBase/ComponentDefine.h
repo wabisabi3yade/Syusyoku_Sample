@@ -46,8 +46,3 @@
 
 // エフェクト
 #include "CP_VisualEffect.h"
-#include "CP_EffectCreater.h"
-
-// テスト
-#include "CP_EaseTest.h"
-#include "CP_BoxAnimation.h"

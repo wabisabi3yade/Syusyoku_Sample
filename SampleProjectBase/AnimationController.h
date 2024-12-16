@@ -1,7 +1,6 @@
 #pragma once
 #include "Asset_Base.h"
 #include"AnimationNode_Base.h"
-#include "AnimConntrollerType.h"
 #include "AnimationParameters.h"
 #include "AnimTransitionArrow.h"
 #include "AnimationNotifyFactory.h"
@@ -13,169 +12,172 @@
 // vector配列で使用するためinclude
 #include "Bone.h"
 
-// ボーン
-class BoneList;
-
-using AnimNotifyList = std::list<std::unique_ptr<AnimationNotify_Base>>;
-using TransArrowList = std::list<std::unique_ptr<AnimTransitionArrow>>;
-
-/// @brief アニメーションノード関連の情報
-struct AnimNodeInfo
+namespace HashiTaku
 {
-	std::unique_ptr<AnimationNode_Base> pAnimNode;	// アニメーションノード
-	TransArrowList transitionArrows; // 遷移元となっている矢印
-	std::string groupArrowsName;	// 属している遷移条件グループ名
-	AnimNotifyList notifyList; // 通知イベント
-};
+	// ボーン
+	class BoneList;
 
-/// @brief アニメーション遷移を管理するクラス
-class AnimationController : public Asset_Base, public HashiTaku::IImGuiUser
-{	
-private:
-	/// @brief アニメーションノード関連の情報リスト
-	std::list<std::unique_ptr<AnimNodeInfo>> animNodeInfos;
+	using AnimNotifyList = std::list<std::unique_ptr<AnimationNotify_Base>>;
+	using TransArrowList = std::list<std::unique_ptr<AnimTransitionArrow>>;
 
-	/// @brief パラメータリスト
-	std::unique_ptr<AnimationParameters> pAnimParameters;
+	/// @brief アニメーションノード関連の情報
+	struct AnimNodeInfo
+	{
+		std::unique_ptr<AnimationNode_Base> pAnimNode;	// アニメーションノード
+		TransArrowList transitionArrows; // 遷移元となっている矢印
+		std::string groupArrowsName;	// 属している遷移条件グループ名
+		AnimNotifyList notifyList; // 通知イベント
+	};
 
-	/// @brief 通知イベント作成クラス
-	std::unique_ptr<AnimationNotifyFactory> pNotifyFactory;
+	/// @brief アニメーション遷移を管理するクラス
+	class AnimationController : public Asset_Base, public IImGuiUser
+	{
+	private:
+		/// @brief アニメーションノード関連の情報リスト
+		std::list<std::unique_ptr<AnimNodeInfo>> animNodeInfos;
 
-	/// @brief 遷移条件をグループにしたもの(キャンセルのアニメーションやらをひとまとめにできる)
-	std::unordered_map<std::string, TransArrowList> groupArrows;
+		/// @brief パラメータリスト
+		std::unique_ptr<AnimationParameters> pAnimParameters;
 
-	/// @brief 最初に始めるノード情報
-	AnimNodeInfo* pDefaultNodeInfo;
+		/// @brief 通知イベント作成クラス
+		std::unique_ptr<AnimationNotifyFactory> pNotifyFactory;
 
-	/// @brief	対応しているボーン配列
-	BoneList* pAssetBoneList;
+		/// @brief 遷移条件をグループにしたもの(キャンセルのアニメーションやらをひとまとめにできる)
+		std::unordered_map<std::string, TransArrowList> groupArrows;
 
-	/// @brief 再生速度
-	float playSpeed;
-public:
-	/// @brief コンストラクタ
-	/// @param _setType コントローラーの種類
-	AnimationController();
-	~AnimationController() {}
+		/// @brief 最初に始めるノード情報
+		AnimNodeInfo* pDefaultNodeInfo;
 
-	/// @brief アニメーション遷移の矢印を作成する
-	/// @param _fromNodeName 遷移元アニメーション
-	/// @param _toNodeName 遷移先アニメーション
-	/// @return 作成した矢印
-	AnimTransitionArrow* CreateTransitionArrow(const std::string& _fromNodeName,
-		const std::string& _toNodeName);
+		/// @brief	対応しているボーン配列
+		BoneList* pAssetBoneList;
 
-	/// @brief アニメーション遷移の矢印を作成する
-	/// @param _toNodeName 遷移先アニメーション
-	/// @return 作成した矢印
-	std::unique_ptr<AnimTransitionArrow> CreateTransitionArrow(const std::string& _toNodeName);
+		/// @brief 再生速度
+		float playSpeed;
+	public:
+		/// @brief コンストラクタ
+		/// @param _setType コントローラーの種類
+		AnimationController();
+		~AnimationController() {}
 
-	/// @brief アニメーションを除外
-	/// @param _animName アニメーションの名前
-	void RemoveNode(const std::string& _animName);
+		/// @brief アニメーション遷移の矢印を作成する
+		/// @param _fromNodeName 遷移元アニメーション
+		/// @param _toNodeName 遷移先アニメーション
+		/// @return 作成した矢印
+		AnimTransitionArrow* CreateTransitionArrow(const std::string& _fromNodeName,
+			const std::string& _toNodeName);
 
-	/// @brief アニメーションの進める速度を取得
-	/// @return 進める速度
-	float GetPlaySpeed() const;
+		/// @brief アニメーション遷移の矢印を作成する
+		/// @param _toNodeName 遷移先アニメーション
+		/// @return 作成した矢印
+		std::unique_ptr<AnimTransitionArrow> CreateTransitionArrow(const std::string& _toNodeName);
 
-	/// @brief デフォルトノード情報を取得
-	/// @return デフォルトノード情報
-	AnimNodeInfo* GetDefaultNode() const;
-	
-	// 名前からノード情報を取得 
-	AnimNodeInfo* GetNodeInfo(const std::string& _name) const;
+		/// @brief アニメーションを除外
+		/// @param _animName アニメーションの名前
+		void RemoveNode(const std::string& _animName);
 
-	// ノードからノード情報を取得する
-	const AnimNodeInfo* GetNodeInfo(const AnimationNode_Base& _node) const;
+		/// @brief アニメーションの進める速度を取得
+		/// @return 進める速度
+		float GetPlaySpeed() const;
 
-	/// @brief ノードの数を取得
-	/// @return ノード数
-	void GetNodeArray(std::list<const AnimationNode_Base*>& _animNodeArray) const;
+		/// @brief デフォルトノード情報を取得
+		/// @return デフォルトノード情報
+		AnimNodeInfo* GetDefaultNode() const;
 
-	/// @brief アニメーションのパラメータを取得
-	/// @return アニメーションのパラメータ
-	const AnimationParameters& GetAnimationParameters() const;
+		// 名前からノード情報を取得 
+		AnimNodeInfo* GetNodeInfo(const std::string& _name) const;
 
-	/// @brief グループの遷移矢印リストを取得する
-	/// @param _groupName グループ名
-	/// @return グループの遷移矢印リスト(nullptrならグループ名ヒットせず)
-	const TransArrowList* GetGroupArrows(const std::string& _groupName) const;
+		// ノードからノード情報を取得する
+		const AnimNodeInfo* GetNodeInfo(const AnimationNode_Base& _node) const;
 
-	nlohmann::json Save() override;
-	void Load(const nlohmann::json& _data) override;
-private:
-	/// @brief 名前のノードを既にあるか確認する
-	/// @param _nodeName 確認する名前
-	/// @return ノードを持っているか？
-	bool IsHaveNode(const std::string& _nodeName);
+		/// @brief ノードの数を取得
+		/// @return ノード数
+		void GetNodeArray(std::list<const AnimationNode_Base*>& _animNodeArray) const;
 
-	/// @brief ノード名を重複しないような名前に変換
-	/// @param _nodename ノード名
-	void NotDuplicateNodeName(std::string& _nodename);
+		/// @brief アニメーションのパラメータを取得
+		/// @return アニメーションのパラメータ
+		const AnimationParameters& GetAnimationParameters() const;
 
-	/// @brief ノードタイプから新しくノードを作成する
-	/// @param _nodeType ノードの種類
-	/// @param _nodeName ノード名
-	/// @return 作成したノード情報
-	AnimNodeInfo* CreateNodeInfoByType(AnimationNode_Base::NodeType _nodeType, const std::string& _nodeName = "Default");
+		/// @brief グループの遷移矢印リストを取得する
+		/// @param _groupName グループ名
+		/// @return グループの遷移矢印リスト(nullptrならグループ名ヒットせず)
+		const TransArrowList* GetGroupArrows(const std::string& _groupName) const;
 
-	/// @brief 遷移条件のグループを作成する
-	/// @param _groupName グループ名
-	/// @return 作成したグループ矢印(nullptrなら作成失敗)
-	TransArrowList* CreateGroupArrows(const std::string& _groupName);
+		nlohmann::json Save() override;
+		void Load(const nlohmann::json& _data) override;
+	private:
+		/// @brief 名前のノードを既にあるか確認する
+		/// @param _nodeName 確認する名前
+		/// @return ノードを持っているか？
+		bool IsHaveNode(const std::string& _nodeName);
 
-	/// @brief グループに矢印を追加
-	/// @param _groupName 追加するグループ名
-	/// @param _addArrow 追加する矢印
-	void AddArrowToGroup(const std::string& _groupName, 
-		std::unique_ptr<AnimTransitionArrow> _addArrow);
+		/// @brief ノード名を重複しないような名前に変換
+		/// @param _nodename ノード名
+		void NotDuplicateNodeName(std::string& _nodename);
 
-	/// @brief グループ遷移条件の名前一覧を取得
-	/// @param _outList リスト
-	void GetGroupNamelist(std::vector<const std::string*>& _outList);
+		/// @brief ノードタイプから新しくノードを作成する
+		/// @param _nodeType ノードの種類
+		/// @param _nodeName ノード名
+		/// @return 作成したノード情報
+		AnimNodeInfo* CreateNodeInfoByType(AnimationNode_Base::NodeType _nodeType, const std::string& _nodeName = "Default");
 
-	/// @brief 遷移矢印の優先順位でソート
-	static bool SortArrowPriority(const std::unique_ptr<AnimTransitionArrow>& _a1, const std::unique_ptr<AnimTransitionArrow>& _a2);
+		/// @brief 遷移条件のグループを作成する
+		/// @param _groupName グループ名
+		/// @return 作成したグループ矢印(nullptrなら作成失敗)
+		TransArrowList* CreateGroupArrows(const std::string& _groupName);
 
-	// ImGuiでノード関係
-	void ImGuiNode(const std::vector<std::string>& _nodeNames);
+		/// @brief グループに矢印を追加
+		/// @param _groupName 追加するグループ名
+		/// @param _addArrow 追加する矢印
+		void AddArrowToGroup(const std::string& _groupName,
+			std::unique_ptr<AnimTransitionArrow> _addArrow);
 
-	// ImGuiで遷移矢印
-	void ImGuiTransArrow(AnimNodeInfo& _nodeInfo, const std::vector<std::string>& _nodeNames);
+		/// @brief グループ遷移条件の名前一覧を取得
+		/// @param _outList リスト
+		void GetGroupNamelist(std::vector<const std::string*>& _outList);
 
-	// ImGuifでボーンリストをセット
-	void ImGuiSetBoneList();
+		/// @brief 遷移矢印の優先順位でソート
+		static bool SortArrowPriority(const std::unique_ptr<AnimTransitionArrow>& _a1, const std::unique_ptr<AnimTransitionArrow>& _a2);
 
-	// ImGuiでデフォルトノード設定
-	void ImGuiSetDefaultNode(const std::vector<std::string>& _nodeNames);
+		// ImGuiでノード関係
+		void ImGuiNode(const std::vector<std::string>& _nodeNames);
 
-	// ImGuiでノード作成
-	void ImGuiCreateNode();
+		// ImGuiで遷移矢印
+		void ImGuiTransArrow(AnimNodeInfo& _nodeInfo, const std::vector<std::string>& _nodeNames);
 
-	// ImGuiで通知イベントを作成
-	// 引数：追加先のノード情報
-	void ImGuiAnimNotify(AnimNodeInfo& _nodeInfo);
+		// ImGuifでボーンリストをセット
+		void ImGuiSetBoneList();
 
-	// ImGuiでグループの遷移条件を編集
-	void ImGuiGroupArrows(const std::vector<std::string>& _nodeNames);
+		// ImGuiでデフォルトノード設定
+		void ImGuiSetDefaultNode(const std::vector<std::string>& _nodeNames);
 
-	// ノード情報をセーブする
-	nlohmann::json SaveNodeInfo(AnimNodeInfo& _nodeInfo);
+		// ImGuiでノード作成
+		void ImGuiCreateNode();
 
-	// グループ遷移条件をセーブする
-	nlohmann::json SaveGroupArrows();
+		// ImGuiで通知イベントを作成
+		// 引数：追加先のノード情報
+		void ImGuiAnimNotify(AnimNodeInfo& _nodeInfo);
 
-	// ノード情報をロードする
-	void LoadNodeInfo(const nlohmann::json& _nodeInfoData);
+		// ImGuiでグループの遷移条件を編集
+		void ImGuiGroupArrows(const std::vector<std::string>& _nodeNames);
 
-	// 通知イベントをロードする
-	void LoadNotify(const nlohmann::json& _nodeInfoData);
+		// ノード情報をセーブする
+		nlohmann::json SaveNodeInfo(AnimNodeInfo& _nodeInfo);
 
-	// 遷移矢印をロードする
-	void LoadTransArrow(const nlohmann::json& _nodeInfoData);
+		// グループ遷移条件をセーブする
+		nlohmann::json SaveGroupArrows();
 
-	// グループ矢印をロードする
-	void LoadGroupArrow(const nlohmann::json& _groupArrowData);
-protected:
-	void ImGuiDebug() override;
-};
+		// ノード情報をロードする
+		void LoadNodeInfo(const nlohmann::json& _nodeInfoData);
+
+		// 通知イベントをロードする
+		void LoadNotify(const nlohmann::json& _nodeInfoData);
+
+		// 遷移矢印をロードする
+		void LoadTransArrow(const nlohmann::json& _nodeInfoData);
+
+		// グループ矢印をロードする
+		void LoadGroupArrow(const nlohmann::json& _groupArrowData);
+	protected:
+		void ImGuiDebug() override;
+	};
+}

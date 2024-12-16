@@ -4,149 +4,151 @@
 #include "AnimationNode_Base.h"
 #include "AnimationNotify_Base.h"
 
-class AnimationParameters;
-
-/// @brief ノード再生の基底クラス
-class AnimNodePlayer_Base : public HashiTaku::IImGuiUser
+namespace HashiTaku
 {
-	/// @brief 現在の再生割合
-	float curPlayRatio;
+	class AnimationParameters;
 
-	/// @brief 1フレーム前の再生割合
-	float lastPlayRatio;
+	/// @brief ノード再生の基底クラス
+	class AnimNodePlayer_Base : public IImGuiUser
+	{
+		/// @brief 現在の再生割合
+		float curPlayRatio;
 
-	/// @brief ノードの再生速度
-	float playerSpeedTimes;
+		/// @brief 1フレーム前の再生割合
+		float lastPlayRatio;
 
-	/// @brief 再生フラグ
-	bool isPlaying;
+		/// @brief ノードの再生速度
+		float playerSpeedTimes;
 
-	/// @brief ループしたタイミングか？
-	bool isJustLoop;
+		/// @brief 再生フラグ
+		bool isPlaying;
 
-	/// @brief アニメーションコントローラ内の通知イベントからコピーしてきた通知イベントリスト
-	std::list<std::unique_ptr<AnimationNotify_Base>> copyNotifys;
-protected:
-	/// @brief ルートモーションによる座標移動速度
-	DirectX::SimpleMath::Vector3 rootMotionPosSpeedPerSec;
+		/// @brief ループしたタイミングか？
+		bool isJustLoop;
 
-	/// @brief 前回のルートモーション座標値
-	DirectX::SimpleMath::Vector3 p_RootMotionPos;
+		/// @brief アニメーションコントローラ内の通知イベントからコピーしてきた通知イベントリスト
+		std::list<std::unique_ptr<AnimationNotify_Base>> copyNotifys;
+	protected:
+		/// @brief ルートモーションによる座標移動速度
+		DirectX::SimpleMath::Vector3 rootMotionPosSpeedPerSec;
 
-	/// @brief 前回のルートモーション回転量
-	DirectX::SimpleMath::Quaternion p_RootMotionRot;
+		/// @brief 前回のルートモーション座標値
+		DirectX::SimpleMath::Vector3 p_RootMotionPos;
 
-	/// @brief 動かすボーン
-	BoneList* pAssetBoneList;
+		/// @brief 前回のルートモーション回転量
+		DirectX::SimpleMath::Quaternion p_RootMotionRot;
 
-	/// @brief 再生するアニメーションノード
-	const AnimationNode_Base* pPlayAnimNode;
+		/// @brief 動かすボーン
+		BoneList* pAssetBoneList;
 
-	/// @brief ルートモーション時に移動するオブジェクトのトランスフォーム
-	Transform* pObjectTransform;
+		/// @brief 再生するアニメーションノード
+		const AnimationNode_Base* pPlayAnimNode;
 
-	/// @brief 計算した全てを考慮した再生速度
-	float allPlaySpeed;
+		/// @brief ルートモーション時に移動するオブジェクトのトランスフォーム
+		Transform* pObjectTransform;
 
-	/// @brief 経過時間
-	float deltaTime;
-public:
-	/// @brief コンストラクタ
-	/// @param _playNode 再生ノード
-	/// @param _boneList ボーン配列
-	/// @param _transform トランスフォーム
-	AnimNodePlayer_Base(const AnimationNode_Base& _playNode, BoneList& _boneList, Transform& _transform);
-	virtual ~AnimNodePlayer_Base(){}
+		/// @brief 計算した全てを考慮した再生速度
+		float allPlaySpeed;
 
-	/// @brief アニメーションコントローラーから通知イベントをコピーする
-	/// @param _notifyList コピー元の通知イベントリスト
-	/// @param _animationParameters アニメーションパラメータ
-	void CopyNotifys(const std::list<std::unique_ptr<AnimationNotify_Base>>& _notifyList, AnimationParameters& _animationParameters);
+		/// @brief 経過時間
+		float deltaTime;
+	public:
+		/// @brief コンストラクタ
+		/// @param _playNode 再生ノード
+		/// @param _boneList ボーン配列
+		/// @param _transform トランスフォーム
+		AnimNodePlayer_Base(const AnimationNode_Base& _playNode, BoneList& _boneList, Transform& _transform);
+		virtual ~AnimNodePlayer_Base() {}
 
-	/// @brief 更新処理呼び出し
-	/// @param _deltaTime 経過時間
-	/// @param _controllerSpeed コントローラー速度
-	void UpdateCall(std::vector<BoneTransform>& _outTransforms, float _deltaTime, float _controllerSpeed);
+		/// @brief アニメーションコントローラーから通知イベントをコピーする
+		/// @param _notifyList コピー元の通知イベントリスト
+		/// @param _animationParameters アニメーションパラメータ
+		void CopyNotifys(const std::list<std::unique_ptr<AnimationNotify_Base>>& _notifyList, AnimationParameters& _animationParameters);
 
-	/// @brief トランスフォームにルートモーションを反映する
-	/// @return このフレームの移動量
-	DirectX::SimpleMath::Vector3 CalcRootMotionToTransform();
+		/// @brief 更新処理呼び出し
+		/// @param _deltaTime 経過時間
+		/// @param _controllerSpeed コントローラー速度
+		void UpdateCall(std::vector<BoneTransform>& _outTransforms, float _deltaTime, float _controllerSpeed);
 
-	/// @brief トランスフォームにこのフレームのルートモーションを移動する
-	/// @param _rootMovement ルートモーションの移動量
-	/// @param _deltaTime 経過時間
-	void ApplyRootMotion(const DirectX::SimpleMath::Vector3& _rootMovement);
+		/// @brief トランスフォームにルートモーションを反映する
+		/// @return このフレームの移動量
+		DirectX::SimpleMath::Vector3 CalcRootMotionToTransform();
 
-	void OnInterpolateUpdate(std::vector<BoneTransform>& _outTransforms, float _deltaTime, float _controllerSpeed);
+		/// @brief トランスフォームにこのフレームのルートモーションを移動する
+		/// @param _rootMovement ルートモーションの移動量
+		/// @param _deltaTime 経過時間
+		void ApplyRootMotion(const DirectX::SimpleMath::Vector3& _rootMovement);
 
-	/// @brief 再生割合を進める
-	virtual void ProgressPlayRatio(float _controllerSpeed);
+		void OnInterpolateUpdate(std::vector<BoneTransform>& _outTransforms, float _deltaTime, float _controllerSpeed);
 
-	/// @brief 変更前終了処理
-	void OnTerminal();
+		/// @brief 再生割合を進める
+		virtual void ProgressPlayRatio(float _controllerSpeed);
 
-	/// @brief 現在の再生割合をセット
-	/// @param 再生割合
-	void SetCurPlayRatio(float _playRatio);
+		/// @brief 変更前終了処理
+		void OnTerminal();
 
-	/// @brief 再生速度倍率をセット
-	/// @param 再生速度倍率
-	void SetPlaySpeedTimes(float _playSpeed);
+		/// @brief 現在の再生割合をセット
+		/// @param 再生割合
+		void SetCurPlayRatio(float _playRatio);
 
-	/// @brief 現在の再生割合を取得する
-	/// @return 現在の再生割合
-	float GetCurPlayRatio() const;
+		/// @brief 再生速度倍率をセット
+		/// @param 再生速度倍率
+		void SetPlaySpeedTimes(float _playSpeed);
 
-	/// @brief 1フレーム前の再生割合を取得
-	/// @return 1フレーム前の再生割合
-	float GetLastPlayRatio() const;
+		/// @brief 現在の再生割合を取得する
+		/// @return 現在の再生割合
+		float GetCurPlayRatio() const;
 
-	/// @brief ノード再生速度を取得
-	/// @return ノード再生速度
-	float GetNodePlaySpeed() const;
+		/// @brief 1フレーム前の再生割合を取得
+		/// @return 1フレーム前の再生割合
+		float GetLastPlayRatio() const;
 
-	/// @brief ルートモーションを取得する（内部で必要な計算を行う）
-	/// @param 現在の再生割合
-	/// @param _isWorldScaling ワールド軸に対応するスケーリングするか？
-	/// @return 現在の割合のルートモーション座標
-	virtual DirectX::SimpleMath::Vector3 GetRootMotionPos(float _ratio, bool _isWorldScaling = true) const = 0;
+		/// @brief ノード再生速度を取得
+		/// @return ノード再生速度
+		float GetNodePlaySpeed() const;
 
-	/// @brief ルートモーションを取得する（内部で必要な計算を行う）
-	/// @param 現在の再生割合
-	/// @param _isWorldScaling ワールド軸に対応するスケーリングするか？
-	/// @return 現在の割合のルートモーション座標
-	void GetCurrentRootPos(DirectX::SimpleMath::Vector3& _outPos, bool _isWorldScaling) const;
+		/// @brief ルートモーションを取得する（内部で必要な計算を行う）
+		/// @param 現在の再生割合
+		/// @param _isWorldScaling ワールド軸に対応するスケーリングするか？
+		/// @return 現在の割合のルートモーション座標
+		virtual DirectX::SimpleMath::Vector3 GetRootMotionPos(float _ratio, bool _isWorldScaling = true) const = 0;
 
-	/// @brief 再生しているノード名を取得
-	/// @return ノード名
-	const std::string& GetNodeName() const;
+		/// @brief ルートモーションを取得する（内部で必要な計算を行う）
+		/// @param 現在の再生割合
+		/// @param _isWorldScaling ワールド軸に対応するスケーリングするか？
+		/// @return 現在の割合のルートモーション座標
+		void GetCurrentRootPos(DirectX::SimpleMath::Vector3& _outPos, bool _isWorldScaling) const;
 
-	const DirectX::SimpleMath::Vector3& GetRootMotionSpeed() const;
-private:
-	/// @brief ループ再生できるか確認
-	/// @return ループできるか？
-	bool IsCanLoop();
+		/// @brief 再生しているノード名を取得
+		/// @return ノード名
+		const std::string& GetNodeName() const;
 
-	/// @brief 再生がループした時の処理
-	void OnPlayLoop();
+		const DirectX::SimpleMath::Vector3& GetRootMotionSpeed() const;
+	private:
+		/// @brief ループ再生できるか確認
+		/// @return ループできるか？
+		bool IsCanLoop();
 
-	/// @brief 通知イベントを更新
-	void NotifyUpdate();
-protected:
-	/// @brief 各ノードプレイヤーの更新処理
-	virtual void Update(std::vector<BoneTransform>& _outTransforms) = 0;
+		/// @brief 再生がループした時の処理
+		void OnPlayLoop();
 
-	/// @brief ルートモーションの座標移動速度を計算する
-	virtual void CalcRootMotionPosSpeed() = 0;
+		/// @brief 通知イベントを更新
+		void NotifyUpdate();
+	protected:
+		/// @brief 各ノードプレイヤーの更新処理
+		virtual void Update(std::vector<BoneTransform>& _outTransforms) = 0;
 
-	/// @brief ルートモーションをロード時のスケール・回転量を反映
-	/// @param _rootMotionPos 反映させたいルートモーション
-	void ApplyLoadTransform(DirectX::SimpleMath::Vector3& _rootMotionPos) const;
+		/// @brief ルートモーションの座標移動速度を計算する
+		virtual void CalcRootMotionPosSpeed() = 0;
 
-	/// @brief プレイヤー再生速度を取得する
-	/// @return プレイヤーの再生速度
-	float GetPlayerSpeed() const;
+		/// @brief ルートモーションをロード時のスケール・回転量を反映
+		/// @param _rootMotionPos 反映させたいルートモーション
+		void ApplyLoadTransform(DirectX::SimpleMath::Vector3& _rootMotionPos) const;
 
-	void ImGuiDebug() override;
-};
+		/// @brief プレイヤー再生速度を取得する
+		/// @return プレイヤーの再生速度
+		float GetPlayerSpeed() const;
 
+		void ImGuiDebug() override;
+	};
+}

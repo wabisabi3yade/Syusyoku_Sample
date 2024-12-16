@@ -1,12 +1,15 @@
 #pragma once
 #include "PlayerGroundState.h"
-class PlayerIdleState : public PlayerGroundState
+
+namespace HashiTaku
 {
-public:
-	PlayerIdleState();
-	~PlayerIdleState() {}
+	class PlayerIdleState : public PlayerGroundState
+	{
+	public:
+		PlayerIdleState();
+		~PlayerIdleState() {}
 
-private:
-	void OnStartBehavior() override;
-};
-
+	private:
+		void OnStartBehavior() override;
+	};
+}

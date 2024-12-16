@@ -1,18 +1,20 @@
 #pragma once
 #include "BossGroundMove.h"
 
-/// @brief ボス歩き
-class BossWalkState : public BossGroundMove
+namespace HashiTaku
 {
-public: 
-	BossWalkState();
-	~BossWalkState() {}
+	/// @brief ボス歩き
+	class BossWalkState : public BossGroundMove
+	{
+	public:
+		BossWalkState();
+		~BossWalkState() {}
 
-	nlohmann::json Save() override;
-	void Load(const nlohmann::json& _data) override;
-private:
-	void TransitionCheckUpdate() override;
+		nlohmann::json Save() override;
+		void Load(const nlohmann::json& _data) override;
+	private:
+		void TransitionCheckUpdate() override;
 
-	void ImGuiDebug() override;
-};
-
+		void ImGuiDebug() override;
+	};
+}

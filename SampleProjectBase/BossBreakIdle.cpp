@@ -2,8 +2,11 @@
 #include "BossBreakIdle.h"
 #include "CP_Boss.h"
 
-void BossBreakIdle::TransitionCheckUpdate()
+namespace HashiTaku
 {
-	if (!pActionController->GetIsBreaking())
-		ChangeState(BossState::Idle);
+	void BossBreakIdle::TransitionCheckUpdate()
+	{
+		if (!pActionController->GetIsBreaking())
+			ChangeState(BossState::Idle);
+	}
 }

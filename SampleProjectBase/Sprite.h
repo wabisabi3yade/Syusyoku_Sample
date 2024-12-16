@@ -4,64 +4,67 @@
 
 #include "ISaveLoad.h"
 
-class Material;
-
-// 四角形ポリゴンにテクスチャを貼って表示するクラス
-class Sprite : public HashiTaku::ISaveLoad
+namespace HashiTaku
 {
-	/// @brief テクスチャ
-	Texture* pTexture;
+	class Material;
 
-	/// @brief 四角形ポリゴン
-	std::unique_ptr<PlaneMesh> pSquareMesh;
+	// 四角形ポリゴンにテクスチャを貼って表示するクラス
+	class Sprite : public ISaveLoad
+	{
+		/// @brief テクスチャ
+		Texture* pTexture;
 
-	/// @brief uv座標の始点(左上)
-	DirectX::SimpleMath::Vector2 uvStart;
+		/// @brief 四角形ポリゴン
+		std::unique_ptr<PlaneMesh> pSquareMesh;
 
-	/// @brief uv座標の終点(右下)
-	DirectX::SimpleMath::Vector2 uvEnd;
+		/// @brief uv座標の始点(左上)
+		DirectX::SimpleMath::Vector2 uvStart;
 
-	/// @brief uvの分割数
-	DirectX::SimpleMath::Vector2 uvDivideNum;
+		/// @brief uv座標の終点(右下)
+		DirectX::SimpleMath::Vector2 uvEnd;
 
-	/// @brief テクスチャが設定されているか
-	bool isTextureEnable{ false };
+		/// @brief uvの分割数
+		DirectX::SimpleMath::Vector2 uvDivideNum;
 
-	/// @brief コピー関数
-	/// @param _other コピーされる対象
-	void Copy(const Sprite& _other);
-public:
-	Sprite();
-	Sprite(const Sprite& _other);
-	~Sprite() {};
+		/// @brief テクスチャが設定されているか
+		bool isTextureEnable{ false };
 
-	Sprite& operator=(const Sprite& _other);
+		/// @brief コピー関数
+		/// @param _other コピーされる対象
+		void Copy(const Sprite& _other);
+	public:
+		Sprite();
+		Sprite(const Sprite& _other);
+		~Sprite() {};
 
-	/// @brief テクスチャをセット
-	/// @param _tex テクスチャの参照
-	void SetTexture(Texture& _tex);
+		Sprite& operator=(const Sprite& _other);
 
-	/// @brief テクスチャを取得
-	/// @return テクスチャの参照
-	Texture* GetTexture() const;
+		/// @brief テクスチャをセット
+		/// @param _tex テクスチャの参照
+		void SetTexture(Texture& _tex);
 
-	/// @brief 四角形ポリゴンを取得
-	/// @return 四角形ポリゴンのconst参照
-	const PlaneMesh& GetSquare() const;
+		/// @brief テクスチャを取得
+		/// @return テクスチャの参照
+		Texture* GetTexture() const;
 
-	// テクスチャ使用しているか返す
-	bool GetIsTexEnable() const;
+		/// @brief 四角形ポリゴンを取得
+		/// @return 四角形ポリゴンのconst参照
+		const PlaneMesh& GetSquare() const;
 
-	/// @brief uv座標を設定
-	/// @param _uvStart uv座標始点
-	/// @param _uvEnd uv座標終点
-	void SetUV(const DirectX::SimpleMath::Vector2& _uvStart, const DirectX::SimpleMath::Vector2& _uvEnd);
+		// テクスチャ使用しているか返す
+		bool GetIsTexEnable() const;
 
-	/// @brief セーブする
-	/// @param _sceneData セーブデータ
-	nlohmann::json Save() override;
+		/// @brief uv座標を設定
+		/// @param _uvStart uv座標始点
+		/// @param _uvEnd uv座標終点
+		void SetUV(const DirectX::SimpleMath::Vector2& _uvStart, const DirectX::SimpleMath::Vector2& _uvEnd);
 
-	/// @brief ロードする
-	/// @param _sceneData ロードするデータ 
-	void Load(const nlohmann::json& _data) override;
-};
+		/// @brief セーブする
+		/// @param _sceneData セーブデータ
+		nlohmann::json Save() override;
+
+		/// @brief ロードする
+		/// @param _sceneData ロードするデータ 
+		void Load(const nlohmann::json& _data) override;
+	};
+}

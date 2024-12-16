@@ -4,20 +4,23 @@
 #include "SceneLights.h"
 #include "CP_Camera.h"
 
-constexpr u_int LIGHT_SLOT(1);
-
-PS_Toon::PS_Toon()
+namespace HashiTaku
 {
-	bufferTypes.resize(2);
-	bufferTypes[0] = BufferType::Material;
-	bufferTypes[LIGHT_SLOT] = BufferType::Light;
-}
+	constexpr u_int LIGHT_SLOT(1);
 
-void PS_Toon::OnceUpdateBuffer()
-{
-	auto pInSceneManager = InSceneSystemManager::GetInstance();
+	PS_Toon::PS_Toon()
+	{
+		bufferTypes.resize(2);
+		bufferTypes[0] = BufferType::Material;
+		bufferTypes[LIGHT_SLOT] = BufferType::Light;
+	}
 
-	// ライトの更新
-	SceneLightsParam& lightParam = pInSceneManager->GetSceneLights().GetLightsParam();
-	UpdateSubResource(LIGHT_SLOT, &lightParam.dirParam);
+	void PS_Toon::OnceUpdateBuffer()
+	{
+		auto pInSceneManager = InSceneSystemManager::GetInstance();
+
+		// ライトの更新
+		SceneLightsParam& lightParam = pInSceneManager->GetSceneLights().GetLightsParam();
+		UpdateSubResource(LIGHT_SLOT, &lightParam.dirParam);
+	}
 }

@@ -1,13 +1,15 @@
 #pragma once
 
-class IGetRenderResource;
-
-// ビュー変換行列を準備する
-class SetUpViewTrans
+namespace HashiTaku
 {
+	class IGetRenderResource;
 
-public :
-	SetUpViewTrans(){};
-	~SetUpViewTrans(){};
-};
+	// ビュー変換行列を準備する
+	class SetUpViewTrans
+	{
 
+	public:
+		SetUpViewTrans() {};
+		~SetUpViewTrans() {};
+	};
+}

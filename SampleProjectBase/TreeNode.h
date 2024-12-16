@@ -1,69 +1,72 @@
 #pragma once
 
-// ボーン
-class Bone;
-
-/// @brief モデルのツリーノード
-class TreeNode
+namespace HashiTaku
 {
-	/// @brief ノード名
-	std::string nodeName;
+	// ボーン
+	class Bone;
 
-	/// @brief 親ノード
-	TreeNode* pParentNode;
+	/// @brief モデルのツリーノード
+	class TreeNode
+	{
+		/// @brief ノード名
+		std::string nodeName;
 
-	/// @brief 子ノード
-	std::list<std::unique_ptr<TreeNode>>  pChildNodes;
+		/// @brief 親ノード
+		TreeNode* pParentNode;
 
-	/// @brief ノードのローカル座標系への変換行列
-	DirectX::SimpleMath::Matrix transformMtx;
+		/// @brief 子ノード
+		std::list<std::unique_ptr<TreeNode>>  pChildNodes;
 
-	/// @brief 対応したボーン
-	Bone* pLinkBone;
-public:
-	TreeNode() : nodeName(""), pParentNode(nullptr), pLinkBone(nullptr) {}
-	~TreeNode() {}
+		/// @brief ノードのローカル座標系への変換行列
+		DirectX::SimpleMath::Matrix transformMtx;
 
-	/// @brief 親ノードをセット
-	/// @param _parentNode 親ノード
-	void SetParent(TreeNode& _parentNode);
+		/// @brief 対応したボーン
+		Bone* pLinkBone;
+	public:
+		TreeNode() : nodeName(""), pParentNode(nullptr), pLinkBone(nullptr) {}
+		~TreeNode() {}
 
-	/// @brief 子供ノードを追加
-	/// @param _chiledNode 子ノードのユニークポインタ
-	void AddChild(std::unique_ptr<TreeNode> _chiledNode);
+		/// @brief 親ノードをセット
+		/// @param _parentNode 親ノード
+		void SetParent(TreeNode& _parentNode);
 
-	/// @brief 子供ノードを除外
-	/// @param _chiledNode 子ノード
-	void RemoveChiled(TreeNode& _chiledNode);
+		/// @brief 子供ノードを追加
+		/// @param _chiledNode 子ノードのユニークポインタ
+		void AddChild(std::unique_ptr<TreeNode> _chiledNode);
 
-	/// @brief 対応したボーンがあるか確認
-	/// @return ボーンがあるか？
-	bool HasBone() const;
+		/// @brief 子供ノードを除外
+		/// @param _chiledNode 子ノード
+		void RemoveChiled(TreeNode& _chiledNode);
 
-	// ノード名をセット
-	void SetNodeName(const std::string& _nodeName);
+		/// @brief 対応したボーンがあるか確認
+		/// @return ボーンがあるか？
+		bool HasBone() const;
 
-	// ローカル座標系への変換行列セット
-	void SetTransformMtx(const DirectX::SimpleMath::Matrix& _transformMtx);
+		// ノード名をセット
+		void SetNodeName(const std::string& _nodeName);
 
-	// 対応したボーンをセット
-	void SetBone(Bone& _bone);
+		// ローカル座標系への変換行列セット
+		void SetTransformMtx(const DirectX::SimpleMath::Matrix& _transformMtx);
 
-	/// @brief 子ノードを取得
-	/// @param _arrayIdx 配列インデックス
-	/// @return 子ノード
-	const TreeNode* GetChild(u_int _arrayIdx) const;
+		// 対応したボーンをセット
+		void SetBone(Bone& _bone);
 
-	// 子ノードの数取得
-	u_int GetChildNum() const;
+		/// @brief 子ノードを取得
+		/// @param _arrayIdx 配列インデックス
+		/// @return 子ノード
+		const TreeNode* GetChild(u_int _arrayIdx) const;
 
-	// 名前を取得する
-	const std::string& GetName() const;
+		// 子ノードの数取得
+		u_int GetChildNum() const;
 
-	/// @brief ボーンIDを取得
-	/// @return ボーンID
-	u_int GetBoneIdx() const;
+		// 名前を取得する
+		const std::string& GetName() const;
 
-	// ローカル座標までの移動行列を取得
-	const DirectX::SimpleMath::Matrix& GetTransformMtx() const;
-};
+		/// @brief ボーンIDを取得
+		/// @return ボーンID
+		u_int GetBoneIdx() const;
+
+		// ローカル座標までの移動行列を取得
+		const DirectX::SimpleMath::Matrix& GetTransformMtx() const;
+	};
+}

@@ -1,47 +1,49 @@
 #pragma once
 #include "BossGroundState.h"
 
-/// @brief ボス地上移動
-class BossGroundMove : public BossActState_Base
+namespace HashiTaku
 {
-	/// @brief  最大移動速度
-	float maxSpeed;
+	/// @brief ボス地上移動
+	class BossGroundMove : public BossActState_Base
+	{
+		/// @brief  最大移動速度
+		float maxSpeed;
 
-	/// @brief 加速度
-	float acceleration;
+		/// @brief 加速度
+		float acceleration;
 
-	/// @brief 現在速度
-	float currentSpeed;
+		/// @brief 現在速度
+		float currentSpeed;
 
-	/// @brief 回転速度
-	float rotateSpeed;
-public:
-	BossGroundMove();
-	virtual ~BossGroundMove() {}
+		/// @brief 回転速度
+		float rotateSpeed;
+	public:
+		BossGroundMove();
+		virtual ~BossGroundMove() {}
 
-	nlohmann::json Save() override;
-	void Load(const nlohmann::json& _data) override;
+		nlohmann::json Save() override;
+		void Load(const nlohmann::json& _data) override;
 
-protected:
-	/// @brief 遷移切り替え
-	void TransitionCheckUpdate() override;
+	protected:
+		/// @brief 遷移切り替え
+		void TransitionCheckUpdate() override;
 
-	void ImGuiDebug() override;
-private:
-	/// @brief 更新処理
-	void UpdateBehavior() override;
+		void ImGuiDebug() override;
+	private:
+		/// @brief 更新処理
+		void UpdateBehavior() override;
 
-	/// @brief 状態切り替え終了処理
-	void OnEndBehavior() override;
+		/// @brief 状態切り替え終了処理
+		void OnEndBehavior() override;
 
-	/// @brief 自身を回転する
-	void Rotation();
+		/// @brief 自身を回転する
+		void Rotation();
 
-	/// @brief 移動処理
-	void Move();
+		/// @brief 移動処理
+		void Move();
 
-	/// @brief 近接の距離になっているか確認
-	/// @return 遷移するか？
-	bool CheckNearTransition();
-};
-
+		/// @brief 近接の距離になっているか確認
+		/// @return 遷移するか？
+		bool CheckNearTransition();
+	};
+}

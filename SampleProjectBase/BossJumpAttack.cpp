@@ -3,164 +3,165 @@
 
 #include "Geometory.h"
 
-namespace DXSimp = DirectX::SimpleMath;
-
-// 正面ベクトルとプレイヤーとの角度がこの値以下なら瞬時に向く
-constexpr float LOOKMOMENT_DEGREE_RANGE{ 20.0f };
-
-// 横移動カーブの値がこれ以上だと瞬時に振り向くことができる
-constexpr float CAN_LOOKMOMENT_HORICURVE_VAL{ 0.5f };
-
-BossJumpAttack::BossJumpAttack() :
-	maxHoriSpeed(12.0f), 
-	maxJumpHeight(5.0f),
-	prevJumpHeight(0.0f),
-	horiSpeedCofficient(2.0f),
-	fallPosOffset(0.0f)
+namespace HashiTaku
 {
-}
+	// 正面ベクトルとプレイヤーとの角度がこの値以下なら瞬時に向く
+	constexpr float LOOKMOMENT_DEGREE_RANGE{ 20.0f };
 
-void BossJumpAttack::OnStartBehavior()
-{
-	BossAttackState::OnStartBehavior();
+	// 横移動カーブの値がこれ以上だと瞬時に振り向くことができる
+	constexpr float CAN_LOOKMOMENT_HORICURVE_VAL{ 0.5f };
 
-	prevJumpHeight = 0.0f;
-}
+	BossJumpAttack::BossJumpAttack() :
+		maxHoriSpeed(12.0f),
+		maxJumpHeight(5.0f),
+		prevJumpHeight(0.0f),
+		horiSpeedCofficient(2.0f),
+		fallPosOffset(0.0f)
+	{
+	}
 
-void BossJumpAttack::UpdateBehavior()
-{
-	BossAttackState::UpdateBehavior();
+	void BossJumpAttack::OnStartBehavior()
+	{
+		BossAttackState::OnStartBehavior();
 
-	// ジャンプの動き
-	JumpMove();
-}
+		prevJumpHeight = 0.0f;
+	}
 
-void BossJumpAttack::DebugDisplay()
-{
+	void BossJumpAttack::UpdateBehavior()
+	{
+		BossAttackState::UpdateBehavior();
+
+		// ジャンプの動き
+		JumpMove();
+	}
+
+	void BossJumpAttack::DebugDisplay()
+	{
 #ifdef EDIT
-	const Transform& t = GetBossTransform();
-	Geometory::SetPosition(t.GetPosition() + t.Forward() * fallPosOffset);
-	Geometory::SetScale(DXSimp::Vector3::One * 0.1f);
-	Geometory::DrawSphere();
+		const Transform& t = GetBossTransform();
+		Geometory::SetPosition(t.GetPosition() + t.Forward() * fallPosOffset);
+		Geometory::SetScale(DXSimp::Vector3::One * 0.1f);
+		Geometory::DrawSphere();
 #endif
-}
-
-nlohmann::json BossJumpAttack::Save()
-{
-	auto data = BossAttackState::Save();
-
-	data["jumpHeight"] = maxJumpHeight;
-	data["jumpHeightCurve"] = jumpHeightDisCurve.Save();
-
-	data["fallOffset"] = fallPosOffset;
-	data["maxHoriSpeed"] = maxHoriSpeed;
-	data["speedCof"] = horiSpeedCofficient;
-	data["jumpHoriCurve"] = horiSpeedCofficientCurve.Save();
-
-	return data;
-}
-
-void BossJumpAttack::Load(const nlohmann::json& _data)
-{
-	BossAttackState::Load(_data);
-
-	HashiTaku::LoadJsonFloat("fallOffset", fallPosOffset, _data);
-	HashiTaku::LoadJsonFloat("jumpHeight", maxJumpHeight, _data);
-	HashiTaku::LoadJsonFloat("maxHoriSpeed", maxHoriSpeed, _data);
-	HashiTaku::LoadJsonFloat("speedCof", horiSpeedCofficient, _data);
-
-	nlohmann::json curveData;
-	if (HashiTaku::LoadJsonData("jumpHeightCurve", curveData, _data))
-	{
-		jumpHeightDisCurve.Load(curveData);
 	}
-	if (HashiTaku::LoadJsonData("jumpHoriCurve", curveData, _data))
+
+	nlohmann::json BossJumpAttack::Save()
 	{
-		horiSpeedCofficientCurve.Load(curveData);
+		auto data = BossAttackState::Save();
+
+		data["jumpHeight"] = maxJumpHeight;
+		data["jumpHeightCurve"] = jumpHeightDisCurve.Save();
+
+		data["fallOffset"] = fallPosOffset;
+		data["maxHoriSpeed"] = maxHoriSpeed;
+		data["speedCof"] = horiSpeedCofficient;
+		data["jumpHoriCurve"] = horiSpeedCofficientCurve.Save();
+
+		return data;
 	}
-}
 
-void BossJumpAttack::JumpMove()
-{
-	// 速度をリセット
-	curMoveSpeed = DXSimp::Vector3::Zero;
+	void BossJumpAttack::Load(const nlohmann::json& _data)
+	{
+		BossAttackState::Load(_data);
 
-	// 横の移動
-	HorizonMove();
+		LoadJsonFloat("fallOffset", fallPosOffset, _data);
+		LoadJsonFloat("jumpHeight", maxJumpHeight, _data);
+		LoadJsonFloat("maxHoriSpeed", maxHoriSpeed, _data);
+		LoadJsonFloat("speedCof", horiSpeedCofficient, _data);
 
-	// 縦の移動
-	VertivalMove();
+		nlohmann::json curveData;
+		if (LoadJsonData("jumpHeightCurve", curveData, _data))
+		{
+			jumpHeightDisCurve.Load(curveData);
+		}
+		if (LoadJsonData("jumpHoriCurve", curveData, _data))
+		{
+			horiSpeedCofficientCurve.Load(curveData);
+		}
+	}
 
-	// 速度をRbに渡す
-	GetRB().SetVelocity(curMoveSpeed);
-}
+	void BossJumpAttack::JumpMove()
+	{
+		// 速度をリセット
+		curMoveSpeed = DXSimp::Vector3::Zero;
 
-void BossJumpAttack::HorizonMove()
-{
-	// プレイヤーとの距離を見て速度を変更しながら、近づいてくる
-	Transform& bossTrans = GetBossTransform();
-	const DXSimp::Vector3& playerPos = GetPlayerTransform().GetPosition();
-	float deltaTime = DeltaTime();
-	float animRatio = GetAnimation()->GetCurrentPlayRatio();
+		// 横の移動
+		HorizonMove();
 
-	// 速度係数を取得する
-	float curSpeedCofficient = horiSpeedCofficientCurve.GetValue(animRatio);
+		// 縦の移動
+		VertivalMove();
 
-	// プレイヤーに合わせる座標を取得
-	DXSimp::Vector3 playerMatchPos = bossTrans.GetPosition() + bossTrans.Forward() * fallPosOffset;
+		// 速度をRbに渡す
+		GetRB().SetVelocity(curMoveSpeed);
+	}
 
-	// プレイヤーとの距離を取得する
-	DXSimp::Vector3 toPlayerDistance = playerPos - playerMatchPos;
-	toPlayerDistance.y = 0.0f;	// 横だけの距離
+	void BossJumpAttack::HorizonMove()
+	{
+		// プレイヤーとの距離を見て速度を変更しながら、近づいてくる
+		Transform& bossTrans = GetBossTransform();
+		const DXSimp::Vector3& playerPos = GetPlayerTransform().GetPosition();
+		float deltaTime = DeltaTime();
+		float animRatio = GetAnimation()->GetCurrentPlayRatio();
 
-	// ボスをプレイヤーへ向けていく
-	DXSimp::Vector3 toPlayerVec;
-	toPlayerDistance.Normalize(toPlayerVec);
+		// 速度係数を取得する
+		float curSpeedCofficient = horiSpeedCofficientCurve.GetValue(animRatio);
 
-	// プレイヤーとの距離の長さ
-	float toPlayerLength = toPlayerDistance.Length();
+		// プレイヤーに合わせる座標を取得
+		DXSimp::Vector3 playerMatchPos = bossTrans.GetPosition() + bossTrans.Forward() * fallPosOffset;
 
-	// 距離から速度を求める(最大速度を制限)
-	float speed = toPlayerLength * curSpeedCofficient * horiSpeedCofficient;
-	if (speed > maxHoriSpeed)
-		speed = maxHoriSpeed;
+		// プレイヤーとの距離を取得する
+		DXSimp::Vector3 toPlayerDistance = playerPos - playerMatchPos;
+		toPlayerDistance.y = 0.0f;	// 横だけの距離
 
-	// 移動速度を求める（XZ成分だけセット）
-	DXSimp::Vector3 moveSpeedXZ = toPlayerVec * speed;
-	curMoveSpeed.x = moveSpeedXZ.x; curMoveSpeed.z = moveSpeedXZ.z;
-}
+		// ボスをプレイヤーへ向けていく
+		DXSimp::Vector3 toPlayerVec;
+		toPlayerDistance.Normalize(toPlayerVec);
 
-void BossJumpAttack::VertivalMove()
-{
-	if (DeltaTime() < Mathf::epsilon) return;
+		// プレイヤーとの距離の長さ
+		float toPlayerLength = toPlayerDistance.Length();
 
-	Transform& bossTrans = GetBossTransform();
-	float deltaTime = DeltaTime();
-	float animRatio = GetAnimation()->GetCurrentPlayRatio();
+		// 距離から速度を求める(最大速度を制限)
+		float speed = toPlayerLength * curSpeedCofficient * horiSpeedCofficient;
+		if (speed > maxHoriSpeed)
+			speed = maxHoriSpeed;
 
-	// 高さの移動
-	// 速度を計算
-	float curJumpHeight = jumpHeightDisCurve.GetValue(animRatio) * maxJumpHeight;
-	float jumpSpeed = (curJumpHeight - prevJumpHeight) / deltaTime;
+		// 移動速度を求める（XZ成分だけセット）
+		DXSimp::Vector3 moveSpeedXZ = toPlayerVec * speed;
+		curMoveSpeed.x = moveSpeedXZ.x; curMoveSpeed.z = moveSpeedXZ.z;
+	}
 
-	// 速度代入
-	curMoveSpeed.y = jumpSpeed;
+	void BossJumpAttack::VertivalMove()
+	{
+		if (DeltaTime() < Mathf::epsilon) return;
 
-	// 次フレームの為に更新
-	prevJumpHeight = curJumpHeight;
-}
+		Transform& bossTrans = GetBossTransform();
+		float deltaTime = DeltaTime();
+		float animRatio = GetAnimation()->GetCurrentPlayRatio();
 
-void BossJumpAttack::ImGuiDebug()
-{
-	BossAttackState::ImGuiDebug();
+		// 高さの移動
+		// 速度を計算
+		float curJumpHeight = jumpHeightDisCurve.GetValue(animRatio) * maxJumpHeight;
+		float jumpSpeed = (curJumpHeight - prevJumpHeight) / deltaTime;
 
-	// Hori
-	ImGui::DragFloat("FallOffset", &fallPosOffset, 0.01f);
-	ImGui::DragFloat("MaxHoriSpd", &maxHoriSpeed, 1.0f, 0.0f, 1000.0f);
-	ImGui::DragFloat("HoriSpeed", &horiSpeedCofficient, 1.0f, 0.0f, 1000.0f);
-	horiSpeedCofficientCurve.ImGuiCall();
+		// 速度代入
+		curMoveSpeed.y = jumpSpeed;
 
-	// Vert
-	ImGui::DragFloat("Height", &maxJumpHeight, 0.01f, 0.0f, 1000.0f);
-	jumpHeightDisCurve.ImGuiCall();
+		// 次フレームの為に更新
+		prevJumpHeight = curJumpHeight;
+	}
+
+	void BossJumpAttack::ImGuiDebug()
+	{
+		BossAttackState::ImGuiDebug();
+
+		// Hori
+		ImGui::DragFloat("FallOffset", &fallPosOffset, 0.01f);
+		ImGui::DragFloat("MaxHoriSpd", &maxHoriSpeed, 1.0f, 0.0f, 1000.0f);
+		ImGui::DragFloat("HoriSpeed", &horiSpeedCofficient, 1.0f, 0.0f, 1000.0f);
+		horiSpeedCofficientCurve.ImGuiCall();
+
+		// Vert
+		ImGui::DragFloat("Height", &maxJumpHeight, 0.01f, 0.0f, 1000.0f);
+		jumpHeightDisCurve.ImGuiCall();
+	}
 }

@@ -1,16 +1,19 @@
 #pragma once
 
-class AnimationParameters;
-
-/// @brief アニメーションパラメータセットインターフェース
-class IAnimParametersSetter
+namespace HashiTaku
 {
-public:
-	IAnimParametersSetter() {}
-	virtual ~IAnimParametersSetter() {}
+	class AnimationParameters;
 
-	/// @brief アニメーションパラメータセット
-	/// @param _animatiionParameters アニメーションパラメータ
-	virtual void SetAnimationParameters(AnimationParameters& _animatiionParameters) = 0;
-};
+	/// @brief アニメーションパラメータセットインターフェース
+	class IAnimParametersSetter
+	{
+	public:
+		IAnimParametersSetter() {}
+		virtual ~IAnimParametersSetter() {}
+
+		/// @brief アニメーションパラメータセット
+		/// @param _animatiionParameters アニメーションパラメータ
+		virtual void SetAnimationParameters(AnimationParameters& _animatiionParameters) = 0;
+	};
+}
 

@@ -3,86 +3,89 @@
 
 #include "Bone.h"
 
-void TreeNode::SetParent(TreeNode& _parentNode)
+namespace HashiTaku
 {
-    pParentNode = &_parentNode;
-}
-
-void TreeNode::AddChild(std::unique_ptr<TreeNode> _chiledNode)
-{
-    _chiledNode->SetParent(*this);
-
-    pChildNodes.push_back(std::move(_chiledNode));
-}
-
-void TreeNode::RemoveChiled(TreeNode& _chiledNode)
-{
-    for (auto& n : pChildNodes)
+    void TreeNode::SetParent(TreeNode& _parentNode)
     {
-        if (&_chiledNode == n.get())
+        pParentNode = &_parentNode;
+    }
+
+    void TreeNode::AddChild(std::unique_ptr<TreeNode> _chiledNode)
+    {
+        _chiledNode->SetParent(*this);
+
+        pChildNodes.push_back(std::move(_chiledNode));
+    }
+
+    void TreeNode::RemoveChiled(TreeNode& _chiledNode)
+    {
+        for (auto& n : pChildNodes)
         {
-            pChildNodes.remove(n);
-            return;
+            if (&_chiledNode == n.get())
+            {
+                pChildNodes.remove(n);
+                return;
+            }
         }
+
+        HASHI_DEBUG_LOG(_chiledNode.GetName() + "‚ÍŽqƒm[ƒh‚É‚ ‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
     }
 
-    HASHI_DEBUG_LOG(_chiledNode.GetName() + "‚ÍŽqƒm[ƒh‚É‚ ‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
-}
-
-bool TreeNode::HasBone() const
-{
-    return pLinkBone != nullptr;
-}
-
-void TreeNode::SetNodeName(const std::string& _nodeName)
-{
-    nodeName = _nodeName;
-}
-
-void TreeNode::SetTransformMtx(const DirectX::SimpleMath::Matrix& _transformMtx)
-{
-    transformMtx = _transformMtx;
-}
-
-void TreeNode::SetBone(Bone& _bone)
-{
-    pLinkBone = &_bone;
-}
-
-const TreeNode* TreeNode::GetChild(u_int _arrayIdx) const
-{
-    if (_arrayIdx >= GetChildNum())
+    bool TreeNode::HasBone() const
     {
-        assert(!"—v‘f‚ª‘å‚«‚·‚¬‚Ü‚·");
-        return nullptr;
+        return pLinkBone != nullptr;
     }
 
-    auto itr = pChildNodes.begin();
+    void TreeNode::SetNodeName(const std::string& _nodeName)
+    {
+        nodeName = _nodeName;
+    }
 
-    for (u_int a_i = 0; a_i < _arrayIdx; a_i++)
-        itr++;
+    void TreeNode::SetTransformMtx(const DirectX::SimpleMath::Matrix& _transformMtx)
+    {
+        transformMtx = _transformMtx;
+    }
 
-    return (*itr).get();
-}
+    void TreeNode::SetBone(Bone& _bone)
+    {
+        pLinkBone = &_bone;
+    }
 
-u_int TreeNode::GetChildNum() const
-{
-    u_int u = static_cast<u_int>(pChildNodes.size());
+    const TreeNode* TreeNode::GetChild(u_int _arrayIdx) const
+    {
+        if (_arrayIdx >= GetChildNum())
+        {
+            assert(!"—v‘f‚ª‘å‚«‚·‚¬‚Ü‚·");
+            return nullptr;
+        }
 
-    return static_cast<u_int>(pChildNodes.size());
-}
+        auto itr = pChildNodes.begin();
 
-const std::string& TreeNode::GetName() const
-{
-    return nodeName;
-}
+        for (u_int a_i = 0; a_i < _arrayIdx; a_i++)
+            itr++;
 
-u_int TreeNode::GetBoneIdx() const
-{
-    return pLinkBone->GetIndex();
-}
+        return (*itr).get();
+    }
 
-const DirectX::SimpleMath::Matrix& TreeNode::GetTransformMtx() const
-{
-    return transformMtx;
+    u_int TreeNode::GetChildNum() const
+    {
+        u_int u = static_cast<u_int>(pChildNodes.size());
+
+        return static_cast<u_int>(pChildNodes.size());
+    }
+
+    const std::string& TreeNode::GetName() const
+    {
+        return nodeName;
+    }
+
+    u_int TreeNode::GetBoneIdx() const
+    {
+        return pLinkBone->GetIndex();
+    }
+
+    const DirectX::SimpleMath::Matrix& TreeNode::GetTransformMtx() const
+    {
+        return transformMtx;
+    }
 }

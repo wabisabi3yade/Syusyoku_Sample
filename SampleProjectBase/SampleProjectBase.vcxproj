@@ -168,7 +168,6 @@
     <ClCompile Include="AnimationNotifyEvent.cpp" />
     <ClCompile Include="AnimationNotifyState.cpp" />
     <ClCompile Include="AnimTransitionArrow.cpp" />
-    <ClCompile Include="ANS_WarpMotion.cpp" />
     <ClCompile Include="AssetPath_Base.cpp" />
     <ClCompile Include="AssetSaveLoad.cpp" />
     <ClCompile Include="AttackInformation.cpp" />
@@ -178,11 +177,9 @@
     <ClCompile Include="BossActState_Base.cpp" />
     <ClCompile Include="BossBreakEndKnock.cpp" />
     <ClCompile Include="BossBreakIdle.cpp" />
-    <ClCompile Include="BossCombAttack.cpp" />
     <ClCompile Include="BossDamageState.cpp" />
     <ClCompile Include="BossAttackState.cpp" />
     <ClCompile Include="BossGroundMove.cpp" />
-    <ClCompile Include="BossGroundState.cpp" />
     <ClCompile Include="BossIdleState.cpp" />
     <ClCompile Include="BossJumpAttack.cpp" />
     <ClCompile Include="BossWalkState.cpp" />
@@ -196,7 +193,6 @@
     <ClCompile Include="CameraTargetMove.cpp" />
     <ClCompile Include="ChangeAnimObserver.cpp" />
     <ClCompile Include="CharacterActionController.cpp" />
-    <ClCompile Include="CharacterActState_Base.cpp" />
     <ClCompile Include="CP_Fade.cpp" />
     <ClCompile Include="CP_GroundCheck.cpp" />
     <ClCompile Include="CP_BattleManager.cpp" />
@@ -206,19 +202,15 @@
     <ClCompile Include="CP_CapsuleCollider.cpp" />
     <ClCompile Include="CatmulSplineInterp.cpp" />
     <ClCompile Include="BulletDebugDraw.cpp" />
-    <ClCompile Include="CloneComponent.cpp" />
     <ClCompile Include="CollisionTypeJudge.cpp" />
     <ClCompile Include="ComponentRespawner.cpp" />
     <ClCompile Include="CopyAnimationParameters.cpp" />
-    <ClCompile Include="CP_BoxAnimation.cpp" />
     <ClCompile Include="CP_Character.cpp" />
     <ClCompile Include="CP_CylinderCollider.cpp" />
-    <ClCompile Include="CP_EffectCreater.cpp" />
     <ClCompile Include="CP_Enemy.cpp" />
     <ClCompile Include="CP_OutLineRenderer.cpp" />
     <ClCompile Include="CP_RigidBody.cpp" />
     <ClCompile Include="CP_SkyBox.cpp" />
-    <ClCompile Include="CP_TestCollider.cpp" />
     <ClCompile Include="CP_TitleButtonGroup.cpp" />
     <ClCompile Include="CP_UIRenderer.cpp" />
     <ClCompile Include="CP_UISlider.cpp" />
@@ -241,16 +233,9 @@
     <ClCompile Include="CP_Player.cpp" />
     <ClCompile Include="GameInput.cpp" />
     <ClCompile Include="IAnimInterpolate.cpp" />
-    <ClCompile Include="IAnimParametersSetter.cpp" />
-    <ClCompile Include="IAssetCreater.cpp" />
-    <ClCompile Include="IAttacker.cpp" />
-    <ClCompile Include="IClassNameGetter.cpp" />
-    <ClCompile Include="IDamageable.cpp" />
     <ClCompile Include="HitStopper_Base.cpp" />
     <ClCompile Include="IImGuiUser.cpp" />
     <ClCompile Include="IntTransCondition.cpp" />
-    <ClCompile Include="IObserever.cpp" />
-    <ClCompile Include="ISetTargeterForCam.cpp" />
     <ClCompile Include="ITargetAccepter.cpp" />
     <ClCompile Include="LayerdAnimationNode.cpp" />
     <ClCompile Include="AnimLayerdNodePlayer.cpp" />
@@ -271,7 +256,6 @@
     <ClCompile Include="PlayerRollingMove.cpp" />
     <ClCompile Include="PlayerRushAttack.cpp" />
     <ClCompile Include="PlayerTargetMove.cpp" />
-    <ClCompile Include="PlayerActChangeObserver.cpp" />
     <ClCompile Include="PlayerGroundActionController.cpp" />
     <ClCompile Include="PlayerAttackState.cpp" />
     <ClCompile Include="PlayerIdleState.cpp" />
@@ -289,10 +273,7 @@
     <ClCompile Include="Bone.cpp" />
     <ClCompile Include="CP_Animation.cpp" />
     <ClCompile Include="AssetDisplay.cpp" />
-    <ClCompile Include="AssetGetter.cpp" />
-    <ClCompile Include="AssetSetter.cpp" />
     <ClCompile Include="Asset_Base.cpp" />
-    <ClCompile Include="CollisionChecker.cpp" />
     <ClCompile Include="ComponentFactory.cpp" />
     <ClCompile Include="CP_BoxCollider.cpp" />
     <ClCompile Include="CP_Collider.cpp" />
@@ -323,7 +304,6 @@
     <ClCompile Include="InputClass.cpp" />
     <ClCompile Include="InSceneSystemManager.cpp" />
     <ClCompile Include="JISToUTF8.cpp" />
-    <ClCompile Include="Light.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MathUseful.cpp" />
     <ClCompile Include="Mesh_Group.cpp" />
@@ -342,14 +322,12 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderCollection.cpp" />
     <ClCompile Include="AnimSingleNodePlayer.cpp" />
-    <ClCompile Include="SingletonComponent.cpp" />
     <ClCompile Include="SkeletalMesh.cpp" />
     <ClCompile Include="SoundAsset.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteDrawer.cpp" />
-    <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="StaticMesh.cpp" />
     <ClCompile Include="AppSystemDraw.cpp" />
     <ClCompile Include="Tag.cpp" />
@@ -372,7 +350,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="RenderParam.cpp" />
-    <ClCompile Include="AssetCollection.cpp" />
     <ClCompile Include="Sampler.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SetUpPerspectiveProj.cpp" />
@@ -407,7 +384,6 @@
     <ClInclude Include="AnimationCurve.h" />
     <ClInclude Include="AnimationNotifyFactory.h" />
     <ClInclude Include="AnimationParameters.h" />
-    <ClInclude Include="AnimConntrollerType.h" />
     <ClInclude Include="AnimControllerCreater.h" />
     <ClInclude Include="AnimControllPlayer.h" />
     <ClInclude Include="AnimNotifyConcept.h" />
@@ -420,7 +396,6 @@
     <ClInclude Include="AnimationNotifyEvent.h" />
     <ClInclude Include="AnimationNotifyState.h" />
     <ClInclude Include="AnimTransitionArrow.h" />
-    <ClInclude Include="ANS_WarpMotion.h" />
     <ClInclude Include="AssetConcept.h" />
     <ClInclude Include="AssetPath_Base.h" />
     <ClInclude Include="AssetSaveLoad.h" />
@@ -431,7 +406,6 @@
     <ClInclude Include="BossActState_Base.h" />
     <ClInclude Include="BossBreakEndKnock.h" />
     <ClInclude Include="BossBreakIdle.h" />
-    <ClInclude Include="BossCombAttack.h" />
     <ClInclude Include="BossDamageState.h" />
     <ClInclude Include="BossAttackState.h" />
     <ClInclude Include="BossGroundMove.h" />
@@ -459,13 +433,11 @@
     <ClInclude Include="CP_CapsuleCollider.h" />
     <ClInclude Include="CatmulSplineInterp.h" />
     <ClInclude Include="BulletDebugDraw.h" />
-    <ClInclude Include="CloneComponent.h" />
     <ClInclude Include="CollisionInfo.h" />
     <ClInclude Include="CollisionTypeJudge.h" />
     <ClInclude Include="ComponentConcept.h" />
     <ClInclude Include="ComponentRespawner.h" />
     <ClInclude Include="CopyAnimationParameters.h" />
-    <ClInclude Include="CP_BoxAnimation.h" />
     <ClInclude Include="CP_Character.h" />
     <ClInclude Include="CP_CylinderCollider.h" />
     <ClInclude Include="CP_EffectCreater.h" />
@@ -473,7 +445,6 @@
     <ClInclude Include="CP_OutLineRenderer.h" />
     <ClInclude Include="CP_RigidBody.h" />
     <ClInclude Include="CP_SkyBox.h" />
-    <ClInclude Include="CP_TestCollider.h" />
     <ClInclude Include="CP_TitleButtonGroup.h" />
     <ClInclude Include="CP_UIRenderer.h" />
     <ClInclude Include="CP_UISlider.h" />
@@ -509,7 +480,6 @@
     <ClInclude Include="IntTransCondition.h" />
     <ClInclude Include="IObserever.h" />
     <ClInclude Include="ISaveLoad.h" />
-    <ClInclude Include="ISetTargeterForCam.h" />
     <ClInclude Include="ITargetAccepter.h" />
     <ClInclude Include="LayerdAnimationNode.h" />
     <ClInclude Include="AnimLayerdNodePlayer.h" />
@@ -532,7 +502,6 @@
     <ClInclude Include="PlayerRollingMove.h" />
     <ClInclude Include="PlayerRushAttack.h" />
     <ClInclude Include="PlayerTargetMove.h" />
-    <ClInclude Include="PlayerActChangeObserver.h" />
     <ClInclude Include="PlayerGroundActionController.h" />
     <ClInclude Include="PlayerAttackState.h" />
     <ClInclude Include="PlayerIdleState.h" />
@@ -553,7 +522,6 @@
     <ClInclude Include="AssetDisplay.h" />
     <ClInclude Include="AssetGetter.h" />
     <ClInclude Include="AssetSetter.h" />
-    <ClInclude Include="CollisionChecker.h" />
     <ClInclude Include="ComponentDefine.h" />
     <ClInclude Include="ComponentFactory.h" />
     <ClInclude Include="CP_BoxCollider.h" />

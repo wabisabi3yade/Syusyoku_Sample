@@ -1,34 +1,37 @@
 #include "Asset_Base.h"
 
-void Asset_Base::SetAssetName(const std::string& _name)
+namespace HashiTaku
 {
-	assetName = _name;
-}
+	void Asset_Base::SetAssetName(const std::string& _name)
+	{
+		assetName = _name;
+	}
 
-const std::string& Asset_Base::GetAssetName() const
-{
-	return assetName;
-}
+	const std::string& Asset_Base::GetAssetName() const
+	{
+		return assetName;
+	}
 
-bool Asset_Base::GetIsSave() const
-{
-	return isSave;
-}
+	bool Asset_Base::GetIsSave() const
+	{
+		return isSave;
+	}
 
-nlohmann::json Asset_Base::Save()
-{
-	nlohmann::json data;
-	data["assetName"] = assetName;
+	nlohmann::json Asset_Base::Save()
+	{
+		nlohmann::json data;
+		data["assetName"] = assetName;
 
-	return data;
-}
+		return data;
+	}
 
-void Asset_Base::Load(const nlohmann::json& _data)
-{
-	HashiTaku::LoadJsonString("assetName", assetName, _data);
-}
+	void Asset_Base::Load(const nlohmann::json& _data)
+	{
+		LoadJsonString("assetName", assetName, _data);
+	}
 
-void Asset_Base::SetIsntSave()
-{
-	isSave = false;
+	void Asset_Base::SetIsntSave()
+	{
+		isSave = false;
+	}
 }

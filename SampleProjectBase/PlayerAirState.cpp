@@ -2,72 +2,67 @@
 #include "PlayerAirState.h"
 #include "PlayerAirActionController.h"
 
-void PlayerAirState::OnStart()
+namespace HashiTaku
 {
-	PlayerActState_Base::OnStart();
+	void PlayerAirState::OnStart()
+	{
+		PlayerActState_Base::OnStart();
 
-	OnStartBehavior();
-}
+		OnStartBehavior();
+	}
 
-void PlayerAirState::Update()
-{
-	InputUpdate();
+	void PlayerAirState::Update()
+	{
+		InputUpdate();
 
-	PlayerActState_Base::Update();
+		PlayerActState_Base::Update();
 
-	UpdateBehavior();
+		UpdateBehavior();
 
-	TransitionCheckUpdate();
-}
+		TransitionCheckUpdate();
+	}
 
-void PlayerAirState::OnEnd()
-{
-	PlayerActState_Base::OnEnd();
+	void PlayerAirState::OnEnd()
+	{
+		PlayerActState_Base::OnEnd();
 
-	OnEndBehavior();
-}
+		OnEndBehavior();
+	}
 
-void PlayerAirState::TransitionCheckUpdate()
-{
-}
+	void PlayerAirState::TransitionCheckUpdate()
+	{
+	}
 
-PlayerAirActionController& PlayerAirState::CastAirController()
-{
-	return static_cast<PlayerAirActionController&>(*pActionController);
-}
+	PlayerAirActionController& PlayerAirState::CastAirController()
+	{
+		return static_cast<PlayerAirActionController&>(*pActionController);
+	}
 
-void PlayerAirState::ChangeState(PlayerState _nextState, bool _isForce)
-{
-	CastAirController().ChangeAirState(_nextState, _isForce);
-}
+	void PlayerAirState::ChangeState(PlayerState _nextState, bool _isForce)
+	{
+		CastAirController().ChangeAirState(_nextState, _isForce);
+	}
 
-void PlayerAirState::ImGuiDebug()
-{
-	PlayerActState_Base::ImGuiDebug();
-}
+	void PlayerAirState::ImGuiDebug()
+	{
+		PlayerActState_Base::ImGuiDebug();
+	}
 
-nlohmann::json PlayerAirState::Save()
-{
-	return PlayerActState_Base::Save();
-}
+	nlohmann::json PlayerAirState::Save()
+	{
+		return PlayerActState_Base::Save();
+	}
 
-void PlayerAirState::Load(const nlohmann::json& _data)
-{
-	PlayerActState_Base::Load(_data);
-}
+	void PlayerAirState::Load(const nlohmann::json& _data)
+	{
+		PlayerActState_Base::Load(_data);
+	}
 
-void PlayerAirState::InputUpdate()
-{
-	if (!pActionController->GetCanInput()) return;
+	void PlayerAirState::InputUpdate()
+	{
+		if (!pActionController->GetCanInput()) return;
 
-	using enum GameInput::ButtonType;
-	using CancelType = PlayerActionController_Base::CancelType;
-
-
-	//// UŒ‚ƒLƒƒƒ“ƒZƒ‹
-	//if (pPlayerInput->GetButtonDown(Player_Attack))
-	//{
-	//	pActionController->SetReserveState(static_cast<int>(PlayerState::Attack11),
-	//		CancelType::Attack);
-	//}
+		using enum GameInput::ButtonType;
+		using CancelType = PlayerActionController_Base::CancelType;
+	}
 }

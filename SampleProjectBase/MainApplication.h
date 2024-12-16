@@ -6,99 +6,101 @@
 #include "VariableFrameRate.h"
 #include "AppSystemDraw.h"
 
-class SceneManager;
-class Direct3D11;
-class AssetCollection;
-
-// ゲームループなどアプリを動かすのに主要な機能をもつクラス(シングルトンパターン)
-class MainApplication
+namespace HashiTaku
 {
-	/// @brief ウィンドウ処理
-	static std::unique_ptr<Window> pWindow;
+	class SceneManager;
+	class Direct3D11;
+	class AssetCollection;
 
-	/// @brief Direct3Dの機能
-	static Direct3D11* pD3D;
+	// ゲームループなどアプリを動かすのに主要な機能をもつクラス(シングルトンパターン)
+	class MainApplication
+	{
+		/// @brief ウィンドウ処理
+		static std::unique_ptr<Window> pWindow;
 
-	/// @brief シーンマネージャー
-	static SceneManager* pSceneManager;
+		/// @brief Direct3Dの機能
+		static Direct3D11* pD3D;
 
-	/// @brief 可変フレームレートクラス
-	static std::unique_ptr<VariableFrameRate> pVariableFps;
+		/// @brief シーンマネージャー
+		static SceneManager* pSceneManager;
 
-	/// @brief 入力管理
-	static std::unique_ptr<InputClass> pInput;
+		/// @brief 可変フレームレートクラス
+		static std::unique_ptr<VariableFrameRate> pVariableFps;
 
-	/// @brief アセットの管理
-	static std::unique_ptr<AssetCollection> pAssetCollection;
+		/// @brief 入力管理
+		static std::unique_ptr<InputClass> pInput;
 
-	/// @brief アプリケーション終了するか確認中
-	static bool isEscapeChecking;
+		/// @brief アセットの管理
+		static std::unique_ptr<AssetCollection> pAssetCollection;
 
-	/// @brief アプリケーション終了するフラグ
-	static bool isExit;
+		/// @brief アプリケーション終了するか確認中
+		static bool isEscapeChecking;
 
-	MainApplication() {};
-	~MainApplication() {};
+		/// @brief アプリケーション終了するフラグ
+		static bool isExit;
 
-	/// @brief アプリケーション終了確認
-	/// @return 終了フラグ
-	static bool EscapeCheck();
+		MainApplication() {};
+		~MainApplication() {};
 
-	/// @brief システム関連の描画
-	static void SystemDraw();
+		/// @brief アプリケーション終了確認
+		/// @return 終了フラグ
+		static bool EscapeCheck();
 
-public:
-	/// @brief 初期化
-	/// @param _hInst ハンドルインスタンス 
-	static void Init(HINSTANCE _hInst);
+		/// @brief システム関連の描画
+		static void SystemDraw();
 
-	/// @brief アプリケーション終了するように依頼する
-	static void ExitRequest();
+	public:
+		/// @brief 初期化
+		/// @param _hInst ハンドルインスタンス 
+		static void Init(HINSTANCE _hInst);
 
-	/// @brief ゲームループ
-	static void GameLoop();
+		/// @brief アプリケーション終了するように依頼する
+		static void ExitRequest();
 
-	/// @brief 解放処理
-	static void Release();
+		/// @brief ゲームループ
+		static void GameLoop();
 
-	/// @brief Δtを返す
-	/// @return Δt(s)
-	static float DeltaTime();
+		/// @brief 解放処理
+		static void Release();
 
-	/// @brief 入力クラスを返す
-	/// @return 
-	static InputClass& GetInput() { return *pInput; }
+		/// @brief Δtを返す
+		/// @return Δt(s)
+		static float DeltaTime();
 
-private:
-	// セットアップ関数
+		/// @brief 入力クラスを返す
+		/// @return 
+		static InputClass& GetInput() { return *pInput; }
 
-	/// @brief ウィンドウ初期化
-	/// @param _hInst ハンドルインスタンス
-	static void WindowSetup(HINSTANCE _hInst);
+	private:
+		// セットアップ関数
 
-	/// @brief Direct3Dの初期化
-	static void D3DSetup(HWND _hwnd);
+		/// @brief ウィンドウ初期化
+		/// @param _hInst ハンドルインスタンス
+		static void WindowSetup(HINSTANCE _hInst);
 
-	/// @brief 可変フレームレート初期化
-	static void VariableFrameSetup();
+		/// @brief Direct3Dの初期化
+		static void D3DSetup(HWND _hwnd);
 
-	/// @brief 入力初期化
-	static void InputSetup(HWND _hwnd);
+		/// @brief 可変フレームレート初期化
+		static void VariableFrameSetup();
 
-	/// @brief ImGui初期化
-	static void ImGuiSetup();
+		/// @brief 入力初期化
+		static void InputSetup(HWND _hwnd);
 
-	/// @brief アセット関係のシステムの初期化
-	static void AssetSysytemSetup();
+		/// @brief ImGui初期化
+		static void ImGuiSetup();
 
-	/// @brief シェーダーの初期化
-	static void ShaderSetup();
+		/// @brief アセット関係のシステムの初期化
+		static void AssetSysytemSetup();
 
-	/// @brief シーンマネージャー初期化
-	static void SceneManagerSetup();
+		/// @brief シェーダーの初期化
+		static void ShaderSetup();
 
-	/// @brief Updateできるか取得する
-	/// @return Updateできるか？
-	static bool CanUpdate();
-};
+		/// @brief シーンマネージャー初期化
+		static void SceneManagerSetup();
 
+		/// @brief Updateできるか取得する
+		/// @return Updateできるか？
+		static bool CanUpdate();
+	};
+}
