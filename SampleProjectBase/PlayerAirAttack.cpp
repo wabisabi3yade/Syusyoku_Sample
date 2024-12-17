@@ -59,10 +59,7 @@ namespace HashiTaku
 
 		// —\–ñó‘Ô‚ÉƒZƒbƒg
 		if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
-			pActionController->SetReserveState(
-				static_cast<int>(nextCombAtkState),
-				PlayerActionController_Base::CancelType::Attack
-			);
+			pActionController->SetReserveState(static_cast<int>(nextCombAtkState));
 	}
 
 	void PlayerAirAttack::LookAtEnemy()

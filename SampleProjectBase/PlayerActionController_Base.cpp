@@ -14,18 +14,12 @@ namespace HashiTaku
 
 	PlayerActionController_Base::PlayerActionController_Base(PlayerAction& _pAction, CP_Player& _player, const std::string& _controllerName) :
 		CharacterActionController(_player, _controllerName),
-		place(ActionPlace::Ground)
+		place(ActionPlace::Ground),
+		reserveCancelState(STATE_NONE_ID),
+		curFlameCancelState(STATE_NONE_ID)
 	{
 		pAction = &_pAction;
 		pInput = &InSceneSystemManager::GetInstance()->GetInput();
-
-		// 初期化
-		u_int cancelCnt = static_cast<u_int>(CancelType::MaxNum);
-		for (u_int c_i = 0; c_i < cancelCnt; c_i++)
-		{
-			reserveCancelStates[c_i] = STATE_NONE_ID;
-			isReservedCurFrame[c_i] = false;
-		}
 	}
 
 	void PlayerActionController_Base::Init(CP_Animation* _pAnimation, CP_RigidBody* _pRigidBody)
@@ -51,46 +45,44 @@ namespace HashiTaku
 
 	void PlayerActionController_Base::ResetReserveState()
 	{
-		// 初期化
-		u_int cancelCnt = static_cast<u_int>(CancelType::MaxNum);
-		for (u_int c_i = 0; c_i < cancelCnt; c_i++)
-		{
-			reserveCancelStates[c_i] = STATE_NONE_ID;
-		}
+		reserveCancelState = STATE_NONE_ID;
 	}
 
 	void PlayerActionController_Base::ResetReservedFlag()
 	{
-		// フラグをリセット
-		u_int cancelCnt = static_cast<u_int>(CancelType::MaxNum);
-		for (u_int c_i = 0; c_i < cancelCnt; c_i++)
-		{
-			isReservedCurFrame[c_i] = false;
-		}
+		curFlameCancelState = STATE_NONE_ID;
 	}
 
-	void PlayerActionController_Base::SetReserveState(int _setState, CancelType _cancelState)
+	void PlayerActionController_Base::SetReserveState(int _setState)
 	{
 		if (!stateNodeList.contains(_setState)) return;
 
-		int cancelId = static_cast<int>(_cancelState);
+		// 移動キャンセルは他のキャンセルがないときだけ行う
+		CancelType cancelType = GetPlayerAction(_setState)->GetCancelType();
+		if (reserveCancelState != STATE_NONE_ID && cancelType == CancelType::Move)
+			return;
 
 		// 同時押し対策
 		// 既に今フレームで予約しているなら
-		if (isReservedCurFrame[cancelId])
+		if (curFlameCancelState != STATE_NONE_ID)
 		{
 			// 予約している側の優先度取得
-			int reservedId = reserveCancelStates[cancelId];
-			int reservedPri = GetStatePriority(reservedId);
-
+			int reservedPri = GetStatePriority(curFlameCancelState);
 			// セットする側の優先度取得
 			int setPri = GetStatePriority(_setState);
 
 			if (setPri < reservedPri) return;	// 予約してる側の方が上なら終了
 		}
 
-		reserveCancelStates[cancelId] = _setState;
-		isReservedCurFrame[cancelId] = true;
+		curFlameCancelState = _setState;
+	}
+
+	PlayerActState_Base* PlayerActionController_Base::GetPlayerAction(int _playerStateId)
+	{
+		StateNode_Base* pState = GetNode(_playerStateId);
+		if (!pState) return nullptr;
+
+		return static_cast<PlayerActState_Base*>(pState);
 	}
 
 	const ITargetAccepter* PlayerActionController_Base::GetTargetAccepter() const
@@ -170,24 +162,36 @@ namespace HashiTaku
 
 	void PlayerActionController_Base::ChangeStateFromReserve()
 	{
-		// 予約状態から変更する
-		if (GetCanAction() &&
-			reserveCancelStates[static_cast<u_int>(CancelType::Action)] != STATE_NONE_ID)
+		// 今フレームで予約されたならそれを新しい予約状態とする
+		if (curFlameCancelState != STATE_NONE_ID)
 		{
-			ChangeState(reserveCancelStates[static_cast<u_int>(CancelType::Action)]);
-			return;
+			reserveCancelState = curFlameCancelState;
 		}
-		if (GetCanAttack() &&
-			reserveCancelStates[static_cast<u_int>(CancelType::Attack)] != STATE_NONE_ID)
+
+		HASHI_DEBUG_LOG(std::to_string(reserveCancelState));
+
+		// 予約した状態のキャンセルから遷移できる状態なら遷移を行う
+		if (reserveCancelState == STATE_NONE_ID) return;	// 予約されていないなら
+
+		bool canTransition = false;	// 遷移できるかフラグ
+		switch (GetPlayerAction(reserveCancelState)->GetCancelType())
 		{
-			ChangeState(reserveCancelStates[static_cast<u_int>(CancelType::Attack)]);
-			return;
+		case CancelType::Action:
+			canTransition = GetCanAction();
+			break;
+		case CancelType::Attack:
+			canTransition = GetCanAttack();
+			break;
+		case CancelType::Move:
+			canTransition = GetCanMove();
+			break;
+
+		default:
+			HASHI_DEBUG_LOG("キャンセルタイプが判別できません");
+			break;
 		}
-		if (GetCanMove() &&
-			reserveCancelStates[static_cast<u_int>(CancelType::Move)] != STATE_NONE_ID)
-		{
-			ChangeState(reserveCancelStates[static_cast<u_int>(CancelType::Move)]);
-			return;
-		}
+
+		if (canTransition)	// 遷移する
+			ChangeState(reserveCancelState);
 	}
 }

@@ -36,6 +36,7 @@ namespace HashiTaku
 			SpecialAtkHi = 30,
 			SpecialAtkLow,
 			SpecialAtkGuard,	// ガードパリィ時の攻撃
+			ChargeAttack1,	// 溜め攻撃
 
 			// 最後
 			None = 99

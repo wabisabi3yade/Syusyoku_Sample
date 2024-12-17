@@ -15,7 +15,7 @@ namespace HashiTaku
 
 		// 行動クラスを生成
 		using enum AirState;
-		CreateState<PlayerAirMove>(Move);
+		CreateState<PlayerAirMove>(Move, CancelType::Move);
 		//CreateState<PlayerAirAttack>(Attack11);
 
 		// デフォルト状態をセット

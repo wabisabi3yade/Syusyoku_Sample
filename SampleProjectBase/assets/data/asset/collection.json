@@ -501,7 +501,7 @@
                                 {
                                     "interp": 1,
                                     "time": 0.21699999272823334,
-                                    "value": 1.0,
+                                    "value": 0.800000011920929,
                                     "vector": 0.0
                                 },
                                 {
@@ -548,7 +548,7 @@
                                 }
                             ],
                             "startInterp": 1,
-                            "startValue": 1.0,
+                            "startValue": 0.800000011920929,
                             "startVector": 0.0,
                             "useHermite": true
                         },
@@ -4749,6 +4749,11 @@
                 {
                     "name": "rollingTrigger",
                     "type": 3
+                },
+                {
+                    "name": "isCharging",
+                    "type": 0,
+                    "value": false
                 },
                 {
                     "name": "canInput",

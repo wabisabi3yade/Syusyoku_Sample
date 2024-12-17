@@ -2,7 +2,6 @@
 #include "CP_Weapon.h"
 #include "CP_RigidBody.h"
 #include "GameObject.h"
-#include "CP_EffectCreater.h"
 #include "AssetGetter.h"
 
 #ifdef EDIT

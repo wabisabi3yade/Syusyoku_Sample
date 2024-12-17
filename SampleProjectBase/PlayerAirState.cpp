@@ -63,6 +63,5 @@ namespace HashiTaku
 		if (!pActionController->GetCanInput()) return;
 
 		using enum GameInput::ButtonType;
-		using CancelType = PlayerActionController_Base::CancelType;
 	}
 }

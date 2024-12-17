@@ -250,6 +250,7 @@
     <ClCompile Include="PlayerAirState.cpp" />
     <ClCompile Include="PlayerAttackInformation.cpp" />
     <ClCompile Include="PlayerDamageState.cpp" />
+    <ClCompile Include="PlayerGroundChargeAttack.cpp" />
     <ClCompile Include="PlayerGroundState.cpp" />
     <ClCompile Include="PlayerGuardState.cpp" />
     <ClCompile Include="PlayerJumpState.cpp" />
@@ -440,7 +441,6 @@
     <ClInclude Include="CopyAnimationParameters.h" />
     <ClInclude Include="CP_Character.h" />
     <ClInclude Include="CP_CylinderCollider.h" />
-    <ClInclude Include="CP_EffectCreater.h" />
     <ClInclude Include="CP_Enemy.h" />
     <ClInclude Include="CP_OutLineRenderer.h" />
     <ClInclude Include="CP_RigidBody.h" />
@@ -496,6 +496,7 @@
     <ClInclude Include="PlayerAnimReference.h" />
     <ClInclude Include="PlayerAttackInformation.h" />
     <ClInclude Include="PlayerDamageState.h" />
+    <ClInclude Include="PlayerGroundChargeAttack.h" />
     <ClInclude Include="PlayerGroundState.h" />
     <ClInclude Include="PlayerGuardState.h" />
     <ClInclude Include="PlayerJumpState.h" />

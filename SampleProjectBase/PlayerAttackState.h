@@ -52,7 +52,25 @@ namespace HashiTaku
 
 		void OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName) override;
 
+		/// @brief 攻撃回数をセット
+		void SetAttackTimes(u_int _attackTimes);
+
+		/// @brief 攻撃回数を変えたときの処理
+		virtual void OnChangeAttackTimes();
+
+		/// @brief 指定した攻撃情報を取得
+		/// @param _atkIdx 配列の要素数
+		/// @return 攻撃情報(範囲外ならnullptr)
+		PlayerAttackInformation* GetPlayerAtkInfo(u_int _atkIdx);
+
+		/// @brief 攻撃回数を取得
+		/// @return 攻撃回数
+		u_int GetAttackTimes() const;
+
 		void ImGuiDebug() override;
+
+		// 攻撃情報の編集
+		virtual void ImGuiAttackInfo();
 	private:
 		/// @brief パラメータを初期化
 		void InitParameter();

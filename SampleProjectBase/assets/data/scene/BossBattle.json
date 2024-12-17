@@ -675,6 +675,85 @@
                                     },
                                     {
                                         "data": {
+                                            "attackCnt": 1,
+                                            "attackInfos": [
+                                                {
+                                                    "break": 1.0,
+                                                    "damage": 0.0,
+                                                    "hitVfx": {
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
+                                                    "level": 0
+                                                }
+                                            ],
+                                            "chargeInfos": [
+                                                {
+                                                    "attackInfos": [
+                                                        {
+                                                            "break": 1.0,
+                                                            "damage": 2.0,
+                                                            "hitVfx": {
+                                                                "scale": 1.0,
+                                                                "speed": 1.0,
+                                                                "startFrame": 0
+                                                            },
+                                                            "level": 0
+                                                        }
+                                                    ],
+                                                    "time": 0.0
+                                                },
+                                                {
+                                                    "attackInfos": [
+                                                        {
+                                                            "break": 1.0,
+                                                            "damage": 0.0,
+                                                            "hitVfx": {
+                                                                "scale": 1.0,
+                                                                "speed": 1.0,
+                                                                "startFrame": 0
+                                                            },
+                                                            "level": 0
+                                                        }
+                                                    ],
+                                                    "time": 2.0
+                                                },
+                                                {
+                                                    "attackInfos": [
+                                                        {
+                                                            "break": 1.0,
+                                                            "damage": 0.0,
+                                                            "hitVfx": {
+                                                                "scale": 1.0,
+                                                                "speed": 1.0,
+                                                                "startFrame": 0
+                                                            },
+                                                            "level": 0
+                                                        }
+                                                    ],
+                                                    "time": 4.0
+                                                }
+                                            ],
+                                            "forwardCurve": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": null,
+                                                "startInterp": 1,
+                                                "startValue": 1.0,
+                                                "startVector": 0.0,
+                                                "useHermite": true
+                                            },
+                                            "isMoveFwd": false,
+                                            "maxDistance": 10.0,
+                                            "maxTime": 5.0,
+                                            "nextCombAttack": 99
+                                        },
+                                        "typeString": "ChargeAttack1"
+                                    },
+                                    {
+                                        "data": {
                                             "crouchTime": 0.10000000149011612,
                                             "jumpPower": 20.0
                                         },
@@ -1132,7 +1211,7 @@
                             "actData": [
                                 {
                                     "data": {
-                                        "isIdleOnly": false,
+                                        "isIdleOnly": true,
                                         "warpMotion": {
                                             "useWarp": false
                                         }
@@ -1456,7 +1535,7 @@
                                                         "startVector": 2.0,
                                                         "useHermite": true
                                                     },
-                                                    "movementXZ": 6.0,
+                                                    "movementXZ": 4.0,
                                                     "targetOffset": -1.0
                                                 },
                                                 {
@@ -1480,7 +1559,7 @@
                                                         "startVector": 2.0,
                                                         "useHermite": true
                                                     },
-                                                    "movementXZ": 6.0,
+                                                    "movementXZ": 5.5,
                                                     "targetOffset": -1.0
                                                 }
                                             ]

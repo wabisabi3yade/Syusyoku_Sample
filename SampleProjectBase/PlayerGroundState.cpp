@@ -61,40 +61,38 @@ namespace HashiTaku
 		if (!pActionController->GetCanInput()) return;	// 入力受け付けていないなら
 
 		using enum PlayerState;
-		using CancelType = PlayerActionController_Base::CancelType;
 
 		// アクションキャンセル
 		// ガード
 		if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Guard))
 		{
-			pActionController->SetReserveState(static_cast<int>(Guard),
-				CancelType::Action);
+			pActionController->SetReserveState(static_cast<int>(Guard));
 		}
 		// ローリングボタンを押す　かつ　左スティックの傾きが足りる
 		if (IsRollingInput())
 		{
-			pActionController->SetReserveState(static_cast<int>(Rolling),
-				CancelType::Action);
+			pActionController->SetReserveState(static_cast<int>(Rolling));
 		}
 		// ジャンプ
 		if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Jump))
 		{
-			pActionController->SetReserveState(static_cast<int>(BeginJump),
-				CancelType::Action);
+			pActionController->SetReserveState(static_cast<int>(BeginJump));
 		}
 
 		// 攻撃キャンセル
+		if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_ChargeAttack))
+		{
+			pActionController->SetReserveState(static_cast<int>(ChargeAttack1));
+		}
 		// 前突進攻撃
 		if (IsSpecialAtkInput(InputVector::Forward))
 		{
-			pActionController->SetReserveState(static_cast<int>(SpecialAtkHi),
-				CancelType::Attack);
+			pActionController->SetReserveState(static_cast<int>(SpecialAtkHi));
 		}
 		// 攻撃
 		if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
 		{
-			pActionController->SetReserveState(static_cast<int>(Attack11),
-				CancelType::Attack);
+			pActionController->SetReserveState(static_cast<int>(Attack11));
 		}
 
 		// 移動キャンセル
@@ -111,13 +109,11 @@ namespace HashiTaku
 			// ターゲット時ならターゲット移動
 			if (isTarget && curState != PlayerState::TargetMove)
 			{
-				pActionController->SetReserveState(static_cast<int>(TargetMove),
-					CancelType::Move);
+				pActionController->SetReserveState(static_cast<int>(TargetMove));
 			}
 			else if (!isTarget && curState != PlayerState::Move)
 			{
-				pActionController->SetReserveState(static_cast<int>(Move),
-					CancelType::Move);
+				pActionController->SetReserveState(static_cast<int>(Move));
 			}
 		}
 	}

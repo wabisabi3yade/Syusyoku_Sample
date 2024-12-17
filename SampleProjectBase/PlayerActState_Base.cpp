@@ -20,6 +20,7 @@ namespace HashiTaku
 
 	PlayerActState_Base::PlayerActState_Base() :
 		pActionController(nullptr),
+		cancelType(CancelType::None),
 		statePriority(-1),
 		targetLookRotateSpeed(40.0f),
 		isTargetLookAtEnemy(false)
@@ -27,9 +28,12 @@ namespace HashiTaku
 		pPlayerInput = &InSceneSystemManager::GetInstance()->GetInput();
 	}
 
-	void PlayerActState_Base::Init(PlayerActionController_Base& _actController, int _priority)
+	void PlayerActState_Base::Init(PlayerActionController_Base& _actController, 
+		CancelType _cancelType,
+		int _priority)
 	{
 		pActionController = &_actController;
+		cancelType = _cancelType;
 		statePriority = _priority;
 	}
 
@@ -39,6 +43,11 @@ namespace HashiTaku
 
 		// ターゲットの方向を見る
 		UpdateTargetLook();
+	}
+
+	PlayerActState_Base::CancelType PlayerActState_Base::GetCancelType() const
+	{
+		return cancelType;
 	}
 
 	int PlayerActState_Base::GetPriority() const

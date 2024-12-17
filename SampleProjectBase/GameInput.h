@@ -11,6 +11,7 @@ namespace HashiTaku
 		enum class ButtonType
 		{
 			Player_Attack,	// 攻撃
+			Player_ChargeAttack,	// 攻撃
 			Player_Jump, // ジャンプ
 			Player_Rolling,	// ローリング
 			Player_RockOn,	// ロックオン

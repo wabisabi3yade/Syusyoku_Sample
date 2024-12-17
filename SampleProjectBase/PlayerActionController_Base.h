@@ -18,24 +18,15 @@ namespace HashiTaku
 			Ground,	// 地面
 			Air	// 空中
 		};
-
-		/// @brief キャンセルの種類
-		enum class CancelType
-		{
-			Action,	// アクション(ローリングなど)
-			Attack,	// 攻撃
-			Move,	// 移動
-			MaxNum
-		};
-
 	private:
 		/// @brief キャンセル可能になったときの変更先のステート(予約)
-		std::array<int, static_cast<u_int>(CancelType::MaxNum)> reserveCancelStates;
+		int reserveCancelState;
 
-		/// @brief 現在のフレームで各キャンセルタイプが予約されたか？
-		std::array<bool, static_cast<u_int>(CancelType::MaxNum)> isReservedCurFrame;
-
+		/// @brief 今フレームで押されたステート
+		int curFlameCancelState;
 	protected:
+		using CancelType = PlayerActState_Base::CancelType;
+
 		/// @brief どの場所のコントローラーか
 		ActionPlace place;
 
@@ -45,7 +36,10 @@ namespace HashiTaku
 		/// @brief 入力変数
 		const GameInput* pInput;
 	public:
-		PlayerActionController_Base(PlayerAction& _pAction, CP_Player& _player, const std::string& _controllerName);
+		PlayerActionController_Base(PlayerAction& _pAction, 
+			CP_Player& _player,
+			const std::string& _controllerName);
+
 		virtual ~PlayerActionController_Base() {}
 
 		/// @brief 初期化処理
@@ -61,8 +55,12 @@ namespace HashiTaku
 
 		/// @brief 予約状態をセットする
 		/// @param _setState 予約する状態
-		/// @param _cancelState どのキャンセルか？
-		void SetReserveState(int _setState, CancelType _cancelState);
+		void SetReserveState(int _setState);
+
+		/// @brief プレイヤーのステートを取得
+		/// @param _playerStateId 取得したいステートのID
+		/// @return プレイヤーのアクション
+		PlayerActState_Base* GetPlayerAction(int _playerStateId);
 
 		const ITargetAccepter* GetTargetAccepter() const;
 
@@ -97,7 +95,8 @@ namespace HashiTaku
 		/// @brief 新しくStateを生成
 		/// @tparam T 対応している行動クラス
 		/// @param _actionName アクション名
-		template <class T> void CreateState(int _actionState);
+		/// @param _cancelType キャンセルタイプ
+		template <class T> void CreateState(int _actionState, CancelType _cancelType);
 
 		/// @brief 状態を遷移
 		/// @param _nextActionState アクションのID
@@ -134,13 +133,13 @@ namespace HashiTaku
 	};
 
 	template<class T>
-	inline void PlayerActionController_Base::CreateState(int _actionState)
+	inline void PlayerActionController_Base::CreateState(int _actionState, CancelType _cancelType)
 	{
 		int hasStateCnt = static_cast<int>(stateNodeList.size());
 
 		std::unique_ptr<PlayerActState_Base> createState = std::make_unique<T>();
 		// ステートの数から優先度をつけていく
-		createState->Init(*this, hasStateCnt);
+		createState->Init(*this, _cancelType, hasStateCnt);
 
 		AddNode(static_cast<int>(_actionState), std::move(createState));
 	}

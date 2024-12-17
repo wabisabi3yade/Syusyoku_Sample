@@ -83,6 +83,12 @@ namespace HashiTaku
 			ChangeState(PlayerState::Idle);
 	}
 
+	void PlayerAttackState::SetAttackTimes(u_int _attackTimes)
+	{
+		attackTimeCnt = _attackTimes;
+		OnChangeAttackTimes();
+	}
+
 	void PlayerAttackState::UpdateAttackInfo()
 	{
 		assert(curAttackTime <= attackTimeCnt && "攻撃回数が終えています");
@@ -114,10 +120,7 @@ namespace HashiTaku
 		if (!pActionController->GetCanInput()) return;	// 入力受け付けていないなら
 
 		if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
-			pActionController->SetReserveState(
-				static_cast<int>(nextCombAtkState),
-				PlayerActionController_Base::CancelType::Attack
-			);
+			pActionController->SetReserveState(static_cast<int>(nextCombAtkState));
 	}
 
 	void PlayerAttackState::CalcProgressDis(const DirectX::SimpleMath::Vector3& _atkEnemyPos)
@@ -132,6 +135,29 @@ namespace HashiTaku
 			curAtkProgressDis = atkMaxDistance;
 	}
 
+	void PlayerAttackState::OnChangeAttackTimes()
+	{
+		// 攻撃情報を更新
+		attackInfos.resize(attackTimeCnt);
+	}
+
+	PlayerAttackInformation* PlayerAttackState::GetPlayerAtkInfo(u_int _atkIdx)
+	{
+		// 範囲外なら
+		if (static_cast<u_int>(attackInfos.size()) <= _atkIdx)
+		{
+			HASHI_DEBUG_LOG("エラー：攻撃情報の範囲外を取得しています");
+			return nullptr;
+		}
+			
+		return &attackInfos[_atkIdx];
+	}
+
+	u_int PlayerAttackState::GetAttackTimes() const
+	{
+		return attackTimeCnt;
+	}
+
 	void PlayerAttackState::ImGuiDebug()
 	{
 		PlayerGroundState::ImGuiDebug();
@@ -142,17 +168,9 @@ namespace HashiTaku
 		ImGui::Text("AtkInfo");
 		int imInt = static_cast<int>(attackTimeCnt);	// 回数指定
 		if (ImGui::DragInt("attackTime", &imInt, 1, 1, 100))
-		{
-			attackTimeCnt = static_cast<u_int>(imInt);
-			attackInfos.resize(attackTimeCnt);
-		}
+			SetAttackTimes(attackTimeCnt);
 
-		for (u_int a_i = 0; a_i < attackTimeCnt; a_i++)
-		{
-			ImGui::PushID(a_i);
-			attackInfos[a_i].ImGuiCall();
-			ImGui::PopID();
-		}
+		ImGuiAttackInfo();
 
 		// 前進カーブ
 		ImGui::Text(std::to_string(curAtkProgressDis).c_str());
@@ -161,6 +179,16 @@ namespace HashiTaku
 		{
 			ImGui::DragFloat("AtkMoveSpeed", &atkMaxDistance, 0.1f);
 			progressDistanceCurve.ImGuiCall();
+		}
+	}
+
+	void PlayerAttackState::ImGuiAttackInfo()
+	{
+		for (u_int a_i = 0; a_i < attackTimeCnt; a_i++)
+		{
+			ImGui::PushID(a_i);
+			attackInfos[a_i].ImGuiCall();
+			ImGui::PopID();
 		}
 	}
 
@@ -255,16 +283,17 @@ namespace HashiTaku
 
 		LoadJsonEnum<PlayerState>("nextCombAttack", nextCombAtkState, _data);
 		LoadJsonFloat("maxDistance", atkMaxDistance, _data);
-		LoadJsonUnsigned("attackCnt", attackTimeCnt, _data);
 		LoadJsonBoolean("isMoveFwd", isMoveForward, _data);
+
+		// 攻撃回数
+		if (LoadJsonUnsigned("attackCnt", attackTimeCnt, _data))
+			SetAttackTimes(attackTimeCnt);
 
 		// 攻撃情報をロード
 		nlohmann::json attackDatas;
 		if (LoadJsonDataArray("attackInfos", attackDatas, _data))
 		{
 			u_int arrayIdx = 0;
-			attackInfos.clear();
-			attackInfos.resize(attackTimeCnt);
 
 			for (auto& atkInfoData : attackDatas)
 			{
