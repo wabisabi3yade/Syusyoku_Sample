@@ -5,21 +5,26 @@
 
 namespace HashiTaku
 {
+	class CP_CameraMove;
+
 	/// @brief プレイヤーや敵の基底コンポーネント
 	class CP_Character : public Component, public IDamageable, public HitStopper_Base
 	{
 	private:
+		/// @brief カメラシェイク用
+		CP_CameraMove* pCamMove;
+
 		/// @brief 死んだフラグ
 		bool isDead;
 
-		/// @brief 死んだフラグ
+		/// @brief 
 		bool isMove;
 
 		/// @brief ヒットストップ中か？
 		bool isHitStopping;
 
 		/// @brief 無敵フラグ
-		bool isInvicible;;
+		bool isInvicible;
 	protected:
 		/// @brief 現在の体力
 		float currentHP;
@@ -62,7 +67,8 @@ namespace HashiTaku
 		/// @brief ダメージを受けたときの処理
 		/// @param _attackInfo 攻撃情報
 		void OnDamage(const AttackInformation& _attackInfo,
-			const DirectX::SimpleMath::Vector3& _attackerPos) override;
+			const DirectX::SimpleMath::Vector3& _attackerPos,
+			const DXSimp::Vector3& _contactPos) override;
 
 		/// @brief 死んだときの処理
 		void OnDeath();
@@ -101,7 +107,9 @@ namespace HashiTaku
 
 		/// @brief 各クラスのダメージを受けたときの処理
 		/// @param _attackInfo 攻撃情報
-		virtual void OnDamageBehavior(const AttackInformation& _attackInfo,
+		/// @param _attackerPos 攻撃した側の座標
+		/// @return ダメージを受けたか？
+		virtual bool OnDamageBehavior(const AttackInformation& _attackInfo,
 			const DirectX::SimpleMath::Vector3& _attackerPos) = 0;
 
 		/// @brief 各クラスのダメージを受けたときの処理
@@ -109,5 +117,21 @@ namespace HashiTaku
 		virtual void OnDeathBehavior() = 0;
 
 		void ImGuiDebug() override;
+
+	private:
+		/// @brief カメラ移動クラスを準備
+		void SetupCameraMove();
+
+		/// @brief ダメージ受けたときの処理
+		/// @param _attackInfo 攻撃情報
+		/// @param _contactPos 衝突地点
+		void OnTakeDamage(const AttackInformation& _attackInfo,
+			const DXSimp::Vector3& _contactPos);
+
+		/// @brief ヒットエフェクトを出す
+		/// @param _attackInfo 攻撃情報
+		/// @param 当たり判定の衝突地点
+		void CreateHitVfx(const AttackInformation& _attackInfo,
+			const DirectX::SimpleMath::Vector3& _contactPos);
 	};
 }

@@ -527,8 +527,11 @@ namespace HashiTaku
 		}
 
 		AnimNodeInfo* pRetNode = pAnimNodeInfo.get();
-
 		animNodeInfos.push_back(std::move(pAnimNodeInfo));
+
+		// ノード名でソート
+		animNodeInfos.sort(SortNodeName);
+
 		return pRetNode;
 	}
 
@@ -565,6 +568,11 @@ namespace HashiTaku
 	bool AnimationController::SortArrowPriority(const std::unique_ptr<AnimTransitionArrow>& _a1, const std::unique_ptr<AnimTransitionArrow>& _a2)
 	{
 		return _a1->GetPriority() > _a2->GetPriority();
+	}
+
+	bool AnimationController::SortNodeName(const std::unique_ptr<AnimNodeInfo>& _a1, const std::unique_ptr<AnimNodeInfo>& _a2)
+	{
+		return _a1->pAnimNode->GetNodeName() < _a2->pAnimNode->GetNodeName();
 	}
 
 	void AnimationController::LoadGroupArrow(const nlohmann::json& _groupArrowData)

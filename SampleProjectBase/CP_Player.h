@@ -40,6 +40,9 @@ namespace HashiTaku
 
 		/// @brief ヒットストップする前の再生速度
 		float hitStopBeforeAnimSpeed;
+
+		/// @brief デバッグの無敵フラグ
+		bool isDebugInvicible;
 	public:
 		CP_Player();
 		~CP_Player() {}
@@ -86,7 +89,7 @@ namespace HashiTaku
 		void DecadePlayerHp(float _damageVal);
 
 		/// @brief プレイヤーのダメージ処理
-		void OnDamageBehavior(const AttackInformation& _attackInfo,
+		bool OnDamageBehavior(const AttackInformation& _attackInfo,
 			const DirectX::SimpleMath::Vector3& _attackerPos) override;
 		void OnDeathBehavior() override;
 

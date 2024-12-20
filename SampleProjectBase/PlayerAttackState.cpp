@@ -184,12 +184,17 @@ namespace HashiTaku
 
 	void PlayerAttackState::ImGuiAttackInfo()
 	{
+		if (!ImGuiMethod::TreeNode("Attack")) return;
+
 		for (u_int a_i = 0; a_i < attackTimeCnt; a_i++)
 		{
-			ImGui::PushID(a_i);
+			std::string caption = "Step:" + std::to_string(a_i);
+			if(!ImGuiMethod::TreeNode(caption)) continue;
 			attackInfos[a_i].ImGuiCall();
-			ImGui::PopID();
+			ImGui::TreePop();
 		}
+
+		ImGui::TreePop();
 	}
 
 	void PlayerAttackState::InitParameter()

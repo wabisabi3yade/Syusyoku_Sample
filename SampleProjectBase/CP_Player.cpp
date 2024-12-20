@@ -19,7 +19,8 @@ namespace HashiTaku
 		pCameraMove(nullptr),
 		pHpSlider(nullptr),
 		pAttackCollisionFlag(nullptr),
-		hitStopBeforeAnimSpeed(0.0f)
+		hitStopBeforeAnimSpeed(0.0f),
+		isDebugInvicible(false)
 	{
 	}
 
@@ -140,6 +141,7 @@ namespace HashiTaku
 	{
 		CP_Character::ImGuiDebug();
 		ImGuiFindObj();
+		ImGui::Checkbox("DebugInvicible", &isDebugInvicible);
 
 		static bool isWindow = true;
 		if (ImGui::Button("Window"))
@@ -191,10 +193,12 @@ namespace HashiTaku
 	{
 		auto data = CP_Character::Save();
 		data["action"] = pAction->Save();
-
 		data["weaponObjName"] = weaponObjName;
 		data["camObjName"] = cameraObjName;
 		data["hpBarObjName"] = hpBarObjName;
+#ifdef EDIT
+		data["debugInvicible"] = isDebugInvicible;
+#endif // EDIT
 		return data;
 	}
 
@@ -205,10 +209,14 @@ namespace HashiTaku
 		nlohmann::json actionData;
 		if (LoadJsonData("action", actionData, _data))
 			pAction->Load(actionData);
-
 		LoadJsonString("weaponObjName", weaponObjName, _data);
 		LoadJsonString("camObjName", cameraObjName, _data);
 		LoadJsonString("hpBarObjName", hpBarObjName, _data);
+
+#ifdef EDIT
+		LoadJsonBoolean("debugInvicible", isDebugInvicible, _data);
+#endif // EDIT
+
 	}
 
 	void CP_Player::SetWeaponAttackFlag()
@@ -231,18 +239,21 @@ namespace HashiTaku
 			pHpSlider->SetCurrentValue(currentHP);
 	}
 
-	void CP_Player::OnDamageBehavior(const AttackInformation& _attackInfo,
+	bool CP_Player::OnDamageBehavior(const AttackInformation& _attackInfo,
 		const DirectX::SimpleMath::Vector3& _attackerPos)
 	{
+		// デバッグ無敵
+		if (isDebugInvicible) return false;
+
 		bool isAcceptDamage = false;	// アクション内でダメージ受けているかチェック
 		pAction->OnDamage(_attackInfo, _attackerPos, &isAcceptDamage);
 
 		// ダメージ受けていたら
-		if (isAcceptDamage)
-		{
-			// 体力を減らす
-			DecadePlayerHp(_attackInfo.GetDamageValue());
-		}
+		if (!isAcceptDamage) return false;
+		// 体力を減らす
+		DecadePlayerHp(_attackInfo.GetDamageValue());
+
+		return true;
 	}
 
 	void CP_Player::OnDeathBehavior()

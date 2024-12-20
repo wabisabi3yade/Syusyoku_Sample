@@ -31,6 +31,11 @@ namespace HashiTaku
 		pMoveController = std::make_unique<CameraMoveController>();
 	}
 
+	void CP_CameraMove::ShakeCamera(const CameraShakeParameter& _shakeCamParam)
+	{
+		pMoveController->BeginShake(_shakeCamParam);
+	}
+
 	bool CP_CameraMove::IsCanUpdate()
 	{
 #ifdef EDIT

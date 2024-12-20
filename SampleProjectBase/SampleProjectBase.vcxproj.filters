@@ -880,6 +880,12 @@
     <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\ChargeAttack">
       <UniqueIdentifier>{f6a32c37-3da1-40c5-a3ef-7a73835c58b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\System\PerlinNoise">
+      <UniqueIdentifier>{c44c6e00-3b85-4309-9240-e40186f31588}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Camera\CameraShake">
+      <UniqueIdentifier>{31fc32ed-0e12-4670-92df-0eb43422b2da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1612,6 +1618,12 @@
     </ClCompile>
     <ClCompile Include="PlayerGroundChargeAttack.cpp">
       <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\ChargeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="PerlinNoise.cpp">
+      <Filter>ソース ファイル\System\PerlinNoise</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraShakeParameter.cpp">
+      <Filter>ソース ファイル\Component\InGame\Camera\CameraShake</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2394,6 +2406,12 @@
     </ClInclude>
     <ClInclude Include="PlayerGroundChargeAttack.h">
       <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\ChargeAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="PerlinNoise.h">
+      <Filter>ソース ファイル\System\PerlinNoise</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraShakeParameter.h">
+      <Filter>ソース ファイル\Component\InGame\Camera\CameraShake</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

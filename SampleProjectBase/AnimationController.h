@@ -138,6 +138,10 @@ namespace HashiTaku
 		/// @brief 遷移矢印の優先順位でソート
 		static bool SortArrowPriority(const std::unique_ptr<AnimTransitionArrow>& _a1, const std::unique_ptr<AnimTransitionArrow>& _a2);
 
+		/// @brief ノード名でソートする
+		static bool SortNodeName(const std::unique_ptr<AnimNodeInfo>& _a1,
+			const std::unique_ptr<AnimNodeInfo>& _a2);
+
 		// ImGuiでノード関係
 		void ImGuiNode(const std::vector<std::string>& _nodeNames);
 

@@ -29,6 +29,10 @@ namespace HashiTaku
 
 		void Init() override;
 
+		/// @brief カメラを揺らす
+		/// @param _shakeCamParam カメラ揺れパラメータ
+		void ShakeCamera(const CameraShakeParameter& _shakeCamParam);
+
 		/// @brief 対象とするゲームオブジェクトをセット
 		/// @param _targetTransform 対象のオブジェクト(nullptrで外す)
 		void SetFollowTransform(const Transform* _targetTransform);

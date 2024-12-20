@@ -25,6 +25,12 @@ namespace HashiTaku
 		/// @brief レベルごとのチャージの時間
 		std::array<float, static_cast<u_int>(ChargeLevel::MaxNum)> chargeTimes;
 
+		/// @brief チャージで次の段階に移行した時のエフェクト
+		CreateVfxInfo onNextChargeVfx;
+
+		/// @brief チャージエフェクトのオフセット座標
+		DXSimp::Vector3 chargeVfxOffset;
+
 		/// @brief 最大溜め時間
 		float maxChargeTime;
 
@@ -58,6 +64,9 @@ namespace HashiTaku
 
 		/// @brief チャージ中の更新処理
 		void ChargingUpdate();
+
+		/// @brief 次のチャージレベルへ移行
+		void NextChargeLevel();
 
 		/// @brief チャージ終了時の処理
 		void OnChargeEnd();

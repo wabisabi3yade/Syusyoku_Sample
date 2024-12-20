@@ -11,6 +11,7 @@ namespace HashiTaku
 	constexpr auto ATTACKTRIGGER_PARAMNAME{ "attackTrigger" };	// 攻撃トリガー
 	constexpr auto REATTACK_PARAMNAME{ "isReAttack" };	// リアタック時bool
 	constexpr auto CHARGE_PARAMNAME{ "isCharging" };	// チャージ中なのか
+	constexpr auto CHARGE_STEP_PARAMNAME{ "chargeSteps" };	// チャージ中のステップ
 	constexpr auto INPUT_PARAMNAME{ "canInput" };	// 先行入力できるか
 	constexpr auto CANCEL_PARAMNAME{ "canCancel" };	// キャンセル可能
 	constexpr auto CANATK_PARAMNAME{ "canAttack" };	// 攻撃できるか

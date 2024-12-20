@@ -2,19 +2,14 @@
 #include "AttackInformation.h"
 #include "AssetGetter.h"
 #include "VisualEffect.h"
+#include "CameraShakeParameter.h"
 
 namespace HashiTaku
 {
 	AttackInformation::AttackInformation()
-		: atkDamage(0.0f), hitStopFrame(0), atkLevel(AttackLevel::Low)
+		: atkDamage(0.0f), hitStopFrame(0), atkLevel(AttackLevel::Low), isCamShake(false)
 	{
 		SetAttackLevel(AttackLevel::Low);
-	}
-
-	AttackInformation::AttackInformation(float _atkDamage, AttackLevel _atkLevel)
-		: atkDamage(_atkDamage)
-	{
-		SetAttackLevel(_atkLevel);
 	}
 
 	void AttackInformation::SetDamageValue(float _atkDamage)
@@ -38,6 +33,10 @@ namespace HashiTaku
 		return hitVfxInfo;
 	}
 
+	const CameraShakeParameter& AttackInformation::GetCamShakeParam() const
+	{
+		return pCamShakeParam;
+	}
 
 	float AttackInformation::GetDamageValue() const
 	{
@@ -54,11 +53,19 @@ namespace HashiTaku
 		return atkLevel;
 	}
 
+	bool AttackInformation::GetIsShake() const
+	{
+		return isCamShake;
+	}
+
 	nlohmann::json AttackInformation::Save()
 	{
 		nlohmann::json data;
 
 		data["hitVfx"] = hitVfxInfo.Save();
+		data["isCamShake"] = isCamShake;
+		if (isCamShake)
+			data["camShake"] = pCamShakeParam.Save();
 		data["damage"] = atkDamage;
 		data["level"] = atkLevel;
 
@@ -67,10 +74,17 @@ namespace HashiTaku
 
 	void AttackInformation::Load(const nlohmann::json& _data)
 	{
-		nlohmann::json hitVfxData;
-		if (LoadJsonData("hitVfx", hitVfxData, _data))
+		nlohmann::json loadData;
+		if (LoadJsonData("hitVfx", loadData, _data))
 		{
-			hitVfxInfo.Load(hitVfxData);
+			hitVfxInfo.Load(loadData);
+		}
+
+		LoadJsonBoolean("isCamShake", isCamShake, _data);
+		if (isCamShake)
+		{
+			if (LoadJsonData("camShake", loadData, _data))
+				pCamShakeParam.Load(loadData);
 		}
 
 		LoadJsonFloat("damage", atkDamage, _data);
@@ -122,5 +136,10 @@ namespace HashiTaku
 		}
 
 		hitVfxInfo.ImGuiCall();
+
+		ImGui::Checkbox("IsCameraShake", &isCamShake);
+
+		if (isCamShake)
+			pCamShakeParam.ImGuiCall();
 	}
 }

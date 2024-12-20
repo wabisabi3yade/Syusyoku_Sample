@@ -41,8 +41,6 @@ namespace HashiTaku
 		CP_Weapon();
 		virtual ~CP_Weapon() {}
 
-		void Draw() override;
-
 		// コンポーネント共通
 		void OnCollisionStay(const CollisionInfo& _otherColInfo);
 
@@ -69,15 +67,16 @@ namespace HashiTaku
 		/// @param _data ロードするシーンデータ 
 		void Load(const nlohmann::json& _data) override;
 	private:
+		void Draw() override;
+
 		/// @brief 攻撃できるか取得
 		/// @return 攻撃できるか？
 		bool CanAttack() const;
 
 		/// @brief 攻撃処理
 		/// @param _damager 攻撃与える対象
-		/// @param _haveObjPos 所有オブジェクトの座標
-		void OnAttack(IDamageable& _damager,
-			const DirectX::SimpleMath::Vector3& _haveObjPos);
+		/// @param _contactPos 衝突地点
+		void OnAttack(IDamageable& _damager, const DXSimp::Vector3& _contactPos);
 
 		/// @brief 既に攻撃したかリストに追加
 		/// @param _rb 攻撃済みのRb
@@ -92,10 +91,6 @@ namespace HashiTaku
 		/// @param  _targetRb 対象のオブジェクト
 		/// @return 攻撃できるか？
 		bool CheckAttackedRb(const CP_RigidBody& _targetRb) const;
-
-		/// @brief ヒットエフェクトを出す
-		/// @param 当たり判定の衝突地点
-		void CreateHitVfx(const DirectX::SimpleMath::Vector3& _contactPos);
 
 		// デバッグ用攻撃フラグが立っているか見るための描画
 		void DebugAttackFlag();

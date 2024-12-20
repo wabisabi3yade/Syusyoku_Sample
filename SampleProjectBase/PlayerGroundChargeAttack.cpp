@@ -23,6 +23,8 @@ namespace HashiTaku
 	{
 		auto data = PlayerAttackState::Save();
 		data["maxTime"] = maxChargeTime;
+		SaveJsonVector3("chargeOffset", chargeVfxOffset, data);
+		data["chargeVfx"] = onNextChargeVfx.Save();
 
 		// チャージ段階ごとの情報
 		auto& chargeInfoDatas = data["chargeInfos"];
@@ -51,10 +53,15 @@ namespace HashiTaku
 	{
 		PlayerAttackState::Load(_data);
 		LoadJsonFloat("maxTime", maxChargeTime, _data);
-
+		LoadJsonVector3("chargeOffset", chargeVfxOffset, _data);
+		json vfxData;
+		if (LoadJsonData("chargeVfx", vfxData, _data))
+		{
+			onNextChargeVfx.Load(vfxData);
+		}
+		
 		nlohmann::json chargeDatas;
 		if (!LoadJsonDataArray("chargeInfos", chargeDatas, _data)) return;
-
 		int l_i = -1;
 		for (auto& chargeData : chargeDatas)
 		{
@@ -84,7 +91,8 @@ namespace HashiTaku
 		curChargeLevel = ChargeLevel::Low;
 
 		// アニメーション側
-		GetAnimation()->SetBool(CHARGE_PARAMNAME, true);
+		GetAnimation()->SetBool(CHARGE_PARAMNAME, true);	// チャージ中か
+		GetAnimation()->SetInt(CHARGE_STEP_PARAMNAME, 1);	// チャージの段階
 	}
 
 
@@ -122,13 +130,38 @@ namespace HashiTaku
 	{
 		curChargingTime += DeltaTime();
 
+		int nextLevelId = static_cast<int>(curChargeLevel) + 1;
+		int maxLevelId = static_cast<int>(ChargeLevel::MaxNum);
+		if (nextLevelId != maxLevelId)	// 最大レベルでない
+		{
+			// チャージ時間が来たら
+			if (curChargingTime > chargeTimes[nextLevelId])
+				NextChargeLevel();
+		}
+
 		// 最大時間が溜まれば
 		if (curChargingTime > maxChargeTime)
 			OnChargeEnd();
 	}
 
+	void PlayerGroundChargeAttack::NextChargeLevel()
+	{
+		// 次のレベルへ
+		int nextLevelId = static_cast<int>(curChargeLevel) + 1;
+		curChargeLevel = static_cast<ChargeLevel>(nextLevelId);
+		GetAnimation()->SetInt(CHARGE_STEP_PARAMNAME, nextLevelId + 1);	// チャージの段階
+
+		// エフェクトを出す
+		DXSimp::Vector3 effectPos = GetMyTransform().GetPosition();
+		DX11EffecseerManager::GetInstance()->Play(onNextChargeVfx, effectPos + chargeVfxOffset);
+
+		HASHI_DEBUG_LOG("チャージ段階：" + std::string(magic_enum::enum_name(curChargeLevel)));
+	}
+
 	void PlayerGroundChargeAttack::OnChargeEnd()
 	{
+		HASHI_DEBUG_LOG("チャージ終了");
+
 		isCharging = false;	// 溜め終了
 		GetAnimation()->SetBool(CHARGE_PARAMNAME, false);
 
@@ -154,7 +187,7 @@ namespace HashiTaku
 		{
 			// チャージレベルごとの
 			u_int chargeCnt = static_cast<u_int>(ChargeLevel::MaxNum);
-			for (u_int c_i = 0; c_i < chargeCnt; c_i++)
+			for (u_int c_i = 1; c_i < chargeCnt; c_i++)
 			{
 				ChargeLevel c = static_cast<ChargeLevel>(c_i);
 				std::string levelStr = std::string(magic_enum::enum_name(c));
@@ -163,6 +196,9 @@ namespace HashiTaku
 
 			ImGui::TreePop();
 		}
+
+		ImGui::DragFloat3("ChargeOffset", &chargeVfxOffset.x, 0.1f);
+		onNextChargeVfx.ImGuiCall();
 
 		ImGuiAttackInfo();
 	}

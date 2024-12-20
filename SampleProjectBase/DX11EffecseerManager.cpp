@@ -86,6 +86,8 @@ namespace HashiTaku
 	Effekseer::Handle DX11EffecseerManager::Play(const CreateVfxInfo& _createVfx, const DirectX::SimpleMath::Vector3& _pos,
 		const DirectX::SimpleMath::Vector3& _eularAngles)
 	{
+		if (!_createVfx.pHitVfx) return -1;
+
 		return Play(_createVfx.pHitVfx->GetEffect(),
 			_createVfx.speed,
 			_pos,
@@ -158,13 +160,15 @@ namespace HashiTaku
 		return Effekseer::Vector3D(_dxVec3.x, _dxVec3.y, _dxVec3.z);
 	}
 
-	nlohmann::json CreateVfxInfo::Save()
+	json CreateVfxInfo::Save()
 	{
-		nlohmann::json vfxData;
+		json vfxData;
 
 		if (pHitVfx)
 			vfxData["name"] = pHitVfx->GetAssetName();
 
+		vfxData["applyColor"] = isApplyColor;
+		if (isApplyColor) SaveJsonVector4("color", effectColor, vfxData);
 		vfxData["scale"] = scale;
 		vfxData["speed"] = speed;
 		vfxData["startFrame"] = startFrame;
@@ -180,6 +184,10 @@ namespace HashiTaku
 			pHitVfx = AssetGetter::GetAsset<VisualEffect>(vfxName);
 		}
 
+		/*if (LoadJsonBoolean("applyColor", isApplyColor, _data))
+		{
+			LoadJsonColor("color", effectColor, _data);
+		}*/
 		LoadJsonFloat("scale", scale, _data);
 		LoadJsonFloat("speed", speed, _data);
 		LoadJsonInteger("startFrame", startFrame, _data);
@@ -202,6 +210,9 @@ namespace HashiTaku
 		}
 
 		// 各パラメータ
+		ImGui::Checkbox("ApplyColor", &isApplyColor);
+		if (isApplyColor)
+			ImGui::ColorEdit4("color", &effectColor.x);
 		ImGui::DragFloat("Scale", &scale, 0.01f, 0.0f, 1000.0f);
 		ImGui::DragFloat("Speed", &speed, 0.01f, 0.0f, 1000.0f);
 		ImGui::DragInt("StartFrame", &startFrame, 1.0f, 0, 200);

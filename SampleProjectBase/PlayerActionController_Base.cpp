@@ -168,8 +168,6 @@ namespace HashiTaku
 			reserveCancelState = curFlameCancelState;
 		}
 
-		HASHI_DEBUG_LOG(std::to_string(reserveCancelState));
-
 		// —\–ñ‚µ‚½ó‘Ô‚ÌƒLƒƒƒ“ƒZƒ‹‚©‚ç‘JˆÚ‚Å‚«‚éó‘Ô‚È‚ç‘JˆÚ‚ğs‚¤
 		if (reserveCancelState == STATE_NONE_ID) return;	// —\–ñ‚³‚ê‚Ä‚¢‚È‚¢‚È‚ç
 

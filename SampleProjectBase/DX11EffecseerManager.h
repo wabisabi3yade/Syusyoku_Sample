@@ -4,7 +4,6 @@
 namespace HashiTaku
 {
 	class CreateVfxInfo;
-	class InSceneSystemManager;
 	class VisualEffect;
 
 	/// @brief DX11環境で初期化や解放などを行うクラス
@@ -88,6 +87,9 @@ namespace HashiTaku
 	class CreateVfxInfo : public IImGuiUser, public ISaveLoad
 	{
 	public:
+		/// @brief エフェクト色
+		DXSimp::Color effectColor{ DXSimp::Vector4::One };
+
 		/// @brief エフェクト名
 		VisualEffect* pHitVfx{ nullptr };
 
@@ -99,6 +101,9 @@ namespace HashiTaku
 
 		/// @brief 開始フレーム
 		int startFrame{ 0 };
+
+		/// @brief 指定色を反映する
+		bool isApplyColor{ false };
 
 		nlohmann::json Save() override;
 		void Load(const nlohmann::json& _data) override;

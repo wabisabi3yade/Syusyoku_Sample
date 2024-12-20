@@ -54,6 +54,14 @@
 // ImPlot
 #include <implot.h>
 
+// 名前空間定義
+namespace HashiTaku
+{
+	namespace DX = DirectX;
+	namespace DXSimp = DirectX::SimpleMath;
+	using json = nlohmann::json;
+}
+
 // 自前クラス
 #include "IClassNameGetter.h"
 #include "MathUseful.h"	// 自作数学便利関数
@@ -66,10 +74,3 @@
 #include "Direct3D11.h"	// 自前のDirectX11
 #include "DX11BulletPhisics.h"	// DX11物理エンジン
 #include "DX11EffecseerManager.h"	// エフェクトマネジャー
-
-// 名前空間定義
-namespace HashiTaku
-{
-	namespace DX = DirectX;
-	namespace DXSimp = DirectX::SimpleMath;
-}

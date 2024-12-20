@@ -1,4 +1,5 @@
 #pragma once
+#include "PerlinNoise.h"
 
 namespace HashiTaku
 {
@@ -7,7 +8,10 @@ namespace HashiTaku
 		friend class MainApplication;	// 初期化をするクラス
 
 		/// @brief Mersenne Twister エンジン
-		static std::mt19937 gen;	
+		static std::mt19937 gen;
+
+		/// @brief パーリンノイズ
+		static PerlinNoise perlinNoise;
 	public:
 
 		/// @brief 範囲内の値を乱数で生成する
@@ -26,8 +30,12 @@ namespace HashiTaku
 		template <typename T> requires std::same_as<T, int> || std::same_as<T, u_int>
 		static int RangeInt(int _min, int _max);
 
-
-
+		/// @brief パーリンノイズを取得
+		/// @param _x X
+		/// @param _y Y
+		/// @param _z Z
+		/// @return パーリンノイズで求めた値
+		static double GetPerlinNoise(double _x = 0.0, double _y = 0.0, double _z = 0.0) noexcept;
 	private:
 		static void Init();	// 初期化関数
 	};

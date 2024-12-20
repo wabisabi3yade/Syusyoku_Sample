@@ -190,6 +190,7 @@
     <ClCompile Include="CameraMoveController.cpp" />
     <ClCompile Include="CameraMoveState_Base.cpp" />
     <ClCompile Include="CameraOnMoveState.cpp" />
+    <ClCompile Include="CameraShakeParameter.cpp" />
     <ClCompile Include="CameraTargetMove.cpp" />
     <ClCompile Include="ChangeAnimObserver.cpp" />
     <ClCompile Include="CharacterActionController.cpp" />
@@ -242,6 +243,7 @@
     <ClCompile Include="MaterialCreater.cpp" />
     <ClCompile Include="AnimNodePlayer_Base.cpp" />
     <ClCompile Include="MyClass2.cpp" />
+    <ClCompile Include="PerlinNoise.cpp" />
     <ClCompile Include="PlayerAction.cpp" />
     <ClCompile Include="PlayerActionController_Base.cpp" />
     <ClCompile Include="PlayerAirActionController.cpp" />
@@ -421,6 +423,7 @@
     <ClInclude Include="CameraMoveController.h" />
     <ClInclude Include="CameraMoveState_Base.h" />
     <ClInclude Include="CameraOnMoveState.h" />
+    <ClInclude Include="CameraShakeParameter.h" />
     <ClInclude Include="CameraTargetMove.h" />
     <ClInclude Include="ChangeAnimObserver.h" />
     <ClInclude Include="CharacterActionController.h" />
@@ -487,6 +490,7 @@
     <ClInclude Include="AnimNodePlayer_Base.h" />
     <ClInclude Include="MyClass2.h" />
     <ClInclude Include="NullTransform.h" />
+    <ClInclude Include="PerlinNoise.h" />
     <ClInclude Include="PlayerAction.h" />
     <ClInclude Include="PlayerActionController_Base.h" />
     <ClInclude Include="PlayerAirActionController.h" />

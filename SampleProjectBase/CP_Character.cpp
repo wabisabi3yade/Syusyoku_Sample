@@ -2,6 +2,7 @@
 #include "CP_Character.h"
 #include "CP_HitStopManager.h"
 #include "GameObject.h"
+#include "InSceneSystemManager.h"
 
 namespace HashiTaku
 {
@@ -45,15 +46,19 @@ namespace HashiTaku
 	}
 
 	void CP_Character::OnDamage(const AttackInformation& _attackInfo,
-		const DirectX::SimpleMath::Vector3& _attackerPos)
+		const DirectX::SimpleMath::Vector3& _attackerPos,
+		const DXSimp::Vector3& _contactPos)
 	{
 		if (isInvicible) return;
 
-		OnDamageBehavior(_attackInfo, _attackerPos);
+		// 各派生のダメージ処理
+		bool isDamage = OnDamageBehavior(_attackInfo, _attackerPos);
 
-		// 体力がなくなったら
-		if (currentHP <= 0.0f)
-			OnDeath();
+		// ダメージを受けていないなら
+		if (!isDamage) return;
+
+		// ダメージ受けたときの処理
+		OnTakeDamage(_attackInfo, _contactPos);
 	}
 
 	void CP_Character::OnDeath()
@@ -105,6 +110,9 @@ namespace HashiTaku
 		// ヒットストップマネージャーに自身を代入
 		AddToHitStopManager();
 
+		// カメラ移動
+		SetupCameraMove();
+
 		// 最大体力に合わせる
 		currentHP = maxHP;
 	}
@@ -139,5 +147,48 @@ namespace HashiTaku
 		}
 		ImGui::DragFloat("MaxHP", &maxHP, 0.1f, 0.0f, MAXLIMIT_HP);
 #endif // EDIT
+	}
+
+	void CP_Character::SetupCameraMove()
+	{
+		CP_Camera& camera = InSceneSystemManager::GetInstance()->GetMainCamera();
+		pCamMove = camera.GetGameObject().GetComponent<CP_CameraMove>();
+	}
+
+	void CP_Character::OnTakeDamage(const AttackInformation& _attackInfo,
+		const DXSimp::Vector3& _contactPos)
+	{
+		// ヒットストップ
+		if (CP_HitStopManager* pHitStop = CP_HitStopManager::GetInstance())
+		{
+			pHitStop->HitStopBegin(_attackInfo.GetHitStopFlame());
+		}
+
+		// カメラを揺らす
+		if (_attackInfo.GetIsShake() && pCamMove)
+		{
+			pCamMove->ShakeCamera(_attackInfo.GetCamShakeParam());
+		}
+
+		// エフェクトを出す
+		// ヒットエフェクトを生成
+		CreateHitVfx(_attackInfo, _contactPos);
+
+		// 体力がなくなったら
+		if (currentHP <= 0.0f)
+			OnDeath();
+	}
+
+	void CP_Character::CreateHitVfx(const AttackInformation& _attackInfo,
+		const DirectX::SimpleMath::Vector3& _contactPos)
+	{
+		const CreateVfxInfo& hitVfxInfo = _attackInfo.GetHitVfxInfo();
+
+		// 攻撃情報からエフェクトを取得する
+		auto* pVfx = hitVfxInfo.pHitVfx;
+		if (!pVfx) return;
+
+		// 再生
+		DX11EffecseerManager::GetInstance()->Play(hitVfxInfo, _contactPos);
 	}
 }

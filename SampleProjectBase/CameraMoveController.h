@@ -1,5 +1,6 @@
 #pragma once
 #include "CameraMoveState_Base.h"
+#include "CameraShakeParameter.h"
 #include "ITargetAccepter.h"
 
 namespace HashiTaku
@@ -7,46 +8,22 @@ namespace HashiTaku
 	/// @brief カメラの動き
 	class CameraMoveController :
 		public StateMachine_Base<CameraMoveState_Base::CameraState>,
-		public IImGuiUser, public ISaveLoad
+		public IImGuiUser,
+		public ISaveLoad
 	{
 		using CameraState = CameraMoveState_Base::CameraState;
-
-	public:
-		/// @brief カメラの揺れの強さ
-		enum class ShakeLevel
-		{
-			Low,
-			Mid,
-			High,
-			SuperHigh,
-			MaxNum
-		};
-
-		/// @brief カメラの揺れの強さ
-		enum class ShakeType
-		{
-			Vertical,	// 縦揺れ
-			Horizon,	// 横揺れ
-			Both,	// 両方揺れ
-			MaxNum
-		};
-
-		/// @brief レベルごとに設定するパラメータ
-		struct CameraShakeParameter
-		{
-			float power{ 0.2f };	// 揺れの強さ
-			float duration{ 0.3f };	// 揺れの間隔時間(s)
-		};
 	private:
-
-		/// @brief 各レベルの揺れの強さ
-		std::array<CameraShakeParameter, static_cast<u_int>(ShakeLevel::MaxNum)> shakeLevelParameter;
+		/// @brief 現在揺らしているパラメータ
+		CameraShakeParameter curShakeParameter;
 
 		/// @brief カメラの現在の座標(カメラ揺れを実装するのでオブジェクトと別で持っておく)
 		DirectX::SimpleMath::Vector3 curBaseCameraPos;
 
 		/// @brief 現在のカメラ揺れでずらしているオフセット座標
-		DirectX::SimpleMath::Vector3 curShakeOffset;
+		DirectX::SimpleMath::Vector3 curShakeOffsetPos;
+
+		/// @brief 乱数で決めたパーリンノイズのオフセット値(毎回変わる)
+		DirectX::SimpleMath::Vector3 randPerlinOffset;
 
 		/// @brief 前フレームのフォローしている座標
 		DirectX::SimpleMath::Vector3 prevFollowPos;
@@ -60,27 +37,16 @@ namespace HashiTaku
 		/// @brief カメラの注視オブジェクト
 		const ITargetAccepter* pLookAtTransform;
 
-		/// @brief 揺らしてる強さ
-		ShakeLevel curShakeLevel;
-
-		/// @brief 揺らしてる種類
-		ShakeType curShakeType;
-
-		/// @brief 揺らす時間
-		float shakeTime;
-
 		/// @brief 揺らしてからの経過時間
 		float shakeElapsedTime;
-
-		/// @brief 前揺れたときの時間
-		float prevShakeElapsedTime;
 
 		/// @brief 揺れているか？
 		bool isShaking;
 
-		ShakeLevel testLevel = ShakeLevel::Low;
-		ShakeType testType = ShakeType::Both;
-		float testTime = 0.0f;
+#ifdef EDIT
+		CameraShakeParameter debugShakeParam;
+#endif // EDIT
+
 	public:
 		CameraMoveController();
 		~CameraMoveController() {}
@@ -111,10 +77,17 @@ namespace HashiTaku
 		void SetFov(float _setDegree);
 
 		/// @brief 揺れを開始する
-		/// @param _level 揺れの強さ
-		/// @param _type 揺れの種類
-		/// @param _time 揺れの時間
-		void BeginShake(ShakeLevel _level, ShakeType _type, float _time);
+		/// @param _vector 揺れの方向
+		/// @param _power 揺れの力
+		/// @param _time 揺れ時間
+		/// @param _speed 揺らす速度
+		/// @param _isFadeOut フェードアウトさせていくか？
+		void BeginShake(const DXSimp::Vector3& _vector, float _power, float _time, float _speed,
+			bool _isFadeOut = true);
+
+		/// @brief 揺れを開始する
+		/// @param _shakeParam カメラ揺れパラメータ
+		void BeginShake(const CameraShakeParameter& _shakeParam);
 
 		/// @brief プレイヤー勝利時の処理
 		/// @param _targetTransform ターゲットのトランスフォーム
@@ -164,6 +137,9 @@ namespace HashiTaku
 		/// @brief カメラ揺れの更新
 		void ShakeUpdate();
 
+		/// @brief 揺れのオフセット値を取得する
+		void CalcShakeOffset();
+
 		/// @brief 最終の座標を更新する
 		void UpdateFinalPos();
 
@@ -180,23 +156,15 @@ namespace HashiTaku
 		/// @return 文字列
 		std::string GetStateName(CameraMoveState_Base::CameraState _state);
 
-		/// @brief 揺れのオフセット値を取得する
-		/// @param _level レベル
-		/// @param _type 種類
-		/// @return オフセット値
-		DirectX::SimpleMath::Vector3 CalcShakeOffset(ShakeLevel _level, ShakeType _type);
-
 		/// @brief カメラ行動にキャストする
 		/// @param _stateBase ステートノードの基底
 		/// @return カメラステートクラス
 		CameraMoveState_Base& CastCamState(StateNode_Base& _stateBase);
 
-		void TestShakeUpdate();
-
 		void ImGuiDebug() override;
 
-		// 揺れのレベル強さ
-		void ImGuiShakeLevel();
+		// カメラ揺れのデバッグ
+		void ImGuiShakeDebug();
 
 		// 全ステートをロードする
 		void LoadStates(const nlohmann::json& _data);

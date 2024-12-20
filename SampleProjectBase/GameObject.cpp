@@ -355,17 +355,17 @@ namespace HashiTaku
 			return;
 		}
 
-		// アクティブになかったら	// アクティブになかったら
+		// アクティブになかったら
 		if (!IsExistActiveComponent(_addComonent))
 			pActiveComponents.push_back(&_addComonent);
 
 		// Awakeになかったら
 		if (!_addComonent.GetIsAlreadyAwake() && !IsExistAwakeComponent(_addComonent))
-			pAwakeComponents.push_back(&_addComonent);
+			/*pAwakeComponents.push_back(&_addComonent);*/ _addComonent.AwakeCall();
 
 		// Startになかったら
 		if (!_addComonent.GetIsAlreadyStart() && !IsExistStartComponent(_addComonent))
-			pStartComponents.push_back(&_addComonent);
+			/*pStartComponents.push_back(&_addComonent);*/ _addComonent.StartCall();
 	}
 
 	void GameObject::OnActiveTrue()

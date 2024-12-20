@@ -62,16 +62,13 @@ namespace HashiTaku
 		}
 	}
 
-	void CP_Enemy::OnDamageBehavior(const AttackInformation& _attackInfo,
+	bool CP_Enemy::OnDamageBehavior(const AttackInformation& _attackInfo,
 		const DirectX::SimpleMath::Vector3& _attackerPos)
 	{
-		if (GetIsInvicible()) return;
-
 		// HPを減らす
 		DecadeHp(_attackInfo.GetDamageValue());
 
-		// ヒットストップをする
-		BeginHitStop(_attackInfo.GetHitStopFlame());
+		return true;
 	}
 
 	void CP_Enemy::SetEnemyName(const std::string& _enemyName)

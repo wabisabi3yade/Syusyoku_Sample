@@ -127,9 +127,6 @@ namespace HashiTaku
 		DXSimp::Vector3 moveDis = GetFollowPosition() - pCamController->GetPrevFollowPos();
 		bool isTargetMoving = moveDis.Length() > canFovChangeMovement * deltaTime;
 
-		if (isTargetMoving)
-			HASHI_DEBUG_LOG("aaa");
-
 		float curFov = camera.GetFov();
 
 		// ˆÚ“®—Ê‚É‚æ‚Á‚ÄŽ‹–ìŠp‚ð•Ï‚¦‚é
