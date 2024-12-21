@@ -34,8 +34,8 @@ namespace HashiTaku
 		/// @return Œ^‚ÌŽí—Þ
 		AnimParam::TypeKind GetTypeKind() const;
 
-		virtual nlohmann::json Save() = 0;
-		virtual void Load(const nlohmann::json& _data) = 0;
+		virtual json Save() = 0;
+		virtual void Load(const json& _data) = 0;
 	protected:
 		void ImGuiDebug() override;
 	};

@@ -15,14 +15,14 @@ namespace HashiTaku
 		SetTargetAtEnemy(true);
 	}
 
-	nlohmann::json PlayerTargetMove::Save()
+	json PlayerTargetMove::Save()
 	{
 		auto data = PlayerMoveState::Save();
 
 		return data;
 	}
 
-	void PlayerTargetMove::Load(const nlohmann::json& _data)
+	void PlayerTargetMove::Load(const json& _data)
 	{
 		using namespace HashiTaku;
 		PlayerMoveState::Load(_data);

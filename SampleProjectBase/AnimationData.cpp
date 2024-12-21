@@ -347,7 +347,7 @@ namespace HashiTaku
 		return animationTime_s;
 	}
 
-	nlohmann::json AnimationData::Save()
+	json AnimationData::Save()
 	{
 		auto data = AssetPath_Base::Save();
 

@@ -100,8 +100,8 @@ namespace HashiTaku
 		/// @return アニメーションカーブの値(基本的に0.0～1.0)
 		float GetCurveValue(float _ratio) const;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		// ノードのパラメーター設定
 		void ImGuiSetParameter();

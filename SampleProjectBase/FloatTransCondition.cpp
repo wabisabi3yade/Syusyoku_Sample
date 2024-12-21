@@ -47,15 +47,15 @@ namespace HashiTaku
 		return isAchieve;
 	}
 
-	nlohmann::json FloatTransCondition::Save()
+	json FloatTransCondition::Save()
 	{
-		nlohmann::json data;
+		json data;
 		data["fCompare"] = compareVal;
 		data["fJudgeType"] = judgeType;
 		return data;
 	}
 
-	void FloatTransCondition::Load(const nlohmann::json& _data)
+	void FloatTransCondition::Load(const json& _data)
 	{
 		LoadJsonFloat("fCompare", compareVal, _data);
 		LoadJsonEnum<JudgeType>("fJudgeType", judgeType, _data);

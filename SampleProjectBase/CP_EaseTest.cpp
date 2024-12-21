@@ -69,7 +69,7 @@ namespace HashiTaku
 		Easing::ImGuiSelect(nowEase);
 	}
 
-	nlohmann::json CP_EaseTest::Save()
+	json CP_EaseTest::Save()
 	{
 		auto data = Component::Save();
 
@@ -80,7 +80,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_EaseTest::Load(const nlohmann::json& _data)
+	void CP_EaseTest::Load(const json& _data)
 	{
 		Component::Load(_data);
 

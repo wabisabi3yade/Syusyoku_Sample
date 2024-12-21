@@ -42,8 +42,8 @@ namespace HashiTaku
 		PlayerAttackState();
 		virtual ~PlayerAttackState() {}
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	protected:
 		// State‹¤’Êˆ—
 		void OnStartBehavior() override;

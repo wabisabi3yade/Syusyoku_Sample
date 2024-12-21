@@ -75,10 +75,10 @@ namespace HashiTaku
 		return isChange;
 	}
 
-	template<AssetConcept T> T* LoadJsonAsset(const std::string& _s, const nlohmann::json& _j);
+	template<AssetConcept T> T* LoadJsonAsset(const std::string& _s, const json& _j);
 
 	template<AssetConcept T>
-	T* LoadJsonAsset(const std::string& _s, const nlohmann::json& _j)
+	T* LoadJsonAsset(const std::string& _s, const json& _j)
 	{
 		if (!IsJsonContains(_j, _s)) return nullptr;
 

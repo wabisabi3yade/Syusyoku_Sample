@@ -189,7 +189,7 @@ namespace HashiTaku
 		return *pAttackCollisionFlag;
 	}
 
-	nlohmann::json CP_Player::Save()
+	json CP_Player::Save()
 	{
 		auto data = CP_Character::Save();
 		data["action"] = pAction->Save();
@@ -202,11 +202,11 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_Player::Load(const nlohmann::json& _data)
+	void CP_Player::Load(const json& _data)
 	{
 		CP_Character::Load(_data);
 
-		nlohmann::json actionData;
+		json actionData;
 		if (LoadJsonData("action", actionData, _data))
 			pAction->Load(actionData);
 		LoadJsonString("weaponObjName", weaponObjName, _data);

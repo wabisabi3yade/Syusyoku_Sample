@@ -11,8 +11,8 @@ namespace HashiTaku
 		EnemyActState_Base();
 		virtual ~EnemyActState_Base() {}
 
-		virtual nlohmann::json Save() = 0;
-		virtual void Load(const nlohmann::json& _data) = 0;
+		virtual json Save() = 0;
+		virtual void Load(const json& _data) = 0;
 
 	protected:
 		virtual void ImGuiDebug() = 0;

@@ -23,7 +23,7 @@ namespace HashiTaku
 		return std::make_unique<ANE_ChangeParameter>(*this);
 	}
 
-	nlohmann::json ANE_ChangeParameter::Save()
+	json ANE_ChangeParameter::Save()
 	{
 		auto data = AnimationNotifyEvent::Save();
 
@@ -33,7 +33,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void ANE_ChangeParameter::Load(const nlohmann::json& _data)
+	void ANE_ChangeParameter::Load(const json& _data)
 	{
 		AnimationNotifyEvent::Load(_data);
 

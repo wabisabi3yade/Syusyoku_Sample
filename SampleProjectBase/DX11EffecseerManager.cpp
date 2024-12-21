@@ -176,7 +176,7 @@ namespace HashiTaku
 		return vfxData;
 	}
 
-	void CreateVfxInfo::Load(const nlohmann::json& _data)
+	void CreateVfxInfo::Load(const json& _data)
 	{
 		std::string vfxName;
 		if (LoadJsonString("name", vfxName, _data))

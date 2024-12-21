@@ -8,7 +8,7 @@ namespace HashiTaku
 	{
 	}
 
-	nlohmann::json BossIdleState::Save()
+	json BossIdleState::Save()
 	{
 		auto data = BossActState_Base::Save();
 
@@ -18,7 +18,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void BossIdleState::Load(const nlohmann::json& _data)
+	void BossIdleState::Load(const json& _data)
 	{
 #ifdef EDIT
 		LoadJsonBoolean("isIdleOnly", isIdleOnly, _data);

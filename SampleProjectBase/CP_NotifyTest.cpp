@@ -70,7 +70,7 @@ void CP_NotifyTest::ImGuiDebug()
 	}
 }
 
-nlohmann::json CP_NotifyTest::Save()
+json CP_NotifyTest::Save()
 {
 	auto data = Component::Save();
 
@@ -90,7 +90,7 @@ nlohmann::json CP_NotifyTest::Save()
 	return data;
 }
 
-void CP_NotifyTest::Load(const nlohmann::json& _data)
+void CP_NotifyTest::Load(const json& _data)
 {
 	Component::Load(_data);
 
@@ -101,7 +101,7 @@ void CP_NotifyTest::Load(const nlohmann::json& _data)
 		//auto notify = pFactory->Create(typeName);
 		/*if (notify)
 		{
-			nlohmann::json d; HashiTaku::LoadJsonData("notify", d, nData);
+			json d; HashiTaku::LoadJsonData("notify", d, nData);
 			notify->Load(d);
 			pNotifys.push_back(std::move(notify));
 		}*/

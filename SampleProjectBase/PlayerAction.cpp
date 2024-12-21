@@ -192,9 +192,9 @@ namespace HashiTaku
 		HASHI_DEBUG_LOG("—£—¤");
 	}
 
-	nlohmann::json PlayerAction::Save()
+	json PlayerAction::Save()
 	{
-		nlohmann::json data;
+		json data;
 
 		data["groundCheckName"] = groundCheckerName;
 
@@ -204,11 +204,11 @@ namespace HashiTaku
 		return data;
 	}
 
-	void PlayerAction::Load(const nlohmann::json& _data)
+	void PlayerAction::Load(const json& _data)
 	{
 		LoadJsonString("groundCheckName", groundCheckerName, _data);
 
-		nlohmann::json loadData;
+		json loadData;
 		if (LoadJsonData("ground", loadData, _data))
 		{
 			pGroundController->Load(loadData);

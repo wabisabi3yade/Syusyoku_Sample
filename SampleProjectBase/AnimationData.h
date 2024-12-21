@@ -158,6 +158,6 @@ namespace HashiTaku
 
 		/// @brief セーブ
 		/// @return データ
-		nlohmann::json Save() override;
+		json Save() override;
 	};
 }

@@ -41,8 +41,8 @@ namespace HashiTaku
 		/// @param _toAnimNodeName 遷移先のアニメーションノード名
 		void OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName) override;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	protected:
 		/// @brief 向きを更新する
 		void RotateUpdate();

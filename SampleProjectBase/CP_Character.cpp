@@ -87,14 +87,14 @@ namespace HashiTaku
 		hsBeforeDeltaTime = 0.0f;
 	}
 
-	nlohmann::json CP_Character::Save()
+	json CP_Character::Save()
 	{
 		auto data = Component::Save();
 		data["maxHp"] = maxHP;
 		return data;
 	}
 
-	void CP_Character::Load(const nlohmann::json& _data)
+	void CP_Character::Load(const json& _data)
 	{
 		Component::Load(_data);
 		LoadJsonFloat("maxHp", maxHP, _data);

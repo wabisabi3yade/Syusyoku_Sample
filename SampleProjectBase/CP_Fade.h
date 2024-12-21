@@ -66,8 +66,8 @@ namespace HashiTaku
 		/// @param _func ŠÖ”
 		void SetOnEndFunction(const std::function<void()>& _func);
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		/// @brief ŠJnˆ—
 		void Awake() override;

@@ -9,6 +9,10 @@ namespace HashiTaku
 	/// @brief カメラ移動クラス
 	class CP_CameraMove : public Component, public IObjectTargeter
 	{
+	public:
+		using CameraState = CameraMoveState_Base::CameraState;
+
+	private:
 		/// @brief カメラの動きを統制するコントローラー
 		std::unique_ptr<CameraMoveController> pMoveController;
 
@@ -31,7 +35,7 @@ namespace HashiTaku
 
 		/// @brief カメラを揺らす
 		/// @param _shakeCamParam カメラ揺れパラメータ
-		void ShakeCamera(const CameraShakeParameter& _shakeCamParam);
+		void ShakeCamera(const PerlinShakeParameter& _shakeCamParam);
 
 		/// @brief 対象とするゲームオブジェクトをセット
 		/// @param _targetTransform 対象のオブジェクト(nullptrで外す)
@@ -45,14 +49,24 @@ namespace HashiTaku
 		/// @param _removeObj 死んだターゲットオブジェクト
 		void RemoveNotify(const ITargetAccepter& _removeObj) override;
 
+		/// @brief カメラのステートを変更する
+		/// @param _nextState 変更先のステート
+		/// @return 変更先のノード
+		CameraMoveState_Base* ChangeState(CameraState _nextState);
+
+		/// @brief ステートを取得する
+		/// @param _getState 取得するステート
+		/// @return ステートクラス(無かったらnullptr)
+		CameraMoveState_Base* GetState(CameraState _getState);
+
 		/// @brief プレイヤー勝利時の処理
 		/// @param _targetTransform 映す対象トランスフォーム
 		void OnPlayerWin(const Transform& _targetTransform);
 
 		virtual void ImGuiDebug() override;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		void Awake() override;
 		void Start() override;

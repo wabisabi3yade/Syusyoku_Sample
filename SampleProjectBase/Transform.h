@@ -124,15 +124,15 @@ namespace HashiTaku
 
 		/// @brief セーブする
 		/// @param _sceneData セーブシーンデータ
-		nlohmann::json Save() override;
+		json Save() override;
 
 		/// @brief ロードする
 		/// @param  _transformData ロードするデータ 
-		void Load(const nlohmann::json& _transformData) override;
+		void Load(const json& _transformData) override;
 
 		/// @brief 親子関係をロードする
 		/// @param  _transformData ロードするデータ 
-		void LoadChildTransform(const nlohmann::json& _transformData);
+		void LoadChildTransform(const json& _transformData);
 
 	private:
 		/// @brief 自身のワールド行列を更新する

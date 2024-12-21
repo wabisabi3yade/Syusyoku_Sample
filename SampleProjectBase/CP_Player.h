@@ -64,8 +64,8 @@ namespace HashiTaku
 		/// @return UŒ‚ƒtƒ‰ƒO
 		bool GetIsAttackFlag() const;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 
 	private:
 		void Awake() override;

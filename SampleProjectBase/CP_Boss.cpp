@@ -42,7 +42,7 @@ namespace HashiTaku
 		return isBreaking;
 	}
 
-	nlohmann::json CP_Boss::Save()
+	json CP_Boss::Save()
 	{
 		auto data = CP_Enemy::Save();
 
@@ -54,7 +54,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_Boss::Load(const nlohmann::json& _data)
+	void CP_Boss::Load(const json& _data)
 	{
 		CP_Enemy::Load(_data);
 
@@ -62,7 +62,7 @@ namespace HashiTaku
 		LoadJsonString("hpBarName", hpBarObjName, _data);
 		LoadJsonString("breakBarName", breakBarObjName, _data);
 
-		nlohmann::json actionControllerData;
+		json actionControllerData;
 		if (LoadJsonData("actionController", actionControllerData, _data))
 			pActionController->Load(actionControllerData);
 	}

@@ -54,8 +54,8 @@ namespace HashiTaku
 		/// @brief  終了処理呼び出し
 		void OnEnd() override;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	protected:
 		/// @brief 各状態の開始処理
 		virtual void OnStartBehavior() {};

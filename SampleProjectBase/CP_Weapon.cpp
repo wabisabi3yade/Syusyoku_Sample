@@ -75,7 +75,7 @@ namespace HashiTaku
 		attackedRbs.clear();
 	}
 
-	nlohmann::json CP_Weapon::Save()
+	json CP_Weapon::Save()
 	{
 		auto data = Component::Save();
 
@@ -91,13 +91,13 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_Weapon::Load(const nlohmann::json& _data)
+	void CP_Weapon::Load(const json& _data)
 	{
 		using namespace HashiTaku;
 
 		Component::Load(_data);
 
-		nlohmann::json attackTagDatas;
+		json attackTagDatas;
 		if (LoadJsonDataArray("attackableTags", attackTagDatas, _data))
 		{
 			for (auto& tagData : attackTagDatas)

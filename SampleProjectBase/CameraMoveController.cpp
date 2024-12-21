@@ -3,23 +3,21 @@
 #include "GameObject.h"
 
 #include "CameraOnMoveState.h"
+#include "CameraChargeAttack.h"
 #include "CameraGameOverState.h"
 
 namespace HashiTaku
 {
-	constexpr float MAX_RAND_PERLINOFFSET(50.0f); // パーリンノイズのオフセット値の最大値
-
 	CameraMoveController::CameraMoveController() :
 		StateMachine_Base("CameraMove"),
 		pFollowTransform(nullptr),
-		pLookAtTransform(nullptr),
-		shakeElapsedTime(0.0f),
-		isShaking(false)
+		pLookAtTransform(nullptr)
 	{
 		using enum CameraState;
 
 		// ステートを作成
 		CreateState<CameraOnMoveState>(Move);
+		CreateState<CameraChargeAttack>(Charge);
 		CreateState<CameraGameOverState>(Win);
 		CreateState<CameraGameOverState>(Lose);
 
@@ -54,80 +52,9 @@ namespace HashiTaku
 
 	void CameraMoveController::ShakeUpdate()
 	{
-		if (!isShaking) return;
-
-		/// 経過時間を加算
-		shakeElapsedTime += GetCamera().DeltaTime();
-
-		// オフセット値を求める
-		CalcShakeOffset();
-
-		// 全体時間を過ぎたら終わる
-		if (shakeElapsedTime > curShakeParameter.time)
-			OnEndShake();
-	}
-
-	void CameraMoveController::CalcShakeOffset()
-	{
-		float speed = curShakeParameter.speed;
-
-		// 時間経過でフェードアウトさせるフェードアウト割合を求める
-		float fadeOutRatio = 1.0f;
-		if (curShakeParameter.isFadeOut)
-		{
-			fadeOutRatio -= std::clamp(shakeElapsedTime / curShakeParameter.time, 0.0f, 1.0f);
-		}
-
-		// X軸
-		if (curShakeParameter.shakeVec.x > Mathf::epsilon)
-		{
-			// パーリンノイズから取得
-			curShakeOffsetPos.x = static_cast<float>(Random::GetPerlinNoise(static_cast<double>(
-				randPerlinOffset.x * speed * shakeElapsedTime
-				)));
-			curShakeOffsetPos.x -= 0.5f;
-			curShakeOffsetPos.x *= 2.0f;
-			
-			HASHI_DEBUG_LOG(std::to_string(curShakeOffsetPos.x));
-
-			// 揺れの力の倍率を求める
-			curShakeOffsetPos.x *= curShakeParameter.power * fadeOutRatio;
-
-			// ベクトルの大きさも掛ける
-			curShakeOffsetPos.x *= curShakeParameter.shakeVec.x;
-		}
-		// Y軸
-		if (curShakeParameter.shakeVec.y > Mathf::epsilon)
-		{
-			// パーリンノイズから取得
-			curShakeOffsetPos.y = static_cast<float>(Random::GetPerlinNoise(static_cast<double>(
-				randPerlinOffset.y * speed * shakeElapsedTime
-				)));
-			curShakeOffsetPos.y -= 0.5f;
-			curShakeOffsetPos.y *= 2.0f;
-
-			// 揺れの力の倍率を求める
-			curShakeOffsetPos.y *= curShakeParameter.power * fadeOutRatio;
-
-			// ベクトルの大きさも掛ける
-			curShakeOffsetPos.y *= curShakeParameter.shakeVec.y;
-		}
-		// Z軸
-		if (curShakeParameter.shakeVec.z > Mathf::epsilon)
-		{
-			// パーリンノイズから取得
-			curShakeOffsetPos.z= static_cast<float>(Random::GetPerlinNoise(static_cast<double>(
-				randPerlinOffset.z * speed * shakeElapsedTime
-				)));
-			curShakeOffsetPos.z -= 0.5f;
-			curShakeOffsetPos.z *= 2.0f;
-
-			// 揺れの力の倍率を求める
-			curShakeOffsetPos.z *= curShakeParameter.power * fadeOutRatio;
-
-			// ベクトルの大きさも掛ける
-			curShakeOffsetPos.z *= curShakeParameter.shakeVec.z;
-		}
+		// パーリンノイズでシェイクするオフセット値を求める
+		perlinShake.CalcurateVector(pCamera->DeltaTime(),
+			curShakeOffsetPos);
 	}
 
 	void CameraMoveController::UpdateFinalPos()
@@ -136,7 +63,7 @@ namespace HashiTaku
 
 		// カメラの向きを考慮したワールド空間の揺れを求める
 		DXSimp::Vector3 worldShakeOffset;
-		if (isShaking)
+		if (perlinShake.GetIsShaking())
 		{
 			worldShakeOffset = camTransform.Right() * curShakeOffsetPos.x +
 				camTransform.Up() * curShakeOffsetPos.y +
@@ -150,6 +77,11 @@ namespace HashiTaku
 	void CameraMoveController::ChangeState(CameraMoveState_Base::CameraState _cameraState, bool _isForce)
 	{
 		ChangeNode(_cameraState, _isForce);
+	}
+
+	void CameraMoveController::BeginShake(const PerlinShakeParameter& _shakeParam)
+	{
+		perlinShake.BeginShake(_shakeParam);
 	}
 
 	void CameraMoveController::SetFollowTransform(const Transform* _pTransform)
@@ -169,37 +101,11 @@ namespace HashiTaku
 
 	void CameraMoveController::SetFov(float _setDegree)
 	{
+#ifdef EDIT
+		if (!pCamera) return;
+#endif // EDIT
+
 		pCamera->SetFov(_setDegree);
-	}
-
-	void CameraMoveController::BeginShake(const DXSimp::Vector3& _vector, 
-		float _power, 
-		float _time, 
-		float _speed,
-		bool _isFadeOut)
-	{
-		isShaking = true;
-		shakeElapsedTime = 0.0f;
-
-		curShakeParameter.isFadeOut = _isFadeOut;
-		curShakeParameter.power = _power;
-		curShakeParameter.time = _time;
-		curShakeParameter.speed = _speed;
-		curShakeParameter.shakeVec = _vector;
-
-		// 乱数でパーリンノイズのオフセット値を決める
-		randPerlinOffset.x = Random::Range<float>(0.0f, MAX_RAND_PERLINOFFSET);
-		randPerlinOffset.y = Random::Range<float>(0.0f, MAX_RAND_PERLINOFFSET);
-		randPerlinOffset.z = Random::Range<float>(0.0f, MAX_RAND_PERLINOFFSET);
-	}
-
-	void CameraMoveController::BeginShake(const CameraShakeParameter& _shakeParam)
-	{
-		BeginShake(_shakeParam.shakeVec,
-			_shakeParam.power,
-			_shakeParam.time,
-			_shakeParam.speed,
-			_shakeParam.isFadeOut);
 	}
 
 	void CameraMoveController::OnPlayerWin(const Transform& _targetTransform)
@@ -259,15 +165,15 @@ namespace HashiTaku
 		return pLookAtTransform->GetWorldPos();
 	}
 
-	nlohmann::json CameraMoveController::Save()
+	json CameraMoveController::Save()
 	{
-		nlohmann::json data;
+		json data;
 
 		// 各状態をセーブ
 		auto& stateDatas = data["stateDatas"];
 		for (auto& state : stateNodeList)
 		{
-			nlohmann::json stateData;
+			json stateData;
 
 			CameraMoveState_Base& camState = CastCamState(*state.second);
 
@@ -279,7 +185,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CameraMoveController::Load(const nlohmann::json& _data)
+	void CameraMoveController::Load(const json& _data)
 	{
 		LoadStates(_data);
 	}
@@ -302,17 +208,9 @@ namespace HashiTaku
 		}
 	}
 
-	void CameraMoveController::OnEndShake()
-	{
-		isShaking = false;
-		curShakeOffsetPos = DXSimp::Vector3::Zero;
-	}
-
 	std::string CameraMoveController::GetStateName(CameraMoveState_Base::CameraState _state)
 	{
-		return 	std::string(
-			magic_enum::enum_name<CameraMoveState_Base::CameraState>(_state)
-		);
+		return 	std::string(magic_enum::enum_name(_state));
 	}
 
 	CameraMoveState_Base& CameraMoveController::CastCamState(StateNode_Base& _stateBase)
@@ -322,10 +220,10 @@ namespace HashiTaku
 
 	void CameraMoveController::ImGuiDebug()
 	{
-		ImGuiShakeDebug();
+		//ImGuiShakeDebug();
 
 		// 現在のステート名
-		std::string curStateName = "current" + GetStateName(currentStateKey);
+		std::string curStateName = "current:" + GetStateName(currentStateKey);
 		ImGui::Text(curStateName.c_str());
 
 		// 各ステート編集
@@ -344,21 +242,9 @@ namespace HashiTaku
 		}
 	}
 
-	void CameraMoveController::ImGuiShakeDebug()
+	void CameraMoveController::LoadStates(const json& _data)
 	{
-#ifdef EDIT
-		if (ImGui::Button("Test Shake"))
-			BeginShake(debugShakeParam);
-
-		debugShakeParam.ImGuiCall();
-
-		if (!isShaking) return;
-#endif // EDIT
-	}
-
-	void CameraMoveController::LoadStates(const nlohmann::json& _data)
-	{
-		nlohmann::json stateDatas;
+		json stateDatas;
 		// ステートのデータがないなら
 		if (!LoadJsonDataArray("stateDatas", stateDatas, _data)) return;
 
@@ -375,7 +261,7 @@ namespace HashiTaku
 			if (!stateNodeList.contains(loadState)) continue;
 
 			// パラメータのデータがないなら
-			nlohmann::json paramData;
+			json paramData;
 			if (!LoadJsonData("parameter", paramData, stateData))
 				continue;
 

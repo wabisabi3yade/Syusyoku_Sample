@@ -122,7 +122,7 @@ namespace HashiTaku
 		pDistanceCurve->ImGuiCall();
 	}
 
-	nlohmann::json PlayerRollingMove::Save()
+	json PlayerRollingMove::Save()
 	{
 		auto data = PlayerGroundState::Save();
 
@@ -133,7 +133,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void PlayerRollingMove::Load(const nlohmann::json& _data)
+	void PlayerRollingMove::Load(const json& _data)
 	{
 		using namespace HashiTaku;
 
@@ -142,7 +142,7 @@ namespace HashiTaku
 		LoadJsonFloat("rollingDistance", rollingDistance, _data);
 		LoadJsonFloat("invicibleTime", invicibleTime, _data);
 
-		nlohmann::json speedCurveData;
+		json speedCurveData;
 		if (LoadJsonData("speedCurve", speedCurveData, _data))
 		{
 			pDistanceCurve->Load(speedCurveData);

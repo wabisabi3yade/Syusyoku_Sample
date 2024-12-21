@@ -155,7 +155,7 @@ namespace HashiTaku
 		return &itr->second;
 	}
 
-	nlohmann::json AnimationController::Save()
+	json AnimationController::Save()
 	{
 		auto data = Asset_Base::Save();
 		data["playSpeed"] = playSpeed;
@@ -163,7 +163,7 @@ namespace HashiTaku
 		if (pAssetBoneList)
 			data["boneList"] = pAssetBoneList->GetAssetName();
 
-		nlohmann::json nodeInfoData;
+		json nodeInfoData;
 		for (auto& nodeInfo : animNodeInfos)
 		{
 			nodeInfoData.push_back(SaveNodeInfo(*nodeInfo));
@@ -179,7 +179,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void AnimationController::Load(const nlohmann::json& _data)
+	void AnimationController::Load(const json& _data)
 	{
 		Asset_Base::Load(_data);
 		LoadJsonFloat("playSpeed", playSpeed, _data);
@@ -193,7 +193,7 @@ namespace HashiTaku
 
 
 		// パラメーター
-		nlohmann::json loadData;
+		json loadData;
 		if (LoadJsonDataArray("animParameter", loadData, _data))
 		{
 			pAnimParameters->Load(loadData);
@@ -358,9 +358,9 @@ namespace HashiTaku
 		}
 	}
 
-	nlohmann::json AnimationController::SaveNodeInfo(AnimNodeInfo& _nodeInfo)
+	json AnimationController::SaveNodeInfo(AnimNodeInfo& _nodeInfo)
 	{
-		nlohmann::json nodeInfoData;
+		json nodeInfoData;
 		nodeInfoData["nodeName"] = _nodeInfo.pAnimNode->GetNodeName();
 		nodeInfoData["nodeType"] = _nodeInfo.pAnimNode->GetNodeType();
 		nodeInfoData["animNode"] = _nodeInfo.pAnimNode->Save();
@@ -370,7 +370,7 @@ namespace HashiTaku
 		auto& notifyDataList = nodeInfoData["notifyList"];
 		for (auto& pNotify : _nodeInfo.notifyList)
 		{
-			nlohmann::json notifyData;
+			json notifyData;
 			notifyData["notifyParam"] = pNotify->Save();
 			notifyData["notifyType"] = pNotify->GetNotifyType();
 			notifyDataList.push_back(notifyData);
@@ -380,7 +380,7 @@ namespace HashiTaku
 		auto& arrowDataList = nodeInfoData["arrowDataList"];
 		for (auto& pArrow : _nodeInfo.transitionArrows)
 		{
-			nlohmann::json arrowData;
+			json arrowData;
 			arrowData["arrowParam"] = pArrow->Save();
 			arrowData["toName"] = pArrow->GetToNode().GetNodeName();
 			arrowDataList.push_back(arrowData);
@@ -389,18 +389,18 @@ namespace HashiTaku
 		return nodeInfoData;
 	}
 
-	nlohmann::json AnimationController::SaveGroupArrows()
+	json AnimationController::SaveGroupArrows()
 	{
-		nlohmann::json groupDatas;
+		json groupDatas;
 		for (auto& group : groupArrows)
 		{
-			nlohmann::json groupData;
+			json groupData;
 			groupData["name"] = group.first;	// 名前
 
 			auto& arrowDatas = groupData["arrows"];
 			for (auto& arrow : group.second)
 			{
-				nlohmann::json arrowData;
+				json arrowData;
 				arrowData["toNode"] = arrow->GetToNode().GetNodeName();
 				arrowData["param"] = arrow->Save();
 				arrowDatas.push_back(arrowData);	// 矢印のデータ
@@ -412,7 +412,7 @@ namespace HashiTaku
 		return groupDatas;
 	}
 
-	void AnimationController::LoadNodeInfo(const nlohmann::json& _nodeInfoData)
+	void AnimationController::LoadNodeInfo(const json& _nodeInfoData)
 	{
 		std::string nodeName;	// ノード名
 		LoadJsonString("nodeName", nodeName, _nodeInfoData);
@@ -424,15 +424,15 @@ namespace HashiTaku
 		// グループ遷移矢印名
 		LoadJsonString("groupArrowName", pCreateNodeInfo->groupArrowsName, _nodeInfoData);
 
-		nlohmann::json nodeData;	// ノード種ごとのロード
+		json nodeData;	// ノード種ごとのロード
 		LoadJsonData("animNode", nodeData, _nodeInfoData);
 		pCreateNodeInfo->pAnimNode->Load(nodeData);
 	}
 
-	void AnimationController::LoadNotify(const nlohmann::json& _nodeInfoData)
+	void AnimationController::LoadNotify(const json& _nodeInfoData)
 	{
 		// 通知イベントリストを取得
-		nlohmann::json notifyDataList;
+		json notifyDataList;
 		if (!LoadJsonDataArray("notifyList", notifyDataList, _nodeInfoData))
 			return;
 
@@ -452,7 +452,7 @@ namespace HashiTaku
 				continue;
 
 			// 通知イベントのパラメータ
-			nlohmann::json notifyParamData;
+			json notifyParamData;
 			if (!LoadJsonData("notifyParam", notifyParamData, notifyData))
 				continue;
 
@@ -468,10 +468,10 @@ namespace HashiTaku
 		}
 	}
 
-	void AnimationController::LoadTransArrow(const nlohmann::json& _nodeInfoData)
+	void AnimationController::LoadTransArrow(const json& _nodeInfoData)
 	{
 		// 矢印作成
-		nlohmann::json arrowDataList;
+		json arrowDataList;
 		LoadJsonDataArray("arrowDataList", arrowDataList, _nodeInfoData);
 		for (auto& arrowData : arrowDataList)
 		{
@@ -484,7 +484,7 @@ namespace HashiTaku
 			// 矢印を作成
 			if (AnimTransitionArrow* pTransArrow = CreateTransitionArrow(fromName, toNodeName))
 			{
-				nlohmann::json arrowParamData;	// 矢印のパラメータ
+				json arrowParamData;	// 矢印のパラメータ
 				if (LoadJsonData("arrowParam", arrowParamData, arrowData))
 					pTransArrow->Load(arrowParamData);
 			}
@@ -575,7 +575,7 @@ namespace HashiTaku
 		return _a1->pAnimNode->GetNodeName() < _a2->pAnimNode->GetNodeName();
 	}
 
-	void AnimationController::LoadGroupArrow(const nlohmann::json& _groupArrowData)
+	void AnimationController::LoadGroupArrow(const json& _groupArrowData)
 	{
 		for (auto& groupData : _groupArrowData)
 		{
@@ -585,7 +585,7 @@ namespace HashiTaku
 			TransArrowList* pTransArrow = CreateGroupArrows(groupName);
 			if (!pTransArrow) continue;	// 作成失敗したなら
 
-			nlohmann::json arrowDatas;
+			json arrowDatas;
 			if (!LoadJsonDataArray("arrows", arrowDatas, groupData)) continue;
 
 			for (auto& arrowData : arrowDatas)	// 矢印
@@ -601,7 +601,7 @@ namespace HashiTaku
 					std::make_unique<AnimTransitionArrow>(*pToNodeInfo->pAnimNode, *pAnimParameters);
 
 				// パラメータ
-				nlohmann::json paramData;
+				json paramData;
 				if (!LoadJsonData("param", paramData, arrowData)) continue;
 				pCreateArrow->Load(paramData);
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "CameraShakeParameter.h"
+#include "PerlinShakeParameter.h"
 
 namespace HashiTaku
 {
@@ -23,7 +23,7 @@ namespace HashiTaku
 		CreateVfxInfo hitVfxInfo;
 
 		/// @brief カメラを揺らすパラメータ
-		CameraShakeParameter pCamShakeParam;
+		PerlinShakeParameter pCamShakeParam;
 
 		/// @brief 攻撃時のダメージ
 		float atkDamage;
@@ -58,7 +58,7 @@ namespace HashiTaku
 
 		/// @brief カメラを揺らすパラメータを取得
 		/// @return カメラを揺らすパラメータ
-		const CameraShakeParameter& GetCamShakeParam() const;
+		const PerlinShakeParameter& GetCamShakeParam() const;
 
 		/// @brief ダメージ値を取得
 		/// @return ダメージ値
@@ -76,8 +76,8 @@ namespace HashiTaku
 		/// @return カメラ揺らす？
 		bool GetIsShake() const;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	protected:
 		void ImGuiDebug() override;
 	private:

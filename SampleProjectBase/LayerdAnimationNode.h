@@ -79,8 +79,8 @@ namespace HashiTaku
 		/// @return ルートモーション秒速
 		const DirectX::SimpleMath::Vector3& GetRootMotionPerSpeed() const;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		/// @brief 機能できているか確認する
 		/// @return 機能できているか？

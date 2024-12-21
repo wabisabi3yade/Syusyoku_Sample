@@ -56,11 +56,11 @@ namespace HashiTaku
 
 		/// @brief セーブする
 		/// @param _data セーブシーンデータ
-		nlohmann::json Save() override;
+		json Save() override;
 
 		/// @brief ロードする
 		/// @param _data ロードするシーンデータ 
-		void Load(const nlohmann::json& _data) override;
+		void Load(const json& _data) override;
 	private:
 		/// @brief マテリアルのセットアップ
 		void MaterialSetting();
@@ -85,8 +85,8 @@ namespace HashiTaku
 		/// @brief テクスチャをセーブする
 		/// @param _data 保存するデータ先
 		/// @param _kind 面の種類
-		void SaveTexture(nlohmann::json& _data, FaceKind _kind);
+		void SaveTexture(json& _data, FaceKind _kind);
 
-		void LoadTexture(const nlohmann::json& _data, FaceKind _kind);
+		void LoadTexture(const json& _data, FaceKind _kind);
 	};
 }

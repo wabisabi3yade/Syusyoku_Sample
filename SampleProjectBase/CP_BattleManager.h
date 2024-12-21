@@ -126,8 +126,8 @@ namespace HashiTaku
 		/// @brief ƒvƒŒƒCƒ„[‚ª•‰‚¯‚½‚Æ‚«‚Ìˆ—
 		void OnPlayerLose();
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		void Start() override;
 		void Update() override;

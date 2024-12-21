@@ -36,12 +36,12 @@ namespace HashiTaku
 		OnEndBehavior();
 	}
 
-	nlohmann::json PlayerGroundState::Save()
+	json PlayerGroundState::Save()
 	{
 		return PlayerActState_Base::Save();
 	}
 
-	void PlayerGroundState::Load(const nlohmann::json& _data)
+	void PlayerGroundState::Load(const json& _data)
 	{
 		PlayerActState_Base::Load(_data);
 	}

@@ -261,7 +261,7 @@ namespace HashiTaku
 #endif EDIT
 	}
 
-	nlohmann::json PlayerAttackState::Save()
+	json PlayerAttackState::Save()
 	{
 		auto data = PlayerGroundState::Save();
 
@@ -281,7 +281,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void PlayerAttackState::Load(const nlohmann::json& _data)
+	void PlayerAttackState::Load(const json& _data)
 	{
 		using namespace HashiTaku;
 		PlayerGroundState::Load(_data);
@@ -295,7 +295,7 @@ namespace HashiTaku
 			SetAttackTimes(attackTimeCnt);
 
 		// UŒ‚î•ñ‚ğƒ[ƒh
-		nlohmann::json attackDatas;
+		json attackDatas;
 		if (LoadJsonDataArray("attackInfos", attackDatas, _data))
 		{
 			u_int arrayIdx = 0;
@@ -307,7 +307,7 @@ namespace HashiTaku
 			}
 		}
 
-		nlohmann::json loadData;
+		json loadData;
 		if (LoadJsonData("forwardCurve", loadData, _data))
 		{
 			progressDistanceCurve.Load(loadData);

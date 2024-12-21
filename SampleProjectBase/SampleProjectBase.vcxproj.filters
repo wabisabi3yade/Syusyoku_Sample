@@ -117,9 +117,6 @@
     <Filter Include="ソース ファイル\System\Json">
       <UniqueIdentifier>{0e2f16b8-5e83-4119-867e-087426684a3a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\System\Json\SaveJsonValue">
-      <UniqueIdentifier>{c5ddcc57-61e7-4c28-8254-6882c301f71c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\System\Json\Save">
       <UniqueIdentifier>{e8e81301-115a-4a0a-93dd-3fa9d701854e}</UniqueIdentifier>
     </Filter>
@@ -883,7 +880,10 @@
     <Filter Include="ソース ファイル\System\PerlinNoise">
       <UniqueIdentifier>{c44c6e00-3b85-4309-9240-e40186f31588}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\InGame\Camera\CameraShake">
+    <Filter Include="ソース ファイル\InGame\PerlinShake">
+      <UniqueIdentifier>{e88f1067-4010-4bb8-8864-3da5c1eb5fad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\PerlinShake\Parameter">
       <UniqueIdentifier>{31fc32ed-0e12-4670-92df-0eb43422b2da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -1051,9 +1051,6 @@
     </ClCompile>
     <ClCompile Include="SaveJson.cpp">
       <Filter>ソース ファイル\System\Json\Save</Filter>
-    </ClCompile>
-    <ClCompile Include="SaveJsonValue.cpp">
-      <Filter>ソース ファイル\System\Json\SaveJsonValue</Filter>
     </ClCompile>
     <ClCompile Include="SF_GameObject.cpp">
       <Filter>ソース ファイル\Scene\SceneFunction\GameObject</Filter>
@@ -1622,8 +1619,14 @@
     <ClCompile Include="PerlinNoise.cpp">
       <Filter>ソース ファイル\System\PerlinNoise</Filter>
     </ClCompile>
-    <ClCompile Include="CameraShakeParameter.cpp">
-      <Filter>ソース ファイル\Component\InGame\Camera\CameraShake</Filter>
+    <ClCompile Include="PerlinShakeParameter.cpp">
+      <Filter>ソース ファイル\InGame\PerlinShake\Parameter</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraChargeAttack.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CalcPerlinShakeVector.cpp">
+      <Filter>ソース ファイル\InGame\PerlinShake</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1737,9 +1740,6 @@
     </ClInclude>
     <ClInclude Include="GameKey.h">
       <Filter>ソース ファイル\System\Application\Input\Keyboard</Filter>
-    </ClInclude>
-    <ClInclude Include="SaveJsonValue.h">
-      <Filter>ソース ファイル\System\Json\SaveJsonValue</Filter>
     </ClInclude>
     <ClInclude Include="SaveJson.h">
       <Filter>ソース ファイル\System\Json\Save</Filter>
@@ -2410,8 +2410,14 @@
     <ClInclude Include="PerlinNoise.h">
       <Filter>ソース ファイル\System\PerlinNoise</Filter>
     </ClInclude>
-    <ClInclude Include="CameraShakeParameter.h">
-      <Filter>ソース ファイル\Component\InGame\Camera\CameraShake</Filter>
+    <ClInclude Include="PerlinShakeParameter.h">
+      <Filter>ソース ファイル\InGame\PerlinShake\Parameter</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraChargeAttack.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CalcPerlinShakeVector.h">
+      <Filter>ソース ファイル\InGame\PerlinShake</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

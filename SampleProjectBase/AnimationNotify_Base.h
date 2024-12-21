@@ -95,8 +95,8 @@ namespace HashiTaku
 		/// @return 生成した通知イベント
 		virtual std::unique_ptr<AnimationNotify_Base> Clone() = 0;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 
 	protected:
 		/// @brief 始まったときの開始処理

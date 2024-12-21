@@ -11,7 +11,7 @@ namespace HashiTaku
 
 	}
 
-	nlohmann::json CameraTargetMove::Save()
+	json CameraTargetMove::Save()
 	{
 		auto data = CameraMoveState_Base::Save();
 
@@ -26,7 +26,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CameraTargetMove::Load(const nlohmann::json& _data)
+	void CameraTargetMove::Load(const json& _data)
 	{
 		CameraMoveState_Base::Load(_data);
 

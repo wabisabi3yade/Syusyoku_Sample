@@ -508,9 +508,9 @@ namespace HashiTaku
 #endif // EDIT
 	}
 
-	nlohmann::json AnimationCurve::Save()
+	json AnimationCurve::Save()
 	{
-		nlohmann::json data;
+		json data;
 
 		data["easeKind"] = easeKind;
 		data["useHermite"] = isUsePlot;
@@ -518,7 +518,7 @@ namespace HashiTaku
 		auto& plotDatas = data["plotDatas"];
 		for (const auto& plot : plotPoints)
 		{
-			nlohmann::json plotData;
+			json plotData;
 
 			// 始点と終点
 			if (&plot == &*plotPoints.begin())
@@ -547,7 +547,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void AnimationCurve::Load(const nlohmann::json& _data)
+	void AnimationCurve::Load(const json& _data)
 	{
 		using namespace HashiTaku;
 		EaseKind loadEase = EaseKind::Linear;
@@ -556,7 +556,7 @@ namespace HashiTaku
 
 		LoadJsonBoolean("useHermite", isUsePlot, _data);
 
-		nlohmann::json plotDatas;
+		json plotDatas;
 		if (LoadJsonDataArray("plotDatas", plotDatas, _data))
 		{
 			for (auto& plotData : plotDatas)

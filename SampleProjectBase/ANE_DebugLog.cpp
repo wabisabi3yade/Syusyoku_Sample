@@ -27,14 +27,14 @@ namespace HashiTaku
 		return std::make_unique<ANE_DebugLog>(*this);
 	}
 
-	nlohmann::json ANE_DebugLog::Save()
+	json ANE_DebugLog::Save()
 	{
 		auto data = AnimationNotifyEvent::Save();
 		data["message"] = displayMessage;
 		return data;
 	}
 
-	void ANE_DebugLog::Load(const nlohmann::json& _data)
+	void ANE_DebugLog::Load(const json& _data)
 	{
 		AnimationNotifyEvent::Load(_data);
 		LoadJsonString("message", displayMessage, _data);

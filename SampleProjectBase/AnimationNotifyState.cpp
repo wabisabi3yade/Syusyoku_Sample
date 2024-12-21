@@ -58,7 +58,7 @@ namespace HashiTaku
 		endEventRatio = std::clamp(_endRatio, startEventRatio, 1.0f);
 	}
 
-	nlohmann::json AnimationNotifyState::Save()
+	json AnimationNotifyState::Save()
 	{
 		bool isUseFrame = UseFrame();
 		auto data = AnimationNotify_Base::Save();
@@ -78,7 +78,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void AnimationNotifyState::Load(const nlohmann::json& _data)
+	void AnimationNotifyState::Load(const json& _data)
 	{
 		AnimationNotify_Base::Load(_data);
 

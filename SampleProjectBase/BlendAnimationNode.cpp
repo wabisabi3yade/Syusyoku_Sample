@@ -38,7 +38,7 @@ namespace HashiTaku
 		return axisParameters[_axisIdx].targetParamName;
 	}
 
-	nlohmann::json BlendAnimationNode::Save()
+	json BlendAnimationNode::Save()
 	{
 		auto data = AnimationNode_Base::Save();
 
@@ -55,13 +55,13 @@ namespace HashiTaku
 		return data;
 	}
 
-	void BlendAnimationNode::Load(const nlohmann::json& _data)
+	void BlendAnimationNode::Load(const json& _data)
 	{
 		AnimationNode_Base::Load(_data);
 
 		LoadJsonBoolean("useBlend", isUseBlend, _data);
 
-		nlohmann::json blendSaveDatas;
+		json blendSaveDatas;
 		if (LoadJsonDataArray("axisParam", blendSaveDatas, _data))
 			for (auto& d : blendSaveDatas)	// 軸パラメータをロードする
 				LoadAxisParameter(d);
@@ -368,9 +368,9 @@ namespace HashiTaku
 #endif // EDIT
 	}
 
-	nlohmann::json BlendAnimationNode::SaveAxisParameter(const AxisParameter& _axisParam)
+	json BlendAnimationNode::SaveAxisParameter(const AxisParameter& _axisParam)
 	{
-		nlohmann::json saveData;
+		json saveData;
 
 		saveData["name"] = _axisParam.targetParamName;
 		saveData["time"] = _axisParam.blendMoveTime;
@@ -379,15 +379,15 @@ namespace HashiTaku
 		return saveData;
 	}
 
-	nlohmann::json BlendAnimationNode::SaveBlendPoint(const AnimPointData& _blendPoint)
+	json BlendAnimationNode::SaveBlendPoint(const AnimPointData& _blendPoint)
 	{
-		nlohmann::json saveData;
+		json saveData;
 		saveData["animName"] = _blendPoint.pAnimation->GetAssetName();
 		SaveJsonVector2("blendValue", _blendPoint.blendValue, saveData);
 		return saveData;
 	}
 
-	void BlendAnimationNode::LoadAxisParameter(const nlohmann::json& _blendData)
+	void BlendAnimationNode::LoadAxisParameter(const json& _blendData)
 	{
 		AxisParameter create;
 		LoadJsonString("name", create.targetParamName, _blendData);
@@ -397,7 +397,7 @@ namespace HashiTaku
 		axisParameters.push_back(create);
 	}
 
-	void BlendAnimationNode::LoadBlendPoint(const nlohmann::json& _blendData)
+	void BlendAnimationNode::LoadBlendPoint(const json& _blendData)
 	{
 		AnimPointData loadBlend;
 

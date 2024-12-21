@@ -47,7 +47,7 @@ namespace HashiTaku
 	void EditScene::SceneSave()
 	{
 		// シーンデータ
-		nlohmann::json sceneData;
+		json sceneData;
 
 		// シーン内オブジェクトをセーブ
 		SceneObjects& sceneObj = pInSceneSystem->GetSceneObjects();

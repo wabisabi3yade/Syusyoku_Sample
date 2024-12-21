@@ -114,15 +114,15 @@ namespace HashiTaku
 		return animFrameCnt != DONT_USE_FRAME_CNT;
 	}
 
-	nlohmann::json AnimationNotify_Base::Save()
+	json AnimationNotify_Base::Save()
 	{
-		nlohmann::json data;
+		json data;
 		data["isActive"] = isActive;
 		data["notifyName"] = notifyName;
 		return data;
 	}
 
-	void AnimationNotify_Base::Load(const nlohmann::json& _data)
+	void AnimationNotify_Base::Load(const json& _data)
 	{
 		LoadJsonBoolean("isActive", isActive, _data);
 		LoadJsonString("notifyName", notifyName, _data);

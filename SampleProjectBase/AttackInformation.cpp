@@ -2,7 +2,6 @@
 #include "AttackInformation.h"
 #include "AssetGetter.h"
 #include "VisualEffect.h"
-#include "CameraShakeParameter.h"
 
 namespace HashiTaku
 {
@@ -33,7 +32,7 @@ namespace HashiTaku
 		return hitVfxInfo;
 	}
 
-	const CameraShakeParameter& AttackInformation::GetCamShakeParam() const
+	const PerlinShakeParameter& AttackInformation::GetCamShakeParam() const
 	{
 		return pCamShakeParam;
 	}
@@ -58,9 +57,9 @@ namespace HashiTaku
 		return isCamShake;
 	}
 
-	nlohmann::json AttackInformation::Save()
+	json AttackInformation::Save()
 	{
-		nlohmann::json data;
+		json data;
 
 		data["hitVfx"] = hitVfxInfo.Save();
 		data["isCamShake"] = isCamShake;
@@ -72,9 +71,9 @@ namespace HashiTaku
 		return data;
 	}
 
-	void AttackInformation::Load(const nlohmann::json& _data)
+	void AttackInformation::Load(const json& _data)
 	{
-		nlohmann::json loadData;
+		json loadData;
 		if (LoadJsonData("hitVfx", loadData, _data))
 		{
 			hitVfxInfo.Load(loadData);

@@ -121,8 +121,8 @@ namespace HashiTaku
 		/// @param _outData ブレンドデータリスト
 		void FindBlendPairTwoAxis(DirectX::SimpleMath::Vector2 _blendValues, std::vector<BlendingData>& _outData) const;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		/// @brief ブレンド値とポイントのブレンド値との距離を昇順から並べる
 		/// @param _a A
@@ -161,15 +161,15 @@ namespace HashiTaku
 		void ImGuiChangeTargetParam();
 
 		// ブレンドデータをセーブする
-		nlohmann::json SaveAxisParameter(const AxisParameter& _axisParam);
+		json SaveAxisParameter(const AxisParameter& _axisParam);
 
 		// 軸パラメータをセーブする
-		nlohmann::json SaveBlendPoint(const AnimPointData& _blendPoint);
+		json SaveBlendPoint(const AnimPointData& _blendPoint);
 
 		// 軸パラメータをロードする
-		void LoadAxisParameter(const nlohmann::json& _blendData);
+		void LoadAxisParameter(const json& _blendData);
 
 		// ブレンドデータをロードする
-		void LoadBlendPoint(const nlohmann::json& _blendData);
+		void LoadBlendPoint(const json& _blendData);
 	};
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include "CameraMoveState_Base.h"
-#include "CameraShakeParameter.h"
+#include "CalcPerlinShakeVector.h"
 #include "ITargetAccepter.h"
 
 namespace HashiTaku
@@ -13,17 +13,14 @@ namespace HashiTaku
 	{
 		using CameraState = CameraMoveState_Base::CameraState;
 	private:
-		/// @brief 現在揺らしているパラメータ
-		CameraShakeParameter curShakeParameter;
+		/// @brief パーリンシェイク
+		CalcPerlinShakeVector perlinShake;
 
 		/// @brief カメラの現在の座標(カメラ揺れを実装するのでオブジェクトと別で持っておく)
 		DirectX::SimpleMath::Vector3 curBaseCameraPos;
 
 		/// @brief 現在のカメラ揺れでずらしているオフセット座標
 		DirectX::SimpleMath::Vector3 curShakeOffsetPos;
-
-		/// @brief 乱数で決めたパーリンノイズのオフセット値(毎回変わる)
-		DirectX::SimpleMath::Vector3 randPerlinOffset;
 
 		/// @brief 前フレームのフォローしている座標
 		DirectX::SimpleMath::Vector3 prevFollowPos;
@@ -36,17 +33,6 @@ namespace HashiTaku
 
 		/// @brief カメラの注視オブジェクト
 		const ITargetAccepter* pLookAtTransform;
-
-		/// @brief 揺らしてからの経過時間
-		float shakeElapsedTime;
-
-		/// @brief 揺れているか？
-		bool isShaking;
-
-#ifdef EDIT
-		CameraShakeParameter debugShakeParam;
-#endif // EDIT
-
 	public:
 		CameraMoveController();
 		~CameraMoveController() {}
@@ -59,6 +45,10 @@ namespace HashiTaku
 		/// @param _cameraState 変更先のステート
 		/// @param _isForce 強制的に変更するか
 		void ChangeState(CameraMoveState_Base::CameraState _cameraState, bool _isForce = false);
+
+		/// @brief 揺れを開始する
+		/// @param _shakeParam カメラ揺れパラメータ
+		void BeginShake(const PerlinShakeParameter& _shakeParam);
 
 		/// @brief ターゲットとするオブジェクトをセット（外したい場合nullptr）
 		/// @param _pTransform ゲームオブジェクト 
@@ -76,21 +66,6 @@ namespace HashiTaku
 		/// @param _setDegree 視野角
 		void SetFov(float _setDegree);
 
-		/// @brief 揺れを開始する
-		/// @param _vector 揺れの方向
-		/// @param _power 揺れの力
-		/// @param _time 揺れ時間
-		/// @param _speed 揺らす速度
-		/// @param _isFadeOut フェードアウトさせていくか？
-		void BeginShake(const DXSimp::Vector3& _vector, float _power, float _time, float _speed,
-			bool _isFadeOut = true);
-
-		/// @brief 揺れを開始する
-		/// @param _shakeParam カメラ揺れパラメータ
-		void BeginShake(const CameraShakeParameter& _shakeParam);
-
-		/// @brief プレイヤー勝利時の処理
-		/// @param _targetTransform ターゲットのトランスフォーム
 		void OnPlayerWin(const Transform& _targetTransform);
 
 		/// @brief 視野角を取得(単位：deg)
@@ -125,8 +100,8 @@ namespace HashiTaku
 		/// @return 注視先オブジェクトのワールド座標
 		const DirectX::SimpleMath::Vector3& GetLookAtWorldPos() const;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		/// @brief カメラの座標を初期化
 		void InitCameraPos();
@@ -137,9 +112,6 @@ namespace HashiTaku
 		/// @brief カメラ揺れの更新
 		void ShakeUpdate();
 
-		/// @brief 揺れのオフセット値を取得する
-		void CalcShakeOffset();
-
 		/// @brief 最終の座標を更新する
 		void UpdateFinalPos();
 
@@ -147,9 +119,6 @@ namespace HashiTaku
 		/// @tparam T 対応したノード
 		/// @param _stateType ステートの種類
 		template<class T> void CreateState(CameraMoveState_Base::CameraState _stateType);
-
-		/// @brief 揺れの終了処理
-		void OnEndShake();
 
 		/// @brief カメラの列挙型を文字列に
 		/// @param _state 変更したい列挙型
@@ -163,11 +132,8 @@ namespace HashiTaku
 
 		void ImGuiDebug() override;
 
-		// カメラ揺れのデバッグ
-		void ImGuiShakeDebug();
-
 		// 全ステートをロードする
-		void LoadStates(const nlohmann::json& _data);
+		void LoadStates(const json& _data);
 	};
 
 	template<class T>

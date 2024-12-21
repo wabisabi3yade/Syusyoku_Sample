@@ -40,7 +40,7 @@ namespace HashiTaku
 		pTargetTransform = &_targetTransform;
 	}
 
-	nlohmann::json CameraGameOverState::Save()
+	json CameraGameOverState::Save()
 	{
 		auto data = CameraMoveState_Base::Save();
 		SaveJsonVector2("lookOffset", lookOffset, data);
@@ -49,7 +49,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CameraGameOverState::Load(const nlohmann::json& _data)
+	void CameraGameOverState::Load(const json& _data)
 	{
 		CameraMoveState_Base::Load(_data);
 		LoadJsonVector2("lookOffset", lookOffset, _data);

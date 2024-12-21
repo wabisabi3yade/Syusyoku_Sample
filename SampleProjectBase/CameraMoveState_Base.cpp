@@ -44,9 +44,9 @@ namespace HashiTaku
 		OnEndBehavior();
 	}
 
-	nlohmann::json CameraMoveState_Base::Save()
+	json CameraMoveState_Base::Save()
 	{
-		nlohmann::json data;
+		json data;
 
 		data["moveFov"] = moveFov;
 		data["normalFov"] = normalFov;
@@ -56,7 +56,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CameraMoveState_Base::Load(const nlohmann::json& _data)
+	void CameraMoveState_Base::Load(const json& _data)
 	{
 		LoadJsonFloat("moveFov", moveFov, _data);
 		LoadJsonFloat("normalFov", normalFov, _data);

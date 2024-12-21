@@ -170,7 +170,7 @@ namespace HashiTaku
 		return curDisType;
 	}
 
-	nlohmann::json BossActionController::Save()
+	json BossActionController::Save()
 	{
 		auto data = EnemyActionController::Save();
 		data["defaultState"] = defaultState;
@@ -184,7 +184,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void BossActionController::Load(const nlohmann::json& _data)
+	void BossActionController::Load(const json& _data)
 	{
 		EnemyActionController::Load(_data);
 
@@ -197,7 +197,7 @@ namespace HashiTaku
 			SetDefaultNode(static_cast<int>(defaultState));
 
 		// ãóó£ÇÉçÅ[Éh
-		nlohmann::json disDatas;
+		json disDatas;
 		if (LoadJsonDataArray("disLengthList", disDatas, _data))
 		{
 			u_int i = 0;

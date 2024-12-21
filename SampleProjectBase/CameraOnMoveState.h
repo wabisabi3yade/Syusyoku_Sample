@@ -42,8 +42,8 @@ namespace HashiTaku
 		/// @brief 横軸の目標への移動速度
 		float horiSpeedToTarget;
 
-		/// @brief 中心との角度
-		float centerAngle;
+		/// @brief 中心との角度(状態を変えても保持する為にstatic)
+		static float centerAngle;
 
 		/// @brief 横軸の対象とのカメラ距離
 		float distanceHorizon;
@@ -55,26 +55,31 @@ namespace HashiTaku
 		bool isTargeting;
 	public:
 		CameraOnMoveState();
-		~CameraOnMoveState() {}
+		virtual ~CameraOnMoveState() {}
 
 		/// @brief 初期座標を渡す
 		void InitCameraTransform();
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
-	private:
+		json Save() override;
+		void Load(const json& _data) override;
+
+	protected:
 		/// @brief 開始処理
 		void OnStartBehavior() override;
 
 		/// @brief 更新処理
 		void UpdateBehavior() override;
 
-		void NormalUpdate();
-
-		void TargetUpdate();
-
 		/// @brief 終了処理
 		void OnEndBehavior() override;
+
+		void ImGuiDebug() override;
+	private:
+		/// @brief 通常時の更新処理
+		void NormalUpdate();
+
+		/// @brief ターゲット時の更新処理
+		void TargetUpdate();
 
 		/// @brief 遷移確認
 		void CheckTransitionUpdate() override;
@@ -90,7 +95,5 @@ namespace HashiTaku
 
 		/// @brief 注視点を更新
 		void LookUpdate();
-
-		void ImGuiDebug() override;
 	};
 }

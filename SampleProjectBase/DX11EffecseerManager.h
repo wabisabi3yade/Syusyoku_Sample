@@ -105,8 +105,8 @@ namespace HashiTaku
 		/// @brief w’èF‚ğ”½‰f‚·‚é
 		bool isApplyColor{ false };
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 
 		void ImGuiDebug() override;
 	};

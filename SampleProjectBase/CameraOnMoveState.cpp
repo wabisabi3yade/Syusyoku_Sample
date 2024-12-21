@@ -4,6 +4,8 @@
 
 namespace HashiTaku
 {
+	float CameraOnMoveState::centerAngle = 90.0f;
+
 	CameraOnMoveState::CameraOnMoveState() :
 		idleHeight(2.0f),
 		currentHeight(2.0f),
@@ -13,7 +15,6 @@ namespace HashiTaku
 		returnVertRatio(3.0f),
 		rotateSpeed(120.0f),
 		horiSpeedToTarget(10.0f),
-		centerAngle(-90.0f),
 		distanceHorizon(5.0f),
 		lookTargetOffsetY(2.0f),
 		isTargeting(false)
@@ -45,7 +46,7 @@ namespace HashiTaku
 		camTransform.SetRotation(camTargetRot);
 	}
 
-	nlohmann::json CameraOnMoveState::Save()
+	json CameraOnMoveState::Save()
 	{
 		auto data = CameraMoveState_Base::Save();
 
@@ -64,7 +65,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CameraOnMoveState::Load(const nlohmann::json& _data)
+	void CameraOnMoveState::Load(const json& _data)
 	{
 		CameraMoveState_Base::Load(_data);
 

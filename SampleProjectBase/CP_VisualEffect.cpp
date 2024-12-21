@@ -35,7 +35,7 @@ namespace HashiTaku
 		pVFX = _setVfx;
 	}
 
-	nlohmann::json CP_VisualEffect::Save()
+	json CP_VisualEffect::Save()
 	{
 		auto data = Component::Save();
 
@@ -54,7 +54,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_VisualEffect::Load(const nlohmann::json& _data)
+	void CP_VisualEffect::Load(const json& _data)
 	{
 		Component::Load(_data);
 

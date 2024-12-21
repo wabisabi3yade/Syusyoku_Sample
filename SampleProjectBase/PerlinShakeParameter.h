@@ -2,8 +2,8 @@
 
 namespace HashiTaku
 {
-	/// @brief レベルごとに設定するパラメータ
-	class CameraShakeParameter : public IImGuiUser, public ISaveLoad
+	/// @brief パーリンノイズシェイクするときのパラメータ
+	class PerlinShakeParameter : public IImGuiUser, public ISaveLoad
 	{
 	public:
 		/// @brief 揺れる方向ベクトル
@@ -21,11 +21,11 @@ namespace HashiTaku
 		/// @brief フェードアウトするか？
 		bool isFadeOut{ false };
 
-		CameraShakeParameter() = default;
-		~CameraShakeParameter() = default;
+		PerlinShakeParameter() = default;
+		~PerlinShakeParameter() = default;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		void ImGuiDebug() override;
 	};

@@ -15,6 +15,7 @@ namespace HashiTaku
 		enum  class CameraState
 		{
 			Move,	// 移動時
+			Charge,	// チャージ時
 			Win,	// プレイヤー勝利
 			Lose,	// プレイヤー負け
 			None
@@ -56,8 +57,8 @@ namespace HashiTaku
 		/// @brief 状態切り替え終了処理
 		void OnEnd() override;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	protected:
 		/// @brief 開始処理の振る舞い
 		virtual void OnStartBehavior() {}

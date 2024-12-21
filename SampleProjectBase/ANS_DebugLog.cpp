@@ -18,7 +18,7 @@ namespace HashiTaku
 		return std::make_unique<ANS_DebugLog>(*this);
 	}
 
-	nlohmann::json ANS_DebugLog::Save()
+	json ANS_DebugLog::Save()
 	{
 		auto data = AnimationNotifyState::Save();
 		data["bMessage"] = message[0];
@@ -27,7 +27,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void ANS_DebugLog::Load(const nlohmann::json& _data)
+	void ANS_DebugLog::Load(const json& _data)
 	{
 		AnimationNotifyState::Load(_data);
 	}

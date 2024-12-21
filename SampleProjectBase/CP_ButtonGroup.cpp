@@ -20,7 +20,7 @@ namespace HashiTaku
 		canInput = _canMove;
 	}
 
-	nlohmann::json CP_ButtonGroup::Save()
+	json CP_ButtonGroup::Save()
 	{
 		auto data = Component::Save();
 
@@ -33,7 +33,7 @@ namespace HashiTaku
 		auto& targetData = data["selectTargetPos"];
 		for (int b_i = 0; b_i < maxButtonCnt; b_i++)
 		{
-			nlohmann::json posData;
+			json posData;
 			SaveJsonVector3("target", selectTargetPos[b_i], posData);
 			targetData.push_back(posData);
 		}
@@ -41,7 +41,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_ButtonGroup::Load(const nlohmann::json& _data)
+	void CP_ButtonGroup::Load(const json& _data)
 	{
 		Component::Load(_data);
 
@@ -52,7 +52,7 @@ namespace HashiTaku
 
 		if (IsJsonContains(_data, "buttonObjNames"))
 		{
-			const nlohmann::json& namesData = _data["buttonObjNames"];
+			const json& namesData = _data["buttonObjNames"];
 			int idx = 0;
 			for (auto& nameData : namesData)
 			{
@@ -63,7 +63,7 @@ namespace HashiTaku
 		}
 
 		// À•W
-		nlohmann::json targetData;
+		json targetData;
 		if (LoadJsonDataArray("selectTargetPos", targetData, _data))
 		{
 			int i = 0;

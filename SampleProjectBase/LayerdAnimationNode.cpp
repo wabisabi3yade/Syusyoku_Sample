@@ -104,7 +104,7 @@ namespace HashiTaku
 		return pBaseAnimation->GetRootMotionPosSpeedPerSec();
 	}
 
-	nlohmann::json LayerdAnimationNode::Save()
+	json LayerdAnimationNode::Save()
 	{
 		auto data = AnimationNode_Base::Save();
 
@@ -121,12 +121,12 @@ namespace HashiTaku
 		return data;
 	}
 
-	void LayerdAnimationNode::Load(const nlohmann::json& _data)
+	void LayerdAnimationNode::Load(const json& _data)
 	{
 		AnimationNode_Base::Load(_data);
 
 		LoadJsonUnsigned("blendBeginFrame", beginBlendPlayFrame, _data);
-		nlohmann::json blendCurveData;
+		json blendCurveData;
 		if (LoadJsonData("blendCurve", blendCurveData, _data))
 		{
 			blendSpeedCurve.Load(blendCurveData);

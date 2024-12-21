@@ -18,8 +18,8 @@ namespace HashiTaku
 		/// @brief ブレイク値を取得する
 		float GetCanBreakValue() const;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		/// @brief 開始
 		void OnStartBehavior() override;

@@ -1,9 +1,12 @@
 #include "pch.h"
 #include "PlayerGroundChargeAttack.h"
+#include "GameObject.h"
+#include "CameraChargeAttack.h"
 
 namespace HashiTaku
 {
 	PlayerGroundChargeAttack::PlayerGroundChargeAttack() :
+		pCamMove(nullptr),
 		maxChargeTime(5.0f),
 		curChargingTime(0.0f),
 		curChargeLevel(ChargeLevel::Low),
@@ -19,7 +22,7 @@ namespace HashiTaku
 		chargeAtkInfos.resize(1);	// 最低1用意
 	}
 
-	nlohmann::json PlayerGroundChargeAttack::Save()
+	json PlayerGroundChargeAttack::Save()
 	{
 		auto data = PlayerAttackState::Save();
 		data["maxTime"] = maxChargeTime;
@@ -31,10 +34,10 @@ namespace HashiTaku
 		u_int levelCnt = static_cast<u_int>(ChargeLevel::MaxNum);
 		for (u_int l_i = 0; l_i < levelCnt; l_i++)
 		{
-			nlohmann::json chargeData;
+			json chargeData;
 
 			// 攻撃情報
-			nlohmann::json& atkInfoDatas = chargeData["attackInfos"];
+			json& atkInfoDatas = chargeData["attackInfos"];
 			u_int attackTimes = GetAttackTimes();
 			for (u_int a_i = 0; a_i < attackTimes; a_i++)
 			{
@@ -49,7 +52,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void PlayerGroundChargeAttack::Load(const nlohmann::json& _data)
+	void PlayerGroundChargeAttack::Load(const json& _data)
 	{
 		PlayerAttackState::Load(_data);
 		LoadJsonFloat("maxTime", maxChargeTime, _data);
@@ -59,8 +62,8 @@ namespace HashiTaku
 		{
 			onNextChargeVfx.Load(vfxData);
 		}
-		
-		nlohmann::json chargeDatas;
+
+		json chargeDatas;
 		if (!LoadJsonDataArray("chargeInfos", chargeDatas, _data)) return;
 		int l_i = -1;
 		for (auto& chargeData : chargeDatas)
@@ -69,7 +72,7 @@ namespace HashiTaku
 			LoadJsonFloat("time", chargeTimes[l_i], chargeData);
 
 			int a_i = -1;
-			nlohmann::json attackInfoData;
+			json attackInfoData;
 			if (LoadJsonDataArray("attackInfos", attackInfoData, chargeData))
 			{
 				a_i++;
@@ -84,6 +87,9 @@ namespace HashiTaku
 	void PlayerGroundChargeAttack::OnStartBehavior()
 	{
 		PlayerAttackState::OnStartBehavior();
+
+		// チャージ状態のカメラに変更
+		ChangeCameraChargeState();
 
 		// パラメータ初期化
 		isCharging = true;
@@ -108,6 +114,22 @@ namespace HashiTaku
 			// チャージ中の更新処理
 			ChargingUpdate();
 		}
+	}
+
+	void PlayerGroundChargeAttack::ChangeCameraChargeState()
+	{
+		// カメラ移動コンポーネント取得できていないなら
+		if (!pCamMove)
+		{
+			// カメラ移動コンポーネント取得
+			GameObject& cameraObj = pActionController->GetCamera().GetGameObject();
+			pCamMove = cameraObj.GetComponent<CP_CameraMove>();
+
+			if (!pCamMove) return;	// 取得できないなら
+		}
+
+		// カメラステートを変更
+		pCamMove->ChangeState(CP_CameraMove::CameraState::Charge);
 	}
 
 	void PlayerGroundChargeAttack::OnChangeAttackTimes()
@@ -165,6 +187,18 @@ namespace HashiTaku
 		isCharging = false;	// 溜め終了
 		GetAnimation()->SetBool(CHARGE_PARAMNAME, false);
 
+		// カメラを通常状態に戻す
+		if (pCamMove)
+		{
+			CameraChargeAttack* pCamCharge = static_cast<CameraChargeAttack*>(
+				pCamMove->GetState(CP_CameraMove::CameraState::Charge)
+				);
+			if (pCamCharge) pCamCharge->EndChargingShake();
+
+			pCamMove->ChangeState(CP_CameraMove::CameraState::Move);
+		}
+			
+
 		// 与えるダメージ量を求める（溜めた分だけダメージアップ）
 		u_int atkTimes = GetAttackTimes();
 		for (u_int a_i = 0; a_i < atkTimes; a_i++)
@@ -183,7 +217,7 @@ namespace HashiTaku
 	{
 		ImGui::DragFloat("MaxTime", &maxChargeTime, 0.01f, 0.0f, 100.0f);
 
-		if(ImGuiMethod::TreeNode("Charge Time"))
+		if (ImGuiMethod::TreeNode("Charge Time"))
 		{
 			// チャージレベルごとの
 			u_int chargeCnt = static_cast<u_int>(ChargeLevel::MaxNum);

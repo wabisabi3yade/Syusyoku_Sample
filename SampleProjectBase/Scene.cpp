@@ -91,10 +91,10 @@ namespace HashiTaku
 			return;
 		}
 
-		const nlohmann::json sceneData = nlohmann::json::parse(f);
+		const json sceneData = json::parse(f);
 
 		// シーンオブジェクトをロード
-		const nlohmann::json& sceneObjData = sceneData["objects"];
+		const json& sceneObjData = sceneData["objects"];
 		pInSceneSystem->GetSceneObjects().LoadObjectList(sceneObjData);
 
 		HASHI_DEBUG_LOG(sceneName + " ロード完了");

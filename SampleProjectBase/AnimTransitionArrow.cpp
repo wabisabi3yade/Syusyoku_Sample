@@ -131,15 +131,15 @@ namespace HashiTaku
 		return interpolateKind;
 	}
 
-	nlohmann::json AnimTransitionArrow::Save()
+	json AnimTransitionArrow::Save()
 	{
-		nlohmann::json data;
+		json data;
 
 		// 遷移条件
-		nlohmann::json conditionDataList;
+		json conditionDataList;
 		for (auto& pCond : conditionList)
 		{
-			nlohmann::json conData;
+			json conData;
 			conData["condition"] = pCond->Save();
 
 			// 対応型と参照しているパラメータ名をセーブ
@@ -160,10 +160,10 @@ namespace HashiTaku
 		return data;
 	}
 
-	void AnimTransitionArrow::Load(const nlohmann::json& _data)
+	void AnimTransitionArrow::Load(const json& _data)
 	{
 		// 遷移条件
-		nlohmann::json conditionDataList;
+		json conditionDataList;
 		if (LoadJsonDataArray("conditionList", conditionDataList, _data))
 		{
 			for (auto& conditionData : conditionDataList)
@@ -180,7 +180,7 @@ namespace HashiTaku
 				std::unique_ptr<TransCondition_Base> pCondition = TransConditionCreater::Create(value, name);
 
 				// 遷移条件自体のロード
-				nlohmann::json conditionParamData;
+				json conditionParamData;
 				if (LoadJsonData("condition", conditionParamData, conditionData))
 					pCondition->Load(conditionParamData);
 

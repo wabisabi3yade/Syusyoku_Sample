@@ -256,7 +256,7 @@ namespace HashiTaku
 		return pSkeletalMesh->GetBoneCnt();
 	}
 
-	nlohmann::json CP_Animation::Save()
+	json CP_Animation::Save()
 	{
 		auto data = Component::Save();
 
@@ -268,7 +268,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_Animation::Load(const nlohmann::json& _data)
+	void CP_Animation::Load(const json& _data)
 	{
 		Component::Load(_data);
 

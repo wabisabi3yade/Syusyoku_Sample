@@ -3,6 +3,8 @@
 
 namespace HashiTaku
 {
+	class CP_CameraMove;
+
 	/// @brief 地上溜め攻撃
 	class PlayerGroundChargeAttack : public PlayerAttackState
 	{
@@ -31,6 +33,9 @@ namespace HashiTaku
 		/// @brief チャージエフェクトのオフセット座標
 		DXSimp::Vector3 chargeVfxOffset;
 
+		// カメラ移動コンポーネント
+		CP_CameraMove* pCamMove;
+
 		/// @brief 最大溜め時間
 		float maxChargeTime;
 
@@ -46,14 +51,17 @@ namespace HashiTaku
 		PlayerGroundChargeAttack();
 		~PlayerGroundChargeAttack() {}
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		/// @brief 開始
 		void OnStartBehavior() override;
 
 		/// @brief 更新
 		void UpdateBehavior() override;
+
+		/// @brief カメラをチャージ状態に編子うする
+		void ChangeCameraChargeState();
 
 		/// @brief 攻撃回数を変えたときの処理
 		void OnChangeAttackTimes() override;

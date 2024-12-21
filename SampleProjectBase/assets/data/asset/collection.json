@@ -9733,12 +9733,6 @@
             "rightHand": true
         },
         {
-            "assetName": "knight_ChargeAttack1.fbx",
-            "boneListName": "Knight.fbx",
-            "pathName": "assets/animation/player/knight_ChargeAttack1.fbx",
-            "rightHand": true
-        },
-        {
             "assetName": "knight_ChargeAttack2.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_ChargeAttack2.fbx",

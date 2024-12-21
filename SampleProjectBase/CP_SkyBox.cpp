@@ -97,7 +97,7 @@ namespace HashiTaku
 		pFaces[num]->SetTexture(_pTex);
 	}
 
-	nlohmann::json CP_SkyBox::Save()
+	json CP_SkyBox::Save()
 	{
 		auto data = Component::Save();
 
@@ -112,7 +112,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_SkyBox::Load(const nlohmann::json& _data)
+	void CP_SkyBox::Load(const json& _data)
 	{
 		Component::Load(_data);
 
@@ -222,7 +222,7 @@ namespace HashiTaku
 		size = _other.size;
 	}
 
-	void CP_SkyBox::SaveTexture(nlohmann::json& _data, FaceKind _kind)
+	void CP_SkyBox::SaveTexture(json& _data, FaceKind _kind)
 	{
 		int faceId = static_cast<int>(_kind);
 		std::string arrayName = g_faceKindName[faceId];
@@ -236,7 +236,7 @@ namespace HashiTaku
 		texData = pFaces[faceId]->GetTexture()->GetAssetName();
 	}
 
-	void CP_SkyBox::LoadTexture(const nlohmann::json& _data, FaceKind _kind)
+	void CP_SkyBox::LoadTexture(const json& _data, FaceKind _kind)
 	{
 		int faceId = static_cast<int>(_kind);
 		std::string arrayName = g_faceKindName[faceId];

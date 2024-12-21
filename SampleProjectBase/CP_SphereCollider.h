@@ -20,8 +20,8 @@ namespace HashiTaku
 
 		void ImGuiDebug() override;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		/// @brief Œ`óì¬
 		void CreateShape() override;

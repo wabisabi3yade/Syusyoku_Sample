@@ -61,7 +61,7 @@ namespace HashiTaku
 		ApplySlider();
 	}
 
-	nlohmann::json CP_UISlider::Save()
+	json CP_UISlider::Save()
 	{
 		auto data = CP_UIRenderer::Save();
 
@@ -72,7 +72,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_UISlider::Load(const nlohmann::json& _data)
+	void CP_UISlider::Load(const json& _data)
 	{
 		using namespace HashiTaku;
 

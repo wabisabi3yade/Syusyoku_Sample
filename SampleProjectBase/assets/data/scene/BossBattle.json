@@ -835,7 +835,7 @@
                                                             "break": 1.0,
                                                             "camShake": {
                                                                 "fadeOut": true,
-                                                                "power": 3.0,
+                                                                "power": 5.0,
                                                                 "shakeVec": [
                                                                     0.5,
                                                                     1.0,
@@ -2200,16 +2200,38 @@
                                 },
                                 {
                                     "parameter": {
-                                        "canFovMovement": 1.0,
-                                        "fovChangeRate": 3.0,
-                                        "height": 3.5,
-                                        "hori": 3.5,
-                                        "lookOffset": [
-                                            0.0,
-                                            0.3799999952316284
+                                        "canFovMovement": 100.0,
+                                        "centerAngle": -90.0,
+                                        "chargeShake": {
+                                            "fadeOut": false,
+                                            "power": 0.10000000149011612,
+                                            "shakeVec": [
+                                                1.0,
+                                                0.5,
+                                                0.0
+                                            ],
+                                            "speed": 1.0,
+                                            "time": 6.0
+                                        },
+                                        "deadZone": [
+                                            0.20000000298023224,
+                                            0.20000000298023224
                                         ],
-                                        "moveFov": 65.0,
-                                        "normalFov": 50.0
+                                        "disHorizon": 8.0,
+                                        "fovChangeRate": 3.0,
+                                        "heightMax": 7.0,
+                                        "heightMin": 1.0,
+                                        "horiSpeed": 20.0,
+                                        "idleHeight": 3.0,
+                                        "lookOffsetY": 2.0,
+                                        "moveEase": 0,
+                                        "moveFov": 58.0,
+                                        "moveFovTime": 30.0,
+                                        "normalFov": 50.0,
+                                        "returnVert": 2.0,
+                                        "rotateSpeed": 75.0,
+                                        "targetFov": 30.0,
+                                        "verticalSpeed": 4.0
                                     },
                                     "stateType": 1
                                 },
@@ -2227,6 +2249,21 @@
                                         "normalFov": 50.0
                                     },
                                     "stateType": 2
+                                },
+                                {
+                                    "parameter": {
+                                        "canFovMovement": 1.0,
+                                        "fovChangeRate": 3.0,
+                                        "height": 3.0,
+                                        "hori": 3.0,
+                                        "lookOffset": [
+                                            0.0,
+                                            0.0
+                                        ],
+                                        "moveFov": 65.0,
+                                        "normalFov": 50.0
+                                    },
+                                    "stateType": 3
                                 }
                             ]
                         },

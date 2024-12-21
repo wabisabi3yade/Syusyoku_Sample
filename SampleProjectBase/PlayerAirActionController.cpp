@@ -60,7 +60,7 @@ namespace HashiTaku
 		return static_cast<int>(state.value());
 	}
 
-	nlohmann::json PlayerAirActionController::Save()
+	json PlayerAirActionController::Save()
 	{
 		auto data = PlayerActionController_Base::Save();
 
@@ -69,7 +69,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void PlayerAirActionController::Load(const nlohmann::json& _data)
+	void PlayerAirActionController::Load(const json& _data)
 	{
 		PlayerActionController_Base::Load(_data);
 		LoadJsonFloat("downForcePower", downForcePower, _data);

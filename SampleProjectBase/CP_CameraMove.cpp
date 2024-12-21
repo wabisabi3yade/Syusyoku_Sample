@@ -31,7 +31,7 @@ namespace HashiTaku
 		pMoveController = std::make_unique<CameraMoveController>();
 	}
 
-	void CP_CameraMove::ShakeCamera(const CameraShakeParameter& _shakeCamParam)
+	void CP_CameraMove::ShakeCamera(const PerlinShakeParameter& _shakeCamParam)
 	{
 		pMoveController->BeginShake(_shakeCamParam);
 	}
@@ -110,6 +110,17 @@ namespace HashiTaku
 		pMoveController->SetLookAtObject(nullptr);
 	}
 
+	CameraMoveState_Base* CP_CameraMove::ChangeState(CameraState _nextState)
+	{
+		pMoveController->ChangeState(_nextState);
+		return static_cast<CameraMoveState_Base*>(pMoveController->GetNode(_nextState));
+	}
+
+	CameraMoveState_Base* CP_CameraMove::GetState(CameraState _getState)
+	{
+		return static_cast<CameraMoveState_Base*>(pMoveController->GetNode(_getState));
+	}
+
 	void CP_CameraMove::OnPlayerWin(const Transform& _targetTransform)
 	{
 		pMoveController->OnPlayerWin(_targetTransform);
@@ -138,7 +149,7 @@ namespace HashiTaku
 		}
 	}
 
-	nlohmann::json CP_CameraMove::Save()
+	json CP_CameraMove::Save()
 	{
 		auto data = Component::Save();
 
@@ -151,7 +162,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_CameraMove::Load(const nlohmann::json& _data)
+	void CP_CameraMove::Load(const json& _data)
 	{
 		Component::Load(_data);
 
@@ -159,7 +170,7 @@ namespace HashiTaku
 		LoadJsonString("target", followObjName, _data);
 
 		// コントローラのロード
-		nlohmann::json controllerData;
+		json controllerData;
 		if (LoadJsonData("moveController", controllerData, _data))
 		{
 			pMoveController->Load(controllerData);

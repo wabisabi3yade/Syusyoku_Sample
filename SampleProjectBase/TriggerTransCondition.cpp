@@ -16,12 +16,12 @@ namespace HashiTaku
         return pTrigger->GetIsTrigger();
     }
 
-    nlohmann::json TriggerTransCondition::Save()
+    json TriggerTransCondition::Save()
     {
-        return nlohmann::json();
+        return json();
     }
 
-    void TriggerTransCondition::Load(const nlohmann::json& _data)
+    void TriggerTransCondition::Load(const json& _data)
     {
     }
 }

@@ -138,8 +138,8 @@ namespace HashiTaku
 		/// @return ƒ{[ƒ“”
 		u_int GetBoneCnt() const;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		void Awake() override;
 		void Update() override;

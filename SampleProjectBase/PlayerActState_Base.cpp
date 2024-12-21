@@ -55,12 +55,12 @@ namespace HashiTaku
 		return statePriority;
 	}
 
-	nlohmann::json PlayerActState_Base::Save()
+	json PlayerActState_Base::Save()
 	{
-		return nlohmann::json();
+		return json();
 	}
 
-	void PlayerActState_Base::Load(const nlohmann::json& _data)
+	void PlayerActState_Base::Load(const json& _data)
 	{
 	}
 

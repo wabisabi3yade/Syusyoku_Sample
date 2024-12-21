@@ -45,7 +45,7 @@ namespace HashiTaku
 #endif
 	}
 
-	nlohmann::json BossJumpAttack::Save()
+	json BossJumpAttack::Save()
 	{
 		auto data = BossAttackState::Save();
 
@@ -60,7 +60,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void BossJumpAttack::Load(const nlohmann::json& _data)
+	void BossJumpAttack::Load(const json& _data)
 	{
 		BossAttackState::Load(_data);
 
@@ -69,7 +69,7 @@ namespace HashiTaku
 		LoadJsonFloat("maxHoriSpeed", maxHoriSpeed, _data);
 		LoadJsonFloat("speedCof", horiSpeedCofficient, _data);
 
-		nlohmann::json curveData;
+		json curveData;
 		if (LoadJsonData("jumpHeightCurve", curveData, _data))
 		{
 			jumpHeightDisCurve.Load(curveData);

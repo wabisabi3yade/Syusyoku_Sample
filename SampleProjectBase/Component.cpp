@@ -57,9 +57,9 @@ namespace HashiTaku
         Draw();
     }
 
-    nlohmann::json Component::Save()
+    json Component::Save()
     {
-        nlohmann::json componentData;
+        json componentData;
         componentData["name"] = name;
         componentData["priority"] = priority;
         componentData["enable"] = isEnable;
@@ -67,7 +67,7 @@ namespace HashiTaku
         return componentData;
     }
 
-    void Component::Load(const nlohmann::json& _componentData)
+    void Component::Load(const json& _componentData)
     {
         LoadJsonInteger("priority", priority, _componentData);
 

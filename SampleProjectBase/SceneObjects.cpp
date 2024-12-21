@@ -177,7 +177,7 @@ namespace HashiTaku
 			return;
 		}
 
-		const nlohmann::json prefabData = nlohmann::json::parse(f);
+		const json prefabData = json::parse(f);
 		// プレハブをロード
 		LoadObject(prefabData);
 		LateLoadObject(prefabData);
@@ -228,9 +228,9 @@ namespace HashiTaku
 		MoveList();
 	}
 
-	nlohmann::json SceneObjects::SaveObject(GameObject& _go)
+	json SceneObjects::SaveObject(GameObject& _go)
 	{
-		nlohmann::json objData;
+		json objData;
 		objData["gameObject"] = _go.Save();
 
 		Transform& transform = _go.GetTransform();
@@ -251,7 +251,7 @@ namespace HashiTaku
 	void SceneObjects::ObjectToPrefab(GameObject& _toPrefabObject)
 	{
 		// シーンデータ
-		nlohmann::json prefabData;
+		json prefabData;
 
 		// シーン内オブジェクトをセーブ
 		prefabData = SaveObject(_toPrefabObject);
@@ -270,10 +270,10 @@ namespace HashiTaku
 		HASHI_DEBUG_LOG(_toPrefabObject.GetName() + "のプレハブ化に成功しました");
 	}
 
-	bool SceneObjects::LoadObject(const nlohmann::json& _gameObjectData)
+	bool SceneObjects::LoadObject(const json& _gameObjectData)
 	{
 		// オブジェクトを読み込む
-		nlohmann::json objData;
+		json objData;
 		if (!LoadJsonData("gameObject", objData, _gameObjectData))
 		{
 			HASHI_DEBUG_LOG("オブジェクトが読み込めませんでした");
@@ -292,7 +292,7 @@ namespace HashiTaku
 
 
 		// 子オブジェクトを読み込む
-		nlohmann::json childDatas;
+		json childDatas;
 		if (!LoadJsonDataArray("childs", childDatas, _gameObjectData))
 		{
 			return false;
@@ -305,10 +305,10 @@ namespace HashiTaku
 		return true;
 	}
 
-	bool SceneObjects::LateLoadObject(const nlohmann::json& _gameObjectData)
+	bool SceneObjects::LateLoadObject(const json& _gameObjectData)
 	{
 		// オブジェクトを読み込む
-		nlohmann::json objData;
+		json objData;
 		if (!LoadJsonData("gameObject", objData, _gameObjectData))
 		{
 			HASHI_DEBUG_LOG("オブジェクトが読み込めませんでした");
@@ -322,7 +322,7 @@ namespace HashiTaku
 		go->LateLode(objData);
 
 		// 子オブジェクトを読み込む
-		nlohmann::json childDatas;
+		json childDatas;
 		if (!LoadJsonDataArray("childs", childDatas, _gameObjectData))
 		{
 			return false;
@@ -471,9 +471,9 @@ namespace HashiTaku
 		return itr->second.get();
 	}
 
-	nlohmann::json SceneObjects::SaveObjectList()
+	json SceneObjects::SaveObjectList()
 	{
-		nlohmann::json objectData;
+		json objectData;
 
 		for (auto& obj : objList)
 		{
@@ -497,7 +497,7 @@ namespace HashiTaku
 		return objectData;
 	}
 
-	void SceneObjects::LoadObjectList(const nlohmann::json& _objectsData)
+	void SceneObjects::LoadObjectList(const json& _objectsData)
 	{
 		// オブジェクトを作成する
 		for (const auto& data : _objectsData)

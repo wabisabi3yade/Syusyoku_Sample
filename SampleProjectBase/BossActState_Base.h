@@ -135,8 +135,8 @@ namespace HashiTaku
 		/// @brief デバッグ描画
 		void DebugDisplay();
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	protected:
 		/// @brief 状態切り替え開始処理
 		virtual void OnStartBehavior() {}
@@ -204,10 +204,10 @@ namespace HashiTaku
 		void ImGuiWarpDebug();
 
 		// ワープモーション関連のセーブ
-		nlohmann::json SaveWarpParameters();
+		json SaveWarpParameters();
 
 		// ワープモーション関連のロード
-		void LoadWarpParameters(const nlohmann::json& _warpData);
+		void LoadWarpParameters(const json& _warpData);
 	public:
 		// パラメータ
 		/// @brief 移動速度のアニメーションパラメータ名

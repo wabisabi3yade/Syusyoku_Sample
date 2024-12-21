@@ -29,8 +29,8 @@ namespace HashiTaku
 		/// @param _targetPos ターゲットのトランスフォームの参照
 		void SetTargetTransform(const Transform& _targetTransform);
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		void ImGuiDebug() override;
 	};

@@ -42,14 +42,14 @@ namespace HashiTaku
 		return isAchieve;
 	}
 
-	nlohmann::json BoolTransCondition::Save()
+	json BoolTransCondition::Save()
 	{
-		nlohmann::json data;
+		json data;
 		data["bJudgeType"] = judgeType;
 		return data;
 	}
 
-	void BoolTransCondition::Load(const nlohmann::json& _data)
+	void BoolTransCondition::Load(const json& _data)
 	{
 		LoadJsonEnum<JudgeType>("bJudgeType", judgeType, _data);
 	}

@@ -54,7 +54,7 @@ namespace HashiTaku
 			ChangeState(BossState::Idle);
 	}
 
-	nlohmann::json BossAttackState::Save()
+	json BossAttackState::Save()
 	{
 		auto data = BossActState_Base::Save();
 
@@ -78,14 +78,14 @@ namespace HashiTaku
 		return data;
 	}
 
-	void BossAttackState::Load(const nlohmann::json& _data)
+	void BossAttackState::Load(const json& _data)
 	{
 		BossActState_Base::Load(_data);
 
 		LoadJsonUnsigned("atkTimeCnt", attackTimeCnt, _data);
 
 		// 攻撃情報をロード
-		nlohmann::json atkLoadDatas;
+		json atkLoadDatas;
 		if (LoadJsonDataArray("atkInfos", atkLoadDatas, _data))
 		{
 			attackInfos.clear();	// 今の情報をリセット

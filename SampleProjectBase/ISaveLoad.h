@@ -12,14 +12,14 @@ namespace HashiTaku
 
 		/// @brief セーブする
 		/// @return セーブデータ
-		virtual nlohmann::json Save() = 0;
+		virtual json Save() = 0;
 
 		/// @brief ロードする
 		/// @param _data ロードするデータ 
-		virtual void Load(const nlohmann::json& _data) = 0;
+		virtual void Load(const json& _data) = 0;
 
-		/*nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;*/
+		/*json Save() override;
+		void Load(const json& _data) override;*/
 	};
 }
 

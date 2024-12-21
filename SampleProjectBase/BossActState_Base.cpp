@@ -92,18 +92,18 @@ namespace HashiTaku
 #endif // EDIT
 	}
 
-	nlohmann::json BossActState_Base::Save()
+	json BossActState_Base::Save()
 	{
-		nlohmann::json data;
+		json data;
 
 		data["warpMotion"] = SaveWarpParameters();
 
 		return data;
 	}
 
-	void BossActState_Base::Load(const nlohmann::json& _data)
+	void BossActState_Base::Load(const json& _data)
 	{
-		nlohmann::json warpData;
+		json warpData;
 		if (LoadJsonData("warpMotion", warpData, _data))
 		{
 			LoadWarpParameters(warpData);
@@ -360,19 +360,19 @@ namespace HashiTaku
 #endif // EDIT
 	}
 
-	nlohmann::json BossActState_Base::SaveWarpParameters()
+	json BossActState_Base::SaveWarpParameters()
 	{
-		nlohmann::json warpData;
+		json warpData;
 		warpData["useWarp"] = isUseWarpMotion;
 
 		if (!isUseWarpMotion) return warpData;
 		warpData["allWarpStep"] = allWarpSteps;
 
 		// 構造体のセーブ
-		nlohmann::json& warpStructDatas = warpData["warpStructs"];
+		json& warpStructDatas = warpData["warpStructs"];
 		for (u_int w_i = 0; w_i < allWarpSteps; w_i++)
 		{
-			nlohmann::json paramData;
+			json paramData;
 			WarpMotionParam& warpParam = warpMotionParams[w_i];
 
 			paramData["fromRootMotion"] = warpParam.isFromRootMotion;
@@ -400,7 +400,7 @@ namespace HashiTaku
 		return warpData;
 	}
 
-	void BossActState_Base::LoadWarpParameters(const nlohmann::json& _warpData)
+	void BossActState_Base::LoadWarpParameters(const json& _warpData)
 	{
 		LoadJsonBoolean("useWarp", isUseWarpMotion, _warpData);
 		if (!isUseWarpMotion) return;
@@ -409,14 +409,14 @@ namespace HashiTaku
 		allWarpSteps = std::clamp<u_int>(allWarpSteps, 0, MAX_WARP_STEPS);
 		warpMotionParams.resize(allWarpSteps);
 
-		nlohmann::json warpStructDatas;
+		json warpStructDatas;
 		if (!LoadJsonDataArray("warpStructs", warpStructDatas, _warpData)) return;
 
 		// 構造体
 		u_int dataCnt = static_cast<u_int>(warpStructDatas.size());
 		for (u_int d_i = 0; d_i < dataCnt; d_i++)
 		{
-			const nlohmann::json& paramData = warpStructDatas[d_i];
+			const json& paramData = warpStructDatas[d_i];
 			WarpMotionParam& warpParam = warpMotionParams[d_i];
 			warpParam.pHoriMovementCurve = std::make_unique<AnimationCurve>();
 

@@ -84,7 +84,7 @@ namespace HashiTaku
 		return grabBoneName;
 	}
 
-	nlohmann::json CP_Rig::Save()
+	json CP_Rig::Save()
 	{
 		auto data = Component::Save();
 
@@ -93,7 +93,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_Rig::Load(const nlohmann::json& _data)
+	void CP_Rig::Load(const json& _data)
 	{
 		Component::Load(_data);
 		LoadJsonString("grabName", grabBoneName, _data);

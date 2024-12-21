@@ -1,9 +1,9 @@
 #include "pch.h"
-#include "CameraShakeParameter.h"
+#include "PerlinShakeParameter.h"
 
 namespace HashiTaku
 {
-	nlohmann::json CameraShakeParameter::Save()
+	json PerlinShakeParameter::Save()
 	{
 		json shakeData;
 
@@ -16,7 +16,7 @@ namespace HashiTaku
 		return shakeData;
 	}
 
-	void CameraShakeParameter::Load(const nlohmann::json& _data)
+	void PerlinShakeParameter::Load(const json& _data)
 	{
 		LoadJsonVector3("shakeVec", shakeVec, _data);
 		LoadJsonFloat("power", power, _data);
@@ -25,7 +25,7 @@ namespace HashiTaku
 		LoadJsonBoolean("fadeOut", isFadeOut, _data);
 	}
 
-	void CameraShakeParameter::ImGuiDebug()
+	void PerlinShakeParameter::ImGuiDebug()
 	{
 		if (!ImGuiMethod::TreeNode("CamShake")) return;
 
