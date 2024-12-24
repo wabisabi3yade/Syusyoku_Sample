@@ -70,5 +70,7 @@ namespace HashiTaku
 		ResisterNotify<ANS_DebugLog>(AnimationNotify_Base::NotifyType::ANS_DebugLog);
 		ResisterNotify<ANE_ChangeParameter>(AnimationNotify_Base::NotifyType::ANE_ChangeParameter);
 		ResisterNotify<ANS_ChangeParameter>(AnimationNotify_Base::NotifyType::ANS_ChangeParameter);
+		ResisterNotify<ANE_CreateVfx>(AnimationNotify_Base::NotifyType::ANE_CreateVfx);
+		ResisterNotify<ANE_CameraShake>(AnimationNotify_Base::NotifyType::ANE_CameraShake);
 	}
 }

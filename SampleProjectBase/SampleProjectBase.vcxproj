@@ -153,7 +153,9 @@
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_widgets.cpp" />
     <ClCompile Include="..\ThirdParty\implot\include\implot.cpp" />
     <ClCompile Include="..\ThirdParty\implot\include\implot_items.cpp" />
+    <ClCompile Include="ANE_CameraShake.cpp" />
     <ClCompile Include="ANE_ChangeParameter.cpp" />
+    <ClCompile Include="ANE_CreateVfx.cpp" />
     <ClCompile Include="ANE_DebugLog.cpp" />
     <ClCompile Include="AnimationCurve.cpp" />
     <ClCompile Include="AnimationNotifyFactory.cpp" />
@@ -383,7 +385,9 @@
     <ClInclude Include="..\ThirdParty\imgui\include\imstb_truetype.h" />
     <ClInclude Include="..\ThirdParty\implot\include\implot.h" />
     <ClInclude Include="..\ThirdParty\implot\include\implot_internal.h" />
+    <ClInclude Include="ANE_CameraShake.h" />
     <ClInclude Include="ANE_ChangeParameter.h" />
+    <ClInclude Include="ANE_CreateVfx.h" />
     <ClInclude Include="ANE_DebugLog.h" />
     <ClInclude Include="AnimationCurve.h" />
     <ClInclude Include="AnimationNotifyFactory.h" />
@@ -424,6 +428,7 @@
     <ClInclude Include="CameraMoveController.h" />
     <ClInclude Include="CameraMoveState_Base.h" />
     <ClInclude Include="CameraOnMoveState.h" />
+    <ClInclude Include="ITransformSetter.h" />
     <ClInclude Include="PerlinShakeParameter.h" />
     <ClInclude Include="CameraTargetMove.h" />
     <ClInclude Include="ChangeAnimObserver.h" />

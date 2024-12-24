@@ -40,9 +40,6 @@ namespace HashiTaku
 
 	void CameraChargeAttack::UpdateFovMove()
 	{
-		// 経過時間が超えているなら
-		if (elapsedMoveFovTime > moveTargetFovTime - Mathf::epsilon) return;
-
 		elapsedMoveFovTime += DeltaTime();
 
 		float ratio = std::min(elapsedMoveFovTime / moveTargetFovTime, 1.0f);
@@ -57,6 +54,7 @@ namespace HashiTaku
 	{
 		chargeTargetFov = _targetFov;
 		moveTargetFovTime = std::max(_moveTime, Mathf::epsilon);
+		fovOnBeginMove = pCamController->GetFov();
 
 		// 経過時間をリセット
 		elapsedMoveFovTime = 0.0f;

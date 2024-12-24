@@ -6,7 +6,7 @@
 
 namespace HashiTaku
 {
-	constexpr u_int EFFECT_DRAW_MAX(2000);	// 最大のエフェクト描画数
+	constexpr u_int EFFECT_DRAW_MAX(5000);	// 最大のエフェクト描画数
 
 	void DX11EffecseerManager::Init()
 	{
@@ -88,12 +88,40 @@ namespace HashiTaku
 	{
 		if (!_createVfx.pHitVfx) return -1;
 
-		return Play(_createVfx.pHitVfx->GetEffect(),
+		DXSimp::Vector3 eularAngles = _eularAngles;
+		// 向くならカメラを向く角度を求める
+		if (_createVfx.isLookCamera)
+		{
+			CalcLookCameraAngles(_pos, eularAngles);
+		}
+
+		// 再生する
+		Effekseer::Handle retHand = Play(_createVfx.pHitVfx->GetEffect(),
 			_createVfx.speed,
 			_pos,
 			_createVfx.scale * DXSimp::Vector3::One,
-			_eularAngles,
+			eularAngles,
 			_createVfx.startFrame);
+
+		// 色を変更するなら変更
+		if (_createVfx.isApplyColor)
+			ChangeColor(retHand, _createVfx.effectColor);
+
+		return retHand;
+	}
+
+	void DX11EffecseerManager::ChangeColor(Effekseer::Handle _efkHandle, const DXSimp::Color& _color)
+	{
+		manager->SetAllColor(_efkHandle,
+			{ static_cast<uint8_t>(_color.R() * 255.0f),
+			static_cast<uint8_t>(_color.G() * 255.0f),
+			static_cast<uint8_t>(_color.B() * 255.0f),
+			static_cast<uint8_t>(_color.A() * 255.0f) });
+	}
+
+	void DX11EffecseerManager::DestroyVfx(const Effekseer::Handle _deleteHandle)
+	{
+		manager->StopEffect(_deleteHandle);
 	}
 
 	const Effekseer::ManagerRef& DX11EffecseerManager::GetManager() const
@@ -132,6 +160,16 @@ namespace HashiTaku
 		);
 	}
 
+	void DX11EffecseerManager::CalcLookCameraAngles(const DXSimp::Vector3& _efkPos, DXSimp::Vector3& _outAngles)
+	{
+		DXSimp::Vector3 camPos =
+			InSceneSystemManager::GetInstance()->GetMainCamera().GetTransform().GetPosition();
+
+		// ベクトルから角度を求める
+		DXSimp::Vector3 vec = camPos - _efkPos; vec.Normalize();
+		_outAngles.y = Quat::RotateToVector(vec).ToEuler().y * Mathf::radToDeg;
+	}
+
 	void DX11EffecseerManager::CreateEffekseerMtx(const DirectX::SimpleMath::Matrix& _dxMtx, Effekseer::Matrix44& _outMtx)
 	{
 		_outMtx.Values[0][0] = _dxMtx._11;
@@ -166,9 +204,9 @@ namespace HashiTaku
 
 		if (pHitVfx)
 			vfxData["name"] = pHitVfx->GetAssetName();
-
 		vfxData["applyColor"] = isApplyColor;
 		if (isApplyColor) SaveJsonVector4("color", effectColor, vfxData);
+		vfxData["lookCam"] = isLookCamera;
 		vfxData["scale"] = scale;
 		vfxData["speed"] = speed;
 		vfxData["startFrame"] = startFrame;
@@ -183,11 +221,11 @@ namespace HashiTaku
 		{
 			pHitVfx = AssetGetter::GetAsset<VisualEffect>(vfxName);
 		}
-
-		/*if (LoadJsonBoolean("applyColor", isApplyColor, _data))
+		if (LoadJsonBoolean("applyColor", isApplyColor, _data))
 		{
 			LoadJsonColor("color", effectColor, _data);
-		}*/
+		}
+		LoadJsonBoolean("lookCam", isLookCamera, _data);
 		LoadJsonFloat("scale", scale, _data);
 		LoadJsonFloat("speed", speed, _data);
 		LoadJsonInteger("startFrame", startFrame, _data);
@@ -210,6 +248,7 @@ namespace HashiTaku
 		}
 
 		// 各パラメータ
+		ImGui::Checkbox("LookCamera", &isLookCamera);
 		ImGui::Checkbox("ApplyColor", &isApplyColor);
 		if (isApplyColor)
 			ImGui::ColorEdit4("color", &effectColor.x);

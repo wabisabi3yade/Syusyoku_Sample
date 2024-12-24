@@ -4,7 +4,8 @@
 // イベント
 #include "ANE_DebugLog.h"
 #include "ANE_ChangeParameter.h"
-
+#include "ANE_CreateVfx.h"
+#include "ANE_CameraShake.h"
 
 // ステート
 #include "ANS_DebugLog.h"

@@ -17,6 +17,8 @@ namespace HashiTaku
 		horiSpeedToTarget(10.0f),
 		distanceHorizon(5.0f),
 		lookTargetOffsetY(2.0f),
+		lookSpeedRate(10.0f),
+		isFollowLooking(false),
 		isTargeting(false)
 	{
 		pInput = &InSceneSystemManager::GetInstance()->GetInput();
@@ -61,6 +63,7 @@ namespace HashiTaku
 		data["centerAngle"] = centerAngle;
 		data["disHorizon"] = distanceHorizon;
 		data["lookOffsetY"] = lookTargetOffsetY;
+		data["lookSpeedRate"] = lookSpeedRate;
 
 		return data;
 	}
@@ -80,10 +83,18 @@ namespace HashiTaku
 		LoadJsonFloat("centerAngle", centerAngle, _data);
 		LoadJsonFloat("disHorizon", distanceHorizon, _data);
 		LoadJsonFloat("lookOffsetY", lookTargetOffsetY, _data);
+		LoadJsonFloat("lookSpeedRate", lookSpeedRate, _data);
 	}
 
 	void CameraOnMoveState::OnStartBehavior()
 	{
+		// 現在の高さを取得
+		currentHeight =
+			GetCamera().GetTransform().GetPosition().y -
+			GetFollowPosition().y;
+
+		// 視点移動を滑らかに合わせに行く
+		isFollowLooking = true;
 	}
 
 	void CameraOnMoveState::UpdateBehavior()
@@ -107,7 +118,6 @@ namespace HashiTaku
 
 		// 注視点更新
 		LookUpdate();
-
 	}
 
 	void CameraOnMoveState::NormalUpdate()
@@ -215,9 +225,26 @@ namespace HashiTaku
 		DXSimp::Vector3 lookPos = followPos + Vec3::Up * lookTargetOffsetY;
 		DXSimp::Vector3 lookVec = lookPos - GetBasePosition();
 		lookVec.Normalize();
-		DXSimp::Quaternion camTargetRot = Quat::RotateToVector(lookVec);
 
-		camTrans.SetRotation(camTargetRot);
+		// ターゲットまでの向き
+		DXSimp::Quaternion camTargetRot = Quat::RotateToVector(lookVec);
+		DXSimp::Quaternion lookRot;
+
+		if (isFollowLooking)	// 滑らかに合わせているとき
+		{
+			lookRot = camTrans.GetRotation();
+			lookRot = DXSimp::Quaternion::Slerp(lookRot, camTargetRot, lookSpeedRate * DeltaTime());
+
+			// ほぼ同等になったなら
+			if (Quat::CheckEqual(lookRot, camTargetRot))
+				isFollowLooking = false;
+		}
+		else // 瞬時に合わせる
+		{
+			lookRot = camTargetRot;
+		}
+		
+		camTrans.SetRotation(lookRot);
 	}
 
 	void CameraOnMoveState::ImGuiDebug()
@@ -246,5 +273,6 @@ namespace HashiTaku
 
 		ImGui::Text("Look");
 		ImGui::DragFloat("lookOffsetY", &lookTargetOffsetY, 0.01f);
+		ImGui::DragFloat("lookRate", &lookSpeedRate, 0.01f);
 	}
 }

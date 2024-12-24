@@ -27,11 +27,20 @@ namespace HashiTaku
 		/// @brief レベルごとのチャージの時間
 		std::array<float, static_cast<u_int>(ChargeLevel::MaxNum)> chargeTimes;
 
+		/// @brief レベルごとのチャージの色
+		std::array<DXSimp::Color, static_cast<u_int>(ChargeLevel::MaxNum)> chargeVfxColor;
+
 		/// @brief チャージで次の段階に移行した時のエフェクト
 		CreateVfxInfo onNextChargeVfx;
 
+		/// @brief チャージ攻撃に移行するエフェクト
+		CreateVfxInfo chargeReleaseVfx;
+
 		/// @brief チャージエフェクトのオフセット座標
 		DXSimp::Vector3 chargeVfxOffset;
+
+		/// @brief チャージ攻撃移行時のエフェクトオフセットY座標
+		float chargeReleaseVfxOffsetY;
 
 		// カメラ移動コンポーネント
 		CP_CameraMove* pCamMove;
@@ -42,8 +51,17 @@ namespace HashiTaku
 		/// @brief 現在の溜め時間
 		float curChargingTime;
 
+		/// @brief 1フレーム前のの溜め時間
+		float lastChargingTime;
+
+		/// @brief チャージ中のエフェクトの生成時間オフセット(チャージ時から見た)
+		float chargeVfxCreateTimeOffset;
+
 		/// @brief 現在のチャージのレベル
 		ChargeLevel curChargeLevel;
+
+		/// @brief チャージのエフェクトハンドル
+		Effekseer::Handle chargeVfxHandle;
 
 		/// @brief チャージ中かどうか？
 		bool isCharging;
@@ -60,6 +78,9 @@ namespace HashiTaku
 		/// @brief 更新
 		void UpdateBehavior() override;
 
+		/// @brief 終了
+		void OnEndBehavior() override;
+
 		/// @brief カメラをチャージ状態に編子うする
 		void ChangeCameraChargeState();
 
@@ -72,6 +93,9 @@ namespace HashiTaku
 
 		/// @brief チャージ中の更新処理
 		void ChargingUpdate();
+
+		/// @brief チャージのエフェクトを出す
+		void CreateChargeVfx();
 
 		/// @brief 次のチャージレベルへ移行
 		void NextChargeLevel();

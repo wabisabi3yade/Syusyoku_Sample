@@ -38,7 +38,8 @@ namespace HashiTaku
 	template<AnimNotifyConcept T>
 	inline void AnimationNotifyFactory::ResisterNotify(AnimationNotify_Base::NotifyType _createNotifyType)
 	{
-		std::unique_ptr<AnimNotifyRespawner_Base> pRespawner = std::make_unique<AnimNotifyRespawner<T>>();
+		std::unique_ptr<AnimNotifyRespawner_Base> pRespawner =
+			std::make_unique<AnimNotifyRespawner<T>>();
 
 		animNotifyList[_createNotifyType] = std::move(pRespawner);
 	}

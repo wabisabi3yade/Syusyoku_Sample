@@ -51,6 +51,12 @@ namespace HashiTaku
 		/// @brief ターゲットからY座標の注視点
 		float lookTargetOffsetY;
 
+		/// @brief 視点移動速度のレート
+		float lookSpeedRate;
+
+		/// @brief 視点移動を滑らかに移動している途中か？
+		bool isFollowLooking;
+
 		/// @brief ターゲット処理するか？
 		bool isTargeting;
 	public:

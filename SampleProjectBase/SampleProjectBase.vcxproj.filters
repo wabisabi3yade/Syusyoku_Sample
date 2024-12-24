@@ -886,6 +886,18 @@
     <Filter Include="ソース ファイル\InGame\PerlinShake\Parameter">
       <UniqueIdentifier>{31fc32ed-0e12-4670-92df-0eb43422b2da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\CreateVfx">
+      <UniqueIdentifier>{a7188c60-bf7d-4d2d-9054-a75b7d4d16a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\ITransfiormSetter">
+      <UniqueIdentifier>{f6d914cd-6fa2-43f8-9f94-a6c004e814e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\CameraShake">
+      <UniqueIdentifier>{e963cdc1-6c87-49e9-a18d-00369aeae517}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera\State\ChargeAttack">
+      <UniqueIdentifier>{4c1a00e6-a7b2-40bd-81c8-26a56c0eba9c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1622,11 +1634,17 @@
     <ClCompile Include="PerlinShakeParameter.cpp">
       <Filter>ソース ファイル\InGame\PerlinShake\Parameter</Filter>
     </ClCompile>
-    <ClCompile Include="CameraChargeAttack.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="CalcPerlinShakeVector.cpp">
       <Filter>ソース ファイル\InGame\PerlinShake</Filter>
+    </ClCompile>
+    <ClCompile Include="ANE_CreateVfx.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\CreateVfx</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraChargeAttack.cpp">
+      <Filter>ソース ファイル\InGame\Camera\State\ChargeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="ANE_CameraShake.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2413,11 +2431,20 @@
     <ClInclude Include="PerlinShakeParameter.h">
       <Filter>ソース ファイル\InGame\PerlinShake\Parameter</Filter>
     </ClInclude>
-    <ClInclude Include="CameraChargeAttack.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="CalcPerlinShakeVector.h">
       <Filter>ソース ファイル\InGame\PerlinShake</Filter>
+    </ClInclude>
+    <ClInclude Include="ANE_CreateVfx.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\CreateVfx</Filter>
+    </ClInclude>
+    <ClInclude Include="ITransformSetter.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\ITransfiormSetter</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraChargeAttack.h">
+      <Filter>ソース ファイル\InGame\Camera\State\ChargeAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="ANE_CameraShake.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

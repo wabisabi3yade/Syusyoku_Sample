@@ -140,6 +140,10 @@ namespace HashiTaku
 		/// @return クォータニオン
 		Quaternion ToQuaternion(const Vector3& _degrees);
 
+		/// @brief ほぼ等しいクォータニオンか判断する
+		/// @return 等しいか？
+		bool CheckEqual(const Quaternion& _q1, const Quaternion& _q2);
+
 		/// @brief 文字列に変換する
 		/// @param _v Quaternion
 		/// @return 文字列

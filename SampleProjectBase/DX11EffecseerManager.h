@@ -20,6 +20,11 @@ namespace HashiTaku
 
 		/// @brief D3D描画クラス
 		D3D11_Renderer* pRenderer;
+
+	public:
+		/// @brief エフェクトの何もなしを表すハンドル
+		static constexpr int NONE_VFX_HANDLE{ -9999 };
+
 	public:
 		/// @brief 初期化関数
 		void Init();
@@ -61,6 +66,15 @@ namespace HashiTaku
 			const DirectX::SimpleMath::Vector3& _pos,
 			const DirectX::SimpleMath::Vector3& _eularAngles = DirectX::SimpleMath::Vector3::Zero);
 
+		/// @brief 色を変更するなら
+		/// @param _efkHandle エフェクトのハンドル
+		/// @param _color 色
+		void ChangeColor(Effekseer::Handle _efkHandle, const DXSimp::Color& _color);
+
+		/// @brief 指定したエフェクトを削除する
+		/// @param _deleteHandle 削除するエフェクトハンドル
+		void DestroyVfx(const Effekseer::Handle _deleteHandle);
+
 		/// @brief マネジャーを取得
 		/// @return エフェクシアマネジャー変数
 		const Effekseer::ManagerRef& GetManager() const;
@@ -70,6 +84,11 @@ namespace HashiTaku
 
 		/// @brief カメラ行列をセット
 		void UpdateCamMatrix();
+
+		/// @brief カメラを向く角度を求める
+		/// @param _efkPos エフェクトの座標
+		/// @param _outAngles 結果
+		void CalcLookCameraAngles(const DXSimp::Vector3& _efkPos, DXSimp::Vector3& _outAngles);
 
 		/// @brief エフェクシアの行列を作成
 		/// @param _dxMtx DIrectXの行列
@@ -104,6 +123,9 @@ namespace HashiTaku
 
 		/// @brief 指定色を反映する
 		bool isApplyColor{ false };
+
+		/// @brief カメラを向き続けるか？
+		bool isLookCamera{ false };
 
 		json Save() override;
 		void Load(const json& _data) override;

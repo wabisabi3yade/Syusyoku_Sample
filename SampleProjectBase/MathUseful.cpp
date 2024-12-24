@@ -175,6 +175,14 @@ namespace HashiTaku
 		return q;
 	}
 
+	bool Quat::CheckEqual(const Quaternion& _q1, const Quaternion& _q2)
+	{
+		// “àÏ‚Å1‚È‚ç‚Î“¯“™‚Æˆµ‚¤
+		float dot = _q1.Dot(_q2);
+		
+		return std::abs(dot) > 1.0f - Mathf::epsilon;
+	}
+
 	std::string Quat::ToStr(const Quaternion& _q)
 	{
 		return "x:" + std::to_string(_q.x)

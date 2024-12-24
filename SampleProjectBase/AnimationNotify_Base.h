@@ -19,8 +19,11 @@ namespace HashiTaku
 			ANE_ChangeParameter,
 			ANS_ChangeParameter,
 
-			// ワープモーション
-			//ANS_WarpMotion,
+			// エフェクト作成
+			ANE_CreateVfx,
+
+			// カメラシェイク
+			ANE_CameraShake,
 
 			None
 		};

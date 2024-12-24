@@ -93,7 +93,7 @@ namespace HashiTaku
 
 		// 通知イベントをコピーする
 		const AnimNotifyList& originNotifys = defaultNodeInfo.notifyList;
-		pCurNodePlayer->CopyNotifys(originNotifys, *pCopyAnimParameters);
+		pCurNodePlayer->CopyNotifys(originNotifys, *pCopyAnimParameters, *pObjectTransform);
 
 		// 遷移条件確認クラスを作成
 		const auto& transArrows = defaultNodeInfo.transitionArrows;
@@ -236,9 +236,10 @@ namespace HashiTaku
 		const AnimNodeInfo& nodeInfo = *pAnimController->GetNodeInfo(nextAnimation);
 		const auto& transArrowList = nodeInfo.transitionArrows;
 		const auto* groupArrows = pAnimController->GetGroupArrows(nodeInfo.groupArrowsName);
-		pTransChecker =
-			std::make_unique<AnimTransitionChecker>(*pCopyAnimParameters, transArrowList,
-				groupArrows);
+		pTransChecker = std::make_unique<AnimTransitionChecker>(
+			*pCopyAnimParameters,
+			transArrowList,
+			groupArrows);
 
 		// 遷移ステートに変更
 		updateState = UpdateState::Transition;
@@ -251,7 +252,7 @@ namespace HashiTaku
 
 		// 通知イベントをコピーする
 		const AnimNotifyList& originNotifys = pAnimController->GetNodeInfo(nextAnimation)->notifyList;
-		pCurNodePlayer->CopyNotifys(originNotifys, *pCopyAnimParameters);
+		pCurNodePlayer->CopyNotifys(originNotifys, *pCopyAnimParameters, *pObjectTransform);
 
 		// サブジェクト更新
 		ChangeAnimSubjectUpdate();

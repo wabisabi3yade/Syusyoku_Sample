@@ -63,7 +63,10 @@ namespace HashiTaku
 		/// @brief アニメーションコントローラーから通知イベントをコピーする
 		/// @param _notifyList コピー元の通知イベントリスト
 		/// @param _animationParameters アニメーションパラメータ
-		void CopyNotifys(const std::list<std::unique_ptr<AnimationNotify_Base>>& _notifyList, AnimationParameters& _animationParameters);
+		/// @param _transform トランスフォーム情報
+		void CopyNotifys(const std::list<std::unique_ptr<AnimationNotify_Base>>& _notifyList, 
+			AnimationParameters& _animationParameters, 
+			Transform& _transform);
 
 		/// @brief 更新処理呼び出し
 		/// @param _deltaTime 経過時間

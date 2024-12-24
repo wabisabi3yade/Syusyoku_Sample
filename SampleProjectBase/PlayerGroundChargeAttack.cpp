@@ -5,11 +5,17 @@
 
 namespace HashiTaku
 {
+	constexpr int NONE_VFX_HANDLE = -9999;	// エフェクトなしを表すエフェクトハンドル
+
 	PlayerGroundChargeAttack::PlayerGroundChargeAttack() :
 		pCamMove(nullptr),
 		maxChargeTime(5.0f),
 		curChargingTime(0.0f),
+		lastChargingTime(0.0f),
+		chargeVfxCreateTimeOffset(0.0f),
+		chargeReleaseVfxOffsetY(0.0f),
 		curChargeLevel(ChargeLevel::Low),
+		chargeVfxHandle(NONE_VFX_HANDLE),
 		isCharging(false)
 	{
 		// 初期化
@@ -26,8 +32,11 @@ namespace HashiTaku
 	{
 		auto data = PlayerAttackState::Save();
 		data["maxTime"] = maxChargeTime;
+		data["chargeOffsetTime"] = chargeVfxCreateTimeOffset;
 		SaveJsonVector3("chargeOffset", chargeVfxOffset, data);
 		data["chargeVfx"] = onNextChargeVfx.Save();
+		data["releaseVfxOffset"] = chargeReleaseVfxOffsetY;
+		data["releaseVfx"] = chargeReleaseVfx.Save();
 
 		// チャージ段階ごとの情報
 		auto& chargeInfoDatas = data["chargeInfos"];
@@ -56,11 +65,18 @@ namespace HashiTaku
 	{
 		PlayerAttackState::Load(_data);
 		LoadJsonFloat("maxTime", maxChargeTime, _data);
+		LoadJsonFloat("chargeOffsetTime", chargeVfxCreateTimeOffset, _data);
 		LoadJsonVector3("chargeOffset", chargeVfxOffset, _data);
 		json vfxData;
 		if (LoadJsonData("chargeVfx", vfxData, _data))
 		{
 			onNextChargeVfx.Load(vfxData);
+		}
+
+		LoadJsonFloat("releaseVfxOffset", chargeReleaseVfxOffsetY, _data);
+		if (LoadJsonData("releaseVfx", vfxData, _data))
+		{
+			chargeReleaseVfx.Load(vfxData);
 		}
 
 		json chargeDatas;
@@ -94,6 +110,7 @@ namespace HashiTaku
 		// パラメータ初期化
 		isCharging = true;
 		curChargingTime = 0.0f;
+		lastChargingTime = -Mathf::epsilon;
 		curChargeLevel = ChargeLevel::Low;
 
 		// アニメーション側
@@ -114,6 +131,12 @@ namespace HashiTaku
 			// チャージ中の更新処理
 			ChargingUpdate();
 		}
+	}
+
+	void PlayerGroundChargeAttack::OnEndBehavior()
+	{
+		// チャージのエフェクトを消す
+		DX11EffecseerManager::GetInstance()->DestroyVfx(chargeVfxHandle);
 	}
 
 	void PlayerGroundChargeAttack::ChangeCameraChargeState()
@@ -143,8 +166,9 @@ namespace HashiTaku
 
 	void PlayerGroundChargeAttack::CheckInputRelease()
 	{
-		// 入力上げたら
-		if (pPlayerInput->GetButtonUp(GameInput::ButtonType::Player_ChargeAttack))
+		// 入力していなかったら
+		if (isCharging &&
+			!pPlayerInput->GetButton(GameInput::ButtonType::Player_ChargeAttack))
 			OnChargeEnd();
 	}
 
@@ -156,6 +180,11 @@ namespace HashiTaku
 		int maxLevelId = static_cast<int>(ChargeLevel::MaxNum);
 		if (nextLevelId != maxLevelId)	// 最大レベルでない
 		{
+			// エフェクトを出すタイミングになった瞬間なら
+			if (curChargingTime > chargeTimes[nextLevelId] + chargeVfxCreateTimeOffset &&
+				lastChargingTime < chargeTimes[nextLevelId] + chargeVfxCreateTimeOffset)
+				CreateChargeVfx();
+
 			// チャージ時間が来たら
 			if (curChargingTime > chargeTimes[nextLevelId])
 				NextChargeLevel();
@@ -164,6 +193,17 @@ namespace HashiTaku
 		// 最大時間が溜まれば
 		if (curChargingTime > maxChargeTime)
 			OnChargeEnd();
+
+		lastChargingTime = curChargingTime;
+	}
+
+	void PlayerGroundChargeAttack::CreateChargeVfx()
+	{
+		// エフェクトを出す
+		DXSimp::Vector3 effectPos = GetMyTransform().GetPosition();
+		chargeVfxHandle = DX11EffecseerManager::GetInstance()->Play(
+			onNextChargeVfx,
+			effectPos + chargeVfxOffset);
 	}
 
 	void PlayerGroundChargeAttack::NextChargeLevel()
@@ -173,9 +213,8 @@ namespace HashiTaku
 		curChargeLevel = static_cast<ChargeLevel>(nextLevelId);
 		GetAnimation()->SetInt(CHARGE_STEP_PARAMNAME, nextLevelId + 1);	// チャージの段階
 
-		// エフェクトを出す
-		DXSimp::Vector3 effectPos = GetMyTransform().GetPosition();
-		DX11EffecseerManager::GetInstance()->Play(onNextChargeVfx, effectPos + chargeVfxOffset);
+		// チャージのエフェクトのハンドルをリセット
+		chargeVfxHandle = NONE_VFX_HANDLE;
 
 		HASHI_DEBUG_LOG("チャージ段階：" + std::string(magic_enum::enum_name(curChargeLevel)));
 	}
@@ -197,7 +236,6 @@ namespace HashiTaku
 
 			pCamMove->ChangeState(CP_CameraMove::CameraState::Move);
 		}
-			
 
 		// 与えるダメージ量を求める（溜めた分だけダメージアップ）
 		u_int atkTimes = GetAttackTimes();
@@ -211,6 +249,16 @@ namespace HashiTaku
 			u_int chargeId = static_cast<u_int>(curChargeLevel);
 			*pAtkInfo = chargeAtkInfos[a_i][chargeId];
 		}
+
+		// チャージエフェクトを消す
+		auto* pVfxManager = DX11EffecseerManager::GetInstance();
+		if (chargeVfxHandle != NONE_VFX_HANDLE)
+			pVfxManager->DestroyVfx(chargeVfxHandle);
+
+		// 攻撃移行時のエフェクトを出す
+		DXSimp::Vector3 vfxPos = GetMyTransform().GetPosition() +
+			Vec3::Up * chargeReleaseVfxOffsetY;
+		pVfxManager->Play(chargeReleaseVfx, vfxPos);
 	}
 
 	void PlayerGroundChargeAttack::ImGuiDebug()
@@ -231,8 +279,16 @@ namespace HashiTaku
 			ImGui::TreePop();
 		}
 
-		ImGui::DragFloat3("ChargeOffset", &chargeVfxOffset.x, 0.1f);
+		ImGui::PushID("ChargeVfx");
+		ImGui::Text("ChargeVfx");
+		ImGui::DragFloat("ChargeOffsetTime", &chargeVfxCreateTimeOffset, 0.01f);
+		ImGui::DragFloat3("ChargeOffsetPos", &chargeVfxOffset.x, 0.1f);
 		onNextChargeVfx.ImGuiCall();
+		ImGui::PopID();
+		ImGuiMethod::LineSpaceSmall();
+		ImGui::Text("ChargeReleaseVfx");
+		ImGui::DragFloat("ReleaseOffsetY", &chargeReleaseVfxOffsetY, 0.1f);
+		chargeReleaseVfx.ImGuiCall();
 
 		ImGuiAttackInfo();
 	}
