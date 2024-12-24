@@ -14,11 +14,11 @@ namespace HashiTaku
 
 		/// @brief セーブする
 		/// @return セーブデータ
-		nlohmann::json Save() override;
+		json Save() override;
 
 		/// @brief ロードする
 		/// @param _data ロードするデータ 
-		void Load(const nlohmann::json& _data) override;
+		void Load(const json& _data) override;
 	private:
 		void UpdateBehavior() override;
 		void OnEndBehavior() override;

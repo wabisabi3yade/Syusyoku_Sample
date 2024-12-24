@@ -42,8 +42,8 @@ namespace HashiTaku
 		PlayerAttackState();
 		virtual ~PlayerAttackState() {}
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	protected:
 		// State‹¤’Êˆ—
 		void OnStartBehavior() override;
@@ -52,7 +52,25 @@ namespace HashiTaku
 
 		void OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName) override;
 
+		/// @brief UŒ‚‰ñ”‚ğƒZƒbƒg
+		void SetAttackTimes(u_int _attackTimes);
+
+		/// @brief UŒ‚‰ñ”‚ğ•Ï‚¦‚½‚Æ‚«‚Ìˆ—
+		virtual void OnChangeAttackTimes();
+
+		/// @brief w’è‚µ‚½UŒ‚î•ñ‚ğæ“¾
+		/// @param _atkIdx ”z—ñ‚Ì—v‘f”
+		/// @return UŒ‚î•ñ(”ÍˆÍŠO‚È‚çnullptr)
+		PlayerAttackInformation* GetPlayerAtkInfo(u_int _atkIdx);
+
+		/// @brief UŒ‚‰ñ”‚ğæ“¾
+		/// @return UŒ‚‰ñ”
+		u_int GetAttackTimes() const;
+
 		void ImGuiDebug() override;
+
+		// UŒ‚î•ñ‚Ì•ÒW
+		virtual void ImGuiAttackInfo();
 	private:
 		/// @brief ƒpƒ‰ƒ[ƒ^‚ğ‰Šú‰»
 		void InitParameter();

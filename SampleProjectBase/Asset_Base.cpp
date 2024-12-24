@@ -17,15 +17,15 @@ namespace HashiTaku
 		return isSave;
 	}
 
-	nlohmann::json Asset_Base::Save()
+	json Asset_Base::Save()
 	{
-		nlohmann::json data;
+		json data;
 		data["assetName"] = assetName;
 
 		return data;
 	}
 
-	void Asset_Base::Load(const nlohmann::json& _data)
+	void Asset_Base::Load(const json& _data)
 	{
 		LoadJsonString("assetName", assetName, _data);
 	}

@@ -51,11 +51,11 @@ namespace HashiTaku
 		/// @return ó‘Ô‚ÌID
 		int GetStateId(const std::string& _stateName) override;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		template<PlayerAirConcept T>
-		void CreateState(AirState _actionState);
+		void CreateState(AirState _actionState, CancelType _cancelType);
 
 		/// @brief —‘z‚Ì—‰º‚É‚·‚é‚½‚ß‚É‰ºŒü‚«‚Ì—Í‚ğ‰Á‚¦‚é
 		void AddDownForce();
@@ -64,8 +64,11 @@ namespace HashiTaku
 	};
 
 	template<PlayerAirConcept T>
-	inline void PlayerAirActionController::CreateState(AirState _actionState)
+	inline void PlayerAirActionController::CreateState(AirState _actionState, 
+		CancelType _cancelType)
 	{
-		PlayerActionController_Base::CreateState<T>(static_cast<int>(_actionState));
+		PlayerActionController_Base::CreateState<T>(
+			static_cast<int>(_actionState),
+			_cancelType);
 	}
 }

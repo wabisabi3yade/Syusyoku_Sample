@@ -102,8 +102,8 @@ namespace HashiTaku
 		/// @return グループの遷移矢印リスト(nullptrならグループ名ヒットせず)
 		const TransArrowList* GetGroupArrows(const std::string& _groupName) const;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		/// @brief 名前のノードを既にあるか確認する
 		/// @param _nodeName 確認する名前
@@ -138,6 +138,10 @@ namespace HashiTaku
 		/// @brief 遷移矢印の優先順位でソート
 		static bool SortArrowPriority(const std::unique_ptr<AnimTransitionArrow>& _a1, const std::unique_ptr<AnimTransitionArrow>& _a2);
 
+		/// @brief ノード名でソートする
+		static bool SortNodeName(const std::unique_ptr<AnimNodeInfo>& _a1,
+			const std::unique_ptr<AnimNodeInfo>& _a2);
+
 		// ImGuiでノード関係
 		void ImGuiNode(const std::vector<std::string>& _nodeNames);
 
@@ -161,22 +165,22 @@ namespace HashiTaku
 		void ImGuiGroupArrows(const std::vector<std::string>& _nodeNames);
 
 		// ノード情報をセーブする
-		nlohmann::json SaveNodeInfo(AnimNodeInfo& _nodeInfo);
+		json SaveNodeInfo(AnimNodeInfo& _nodeInfo);
 
 		// グループ遷移条件をセーブする
-		nlohmann::json SaveGroupArrows();
+		json SaveGroupArrows();
 
 		// ノード情報をロードする
-		void LoadNodeInfo(const nlohmann::json& _nodeInfoData);
+		void LoadNodeInfo(const json& _nodeInfoData);
 
 		// 通知イベントをロードする
-		void LoadNotify(const nlohmann::json& _nodeInfoData);
+		void LoadNotify(const json& _nodeInfoData);
 
 		// 遷移矢印をロードする
-		void LoadTransArrow(const nlohmann::json& _nodeInfoData);
+		void LoadTransArrow(const json& _nodeInfoData);
 
 		// グループ矢印をロードする
-		void LoadGroupArrow(const nlohmann::json& _groupArrowData);
+		void LoadGroupArrow(const json& _groupArrowData);
 	protected:
 		void ImGuiDebug() override;
 	};

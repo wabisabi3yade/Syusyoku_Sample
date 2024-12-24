@@ -13,7 +13,7 @@ namespace HashiTaku
 		return pathName;
 	}
 
-	nlohmann::json AssetPath_Base::Save()
+	json AssetPath_Base::Save()
 	{
 		auto data = Asset_Base::Save();
 
@@ -22,7 +22,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void AssetPath_Base::Load(const nlohmann::json& _data)
+	void AssetPath_Base::Load(const json& _data)
 	{
 		Asset_Base::Load(_data);
 

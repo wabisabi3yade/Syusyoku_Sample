@@ -20,8 +20,8 @@ namespace HashiTaku
 		/// @return 生成した通知イベント
 		std::unique_ptr<AnimationNotify_Base> Clone() override;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		/// @brief イベント開始処理
 		void Begin() override;

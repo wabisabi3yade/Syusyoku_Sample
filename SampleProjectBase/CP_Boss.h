@@ -71,11 +71,11 @@ namespace HashiTaku
 		float GetBreakValue() const;
 
 		/// @param _data セーブシーンデータ
-		nlohmann::json Save() override;
+		json Save() override;
 
 		/// @brief ロードする
 		/// @param _data ロードするシーンデータ 
-		void Load(const nlohmann::json& _data) override;
+		void Load(const json& _data) override;
 	private:
 		void Awake() override;
 		void Start() override;
@@ -107,7 +107,13 @@ namespace HashiTaku
 
 		/// @brief 各クラスのダメージを受けたときの処理
 		/// @param _attackInfo 攻撃情報
-		void OnDamageBehavior(const AttackInformation& _attackInfo,
+		/// 
+		
+		/// @brief 各クラスのダメージを受けたときの処理
+		/// @param _attackInfo 攻撃情報
+		/// @param _attackerPos 攻撃した側の座標
+		/// @return ダメージを受けたか？
+		bool OnDamageBehavior(const AttackInformation& _attackInfo,
 			const DirectX::SimpleMath::Vector3& _attackerPos) override;
 
 		/// @brief 死んだときの処理

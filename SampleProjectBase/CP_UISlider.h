@@ -48,8 +48,8 @@ namespace HashiTaku
 		/// @param _minVal 最小値
 		void SetMinValue(float _minVal);
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 
 	private:
 		/// @brief スライダー画像に適用する

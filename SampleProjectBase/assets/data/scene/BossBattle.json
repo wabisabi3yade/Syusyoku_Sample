@@ -436,13 +436,27 @@
                                             "attackInfos": [
                                                 {
                                                     "break": 5.0,
+                                                    "camShake": {
+                                                        "fadeOut": true,
+                                                        "power": 0.15000000596046448,
+                                                        "shakeVec": [
+                                                            1.0,
+                                                            0.0,
+                                                            0.0
+                                                        ],
+                                                        "speed": 0.4000000059604645,
+                                                        "time": 0.05999999865889549
+                                                    },
                                                     "damage": 2.0,
                                                     "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
                                                         "name": "hit01",
                                                         "scale": 0.25,
                                                         "speed": 0.699999988079071,
                                                         "startFrame": 2
                                                     },
+                                                    "isCamShake": true,
                                                     "level": 0
                                                 }
                                             ],
@@ -468,13 +482,27 @@
                                             "attackInfos": [
                                                 {
                                                     "break": 6.0,
+                                                    "camShake": {
+                                                        "fadeOut": true,
+                                                        "power": 0.15000000596046448,
+                                                        "shakeVec": [
+                                                            1.0,
+                                                            0.0,
+                                                            0.0
+                                                        ],
+                                                        "speed": 0.4000000059604645,
+                                                        "time": 0.05999999865889549
+                                                    },
                                                     "damage": 2.9000000953674316,
                                                     "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
                                                         "name": "hit01",
                                                         "scale": 0.25,
                                                         "speed": 0.699999988079071,
                                                         "startFrame": 2
                                                     },
+                                                    "isCamShake": true,
                                                     "level": 0
                                                 }
                                             ],
@@ -502,11 +530,14 @@
                                                     "break": 1.0,
                                                     "damage": 2.0,
                                                     "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
                                                         "name": "hit01",
                                                         "scale": 0.30000001192092896,
                                                         "speed": 0.699999988079071,
                                                         "startFrame": 2
                                                     },
+                                                    "isCamShake": false,
                                                     "level": 0
                                                 }
                                             ],
@@ -559,13 +590,27 @@
                                             "attackInfos": [
                                                 {
                                                     "break": 8.0,
+                                                    "camShake": {
+                                                        "fadeOut": true,
+                                                        "power": 0.15000000596046448,
+                                                        "shakeVec": [
+                                                            1.0,
+                                                            0.0,
+                                                            0.0
+                                                        ],
+                                                        "speed": 0.4000000059604645,
+                                                        "time": 0.05999999865889549
+                                                    },
                                                     "damage": 4.0,
                                                     "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
                                                         "name": "hit01",
                                                         "scale": 0.30000001192092896,
                                                         "speed": 0.75,
                                                         "startFrame": 2
                                                     },
+                                                    "isCamShake": true,
                                                     "level": 0
                                                 }
                                             ],
@@ -591,13 +636,27 @@
                                             "attackInfos": [
                                                 {
                                                     "break": 10.0,
+                                                    "camShake": {
+                                                        "fadeOut": true,
+                                                        "power": 0.800000011920929,
+                                                        "shakeVec": [
+                                                            1.0,
+                                                            0.6000000238418579,
+                                                            0.0
+                                                        ],
+                                                        "speed": 0.30000001192092896,
+                                                        "time": 0.30000001192092896
+                                                    },
                                                     "damage": 3.299999952316284,
                                                     "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
                                                         "name": "hit01",
                                                         "scale": 0.30000001192092896,
                                                         "speed": 0.699999988079071,
                                                         "startFrame": 2
                                                     },
+                                                    "isCamShake": true,
                                                     "level": 0
                                                 }
                                             ],
@@ -636,24 +695,52 @@
                                             "attackInfos": [
                                                 {
                                                     "break": 15.0,
+                                                    "camShake": {
+                                                        "fadeOut": true,
+                                                        "power": 1.0,
+                                                        "shakeVec": [
+                                                            1.0,
+                                                            0.0,
+                                                            0.0
+                                                        ],
+                                                        "speed": 0.30000001192092896,
+                                                        "time": 0.10000000149011612
+                                                    },
                                                     "damage": 5.0,
                                                     "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
                                                         "name": "hit01",
                                                         "scale": 0.4000000059604645,
                                                         "speed": 0.800000011920929,
                                                         "startFrame": 0
                                                     },
+                                                    "isCamShake": true,
                                                     "level": 2
                                                 },
                                                 {
                                                     "break": 18.0,
+                                                    "camShake": {
+                                                        "fadeOut": true,
+                                                        "power": 1.399999976158142,
+                                                        "shakeVec": [
+                                                            1.0,
+                                                            0.0,
+                                                            0.0
+                                                        ],
+                                                        "speed": 0.30000001192092896,
+                                                        "time": 0.10000000149011612
+                                                    },
                                                     "damage": 6.199999809265137,
                                                     "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
                                                         "name": "hit01",
                                                         "scale": 0.44999998807907104,
                                                         "speed": 0.800000011920929,
                                                         "startFrame": 0
                                                     },
+                                                    "isCamShake": true,
                                                     "level": 3
                                                 }
                                             ],
@@ -675,6 +762,156 @@
                                     },
                                     {
                                         "data": {
+                                            "attackCnt": 1,
+                                            "attackInfos": [
+                                                {
+                                                    "break": 1.0,
+                                                    "damage": 0.0,
+                                                    "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
+                                                    "isCamShake": false,
+                                                    "level": 0
+                                                }
+                                            ],
+                                            "chargeInfos": [
+                                                {
+                                                    "attackInfos": [
+                                                        {
+                                                            "break": 1.0,
+                                                            "camShake": {
+                                                                "fadeOut": true,
+                                                                "power": 1.0,
+                                                                "shakeVec": [
+                                                                    0.20000000298023224,
+                                                                    1.0,
+                                                                    0.0
+                                                                ],
+                                                                "speed": 0.6000000238418579,
+                                                                "time": 0.20000000298023224
+                                                            },
+                                                            "damage": 2.0,
+                                                            "hitVfx": {
+                                                                "applyColor": false,
+                                                                "lookCam": false,
+                                                                "name": "hit01",
+                                                                "scale": 0.30000001192092896,
+                                                                "speed": 1.0,
+                                                                "startFrame": 0
+                                                            },
+                                                            "isCamShake": true,
+                                                            "level": 1
+                                                        }
+                                                    ],
+                                                    "time": 0.0
+                                                },
+                                                {
+                                                    "attackInfos": [
+                                                        {
+                                                            "break": 1.0,
+                                                            "camShake": {
+                                                                "fadeOut": true,
+                                                                "power": 2.0,
+                                                                "shakeVec": [
+                                                                    0.4000000059604645,
+                                                                    1.0,
+                                                                    0.0
+                                                                ],
+                                                                "speed": 0.5,
+                                                                "time": 0.4000000059604645
+                                                            },
+                                                            "damage": 0.0,
+                                                            "hitVfx": {
+                                                                "applyColor": false,
+                                                                "lookCam": false,
+                                                                "name": "hit01",
+                                                                "scale": 0.5,
+                                                                "speed": 0.6000000238418579,
+                                                                "startFrame": 0
+                                                            },
+                                                            "isCamShake": true,
+                                                            "level": 2
+                                                        }
+                                                    ],
+                                                    "time": 1.0
+                                                },
+                                                {
+                                                    "attackInfos": [
+                                                        {
+                                                            "break": 1.0,
+                                                            "camShake": {
+                                                                "fadeOut": false,
+                                                                "power": 7.0,
+                                                                "shakeVec": [
+                                                                    1.0,
+                                                                    1.0,
+                                                                    0.0
+                                                                ],
+                                                                "speed": 0.6000000238418579,
+                                                                "time": 0.6000000238418579
+                                                            },
+                                                            "damage": 0.0,
+                                                            "hitVfx": {
+                                                                "applyColor": false,
+                                                                "lookCam": false,
+                                                                "name": "hit01",
+                                                                "scale": 0.800000011920929,
+                                                                "speed": 0.4000000059604645,
+                                                                "startFrame": 0
+                                                            },
+                                                            "isCamShake": true,
+                                                            "level": 3
+                                                        }
+                                                    ],
+                                                    "time": 2.0
+                                                }
+                                            ],
+                                            "chargeOffset": [
+                                                0.03200000151991844,
+                                                1.2000000476837158,
+                                                0.0
+                                            ],
+                                            "chargeOffsetTime": -0.30000001192092896,
+                                            "chargeVfx": {
+                                                "applyColor": false,
+                                                "lookCam": true,
+                                                "name": "charge02",
+                                                "scale": 0.800000011920929,
+                                                "speed": 1.5,
+                                                "startFrame": 0
+                                            },
+                                            "forwardCurve": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": null,
+                                                "startInterp": 1,
+                                                "startValue": 1.0,
+                                                "startVector": 0.0,
+                                                "useHermite": true
+                                            },
+                                            "isMoveFwd": false,
+                                            "maxDistance": 10.0,
+                                            "maxTime": 3.0,
+                                            "nextCombAttack": 99,
+                                            "releaseVfx": {
+                                                "applyColor": false,
+                                                "lookCam": true,
+                                                "name": "chargeRelease01",
+                                                "scale": 2.0,
+                                                "speed": 1.5,
+                                                "startFrame": 4
+                                            },
+                                            "releaseVfxOffset": 1.2000000476837158
+                                        },
+                                        "typeString": "ChargeAttack1"
+                                    },
+                                    {
+                                        "data": {
                                             "crouchTime": 0.10000000149011612,
                                             "jumpPower": 20.0
                                         },
@@ -685,6 +922,8 @@
                                             "canParryTime": 12,
                                             "parryAngle": 100.0,
                                             "vfxInfo": {
+                                                "applyColor": false,
+                                                "lookCam": false,
                                                 "name": "Parry01",
                                                 "scale": 0.800000011920929,
                                                 "speed": 1.600000023841858,
@@ -765,6 +1004,7 @@
                             "groundCheckName": "PlayerGroundCollision"
                         },
                         "camObjName": "Camera",
+                        "debugInvicible": false,
                         "enable": true,
                         "hpBarObjName": "Player_HpBar",
                         "maxHp": 100.0,
@@ -1011,7 +1251,7 @@
                                             2
                                         ],
                                         "enable": true,
-                                        "isDebugDisplay": true,
+                                        "isDebugDisplay": false,
                                         "name": "Weapon",
                                         "priority": 0
                                     }
@@ -1132,7 +1372,7 @@
                             "actData": [
                                 {
                                     "data": {
-                                        "isIdleOnly": false,
+                                        "isIdleOnly": true,
                                         "warpMotion": {
                                             "useWarp": false
                                         }
@@ -1175,28 +1415,48 @@
                                             {
                                                 "damage": 1.0,
                                                 "hitVfx": {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
                                                     "scale": 1.0,
                                                     "speed": 1.0,
                                                     "startFrame": 0
                                                 },
+                                                "isCamShake": false,
                                                 "level": 0
                                             },
                                             {
                                                 "damage": 2.0999999046325684,
                                                 "hitVfx": {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
                                                     "scale": 1.0,
                                                     "speed": 1.0,
                                                     "startFrame": 0
                                                 },
+                                                "isCamShake": false,
                                                 "level": 0
                                             },
                                             {
+                                                "camShake": {
+                                                    "fadeOut": true,
+                                                    "power": 1.0,
+                                                    "shakeVec": [
+                                                        1.0,
+                                                        0.5,
+                                                        0.0
+                                                    ],
+                                                    "speed": 0.6000000238418579,
+                                                    "time": 0.6000000238418579
+                                                },
                                                 "damage": 5.099999904632568,
                                                 "hitVfx": {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
                                                     "scale": 1.0,
                                                     "speed": 1.0,
                                                     "startFrame": 0
                                                 },
+                                                "isCamShake": true,
                                                 "level": 2
                                             }
                                         ],
@@ -1366,19 +1626,36 @@
                                             {
                                                 "damage": 3.0,
                                                 "hitVfx": {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
                                                     "scale": 1.0,
                                                     "speed": 1.0,
                                                     "startFrame": 0
                                                 },
+                                                "isCamShake": false,
                                                 "level": 1
                                             },
                                             {
+                                                "camShake": {
+                                                    "fadeOut": true,
+                                                    "power": 1.0,
+                                                    "shakeVec": [
+                                                        1.0,
+                                                        0.4000000059604645,
+                                                        0.0
+                                                    ],
+                                                    "speed": 0.5,
+                                                    "time": 0.6000000238418579
+                                                },
                                                 "damage": 5.0,
                                                 "hitVfx": {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
                                                     "scale": 1.0,
                                                     "speed": 1.0,
                                                     "startFrame": 0
                                                 },
+                                                "isCamShake": true,
                                                 "level": 2
                                             }
                                         ],
@@ -1456,7 +1733,7 @@
                                                         "startVector": 2.0,
                                                         "useHermite": true
                                                     },
-                                                    "movementXZ": 6.0,
+                                                    "movementXZ": 4.0,
                                                     "targetOffset": -1.0
                                                 },
                                                 {
@@ -1480,7 +1757,7 @@
                                                         "startVector": 2.0,
                                                         "useHermite": true
                                                     },
-                                                    "movementXZ": 6.0,
+                                                    "movementXZ": 5.5,
                                                     "targetOffset": -1.0
                                                 }
                                             ]
@@ -1492,21 +1769,49 @@
                                     "data": {
                                         "atkInfos": [
                                             {
+                                                "camShake": {
+                                                    "fadeOut": true,
+                                                    "power": 1.0,
+                                                    "shakeVec": [
+                                                        1.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "speed": 0.5,
+                                                    "time": 0.4000000059604645
+                                                },
                                                 "damage": 8.0,
                                                 "hitVfx": {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
                                                     "scale": 1.0,
                                                     "speed": 1.0,
                                                     "startFrame": 0
                                                 },
+                                                "isCamShake": true,
                                                 "level": 2
                                             },
                                             {
+                                                "camShake": {
+                                                    "fadeOut": true,
+                                                    "power": 1.0,
+                                                    "shakeVec": [
+                                                        1.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "speed": 0.6000000238418579,
+                                                    "time": 0.5
+                                                },
                                                 "damage": 8.0,
                                                 "hitVfx": {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
                                                     "scale": 1.0,
                                                     "speed": 1.0,
                                                     "startFrame": 0
                                                 },
+                                                "isCamShake": true,
                                                 "level": 2
                                             }
                                         ],
@@ -1564,12 +1869,26 @@
                                     "data": {
                                         "atkInfos": [
                                             {
+                                                "camShake": {
+                                                    "fadeOut": true,
+                                                    "power": 1.5,
+                                                    "shakeVec": [
+                                                        1.0,
+                                                        0.6000000238418579,
+                                                        0.0
+                                                    ],
+                                                    "speed": 0.4000000059604645,
+                                                    "time": 0.30000001192092896
+                                                },
                                                 "damage": 15.0,
                                                 "hitVfx": {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
                                                     "scale": 1.0,
                                                     "speed": 1.0,
                                                     "startFrame": 0
                                                 },
+                                                "isCamShake": true,
                                                 "level": 3
                                             }
                                         ],
@@ -1886,24 +2205,6 @@
                     {
                         "enable": true,
                         "moveController": {
-                            "shakeLevels": [
-                                {
-                                    "duration": 0.5099999904632568,
-                                    "power": 0.20000000298023224
-                                },
-                                {
-                                    "duration": 0.30000001192092896,
-                                    "power": 0.20000000298023224
-                                },
-                                {
-                                    "duration": 0.8199999928474426,
-                                    "power": 0.07999999821186066
-                                },
-                                {
-                                    "duration": 0.4000000059604645,
-                                    "power": 0.20000000298023224
-                                }
-                            ],
                             "stateDatas": [
                                 {
                                     "parameter": {
@@ -1914,12 +2215,13 @@
                                             0.20000000298023224
                                         ],
                                         "disHorizon": 8.0,
-                                        "fovChangeRate": 3.0,
+                                        "fovChangeRate": 5.0,
                                         "heightMax": 7.0,
                                         "heightMin": 1.0,
                                         "horiSpeed": 20.0,
                                         "idleHeight": 3.0,
                                         "lookOffsetY": 2.4000000953674316,
+                                        "lookSpeedRate": 40.0,
                                         "moveFov": 58.0,
                                         "normalFov": 50.0,
                                         "returnVert": 2.0,
@@ -1930,16 +2232,39 @@
                                 },
                                 {
                                     "parameter": {
-                                        "canFovMovement": 1.0,
-                                        "fovChangeRate": 3.0,
-                                        "height": 3.5,
-                                        "hori": 3.5,
-                                        "lookOffset": [
-                                            0.0,
-                                            0.3799999952316284
+                                        "canFovMovement": 100.0,
+                                        "centerAngle": -90.0,
+                                        "chargeShake": {
+                                            "fadeOut": false,
+                                            "power": 0.15000000596046448,
+                                            "shakeVec": [
+                                                1.0,
+                                                0.5,
+                                                0.0
+                                            ],
+                                            "speed": 2.0,
+                                            "time": 6.0
+                                        },
+                                        "deadZone": [
+                                            0.20000000298023224,
+                                            0.20000000298023224
                                         ],
-                                        "moveFov": 65.0,
-                                        "normalFov": 50.0
+                                        "disHorizon": 8.0,
+                                        "fovChangeRate": 3.0,
+                                        "heightMax": 7.0,
+                                        "heightMin": 1.0,
+                                        "horiSpeed": 20.0,
+                                        "idleHeight": 3.0,
+                                        "lookOffsetY": 1.5,
+                                        "lookSpeedRate": 20.0,
+                                        "moveEase": 5,
+                                        "moveFov": 58.0,
+                                        "moveFovTime": 2.0,
+                                        "normalFov": 50.0,
+                                        "returnVert": 2.0,
+                                        "rotateSpeed": 75.0,
+                                        "targetFov": 30.0,
+                                        "verticalSpeed": 4.0
                                     },
                                     "stateType": 1
                                 },
@@ -1957,6 +2282,21 @@
                                         "normalFov": 50.0
                                     },
                                     "stateType": 2
+                                },
+                                {
+                                    "parameter": {
+                                        "canFovMovement": 1.0,
+                                        "fovChangeRate": 3.0,
+                                        "height": 3.0,
+                                        "hori": 3.0,
+                                        "lookOffset": [
+                                            0.0,
+                                            0.0
+                                        ],
+                                        "moveFov": 65.0,
+                                        "normalFov": 50.0
+                                    },
+                                    "stateType": 3
                                 }
                             ]
                         },

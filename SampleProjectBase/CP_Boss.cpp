@@ -42,7 +42,7 @@ namespace HashiTaku
 		return isBreaking;
 	}
 
-	nlohmann::json CP_Boss::Save()
+	json CP_Boss::Save()
 	{
 		auto data = CP_Enemy::Save();
 
@@ -54,7 +54,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_Boss::Load(const nlohmann::json& _data)
+	void CP_Boss::Load(const json& _data)
 	{
 		CP_Enemy::Load(_data);
 
@@ -62,7 +62,7 @@ namespace HashiTaku
 		LoadJsonString("hpBarName", hpBarObjName, _data);
 		LoadJsonString("breakBarName", breakBarObjName, _data);
 
-		nlohmann::json actionControllerData;
+		json actionControllerData;
 		if (LoadJsonData("actionController", actionControllerData, _data))
 			pActionController->Load(actionControllerData);
 	}
@@ -242,10 +242,10 @@ namespace HashiTaku
 		pAnimation->SetBool(BREAK_ANIMPARAM, false);
 	}
 
-	void CP_Boss::OnDamageBehavior(const AttackInformation& _attackInfo,
+	bool CP_Boss::OnDamageBehavior(const AttackInformation& _attackInfo,
 		const DirectX::SimpleMath::Vector3& _attackerPos)
 	{
-		CP_Enemy::OnDamageBehavior(_attackInfo, _attackerPos);
+		if (!CP_Enemy::OnDamageBehavior(_attackInfo, _attackerPos)) return false;
 
 		// ブレイク値を加算
 		const PlayerAttackInformation* pPlayerAtkInfo =
@@ -253,6 +253,8 @@ namespace HashiTaku
 		AddBreakValue(pPlayerAtkInfo->GetBreakValue());
 
 		pActionController->OnDamage(_attackInfo, _attackerPos);
+
+		return true;
 	}
 
 	void CP_Boss::OnDeathBehavior()
@@ -294,15 +296,12 @@ namespace HashiTaku
 		if (ImGui::Button("BreakBar"))
 			breakBarObjName = input;
 
-		if (ImGui::Begin("Boss"))
-		{
-			CP_Enemy::ImGuiDebug();
+		ImGui::Begin("Boss");
 
-			ImGuiMethod::Text("IsBreaking", isBreaking);
+		CP_Enemy::ImGuiDebug();
+		ImGuiMethod::Text("IsBreaking", isBreaking);
+		pActionController->ImGuiCall();
 
-			pActionController->ImGuiCall();
-
-			ImGui::End();
-		}
+		ImGui::End();
 	}
 }

@@ -49,8 +49,8 @@ namespace HashiTaku
 		// ボーン名取得
 		std::string GetGrabBoneName() const;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		/// @brief ボーンから座標を更新する
 		void UpdateTransform();

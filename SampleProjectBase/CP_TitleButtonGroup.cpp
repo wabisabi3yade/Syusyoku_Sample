@@ -13,7 +13,7 @@ namespace HashiTaku
 		SetMaxButtonCnt(static_cast<u_int>(ButtonType::MaxNum));
 	}
 
-	nlohmann::json CP_TitleButtonGroup::Save()
+	json CP_TitleButtonGroup::Save()
 	{
 		auto data = CP_ButtonGroup::Save();
 		data["fadeObj"] = fadeObjName;
@@ -21,7 +21,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_TitleButtonGroup::Load(const nlohmann::json& _data)
+	void CP_TitleButtonGroup::Load(const json& _data)
 	{
 		CP_ButtonGroup::Load(_data);
 		LoadJsonString("fadeObj", fadeObjName, _data);

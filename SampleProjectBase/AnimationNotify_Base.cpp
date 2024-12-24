@@ -55,25 +55,7 @@ namespace HashiTaku
 
 	std::string AnimationNotify_Base::GetTypeToStr(NotifyType _notifyType)
 	{
-		switch (_notifyType)
-		{
-		case AnimationNotify_Base::NotifyType::ANE_DebugLog:
-			return "ANE_DebugLog";
-			break;
-		case AnimationNotify_Base::NotifyType::ANS_DebugLog:
-			return "ANS_DebugLog";
-			break;
-		case AnimationNotify_Base::NotifyType::ANE_ChangeParameter:
-			return "ANE_ChangeParameter";
-			break;
-		case AnimationNotify_Base::NotifyType::ANS_ChangeParameter:
-			return "ANS_ChangeParameter";
-			break;
-		default:
-			break;
-		}
-
-		return "";
+		return std::string(magic_enum::enum_name(_notifyType));
 	}
 
 	bool AnimationNotify_Base::GetIsActive() const
@@ -114,15 +96,15 @@ namespace HashiTaku
 		return animFrameCnt != DONT_USE_FRAME_CNT;
 	}
 
-	nlohmann::json AnimationNotify_Base::Save()
+	json AnimationNotify_Base::Save()
 	{
-		nlohmann::json data;
+		json data;
 		data["isActive"] = isActive;
 		data["notifyName"] = notifyName;
 		return data;
 	}
 
-	void AnimationNotify_Base::Load(const nlohmann::json& _data)
+	void AnimationNotify_Base::Load(const json& _data)
 	{
 		LoadJsonBoolean("isActive", isActive, _data);
 		LoadJsonString("notifyName", notifyName, _data);

@@ -19,7 +19,7 @@ namespace HashiTaku
 		distanceHoriCurve.SetCurveName("Horizon");
 	}
 
-	nlohmann::json PlayerRushAttack::Save()
+	json PlayerRushAttack::Save()
 	{
 		auto data = PlayerAttackState::Save();
 
@@ -32,7 +32,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void PlayerRushAttack::Load(const nlohmann::json& _data)
+	void PlayerRushAttack::Load(const json& _data)
 	{
 		PlayerAttackState::Load(_data);
 

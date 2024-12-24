@@ -94,10 +94,10 @@ float AnimationNode_Base::GetCurveValue(float _ratio) const
 	return pCurveSpeed->GetValue(_ratio);
 }
 
-nlohmann::json AnimationNode_Base::Save()
+json AnimationNode_Base::Save()
 {
 	// ノード名とタイプはコントローラーで管理
-	nlohmann::json nodeData;
+	json nodeData;
 	nodeData["speed"] = playNodeSpeedTimes;
 	nodeData["isLoop"] = isLoop;
 	nodeData["isRMXZ"] = isRootMotionPosXZ;
@@ -106,14 +106,14 @@ nlohmann::json AnimationNode_Base::Save()
 	return nodeData;
 }
 
-void AnimationNode_Base::Load(const nlohmann::json& _data)
+void AnimationNode_Base::Load(const json& _data)
 {
 	LoadJsonFloat("speed", playNodeSpeedTimes, _data);
 	LoadJsonBoolean("isLoop", isLoop, _data);
 	LoadJsonBoolean("isRMXZ", isRootMotionPosXZ, _data);
 	LoadJsonBoolean("isRMY", isRootMotionPosY, _data);
 
-	nlohmann::json loadData;
+	json loadData;
 	if (LoadJsonData("animationCurve", loadData, _data))
 	{
 		pCurveSpeed->Load(loadData);

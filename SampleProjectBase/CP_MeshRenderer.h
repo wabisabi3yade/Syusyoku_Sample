@@ -37,8 +37,8 @@ namespace HashiTaku
 		/// @return メッシュ群
 		Mesh_Group* GetRenderMesh();
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		// コンポーネント共通関数
 		void Start() override;

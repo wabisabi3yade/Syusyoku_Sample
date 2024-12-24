@@ -112,7 +112,7 @@ namespace HashiTaku
 		pCamMove->OnPlayerWin(playerTransform);
 	}
 
-	nlohmann::json CP_BattleManager::Save()
+	json CP_BattleManager::Save()
 	{
 		auto data = SingletonComponent::Save();
 
@@ -132,7 +132,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_BattleManager::Load(const nlohmann::json& _data)
+	void CP_BattleManager::Load(const json& _data)
 	{
 		SingletonComponent::Load(_data);
 
@@ -143,7 +143,7 @@ namespace HashiTaku
 		LoadJsonString("win", winObjName, _data);
 		LoadJsonString("gameOver", gameOverObjName, _data);
 
-		nlohmann::json loadData;
+		json loadData;
 		if (LoadJsonData("gameStartCurve", loadData, _data))
 		{
 			gameStartCurve.Load(loadData);

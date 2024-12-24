@@ -69,8 +69,8 @@ namespace HashiTaku
 		u_int GetObjectsNum()const { return static_cast<u_int>(objList.size()); }
 
 		// シーンオブジェクトをセーブ・ロード
-		nlohmann::json SaveObjectList();
-		void LoadObjectList(const nlohmann::json& _objectsData);
+		json SaveObjectList();
+		void LoadObjectList(const json& _objectsData);
 	private:
 		/// @brief オブジェクトの名前があるか確認
 		/// @param _gameObject オブジェクト
@@ -131,7 +131,7 @@ namespace HashiTaku
 		/// @brief オブジェクトをセーブ
 		/// @param _go ゲームオブジェクト
 		/// @return セーブデータ
-		nlohmann::json SaveObject(GameObject& _go);
+		json SaveObject(GameObject& _go);
 
 		/// @brief オブジェクトをプレハブ化する
 		/// @param _toPrefabObject プレハブ化するオブジェクト
@@ -140,12 +140,12 @@ namespace HashiTaku
 		/// @brief オブジェクトをロードする
 		/// @param _gameObjectData ゲームオブジェクトデータ
 		/// @return 成功したか？
-		bool LoadObject(const nlohmann::json& _gameObjectData);
+		bool LoadObject(const json& _gameObjectData);
 
 		/// @brief オブジェクトを遅れたロードする
 		/// @param _gameObjectData ゲームオブジェクトデータ
 		/// @return 成功したか？
-		bool LateLoadObject(const nlohmann::json& _gameObjectData);
+		bool LateLoadObject(const json& _gameObjectData);
 
 		/// @brief ゲームオブジェクトのImGUi表示
 		/// @param _gameObject 表示するゲームオブジェクト

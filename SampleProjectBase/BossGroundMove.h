@@ -21,8 +21,8 @@ namespace HashiTaku
 		BossGroundMove();
 		virtual ~BossGroundMove() {}
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 
 	protected:
 		/// @brief ‘JˆÚØ‚è‘Ö‚¦

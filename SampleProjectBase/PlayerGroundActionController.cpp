@@ -9,12 +9,12 @@
 #include "PlayerRollingMove.h"
 #include "PlayerGuardState.h"
 #include "PlayerRushAttack.h"
+#include "PlayerGroundChargeAttack.h"
 #include "PlayerDamageState.h"
 #include "PlayerJumpState.h"
 
 namespace HashiTaku
 {
-
 	PlayerGroundActionController::PlayerGroundActionController(
 		PlayerAction& _pAction,
 		CP_Player& _player) :
@@ -24,24 +24,25 @@ namespace HashiTaku
 
 		// 行動クラスを生成(下に行くほど優先度高め)
 		using enum GroundState;
-		CreateState<PlayerIdleState>(Idle);
+		CreateState<PlayerIdleState>(Idle, CancelType::None);
 
-		CreateState<PlayerMoveState>(Move);
-		CreateState<PlayerTargetMove>(TargetMove);
+		CreateState<PlayerMoveState>(Move, CancelType::Move);
+		CreateState<PlayerTargetMove>(TargetMove, CancelType::Move);
 
-		CreateState<PlayerAttackState>(Attack11);
-		CreateState<PlayerAttackState>(Attack12);
-		CreateState<PlayerAttackState>(Attack13);
-		CreateState<PlayerAttackState>(Attack14);
-		CreateState<PlayerRushAttack>(SpecialAtkHi);
-		CreateState<PlayerAttackState>(SpecialAtkGuard);
+		CreateState<PlayerAttackState>(Attack11, CancelType::Attack);
+		CreateState<PlayerAttackState>(Attack12, CancelType::Attack);
+		CreateState<PlayerAttackState>(Attack13, CancelType::Attack);
+		CreateState<PlayerAttackState>(Attack14, CancelType::Attack);
+		CreateState<PlayerRushAttack>(SpecialAtkHi, CancelType::Attack);
+		CreateState<PlayerAttackState>(SpecialAtkGuard, CancelType::Attack);
+		CreateState<PlayerGroundChargeAttack>(ChargeAttack1, CancelType::Attack);
 
-		CreateState<PlayerJumpState>(BeginJump);
-		CreateState<PlayerGuardState>(Guard);
-		CreateState<PlayerRollingMove>(Rolling);
+		CreateState<PlayerJumpState>(BeginJump, CancelType::Action);
+		CreateState<PlayerGuardState>(Guard, CancelType::Action);
+		CreateState<PlayerRollingMove>(Rolling, CancelType::Action);
 
-		CreateState<PlayerDamageState>(Damage_S);
-		CreateState<PlayerDamageState>(Damage_L);
+		CreateState<PlayerDamageState>(Damage_S, CancelType::None);
+		CreateState<PlayerDamageState>(Damage_L, CancelType::None);
 
 		// デフォルト状態をセット
 		SetDefaultNode(static_cast<int>(Idle));

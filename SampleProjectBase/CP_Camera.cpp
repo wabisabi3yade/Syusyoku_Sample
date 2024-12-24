@@ -109,7 +109,7 @@ namespace HashiTaku
 		viewPortSlot = _slot;
 	}
 
-	nlohmann::json CP_Camera::Save()
+	json CP_Camera::Save()
 	{
 		auto data = Component::Save();
 
@@ -120,7 +120,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_Camera::Load(const nlohmann::json& _data)
+	void CP_Camera::Load(const json& _data)
 	{
 		Component::Load(_data);
 

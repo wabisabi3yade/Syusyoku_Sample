@@ -104,8 +104,8 @@ namespace HashiTaku
 		/// @return ‚Ç‚Ì‹——£‚©H
 		ActDistance JudgeActDistance(float _disLength) const;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		/// @brief XVˆ—
 		void Update() override;

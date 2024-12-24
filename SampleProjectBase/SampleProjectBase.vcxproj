@@ -153,7 +153,9 @@
     <ClCompile Include="..\ThirdParty\imgui\include\imgui_widgets.cpp" />
     <ClCompile Include="..\ThirdParty\implot\include\implot.cpp" />
     <ClCompile Include="..\ThirdParty\implot\include\implot_items.cpp" />
+    <ClCompile Include="ANE_CameraShake.cpp" />
     <ClCompile Include="ANE_ChangeParameter.cpp" />
+    <ClCompile Include="ANE_CreateVfx.cpp" />
     <ClCompile Include="ANE_DebugLog.cpp" />
     <ClCompile Include="AnimationCurve.cpp" />
     <ClCompile Include="AnimationNotifyFactory.cpp" />
@@ -190,9 +192,11 @@
     <ClCompile Include="CameraMoveController.cpp" />
     <ClCompile Include="CameraMoveState_Base.cpp" />
     <ClCompile Include="CameraOnMoveState.cpp" />
+    <ClCompile Include="PerlinShakeParameter.cpp" />
     <ClCompile Include="CameraTargetMove.cpp" />
     <ClCompile Include="ChangeAnimObserver.cpp" />
     <ClCompile Include="CharacterActionController.cpp" />
+    <ClCompile Include="CameraChargeAttack.cpp" />
     <ClCompile Include="CP_Fade.cpp" />
     <ClCompile Include="CP_GroundCheck.cpp" />
     <ClCompile Include="CP_BattleManager.cpp" />
@@ -242,6 +246,8 @@
     <ClCompile Include="MaterialCreater.cpp" />
     <ClCompile Include="AnimNodePlayer_Base.cpp" />
     <ClCompile Include="MyClass2.cpp" />
+    <ClCompile Include="PerlinNoise.cpp" />
+    <ClCompile Include="CalcPerlinShakeVector.cpp" />
     <ClCompile Include="PlayerAction.cpp" />
     <ClCompile Include="PlayerActionController_Base.cpp" />
     <ClCompile Include="PlayerAirActionController.cpp" />
@@ -250,6 +256,7 @@
     <ClCompile Include="PlayerAirState.cpp" />
     <ClCompile Include="PlayerAttackInformation.cpp" />
     <ClCompile Include="PlayerDamageState.cpp" />
+    <ClCompile Include="PlayerGroundChargeAttack.cpp" />
     <ClCompile Include="PlayerGroundState.cpp" />
     <ClCompile Include="PlayerGuardState.cpp" />
     <ClCompile Include="PlayerJumpState.cpp" />
@@ -314,7 +321,6 @@
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="PS_Unlit.cpp" />
     <ClCompile Include="SaveJson.cpp" />
-    <ClCompile Include="SaveJsonValue.cpp" />
     <ClCompile Include="SceneLights.cpp" />
     <ClCompile Include="SceneObjects.cpp" />
     <ClCompile Include="SF_GameObject.cpp" />
@@ -379,7 +385,9 @@
     <ClInclude Include="..\ThirdParty\imgui\include\imstb_truetype.h" />
     <ClInclude Include="..\ThirdParty\implot\include\implot.h" />
     <ClInclude Include="..\ThirdParty\implot\include\implot_internal.h" />
+    <ClInclude Include="ANE_CameraShake.h" />
     <ClInclude Include="ANE_ChangeParameter.h" />
+    <ClInclude Include="ANE_CreateVfx.h" />
     <ClInclude Include="ANE_DebugLog.h" />
     <ClInclude Include="AnimationCurve.h" />
     <ClInclude Include="AnimationNotifyFactory.h" />
@@ -420,10 +428,13 @@
     <ClInclude Include="CameraMoveController.h" />
     <ClInclude Include="CameraMoveState_Base.h" />
     <ClInclude Include="CameraOnMoveState.h" />
+    <ClInclude Include="ITransformSetter.h" />
+    <ClInclude Include="PerlinShakeParameter.h" />
     <ClInclude Include="CameraTargetMove.h" />
     <ClInclude Include="ChangeAnimObserver.h" />
     <ClInclude Include="CharacterActionController.h" />
     <ClInclude Include="CharacterActState_Base.h" />
+    <ClInclude Include="CameraChargeAttack.h" />
     <ClInclude Include="CP_Fade.h" />
     <ClInclude Include="CP_GroundCheck.h" />
     <ClInclude Include="CP_BattleManager.h" />
@@ -440,7 +451,6 @@
     <ClInclude Include="CopyAnimationParameters.h" />
     <ClInclude Include="CP_Character.h" />
     <ClInclude Include="CP_CylinderCollider.h" />
-    <ClInclude Include="CP_EffectCreater.h" />
     <ClInclude Include="CP_Enemy.h" />
     <ClInclude Include="CP_OutLineRenderer.h" />
     <ClInclude Include="CP_RigidBody.h" />
@@ -487,6 +497,8 @@
     <ClInclude Include="AnimNodePlayer_Base.h" />
     <ClInclude Include="MyClass2.h" />
     <ClInclude Include="NullTransform.h" />
+    <ClInclude Include="PerlinNoise.h" />
+    <ClInclude Include="CalcPerlinShakeVector.h" />
     <ClInclude Include="PlayerAction.h" />
     <ClInclude Include="PlayerActionController_Base.h" />
     <ClInclude Include="PlayerAirActionController.h" />
@@ -496,6 +508,7 @@
     <ClInclude Include="PlayerAnimReference.h" />
     <ClInclude Include="PlayerAttackInformation.h" />
     <ClInclude Include="PlayerDamageState.h" />
+    <ClInclude Include="PlayerGroundChargeAttack.h" />
     <ClInclude Include="PlayerGroundState.h" />
     <ClInclude Include="PlayerGuardState.h" />
     <ClInclude Include="PlayerJumpState.h" />
@@ -566,7 +579,6 @@
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="PS_Unlit.h" />
     <ClInclude Include="SaveJson.h" />
-    <ClInclude Include="SaveJsonValue.h" />
     <ClInclude Include="SceneLights.h" />
     <ClInclude Include="SceneObjects.h" />
     <ClInclude Include="SF_GameObject.h" />

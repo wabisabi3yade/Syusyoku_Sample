@@ -62,11 +62,11 @@ namespace HashiTaku
 
 		/// @brief セーブする
 		/// @param _sceneData セーブデータ
-		nlohmann::json Save();
+		json Save();
 
 		/// @brief ロードする
 		/// @param _sceneData ロードするデータ 
-		void Load(const nlohmann::json& _data);
+		void Load(const json& _data);
 
 	protected:
 		/// @brief 投影行列を更新する
@@ -128,11 +128,11 @@ namespace HashiTaku
 
 		/// @brief セーブする
 		/// @param _sceneData セーブデータ
-		nlohmann::json Save() { return nlohmann::json(); }
+		json Save() { return json(); }
 
 		/// @brief ロードする
 		/// @param _sceneData ロードするデータ 
-		void Load(const nlohmann::json& _data) {}
+		void Load(const json& _data) {}
 
 	private:
 		/// @brief 投影行列を更新する

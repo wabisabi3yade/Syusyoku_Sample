@@ -12,14 +12,14 @@ namespace HashiTaku
 		return breakValue;
 	}
 
-	nlohmann::json PlayerAttackInformation::Save()
+	json PlayerAttackInformation::Save()
 	{
-		nlohmann::json data = AttackInformation::Save();
+		json data = AttackInformation::Save();
 		data["break"] = breakValue;
 		return data;
 	}
 
-	void PlayerAttackInformation::Load(const nlohmann::json& _data)
+	void PlayerAttackInformation::Load(const json& _data)
 	{
 		AttackInformation::Load(_data);
 		LoadJsonFloat("break", breakValue, _data);

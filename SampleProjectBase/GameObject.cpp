@@ -97,7 +97,7 @@ namespace HashiTaku
 		return _c1->GetPriority() > _c2->GetPriority();
 	}
 
-	void GameObject::LoadCreateComponnet(const nlohmann::json& _componentsData)
+	void GameObject::LoadCreateComponnet(const json& _componentsData)
 	{
 		ComponentFactory* compFactory = ComponentFactory::GetInstance();
 
@@ -132,7 +132,7 @@ namespace HashiTaku
 		}
 	}
 
-	void GameObject::LoadComponentParameter(const nlohmann::json& _componentData)
+	void GameObject::LoadComponentParameter(const json& _componentData)
 	{
 		// 初期処理とロードを行う
 		for (auto& pComp : components)
@@ -355,17 +355,17 @@ namespace HashiTaku
 			return;
 		}
 
-		// アクティブになかったら	// アクティブになかったら
+		// アクティブになかったら
 		if (!IsExistActiveComponent(_addComonent))
 			pActiveComponents.push_back(&_addComonent);
 
 		// Awakeになかったら
 		if (!_addComonent.GetIsAlreadyAwake() && !IsExistAwakeComponent(_addComonent))
-			pAwakeComponents.push_back(&_addComonent);
+			/*pAwakeComponents.push_back(&_addComonent);*/ _addComonent.AwakeCall();
 
 		// Startになかったら
 		if (!_addComonent.GetIsAlreadyStart() && !IsExistStartComponent(_addComonent))
-			pStartComponents.push_back(&_addComonent);
+			/*pStartComponents.push_back(&_addComonent);*/ _addComonent.StartCall();
 	}
 
 	void GameObject::OnActiveTrue()
@@ -471,9 +471,9 @@ namespace HashiTaku
 		compFactory->CreateImGuiCombo(*this);
 	}
 
-	nlohmann::json GameObject::Save()
+	json GameObject::Save()
 	{
-		nlohmann::json objectData;
+		json objectData;
 
 		objectData["active"] = isActive;
 		objectData["name"] = name;
@@ -492,7 +492,7 @@ namespace HashiTaku
 	}
 
 
-	void GameObject::Load(const nlohmann::json& _data)
+	void GameObject::Load(const json& _data)
 	{
 		using namespace HashiTaku;
 
@@ -516,7 +516,7 @@ namespace HashiTaku
 
 	}
 
-	void GameObject::LateLode(const nlohmann::json& _data)
+	void GameObject::LateLode(const json& _data)
 	{
 		using namespace HashiTaku;
 		if (IsJsonContains(_data, "transform"))

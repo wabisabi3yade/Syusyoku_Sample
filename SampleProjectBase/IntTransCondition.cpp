@@ -53,15 +53,15 @@ namespace HashiTaku
 		return isAchieve;
 	}
 
-	nlohmann::json IntTransCondition::Save()
+	json IntTransCondition::Save()
 	{
-		nlohmann::json data;
+		json data;
 		data["iCompare"] = compareVal;
 		data["iJudgeType"] = judgeType;
 		return data;
 	}
 
-	void IntTransCondition::Load(const nlohmann::json& _data)
+	void IntTransCondition::Load(const json& _data)
 	{
 		LoadJsonInteger("iCompare", compareVal, _data);
 		LoadJsonEnum<JudgeType>("iJudgeType", judgeType, _data);

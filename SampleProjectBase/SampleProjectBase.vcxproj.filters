@@ -117,9 +117,6 @@
     <Filter Include="ソース ファイル\System\Json">
       <UniqueIdentifier>{0e2f16b8-5e83-4119-867e-087426684a3a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\System\Json\SaveJsonValue">
-      <UniqueIdentifier>{c5ddcc57-61e7-4c28-8254-6882c301f71c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\System\Json\Save">
       <UniqueIdentifier>{e8e81301-115a-4a0a-93dd-3fa9d701854e}</UniqueIdentifier>
     </Filter>
@@ -859,9 +856,6 @@
     <Filter Include="ソース ファイル\Component\UI\Fade">
       <UniqueIdentifier>{392f792b-0e3e-4e36-8adb-a11e4154b468}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\InGame\Camera\CameraGameOverState">
-      <UniqueIdentifier>{4584bff5-e608-4dea-813f-72cdd9d104ef}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\JumpAttack">
       <UniqueIdentifier>{895815e6-92fc-4e24-9814-1d2538ab20f5}</UniqueIdentifier>
     </Filter>
@@ -870,6 +864,39 @@
     </Filter>
     <Filter Include="ソース ファイル\Animation\AnimationController\Creater">
       <UniqueIdentifier>{20cccec9-f21a-4a25-bcf5-973c61d832e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera\State\GameOver">
+      <UniqueIdentifier>{4584bff5-e608-4dea-813f-72cdd9d104ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\ButtonGroup\Base">
+      <UniqueIdentifier>{0e91e8a1-337f-4953-84bd-6ff63373df94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\GroundChecker">
+      <UniqueIdentifier>{c284bd1d-f0fa-4db9-a7e9-59bcdee0afac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\ChargeAttack">
+      <UniqueIdentifier>{f6a32c37-3da1-40c5-a3ef-7a73835c58b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\PerlinNoise">
+      <UniqueIdentifier>{c44c6e00-3b85-4309-9240-e40186f31588}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\PerlinShake">
+      <UniqueIdentifier>{e88f1067-4010-4bb8-8864-3da5c1eb5fad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\PerlinShake\Parameter">
+      <UniqueIdentifier>{31fc32ed-0e12-4670-92df-0eb43422b2da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\CreateVfx">
+      <UniqueIdentifier>{a7188c60-bf7d-4d2d-9054-a75b7d4d16a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\ITransfiormSetter">
+      <UniqueIdentifier>{f6d914cd-6fa2-43f8-9f94-a6c004e814e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\CameraShake">
+      <UniqueIdentifier>{e963cdc1-6c87-49e9-a18d-00369aeae517}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera\State\ChargeAttack">
+      <UniqueIdentifier>{4c1a00e6-a7b2-40bd-81c8-26a56c0eba9c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1036,9 +1063,6 @@
     </ClCompile>
     <ClCompile Include="SaveJson.cpp">
       <Filter>ソース ファイル\System\Json\Save</Filter>
-    </ClCompile>
-    <ClCompile Include="SaveJsonValue.cpp">
-      <Filter>ソース ファイル\System\Json\SaveJsonValue</Filter>
     </ClCompile>
     <ClCompile Include="SF_GameObject.cpp">
       <Filter>ソース ファイル\Scene\SceneFunction\GameObject</Filter>
@@ -1517,14 +1541,8 @@
     <ClCompile Include="CameraOnMoveState.cpp">
       <Filter>ソース ファイル\InGame\Camera\State\Move</Filter>
     </ClCompile>
-    <ClCompile Include="CameraTargetMove.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="CP_Button.cpp">
       <Filter>ソース ファイル\Component\Button</Filter>
-    </ClCompile>
-    <ClCompile Include="CP_ButtonGroup.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DXSoundManager.cpp">
       <Filter>ソース ファイル\Sound\Manager</Filter>
@@ -1550,9 +1568,6 @@
     <ClCompile Include="PlayerGroundActionController.cpp">
       <Filter>ソース ファイル\InGame\Player\Action\Controller\Ground</Filter>
     </ClCompile>
-    <ClCompile Include="CP_GroundCheck.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerGroundState.cpp">
       <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Base</Filter>
     </ClCompile>
@@ -1577,9 +1592,6 @@
     <ClCompile Include="BossBreakIdle.cpp">
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\BreakIdle</Filter>
     </ClCompile>
-    <ClCompile Include="CameraGameOverState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="CP_TitleButtonGroup.cpp">
       <Filter>ソース ファイル\Component\ButtonGroup\Title</Filter>
     </ClCompile>
@@ -1600,6 +1612,39 @@
     </ClCompile>
     <ClCompile Include="AnimControllerCreater.cpp">
       <Filter>ソース ファイル\Animation\AnimationController\Creater</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraGameOverState.cpp">
+      <Filter>ソース ファイル\InGame\Camera\State\GameOver</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraTargetMove.cpp">
+      <Filter>ソース ファイル\InGame\Camera\State\Target</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_ButtonGroup.cpp">
+      <Filter>ソース ファイル\Component\ButtonGroup\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_GroundCheck.cpp">
+      <Filter>ソース ファイル\Component\GroundChecker</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerGroundChargeAttack.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\ChargeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="PerlinNoise.cpp">
+      <Filter>ソース ファイル\System\PerlinNoise</Filter>
+    </ClCompile>
+    <ClCompile Include="PerlinShakeParameter.cpp">
+      <Filter>ソース ファイル\InGame\PerlinShake\Parameter</Filter>
+    </ClCompile>
+    <ClCompile Include="CalcPerlinShakeVector.cpp">
+      <Filter>ソース ファイル\InGame\PerlinShake</Filter>
+    </ClCompile>
+    <ClCompile Include="ANE_CreateVfx.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\CreateVfx</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraChargeAttack.cpp">
+      <Filter>ソース ファイル\InGame\Camera\State\ChargeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="ANE_CameraShake.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1713,9 +1758,6 @@
     </ClInclude>
     <ClInclude Include="GameKey.h">
       <Filter>ソース ファイル\System\Application\Input\Keyboard</Filter>
-    </ClInclude>
-    <ClInclude Include="SaveJsonValue.h">
-      <Filter>ソース ファイル\System\Json\SaveJsonValue</Filter>
     </ClInclude>
     <ClInclude Include="SaveJson.h">
       <Filter>ソース ファイル\System\Json\Save</Filter>
@@ -2290,17 +2332,8 @@
     <ClInclude Include="CameraOnMoveState.h">
       <Filter>ソース ファイル\InGame\Camera\State\Move</Filter>
     </ClInclude>
-    <ClInclude Include="CameraTargetMove.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CP_EffectCreater.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="CP_Button.h">
       <Filter>ソース ファイル\Component\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="CP_ButtonGroup.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DXSoundManager.h">
       <Filter>ソース ファイル\Sound\Manager</Filter>
@@ -2314,9 +2347,6 @@
     <ClInclude Include="PlayerActionController_Base.h">
       <Filter>ソース ファイル\InGame\Player\Action\Controller\Base</Filter>
     </ClInclude>
-    <ClInclude Include="IUISlider.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerGuardState.h">
       <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Guard</Filter>
     </ClInclude>
@@ -2328,12 +2358,6 @@
     </ClInclude>
     <ClInclude Include="PlayerGroundActionController.h">
       <Filter>ソース ファイル\InGame\Player\Action\Controller\Ground</Filter>
-    </ClInclude>
-    <ClInclude Include="CP_GroundCheck.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="IGroundNotifyer.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="PlayerGroundState.h">
       <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Base</Filter>
@@ -2362,9 +2386,6 @@
     <ClInclude Include="PlayerAnimReference.h">
       <Filter>ソース ファイル\InGame\Player</Filter>
     </ClInclude>
-    <ClInclude Include="CameraGameOverState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="CP_TitleButtonGroup.h">
       <Filter>ソース ファイル\Component\ButtonGroup\Title</Filter>
     </ClInclude>
@@ -2382,6 +2403,48 @@
     </ClInclude>
     <ClInclude Include="AnimControllerCreater.h">
       <Filter>ソース ファイル\Animation\AnimationController\Creater</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraGameOverState.h">
+      <Filter>ソース ファイル\InGame\Camera\State\GameOver</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraTargetMove.h">
+      <Filter>ソース ファイル\InGame\Camera\State\Target</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_ButtonGroup.h">
+      <Filter>ソース ファイル\Component\ButtonGroup\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_GroundCheck.h">
+      <Filter>ソース ファイル\Component\GroundChecker</Filter>
+    </ClInclude>
+    <ClInclude Include="IGroundNotifyer.h">
+      <Filter>ソース ファイル\Component\GroundChecker</Filter>
+    </ClInclude>
+    <ClInclude Include="IUISlider.h">
+      <Filter>ソース ファイル\Component\UI\Slider</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerGroundChargeAttack.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\ChargeAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="PerlinNoise.h">
+      <Filter>ソース ファイル\System\PerlinNoise</Filter>
+    </ClInclude>
+    <ClInclude Include="PerlinShakeParameter.h">
+      <Filter>ソース ファイル\InGame\PerlinShake\Parameter</Filter>
+    </ClInclude>
+    <ClInclude Include="CalcPerlinShakeVector.h">
+      <Filter>ソース ファイル\InGame\PerlinShake</Filter>
+    </ClInclude>
+    <ClInclude Include="ANE_CreateVfx.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\CreateVfx</Filter>
+    </ClInclude>
+    <ClInclude Include="ITransformSetter.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\ITransfiormSetter</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraChargeAttack.h">
+      <Filter>ソース ファイル\InGame\Camera\State\ChargeAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="ANE_CameraShake.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

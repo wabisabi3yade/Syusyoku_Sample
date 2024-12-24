@@ -47,8 +47,8 @@ namespace HashiTaku
 		/// @param _canMove ˆÚ“®‚Å‚«‚é‚©ƒtƒ‰ƒO
 		void SetCanMove(bool _canMove);
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	protected:
 		void Start() override;
 

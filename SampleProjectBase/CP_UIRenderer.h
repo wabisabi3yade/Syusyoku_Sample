@@ -57,11 +57,11 @@ namespace HashiTaku
 
 		/// @brief セーブする
 		/// @param _data セーブシーンデータ
-		nlohmann::json Save() override;
+		json Save() override;
 
 		/// @brief ロードする
 		/// @param _data ロードするシーンデータ 
-		void Load(const nlohmann::json& _data) override;
+		void Load(const json& _data) override;
 
 	protected:
 		/// @brief サイズなど変更するためにポリゴン再生成(トランスフォームから自動で)

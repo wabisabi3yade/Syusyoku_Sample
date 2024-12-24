@@ -81,8 +81,8 @@ namespace HashiTaku
 		Texture* GetDiffuseTexture()const { return pDiffuseTexture; }
 		Texture* GetNormalTexture()const { return pNormalTexture; }
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		/// @brief マテリアルのパラメータ初期化
 		void InitParameter();

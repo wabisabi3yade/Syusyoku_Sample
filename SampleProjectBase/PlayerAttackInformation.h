@@ -16,8 +16,8 @@ namespace HashiTaku
 		/// @return ブレイク値
 		float GetBreakValue() const;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		void ImGuiDebug() override;
 	};

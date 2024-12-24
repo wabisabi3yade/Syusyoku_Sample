@@ -44,9 +44,9 @@ namespace HashiTaku
 		OnEndBehavior();
 	}
 
-	nlohmann::json CameraMoveState_Base::Save()
+	json CameraMoveState_Base::Save()
 	{
-		nlohmann::json data;
+		json data;
 
 		data["moveFov"] = moveFov;
 		data["normalFov"] = normalFov;
@@ -56,7 +56,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CameraMoveState_Base::Load(const nlohmann::json& _data)
+	void CameraMoveState_Base::Load(const json& _data)
 	{
 		LoadJsonFloat("moveFov", moveFov, _data);
 		LoadJsonFloat("normalFov", normalFov, _data);
@@ -126,9 +126,6 @@ namespace HashiTaku
 		// ‘OƒtƒŒ[ƒ€‚©‚ç’Ç]æ‚ª“®‚¢‚Ä‚¢‚é‚©Žæ“¾
 		DXSimp::Vector3 moveDis = GetFollowPosition() - pCamController->GetPrevFollowPos();
 		bool isTargetMoving = moveDis.Length() > canFovChangeMovement * deltaTime;
-
-		if (isTargetMoving)
-			HASHI_DEBUG_LOG("aaa");
 
 		float curFov = camera.GetFov();
 

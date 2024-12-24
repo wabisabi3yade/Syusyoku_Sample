@@ -52,7 +52,7 @@ namespace HashiTaku
 			GuardParry();
 	}
 
-	nlohmann::json PlayerGuardState::Save()
+	json PlayerGuardState::Save()
 	{
 		auto data = PlayerGroundState::Save();
 		data["canParryTime"] = sustainParryFrame;
@@ -62,13 +62,13 @@ namespace HashiTaku
 		return data;
 	}
 
-	void PlayerGuardState::Load(const nlohmann::json& _data)
+	void PlayerGuardState::Load(const json& _data)
 	{
 		PlayerGroundState::Load(_data);
 		LoadJsonUnsigned("canParryTime", sustainParryFrame, _data);
 		LoadJsonFloat("parryAngle", canParryForwardAngle, _data);
 		LoadJsonVector3("vfxOffset", createVfxOffset, _data);
-		nlohmann::json vfxData;
+		json vfxData;
 		if (LoadJsonData("vfxInfo", vfxData, _data))
 		{
 			parryEffectInfo.Load(vfxData);

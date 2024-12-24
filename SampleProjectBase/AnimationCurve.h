@@ -72,8 +72,8 @@ namespace HashiTaku
 		/// @return 値
 		float GetValue(float _time)  const;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		/// @brief 時間からエルミート曲線を取得する
 		/// @param _getTime 2点間の割合(0.0～1.0)

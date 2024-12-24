@@ -67,9 +67,9 @@ namespace HashiTaku
 		uvEnd = _uvEnd;
 	}
 
-	nlohmann::json Sprite::Save()
+	json Sprite::Save()
 	{
-		nlohmann::json data;
+		json data;
 
 		if (pTexture)
 			data["texName"] = pTexture->GetAssetName();
@@ -80,7 +80,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void Sprite::Load(const nlohmann::json& _data)
+	void Sprite::Load(const json& _data)
 	{
 		pTexture = LoadJsonAsset<Texture>("texName", _data);
 		if (pTexture)

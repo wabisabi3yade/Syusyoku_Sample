@@ -1,5 +1,6 @@
 #pragma once
 #include "CameraMoveState_Base.h"
+#include "CalcPerlinShakeVector.h"
 #include "ITargetAccepter.h"
 
 namespace HashiTaku
@@ -7,46 +8,19 @@ namespace HashiTaku
 	/// @brief カメラの動き
 	class CameraMoveController :
 		public StateMachine_Base<CameraMoveState_Base::CameraState>,
-		public IImGuiUser, public ISaveLoad
+		public IImGuiUser,
+		public ISaveLoad
 	{
 		using CameraState = CameraMoveState_Base::CameraState;
-
-	public:
-		/// @brief カメラの揺れの強さ
-		enum class ShakeLevel
-		{
-			Low,
-			Mid,
-			High,
-			SuperHigh,
-			MaxNum
-		};
-
-		/// @brief カメラの揺れの強さ
-		enum class ShakeType
-		{
-			Vertical,	// 縦揺れ
-			Horizon,	// 横揺れ
-			Both,	// 両方揺れ
-			MaxNum
-		};
-
-		/// @brief レベルごとに設定するパラメータ
-		struct CameraShakeParameter
-		{
-			float power{ 0.2f };	// 揺れの強さ
-			float duration{ 0.3f };	// 揺れの間隔時間(s)
-		};
 	private:
-
-		/// @brief 各レベルの揺れの強さ
-		std::array<CameraShakeParameter, static_cast<u_int>(ShakeLevel::MaxNum)> shakeLevelParameter;
+		/// @brief パーリンシェイク
+		CalcPerlinShakeVector perlinShake;
 
 		/// @brief カメラの現在の座標(カメラ揺れを実装するのでオブジェクトと別で持っておく)
 		DirectX::SimpleMath::Vector3 curBaseCameraPos;
 
 		/// @brief 現在のカメラ揺れでずらしているオフセット座標
-		DirectX::SimpleMath::Vector3 curShakeOffset;
+		DirectX::SimpleMath::Vector3 curShakeOffsetPos;
 
 		/// @brief 前フレームのフォローしている座標
 		DirectX::SimpleMath::Vector3 prevFollowPos;
@@ -59,28 +33,6 @@ namespace HashiTaku
 
 		/// @brief カメラの注視オブジェクト
 		const ITargetAccepter* pLookAtTransform;
-
-		/// @brief 揺らしてる強さ
-		ShakeLevel curShakeLevel;
-
-		/// @brief 揺らしてる種類
-		ShakeType curShakeType;
-
-		/// @brief 揺らす時間
-		float shakeTime;
-
-		/// @brief 揺らしてからの経過時間
-		float shakeElapsedTime;
-
-		/// @brief 前揺れたときの時間
-		float prevShakeElapsedTime;
-
-		/// @brief 揺れているか？
-		bool isShaking;
-
-		ShakeLevel testLevel = ShakeLevel::Low;
-		ShakeType testType = ShakeType::Both;
-		float testTime = 0.0f;
 	public:
 		CameraMoveController();
 		~CameraMoveController() {}
@@ -93,6 +45,10 @@ namespace HashiTaku
 		/// @param _cameraState 変更先のステート
 		/// @param _isForce 強制的に変更するか
 		void ChangeState(CameraMoveState_Base::CameraState _cameraState, bool _isForce = false);
+
+		/// @brief 揺れを開始する
+		/// @param _shakeParam カメラ揺れパラメータ
+		void BeginShake(const PerlinShakeParameter& _shakeParam);
 
 		/// @brief ターゲットとするオブジェクトをセット（外したい場合nullptr）
 		/// @param _pTransform ゲームオブジェクト 
@@ -110,14 +66,6 @@ namespace HashiTaku
 		/// @param _setDegree 視野角
 		void SetFov(float _setDegree);
 
-		/// @brief 揺れを開始する
-		/// @param _level 揺れの強さ
-		/// @param _type 揺れの種類
-		/// @param _time 揺れの時間
-		void BeginShake(ShakeLevel _level, ShakeType _type, float _time);
-
-		/// @brief プレイヤー勝利時の処理
-		/// @param _targetTransform ターゲットのトランスフォーム
 		void OnPlayerWin(const Transform& _targetTransform);
 
 		/// @brief 視野角を取得(単位：deg)
@@ -152,8 +100,8 @@ namespace HashiTaku
 		/// @return 注視先オブジェクトのワールド座標
 		const DirectX::SimpleMath::Vector3& GetLookAtWorldPos() const;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		/// @brief カメラの座標を初期化
 		void InitCameraPos();
@@ -172,34 +120,20 @@ namespace HashiTaku
 		/// @param _stateType ステートの種類
 		template<class T> void CreateState(CameraMoveState_Base::CameraState _stateType);
 
-		/// @brief 揺れの終了処理
-		void OnEndShake();
-
 		/// @brief カメラの列挙型を文字列に
 		/// @param _state 変更したい列挙型
 		/// @return 文字列
 		std::string GetStateName(CameraMoveState_Base::CameraState _state);
-
-		/// @brief 揺れのオフセット値を取得する
-		/// @param _level レベル
-		/// @param _type 種類
-		/// @return オフセット値
-		DirectX::SimpleMath::Vector3 CalcShakeOffset(ShakeLevel _level, ShakeType _type);
 
 		/// @brief カメラ行動にキャストする
 		/// @param _stateBase ステートノードの基底
 		/// @return カメラステートクラス
 		CameraMoveState_Base& CastCamState(StateNode_Base& _stateBase);
 
-		void TestShakeUpdate();
-
 		void ImGuiDebug() override;
 
-		// 揺れのレベル強さ
-		void ImGuiShakeLevel();
-
 		// 全ステートをロードする
-		void LoadStates(const nlohmann::json& _data);
+		void LoadStates(const json& _data);
 	};
 
 	template<class T>

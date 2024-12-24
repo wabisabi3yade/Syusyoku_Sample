@@ -3,6 +3,7 @@
 #include "SkeletalMesh.h"
 #include "AnimationNode_Base.h"
 #include "IAnimParametersSetter.h"
+#include "ITransformSetter.h"
 #include "AnimationNotifyFactory.h"
 
 namespace HashiTaku
@@ -21,7 +22,10 @@ namespace HashiTaku
 	{
 	}
 
-	void AnimNodePlayer_Base::CopyNotifys(const std::list<std::unique_ptr<AnimationNotify_Base>>& _notifyList, AnimationParameters& _animationParameters)
+	void AnimNodePlayer_Base::CopyNotifys(
+		const std::list<std::unique_ptr<AnimationNotify_Base>>& _notifyList,
+		AnimationParameters& _animationParameters,
+		Transform& _transform)
 	{
 		// コピーする
 		for (auto& origin : _notifyList)
@@ -34,6 +38,12 @@ namespace HashiTaku
 				dynamic_cast<IAnimParametersSetter*>(pCopyNotify.get()))
 			{
 				pAnimParamSetter->SetAnimationParameters(_animationParameters);
+			}
+			// トランスフォームをセットするなら
+			if (ITransformSetter* pTransSetter =
+				dynamic_cast<ITransformSetter*>(pCopyNotify.get()))
+			{
+				pTransSetter->SetTransform(_transform);
 			}
 
 			// 初期処理

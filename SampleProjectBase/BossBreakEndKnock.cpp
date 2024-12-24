@@ -17,7 +17,7 @@ namespace HashiTaku
 		return canBreakValue;
 	}
 
-	nlohmann::json BossBreakEndKnock::Save()
+	json BossBreakEndKnock::Save()
 	{
 		auto data = BossDamageState::Save();
 		data["canBreak"] = canBreakValue;
@@ -25,7 +25,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void BossBreakEndKnock::Load(const nlohmann::json& _data)
+	void BossBreakEndKnock::Load(const json& _data)
 	{
 		BossDamageState::Load(_data);
 

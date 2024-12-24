@@ -35,8 +35,8 @@ namespace HashiTaku
 		PlayerRushAttack();
 		~PlayerRushAttack() {}
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		// State‹¤’Êˆ—
 		void OnStartBehavior() override;

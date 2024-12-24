@@ -67,7 +67,9 @@ namespace HashiTaku
 		/// @brief 新しくStateを生成
 		/// @tparam T 対応している行動クラス
 		/// @param _actionState アクション名
-		template <PlayerGroundConcept T> void CreateState(GroundState _actionState);
+		/// @param _cancelType キャンセルタイプ
+		template <PlayerGroundConcept T> void CreateState(GroundState _actionState,
+			CancelType _cancelType);
 
 		/// @brief 更新できるか取得
 		/// @return 更新できるか？
@@ -91,8 +93,10 @@ namespace HashiTaku
 	};
 
 	template<PlayerGroundConcept T>
-	inline void PlayerGroundActionController::CreateState(GroundState _actionState)
+	inline void PlayerGroundActionController::CreateState(GroundState _actionState,
+		CancelType _cancelType)
 	{
-		PlayerActionController_Base::CreateState<T>(static_cast<int>(_actionState));
+		PlayerActionController_Base::CreateState<T>(static_cast<int>(_actionState),
+			_cancelType);
 	}
 }

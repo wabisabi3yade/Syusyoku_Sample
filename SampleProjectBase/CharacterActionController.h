@@ -104,8 +104,8 @@ namespace HashiTaku
 		/// @param _floatVal 取得する値
 		float GetAnimationFloat(const std::string& _paramName);
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	protected:
 		/// @brief アニメーションを持っているか確認
 		/// @return アニメーション持っているか？

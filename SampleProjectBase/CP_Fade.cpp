@@ -59,7 +59,7 @@ namespace HashiTaku
 		endFunction = _func;
 	}
 
-	nlohmann::json CP_Fade::Save()
+	json CP_Fade::Save()
 	{
 		auto data = Component::Save();
 
@@ -70,7 +70,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_Fade::Load(const nlohmann::json& _data)
+	void CP_Fade::Load(const json& _data)
 	{
 		Component::Load(_data);
 

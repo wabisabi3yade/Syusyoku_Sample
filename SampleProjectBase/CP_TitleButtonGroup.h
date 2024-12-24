@@ -25,8 +25,8 @@ namespace HashiTaku
 		CP_TitleButtonGroup();
 		~CP_TitleButtonGroup() {}
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		void Start() override;
 

@@ -85,7 +85,7 @@ namespace HashiTaku
 		}
 	}
 
-	nlohmann::json CP_Collider::Save()
+	json CP_Collider::Save()
 	{
 		auto data = Component::Save();
 
@@ -95,7 +95,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_Collider::Load(const nlohmann::json& _data)
+	void CP_Collider::Load(const json& _data)
 	{
 		Component::Load(_data);
 

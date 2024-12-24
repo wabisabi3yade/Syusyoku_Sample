@@ -48,12 +48,12 @@ namespace HashiTaku
 		PlayerActState_Base::ImGuiDebug();
 	}
 
-	nlohmann::json PlayerAirState::Save()
+	json PlayerAirState::Save()
 	{
 		return PlayerActState_Base::Save();
 	}
 
-	void PlayerAirState::Load(const nlohmann::json& _data)
+	void PlayerAirState::Load(const json& _data)
 	{
 		PlayerActState_Base::Load(_data);
 	}
@@ -63,6 +63,5 @@ namespace HashiTaku
 		if (!pActionController->GetCanInput()) return;
 
 		using enum GameInput::ButtonType;
-		using CancelType = PlayerActionController_Base::CancelType;
 	}
 }

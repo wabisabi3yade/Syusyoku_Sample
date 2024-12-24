@@ -188,8 +188,8 @@ namespace HashiTaku
 		/// @brief 地面から離れた瞬間の処理
 		void OnGroundExit()	override;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		/// @brief 接地チェッカーを探して取得
 		void FindGroundChecker();

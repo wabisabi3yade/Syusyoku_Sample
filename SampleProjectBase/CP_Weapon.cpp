@@ -1,9 +1,10 @@
 #include "pch.h"
 #include "CP_Weapon.h"
 #include "CP_RigidBody.h"
+#include "CP_CameraMove.h"
 #include "GameObject.h"
-#include "CP_EffectCreater.h"
 #include "AssetGetter.h"
+#include "InSceneSystemManager.h"
 
 #ifdef EDIT
 #include "Geometory.h"
@@ -45,17 +46,8 @@ namespace HashiTaku
 		IDamageable* pDamager = gameObject.GetComponent<IDamageable>();
 		if (!pDamager) return;
 
-		// 攻撃処理
-		DXSimp::Vector3 haveObjPos;	// 所有オブジェクトの座標を取得する
-		if (pHaveObjectPos) haveObjPos = *pHaveObjectPos;
-		else
-			HASHI_DEBUG_LOG("所有オブジェクトの座標が設定されていません");
-
 		// 攻撃する
-		OnAttack(*pDamager, haveObjPos);
-
-		// ヒットエフェクトを生成
-		CreateHitVfx(_otherColInfo.contactPoint);
+		OnAttack(*pDamager, _otherColInfo.contactPoint);
 
 		// 追加する
 		AddAttackedRb(*_otherColInfo.pRigidBodyCp);
@@ -83,7 +75,7 @@ namespace HashiTaku
 		attackedRbs.clear();
 	}
 
-	nlohmann::json CP_Weapon::Save()
+	json CP_Weapon::Save()
 	{
 		auto data = Component::Save();
 
@@ -99,13 +91,13 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_Weapon::Load(const nlohmann::json& _data)
+	void CP_Weapon::Load(const json& _data)
 	{
 		using namespace HashiTaku;
 
 		Component::Load(_data);
 
-		nlohmann::json attackTagDatas;
+		json attackTagDatas;
 		if (LoadJsonDataArray("attackableTags", attackTagDatas, _data))
 		{
 			for (auto& tagData : attackTagDatas)
@@ -129,11 +121,14 @@ namespace HashiTaku
 		return true;
 	}
 
-	void CP_Weapon::OnAttack(IDamageable& _damager,
-		const DirectX::SimpleMath::Vector3& _haveObjPos)
+	void CP_Weapon::OnAttack(IDamageable& _damager, const DXSimp::Vector3& _contactPos)
 	{
+		// 攻撃処理
+		DXSimp::Vector3 haveObjPos;	// 所有オブジェクトの座標を取得する
+		if (pHaveObjectPos) haveObjPos = *pHaveObjectPos;
+
 		// ダメージを与える
-		_damager.OnDamage(*pAtkInfomation, _haveObjPos);
+		_damager.OnDamage(*pAtkInfomation, haveObjPos, _contactPos);
 	}
 
 	void CP_Weapon::AddAttackedRb(const CP_RigidBody& _rb)
@@ -166,18 +161,6 @@ namespace HashiTaku
 		}
 
 		return true;
-	}
-
-	void CP_Weapon::CreateHitVfx(const DirectX::SimpleMath::Vector3& _contactPos)
-	{
-		const CreateVfxInfo& hitVfxInfo = pAtkInfomation->GetHitVfxInfo();
-
-		// 攻撃情報からエフェクトを取得する
-		auto* pVfx = hitVfxInfo.pHitVfx;
-		if (!pVfx) return;
-
-		// 再生
-		DX11EffecseerManager::GetInstance()->Play(hitVfxInfo, _contactPos);
 	}
 
 	void CP_Weapon::DebugAttackFlag()

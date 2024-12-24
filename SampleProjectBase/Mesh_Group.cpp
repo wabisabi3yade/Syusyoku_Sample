@@ -133,7 +133,7 @@ namespace HashiTaku
 		}
 	}
 
-	nlohmann::json Mesh_Group::Save()
+	json Mesh_Group::Save()
 	{
 		auto data = AssetPath_Base::Save();
 
@@ -157,12 +157,12 @@ namespace HashiTaku
 		return data;
 	}
 
-	void Mesh_Group::Load(const nlohmann::json& _data)
+	void Mesh_Group::Load(const json& _data)
 	{
 		using namespace HashiTaku;
 
 		//// マテリアルのテクスチャをロード
-		//nlohmann::json matDatas;
+		//json matDatas;
 		//bool isData = LoadJsonDataArray("matDiffuse", matDatas, _data);
 		//if (isData)
 		//{

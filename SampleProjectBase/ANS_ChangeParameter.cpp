@@ -34,7 +34,7 @@ namespace HashiTaku
 		return std::make_unique<ANS_ChangeParameter>(*this);
 	}
 
-	nlohmann::json ANS_ChangeParameter::Save()
+	json ANS_ChangeParameter::Save()
 	{
 		auto data = AnimationNotifyState::Save();
 
@@ -50,7 +50,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void ANS_ChangeParameter::Load(const nlohmann::json& _data)
+	void ANS_ChangeParameter::Load(const json& _data)
 	{
 		using namespace HashiTaku;
 
@@ -62,8 +62,8 @@ namespace HashiTaku
 		// セクションごとのセーブ
 		for (auto s_i = 0; s_i < SECTION_CNT; s_i++)
 		{
-			nlohmann::json useData;
-			nlohmann::json setParamData;
+			json useData;
+			json setParamData;
 
 			// 使用フラグ
 			if (LoadJsonDataArray("isUse", useData, _data))

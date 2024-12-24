@@ -9,7 +9,7 @@ namespace HashiTaku
 	{
 	}
 
-	nlohmann::json BossGroundMove::Save()
+	json BossGroundMove::Save()
 	{
 		auto data = BossActState_Base::Save();
 
@@ -20,7 +20,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void BossGroundMove::Load(const nlohmann::json& _data)
+	void BossGroundMove::Load(const json& _data)
 	{
 		using namespace HashiTaku;
 

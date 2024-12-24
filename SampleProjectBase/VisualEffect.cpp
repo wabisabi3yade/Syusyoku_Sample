@@ -21,14 +21,14 @@ namespace HashiTaku
 		return effect;
 	}
 
-	nlohmann::json VisualEffect::Save()
+	json VisualEffect::Save()
 	{
 		auto data = AssetPath_Base::Save();
 		data["loadScale"] = loadScale;
 		return data;
 	}
 
-	void VisualEffect::Load(const nlohmann::json& _data)
+	void VisualEffect::Load(const json& _data)
 	{
 		AssetPath_Base::Load(_data);
 	}

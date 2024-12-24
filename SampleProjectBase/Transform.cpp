@@ -295,9 +295,9 @@ namespace HashiTaku
 		return static_cast<u_int>(childTransforms.size());
 	}
 
-	nlohmann::json Transform::Save()
+	json Transform::Save()
 	{
-		nlohmann::json transformData;
+		json transformData;
 
 		// ローカル座標をセーブする
 		SaveJsonVector3("pos", position, transformData);
@@ -313,7 +313,7 @@ namespace HashiTaku
 		return transformData;
 	}
 
-	void Transform::Load(const nlohmann::json& _transformData)
+	void Transform::Load(const json& _transformData)
 	{
 		// ワールド座標をロードする
 		LoadJsonQuaternion("rotation", rotation, _transformData);
@@ -329,7 +329,7 @@ namespace HashiTaku
 		UpdateLocalMatrixFromWorld();
 	}
 
-	void Transform::LoadChildTransform(const nlohmann::json& _transformData)
+	void Transform::LoadChildTransform(const json& _transformData)
 	{
 		// 親子トランスフォーム取得
 		SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->GetSceneObjects();

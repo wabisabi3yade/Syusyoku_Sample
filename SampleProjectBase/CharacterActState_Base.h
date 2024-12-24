@@ -26,8 +26,8 @@ namespace HashiTaku
 		/// @brief デバッグ時で描画したいときの処理
 		virtual void DebugDisplay() {}
 
-		virtual nlohmann::json Save() = 0;
-		virtual void Load(const nlohmann::json& _data) = 0;
+		virtual json Save() = 0;
+		virtual void Load(const json& _data) = 0;
 	protected:
 		virtual void ImGuiDebug() = 0;
 	};

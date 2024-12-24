@@ -157,7 +157,7 @@ namespace HashiTaku
 		return pRenderMesh;
 	}
 
-	nlohmann::json CP_MeshRenderer::Save()
+	json CP_MeshRenderer::Save()
 	{
 		auto data = CP_Renderer::Save();
 
@@ -167,7 +167,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_MeshRenderer::Load(const nlohmann::json& _data)
+	void CP_MeshRenderer::Load(const json& _data)
 	{
 		CP_Renderer::Load(_data);
 

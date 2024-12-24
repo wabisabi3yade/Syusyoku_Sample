@@ -220,14 +220,14 @@ namespace HashiTaku
 		return *pAnimParamSubject;
 	}
 
-	nlohmann::json AnimationParameters::Save()
+	json AnimationParameters::Save()
 	{
-		nlohmann::json parameterListData;
+		json parameterListData;
 
 		for (auto& param : animParameters)
 		{
 			//–¼‘O
-			nlohmann::json parameterData;
+			json parameterData;
 			parameterData["name"] = param.first;
 
 			//Œ^
@@ -259,7 +259,7 @@ namespace HashiTaku
 		return parameterListData;
 	}
 
-	void AnimationParameters::Load(const nlohmann::json& _data)
+	void AnimationParameters::Load(const json& _data)
 	{
 		for (auto& paramData : _data)
 		{

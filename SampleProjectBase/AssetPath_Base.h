@@ -20,10 +20,10 @@ namespace HashiTaku
 
 		/// @brief セーブする
 		/// @param _sceneData セーブデータ
-		nlohmann::json Save() override;
+		json Save() override;
 
 		/// @brief ロードする
 		/// @param _sceneData ロードするデータ 
-		void Load(const nlohmann::json& _data) override;
+		void Load(const json& _data) override;
 	};
 }

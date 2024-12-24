@@ -30,8 +30,8 @@ namespace HashiTaku
 				pBulletEngine->SetDisplay(isDisplay);
 
 			float gravity = pBulletEngine->GetGravity();
-			if (ImGui::DragFloat("Gravity", &gravity, 0.01f, -1000.0f, -9.81f));
-			pBulletEngine->SetGravity(gravity);
+			if (ImGui::DragFloat("Gravity", &gravity, 0.01f, -1000.0f, -9.81f))
+				pBulletEngine->SetGravity(gravity);
 
 			ImGui::TreePop();
 		}

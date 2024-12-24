@@ -54,7 +54,7 @@ namespace HashiTaku
 			ChangeState(BossState::Idle);
 	}
 
-	nlohmann::json BossAttackState::Save()
+	json BossAttackState::Save()
 	{
 		auto data = BossActState_Base::Save();
 
@@ -78,14 +78,14 @@ namespace HashiTaku
 		return data;
 	}
 
-	void BossAttackState::Load(const nlohmann::json& _data)
+	void BossAttackState::Load(const json& _data)
 	{
 		BossActState_Base::Load(_data);
 
 		LoadJsonUnsigned("atkTimeCnt", attackTimeCnt, _data);
 
 		// 攻撃情報をロード
-		nlohmann::json atkLoadDatas;
+		json atkLoadDatas;
 		if (LoadJsonDataArray("atkInfos", atkLoadDatas, _data))
 		{
 			attackInfos.clear();	// 今の情報をリセット
@@ -131,19 +131,25 @@ namespace HashiTaku
 	{
 		BossActState_Base::ImGuiDebug();
 
+		ImGuiMethod::LineSpaceSmall();
+
 		/// 攻撃情報
+		ImGui::PushID("Attack");
+		ImGui::Text("Attack");
 		u_int infoCnt = static_cast<u_int>(attackInfos.size());
 		for (u_int a_i = 0; a_i < infoCnt; a_i++)
 		{
-			ImGui::PushID(a_i);
+			std::string caption = "Step:" + std::to_string(a_i + 1);
+			if(!ImGui::TreeNode(caption.c_str())) continue;
 
 			std::string text = "Step" + std::to_string(a_i);
 			ImGui::Text(text.c_str());
 			attackInfos[a_i].ImGuiCall();
 			ImGuiMethod::LineSpaceSmall();
 
-			ImGui::PopID();
+			ImGui::TreePop();
 		}
+		ImGui::PopID();
 
 		ImGuiMethod::LineSpaceSmall();
 

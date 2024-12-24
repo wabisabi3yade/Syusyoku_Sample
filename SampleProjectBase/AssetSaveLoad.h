@@ -24,14 +24,14 @@ namespace HashiTaku
 		static std::string SaveFilePath();
 
 		// ロード時のアセット作成
-		static void CreateTexture(const nlohmann::json& _loadData);
-		static void CreateMesh(const nlohmann::json& _loadData);
-		static void CreateMaterial(const nlohmann::json& _loadData);
-		static void CreateVFX(const nlohmann::json& _loadData);
-		static void CreateAnimaton(const nlohmann::json& _loadData);
-		static void CreateAnimController(const nlohmann::json& _loadData);
+		static void CreateTexture(const json& _loadData);
+		static void CreateMesh(const json& _loadData);
+		static void CreateMaterial(const json& _loadData);
+		static void CreateVFX(const json& _loadData);
+		static void CreateAnimaton(const json& _loadData);
+		static void CreateAnimController(const json& _loadData);
 
 		// アセットをロード
-		static void LoadAsset(const nlohmann::json& _loadData);
+		static void LoadAsset(const json& _loadData);
 	};
 }

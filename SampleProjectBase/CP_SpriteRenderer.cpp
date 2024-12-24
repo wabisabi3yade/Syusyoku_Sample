@@ -126,7 +126,7 @@ namespace HashiTaku
 		return alpha;
 	}
 
-	nlohmann::json CP_SpriteRenderer::Save()
+	json CP_SpriteRenderer::Save()
 	{
 		auto data = CP_Renderer::Save();
 
@@ -136,7 +136,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_SpriteRenderer::Load(const nlohmann::json& _data)
+	void CP_SpriteRenderer::Load(const json& _data)
 	{
 		CP_Renderer::Load(_data);
 

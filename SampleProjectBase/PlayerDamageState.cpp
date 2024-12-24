@@ -13,7 +13,7 @@ namespace HashiTaku
 		knockVector = _knockVec;
 	}
 
-	nlohmann::json PlayerDamageState::Save()
+	json PlayerDamageState::Save()
 	{
 		auto data = PlayerGroundState::Save();
 
@@ -23,7 +23,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void PlayerDamageState::Load(const nlohmann::json& _data)
+	void PlayerDamageState::Load(const json& _data)
 	{
 		PlayerGroundState::Load(_data);
 

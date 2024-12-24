@@ -72,8 +72,8 @@ namespace HashiTaku
 
 		void ImGuiDebug() override;
 
-		virtual nlohmann::json Save() override;
-		virtual void Load(const nlohmann::json& _data) override;
+		virtual json Save() override;
+		virtual void Load(const json& _data) override;
 	private:
 		void Copy(const CP_Collider& _other);
 

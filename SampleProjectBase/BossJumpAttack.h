@@ -37,8 +37,8 @@ namespace HashiTaku
 		/// @brief デバッグ描画
 		void DebugDisplay();
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		json Save() override;
+		void Load(const json& _data) override;
 	private:
 		void OnStartBehavior();
 		void UpdateBehavior();

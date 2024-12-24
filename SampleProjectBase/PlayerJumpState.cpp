@@ -18,7 +18,7 @@ namespace HashiTaku
 	{
 	}
 
-	nlohmann::json PlayerJumpState::Save()
+	json PlayerJumpState::Save()
 	{
 		auto data = PlayerGroundState::Save();
 
@@ -28,7 +28,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void PlayerJumpState::Load(const nlohmann::json& _data)
+	void PlayerJumpState::Load(const json& _data)
 	{
 		PlayerGroundState::Load(_data);
 

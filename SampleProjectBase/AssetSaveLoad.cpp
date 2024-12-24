@@ -24,7 +24,7 @@ namespace HashiTaku
 	void AssetSaveLoader::Save()
 	{
 		// シーンデータ
-		nlohmann::json saveData;
+		json saveData;
 
 		auto& assetData = saveData[ASSET_ELEMENT];
 
@@ -96,7 +96,7 @@ namespace HashiTaku
 			return;
 		}
 
-		const nlohmann::json loadData = nlohmann::json::parse(f);
+		const json loadData = json::parse(f);
 
 		// テクスチャ
 		CreateTexture(loadData);
@@ -120,7 +120,7 @@ namespace HashiTaku
 		LoadAsset(loadData);
 	}
 
-	void AssetSaveLoader::CreateTexture(const nlohmann::json& _loadData)
+	void AssetSaveLoader::CreateTexture(const json& _loadData)
 	{
 		if (!IsJsonContains(_loadData, TEX_ELEMENT)) return;
 
@@ -133,7 +133,7 @@ namespace HashiTaku
 		}
 	}
 
-	void AssetSaveLoader::CreateMaterial(const nlohmann::json& _loadData)
+	void AssetSaveLoader::CreateMaterial(const json& _loadData)
 	{
 		if (!IsJsonContains(_loadData, MAT_ELEMENT)) return;
 
@@ -148,7 +148,7 @@ namespace HashiTaku
 		}
 	}
 
-	void AssetSaveLoader::CreateVFX(const nlohmann::json& _loadData)
+	void AssetSaveLoader::CreateVFX(const json& _loadData)
 	{
 		if (!IsJsonContains(_loadData, VFX_ELEMENT)) return;
 
@@ -166,7 +166,7 @@ namespace HashiTaku
 		}
 	}
 
-	void AssetSaveLoader::CreateMesh(const nlohmann::json& _loadData)
+	void AssetSaveLoader::CreateMesh(const json& _loadData)
 	{
 		if (!IsJsonContains(_loadData, MOD_ELEMENT)) return;
 
@@ -191,7 +191,7 @@ namespace HashiTaku
 		}
 	}
 
-	void AssetSaveLoader::CreateAnimaton(const nlohmann::json& _loadData)
+	void AssetSaveLoader::CreateAnimaton(const json& _loadData)
 	{
 		if (!IsJsonContains(_loadData, ANIM_ELEMENT)) return;
 
@@ -210,7 +210,7 @@ namespace HashiTaku
 		}
 	}
 
-	void AssetSaveLoader::CreateAnimController(const nlohmann::json& _loadData)
+	void AssetSaveLoader::CreateAnimController(const json& _loadData)
 	{
 		if (!IsJsonContains(_loadData, ANIMCON_ELEMENT)) return;
 
@@ -228,9 +228,9 @@ namespace HashiTaku
 		}
 	}
 
-	void AssetSaveLoader::LoadAsset(const nlohmann::json& _loadData)
+	void AssetSaveLoader::LoadAsset(const json& _loadData)
 	{
-		nlohmann::json assetDatas;
+		json assetDatas;
 
 		if (LoadJsonDataArray(TEX_ELEMENT, assetDatas, _loadData))
 		{

@@ -97,13 +97,13 @@ namespace HashiTaku
 		return pAnimation->GetFloat(_paramName);
 	}
 
-	nlohmann::json CharacterActionController::Save()
+	json CharacterActionController::Save()
 	{
-		nlohmann::json data;
+		json data;
 
 		for (auto& node : stateNodeList)
 		{
-			nlohmann::json actData;
+			json actData;
 			// 文字列に変換
 			actData["typeString"] = GetStateStr(node.first);
 			actData["data"] = static_cast<CharacterActState_Base&>(*node.second).Save();
@@ -113,9 +113,9 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CharacterActionController::Load(const nlohmann::json& _data)
+	void CharacterActionController::Load(const json& _data)
 	{
-		nlohmann::json actDataList;
+		json actDataList;
 		// ステートごとのパラメータをロードする
 		if (LoadJsonDataArray("actData", actDataList, _data))
 		{
@@ -128,7 +128,7 @@ namespace HashiTaku
 				// 文字列→状態ID
 				int stateId = GetStateId(stateString);
 
-				nlohmann::json actParam;
+				json actParam;
 				if (!LoadJsonData("data", actParam, actData))
 					continue;
 

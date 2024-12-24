@@ -1,4 +1,5 @@
 #pragma once
+#include "PerlinShakeParameter.h"
 
 namespace HashiTaku
 {
@@ -21,6 +22,9 @@ namespace HashiTaku
 		/// @brief ヒットエフェクト情報
 		CreateVfxInfo hitVfxInfo;
 
+		/// @brief カメラを揺らすパラメータ
+		PerlinShakeParameter pCamShakeParam;
+
 		/// @brief 攻撃時のダメージ
 		float atkDamage;
 
@@ -29,9 +33,11 @@ namespace HashiTaku
 
 		/// @brief 攻撃レベル
 		AttackLevel atkLevel;
+
+		/// @brief カメラを揺らすか？
+		bool isCamShake;
 	public:
 		AttackInformation();
-		AttackInformation(float _atkDamage, AttackLevel _atkLevel);
 		virtual ~AttackInformation() {}
 
 		/// @brief ダメージ値をセット
@@ -50,6 +56,10 @@ namespace HashiTaku
 		/// @return ヒットエフェクト情報
 		const CreateVfxInfo& GetHitVfxInfo() const;
 
+		/// @brief カメラを揺らすパラメータを取得
+		/// @return カメラを揺らすパラメータ
+		const PerlinShakeParameter& GetCamShakeParam() const;
+
 		/// @brief ダメージ値を取得
 		/// @return ダメージ値
 		float GetDamageValue() const;
@@ -62,8 +72,12 @@ namespace HashiTaku
 		/// @return 攻撃レベル
 		AttackLevel GetAttackLevel() const;
 
-		nlohmann::json Save() override;
-		void Load(const nlohmann::json& _data) override;
+		/// @brief カメラを揺らすかどうか
+		/// @return カメラ揺らす？
+		bool GetIsShake() const;
+
+		json Save() override;
+		void Load(const json& _data) override;
 	protected:
 		void ImGuiDebug() override;
 	private:

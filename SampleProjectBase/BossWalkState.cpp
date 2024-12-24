@@ -8,13 +8,13 @@ namespace HashiTaku
 	{
 	}
 
-	nlohmann::json BossWalkState::Save()
+	json BossWalkState::Save()
 	{
 		auto data = BossGroundMove::Save();
 		return data;
 	}
 
-	void BossWalkState::Load(const nlohmann::json& _data)
+	void BossWalkState::Load(const json& _data)
 	{
 		BossGroundMove::Load(_data);
 	}

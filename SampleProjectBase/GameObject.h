@@ -110,15 +110,15 @@ namespace HashiTaku
 
 		/// @brief セーブする
 		/// @param _sceneData セーブシーンデータ
-		nlohmann::json Save() override;
+		json Save() override;
 
 		/// @brief ロードする
 		/// @param _sceneData ロードするシーンデータ 
-		void Load(const nlohmann::json& _sceneData) override;
+		void Load(const json& _sceneData) override;
 
 		/// @brief オブジェクト関係をロードする(シーン内のオブジェクトが必要)
 		/// @param _sceneData ロードするシーンデータ 
-		void LateLode(const nlohmann::json& _sceneData);
+		void LateLode(const json& _sceneData);
 
 		/// @brief オブジェクト名をセット
 		/// @param _name オブジェクト名
@@ -217,11 +217,11 @@ namespace HashiTaku
 
 		/// @brief コンポーネント生成ロード処理
 		/// @param _componentsData コンポーネントデータ
-		void LoadCreateComponnet(const nlohmann::json& _componentsData);
+		void LoadCreateComponnet(const json& _componentsData);
 
 		/// @brief コンポーネントのロード処理
 		/// @param _componentData このオブジェクト全てのコンポーネントデータ
-		void LoadComponentParameter(const nlohmann::json& _componentsData);
+		void LoadComponentParameter(const json& _componentsData);
 
 		// ImGuiの設定
 		void ImGuiDebug() override;

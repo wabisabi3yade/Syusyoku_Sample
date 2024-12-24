@@ -101,7 +101,7 @@ namespace HashiTaku
 		ImGui::DragFloat("shiness", &parameter.shiness);
 	}
 
-	nlohmann::json Material::Save()
+	json Material::Save()
 	{
 		using namespace HashiTaku;
 
@@ -125,7 +125,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void Material::Load(const nlohmann::json& _data)
+	void Material::Load(const json& _data)
 	{
 		using namespace HashiTaku;
 

@@ -22,7 +22,20 @@ namespace HashiTaku
 			Forward,	// 前方向
 			Back	// 後ろ
 		};
+
+		/// @brief キャンセルの種類
+		enum class CancelType
+		{
+			Action,	// アクション(ローリングなど)
+			Attack,	// 攻撃
+			Move,	// 移動
+			MaxNum,
+			None	// キャンセルしない
+		};
 	private:
+		/// @brief キャンセルタイプ
+		CancelType cancelType;
+
 		/// @brief ターゲットを見るときの回転速度
 		float targetLookRotateSpeed;
 
@@ -43,11 +56,18 @@ namespace HashiTaku
 
 		/// @brief 初期化処理
 		/// @param _actController　プレイヤーコンポーネント
+		/// @param _cancelType　キャンセルタイプ
 		/// @param _priority　優先度
-		void Init(PlayerActionController_Base& _actController, int _priority);
+		void Init(PlayerActionController_Base& _actController, 
+			CancelType _cancelType, 
+			int _priority);
 
 		/// @brief 更新処理呼び出し
 		void Update() override;
+
+		/// @brief キャンセルタイプを取得
+		/// @return キャンセルタイプ
+		CancelType GetCancelType() const;
 
 		/// @brief 優先度を取得する
 		/// @return 優先度
@@ -55,11 +75,11 @@ namespace HashiTaku
 
 		/// @brief セーブする
 		/// @return セーブデータ
-		nlohmann::json Save() override;
+		json Save() override;
 
 		/// @brief ロードする
 		/// @param _data ロードするデータ 
-		void Load(const nlohmann::json& _data) override;
+		void Load(const json& _data) override;
 	protected:
 		/// @brief 速度をクリアする
 		/// @param _applyY Y軸にも反映させるか

@@ -73,7 +73,7 @@ namespace HashiTaku
 		return alpha;
 	}
 
-	nlohmann::json CP_UIRenderer::Save()
+	json CP_UIRenderer::Save()
 	{
 		auto data = CP_Renderer::Save();
 
@@ -85,7 +85,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_UIRenderer::Load(const nlohmann::json& _data)
+	void CP_UIRenderer::Load(const json& _data)
 	{
 		CP_Renderer::Load(_data);
 

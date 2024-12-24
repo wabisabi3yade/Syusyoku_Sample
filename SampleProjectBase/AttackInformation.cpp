@@ -6,15 +6,9 @@
 namespace HashiTaku
 {
 	AttackInformation::AttackInformation()
-		: atkDamage(0.0f), hitStopFrame(0), atkLevel(AttackLevel::Low)
+		: atkDamage(0.0f), hitStopFrame(0), atkLevel(AttackLevel::Low), isCamShake(false)
 	{
 		SetAttackLevel(AttackLevel::Low);
-	}
-
-	AttackInformation::AttackInformation(float _atkDamage, AttackLevel _atkLevel)
-		: atkDamage(_atkDamage)
-	{
-		SetAttackLevel(_atkLevel);
 	}
 
 	void AttackInformation::SetDamageValue(float _atkDamage)
@@ -38,6 +32,10 @@ namespace HashiTaku
 		return hitVfxInfo;
 	}
 
+	const PerlinShakeParameter& AttackInformation::GetCamShakeParam() const
+	{
+		return pCamShakeParam;
+	}
 
 	float AttackInformation::GetDamageValue() const
 	{
@@ -54,23 +52,38 @@ namespace HashiTaku
 		return atkLevel;
 	}
 
-	nlohmann::json AttackInformation::Save()
+	bool AttackInformation::GetIsShake() const
 	{
-		nlohmann::json data;
+		return isCamShake;
+	}
+
+	json AttackInformation::Save()
+	{
+		json data;
 
 		data["hitVfx"] = hitVfxInfo.Save();
+		data["isCamShake"] = isCamShake;
+		if (isCamShake)
+			data["camShake"] = pCamShakeParam.Save();
 		data["damage"] = atkDamage;
 		data["level"] = atkLevel;
 
 		return data;
 	}
 
-	void AttackInformation::Load(const nlohmann::json& _data)
+	void AttackInformation::Load(const json& _data)
 	{
-		nlohmann::json hitVfxData;
-		if (LoadJsonData("hitVfx", hitVfxData, _data))
+		json loadData;
+		if (LoadJsonData("hitVfx", loadData, _data))
 		{
-			hitVfxInfo.Load(hitVfxData);
+			hitVfxInfo.Load(loadData);
+		}
+
+		LoadJsonBoolean("isCamShake", isCamShake, _data);
+		if (isCamShake)
+		{
+			if (LoadJsonData("camShake", loadData, _data))
+				pCamShakeParam.Load(loadData);
 		}
 
 		LoadJsonFloat("damage", atkDamage, _data);
@@ -122,5 +135,10 @@ namespace HashiTaku
 		}
 
 		hitVfxInfo.ImGuiCall();
+
+		ImGui::Checkbox("IsCameraShake", &isCamShake);
+
+		if (isCamShake)
+			pCamShakeParam.ImGuiCall();
 	}
 }

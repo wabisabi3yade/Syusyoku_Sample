@@ -20,7 +20,7 @@ namespace HashiTaku
 		RecreateShape();
 	}
 
-	nlohmann::json CP_CylinderCollider::Save()
+	json CP_CylinderCollider::Save()
 	{
 		auto data = CP_Collider::Save();
 
@@ -30,7 +30,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_CylinderCollider::Load(const nlohmann::json& _data)
+	void CP_CylinderCollider::Load(const json& _data)
 	{
 		CP_Collider::Load(_data);
 

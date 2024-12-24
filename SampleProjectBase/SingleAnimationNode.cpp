@@ -47,7 +47,7 @@ namespace HashiTaku
 		return pAnimationData->GetRootMotionPosSpeedPerSec();
 	}
 
-	nlohmann::json SingleAnimationNode::Save()
+	json SingleAnimationNode::Save()
 	{
 		auto data = AnimationNode_Base::Save();
 
@@ -57,7 +57,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void SingleAnimationNode::Load(const nlohmann::json& _data)
+	void SingleAnimationNode::Load(const json& _data)
 	{
 		AnimationNode_Base::Load(_data);
 

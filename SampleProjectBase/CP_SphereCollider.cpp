@@ -23,15 +23,15 @@ namespace HashiTaku
 		return radius;
 	}
 
-	nlohmann::json CP_SphereCollider::Save()
+	json CP_SphereCollider::Save()
 	{
-		nlohmann::json data = CP_Collider::Save();
+		json data = CP_Collider::Save();
 
 		data["radius"] = radius;
 		return data;
 	}
 
-	void CP_SphereCollider::Load(const nlohmann::json& _data)
+	void CP_SphereCollider::Load(const json& _data)
 	{
 		CP_Collider::Load(_data);
 

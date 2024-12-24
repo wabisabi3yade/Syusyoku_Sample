@@ -14,7 +14,7 @@ namespace HashiTaku
 	{
 	}
 
-	nlohmann::json PlayerMoveState::Save()
+	json PlayerMoveState::Save()
 	{
 		auto data = PlayerActState_Base::Save();
 
@@ -26,7 +26,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void PlayerMoveState::Load(const nlohmann::json& _data)
+	void PlayerMoveState::Load(const json& _data)
 	{
 		using namespace HashiTaku;
 

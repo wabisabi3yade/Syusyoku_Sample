@@ -250,7 +250,7 @@ namespace HashiTaku
 		ImGuiFreezeRot();
 	}
 
-	nlohmann::json CP_RigidBody::Save()
+	json CP_RigidBody::Save()
 	{
 		auto data = Component::Save();
 		data["mass"] = mass;
@@ -267,7 +267,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void CP_RigidBody::Load(const nlohmann::json& _data)
+	void CP_RigidBody::Load(const json& _data)
 	{
 		Component::Load(_data);
 

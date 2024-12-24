@@ -9,7 +9,7 @@ namespace HashiTaku
 
 	}
 
-	nlohmann::json AnimationNotifyEvent::Save()
+	json AnimationNotifyEvent::Save()
 	{
 		auto data = AnimationNotify_Base::Save();
 		bool isUseFrame = UseFrame();
@@ -27,7 +27,7 @@ namespace HashiTaku
 		return data;
 	}
 
-	void AnimationNotifyEvent::Load(const nlohmann::json& _data)
+	void AnimationNotifyEvent::Load(const json& _data)
 	{
 		AnimationNotify_Base::Load(_data);
 
