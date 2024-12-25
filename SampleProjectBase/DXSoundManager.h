@@ -15,7 +15,10 @@ namespace HashiTaku
 		/// @brief 再生中のサウンドパラメータ
 		struct PlaySoundParam
 		{
+			/// @brief 再生中のサウンドインデックス
 			int soundId{ -1 };
+
+			/// @brief サウンドインスタンス
 			std::unique_ptr<DX::SoundEffectInstance> pSoundInstance;
 		};
 

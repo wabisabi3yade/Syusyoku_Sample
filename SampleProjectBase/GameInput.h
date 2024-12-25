@@ -68,6 +68,11 @@ namespace HashiTaku
 		/// @brief 更新処理
 		void Update();
 
+		/// @brief コントローラー振動時間
+		/// @param _power 振動の力
+		/// @param _time 振動時間
+		void BeginVibration(float _power, float _time);
+
 		/// @brief 押されているか取得
 		/// @param _buttonType ゲーム内ボタンの種類
 		/// @return 押されているか？

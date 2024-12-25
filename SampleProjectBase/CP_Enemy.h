@@ -49,6 +49,12 @@ namespace HashiTaku
 		bool OnDamageBehavior(const AttackInformation& _attackInfo,
 			const DirectX::SimpleMath::Vector3& _attackerPos) override;
 
+		/// @brief ダメージ受けたときの処理
+		/// @param _attackInfo 攻撃情報
+		/// @param _contactPos 衝突地点
+		void OnTakeDamage(const AttackInformation& _attackInfo,
+			const DXSimp::Vector3& _contactPos) override;
+
 		/// @brief 死んだときの処理
 		void OnDeathBehavior() override {};
 	};

@@ -10,6 +10,7 @@
 #include "SkeletalMesh.h"
 #include "VisualEffect.h"
 #include "AnimationData.h"
+#include "SoundAsset.h"
 
 namespace HashiTaku
 {
@@ -20,6 +21,7 @@ namespace HashiTaku
 	constexpr auto VFX_ELEMENT = "vfx";
 	constexpr auto ANIM_ELEMENT = "animations";
 	constexpr auto ANIMCON_ELEMENT = "animController";
+	constexpr auto SOUND_ELEMENT = "sounds";
 
 	void AssetSaveLoader::Save()
 	{
@@ -76,6 +78,14 @@ namespace HashiTaku
 				animConData.push_back(animCon.second->Save());
 		}
 
+		// サウンド
+		auto& soundData = assetData[SOUND_ELEMENT];
+		for (auto& sound : pAssetCollection->soundAssets)
+		{
+			if (sound.second->GetIsSave())
+				soundData.push_back(sound.second->Save());
+		}
+
 		std::ofstream f(SaveFilePath());
 
 		auto str = assetData.dump(4);
@@ -115,6 +125,9 @@ namespace HashiTaku
 
 		//// アニメーションコントローラー
 		CreateAnimController(loadData);
+
+		// サウンド
+		CreateSound(loadData);
 
 		// アセットをロードする
 		LoadAsset(loadData);
@@ -220,11 +233,31 @@ namespace HashiTaku
 		for (auto& data : _loadData[ANIMCON_ELEMENT])
 		{
 			std::unique_ptr<AnimationController> pCreate;
-			;
+	
 			std::string name;
 			LoadJsonString("assetName", name, data);
 
 			animConCreater.CraeteAsset(name);
+		}
+	}
+
+	void AssetSaveLoader::CreateSound(const json& _loadData)
+	{
+		nlohmann::json soundDatas;
+		if (!LoadJsonDataArray(SOUND_ELEMENT, soundDatas, _loadData)) return;
+
+		AnimControllerCreater animConCreater;
+
+		// 名前を取得し、アセット生成
+		for (auto& data : soundDatas)
+		{
+			std::unique_ptr<SoundAsset> pCreate;
+	
+			std::string path;
+			if (LoadJsonString("pathName", path, data))
+			{
+				AssetLoader::LoadSound(path);
+			}
 		}
 	}
 
@@ -310,6 +343,20 @@ namespace HashiTaku
 				LoadJsonString("assetName", assetName, asset);
 
 				Asset_Base* pAsset = pAssetCollection->GetAsset<AnimationController>(assetName);
+
+				if (pAsset)
+					pAsset->Load(asset);
+			}
+		}
+
+		if (LoadJsonDataArray(SOUND_ELEMENT, assetDatas, _loadData))
+		{
+			for (const auto& asset : assetDatas)
+			{
+				std::string assetName;
+				LoadJsonString("assetName", assetName, asset);
+
+				Asset_Base* pAsset = pAssetCollection->GetAsset<SoundAsset>(assetName);
 
 				if (pAsset)
 					pAsset->Load(asset);

@@ -33,6 +33,11 @@ namespace HashiTaku
 		TimeLineUpdate();
 	}
 
+	void GameInput::BeginVibration(float _power, float _time)
+	{
+		MainApplication::GetInput().GetGamePad().SetVibration(_power, _time);
+	}
+
 	bool GameInput::GetButton(ButtonType _buttonType)
 	{
 		u_int buttonNum = static_cast<u_int>(_buttonType);

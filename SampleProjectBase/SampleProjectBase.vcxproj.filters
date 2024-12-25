@@ -898,6 +898,9 @@
     <Filter Include="ソース ファイル\InGame\Camera\State\ChargeAttack">
       <UniqueIdentifier>{4c1a00e6-a7b2-40bd-81c8-26a56c0eba9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\PadShake">
+      <UniqueIdentifier>{a4d828b4-4f41-4124-b197-f87441f4fe94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1644,7 +1647,10 @@
       <Filter>ソース ファイル\InGame\Camera\State\ChargeAttack</Filter>
     </ClCompile>
     <ClCompile Include="ANE_CameraShake.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\CameraShake</Filter>
+    </ClCompile>
+    <ClCompile Include="ANE_PadShake.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\PadShake</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2444,7 +2450,10 @@
       <Filter>ソース ファイル\InGame\Camera\State\ChargeAttack</Filter>
     </ClInclude>
     <ClInclude Include="ANE_CameraShake.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\CameraShake</Filter>
+    </ClInclude>
+    <ClInclude Include="ANE_PadShake.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\PadShake</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

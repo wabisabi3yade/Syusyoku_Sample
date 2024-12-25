@@ -2,6 +2,7 @@
 #include "PlayerGroundChargeAttack.h"
 #include "GameObject.h"
 #include "CameraChargeAttack.h"
+#include "InSceneSystemManager.h"
 
 namespace HashiTaku
 {
@@ -14,6 +15,7 @@ namespace HashiTaku
 		lastChargingTime(0.0f),
 		chargeVfxCreateTimeOffset(0.0f),
 		chargeReleaseVfxOffsetY(0.0f),
+		chargePadShakePower(0.4f),
 		curChargeLevel(ChargeLevel::Low),
 		chargeVfxHandle(NONE_VFX_HANDLE),
 		isCharging(false)
@@ -37,6 +39,7 @@ namespace HashiTaku
 		data["chargeVfx"] = onNextChargeVfx.Save();
 		data["releaseVfxOffset"] = chargeReleaseVfxOffsetY;
 		data["releaseVfx"] = chargeReleaseVfx.Save();
+		data["charhePadPower"] = chargePadShakePower;
 
 		// チャージ段階ごとの情報
 		auto& chargeInfoDatas = data["chargeInfos"];
@@ -66,6 +69,7 @@ namespace HashiTaku
 		PlayerAttackState::Load(_data);
 		LoadJsonFloat("maxTime", maxChargeTime, _data);
 		LoadJsonFloat("chargeOffsetTime", chargeVfxCreateTimeOffset, _data);
+		LoadJsonFloat("charhePadPower", chargePadShakePower, _data);
 		LoadJsonVector3("chargeOffset", chargeVfxOffset, _data);
 		json vfxData;
 		if (LoadJsonData("chargeVfx", vfxData, _data))
@@ -116,6 +120,9 @@ namespace HashiTaku
 		// アニメーション側
 		GetAnimation()->SetBool(CHARGE_PARAMNAME, true);	// チャージ中か
 		GetAnimation()->SetInt(CHARGE_STEP_PARAMNAME, 1);	// チャージの段階
+
+		// チャージ中にゲームパッド振動し続ける
+		InSceneSystemManager::GetInstance()->GetInput().BeginVibration(chargePadShakePower, 1000.0f);
 	}
 
 
@@ -195,6 +202,8 @@ namespace HashiTaku
 			OnChargeEnd();
 
 		lastChargingTime = curChargingTime;
+
+		
 	}
 
 	void PlayerGroundChargeAttack::CreateChargeVfx()
@@ -225,6 +234,9 @@ namespace HashiTaku
 
 		isCharging = false;	// 溜め終了
 		GetAnimation()->SetBool(CHARGE_PARAMNAME, false);
+
+		// パッド振動をやめる
+		InSceneSystemManager::GetInstance()->GetInput().BeginVibration(0.0f, 0.0f);
 
 		// カメラを通常状態に戻す
 		if (pCamMove)
@@ -291,6 +303,8 @@ namespace HashiTaku
 		chargeReleaseVfx.ImGuiCall();
 
 		ImGuiAttackInfo();
+
+		ImGui::DragFloat("PadPower", &chargePadShakePower, 0.1f, 0.0f, 1.0f);
 	}
 
 	void PlayerGroundChargeAttack::ImGuiAttackInfo()

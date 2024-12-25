@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "CP_Character.h"
-#include "CP_HitStopManager.h"
 #include "GameObject.h"
 #include "InSceneSystemManager.h"
 
@@ -158,14 +157,8 @@ namespace HashiTaku
 	void CP_Character::OnTakeDamage(const AttackInformation& _attackInfo,
 		const DXSimp::Vector3& _contactPos)
 	{
-		// ヒットストップ
-		if (CP_HitStopManager* pHitStop = CP_HitStopManager::GetInstance())
-		{
-			pHitStop->HitStopBegin(_attackInfo.GetHitStopFlame());
-		}
-
 		// カメラを揺らす
-		if (_attackInfo.GetIsShake() && pCamMove)
+		if (_attackInfo.GetIsCamShake() && pCamMove)
 		{
 			pCamMove->ShakeCamera(_attackInfo.GetCamShakeParam());
 		}

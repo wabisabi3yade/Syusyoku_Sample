@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CP_Enemy.h"
 #include "CP_BattleManager.h"
+#include "CP_HitStopManager.h"
+#include "InSceneSystemManager.h"
 
 namespace HashiTaku
 {
@@ -69,6 +71,21 @@ namespace HashiTaku
 		DecadeHp(_attackInfo.GetDamageValue());
 
 		return true;
+	}
+
+	void CP_Enemy::OnTakeDamage(const AttackInformation& _attackInfo, const DXSimp::Vector3& _contactPos)
+	{
+		CP_Character::OnTakeDamage(_attackInfo, _contactPos);
+
+		// ヒットストップ
+		if (CP_HitStopManager* pHitStop = CP_HitStopManager::GetInstance())
+		{
+			pHitStop->HitStopBegin(_attackInfo.GetHitStopFlame());
+		}
+
+		// パッド振動
+		InSceneSystemManager::GetInstance()->GetInput().
+			BeginVibration(_attackInfo.GetPadShakePower(), _attackInfo.GetPadShakeTime());
 	}
 
 	void CP_Enemy::SetEnemyName(const std::string& _enemyName)

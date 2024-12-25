@@ -157,6 +157,7 @@
     <ClCompile Include="ANE_ChangeParameter.cpp" />
     <ClCompile Include="ANE_CreateVfx.cpp" />
     <ClCompile Include="ANE_DebugLog.cpp" />
+    <ClCompile Include="ANE_PadShake.cpp" />
     <ClCompile Include="AnimationCurve.cpp" />
     <ClCompile Include="AnimationNotifyFactory.cpp" />
     <ClCompile Include="AnimationParameters.cpp" />
@@ -389,6 +390,7 @@
     <ClInclude Include="ANE_ChangeParameter.h" />
     <ClInclude Include="ANE_CreateVfx.h" />
     <ClInclude Include="ANE_DebugLog.h" />
+    <ClInclude Include="ANE_PadShake.h" />
     <ClInclude Include="AnimationCurve.h" />
     <ClInclude Include="AnimationNotifyFactory.h" />
     <ClInclude Include="AnimationParameters.h" />

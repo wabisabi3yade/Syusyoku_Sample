@@ -112,6 +112,12 @@ namespace HashiTaku
 		virtual bool OnDamageBehavior(const AttackInformation& _attackInfo,
 			const DirectX::SimpleMath::Vector3& _attackerPos) = 0;
 
+		/// @brief ダメージ受けたときの処理
+		/// @param _attackInfo 攻撃情報
+		/// @param _contactPos 衝突地点
+		virtual void OnTakeDamage(const AttackInformation& _attackInfo,
+			const DXSimp::Vector3& _contactPos);
+
 		/// @brief 各クラスのダメージを受けたときの処理
 		/// @param _attackInfo 攻撃情報
 		virtual void OnDeathBehavior() = 0;
@@ -121,12 +127,6 @@ namespace HashiTaku
 	private:
 		/// @brief カメラ移動クラスを準備
 		void SetupCameraMove();
-
-		/// @brief ダメージ受けたときの処理
-		/// @param _attackInfo 攻撃情報
-		/// @param _contactPos 衝突地点
-		void OnTakeDamage(const AttackInformation& _attackInfo,
-			const DXSimp::Vector3& _contactPos);
 
 		/// @brief ヒットエフェクトを出す
 		/// @param _attackInfo 攻撃情報
