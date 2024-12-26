@@ -47,12 +47,12 @@ namespace HashiTaku
 		return static_cast<u_int>(materials.size());
 	}
 
-	DirectX::SimpleMath::Vector3 Mesh_Group::GetCenterPosition() const
+	DXSimp::Vector3 Mesh_Group::GetCenterPosition() const
 	{
 		return centerPos;
 	}
 
-	DirectX::SimpleMath::Vector3 Mesh_Group::GetSize() const
+	DXSimp::Vector3 Mesh_Group::GetSize() const
 	{
 		return size;
 	}
@@ -62,7 +62,7 @@ namespace HashiTaku
 		return loadScale;
 	}
 
-	DirectX::SimpleMath::Vector3 Mesh_Group::GetLoadOffsetAngles() const
+	DXSimp::Vector3 Mesh_Group::GetLoadOffsetAngles() const
 	{
 		return loadOffsetAngles;
 	}
@@ -72,12 +72,12 @@ namespace HashiTaku
 		return meshType;
 	}
 
-	void Mesh_Group::SetCenterPosition(const DirectX::SimpleMath::Vector3& _centerPos)
+	void Mesh_Group::SetCenterPosition(const DXSimp::Vector3& _centerPos)
 	{
 		centerPos = _centerPos;
 	}
 
-	void Mesh_Group::SetSize(const DirectX::SimpleMath::Vector3& _size)
+	void Mesh_Group::SetSize(const DXSimp::Vector3& _size)
 	{
 		// 0à»â∫Ç…Ç»ÇÁÇ»Ç¢ÇÊÇ§êßå¿
 		size = Vec3::Max(_size, 0.0f);

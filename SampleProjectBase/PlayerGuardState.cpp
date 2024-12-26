@@ -14,7 +14,7 @@ namespace HashiTaku
 	{
 	}
 
-	bool PlayerGuardState::GetCanParry(const DirectX::SimpleMath::Vector3& _enemyPos)
+	bool PlayerGuardState::GetCanParry(const DXSimp::Vector3& _enemyPos)
 	{
 		if (!canParry) return false;
 

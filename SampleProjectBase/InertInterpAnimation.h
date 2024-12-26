@@ -32,12 +32,12 @@ namespace HashiTaku
 
 		struct VectorTransition : public TransitionBase
 		{
-			DirectX::SimpleMath::Vector3 normalizeVector;
+			DXSimp::Vector3 normalizeVector;
 		};
 
 		struct QuatTransition : public TransitionBase
 		{
-			DirectX::SimpleMath::Vector3 axis;  // 軸ベクトル
+			DXSimp::Vector3 axis;  // 軸ベクトル
 		};
 
 		/// @brief 座標の遷移情報
@@ -79,9 +79,9 @@ namespace HashiTaku
 		void UpdateBoneCache(std::vector<BoneTransform>& boneTransforms, float _deltaTime);
 
 		// 各パラメータのブレンド値を計算する
-		DirectX::SimpleMath::Vector3 CalcBlendPos(u_int _boneIdx, float _blendingTime);
-		DirectX::SimpleMath::Vector3 CalcBlendScale(u_int _boneIdx, float _blendingTime);
-		DirectX::SimpleMath::Quaternion CalcBlendRot(u_int _boneIdx, float _blendingTime);
+		DXSimp::Vector3 CalcBlendPos(u_int _boneIdx, float _blendingTime);
+		DXSimp::Vector3 CalcBlendScale(u_int _boneIdx, float _blendingTime);
+		DXSimp::Quaternion CalcBlendRot(u_int _boneIdx, float _blendingTime);
 
 		/// @brief 遷移の経過時間を進める
 		/// @param _deltaTime Δt
@@ -111,7 +111,7 @@ namespace HashiTaku
 		/// @param _secondLastPose 2フレーム前のパラメータ
 		/// @param _secondToLastDeltaTime 2フレーム前から1フレーム前までのdeltaTime
 		/// @param _blendTime 遷移時間
-		void InitTransition(VectorTransition& _transition, const DirectX::SimpleMath::Vector3& _requestPose, const DirectX::SimpleMath::Vector3& _lastPose, const DirectX::SimpleMath::Vector3& _secondLastPose, float _blendTime);
+		void InitTransition(VectorTransition& _transition, const DXSimp::Vector3& _requestPose, const DXSimp::Vector3& _lastPose, const DXSimp::Vector3& _secondLastPose, float _blendTime);
 
 		/// @brief Quaternion型の慣性補間計算
 		/// @param _transition 遷移情報
@@ -119,7 +119,7 @@ namespace HashiTaku
 		/// @param _lastPose 1フレーム前のパラメータ
 		/// @param _secondLastPose 2フレーム前のパラメータ
 		/// @param _blendTime 遷移時間
-		void InitTransition(QuatTransition& _transition, const DirectX::SimpleMath::Quaternion& _requestPose, const DirectX::SimpleMath::Quaternion& _lastPose, const DirectX::SimpleMath::Quaternion& _secondLastPose, float _blendTime);
+		void InitTransition(QuatTransition& _transition, const DXSimp::Quaternion& _requestPose, const DXSimp::Quaternion& _lastPose, const DXSimp::Quaternion& _secondLastPose, float _blendTime);
 
 		/// @brief x0とv0が決まった状態で、残りの値を計算する
 		/// @param _transition 遷移情報

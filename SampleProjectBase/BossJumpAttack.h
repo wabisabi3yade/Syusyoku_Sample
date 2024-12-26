@@ -17,7 +17,7 @@ namespace HashiTaku
 		float fallPosOffset;
 
 		/// @brief Œ»İ‚ÌˆÚ“®‘¬“x
-		DirectX::SimpleMath::Vector3 curMoveSpeed;
+		DXSimp::Vector3 curMoveSpeed;
 
 		/// @brief ‰¡ˆÚ“®‚ÅÅ‘å‚Ì‘¬“x
 		float maxHoriSpeed;

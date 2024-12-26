@@ -37,7 +37,7 @@ namespace HashiTaku
 
 		/// @brief ルートモーションの移動速度を取得する
 		/// @return ルートモーションの移動速度
-		const DirectX::SimpleMath::Vector3& GetRootMotionPosSpeed() const;
+		const DXSimp::Vector3& GetRootMotionPosSpeed() const;
 
 		json Save() override;
 		void Load(const json& _data) override;

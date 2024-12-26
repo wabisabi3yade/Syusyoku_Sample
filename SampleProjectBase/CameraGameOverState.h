@@ -10,7 +10,7 @@ namespace HashiTaku
 		const Transform* pTargetTransform;
 
 		/// @brief オフセット
-		DirectX::SimpleMath::Vector2 lookOffset;
+		DXSimp::Vector2 lookOffset;
 
 		/// @brief 横の距離
 		float horiDistance;

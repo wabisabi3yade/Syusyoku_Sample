@@ -44,7 +44,7 @@ namespace HashiTaku
 		return wvp;
 	}
 
-	const DirectX::SimpleMath::Matrix& RenderParam::GetProjectionMatrix() const
+	const DXSimp::Matrix& RenderParam::GetProjectionMatrix() const
 	{
 		return wvp.projection;
 	}

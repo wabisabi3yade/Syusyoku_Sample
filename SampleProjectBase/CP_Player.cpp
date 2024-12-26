@@ -240,7 +240,7 @@ namespace HashiTaku
 	}
 
 	bool CP_Player::OnDamageBehavior(const AttackInformation& _attackInfo,
-		const DirectX::SimpleMath::Vector3& _attackerPos)
+		const DXSimp::Vector3& _attackerPos)
 	{
 		// デバッグ無敵
 		if (isDebugInvicible) return false;

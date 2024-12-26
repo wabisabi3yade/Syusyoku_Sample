@@ -15,14 +15,14 @@ namespace HashiTaku
 		void RemoveParent() override {}
 		void RemoveChild(Transform& _removeTransform) override {}
 
-		void SetPosition(const DirectX::SimpleMath::Vector3& _pos) override {}
-		void SetScale(const DirectX::SimpleMath::Vector3& _scale) override {}
-		void SetEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles) override {}
-		void SetRotation(const DirectX::SimpleMath::Quaternion& _quaternion) override {}
+		void SetPosition(const DXSimp::Vector3& _pos) override {}
+		void SetScale(const DXSimp::Vector3& _scale) override {}
+		void SetEularAngles(const DXSimp::Vector3& _eularAngles) override {}
+		void SetRotation(const DXSimp::Quaternion& _quaternion) override {}
 
-		void SetLocalPosition(const DirectX::SimpleMath::Vector3& _position) override {}
-		void SetLocalScale(const DirectX::SimpleMath::Vector3& _scale) override {}
-		void SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles) override {}
-		void SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quaternion) override {}
+		void SetLocalPosition(const DXSimp::Vector3& _position) override {}
+		void SetLocalScale(const DXSimp::Vector3& _scale) override {}
+		void SetLocalEularAngles(const DXSimp::Vector3& _eularAngles) override {}
+		void SetLocalRotation(const DXSimp::Quaternion& _quaternion) override {}
 	};
 }

@@ -15,7 +15,7 @@ namespace HashiTaku
 			/// @brief アニメーションデータ
 			const AnimationData* pAnimation{ nullptr };
 			/// @brief ブレンド値
-			DirectX::SimpleMath::Vector2 blendValue;
+			DXSimp::Vector2 blendValue;
 		};
 
 		/// @brief 姿勢を求めるときにブレンドするときの1ブレンドパラメータ
@@ -95,7 +95,7 @@ namespace HashiTaku
 		/// @return 移動イージング
 		EaseKind GetBlendMoveEasing(u_int _axisIdx) const;
 
-		void CalcRootMotionSpeed(const std::vector<BlendingData>& _blendData, DirectX::SimpleMath::Vector3& _outPos) const;
+		void CalcRootMotionSpeed(const std::vector<BlendingData>& _blendData, DXSimp::Vector3& _outPos) const;
 
 		/// @brief 軸の数を取得（最大2）
 		/// @return 軸の数
@@ -105,7 +105,7 @@ namespace HashiTaku
 		/// @param _ratio 割合
 		/// @param _blendDatas ブレンドデータ 
 		/// @param _outPos 結果
-		void GetRootMotionPos(float _ratio, const std::vector<BlendingData>& _blendDatas, DirectX::SimpleMath::Vector3& _outPos) const;
+		void GetRootMotionPos(float _ratio, const std::vector<BlendingData>& _blendDatas, DXSimp::Vector3& _outPos) const;
 
 		/// @brief ブレンドするかどうか取得
 		/// @return ブレンドするか？
@@ -119,7 +119,7 @@ namespace HashiTaku
 		/// @brief Y軸のみのときのブレンドペア探索
 		/// @param _blendValues ブレンド値
 		/// @param _outData ブレンドデータリスト
-		void FindBlendPairTwoAxis(DirectX::SimpleMath::Vector2 _blendValues, std::vector<BlendingData>& _outData) const;
+		void FindBlendPairTwoAxis(DXSimp::Vector2 _blendValues, std::vector<BlendingData>& _outData) const;
 
 		json Save() override;
 		void Load(const json& _data) override;

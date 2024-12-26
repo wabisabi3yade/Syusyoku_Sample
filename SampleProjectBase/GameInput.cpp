@@ -63,7 +63,7 @@ namespace HashiTaku
 		return buttonTimeLine[static_cast<u_int>(_buttonType)] < _withinTime;
 	}
 
-	const DirectX::SimpleMath::Vector2& GameInput::GetValue(ValueType _valueType)
+	const DXSimp::Vector2& GameInput::GetValue(ValueType _valueType)
 	{
 		return c_valueState[static_cast<u_int>(_valueType)];
 	}

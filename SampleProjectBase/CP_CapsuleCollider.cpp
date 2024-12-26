@@ -63,7 +63,7 @@ namespace HashiTaku
 	{
 		// ”¼Œa‚ÍXZ‚ÌÅ‘å‚Ì‘å‚«‚³A‚‚³‚ÍY
 		Transform& transform = GetTransform();
-		const DirectX::SimpleMath::Vector3& scale = transform.GetScale();
+		const DXSimp::Vector3& scale = transform.GetScale();
 		float maxVal = scale.x;
 		maxVal = std::max(maxVal, scale.z);
 

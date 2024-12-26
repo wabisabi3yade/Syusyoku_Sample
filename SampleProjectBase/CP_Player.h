@@ -90,7 +90,7 @@ namespace HashiTaku
 
 		/// @brief プレイヤーのダメージ処理
 		bool OnDamageBehavior(const AttackInformation& _attackInfo,
-			const DirectX::SimpleMath::Vector3& _attackerPos) override;
+			const DXSimp::Vector3& _attackerPos) override;
 		void OnDeathBehavior() override;
 
 		void ImGuiDebug() override;

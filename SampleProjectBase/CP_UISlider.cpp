@@ -87,7 +87,7 @@ namespace HashiTaku
 
 	void CP_UISlider::ApplySlider()
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 
 		Transform& transform = GetTransform();
 

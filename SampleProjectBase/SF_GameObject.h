@@ -19,7 +19,7 @@ namespace HashiTaku
 			/// @param _obj 対象オブジェクト
 			/// @param _worldPos 生成する座標
 			/// @return
-			static GameObject& Instantiate(const GameObject& _obj, const DirectX::SimpleMath::Vector3& _worldPos);*/
+			static GameObject& Instantiate(const GameObject& _obj, const DXSimp::Vector3& _worldPos);*/
 
 			/// @brief 空オブジェクトを作成し、シーンオブジェクトに追加
 			/// @param _objectName オブジェクト名

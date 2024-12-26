@@ -45,7 +45,7 @@ namespace HashiTaku
 	}
 
 	void CP_Character::OnDamage(const AttackInformation& _attackInfo,
-		const DirectX::SimpleMath::Vector3& _attackerPos,
+		const DXSimp::Vector3& _attackerPos,
 		const DXSimp::Vector3& _contactPos)
 	{
 		if (isInvicible) return;
@@ -173,7 +173,7 @@ namespace HashiTaku
 	}
 
 	void CP_Character::CreateHitVfx(const AttackInformation& _attackInfo,
-		const DirectX::SimpleMath::Vector3& _contactPos)
+		const DXSimp::Vector3& _contactPos)
 	{
 		const CreateVfxInfo& hitVfxInfo = _attackInfo.GetHitVfxInfo();
 

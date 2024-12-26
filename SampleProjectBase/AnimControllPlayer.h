@@ -17,7 +17,7 @@ namespace HashiTaku
 		};
 
 		/// @brief 現在のルートモーション座標位置
-		DirectX::SimpleMath::Vector3 rootMotionPos;
+		DXSimp::Vector3 rootMotionPos;
 
 		/// @brief 再生するアニメーションコントローラー
 		const AnimationController* pAnimController;
@@ -61,7 +61,13 @@ namespace HashiTaku
 		/// @brief 遷移中の種類
 		AnimInterpolateKind curTransitonKind;
 	public:
-		AnimControllPlayer(const AnimationController& _animController, BoneList& _boneList, Transform& _transform);
+		/// @brief コンストラクタ
+		/// @param _animController 対応アニメーションコントローラー
+		/// @param _boneList ボーン配列
+		/// @param _transform オブジェクトのトランスフォーム
+		AnimControllPlayer(const AnimationController& _animController, 
+			BoneList& _boneList, 
+			Transform& _transform);
 		~AnimControllPlayer() {}
 
 		/// @brief 更新処理
@@ -90,7 +96,7 @@ namespace HashiTaku
 
 		/// @brief ルートボーンのローカル座標を取得
 		/// @param _outPos 結果
-		void GetCurrentRootPos(DirectX::SimpleMath::Vector3& _outPos) const;
+		void GetCurrentRootPos(DXSimp::Vector3& _outPos) const;
 
 		/// @brief 現在の再生速度を取得
 		/// @return 再生速度
@@ -108,6 +114,11 @@ namespace HashiTaku
 
 		/// @brief ノードを再生する
 		void NodePlayUpdate();
+
+		/// @brief 親ノードからの行列を代入していく
+		/// @param _animationTransforms 格納するトランスフォームリスト
+		/// @param _nextNode 次のノード
+		void SetTreeNodeMatrix(std::vector<BoneTransform>& _setTransforms, const TreeNode& _nextNode);
 
 		/// @brief アニメーション遷移更新処理
 		void TransitionUpdate();

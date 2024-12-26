@@ -40,6 +40,11 @@ namespace HashiTaku
 	// アセットをロードするクラス(staticクラス)
 	class AssetLoader : private AssetContacter
 	{
+		// ツリーノードロード時の各パラメータごとのローカル行列
+		static DXSimp::Matrix loadNodeTransformMtx;
+		static DXSimp::Matrix loadNodeScaleMtx;
+		static DXSimp::Matrix loadNodeRotationMtx;
+
 		AssetLoader() {};
 		~AssetLoader() {};
 
@@ -108,20 +113,25 @@ namespace HashiTaku
 		/// @param _loadScale ロード時のスケール
 		/// @param _loadAngles ロード時のオフセット角度
 		/// @return 作成したメッシュ群
-		static std::unique_ptr<Mesh_Group> CreateMeshGroup(const aiScene* _pScene, const std::string& _assetName, float _loadScale, const DirectX::SimpleMath::Vector3& _loadAngles);
+		static std::unique_ptr<Mesh_Group> CreateMeshGroup(const aiScene* _pScene, const std::string& _assetName, float _loadScale, const DXSimp::Vector3& _loadAngles);
 
 		/// @brief ボーンを生成する
 		/// @param _pScene シーン情報
 		/// @param _skeletalMesh 情報いれるスケルタルメッシュ
 		/// @param _loadScale ロード時のスケール
 		/// @param _loadAngles ロード時のオフセット角度
-		static void CreateBone(const aiScene* _pScene, SkeletalMesh& _skeletalMesh, float _loadScale, const DirectX::SimpleMath::Vector3& _loadAngles);
+		static void CreateBone(const aiScene* _pScene, SkeletalMesh& _skeletalMesh, float _loadScale, const DXSimp::Vector3& _loadAngles);
 
 		/// @brief ノードを生成する再帰関数
 		/// @param _aiChildNode 子ノード
 		/// @param _skeletalMesh スケルタルメッシュ
+		/// @param _assimpFbxMtx AssimpFbxと名のついたノードのローカル行列
+		/// @param _isStoreAssimpFbxMtx _assimpFbxMtxにローカル行列が入っている状態か？
 		/// @return 生成したノード
-		static std::unique_ptr<TreeNode> CreateNode(const aiNode& _aiChildNode, SkeletalMesh& _skeletalMesh);
+		static std::unique_ptr<TreeNode> CreateNode(
+			const aiNode& _aiChildNode, 
+			SkeletalMesh& _skeletalMesh,
+			bool _isStoreAssimpFbxMtx);
 
 		/// @brief	頂点とボーン情報を紐づける
 		/// @param _pAiMesh aiメッシュ
@@ -174,7 +184,7 @@ namespace HashiTaku
 		/// @param _vertexPos 頂点座標
 		/// @param _max 最大
 		/// @param _min 最小
-		static void UpdateSize(const DirectX::SimpleMath::Vector3& _vertexPos, DirectX::SimpleMath::Vector3& _max, DirectX::SimpleMath::Vector3& _min);
+		static void UpdateSize(const DXSimp::Vector3& _vertexPos, DXSimp::Vector3& _max, DXSimp::Vector3& _min);
 	};
 
 	/// @brief アセット管理クラスにアセットを送る

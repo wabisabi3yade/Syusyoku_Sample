@@ -69,11 +69,11 @@ namespace HashiTaku
 
 		/// @brief 衝撃を加える
 		/// @param _power パワー
-		void AddImpulse(const DirectX::SimpleMath::Vector3& _power);
+		void AddImpulse(const DXSimp::Vector3& _power);
 
 		/// @brief 力を加える
 		/// @param _power パワー
-		void AddForce(const DirectX::SimpleMath::Vector3& _power);
+		void AddForce(const DXSimp::Vector3& _power);
 
 		/// @brief コライダーをセットする
 		/// @param _setCollider セットするコライダーコンポーネント
@@ -111,7 +111,7 @@ namespace HashiTaku
 
 		/// @brief 速度をセット
 		/// @param _velocity 速度
-		void SetVelocity(const DirectX::SimpleMath::Vector3& _velocity);
+		void SetVelocity(const DXSimp::Vector3& _velocity);
 
 		/// @brief 速度をクリアする
 		void ClearVelocity();
@@ -126,7 +126,7 @@ namespace HashiTaku
 
 		/// @brief 剛体の速度を取得する
 		/// @return 速度
-		DirectX::SimpleMath::Vector3 GetVelocity() const;
+		DXSimp::Vector3 GetVelocity() const;
 
 		void ImGuiDebug() override;
 

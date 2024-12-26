@@ -72,7 +72,7 @@ namespace HashiTaku
 
 		/// @brief XZ座標のエリア制限
 		// x : X_R,	y: X_L, z : Y_T, w : Y_B
-		DirectX::SimpleMath::Vector4 moveAreaRect;
+		DXSimp::Vector4 moveAreaRect;
 
 		/// @brief 演出の経過時間
 		float animationElapsedTime{ 0.0f };

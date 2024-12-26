@@ -8,16 +8,16 @@ namespace HashiTaku
 	struct MaterialParameter
 	{
 		/// @brief 色
-		DirectX::SimpleMath::Color diffuse;
+		DXSimp::Color diffuse;
 
 		/// @brief 環境光
-		DirectX::SimpleMath::Color ambient;
+		DXSimp::Color ambient;
 
 		/// @brief 鏡面反射
-		DirectX::SimpleMath::Color specular;
+		DXSimp::Color specular;
 
 		/// @brief 自発光
-		DirectX::SimpleMath::Color emissive;
+		DXSimp::Color emissive;
 
 		/// @brief 光沢
 		float shiness;
@@ -56,10 +56,10 @@ namespace HashiTaku
 
 		// マテリアル・各パラメータをセット
 		void SetMaterialParameter(const MaterialParameter& _mat) { parameter = _mat; }
-		void SetDiffuse(const DirectX::SimpleMath::Color& _diffuse) { parameter.diffuse = _diffuse; }
-		void SetAmbeint(const DirectX::SimpleMath::Color& _ambient) { parameter.ambient = _ambient; }
-		void SetSpecular(const DirectX::SimpleMath::Color& _specular) { parameter.specular = _specular; }
-		void SetEmissive(const DirectX::SimpleMath::Color& _emmisive) { parameter.emissive = _emmisive; }
+		void SetDiffuse(const DXSimp::Color& _diffuse) { parameter.diffuse = _diffuse; }
+		void SetAmbeint(const DXSimp::Color& _ambient) { parameter.ambient = _ambient; }
+		void SetSpecular(const DXSimp::Color& _specular) { parameter.specular = _specular; }
+		void SetEmissive(const DXSimp::Color& _emmisive) { parameter.emissive = _emmisive; }
 		void SetShiness(float _shiness) { parameter.shiness = _shiness; }
 		void SetTextureEnable(bool _isTextureEnable) { parameter.isTextureEnable = _isTextureEnable; }
 

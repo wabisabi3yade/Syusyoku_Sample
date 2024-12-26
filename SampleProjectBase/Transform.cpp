@@ -54,7 +54,7 @@ namespace HashiTaku
 		forward = Mtx::GetForwardVector(rotateMatrix);
 	}
 
-	void Transform::LookAt(const DirectX::SimpleMath::Vector3& _worldPos, const DirectX::SimpleMath::Vector3& _upVector)
+	void Transform::LookAt(const DXSimp::Vector3& _worldPos, const DXSimp::Vector3& _upVector)
 	{
 		DXSimp::Vector3 vec = _worldPos - position;
 		DXSimp::Quaternion q = Quat::RotateToVector(vec);
@@ -95,7 +95,7 @@ namespace HashiTaku
 	}
 
 
-	void Transform::SetPosition(const DirectX::SimpleMath::Vector3& _pos)
+	void Transform::SetPosition(const DXSimp::Vector3& _pos)
 	{
 		// ローカル行列を求める為にローカル座標を更新
 		localPosition = DXSimp::Vector3::Transform(_pos, pParent->GetWorldMatrix().Invert());
@@ -114,7 +114,7 @@ namespace HashiTaku
 		InSceneSystemManager::GetInstance()->GetSceneObjects().SortUiList();
 	}
 
-	void Transform::SetScale(const DirectX::SimpleMath::Vector3& _scale)
+	void Transform::SetScale(const DXSimp::Vector3& _scale)
 	{
 		//scale = _scale;
 		localScale = scale / pParent->GetScale();
@@ -127,7 +127,7 @@ namespace HashiTaku
 		ChangeScaleNotify();
 	}
 
-	void Transform::SetEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
+	void Transform::SetEularAngles(const DXSimp::Vector3& _eularAngles)
 	{
 		// ローカル回転量を求める
 		DXSimp::Quaternion invParentRot = XMQuaternionInverse(pParent->GetRotation());
@@ -143,7 +143,7 @@ namespace HashiTaku
 		ChangeRotNotify();
 	}
 
-	void Transform::SetRotation(const DirectX::SimpleMath::Quaternion& _quaternion)
+	void Transform::SetRotation(const DXSimp::Quaternion& _quaternion)
 	{
 		DXSimp::Quaternion invParentRot = XMQuaternionInverse(pParent->GetRotation());
 		localRotation = Quat::Multiply(_quaternion, invParentRot);
@@ -159,7 +159,7 @@ namespace HashiTaku
 	}
 
 
-	void Transform::SetLocalPosition(const DirectX::SimpleMath::Vector3& _localPos)
+	void Transform::SetLocalPosition(const DXSimp::Vector3& _localPos)
 	{
 		localPosition = _localPos;
 
@@ -175,7 +175,7 @@ namespace HashiTaku
 		InSceneSystemManager::GetInstance()->GetSceneObjects().SortUiList();
 	}
 
-	void Transform::SetLocalScale(const DirectX::SimpleMath::Vector3& _scale)
+	void Transform::SetLocalScale(const DXSimp::Vector3& _scale)
 	{
 		localScale = _scale;
 
@@ -186,7 +186,7 @@ namespace HashiTaku
 		ChangeScaleNotify();
 	}
 
-	void Transform::SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles)
+	void Transform::SetLocalEularAngles(const DXSimp::Vector3& _eularAngles)
 	{
 		localEularAngles = _eularAngles;
 		// クォータニオンに反映させる
@@ -199,7 +199,7 @@ namespace HashiTaku
 		ChangeRotNotify();
 	}
 
-	void Transform::SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quaternion)
+	void Transform::SetLocalRotation(const DXSimp::Quaternion& _quaternion)
 	{
 		localRotation = _quaternion;
 		localEularAngles = localRotation.ToEuler() * Mathf::radToDeg;
@@ -211,52 +211,52 @@ namespace HashiTaku
 		ChangeRotNotify();
 	}
 
-	const DirectX::SimpleMath::Vector3& Transform::GetPosition() const
+	const DXSimp::Vector3& Transform::GetPosition() const
 	{
 		return position;
 	}
 
-	const DirectX::SimpleMath::Vector3& Transform::GetScale() const
+	const DXSimp::Vector3& Transform::GetScale() const
 	{
 		return scale;
 	}
 
-	const DirectX::SimpleMath::Vector3& Transform::GetEularAngles() const
+	const DXSimp::Vector3& Transform::GetEularAngles() const
 	{
 		return eularAngles;
 	}
 
-	const DirectX::SimpleMath::Quaternion& Transform::GetRotation() const
+	const DXSimp::Quaternion& Transform::GetRotation() const
 	{
 		return rotation;
 	}
 
-	const DirectX::SimpleMath::Matrix& Transform::GetWorldMatrix() const
+	const DXSimp::Matrix& Transform::GetWorldMatrix() const
 	{
 		return worldMatrix;
 	}
 
-	const DirectX::SimpleMath::Vector3& Transform::GetLocalPosition() const
+	const DXSimp::Vector3& Transform::GetLocalPosition() const
 	{
 		return localPosition;
 	}
 
-	const DirectX::SimpleMath::Vector3& Transform::GetLocalScale() const
+	const DXSimp::Vector3& Transform::GetLocalScale() const
 	{
 		return localScale;
 	}
 
-	const DirectX::SimpleMath::Vector3& Transform::GetLocalEularAngles() const
+	const DXSimp::Vector3& Transform::GetLocalEularAngles() const
 	{
 		return localEularAngles;
 	}
 
-	const DirectX::SimpleMath::Quaternion& Transform::GetLocalRotation() const
+	const DXSimp::Quaternion& Transform::GetLocalRotation() const
 	{
 		return localRotation;
 	}
 
-	const DirectX::SimpleMath::Matrix& Transform::GetLocalMatrix() const
+	const DXSimp::Matrix& Transform::GetLocalMatrix() const
 	{
 		return localMatrix;
 	}
@@ -348,7 +348,7 @@ namespace HashiTaku
 		}
 	}
 
-	void Transform::UpdateWorldMatrix(const DirectX::SimpleMath::Matrix& _parentWorldMtx)
+	void Transform::UpdateWorldMatrix(const DXSimp::Matrix& _parentWorldMtx)
 	{
 		// ワールド行列を更新
 		worldMatrix = localMatrix * _parentWorldMtx;

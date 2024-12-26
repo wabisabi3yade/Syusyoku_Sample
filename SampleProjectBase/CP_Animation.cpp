@@ -192,7 +192,7 @@ namespace HashiTaku
 		pAnimConPlayer->RemoveChangeAnimObserver(_observer);
 	}
 
-	const DirectX::SimpleMath::Vector3& CP_Animation::GetMotionPosSpeedPerSec() const
+	const DXSimp::Vector3& CP_Animation::GetMotionPosSpeedPerSec() const
 	{
 #ifdef EDIT
 		if (!pAnimConPlayer)
@@ -205,7 +205,7 @@ namespace HashiTaku
 		return pAnimConPlayer->GetCurNodePlayer().GetRootMotionSpeed();
 	}
 
-	DirectX::SimpleMath::Vector3 CP_Animation::GetCurAnimRMPos(float _ratio)
+	DXSimp::Vector3 CP_Animation::GetCurAnimRMPos(float _ratio)
 	{
 #ifdef EDIT
 		if (!pAnimConPlayer)

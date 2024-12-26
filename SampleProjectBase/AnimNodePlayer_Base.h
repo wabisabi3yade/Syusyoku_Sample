@@ -30,13 +30,13 @@ namespace HashiTaku
 		std::list<std::unique_ptr<AnimationNotify_Base>> copyNotifys;
 	protected:
 		/// @brief ルートモーションによる座標移動速度
-		DirectX::SimpleMath::Vector3 rootMotionPosSpeedPerSec;
+		DXSimp::Vector3 rootMotionPosSpeedPerSec;
 
 		/// @brief 前回のルートモーション座標値
-		DirectX::SimpleMath::Vector3 p_RootMotionPos;
+		DXSimp::Vector3 p_RootMotionPos;
 
 		/// @brief 前回のルートモーション回転量
-		DirectX::SimpleMath::Quaternion p_RootMotionRot;
+		DXSimp::Quaternion p_RootMotionRot;
 
 		/// @brief 動かすボーン
 		BoneList* pAssetBoneList;
@@ -75,12 +75,12 @@ namespace HashiTaku
 
 		/// @brief トランスフォームにルートモーションを反映する
 		/// @return このフレームの移動量
-		DirectX::SimpleMath::Vector3 CalcRootMotionToTransform();
+		DXSimp::Vector3 CalcRootMotionToTransform();
 
 		/// @brief トランスフォームにこのフレームのルートモーションを移動する
 		/// @param _rootMovement ルートモーションの移動量
 		/// @param _deltaTime 経過時間
-		void ApplyRootMotion(const DirectX::SimpleMath::Vector3& _rootMovement);
+		void ApplyRootMotion(const DXSimp::Vector3& _rootMovement);
 
 		void OnInterpolateUpdate(std::vector<BoneTransform>& _outTransforms, float _deltaTime, float _controllerSpeed);
 
@@ -114,19 +114,19 @@ namespace HashiTaku
 		/// @param 現在の再生割合
 		/// @param _isWorldScaling ワールド軸に対応するスケーリングするか？
 		/// @return 現在の割合のルートモーション座標
-		virtual DirectX::SimpleMath::Vector3 GetRootMotionPos(float _ratio, bool _isWorldScaling = true) const = 0;
+		virtual DXSimp::Vector3 GetRootMotionPos(float _ratio, bool _isWorldScaling = true) const = 0;
 
 		/// @brief ルートモーションを取得する（内部で必要な計算を行う）
 		/// @param 現在の再生割合
 		/// @param _isWorldScaling ワールド軸に対応するスケーリングするか？
 		/// @return 現在の割合のルートモーション座標
-		void GetCurrentRootPos(DirectX::SimpleMath::Vector3& _outPos, bool _isWorldScaling) const;
+		void GetCurrentRootPos(DXSimp::Vector3& _outPos, bool _isWorldScaling) const;
 
 		/// @brief 再生しているノード名を取得
 		/// @return ノード名
 		const std::string& GetNodeName() const;
 
-		const DirectX::SimpleMath::Vector3& GetRootMotionSpeed() const;
+		const DXSimp::Vector3& GetRootMotionSpeed() const;
 	private:
 		/// @brief ループ再生できるか確認
 		/// @return ループできるか？
@@ -146,7 +146,7 @@ namespace HashiTaku
 
 		/// @brief ルートモーションをロード時のスケール・回転量を反映
 		/// @param _rootMotionPos 反映させたいルートモーション
-		void ApplyLoadTransform(DirectX::SimpleMath::Vector3& _rootMotionPos) const;
+		void ApplyLoadTransform(DXSimp::Vector3& _rootMotionPos) const;
 
 		/// @brief プレイヤー再生速度を取得する
 		/// @return プレイヤーの再生速度

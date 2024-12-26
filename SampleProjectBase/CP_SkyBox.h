@@ -78,7 +78,7 @@ namespace HashiTaku
 		/// @param _outPos 座標
 		/// @param _outScale スケール
 		/// @param _outAngles 角度
-		void FaceTransform(FaceKind _facePlace, DirectX::SimpleMath::Vector3& _outPos, DirectX::SimpleMath::Vector3& _outScale, DirectX::SimpleMath::Vector3& _outAngles);
+		void FaceTransform(FaceKind _facePlace, DXSimp::Vector3& _outPos, DXSimp::Vector3& _outScale, DXSimp::Vector3& _outAngles);
 
 		void Copy(const CP_SkyBox& _other);
 

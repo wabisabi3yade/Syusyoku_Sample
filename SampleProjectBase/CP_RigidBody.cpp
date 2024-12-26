@@ -41,13 +41,13 @@ namespace HashiTaku
 		DX11BulletPhisics::GetInstance()->RemoveCollObj(*this);
 	}
 
-	void CP_RigidBody::AddImpulse(const DirectX::SimpleMath::Vector3& _power)
+	void CP_RigidBody::AddImpulse(const DXSimp::Vector3& _power)
 	{
 		if (!collider || isTrigger) return;
 		CastRigidBody().applyCentralImpulse(Bullet::ToBtVector3(_power));
 	}
 
-	void CP_RigidBody::AddForce(const DirectX::SimpleMath::Vector3& _power)
+	void CP_RigidBody::AddForce(const DXSimp::Vector3& _power)
 	{
 		if (!collider || isTrigger) return;
 		CastRigidBody().applyCentralForce(Bullet::ToBtVector3(_power));
@@ -190,7 +190,7 @@ namespace HashiTaku
 		dxTransform.SetRotation(Bullet::ToDXQuaternion(bulletTransform.getRotation()));
 	}
 
-	void CP_RigidBody::SetVelocity(const DirectX::SimpleMath::Vector3& _velocity)
+	void CP_RigidBody::SetVelocity(const DXSimp::Vector3& _velocity)
 	{
 		if (!collider || isTrigger) return;
 
@@ -212,7 +212,7 @@ namespace HashiTaku
 		return *collider->pColTypeJudge;
 	}
 
-	DirectX::SimpleMath::Vector3 CP_RigidBody::GetVelocity() const
+	DXSimp::Vector3 CP_RigidBody::GetVelocity() const
 	{
 		if (!collider || isTrigger) return DXSimp::Vector3::Zero;
 

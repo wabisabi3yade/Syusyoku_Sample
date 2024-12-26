@@ -10191,7 +10191,12 @@
             "rightHand": true
         }
     ],
-    "sounds": null,
+    "sounds": [
+        {
+            "assetName": "manAttackVoice1.wav",
+            "pathName": "assets/sound/se/manAttackVoice1.wav"
+        }
+    ],
     "textures": [
         {
             "assetName": "FarbPalette256x256.png",

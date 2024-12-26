@@ -21,7 +21,7 @@ namespace HashiTaku
 		std::string boneListName;
 
 		/// @brief ルートモーションで移動する移動速度
-		DirectX::SimpleMath::Vector3 rootMovePosPerSec;
+		DXSimp::Vector3 rootMovePosPerSec;
 
 		/// @brief ルートボーンのインデックス(-1は設定なし)
 		u_int rootBoneId;
@@ -94,20 +94,26 @@ namespace HashiTaku
 		/// @brief スケールを求める
 		/// @param _boneId ボーンID
 		/// @param_playingRatio 再生割合
-		/// @return アニメーションのスケール
-		DirectX::SimpleMath::Vector3 GetScaleByRatio(u_int _boneId, float _playingRatio) const;
+		/// @param _outScale アニメーションのスケール
+		void GetScaleByRatio(u_int _boneId, 
+			float _playingRatio,
+			DXSimp::Vector3& _outScale) const;
 
 		/// @brief クォータニオンを求める
 		/// @param _boneId ボーンID
 		/// @param _playingRatio 再生割合
-		/// @return アニメーションのクォータニオン
-		DirectX::SimpleMath::Quaternion GetQuaternionByRatio(u_int _boneId, float _playingRatio) const;
+		/// @param _playingRatio アニメーションのクォータニオン
+		void GetQuaternionByRatio(u_int _boneId, 
+			float _playingRatio, 
+			DXSimp::Quaternion& _outRot) const;
 
 		/// @brief 座標を求める
 		/// @param _boneId ボーンID
-		/// @param_playingRatio 再生割合
-		/// @return アニメーションの座標
-		DirectX::SimpleMath::Vector3 GetPositionByRatio(u_int _boneId, float _playingRatio) const;
+		/// @param _playingRatio 再生割合
+		/// @param _outPos アニメーションの座標
+		void GetPositionByRatio(u_int _boneId,
+			float _playingRatio, 
+			DXSimp::Vector3& _outPos) const;
 
 		/// @brief トランスフォーム取得
 		/// @param _boneId ボーンID
@@ -119,19 +125,19 @@ namespace HashiTaku
 		/// @param _boneId ボーンID
 		/// @param _requestKey 取得するキー
 		/// @return アニメーションのスケール
-		DirectX::SimpleMath::Vector3 GetScaleByKey(u_int _boneId, u_int _playingKey) const;
+		DXSimp::Vector3 GetScaleByKey(u_int _boneId, u_int _playingKey) const;
 
 		/// @brief クォータニオンを求める
 		/// @param _boneId ボーンID
 		/// @param _requestKey 取得するキー
 		/// @return アニメーションのクォータニオン
-		DirectX::SimpleMath::Quaternion GetQuaternioneByKey(u_int _boneId, u_int _playingKey) const;
+		DXSimp::Quaternion GetQuaternioneByKey(u_int _boneId, u_int _playingKey) const;
 
 		/// @brief 座標を求める
 		/// @param _boneId ボーンID
 		/// @param _requestKey 取得するキー
 		/// @return アニメーションの座標
-		DirectX::SimpleMath::Vector3 GetPositioneByKey(u_int _boneId, u_int _playingKey) const;
+		DXSimp::Vector3 GetPositioneByKey(u_int _boneId, u_int _playingKey) const;
 
 		/// @brief トランスフォーム取得
 		/// @param _boneId ボーンID
@@ -141,17 +147,17 @@ namespace HashiTaku
 
 		/// @brief ルートモーションの移動速度を求める(秒
 		/// @return ルートモーションの移動速度
-		const DirectX::SimpleMath::Vector3& GetRootMotionPosSpeedPerSec() const;
+		const DXSimp::Vector3& GetRootMotionPosSpeedPerSec() const;
 
 		/// @brief ルートモーションの移動座標を割合から取得する
 		/// @param _ratio 取得したい割合
 		/// @return ルートモーションでの移動座標
-		DirectX::SimpleMath::Vector3 GetRootMotionPos(float _ratio) const;
+		DXSimp::Vector3 GetRootMotionPos(float _ratio) const;
 
 		/// @brief ルートモーションの回転量を割合から取得する
 		/// @param _ratio 取得したい割合
 		/// @return ルートモーションでの移動座標
-		DirectX::SimpleMath::Quaternion GetRootMotionRot(float _ratio) const;
+		DXSimp::Quaternion GetRootMotionRot(float _ratio) const;
 
 		// アニメーション全体の時間を取得
 		float GetAnimationTime() const;

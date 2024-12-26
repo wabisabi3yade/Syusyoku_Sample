@@ -42,7 +42,7 @@ namespace HashiTaku
 		return pAnimationData->GetAllAnimationFrame();
 	}
 
-	const DirectX::SimpleMath::Vector3& SingleAnimationNode::GetRootMotionPosSpeed() const
+	const DXSimp::Vector3& SingleAnimationNode::GetRootMotionPosSpeed() const
 	{
 		return pAnimationData->GetRootMotionPosSpeedPerSec();
 	}

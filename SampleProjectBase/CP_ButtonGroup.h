@@ -8,7 +8,7 @@ namespace HashiTaku
 	class CP_ButtonGroup : public Component
 	{
 		/// @brief セレクトイメージの座標先
-		std::vector<DirectX::SimpleMath::Vector3> selectTargetPos;
+		std::vector<DXSimp::Vector3> selectTargetPos;
 
 		/// @brief デフォルトのボタンのID
 		u_int defaultSelectButtonId;

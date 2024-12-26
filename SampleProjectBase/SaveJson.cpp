@@ -3,21 +3,21 @@
 
 namespace HashiTaku
 {
-	void SaveJsonVector2(const std::string& _s, const DirectX::SimpleMath::Vector2& _v,
+	void SaveJsonVector2(const std::string& _s, const DXSimp::Vector2& _v,
 		json& _j)
 	{
 		_j[_s][0] = _v.x;
 		_j[_s][1] = _v.y;
 	}
 
-	void SaveJsonVector3(const std::string& _s, const DirectX::SimpleMath::Vector3& _v, json& _j)
+	void SaveJsonVector3(const std::string& _s, const DXSimp::Vector3& _v, json& _j)
 	{
 		_j[_s][0] = _v.x;
 		_j[_s][1] = _v.y;
 		_j[_s][2] = _v.z;
 	}
 
-	void SaveJsonVector4(const std::string& _s, const DirectX::SimpleMath::Vector4& _v, json& _j)
+	void SaveJsonVector4(const std::string& _s, const DXSimp::Vector4& _v, json& _j)
 	{
 		_j[_s][0] = _v.x;
 		_j[_s][1] = _v.y;
@@ -127,7 +127,7 @@ namespace HashiTaku
 		return true;
 	}
 
-	bool LoadJsonVector2(const std::string& _s, DirectX::SimpleMath::Vector2& _v, const json& _j)
+	bool LoadJsonVector2(const std::string& _s, DXSimp::Vector2& _v, const json& _j)
 	{
 
 		if (!IsJsonContains(_j, _s)) return false;
@@ -142,23 +142,7 @@ namespace HashiTaku
 		return true;
 	}
 
-	bool LoadJsonVector3(const std::string& _s, DirectX::SimpleMath::Vector3& _v, const json& _j)
-	{
-
-		if (!IsJsonContains(_j, _s)) return false;
-#ifdef EDIT
-		if (!_j[_s].is_array())
-		{
-			return false;
-		}
-#endif
-		_v.x = _j[_s][0];
-		_v.y = _j[_s][1];
-		_v.z = _j[_s][2];
-		return true;
-	}
-
-	bool LoadJsonVector4(const std::string& _s, DirectX::SimpleMath::Vector4& _v, const json& _j)
+	bool LoadJsonVector3(const std::string& _s, DXSimp::Vector3& _v, const json& _j)
 	{
 
 		if (!IsJsonContains(_j, _s)) return false;
@@ -171,11 +155,10 @@ namespace HashiTaku
 		_v.x = _j[_s][0];
 		_v.y = _j[_s][1];
 		_v.z = _j[_s][2];
-		_v.w = _j[_s][3];
 		return true;
 	}
 
-	bool LoadJsonQuaternion(const std::string& _s, DirectX::SimpleMath::Quaternion& _v, const json& _j)
+	bool LoadJsonVector4(const std::string& _s, DXSimp::Vector4& _v, const json& _j)
 	{
 
 		if (!IsJsonContains(_j, _s)) return false;
@@ -192,7 +175,24 @@ namespace HashiTaku
 		return true;
 	}
 
-	bool LoadJsonColor(const std::string& _s, DirectX::SimpleMath::Color& _c, const json& _j)
+	bool LoadJsonQuaternion(const std::string& _s, DXSimp::Quaternion& _v, const json& _j)
+	{
+
+		if (!IsJsonContains(_j, _s)) return false;
+#ifdef EDIT
+		if (!_j[_s].is_array())
+		{
+			return false;
+		}
+#endif
+		_v.x = _j[_s][0];
+		_v.y = _j[_s][1];
+		_v.z = _j[_s][2];
+		_v.w = _j[_s][3];
+		return true;
+	}
+
+	bool LoadJsonColor(const std::string& _s, DXSimp::Color& _c, const json& _j)
 	{
 
 		if (!IsJsonContains(_j, _s)) return false;

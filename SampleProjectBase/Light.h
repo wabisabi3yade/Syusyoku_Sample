@@ -1,46 +1,49 @@
 #pragma once
 #include "GameObject.h"
 
-struct LightParameter
+namespace HashiTaku
 {
-	DirectX::SimpleMath::Color color{ 1.0f, 1.0f, 1.0f, 1.0f };
-	DirectX::SimpleMath::Vector3 position{ 0.0f, 0.0f, 0.0f };
-	float dummy{0.0f};
-};
-
-// ライトの基底
-class Light
-{
-public:
-	enum class Type
+	struct LightParameter
 	{
-		Direction,
-		Point,
-		Spot,
-		Num,
-		None
+		DXSimp::Color color{ 1.0f, 1.0f, 1.0f, 1.0f };
+		DXSimp::Vector3 position{ 0.0f, 0.0f, 0.0f };
+		float dummy{ 0.0f };
 	};
-private:
-	// ライトの座標に目印
-	bool isDebugDisplay;
-protected:
-	// ライトの種類
-	Type type;
 
-	// ライトのパラメータ構造体
-	LightParameter parameter;
-public:
-	Light() : type(Type::None), isDebugDisplay(false) {}
-	~Light() {};
+	// ライトの基底
+	class Light
+	{
+	public:
+		enum class Type
+		{
+			Direction,
+			Point,
+			Spot,
+			Num,
+			None
+		};
+	private:
+		// ライトの座標に目印
+		bool isDebugDisplay;
+	protected:
+		// ライトの種類
+		Type type;
 
-	virtual void Draw() {};
+		// ライトのパラメータ構造体
+		LightParameter parameter;
+	public:
+		Light() : type(Type::None), isDebugDisplay(false) {}
+		~Light() {};
 
-	// 各パラメータセット
-	void SetDisplay(bool _isDisplay) { isDebugDisplay = _isDisplay; }
-	void SetPosition(const DirectX::SimpleMath::Vector3& _position) { parameter.position = _position; }
-	void SetColor(const DirectX::SimpleMath::Color& _color) { parameter.color = _color; }
+		virtual void Draw() {};
 
-	bool GetDisplay() { return isDebugDisplay; }
-	const DirectX::SimpleMath::Vector3& GetPosition() { return parameter.position; }
-	const DirectX::SimpleMath::Color& GetColor() { return parameter.color; }
-};
+		// 各パラメータセット
+		void SetDisplay(bool _isDisplay) { isDebugDisplay = _isDisplay; }
+		void SetPosition(const DXSimp::Vector3& _position) { parameter.position = _position; }
+		void SetColor(const DXSimp::Color& _color) { parameter.color = _color; }
+
+		bool GetDisplay() { return isDebugDisplay; }
+		const DXSimp::Vector3& GetPosition() { return parameter.position; }
+		const DXSimp::Color& GetColor() { return parameter.color; }
+	};
+}

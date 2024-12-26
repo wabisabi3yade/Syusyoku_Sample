@@ -36,7 +36,7 @@ namespace HashiTaku
 		/// @param _attackerPos 攻撃委敵の座標
 		/// @param _pAcceptDamage ダメージ受けたか？
 		void OnDamage(const AttackInformation& _atkInfo,
-			const DirectX::SimpleMath::Vector3& _attackerPos,
+			const DXSimp::Vector3& _attackerPos,
 			bool* _pAcceptDamage = nullptr) override;
 
 		/// @brief ターゲット中か取得する
@@ -78,13 +78,13 @@ namespace HashiTaku
 		/// @brief パリィできているか確認
 		/// @param _enemyPos 敵座標
 		/// @return パリィできたか？
-		bool OnDamageParryCheck(const DirectX::SimpleMath::Vector3& _enemyPos);
+		bool OnDamageParryCheck(const DXSimp::Vector3& _enemyPos);
 
 		/// @brief ノック状態に遷移
 		/// @param _atkInfo 攻撃情報
 		/// @param _attackerPos 攻撃敵の座標
 		void ChangeKnockState(const AttackInformation& _atkInfo,
-			const DirectX::SimpleMath::Vector3& _attackerPos);
+			const DXSimp::Vector3& _attackerPos);
 
 		void ImGuiDebug() override;
 	private:

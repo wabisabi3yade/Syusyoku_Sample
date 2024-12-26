@@ -86,7 +86,7 @@ namespace HashiTaku
 		return beginBlendBoneId;
 	}
 
-	DirectX::SimpleMath::Vector3 LayerdAnimationNode::GetRootMotionPos(float _ratio) const
+	DXSimp::Vector3 LayerdAnimationNode::GetRootMotionPos(float _ratio) const
 	{
 #ifdef EDIT
 		if (!pBaseAnimation) return  DXSimp::Vector3::Zero;
@@ -95,7 +95,7 @@ namespace HashiTaku
 		return pBaseAnimation->GetRootMotionPos(_ratio);
 	}
 
-	const DirectX::SimpleMath::Vector3& LayerdAnimationNode::GetRootMotionPerSpeed() const
+	const DXSimp::Vector3& LayerdAnimationNode::GetRootMotionPerSpeed() const
 	{
 #ifdef EDIT
 		if (!pBaseAnimation) return  DXSimp::Vector3::Zero;

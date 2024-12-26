@@ -57,14 +57,14 @@ namespace HashiTaku
 		Effekseer::Handle Play(
 			const Effekseer::EffectRef& _effect,
 			float _playSpeed,
-			const DirectX::SimpleMath::Vector3& _pos,
-			const DirectX::SimpleMath::Vector3& _scale = DirectX::SimpleMath::Vector3::One,
-			const DirectX::SimpleMath::Vector3& _eularAngles = DirectX::SimpleMath::Vector3::Zero,
+			const DXSimp::Vector3& _pos,
+			const DXSimp::Vector3& _scale = DXSimp::Vector3::One,
+			const DXSimp::Vector3& _eularAngles = DXSimp::Vector3::Zero,
 			int _startFrame = 0);
 
 		Effekseer::Handle Play(const CreateVfxInfo& _createVfx,
-			const DirectX::SimpleMath::Vector3& _pos,
-			const DirectX::SimpleMath::Vector3& _eularAngles = DirectX::SimpleMath::Vector3::Zero);
+			const DXSimp::Vector3& _pos,
+			const DXSimp::Vector3& _eularAngles = DXSimp::Vector3::Zero);
 
 		/// @brief 色を変更するなら
 		/// @param _efkHandle エフェクトのハンドル
@@ -93,13 +93,13 @@ namespace HashiTaku
 		/// @brief エフェクシアの行列を作成
 		/// @param _dxMtx DIrectXの行列
 		/// @param エフェクシアの行列
-		void CreateEffekseerMtx(const DirectX::SimpleMath::Matrix& _dxMtx,
+		void CreateEffekseerMtx(const DXSimp::Matrix& _dxMtx,
 			Effekseer::Matrix44& _outMtx);
 
 		/// @brief エフェクシアのVector3を作成
 		/// @param _dxMtx DIrectXのVector3
 		/// @param エフェクシアのVector3
-		Effekseer::Vector3D CreateEffekseerVector3(const DirectX::SimpleMath::Vector3& _dxVec3);
+		Effekseer::Vector3D CreateEffekseerVector3(const DXSimp::Vector3& _dxVec3);
 	};
 
 	/// @brief エフェクト生成情報

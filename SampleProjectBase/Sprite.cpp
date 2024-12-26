@@ -61,7 +61,7 @@ namespace HashiTaku
 		return isTextureEnable;
 	}
 
-	void Sprite::SetUV(const DirectX::SimpleMath::Vector2& _uvStart, const DirectX::SimpleMath::Vector2& _uvEnd)
+	void Sprite::SetUV(const DXSimp::Vector2& _uvStart, const DXSimp::Vector2& _uvEnd)
 	{
 		uvStart = _uvStart;
 		uvEnd = _uvEnd;

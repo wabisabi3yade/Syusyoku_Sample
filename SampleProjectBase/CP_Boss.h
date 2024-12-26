@@ -114,7 +114,7 @@ namespace HashiTaku
 		/// @param _attackerPos 攻撃した側の座標
 		/// @return ダメージを受けたか？
 		bool OnDamageBehavior(const AttackInformation& _attackInfo,
-			const DirectX::SimpleMath::Vector3& _attackerPos) override;
+			const DXSimp::Vector3& _attackerPos) override;
 
 		/// @brief 死んだときの処理
 		void OnDeathBehavior() override;

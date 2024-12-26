@@ -41,7 +41,7 @@ namespace HashiTaku
         nodeName = _nodeName;
     }
 
-    void TreeNode::SetTransformMtx(const DirectX::SimpleMath::Matrix& _transformMtx)
+    void TreeNode::SetTransformMtx(const DXSimp::Matrix& _transformMtx)
     {
         transformMtx = _transformMtx;
     }
@@ -49,6 +49,7 @@ namespace HashiTaku
     void TreeNode::SetBone(Bone& _bone)
     {
         pLinkBone = &_bone;
+        pLinkBone->SetLocalNodeMtx(transformMtx);
     }
 
     const TreeNode* TreeNode::GetChild(u_int _arrayIdx) const
@@ -84,7 +85,7 @@ namespace HashiTaku
         return pLinkBone->GetIndex();
     }
 
-    const DirectX::SimpleMath::Matrix& TreeNode::GetTransformMtx() const
+    const DXSimp::Matrix& TreeNode::GetTransformMtx() const
     {
         return transformMtx;
     }

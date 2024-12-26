@@ -15,7 +15,7 @@ namespace HashiTaku
 		const Bone* pGrabBone;
 
 		/// @brief ロード時の角度
-		DirectX::SimpleMath::Quaternion loadMeshRot;
+		DXSimp::Quaternion loadMeshRot;
 
 		/// @brief ロード時のスケール
 		float loadMeshScale;

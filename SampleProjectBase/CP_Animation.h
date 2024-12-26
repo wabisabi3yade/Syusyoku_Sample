@@ -17,14 +17,14 @@ namespace HashiTaku
 		// シェーダーに渡すボーン行列構造体
 		struct BoneCombMtricies
 		{
-			DirectX::SimpleMath::Matrix matrix[MAX_BONEMTX];
+			DXSimp::Matrix matrix[MAX_BONEMTX];
 		};
 
 		/// @brief ボーンのコンビネーション行列のバッファー
 		static BoneCombMtricies boneCombBuffer;
 
 		/// @brief ルートボーンに対するオフセット行列
-		DirectX::SimpleMath::Matrix rootOffsetMtx;
+		DXSimp::Matrix rootOffsetMtx;
 
 		/// @brief スケルタルメッシュ
 		SkeletalMesh* pSkeletalMesh;
@@ -116,11 +116,11 @@ namespace HashiTaku
 
 		/// @brief 現在再生しているアニメーションのルートモーションの座標移動速度を渡す
 		/// @return 座標移動速度(s)
-		const DirectX::SimpleMath::Vector3& GetMotionPosSpeedPerSec() const;
+		const DXSimp::Vector3& GetMotionPosSpeedPerSec() const;
 
 		/// @brief 現在のアニメーションのルートモーション座標を取得
 		/// @param 取得する割合
-		DirectX::SimpleMath::Vector3 GetCurAnimRMPos(float _ratio);
+		DXSimp::Vector3 GetCurAnimRMPos(float _ratio);
 
 		/// @brief プレイヤー再生速度を取得する
 		/// @return 現在の再生速度
@@ -165,7 +165,7 @@ namespace HashiTaku
 		/// @brief 子ノードのコンビネーション行列を更新する（再帰関数）
 		/// @param _treeNode 更新するノード
 		/// @param _parentMtx ワールド変換するための親までの行列
-		void UpdateNodeHierarchy(const TreeNode& _treeNode, const DirectX::SimpleMath::Matrix& _parentMtx);
+		void UpdateNodeHierarchy(const TreeNode& _treeNode, const DXSimp::Matrix& _parentMtx);
 
 		/// @brief ボーンのコンビネーション行列を更新
 		void UpdateAnimationMtx();

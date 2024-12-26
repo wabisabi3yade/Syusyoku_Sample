@@ -28,17 +28,17 @@ namespace HashiTaku
 		InSceneSystemManager::GetInstance()->DeleteCamera(*this);
 	}
 
-	const DirectX::SimpleMath::Vector3& CP_Camera::GetCamUp() const
+	const DXSimp::Vector3& CP_Camera::GetCamUp() const
 	{
 		return camUp;
 	}
 
-	const DirectX::SimpleMath::Vector3& CP_Camera::GetEyePos() const
+	const DXSimp::Vector3& CP_Camera::GetEyePos() const
 	{
 		return GetTransform().GetPosition();
 	}
 
-	const DirectX::SimpleMath::Vector3& CP_Camera::GetTarget() const
+	const DXSimp::Vector3& CP_Camera::GetTarget() const
 	{
 		return target;
 	}

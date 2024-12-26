@@ -49,7 +49,7 @@ namespace HashiTaku
 		MakePlane();
 	}
 
-	void PlaneMesh::SetUV(const DirectX::SimpleMath::Vector2& _startUV, const DirectX::SimpleMath::Vector2& _endUV)
+	void PlaneMesh::SetUV(const DXSimp::Vector2& _startUV, const DXSimp::Vector2& _endUV)
 	{
 		verticies[0].uv = _startUV;	// ç∂è„
 		verticies[1].uv = { _endUV.x, _startUV.y };	//Å@âEè„

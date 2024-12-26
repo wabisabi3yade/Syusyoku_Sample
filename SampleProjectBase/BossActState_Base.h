@@ -72,13 +72,13 @@ namespace HashiTaku
 		std::vector<WarpMotionParam> warpMotionParams;
 
 		/// @brief ワープモーションのターゲット先のポインタ
-		const DirectX::SimpleMath::Vector3* pWarpTargetPos;
+		const DXSimp::Vector3* pWarpTargetPos;
 
 		/// @brief ワープモーションのターゲット先座標
-		DirectX::SimpleMath::Vector3 warpTargetPos;
+		DXSimp::Vector3 warpTargetPos;
 
 		/// @brief ワープモーションで移動するときのターゲット座標との距離
-		DirectX::SimpleMath::Vector3 disToWarpTargePos;
+		DXSimp::Vector3 disToWarpTargePos;
 
 		/// @brief 最後のワープモーションで求めた進行度(0.0～1.0)
 		float lastProgressRatio;
@@ -93,10 +93,10 @@ namespace HashiTaku
 		u_int curWarpStep;
 
 		/// @brief ワープ開始時のルートモーション座標
-		DirectX::SimpleMath::Vector3 startRMPos;
+		DXSimp::Vector3 startRMPos;
 
 		/// @brief ワープ終了時のルートモーション座標
-		DirectX::SimpleMath::Vector3 endRMPos;
+		DXSimp::Vector3 endRMPos;
 
 		/// @brief ワープモーションさせるか？
 		bool isUseWarpMotion;
@@ -106,7 +106,7 @@ namespace HashiTaku
 
 #ifdef EDIT
 		// ワープモーション開始時の座標
-		DirectX::SimpleMath::Vector3 warpStartPos;
+		DXSimp::Vector3 warpStartPos;
 #endif
 	protected:
 		/// @brief アクションコントローラー
@@ -157,11 +157,11 @@ namespace HashiTaku
 
 		/// @brief ワープモーションのターゲットの座標の参照をセット
 		/// @param _targetWorldPos ターゲットの座標の参照
-		void SetWarpTargetPosReference(const DirectX::SimpleMath::Vector3& _targetPosRef);
+		void SetWarpTargetPosReference(const DXSimp::Vector3& _targetPosRef);
 
 		/// @brief ワープモーションのターゲットの座標をセット
 		/// @param _targetWorldPos ターゲットの座標
-		void SetWarpTargetPos(const DirectX::SimpleMath::Vector3& _targetPos);
+		void SetWarpTargetPos(const DXSimp::Vector3& _targetPos);
 
 		/// @brief トランスフォームを取得する
 		/// @return ボスのトランスフォーム
@@ -194,7 +194,7 @@ namespace HashiTaku
 
 		/// @brief ワープモーションのターゲットの座標をセット
 		/// @param _targetWorldPos ターゲットの座標
-		void CalcWarpDistance(const DirectX::SimpleMath::Vector3& _targetWorldPos);
+		void CalcWarpDistance(const DXSimp::Vector3& _targetWorldPos);
 
 		/// @brief ブレイク終了ノックができるか取得する
 		/// @return ブレイク終了ノックできるか？

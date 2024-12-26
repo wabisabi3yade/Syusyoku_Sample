@@ -126,7 +126,7 @@ namespace HashiTaku
 		return loadScale;
 	}
 
-	const DirectX::SimpleMath::Quaternion& BoneList::GetLoadRotation() const
+	const DXSimp::Quaternion& BoneList::GetLoadRotation() const
 	{
 		return loadOffsetRotation;
 	}

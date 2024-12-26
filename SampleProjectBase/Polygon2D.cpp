@@ -38,9 +38,9 @@ namespace HashiTaku
 		InitSetting("Polygon2D", D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 	}
 
-	void Polygon2D::MakePolygon(const DirectX::SimpleMath::Vector3& _centerPos, const DirectX::SimpleMath::Vector2& _size, const DirectX::SimpleMath::Vector3& _angles)
+	void Polygon2D::MakePolygon(const DXSimp::Vector3& _centerPos, const DXSimp::Vector2& _size, const DXSimp::Vector3& _angles)
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 
 		// í∏ì_çÏê¨
 		Vector2 halfSize = _size * 0.5f;
@@ -71,7 +71,7 @@ namespace HashiTaku
 		InitBuffer();
 	}
 
-	void Polygon2D::SetUV(const DirectX::SimpleMath::Vector2& _startUV, const DirectX::SimpleMath::Vector2& _endUV)
+	void Polygon2D::SetUV(const DXSimp::Vector2& _startUV, const DXSimp::Vector2& _endUV)
 	{
 		verticies[LEFT_UP_IDX].uv = _startUV;	// ç∂è„
 		verticies[RIGHT_UP_IDX].uv = { _endUV.x, _startUV.y };	//Å@âEè„

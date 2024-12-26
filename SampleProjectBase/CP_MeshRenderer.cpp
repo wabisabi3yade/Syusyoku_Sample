@@ -181,7 +181,7 @@ namespace HashiTaku
 		return true;
 	}
 
-	DirectX::SimpleMath::Matrix CP_MeshRenderer::CalcLoadMtx()
+	DXSimp::Matrix CP_MeshRenderer::CalcLoadMtx()
 	{
 		using namespace DXSimp;
 
@@ -282,7 +282,7 @@ namespace HashiTaku
 		}
 	}
 
-	DirectX::SimpleMath::Vector3 CP_MeshRenderer::WorldOffset(const DirectX::SimpleMath::Vector3& _offset)
+	DXSimp::Vector3 CP_MeshRenderer::WorldOffset(const DXSimp::Vector3& _offset)
 	{
 		DXSimp::Vector3 worldOffset = _offset.x * GetTransform().Right();
 		worldOffset += _offset.y * GetTransform().Up();

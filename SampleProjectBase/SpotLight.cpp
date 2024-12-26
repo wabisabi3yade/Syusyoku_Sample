@@ -13,7 +13,7 @@ namespace HashiTaku
 		rangeAngle = std::max(_rangeAngle, 0.0f);
 	}
 
-	void SpotLight::SetDirection(const DirectX::SimpleMath::Vector3& _direction)
+	void SpotLight::SetDirection(const DXSimp::Vector3& _direction)
 	{
 		lightDir = _direction;
 	}
@@ -28,7 +28,7 @@ namespace HashiTaku
 		return rangeAngle;
 	}
 
-	const DirectX::SimpleMath::Vector3& SpotLight::GetLightDir()
+	const DXSimp::Vector3& SpotLight::GetLightDir()
 	{
 		return lightDir;
 	}

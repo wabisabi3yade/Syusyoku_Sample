@@ -18,7 +18,7 @@ namespace HashiTaku
 		return false;
 	}
 
-	DirectX::SimpleMath::Vector3 DX11BulletPhisics::GetGravityValue() const
+	DXSimp::Vector3 DX11BulletPhisics::GetGravityValue() const
 	{
 		return gravityValue;
 	}

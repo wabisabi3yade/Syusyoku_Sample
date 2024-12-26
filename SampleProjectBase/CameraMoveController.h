@@ -17,13 +17,13 @@ namespace HashiTaku
 		CalcPerlinShakeVector perlinShake;
 
 		/// @brief カメラの現在の座標(カメラ揺れを実装するのでオブジェクトと別で持っておく)
-		DirectX::SimpleMath::Vector3 curBaseCameraPos;
+		DXSimp::Vector3 curBaseCameraPos;
 
 		/// @brief 現在のカメラ揺れでずらしているオフセット座標
-		DirectX::SimpleMath::Vector3 curShakeOffsetPos;
+		DXSimp::Vector3 curShakeOffsetPos;
 
 		/// @brief 前フレームのフォローしている座標
-		DirectX::SimpleMath::Vector3 prevFollowPos;
+		DXSimp::Vector3 prevFollowPos;
 
 		/// @brief カメラコンポーネント
 		CP_Camera* pCamera;
@@ -60,7 +60,7 @@ namespace HashiTaku
 
 		/// @brief 現在のカメラのベース座標を更新
 		/// @param _camPos ベースとなるカメラの座標
-		void SetCameraBasePos(const DirectX::SimpleMath::Vector3& _camPos);
+		void SetCameraBasePos(const DXSimp::Vector3& _camPos);
 
 		/// @brief 視野角の角度をセット(単位：deg)
 		/// @param _setDegree 視野角
@@ -78,11 +78,11 @@ namespace HashiTaku
 
 		/// @brief カメラ揺れを考慮しないカメラの座標を取得
 		/// @return カメラ揺れを考慮しないカメラ座標
-		const DirectX::SimpleMath::Vector3& GetCameraBasePos();
+		const DXSimp::Vector3& GetCameraBasePos();
 
 		/// @brief 前フレームの追従先座標を取得
 		/// @return 前フレームの追従先座標
-		const DirectX::SimpleMath::Vector3& GetPrevFollowPos() const;
+		const DXSimp::Vector3& GetPrevFollowPos() const;
 
 		/// @brief 追従先のオブジェクトを所持しているか取得
 		/// @return 所持しているか？
@@ -98,7 +98,7 @@ namespace HashiTaku
 
 		/// @brief 注視先オブジェクトを取得
 		/// @return 注視先オブジェクトのワールド座標
-		const DirectX::SimpleMath::Vector3& GetLookAtWorldPos() const;
+		const DXSimp::Vector3& GetLookAtWorldPos() const;
 
 		json Save() override;
 		void Load(const json& _data) override;

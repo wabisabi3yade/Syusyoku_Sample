@@ -17,8 +17,8 @@ namespace HashiTaku
 		/// @brief 子ノード
 		std::list<std::unique_ptr<TreeNode>>  pChildNodes;
 
-		/// @brief ノードのローカル座標系への変換行列
-		DirectX::SimpleMath::Matrix transformMtx;
+		/// @brief 親ノードからのローカル座標系の変換行列
+		DXSimp::Matrix transformMtx;
 
 		/// @brief 対応したボーン
 		Bone* pLinkBone;
@@ -46,7 +46,7 @@ namespace HashiTaku
 		void SetNodeName(const std::string& _nodeName);
 
 		// ローカル座標系への変換行列セット
-		void SetTransformMtx(const DirectX::SimpleMath::Matrix& _transformMtx);
+		void SetTransformMtx(const DXSimp::Matrix& _transformMtx);
 
 		// 対応したボーンをセット
 		void SetBone(Bone& _bone);
@@ -67,6 +67,6 @@ namespace HashiTaku
 		u_int GetBoneIdx() const;
 
 		// ローカル座標までの移動行列を取得
-		const DirectX::SimpleMath::Matrix& GetTransformMtx() const;
+		const DXSimp::Matrix& GetTransformMtx() const;
 	};
 }

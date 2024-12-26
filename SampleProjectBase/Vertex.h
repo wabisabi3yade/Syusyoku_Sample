@@ -9,16 +9,16 @@ namespace HashiTaku
 	struct Vertex
 	{
 		/// @brief 座標
-		DirectX::SimpleMath::Vector3 position;
+		DXSimp::Vector3 position;
 
 		// 色(RGBA)
-		DirectX::SimpleMath::Color color;
+		DXSimp::Color color;
 
 		/// @brief UV座標（テクスチャ座標）
-		DirectX::SimpleMath::Vector2 uv;
+		DXSimp::Vector2 uv;
 
 		/// @brief 頂点の法線ベクトル
-		DirectX::SimpleMath::Vector3 normal;
+		DXSimp::Vector3 normal;
 
 		/// @brief 影響されるボーンのID
 		int boneIndex[MAX_WEIGHT_NUM]{ -1,-1,-1,-1 };

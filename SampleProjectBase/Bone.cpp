@@ -17,12 +17,12 @@ namespace HashiTaku
 		return *this;
 	}
 
-	void Bone::CreateCombMtx(const DirectX::SimpleMath::Matrix& _parentMtx)
+	void Bone::CreateCombMtx(const DXSimp::Matrix& _parentMtx)
 	{
 		combinationMatrix = offsetMatrix * GetAnimMtx() * _parentMtx;
 	}
 
-	void Bone::CreateGlobalMtx(const DirectX::SimpleMath::Matrix& _parentMtx, const DirectX::SimpleMath::Matrix& _offsetMtx)
+	void Bone::CreateGlobalMtx(const DXSimp::Matrix& _parentMtx, const DXSimp::Matrix& _offsetMtx)
 	{
 		globalMatrix = GetAnimMtx() * _parentMtx * _offsetMtx;
 	}
@@ -32,9 +32,20 @@ namespace HashiTaku
 		boneName = _boneName;
 	}
 
-	void Bone::SetOffeetMtx(const DirectX::SimpleMath::Matrix& _offsetMatrix)
+	void Bone::SetOffeetMtx(const DXSimp::Matrix& _offsetMatrix)
 	{
 		offsetMatrix = _offsetMatrix;
+	}
+
+	void Bone::SetLocalNodeMtx(const DXSimp::Matrix& _nodeMatrix)
+	{
+		// ツリーノードからの初期行列をトランスフォームに変換し、代入
+		Mtx::GetTransformFromWldMtx(
+			_nodeMatrix,
+			localNodeTransform.position,
+			localNodeTransform.scale,
+			localNodeTransform.rotation
+			);
 	}
 
 	BoneTransform& Bone::GetRefelenceAnimTransform()
@@ -52,12 +63,12 @@ namespace HashiTaku
 		return boneName;
 	}
 
-	const DirectX::SimpleMath::Matrix& Bone::GetCombMtx() const
+	const DXSimp::Matrix& Bone::GetCombMtx() const
 	{
 		return combinationMatrix;
 	}
 
-	DirectX::SimpleMath::Matrix Bone::GetAnimMtx() const
+	DXSimp::Matrix Bone::GetAnimMtx() const
 	{
 		// アニメーション行列を作成
 		Matrix scaleMtx = Matrix::CreateScale(animationTransform.scale);
@@ -68,19 +79,24 @@ namespace HashiTaku
 		return animationMtx;
 	}
 
-	const DirectX::SimpleMath::Matrix& Bone::GetOffsetMtx() const
+	const DXSimp::Matrix& Bone::GetOffsetMtx() const
 	{
 		return offsetMatrix;
 	}
 
-	const DirectX::SimpleMath::Matrix& Bone::GetGlobalMtx() const
+	const DXSimp::Matrix& Bone::GetGlobalMtx() const
 	{
 		return globalMatrix;
 	}
 
-	BoneTransform Bone::GetAnimationTransform() const
+	const BoneTransform& Bone::GetAnimationTransform() const
 	{
 		return animationTransform;
+	}
+
+	const BoneTransform& Bone::GetLocalNodeTransform() const
+	{
+		return localNodeTransform;
 	}
 
 	u_int Bone::GetIndex() const
@@ -94,6 +110,7 @@ namespace HashiTaku
 
 		boneName = _other.boneName;
 		offsetMatrix = _other.offsetMatrix;
+		localNodeTransform = _other.localNodeTransform;
 		boneIdx = _other.boneIdx;
 	}
 }

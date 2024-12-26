@@ -50,7 +50,7 @@ namespace HashiTaku
 
 		/// @brief ロード時のオフセット行列計算
 		/// @return ロード行列
-		DirectX::SimpleMath::Matrix CalcLoadMtx();
+		DXSimp::Matrix CalcLoadMtx();
 
 		/// @brief メッシュを描画
 		void DrawMesh(RenderParam::WVP& _wvp);
@@ -71,7 +71,7 @@ namespace HashiTaku
 
 		/// @brief ローカル軸を考慮したオフセットに変換
 		/// @param _worldOffset 変換したいオフセット
-		DirectX::SimpleMath::Vector3 WorldOffset(const DirectX::SimpleMath::Vector3& _offset);
+		DXSimp::Vector3 WorldOffset(const DXSimp::Vector3& _offset);
 
 		/// @brief 原点表示
 		void OriginDisplay();

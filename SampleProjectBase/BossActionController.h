@@ -60,7 +60,7 @@ namespace HashiTaku
 
 		/// @brief ダメージ時処理
 		void OnDamage(const AttackInformation& _atkInfo,
-			const DirectX::SimpleMath::Vector3& _attackerPos,
+			const DXSimp::Vector3& _attackerPos,
 			bool* _pAcceptDamage = nullptr) override;
 
 		/// @brief デバッグ描画

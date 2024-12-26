@@ -16,7 +16,7 @@ namespace HashiTaku
 #endif
 	}
 
-	void DirectionLight::SetDirection(const DirectX::SimpleMath::Vector3& _dir)
+	void DirectionLight::SetDirection(const DXSimp::Vector3& _dir)
 	{
 		DXSimp::Vector3 d = _dir;
 
@@ -30,17 +30,17 @@ namespace HashiTaku
 		direction = d;
 	}
 
-	void DirectionLight::SetAmbiemt(const DirectX::SimpleMath::Color& _color)
+	void DirectionLight::SetAmbiemt(const DXSimp::Color& _color)
 	{
 		ambiemt = Vec4::Max(_color, 0.0f);
 	}
 
-	DirectX::SimpleMath::Vector3 DirectionLight::GetDirection()
+	DXSimp::Vector3 DirectionLight::GetDirection()
 	{
 		return direction;
 	}
 
-	DirectX::SimpleMath::Color DirectionLight::GetAmbiemt()
+	DXSimp::Color DirectionLight::GetAmbiemt()
 	{
 		return ambiemt;
 	}

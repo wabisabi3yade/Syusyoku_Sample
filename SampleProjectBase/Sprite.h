@@ -18,13 +18,13 @@ namespace HashiTaku
 		std::unique_ptr<PlaneMesh> pSquareMesh;
 
 		/// @brief uv座標の始点(左上)
-		DirectX::SimpleMath::Vector2 uvStart;
+		DXSimp::Vector2 uvStart;
 
 		/// @brief uv座標の終点(右下)
-		DirectX::SimpleMath::Vector2 uvEnd;
+		DXSimp::Vector2 uvEnd;
 
 		/// @brief uvの分割数
-		DirectX::SimpleMath::Vector2 uvDivideNum;
+		DXSimp::Vector2 uvDivideNum;
 
 		/// @brief テクスチャが設定されているか
 		bool isTextureEnable{ false };
@@ -57,7 +57,7 @@ namespace HashiTaku
 		/// @brief uv座標を設定
 		/// @param _uvStart uv座標始点
 		/// @param _uvEnd uv座標終点
-		void SetUV(const DirectX::SimpleMath::Vector2& _uvStart, const DirectX::SimpleMath::Vector2& _uvEnd);
+		void SetUV(const DXSimp::Vector2& _uvStart, const DXSimp::Vector2& _uvEnd);
 
 		/// @brief セーブする
 		/// @param _sceneData セーブデータ

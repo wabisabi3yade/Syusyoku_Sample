@@ -59,7 +59,7 @@ namespace HashiTaku
 		bool c_buttonState[BUTTON_TYPE_CNT];
 		bool p_buttonState[BUTTON_TYPE_CNT];
 
-		DirectX::SimpleMath::Vector2 c_valueState[static_cast<u_int>(ValueType::Max_ValueNum)];
+		DXSimp::Vector2 c_valueState[static_cast<u_int>(ValueType::Max_ValueNum)];
 
 	public:
 		GameInput();
@@ -97,7 +97,7 @@ namespace HashiTaku
 		/// @brief 入力スティックの数値を取得する
 		/// @param _valueType ゲーム内スティックの種類
 		/// @return 入力数値
-		const DirectX::SimpleMath::Vector2& GetValue(ValueType _valueType);
+		const DXSimp::Vector2& GetValue(ValueType _valueType);
 
 	private:
 		/// @brief デフォルトの設定にする

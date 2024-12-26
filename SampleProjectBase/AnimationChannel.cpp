@@ -3,7 +3,7 @@
 
 namespace HashiTaku
 {
-	void AnimationChannel::AddPosKey(float _startKeyNum, const DirectX::SimpleMath::Vector3& _position)
+	void AnimationChannel::AddPosKey(float _startKeyNum, const DXSimp::Vector3& _position)
 	{
 		AnimKey_V3 addPosKey;
 		addPosKey.parameter = _position;
@@ -11,7 +11,7 @@ namespace HashiTaku
 		positionKeys.push_back(addPosKey);
 	}
 
-	void AnimationChannel::AddScaleKey(float _startKeyNum, const DirectX::SimpleMath::Vector3& _scale)
+	void AnimationChannel::AddScaleKey(float _startKeyNum, const DXSimp::Vector3& _scale)
 	{
 		AnimKey_V3 addScaleKey;
 		addScaleKey.parameter = _scale;
@@ -19,7 +19,7 @@ namespace HashiTaku
 		scaleKeys.push_back(addScaleKey);
 	}
 
-	void AnimationChannel::AddQuatKey(float _startKeyNum, const DirectX::SimpleMath::Quaternion& _quaternion)
+	void AnimationChannel::AddQuatKey(float _startKeyNum, const DXSimp::Quaternion& _quaternion)
 	{
 		AnimKey_Q addQuatKey;
 		addQuatKey.parameter = _quaternion;

@@ -73,11 +73,11 @@ namespace HashiTaku
 
 		/// @brief 指定した割合のルートモーションの移動座標を取得
 		/// @return ルートモーションの移動座標
-		DirectX::SimpleMath::Vector3 GetRootMotionPos(float _ratio) const;
+		DXSimp::Vector3 GetRootMotionPos(float _ratio) const;
 
 		/// @brief ルートモーション秒速を取得
 		/// @return ルートモーション秒速
-		const DirectX::SimpleMath::Vector3& GetRootMotionPerSpeed() const;
+		const DXSimp::Vector3& GetRootMotionPerSpeed() const;
 
 		json Save() override;
 		void Load(const json& _data) override;

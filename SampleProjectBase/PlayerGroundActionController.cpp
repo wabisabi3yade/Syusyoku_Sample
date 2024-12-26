@@ -81,7 +81,7 @@ namespace HashiTaku
 	}
 
 	void PlayerGroundActionController::OnDamage(const AttackInformation& _atkInfo,
-		const DirectX::SimpleMath::Vector3& _attackerPos, bool* _pAcceptDamage)
+		const DXSimp::Vector3& _attackerPos, bool* _pAcceptDamage)
 	{
 		if (_pAcceptDamage)
 			*_pAcceptDamage = false;
@@ -111,7 +111,7 @@ namespace HashiTaku
 		return static_cast<PlayerGroundState::PlayerState>(currentStateKey);
 	}
 
-	bool PlayerGroundActionController::OnDamageParryCheck(const DirectX::SimpleMath::Vector3& _enemyPos)
+	bool PlayerGroundActionController::OnDamageParryCheck(const DXSimp::Vector3& _enemyPos)
 	{
 		// 今パリィできるか確認する
 		// 今ガード状態でないなら
@@ -128,12 +128,12 @@ namespace HashiTaku
 	}
 
 	void PlayerGroundActionController::ChangeKnockState(const AttackInformation& _atkInfo,
-		const DirectX::SimpleMath::Vector3& _attackerPos)
+		const DXSimp::Vector3& _attackerPos)
 	{
 		using enum AttackInformation::AttackLevel;
 
 		// ノックのベクトルを求める
-		DirectX::SimpleMath::Vector3 knockVec =
+		DXSimp::Vector3 knockVec =
 			GetMyTransform().GetPosition() - _attackerPos;
 		knockVec.y = 0.0f; knockVec.Normalize();
 

@@ -39,8 +39,6 @@ namespace HashiTaku
 
 	void AnimLayerdNodePlayer::Update(std::vector<BoneTransform>& _outTransforms)
 	{
-		_outTransforms.resize(pAssetBoneList->GetBoneCnt());
-
 		//ボーン数ループ
 		const LayerdAnimationNode& layerdNode = static_cast<const LayerdAnimationNode&>(*pPlayAnimNode);
 
@@ -63,11 +61,11 @@ namespace HashiTaku
 			(allPlaySpeed / nodePlaySpeed);
 	}
 
-	DirectX::SimpleMath::Vector3 AnimLayerdNodePlayer::GetRootMotionPos(float _ratio, bool _isWorldScaling) const
+	DXSimp::Vector3 AnimLayerdNodePlayer::GetRootMotionPos(float _ratio, bool _isWorldScaling) const
 	{
 		const LayerdAnimationNode& layerdNode = static_cast<const  LayerdAnimationNode&>(*pPlayAnimNode);
 
-		DirectX::SimpleMath::Vector3 rootMotionPos = layerdNode.GetRootMotionPos(_ratio);
+		DXSimp::Vector3 rootMotionPos = layerdNode.GetRootMotionPos(_ratio);
 
 		// ロード時の回転量と、スケールを掛ける
 		if (_isWorldScaling)

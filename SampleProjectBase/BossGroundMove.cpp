@@ -60,7 +60,7 @@ namespace HashiTaku
 
 	void BossGroundMove::Rotation()
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 		float deltaTime = DeltaTime();
 
 		Transform& myTransform = GetBossTransform();
@@ -82,7 +82,7 @@ namespace HashiTaku
 
 	void BossGroundMove::Move()
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 
 		float deltaTime = DeltaTime();
 		Transform& myTransform = pActionController->GetBoss().GetTransform();
@@ -119,7 +119,7 @@ namespace HashiTaku
 
 	bool BossGroundMove::CheckNearTransition()
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 
 		// ƒvƒŒƒCƒ„[‚Æ‚Ì‹——£
 		Vector3 playerToDis = GetPlayerTransform().GetPosition() -

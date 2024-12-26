@@ -7,16 +7,16 @@ namespace HashiTaku
 	class CameraOnMoveState : public CameraMoveState_Base
 	{
 		/// @brief カメラポジション
-		DirectX::SimpleMath::Vector3 cameraPos;
+		DXSimp::Vector3 cameraPos;
 
 		/// @brief 追従のワールド座標
-		DirectX::SimpleMath::Vector3 followPos;
+		DXSimp::Vector3 followPos;
 
 		/// @brief 入力数値
-		DirectX::SimpleMath::Vector2 inputVal;
+		DXSimp::Vector2 inputVal;
 
 		/// @brief スティックを倒したときの遊びの大きさ
-		DirectX::SimpleMath::Vector2 inpDeadZone;
+		DXSimp::Vector2 inpDeadZone;
 
 		/// @brief 何も入力なしのときの高さ
 		float idleHeight;

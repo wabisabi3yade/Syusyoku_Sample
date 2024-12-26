@@ -78,7 +78,7 @@ namespace HashiTaku
 
 		/// @brief ベースとなるカメラの座標をセット
 		/// @param _basePos ベースとなる座標
-		void SetBasePosition(const DirectX::SimpleMath::Vector3& _basePos);
+		void SetBasePosition(const DXSimp::Vector3& _basePos);
 
 		/// @brief カメラコンポーネントを取得
 		/// @return カメラ
@@ -86,11 +86,11 @@ namespace HashiTaku
 
 		/// @brief 追従先の座標を取得する
 		/// @return  追従先の座標
-		const DirectX::SimpleMath::Vector3& GetFollowPosition() const;
+		const DXSimp::Vector3& GetFollowPosition() const;
 
 		/// @brief ベースとなる座標を取得する
 		/// @return	カメラのベースとなるワールド座標
-		const DirectX::SimpleMath::Vector3& GetBasePosition() const;
+		const DXSimp::Vector3& GetBasePosition() const;
 
 		/// @brief オブジェクトの経過時間を取得
 		/// @return 経過時間

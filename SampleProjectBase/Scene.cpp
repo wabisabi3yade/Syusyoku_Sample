@@ -23,6 +23,9 @@ namespace HashiTaku
 
 		// エフェクトを削除
 		pEffectManager->AllEffectDestroy();
+
+		// サウンドを終了
+		DXSoundManager::GetInstance()->StopAll();
 	}
 
 	void Scene::Exec()
@@ -58,6 +61,9 @@ namespace HashiTaku
 
 		// エフェクト更新処理
 		pEffectManager->Update();
+
+		// サウンドマネジャー更新処理
+		DXSoundManager::GetInstance()->Update();
 	}
 
 	void Scene::SceneDraw()

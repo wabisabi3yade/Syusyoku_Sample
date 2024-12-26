@@ -16,7 +16,7 @@ namespace HashiTaku
 		return enemyName;
 	}
 
-	const DirectX::SimpleMath::Vector3& CP_Enemy::GetWorldPos() const
+	const DXSimp::Vector3& CP_Enemy::GetWorldPos() const
 	{
 		return GetTransform().GetPosition();
 	}
@@ -65,7 +65,7 @@ namespace HashiTaku
 	}
 
 	bool CP_Enemy::OnDamageBehavior(const AttackInformation& _attackInfo,
-		const DirectX::SimpleMath::Vector3& _attackerPos)
+		const DXSimp::Vector3& _attackerPos)
 	{
 		// HP‚ðŒ¸‚ç‚·
 		DecadeHp(_attackInfo.GetDamageValue());

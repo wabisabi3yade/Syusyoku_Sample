@@ -10,10 +10,10 @@ namespace HashiTaku
 	class Transform : public ISaveLoad
 	{
 		/// @brief ワールド空間トランスフォーム行列
-		DirectX::SimpleMath::Matrix worldMatrix;
+		DXSimp::Matrix worldMatrix;
 
 		/// @brief ローカル空間トランスフォーム行列
-		DirectX::SimpleMath::Matrix localMatrix;
+		DXSimp::Matrix localMatrix;
 
 		/// @brief トランスフォームを持つオブジェクト
 		GameObject* pGameObject;
@@ -25,22 +25,22 @@ namespace HashiTaku
 		std::list<Transform*> childTransforms;
 
 		// 各方向の単位ベクトル
-		DirectX::SimpleMath::Vector3 up;	// 上
-		DirectX::SimpleMath::Vector3 right;	// 右
-		DirectX::SimpleMath::Vector3 forward;	// 前
+		DXSimp::Vector3 up;	// 上
+		DXSimp::Vector3 right;	// 右
+		DXSimp::Vector3 forward;	// 前
 
 		// ワールド
-		DirectX::SimpleMath::Vector3 position;	// 座標
-		DirectX::SimpleMath::Vector3 scale;	// スケール
-		DirectX::SimpleMath::Vector3 eularAngles;	// 回転角度
-		DirectX::SimpleMath::Quaternion rotation;	// クォータニオン
+		DXSimp::Vector3 position;	// 座標
+		DXSimp::Vector3 scale;	// スケール
+		DXSimp::Vector3 eularAngles;	// 回転角度
+		DXSimp::Quaternion rotation;	// クォータニオン
 
 
 		// ローカル
-		DirectX::SimpleMath::Vector3 localPosition;	// 座標
-		DirectX::SimpleMath::Vector3 localScale;	// スケール
-		DirectX::SimpleMath::Vector3 localEularAngles;	// 回転角度
-		DirectX::SimpleMath::Quaternion localRotation;	// クォータニオン
+		DXSimp::Vector3 localPosition;	// 座標
+		DXSimp::Vector3 localScale;	// スケール
+		DXSimp::Vector3 localEularAngles;	// 回転角度
+		DXSimp::Quaternion localRotation;	// クォータニオン
 
 	protected:
 		/// @brief 親トランスフォームがあるか？
@@ -56,7 +56,7 @@ namespace HashiTaku
 		void UpdateVector();
 
 		// その座標にオブジェクトを向ける
-		void LookAt(const DirectX::SimpleMath::Vector3& _worldPos, const DirectX::SimpleMath::Vector3& _upVector = DirectX::SimpleMath::Vector3::Up);
+		void LookAt(const DXSimp::Vector3& _worldPos, const DXSimp::Vector3& _upVector = DXSimp::Vector3::Up);
 
 		/// @brief 親トランスフォームを解除する
 		virtual void RemoveParent();
@@ -74,34 +74,34 @@ namespace HashiTaku
 		virtual void SetChild(Transform& _child);
 
 		// ワールド
-		virtual void SetPosition(const DirectX::SimpleMath::Vector3& _pos);
-		virtual void SetScale(const DirectX::SimpleMath::Vector3& _scale);
-		virtual void SetEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles);
-		virtual void SetRotation(const DirectX::SimpleMath::Quaternion& _quaternion);
+		virtual void SetPosition(const DXSimp::Vector3& _pos);
+		virtual void SetScale(const DXSimp::Vector3& _scale);
+		virtual void SetEularAngles(const DXSimp::Vector3& _eularAngles);
+		virtual void SetRotation(const DXSimp::Quaternion& _quaternion);
 
 		// ローカル
-		virtual void SetLocalPosition(const DirectX::SimpleMath::Vector3& _position);
-		virtual void SetLocalScale(const DirectX::SimpleMath::Vector3& _scale);
-		virtual void SetLocalEularAngles(const DirectX::SimpleMath::Vector3& _eularAngles);
-		virtual void SetLocalRotation(const DirectX::SimpleMath::Quaternion& _quaternion);
+		virtual void SetLocalPosition(const DXSimp::Vector3& _position);
+		virtual void SetLocalScale(const DXSimp::Vector3& _scale);
+		virtual void SetLocalEularAngles(const DXSimp::Vector3& _eularAngles);
+		virtual void SetLocalRotation(const DXSimp::Quaternion& _quaternion);
 
 		// ワールド
-		const DirectX::SimpleMath::Vector3& GetPosition() const;
-		const DirectX::SimpleMath::Vector3& GetScale() const;
-		const DirectX::SimpleMath::Vector3& GetEularAngles() const;
-		const DirectX::SimpleMath::Quaternion& GetRotation() const;
-		const DirectX::SimpleMath::Matrix& GetWorldMatrix() const;
+		const DXSimp::Vector3& GetPosition() const;
+		const DXSimp::Vector3& GetScale() const;
+		const DXSimp::Vector3& GetEularAngles() const;
+		const DXSimp::Quaternion& GetRotation() const;
+		const DXSimp::Matrix& GetWorldMatrix() const;
 
 		// ローカル
-		const DirectX::SimpleMath::Vector3& GetLocalPosition() const;
-		const DirectX::SimpleMath::Vector3& GetLocalScale() const;
-		const DirectX::SimpleMath::Vector3& GetLocalEularAngles() const;
-		const DirectX::SimpleMath::Quaternion& GetLocalRotation() const;
-		const DirectX::SimpleMath::Matrix& GetLocalMatrix() const;
+		const DXSimp::Vector3& GetLocalPosition() const;
+		const DXSimp::Vector3& GetLocalScale() const;
+		const DXSimp::Vector3& GetLocalEularAngles() const;
+		const DXSimp::Quaternion& GetLocalRotation() const;
+		const DXSimp::Matrix& GetLocalMatrix() const;
 
-		const DirectX::SimpleMath::Vector3& Right()const { return right; }	// 右ベクトル
-		const DirectX::SimpleMath::Vector3& Up()const { return up; }	// 上ベクトル
-		const DirectX::SimpleMath::Vector3& Forward()const { return forward; }	// 正面ベクトル
+		const DXSimp::Vector3& Right()const { return right; }	// 右ベクトル
+		const DXSimp::Vector3& Up()const { return up; }	// 上ベクトル
+		const DXSimp::Vector3& Forward()const { return forward; }	// 正面ベクトル
 
 		/// @brief ゲームオブジェクトを取得する
 		/// @return ゲームオブジェクト
@@ -137,7 +137,7 @@ namespace HashiTaku
 	private:
 		/// @brief 自身のワールド行列を更新する
 		/// @param _parentWorldMtx 親のワールド行列
-		void UpdateWorldMatrix(const DirectX::SimpleMath::Matrix& _parentWorldMtx);
+		void UpdateWorldMatrix(const DXSimp::Matrix& _parentWorldMtx);
 
 		/// @brief 現在のローカルパラメータからローカル行列を更新
 		void UpdateLocalMatrix();
