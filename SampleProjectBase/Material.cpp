@@ -99,6 +99,26 @@ namespace HashiTaku
 		ImGuiMethod::ColorEdit4(parameter.specular, "specular");
 		ImGuiMethod::ColorEdit4(parameter.emissive, "emmisive");
 		ImGui::DragFloat("shiness", &parameter.shiness);
+
+		// シェーダー関連
+		ShaderCollection* pShCol = ShaderCollection::GetInstance();
+		std::vector<const std::string*> shaders = pShCol->GetVSNameList();
+		std::string curShaderName = "Null";
+		if (pVertexShader)
+			curShaderName = pVertexShader->GetShaderName();
+		if (ImGuiMethod::ComboBox("VS", curShaderName, shaders))
+		{
+			pVertexShader = pShCol->GetVertexShader(curShaderName);
+		}
+
+		shaders = pShCol->GetPSNameList();
+		curShaderName = "Null";
+		if (pPixelShader)
+			curShaderName = pPixelShader->GetShaderName();
+		if (ImGuiMethod::ComboBox("PS", curShaderName, shaders))
+		{
+			pPixelShader = pShCol->GetPixelShader(curShaderName);
+		}
 	}
 
 	json Material::Save()

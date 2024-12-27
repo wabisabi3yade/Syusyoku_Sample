@@ -901,6 +901,15 @@
     <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\PadShake">
       <UniqueIdentifier>{a4d828b4-4f41-4124-b197-f87441f4fe94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\VertexShader\BackObject">
+      <UniqueIdentifier>{97636ff4-a774-4cda-b787-759845768bf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\PixelShader\BackObject">
+      <UniqueIdentifier>{30bd2e94-7d17-4e27-8db1-e3f13fb1c465}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\BackObject">
+      <UniqueIdentifier>{b358a1c9-c45b-481a-9704-a1882cb76ef0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -965,6 +974,12 @@
     </FxCompile>
     <FxCompile Include="VS_OutLineAnimation.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_BackObject.hlsl">
+      <Filter>リソース ファイル\VertexShader\BackObject</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_BackObject.hlsl">
+      <Filter>リソース ファイル\PixelShader\BackObject</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1651,6 +1666,9 @@
     </ClCompile>
     <ClCompile Include="ANE_PadShake.cpp">
       <Filter>ソース ファイル\Animation\AnimationNotify\Event\PadShake</Filter>
+    </ClCompile>
+    <ClCompile Include="PS_BackObject.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\BackObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2454,6 +2472,9 @@
     </ClInclude>
     <ClInclude Include="ANE_PadShake.h">
       <Filter>ソース ファイル\Animation\AnimationNotify\Event\PadShake</Filter>
+    </ClInclude>
+    <ClInclude Include="PS_BackObject.h">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\BackObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

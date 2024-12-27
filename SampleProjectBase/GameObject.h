@@ -108,6 +108,9 @@ namespace HashiTaku
 		/// @brief 活動状態リストに追加
 		void AddActiveComponent(Component& _addComonentComonent);
 
+		/// @brief コンポーネントを並べ変える
+		void SortCompPriority();
+
 		/// @brief セーブする
 		/// @param _sceneData セーブシーンデータ
 		json Save() override;
@@ -208,9 +211,6 @@ namespace HashiTaku
 		/// @tparam  コンポーネント
 		/// @return 重複しているか？
 		template<class T> bool isDuplicateCompoent();
-
-		/// @brief コンポーネントを並べ変える
-		void SortCompPriority();
 
 		/// @brief コンポーネントの優先度が降順に並べていくソート関数
 		static bool SortCompPriorityFunc(const Component* _c1, const Component* _c2);

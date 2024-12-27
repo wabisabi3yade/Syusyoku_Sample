@@ -22,6 +22,24 @@ namespace HashiTaku
 		GetShader();
 	}
 
+	json CP_OutLineRenderer::Save()
+	{
+		auto data = CP_Renderer::Save();
+
+		SaveJsonVector4("color", lineParameter.lineColor, data);
+		data["scale"] = lineParameter.lineScale;
+
+		return data;
+	}
+
+	void CP_OutLineRenderer::Load(const json& _data)
+	{
+		CP_Renderer::Load(_data);
+
+		LoadJsonColor("color", lineParameter.lineColor, _data);
+		LoadJsonFloat("scale", lineParameter.lineScale, _data);
+	}
+
 	void CP_OutLineRenderer::Start()
 	{
 		GetRenderMesh();
@@ -47,7 +65,8 @@ namespace HashiTaku
 		}
 
 		auto pRenderer = Direct3D11::GetInstance()->GetRenderer();
-		pRenderer->SetCullingMode(D3D11_CULL_NONE);
+		pRenderer->SetCullingMode(D3D11_CULL_BACK);
+		pRenderer->SerDepthWrite(true);
 	}
 
 	void CP_OutLineRenderer::DrawSetup()
@@ -56,6 +75,7 @@ namespace HashiTaku
 		RenderParam& rendererParam = pRenderer->GetParameter();
 
 		pRenderer->SetCullingMode(D3D11_CULL_BACK);
+		pRenderer->SerDepthWrite(false);
 
 		// シェーダーにバッファを送る
 		// (ここではライト、カメラ座標などの1ループで1度しか送らないものは送らない)
@@ -68,6 +88,7 @@ namespace HashiTaku
 
 		// バッファーを送る
 		pOutLineVS->UpdateSubResource(0, &wvp);
+		pOutLineVS->UpdateSubResource(1, &lineParameter);
 
 		// GPUに送る
 		pOutLineVS->SetGPU();
@@ -97,7 +118,7 @@ namespace HashiTaku
 
 		pRenderMesh = pMeshRender->GetRenderMesh();
 		// メッシュレンダラーより描画を遅くする
-		SetPriority(pMeshRender->GetPriority() - 1);
+		SetPriority(pMeshRender->GetPriority() + 1);
 	}
 
 	DXSimp::Matrix CP_OutLineRenderer::MakeLoadMatrix()
@@ -111,12 +132,7 @@ namespace HashiTaku
 
 	void CP_OutLineRenderer::ImGuiDebug()
 	{
-		if (ImGui::Button("Set Mesh"))
-		{
-			CP_MeshRenderer* pMeshRender = GetGameObject().GetComponent<CP_MeshRenderer>();
-			if (!pMeshRender) return;
-
-			pRenderMesh = pMeshRender->GetRenderMesh();
-		}
+		ImGui::ColorEdit4("Color", &lineParameter.lineColor.x);
+		ImGui::DragFloat("Scale", &lineParameter.lineScale, 0.001f, 0.0f, 100.0f);
 	}
 }

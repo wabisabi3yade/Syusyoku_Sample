@@ -43,6 +43,7 @@ namespace HashiTaku
 		LoadShader<VertexShader>("VS_Sprite.cso");
 		LoadShader<VertexShader>("VS_UI.cso");
 		LoadShader<VertexShader>("VS_OutLine.cso");
+		LoadShader<VS_WorldPosition>("VS_BackObject.cso");
 		defaultVS = "VS_WorldPosition";
 
 		// ピクセルシェーダー
@@ -53,12 +54,21 @@ namespace HashiTaku
 		LoadShader<PixelShader>("PS_Line.cso");
 		LoadShader<PixelShader>("PS_UI.cso");
 		LoadShader<PixelShader>("PS_OutLine.cso");
+		LoadShader<PS_BackObject>("PS_BackObject.cso");
 		defaultPS = "PS_Unlit";
 	}
 
 	void ShaderCollection::Init()
 	{
 		LoadFromCSO();	// csoファイルをロードする
+	}
+
+	void ShaderCollection::InitAssets()
+	{
+		for (auto& shader : shaderList)
+		{
+			shader.second->InitAssets();
+		}
 	}
 
 	void ShaderCollection::UniqueUpdateBuffer()

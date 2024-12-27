@@ -10,6 +10,7 @@ struct VS_IN
 struct VS_OUT
 {
     float4 pos : SV_POSITION0;
+    float4 color : COLOR0; // í∏ì_êF
     float2 uv : TEXCOORD0;
     float3 normal : NORMAL0;
 };
@@ -21,7 +22,12 @@ cbuffer WVP : register(b0)
     float4x4 proj;
 }
 
-#define OUTLINE_SCALE (0.5f)
+cbuffer OutLine : register(b1)
+{
+    float4 color;
+    float lineScale;
+    float3 dummy;
+}
 
 VS_OUT main(VS_IN vin)
 {
@@ -37,12 +43,14 @@ VS_OUT main(VS_IN vin)
     //vout.normal = normalize(vout.normal);
     
     vout.pos = float4(vin.pos, 1.0f);
-    
-    vout.pos.xyz += normalize(vin.normal) * OUTLINE_SCALE;
     vout.pos = mul(vout.pos, world);
+    vout.normal = normalize(mul(vin.normal, (float3x3) world));
+    
+    vout.pos.xyz += vout.normal * lineScale;
     vout.pos = mul(vout.pos, view);
     vout.pos = mul(vout.pos, proj);
     
     vout.uv = vin.uv;
+    vout.color = color;
     return vout;
 }

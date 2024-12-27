@@ -113,6 +113,8 @@ namespace HashiTaku
 
 		AssetSysytemSetup();
 
+		ShaderCollection::GetInstance()->InitAssets();
+
 		ImGuiSetup();
 
 		SceneManagerSetup();

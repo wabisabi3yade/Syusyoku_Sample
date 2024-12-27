@@ -120,6 +120,9 @@ namespace HashiTaku
     void Component::SetPriority(int _priority)
     {
         priority = _priority;
+
+        if (gameObject)
+            gameObject->SortCompPriority();
     }
 
     void Component::SetEnable(bool _enable)

@@ -181,6 +181,26 @@ namespace HashiTaku
 		if (FAILED(hr))
 			return false;
 
+		// 深度ステンシルステート
+		// 深度書き込み無効のステンシルステート
+		D3D11_DEPTH_STENCIL_DESC noDepthWriteDesc = {};
+		noDepthWriteDesc.DepthEnable = TRUE;
+		noDepthWriteDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO; // 書き込み無効
+		noDepthWriteDesc.DepthFunc = D3D11_COMPARISON_LESS; // 通常の深度比較
+		noDepthWriteDesc.StencilEnable = FALSE; // ステンシル無効
+		pD3DDevice->CreateDepthStencilState(&noDepthWriteDesc, &pNoDepthWriteState);
+
+		// 深度書き込み有効のステンシルステート
+		D3D11_DEPTH_STENCIL_DESC depthWriteDesc = {};
+		depthWriteDesc.DepthEnable = TRUE;
+		depthWriteDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL; // 書き込み有効
+		depthWriteDesc.DepthFunc = D3D11_COMPARISON_LESS; // 通常の深度比較
+		depthWriteDesc.StencilEnable = FALSE; // ステンシル無効
+		pD3DDevice->CreateDepthStencilState(&depthWriteDesc, &pDepthWriteState);
+
+		// 深度書き込むようにする
+		SerDepthWrite(true);
+
 		// ビューポートの設定
 		D3D11_VIEWPORT viewport;
 		viewport.TopLeftX = 0.0f;    // ビューポート領域の左上X座標。
@@ -281,6 +301,18 @@ namespace HashiTaku
 		case D3D11_CULL_FRONT: pDeviceContext->RSSetState(pRasterizerStates[1].Get()); break;
 		case D3D11_CULL_BACK: pDeviceContext->RSSetState(pRasterizerStates[2].Get()); break;
 		default: assert(!"カリングモードが不正です");
+		}
+	}
+
+	void D3D11_Renderer::SerDepthWrite(bool _isWrite)
+	{
+		if (_isWrite)
+		{
+			pDeviceContext->OMSetDepthStencilState(pDepthWriteState.Get(), 0);
+		}
+		else
+		{
+			pDeviceContext->OMSetDepthStencilState(pNoDepthWriteState.Get(), 0);
 		}
 	}
 

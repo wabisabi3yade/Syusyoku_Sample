@@ -28,10 +28,8 @@ namespace HashiTaku
 		};
 
 	private:
-
 		/// @brief シェーダーの種類
 		Type type;
-
 
 	protected:
 		/// @brief 名前
@@ -59,6 +57,9 @@ namespace HashiTaku
 	public:
 		Shader(Type _type) : type(_type), shaderName("") {}
 		virtual ~Shader() {};
+
+		/// @brief 使用するテクスチャなどの初期化を行う
+		virtual void InitAssets() {};
 
 		/// @brief csoからシェーダを作成
 		/// @param _filePath csoのパス

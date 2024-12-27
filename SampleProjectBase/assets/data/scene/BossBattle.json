@@ -2060,6 +2060,18 @@
                                 "meshName": "desertRock11.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.07000000029802322
                             }
                         ],
                         "layer": 0,
@@ -2096,6 +2108,18 @@
                                 "meshName": "desertRock15.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.07000000029802322
                             }
                         ],
                         "layer": 0,
@@ -2132,6 +2156,18 @@
                                 "meshName": "desertRock15.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.07000000029802322
                             }
                         ],
                         "layer": 0,
@@ -2342,6 +2378,18 @@
                                 "meshName": "desertRock15.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.07000000029802322
                             }
                         ],
                         "layer": 0,
@@ -2378,6 +2426,18 @@
                                 "meshName": "desertRock11.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.07000000029802322
                             }
                         ],
                         "layer": 0,
@@ -2414,6 +2474,18 @@
                                 "meshName": "desertRock11.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.07000000029802322
                             }
                         ],
                         "layer": 0,
@@ -2560,6 +2632,18 @@
                                         "name": "CylinderCollider",
                                         "priority": 0,
                                         "radius": 1.059999942779541
+                                    },
+                                    {
+                                        "color": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "enable": true,
+                                        "name": "OutLineRenderer",
+                                        "priority": 0,
+                                        "scale": 0.07000000029802322
                                     }
                                 ],
                                 "layer": 0,
@@ -2672,6 +2756,18 @@
                                         "mass": 0.0,
                                         "name": "RigidBody",
                                         "priority": 0
+                                    },
+                                    {
+                                        "color": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "enable": true,
+                                        "name": "OutLineRenderer",
+                                        "priority": 0,
+                                        "scale": 0.07000000029802322
                                     }
                                 ],
                                 "layer": 0,
@@ -2784,6 +2880,18 @@
                                         "name": "CylinderCollider",
                                         "priority": 0,
                                         "radius": 1.059999942779541
+                                    },
+                                    {
+                                        "color": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "enable": true,
+                                        "name": "OutLineRenderer",
+                                        "priority": 0,
+                                        "scale": 0.07000000029802322
                                     }
                                 ],
                                 "layer": 0,
@@ -2883,7 +2991,7 @@
                                         "radius": 1.059999942779541
                                     },
                                     {
-                                        "enable": true,
+                                        "enable": false,
                                         "friction": 0.0,
                                         "isAwake": false,
                                         "isFreezeRot": [
@@ -2896,6 +3004,18 @@
                                         "mass": 0.0,
                                         "name": "RigidBody",
                                         "priority": 0
+                                    },
+                                    {
+                                        "color": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "enable": true,
+                                        "name": "OutLineRenderer",
+                                        "priority": 0,
+                                        "scale": 0.07000000029802322
                                     }
                                 ],
                                 "layer": 0,
@@ -3473,6 +3593,18 @@
                                 "meshName": "desertRock11.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.07000000029802322
                             }
                         ],
                         "layer": 0,
@@ -3509,6 +3641,18 @@
                                 "meshName": "desertRock15.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.07000000029802322
                             }
                         ],
                         "layer": 0,
@@ -3545,6 +3689,18 @@
                                 "meshName": "desertRock11.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.07000000029802322
                             }
                         ],
                         "layer": 0,
@@ -3581,6 +3737,18 @@
                                 "meshName": "desertRock15.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.07000000029802322
                             }
                         ],
                         "layer": 0,
@@ -3652,6 +3820,18 @@
                                 "meshName": "desertRock15.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.07000000029802322
                             }
                         ],
                         "layer": 0,
@@ -3688,6 +3868,18 @@
                                 "meshName": "desertRock11.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.07000000029802322
                             }
                         ],
                         "layer": 0,
@@ -3724,6 +3916,18 @@
                                 "meshName": "desertRock15.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.07000000029802322
                             }
                         ],
                         "layer": 0,
@@ -3760,6 +3964,18 @@
                                 "meshName": "desertRock11.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.07000000029802322
                             }
                         ],
                         "layer": 0,

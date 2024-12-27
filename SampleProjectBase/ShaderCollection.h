@@ -27,6 +27,9 @@ namespace HashiTaku
 
 		void Init();
 
+		/// @brief 必要とするアセットの初期化
+		void InitAssets();
+
 		/// @brief オブジェクトごとで変わらないバッファ情報を更新する(ライト、カメラなど)
 		void UniqueUpdateBuffer();
 
