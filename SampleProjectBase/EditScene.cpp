@@ -155,8 +155,10 @@ namespace HashiTaku
 		isOneFrameProgressing = false;
 
 		// V‚µ‚­ƒV[ƒ“‚Ì’†‚ð¶¬‚·‚é
-		InSceneSystemManager::GetInstance()->Reset();
-		pEffectManager->AllEffectDestroy();
+		OnTerminal();
+		pInSceneSystem = InSceneSystemManager::GetInstance();
+		pInSceneSystem->Init();
+
 		SceneLoad();
 	}
 

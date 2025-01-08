@@ -75,16 +75,18 @@ namespace HashiTaku
 		DXSimp::Vector2 moveAxis = DXSimp::Vector2::One * BLEND_OFFSET;
 		if (moveVector2D.Length() > Mathf::epsilon)
 		{
+
 			// 進行方向と右ベクトルとの角度を求める
 			float dotVR = moveVector2D.Dot(playerRight);
+			dotVR = std::clamp(dotVR, -1.0f, 1.0f);	// 偶に1.0を超えることがあるので
 			float ang = acosf(dotVR);
 
 			float dotVF = moveVector2D.Dot(playerFwd);
 			if (dotVF < 0.0f)
 				ang *= -1;
 
-			moveAxis.x = cos(ang) * 0.5f + BLEND_OFFSET;
-			moveAxis.y = sin(ang) * 0.5f + BLEND_OFFSET;
+			moveAxis.x = cosf(ang) * 0.5f + BLEND_OFFSET;
+			moveAxis.y = sinf(ang) * 0.5f + BLEND_OFFSET;
 		}
 
 		pActionController->SetAnimationFloat(MOVEAXIS_X_PARAMNAME, moveAxis.x);

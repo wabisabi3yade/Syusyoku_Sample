@@ -27,24 +27,6 @@ struct DirectionLight
     float dummy;
 };
 
-//// ポイントライト
-//struct PointLight
-//{
-//    LightBase base;
-//    float range; // 範囲
-//    float3 dummy;
-//};
-
-//// スポットライト
-//struct SpotLight
-//{
-//    LightBase base;
-//    float3 direction; // 方向
-//    float distance; // 距離
-//    float angleRange; // 角度範囲
-//    float3 dummy;
-//};
-
 // Slot0 座標変換
 cbuffer WVP : register(b0)
 {

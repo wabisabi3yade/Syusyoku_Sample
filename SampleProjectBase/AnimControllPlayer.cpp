@@ -73,9 +73,6 @@ namespace HashiTaku
 
 	void AnimControllPlayer::PlayInit()
 	{
-		// 慣性補間クラスを作成しておく(キャッシュ保存の為)
-		pInertInterp = std::make_unique<InertInterpAnimation>();
-
 		// アニメーションパラメータコピー
 		const AnimationParameters& originParams = pAnimController->GetAnimationParameters();
 		pCopyAnimParameters = std::make_unique<AnimationParameters>(originParams);

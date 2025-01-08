@@ -124,6 +124,7 @@ namespace HashiTaku
 		data["gameOver"] = gameOverObjName;
 		data["gameStartCurve"] = gameStartCurve.Save();
 
+		data["battleBGM"] = battleBGMParameter.Save();
 #ifdef EDIT
 		data["uiAnim"] = isUIAnimation;
 #endif // EDIT
@@ -149,6 +150,11 @@ namespace HashiTaku
 			gameStartCurve.Load(loadData);
 		}
 
+		if (LoadJsonData("battleBGM", loadData, _data))
+		{
+			battleBGMParameter.Load(loadData);
+		}
+
 #ifdef EDIT
 		LoadJsonBoolean("uiAnim", isUIAnimation, _data);
 #endif // EDIT
@@ -158,7 +164,9 @@ namespace HashiTaku
 	{
 		FindObject();
 
-		//FadeStart();
+		FadeStart();
+
+		PlayBGM();
 	}
 
 	void CP_BattleManager::Update()
@@ -261,6 +269,14 @@ namespace HashiTaku
 		// ƒJƒƒ‰‚à“®‚©‚³‚È‚¢
 		if (pCamMove)
 			pCamMove->SetEnable(false);
+	}
+
+	void CP_BattleManager::PlayBGM()
+	{
+		auto pSound = CP_SoundManager::GetInstance();
+		if (!pSound) return;
+
+		pSound->PlayBGM(battleBGMParameter);
 	}
 
 	void CP_BattleManager::OnBeginStart()
@@ -476,6 +492,9 @@ namespace HashiTaku
 
 		ImGuiMethod::LineSpaceSmall();
 
+		battleBGMParameter.ImGuiCall();
+
+		ImGuiMethod::LineSpaceSmall();
 		static char input[IM_INPUT_BUF] = "\0";
 		ImGui::InputText("ObjName", input, IM_INPUT_BUF);
 		if (ImGui::Button("Set Fade")) fadeObjName = input;

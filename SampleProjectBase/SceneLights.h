@@ -32,11 +32,11 @@ namespace HashiTaku
 		// ディレクション
 		std::unique_ptr<DirectionLight> pDirection;
 
-		// ポイントライト
-		std::list<std::unique_ptr<PointLight>> pPointLights;
+		//// ポイントライト
+		//std::list<std::unique_ptr<PointLight>> pPointLights;
 
-		// スポットライト
-		std::list<std::unique_ptr<SpotLight>> pSpotLights;
+		//// スポットライト
+		//std::list<std::unique_ptr<SpotLight>> pSpotLights;
 
 	public:
 		SceneLights();
@@ -46,12 +46,16 @@ namespace HashiTaku
 
 		// 各ライトセット
 		DirectionLight* SetDirectionLight(std::unique_ptr<DirectionLight> _direction);
-		PointLight* SetPointLight(std::unique_ptr<PointLight> _point);
-		SpotLight* SetSpotLight(std::unique_ptr<SpotLight> _spot);
+	/*	PointLight* SetPointLight(std::unique_ptr<PointLight> _point);
+		SpotLight* SetSpotLight(std::unique_ptr<SpotLight> _spot);*/
 
 		/// @brief 光源のパラメータを取得する
 		/// @return 光源パラメータ
 		SceneLightsParam& GetLightsParam();
+
+		/// @brief ディレクションライトを取得
+		/// @return ディレクションライト
+		const DirectionLight& GetDirectionLight() const;
 
 	private:
 		// 光源のパラメータを更新する
@@ -61,8 +65,8 @@ namespace HashiTaku
 
 		// ImGuiの表示
 		void ImGuiDirection();
-		void ImGuiPoint();
-		void ImGuiSpot();
+	/*	void ImGuiPoint();
+		void ImGuiSpot();*/
 
 		void Draw();
 	};

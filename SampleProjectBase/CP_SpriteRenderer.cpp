@@ -26,8 +26,8 @@ namespace HashiTaku
 		std::unique_ptr<Material> pCreateMaterial = std::make_unique<Material>();
 		pMaterial = AssetSetter::SetAsset(MATERIAL_NAME, std::move(pCreateMaterial));
 		pMaterial->SetPixelShader("PS_TexColor");
+		pMaterial->SetIsntSave();
 	}
-
 
 	void CP_SpriteRenderer::DrawSetup()
 	{
@@ -47,28 +47,33 @@ namespace HashiTaku
 		wvp.world = wvp.world.Transpose();
 
 		// シェーダーの設定
-		VertexShader& pVs = pMaterial->GetVertexShader();
-		PixelShader& pPs = pMaterial->GetPixelShader();
+		VertexShader* useVertexShader = &pMaterial->GetVertexShader();
+		if (pDrawVS) useVertexShader = pDrawVS;
+		PixelShader* usePixelShader = &pMaterial->GetPixelShader();
+		if (pDrawPS) usePixelShader = pDrawPS;
 
 		MaterialParameter& materialParam = pMaterial->GetMaterialParameter();
 		materialParam.isTextureEnable = pSprite->GetIsTexEnable();
 
 		Texture* pTex = pSprite->GetTexture();
 
-		pVs.UpdateSubResource(0, &wvp);
-		pVs.UpdateSubResource(1, &materialParam);
+		useVertexShader->UpdateSubResource(0, &wvp);
+		/*useVertexShader->UpdateSubResource(1, &materialParam);*/
 
 		TexParam texEnable;
 		texEnable.isTexEnable = materialParam.isTextureEnable;
 		texEnable.alpha = alpha;
-		pPs.UpdateSubResource(0, &texEnable);
-		pPs.SetTexture(0, pTex);
+		usePixelShader->UpdateSubResource(0, &texEnable);
+		usePixelShader->SetTexture(0, pTex);
 
-		pVs.SetGPU();
-		pPs.SetGPU();
+		useVertexShader->SetGPU();
+		usePixelShader->SetGPU();
 	}
 
-	CP_SpriteRenderer::CP_SpriteRenderer() : alpha(1.0f)
+	CP_SpriteRenderer::CP_SpriteRenderer() : 
+		alpha(1.0f),
+		pDrawVS(nullptr),
+		pDrawPS(nullptr)
 	{
 	}
 
@@ -102,6 +107,34 @@ namespace HashiTaku
 		{
 			Texture* pTex = AssetGetter::GetAsset<Texture>(texName);
 			pSprite->SetTexture(*pTex);
+		}	
+
+		ImGuiUseShader();
+	}
+
+	void CP_SpriteRenderer::ImGuiUseShader()
+	{
+		// 頂点
+		auto* pShCol = ShaderCollection::GetInstance();
+		std::vector<const std::string*> shaderNames = pShCol->GetVSNameList();
+		std::string useShaderName = "Null";
+		if (pDrawVS)
+			useShaderName = pDrawVS->GetShaderName();
+
+		if (ImGuiMethod::ComboBox("VSName", useShaderName, shaderNames))
+		{
+			pDrawVS = pShCol->GetVertexShader(useShaderName);
+		}
+
+		// ピクセル
+		shaderNames = pShCol->GetPSNameList();
+		useShaderName = "Null";
+		if (pDrawPS)
+			useShaderName = pDrawPS->GetShaderName();
+
+		if (ImGuiMethod::ComboBox("PSName", useShaderName, shaderNames))
+		{
+			pDrawPS = pShCol->GetPixelShader(useShaderName);
 		}
 	}
 
@@ -133,6 +166,11 @@ namespace HashiTaku
 		data["sprite"] = pSprite->Save();
 		data["alpha"] = alpha;
 
+		if (pDrawVS)
+			data["drawVSName"] = pDrawVS->GetShaderName();
+		if (pDrawPS)
+			data["drawPSName"] = pDrawPS->GetShaderName();
+
 		return data;
 	}
 
@@ -146,6 +184,15 @@ namespace HashiTaku
 		{
 			pSprite->Load(_data["sprite"]);
 		}
-
+		std::string str;
+		ShaderCollection* pShCol = ShaderCollection::GetInstance();
+		if (LoadJsonString("drawVSName", str, _data))
+		{
+			pDrawVS = pShCol->GetVertexShader(str);
+		}
+		if (LoadJsonString("drawPSName", str, _data))
+		{
+			pDrawPS = pShCol->GetPixelShader(str);
+		}
 	}
 }

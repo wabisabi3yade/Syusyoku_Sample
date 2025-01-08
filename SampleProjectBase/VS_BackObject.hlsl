@@ -6,6 +6,14 @@ cbuffer WVP : register(b0)
     matrix projection;
 };
 
+// Slot1 ライトのビュー変換
+cbuffer LightWVP : register(b1)
+{
+    matrix Lworld;
+    matrix Lview;
+    matrix Lprojection;
+};
+
 struct VS_INPUT
 {
     float3 pos : POSITION; // 頂点座標（モデル座標系）
@@ -27,7 +35,8 @@ struct VS_OUTPUT
     float3 normal : NORMAL0;
     // ワールド座標
     float4 worldPos : POSITION0;
-    float4 screenPos : POSITION1;
+    // ライトビュー上での座標
+    float4 lightSpacePos : POSITION1;
 };
 
 VS_OUTPUT main(VS_INPUT vin)
@@ -43,8 +52,12 @@ VS_OUTPUT main(VS_INPUT vin)
      // スクリーン座標
     pos = mul(pos, view);
     pos = mul(pos, projection);
+    
+    // ライトビュー上での
+    output.lightSpacePos = mul(output.worldPos, Lview);
+    output.lightSpacePos = mul(output.lightSpacePos, Lprojection);
+    
     output.pos = pos;
-    output.screenPos = output.pos;
     output.color = vin.color;
     output.uv = vin.uv;
     

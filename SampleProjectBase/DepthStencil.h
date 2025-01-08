@@ -9,7 +9,7 @@ namespace HashiTaku
 		Microsoft::WRL::ComPtr<ID3D11DepthStencilView> pDSV;
 
 	public:
-		DepthStencil() {}
+		DepthStencil();
 		~DepthStencil() {}
 
 		/// @brief ÉNÉäÉAÇ∑ÇÈ

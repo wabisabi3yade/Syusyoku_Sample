@@ -54,6 +54,7 @@
                                         "components": [
                                             {
                                                 "enable": true,
+                                                "materials": null,
                                                 "meshName": "shield1.fbx",
                                                 "name": "MeshRenderer",
                                                 "priority": 0
@@ -161,6 +162,7 @@
                                         "components": [
                                             {
                                                 "enable": true,
+                                                "materials": null,
                                                 "meshName": "Knight_Sword.fbx",
                                                 "name": "MeshRenderer",
                                                 "priority": 0
@@ -371,6 +373,7 @@
                 "components": [
                     {
                         "enable": true,
+                        "materials": null,
                         "meshName": "Knight.fbx",
                         "name": "MeshRenderer",
                         "priority": 0
@@ -527,7 +530,7 @@
                                             "attackCnt": 1,
                                             "attackInfos": [
                                                 {
-                                                    "break": 1.0,
+                                                    "break": 8.0,
                                                     "damage": 2.0,
                                                     "hitVfx": {
                                                         "applyColor": false,
@@ -580,7 +583,7 @@
                                             "maxDistance": 10.0,
                                             "nextCombAttack": 99,
                                             "slashAnim": 0.4429999887943268,
-                                            "slashBegin": 2.200000047683716
+                                            "slashBegin": 4.0
                                         },
                                         "typeString": "SpecialAtkHi"
                                     },
@@ -782,7 +785,7 @@
                                                 {
                                                     "attackInfos": [
                                                         {
-                                                            "break": 1.0,
+                                                            "break": 6.0,
                                                             "camShake": {
                                                                 "fadeOut": true,
                                                                 "power": 1.0,
@@ -794,7 +797,7 @@
                                                                 "speed": 0.6000000238418579,
                                                                 "time": 0.20000000298023224
                                                             },
-                                                            "damage": 2.0,
+                                                            "damage": 8.0,
                                                             "hitVfx": {
                                                                 "applyColor": false,
                                                                 "lookCam": false,
@@ -812,7 +815,7 @@
                                                 {
                                                     "attackInfos": [
                                                         {
-                                                            "break": 1.0,
+                                                            "break": 15.0,
                                                             "camShake": {
                                                                 "fadeOut": true,
                                                                 "power": 2.0,
@@ -824,7 +827,7 @@
                                                                 "speed": 0.5,
                                                                 "time": 0.4000000059604645
                                                             },
-                                                            "damage": 0.0,
+                                                            "damage": 20.0,
                                                             "hitVfx": {
                                                                 "applyColor": false,
                                                                 "lookCam": false,
@@ -842,7 +845,7 @@
                                                 {
                                                     "attackInfos": [
                                                         {
-                                                            "break": 1.0,
+                                                            "break": 30.0,
                                                             "camShake": {
                                                                 "fadeOut": false,
                                                                 "power": 5.0,
@@ -854,7 +857,7 @@
                                                                 "speed": 2.0,
                                                                 "time": 0.6000000238418579
                                                             },
-                                                            "damage": 0.0,
+                                                            "damage": 50.0,
                                                             "hitVfx": {
                                                                 "applyColor": false,
                                                                 "lookCam": false,
@@ -922,6 +925,13 @@
                                         "data": {
                                             "canParryTime": 12,
                                             "parryAngle": 100.0,
+                                            "parrySE": {
+                                                "loop": false,
+                                                "pitch": 0.0,
+                                                "soundName": "parry1.wav",
+                                                "useListener": false,
+                                                "volume": 0.5
+                                            },
                                             "vfxInfo": {
                                                 "applyColor": false,
                                                 "lookCam": false,
@@ -1106,6 +1116,13 @@
                 "active": true,
                 "components": [
                     {
+                        "battleBGM": {
+                            "loop": true,
+                            "pitch": 0.0,
+                            "soundName": "battle.wav",
+                            "useListener": false,
+                            "volume": 0.5
+                        },
                         "enable": true,
                         "fade": "Fade",
                         "gameOver": "GameOverText",
@@ -1182,6 +1199,7 @@
                                         "components": [
                                             {
                                                 "enable": true,
+                                                "materials": null,
                                                 "meshName": "Sword15_FBX.fbx",
                                                 "name": "MeshRenderer",
                                                 "priority": 0
@@ -1326,6 +1344,7 @@
                 "components": [
                     {
                         "enable": true,
+                        "materials": null,
                         "meshName": "Uriel A Plotexia.fbx",
                         "name": "MeshRenderer",
                         "priority": 0
@@ -1373,7 +1392,7 @@
                             "actData": [
                                 {
                                     "data": {
-                                        "isIdleOnly": true,
+                                        "isIdleOnly": false,
                                         "warpMotion": {
                                             "useWarp": false
                                         }
@@ -1440,7 +1459,7 @@
                                             {
                                                 "camShake": {
                                                     "fadeOut": true,
-                                                    "power": 1.0,
+                                                    "power": 2.0,
                                                     "shakeVec": [
                                                         1.0,
                                                         0.5,
@@ -2057,6 +2076,9 @@
                         "components": [
                             {
                                 "enable": true,
+                                "materials": [
+                                    "M_Rock1"
+                                ],
                                 "meshName": "desertRock11.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -2070,7 +2092,7 @@
                                 ],
                                 "enable": true,
                                 "name": "OutLineRenderer",
-                                "priority": 0,
+                                "priority": 1,
                                 "scale": 0.07000000029802322
                             }
                         ],
@@ -2105,6 +2127,9 @@
                         "components": [
                             {
                                 "enable": true,
+                                "materials": [
+                                    "M_Rock2"
+                                ],
                                 "meshName": "desertRock15.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -2153,6 +2178,9 @@
                         "components": [
                             {
                                 "enable": true,
+                                "materials": [
+                                    "M_Rock2"
+                                ],
                                 "meshName": "desertRock15.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -2340,6 +2368,11 @@
                         "name": "CameraMove",
                         "priority": 0,
                         "target": "Player"
+                    },
+                    {
+                        "enable": true,
+                        "name": "AudioListener",
+                        "priority": 0
                     }
                 ],
                 "layer": 1,
@@ -2375,6 +2408,9 @@
                         "components": [
                             {
                                 "enable": true,
+                                "materials": [
+                                    "M_Rock2"
+                                ],
                                 "meshName": "desertRock15.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -2398,20 +2434,20 @@
                         "transform": {
                             "child": null,
                             "pos": [
-                                -25.600000381469727,
-                                -0.4000000059604645,
-                                -16.799999237060547
+                                -27.0,
+                                -1.2999999523162842,
+                                -16.200000762939453
                             ],
                             "rotation": [
-                                -0.11866487562656403,
-                                0.517413854598999,
-                                0.07271794974803925,
-                                0.8443421721458435
+                                -0.21961334347724915,
+                                0.4817492961883545,
+                                0.15240047872066498,
+                                0.8345427513122559
                             ],
                             "scale": [
-                                5.000004291534424,
-                                8.100000381469727,
-                                2.3000025749206543
+                                4.999999523162842,
+                                5.0,
+                                5.0
                             ]
                         }
                     }
@@ -2423,6 +2459,9 @@
                         "components": [
                             {
                                 "enable": true,
+                                "materials": [
+                                    "M_Rock1"
+                                ],
                                 "meshName": "desertRock11.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -2446,20 +2485,20 @@
                         "transform": {
                             "child": null,
                             "pos": [
-                                -30.600000381469727,
-                                -3.0,
-                                17.399999618530273
+                                -26.200000762939453,
+                                0.0,
+                                2.700000047683716
                             ],
                             "rotation": [
-                                0.24039505422115326,
-                                0.6135275363922119,
-                                0.029180696234107018,
-                                0.7516266703605652
+                                0.2925814986228943,
+                                0.7369591593742371,
+                                -0.2755616009235382,
+                                0.543463945388794
                             ],
                             "scale": [
-                                12.600006103515625,
-                                10.300000190734863,
-                                8.200004577636719
+                                5.0,
+                                5.0,
+                                4.999999523162842
                             ]
                         }
                     }
@@ -2471,6 +2510,9 @@
                         "components": [
                             {
                                 "enable": true,
+                                "materials": [
+                                    "M_Rock1"
+                                ],
                                 "meshName": "desertRock11.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -2494,20 +2536,20 @@
                         "transform": {
                             "child": null,
                             "pos": [
-                                -35.79999923706055,
-                                -0.8999999761581421,
-                                -0.20000000298023224
+                                -27.0,
+                                -0.5,
+                                -5.599999904632568
                             ],
                             "rotation": [
-                                -0.2714499235153198,
-                                0.16692157089710236,
-                                0.047863997519016266,
-                                0.9466578960418701
+                                -0.3074546158313751,
+                                0.1615123450756073,
+                                0.06314007937908173,
+                                0.9356274604797363
                             ],
                             "scale": [
-                                12.399998664855957,
-                                14.699999809265137,
-                                14.40000057220459
+                                5.0,
+                                5.000000476837158,
+                                5.0
                             ]
                         }
                     }
@@ -2531,15 +2573,66 @@
                         0.0
                     ],
                     "rotation": [
+                        -0.0,
                         0.0,
-                        0.0,
-                        0.0,
+                        -0.0,
                         1.0
                     ],
                     "scale": [
                         1.0,
                         1.0,
                         1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "materials": [
+                            "M_Rock1"
+                        ],
+                        "meshName": "desertRock11.fbx",
+                        "name": "MeshRenderer",
+                        "priority": 0
+                    },
+                    {
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "enable": true,
+                        "name": "OutLineRenderer",
+                        "priority": 0,
+                        "scale": 0.07000000029802322
+                    }
+                ],
+                "layer": 0,
+                "name": "Rock14",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        -25.5,
+                        1.2999999523162842,
+                        17.399999618530273
+                    ],
+                    "rotation": [
+                        -0.08036001771688461,
+                        0.6103947162628174,
+                        -0.10285607725381851,
+                        0.7812689542770386
+                    ],
+                    "scale": [
+                        8.0,
+                        6.699999809265137,
+                        3.6000001430511475
                     ]
                 }
             }
@@ -2597,6 +2690,9 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": [
+                                            "M_Pillar"
+                                        ],
                                         "meshName": "Pillar1.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -2721,6 +2817,9 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": [
+                                            "M_Pillar"
+                                        ],
                                         "meshName": "Pillar1.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -2845,6 +2944,9 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": [
+                                            "M_Pillar"
+                                        ],
                                         "meshName": "Pillar1.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -2969,6 +3071,9 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": [
+                                            "M_Pillar"
+                                        ],
                                         "meshName": "Pillar1.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -3086,6 +3191,8 @@
                             },
                             {
                                 "alpha": 1.0,
+                                "drawPSName": "PS_Ground",
+                                "drawVSName": "VS_Ground",
                                 "enable": true,
                                 "name": "SpriteRenderer",
                                 "priority": 0,
@@ -3590,6 +3697,9 @@
                         "components": [
                             {
                                 "enable": true,
+                                "materials": [
+                                    "M_Rock1"
+                                ],
                                 "meshName": "desertRock11.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -3638,6 +3748,9 @@
                         "components": [
                             {
                                 "enable": true,
+                                "materials": [
+                                    "M_Rock2"
+                                ],
                                 "meshName": "desertRock15.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -3686,6 +3799,9 @@
                         "components": [
                             {
                                 "enable": true,
+                                "materials": [
+                                    "M_Rock1"
+                                ],
                                 "meshName": "desertRock11.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -3734,6 +3850,9 @@
                         "components": [
                             {
                                 "enable": true,
+                                "materials": [
+                                    "M_Rock2"
+                                ],
                                 "meshName": "desertRock15.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -3817,6 +3936,9 @@
                         "components": [
                             {
                                 "enable": true,
+                                "materials": [
+                                    "M_Rock2"
+                                ],
                                 "meshName": "desertRock15.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -3865,6 +3987,9 @@
                         "components": [
                             {
                                 "enable": true,
+                                "materials": [
+                                    "M_Rock1"
+                                ],
                                 "meshName": "desertRock11.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -3913,6 +4038,9 @@
                         "components": [
                             {
                                 "enable": true,
+                                "materials": [
+                                    "M_Rock2"
+                                ],
                                 "meshName": "desertRock15.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -3961,6 +4089,9 @@
                         "components": [
                             {
                                 "enable": true,
+                                "materials": [
+                                    "M_Rock1"
+                                ],
                                 "meshName": "desertRock11.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -4016,6 +4147,41 @@
                         "Rock11",
                         "Rock13"
                     ],
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "name": "SoundManager",
+                        "priority": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "SoundManager",
+                "tag": 0,
+                "transform": {
+                    "child": null,
                     "pos": [
                         0.0,
                         0.0,

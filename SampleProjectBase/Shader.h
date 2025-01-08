@@ -24,7 +24,8 @@ namespace HashiTaku
 			Light,	// ライト
 			CameraPos,	// カメラの座標
 			Color,	// ジオメトリ使用時の色
-			BoneMatricies	// ボーン行列
+			BoneMatricies,	// ボーン行列
+			LightWVP	// ライトから見たWVP行列
 		};
 
 	private:

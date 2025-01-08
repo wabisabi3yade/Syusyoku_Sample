@@ -21,14 +21,14 @@
                     "child": null,
                     "pos": [
                         0.0,
-                        14.899999618530273,
-                        -54.5
+                        5.0,
+                        -3.0
                     ],
                     "rotation": [
-                        0.0871557891368866,
+                        -0.0,
                         0.0,
                         -0.0,
-                        0.9961946606636047
+                        1.0
                     ],
                     "scale": [
                         1.0,
@@ -44,27 +44,6 @@
                 "active": true,
                 "components": [
                     {
-                        "AABB": false,
-                        "angles": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "center": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "enable": true,
-                        "length": [
-                            1.0,
-                            0.029999999329447746,
-                            1.0
-                        ],
-                        "name": "BoxCollider",
-                        "priority": 0
-                    },
-                    {
                         "enable": true,
                         "friction": 0.5,
                         "isAwake": false,
@@ -73,42 +52,39 @@
                             false,
                             false
                         ],
-                        "isKinematic": false,
-                        "isTrigger": false,
+                        "isKinematic": true,
+                        "isTrigger": true,
                         "mass": 0.0,
                         "name": "RigidBody",
                         "priority": 0
                     },
                     {
+                        "angles": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "center": [
+                            0.0,
+                            -0.6000000238418579,
+                            0.0
+                        ],
                         "enable": true,
-                        "name": "SpriteRenderer",
+                        "height": 1.0,
+                        "name": "CylinderCollider",
                         "priority": 0,
-                        "sprite": {
-                            "texName": "Sunset_left.png",
-                            "uvDivNum": [
-                                0.0,
-                                0.0
-                            ],
-                            "uvEnd": [
-                                1.0,
-                                1.0
-                            ],
-                            "uvStart": [
-                                0.0,
-                                0.0
-                            ]
-                        }
+                        "radius": 0.5
                     }
                 ],
                 "layer": 0,
-                "name": "Ground",
+                "name": "A",
                 "tag": 0,
                 "transform": {
                     "child": null,
                     "pos": [
                         0.0,
-                        -2.5999999046325684,
-                        26.799999237060547
+                        5.5,
+                        0.0
                     ],
                     "rotation": [
                         -0.0,
@@ -117,9 +93,9 @@
                         1.0
                     ],
                     "scale": [
-                        100.0,
-                        100.0,
-                        100.0
+                        1.0,
+                        1.0,
+                        1.0
                     ]
                 }
             }
@@ -138,9 +114,9 @@
                             false,
                             false
                         ],
-                        "isKinematic": false,
+                        "isKinematic": true,
                         "isTrigger": true,
-                        "mass": 1.0,
+                        "mass": 0.0,
                         "name": "RigidBody",
                         "priority": 0
                     },
@@ -167,8 +143,8 @@
                 "transform": {
                     "child": null,
                     "pos": [
-                        0.0,
-                        9.0,
+                        1.0,
+                        5.0,
                         0.0
                     ],
                     "rotation": [

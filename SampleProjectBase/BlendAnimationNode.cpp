@@ -146,10 +146,6 @@ namespace HashiTaku
 			PointToDistance pd;
 			pd.point = &p;
 			pd.distance = Vector2::Distance(_blendValues, p.blendValue);
-			if (pd.distance < Mathf::epsilon)
-			{
-				pd.distance = Mathf::epsilon;
-			}
 
 			if (pd.distance <= Mathf::epsilon)	// ‹——£‚ª0.0‚È‚ç
 			{
@@ -190,7 +186,6 @@ namespace HashiTaku
 		{
 			bd.blendWeight /= sumWeight;
 		}
-
 	}
 
 	void BlendAnimationNode::SortBlendPoint()

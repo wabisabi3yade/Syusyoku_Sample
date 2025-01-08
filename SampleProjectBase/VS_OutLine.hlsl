@@ -13,6 +13,7 @@ struct VS_OUT
     float4 color : COLOR0; // 頂点色
     float2 uv : TEXCOORD0;
     float3 normal : NORMAL0;
+    float4 worldPos : POSITION0;
 };
 
 cbuffer WVP : register(b0)
@@ -33,20 +34,12 @@ VS_OUT main(VS_IN vin)
 {
     VS_OUT vout;
     
-    // スケール成分を除く
-    //float3x3 rotationMatrix = (float3x3) world;
-    //rotationMatrix[0] = normalize(rotationMatrix[0]);
-    //rotationMatrix[1] = normalize(rotationMatrix[1]);
-    //rotationMatrix[2] = normalize(rotationMatrix[2]);
-    
-    //vout.normal = mul(vin.normal, rotationMatrix);
-    //vout.normal = normalize(vout.normal);
-    
     vout.pos = float4(vin.pos, 1.0f);
     vout.pos = mul(vout.pos, world);
     vout.normal = normalize(mul(vin.normal, (float3x3) world));
     
     vout.pos.xyz += vout.normal * lineScale;
+    vout.worldPos = vout.pos;
     vout.pos = mul(vout.pos, view);
     vout.pos = mul(vout.pos, proj);
     

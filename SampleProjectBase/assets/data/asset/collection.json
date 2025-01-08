@@ -5901,9 +5901,11 @@
                             "startVector": 0.0,
                             "useHermite": true
                         },
+                        "blendDepth": 0,
                         "isLoop": false,
                         "isRMXZ": false,
                         "isRMY": false,
+                        "meshSpaceBlend": false,
                         "speed": 1.0
                     },
                     "arrowDataList": [
@@ -9614,6 +9616,55 @@
             "playSpeed": 1.0
         },
         {
+            "animParameter": null,
+            "assetName": "ANC_Test",
+            "boneList": "Knight.fbx",
+            "defaultNode": "TestAirAtk",
+            "groupArrows": null,
+            "nodeInfoData": [
+                {
+                    "animNode": {
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startInterp": 1,
+                            "startValue": 1.0,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "baseAnim": "knight_AirDownBody.fbx",
+                        "beginBoneId": 2,
+                        "blendAnim": "knight_AirSlash1.fbx",
+                        "blendBeginFrame": 0,
+                        "blendCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startInterp": 1,
+                            "startValue": 1.0,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "blendDepth": 3,
+                        "isLoop": true,
+                        "isRMXZ": false,
+                        "isRMY": false,
+                        "meshSpaceBlend": true,
+                        "speed": 1.0
+                    },
+                    "arrowDataList": null,
+                    "groupArrowName": "",
+                    "nodeName": "TestAirAtk",
+                    "nodeType": 2,
+                    "notifyList": null
+                }
+            ],
+            "playSpeed": 1.0
+        },
+        {
             "animParameter": [
                 {
                     "name": "standUp",
@@ -10027,7 +10078,38 @@
                 1.0
             ],
             "pixelShader": "PS_Unlit",
-            "vertexShader": "VS_WorldPosition"
+            "vertexShader": "VS_Ground"
+        },
+        {
+            "assetName": "M_Pillar",
+            "diffuseTex": "Pillar1.png",
+            "m_ambient": [
+                0.20000000298023224,
+                0.20000000298023224,
+                0.20000000298023224,
+                1.0
+            ],
+            "m_diffuse": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "m_emissive": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "m_shiness": 0.0,
+            "m_specular": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "pixelShader": "PS_BackObject",
+            "vertexShader": "VS_BackObject"
         },
         {
             "assetName": "M_Rock1",
@@ -10049,6 +10131,37 @@
                 0.0,
                 0.0,
                 1.0
+            ],
+            "m_shiness": 0.0,
+            "m_specular": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ],
+            "pixelShader": "PS_BackObject",
+            "vertexShader": "VS_BackObject"
+        },
+        {
+            "assetName": "M_Rock2",
+            "diffuseTex": "desertRock15.jpg",
+            "m_ambient": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "m_diffuse": [
+                0.6392157077789307,
+                0.6392157077789307,
+                0.6392157077789307,
+                1.0
+            ],
+            "m_emissive": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
             ],
             "m_shiness": 0.0,
             "m_specular": [
@@ -10118,7 +10231,7 @@
                 1.0
             ],
             "pixelShader": "PS_TexColor",
-            "vertexShader": "VS_Gouraud"
+            "vertexShader": "VS_Sprite"
         }
     ],
     "models": [
@@ -10224,8 +10337,28 @@
     ],
     "sounds": [
         {
+            "assetName": "battle.wav",
+            "pathName": "assets/sound/bgm/battle.wav"
+        },
+        {
             "assetName": "manAttackVoice1.wav",
             "pathName": "assets/sound/se/manAttackVoice1.wav"
+        },
+        {
+            "assetName": "parry1.wav",
+            "pathName": "assets/sound/se/parry1.wav"
+        },
+        {
+            "assetName": "parry2.wav",
+            "pathName": "assets/sound/se/parry2.wav"
+        },
+        {
+            "assetName": "sword1.wav",
+            "pathName": "assets/sound/se/sword1.wav"
+        },
+        {
+            "assetName": "title.wav",
+            "pathName": "assets/sound/bgm/title.wav"
         }
     ],
     "textures": [

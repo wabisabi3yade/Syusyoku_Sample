@@ -29,11 +29,15 @@ namespace HashiTaku
 		virtual bool CreateResource(D3D11_TEXTURE2D_DESC& _desc, const void* _pData = nullptr);
 	};
 
+	class D3D11_Renderer;
 	/// @brief レンダーターゲットクラス
 	class RenderTarget : public D3DTexture_Base
 	{
 		/// @brief  レンダーターゲットビュー
 		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> pRTV;
+
+		/// @brief 描画クラス
+		D3D11_Renderer* pRenderer;
 	public:
 		RenderTarget();
 		~RenderTarget() {}
@@ -47,8 +51,10 @@ namespace HashiTaku
 
 		/// @brief レンダーターゲットビューを取得
 		/// @return レンダーターゲットビュー
-		ID3D11RenderTargetView* GetView() const;
+		ID3D11RenderTargetView* GetView();
 
+		/// @brief レンダーターゲットをクリアする
+		void Clear();
 	private:
 		/// @brief リソース作成
 		/// @param _desc desc

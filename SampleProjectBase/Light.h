@@ -43,7 +43,7 @@ namespace HashiTaku
 		void SetColor(const DXSimp::Color& _color) { parameter.color = _color; }
 
 		bool GetDisplay() { return isDebugDisplay; }
-		const DXSimp::Vector3& GetPosition() { return parameter.position; }
-		const DXSimp::Color& GetColor() { return parameter.color; }
+		const DXSimp::Vector3& GetPosition() const { return parameter.position; }
+		const DXSimp::Color& GetColor() const { return parameter.color; }
 	};
 }

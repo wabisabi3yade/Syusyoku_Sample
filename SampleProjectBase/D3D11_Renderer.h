@@ -75,6 +75,9 @@ namespace HashiTaku
 		/// @param _pDepthStencils 深度ステンシル
 		void SetRenderTerget(u_int _cnt, RenderTarget* _pRrenderTarget, DepthStencil* _pDepthStencil);
 
+		/// @brief 元のレンダーターゲットに戻す
+		void SetBaseRenderTarget();
+
 		// 描画の情報を取得
 		RenderParam& GetParameter() override;
 		ID3D11Device* GetDevice()const override { return pD3DDevice.Get(); }

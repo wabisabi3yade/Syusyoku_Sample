@@ -37,9 +37,6 @@ namespace HashiTaku
 		/// @brief クロスフェード
 		std::unique_ptr<CrossFadeAnimation> pCrossFadeInterp;
 
-		/// @brief 慣性補間
-		std::unique_ptr<InertInterpAnimation> pInertInterp;
-
 		/// @brief アニメーション変更サブジェクト
 		std::unique_ptr<ChangeAnimSubject> pChangeAnimSubject;
 

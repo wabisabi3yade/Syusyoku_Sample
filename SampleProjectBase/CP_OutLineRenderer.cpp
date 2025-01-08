@@ -2,18 +2,20 @@
 #include "CP_OutLineRenderer.h"
 #include "ShaderCollection.h"
 #include "GameObject.h"
+#include "CP_Animation.h"
 
 namespace HashiTaku
 {
 	VertexShader* CP_OutLineRenderer::pOutLineVS = nullptr;
+	VertexShader* CP_OutLineRenderer::pAnimationOutLineVS = nullptr;
 	PixelShader* CP_OutLineRenderer::pOutLinePS = nullptr;
 
 	constexpr auto VS_NAME = "VS_OutLine";
-	constexpr auto ANIMVS_NAME = "VS_OutLine";
+	constexpr auto ANIMVS_NAME = "VS_OutLineAnimation";
 	constexpr auto PS_NAME = "PS_OutLine";
 
 	CP_OutLineRenderer::CP_OutLineRenderer()
-		: pRenderMesh(nullptr)
+		: pUseVetrexShader(nullptr), pRenderMesh(nullptr), pBoneBuffer(nullptr)
 	{
 	}
 
@@ -43,6 +45,8 @@ namespace HashiTaku
 	void CP_OutLineRenderer::Start()
 	{
 		GetRenderMesh();
+
+		SetUseShader();
 	}
 
 	void CP_OutLineRenderer::Draw()
@@ -87,11 +91,19 @@ namespace HashiTaku
 		wvp.world = wvp.world.Transpose();
 
 		// バッファーを送る
-		pOutLineVS->UpdateSubResource(0, &wvp);
-		pOutLineVS->UpdateSubResource(1, &lineParameter);
+		pUseVetrexShader->UpdateSubResource(0, &wvp);
+		pUseVetrexShader->UpdateSubResource(1, &lineParameter);
+
+		// アニメーションを行っているなら追加でバッファを送る
+		if (IsAnimation())
+		{
+			// コンビネーション行列
+			pUseVetrexShader->UpdateSubResource(2,
+				pBoneBuffer->GetBoneBuffer());
+		}
 
 		// GPUに送る
-		pOutLineVS->SetGPU();
+		pUseVetrexShader->SetGPU();
 		pOutLinePS->SetGPU();
 	}
 
@@ -102,6 +114,7 @@ namespace HashiTaku
 
 		ShaderCollection* pShCol = ShaderCollection::GetInstance();
 		pOutLineVS = pShCol->GetVertexShader(VS_NAME);
+		pAnimationOutLineVS = pShCol->GetVertexShader(ANIMVS_NAME);
 		pOutLinePS = pShCol->GetPixelShader(PS_NAME);
 	}
 
@@ -119,6 +132,21 @@ namespace HashiTaku
 		pRenderMesh = pMeshRender->GetRenderMesh();
 		// メッシュレンダラーより描画を遅くする
 		SetPriority(pMeshRender->GetPriority() + 1);
+	}
+
+	void CP_OutLineRenderer::SetUseShader()
+	{
+		// アニメーションコンポーネントがあれば、アニメーション用の頂点シェーダーにする
+		pBoneBuffer = GetGameObject().GetComponent<CP_Animation>();
+		if (pBoneBuffer)
+			pUseVetrexShader = pAnimationOutLineVS;
+		else
+			pUseVetrexShader = pOutLineVS;
+	}
+
+	bool CP_OutLineRenderer::IsAnimation() const
+	{
+		return pBoneBuffer != nullptr;
 	}
 
 	DXSimp::Matrix CP_OutLineRenderer::MakeLoadMatrix()

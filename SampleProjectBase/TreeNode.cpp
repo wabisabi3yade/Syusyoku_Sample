@@ -36,6 +36,27 @@ namespace HashiTaku
         return pLinkBone != nullptr;
     }
 
+    const TreeNode* TreeNode::FindTreeNode(int _boneIdx) const
+    {
+        // ボーンがあり　かつ　インデックスが一致しているなら
+        if (pLinkBone != nullptr && pLinkBone->GetIndex())
+        {
+            return this;
+        }
+
+        // 子ノードから探す
+        for (const auto& child : pChildNodes)
+        {
+            const TreeNode* pFindBone = child->FindTreeNode(_boneIdx);
+
+            if (pFindBone == nullptr) continue;
+            return pFindBone;
+        }
+
+        HASHI_DEBUG_LOG("ボーンIDに対応したノードが見つかりませんでした");
+        return nullptr;
+    }
+
     void TreeNode::SetNodeName(const std::string& _nodeName)
     {
         nodeName = _nodeName;

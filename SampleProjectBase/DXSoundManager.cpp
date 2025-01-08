@@ -57,8 +57,8 @@ namespace HashiTaku
 
 		// サウンドデータからインスタンスを作成
 		auto effect = soundFx->CreateInstance(
-			DX::SoundEffectInstance_Use3D
-			| DX::SoundEffectInstance_ReverbUseFilters
+			/*DX::SoundEffectInstance_Use3D
+			| DX::SoundEffectInstance_ReverbUseFilters*/
 		);
 
 		// 音のパラメータ調整

@@ -66,7 +66,7 @@
                     },
                     {
                         "enable": true,
-                        "friction": 0.0,
+                        "friction": 20.0,
                         "isAwake": false,
                         "isFreezeRot": [
                             false,
@@ -103,7 +103,7 @@
                 ],
                 "layer": 0,
                 "name": "Ground",
-                "tag": 0,
+                "tag": 4,
                 "transform": {
                     "child": null,
                     "pos": [
@@ -210,10 +210,11 @@
                                 {
                                     "childs": null,
                                     "gameObject": {
-                                        "active": false,
+                                        "active": true,
                                         "components": [
                                             {
                                                 "enable": true,
+                                                "materials": null,
                                                 "meshName": "shield1.fbx",
                                                 "name": "MeshRenderer",
                                                 "priority": 0
@@ -225,27 +226,27 @@
                                         "transform": {
                                             "child": null,
                                             "pos": [
-                                                -0.09351911395788193,
-                                                0.00999921839684248,
-                                                14.721550941467285
+                                                -0.09351890534162521,
+                                                0.6099992990493774,
+                                                9.621550559997559
                                             ],
                                             "rotation": [
-                                                0.7228977084159851,
+                                                0.7228975892066956,
                                                 0.6716678738594055,
-                                                0.13734832406044006,
-                                                -0.08612040430307388
+                                                0.13734906911849976,
+                                                -0.08611972630023956
                                             ],
                                             "scale": [
                                                 1.0000005960464478,
-                                                0.800000786781311,
-                                                0.9999996423721313
+                                                0.800001323223114,
+                                                1.0000003576278687
                                             ]
                                         }
                                     }
                                 }
                             ],
                             "gameObject": {
-                                "active": false,
+                                "active": true,
                                 "components": null,
                                 "layer": 0,
                                 "name": "Shield",
@@ -255,20 +256,20 @@
                                         "Shield_Mesh"
                                     ],
                                     "pos": [
-                                        -3.3246899988625955e-07,
-                                        0.00999924261122942,
-                                        14.800004005432129
+                                        7.043166760922759e-07,
+                                        0.609999418258667,
+                                        9.700002670288086
                                     ],
                                     "rotation": [
                                         0.0,
                                         0.9990482330322266,
                                         0.0,
-                                        0.04361894354224205
+                                        0.04361982271075249
                                     ],
                                     "scale": [
-                                        1.0000005960464478,
+                                        1.000000238418579,
                                         1.0,
-                                        1.0000005960464478
+                                        1.000000238418579
                                     ]
                                 }
                             }
@@ -292,20 +293,20 @@
                                 "Shield"
                             ],
                             "pos": [
-                                0.0,
-                                0.00999925471842289,
-                                14.800000190734863
+                                9.536742027194123e-07,
+                                0.6099991798400879,
+                                9.699999809265137
                             ],
                             "rotation": [
                                 0.0,
                                 0.9990482330322266,
                                 0.0,
-                                0.04361885040998459
+                                0.04361983388662338
                             ],
                             "scale": [
-                                1.0000008344650269,
+                                1.0000016689300537,
                                 1.0,
-                                1.0000008344650269
+                                1.0000016689300537
                             ]
                         }
                     }
@@ -321,6 +322,7 @@
                                         "components": [
                                             {
                                                 "enable": true,
+                                                "materials": null,
                                                 "meshName": "Knight_Sword.fbx",
                                                 "name": "MeshRenderer",
                                                 "priority": 0
@@ -332,20 +334,20 @@
                                         "transform": {
                                             "child": null,
                                             "pos": [
-                                                -0.20000088214874268,
-                                                0.16000141203403473,
-                                                14.80001163482666
+                                                -0.19999882578849792,
+                                                0.7600006461143494,
+                                                9.700006484985352
                                             ],
                                             "rotation": [
-                                                -0.618116021156311,
-                                                0.7505235075950623,
-                                                -0.16874882578849792,
-                                                -0.16177457571029663
+                                                -0.6181159019470215,
+                                                0.7505236268043518,
+                                                -0.1687493771314621,
+                                                -0.1617737114429474
                                             ],
                                             "scale": [
-                                                1.2000011205673218,
-                                                1.2000011205673218,
-                                                1.2000012397766113
+                                                1.2000019550323486,
+                                                1.2000014781951904,
+                                                1.2000019550323486
                                             ]
                                         }
                                     }
@@ -404,20 +406,20 @@
                                         "Weapon_Model"
                                     ],
                                     "pos": [
-                                        -0.20000267028808594,
-                                        0.15999996662139893,
-                                        14.800004005432129
+                                        -0.20000171661376953,
+                                        0.7599998712539673,
+                                        9.700003623962402
                                     ],
                                     "rotation": [
-                                        -0.6181162595748901,
-                                        0.7505232095718384,
-                                        -0.1687488555908203,
-                                        -0.16177454590797424
+                                        -0.6181161999702454,
+                                        0.7505233883857727,
+                                        -0.16874942183494568,
+                                        -0.16177378594875336
                                     ],
                                     "scale": [
-                                        1.0000001192092896,
-                                        1.0000001192092896,
-                                        1.0
+                                        1.0000004768371582,
+                                        0.9999999403953552,
+                                        1.0000005960464478
                                     ]
                                 }
                             }
@@ -441,15 +443,15 @@
                                 "Weapon"
                             ],
                             "pos": [
-                                0.0,
-                                0.009999969974160194,
-                                14.800000190734863
+                                9.536742027194123e-07,
+                                0.6099998950958252,
+                                9.699999809265137
                             ],
                             "rotation": [
                                 0.0,
                                 1.0,
                                 0.0,
-                                -4.76837158203125e-07
+                                4.76837158203125e-07
                             ],
                             "scale": [
                                 1.0,
@@ -507,15 +509,15 @@
                         "transform": {
                             "child": null,
                             "pos": [
-                                0.0,
-                                0.009999999776482582,
-                                14.800000190734863
+                                9.536742027194123e-07,
+                                0.6099998950958252,
+                                9.699999809265137
                             ],
                             "rotation": [
                                 0.0,
                                 1.0,
                                 0.0,
-                                -4.76837158203125e-07
+                                4.76837158203125e-07
                             ],
                             "scale": [
                                 1.0,
@@ -531,6 +533,7 @@
                 "components": [
                     {
                         "enable": true,
+                        "materials": null,
                         "meshName": "Knight.fbx",
                         "name": "MeshRenderer",
                         "priority": 0
@@ -546,7 +549,7 @@
                         ],
                         "isKinematic": false,
                         "isTrigger": false,
-                        "mass": 1.059999942779541,
+                        "mass": 0.0,
                         "name": "RigidBody",
                         "priority": 0
                     },
@@ -598,10 +601,13 @@
                                                     "break": 1.0,
                                                     "damage": 2.0,
                                                     "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
                                                         "scale": 1.0,
                                                         "speed": 1.0,
                                                         "startFrame": 0
                                                     },
+                                                    "isCamShake": false,
                                                     "level": 0
                                                 }
                                             ],
@@ -629,10 +635,13 @@
                                                     "break": 1.0,
                                                     "damage": 2.9000000953674316,
                                                     "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
                                                         "scale": 1.0,
                                                         "speed": 1.0,
                                                         "startFrame": 0
                                                     },
+                                                    "isCamShake": false,
                                                     "level": 0
                                                 }
                                             ],
@@ -660,10 +669,13 @@
                                                     "break": 1.0,
                                                     "damage": 2.0,
                                                     "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
                                                         "scale": 1.0,
                                                         "speed": 1.0,
                                                         "startFrame": 0
                                                     },
+                                                    "isCamShake": false,
                                                     "level": 0
                                                 }
                                             ],
@@ -718,10 +730,13 @@
                                                     "break": 1.0,
                                                     "damage": 4.0,
                                                     "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
                                                         "scale": 1.0,
                                                         "speed": 1.0,
                                                         "startFrame": 0
                                                     },
+                                                    "isCamShake": false,
                                                     "level": 0
                                                 }
                                             ],
@@ -749,10 +764,13 @@
                                                     "break": 1.0,
                                                     "damage": 3.299999952316284,
                                                     "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
                                                         "scale": 1.0,
                                                         "speed": 1.0,
                                                         "startFrame": 0
                                                     },
+                                                    "isCamShake": false,
                                                     "level": 0
                                                 }
                                             ],
@@ -793,20 +811,26 @@
                                                     "break": 1.0,
                                                     "damage": 4.199999809265137,
                                                     "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
                                                         "scale": 1.0,
                                                         "speed": 1.0,
                                                         "startFrame": 0
                                                     },
+                                                    "isCamShake": false,
                                                     "level": 0
                                                 },
                                                 {
                                                     "break": 1.0,
                                                     "damage": 6.199999809265137,
                                                     "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
                                                         "scale": 1.0,
                                                         "speed": 1.0,
                                                         "startFrame": 0
                                                     },
+                                                    "isCamShake": false,
                                                     "level": 0
                                                 }
                                             ],
@@ -828,6 +852,119 @@
                                     },
                                     {
                                         "data": {
+                                            "attackCnt": 1,
+                                            "attackInfos": [
+                                                {
+                                                    "break": 1.0,
+                                                    "damage": 0.0,
+                                                    "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
+                                                    "isCamShake": false,
+                                                    "level": 0
+                                                }
+                                            ],
+                                            "chargeInfos": [
+                                                {
+                                                    "attackInfos": [
+                                                        {
+                                                            "break": 1.0,
+                                                            "damage": 0.0,
+                                                            "hitVfx": {
+                                                                "applyColor": false,
+                                                                "lookCam": false,
+                                                                "scale": 1.0,
+                                                                "speed": 1.0,
+                                                                "startFrame": 0
+                                                            },
+                                                            "isCamShake": false,
+                                                            "level": 0
+                                                        }
+                                                    ],
+                                                    "time": 1.0
+                                                },
+                                                {
+                                                    "attackInfos": [
+                                                        {
+                                                            "break": 1.0,
+                                                            "damage": 0.0,
+                                                            "hitVfx": {
+                                                                "applyColor": false,
+                                                                "lookCam": false,
+                                                                "scale": 1.0,
+                                                                "speed": 1.0,
+                                                                "startFrame": 0
+                                                            },
+                                                            "isCamShake": false,
+                                                            "level": 0
+                                                        }
+                                                    ],
+                                                    "time": 1.0
+                                                },
+                                                {
+                                                    "attackInfos": [
+                                                        {
+                                                            "break": 1.0,
+                                                            "damage": 0.0,
+                                                            "hitVfx": {
+                                                                "applyColor": false,
+                                                                "lookCam": false,
+                                                                "scale": 1.0,
+                                                                "speed": 1.0,
+                                                                "startFrame": 0
+                                                            },
+                                                            "isCamShake": false,
+                                                            "level": 0
+                                                        }
+                                                    ],
+                                                    "time": 1.0
+                                                }
+                                            ],
+                                            "chargeOffset": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "chargeOffsetTime": 0.0,
+                                            "chargeVfx": {
+                                                "applyColor": false,
+                                                "lookCam": false,
+                                                "scale": 1.0,
+                                                "speed": 1.0,
+                                                "startFrame": 0
+                                            },
+                                            "charhePadPower": 0.4000000059604645,
+                                            "forwardCurve": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": null,
+                                                "startInterp": 1,
+                                                "startValue": 1.0,
+                                                "startVector": 0.0,
+                                                "useHermite": true
+                                            },
+                                            "isMoveFwd": false,
+                                            "maxDistance": 10.0,
+                                            "maxTime": 5.0,
+                                            "nextCombAttack": 99,
+                                            "releaseVfx": {
+                                                "applyColor": false,
+                                                "lookCam": false,
+                                                "scale": 1.0,
+                                                "speed": 1.0,
+                                                "startFrame": 0
+                                            },
+                                            "releaseVfxOffset": 0.0
+                                        },
+                                        "typeString": "ChargeAttack1"
+                                    },
+                                    {
+                                        "data": {
                                             "crouchTime": 0.10000000149011612,
                                             "jumpPower": 20.0
                                         },
@@ -838,6 +975,8 @@
                                             "canParryTime": 12,
                                             "parryAngle": 180.0,
                                             "vfxInfo": {
+                                                "applyColor": false,
+                                                "lookCam": false,
                                                 "scale": 1.0,
                                                 "speed": 1.0,
                                                 "startFrame": 0
@@ -917,7 +1056,8 @@
                             "groundCheckName": "PlayerGroundCollision"
                         },
                         "camObjName": "Camera",
-                        "enable": true,
+                        "debugInvicible": false,
+                        "enable": false,
                         "hpBarObjName": "Player_HpBar",
                         "maxHp": 100.0,
                         "name": "Player",
@@ -925,7 +1065,7 @@
                         "weaponObjName": "Weapon"
                     },
                     {
-                        "animConName": "ANC_Player",
+                        "animConName": "ANC_Test",
                         "enable": true,
                         "name": "Animation",
                         "priority": 1
@@ -959,19 +1099,19 @@
                     ],
                     "pos": [
                         0.0,
-                        0.009999999776482582,
-                        14.800000190734863
+                        0.6100000143051147,
+                        9.699999809265137
                     ],
                     "rotation": [
                         0.0,
                         1.0,
                         0.0,
-                        -4.76837158203125e-07
+                        4.76837158203125e-07
                     ],
                     "scale": [
+                        1.0000001192092896,
                         1.0,
-                        1.0,
-                        1.0
+                        1.0000001192092896
                     ]
                 }
             }

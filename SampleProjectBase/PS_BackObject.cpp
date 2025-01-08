@@ -26,6 +26,10 @@ namespace HashiTaku
 	{
 		InSceneSystemManager* pSceneSystem = InSceneSystemManager::GetInstance();
 
+#ifdef EDIT
+		if (pSceneSystem->GetIsNullCamera()) return;
+#endif // EDIT
+
 		// ライトの更新
 		SceneLightsParam& lightParam = pSceneSystem->GetSceneLights().GetLightsParam();
 		UpdateSubResource(1, &lightParam);
@@ -33,6 +37,10 @@ namespace HashiTaku
 		CP_Camera& cam = pSceneSystem->GetMainCamera();
 		DXSimp::Vector3 camPos = cam.GetTransform().GetPosition();
 		UpdateSubResource(2, &camPos);
+
+		// 深度テクスチャ
+		Texture& texture = InSceneSystemManager::GetInstance()->GetShadowDrawer().GetDepthRTV();
+		SetTexture(2, &texture);
 	}
 }
 

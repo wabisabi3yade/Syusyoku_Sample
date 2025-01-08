@@ -11,16 +11,29 @@
 namespace HashiTaku
 {
 	constexpr u_int TEX_DIFUSSE_SLOT(0);	// ディフューズテクスチャのスロット
+	constexpr u_int ANIMBONE_SLOT(1);	// ディフューズテクスチャのスロット
 	constexpr float ORIGIN_SCALE(0.15f);	// 原点表示のオブジェクトのスケール
 	constexpr DXSimp::Color ORIGIN_COLOR(1.0f, 1.0f, 0.0f);	// 原点表示のオブジェクトの色
 
 	CP_MeshRenderer::CP_MeshRenderer()
-		: pRenderMesh{ nullptr }, isOriginDisplay(false)
+		: pRenderMesh(nullptr), pShadowDrawer(nullptr), pBoneBuffer(nullptr), isOriginDisplay(false), isShadow(true)
 	{
 	}
 
-	void CP_MeshRenderer::Start()
+	void CP_MeshRenderer::Init()
 	{
+		// 影書き込みクラスを取得
+		pShadowDrawer = &InSceneSystemManager::GetInstance()->GetShadowDrawer();
+		pShadowDrawer->AddDepthWriteRenderer(*this);
+
+		// ボーン供給クラスを取得する
+		pBoneBuffer = GetGameObject().GetComponent<IBoneBufferSupplier>();
+	}
+
+	void CP_MeshRenderer::OnDestroy()
+	{
+		// 削除
+		pShadowDrawer->RemoveDepthWriteRenderer(*this);
 	}
 
 	void CP_MeshRenderer::Draw()
@@ -66,6 +79,23 @@ namespace HashiTaku
 		pRenderMesh->SetPixelShader(_psName);
 	}
 
+
+	Material* CP_MeshRenderer::GetMaterial(u_int _meshIdx)
+	{
+		assert(_meshIdx < pRenderMesh->GetMeshNum());
+
+		u_int rendererMatCnt = static_cast<u_int>(setMaterials.size());
+		if (_meshIdx < rendererMatCnt)	// セットされているマテリアルを取得
+		{
+			Material* pSetMat = setMaterials[_meshIdx];
+			if (pSetMat) return pSetMat;
+		}
+
+		// まだセットされていないなら
+		// メッシュ側から取得
+		u_int materialID = pRenderMesh->GetMesh(_meshIdx)->GetMaterialID();
+		return  pRenderMesh->GetMaterial(materialID);
+	}
 
 	void CP_MeshRenderer::ImGuiDebug()
 	{
@@ -151,10 +181,36 @@ namespace HashiTaku
 #endif // EDIT
 	}
 
-
 	Mesh_Group* CP_MeshRenderer::GetRenderMesh()
 	{
 		return pRenderMesh;
+	}
+
+	void CP_MeshRenderer::WriteDepth()
+	{
+		if (!isShadow) return;
+		if (!IsCanDraw()) return;
+
+		// WVP求める
+		Transform& transform = GetTransform();
+		DXSimp::Matrix worldMtx = CalcLoadMtx() * transform.GetWorldMatrix();
+		worldMtx = worldMtx.Transpose();
+
+		// メッシュの深度を書き込んでいく
+		u_int meshCnt = pRenderMesh->GetMeshNum();
+		for (u_int meshLoop = 0; meshLoop < meshCnt; meshLoop++)
+		{
+			VertexShader* pVS = &GetMaterial(meshLoop)->GetVertexShader();
+
+			// アニメーションを反映
+			if (pBoneBuffer)
+				pVS->UpdateSubResource(ANIMBONE_SLOT, pBoneBuffer->GetBoneBuffer());
+
+			// ライト行列をワールド行列としてセットする
+			pShadowDrawer->SetWorldMatrix(worldMtx, pVS);
+			const SingleMesh* pSingleMesh = pRenderMesh->GetMesh(meshLoop);
+			CP_Renderer::DrawMesh(*pSingleMesh);
+		}
 	}
 
 	json CP_MeshRenderer::Save()
@@ -164,6 +220,16 @@ namespace HashiTaku
 		if (pRenderMesh)
 			data["meshName"] = pRenderMesh->GetAssetName();
 
+		json& materialDatas = data["materials"];
+		for (auto& material : setMaterials)
+		{
+			std::string materialName = "Null";
+			if (material)
+				materialName = material->GetAssetName();
+
+			materialDatas.push_back(materialName);
+		}
+
 		return data;
 	}
 
@@ -172,6 +238,19 @@ namespace HashiTaku
 		CP_Renderer::Load(_data);
 
 		pRenderMesh = LoadJsonAsset<Mesh_Group>("meshName", _data);
+
+		json materialDatas;
+		if (LoadJsonDataArray("materials", materialDatas, _data))
+		{
+			u_int matCnt = static_cast<u_int>(materialDatas.size());
+			setMaterials.resize(matCnt);
+			for (u_int m_i = 0; m_i < matCnt; m_i++)
+			{
+				std::string matName = materialDatas[m_i];
+				Material* pMat = AssetGetter::GetAsset<Material>(matName);
+				setMaterials[m_i] = pMat;
+			}
+		}
 	}
 
 	bool CP_MeshRenderer::IsCanDraw()
@@ -197,32 +276,13 @@ namespace HashiTaku
 		// メッシュ数
 		u_int meshCnt = pRenderMesh->GetMeshNum();
 
-		// このレンダラーでセットされているマテリアル数
-		u_int rendererMatCnt = static_cast<u_int>(setMaterials.size());
-
-		auto setMatItr = setMaterials.begin();
-
 		for (u_int meshLoop = 0; meshLoop < meshCnt; meshLoop++)
 		{
 			// メッシュを取得
 			const SingleMesh* pSingleMesh = pRenderMesh->GetMesh(meshLoop);
 
 			// 今回描画するマテリアル
-			Material* pRenderMaterial = nullptr;
-
-			if (meshLoop < rendererMatCnt)	// セットされているマテリアルを取得
-			{
-				pRenderMaterial = *setMatItr;
-				++setMatItr;
-			}
-
-			// まだセットされていないなら
-			if (!pRenderMaterial)
-			{
-				// メッシュ側から取得
-				u_int materialID = pSingleMesh->GetMaterialID();
-				pRenderMaterial = pRenderMesh->GetMaterial(materialID);
-			}
+			Material* pRenderMaterial = GetMaterial(meshLoop);
 
 			// マテリアルの描画準備
 			MaterialSetup(_wvp, pRenderMaterial);
@@ -230,11 +290,6 @@ namespace HashiTaku
 			// メッシュ描画
 			CP_Renderer::DrawMesh(*pSingleMesh);
 		}
-	}
-
-	void CP_MeshRenderer::DrawShadow()
-	{
-
 	}
 
 	void CP_MeshRenderer::MaterialSetup(RenderParam::WVP& _wvp, Material* _pMaterial)
@@ -274,6 +329,16 @@ namespace HashiTaku
 
 			case Material:	// マテリアル
 				_shader.UpdateSubResource(bufLoop, &_material.GetMaterialParameter());
+				break;
+
+			case BoneMatricies:	// ボーン
+				if (pBoneBuffer)
+					_shader.UpdateSubResource(bufLoop, pBoneBuffer->GetBoneBuffer());
+				/*	else
+					{
+						_shader.UpdateSubResource(bufLoop, )
+
+					}*/
 				break;
 
 			default:

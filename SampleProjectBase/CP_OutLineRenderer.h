@@ -6,6 +6,7 @@
 namespace HashiTaku
 {
 	class Mesh_Group;
+	class IBoneBufferSupplier;
 
 	/// @brief アウトライン描画コンポーネント(MeshRendererの後にする)
 	class CP_OutLineRenderer : public CP_Renderer
@@ -25,8 +26,17 @@ namespace HashiTaku
 		/// @brief アウトライン頂点シェーダー
 		static VertexShader* pOutLineVS;
 
+		/// @brief アニメーションを反映させる頂点シェーダー
+		static VertexShader* pAnimationOutLineVS;
+
 		/// @brief アウトラインピクセルシェーダー
 		static PixelShader* pOutLinePS;
+
+		/// @brief 使用している頂点シェーダー
+		VertexShader* pUseVetrexShader;
+
+		/// @brief ボーンのバッファ供給クラス
+		IBoneBufferSupplier* pBoneBuffer;
 
 		/// @brief 描画するメッシュ
 		Mesh_Group* pRenderMesh;
@@ -57,6 +67,13 @@ namespace HashiTaku
 
 		/// @brief MeshRendererからメッシュを取得する
 		void GetRenderMesh();
+
+		/// @brief 使用する頂点シェーダーをセットする
+		void SetUseShader();
+
+		/// @brief アニメーションしているか取得
+		/// @return アニメーションしているか？
+		bool IsAnimation() const;
 
 		/// @brief ロード行列作成
 		/// @return ロード行列

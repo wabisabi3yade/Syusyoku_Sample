@@ -1,13 +1,17 @@
 #pragma once
 #include "CP_Renderer.h"
+#include "IApplyDepthShadow.h"
+#include "IBoneSupplier.h"
 
 // 描画に必要
 #include "Mesh_Group.h"
 
 namespace HashiTaku
 {
+	class ShadowDrawer;
+
 	// メッシュ描画コンポーネント
-	class CP_MeshRenderer : public CP_Renderer
+	class CP_MeshRenderer : public CP_Renderer, public IApplyShadowDepth
 	{
 		/// @brief 描画するメッシュ群
 		Mesh_Group* pRenderMesh{ nullptr };
@@ -15,11 +19,26 @@ namespace HashiTaku
 		/// @brief 使用するマテリアル（ないときはメッシュのマテリアルを使用する）
 		std::vector<Material*> setMaterials;
 
+		/// @brief 影を描画するクラス
+		ShadowDrawer* pShadowDrawer;
+
+		/// @brief ボーンバッファを供給してくれるクラス
+		IBoneBufferSupplier* pBoneBuffer;
+
 		/// @brief オブジェクトの原点を表示するか
 		bool isOriginDisplay;
+
+		/// @brief 影を描画させるか？
+		bool isShadow;
 	public:
 		CP_MeshRenderer();
 		~CP_MeshRenderer() {}
+
+		/// @brief 初期化
+		void Init() override;
+
+		/// @brief 削除時処理
+		void OnDestroy() override;
 
 		/// @brief 描画するメッシュをセット
 		/// @param _renderMesh メッシュ群
@@ -37,11 +56,13 @@ namespace HashiTaku
 		/// @return メッシュ群
 		Mesh_Group* GetRenderMesh();
 
+		/// @brief 深度書き込みを行う
+		void WriteDepth() override;
+
 		json Save() override;
 		void Load(const json& _data) override;
 	private:
 		// コンポーネント共通関数
-		void Start() override;
 		void Draw() override;
 
 		/// @brief 描画できるのか返す
@@ -54,9 +75,6 @@ namespace HashiTaku
 
 		/// @brief メッシュを描画
 		void DrawMesh(RenderParam::WVP& _wvp);
-
-		/// @brief 影描画
-		void DrawShadow();
 
 		/// @brief マテリアルの準備
 		/// @param _wvp wvp行列
@@ -75,6 +93,10 @@ namespace HashiTaku
 
 		/// @brief 原点表示
 		void OriginDisplay();
+
+		/// @brief マテリアルを取得する
+		/// @param meshIdx メッシュID
+		Material* GetMaterial(u_int meshIdx);
 
 		void ImGuiDebug() override;
 	};

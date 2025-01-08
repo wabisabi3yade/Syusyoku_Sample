@@ -6,6 +6,7 @@
 namespace HashiTaku
 {
 	constexpr int NOT_SET_BONEID(-1);	// ボーンを指定していない時のボーンID
+	constexpr u_int START_BLEND_DEPTH(9999);	// 開始時のブレンドの深さ
 
 	LayerdAnimationNode::LayerdAnimationNode(const BoneList& _boneList, const std::string& _nodeName) :
 		AnimationNode_Base(_nodeName, NodeType::Layerd),
@@ -13,7 +14,9 @@ namespace HashiTaku
 		pBaseAnimation(nullptr),
 		pBlendAnimation(nullptr),
 		beginBlendPlayFrame(0),
-		beginBlendBoneId(NOT_SET_BONEID)
+		beginBlendBoneId(NOT_SET_BONEID),
+		isMeshSpaceRotationBlend(false),
+		blendDepth(0)
 	{
 		blendSpeedCurve.SetCurveName("Blend Speed");
 	}
@@ -23,19 +26,147 @@ namespace HashiTaku
 		// 機能できていないなら
 		if (!CanWarking()) return;
 
+		if (isMeshSpaceRotationBlend)	// メッシュ空間で回転量のブレンドを行う
+		{
+			GetMeshSpaceBlendTransform(_outTransforms,
+				pBoneList->GetRootNode(),
+				DXSimp::Quaternion::Identity,
+				DXSimp::Quaternion::Identity,
+				_baseRatio,
+				_blendRatio,
+				START_BLEND_DEPTH);
+		}
+		else 	// ローカル空間で回転量のブレンドを行う
+		{
+			GetLocalSpaceBlendTransform(_outTransforms,
+				_baseRatio,
+				_blendRatio);
+		}
+
+	}
+
+	void LayerdAnimationNode::GetMeshSpaceBlendTransform(std::vector<BoneTransform>& _outTransforms,
+		const TreeNode* _pCurrentNode,
+		const DXSimp::Quaternion& _parenBaseRotation,
+		const DXSimp::Quaternion& _parentBlendRotation,
+		float _baseRatio,
+		float _blendRatio,
+		u_int _curBlendDepth) const
+	{
+		// ボーンがないなら次に進む
+		if (!_pCurrentNode->HasBone())
+		{
+			u_int childCnt = _pCurrentNode->GetChildNum();
+			for (u_int c_i = 0; c_i < childCnt; c_i++)
+				GetMeshSpaceBlendTransform(_outTransforms,
+					_pCurrentNode->GetChild(c_i),
+					_parenBaseRotation,
+					_parentBlendRotation,
+					_baseRatio,
+					_blendRatio,
+					_curBlendDepth + 1
+				);
+
+			return;
+		}
+
+		// ブレンド開始のノードなら深さを0にする
+		if (_pCurrentNode->GetBoneIdx() == beginBlendBoneId)
+			_curBlendDepth = 0;
+
+		u_int uBoneId = static_cast<u_int>(_pCurrentNode->GetBoneIdx());
+
+		// メッシュ空間の回転量
+		DXSimp::Quaternion meshBaseSpaceRotation;
+		DXSimp::Quaternion meshBlendSpaceRotation;
+
+		// ブレンド側のアニメーションなら(開始時の深さよりも下、すなわちブレンド開始ボーンよりも子ノード)
+		if (_curBlendDepth < START_BLEND_DEPTH)
+		{
+			// ブレンド深さ以内なら
+			if (_curBlendDepth <= blendDepth)
+			{
+				// ベース側のアニメーショントランスフォーム
+				BoneTransform baseTransform;
+				pBaseAnimation->GetTransformByRatio(uBoneId, _baseRatio, baseTransform);
+				// ベース側のメッシュ空間の回転量
+				meshBaseSpaceRotation = Quat::Multiply(baseTransform.rotation, _parenBaseRotation);
+
+				// ブレンド側も計算する
+				BoneTransform blendTransform;
+				pBlendAnimation->GetTransformByRatio(uBoneId, _blendRatio, blendTransform);
+				meshBlendSpaceRotation = Quat::Multiply(blendTransform.rotation, _parentBlendRotation);
+
+				float blendFactor = 0.0f;
+				// ブレンドする割合を求める(深さ0なら1)
+				if (_curBlendDepth == 0)
+					blendFactor = 1.0f;
+				else
+					blendFactor = 1.0f / blendDepth * _curBlendDepth;
+
+				// メッシュ空間でのブレンドした回転量を求める
+				DXSimp::Quaternion meshBlendRot =
+					DXSimp::Quaternion::Slerp(meshBaseSpaceRotation, meshBlendSpaceRotation, blendFactor);
+				meshBlendRot.Normalize();
+				// ローカル空間に戻す
+				_outTransforms[uBoneId].rotation =
+					Quat::RotationDifference(meshBlendRot, _parentBlendRotation);
+
+				// トランスフォームと、スケールもブレンド
+				_outTransforms[uBoneId].position =
+					DXSimp::Vector3::Lerp(baseTransform.position, blendTransform.position, blendFactor);
+				_outTransforms[uBoneId].scale =
+					DXSimp::Vector3::Lerp(baseTransform.scale, blendTransform.scale, blendFactor);
+			}
+			else // ブレンド側のアニメーションで深さの範囲外
+			{
+				// ブレンドアニメーションを取得
+				pBlendAnimation->GetTransformByRatio(uBoneId, _blendRatio, _outTransforms[uBoneId]);
+			}
+		}
+		else // ベース側のアニメーション
+		{
+			pBaseAnimation->GetTransformByRatio(uBoneId, _baseRatio, _outTransforms[uBoneId]);
+
+			// 次のために計算しておく
+			meshBaseSpaceRotation = Quat::Multiply(_outTransforms[uBoneId].rotation, _parenBaseRotation);
+
+			// ブレンド側も計算する
+			DXSimp::Quaternion blendRotation;
+			pBlendAnimation->GetQuaternionByRatio(uBoneId, _blendRatio, blendRotation);
+			meshBlendSpaceRotation = Quat::Multiply(blendRotation, _parentBlendRotation);
+		}
+
+		// 子ノードに渡す
+		u_int childCnt = _pCurrentNode->GetChildNum();
+		for (u_int c_i = 0; c_i < childCnt; c_i++)
+			GetMeshSpaceBlendTransform(_outTransforms,
+				_pCurrentNode->GetChild(c_i),
+				meshBaseSpaceRotation,
+				meshBlendSpaceRotation,
+				_baseRatio,
+				_blendRatio,
+				_curBlendDepth + 1	// 深度を増やしていく
+			);
+	}
+
+	void LayerdAnimationNode::GetLocalSpaceBlendTransform(std::vector<BoneTransform>& _outTransforms,
+		float _baseRatio,
+		float _blendRatio) const
+	{
 		// ベース側
-		u_int baseBoneCnt = static_cast<u_int>(baseBoneIds.size());
+		u_int baseBoneCnt = static_cast<u_int>(baseAnimBoneIds.size());
 		for (u_int b_i = 0; b_i < baseBoneCnt; b_i++)
 		{
-			u_int uBoneId = static_cast<u_int>(baseBoneIds[b_i]);
+			u_int uBoneId = static_cast<u_int>(baseAnimBoneIds[b_i]);
 			pBaseAnimation->GetTransformByRatio(uBoneId, _baseRatio, _outTransforms[uBoneId]);
 		}
 
 		// ブレンド側
-		u_int blendBoneCnt = static_cast<u_int>(blendBoneIds.size());
+		u_int blendBoneCnt = static_cast<u_int>(blendAnimBoneIds.size());
 		for (u_int b_i = 0; b_i < blendBoneCnt; b_i++)
 		{
-			u_int uBoneId = static_cast<u_int>(blendBoneIds[b_i]);
+			u_int uBoneId = static_cast<u_int>(blendAnimBoneIds[b_i]);
 			pBlendAnimation->GetTransformByRatio(uBoneId, _blendRatio, _outTransforms[uBoneId]);
 		}
 	}
@@ -104,6 +235,11 @@ namespace HashiTaku
 		return pBaseAnimation->GetRootMotionPosSpeedPerSec();
 	}
 
+	bool LayerdAnimationNode::GetMotionSpaceRotationBlend() const
+	{
+		return isMeshSpaceRotationBlend;
+	}
+
 	json LayerdAnimationNode::Save()
 	{
 		auto data = AnimationNode_Base::Save();
@@ -117,6 +253,8 @@ namespace HashiTaku
 			data["blendAnim"] = pBlendAnimation->GetAssetName();
 
 		data["beginBoneId"] = beginBlendBoneId;
+		data["meshSpaceBlend"] = isMeshSpaceRotationBlend;
+		data["blendDepth"] = blendDepth;
 
 		return data;
 	}
@@ -126,6 +264,8 @@ namespace HashiTaku
 		AnimationNode_Base::Load(_data);
 
 		LoadJsonUnsigned("blendBeginFrame", beginBlendPlayFrame, _data);
+		LoadJsonBoolean("meshSpaceBlend", isMeshSpaceRotationBlend, _data);
+		LoadJsonUnsigned("blendDepth", blendDepth, _data);
 		json blendCurveData;
 		if (LoadJsonData("blendCurve", blendCurveData, _data))
 		{
@@ -178,8 +318,8 @@ namespace HashiTaku
 		beginBlendBoneId = _beginBoneId;
 
 		// ベース側とブレンド側でボーンを分けていく
-		baseBoneIds.clear();
-		blendBoneIds.clear();
+		baseAnimBoneIds.clear();
+		blendAnimBoneIds.clear();
 		SeparateBoneGroup(*pBoneList->GetRootNode());
 	}
 
@@ -196,7 +336,7 @@ namespace HashiTaku
 				return; // 以降のボーンは処理しない
 			}
 
-			baseBoneIds.push_back(boneId);	// ベースに追加
+			baseAnimBoneIds.push_back(boneId);	// ベースに追加
 		}
 
 		u_int childCnt = _treeNode.GetChildNum();
@@ -208,7 +348,7 @@ namespace HashiTaku
 	void LayerdAnimationNode::CreateBlendBoneGroup(const TreeNode& _blendBoneNode)
 	{
 		if (_blendBoneNode.HasBone())
-			blendBoneIds.push_back(_blendBoneNode.GetBoneIdx());	// ブレンドに追加
+			blendAnimBoneIds.push_back(_blendBoneNode.GetBoneIdx());	// ブレンドに追加
 
 		// 再帰で分けていく
 		u_int childCnt = _blendBoneNode.GetChildNum();
@@ -220,6 +360,17 @@ namespace HashiTaku
 	{
 #ifdef EDIT
 		AnimationNode_Base::ImGuiDebug();
+
+		ImGui::Checkbox("MeshSpaceBlend", &isMeshSpaceRotationBlend);
+
+		// ブレンド開始するボーンのIdをセット
+		if (ImGui::DragInt("BlendBeginBoneId", &beginBlendBoneId, 1, 0, (int)pBoneList->GetBoneCnt()))
+		{
+			SetBlendBeginBone(beginBlendBoneId);
+		}
+
+		// ブレンドする深さ
+		ImGui::DragScalar("BlendDepth", ImGuiDataType_U32, &blendDepth);
 
 		// ブレンド側の開始フレーム
 		u_int maxFrame = 0;
@@ -260,12 +411,6 @@ namespace HashiTaku
 		if (pBlendAnimation)
 			animName = pBlendAnimation->GetAssetName();
 		ImGui::Text(animName.c_str());
-
-		// ブレンド開始するボーンのIdをセット
-		if (ImGui::DragInt("BlendBoneId", &beginBlendBoneId, 1, 0, (int)pBoneList->GetBoneCnt()))
-		{
-			SetBlendBeginBone(beginBlendBoneId);
-		}
 #endif // EDIT
 	}
 }

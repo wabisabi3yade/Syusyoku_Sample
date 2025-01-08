@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "IBoneSupplier.h"
 #include "IAnimationObserver.h"
 #include "AnimControllPlayer.h"
 
@@ -10,18 +11,10 @@ namespace HashiTaku
 	class CP_MeshRenderer;
 
 	/// @brief アニメーションコンポーネント
-	class CP_Animation : public Component
+	class CP_Animation : public Component, public IBoneBufferSupplier
 	{
-		static constexpr u_int MAX_BONEMTX{ 100 };	// シェーダーの渡すボーン行列の最大数
-
-		// シェーダーに渡すボーン行列構造体
-		struct BoneCombMtricies
-		{
-			DXSimp::Matrix matrix[MAX_BONEMTX];
-		};
-
 		/// @brief ボーンのコンビネーション行列のバッファー
-		static BoneCombMtricies boneCombBuffer;
+		BoneCombMtricies boneCombBuffer;
 
 		/// @brief ルートボーンに対するオフセット行列
 		DXSimp::Matrix rootOffsetMtx;
@@ -91,7 +84,6 @@ namespace HashiTaku
 		/// @param _playRatio 再生割合
 		void SetPlayRatio(float _playRatio);
 
-
 		/// @brief 指定したbool変数に値を取得
 		/// @param _paramName パラメーター名
 		/// @param _isBool 取得する値
@@ -137,6 +129,10 @@ namespace HashiTaku
 		/// @brief ボーン数を取得
 		/// @return ボーン数
 		u_int GetBoneCnt() const;
+
+		/// @brief ボーン行列のバッファを取得する
+		/// @return ボーン行列のバッファ(転置済み)
+		BoneCombMtricies* GetBoneBuffer() override;
 
 		json Save() override;
 		void Load(const json& _data) override;

@@ -80,48 +80,6 @@
             }
         },
         {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "meshName": "Knight.fbx",
-                        "name": "MeshRenderer",
-                        "priority": 0
-                    },
-                    {
-                        "animConName": "ANC_TitlePlayer",
-                        "enable": true,
-                        "name": "Animation",
-                        "priority": 0
-                    }
-                ],
-                "layer": 0,
-                "name": "Player",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        1.100000023841858,
-                        -5.0,
-                        -13.0
-                    ],
-                    "rotation": [
-                        -0.0,
-                        -0.38268357515335083,
-                        -0.0,
-                        0.9238794445991516
-                    ],
-                    "scale": [
-                        0.9999998807907104,
-                        1.0,
-                        0.9999998807907104
-                    ]
-                }
-            }
-        },
-        {
             "childs": [
                 {
                     "childs": null,
@@ -170,6 +128,7 @@
                 "components": [
                     {
                         "enable": true,
+                        "materials": null,
                         "meshName": "campfire.fbx",
                         "name": "MeshRenderer",
                         "priority": 0
@@ -197,6 +156,49 @@
                         1.0,
                         1.0,
                         1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "materials": null,
+                        "meshName": "Knight.fbx",
+                        "name": "MeshRenderer",
+                        "priority": 0
+                    },
+                    {
+                        "animConName": "ANC_TitlePlayer",
+                        "enable": true,
+                        "name": "Animation",
+                        "priority": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "Player",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        1.100000023841858,
+                        -5.0,
+                        -13.0
+                    ],
+                    "rotation": [
+                        -0.0,
+                        -0.38268357515335083,
+                        -0.0,
+                        0.9238794445991516
+                    ],
+                    "scale": [
+                        0.9999998807907104,
+                        1.0,
+                        0.9999998807907104
                     ]
                 }
             }
@@ -254,6 +256,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": null,
                                         "meshName": "Pillar1.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -334,6 +337,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": null,
                                         "meshName": "Pillar1.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -392,6 +396,8 @@
                             },
                             {
                                 "alpha": 1.0,
+                                "drawPSName": "PS_Ground",
+                                "drawVSName": "VS_Ground",
                                 "enable": true,
                                 "name": "SpriteRenderer",
                                 "priority": 0,
@@ -448,6 +454,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": null,
                                         "meshName": "desertRock11.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -516,6 +523,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": null,
                                         "meshName": "desertRock15.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -584,6 +592,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": null,
                                         "meshName": "desertRock15.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -620,6 +629,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": null,
                                         "meshName": "desertRock11.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -656,6 +666,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": null,
                                         "meshName": "desertRock15.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -692,6 +703,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": null,
                                         "meshName": "desertRock11.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -796,6 +808,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "materials": null,
                                 "meshName": "Knight_Sword.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -832,6 +845,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "materials": null,
                                 "meshName": "shield1.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0

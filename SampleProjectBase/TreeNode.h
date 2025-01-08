@@ -42,6 +42,11 @@ namespace HashiTaku
 		/// @return ボーンがあるか？
 		bool HasBone() const;
 
+		/// @brief ボーンのIDから対応したツリーノードを子ノードから探す
+		/// @param _boneIdx 探したいツリーノードのボーンID
+		/// @return ツリーノード(見つからなければnullptr)
+		const TreeNode* FindTreeNode(int _boneIdx) const;
+
 		// ノード名をセット
 		void SetNodeName(const std::string& _nodeName);
 

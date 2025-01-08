@@ -8,6 +8,12 @@ namespace HashiTaku
 		/// @brief パリィ時のエフェクト情報
 		CreateVfxInfo parryEffectInfo;
 
+		/// @brief パリィの効果音
+		PlaySoundParameter parrySoundParameter;
+
+		/// @brief パリィの音アセットリスト(乱数で変える)
+		std::list<SoundAsset> parrySounds;
+
 		/// @brief パリィエフェクトを生成する場所のオフセット(オブジェクトから)
 		DXSimp::Vector3 createVfxOffset;
 
@@ -70,6 +76,9 @@ namespace HashiTaku
 
 		/// @brief パリィエフェクトを生成
 		void CreateParryVfx();
+
+		/// @brief 効果音を鳴らす
+		void PlayParrySE();
 
 		void ImGuiDebug() override;
 	private:

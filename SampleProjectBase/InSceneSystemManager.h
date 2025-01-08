@@ -3,6 +3,7 @@
 // シーン内システムクラス
 #include "SceneObjects.h"
 #include "SceneLights.h"
+#include "ShadowDrawer.h"
 
 namespace HashiTaku
 {
@@ -22,6 +23,9 @@ namespace HashiTaku
 
 		/// @brief シーンライティング
 		std::unique_ptr<SceneLights> pSceneLights;
+
+		/// @brief 影描画機能クラス
+		std::unique_ptr<ShadowDrawer> pShadowDrawer;
 
 		/// @brief カメラがNullObjectかどうか
 		bool isNullCamera;
@@ -57,6 +61,14 @@ namespace HashiTaku
 		/// @brief 入力クラスを取得
 		/// @return 入力クラス
 		GameInput& GetInput();
+
+		/// @brief 影描画クラスを取得
+		/// @return 影描画クラス
+		ShadowDrawer& GetShadowDrawer();
+
+		/// @brief カメラがセットされていないか？
+		/// @return カメラがセットされていないか？
+		bool GetIsNullCamera() const;
 
 		// カメラをセットする
 		void SetCamera(CP_Camera& _camera);

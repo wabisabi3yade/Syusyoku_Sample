@@ -15,7 +15,7 @@ namespace HashiTaku
 		: public Light
 	{
 		// 環境色
-		DXSimp::Vector4 ambiemt;
+		DXSimp::Color ambiemt;
 
 		// 方向ベクトル
 		DXSimp::Vector3 direction;
@@ -28,10 +28,10 @@ namespace HashiTaku
 		void SetDirection(const DXSimp::Vector3& _dir);
 		void SetAmbiemt(const DXSimp::Color& _color);
 
-		DXSimp::Vector3 GetDirection();
-		DXSimp::Color GetAmbiemt();
+		const DXSimp::Vector3& GetDirection() const;
+		const DXSimp::Color& GetAmbiemt() const;
 
-		DirectionLParameter GetParameter();
+		DirectionLParameter GetParameter() const;
 	};
 
 	/// @brief ディレクションライトのNullオブジェクト

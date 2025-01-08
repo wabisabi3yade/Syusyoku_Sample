@@ -7,6 +7,7 @@ struct PS_IN
     float2 uv : TEXCOORD0;
     float3 normal : NORMAL0;
     float4 worldPos : POSITION0;
+    float4 lightSpacePos : POSITION1;
 };
 
 struct Material

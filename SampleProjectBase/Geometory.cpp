@@ -117,6 +117,7 @@ namespace HashiTaku
 		LineVertex line;
 		line.position = _start;
 		line.color = _color;
+	
 		drawLines.push_back(line);
 
 		line.position = _end;

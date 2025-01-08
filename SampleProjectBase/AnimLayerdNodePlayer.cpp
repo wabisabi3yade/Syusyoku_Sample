@@ -20,19 +20,18 @@ namespace HashiTaku
 
 		AnimNodePlayer_Base::ProgressPlayRatio(_controllerSpeed);
 
-		// 0™Z–h~
+		
 
 		float speed =
 			GetPlayerSpeed() *
 			layerdNode.GetBlendCurveSpeed(curBlendPlayRatio) *
 			pPlayAnimNode->GetPlaySpeedTimes();
 
+		// 0™Z–h~
+		float animTime = std::max(layerdNode.GetBlendAnimationTime(), Mathf::epsilon);
+
 		// i‚ß‚é
-		curBlendPlayRatio += speed * deltaTime / layerdNode.GetBlendAnimationTime();
-
-		//// ƒ‹[ƒv‚µ‚½‚­‚È‚Á‚½‚ç‘Î‰‚³‚¹‚Ü‚·
-		//curBlendPlayRatio = std::min(curBlendPlayRatio, 1.0f);
-
+		curBlendPlayRatio += speed * deltaTime / animTime;
 		if (curBlendPlayRatio > 1.0f)
 			curBlendPlayRatio -= 1.0f;
 	}
@@ -44,7 +43,6 @@ namespace HashiTaku
 
 		// Ä¶ŠÔ‚©‚çŠeƒpƒ‰ƒ[ƒ^‚ğæ“¾
 		layerdNode.GetAnimTransform(_outTransforms, GetCurPlayRatio(), curBlendPlayRatio);
-
 	}
 
 	void AnimLayerdNodePlayer::CalcRootMotionPosSpeed()

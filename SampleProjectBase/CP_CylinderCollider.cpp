@@ -51,7 +51,7 @@ namespace HashiTaku
 		ApplyObjectScale(worldRadius, worldHeight);
 
 		// çÏê¨
-		btVector3 cylinderParam(worldRadius, worldHeight / 2.0f, worldRadius);
+		btVector3 cylinderParam(worldRadius, worldHeight / 2.0f, worldRadius / 2.0f);
 		pCollisionShape = std::make_unique<btCylinderShape>(cylinderParam);
 	}
 

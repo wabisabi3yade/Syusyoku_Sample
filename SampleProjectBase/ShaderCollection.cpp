@@ -34,7 +34,7 @@ namespace HashiTaku
 	void ShaderCollection::LoadFromCSO()
 	{
 		// 頂点シェーダー
-		LoadShader<VS_Object>("VS_Object.cso");
+		LoadShader<VertexShader>("VS_Object.cso");
 		LoadShader<VS_Gouraud>("VS_Gouraud.cso");
 		LoadShader<VS_Primitive>("VS_Primitive.cso");
 		LoadShader<VS_SkinnedAnimation>("VS_SkinAnimation.cso");
@@ -43,7 +43,9 @@ namespace HashiTaku
 		LoadShader<VertexShader>("VS_Sprite.cso");
 		LoadShader<VertexShader>("VS_UI.cso");
 		LoadShader<VertexShader>("VS_OutLine.cso");
+		LoadShader<VertexShader>("VS_OutLineAnimation.cso");
 		LoadShader<VS_WorldPosition>("VS_BackObject.cso");
+		LoadShader<VS_Ground>("VS_Ground.cso");
 		defaultVS = "VS_WorldPosition";
 
 		// ピクセルシェーダー
@@ -53,8 +55,10 @@ namespace HashiTaku
 		LoadShader<PixelShader>("PS_Primitive.cso");
 		LoadShader<PixelShader>("PS_Line.cso");
 		LoadShader<PixelShader>("PS_UI.cso");
-		LoadShader<PixelShader>("PS_OutLine.cso");
+		LoadShader<PS_OutLine>("PS_OutLine.cso");
 		LoadShader<PS_BackObject>("PS_BackObject.cso");
+		LoadShader<PixelShader>("PS_DepthWrite.cso");
+		LoadShader<PS_Ground>("PS_Ground.cso");
 		defaultPS = "PS_Unlit";
 	}
 

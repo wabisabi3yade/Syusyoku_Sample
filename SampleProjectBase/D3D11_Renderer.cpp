@@ -257,12 +257,12 @@ namespace HashiTaku
 		// フルスクリーンにするか
 #ifndef _DEBUG
 
-		int pushButton = MessageBoxA(_hWnd, "フルスクリーンで起動しますか？", "就職作品",
+		int pushButton = MessageBoxA(_hWnd, "フルスクリーンで起動しますか？", "Duel Knight",
 			MB_YESNO | MB_ICONQUESTION);
 
 		if (pushButton == IDYES)
 			pSwapChain->SetFullscreenState(TRUE, NULL);
-#endif // _RELEASE
+#endif // _DEBUG
 	}
 
 	void D3D11_Renderer::Release()
@@ -336,7 +336,23 @@ namespace HashiTaku
 		vp.TopLeftY = 0.0f;
 		vp.Width = static_cast<float>(_pRrenderTarget->GetWidth());
 		vp.Height = static_cast<float>(_pRrenderTarget->GetHeight());
-		vp.Height = static_cast<float>(_pRrenderTarget->GetHeight());
+		vp.MinDepth = 0.0f;
+		vp.MaxDepth = 1.0f;
+
+		pDeviceContext->RSSetViewports(1, &vp);
+	}
+
+	void D3D11_Renderer::SetBaseRenderTarget()
+	{
+		pDeviceContext->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView.Get());
+
+		D3D11_VIEWPORT& vp = viewPorts[0];
+
+		// ビューポート設定
+		vp.TopLeftX = 0.0f;
+		vp.TopLeftY = 0.0f;
+		vp.Width = static_cast<float>(GetWindowWidth());
+		vp.Height = static_cast<float>(GetWindowHeight());
 		vp.MinDepth = 0.0f;
 		vp.MaxDepth = 1.0f;
 

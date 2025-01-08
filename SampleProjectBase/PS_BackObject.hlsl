@@ -9,7 +9,7 @@ struct PS_IN
     float2 uv : TEXCOORD0;
     float3 normal : NORMAL0;
     float4 worldPos : POSITION0;
-    float4 screenPos : POSITION1;
+    float4 lightSpacePos : POSITION1;
 };
 
 struct Material
@@ -80,6 +80,7 @@ cbuffer Camera : register(b2)
 
 Texture2D myTexture : register(t0); // テクスチャー
 Texture2D ditherTex : register(t1); // アルファディザーテクスチャー
+Texture2D depthTex : register(t2); // 深度テクスチャー
 SamplerState mySampler : register(s0); // サンプラー
 
 float4 main(PS_IN pin) : SV_TARGET
@@ -101,18 +102,33 @@ float4 main(PS_IN pin) : SV_TARGET
     color.a *= material.diffuse.a;
     color = saturate(color);
     
+    // 影
+   // float2 screenUV = pin.lightSpacePos.xy / pin.lightSpacePos.w;
+   // screenUV = screenUV * 0.5f + 0.5f;
+   // screenUV.y = 1.0f - screenUV.y;
+   // screenUV = saturate(screenUV);
+   // float objDepth = pin.lightSpacePos.z / pin.lightSpacePos.w;    
+   // float texDepth = depthTex.Sample(mySampler, screenUV).r;
+   // if (screenUV.x < 0.0f || screenUV.x > 1.0f ||
+   //     screenUV.y < 0.0f || screenUV.y > 1.0f)
+   // {
+   //     texDepth = 1.0f;
+   // }
+    
+   //color.rgb *= objDepth > texDepth ? 0.5f : 1.0f;
+    
+    
     float len = length(pin.worldPos.xyz - camPos.xyz);
-    float alpha = color.a * saturate(len * 0.2f);
+    float alpha = color.a * saturate(len * 0.2f - 0.3f);
     
     // スクリーンの座標に応じて、
     // ディザパターンを適用する位置を計算
-    float2 screenUV = pin.screenPos.xy / pin.screenPos.w;
-    screenUV = screenUV * 0.5f + 0.5f;
-    screenUV *= float2(SCREEN_WIDTH, SCREEN_HEIGHT) / 4.0f;
+    float2 ditherUV = pin.pos.xy / float2(SCREEN_WIDTH, SCREEN_HEIGHT);
+    ditherUV = frac(ditherUV * 200.0f);
     
     // ディザパターンの取得
-    float dither = ditherTex.Sample(mySampler, screenUV).r;
-    if(alpha < dither)
+    float dither = ditherTex.Sample(mySampler, ditherUV).r;
+    if (alpha - 1e-6 < dither)
     {
         // 透明度0で見えないけどそこにある、ではなく完全に表示を行わない
         discard;
