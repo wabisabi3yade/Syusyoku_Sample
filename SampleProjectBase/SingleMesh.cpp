@@ -75,12 +75,12 @@ namespace HashiTaku
 		return materialID;
 	}
 
-	DirectX::SimpleMath::Vector3 SingleMesh::GetCenterPos()
+	DXSimp::Vector3 SingleMesh::GetCenterPos()
 	{
 		return centerPos;
 	}
 
-	DirectX::SimpleMath::Vector3 SingleMesh::GetSize()
+	DXSimp::Vector3 SingleMesh::GetSize()
 	{
 		return size;
 	}
@@ -105,12 +105,12 @@ namespace HashiTaku
 		topology = _topology;
 	}
 
-	void SingleMesh::SetCenterPosition(const DirectX::SimpleMath::Vector3& _centerPos)
+	void SingleMesh::SetCenterPosition(const DXSimp::Vector3& _centerPos)
 	{
 		centerPos = _centerPos;
 	}
 
-	void SingleMesh::SetSize(const DirectX::SimpleMath::Vector3& _size)
+	void SingleMesh::SetSize(const DXSimp::Vector3& _size)
 	{
 		// 0à»â∫Ç…Ç»ÇÁÇ»Ç¢ÇÊÇ§Ç…ç≈è¨ílÇêßå¿
 		size = Vec3::Max(_size, 0.0f);

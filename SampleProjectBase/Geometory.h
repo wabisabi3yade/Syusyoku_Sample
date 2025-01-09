@@ -24,24 +24,24 @@ namespace HashiTaku
 		/// @brief 線描画パラメータ
 		struct LineVertex
 		{
-			DirectX::SimpleMath::Vector3 position;	// 座標
-			DirectX::SimpleMath::Color color;	// 色
+			DXSimp::Vector3 position;	// 座標
+			DXSimp::Color color;	// 色
 		};
 	private:
 		// Material
 		static Material* pMaterial;
 
 		/// @brief ワールド座標
-		static DirectX::SimpleMath::Vector3 position;
+		static DXSimp::Vector3 position;
 
 		/// @brief 大きさ
-		static DirectX::SimpleMath::Vector3 scale;
+		static DXSimp::Vector3 scale;
 
 		/// @brief 角度
-		static DirectX::SimpleMath::Vector3 eularAngle;
+		static DXSimp::Vector3 eularAngle;
 
 		// 色
-		static DirectX::SimpleMath::Color color;
+		static DXSimp::Color color;
 
 		// 基本図形
 		static std::vector<StaticMesh*> pGeometory;
@@ -60,28 +60,28 @@ namespace HashiTaku
 		static void Release();
 
 		// 座標を設定
-		static void SetPosition(const DirectX::SimpleMath::Vector3& _position)
+		static void SetPosition(const DXSimp::Vector3& _position)
 		{
 			position = _position;
 		}
 		// 回転を設定
-		static void SetRotation(const DirectX::SimpleMath::Vector3& _eularAngle)
+		static void SetRotation(const DXSimp::Vector3& _eularAngle)
 		{
 			eularAngle = _eularAngle;
 		}
 		// 大きさを設定
-		static void SetScale(const DirectX::SimpleMath::Vector3& _scale)
+		static void SetScale(const DXSimp::Vector3& _scale)
 		{
 			scale = _scale;
 		}
 		// 色
-		static void SetColor(const DirectX::SimpleMath::Color& _color) { color = _color; }
+		static void SetColor(const DXSimp::Color& _color) { color = _color; }
 
 		static void DrawCube(bool _isWireFrame = false);	// キューブ描画
 
 		static void DrawSphere(bool _isWireFrame = false);	// 球描画
 
-		static void AddLine(const DirectX::SimpleMath::Vector3& _start, const DirectX::SimpleMath::Vector3& _end, const DirectX::SimpleMath::Color& _color);
+		static void AddLine(const DXSimp::Vector3& _start, const DXSimp::Vector3& _end, const DXSimp::Color& _color);
 
 		/// @brief 線描画
 		static void DrawLine();

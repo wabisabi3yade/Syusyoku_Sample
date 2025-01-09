@@ -11,7 +11,7 @@ namespace HashiTaku
 		const CP_RigidBody* pRigidBodyCp{ nullptr };
 
 		/// @brief è’ìÀç¿ïW
-		DirectX::SimpleMath::Vector3 contactPoint;
+		DXSimp::Vector3 contactPoint;
 	};
 }
 

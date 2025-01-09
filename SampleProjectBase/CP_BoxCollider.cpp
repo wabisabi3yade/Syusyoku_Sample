@@ -41,14 +41,14 @@ namespace HashiTaku
 			SetLength(changeFloat);
 	}
 
-	void CP_BoxCollider::SetLength(const DirectX::SimpleMath::Vector3& _length)
+	void CP_BoxCollider::SetLength(const DXSimp::Vector3& _length)
 	{
 		length = _length;
 
 		RecreateShape();
 	}
 
-	const DirectX::SimpleMath::Vector3& CP_BoxCollider::GetLength() const
+	const DXSimp::Vector3& CP_BoxCollider::GetLength() const
 	{
 		return length;
 	}
@@ -100,7 +100,7 @@ namespace HashiTaku
 	{
 	}
 
-	void CP_BoxCollider::CalcWorldLength(DirectX::SimpleMath::Vector3& _out)
+	void CP_BoxCollider::CalcWorldLength(DXSimp::Vector3& _out)
 	{
 		_out = GetTransform().GetScale() * length;
 	}

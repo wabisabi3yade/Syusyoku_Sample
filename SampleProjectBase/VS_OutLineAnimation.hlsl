@@ -1,3 +1,4 @@
+
 struct VS_IN
 {
     float3 pos : POSITION; // 頂点座標（モデル座標系）
@@ -11,7 +12,7 @@ struct VS_IN
 struct VS_OUT
 {
     float4 pos : SV_POSITION0;
-    float4 color : COLOR0;
+    float4 color : COLOR0; // 頂点色
     float2 uv : TEXCOORD0;
     float3 normal : NORMAL0;
     float4 worldPos : POSITION0;
@@ -22,14 +23,19 @@ cbuffer WVP : register(b0)
     float4x4 world;
     float4x4 view;
     float4x4 proj;
-};
+}
 
-cbuffer BoneMatrixBuffer : register(b1)
+cbuffer OutLine : register(b1)
+{
+    float4 color;
+    float lineScale;
+    float3 dummy;
+}
+
+cbuffer BoneMatrixBuffer : register(b2)
 {
     matrix BoneMatrix[100];
 }
-
-#define OUTLINE_SCALE (0.01f)
 
 VS_OUT main(VS_IN vin)
 {
@@ -40,15 +46,13 @@ VS_OUT main(VS_IN vin)
     Comb += BoneMatrix[vin.boneIndex[2]] * vin.boneWeight[2];
     Comb += BoneMatrix[vin.boneIndex[3]] * vin.boneWeight[3];
     
-    // 伸ばす
-    vout.pos.xyz += normalize(vin.normal) * OUTLINE_SCALE;
-    
     float4 Pos = float4(vin.pos, 1.0f);
     Pos = mul(Pos, Comb);
     vout.pos = Pos;
 	
 	// 法線ベクトルを補正
-    float4 Normal = float4(vin.normal.xyz, 0.0f);
+    float4 Normal;
+    Normal = float4(vin.normal.xyz, 0.0f);
  
     Comb._41 = 0.0f; // 移動成分を消す
     Comb._42 = 0.0f;
@@ -57,23 +61,16 @@ VS_OUT main(VS_IN vin)
 
     Normal = mul(Normal, Comb);
     vout.normal = Normal;
-	
+    
     vout.pos = mul(vout.pos, world);
-
-    // ピクセルシェーダーでワールド座標を使用するので
+    vout.normal = normalize(mul(vout.normal, (float3x3) world));
+    
+    vout.pos.xyz += vout.normal * lineScale;
     vout.worldPos = vout.pos;
-
     vout.pos = mul(vout.pos, view);
     vout.pos = mul(vout.pos, proj);
     
-    // スケール成分を除く
-    float3x3 rotationMatrix = (float3x3) world;
-    rotationMatrix[0] = normalize(rotationMatrix[0]);
-    rotationMatrix[1] = normalize(rotationMatrix[1]);
-    rotationMatrix[2] = normalize(rotationMatrix[2]);
-    
-    vout.normal = mul(vout.normal, rotationMatrix);
-    vout.normal = normalize(vout.normal);
-    
+    vout.uv = vin.uv;
+    vout.color = color;
     return vout;
 }

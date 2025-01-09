@@ -14,10 +14,10 @@ namespace HashiTaku
 		AnimationCurve blendSpeedCurve;
 
 		/// @brief ベース側のアニメーションを反映するボーンのId
-		std::vector<int> baseBoneIds;
+		std::vector<int> baseAnimBoneIds;
 
 		/// @brief ブレンド側のアニメーションを反映するボーンのId
-		std::vector<int> blendBoneIds;
+		std::vector<int> blendAnimBoneIds;
 
 		/// @brief ベースとなるアニメーション(ルートボーンはこっち)
 		AnimationData* pBaseAnimation;
@@ -31,8 +31,14 @@ namespace HashiTaku
 		/// @brief ブレンド側のアニメーションをどこから再生するか
 		u_int beginBlendPlayFrame;
 
+		/// @brief ブレンド開始ボーンからのブレンドするボーンの深さ(2なら開始ボーンから深さ2までのボーンを0.5ずつブレンドする)
+		u_int blendDepth;
+
 		/// @brief どこからブレンドアニメーションを再生するか指定するボーンID
 		int beginBlendBoneId;
+
+		/// @brief メッシュのローカル空間内で回転量をブレンド
+		bool isMeshSpaceRotationBlend;
 	public:
 		/// @brief コンストラクタ
 		/// @param _boneList ボーンリスト
@@ -73,11 +79,15 @@ namespace HashiTaku
 
 		/// @brief 指定した割合のルートモーションの移動座標を取得
 		/// @return ルートモーションの移動座標
-		DirectX::SimpleMath::Vector3 GetRootMotionPos(float _ratio) const;
+		DXSimp::Vector3 GetRootMotionPos(float _ratio) const;
 
 		/// @brief ルートモーション秒速を取得
 		/// @return ルートモーション秒速
-		const DirectX::SimpleMath::Vector3& GetRootMotionPerSpeed() const;
+		const DXSimp::Vector3& GetRootMotionPerSpeed() const;
+
+		/// @brief メッシュ空間内でブレンドを行うか取得
+		/// @return メッシュ空間内でブレンドを行うか
+		bool GetMotionSpaceRotationBlend() const;
 
 		json Save() override;
 		void Load(const json& _data) override;
@@ -85,6 +95,29 @@ namespace HashiTaku
 		/// @brief 機能できているか確認する
 		/// @return 機能できているか？
 		bool CanWarking() const;
+
+		/// @brief メッシュ空間でブレンドをしたトランスフォーム取得(計算コスト高)
+		/// @param outTransforms 格納するボーントランスフォームリスト
+		/// @param _currentNode 現在のノード
+		/// @param _parentBaseRotation ベース側の親ボーンまでのメッシュ空間回転量
+		/// @param _parentBlendRotation ブレンド側の親ボーンまでのメッシュ空間回転量
+		/// @param _baseRatio ベースのアニメーション側の割合
+		/// @param _blendRatio ブレンド側のアニメーション割合
+		/// @param _blendDepth ブレンド開始からの深さ
+		void GetMeshSpaceBlendTransform(std::vector<BoneTransform>& _outTransforms, 
+			const TreeNode* _currentNode, 
+			const DXSimp::Quaternion& _parentBaseRotation,
+			const DXSimp::Quaternion& _parentBlendRotation,
+			float _baseRatio, 
+			float _blendRatio,
+			u_int _blendDepth) const;
+
+		/// @brief ボーンのローカル空間でブレンドをしたトランスフォーム取得(計算コスト低)
+		/// @param outTransforms 格納するボーントランスフォームリスト
+		/// @param_baseRatio ベースのアニメーション側の割合
+		/// @param _blendRatio ブレンド側のアニメーション割合
+		void GetLocalSpaceBlendTransform(std::vector<BoneTransform>& _outTransforms, float _baseRatio, float _blendRatio) const;
+
 
 		/// @brief ブレンド開始ボーンをセットする
 		/// @param _beginBoneId ブレンド開始ボーンのId

@@ -44,7 +44,7 @@ namespace HashiTaku
 		u_int maxSubSteps;
 
 		/// @brief 重力値
-		DirectX::SimpleMath::Vector3 gravityValue;
+		DXSimp::Vector3 gravityValue;
 
 #ifdef EDIT
 		/// @brief デバッグ描画
@@ -98,7 +98,7 @@ namespace HashiTaku
 		bool GetDisplay() const;
 
 		// 重力値を取得する
-		DirectX::SimpleMath::Vector3 GetGravityValue() const;
+		DXSimp::Vector3 GetGravityValue() const;
 	private:
 		DX11BulletPhisics();
 		~DX11BulletPhisics() {}

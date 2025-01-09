@@ -132,12 +132,12 @@ namespace HashiTaku
 		}
 	}
 
-	void BlendAnimationNode::FindBlendPairTwoAxis(DirectX::SimpleMath::Vector2 _blendValues, std::vector<BlendingData>& _outData) const
+	void BlendAnimationNode::FindBlendPairTwoAxis(DXSimp::Vector2 _blendValues, std::vector<BlendingData>& _outData) const
 	{
 		// 今は4点以下は処理しない
 		if (GetAnimPointCnt() < TWOAXIS_MAXBLEND_NUM) return;
 
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 		std::list<PointToDistance> pointData;
 
 		//　ポイントとの距離を求める
@@ -146,10 +146,6 @@ namespace HashiTaku
 			PointToDistance pd;
 			pd.point = &p;
 			pd.distance = Vector2::Distance(_blendValues, p.blendValue);
-			if (pd.distance < Mathf::epsilon)
-			{
-				pd.distance = Mathf::epsilon;
-			}
 
 			if (pd.distance <= Mathf::epsilon)	// 距離が0.0なら
 			{
@@ -190,7 +186,6 @@ namespace HashiTaku
 		{
 			bd.blendWeight /= sumWeight;
 		}
-
 	}
 
 	void BlendAnimationNode::SortBlendPoint()
@@ -229,9 +224,9 @@ namespace HashiTaku
 		return axisParameters[_axisIdx].blendMoveEase;
 	}
 
-	void BlendAnimationNode::CalcRootMotionSpeed(const std::vector<BlendingData>& _blendDatas, DirectX::SimpleMath::Vector3& _outPos) const
+	void BlendAnimationNode::CalcRootMotionSpeed(const std::vector<BlendingData>& _blendDatas, DXSimp::Vector3& _outPos) const
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 		_outPos = Vector3::Zero;
 		for (auto& anim : _blendDatas)
 		{
@@ -245,9 +240,9 @@ namespace HashiTaku
 		return static_cast<u_int>(axisParameters.size());
 	}
 
-	void BlendAnimationNode::GetRootMotionPos(float _ratio, const std::vector<BlendingData>& _blendDatas, DirectX::SimpleMath::Vector3& _outPos) const
+	void BlendAnimationNode::GetRootMotionPos(float _ratio, const std::vector<BlendingData>& _blendDatas, DXSimp::Vector3& _outPos) const
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 		for (auto& anim : _blendDatas)
 		{
 			Vector3 rootPos = anim.pAnimation->GetRootMotionPos(_ratio);

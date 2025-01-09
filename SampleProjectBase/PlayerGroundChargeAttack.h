@@ -57,6 +57,9 @@ namespace HashiTaku
 		/// @brief チャージ中のエフェクトの生成時間オフセット(チャージ時から見た)
 		float chargeVfxCreateTimeOffset;
 
+		/// @brief チャージ中のパッド振動力
+		float chargePadShakePower;
+
 		/// @brief 現在のチャージのレベル
 		ChargeLevel curChargeLevel;
 

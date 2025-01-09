@@ -34,6 +34,13 @@ namespace HashiTaku
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> pDepthStencilTexture;
 		// 深度バッファ
 		Microsoft::WRL::ComPtr<ID3D11DepthStencilView> pDepthStencilView;
+		
+		/// @brief 深度書き込み深度ステンシルステート
+		Microsoft::WRL::ComPtr<ID3D11DepthStencilState> pDepthWriteState;
+
+		/// @brief 深度書き込まない深度ステンシルステート
+		Microsoft::WRL::ComPtr<ID3D11DepthStencilState> pNoDepthWriteState;
+
 		// ラスタライザ
 		Microsoft::WRL::ComPtr<ID3D11RasterizerState> pRasterizerStates[RASTERIZE_NUM];
 
@@ -58,11 +65,18 @@ namespace HashiTaku
 		/// @param _cullMode カリングモード
 		void SetCullingMode(D3D11_CULL_MODE _cullMode);
 
+		/// @brief 深度書き込みを切り替える
+		/// @param _isWrite 書き込むようにするか？
+		void SerDepthWrite(bool _isWrite);
+
 		/// @brief レンダーターゲットをセット
 		/// @param _viewPortId ビューポートのID
 		/// @param _pRrenderTarget レンダーターゲット
 		/// @param _pDepthStencils 深度ステンシル
 		void SetRenderTerget(u_int _cnt, RenderTarget* _pRrenderTarget, DepthStencil* _pDepthStencil);
+
+		/// @brief 元のレンダーターゲットに戻す
+		void SetBaseRenderTarget();
 
 		// 描画の情報を取得
 		RenderParam& GetParameter() override;

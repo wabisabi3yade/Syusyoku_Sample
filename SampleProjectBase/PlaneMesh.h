@@ -12,6 +12,6 @@ namespace HashiTaku
 		PlaneMesh();
 		~PlaneMesh() {}
 
-		void SetUV(const DirectX::SimpleMath::Vector2& _startUV, const DirectX::SimpleMath::Vector2& _endUV);
+		void SetUV(const DXSimp::Vector2& _startUV, const DXSimp::Vector2& _endUV);
 	};
 }

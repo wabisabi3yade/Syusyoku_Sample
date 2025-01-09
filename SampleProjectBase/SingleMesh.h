@@ -34,10 +34,10 @@ namespace HashiTaku
 		D3D11_PRIMITIVE_TOPOLOGY topology;
 
 		/// @brief 中心座標
-		DirectX::SimpleMath::Vector3 centerPos;
+		DXSimp::Vector3 centerPos;
 
 		/// @brief メッシュのサイズ
-		DirectX::SimpleMath::Vector3 size;
+		DXSimp::Vector3 size;
 
 		// 初期設定
 		void InitSetting(const std::string& _name, D3D11_PRIMITIVE_TOPOLOGY _topology);
@@ -82,11 +82,11 @@ namespace HashiTaku
 
 		/// @brief 中心座標を取得する
 		/// @return 中心座標
-		DirectX::SimpleMath::Vector3 GetCenterPos();
+		DXSimp::Vector3 GetCenterPos();
 
 		/// @brief サイズを取得する
 		/// @return メッシュの大きさ
-		DirectX::SimpleMath::Vector3 GetSize();
+		DXSimp::Vector3 GetSize();
 
 		/// @brief トポロジーを取得
 		/// @return トポロジー
@@ -106,11 +106,11 @@ namespace HashiTaku
 
 		/// @brief 中心座標をセット
 		/// @param _centerPos 中心座標
-		void SetCenterPosition(const DirectX::SimpleMath::Vector3& _centerPos);
+		void SetCenterPosition(const DXSimp::Vector3& _centerPos);
 
 		/// @brief サイズをセット
 		/// @param _size モデルのサイズ
-		void SetSize(const DirectX::SimpleMath::Vector3& _size);
+		void SetSize(const DXSimp::Vector3& _size);
 
 	protected:
 		/// @brief コピー

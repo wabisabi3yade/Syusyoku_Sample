@@ -2,6 +2,7 @@
 #include "PlayerGroundState.h"
 #include "PlayerAttackInformation.h"
 #include "AnimationCurve.h"
+#include "SoundAsset.h"
 
 namespace HashiTaku
 {
@@ -86,11 +87,11 @@ namespace HashiTaku
 
 		/// @brief UŒ‚‚Åi‚Ş‹——£‚ğ‹‚ß‚é
 		/// @param _atkEnemyPos “G‚ÌÀ•W
-		void CalcProgressDis(const DirectX::SimpleMath::Vector3& _atkEnemyPos);
+		void CalcProgressDis(const DXSimp::Vector3& _atkEnemyPos);
 
 		/// @brief “G‚É‘Î‚µ‚ÄŒü‚¯‚é
 		/// @param _atkEnemyPos “G‚ÌÀ•W
-		void LookAtEnemyInstant(DirectX::SimpleMath::Vector3 _atkEnemyPos);
+		void LookAtEnemyInstant(DXSimp::Vector3 _atkEnemyPos);
 
 		/// @brief UŒ‚‚É‘O‚Öi‚Ş
 		void ForwardProgressMove();

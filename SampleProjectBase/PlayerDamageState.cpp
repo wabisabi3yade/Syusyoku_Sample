@@ -8,7 +8,7 @@ namespace HashiTaku
 	{
 	}
 
-	void PlayerDamageState::SetKnockVec(const DirectX::SimpleMath::Vector3& _knockVec)
+	void PlayerDamageState::SetKnockVec(const DXSimp::Vector3& _knockVec)
 	{
 		knockVector = _knockVec;
 	}

@@ -123,7 +123,7 @@ namespace HashiTaku
 			pActionController->SetReserveState(static_cast<int>(nextCombAtkState));
 	}
 
-	void PlayerAttackState::CalcProgressDis(const DirectX::SimpleMath::Vector3& _atkEnemyPos)
+	void PlayerAttackState::CalcProgressDis(const DXSimp::Vector3& _atkEnemyPos)
 	{
 		if (!isMoveForward) return;
 
@@ -206,7 +206,7 @@ namespace HashiTaku
 		curAttackTime = 1;	// 1ŒÂ–Ú‚ÌUŒ‚î•ñ‚©‚ç
 	}
 
-	void PlayerAttackState::LookAtEnemyInstant(DirectX::SimpleMath::Vector3 _atkEnemyPos)
+	void PlayerAttackState::LookAtEnemyInstant(DXSimp::Vector3 _atkEnemyPos)
 	{
 		// “G‚Ì•ûŒü‚ğŒ©‚é
 		Transform& trans = GetMyTransform();
@@ -217,7 +217,7 @@ namespace HashiTaku
 
 	void PlayerAttackState::ForwardProgressMove()
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 
 		float deltaTime = DeltaTime();
 		if (deltaTime < Mathf::epsilon) return;

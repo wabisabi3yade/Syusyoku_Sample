@@ -40,7 +40,7 @@ namespace HashiTaku
 		/// @param 現在の再生割合
 		/// @param _isWorldScaling ワールド軸に対応するスケーリングするか？
 		/// @return 現在の割合のルートモーション座標
-		DirectX::SimpleMath::Vector3 GetRootMotionPos(float _ratio, bool _isWorldScaling = true) const override;
+		DXSimp::Vector3 GetRootMotionPos(float _ratio, bool _isWorldScaling = true) const override;
 
 	protected:
 		/// @brief モデルの大きさが原寸の大きさからどれだけの倍率なのか計算する

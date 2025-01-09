@@ -16,7 +16,7 @@ namespace HashiTaku
 	// キャンセル入力で予約した状態の有効期限時間（超えると予約した状態はリセットされる）
 	constexpr float CANCEL_RESERVE_VALIED_TIME(0.3f);
 
-	namespace DXSimp = DirectX::SimpleMath;
+	namespace DXSimp = DXSimp;
 
 	PlayerActState_Base::PlayerActState_Base() :
 		pActionController(nullptr),
@@ -119,12 +119,12 @@ namespace HashiTaku
 		return pActionController->GetCharacter().GetDeltaSpeed();
 	}
 
-	DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStick() const
+	DXSimp::Vector2 PlayerActState_Base::GetInputLeftStick() const
 	{
 		return pPlayerInput->GetValue(GameInput::ValueType::Player_Move);
 	}
 
-	DirectX::SimpleMath::Vector2 PlayerActState_Base::GetInputLeftStickFromCam() const
+	DXSimp::Vector2 PlayerActState_Base::GetInputLeftStickFromCam() const
 	{
 		// 入力値を取得
 		DXSimp::Vector2 inputVec = GetInputLeftStick();
@@ -139,7 +139,7 @@ namespace HashiTaku
 		return inputVec;
 	}
 
-	DirectX::SimpleMath::Vector3 PlayerActState_Base::GetAtkEnemyPos()
+	DXSimp::Vector3 PlayerActState_Base::GetAtkEnemyPos()
 	{
 		// ターゲットしているなら
 		if (pActionController->GetIsTargeting())

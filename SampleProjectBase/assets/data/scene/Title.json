@@ -128,6 +128,7 @@
                 "components": [
                     {
                         "enable": true,
+                        "materials": null,
                         "meshName": "campfire.fbx",
                         "name": "MeshRenderer",
                         "priority": 0
@@ -166,6 +167,7 @@
                 "components": [
                     {
                         "enable": true,
+                        "materials": null,
                         "meshName": "Knight.fbx",
                         "name": "MeshRenderer",
                         "priority": 0
@@ -254,6 +256,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": null,
                                         "meshName": "Pillar1.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -334,6 +337,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": null,
                                         "meshName": "Pillar1.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -392,6 +396,8 @@
                             },
                             {
                                 "alpha": 1.0,
+                                "drawPSName": "PS_Ground",
+                                "drawVSName": "VS_Ground",
                                 "enable": true,
                                 "name": "SpriteRenderer",
                                 "priority": 0,
@@ -448,6 +454,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": null,
                                         "meshName": "desertRock11.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -516,6 +523,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": null,
                                         "meshName": "desertRock15.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -584,6 +592,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": null,
                                         "meshName": "desertRock15.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -620,6 +629,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": null,
                                         "meshName": "desertRock11.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -656,6 +666,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": null,
                                         "meshName": "desertRock15.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -692,6 +703,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "materials": null,
                                         "meshName": "desertRock11.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -796,6 +808,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "materials": null,
                                 "meshName": "Knight_Sword.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -832,6 +845,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "materials": null,
                                 "meshName": "shield1.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0

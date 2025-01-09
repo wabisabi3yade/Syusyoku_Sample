@@ -36,10 +36,10 @@ namespace HashiTaku
 		std::unique_ptr<btCollisionShape> pCollisionShape;
 
 		/// @brief 中心座標オフセット
-		DirectX::SimpleMath::Vector3 centerOffset;
+		DXSimp::Vector3 centerOffset;
 
 		/// @brief 角度オフセット
-		DirectX::SimpleMath::Vector3 angleOffset;
+		DXSimp::Vector3 angleOffset;
 
 	public:
 		CP_Collider() : type(ShapeType::Num), isCreateCompound(false) {}
@@ -55,11 +55,11 @@ namespace HashiTaku
 
 		/// @brief コリジョンの中心座標オフセットをセット
 		/// @param _offset オフセット座標
-		void SetCenterOffset(const DirectX::SimpleMath::Vector3& _offset);
+		void SetCenterOffset(const DXSimp::Vector3& _offset);
 
 		/// @brief コリジョンの角度オフセットをセット
 		/// @param _offset オフセット角度
-		void SetAngleOffset(const DirectX::SimpleMath::Vector3& _offset);
+		void SetAngleOffset(const DXSimp::Vector3& _offset);
 
 		/// @brief 衝突形状取得
 		/// @return 衝突形状

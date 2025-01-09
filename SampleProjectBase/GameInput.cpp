@@ -33,6 +33,11 @@ namespace HashiTaku
 		TimeLineUpdate();
 	}
 
+	void GameInput::BeginVibration(float _power, float _time)
+	{
+		MainApplication::GetInput().GetGamePad().SetVibration(_power, _time);
+	}
+
 	bool GameInput::GetButton(ButtonType _buttonType)
 	{
 		u_int buttonNum = static_cast<u_int>(_buttonType);
@@ -58,7 +63,7 @@ namespace HashiTaku
 		return buttonTimeLine[static_cast<u_int>(_buttonType)] < _withinTime;
 	}
 
-	const DirectX::SimpleMath::Vector2& GameInput::GetValue(ValueType _valueType)
+	const DXSimp::Vector2& GameInput::GetValue(ValueType _valueType)
 	{
 		return c_valueState[static_cast<u_int>(_valueType)];
 	}

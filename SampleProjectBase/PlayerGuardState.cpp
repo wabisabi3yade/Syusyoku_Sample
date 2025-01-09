@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "PlayerGuardState.h"
 #include "CP_Player.h"
+#include "CP_SoundManager.h"
 
 namespace HashiTaku
 {
@@ -14,7 +15,7 @@ namespace HashiTaku
 	{
 	}
 
-	bool PlayerGuardState::GetCanParry(const DirectX::SimpleMath::Vector3& _enemyPos)
+	bool PlayerGuardState::GetCanParry(const DXSimp::Vector3& _enemyPos)
 	{
 		if (!canParry) return false;
 
@@ -45,6 +46,9 @@ namespace HashiTaku
 		// エフェクトを出す
 		CreateParryVfx();
 
+		// 効果音を鳴らす
+		PlayParrySE();
+
 		// 前入力されていたら
 		if (IsInputVector(InputVector::Forward))
 			ReleaseAttack();	// 攻撃に派生
@@ -59,6 +63,11 @@ namespace HashiTaku
 		data["parryAngle"] = canParryForwardAngle;
 		SaveJsonVector3("vfxOffset", createVfxOffset, data);
 		data["vfxInfo"] = parryEffectInfo.Save();
+		for (auto& itr : parrySoundParameters)
+		{
+			data["parrySEs"].push_back(itr.Save());
+		}
+
 		return data;
 	}
 
@@ -68,10 +77,20 @@ namespace HashiTaku
 		LoadJsonUnsigned("canParryTime", sustainParryFrame, _data);
 		LoadJsonFloat("parryAngle", canParryForwardAngle, _data);
 		LoadJsonVector3("vfxOffset", createVfxOffset, _data);
-		json vfxData;
-		if (LoadJsonData("vfxInfo", vfxData, _data))
+		json loadData;
+		if (LoadJsonData("vfxInfo", loadData, _data))
 		{
-			parryEffectInfo.Load(vfxData);
+			parryEffectInfo.Load(loadData);
+		}
+
+		if (LoadJsonDataArray("parrySEs", loadData, _data))
+		{
+			for (auto& soundData : loadData)
+			{
+				PlaySoundParameter loadSound;
+				loadSound.Load(soundData);
+				parrySoundParameters.push_back(loadSound);
+			}
 		}
 	}
 
@@ -153,6 +172,24 @@ namespace HashiTaku
 			transform.GetEularAngles());
 	}
 
+	void PlayerGuardState::PlayParrySE()
+	{
+		// シーン内にサウンドマネジャーがあるか確認
+		CP_SoundManager* pSoundManager = CP_SoundManager::GetInstance();
+		if (!pSoundManager) return;
+
+		// ランダムで再生する音を変える
+		int soundCnt = static_cast<int>(parrySoundParameters.size());
+		if (soundCnt == 0) return;
+
+		int randId = Random::RangeInt<int>(0, soundCnt - 1);
+		auto soundItr = parrySoundParameters.begin();
+		soundItr = std::next(soundItr, randId);
+
+		// プレイヤーからSEを再生
+		pSoundManager->PlaySE(*soundItr, GetMyTransform().GetPosition());
+	}
+
 	void PlayerGuardState::ImGuiDebug()
 	{
 		PlayerGroundState::ImGuiDebug();
@@ -165,8 +202,38 @@ namespace HashiTaku
 		ImGui::DragFloat("parryAngle", &canParryForwardAngle, 0.1f, 0.0f, 360.0f);
 
 		// エフェクト
+		ImGuiMethod::LineSpaceSmall();
 		ImGui::Text("Parry Vfx");
 		ImGui::DragFloat3("offset", &createVfxOffset.x, 0.01f);
 		parryEffectInfo.ImGuiCall();
+
+		// サウンド
+		ImGuiMethod::LineSpaceSmall();
+		ImGui::Text("Parry SE");
+		u_int loop = 1;
+		for (auto itr = parrySoundParameters.begin(); itr != parrySoundParameters.end();)
+		{
+			bool isDelete = false;
+			if (ImGuiMethod::TreeNode(std::to_string(loop)))
+			{
+				if (ImGui::Button("X"))
+					isDelete = true;
+				
+				itr->ImGuiCall();
+
+				ImGui::TreePop();
+			}
+			loop++;
+
+			if (isDelete)
+				itr = parrySoundParameters.erase(itr);
+			else
+				itr++;
+		}
+		if (ImGui::Button("+"))
+		{
+			PlaySoundParameter add;
+			parrySoundParameters.push_back(add);
+		}
 	}
 }

@@ -30,7 +30,6 @@ namespace HashiTaku
 
 		// ボーンのトランスフォームを取得
 		const SingleAnimationNode& singleNode = static_cast<const SingleAnimationNode&>(*pPlayAnimNode);
-		_outTransforms.resize(pAssetBoneList->GetBoneCnt());
 		for (unsigned int b_i = 0; b_i < pAssetBoneList->GetBoneCnt(); b_i++)
 		{
 			// 再生時間から各パラメータを取得
@@ -52,13 +51,13 @@ namespace HashiTaku
 			(allPlaySpeed / nodePlaySpeed);
 	}
 
-	DirectX::SimpleMath::Vector3 AnimSingleNodePlayer::GetRootMotionPos(float _ratio, bool _isWorldScaling) const
+	DXSimp::Vector3 AnimSingleNodePlayer::GetRootMotionPos(float _ratio, bool _isWorldScaling) const
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 
 		const SingleAnimationNode& singleNode = static_cast<const SingleAnimationNode&>(*pPlayAnimNode);
 
-		DirectX::SimpleMath::Vector3 rootMotionPos = singleNode.GetAnimationData().GetRootMotionPos(_ratio);
+		DXSimp::Vector3 rootMotionPos = singleNode.GetAnimationData().GetRootMotionPos(_ratio);
 
 		// ロード時の回転量と、スケールを掛ける
 		if (_isWorldScaling)

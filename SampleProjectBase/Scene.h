@@ -38,6 +38,9 @@ namespace HashiTaku
 
 		/// @brief jsonファイルからシーンをロード
 		void SceneLoad();
+
+		/// @brief シーンの終了処理
+		void OnTerminal();
 	private:
 		/// @brief 描画準備
 		void DrawSetup();

@@ -1,0 +1,269 @@
+{
+    "objects": [
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "distance": 1000.0,
+                        "enable": true,
+                        "fov": 60.0,
+                        "name": "Camera",
+                        "priority": 0,
+                        "viewSlot": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "Camera",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        -1.899999976158142,
+                        1.0,
+                        -3.700000047683716
+                    ],
+                    "rotation": [
+                        0.12275626510381699,
+                        0.40220120549201965,
+                        -0.045183949172496796,
+                        0.9061586260795593
+                    ],
+                    "scale": [
+                        0.9999996423721313,
+                        0.9999998211860657,
+                        0.9999998211860657
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "X_Left": "Sunset_left.png",
+                        "X_Right": "Sunset_right.png",
+                        "Y_Bottom": "Sunset_down.png",
+                        "Y_Top": "Sunset_up.png",
+                        "Z_Back": "Sunset_back.png",
+                        "Z_Front": "Sunset_front.png",
+                        "enable": true,
+                        "name": "SkyBox",
+                        "priority": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "SkyBox",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "alpha": 1.0,
+                        "drawPSName": "PS_Ground",
+                        "drawVSName": "VS_Ground",
+                        "enable": true,
+                        "name": "SpriteRenderer",
+                        "priority": 0,
+                        "sprite": {
+                            "texName": "ground1_Diffuse.png",
+                            "uvDivNum": [
+                                0.0,
+                                0.0
+                            ],
+                            "uvEnd": [
+                                1.0,
+                                1.0
+                            ],
+                            "uvStart": [
+                                0.0,
+                                0.0
+                            ]
+                        }
+                    }
+                ],
+                "layer": 0,
+                "name": "Plane",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        -1.399999976158142,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        100.0,
+                        100.0,
+                        100.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "materials": null,
+                        "meshName": "Knight.fbx",
+                        "name": "MeshRenderer",
+                        "priority": 0
+                    },
+                    {
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "enable": false,
+                        "name": "OutLineRenderer",
+                        "priority": 0,
+                        "scale": 0.07000000029802322
+                    },
+                    {
+                        "animConName": "ANC_Player",
+                        "enable": true,
+                        "name": "Animation",
+                        "priority": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "Player",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.30000001192092896,
+                        -1.2000000476837158,
+                        0.4000000059604645
+                    ],
+                    "rotation": [
+                        -0.0,
+                        -0.642786979675293,
+                        -0.0,
+                        0.7660449743270874
+                    ],
+                    "scale": [
+                        1.100000023841858,
+                        0.699999988079071,
+                        1.0000005960464478
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "materials": [
+                            "M_Pillar"
+                        ],
+                        "meshName": "Pillar1.fbx",
+                        "name": "MeshRenderer",
+                        "priority": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "A",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        2.799999952316284,
+                        -1.5,
+                        0.5
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "materials": [
+                            "M_Rock1"
+                        ],
+                        "meshName": "desertRock11.fbx",
+                        "name": "MeshRenderer",
+                        "priority": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "S",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        2.700000047683716,
+                        -0.800000011920929,
+                        -1.7999999523162842
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        2.299999952316284,
+                        1.0
+                    ]
+                }
+            }
+        }
+    ]
+}

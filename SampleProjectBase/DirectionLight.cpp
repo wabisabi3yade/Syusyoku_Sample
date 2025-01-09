@@ -7,16 +7,16 @@ namespace HashiTaku
 {
 	void DirectionLight::Draw()
 	{
+#ifdef EDIT
 		Geometory::SetPosition(parameter.position);
 		Geometory::SetColor(parameter.color);
 
-#ifdef EDIT
 		if (GetDisplay())
 			Geometory::DrawCube();
 #endif
 	}
 
-	void DirectionLight::SetDirection(const DirectX::SimpleMath::Vector3& _dir)
+	void DirectionLight::SetDirection(const DXSimp::Vector3& _dir)
 	{
 		DXSimp::Vector3 d = _dir;
 
@@ -30,22 +30,22 @@ namespace HashiTaku
 		direction = d;
 	}
 
-	void DirectionLight::SetAmbiemt(const DirectX::SimpleMath::Color& _color)
+	void DirectionLight::SetAmbiemt(const DXSimp::Color& _color)
 	{
 		ambiemt = Vec4::Max(_color, 0.0f);
 	}
 
-	DirectX::SimpleMath::Vector3 DirectionLight::GetDirection()
+	const DXSimp::Vector3& DirectionLight::GetDirection() const
 	{
 		return direction;
 	}
 
-	DirectX::SimpleMath::Color DirectionLight::GetAmbiemt()
+	const DXSimp::Color& DirectionLight::GetAmbiemt() const
 	{
 		return ambiemt;
 	}
 
-	DirectionLParameter DirectionLight::GetParameter()
+	DirectionLParameter DirectionLight::GetParameter() const
 	{
 		DirectionLParameter d;
 		d.base = parameter;

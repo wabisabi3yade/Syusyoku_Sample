@@ -6,7 +6,7 @@ namespace HashiTaku
 	struct SpotLParameter
 	{
 		LightParameter base;
-		DirectX::SimpleMath::Vector3 direction{ 0.0f, -1.0f, 0.0f };
+		DXSimp::Vector3 direction{ 0.0f, -1.0f, 0.0f };
 		float distance{ 5.0f };
 		float rangeAngle{ 45.0f };
 		float dummy1, dummy2, dummy3;
@@ -22,7 +22,7 @@ namespace HashiTaku
 		float rangeAngle;
 
 		// 光の方向
-		DirectX::SimpleMath::Vector3 lightDir;
+		DXSimp::Vector3 lightDir;
 	public:
 		SpotLight() : lightDistance(5.0f), rangeAngle(45.0f), lightDir(0.0f, -1.0f, 0.0f)
 		{
@@ -32,12 +32,12 @@ namespace HashiTaku
 
 		void SetDistance(float _distance);
 		void SetRangeAngle(float _rangeAngle);
-		void SetDirection(const DirectX::SimpleMath::Vector3& _direction);
+		void SetDirection(const DXSimp::Vector3& _direction);
 
 		// 各パラメータ取得
 		float GetDistance();
 		float GetRangeAngle();
-		const DirectX::SimpleMath::Vector3& GetLightDir();
+		const DXSimp::Vector3& GetLightDir();
 
 		SpotLParameter GetParameter();
 	};

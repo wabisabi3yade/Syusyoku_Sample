@@ -112,11 +112,12 @@ namespace HashiTaku
 		ResetParameter();
 	}
 
-	void Geometory::AddLine(const DirectX::SimpleMath::Vector3& _start, const DirectX::SimpleMath::Vector3& _end, const DirectX::SimpleMath::Color& _color)
+	void Geometory::AddLine(const DXSimp::Vector3& _start, const DXSimp::Vector3& _end, const DXSimp::Color& _color)
 	{
 		LineVertex line;
 		line.position = _start;
 		line.color = _color;
+	
 		drawLines.push_back(line);
 
 		line.position = _end;

@@ -26,6 +26,8 @@ namespace HashiTaku
 
 		pGameInput = std::make_unique<GameInput>();
 
+		pShadowDrawer = std::make_unique<ShadowDrawer>(pSceneLights->GetDirectionLight());
+
 		// Nullオブジェクトを作成
 		pMainCamera = new CP_CameraNull();
 		isNullCamera = true;
@@ -48,9 +50,11 @@ namespace HashiTaku
 		// シーンオブジェクトだけ先に解放する
 		pSceneObjects.reset();
 		pSceneLights.reset();
+		pShadowDrawer.reset();
 
 		pSceneObjects = std::make_unique<SceneObjects>();
 		pSceneLights = std::make_unique<SceneLights>();
+		pShadowDrawer = std::make_unique<ShadowDrawer>(pSceneLights->GetDirectionLight());
 	}
 
 	CP_Camera& InSceneSystemManager::GetMainCamera()
@@ -77,6 +81,16 @@ namespace HashiTaku
 	GameInput& InSceneSystemManager::GetInput()
 	{
 		return *pGameInput;
+	}
+
+	ShadowDrawer& InSceneSystemManager::GetShadowDrawer()
+	{
+		return *pShadowDrawer;
+	}
+
+	bool InSceneSystemManager::GetIsNullCamera() const
+	{
+		return isNullCamera;
 	}
 
 	void InSceneSystemManager::SetCamera(CP_Camera& _camera)

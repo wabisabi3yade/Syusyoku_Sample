@@ -96,7 +96,7 @@ namespace HashiTaku
 		return pTargetAccepter;
 	}
 
-	const DirectX::SimpleMath::Vector2& PlayerAction::GetInputLeftStick() const
+	const DXSimp::Vector2& PlayerAction::GetInputLeftStick() const
 	{
 		return  pInput->GetValue(GameInput::ValueType::Player_Move);
 	}
@@ -162,7 +162,7 @@ namespace HashiTaku
 	}
 
 	void PlayerAction::OnDamage(const AttackInformation& _atkInfo,
-		const DirectX::SimpleMath::Vector3& _attackerPos,
+		const DXSimp::Vector3& _attackerPos,
 		bool* _pAcceptDamage)
 	{
 		pCurrentController->OnDamage(_atkInfo,

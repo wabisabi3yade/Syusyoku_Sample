@@ -22,7 +22,7 @@ namespace HashiTaku
 
 		/// @brief そのオブジェクトのワールド座標を取得
 		/// @return ワールド座標を取得
-		const DirectX::SimpleMath::Vector3& GetWorldPos() const override;
+		const DXSimp::Vector3& GetWorldPos() const override;
 
 		/// @brief ターゲットする側を取得する
 		/// @param _targeter ターゲットする側
@@ -47,7 +47,13 @@ namespace HashiTaku
 		/// @param _attackerPos 攻撃した側の座標
 		/// @return ダメージを受けたか？
 		bool OnDamageBehavior(const AttackInformation& _attackInfo,
-			const DirectX::SimpleMath::Vector3& _attackerPos) override;
+			const DXSimp::Vector3& _attackerPos) override;
+
+		/// @brief ダメージ受けたときの処理
+		/// @param _attackInfo 攻撃情報
+		/// @param _contactPos 衝突地点
+		void OnTakeDamage(const AttackInformation& _attackInfo,
+			const DXSimp::Vector3& _contactPos) override;
 
 		/// @brief 死んだときの処理
 		void OnDeathBehavior() override {};

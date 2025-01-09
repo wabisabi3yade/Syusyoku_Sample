@@ -15,6 +15,7 @@ struct VS_OUT
     float2 uv : TEXCOORD0;
     float3 normal : NORMAL0;
     float4 worldPos : POSITION0;
+    float4 lightSpacePos : POSITION1;
 };
 
 cbuffer WVP : register(b0)
@@ -27,6 +28,13 @@ cbuffer WVP : register(b0)
 cbuffer BoneMatrixBuffer : register(b1)
 {
     matrix BoneMatrix[100];
+}
+
+cbuffer LightWVP : register(b2)
+{
+    float4x4 Lworld;
+    float4x4 Lview;
+    float4x4 Lproj;
 }
 
 VS_OUT main(VS_IN vin)
@@ -55,13 +63,15 @@ VS_OUT main(VS_IN vin)
     vout.normal = Normal;
 	
     vout.pos = mul(vout.pos, world);
-
-    // ピクセルシェーダーでワールド座標を使用するので
-    vout.worldPos = vout.pos;
-
+    vout.worldPos = vout.pos; // ピクセルシェーダーでワールド座標を使用するので
     vout.pos = mul(vout.pos, view);
     vout.pos = mul(vout.pos, proj);
-
+    
+    // ライトビュー上での座標
+    vout.lightSpacePos = mul(vout.worldPos, Lview);
+    vout.lightSpacePos = mul(vout.lightSpacePos, Lproj);
+    
+    
     vout.uv = vin.uv;
     
     // スケール成分を除く

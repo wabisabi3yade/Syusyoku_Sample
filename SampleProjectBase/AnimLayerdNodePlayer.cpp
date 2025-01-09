@@ -20,33 +20,29 @@ namespace HashiTaku
 
 		AnimNodePlayer_Base::ProgressPlayRatio(_controllerSpeed);
 
-		// 0徐算防止
+		
 
 		float speed =
 			GetPlayerSpeed() *
 			layerdNode.GetBlendCurveSpeed(curBlendPlayRatio) *
 			pPlayAnimNode->GetPlaySpeedTimes();
 
+		// 0徐算防止
+		float animTime = std::max(layerdNode.GetBlendAnimationTime(), Mathf::epsilon);
+
 		// 進める
-		curBlendPlayRatio += speed * deltaTime / layerdNode.GetBlendAnimationTime();
-
-		//// ループしたくなったら対応させます
-		//curBlendPlayRatio = std::min(curBlendPlayRatio, 1.0f);
-
+		curBlendPlayRatio += speed * deltaTime / animTime;
 		if (curBlendPlayRatio > 1.0f)
 			curBlendPlayRatio -= 1.0f;
 	}
 
 	void AnimLayerdNodePlayer::Update(std::vector<BoneTransform>& _outTransforms)
 	{
-		_outTransforms.resize(pAssetBoneList->GetBoneCnt());
-
 		//ボーン数ループ
 		const LayerdAnimationNode& layerdNode = static_cast<const LayerdAnimationNode&>(*pPlayAnimNode);
 
 		// 再生時間から各パラメータを取得
 		layerdNode.GetAnimTransform(_outTransforms, GetCurPlayRatio(), curBlendPlayRatio);
-
 	}
 
 	void AnimLayerdNodePlayer::CalcRootMotionPosSpeed()
@@ -63,11 +59,11 @@ namespace HashiTaku
 			(allPlaySpeed / nodePlaySpeed);
 	}
 
-	DirectX::SimpleMath::Vector3 AnimLayerdNodePlayer::GetRootMotionPos(float _ratio, bool _isWorldScaling) const
+	DXSimp::Vector3 AnimLayerdNodePlayer::GetRootMotionPos(float _ratio, bool _isWorldScaling) const
 	{
 		const LayerdAnimationNode& layerdNode = static_cast<const  LayerdAnimationNode&>(*pPlayAnimNode);
 
-		DirectX::SimpleMath::Vector3 rootMotionPos = layerdNode.GetRootMotionPos(_ratio);
+		DXSimp::Vector3 rootMotionPos = layerdNode.GetRootMotionPos(_ratio);
 
 		// ロード時の回転量と、スケールを掛ける
 		if (_isWorldScaling)

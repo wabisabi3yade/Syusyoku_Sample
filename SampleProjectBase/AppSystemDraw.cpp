@@ -2,6 +2,7 @@
 #include "AppSystemDraw.h"
 #include "AssetDisplay.h"
 #include "DX11BulletPhisics.h"
+#include "InSceneSystemManager.h"
 
 namespace HashiTaku
 {
@@ -38,6 +39,17 @@ namespace HashiTaku
 
 		AssetDisplay::Draw();
 
+		ImGuiRenderTarget();
+
 		ImGui::End();
+	}
+	void AppSystemDraw::ImGuiRenderTarget()
+	{
+		if (!ImGuiMethod::TreeNode("RenderTarget")) return;
+
+		auto& pShadowDrawer = InSceneSystemManager::GetInstance()->GetShadowDrawer();
+		pShadowDrawer.ImGuiCall();
+
+		ImGui::TreePop();
 	}
 }

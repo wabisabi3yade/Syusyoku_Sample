@@ -273,7 +273,7 @@ namespace HashiTaku
 
 		// マウス編集
 		ImPlotPoint mousePos = ImPlot::GetPlotMousePos();
-		DirectX::SimpleMath::Vector2 floatMousePos =
+		DXSimp::Vector2 floatMousePos =
 		{
 			static_cast<float>(mousePos.x),
 			static_cast<float>(mousePos.y)
@@ -365,7 +365,7 @@ namespace HashiTaku
 			// クリック時
 			if (ImGui::IsMouseDragging(0))
 			{
-				DirectX::SimpleMath::Vector2 vecDis;
+				DXSimp::Vector2 vecDis;
 				vecDis.x = static_cast<float>(mousePos.x) - editingPlot->time;
 
 				if (vecDis.x < 0.0f)

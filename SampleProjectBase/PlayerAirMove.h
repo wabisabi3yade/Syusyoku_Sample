@@ -7,7 +7,7 @@ namespace HashiTaku
 	class PlayerAirMove : public PlayerAirState
 	{
 		/// @brief ˆÚ“®•ûŒü
-		DirectX::SimpleMath::Vector3 moveVector;
+		DXSimp::Vector3 moveVector;
 
 		/// @brief Œ»İ‚Ì‘¬“x
 		float currentSpeed;

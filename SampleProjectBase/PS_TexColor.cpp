@@ -5,7 +5,7 @@ namespace HashiTaku
 {
 	PS_TexColor::PS_TexColor()
 	{
-		bufferTypes.resize(1);
+		bufferTypes.resize(2);
 		bufferTypes[0] = BufferType::Material;
 	}
 }

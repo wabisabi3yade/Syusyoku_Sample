@@ -8,7 +8,7 @@ namespace HashiTaku
 {
 	namespace Bullet
 	{
-		namespace DX = DirectX::SimpleMath;
+		namespace DX = DXSimp;
 
 		btScalar ToBtScalar(float _dxScalar);
 

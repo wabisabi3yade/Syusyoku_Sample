@@ -45,7 +45,7 @@ namespace HashiTaku
 		/// @brief UV座標をセット
 		/// @param _startUV 開始UV
 		/// @param _endUV 終点UV
-		void SetUV(const DirectX::SimpleMath::Vector2& _startUV, const DirectX::SimpleMath::Vector2& _endUV);
+		void SetUV(const DXSimp::Vector2& _startUV, const DXSimp::Vector2& _endUV);
 
 		/// @brief α値をセット
 		/// @param _alpha α値

@@ -5,14 +5,14 @@ namespace HashiTaku
 	/// @brief Vector3型パラメータのアニメーションキー
 	struct AnimKey_V3
 	{
-		DirectX::SimpleMath::Vector3 parameter;
+		DXSimp::Vector3 parameter;
 		float startKeyNum;	// 開始のキー数
 	};
 
 	/// @brief Quaternion型パラメータのアニメーションキー
 	struct AnimKey_Q
 	{
-		DirectX::SimpleMath::Quaternion parameter;
+		DXSimp::Quaternion parameter;
 		float startKeyNum;	// 開始のキー数
 	};
 
@@ -40,17 +40,17 @@ namespace HashiTaku
 		/// @brief 座標キーを追加
 		/// @param _startTime 開始キー数
 		/// @param _position 座標
-		void AddPosKey(float _startKeyNum, const DirectX::SimpleMath::Vector3& _position);
+		void AddPosKey(float _startKeyNum, const DXSimp::Vector3& _position);
 
 		/// @brief スケールキーを追加
 		/// @param _startTime 開始キー数
 		/// @param _scale スケール値
-		void AddScaleKey(float _startKeyNum, const DirectX::SimpleMath::Vector3& _scale);
+		void AddScaleKey(float _startKeyNum, const DXSimp::Vector3& _scale);
 
 		/// @brief クォータニオンキーを追加
 		/// @param _startTime 開始キー数
 		/// @param _quaternion クォータニオン
-		void AddQuatKey(float _startKeyNum, const DirectX::SimpleMath::Quaternion& _quaternion);
+		void AddQuatKey(float _startKeyNum, const DXSimp::Quaternion& _quaternion);
 
 		/// @brief ルートノードのとき移動パラメータをリセットする
 		void ResetKeys();

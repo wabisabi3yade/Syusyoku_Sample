@@ -15,7 +15,8 @@ namespace HashiTaku
 			Low, // 低
 			Mid,	// 中
 			High,	// 高
-			SuperHigh	// 最大
+			SuperHigh,	// 最大
+			MaxNum
 		};
 
 	private:
@@ -25,11 +26,11 @@ namespace HashiTaku
 		/// @brief カメラを揺らすパラメータ
 		PerlinShakeParameter pCamShakeParam;
 
+		/// @brief ヒット音のパラメータ
+		PlaySoundParameter hitSoundParameter;
+
 		/// @brief 攻撃時のダメージ
 		float atkDamage;
-
-		/// @brief ヒットストップで止めるフレーム数
-		u_int hitStopFrame;
 
 		/// @brief 攻撃レベル
 		AttackLevel atkLevel;
@@ -44,10 +45,6 @@ namespace HashiTaku
 		/// @param _atkDamage ダメージ値
 		void SetDamageValue(float _atkDamage);
 
-		/// @brief ヒットストップで止めるフレーム数を取得
-		/// @return ヒットストップ数
-		void SetHitStopFlame(u_int _hitStopFlame);
-
 		/// @brief 攻撃レベルをセット
 		/// @param _atkLevel 攻撃レベル
 		void SetAttackLevel(AttackLevel _atkLevel);
@@ -59,6 +56,10 @@ namespace HashiTaku
 		/// @brief カメラを揺らすパラメータを取得
 		/// @return カメラを揺らすパラメータ
 		const PerlinShakeParameter& GetCamShakeParam() const;
+
+		/// @brief ヒットSEを取得
+		/// @return ヒットSE
+		const PlaySoundParameter& GetHitSEParam() const;
 
 		/// @brief ダメージ値を取得
 		/// @return ダメージ値
@@ -74,27 +75,31 @@ namespace HashiTaku
 
 		/// @brief カメラを揺らすかどうか
 		/// @return カメラ揺らす？
-		bool GetIsShake() const;
+		bool GetIsCamShake() const;
+
+		/// @brief パッド振動力を取得
+		/// @return パッド振動の力
+		float GetPadShakePower() const;
+
+		/// @brief パッド振動の時間取得
+		/// @return パッド振動時間
+		float GetPadShakeTime() const;
 
 		json Save() override;
 		void Load(const json& _data) override;
 	protected:
+
 		void ImGuiDebug() override;
 	private:
-		/// @brief 攻撃レベルから各パラメータを適用
-		void ApplyFromAttackLevel();
+
+		// 攻撃レベルで変更するパラメータ
+		void ImGuiLevelParamerter();
 	private:
-		// Low
-		static constexpr u_int LOW_HITSTOP = 0;
+		static std::array<u_int, static_cast<u_int>(AttackLevel::MaxNum)> hitStopFrames;
 
-		// Mid
-		static constexpr u_int MID_HITSTOP = 3;
+		static std::array<float, static_cast<u_int>(AttackLevel::MaxNum)> padShakePowers;
 
-		// High
-		static constexpr u_int HIGH_HITSTOP = 5;
-
-		// SuperHigh
-		static constexpr u_int SUPERHIGH_HITSTOP = 8;
+		static std::array<float, static_cast<u_int>(AttackLevel::MaxNum)> padShakeTimes;
 	};
 }
 

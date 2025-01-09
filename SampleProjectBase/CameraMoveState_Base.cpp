@@ -73,7 +73,7 @@ namespace HashiTaku
 		pCamController->ChangeState(_camState, _isForce);
 	}
 
-	void CameraMoveState_Base::SetBasePosition(const DirectX::SimpleMath::Vector3& _basePos)
+	void CameraMoveState_Base::SetBasePosition(const DXSimp::Vector3& _basePos)
 	{
 		pCamController->SetCameraBasePos(_basePos);
 	}
@@ -83,7 +83,7 @@ namespace HashiTaku
 		return pCamController->GetCamera();
 	}
 
-	const DirectX::SimpleMath::Vector3& CameraMoveState_Base::GetFollowPosition() const
+	const DXSimp::Vector3& CameraMoveState_Base::GetFollowPosition() const
 	{
 		const Transform* pObj = pCamController->GetFollowTransform();
 
@@ -97,7 +97,7 @@ namespace HashiTaku
 		return pObj->GetPosition();
 	}
 
-	const DirectX::SimpleMath::Vector3& CameraMoveState_Base::GetBasePosition() const
+	const DXSimp::Vector3& CameraMoveState_Base::GetBasePosition() const
 	{
 		return pCamController->GetCameraBasePos();
 	}

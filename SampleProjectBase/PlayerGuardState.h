@@ -8,8 +8,11 @@ namespace HashiTaku
 		/// @brief パリィ時のエフェクト情報
 		CreateVfxInfo parryEffectInfo;
 
+		/// @brief パリィの効果音
+		std::list<PlaySoundParameter> parrySoundParameters;
+
 		/// @brief パリィエフェクトを生成する場所のオフセット(オブジェクトから)
-		DirectX::SimpleMath::Vector3 createVfxOffset;
+		DXSimp::Vector3 createVfxOffset;
 
 		/// @brief パリィできる状態の持続時間W
 		u_int sustainParryFrame;
@@ -31,7 +34,7 @@ namespace HashiTaku
 
 		/// @brief パリィできるか確認
 		/// @return パリィできるか？
-		bool GetCanParry(const DirectX::SimpleMath::Vector3& _enemyPos);
+		bool GetCanParry(const DXSimp::Vector3& _enemyPos);
 
 		/// @brief パリィ時の行動
 		void OnParry();
@@ -70,6 +73,9 @@ namespace HashiTaku
 
 		/// @brief パリィエフェクトを生成
 		void CreateParryVfx();
+
+		/// @brief 効果音を鳴らす
+		void PlayParrySE();
 
 		void ImGuiDebug() override;
 	private:

@@ -24,7 +24,7 @@ namespace HashiTaku
 		std::vector<const CP_RigidBody*> attackedRbs;
 
 		/// @brief この武器を持つオブジェクトの座標
-		const DirectX::SimpleMath::Vector3* pHaveObjectPos;
+		const DXSimp::Vector3* pHaveObjectPos;
 
 		/// @brief 攻撃タグの数
 		u_int attackTagCnt;
@@ -54,7 +54,7 @@ namespace HashiTaku
 
 		/// @brief 所有オブジェクトの座標のポインタ
 		/// @param _pWorldPos ワールド座標
-		void SetHaveObjPosPointer(const DirectX::SimpleMath::Vector3* _pWorldPos);
+		void SetHaveObjPosPointer(const DXSimp::Vector3* _pWorldPos);
 
 		/// @brief 攻撃済みコリジョンをリセット
 		void ClearAttackedRb();

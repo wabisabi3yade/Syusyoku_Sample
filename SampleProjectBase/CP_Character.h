@@ -17,9 +17,6 @@ namespace HashiTaku
 		/// @brief 死んだフラグ
 		bool isDead;
 
-		/// @brief 
-		bool isMove;
-
 		/// @brief ヒットストップ中か？
 		bool isHitStopping;
 
@@ -67,7 +64,7 @@ namespace HashiTaku
 		/// @brief ダメージを受けたときの処理
 		/// @param _attackInfo 攻撃情報
 		void OnDamage(const AttackInformation& _attackInfo,
-			const DirectX::SimpleMath::Vector3& _attackerPos,
+			const DXSimp::Vector3& _attackerPos,
 			const DXSimp::Vector3& _contactPos) override;
 
 		/// @brief 死んだときの処理
@@ -110,7 +107,13 @@ namespace HashiTaku
 		/// @param _attackerPos 攻撃した側の座標
 		/// @return ダメージを受けたか？
 		virtual bool OnDamageBehavior(const AttackInformation& _attackInfo,
-			const DirectX::SimpleMath::Vector3& _attackerPos) = 0;
+			const DXSimp::Vector3& _attackerPos) = 0;
+
+		/// @brief ダメージ受けたときの処理
+		/// @param _attackInfo 攻撃情報
+		/// @param _contactPos 衝突地点
+		virtual void OnTakeDamage(const AttackInformation& _attackInfo,
+			const DXSimp::Vector3& _contactPos);
 
 		/// @brief 各クラスのダメージを受けたときの処理
 		/// @param _attackInfo 攻撃情報
@@ -122,16 +125,16 @@ namespace HashiTaku
 		/// @brief カメラ移動クラスを準備
 		void SetupCameraMove();
 
-		/// @brief ダメージ受けたときの処理
-		/// @param _attackInfo 攻撃情報
-		/// @param _contactPos 衝突地点
-		void OnTakeDamage(const AttackInformation& _attackInfo,
-			const DXSimp::Vector3& _contactPos);
-
 		/// @brief ヒットエフェクトを出す
 		/// @param _attackInfo 攻撃情報
 		/// @param 当たり判定の衝突地点
 		void CreateHitVfx(const AttackInformation& _attackInfo,
-			const DirectX::SimpleMath::Vector3& _contactPos);
+			const DXSimp::Vector3& _contactPos);
+
+		/// @brief SEを再生
+		/// @param _attackInfo 攻撃情報
+		/// @param 当たり判定の衝突地点
+		void CreateSoundFX(const AttackInformation& _attackInfo,
+			const DXSimp::Vector3& _contactPos);
 	};
 }

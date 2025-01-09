@@ -60,7 +60,7 @@ namespace HashiTaku
 
 	void PlayerRushAttack::UpdateBehavior()
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 
 		PlayerAttackState::UpdateBehavior();
 

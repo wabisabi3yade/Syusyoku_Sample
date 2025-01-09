@@ -6,7 +6,7 @@ namespace HashiTaku
 	class CP_BoxCollider : public CP_Collider
 	{
 		/// @brief 長さ
-		DirectX::SimpleMath::Vector3 length;
+		DXSimp::Vector3 length;
 
 		// AABBフラグ
 		bool isAABB = false;
@@ -17,11 +17,11 @@ namespace HashiTaku
 
 		/// @brief 長さをセットする
 		/// @param _length 
-		void SetLength(const DirectX::SimpleMath::Vector3& _length);
+		void SetLength(const DXSimp::Vector3& _length);
 
 		/// @brief 長さを取得する
 		/// @return ボックスの長さ
-		const DirectX::SimpleMath::Vector3& GetLength()const;
+		const DXSimp::Vector3& GetLength()const;
 
 		json Save() override;
 		void Load(const json& _data) override;
@@ -40,7 +40,7 @@ namespace HashiTaku
 
 		/// @brief ワールド座標に計算
 		/// @param ワールド座標での長さ
-		void CalcWorldLength(DirectX::SimpleMath::Vector3& _out);
+		void CalcWorldLength(DXSimp::Vector3& _out);
 
 		void ImGuiDebug() override;
 	};

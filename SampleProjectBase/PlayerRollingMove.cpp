@@ -25,7 +25,7 @@ namespace HashiTaku
 
 	void PlayerRollingMove::UpdateBehavior()
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 		PlayerGroundState::UpdateBehavior();
 
 		// ˆÚ“®
@@ -50,7 +50,7 @@ namespace HashiTaku
 
 	void PlayerRollingMove::TurnInputVec()
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 		Transform& transform = GetPlayer().GetTransform();
 
 		// Œü‚­•ûŒü‚ğ‹‚ß‚é
@@ -83,7 +83,7 @@ namespace HashiTaku
 
 	void PlayerRollingMove::Move()
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 
 		float deltaTime = DeltaTime();
 		if (deltaTime < Mathf::epsilon) return;

@@ -6,7 +6,7 @@ namespace HashiTaku
 	/// @brief イージングテスト用
 	class CP_EaseTest : public Component
 	{
-		DirectX::SimpleMath::Color color;
+		DXSimp::Color color;
 
 		EaseKind nowEase;
 

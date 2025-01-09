@@ -7,10 +7,10 @@ namespace HashiTaku
 	class CP_Camera : public Component
 	{
 		/// @brief カメラの上ベクトル
-		DirectX::SimpleMath::Vector3 camUp{ Vec3::Up };
+		DXSimp::Vector3 camUp{ Vec3::Up };
 
 		/// @brief カメラの上ベクトル
-		DirectX::SimpleMath::Vector3 target{ Vec3::Forward };
+		DXSimp::Vector3 target{ Vec3::Forward };
 
 		/// @brief 視野角
 		float fov;
@@ -46,13 +46,13 @@ namespace HashiTaku
 		virtual void SetViewportSlot(u_int _slot);
 
 		/// @brief カメラの上ベクトル
-		virtual const DirectX::SimpleMath::Vector3& GetCamUp() const;
+		virtual const DXSimp::Vector3& GetCamUp() const;
 
 		/// @brief カメラの座標
-		virtual const DirectX::SimpleMath::Vector3& GetEyePos() const;
+		virtual const DXSimp::Vector3& GetEyePos() const;
 
 		/// @brief カメラの注視点
-		virtual const DirectX::SimpleMath::Vector3& GetTarget() const;
+		virtual const DXSimp::Vector3& GetTarget() const;
 
 		/// @brief 視野角を取得(deg)
 		/// @return 視野角
@@ -110,16 +110,16 @@ namespace HashiTaku
 		void SetViewportSlot(u_int _slot) {}
 
 		/// @brief カメラの上ベクトル
-		const DirectX::SimpleMath::Vector3& GetCamUp() const override { return Vec3::Up; }
+		const DXSimp::Vector3& GetCamUp() const override { return Vec3::Up; }
 
 		/// @brief カメラの座標
-		const DirectX::SimpleMath::Vector3& GetEyePos() const override
+		const DXSimp::Vector3& GetEyePos() const override
 		{
-			return DirectX::SimpleMath::Vector3::Zero;
+			return DXSimp::Vector3::Zero;
 		}
 
 		/// @brief カメラの注視点
-		const DirectX::SimpleMath::Vector3& GetTarget() const override
+		const DXSimp::Vector3& GetTarget() const override
 		{
 			return Vec3::Forward;
 		};

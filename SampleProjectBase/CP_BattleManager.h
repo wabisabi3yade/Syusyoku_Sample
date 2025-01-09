@@ -49,6 +49,9 @@ namespace HashiTaku
 		/// @brief 敵全体リスト
 		EnemyList enemyList;
 
+		/// @brief 戦闘BGMのパラメータ
+		PlaySoundParameter battleBGMParameter;
+
 		/// @brief フェード
 		CP_Fade* pFade{ nullptr };
 
@@ -72,7 +75,7 @@ namespace HashiTaku
 
 		/// @brief XZ座標のエリア制限
 		// x : X_R,	y: X_L, z : Y_T, w : Y_B
-		DirectX::SimpleMath::Vector4 moveAreaRect;
+		DXSimp::Vector4 moveAreaRect;
 
 		/// @brief 演出の経過時間
 		float animationElapsedTime{ 0.0f };
@@ -140,6 +143,9 @@ namespace HashiTaku
 		/// @brief フェードを開始する
 		void FadeStart();
 
+		/// @brief 戦闘BGMを開始する
+		void PlayBGM();
+
 		/// @brief スタート状態開始時の処理
 		void OnBeginStart();
 
@@ -154,7 +160,6 @@ namespace HashiTaku
 
 		/// @brief 勝利時の更新処理
 		void LoseUpdate();
-
 
 		/// @brief キャラクターの移動制限更新処理
 		void MoveAreaUpdate();

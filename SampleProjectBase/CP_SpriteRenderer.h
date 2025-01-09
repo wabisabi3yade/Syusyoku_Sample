@@ -19,6 +19,12 @@ namespace HashiTaku
 		// マテリアル
 		Material* pMaterial{ nullptr };
 
+		/// @brief 描画する頂点シェーダー
+		VertexShader* pDrawVS;
+
+		/// @brief 描画するピクセルシェーダー
+		PixelShader* pDrawPS;
+
 		// マテリアルの準備
 		void MaterialSetup();
 
@@ -27,6 +33,7 @@ namespace HashiTaku
 
 	public:
 		CP_SpriteRenderer();
+		~CP_SpriteRenderer(){}
 
 		void Init() override;
 
@@ -49,5 +56,8 @@ namespace HashiTaku
 
 	private:
 		void ImGuiDebug() override;
+
+		// 使用するシェーダーをImGuiで
+		void ImGuiUseShader();
 	};
 }

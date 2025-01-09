@@ -17,7 +17,7 @@ namespace HashiTaku
         return 0.5f * (a + (b * _ratio) + (c * _ratio * _ratio) + (d * _ratio * _ratio * _ratio));
     }
 
-    DirectX::SimpleMath::Quaternion CatmulSplineInterp::CalcQuaternion(const DirectX::SimpleMath::Quaternion& _from, const DirectX::SimpleMath::Quaternion& _to, const DirectX::SimpleMath::Quaternion& _prev, const DirectX::SimpleMath::Quaternion& _next, float _ratio)
+    DXSimp::Quaternion CatmulSplineInterp::CalcQuaternion(const DXSimp::Quaternion& _from, const DXSimp::Quaternion& _to, const DXSimp::Quaternion& _prev, const DXSimp::Quaternion& _next, float _ratio)
     {
         // 接線ベクトルの計算
         Quaternion T1 = Quat::Multiply(Quaternion::Slerp(_prev, _to, 0.5f), XMQuaternionConjugate(_from));

@@ -8,8 +8,6 @@
 
 namespace HashiTaku
 {
-	CP_Animation::BoneCombMtricies CP_Animation::boneCombBuffer;
-
 	// ボーン行列のスロット番号
 	constexpr int SHBUFFER_BONE_SLOT(1);
 
@@ -20,7 +18,7 @@ namespace HashiTaku
 
 	void CP_Animation::Init()
 	{
-		for (u_int i = 0; i < MAX_BONEMTX; i++)
+		for (u_int i = 0; i < BoneCombMtricies::MAX_BONEMTX; i++)
 		{
 			boneCombBuffer.matrix[i] = DXSimp::Matrix::Identity.Transpose();
 		}
@@ -47,6 +45,8 @@ namespace HashiTaku
 
 		// コンビネーション行列を更新
 		UpdateBoneCombMtx();
+
+		UpdateBoneBuffer();
 	}
 
 	void CP_Animation::Draw()
@@ -192,7 +192,7 @@ namespace HashiTaku
 		pAnimConPlayer->RemoveChangeAnimObserver(_observer);
 	}
 
-	const DirectX::SimpleMath::Vector3& CP_Animation::GetMotionPosSpeedPerSec() const
+	const DXSimp::Vector3& CP_Animation::GetMotionPosSpeedPerSec() const
 	{
 #ifdef EDIT
 		if (!pAnimConPlayer)
@@ -205,7 +205,7 @@ namespace HashiTaku
 		return pAnimConPlayer->GetCurNodePlayer().GetRootMotionSpeed();
 	}
 
-	DirectX::SimpleMath::Vector3 CP_Animation::GetCurAnimRMPos(float _ratio)
+	DXSimp::Vector3 CP_Animation::GetCurAnimRMPos(float _ratio)
 	{
 #ifdef EDIT
 		if (!pAnimConPlayer)
@@ -254,6 +254,11 @@ namespace HashiTaku
 		if (!pSkeletalMesh) return 0;
 
 		return pSkeletalMesh->GetBoneCnt();
+	}
+
+	BoneCombMtricies* CP_Animation::GetBoneBuffer()
+	{
+		return &boneCombBuffer;
 	}
 
 	json CP_Animation::Save()
@@ -355,7 +360,7 @@ namespace HashiTaku
 		UpdateNodeHierarchy(*pRootNode, posMtx);
 	}
 
-	void CP_Animation::UpdateNodeHierarchy(const TreeNode& _treeNode, 
+	void CP_Animation::UpdateNodeHierarchy(const TreeNode& _treeNode,
 		const DXSimp::Matrix& _parentMtx)
 	{
 		DXSimp::Matrix nodeMatrix = DXSimp::Matrix::Identity;
@@ -372,6 +377,9 @@ namespace HashiTaku
 
 			// コンビネーション行列を求める
 			moveBone.CreateCombMtx(_parentMtx);
+
+			// バッファとして用意しておく
+			boneCombBuffer.matrix[boneId] = moveBone.GetCombMtx().Transpose();
 		}
 
 		DXSimp::Matrix toWorldMtx = nodeMatrix * _parentMtx;
@@ -385,32 +393,32 @@ namespace HashiTaku
 
 	void CP_Animation::UpdateBoneBuffer()
 	{
-		if (!pSkeletalMesh) return;
+		//if (!pSkeletalMesh) return;
 
-		if (pMoveBoneList)	// 動かすボーンがあるか
-		{
-			u_int bufferCnt = static_cast<u_int>(pMoveBoneList->GetBoneCnt());
-			// ボーン数ループ
-			for (u_int b_i = 0; b_i < bufferCnt; b_i++)
-			{
-				const Bone& bone = *pMoveBoneList->GetBone(b_i);
+		//if (pMoveBoneList)	// 動かすボーンがあるか
+		//{
+		//	u_int bufferCnt = static_cast<u_int>(pMoveBoneList->GetBoneCnt());
+		//	// ボーン数ループ
+		//	for (u_int b_i = 0; b_i < bufferCnt; b_i++)
+		//	{
+		//		const Bone& bone = *pMoveBoneList->GetBone(b_i);
 
-				// ボーンのID番目に行列を入れる
-				boneCombBuffer.matrix[bone.GetIndex()] = bone.GetCombMtx();
+		//		// ボーンのID番目に行列を入れる
+		//		boneCombBuffer.matrix[bone.GetIndex()] = bone.GetCombMtx();
 
-				// シェーダーに渡すので転置行列を作成
-				boneCombBuffer.matrix[bone.GetIndex()] =
-					boneCombBuffer.matrix[bone.GetIndex()].Transpose();
-			}
-		}
+		//		// シェーダーに渡すので転置行列を作成
+		//		boneCombBuffer.matrix[bone.GetIndex()] =
+		//			boneCombBuffer.matrix[bone.GetIndex()].Transpose();
+		//	}
+		//}
 
-		// シェーダーにボーン行列を渡す
-		u_int mtrlCnt = pSkeletalMesh->GetMaterialNum();
-		for (u_int m_i = 0; m_i < mtrlCnt; m_i++)
-		{
-			Material* pMaterial = pSkeletalMesh->GetMaterial(m_i);
-			/*pMaterial->GetVertexShader().Map(1, &boneComb, sizeof(BoneCombMtricies));*/
-			pMaterial->GetVertexShader().UpdateSubResource(1, &boneCombBuffer);
-		}
+		//// シェーダーにボーン行列を渡す
+		//u_int mtrlCnt = pSkeletalMesh->GetMaterialNum();
+		//for (u_int m_i = 0; m_i < mtrlCnt; m_i++)
+		//{
+		//	Material* pMaterial = pSkeletalMesh->GetMaterial(m_i);
+		//	/*pMaterial->GetVertexShader().Map(1, &boneComb, sizeof(BoneCombMtricies));*/
+		//	pMaterial->GetVertexShader().UpdateSubResource(1, &boneCombBuffer);
+		//}
 	}
 }

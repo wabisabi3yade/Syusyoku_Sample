@@ -39,14 +39,14 @@ namespace HashiTaku
 		RemoveShapeFromRb();
 	}
 
-	void CP_Collider::SetCenterOffset(const DirectX::SimpleMath::Vector3& _offset)
+	void CP_Collider::SetCenterOffset(const DXSimp::Vector3& _offset)
 	{
 		centerOffset = _offset;
 		RemoveFromCompound();
 		AddToCompound();
 	}
 
-	void CP_Collider::SetAngleOffset(const DirectX::SimpleMath::Vector3& _offset)
+	void CP_Collider::SetAngleOffset(const DXSimp::Vector3& _offset)
 	{
 		angleOffset = _offset;
 		RemoveFromCompound();
@@ -168,7 +168,7 @@ namespace HashiTaku
 
 	void CP_Collider::AddToCompound()
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 
 		if (pCollisionShape)
 		{

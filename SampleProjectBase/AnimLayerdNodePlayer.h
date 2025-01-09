@@ -27,7 +27,7 @@ namespace HashiTaku
 		/// @param _ratio 割合
 		/// @param _isWorldScaling ワールドスケーリング適用するか？ 
 		/// @return ルートモーション移動量
-		DirectX::SimpleMath::Vector3 GetRootMotionPos(float _ratio, bool _isWorldScaling = true) const override;
+		DXSimp::Vector3 GetRootMotionPos(float _ratio, bool _isWorldScaling = true) const override;
 
 	private:
 		void ImGuiDebug() override;

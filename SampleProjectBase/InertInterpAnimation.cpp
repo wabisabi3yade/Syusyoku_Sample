@@ -58,7 +58,7 @@ namespace HashiTaku
 		lastBoneCache.isEnable = true;
 	}
 
-	DirectX::SimpleMath::Vector3 InertInterpAnimation::CalcBlendPos(u_int _boneIdx, float _blendingTime)
+	DXSimp::Vector3 InertInterpAnimation::CalcBlendPos(u_int _boneIdx, float _blendingTime)
 	{
 		float blendValue = CalcBlend(positionTransition[_boneIdx], _blendingTime);
 
@@ -68,7 +68,7 @@ namespace HashiTaku
 		return blendPos;
 	}
 
-	DirectX::SimpleMath::Vector3 InertInterpAnimation::CalcBlendScale(u_int _boneIdx, float _blendingTime)
+	DXSimp::Vector3 InertInterpAnimation::CalcBlendScale(u_int _boneIdx, float _blendingTime)
 	{
 		float blendValue = CalcBlend(scaleTransition[_boneIdx], _blendingTime);
 
@@ -78,7 +78,7 @@ namespace HashiTaku
 		return blendScale;
 	}
 
-	DirectX::SimpleMath::Quaternion InertInterpAnimation::CalcBlendRot(u_int _boneIdx, float _blendingTime)
+	DXSimp::Quaternion InertInterpAnimation::CalcBlendRot(u_int _boneIdx, float _blendingTime)
 	{
 		QuatTransition qT = rotationTransition[_boneIdx];
 		float blendValue = CalcBlend(qT, _blendingTime);
@@ -128,7 +128,7 @@ namespace HashiTaku
 
 	}
 
-	void InertInterpAnimation::InitTransition(VectorTransition& _transition, const DirectX::SimpleMath::Vector3& _requestPose, const DirectX::SimpleMath::Vector3& _lastPose, const DirectX::SimpleMath::Vector3& _secondLastPose, float _blendTime)
+	void InertInterpAnimation::InitTransition(VectorTransition& _transition, const DXSimp::Vector3& _requestPose, const DXSimp::Vector3& _lastPose, const DXSimp::Vector3& _secondLastPose, float _blendTime)
 	{
 
 		assert(lastBoneCache.deltaTime_s > 0.0f);
@@ -157,7 +157,7 @@ namespace HashiTaku
 	}
 
 
-	void InertInterpAnimation::InitTransition(QuatTransition& _transition, const DirectX::SimpleMath::Quaternion& _requestPose, const DirectX::SimpleMath::Quaternion& _lastPose, const DirectX::SimpleMath::Quaternion& _secondLastPose, float _blendTime)
+	void InertInterpAnimation::InitTransition(QuatTransition& _transition, const DXSimp::Quaternion& _requestPose, const DXSimp::Quaternion& _lastPose, const DXSimp::Quaternion& _secondLastPose, float _blendTime)
 	{
 		assert(lastBoneCache.deltaTime_s > 0.0f);
 

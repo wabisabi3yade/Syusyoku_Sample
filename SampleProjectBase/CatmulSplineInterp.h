@@ -21,10 +21,10 @@ namespace HashiTaku
 		/// @param _next パラメータ先の一つ先のパラメータ
 		/// @param _ratio 割合
 		/// @return 計算値
-		static DirectX::SimpleMath::Vector3 CalcVector3(const DirectX::SimpleMath::Vector3& _from, const DirectX::SimpleMath::Vector3& _to, const DirectX::SimpleMath::Vector3& _prev, const DirectX::SimpleMath::Vector3& _next, float _ratio);
+		static DXSimp::Vector3 CalcVector3(const DXSimp::Vector3& _from, const DXSimp::Vector3& _to, const DXSimp::Vector3& _prev, const DXSimp::Vector3& _next, float _ratio);
 
 
-		static DirectX::SimpleMath::Quaternion CalcQuaternion(const DirectX::SimpleMath::Quaternion& _from, const DirectX::SimpleMath::Quaternion& _to, const DirectX::SimpleMath::Quaternion& _prev, const DirectX::SimpleMath::Quaternion& next, float _ratio);
+		static DXSimp::Quaternion CalcQuaternion(const DXSimp::Quaternion& _from, const DXSimp::Quaternion& _to, const DXSimp::Quaternion& _prev, const DXSimp::Quaternion& next, float _ratio);
 
 	private:
 
@@ -35,6 +35,6 @@ namespace HashiTaku
 		/// @param _next 補間先の一つ先のパラメータ
 		/// @param _point1 導出した制御点1
 		/// @param _point2 導出した制御点2
-		/*static void CalcControlPoints(const DirectX::SimpleMath::Vector3& _from, const DirectX::SimpleMath::Vector3& _to, const DirectX::SimpleMath::Vector3& _prev, const DirectX::SimpleMath::Vector3& _next, DirectX::SimpleMath::Vector3& _point1, DirectX::SimpleMath::Vector3& _point2);*/
+		/*static void CalcControlPoints(const DXSimp::Vector3& _from, const DXSimp::Vector3& _to, const DXSimp::Vector3& _prev, const DXSimp::Vector3& _next, DXSimp::Vector3& _point1, DXSimp::Vector3& _point2);*/
 	};
 }

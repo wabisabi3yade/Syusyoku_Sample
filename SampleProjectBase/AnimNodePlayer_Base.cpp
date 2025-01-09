@@ -80,7 +80,7 @@ namespace HashiTaku
 		NotifyUpdate();
 	}
 
-	void AnimNodePlayer_Base::ApplyRootMotion(const DirectX::SimpleMath::Vector3& _rootMovement)
+	void AnimNodePlayer_Base::ApplyRootMotion(const DXSimp::Vector3& _rootMovement)
 	{
 		pObjectTransform->SetPosition(pObjectTransform->GetPosition() + _rootMovement);
 	}
@@ -140,7 +140,7 @@ namespace HashiTaku
 		return playerSpeedTimes;
 	}
 
-	void AnimNodePlayer_Base::GetCurrentRootPos(DirectX::SimpleMath::Vector3& _outPos, bool _isLoadScaling) const
+	void AnimNodePlayer_Base::GetCurrentRootPos(DXSimp::Vector3& _outPos, bool _isLoadScaling) const
 	{
 		_outPos = GetRootMotionPos(curPlayRatio, _isLoadScaling);
 	}
@@ -150,7 +150,7 @@ namespace HashiTaku
 		return pPlayAnimNode->GetNodeName();
 	}
 
-	const DirectX::SimpleMath::Vector3& AnimNodePlayer_Base::GetRootMotionSpeed() const
+	const DXSimp::Vector3& AnimNodePlayer_Base::GetRootMotionSpeed() const
 	{
 		return rootMotionPosSpeedPerSec;
 	}
@@ -207,15 +207,15 @@ namespace HashiTaku
 
 	void AnimNodePlayer_Base::OnPlayLoop()
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 
 		isJustLoop = true;
 		curPlayRatio = Mathf::Repeat(curPlayRatio, 1.0f);	// Ä¶Š„‡‚ð–ß‚·
 	}
 
-	DirectX::SimpleMath::Vector3 AnimNodePlayer_Base::CalcRootMotionToTransform()
+	DXSimp::Vector3 AnimNodePlayer_Base::CalcRootMotionToTransform()
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 
 		if (isJustLoop)	// ƒ‹[ƒv‚µ‚½‚È‚ç
 		{
@@ -260,9 +260,9 @@ namespace HashiTaku
 	}
 
 
-	void AnimNodePlayer_Base::ApplyLoadTransform(DirectX::SimpleMath::Vector3& _rootMotionPos) const
+	void AnimNodePlayer_Base::ApplyLoadTransform(DXSimp::Vector3& _rootMotionPos) const
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 
 		_rootMotionPos *= pAssetBoneList->GetLoadScale();
 		_rootMotionPos = Vector3::Transform(_rootMotionPos, Matrix::CreateFromQuaternion(pAssetBoneList->GetLoadRotation()));

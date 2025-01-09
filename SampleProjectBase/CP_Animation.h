@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "IBoneSupplier.h"
 #include "IAnimationObserver.h"
 #include "AnimControllPlayer.h"
 
@@ -10,21 +11,13 @@ namespace HashiTaku
 	class CP_MeshRenderer;
 
 	/// @brief アニメーションコンポーネント
-	class CP_Animation : public Component
+	class CP_Animation : public Component, public IBoneBufferSupplier
 	{
-		static constexpr u_int MAX_BONEMTX{ 100 };	// シェーダーの渡すボーン行列の最大数
-
-		// シェーダーに渡すボーン行列構造体
-		struct BoneCombMtricies
-		{
-			DirectX::SimpleMath::Matrix matrix[MAX_BONEMTX];
-		};
-
 		/// @brief ボーンのコンビネーション行列のバッファー
-		static BoneCombMtricies boneCombBuffer;
+		BoneCombMtricies boneCombBuffer;
 
 		/// @brief ルートボーンに対するオフセット行列
-		DirectX::SimpleMath::Matrix rootOffsetMtx;
+		DXSimp::Matrix rootOffsetMtx;
 
 		/// @brief スケルタルメッシュ
 		SkeletalMesh* pSkeletalMesh;
@@ -91,7 +84,6 @@ namespace HashiTaku
 		/// @param _playRatio 再生割合
 		void SetPlayRatio(float _playRatio);
 
-
 		/// @brief 指定したbool変数に値を取得
 		/// @param _paramName パラメーター名
 		/// @param _isBool 取得する値
@@ -116,11 +108,11 @@ namespace HashiTaku
 
 		/// @brief 現在再生しているアニメーションのルートモーションの座標移動速度を渡す
 		/// @return 座標移動速度(s)
-		const DirectX::SimpleMath::Vector3& GetMotionPosSpeedPerSec() const;
+		const DXSimp::Vector3& GetMotionPosSpeedPerSec() const;
 
 		/// @brief 現在のアニメーションのルートモーション座標を取得
 		/// @param 取得する割合
-		DirectX::SimpleMath::Vector3 GetCurAnimRMPos(float _ratio);
+		DXSimp::Vector3 GetCurAnimRMPos(float _ratio);
 
 		/// @brief プレイヤー再生速度を取得する
 		/// @return 現在の再生速度
@@ -137,6 +129,10 @@ namespace HashiTaku
 		/// @brief ボーン数を取得
 		/// @return ボーン数
 		u_int GetBoneCnt() const;
+
+		/// @brief ボーン行列のバッファを取得する
+		/// @return ボーン行列のバッファ(転置済み)
+		BoneCombMtricies* GetBoneBuffer() override;
 
 		json Save() override;
 		void Load(const json& _data) override;
@@ -165,7 +161,7 @@ namespace HashiTaku
 		/// @brief 子ノードのコンビネーション行列を更新する（再帰関数）
 		/// @param _treeNode 更新するノード
 		/// @param _parentMtx ワールド変換するための親までの行列
-		void UpdateNodeHierarchy(const TreeNode& _treeNode, const DirectX::SimpleMath::Matrix& _parentMtx);
+		void UpdateNodeHierarchy(const TreeNode& _treeNode, const DXSimp::Matrix& _parentMtx);
 
 		/// @brief ボーンのコンビネーション行列を更新
 		void UpdateAnimationMtx();

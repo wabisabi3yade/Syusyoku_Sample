@@ -2,18 +2,20 @@
 #include "CP_OutLineRenderer.h"
 #include "ShaderCollection.h"
 #include "GameObject.h"
+#include "CP_Animation.h"
 
 namespace HashiTaku
 {
 	VertexShader* CP_OutLineRenderer::pOutLineVS = nullptr;
+	VertexShader* CP_OutLineRenderer::pAnimationOutLineVS = nullptr;
 	PixelShader* CP_OutLineRenderer::pOutLinePS = nullptr;
 
 	constexpr auto VS_NAME = "VS_OutLine";
-	constexpr auto ANIMVS_NAME = "VS_OutLine";
+	constexpr auto ANIMVS_NAME = "VS_OutLineAnimation";
 	constexpr auto PS_NAME = "PS_OutLine";
 
 	CP_OutLineRenderer::CP_OutLineRenderer()
-		: pRenderMesh(nullptr)
+		: pUseVetrexShader(nullptr), pRenderMesh(nullptr), pBoneBuffer(nullptr)
 	{
 	}
 
@@ -22,9 +24,29 @@ namespace HashiTaku
 		GetShader();
 	}
 
+	json CP_OutLineRenderer::Save()
+	{
+		auto data = CP_Renderer::Save();
+
+		SaveJsonVector4("color", lineParameter.lineColor, data);
+		data["scale"] = lineParameter.lineScale;
+
+		return data;
+	}
+
+	void CP_OutLineRenderer::Load(const json& _data)
+	{
+		CP_Renderer::Load(_data);
+
+		LoadJsonColor("color", lineParameter.lineColor, _data);
+		LoadJsonFloat("scale", lineParameter.lineScale, _data);
+	}
+
 	void CP_OutLineRenderer::Start()
 	{
 		GetRenderMesh();
+
+		SetUseShader();
 	}
 
 	void CP_OutLineRenderer::Draw()
@@ -47,7 +69,8 @@ namespace HashiTaku
 		}
 
 		auto pRenderer = Direct3D11::GetInstance()->GetRenderer();
-		pRenderer->SetCullingMode(D3D11_CULL_NONE);
+		pRenderer->SetCullingMode(D3D11_CULL_BACK);
+		pRenderer->SerDepthWrite(true);
 	}
 
 	void CP_OutLineRenderer::DrawSetup()
@@ -56,6 +79,7 @@ namespace HashiTaku
 		RenderParam& rendererParam = pRenderer->GetParameter();
 
 		pRenderer->SetCullingMode(D3D11_CULL_BACK);
+		pRenderer->SerDepthWrite(false);
 
 		// シェーダーにバッファを送る
 		// (ここではライト、カメラ座標などの1ループで1度しか送らないものは送らない)
@@ -67,10 +91,19 @@ namespace HashiTaku
 		wvp.world = wvp.world.Transpose();
 
 		// バッファーを送る
-		pOutLineVS->UpdateSubResource(0, &wvp);
+		pUseVetrexShader->UpdateSubResource(0, &wvp);
+		pUseVetrexShader->UpdateSubResource(1, &lineParameter);
+
+		// アニメーションを行っているなら追加でバッファを送る
+		if (IsAnimation())
+		{
+			// コンビネーション行列
+			pUseVetrexShader->UpdateSubResource(2,
+				pBoneBuffer->GetBoneBuffer());
+		}
 
 		// GPUに送る
-		pOutLineVS->SetGPU();
+		pUseVetrexShader->SetGPU();
 		pOutLinePS->SetGPU();
 	}
 
@@ -81,6 +114,7 @@ namespace HashiTaku
 
 		ShaderCollection* pShCol = ShaderCollection::GetInstance();
 		pOutLineVS = pShCol->GetVertexShader(VS_NAME);
+		pAnimationOutLineVS = pShCol->GetVertexShader(ANIMVS_NAME);
 		pOutLinePS = pShCol->GetPixelShader(PS_NAME);
 	}
 
@@ -97,7 +131,22 @@ namespace HashiTaku
 
 		pRenderMesh = pMeshRender->GetRenderMesh();
 		// メッシュレンダラーより描画を遅くする
-		SetPriority(pMeshRender->GetPriority() - 1);
+		SetPriority(pMeshRender->GetPriority() + 1);
+	}
+
+	void CP_OutLineRenderer::SetUseShader()
+	{
+		// アニメーションコンポーネントがあれば、アニメーション用の頂点シェーダーにする
+		pBoneBuffer = GetGameObject().GetComponent<CP_Animation>();
+		if (pBoneBuffer)
+			pUseVetrexShader = pAnimationOutLineVS;
+		else
+			pUseVetrexShader = pOutLineVS;
+	}
+
+	bool CP_OutLineRenderer::IsAnimation() const
+	{
+		return pBoneBuffer != nullptr;
 	}
 
 	DXSimp::Matrix CP_OutLineRenderer::MakeLoadMatrix()
@@ -111,12 +160,7 @@ namespace HashiTaku
 
 	void CP_OutLineRenderer::ImGuiDebug()
 	{
-		if (ImGui::Button("Set Mesh"))
-		{
-			CP_MeshRenderer* pMeshRender = GetGameObject().GetComponent<CP_MeshRenderer>();
-			if (!pMeshRender) return;
-
-			pRenderMesh = pMeshRender->GetRenderMesh();
-		}
+		ImGui::ColorEdit4("Color", &lineParameter.lineColor.x);
+		ImGui::DragFloat("Scale", &lineParameter.lineScale, 0.001f, 0.0f, 100.0f);
 	}
 }

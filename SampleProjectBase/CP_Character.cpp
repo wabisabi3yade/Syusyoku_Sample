@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "CP_Character.h"
-#include "CP_HitStopManager.h"
 #include "GameObject.h"
 #include "InSceneSystemManager.h"
 
 namespace HashiTaku
 {
 	CP_Character::CP_Character() :
+		pCamMove(nullptr),
 		currentHP(0.0f),
 		maxHP(1.0f),
 		hsBeforeDeltaTime(0.0f),
@@ -46,7 +46,7 @@ namespace HashiTaku
 	}
 
 	void CP_Character::OnDamage(const AttackInformation& _attackInfo,
-		const DirectX::SimpleMath::Vector3& _attackerPos,
+		const DXSimp::Vector3& _attackerPos,
 		const DXSimp::Vector3& _contactPos)
 	{
 		if (isInvicible) return;
@@ -158,14 +158,8 @@ namespace HashiTaku
 	void CP_Character::OnTakeDamage(const AttackInformation& _attackInfo,
 		const DXSimp::Vector3& _contactPos)
 	{
-		// ヒットストップ
-		if (CP_HitStopManager* pHitStop = CP_HitStopManager::GetInstance())
-		{
-			pHitStop->HitStopBegin(_attackInfo.GetHitStopFlame());
-		}
-
 		// カメラを揺らす
-		if (_attackInfo.GetIsShake() && pCamMove)
+		if (_attackInfo.GetIsCamShake() && pCamMove)
 		{
 			pCamMove->ShakeCamera(_attackInfo.GetCamShakeParam());
 		}
@@ -174,13 +168,16 @@ namespace HashiTaku
 		// ヒットエフェクトを生成
 		CreateHitVfx(_attackInfo, _contactPos);
 
+		// ヒット音を再生
+		CreateSoundFX(_attackInfo, _contactPos);
+
 		// 体力がなくなったら
 		if (currentHP <= 0.0f)
 			OnDeath();
 	}
 
 	void CP_Character::CreateHitVfx(const AttackInformation& _attackInfo,
-		const DirectX::SimpleMath::Vector3& _contactPos)
+		const DXSimp::Vector3& _contactPos)
 	{
 		const CreateVfxInfo& hitVfxInfo = _attackInfo.GetHitVfxInfo();
 
@@ -190,5 +187,14 @@ namespace HashiTaku
 
 		// 再生
 		DX11EffecseerManager::GetInstance()->Play(hitVfxInfo, _contactPos);
+	}
+
+	void CP_Character::CreateSoundFX(const AttackInformation& _attackInfo, const DXSimp::Vector3& _contactPos)
+	{
+		CP_SoundManager* pSound = CP_SoundManager::GetInstance();
+		if (!pSound) return;
+
+		// 衝突地点に再生する
+		pSound->PlaySE(_attackInfo.GetHitSEParam(), _contactPos);
 	}
 }

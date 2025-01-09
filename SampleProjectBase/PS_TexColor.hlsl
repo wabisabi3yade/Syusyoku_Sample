@@ -17,7 +17,6 @@ struct TexParam
     float2 dummy;
 };
 
-
 cbuffer BufTexEnable : register(b0)
 {
     TexParam texParam;

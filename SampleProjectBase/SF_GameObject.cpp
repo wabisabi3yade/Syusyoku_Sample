@@ -15,7 +15,7 @@ namespace HashiTaku
 		return *sceneObjects.SetObject(std::move(_pAddObject));
 	}
 
-	//GameObject& ObjectFunc::Instantiate(const GameObject& _obj, const DirectX::SimpleMath::Vector3& _worldPos)
+	//GameObject& ObjectFunc::Instantiate(const GameObject& _obj, const DXSimp::Vector3& _worldPos)
 	//{
 	//	// 新しく確保、コピーする
 	//	std::unique_ptr<GameObject> pCreateObject = std::make_unique<GameObject>(_obj);

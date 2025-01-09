@@ -23,9 +23,9 @@ namespace HashiTaku
 		void DrawSprite(
 			const Sprite& _sprite,
 			Material& _material,
-			const DirectX::SimpleMath::Vector3& _pos,
-			const DirectX::SimpleMath::Vector3& _scale,
-			const DirectX::SimpleMath::Quaternion& _rotation,
+			const DXSimp::Vector3& _pos,
+			const DXSimp::Vector3& _scale,
+			const DXSimp::Quaternion& _rotation,
 			float _alpha
 		);
 	};

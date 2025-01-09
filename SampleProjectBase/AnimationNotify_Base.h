@@ -25,6 +25,12 @@ namespace HashiTaku
 			// カメラシェイク
 			ANE_CameraShake,
 
+			// パッド振動
+			ANE_PadShake,
+
+			/// @brief 効果音再生
+			ANE_PlaySound,
+
 			None
 		};
 

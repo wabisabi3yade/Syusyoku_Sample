@@ -11,7 +11,7 @@ namespace HashiTaku
 		AnimationCurve knockSpeedCurve;
 
 		/// @brief 吹っ飛ぶ方向(外部からセットする)
-		DirectX::SimpleMath::Vector3 knockVector;
+		DXSimp::Vector3 knockVector;
 
 		/// @brief ダメージ中に移動する距離
 		float maxKnockMoveSpeed;
@@ -29,7 +29,7 @@ namespace HashiTaku
 		~PlayerDamageState() {}
 
 		/// @brief 吹っ飛ぶベクトル
-		void SetKnockVec(const DirectX::SimpleMath::Vector3& _knockVec);
+		void SetKnockVec(const DXSimp::Vector3& _knockVec);
 
 		/// @brief セーブする
 		/// @return セーブデータ

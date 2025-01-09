@@ -30,17 +30,17 @@ namespace HashiTaku
 		return retVec3;
 	}
 
-	float Vec3::Dot(DirectX::SimpleMath::Vector3 _v1, DirectX::SimpleMath::Vector3 _v2)
+	float Vec3::Dot(DXSimp::Vector3 _v1, DXSimp::Vector3 _v2)
 	{
 		return DirectX::XMVector3Dot(_v1, _v2).m128_f32[0];
 	}
 
-	DirectX::SimpleMath::Vector3 Vec3::Cross(DirectX::SimpleMath::Vector3 _v1, DirectX::SimpleMath::Vector3 _v2)
+	DXSimp::Vector3 Vec3::Cross(DXSimp::Vector3 _v1, DXSimp::Vector3 _v2)
 	{
 		return DirectX::XMVector3Cross(_v1, _v2);
 	}
 
-	DirectX::SimpleMath::Vector3 Vec3::Max(const DirectX::SimpleMath::Vector3& _v3, float _floatVal)
+	DXSimp::Vector3 Vec3::Max(const DXSimp::Vector3& _v3, float _floatVal)
 	{
 		Vector3 retV3;
 		retV3.x = std::max<float>(_v3.x, _floatVal);
@@ -60,7 +60,7 @@ namespace HashiTaku
 		return retV;
 	}
 
-	DirectX::SimpleMath::Vector3 Vec3::WorldMtxToScale(const DirectX::SimpleMath::Matrix& _mtx)
+	DXSimp::Vector3 Vec3::WorldMtxToScale(const DXSimp::Matrix& _mtx)
 	{
 		Vector3 scale;
 
@@ -87,7 +87,7 @@ namespace HashiTaku
 			+ " z:" + std::to_string(_v.z);
 	}
 
-	DirectX::SimpleMath::Vector4 Vec4::Max(const DirectX::SimpleMath::Vector4& _v4, float _floatVal)
+	DXSimp::Vector4 Vec4::Max(const DXSimp::Vector4& _v4, float _floatVal)
 	{
 		Vector4 retV4;
 		retV4.x = std::max<float>(_v4.x, _floatVal);
@@ -97,7 +97,7 @@ namespace HashiTaku
 		return retV4;
 	}
 
-	void Quat::ToAxisAngle(const DirectX::SimpleMath::Quaternion& _q, DirectX::SimpleMath::Vector3& _axis, float& _angle)
+	void Quat::ToAxisAngle(const DXSimp::Quaternion& _q, DXSimp::Vector3& _axis, float& _angle)
 	{
 		// ‰ñ“]Šp“x‚ÌŒvŽZ
 		_angle = 2.0f * std::acos(_q.w);

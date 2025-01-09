@@ -51,6 +51,12 @@ namespace HashiTaku
 
 		// エフェクト
 		ResistComponnent<CP_VisualEffect>();
+		
+		// サウンド
+		ResistComponnent<CP_AudioListener>();
+
+		// システム
+		ResistComponnent<CP_SoundManager>();
 	}
 
 	std::unique_ptr<Component> ComponentFactory::CreateByName(const std::string& _componentName)

@@ -164,7 +164,7 @@ namespace HashiTaku
 			1.0f);
 	}
 
-	void CP_SkyBox::FaceTransform(FaceKind _facePlace, DirectX::SimpleMath::Vector3& _outPos, DirectX::SimpleMath::Vector3& _outScale, DirectX::SimpleMath::Vector3& _outAngles)
+	void CP_SkyBox::FaceTransform(FaceKind _facePlace, DXSimp::Vector3& _outPos, DXSimp::Vector3& _outScale, DXSimp::Vector3& _outAngles)
 	{
 		Transform& transform = GetTransform();
 

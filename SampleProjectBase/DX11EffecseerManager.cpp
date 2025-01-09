@@ -59,9 +59,9 @@ namespace HashiTaku
 
 	Effekseer::Handle DX11EffecseerManager::Play(const Effekseer::EffectRef& _effect,
 		float _playSpeed,
-		const DirectX::SimpleMath::Vector3& _pos,
-		const DirectX::SimpleMath::Vector3& _scale,
-		const DirectX::SimpleMath::Vector3& _eularAngles,
+		const DXSimp::Vector3& _pos,
+		const DXSimp::Vector3& _scale,
+		const DXSimp::Vector3& _eularAngles,
 		int _startFrame)
 	{
 		// Effekseerë§Ç≈çƒê∂ÇçsÇ§
@@ -83,8 +83,8 @@ namespace HashiTaku
 		return  handle;
 	}
 
-	Effekseer::Handle DX11EffecseerManager::Play(const CreateVfxInfo& _createVfx, const DirectX::SimpleMath::Vector3& _pos,
-		const DirectX::SimpleMath::Vector3& _eularAngles)
+	Effekseer::Handle DX11EffecseerManager::Play(const CreateVfxInfo& _createVfx, const DXSimp::Vector3& _pos,
+		const DXSimp::Vector3& _eularAngles)
 	{
 		if (!_createVfx.pHitVfx) return -1;
 
@@ -170,7 +170,7 @@ namespace HashiTaku
 		_outAngles.y = Quat::RotateToVector(vec).ToEuler().y * Mathf::radToDeg;
 	}
 
-	void DX11EffecseerManager::CreateEffekseerMtx(const DirectX::SimpleMath::Matrix& _dxMtx, Effekseer::Matrix44& _outMtx)
+	void DX11EffecseerManager::CreateEffekseerMtx(const DXSimp::Matrix& _dxMtx, Effekseer::Matrix44& _outMtx)
 	{
 		_outMtx.Values[0][0] = _dxMtx._11;
 		_outMtx.Values[0][1] = _dxMtx._12;
@@ -193,7 +193,7 @@ namespace HashiTaku
 		_outMtx.Values[3][3] = _dxMtx._44;
 	}
 
-	Effekseer::Vector3D DX11EffecseerManager::CreateEffekseerVector3(const DirectX::SimpleMath::Vector3& _dxVec3)
+	Effekseer::Vector3D DX11EffecseerManager::CreateEffekseerVector3(const DXSimp::Vector3& _dxVec3)
 	{
 		return Effekseer::Vector3D(_dxVec3.x, _dxVec3.y, _dxVec3.z);
 	}

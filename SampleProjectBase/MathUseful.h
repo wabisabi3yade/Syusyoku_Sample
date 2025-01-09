@@ -31,7 +31,7 @@ namespace HashiTaku
 
 	namespace Vec2
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 		/// @brief 絶対値を求める
 		/// @param _v 変数
 		/// @return 絶対値
@@ -45,7 +45,7 @@ namespace HashiTaku
 
 	namespace Vec3
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 
 		/// <summary>
 		/// 球面線形補間をする関数
@@ -82,7 +82,7 @@ namespace HashiTaku
 		/// @brief ワールド行列からスケールを求める
 		/// @param _mtx ワールド行列
 		/// @return スケール値
-		DirectX::SimpleMath::Vector3 WorldMtxToScale(const DirectX::SimpleMath::Matrix& _mtx);
+		DXSimp::Vector3 WorldMtxToScale(const DXSimp::Matrix& _mtx);
 
 		/// @brief 値を0から最大値までで正規化する
 		/// @param _v 正規化する値
@@ -99,12 +99,12 @@ namespace HashiTaku
 	namespace Vec4
 	{
 		/// @brief float型との最大値を求める
-		DirectX::SimpleMath::Vector4 Max(const DirectX::SimpleMath::Vector4& _v4, float _floatVal);
+		DXSimp::Vector4 Max(const DXSimp::Vector4& _v4, float _floatVal);
 	}
 
 	namespace Quat
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 
 		/// @brief クォータニオンから回転軸と回転角度を求める
 		/// @param _q クォータニオン
@@ -152,7 +152,7 @@ namespace HashiTaku
 
 	namespace Mtx
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 
 		// 真右ベクトル取得
 		Vector3 GetRightVector(const Matrix& _matrix);

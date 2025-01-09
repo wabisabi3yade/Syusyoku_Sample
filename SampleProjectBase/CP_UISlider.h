@@ -10,10 +10,10 @@ namespace HashiTaku
 	class CP_UISlider : public CP_UIRenderer, public IUISlider
 	{
 		/// @brief スライダー画像の中心座標
-		DirectX::SimpleMath::Vector3 sliderCenterPos;
+		DXSimp::Vector3 sliderCenterPos;
 
 		/// @brief スライダー画像のスケール
-		DirectX::SimpleMath::Vector2 sliderScale;
+		DXSimp::Vector2 sliderScale;
 
 		/// @brief 現在の値
 		float currentValue;

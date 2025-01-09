@@ -51,7 +51,7 @@ namespace HashiTaku
 		ApplyObjectScale(worldRadius, worldHeight);
 
 		// çÏê¨
-		btVector3 cylinderParam(worldRadius, worldHeight / 2.0f, worldRadius);
+		btVector3 cylinderParam(worldRadius, worldHeight / 2.0f, worldRadius / 2.0f);
 		pCollisionShape = std::make_unique<btCylinderShape>(cylinderParam);
 	}
 
@@ -59,7 +59,7 @@ namespace HashiTaku
 	{
 		// îºåaÇÕXZÇÃç≈ëÂÇÃëÂÇ´Ç≥ÅAçÇÇ≥ÇÕY
 		Transform& transform = GetTransform();
-		const DirectX::SimpleMath::Vector3& scale = transform.GetScale();
+		const DXSimp::Vector3& scale = transform.GetScale();
 
 		float maxVal = scale.x;
 		maxVal = std::max(maxVal, scale.z);

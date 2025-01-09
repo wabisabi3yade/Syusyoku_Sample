@@ -9,5 +9,8 @@ namespace HashiTaku
 	public:
 		VS_WorldPosition();
 		~VS_WorldPosition() {}
+
+		/// @brief 1ループに一回しか更新しなくてもよいバッファはここで更新する
+		void OnceUpdateBuffer() override;
 	};
 }

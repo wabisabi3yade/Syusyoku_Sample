@@ -71,6 +71,7 @@ namespace HashiTaku
 
 	RenderTarget::RenderTarget()
 	{
+		pRenderer = Direct3D11::GetInstance()->GetRenderer();
 	}
 
 	bool RenderTarget::Create(DXGI_FORMAT format, UINT width, UINT height)
@@ -81,9 +82,15 @@ namespace HashiTaku
 		return CreateResource(desc);
 	}
 
-	ID3D11RenderTargetView* RenderTarget::GetView() const
+	ID3D11RenderTargetView* RenderTarget::GetView()
 	{
 		return pRTV.Get();
+	}
+
+	void RenderTarget::Clear()
+	{
+		DXSimp::Color color = { 1.0f,1.0f,1.0f,1.0f };
+		pRenderer->GetDeviceContext()->ClearRenderTargetView(pRTV.Get(), color);
 	}
 
 	bool RenderTarget::CreateResource(D3D11_TEXTURE2D_DESC& _desc, const void* _pData)

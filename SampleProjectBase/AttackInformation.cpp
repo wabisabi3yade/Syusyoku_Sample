@@ -5,8 +5,27 @@
 
 namespace HashiTaku
 {
-	AttackInformation::AttackInformation()
-		: atkDamage(0.0f), hitStopFrame(0), atkLevel(AttackLevel::Low), isCamShake(false)
+	// ヒットストップフレーム
+	std::array<u_int, static_cast<u_int>(AttackInformation::AttackLevel::MaxNum)>  AttackInformation::hitStopFrames =
+	{
+		4, 8, 12, 15
+	};
+	// パッド振動力
+	std::array<float, static_cast<u_int>(AttackInformation::AttackLevel::MaxNum)>  AttackInformation::padShakePowers =
+	{
+		0.4f, 0.6f, 1.0f, 1.0f
+	};
+
+	// パッド振動時間
+	std::array<float, static_cast<u_int>(AttackInformation::AttackLevel::MaxNum)>  AttackInformation::padShakeTimes =
+	{
+		0.2f, 0.2f, 0.4f, 0.6f
+	};
+
+	AttackInformation::AttackInformation() :
+		atkDamage(0.0f),
+		atkLevel(AttackLevel::Low),
+		isCamShake(false)
 	{
 		SetAttackLevel(AttackLevel::Low);
 	}
@@ -16,15 +35,9 @@ namespace HashiTaku
 		atkDamage = _atkDamage;
 	}
 
-	void AttackInformation::SetHitStopFlame(u_int _hitStopFlame)
-	{
-		hitStopFrame = _hitStopFlame;
-	}
-
 	void AttackInformation::SetAttackLevel(AttackLevel _atkLevel)
 	{
 		atkLevel = _atkLevel;
-		ApplyFromAttackLevel();
 	}
 
 	const CreateVfxInfo& AttackInformation::GetHitVfxInfo() const
@@ -37,6 +50,11 @@ namespace HashiTaku
 		return pCamShakeParam;
 	}
 
+	const PlaySoundParameter& AttackInformation::GetHitSEParam() const
+	{
+		return hitSoundParameter;
+	}
+
 	float AttackInformation::GetDamageValue() const
 	{
 		return atkDamage;
@@ -44,7 +62,7 @@ namespace HashiTaku
 
 	u_int AttackInformation::GetHitStopFlame() const
 	{
-		return hitStopFrame;
+		return hitStopFrames[static_cast<u_int>(atkLevel)];
 	}
 
 	AttackInformation::AttackLevel AttackInformation::GetAttackLevel() const
@@ -52,9 +70,19 @@ namespace HashiTaku
 		return atkLevel;
 	}
 
-	bool AttackInformation::GetIsShake() const
+	bool AttackInformation::GetIsCamShake() const
 	{
 		return isCamShake;
+	}
+
+	float AttackInformation::GetPadShakePower() const
+	{
+		return padShakePowers[static_cast<u_int>(atkLevel)];
+	}
+
+	float AttackInformation::GetPadShakeTime() const
+	{
+		return padShakeTimes[static_cast<u_int>(atkLevel)];
 	}
 
 	json AttackInformation::Save()
@@ -65,6 +93,7 @@ namespace HashiTaku
 		data["isCamShake"] = isCamShake;
 		if (isCamShake)
 			data["camShake"] = pCamShakeParam.Save();
+		data["hitSE"] = hitSoundParameter.Save();
 		data["damage"] = atkDamage;
 		data["level"] = atkLevel;
 
@@ -85,6 +114,10 @@ namespace HashiTaku
 			if (LoadJsonData("camShake", loadData, _data))
 				pCamShakeParam.Load(loadData);
 		}
+		if (LoadJsonData("hitSE", loadData, _data))
+		{
+			hitSoundParameter.Load(loadData);
+		}
 
 		LoadJsonFloat("damage", atkDamage, _data);
 
@@ -94,25 +127,49 @@ namespace HashiTaku
 		}
 	}
 
-	void AttackInformation::ApplyFromAttackLevel()
+	void AttackInformation::ImGuiLevelParamerter()
 	{
-		using enum AttackInformation::AttackLevel;
-		switch (atkLevel)
-		{
-		case Low:
-			hitStopFrame = LOW_HITSTOP;
-			break;
+		if (!ImGuiMethod::TreeNode("LevelParameter")) return;
 
-		case Mid:
-			hitStopFrame = MID_HITSTOP;
-			break;
-		case High:
-			hitStopFrame = HIGH_HITSTOP;
-			break;
-		case SuperHigh:
-			hitStopFrame = SUPERHIGH_HITSTOP;
-			break;
+		// ヒットストップ
+		if (ImGuiMethod::TreeNode("HitStop"))
+		{
+			u_int levelMaxId = static_cast<u_int>(AttackLevel::MaxNum);
+			std::string levelStr;
+			for (u_int l_i = 0; l_i < levelMaxId; l_i++)
+			{
+				AttackLevel level = static_cast<AttackLevel>(l_i);
+				levelStr = magic_enum::enum_name(level);
+
+				ImGui::PushID(l_i);
+				ImGui::DragScalar(levelStr.c_str(), ImGuiDataType_U32, &hitStopFrames[l_i]);
+				ImGui::PopID();
+			}
+
+			ImGui::TreePop();
 		}
+		
+		// パッド振動
+		if (ImGuiMethod::TreeNode("PadShake"))
+		{
+			u_int levelMaxId = static_cast<u_int>(AttackLevel::MaxNum);
+			std::string levelStr;
+			for (u_int l_i = 0; l_i < levelMaxId; l_i++)
+			{
+				AttackLevel level = static_cast<AttackLevel>(l_i);
+				levelStr = magic_enum::enum_name(level);
+
+				ImGui::PushID(l_i);
+				ImGui::Text(levelStr.c_str());
+				ImGui::DragFloat("Power", &padShakePowers[l_i], 0.1f, 0.0f, 1.0f);
+				ImGui::DragFloat("Time", &padShakeTimes[l_i], 0.1f, 0.0f, 100.0f);
+				ImGui::PopID();
+			}
+
+			ImGui::TreePop();
+		}
+
+		ImGui::TreePop();
 	}
 
 	void AttackInformation::ImGuiDebug()
@@ -126,7 +183,6 @@ namespace HashiTaku
 			"SuperHigh"
 		};
 
-		ImGui::Text("HSframe:%d", hitStopFrame);
 		ImGui::DragFloat("AtkDamage", &atkDamage, 0.1f, 0.0f, 9999.0f);
 		u_int id = static_cast<u_int>(atkLevel);
 		if (ImGuiMethod::ComboBox("AtkLevel", id, levelNames))
@@ -134,11 +190,21 @@ namespace HashiTaku
 			SetAttackLevel(static_cast<AttackLevel>(id));
 		}
 
+		// エフェクト
 		hitVfxInfo.ImGuiCall();
 
+		// カメラシェイク
 		ImGui::Checkbox("IsCameraShake", &isCamShake);
-
 		if (isCamShake)
 			pCamShakeParam.ImGuiCall();
+
+		// サウンド
+		if (ImGuiMethod::TreeNode("Sound"))
+		{
+			hitSoundParameter.ImGuiCall();
+			ImGui::TreePop();
+		}
+
+		ImGuiLevelParamerter();
 	}
 }

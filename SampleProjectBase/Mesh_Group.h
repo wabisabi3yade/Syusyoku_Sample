@@ -28,16 +28,16 @@ namespace HashiTaku
 		std::vector<Material*> materials;
 
 		/// @brief 中心座標
-		DirectX::SimpleMath::Vector3 centerPos;
+		DXSimp::Vector3 centerPos;
 
 		/// @brief モデルサイズ
-		DirectX::SimpleMath::Vector3 size;
+		DXSimp::Vector3 size;
 
 		/// @brief ロード時、スケール倍率
 		float loadScale;
 
 		/// @brief ロード時オフセット角度
-		DirectX::SimpleMath::Vector3 loadOffsetAngles;
+		DXSimp::Vector3 loadOffsetAngles;
 
 		/// @brief ロード時Y軸反転したか？
 		bool isFlipY;
@@ -91,17 +91,17 @@ namespace HashiTaku
 
 		/// @brief 中心座標を取得
 		/// @return 中心座標
-		DirectX::SimpleMath::Vector3 GetCenterPosition() const;
+		DXSimp::Vector3 GetCenterPosition() const;
 
 		/// @brief モデルのサイズを取得
 		/// @return サイズ
-		DirectX::SimpleMath::Vector3 GetSize() const;
+		DXSimp::Vector3 GetSize() const;
 
 		// ロード時のスケール倍率を取得する
 		float GetLoadOffsetScale() const;
 
 		/// ロード時のオフセット角度を取得する
-		DirectX::SimpleMath::Vector3 GetLoadOffsetAngles() const;
+		DXSimp::Vector3 GetLoadOffsetAngles() const;
 
 		/// @brief メッシュ群の種類を取得
 		/// @return 種類
@@ -109,11 +109,11 @@ namespace HashiTaku
 
 		/// @brief モデルの中心座標をセット
 		/// @param _size 中心座標
-		void SetCenterPosition(const DirectX::SimpleMath::Vector3& _centerPos);
+		void SetCenterPosition(const DXSimp::Vector3& _centerPos);
 
 		/// @brief サイズをセット
 		/// @param _size サイズ
-		void SetSize(const DirectX::SimpleMath::Vector3& _size);
+		void SetSize(const DXSimp::Vector3& _size);
 
 		/// @brief スケール倍率をセット
 		/// @param _scaleTimes スケール倍率

@@ -547,9 +547,6 @@
     <Filter Include="ソース ファイル\Graphics\Shader\Vertex\Base">
       <UniqueIdentifier>{d1452bc8-852a-4657-b55e-a8cb11c4af52}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\OutLine">
-      <UniqueIdentifier>{6d9f9bbf-d058-49a1-8f01-3308bac93c5d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\Shader\Vertex\Gouraud">
       <UniqueIdentifier>{5c5f5a2b-4fd4-4219-9474-b9a8fcb8112f}</UniqueIdentifier>
     </Filter>
@@ -898,6 +895,48 @@
     <Filter Include="ソース ファイル\InGame\Camera\State\ChargeAttack">
       <UniqueIdentifier>{4c1a00e6-a7b2-40bd-81c8-26a56c0eba9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\PadShake">
+      <UniqueIdentifier>{a4d828b4-4f41-4124-b197-f87441f4fe94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\VertexShader\BackObject">
+      <UniqueIdentifier>{97636ff4-a774-4cda-b787-759845768bf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\PixelShader\BackObject">
+      <UniqueIdentifier>{30bd2e94-7d17-4e27-8db1-e3f13fb1c465}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\BackObject">
+      <UniqueIdentifier>{b358a1c9-c45b-481a-9704-a1882cb76ef0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\OutLine">
+      <UniqueIdentifier>{a27c87fc-8307-4c28-ae08-bc6526b7f903}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\VertexShader\OutLine">
+      <UniqueIdentifier>{de13c24a-b537-4035-892c-044b13c455ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\PixelShader\PS_Ground">
+      <UniqueIdentifier>{f28aa3e3-6465-4343-bfcf-15a7c8c0a274}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\VertexShader\Ground">
+      <UniqueIdentifier>{9971fb44-a153-4405-ad11-a5cbcd13b280}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\Ground">
+      <UniqueIdentifier>{0b711532-d084-46cb-b1ac-a9f4e50fe22e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\Ground">
+      <UniqueIdentifier>{6f94315d-89d0-4923-971c-3a0ff924399a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Animation\IBoneBufferSupplier">
+      <UniqueIdentifier>{7a524518-00d3-4dc4-bf82-f02a5fd5773e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\SoundManager">
+      <UniqueIdentifier>{63eafe5d-7d4d-4d41-ab8a-2110e70df41c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\AudioListener">
+      <UniqueIdentifier>{06701e64-c4bd-4b76-9bb5-2180c8426262}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\Sound">
+      <UniqueIdentifier>{a137c1cd-02d6-4a4d-a8ea-65121ba0ae01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -930,14 +969,8 @@
     <FxCompile Include="PS_Line.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
-    <FxCompile Include="PS_WriteDepth.hlsl">
-      <Filter>リソース ファイル\PixelShader</Filter>
-    </FxCompile>
     <FxCompile Include="PS_Shadow.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
-    </FxCompile>
-    <FxCompile Include="VS_SpriteShadow.hlsl">
-      <Filter>リソース ファイル\VertexShader</Filter>
     </FxCompile>
     <FxCompile Include="VS_Sprite.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
@@ -951,17 +984,32 @@
     <FxCompile Include="PS_Toon.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
-    <FxCompile Include="VS_Object.hlsl">
-      <Filter>リソース ファイル\VertexShader</Filter>
-    </FxCompile>
-    <FxCompile Include="VS_OutLine.hlsl">
+    <FxCompile Include="VS_ShadowObject.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
     </FxCompile>
     <FxCompile Include="PS_OutLine.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
+    <FxCompile Include="VS_BackObject.hlsl">
+      <Filter>リソース ファイル\VertexShader\BackObject</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_BackObject.hlsl">
+      <Filter>リソース ファイル\PixelShader\BackObject</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_OutLine.hlsl">
+      <Filter>リソース ファイル\VertexShader\OutLine</Filter>
+    </FxCompile>
     <FxCompile Include="VS_OutLineAnimation.hlsl">
-      <Filter>リソース ファイル\VertexShader</Filter>
+      <Filter>リソース ファイル\VertexShader\OutLine</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_DepthWrite.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_Ground.hlsl">
+      <Filter>リソース ファイル\PixelShader\PS_Ground</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_Ground.hlsl">
+      <Filter>リソース ファイル\VertexShader\Ground</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1520,9 +1568,6 @@
     <ClCompile Include="CP_OutLineRenderer.cpp">
       <Filter>ソース ファイル\Component\OutLine</Filter>
     </ClCompile>
-    <ClCompile Include="ShadowDrawer.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="ITargetAccepter.cpp">
       <Filter>ソース ファイル\InGame\ITargeter</Filter>
     </ClCompile>
@@ -1644,6 +1689,36 @@
       <Filter>ソース ファイル\InGame\Camera\State\ChargeAttack</Filter>
     </ClCompile>
     <ClCompile Include="ANE_CameraShake.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\CameraShake</Filter>
+    </ClCompile>
+    <ClCompile Include="ANE_PadShake.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\PadShake</Filter>
+    </ClCompile>
+    <ClCompile Include="PS_BackObject.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\BackObject</Filter>
+    </ClCompile>
+    <ClCompile Include="PS_OutLine.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\OutLine</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowDrawer.cpp">
+      <Filter>ソース ファイル\Graphics\Shadow</Filter>
+    </ClCompile>
+    <ClCompile Include="VS_Ground.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="PS_Ground.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="IBoneSupplier.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_SoundManager.cpp">
+      <Filter>ソース ファイル\Component\SoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_AudioListener.cpp">
+      <Filter>ソース ファイル\Component\AudioListener</Filter>
+    </ClCompile>
+    <ClCompile Include="ANE_PlaySound.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -2302,9 +2377,6 @@
     <ClInclude Include="CP_OutLineRenderer.h">
       <Filter>ソース ファイル\Component\OutLine</Filter>
     </ClInclude>
-    <ClInclude Include="ShadowDrawer.h">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="ITargetAccepter.h">
       <Filter>ソース ファイル\InGame\ITargeter</Filter>
     </ClInclude>
@@ -2444,6 +2516,39 @@
       <Filter>ソース ファイル\InGame\Camera\State\ChargeAttack</Filter>
     </ClInclude>
     <ClInclude Include="ANE_CameraShake.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\CameraShake</Filter>
+    </ClInclude>
+    <ClInclude Include="ANE_PadShake.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\PadShake</Filter>
+    </ClInclude>
+    <ClInclude Include="PS_BackObject.h">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\BackObject</Filter>
+    </ClInclude>
+    <ClInclude Include="PS_OutLine.h">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\OutLine</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowDrawer.h">
+      <Filter>ソース ファイル\Graphics\Shadow</Filter>
+    </ClInclude>
+    <ClInclude Include="IApplyDepthShadow.h">
+      <Filter>ソース ファイル\Component\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="VS_Ground.h">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="PS_Ground.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="IBoneSupplier.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_SoundManager.h">
+      <Filter>ソース ファイル\Component\SoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_AudioListener.h">
+      <Filter>ソース ファイル\Component\AudioListener</Filter>
+    </ClInclude>
+    <ClInclude Include="ANE_PlaySound.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

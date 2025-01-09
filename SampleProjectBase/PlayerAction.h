@@ -135,7 +135,7 @@ namespace HashiTaku
 
 		/// @brief コントローラーの左スティックの入力を取得
 		/// @return 左スティックの入力
-		const DirectX::SimpleMath::Vector2& GetInputLeftStick() const;
+		const DXSimp::Vector2& GetInputLeftStick() const;
 
 		/// @brief その方向に入力できているか確認する
 		/// @param _checkVector 確認したい方向
@@ -179,7 +179,7 @@ namespace HashiTaku
 		/// @param _attackerPos 攻撃委敵の座標
 		/// @param _pAcceptDamage ダメージ受けたか？
 		void OnDamage(const AttackInformation& _atkInfo,
-			const DirectX::SimpleMath::Vector3& _attackerPos,
+			const DXSimp::Vector3& _attackerPos,
 			bool* _pAcceptDamage = nullptr);
 
 		/// @brief 地面に付いた瞬間の処理

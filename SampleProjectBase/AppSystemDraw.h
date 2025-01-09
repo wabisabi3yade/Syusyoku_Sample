@@ -20,6 +20,7 @@ namespace HashiTaku
 		AppSystemDraw();
 		~AppSystemDraw() {}
 		void ImGuiDebug() override;
+		void ImGuiRenderTarget();
 	};
 }
 

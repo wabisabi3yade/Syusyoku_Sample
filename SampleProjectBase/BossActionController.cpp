@@ -75,7 +75,7 @@ namespace HashiTaku
 	}
 
 	void BossActionController::OnDamage(const AttackInformation& _atkInfo,
-		const DirectX::SimpleMath::Vector3& _attackerPos, bool* _pAcceptDamage)
+		const DXSimp::Vector3& _attackerPos, bool* _pAcceptDamage)
 	{
 		assert(pCurrentNode && "現在のノードが設定されていません");
 		CastBossAct(pCurrentNode)->OnDamage();
@@ -95,7 +95,7 @@ namespace HashiTaku
 		ActDistance curDis = JudgeActDistance(dis);
 
 		// 線の色で表示
-		DirectX::SimpleMath::Color lineColor = DXSimp::Color(1, 0, 0);
+		DXSimp::Color lineColor = DXSimp::Color(1, 0, 0);
 		switch (curDis)
 		{
 		case ActDistance::Mid:

@@ -243,7 +243,7 @@ namespace HashiTaku
 	}
 
 	bool CP_Boss::OnDamageBehavior(const AttackInformation& _attackInfo,
-		const DirectX::SimpleMath::Vector3& _attackerPos)
+		const DXSimp::Vector3& _attackerPos)
 	{
 		if (!CP_Enemy::OnDamageBehavior(_attackInfo, _attackerPos)) return false;
 

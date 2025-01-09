@@ -10,8 +10,10 @@ struct VS_IN
 struct VS_OUT
 {
     float4 pos : SV_POSITION0;
+    float4 color : COLOR0; // 頂点色
     float2 uv : TEXCOORD0;
     float3 normal : NORMAL0;
+    float4 worldPos : POSITION0;
 };
 
 cbuffer WVP : register(b0)
@@ -21,28 +23,27 @@ cbuffer WVP : register(b0)
     float4x4 proj;
 }
 
-#define OUTLINE_SCALE (0.5f)
+cbuffer OutLine : register(b1)
+{
+    float4 color;
+    float lineScale;
+    float3 dummy;
+}
 
 VS_OUT main(VS_IN vin)
 {
     VS_OUT vout;
     
-    // スケール成分を除く
-    //float3x3 rotationMatrix = (float3x3) world;
-    //rotationMatrix[0] = normalize(rotationMatrix[0]);
-    //rotationMatrix[1] = normalize(rotationMatrix[1]);
-    //rotationMatrix[2] = normalize(rotationMatrix[2]);
-    
-    //vout.normal = mul(vin.normal, rotationMatrix);
-    //vout.normal = normalize(vout.normal);
-    
     vout.pos = float4(vin.pos, 1.0f);
-    
-    vout.pos.xyz += normalize(vin.normal) * OUTLINE_SCALE;
     vout.pos = mul(vout.pos, world);
+    vout.normal = normalize(mul(vin.normal, (float3x3) world));
+    
+    vout.pos.xyz += vout.normal * lineScale;
+    vout.worldPos = vout.pos;
     vout.pos = mul(vout.pos, view);
     vout.pos = mul(vout.pos, proj);
     
     vout.uv = vin.uv;
+    vout.color = color;
     return vout;
 }

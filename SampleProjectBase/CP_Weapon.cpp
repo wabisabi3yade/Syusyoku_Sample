@@ -5,16 +5,18 @@
 #include "GameObject.h"
 #include "AssetGetter.h"
 #include "InSceneSystemManager.h"
-
 #ifdef EDIT
 #include "Geometory.h"
-constexpr DirectX::SimpleMath::Color ATTACK_COLOR(1.0f, 1.0f, 0.0f);
-constexpr DirectX::SimpleMath::Color NO_ATTACK_COLOR(0.0f, 0.0f, 1.0f);
-constexpr DirectX::SimpleMath::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 #endif // EDIT
 
 namespace HashiTaku
 {
+#ifdef EDIT
+constexpr DXSimp::Color ATTACK_COLOR(1.0f, 1.0f, 0.0f);
+constexpr DXSimp::Color NO_ATTACK_COLOR(0.0f, 0.0f, 1.0f);
+constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
+#endif // EDIT
+
 	CP_Weapon::CP_Weapon() :
 		pHaveObjectPos(nullptr),
 		pAtkInfomation(nullptr),
@@ -65,7 +67,7 @@ namespace HashiTaku
 		isAttackCollision = _isAttackCollision;
 	}
 
-	void CP_Weapon::SetHaveObjPosPointer(const DirectX::SimpleMath::Vector3* _pWorldPos)
+	void CP_Weapon::SetHaveObjPosPointer(const DXSimp::Vector3* _pWorldPos)
 	{
 		pHaveObjectPos = _pWorldPos;
 	}
@@ -167,7 +169,7 @@ namespace HashiTaku
 	{
 #ifdef EDIT
 		// çUåÇâ¬î\îªíËï`âÊ
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 		if (!isDebugAttackDisplay) return;
 
 		Geometory::SetPosition(GetTransform().GetPosition());

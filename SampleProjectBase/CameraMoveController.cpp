@@ -94,7 +94,7 @@ namespace HashiTaku
 		pLookAtTransform = _pTransform;
 	}
 
-	void CameraMoveController::SetCameraBasePos(const DirectX::SimpleMath::Vector3& _camPos)
+	void CameraMoveController::SetCameraBasePos(const DXSimp::Vector3& _camPos)
 	{
 		curBaseCameraPos = _camPos;
 	}
@@ -133,12 +133,12 @@ namespace HashiTaku
 		return *pCamera;
 	}
 
-	const DirectX::SimpleMath::Vector3& CameraMoveController::GetCameraBasePos()
+	const DXSimp::Vector3& CameraMoveController::GetCameraBasePos()
 	{
 		return curBaseCameraPos;
 	}
 
-	const DirectX::SimpleMath::Vector3& CameraMoveController::GetPrevFollowPos() const
+	const DXSimp::Vector3& CameraMoveController::GetPrevFollowPos() const
 	{
 		return prevFollowPos;
 	}
@@ -158,9 +158,9 @@ namespace HashiTaku
 		return pFollowTransform != nullptr;
 	}
 
-	const DirectX::SimpleMath::Vector3& CameraMoveController::GetLookAtWorldPos() const
+	const DXSimp::Vector3& CameraMoveController::GetLookAtWorldPos() const
 	{
-		if (!pLookAtTransform) return DirectX::SimpleMath::Vector3::Zero;
+		if (!pLookAtTransform) return DXSimp::Vector3::Zero;
 
 		return pLookAtTransform->GetWorldPos();
 	}

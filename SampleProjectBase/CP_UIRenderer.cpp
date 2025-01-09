@@ -58,7 +58,7 @@ namespace HashiTaku
 		pTexture = &_setTexture;
 	}
 
-	void CP_UIRenderer::SetUV(const DirectX::SimpleMath::Vector2& _startUV, const DirectX::SimpleMath::Vector2& _endUV)
+	void CP_UIRenderer::SetUV(const DXSimp::Vector2& _startUV, const DXSimp::Vector2& _endUV)
 	{
 		pPolygon->SetUV(_startUV, _endUV);
 	}

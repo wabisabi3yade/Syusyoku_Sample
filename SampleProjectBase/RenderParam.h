@@ -10,9 +10,9 @@ namespace HashiTaku
 		/// @brief ワールド・ビュー・プロジェクション	
 		struct WVP
 		{
-			DirectX::SimpleMath::Matrix world;	// ワールド変換行列
-			DirectX::SimpleMath::Matrix view;	// ビュー変換
-			DirectX::SimpleMath::Matrix projection;	// プロジェクション
+			DXSimp::Matrix world;	// ワールド変換行列
+			DXSimp::Matrix view;	// ビュー変換
+			DXSimp::Matrix projection;	// プロジェクション
 		};
 
 	private:
@@ -36,18 +36,18 @@ namespace HashiTaku
 		/// @param _scale 大きさ
 		/// @param _rotation 回転量
 		/// @return wvp行列
-		WVP& GetWVP(const DirectX::SimpleMath::Vector3& _position, const DirectX::SimpleMath::Vector3& _scale, const DirectX::SimpleMath::Quaternion& _rotation);
+		WVP& GetWVP(const DXSimp::Vector3& _position, const DXSimp::Vector3& _scale, const DXSimp::Quaternion& _rotation);
 
 		/// @brief 現在の投影行列を取得
 		/// @return 投影行列
-		const DirectX::SimpleMath::Matrix& GetProjectionMatrix() const;
+		const DXSimp::Matrix& GetProjectionMatrix() const;
 
 		/// @brief ビュー変換行列をセット
 		/// @param _view ビュー変換行列
-		void SetView(const DirectX::SimpleMath::Matrix& _view) { wvp.view = _view; }
+		void SetView(const DXSimp::Matrix& _view) { wvp.view = _view; }
 
 		/// @brief プロジェクション変換行列をセット
 		/// @param _proj プロジェクション変換行列
-		void SetProjection(const DirectX::SimpleMath::Matrix& _proj) { wvp.projection = _proj; }
+		void SetProjection(const DXSimp::Matrix& _proj) { wvp.projection = _proj; }
 	};
 }

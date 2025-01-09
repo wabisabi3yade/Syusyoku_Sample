@@ -4,7 +4,7 @@
 constexpr u_int SPHERE_NUM(1);
 constexpr u_int CUBE_NUM(2);
 
-using namespace DirectX::SimpleMath;
+using namespace DXSimp;
 using namespace SceneFunction;
 
 Tank_InGameSub::Tank_InGameSub(SceneMoveInfo* _moveInfo) : SubScene_Base(_moveInfo)

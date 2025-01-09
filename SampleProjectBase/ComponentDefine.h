@@ -46,3 +46,9 @@
 
 // エフェクト
 #include "CP_VisualEffect.h"
+
+// サウンド
+#include "CP_AudioListener.h"
+
+// システム
+#include "CP_SoundManager.h"

@@ -93,7 +93,7 @@ namespace HashiTaku
 		}
 		else // 2軸
 		{
-			DirectX::SimpleMath::Vector2 curBlendValues;
+			DXSimp::Vector2 curBlendValues;
 			curBlendValues = { axisPlayParameters[0].curBlendValue, axisPlayParameters[1].curBlendValue };
 			pBlendNode->FindBlendPairTwoAxis(curBlendValues, blendingAnimData);
 		}
@@ -107,7 +107,6 @@ namespace HashiTaku
 		//}
 
 		u_int blendAnimCnt = static_cast<u_int>(blendingAnimData.size());
-		_outTransforms.resize(pAssetBoneList->GetBoneCnt());
 		// アニメーションの数によってブレンド計算方法を変える
 		switch (blendAnimCnt)
 		{
@@ -144,7 +143,7 @@ namespace HashiTaku
 
 	void AnimBlendNodePlayer::TwoAnimationUpdate(std::vector<BoneTransform>& _outTransforms)
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 
 		float playingRatio = GetCurPlayRatio();
 
@@ -171,44 +170,49 @@ namespace HashiTaku
 
 	void AnimBlendNodePlayer::SquareAnimationUpdate(std::vector<BoneTransform>& _outTransforms)
 	{
-		using namespace DirectX::SimpleMath;
-
+		using namespace DXSimp;
 		float playingRatio = GetCurPlayRatio();
 
 		for (u_int b_i = 0; b_i < pAssetBoneList->GetBoneCnt(); b_i++)
 		{
+			// 初期トランスフォーム
+			BoneTransform localNodeTransform = _outTransforms[b_i];
+
+			_outTransforms[b_i].position = Vector3::Zero;
 			// 比率分アニメーションの座標・回転量をブレンドする
 			for (u_int bl_i = 0; bl_i < 4; bl_i++)
 			{
-				_outTransforms[b_i].position += blendingAnimData[bl_i].pAnimation->GetPositionByRatio(b_i, playingRatio) *
-					blendingAnimData[bl_i].blendWeight;
+				Vector3 pos = localNodeTransform.position;
+				blendingAnimData[bl_i].pAnimation->GetPositionByRatio(b_i, playingRatio, pos);
+				pos *= blendingAnimData[bl_i].blendWeight;
+				_outTransforms[b_i].position += pos;
 			}
 
-			Quaternion quat12, quat34;	// クォータニオン1・2個目と3。4個目
+			// 回転
+			Quaternion quat1 = localNodeTransform.rotation;
+			Quaternion quat2 = localNodeTransform.rotation;
+			Quaternion quat3 = localNodeTransform.rotation;
+			Quaternion quat4 = localNodeTransform.rotation;
 			float weight12 = 0.0f, weight34 = 0.0f;	// ウェイト1・2個目と3。4個目
 
 			// 1・2個目
 			weight12 = blendingAnimData[0].blendWeight + blendingAnimData[1].blendWeight;
-			quat12 = Quaternion::Slerp(
-				blendingAnimData[0].pAnimation->GetQuaternionByRatio(b_i, playingRatio),
-				blendingAnimData[1].pAnimation->GetQuaternionByRatio(b_i, playingRatio),
-				blendingAnimData[1].blendWeight / weight12
-			);
-			quat12.Normalize();
+			blendingAnimData[0].pAnimation->GetQuaternionByRatio(b_i, playingRatio, quat1);
+			blendingAnimData[1].pAnimation->GetQuaternionByRatio(b_i, playingRatio, quat2);
+			quat1 = Quaternion::Slerp(quat1, quat2, blendingAnimData[1].blendWeight / weight12);
+			quat1.Normalize();
 
 			// 3・4個目
 			weight34 = blendingAnimData[2].blendWeight + blendingAnimData[3].blendWeight;
-			quat34 = Quaternion::Slerp(
-				blendingAnimData[2].pAnimation->GetQuaternionByRatio(b_i, playingRatio),
-				blendingAnimData[3].pAnimation->GetQuaternionByRatio(b_i, playingRatio),
-				blendingAnimData[3].blendWeight / weight34
-			);
-			quat34.Normalize();
+			blendingAnimData[2].pAnimation->GetQuaternionByRatio(b_i, playingRatio, quat3);
+			blendingAnimData[3].pAnimation->GetQuaternionByRatio(b_i, playingRatio, quat4);
+			quat3 = Quaternion::Slerp(quat3, quat4, blendingAnimData[3].blendWeight / weight34);
+			quat3.Normalize();
 
 			// 1.2個目と3・4個目を球面線形補間でブレンドする
 			float t = weight34 / (weight12 + weight34);
 			t = std::clamp(t, 0.0f, 1.0f);
-			_outTransforms[b_i].rotation = Quaternion::Slerp(quat12, quat34, t);
+			_outTransforms[b_i].rotation = Quaternion::Slerp(quat1, quat3, t);
 			_outTransforms[b_i].rotation.Normalize();
 		}
 	}
@@ -220,7 +224,7 @@ namespace HashiTaku
 
 	void AnimBlendNodePlayer::CalcRootMotionPosSpeed()
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 
 		pBlendNode->CalcRootMotionSpeed(blendingAnimData, rootMotionPosSpeedPerSec);
 
@@ -231,9 +235,9 @@ namespace HashiTaku
 			GetNodePlaySpeed();
 	}
 
-	DirectX::SimpleMath::Vector3 AnimBlendNodePlayer::GetRootMotionPos(float _ratio, bool _isWorldScaling) const
+	DXSimp::Vector3 AnimBlendNodePlayer::GetRootMotionPos(float _ratio, bool _isWorldScaling) const
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 		Vector3 rootMotionPos;
 		const BlendAnimationNode& blendNode = static_cast<const BlendAnimationNode&>(*pPlayAnimNode);
 		blendNode.GetRootMotionPos(_ratio, blendingAnimData, rootMotionPos);

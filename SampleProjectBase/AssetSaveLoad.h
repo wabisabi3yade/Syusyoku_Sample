@@ -30,6 +30,7 @@ namespace HashiTaku
 		static void CreateVFX(const json& _loadData);
 		static void CreateAnimaton(const json& _loadData);
 		static void CreateAnimController(const json& _loadData);
+		static void CreateSound(const json& _loadData);
 
 		// アセットをロード
 		static void LoadAsset(const json& _loadData);

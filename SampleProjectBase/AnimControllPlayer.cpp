@@ -7,9 +7,15 @@
 
 namespace HashiTaku
 {
-	AnimControllPlayer::AnimControllPlayer(const AnimationController& _animController, BoneList& _boneList, Transform& _transform) :
-		pAnimController(&_animController), pAssetBoneList(&_boneList),
-		pObjectTransform(&_transform), deltaTime(0.0f), playSpeed(1.0f),
+	AnimControllPlayer::AnimControllPlayer(
+		const AnimationController& _animController, 
+		BoneList& _boneList, 
+		Transform& _transform) :
+		pAnimController(&_animController), 
+		pAssetBoneList(&_boneList),
+		pObjectTransform(&_transform),
+		deltaTime(0.0f), 
+		playSpeed(1.0f),
 		updateState(UpdateState::PlayNode),
 		curTransitonKind(AnimInterpolateKind::CrossFade)
 	{
@@ -55,7 +61,7 @@ namespace HashiTaku
 		return *pCurNodePlayer;
 	}
 
-	void AnimControllPlayer::GetCurrentRootPos(DirectX::SimpleMath::Vector3& _outPos) const
+	void AnimControllPlayer::GetCurrentRootPos(DXSimp::Vector3& _outPos) const
 	{
 		_outPos = rootMotionPos;
 	}
@@ -67,9 +73,6 @@ namespace HashiTaku
 
 	void AnimControllPlayer::PlayInit()
 	{
-		// 慣性補間クラスを作成しておく(キャッシュ保存の為)
-		pInertInterp = std::make_unique<InertInterpAnimation>();
-
 		// アニメーションパラメータコピー
 		const AnimationParameters& originParams = pAnimController->GetAnimationParameters();
 		pCopyAnimParameters = std::make_unique<AnimationParameters>(originParams);
@@ -153,7 +156,17 @@ namespace HashiTaku
 	void AnimControllPlayer::NodePlayUpdate()
 	{
 		// アニメーションのトランスフォームを再生機能から取得する
+
+		// アニメーション行列を格納するリスト
 		std::vector<BoneTransform> animationTransforms;
+		
+		// ローカル初期姿勢をあらかじめ入れておく
+		u_int boneCnt = pAssetBoneList->GetBoneCnt();
+		animationTransforms.resize(boneCnt);
+		for (u_int b_i = 0; b_i < boneCnt; b_i++)
+		{
+			animationTransforms[b_i] = pAssetBoneList->GetBone(b_i)->GetLocalNodeTransform();
+		}
 
 		// コントローラーと再生クラスの速度を掛ける
 		float multiPlaySpeed = playSpeed * pAnimController->GetPlaySpeed();
@@ -166,7 +179,6 @@ namespace HashiTaku
 			return;
 
 		// ボーンに適用する
-		u_int boneCnt = pAssetBoneList->GetBoneCnt();
 		for (u_int b_i = 0; b_i < boneCnt; b_i++)
 		{
 			Bone& bone = *pAssetBoneList->GetBone(b_i);
@@ -184,7 +196,7 @@ namespace HashiTaku
 
 	void AnimControllPlayer::CrossFadeUpdate()
 	{
-		using namespace DirectX::SimpleMath;
+		using namespace DXSimp;
 
 		// コントローラーと再生クラスの速度を掛ける
 		float multiPlaySpeed = playSpeed * pAnimController->GetPlaySpeed();

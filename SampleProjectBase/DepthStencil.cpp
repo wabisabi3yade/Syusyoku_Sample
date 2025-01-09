@@ -3,6 +3,10 @@
 
 namespace HashiTaku
 {
+	DepthStencil::DepthStencil()
+	{
+	}
+
 	void DepthStencil::ClearColor()
 	{
 		ID3D11DeviceContext* pContext = Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
@@ -15,10 +19,10 @@ namespace HashiTaku
 		D3D11_TEXTURE2D_DESC desc = MakeTexDesc(
 			_useStencil ? DXGI_FORMAT_R24G8_TYPELESS :
 			DXGI_FORMAT_R32_TYPELESS,
-			width, height
+			_width, _height
 		);
 
-		desc.BindFlags |= D3D11_BIND_DEPTH_STENCIL;
+		desc.BindFlags |= D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
 
 		// 作成
 		return CreateResource(desc);
@@ -36,8 +40,6 @@ namespace HashiTaku
 		// ステンシル使用判定
 		bool useStencil = (_desc.Format == DXGI_FORMAT_R24G8_TYPELESS);
 
-		// リソース生成
-		_desc.BindFlags |= D3D11_BIND_DEPTH_STENCIL;
 		bool isSuccess = D3DTexture_Base::CreateResource(_desc, nullptr);
 
 		if (!isSuccess)

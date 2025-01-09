@@ -181,6 +181,26 @@ namespace HashiTaku
 		if (FAILED(hr))
 			return false;
 
+		// 深度ステンシルステート
+		// 深度書き込み無効のステンシルステート
+		D3D11_DEPTH_STENCIL_DESC noDepthWriteDesc = {};
+		noDepthWriteDesc.DepthEnable = TRUE;
+		noDepthWriteDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO; // 書き込み無効
+		noDepthWriteDesc.DepthFunc = D3D11_COMPARISON_LESS; // 通常の深度比較
+		noDepthWriteDesc.StencilEnable = FALSE; // ステンシル無効
+		pD3DDevice->CreateDepthStencilState(&noDepthWriteDesc, &pNoDepthWriteState);
+
+		// 深度書き込み有効のステンシルステート
+		D3D11_DEPTH_STENCIL_DESC depthWriteDesc = {};
+		depthWriteDesc.DepthEnable = TRUE;
+		depthWriteDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL; // 書き込み有効
+		depthWriteDesc.DepthFunc = D3D11_COMPARISON_LESS; // 通常の深度比較
+		depthWriteDesc.StencilEnable = FALSE; // ステンシル無効
+		pD3DDevice->CreateDepthStencilState(&depthWriteDesc, &pDepthWriteState);
+
+		// 深度書き込むようにする
+		SerDepthWrite(true);
+
 		// ビューポートの設定
 		D3D11_VIEWPORT viewport;
 		viewport.TopLeftX = 0.0f;    // ビューポート領域の左上X座標。
@@ -237,12 +257,12 @@ namespace HashiTaku
 		// フルスクリーンにするか
 #ifndef _DEBUG
 
-		int pushButton = MessageBoxA(_hWnd, "フルスクリーンで起動しますか？", "就職作品",
+		int pushButton = MessageBoxA(_hWnd, "フルスクリーンで起動しますか？", "Duel Knight",
 			MB_YESNO | MB_ICONQUESTION);
 
 		if (pushButton == IDYES)
 			pSwapChain->SetFullscreenState(TRUE, NULL);
-#endif // _RELEASE
+#endif // _DEBUG
 	}
 
 	void D3D11_Renderer::Release()
@@ -284,6 +304,18 @@ namespace HashiTaku
 		}
 	}
 
+	void D3D11_Renderer::SerDepthWrite(bool _isWrite)
+	{
+		if (_isWrite)
+		{
+			pDeviceContext->OMSetDepthStencilState(pDepthWriteState.Get(), 0);
+		}
+		else
+		{
+			pDeviceContext->OMSetDepthStencilState(pNoDepthWriteState.Get(), 0);
+		}
+	}
+
 	void D3D11_Renderer::SetRenderTerget(u_int _cnt, RenderTarget* _pRrenderTarget, DepthStencil* _pDepthStencil)
 	{
 		static ID3D11RenderTargetView* rtvs[1];
@@ -304,7 +336,23 @@ namespace HashiTaku
 		vp.TopLeftY = 0.0f;
 		vp.Width = static_cast<float>(_pRrenderTarget->GetWidth());
 		vp.Height = static_cast<float>(_pRrenderTarget->GetHeight());
-		vp.Height = static_cast<float>(_pRrenderTarget->GetHeight());
+		vp.MinDepth = 0.0f;
+		vp.MaxDepth = 1.0f;
+
+		pDeviceContext->RSSetViewports(1, &vp);
+	}
+
+	void D3D11_Renderer::SetBaseRenderTarget()
+	{
+		pDeviceContext->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView.Get());
+
+		D3D11_VIEWPORT& vp = viewPorts[0];
+
+		// ビューポート設定
+		vp.TopLeftX = 0.0f;
+		vp.TopLeftY = 0.0f;
+		vp.Width = static_cast<float>(GetWindowWidth());
+		vp.Height = static_cast<float>(GetWindowHeight());
 		vp.MinDepth = 0.0f;
 		vp.MaxDepth = 1.0f;
 

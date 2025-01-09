@@ -119,7 +119,7 @@ namespace HashiTaku
 		pActionController->ChangeState(_nextState, _isForce);
 	}
 
-	void BossActState_Base::CalcWarpDistance(const DirectX::SimpleMath::Vector3& _targetWorldPos)
+	void BossActState_Base::CalcWarpDistance(const DXSimp::Vector3& _targetWorldPos)
 	{
 		if (!isUseWarpMotion) return;
 
@@ -151,12 +151,12 @@ namespace HashiTaku
 		}
 	}
 
-	void BossActState_Base::SetWarpTargetPosReference(const DirectX::SimpleMath::Vector3& _targetPosRef)
+	void BossActState_Base::SetWarpTargetPosReference(const DXSimp::Vector3& _targetPosRef)
 	{
 		pWarpTargetPos = &_targetPosRef;
 	}
 
-	void BossActState_Base::SetWarpTargetPos(const DirectX::SimpleMath::Vector3& _targetPos)
+	void BossActState_Base::SetWarpTargetPos(const DXSimp::Vector3& _targetPos)
 	{
 		warpTargetPos = _targetPos;
 	}

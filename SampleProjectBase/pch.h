@@ -74,3 +74,4 @@ namespace HashiTaku
 #include "Direct3D11.h"	// 自前のDirectX11
 #include "DX11BulletPhisics.h"	// DX11物理エンジン
 #include "DX11EffecseerManager.h"	// エフェクトマネジャー
+#include "DXSoundManager.h"	// サウンドマネジャー

@@ -36,6 +36,10 @@ namespace HashiTaku
 	namespace fs = std::filesystem;
 	using namespace DXSimp;
 
+	Matrix AssetLoader::loadNodeTransformMtx = Matrix::Identity;
+	Matrix AssetLoader::loadNodeScaleMtx = Matrix::Identity;
+	Matrix AssetLoader::loadNodeRotationMtx = Matrix::Identity;
+
 	/// @brief aiVector3D型をSimpleMathのVector3に変換
 	/// @param _aiVector3 変換する値
 	/// @return 変換されたVector3
@@ -643,7 +647,7 @@ namespace HashiTaku
 		return SendAsset<SoundAsset>(assetName, std::move(soundAsset));
 	}
 
-	std::unique_ptr<Mesh_Group> AssetLoader::CreateMeshGroup(const aiScene* _pScene, const std::string& _assetName, float _loadScale, const DirectX::SimpleMath::Vector3& _loadAngles)
+	std::unique_ptr<Mesh_Group> AssetLoader::CreateMeshGroup(const aiScene* _pScene, const std::string& _assetName, float _loadScale, const DXSimp::Vector3& _loadAngles)
 	{
 		// ボーンがなかったら
 		if (_pScene->mMeshes[0]->mNumBones == 0)
@@ -661,13 +665,20 @@ namespace HashiTaku
 		CreateBone(_pScene, *pSkeletalMesh, _loadScale, _loadAngles);
 
 		// ノードを生成する
-		std::unique_ptr<TreeNode> pRootNode = CreateNode(*_pScene->mRootNode, *pSkeletalMesh);
+		
+		// 初期化
+		loadNodeScaleMtx = Matrix::Identity;
+		loadNodeRotationMtx = Matrix::Identity;
+		loadNodeTransformMtx = Matrix::Identity;
+
+		// AssimpFbxとついたノード名のローカル行列を対応したノードに渡すための行列
+		std::unique_ptr<TreeNode> pRootNode = CreateNode(*_pScene->mRootNode, *pSkeletalMesh, false);
 		pSkeletalMesh->SetRootNode(std::move(pRootNode));
 
 		return std::move(pSkeletalMesh);
 	}
 
-	void AssetLoader::CreateBone(const aiScene* _pScene, SkeletalMesh& _skeletalMesh, float _loadScale, const DirectX::SimpleMath::Vector3& _loadOffsetAngles)
+	void AssetLoader::CreateBone(const aiScene* _pScene, SkeletalMesh& _skeletalMesh, float _loadScale, const DXSimp::Vector3& _loadOffsetAngles)
 	{
 		std::unique_ptr<BoneList> pCreateBones = std::make_unique<BoneList>();
 		std::vector<std::unique_ptr<Bone>> pBones;
@@ -709,31 +720,73 @@ namespace HashiTaku
 		_skeletalMesh.SetAssetBoneList(pRetBones);
 	}
 
-	std::unique_ptr<TreeNode> AssetLoader::CreateNode(const aiNode& _aiChildNode, SkeletalMesh& _skeletalMesh)
+	std::unique_ptr<TreeNode> AssetLoader::CreateNode(const aiNode& _aiChildNode,
+		SkeletalMesh& _skeletalMesh,
+		bool _isStoreAssimpFbxMtx)
 	{
 		std::unique_ptr<TreeNode> pCreateNode = std::make_unique<TreeNode>();
 
 		// パラメータセット
 		pCreateNode->SetNodeName(_aiChildNode.mName.C_Str());
 
-		//if (pCreateNode->GetName().find("AssimpFbx") == std::string::npos)
-		//{
-		//	pCreateNode->SetTransformMtx(Matrix::Identity);
-		//}
-		//else
-		pCreateNode->SetTransformMtx(ToDirectXMatrix(_aiChildNode.mTransformation));
-
-		// 対応したボーンを名前から取得する
-		Bone* pLinkBone = _skeletalMesh.GetBoneByName(_aiChildNode.mName.C_Str());
-		pCreateNode->SetBone(*pLinkBone);
-
-		// 再帰でノードを生成する
-		for (u_int n_i = 0; n_i < _aiChildNode.mNumChildren; n_i++)
+		// AssimpFbxとついたノードを排除する
+		if (pCreateNode->GetName().find("AssimpFbx") != std::string::npos)
 		{
-			std::unique_ptr<TreeNode> pChildNode =
-				CreateNode(*_aiChildNode.mChildren[n_i], _skeletalMesh);
+			std::string nodeName = pCreateNode->GetName();
+			
+			if (nodeName.find("Translation") != std::string::npos)
+			{
+				loadNodeTransformMtx = ToDirectXMatrix(_aiChildNode.mTransformation);
+			}
+			else if (nodeName.find("Scaling") != std::string::npos)
+			{
+				loadNodeScaleMtx = ToDirectXMatrix(_aiChildNode.mTransformation);
+			}
+			else if (nodeName.find("Rotation") != std::string::npos)
+			{
+				loadNodeRotationMtx = ToDirectXMatrix(_aiChildNode.mTransformation);
+			}
 
-			pCreateNode->AddChild(std::move(pChildNode));
+			// 対応ノードに引き渡すために行列に保管する
+
+			// 例外処理
+			if (_aiChildNode.mNumChildren == 0) return nullptr;
+
+			pCreateNode = CreateNode(*_aiChildNode.mChildren[0], _skeletalMesh, true);
+		}
+
+		// AssimpFbxと付いていないなら
+		else
+		{
+			// 親ノードがAssimpFbxだったらローカル行列を受け継ぐ
+			if (_isStoreAssimpFbxMtx)
+			{
+				// 全ての行列を掛ける
+				Matrix localNodeMtx =
+					loadNodeScaleMtx * loadNodeRotationMtx * loadNodeTransformMtx;
+				pCreateNode->SetTransformMtx(ToDirectXMatrix(_aiChildNode.mTransformation) * localNodeMtx);
+
+				// 初期化
+				loadNodeScaleMtx = Matrix::Identity;
+				loadNodeRotationMtx = Matrix::Identity;
+				loadNodeTransformMtx = Matrix::Identity;
+			}
+			else
+				pCreateNode->SetTransformMtx(ToDirectXMatrix(_aiChildNode.mTransformation));
+
+			// 対応したボーンを名前から取得する
+			Bone* pLinkBone = _skeletalMesh.GetBoneByName(_aiChildNode.mName.C_Str());
+			if (pLinkBone)
+				pCreateNode->SetBone(*pLinkBone);
+
+			// 再帰でノードを生成する
+			for (u_int n_i = 0; n_i < _aiChildNode.mNumChildren; n_i++)
+			{
+				std::unique_ptr<TreeNode> pChildNode =
+					CreateNode(*_aiChildNode.mChildren[n_i], _skeletalMesh, false);
+
+				pCreateNode->AddChild(std::move(pChildNode));
+			}
 		}
 
 		return std::move(pCreateNode);
@@ -889,7 +942,7 @@ namespace HashiTaku
 		return u16Str;
 	}
 
-	void AssetLoader::UpdateSize(const DirectX::SimpleMath::Vector3& _vertexPos, DirectX::SimpleMath::Vector3& _max, DirectX::SimpleMath::Vector3& _min)
+	void AssetLoader::UpdateSize(const DXSimp::Vector3& _vertexPos, DXSimp::Vector3& _max, DXSimp::Vector3& _min)
 	{
 		if (_vertexPos.x > _max.x)
 			_max.x = _vertexPos.x;
@@ -910,7 +963,7 @@ namespace HashiTaku
 			_min.z = _vertexPos.z;
 	}
 
-	DirectX::SimpleMath::Vector3 ToVector3(const aiVector3D& _aiVector3)
+	DXSimp::Vector3 ToVector3(const aiVector3D& _aiVector3)
 	{
 		Vector3 vector3;
 		vector3.x = _aiVector3.x; vector3.y = _aiVector3.y; vector3.z = _aiVector3.z;
@@ -925,7 +978,7 @@ namespace HashiTaku
 		return retQuat;
 	}
 
-	DirectX::SimpleMath::Color ToColor(const aiColor4D& _aiColor)
+	DXSimp::Color ToColor(const aiColor4D& _aiColor)
 	{
 		Color color;
 		color.x = _aiColor.r; color.y = _aiColor.g; color.z = _aiColor.b; color.w = _aiColor.a;

@@ -15,7 +15,7 @@ namespace HashiTaku
 		std::vector<std::unique_ptr<Bone>> pBones;
 
 		/// @brief ロード時のオフセット回転量
-		DirectX::SimpleMath::Quaternion loadOffsetRotation;
+		DXSimp::Quaternion loadOffsetRotation;
 
 		/// @brief ノード情報の元ノードを持つ
 		std::unique_ptr<TreeNode> pRootNode;
@@ -68,7 +68,7 @@ namespace HashiTaku
 
 		/// @brief ロード時のスケール回転量を取得
 		/// @return ロード時のスケール回転量
-		const DirectX::SimpleMath::Quaternion& GetLoadRotation() const;
+		const DXSimp::Quaternion& GetLoadRotation() const;
 
 	private:
 		void Copy(const BoneList& _other);

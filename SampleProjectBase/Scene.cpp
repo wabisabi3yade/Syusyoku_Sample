@@ -19,10 +19,7 @@ namespace HashiTaku
 
 	Scene::~Scene()
 	{
-		InSceneSystemManager::Delete();
-
-		// エフェクトを削除
-		pEffectManager->AllEffectDestroy();
+		OnTerminal();
 	}
 
 	void Scene::Exec()
@@ -58,11 +55,14 @@ namespace HashiTaku
 
 		// エフェクト更新処理
 		pEffectManager->Update();
+
+		// サウンドマネジャー更新処理
+		DXSoundManager::GetInstance()->Update();
 	}
 
 	void Scene::SceneDraw()
 	{
-		SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->GetSceneObjects();
+		SceneObjects& sceneObjects = pInSceneSystem->GetSceneObjects();
 
 		// 描画前準備
 		DrawSetup();
@@ -100,6 +100,17 @@ namespace HashiTaku
 		HASHI_DEBUG_LOG(sceneName + " ロード完了");
 	}
 
+	void Scene::OnTerminal()
+	{
+		InSceneSystemManager::Delete();
+
+		// エフェクトを削除
+		pEffectManager->AllEffectDestroy();
+
+		// サウンドを終了
+		DXSoundManager::GetInstance()->StopAll();
+	}
+
 	void Scene::SetName(const std::string& _name)
 	{
 		sceneName = _name;
@@ -113,6 +124,7 @@ namespace HashiTaku
 	void Scene::DrawSetup()
 	{
 		SceneLights& sceneLights = pInSceneSystem->GetSceneLights();
+		ShadowDrawer& shadowDrawer = pInSceneSystem->GetShadowDrawer();
 
 		// 画面クリアなど準備
 		Direct3D11::GetInstance()->GetRenderer()->SetUpDraw();
@@ -120,12 +132,15 @@ namespace HashiTaku
 		// 光源の更新処理
 		sceneLights.Update();
 
+		// ビュー変換行列を更新
+		pInSceneSystem->UpdateViewMatrix();
+
+		// 深度テクスチャを作成
+		shadowDrawer.CreateDepthTexture();
+
 		// 1ループ1度だけ更新すればいいバッファ更新
 		ShaderCollection* shCol = ShaderCollection::GetInstance();
 		shCol->UniqueUpdateBuffer();
-
-		// ビュー変換行列を更新
-		pInSceneSystem->UpdateViewMatrix();
 	}
 
 	std::string Scene::SaveFilePath()
