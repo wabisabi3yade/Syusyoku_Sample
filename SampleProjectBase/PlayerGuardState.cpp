@@ -63,7 +63,11 @@ namespace HashiTaku
 		data["parryAngle"] = canParryForwardAngle;
 		SaveJsonVector3("vfxOffset", createVfxOffset, data);
 		data["vfxInfo"] = parryEffectInfo.Save();
-		data["parrySE"] = parrySoundParameter.Save();
+		for (auto& itr : parrySoundParameters)
+		{
+			data["parrySEs"].push_back(itr.Save());
+		}
+
 		return data;
 	}
 
@@ -79,9 +83,14 @@ namespace HashiTaku
 			parryEffectInfo.Load(loadData);
 		}
 
-		if (LoadJsonData("parrySE", loadData, _data))
+		if (LoadJsonDataArray("parrySEs", loadData, _data))
 		{
-			parrySoundParameter.Load(loadData);
+			for (auto& soundData : loadData)
+			{
+				PlaySoundParameter loadSound;
+				loadSound.Load(soundData);
+				parrySoundParameters.push_back(loadSound);
+			}
 		}
 	}
 
@@ -169,8 +178,16 @@ namespace HashiTaku
 		CP_SoundManager* pSoundManager = CP_SoundManager::GetInstance();
 		if (!pSoundManager) return;
 
+		// ランダムで再生する音を変える
+		int soundCnt = static_cast<int>(parrySoundParameters.size());
+		if (soundCnt == 0) return;
+
+		int randId = Random::RangeInt<int>(0, soundCnt - 1);
+		auto soundItr = parrySoundParameters.begin();
+		soundItr = std::next(soundItr, randId);
+
 		// プレイヤーからSEを再生
-		pSoundManager->PlaySE(parrySoundParameter, GetMyTransform().GetPosition());
+		pSoundManager->PlaySE(*soundItr, GetMyTransform().GetPosition());
 	}
 
 	void PlayerGuardState::ImGuiDebug()
@@ -193,10 +210,30 @@ namespace HashiTaku
 		// サウンド
 		ImGuiMethod::LineSpaceSmall();
 		ImGui::Text("Parry SE");
-		parrySoundParameter.ImGuiCall();
-		/*if (ImGui::Button("+"))
+		u_int loop = 1;
+		for (auto itr = parrySoundParameters.begin(); itr != parrySoundParameters.end();)
 		{
-			parrySounds.
-		}*/
+			bool isDelete = false;
+			if (ImGuiMethod::TreeNode(std::to_string(loop)))
+			{
+				if (ImGui::Button("X"))
+					isDelete = true;
+				
+				itr->ImGuiCall();
+
+				ImGui::TreePop();
+			}
+			loop++;
+
+			if (isDelete)
+				itr = parrySoundParameters.erase(itr);
+			else
+				itr++;
+		}
+		if (ImGui::Button("+"))
+		{
+			PlaySoundParameter add;
+			parrySoundParameters.push_back(add);
+		}
 	}
 }

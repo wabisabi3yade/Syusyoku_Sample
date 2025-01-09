@@ -451,6 +451,12 @@
                                                         "time": 0.05999999865889549
                                                     },
                                                     "damage": 2.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
                                                     "hitVfx": {
                                                         "applyColor": false,
                                                         "lookCam": false,
@@ -497,6 +503,12 @@
                                                         "time": 0.05999999865889549
                                                     },
                                                     "damage": 2.9000000953674316,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
                                                     "hitVfx": {
                                                         "applyColor": false,
                                                         "lookCam": false,
@@ -532,6 +544,12 @@
                                                 {
                                                     "break": 8.0,
                                                     "damage": 2.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
                                                     "hitVfx": {
                                                         "applyColor": false,
                                                         "lookCam": false,
@@ -605,6 +623,12 @@
                                                         "time": 0.05999999865889549
                                                     },
                                                     "damage": 4.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
                                                     "hitVfx": {
                                                         "applyColor": false,
                                                         "lookCam": false,
@@ -651,6 +675,12 @@
                                                         "time": 0.30000001192092896
                                                     },
                                                     "damage": 3.299999952316284,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
                                                     "hitVfx": {
                                                         "applyColor": false,
                                                         "lookCam": false,
@@ -710,6 +740,12 @@
                                                         "time": 0.10000000149011612
                                                     },
                                                     "damage": 5.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
                                                     "hitVfx": {
                                                         "applyColor": false,
                                                         "lookCam": false,
@@ -735,6 +771,12 @@
                                                         "time": 0.10000000149011612
                                                     },
                                                     "damage": 6.199999809265137,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
                                                     "hitVfx": {
                                                         "applyColor": false,
                                                         "lookCam": false,
@@ -770,6 +812,12 @@
                                                 {
                                                     "break": 1.0,
                                                     "damage": 0.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
                                                     "hitVfx": {
                                                         "applyColor": false,
                                                         "lookCam": false,
@@ -798,6 +846,12 @@
                                                                 "time": 0.20000000298023224
                                                             },
                                                             "damage": 8.0,
+                                                            "hitSE": {
+                                                                "loop": false,
+                                                                "pitch": 0.0,
+                                                                "useListener": false,
+                                                                "volume": 0.5
+                                                            },
                                                             "hitVfx": {
                                                                 "applyColor": false,
                                                                 "lookCam": false,
@@ -828,6 +882,12 @@
                                                                 "time": 0.4000000059604645
                                                             },
                                                             "damage": 20.0,
+                                                            "hitSE": {
+                                                                "loop": false,
+                                                                "pitch": 0.0,
+                                                                "useListener": false,
+                                                                "volume": 0.5
+                                                            },
                                                             "hitVfx": {
                                                                 "applyColor": false,
                                                                 "lookCam": false,
@@ -858,6 +918,12 @@
                                                                 "time": 0.6000000238418579
                                                             },
                                                             "damage": 50.0,
+                                                            "hitSE": {
+                                                                "loop": false,
+                                                                "pitch": 0.0,
+                                                                "useListener": false,
+                                                                "volume": 0.5
+                                                            },
                                                             "hitVfx": {
                                                                 "applyColor": false,
                                                                 "lookCam": false,
@@ -925,13 +991,22 @@
                                         "data": {
                                             "canParryTime": 12,
                                             "parryAngle": 100.0,
-                                            "parrySE": {
-                                                "loop": false,
-                                                "pitch": 0.0,
-                                                "soundName": "parry1.wav",
-                                                "useListener": false,
-                                                "volume": 0.5
-                                            },
+                                            "parrySEs": [
+                                                {
+                                                    "loop": false,
+                                                    "pitch": 0.0,
+                                                    "soundName": "parry1.wav",
+                                                    "useListener": true,
+                                                    "volume": 0.5
+                                                },
+                                                {
+                                                    "loop": false,
+                                                    "pitch": 0.0,
+                                                    "soundName": "parry2.wav",
+                                                    "useListener": true,
+                                                    "volume": 0.5
+                                                }
+                                            ],
                                             "vfxInfo": {
                                                 "applyColor": false,
                                                 "lookCam": false,
@@ -1121,7 +1196,7 @@
                             "pitch": 0.0,
                             "soundName": "battle.wav",
                             "useListener": false,
-                            "volume": 0.5
+                            "volume": 0.20000000298023224
                         },
                         "enable": true,
                         "fade": "Fade",
@@ -1434,6 +1509,13 @@
                                         "atkInfos": [
                                             {
                                                 "damage": 1.0,
+                                                "hitSE": {
+                                                    "loop": false,
+                                                    "pitch": 0.0,
+                                                    "soundName": "sword1.wav",
+                                                    "useListener": true,
+                                                    "volume": 0.30000001192092896
+                                                },
                                                 "hitVfx": {
                                                     "applyColor": false,
                                                     "lookCam": false,
@@ -1446,6 +1528,12 @@
                                             },
                                             {
                                                 "damage": 2.0999999046325684,
+                                                "hitSE": {
+                                                    "loop": false,
+                                                    "pitch": 0.0,
+                                                    "useListener": false,
+                                                    "volume": 0.5
+                                                },
                                                 "hitVfx": {
                                                     "applyColor": false,
                                                     "lookCam": false,
@@ -1469,6 +1557,12 @@
                                                     "time": 0.6000000238418579
                                                 },
                                                 "damage": 5.099999904632568,
+                                                "hitSE": {
+                                                    "loop": false,
+                                                    "pitch": 0.0,
+                                                    "useListener": false,
+                                                    "volume": 0.5
+                                                },
                                                 "hitVfx": {
                                                     "applyColor": false,
                                                     "lookCam": false,
@@ -1645,6 +1739,12 @@
                                         "atkInfos": [
                                             {
                                                 "damage": 3.0,
+                                                "hitSE": {
+                                                    "loop": false,
+                                                    "pitch": 0.0,
+                                                    "useListener": false,
+                                                    "volume": 0.5
+                                                },
                                                 "hitVfx": {
                                                     "applyColor": false,
                                                     "lookCam": false,
@@ -1668,6 +1768,12 @@
                                                     "time": 0.6000000238418579
                                                 },
                                                 "damage": 5.0,
+                                                "hitSE": {
+                                                    "loop": false,
+                                                    "pitch": 0.0,
+                                                    "useListener": false,
+                                                    "volume": 0.5
+                                                },
                                                 "hitVfx": {
                                                     "applyColor": false,
                                                     "lookCam": false,
@@ -1801,6 +1907,12 @@
                                                     "time": 0.4000000059604645
                                                 },
                                                 "damage": 8.0,
+                                                "hitSE": {
+                                                    "loop": false,
+                                                    "pitch": 0.0,
+                                                    "useListener": false,
+                                                    "volume": 0.5
+                                                },
                                                 "hitVfx": {
                                                     "applyColor": false,
                                                     "lookCam": false,
@@ -1824,6 +1936,12 @@
                                                     "time": 0.5
                                                 },
                                                 "damage": 8.0,
+                                                "hitSE": {
+                                                    "loop": false,
+                                                    "pitch": 0.0,
+                                                    "useListener": false,
+                                                    "volume": 0.5
+                                                },
                                                 "hitVfx": {
                                                     "applyColor": false,
                                                     "lookCam": false,
@@ -1901,6 +2019,12 @@
                                                     "time": 0.30000001192092896
                                                 },
                                                 "damage": 15.0,
+                                                "hitSE": {
+                                                    "loop": false,
+                                                    "pitch": 0.0,
+                                                    "useListener": false,
+                                                    "volume": 0.5
+                                                },
                                                 "hitVfx": {
                                                     "applyColor": false,
                                                     "lookCam": false,
@@ -2582,57 +2706,6 @@
                         1.0,
                         1.0,
                         1.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "materials": [
-                            "M_Rock1"
-                        ],
-                        "meshName": "desertRock11.fbx",
-                        "name": "MeshRenderer",
-                        "priority": 0
-                    },
-                    {
-                        "color": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "enable": true,
-                        "name": "OutLineRenderer",
-                        "priority": 0,
-                        "scale": 0.07000000029802322
-                    }
-                ],
-                "layer": 0,
-                "name": "Rock14",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        -25.5,
-                        1.2999999523162842,
-                        17.399999618530273
-                    ],
-                    "rotation": [
-                        -0.08036001771688461,
-                        0.6103947162628174,
-                        -0.10285607725381851,
-                        0.7812689542770386
-                    ],
-                    "scale": [
-                        8.0,
-                        6.699999809265137,
-                        3.6000001430511475
                     ]
                 }
             }
@@ -3684,6 +3757,57 @@
                         1.0,
                         1.0,
                         1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "materials": [
+                            "M_Rock1"
+                        ],
+                        "meshName": "desertRock11.fbx",
+                        "name": "MeshRenderer",
+                        "priority": 0
+                    },
+                    {
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "enable": true,
+                        "name": "OutLineRenderer",
+                        "priority": 0,
+                        "scale": 0.07000000029802322
+                    }
+                ],
+                "layer": 0,
+                "name": "Rock14",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        -25.5,
+                        1.2999999523162842,
+                        17.399999618530273
+                    ],
+                    "rotation": [
+                        -0.08036001771688461,
+                        0.6103947162628174,
+                        -0.10285607725381851,
+                        0.7812689542770386
+                    ],
+                    "scale": [
+                        8.0,
+                        6.699999809265137,
+                        3.6000001430511475
                     ]
                 }
             }

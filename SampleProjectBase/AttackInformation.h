@@ -26,6 +26,9 @@ namespace HashiTaku
 		/// @brief カメラを揺らすパラメータ
 		PerlinShakeParameter pCamShakeParam;
 
+		/// @brief ヒット音のパラメータ
+		PlaySoundParameter hitSoundParameter;
+
 		/// @brief 攻撃時のダメージ
 		float atkDamage;
 
@@ -53,6 +56,10 @@ namespace HashiTaku
 		/// @brief カメラを揺らすパラメータを取得
 		/// @return カメラを揺らすパラメータ
 		const PerlinShakeParameter& GetCamShakeParam() const;
+
+		/// @brief ヒットSEを取得
+		/// @return ヒットSE
+		const PlaySoundParameter& GetHitSEParam() const;
 
 		/// @brief ダメージ値を取得
 		/// @return ダメージ値

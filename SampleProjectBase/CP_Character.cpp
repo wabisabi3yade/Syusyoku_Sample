@@ -6,6 +6,7 @@
 namespace HashiTaku
 {
 	CP_Character::CP_Character() :
+		pCamMove(nullptr),
 		currentHP(0.0f),
 		maxHP(1.0f),
 		hsBeforeDeltaTime(0.0f),
@@ -167,6 +168,9 @@ namespace HashiTaku
 		// ヒットエフェクトを生成
 		CreateHitVfx(_attackInfo, _contactPos);
 
+		// ヒット音を再生
+		CreateSoundFX(_attackInfo, _contactPos);
+
 		// 体力がなくなったら
 		if (currentHP <= 0.0f)
 			OnDeath();
@@ -183,5 +187,14 @@ namespace HashiTaku
 
 		// 再生
 		DX11EffecseerManager::GetInstance()->Play(hitVfxInfo, _contactPos);
+	}
+
+	void CP_Character::CreateSoundFX(const AttackInformation& _attackInfo, const DXSimp::Vector3& _contactPos)
+	{
+		CP_SoundManager* pSound = CP_SoundManager::GetInstance();
+		if (!pSound) return;
+
+		// 衝突地点に再生する
+		pSound->PlaySE(_attackInfo.GetHitSEParam(), _contactPos);
 	}
 }

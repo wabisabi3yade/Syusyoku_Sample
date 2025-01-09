@@ -28,6 +28,9 @@ namespace HashiTaku
 			// ƒpƒbƒhU“®
 			ANE_PadShake,
 
+			/// @brief Œø‰Ê‰¹Ä¶
+			ANE_PlaySound,
+
 			None
 		};
 

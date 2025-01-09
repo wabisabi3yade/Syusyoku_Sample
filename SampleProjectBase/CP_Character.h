@@ -17,9 +17,6 @@ namespace HashiTaku
 		/// @brief 死んだフラグ
 		bool isDead;
 
-		/// @brief 
-		bool isMove;
-
 		/// @brief ヒットストップ中か？
 		bool isHitStopping;
 
@@ -132,6 +129,12 @@ namespace HashiTaku
 		/// @param _attackInfo 攻撃情報
 		/// @param 当たり判定の衝突地点
 		void CreateHitVfx(const AttackInformation& _attackInfo,
+			const DXSimp::Vector3& _contactPos);
+
+		/// @brief SEを再生
+		/// @param _attackInfo 攻撃情報
+		/// @param 当たり判定の衝突地点
+		void CreateSoundFX(const AttackInformation& _attackInfo,
 			const DXSimp::Vector3& _contactPos);
 	};
 }

@@ -50,6 +50,11 @@ namespace HashiTaku
 		return pCamShakeParam;
 	}
 
+	const PlaySoundParameter& AttackInformation::GetHitSEParam() const
+	{
+		return hitSoundParameter;
+	}
+
 	float AttackInformation::GetDamageValue() const
 	{
 		return atkDamage;
@@ -88,6 +93,7 @@ namespace HashiTaku
 		data["isCamShake"] = isCamShake;
 		if (isCamShake)
 			data["camShake"] = pCamShakeParam.Save();
+		data["hitSE"] = hitSoundParameter.Save();
 		data["damage"] = atkDamage;
 		data["level"] = atkLevel;
 
@@ -107,6 +113,10 @@ namespace HashiTaku
 		{
 			if (LoadJsonData("camShake", loadData, _data))
 				pCamShakeParam.Load(loadData);
+		}
+		if (LoadJsonData("hitSE", loadData, _data))
+		{
+			hitSoundParameter.Load(loadData);
 		}
 
 		LoadJsonFloat("damage", atkDamage, _data);
@@ -180,12 +190,20 @@ namespace HashiTaku
 			SetAttackLevel(static_cast<AttackLevel>(id));
 		}
 
+		// エフェクト
 		hitVfxInfo.ImGuiCall();
 
+		// カメラシェイク
 		ImGui::Checkbox("IsCameraShake", &isCamShake);
-
 		if (isCamShake)
 			pCamShakeParam.ImGuiCall();
+
+		// サウンド
+		if (ImGuiMethod::TreeNode("Sound"))
+		{
+			hitSoundParameter.ImGuiCall();
+			ImGui::TreePop();
+		}
 
 		ImGuiLevelParamerter();
 	}

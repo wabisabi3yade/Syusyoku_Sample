@@ -74,5 +74,6 @@ namespace HashiTaku
 		ResisterNotify<ANE_CameraShake>(AnimationNotify_Base::NotifyType::ANE_CameraShake);
 		ResisterNotify<ANE_CameraShake>(AnimationNotify_Base::NotifyType::ANE_CameraShake);
 		ResisterNotify<ANE_PadShake>(AnimationNotify_Base::NotifyType::ANE_PadShake);
+		ResisterNotify<ANE_PlaySound>(AnimationNotify_Base::NotifyType::ANE_PlaySound);
 	}
 }
