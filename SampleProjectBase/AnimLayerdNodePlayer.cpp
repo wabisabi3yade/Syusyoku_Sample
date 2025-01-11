@@ -20,8 +20,6 @@ namespace HashiTaku
 
 		AnimNodePlayer_Base::ProgressPlayRatio(_controllerSpeed);
 
-		
-
 		float speed =
 			GetPlayerSpeed() *
 			layerdNode.GetBlendCurveSpeed(curBlendPlayRatio) *

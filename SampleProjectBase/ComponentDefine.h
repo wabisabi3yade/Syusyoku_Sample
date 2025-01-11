@@ -49,6 +49,7 @@
 
 // サウンド
 #include "CP_AudioListener.h"
+#include "CP_PlaySound.h"
 
 // システム
 #include "CP_SoundManager.h"

@@ -60,7 +60,7 @@ VS_OUT main(VS_IN vin)
     Comb._44 = 1.0f;
 
     Normal = mul(Normal, Comb);
-    vout.normal = Normal;
+    vout.normal = Normal.xyz;
     
     vout.pos = mul(vout.pos, world);
     vout.normal = normalize(mul(vout.normal, (float3x3) world));

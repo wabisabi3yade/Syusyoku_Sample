@@ -54,10 +54,25 @@
                                         "components": [
                                             {
                                                 "enable": true,
+                                                "isShadow": true,
                                                 "materials": null,
                                                 "meshName": "shield1.fbx",
                                                 "name": "MeshRenderer",
                                                 "priority": 0
+                                            },
+                                            {
+                                                "color": [
+                                                    0.0,
+                                                    0.0,
+                                                    0.0,
+                                                    1.0
+                                                ],
+                                                "ditherOffset": 0.0,
+                                                "ditherPower": 1.0,
+                                                "enable": true,
+                                                "name": "OutLineRenderer",
+                                                "priority": 0,
+                                                "scale": 0.019999999552965164
                                             }
                                         ],
                                         "layer": 0,
@@ -162,10 +177,25 @@
                                         "components": [
                                             {
                                                 "enable": true,
+                                                "isShadow": true,
                                                 "materials": null,
                                                 "meshName": "Knight_Sword.fbx",
                                                 "name": "MeshRenderer",
                                                 "priority": 0
+                                            },
+                                            {
+                                                "color": [
+                                                    0.0,
+                                                    0.0,
+                                                    0.0,
+                                                    1.0
+                                                ],
+                                                "ditherOffset": 0.0,
+                                                "ditherPower": 1.0,
+                                                "enable": true,
+                                                "name": "OutLineRenderer",
+                                                "priority": 0,
+                                                "scale": 0.019999999552965164
                                             }
                                         ],
                                         "layer": 0,
@@ -373,6 +403,7 @@
                 "components": [
                     {
                         "enable": true,
+                        "isShadow": true,
                         "materials": null,
                         "meshName": "Knight.fbx",
                         "name": "MeshRenderer",
@@ -454,8 +485,9 @@
                                                     "hitSE": {
                                                         "loop": false,
                                                         "pitch": 0.0,
-                                                        "useListener": false,
-                                                        "volume": 0.5
+                                                        "soundName": "sword1.wav",
+                                                        "useListener": true,
+                                                        "volume": 0.25
                                                     },
                                                     "hitVfx": {
                                                         "applyColor": false,
@@ -506,8 +538,9 @@
                                                     "hitSE": {
                                                         "loop": false,
                                                         "pitch": 0.0,
-                                                        "useListener": false,
-                                                        "volume": 0.5
+                                                        "soundName": "sword1.wav",
+                                                        "useListener": true,
+                                                        "volume": 0.17000000178813934
                                                     },
                                                     "hitVfx": {
                                                         "applyColor": false,
@@ -547,8 +580,9 @@
                                                     "hitSE": {
                                                         "loop": false,
                                                         "pitch": 0.0,
-                                                        "useListener": false,
-                                                        "volume": 0.5
+                                                        "soundName": "sword2.wav",
+                                                        "useListener": true,
+                                                        "volume": 0.17000000178813934
                                                     },
                                                     "hitVfx": {
                                                         "applyColor": false,
@@ -626,8 +660,9 @@
                                                     "hitSE": {
                                                         "loop": false,
                                                         "pitch": 0.0,
-                                                        "useListener": false,
-                                                        "volume": 0.5
+                                                        "soundName": "sword1.wav",
+                                                        "useListener": true,
+                                                        "volume": 0.17000000178813934
                                                     },
                                                     "hitVfx": {
                                                         "applyColor": false,
@@ -678,8 +713,9 @@
                                                     "hitSE": {
                                                         "loop": false,
                                                         "pitch": 0.0,
-                                                        "useListener": false,
-                                                        "volume": 0.5
+                                                        "soundName": "sword2.wav",
+                                                        "useListener": true,
+                                                        "volume": 0.17000000178813934
                                                     },
                                                     "hitVfx": {
                                                         "applyColor": false,
@@ -743,8 +779,9 @@
                                                     "hitSE": {
                                                         "loop": false,
                                                         "pitch": 0.0,
-                                                        "useListener": false,
-                                                        "volume": 0.5
+                                                        "soundName": "sword1.wav",
+                                                        "useListener": true,
+                                                        "volume": 0.17000000178813934
                                                     },
                                                     "hitVfx": {
                                                         "applyColor": false,
@@ -774,8 +811,9 @@
                                                     "hitSE": {
                                                         "loop": false,
                                                         "pitch": 0.0,
-                                                        "useListener": false,
-                                                        "volume": 0.5
+                                                        "soundName": "sword2.wav",
+                                                        "useListener": true,
+                                                        "volume": 0.18000000715255737
                                                     },
                                                     "hitVfx": {
                                                         "applyColor": false,
@@ -849,8 +887,9 @@
                                                             "hitSE": {
                                                                 "loop": false,
                                                                 "pitch": 0.0,
-                                                                "useListener": false,
-                                                                "volume": 0.5
+                                                                "soundName": "sword1.wav",
+                                                                "useListener": true,
+                                                                "volume": 0.17000000178813934
                                                             },
                                                             "hitVfx": {
                                                                 "applyColor": false,
@@ -885,8 +924,9 @@
                                                             "hitSE": {
                                                                 "loop": false,
                                                                 "pitch": 0.0,
-                                                                "useListener": false,
-                                                                "volume": 0.5
+                                                                "soundName": "sword2.wav",
+                                                                "useListener": true,
+                                                                "volume": 0.17000000178813934
                                                             },
                                                             "hitVfx": {
                                                                 "applyColor": false,
@@ -921,8 +961,9 @@
                                                             "hitSE": {
                                                                 "loop": false,
                                                                 "pitch": 0.0,
-                                                                "useListener": false,
-                                                                "volume": 0.5
+                                                                "soundName": "damage2.wav",
+                                                                "useListener": true,
+                                                                "volume": 0.17000000178813934
                                                             },
                                                             "hitVfx": {
                                                                 "applyColor": false,
@@ -1120,6 +1161,20 @@
                         "name": "CapsuleCollider",
                         "priority": 0,
                         "radius": 0.49000000953674316
+                    },
+                    {
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "ditherOffset": 0.0,
+                        "ditherPower": 1.0,
+                        "enable": true,
+                        "name": "OutLineRenderer",
+                        "priority": 0,
+                        "scale": 0.009999999776482582
                     }
                 ],
                 "layer": 1,
@@ -1233,7 +1288,7 @@
                         "name": "BattleManager",
                         "priority": 0,
                         "start": "GameStartText",
-                        "uiAnim": true,
+                        "uiAnim": false,
                         "win": "WinText"
                     }
                 ],
@@ -1274,10 +1329,25 @@
                                         "components": [
                                             {
                                                 "enable": true,
+                                                "isShadow": true,
                                                 "materials": null,
                                                 "meshName": "Sword15_FBX.fbx",
                                                 "name": "MeshRenderer",
                                                 "priority": 0
+                                            },
+                                            {
+                                                "color": [
+                                                    0.0,
+                                                    0.0,
+                                                    0.0,
+                                                    1.0
+                                                ],
+                                                "ditherOffset": 0.0,
+                                                "ditherPower": 1.0,
+                                                "enable": true,
+                                                "name": "OutLineRenderer",
+                                                "priority": 0,
+                                                "scale": 0.10000000149011612
                                             }
                                         ],
                                         "layer": 0,
@@ -1419,6 +1489,7 @@
                 "components": [
                     {
                         "enable": true,
+                        "isShadow": true,
                         "materials": null,
                         "meshName": "Uriel A Plotexia.fbx",
                         "name": "MeshRenderer",
@@ -1467,7 +1538,7 @@
                             "actData": [
                                 {
                                     "data": {
-                                        "isIdleOnly": false,
+                                        "isIdleOnly": true,
                                         "warpMotion": {
                                             "useWarp": false
                                         }
@@ -1512,9 +1583,9 @@
                                                 "hitSE": {
                                                     "loop": false,
                                                     "pitch": 0.0,
-                                                    "soundName": "sword1.wav",
+                                                    "soundName": "damage1.wav",
                                                     "useListener": true,
-                                                    "volume": 0.30000001192092896
+                                                    "volume": 0.17000000178813934
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -1531,8 +1602,9 @@
                                                 "hitSE": {
                                                     "loop": false,
                                                     "pitch": 0.0,
-                                                    "useListener": false,
-                                                    "volume": 0.5
+                                                    "soundName": "damage1.wav",
+                                                    "useListener": true,
+                                                    "volume": 0.17000000178813934
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -1560,8 +1632,9 @@
                                                 "hitSE": {
                                                     "loop": false,
                                                     "pitch": 0.0,
-                                                    "useListener": false,
-                                                    "volume": 0.5
+                                                    "soundName": "damage2.wav",
+                                                    "useListener": true,
+                                                    "volume": 0.17000000178813934
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -1742,8 +1815,9 @@
                                                 "hitSE": {
                                                     "loop": false,
                                                     "pitch": 0.0,
-                                                    "useListener": false,
-                                                    "volume": 0.5
+                                                    "soundName": "damage1.wav",
+                                                    "useListener": true,
+                                                    "volume": 0.17000000178813934
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -1771,8 +1845,9 @@
                                                 "hitSE": {
                                                     "loop": false,
                                                     "pitch": 0.0,
-                                                    "useListener": false,
-                                                    "volume": 0.5
+                                                    "soundName": "damage2.wav",
+                                                    "useListener": true,
+                                                    "volume": 0.17000000178813934
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -1910,8 +1985,9 @@
                                                 "hitSE": {
                                                     "loop": false,
                                                     "pitch": 0.0,
-                                                    "useListener": false,
-                                                    "volume": 0.5
+                                                    "soundName": "damage1.wav",
+                                                    "useListener": true,
+                                                    "volume": 0.17000000178813934
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -1939,8 +2015,9 @@
                                                 "hitSE": {
                                                     "loop": false,
                                                     "pitch": 0.0,
-                                                    "useListener": false,
-                                                    "volume": 0.5
+                                                    "soundName": "damage2.wav",
+                                                    "useListener": true,
+                                                    "volume": 0.17000000178813934
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -2022,8 +2099,9 @@
                                                 "hitSE": {
                                                     "loop": false,
                                                     "pitch": 0.0,
-                                                    "useListener": false,
-                                                    "volume": 0.5
+                                                    "soundName": "damage2.wav",
+                                                    "useListener": true,
+                                                    "volume": 0.20000000298023224
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -2163,6 +2241,20 @@
                         "name": "Boss",
                         "priority": 0,
                         "weaponName": "Boss_Weapon"
+                    },
+                    {
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "ditherOffset": 0.0,
+                        "ditherPower": 1.0,
+                        "enable": true,
+                        "name": "OutLineRenderer",
+                        "priority": 0,
+                        "scale": 0.009999999776482582
                     }
                 ],
                 "layer": 0,
@@ -2200,6 +2292,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
                                 "materials": [
                                     "M_Rock1"
                                 ],
@@ -2214,6 +2307,8 @@
                                     0.0,
                                     1.0
                                 ],
+                                "ditherOffset": 3.0,
+                                "ditherPower": 0.4000000059604645,
                                 "enable": true,
                                 "name": "OutLineRenderer",
                                 "priority": 1,
@@ -2251,6 +2346,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
                                 "materials": [
                                     "M_Rock2"
                                 ],
@@ -2265,6 +2361,8 @@
                                     0.0,
                                     1.0
                                 ],
+                                "ditherOffset": 3.0,
+                                "ditherPower": 0.4000000059604645,
                                 "enable": true,
                                 "name": "OutLineRenderer",
                                 "priority": 0,
@@ -2302,6 +2400,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
                                 "materials": [
                                     "M_Rock2"
                                 ],
@@ -2316,6 +2415,8 @@
                                     0.0,
                                     1.0
                                 ],
+                                "ditherOffset": 3.0,
+                                "ditherPower": 0.4000000059604645,
                                 "enable": true,
                                 "name": "OutLineRenderer",
                                 "priority": 0,
@@ -2532,6 +2633,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
                                 "materials": [
                                     "M_Rock2"
                                 ],
@@ -2546,6 +2648,8 @@
                                     0.0,
                                     1.0
                                 ],
+                                "ditherOffset": 3.0,
+                                "ditherPower": 0.4000000059604645,
                                 "enable": true,
                                 "name": "OutLineRenderer",
                                 "priority": 0,
@@ -2583,6 +2687,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
                                 "materials": [
                                     "M_Rock1"
                                 ],
@@ -2597,6 +2702,8 @@
                                     0.0,
                                     1.0
                                 ],
+                                "ditherOffset": 3.0,
+                                "ditherPower": 0.4000000059604645,
                                 "enable": true,
                                 "name": "OutLineRenderer",
                                 "priority": 0,
@@ -2634,6 +2741,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
                                 "materials": [
                                     "M_Rock1"
                                 ],
@@ -2648,6 +2756,8 @@
                                     0.0,
                                     1.0
                                 ],
+                                "ditherOffset": 3.0,
+                                "ditherPower": 0.4000000059604645,
                                 "enable": true,
                                 "name": "OutLineRenderer",
                                 "priority": 0,
@@ -2711,6 +2821,60 @@
             }
         },
         {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "isShadow": true,
+                        "materials": [
+                            "M_Rock1"
+                        ],
+                        "meshName": "desertRock11.fbx",
+                        "name": "MeshRenderer",
+                        "priority": 0
+                    },
+                    {
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "ditherOffset": 3.0,
+                        "ditherPower": 0.4000000059604645,
+                        "enable": true,
+                        "name": "OutLineRenderer",
+                        "priority": 0,
+                        "scale": 0.07000000029802322
+                    }
+                ],
+                "layer": 0,
+                "name": "Rock14",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        -25.5,
+                        1.2999999523162842,
+                        17.399999618530273
+                    ],
+                    "rotation": [
+                        -0.08036001771688461,
+                        0.6103947162628174,
+                        -0.10285607725381851,
+                        0.7812689542770386
+                    ],
+                    "scale": [
+                        8.0,
+                        6.699999809265137,
+                        3.6000001430511475
+                    ]
+                }
+            }
+        },
+        {
             "childs": [
                 {
                     "childs": [
@@ -2763,6 +2927,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "isShadow": true,
                                         "materials": [
                                             "M_Pillar"
                                         ],
@@ -2809,6 +2974,8 @@
                                             0.0,
                                             1.0
                                         ],
+                                        "ditherOffset": 3.0,
+                                        "ditherPower": 0.4000000059604645,
                                         "enable": true,
                                         "name": "OutLineRenderer",
                                         "priority": 0,
@@ -2890,6 +3057,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "isShadow": true,
                                         "materials": [
                                             "M_Pillar"
                                         ],
@@ -2936,6 +3104,8 @@
                                             0.0,
                                             1.0
                                         ],
+                                        "ditherOffset": 3.0,
+                                        "ditherPower": 0.4000000059604645,
                                         "enable": true,
                                         "name": "OutLineRenderer",
                                         "priority": 0,
@@ -3017,6 +3187,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "isShadow": true,
                                         "materials": [
                                             "M_Pillar"
                                         ],
@@ -3063,6 +3234,8 @@
                                             0.0,
                                             1.0
                                         ],
+                                        "ditherOffset": 3.0,
+                                        "ditherPower": 0.4000000059604645,
                                         "enable": true,
                                         "name": "OutLineRenderer",
                                         "priority": 0,
@@ -3144,6 +3317,7 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "isShadow": true,
                                         "materials": [
                                             "M_Pillar"
                                         ],
@@ -3190,6 +3364,8 @@
                                             0.0,
                                             1.0
                                         ],
+                                        "ditherOffset": 3.0,
+                                        "ditherPower": 0.4000000059604645,
                                         "enable": true,
                                         "name": "OutLineRenderer",
                                         "priority": 0,
@@ -3762,57 +3938,6 @@
             }
         },
         {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "materials": [
-                            "M_Rock1"
-                        ],
-                        "meshName": "desertRock11.fbx",
-                        "name": "MeshRenderer",
-                        "priority": 0
-                    },
-                    {
-                        "color": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "enable": true,
-                        "name": "OutLineRenderer",
-                        "priority": 0,
-                        "scale": 0.07000000029802322
-                    }
-                ],
-                "layer": 0,
-                "name": "Rock14",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        -25.5,
-                        1.2999999523162842,
-                        17.399999618530273
-                    ],
-                    "rotation": [
-                        -0.08036001771688461,
-                        0.6103947162628174,
-                        -0.10285607725381851,
-                        0.7812689542770386
-                    ],
-                    "scale": [
-                        8.0,
-                        6.699999809265137,
-                        3.6000001430511475
-                    ]
-                }
-            }
-        },
-        {
             "childs": [
                 {
                     "childs": null,
@@ -3821,6 +3946,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
                                 "materials": [
                                     "M_Rock1"
                                 ],
@@ -3835,6 +3961,8 @@
                                     0.0,
                                     1.0
                                 ],
+                                "ditherOffset": 3.0,
+                                "ditherPower": 0.4000000059604645,
                                 "enable": true,
                                 "name": "OutLineRenderer",
                                 "priority": 0,
@@ -3872,6 +4000,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
                                 "materials": [
                                     "M_Rock2"
                                 ],
@@ -3886,6 +4015,8 @@
                                     0.0,
                                     1.0
                                 ],
+                                "ditherOffset": 3.0,
+                                "ditherPower": 0.4000000059604645,
                                 "enable": true,
                                 "name": "OutLineRenderer",
                                 "priority": 0,
@@ -3923,6 +4054,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
                                 "materials": [
                                     "M_Rock1"
                                 ],
@@ -3937,6 +4069,8 @@
                                     0.0,
                                     1.0
                                 ],
+                                "ditherOffset": 3.0,
+                                "ditherPower": 0.4000000059604645,
                                 "enable": true,
                                 "name": "OutLineRenderer",
                                 "priority": 0,
@@ -3974,6 +4108,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
                                 "materials": [
                                     "M_Rock2"
                                 ],
@@ -3988,6 +4123,8 @@
                                     0.0,
                                     1.0
                                 ],
+                                "ditherOffset": 3.0,
+                                "ditherPower": 0.4000000059604645,
                                 "enable": true,
                                 "name": "OutLineRenderer",
                                 "priority": 0,
@@ -4060,6 +4197,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
                                 "materials": [
                                     "M_Rock2"
                                 ],
@@ -4074,6 +4212,8 @@
                                     0.0,
                                     1.0
                                 ],
+                                "ditherOffset": 3.0,
+                                "ditherPower": 0.4000000059604645,
                                 "enable": true,
                                 "name": "OutLineRenderer",
                                 "priority": 0,
@@ -4111,6 +4251,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
                                 "materials": [
                                     "M_Rock1"
                                 ],
@@ -4125,6 +4266,8 @@
                                     0.0,
                                     1.0
                                 ],
+                                "ditherOffset": 3.0,
+                                "ditherPower": 0.4000000059604645,
                                 "enable": true,
                                 "name": "OutLineRenderer",
                                 "priority": 0,
@@ -4162,6 +4305,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
                                 "materials": [
                                     "M_Rock2"
                                 ],
@@ -4176,6 +4320,8 @@
                                     0.0,
                                     1.0
                                 ],
+                                "ditherOffset": 3.0,
+                                "ditherPower": 0.4000000059604645,
                                 "enable": true,
                                 "name": "OutLineRenderer",
                                 "priority": 0,
@@ -4213,6 +4359,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
                                 "materials": [
                                     "M_Rock1"
                                 ],
@@ -4227,6 +4374,8 @@
                                     0.0,
                                     1.0
                                 ],
+                                "ditherOffset": 3.0,
+                                "ditherPower": 0.4000000059604645,
                                 "enable": true,
                                 "name": "OutLineRenderer",
                                 "priority": 0,

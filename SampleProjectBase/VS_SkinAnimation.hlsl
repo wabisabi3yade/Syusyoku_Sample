@@ -60,7 +60,7 @@ VS_OUT main(VS_IN vin)
     Comb._44 = 1.0f;
 
     Normal = mul(Normal, Comb);
-    vout.normal = Normal;
+    vout.normal = Normal.xyz;
 	
     vout.pos = mul(vout.pos, world);
     vout.worldPos = vout.pos; // ピクセルシェーダーでワールド座標を使用するので
@@ -70,8 +70,7 @@ VS_OUT main(VS_IN vin)
     // ライトビュー上での座標
     vout.lightSpacePos = mul(vout.worldPos, Lview);
     vout.lightSpacePos = mul(vout.lightSpacePos, Lproj);
-    
-    
+ 
     vout.uv = vin.uv;
     
     // スケール成分を除く

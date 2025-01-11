@@ -12,6 +12,11 @@
                         "name": "Camera",
                         "priority": 0,
                         "viewSlot": 0
+                    },
+                    {
+                        "enable": true,
+                        "name": "AudioListener",
+                        "priority": 0
                     }
                 ],
                 "layer": 0,
@@ -104,20 +109,20 @@
                         "transform": {
                             "child": null,
                             "pos": [
-                                0.01828049123287201,
+                                0.01828049309551716,
                                 -5.099999904632568,
-                                -11.648881912231445
+                                -11.248882293701172
                             ],
                             "rotation": [
                                 -0.0,
-                                -0.06104860082268715,
+                                -0.061048611998558044,
                                 -0.0,
-                                0.9981348514556885
+                                0.9981347918510437
                             ],
                             "scale": [
                                 0.800000011920929,
                                 0.800000011920929,
-                                0.699999988079071
+                                0.7000000476837158
                             ]
                         }
                     }
@@ -128,10 +133,24 @@
                 "components": [
                     {
                         "enable": true,
+                        "isShadow": true,
                         "materials": null,
                         "meshName": "campfire.fbx",
                         "name": "MeshRenderer",
                         "priority": 0
+                    },
+                    {
+                        "enable": true,
+                        "isBGM": false,
+                        "name": "PlaySound",
+                        "priority": 0,
+                        "sound": {
+                            "loop": false,
+                            "pitch": 0.0,
+                            "soundName": "takibi.wav",
+                            "useListener": true,
+                            "volume": 0.8299999833106995
+                        }
                     }
                 ],
                 "layer": 0,
@@ -144,13 +163,13 @@
                     "pos": [
                         0.0,
                         -5.0,
-                        -11.5
+                        -11.100000381469727
                     ],
                     "rotation": [
                         -0.0,
-                        -0.06104859337210655,
+                        -0.06104860454797745,
                         -0.0,
-                        0.9981348514556885
+                        0.9981347918510437
                     ],
                     "scale": [
                         1.0,
@@ -167,6 +186,7 @@
                 "components": [
                     {
                         "enable": true,
+                        "isShadow": true,
                         "materials": null,
                         "meshName": "Knight.fbx",
                         "name": "MeshRenderer",
@@ -256,7 +276,10 @@
                                 "components": [
                                     {
                                         "enable": true,
-                                        "materials": null,
+                                        "isShadow": true,
+                                        "materials": [
+                                            "M_Pillar"
+                                        ],
                                         "meshName": "Pillar1.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -337,7 +360,10 @@
                                 "components": [
                                     {
                                         "enable": true,
-                                        "materials": null,
+                                        "isShadow": true,
+                                        "materials": [
+                                            "M_Pillar"
+                                        ],
                                         "meshName": "Pillar1.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -454,7 +480,10 @@
                                 "components": [
                                     {
                                         "enable": true,
-                                        "materials": null,
+                                        "isShadow": true,
+                                        "materials": [
+                                            "M_Rock1"
+                                        ],
                                         "meshName": "desertRock11.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -523,7 +552,10 @@
                                 "components": [
                                     {
                                         "enable": true,
-                                        "materials": null,
+                                        "isShadow": true,
+                                        "materials": [
+                                            "M_Rock2"
+                                        ],
                                         "meshName": "desertRock15.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -592,7 +624,10 @@
                                 "components": [
                                     {
                                         "enable": true,
-                                        "materials": null,
+                                        "isShadow": true,
+                                        "materials": [
+                                            "M_Rock2"
+                                        ],
                                         "meshName": "desertRock15.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -629,7 +664,10 @@
                                 "components": [
                                     {
                                         "enable": true,
-                                        "materials": null,
+                                        "isShadow": true,
+                                        "materials": [
+                                            "M_Rock1"
+                                        ],
                                         "meshName": "desertRock11.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -666,7 +704,10 @@
                                 "components": [
                                     {
                                         "enable": true,
-                                        "materials": null,
+                                        "isShadow": true,
+                                        "materials": [
+                                            "M_Rock2"
+                                        ],
                                         "meshName": "desertRock15.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -703,7 +744,10 @@
                                 "components": [
                                     {
                                         "enable": true,
-                                        "materials": null,
+                                        "isShadow": true,
+                                        "materials": [
+                                            "M_Rock1"
+                                        ],
                                         "meshName": "desertRock11.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
@@ -808,6 +852,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
                                 "materials": null,
                                 "meshName": "Knight_Sword.fbx",
                                 "name": "MeshRenderer",
@@ -845,6 +890,7 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
                                 "materials": null,
                                 "meshName": "shield1.fbx",
                                 "name": "MeshRenderer",
@@ -896,6 +942,54 @@
                         -0.0,
                         0.0,
                         -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "name": "SoundManager",
+                        "priority": 0
+                    },
+                    {
+                        "enable": true,
+                        "isBGM": true,
+                        "name": "PlaySound",
+                        "priority": 0,
+                        "sound": {
+                            "loop": true,
+                            "pitch": 0.0,
+                            "soundName": "title.wav",
+                            "useListener": false,
+                            "volume": 0.11999999731779099
+                        }
+                    }
+                ],
+                "layer": 0,
+                "name": "SoundManager",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
                         1.0
                     ],
                     "scale": [

@@ -600,6 +600,12 @@
                                                 {
                                                     "break": 1.0,
                                                     "damage": 2.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
                                                     "hitVfx": {
                                                         "applyColor": false,
                                                         "lookCam": false,
@@ -634,6 +640,12 @@
                                                 {
                                                     "break": 1.0,
                                                     "damage": 2.9000000953674316,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
                                                     "hitVfx": {
                                                         "applyColor": false,
                                                         "lookCam": false,
@@ -668,6 +680,12 @@
                                                 {
                                                     "break": 1.0,
                                                     "damage": 2.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
                                                     "hitVfx": {
                                                         "applyColor": false,
                                                         "lookCam": false,
@@ -729,6 +747,12 @@
                                                 {
                                                     "break": 1.0,
                                                     "damage": 4.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
                                                     "hitVfx": {
                                                         "applyColor": false,
                                                         "lookCam": false,
@@ -763,6 +787,12 @@
                                                 {
                                                     "break": 1.0,
                                                     "damage": 3.299999952316284,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
                                                     "hitVfx": {
                                                         "applyColor": false,
                                                         "lookCam": false,
@@ -810,6 +840,12 @@
                                                 {
                                                     "break": 1.0,
                                                     "damage": 4.199999809265137,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
                                                     "hitVfx": {
                                                         "applyColor": false,
                                                         "lookCam": false,
@@ -823,6 +859,12 @@
                                                 {
                                                     "break": 1.0,
                                                     "damage": 6.199999809265137,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
                                                     "hitVfx": {
                                                         "applyColor": false,
                                                         "lookCam": false,
@@ -857,6 +899,12 @@
                                                 {
                                                     "break": 1.0,
                                                     "damage": 0.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
                                                     "hitVfx": {
                                                         "applyColor": false,
                                                         "lookCam": false,
@@ -874,6 +922,12 @@
                                                         {
                                                             "break": 1.0,
                                                             "damage": 0.0,
+                                                            "hitSE": {
+                                                                "loop": false,
+                                                                "pitch": 0.0,
+                                                                "useListener": false,
+                                                                "volume": 0.5
+                                                            },
                                                             "hitVfx": {
                                                                 "applyColor": false,
                                                                 "lookCam": false,
@@ -892,6 +946,12 @@
                                                         {
                                                             "break": 1.0,
                                                             "damage": 0.0,
+                                                            "hitSE": {
+                                                                "loop": false,
+                                                                "pitch": 0.0,
+                                                                "useListener": false,
+                                                                "volume": 0.5
+                                                            },
                                                             "hitVfx": {
                                                                 "applyColor": false,
                                                                 "lookCam": false,
@@ -910,6 +970,12 @@
                                                         {
                                                             "break": 1.0,
                                                             "damage": 0.0,
+                                                            "hitSE": {
+                                                                "loop": false,
+                                                                "pitch": 0.0,
+                                                                "useListener": false,
+                                                                "volume": 0.5
+                                                            },
                                                             "hitVfx": {
                                                                 "applyColor": false,
                                                                 "lookCam": false,

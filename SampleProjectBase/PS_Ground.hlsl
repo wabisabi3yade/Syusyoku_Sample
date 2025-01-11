@@ -33,23 +33,31 @@ float4 main(PS_IN pin) : SV_TARGET
         color *= diffuseTex.Sample(samp, pin.uv);
     }
     
-    float2 screenUV = pin.lightSpacePos.xy / pin.lightSpacePos.w;
-    screenUV = screenUV * 0.5f + 0.5f;
-    screenUV.y = 1.0f - screenUV.y;
+    float2 shadowMapUV = pin.lightSpacePos.xy / pin.lightSpacePos.w;
+    shadowMapUV *= float2(0.5f, -0.5f);
+    shadowMapUV += 0.5f;
     
-    float objDepth = pin.lightSpacePos.z / pin.lightSpacePos.w;
+    float zInLVP = pin.lightSpacePos.z;
     
-     //screenUV = saturate(screenUV);
-    
-    float texDepth = depthTex.Sample(samp, screenUV).r;
-    
-    if (screenUV.x < 0.0f || screenUV.x > 1.0f ||
-        screenUV.y < 0.0f || screenUV.y > 1.0f)
+    if (shadowMapUV.x > 0.0f && shadowMapUV.x < 1.0f && shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f)
     {
-        texDepth = 1.0f;
+        float2 shadowValue = depthTex.Sample(samp, shadowMapUV).xy;
+        
+        if (zInLVP > shadowValue.r && zInLVP <= 1.0f)
+        {
+            float depth_sq = shadowValue.x * shadowValue.x;
+            
+            float variance = min(max(shadowValue.y - depth_sq, 0.0001f), 1.0f);
+            float md = zInLVP - shadowValue.x;
+            
+            float lit_factor = variance / (variance + md * md);
+            
+            float3 shadowColor = color.xyz * 0.5f;
+            
+            color.xyz = lerp(shadowColor, color.xyz, lit_factor);
+        }
+
     }
-    
-    color.rgb *= objDepth > texDepth ? 0.5f : 1.0f;
     
     return color;
 }

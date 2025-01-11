@@ -37,6 +37,8 @@ namespace HashiTaku
 		// ImGuiの終了処理
 		ImGuiMethod::Terminal();
 
+		DXSoundManager::GetInstance()->FastRelease();
+
 		// アセット管理解放
 		pAssetCollection.reset();
 
