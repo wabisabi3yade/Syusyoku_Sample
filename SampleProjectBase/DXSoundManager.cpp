@@ -30,7 +30,7 @@ namespace HashiTaku
 		auto playItr = playSoundInstances.begin();
 		for (; playItr != playSoundInstances.end();)
 		{
-			auto state = (*playItr).pSoundInstance->GetState();
+			auto state = (*playItr)->pSoundInstance->GetState();
 
 			// 終了していたなら
 			if (state == DX::SoundState::STOPPED)
@@ -57,8 +57,8 @@ namespace HashiTaku
 
 		// サウンドデータからインスタンスを作成
 		auto effect = soundFx->CreateInstance(
-			/*DX::SoundEffectInstance_Use3D
-			| DX::SoundEffectInstance_ReverbUseFilters*/
+			DX::SoundEffectInstance_Use3D
+			| DX::SoundEffectInstance_ReverbUseFilters
 		);
 
 		// 音のパラメータ調整
@@ -84,9 +84,9 @@ namespace HashiTaku
 		int playId = GetEmptyIndex();
 
 		// 再生リストに追加
-		PlaySoundInstance param;
-		param.soundId = playId;
-		param.pSoundInstance = std::move(effect);
+		std::unique_ptr<PlaySoundInstance> param = std::make_unique<PlaySoundInstance>();
+		param->soundId = playId;
+		param->pSoundInstance = std::move(effect);
 		playSoundInstances.push_back(std::move(param));
 
 		return playId;
@@ -111,7 +111,7 @@ namespace HashiTaku
 		// 全ての音を止める
 		for (auto& play : playSoundInstances)
 		{
-			play.pSoundInstance->Stop();
+			play->pSoundInstance->Stop();
 		}
 
 		playSoundInstances.clear();
@@ -120,16 +120,16 @@ namespace HashiTaku
 	void DXSoundManager::StopSound(int _soundId)
 	{
 		auto itr = std::find_if(playSoundInstances.begin(), playSoundInstances.end(),
-			[=](const PlaySoundInstance& _play)
+			[=](const std::unique_ptr<PlaySoundInstance>& _play)
 			{
-				return _play.soundId == _soundId;
+				return _play->soundId == _soundId;
 			});
 
 		// 見つからないなら
 		if (itr == playSoundInstances.end()) return;
 
 		// 再生を止める
-		(*itr).pSoundInstance->Stop();
+		(*itr)->pSoundInstance->Stop();
 		playSoundInstances.erase(itr);
 	}
 
@@ -148,16 +148,21 @@ namespace HashiTaku
 		pAudioLisner = nullptr;
 	}
 
+	void DXSoundManager::FastRelease()
+	{
+		StopAll();
+	}
+
 	DXSoundManager::DXSoundManager() : pAudioLisner(nullptr)
 	{
 	}
 
 	DXSoundManager::~DXSoundManager()
 	{
-		playSoundInstances.clear();
-
 		// 内部で処理を起こさないといけない
 		pAudioEngine->Update();
+
+		pAudioEngine.reset();
 	}
 
 	void DXSoundManager::Init()
@@ -179,7 +184,7 @@ namespace HashiTaku
 			bool isDupplicate = false;	// 重複しているかフラグ
 			for (auto& play : playSoundInstances)
 			{
-				if (idx != play.soundId) continue;
+				if (idx != play->soundId) continue;
 
 				// 重複したら
 				isDupplicate = true;

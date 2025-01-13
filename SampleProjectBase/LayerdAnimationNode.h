@@ -101,6 +101,7 @@ namespace HashiTaku
 		/// @param _currentNode 現在のノード
 		/// @param _parentBaseRotation ベース側の親ボーンまでのメッシュ空間回転量
 		/// @param _parentBlendRotation ブレンド側の親ボーンまでのメッシュ空間回転量
+		/// @param _parentCalculateRotation 計算されている現在の親ボーンまでの
 		/// @param _baseRatio ベースのアニメーション側の割合
 		/// @param _blendRatio ブレンド側のアニメーション割合
 		/// @param _blendDepth ブレンド開始からの深さ
@@ -108,6 +109,7 @@ namespace HashiTaku
 			const TreeNode* _currentNode, 
 			const DXSimp::Quaternion& _parentBaseRotation,
 			const DXSimp::Quaternion& _parentBlendRotation,
+			const DXSimp::Quaternion& _parentCalculateRotation,
 			float _baseRatio, 
 			float _blendRatio,
 			u_int _blendDepth) const;

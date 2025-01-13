@@ -10,9 +10,9 @@ namespace HashiTaku
 	constexpr u_int TEXTURE_WIDTH(1920);
 	constexpr u_int TEXTURE_HEIGHT(1080);
 
-	// ビューポートサイズ
-	constexpr u_int RENDERTARGET_WIDTH(1920);
-	constexpr u_int RENDERTARGET_HEIGHT(1080);
+	// ビュー行列の横幅・縦幅
+	constexpr float VIEW_WIDTH(60.0f);
+	constexpr float VIEW_HEIGHT(60.0f);
 
 	// 深度書き込みに使用するシェーダー名
 	constexpr auto DEPTHWRITE_PSNAME("PS_DepthWrite");
@@ -37,8 +37,8 @@ namespace HashiTaku
 		pRenderTarget = std::make_unique<RenderTarget>();
 		pRenderer = Direct3D11::GetInstance()->GetRenderer();
 		pRenderTarget->Create(DXGI_FORMAT_R32G32B32A32_FLOAT,
-			RENDERTARGET_WIDTH,
-			RENDERTARGET_HEIGHT);
+			TEXTURE_WIDTH,
+			TEXTURE_HEIGHT);
 
 		// シェーダー取得
 		auto* pShCol = ShaderCollection::GetInstance();
@@ -98,8 +98,8 @@ namespace HashiTaku
 
 		// プロジェクション
 		DXSimp::Matrix projtMtx = DirectX::XMMatrixOrthographicLH(
-			50.0f,
-			50.0f,
+			VIEW_WIDTH,
+			VIEW_HEIGHT,
 			0.1f,
 			100.0f
 		);

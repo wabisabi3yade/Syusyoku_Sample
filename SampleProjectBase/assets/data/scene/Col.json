@@ -6,44 +6,6 @@
                 "active": true,
                 "components": [
                     {
-                        "distance": 1000.0,
-                        "enable": true,
-                        "fov": 45.0,
-                        "name": "Camera",
-                        "priority": 0,
-                        "viewSlot": 0
-                    }
-                ],
-                "layer": 0,
-                "name": "Cam",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        0.0,
-                        5.0,
-                        -3.0
-                    ],
-                    "rotation": [
-                        -0.0,
-                        0.0,
-                        -0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        0.9999999403953552,
-                        0.9999999403953552
-                    ]
-                }
-            }
-        },
-        {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
                         "enable": true,
                         "friction": 0.5,
                         "isAwake": false,
@@ -106,6 +68,44 @@
                 "active": true,
                 "components": [
                     {
+                        "distance": 1000.0,
+                        "enable": true,
+                        "fov": 45.0,
+                        "name": "Camera",
+                        "priority": 0,
+                        "viewSlot": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "Cam",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        5.0,
+                        -3.0
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        0.9999999403953552,
+                        0.9999999403953552
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
                         "enable": true,
                         "friction": 0.5,
                         "isAwake": false,
@@ -151,6 +151,43 @@
                         -0.0,
                         0.0,
                         -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "isShadow": true,
+                        "materials": null,
+                        "name": "MeshRenderer",
+                        "priority": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "A1",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
                         1.0
                     ],
                     "scale": [

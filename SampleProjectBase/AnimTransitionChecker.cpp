@@ -50,6 +50,9 @@ namespace HashiTaku
 	{
 		for (auto& transInfo : transitionInfos)	// –îˆó‚Ì”
 		{
+			// Šˆ“®‚µ‚Ä‚¢‚È‚¢‚È‚çŽŸ‚Ö
+			if (!transInfo.pArrow->GetIsActive()) continue;
+
 			auto& conditionList = transInfo.pArrow->GetConditionList();
 			auto condItr = conditionList.begin();
 

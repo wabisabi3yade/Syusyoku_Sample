@@ -50,6 +50,9 @@ namespace HashiTaku
 
 		/// @brief 遷移開始時間でしか開始しないようにする
 		bool isHasExitRatio;
+
+		/// @brief 活動するか？
+		bool isActive;
 #ifdef EDIT
 		// 選択中の名前
 		std::string selectParamName;
@@ -124,6 +127,10 @@ namespace HashiTaku
 
 		// 補間の種類を取得
 		AnimInterpolateKind GetInterpolateKind() const;
+
+		/// @brief 活動状態を取得
+		/// @return 活動状態であるか？
+		bool GetIsActive() const;
 
 		/// @brief セーブする
 		/// @return セーブデータ

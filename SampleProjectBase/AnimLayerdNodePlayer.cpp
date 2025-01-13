@@ -20,8 +20,6 @@ namespace HashiTaku
 
 		AnimNodePlayer_Base::ProgressPlayRatio(_controllerSpeed);
 
-		
-
 		float speed =
 			GetPlayerSpeed() *
 			layerdNode.GetBlendCurveSpeed(curBlendPlayRatio) *
@@ -65,9 +63,8 @@ namespace HashiTaku
 
 		DXSimp::Vector3 rootMotionPos = layerdNode.GetRootMotionPos(_ratio);
 
-		// ロード時の回転量と、スケールを掛ける
-		if (_isWorldScaling)
-			ApplyLoadTransform(rootMotionPos);
+		// 計算処理を行う
+		CalcRootMotion(rootMotionPos, _isWorldScaling);
 
 		return rootMotionPos;
 	}

@@ -146,7 +146,8 @@ namespace HashiTaku
 
 		/// @brief ルートモーションをロード時のスケール・回転量を反映
 		/// @param _rootMotionPos 反映させたいルートモーション
-		void ApplyLoadTransform(DXSimp::Vector3& _rootMotionPos) const;
+		/// @param _isWorldScaling スケーリングを反映するか
+		void CalcRootMotion(DXSimp::Vector3& _rootMotionPos, bool _isWorldScaling) const;
 
 		/// @brief プレイヤー再生速度を取得する
 		/// @return プレイヤーの再生速度

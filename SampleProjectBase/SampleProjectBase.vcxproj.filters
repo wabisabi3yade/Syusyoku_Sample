@@ -937,6 +937,9 @@
     <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\Sound">
       <UniqueIdentifier>{a137c1cd-02d6-4a4d-a8ea-65121ba0ae01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Component\PlaySound">
+      <UniqueIdentifier>{5be12b8c-6860-46f2-82cc-dd3205068512}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1719,6 +1722,9 @@
       <Filter>ソース ファイル\Component\AudioListener</Filter>
     </ClCompile>
     <ClCompile Include="ANE_PlaySound.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_PlaySound.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -2549,6 +2555,9 @@
       <Filter>ソース ファイル\Component\AudioListener</Filter>
     </ClInclude>
     <ClInclude Include="ANE_PlaySound.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_PlaySound.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

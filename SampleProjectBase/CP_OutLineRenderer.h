@@ -11,7 +11,8 @@ namespace HashiTaku
 	/// @brief アウトライン描画コンポーネント(MeshRendererの後にする)
 	class CP_OutLineRenderer : public CP_Renderer
 	{
-		struct OutLineParameter
+		// 頂点シェーダー用のパラメータ
+		struct VSOutLineParameter
 		{
 			/// @brief 線の色
 			DXSimp::Color lineColor;
@@ -20,8 +21,23 @@ namespace HashiTaku
 			float lineScale{ 0.07f };
 		};
 
-		/// @brief アウトラインのパラメータ
-		OutLineParameter lineParameter;
+		// 頂点シェーダー用のパラメータ
+		struct PSOutLineParameter
+		{
+			/// @brief 近づくときの消えやすさ係数
+			float ditherPower{ 0.4f };
+
+			/// @brief ディザーのオフセット(5をセットすると5までは完全に消える)
+			float ditherOffset{ 3.0f };
+
+			float dummy1, dummy2;
+		};
+
+		/// @brief 頂点シェーダー用アウトラインのパラメータ
+		VSOutLineParameter vsLineParameter;
+
+		/// @brief ピクセル用アウトラインをパラメータ
+		PSOutLineParameter psLineParameter;
 
 		/// @brief アウトライン頂点シェーダー
 		static VertexShader* pOutLineVS;

@@ -112,17 +112,17 @@ namespace HashiTaku
 		return static_cast<u_int>(allFrameCnt * _ratio);
 	}
 
-	void AnimationData::GetScaleByRatio(u_int _boneId, float _playingRatio, DXSimp::Vector3& _outScale) const
+	bool AnimationData::GetScaleByRatio(u_int _boneId, float _playingRatio, DXSimp::Vector3& _outScale) const
 	{
 		const AnimationChannel* channel = FindChannel(_boneId);
 
 		// 対応したボーンがないなら
-		if (channel == nullptr) return;
+		if (channel == nullptr) return false;
 
 		if (channel->GetScaleKeyCnt() == 1)	// 1つだと補間しない
 		{
 			_outScale = channel->GetScaleKey(0).parameter;
-			return;
+			return true;
 		}
 
 		u_int prevKeyNum = channel->FindPrevScaleKey(_playingRatio);
@@ -144,19 +144,21 @@ namespace HashiTaku
 
 		// 線形補間
 		_outScale = Vector3::Lerp(prevKey.parameter, nextKey.parameter, ratio);
+
+		return true;
 	}
 
-	void AnimationData::GetQuaternionByRatio(u_int _boneId, float _playingRatio, DXSimp::Quaternion& _outRot) const
+	bool AnimationData::GetQuaternionByRatio(u_int _boneId, float _playingRatio, DXSimp::Quaternion& _outRot) const
 	{
 		const AnimationChannel* channel = FindChannel(_boneId);
 
 		// 対応したボーンがないなら
-		if (channel == nullptr) return;
+		if (channel == nullptr) return false;
 
 		if (channel->GetQuatKeyCnt() == 1)	// 1つだと補間しない
 		{
 			_outRot = channel->GetQuatKey(0).parameter;
-			return;
+			return true;
 		}
 
 		u_int prevKeyNum = channel->FindPrevQuatKey(_playingRatio);
@@ -175,19 +177,21 @@ namespace HashiTaku
 
 		// 球面線形補間
 		_outRot = Quaternion::Slerp(prevKey.parameter, nextKey.parameter, ratio);
+
+		return true;
 	}
 
-	void AnimationData::GetPositionByRatio(u_int _boneId, float _playingRatio, DXSimp::Vector3& _outPos) const
+	bool AnimationData::GetPositionByRatio(u_int _boneId, float _playingRatio, DXSimp::Vector3& _outPos) const
 	{
 		const AnimationChannel* channel = FindChannel(_boneId);
 
 		// 対応したボーンがないなら
-		if (channel == nullptr) return;
+		if (channel == nullptr) return false;
 
 		if (channel->GetPosKeyCnt() == 1)	// 1つだと補間しない
 		{
 			_outPos = channel->GetPosKey(0).parameter;
-			return;
+			return true;
 		}
 
 		u_int prevKeyNum = channel->FindPrevPosKey(_playingRatio);
@@ -206,13 +210,19 @@ namespace HashiTaku
 
 		//// 線形補間
 		_outPos = Vector3::Lerp(prevKey.parameter, nextKey.parameter, ratio);
+
+		return true;
 	}
 
-	void AnimationData::GetTransformByRatio(u_int _boneId, float _playingRatio, BoneTransform& _outTransform) const
+	bool AnimationData::GetTransformByRatio(u_int _boneId, float _playingRatio, BoneTransform& _outTransform) const
 	{
-		GetPositionByRatio(_boneId, _playingRatio, _outTransform.position);
+		bool hasAnimation = GetPositionByRatio(_boneId, _playingRatio, _outTransform.position);
+		if (!hasAnimation) return false;	// 対応したアニメーションがないなら
+
 		GetScaleByRatio(_boneId, _playingRatio, _outTransform.scale);
 		GetQuaternionByRatio(_boneId, _playingRatio, _outTransform.rotation);
+
+		return true;
 	}
 
 	DXSimp::Vector3 AnimationData::GetScaleByKey(u_int _boneId, u_int _playingKey) const

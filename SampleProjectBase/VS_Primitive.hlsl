@@ -40,7 +40,7 @@ VS_OUTPUT main(VS_INPUT vin)
     pos = mul(pos, projection);
     output.pos = pos;
     
-    output.normal = mul(float4(vin.normal, 1.0f), world);
+    output.normal = mul(float4(vin.normal, 1.0f), world).xyz;
 
     output.color = multiColor;  // êFÇë„ì¸ 
     output.uv = vin.uv;

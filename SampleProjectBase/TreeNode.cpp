@@ -101,6 +101,11 @@ namespace HashiTaku
         return nodeName;
     }
 
+    const Bone* TreeNode::GetBone() const
+    {
+        return pLinkBone;
+    }
+
     u_int TreeNode::GetBoneIdx() const
     {
         return pLinkBone->GetIndex();

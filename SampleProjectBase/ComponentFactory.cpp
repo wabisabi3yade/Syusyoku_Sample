@@ -54,6 +54,7 @@ namespace HashiTaku
 		
 		// サウンド
 		ResistComponnent<CP_AudioListener>();
+		ResistComponnent<CP_PlaySound>();
 
 		// システム
 		ResistComponnent<CP_SoundManager>();

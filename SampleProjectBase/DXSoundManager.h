@@ -58,7 +58,7 @@ namespace HashiTaku
 		const DX::AudioListener* pAudioLisner;
 
 		/// @brief 再生中のサウンドリスト
-		std::list<PlaySoundInstance> playSoundInstances;
+		std::list<std::unique_ptr<PlaySoundInstance>> playSoundInstances;
 	public:
 		/// @brief 更新処理
 		void Update();
@@ -103,6 +103,8 @@ namespace HashiTaku
 		/// @return エンジン
 		DirectX::AudioEngine& GetEngine();
 
+		/// @brief サウンドアセットより先にサウンドインスタンスを解放
+		void FastRelease();
 	private:
 		DXSoundManager();
 		~DXSoundManager();

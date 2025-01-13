@@ -6,6 +6,15 @@ cbuffer WVP : register(b0)
     matrix projection;
 };
 
+// Slot1 ライトビュー行列
+cbuffer WVP : register(b1)
+{
+    matrix Lworld;
+    matrix Lview;
+    matrix Lprojection;
+};
+
+
 struct VS_INPUT
 {
     float3 pos : POSITION; // 頂点座標（モデル座標系）
@@ -27,6 +36,8 @@ struct VS_OUTPUT
     float3 normal : NORMAL0;
     // ワールド座標
     float4 worldPos : POSITION0;
+    // ライトビュー空間座標
+    float4 lightSpacePos : POSITION1;
 };
 
 VS_OUTPUT main(VS_INPUT vin)
@@ -45,6 +56,10 @@ VS_OUTPUT main(VS_INPUT vin)
     output.pos = pos;
     output.color = vin.color;
     output.uv = vin.uv;
+    
+    // ライトビュー空間座標を求める
+    output.lightSpacePos = mul(output.worldPos, Lview);
+    output.lightSpacePos = mul(output.lightSpacePos, Lprojection);
 
     float3x3 rotationMatrix = (float3x3)world;
     rotationMatrix[0] = normalize(rotationMatrix[0]);

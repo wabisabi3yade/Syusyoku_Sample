@@ -95,15 +95,17 @@ namespace HashiTaku
 		/// @param _boneId ボーンID
 		/// @param_playingRatio 再生割合
 		/// @param _outScale アニメーションのスケール
-		void GetScaleByRatio(u_int _boneId, 
+		/// @return 対応したアニメーションが存在していたか？
+		bool GetScaleByRatio(u_int _boneId, 
 			float _playingRatio,
 			DXSimp::Vector3& _outScale) const;
 
 		/// @brief クォータニオンを求める
 		/// @param _boneId ボーンID
 		/// @param _playingRatio 再生割合
-		/// @param _playingRatio アニメーションのクォータニオン
-		void GetQuaternionByRatio(u_int _boneId, 
+		/// @param _outRotアニメーションのクォータニオン
+		/// @return 対応したアニメーションが存在していたか？
+		bool GetQuaternionByRatio(u_int _boneId, 
 			float _playingRatio, 
 			DXSimp::Quaternion& _outRot) const;
 
@@ -111,7 +113,8 @@ namespace HashiTaku
 		/// @param _boneId ボーンID
 		/// @param _playingRatio 再生割合
 		/// @param _outPos アニメーションの座標
-		void GetPositionByRatio(u_int _boneId,
+		/// @return 対応したアニメーションが存在していたか？
+		bool GetPositionByRatio(u_int _boneId,
 			float _playingRatio, 
 			DXSimp::Vector3& _outPos) const;
 
@@ -119,7 +122,8 @@ namespace HashiTaku
 		/// @param _boneId ボーンID
 		/// @param _playingRatio 再生割合
 		/// @param _outTransform 結果ボーントランスフォーム
-		void GetTransformByRatio(u_int _boneId, float _playingRatio, BoneTransform& _outTransform) const;
+		/// @return 対応したアニメーションが存在していたか？
+		bool GetTransformByRatio(u_int _boneId, float _playingRatio, BoneTransform& _outTransform) const;
 
 		/// @brief スケールを求める
 		/// @param _boneId ボーンID

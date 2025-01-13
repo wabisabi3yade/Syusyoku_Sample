@@ -15,7 +15,8 @@ namespace HashiTaku
 		priority(0),
 		transitiionEase(EaseKind::Linear),
 		interpolateKind(AnimInterpolateKind::CrossFade),
-		isHasExitRatio(false)
+		isHasExitRatio(false),
+		isActive(true)
 	{
 		// アニメーションパラメータ削除オブザーバーを作成、サブジェクトに追加する
 		pRemoveParamObserver = std::make_unique<AnimParam::AnimParamObserver>(*this, "Arrow_RemoveParam");
@@ -131,6 +132,11 @@ namespace HashiTaku
 		return interpolateKind;
 	}
 
+	bool AnimTransitionArrow::GetIsActive() const
+	{
+		return isActive;
+	}
+
 	json AnimTransitionArrow::Save()
 	{
 		json data;
@@ -156,6 +162,7 @@ namespace HashiTaku
 		data["priority"] = priority;
 		data["transEase"] = transTargetRatio;
 		data["interpolate"] = interpolateKind;
+		data["isActive"] = isActive;
 
 		return data;
 	}
@@ -195,6 +202,7 @@ namespace HashiTaku
 		LoadJsonInteger("priority", priority, _data);
 		LoadJsonEnum<EaseKind>("transEase", transitiionEase, _data);
 		LoadJsonEnum<AnimInterpolateKind>("interpolate", interpolateKind, _data);
+		LoadJsonBoolean("isActive", isActive, _data);
 	}
 
 	void AnimTransitionArrow::AcceptAnimParamData(const AnimParam::NotificationData& _notifyData)
@@ -282,6 +290,7 @@ namespace HashiTaku
 	void AnimTransitionArrow::ImGuiDebug()
 	{
 		ImGuiMethod::PushItemSmallWidth();
+		ImGui::Checkbox("Active", &isActive);
 		ImGui::DragFloat("TransitionTime", &transitionTime, 0.01f, 0.0f, 10.0f);	// 遷移時間
 		ImGui::Checkbox("HasExitTime", &isHasExitRatio);	// exitフラグ
 		ImGui::DragFloat("ExitRatio", &exitRatio, 0.01f, 0.0f, 1.0f);	// 遷移先割合

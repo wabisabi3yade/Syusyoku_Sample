@@ -139,6 +139,7 @@
                 "components": [
                     {
                         "enable": true,
+                        "isShadow": true,
                         "materials": null,
                         "meshName": "Knight.fbx",
                         "name": "MeshRenderer",
@@ -170,7 +171,7 @@
                     "child": null,
                     "pos": [
                         0.30000001192092896,
-                        -1.2000000476837158,
+                        -3.299999952316284,
                         0.4000000059604645
                     ],
                     "rotation": [
@@ -194,6 +195,7 @@
                 "components": [
                     {
                         "enable": true,
+                        "isShadow": true,
                         "materials": [
                             "M_Pillar"
                         ],
@@ -208,9 +210,9 @@
                 "transform": {
                     "child": null,
                     "pos": [
-                        2.799999952316284,
-                        -1.5,
-                        0.5
+                        8.100000381469727,
+                        -1.399999976158142,
+                        3.9000000953674316
                     ],
                     "rotation": [
                         -0.0,
@@ -229,10 +231,11 @@
         {
             "childs": null,
             "gameObject": {
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "enable": true,
+                        "isShadow": true,
                         "materials": [
                             "M_Rock1"
                         ],

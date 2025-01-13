@@ -50,6 +50,8 @@ namespace HashiTaku
 		/// @brief 移動座標のルートモーションを適用するか(Y座標)
 		bool isRootMotionPosY;
 
+		/// @brief 移動座標のルートモーションを引くか(Y座標)
+		bool isMinusRootMotionPosY;
 	public:
 		AnimationNode_Base(const std::string& _nodeName,
 			NodeType _type);
@@ -91,6 +93,10 @@ namespace HashiTaku
 		/// @return 移動するか？
 		bool GetIsRootMotionY() const;
 
+		/// @brief Y軸をルートモーションをマイナスするか？
+		/// @return マイナスするか？
+		bool GetIsMinusRootMotionY() const;
+		
 		/// @brief 再生速度倍率を求める
 		/// @return 再生速度倍率
 		float GetPlaySpeedTimes() const;

@@ -11,6 +11,8 @@ namespace HashiTaku
 		/// @brief DirectXのエフェクトマネジャー
 		DX11EffecseerManager* pDxVfxManager;
 
+		
+
 		/// @brief 再生するエフェクト
 		const VisualEffect* pVFX;
 

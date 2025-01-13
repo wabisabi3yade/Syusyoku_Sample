@@ -49,7 +49,6 @@ namespace HashiTaku
 
 	void PlayerMoveState::OnEndBehavior()
 	{
-		/*ClearVelocity(false);*/
 	}
 
 	void PlayerMoveState::TransitionCheckUpdate()

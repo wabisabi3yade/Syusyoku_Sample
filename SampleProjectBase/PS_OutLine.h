@@ -9,6 +9,9 @@ namespace HashiTaku
     public:
         PS_OutLine();
         ~PS_OutLine() {}
+
+        /// @brief  必要なアセットを用意
+        void InitAssets() override;
         
         void OnceUpdateBuffer() override;
     };

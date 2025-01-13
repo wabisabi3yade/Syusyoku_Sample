@@ -72,7 +72,7 @@ float4 main(PS_IN pin) : SV_TARGET
     diffuse += 0.3f;
     diffuse = floor(diffuse);
     diffuse *= 0.5f;
-    diffuse *= matBuf.diffuse.rgb;
+    //diffuse *= matBuf.diffuse.rgb;
     float3 diffuse3 = diffuse + matBuf.ambient.rgb;
     diffuse3 = saturate(diffuse3);
     diffuse3 += dirL.ambiemtColor.rgb;

@@ -28,9 +28,10 @@ namespace HashiTaku
 	{
 		auto data = CP_Renderer::Save();
 
-		SaveJsonVector4("color", lineParameter.lineColor, data);
-		data["scale"] = lineParameter.lineScale;
-
+		SaveJsonVector4("color", vsLineParameter.lineColor, data);
+		data["scale"] = vsLineParameter.lineScale;
+		data["ditherPower"] = psLineParameter.ditherPower;
+		data["ditherOffset"] = psLineParameter.ditherOffset;
 		return data;
 	}
 
@@ -38,8 +39,10 @@ namespace HashiTaku
 	{
 		CP_Renderer::Load(_data);
 
-		LoadJsonColor("color", lineParameter.lineColor, _data);
-		LoadJsonFloat("scale", lineParameter.lineScale, _data);
+		LoadJsonColor("color", vsLineParameter.lineColor, _data);
+		LoadJsonFloat("scale", vsLineParameter.lineScale, _data);
+		LoadJsonFloat("ditherPower", psLineParameter.ditherPower, _data);
+		LoadJsonFloat("ditherOffset", psLineParameter.ditherOffset, _data);
 	}
 
 	void CP_OutLineRenderer::Start()
@@ -70,7 +73,6 @@ namespace HashiTaku
 
 		auto pRenderer = Direct3D11::GetInstance()->GetRenderer();
 		pRenderer->SetCullingMode(D3D11_CULL_BACK);
-		pRenderer->SerDepthWrite(true);
 	}
 
 	void CP_OutLineRenderer::DrawSetup()
@@ -78,9 +80,8 @@ namespace HashiTaku
 		auto pRenderer = Direct3D11::GetInstance()->GetRenderer();
 		RenderParam& rendererParam = pRenderer->GetParameter();
 
-		pRenderer->SetCullingMode(D3D11_CULL_BACK);
-		pRenderer->SerDepthWrite(false);
-
+		pRenderer->SetCullingMode(D3D11_CULL_FRONT);
+		
 		// シェーダーにバッファを送る
 		// (ここではライト、カメラ座標などの1ループで1度しか送らないものは送らない)
 		Transform& transform = GetTransform();
@@ -92,7 +93,9 @@ namespace HashiTaku
 
 		// バッファーを送る
 		pUseVetrexShader->UpdateSubResource(0, &wvp);
-		pUseVetrexShader->UpdateSubResource(1, &lineParameter);
+		pUseVetrexShader->UpdateSubResource(1, &vsLineParameter);
+
+		pOutLinePS->UpdateSubResource(1, &psLineParameter);
 
 		// アニメーションを行っているなら追加でバッファを送る
 		if (IsAnimation())
@@ -160,7 +163,9 @@ namespace HashiTaku
 
 	void CP_OutLineRenderer::ImGuiDebug()
 	{
-		ImGui::ColorEdit4("Color", &lineParameter.lineColor.x);
-		ImGui::DragFloat("Scale", &lineParameter.lineScale, 0.001f, 0.0f, 100.0f);
+		ImGui::ColorEdit4("Color", &vsLineParameter.lineColor.x);
+		ImGui::DragFloat("Scale", &vsLineParameter.lineScale, 0.001f, 0.0f, 100.0f);
+		ImGui::DragFloat("DitherPower", &psLineParameter.ditherPower, 0.001f, 0.0f, 100.0f);
+		ImGui::DragFloat("DitherOffset", &psLineParameter.ditherOffset, 0.001f, 0.0f, 100.0f);
 	}
 }

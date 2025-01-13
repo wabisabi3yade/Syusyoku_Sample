@@ -32,6 +32,7 @@ namespace HashiTaku
 				pBoneList->GetRootNode(),
 				DXSimp::Quaternion::Identity,
 				DXSimp::Quaternion::Identity,
+				DXSimp::Quaternion::Identity,
 				_baseRatio,
 				_blendRatio,
 				START_BLEND_DEPTH);
@@ -49,6 +50,7 @@ namespace HashiTaku
 		const TreeNode* _pCurrentNode,
 		const DXSimp::Quaternion& _parenBaseRotation,
 		const DXSimp::Quaternion& _parentBlendRotation,
+		const DXSimp::Quaternion& _parentCalculateRotation,
 		float _baseRatio,
 		float _blendRatio,
 		u_int _curBlendDepth) const
@@ -62,6 +64,7 @@ namespace HashiTaku
 					_pCurrentNode->GetChild(c_i),
 					_parenBaseRotation,
 					_parentBlendRotation,
+					_parentCalculateRotation,
 					_baseRatio,
 					_blendRatio,
 					_curBlendDepth + 1
@@ -72,13 +75,15 @@ namespace HashiTaku
 
 		// ブレンド開始のノードなら深さを0にする
 		if (_pCurrentNode->GetBoneIdx() == beginBlendBoneId)
-			_curBlendDepth = 0;
+			_curBlendDepth = 1;
 
 		u_int uBoneId = static_cast<u_int>(_pCurrentNode->GetBoneIdx());
+		const Bone& bone = *_pCurrentNode->GetBone();
 
-		// メッシュ空間の回転量
-		DXSimp::Quaternion meshBaseSpaceRotation;
-		DXSimp::Quaternion meshBlendSpaceRotation;
+		// メッシュ空間の回転量(次回への引数に)
+		DXSimp::Quaternion baseMeshSpaceRotation;
+		DXSimp::Quaternion blendMeshSpaceRotation;
+		DXSimp::Quaternion calcMeshSpaceRotation;
 
 		// ブレンド側のアニメーションなら(開始時の深さよりも下、すなわちブレンド開始ボーンよりも子ノード)
 		if (_curBlendDepth < START_BLEND_DEPTH)
@@ -87,41 +92,61 @@ namespace HashiTaku
 			if (_curBlendDepth <= blendDepth)
 			{
 				// ベース側のアニメーショントランスフォーム
-				BoneTransform baseTransform;
-				pBaseAnimation->GetTransformByRatio(uBoneId, _baseRatio, baseTransform);
-				// ベース側のメッシュ空間の回転量
-				meshBaseSpaceRotation = Quat::Multiply(baseTransform.rotation, _parenBaseRotation);
+				BoneTransform baseAnimTransform;
+				bool hasAnimation = pBaseAnimation->GetTransformByRatio(uBoneId, _baseRatio, baseAnimTransform);
+				if (!hasAnimation)	// 初期姿勢アニメーション
+				{
+					baseAnimTransform = bone.GetLocalNodeTransform();
+				}
 
 				// ブレンド側も計算する
-				BoneTransform blendTransform;
-				pBlendAnimation->GetTransformByRatio(uBoneId, _blendRatio, blendTransform);
-				meshBlendSpaceRotation = Quat::Multiply(blendTransform.rotation, _parentBlendRotation);
+				BoneTransform blendAnimTransform;
+				hasAnimation = pBlendAnimation->GetTransformByRatio(uBoneId, _blendRatio, blendAnimTransform);
+				if (!hasAnimation)	// 初期姿勢アニメーション
+				{
+					blendAnimTransform = bone.GetLocalNodeTransform();
+				}
 
-				float blendFactor = 0.0f;
 				// ブレンドする割合を求める(深さ0なら1)
-				if (_curBlendDepth == 0)
-					blendFactor = 1.0f;
-				else
-					blendFactor = 1.0f / blendDepth * _curBlendDepth;
+				float blendFactor = 1.0f / blendDepth * _curBlendDepth;
 
-				// メッシュ空間でのブレンドした回転量を求める
-				DXSimp::Quaternion meshBlendRot =
-					DXSimp::Quaternion::Slerp(meshBaseSpaceRotation, meshBlendSpaceRotation, blendFactor);
-				meshBlendRot.Normalize();
+				// ベースとブレンドのメッシュ空間の回転量を求める
+				baseMeshSpaceRotation = Quat::Multiply(baseAnimTransform.rotation, _parenBaseRotation);
+				blendMeshSpaceRotation = Quat::Multiply(blendAnimTransform.rotation, _parentBlendRotation);
+
+				// ブレンドとベース側でブレンドを行う(メッシュ空間)
+				calcMeshSpaceRotation = DXSimp::Quaternion::Slerp(baseMeshSpaceRotation, blendMeshSpaceRotation, blendFactor);
+
 				// ローカル空間に戻す
-				_outTransforms[uBoneId].rotation =
-					Quat::RotationDifference(meshBlendRot, _parentBlendRotation);
+				_outTransforms[uBoneId].rotation = Quat::RotationDifference(calcMeshSpaceRotation, _parentCalculateRotation);
 
-				// トランスフォームと、スケールもブレンド
+				// トランスフォームと、スケールもブレンド(ローカル空間)
 				_outTransforms[uBoneId].position =
-					DXSimp::Vector3::Lerp(baseTransform.position, blendTransform.position, blendFactor);
+					DXSimp::Vector3::Lerp(baseAnimTransform.position, blendAnimTransform.position, blendFactor);
 				_outTransforms[uBoneId].scale =
-					DXSimp::Vector3::Lerp(baseTransform.scale, blendTransform.scale, blendFactor);
+					DXSimp::Vector3::Lerp(baseAnimTransform.scale, blendAnimTransform.scale, blendFactor);
 			}
 			else // ブレンド側のアニメーションで深さの範囲外
 			{
 				// ブレンドアニメーションを取得
-				pBlendAnimation->GetTransformByRatio(uBoneId, _blendRatio, _outTransforms[uBoneId]);
+				BoneTransform blendAnimTransform;
+				if (!pBlendAnimation->GetTransformByRatio(uBoneId, _blendRatio, blendAnimTransform))
+				{
+					// アニメーションないなら初期姿勢
+					blendAnimTransform = bone.GetLocalNodeTransform();
+				}
+
+				// メッシュ空間の回転量
+				blendMeshSpaceRotation = Quat::Multiply(blendAnimTransform.rotation, _parentBlendRotation);
+
+				// 親ボーンとのローカル空間に戻す
+				blendAnimTransform.rotation = Quat::RotationDifference(blendMeshSpaceRotation, _parentCalculateRotation);
+
+				// 結果を代入
+				_outTransforms[uBoneId] = blendAnimTransform;
+
+				// 計算したメッシュ空間の回転量を求める(次回の為に)
+				calcMeshSpaceRotation = blendMeshSpaceRotation;
 			}
 		}
 		else // ベース側のアニメーション
@@ -129,12 +154,15 @@ namespace HashiTaku
 			pBaseAnimation->GetTransformByRatio(uBoneId, _baseRatio, _outTransforms[uBoneId]);
 
 			// 次のために計算しておく
-			meshBaseSpaceRotation = Quat::Multiply(_outTransforms[uBoneId].rotation, _parenBaseRotation);
+			baseMeshSpaceRotation = Quat::Multiply(_outTransforms[uBoneId].rotation, _parenBaseRotation);
 
 			// ブレンド側も計算する
 			DXSimp::Quaternion blendRotation;
 			pBlendAnimation->GetQuaternionByRatio(uBoneId, _blendRatio, blendRotation);
-			meshBlendSpaceRotation = Quat::Multiply(blendRotation, _parentBlendRotation);
+			blendMeshSpaceRotation = Quat::Multiply(blendRotation, _parentBlendRotation);
+
+			// ベース側を反映しているのでベースと同じ
+			calcMeshSpaceRotation = baseMeshSpaceRotation;
 		}
 
 		// 子ノードに渡す
@@ -142,8 +170,9 @@ namespace HashiTaku
 		for (u_int c_i = 0; c_i < childCnt; c_i++)
 			GetMeshSpaceBlendTransform(_outTransforms,
 				_pCurrentNode->GetChild(c_i),
-				meshBaseSpaceRotation,
-				meshBlendSpaceRotation,
+				baseMeshSpaceRotation,
+				blendMeshSpaceRotation,
+				calcMeshSpaceRotation,
 				_baseRatio,
 				_blendRatio,
 				_curBlendDepth + 1	// 深度を増やしていく
@@ -276,7 +305,8 @@ namespace HashiTaku
 		if (LoadJsonString("baseAnim", loadStr, _data))
 		{
 			pBaseAnimation = AssetGetter::GetAsset<AnimationData>(loadStr);
-			SetAnimationTime(pBaseAnimation->GetAnimationTime());
+			if (pBaseAnimation)
+				SetAnimationTime(pBaseAnimation->GetAnimationTime());
 		}
 		if (LoadJsonString("blendAnim", loadStr, _data))
 		{

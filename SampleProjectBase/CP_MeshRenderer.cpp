@@ -103,6 +103,9 @@ namespace HashiTaku
 		// ImGui開いたときだけ原点表示
 		isOriginDisplay = true;
 
+		// 影描画するか？
+		ImGui::Checkbox("IsShadow", &isShadow);
+
 		// メッシュ取得
 		std::string meshName;
 		if (pRenderMesh)
@@ -217,6 +220,8 @@ namespace HashiTaku
 	{
 		auto data = CP_Renderer::Save();
 
+		data["isShadow"] = isShadow;
+
 		if (pRenderMesh)
 			data["meshName"] = pRenderMesh->GetAssetName();
 
@@ -236,6 +241,8 @@ namespace HashiTaku
 	void CP_MeshRenderer::Load(const json& _data)
 	{
 		CP_Renderer::Load(_data);
+
+		LoadJsonBoolean("isShadow", isShadow, _data);
 
 		pRenderMesh = LoadJsonAsset<Mesh_Group>("meshName", _data);
 

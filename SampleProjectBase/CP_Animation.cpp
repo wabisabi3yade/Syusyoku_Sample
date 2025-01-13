@@ -346,7 +346,7 @@ namespace HashiTaku
 		// ルートポジション座標を引いて、メッシュを移動させないようにする(y座標は反映しない)
 		Vector3 rootPos;
 		pAnimConPlayer->GetCurrentRootPos(rootPos);
-		rootPos.y = 0.0f;
+		//rootPos.y = 0.0f;
 		rootPos *= -1.0f;
 		Matrix posMtx = Matrix::CreateTranslation(rootPos);
 

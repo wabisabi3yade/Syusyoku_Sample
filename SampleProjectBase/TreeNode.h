@@ -67,6 +67,10 @@ namespace HashiTaku
 		// 名前を取得する
 		const std::string& GetName() const;
 
+		/// @brief 対応ボーンを取得
+		/// @return 対応ボーン(無ければnullptr)
+		const Bone* GetBone() const;
+
 		/// @brief ボーンIDを取得
 		/// @return ボーンID
 		u_int GetBoneIdx() const;

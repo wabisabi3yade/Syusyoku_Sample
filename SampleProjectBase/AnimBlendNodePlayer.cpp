@@ -242,11 +242,8 @@ namespace HashiTaku
 		const BlendAnimationNode& blendNode = static_cast<const BlendAnimationNode&>(*pPlayAnimNode);
 		blendNode.GetRootMotionPos(_ratio, blendingAnimData, rootMotionPos);
 
-		// ロード時の回転量と、スケールを掛ける
-		if (_isWorldScaling)
-			ApplyLoadTransform(rootMotionPos);
-
-
+		// 計算処理を行う
+		CalcRootMotion(rootMotionPos, _isWorldScaling);
 
 		return rootMotionPos;
 	}
