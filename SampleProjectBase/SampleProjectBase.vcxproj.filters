@@ -940,6 +940,9 @@
     <Filter Include="ソース ファイル\Component\PlaySound">
       <UniqueIdentifier>{5be12b8c-6860-46f2-82cc-dd3205068512}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\BattleDirection">
+      <UniqueIdentifier>{b5c5732c-5fce-4db6-8c99-cf93f85b81de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1726,6 +1729,9 @@
     </ClCompile>
     <ClCompile Include="CP_PlaySound.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleDirection.cpp">
+      <Filter>ソース ファイル\Component\InGame\BattleDirection</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2559,6 +2565,9 @@
     </ClInclude>
     <ClInclude Include="CP_PlaySound.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleDirection.h">
+      <Filter>ソース ファイル\Component\InGame\BattleDirection</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

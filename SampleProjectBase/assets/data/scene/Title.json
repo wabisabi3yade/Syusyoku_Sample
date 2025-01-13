@@ -151,6 +151,20 @@
                             "useListener": true,
                             "volume": 0.8299999833106995
                         }
+                    },
+                    {
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "ditherOffset": 0.0,
+                        "ditherPower": 0.4000000059604645,
+                        "enable": true,
+                        "name": "OutLineRenderer",
+                        "priority": 0,
+                        "scale": 0.019999999552965164
                     }
                 ],
                 "layer": 0,
@@ -197,6 +211,20 @@
                         "enable": true,
                         "name": "Animation",
                         "priority": 0
+                    },
+                    {
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "ditherOffset": 0.0,
+                        "ditherPower": 1.0,
+                        "enable": true,
+                        "name": "OutLineRenderer",
+                        "priority": 0,
+                        "scale": 0.012000000104308128
                     }
                 ],
                 "layer": 0,
@@ -283,6 +311,20 @@
                                         "meshName": "Pillar1.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
+                                    },
+                                    {
+                                        "color": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "ditherOffset": 3.0,
+                                        "ditherPower": 0.4000000059604645,
+                                        "enable": true,
+                                        "name": "OutLineRenderer",
+                                        "priority": 0,
+                                        "scale": 0.07000000029802322
                                     }
                                 ],
                                 "layer": 0,
@@ -367,6 +409,20 @@
                                         "meshName": "Pillar1.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
+                                    },
+                                    {
+                                        "color": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "ditherOffset": 3.0,
+                                        "ditherPower": 0.4000000059604645,
+                                        "enable": true,
+                                        "name": "OutLineRenderer",
+                                        "priority": 0,
+                                        "scale": 0.07000000029802322
                                     }
                                 ],
                                 "layer": 0,
@@ -487,6 +543,20 @@
                                         "meshName": "desertRock11.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
+                                    },
+                                    {
+                                        "color": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "ditherOffset": 3.0,
+                                        "ditherPower": 0.4000000059604645,
+                                        "enable": true,
+                                        "name": "OutLineRenderer",
+                                        "priority": 0,
+                                        "scale": 0.07000000029802322
                                     }
                                 ],
                                 "layer": 0,
@@ -559,6 +629,20 @@
                                         "meshName": "desertRock15.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
+                                    },
+                                    {
+                                        "color": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "ditherOffset": 3.0,
+                                        "ditherPower": 0.4000000059604645,
+                                        "enable": true,
+                                        "name": "OutLineRenderer",
+                                        "priority": 0,
+                                        "scale": 0.07000000029802322
                                     }
                                 ],
                                 "layer": 0,
@@ -631,6 +715,20 @@
                                         "meshName": "desertRock15.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
+                                    },
+                                    {
+                                        "color": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "ditherOffset": 3.0,
+                                        "ditherPower": 0.4000000059604645,
+                                        "enable": true,
+                                        "name": "OutLineRenderer",
+                                        "priority": 0,
+                                        "scale": 0.07000000029802322
                                     }
                                 ],
                                 "layer": 0,
@@ -671,6 +769,20 @@
                                         "meshName": "desertRock11.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
+                                    },
+                                    {
+                                        "color": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "ditherOffset": 3.0,
+                                        "ditherPower": 0.4000000059604645,
+                                        "enable": true,
+                                        "name": "OutLineRenderer",
+                                        "priority": 0,
+                                        "scale": 0.07000000029802322
                                     }
                                 ],
                                 "layer": 0,
@@ -711,6 +823,20 @@
                                         "meshName": "desertRock15.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
+                                    },
+                                    {
+                                        "color": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "ditherOffset": 3.0,
+                                        "ditherPower": 0.4000000059604645,
+                                        "enable": true,
+                                        "name": "OutLineRenderer",
+                                        "priority": 0,
+                                        "scale": 0.07000000029802322
                                     }
                                 ],
                                 "layer": 0,
@@ -751,6 +877,20 @@
                                         "meshName": "desertRock11.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
+                                    },
+                                    {
+                                        "color": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "ditherOffset": 3.0,
+                                        "ditherPower": 0.4000000059604645,
+                                        "enable": true,
+                                        "name": "OutLineRenderer",
+                                        "priority": 0,
+                                        "scale": 0.07000000029802322
                                     }
                                 ],
                                 "layer": 0,
@@ -857,6 +997,20 @@
                                 "meshName": "Knight_Sword.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "ditherOffset": 0.0,
+                                "ditherPower": 0.4000000059604645,
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.009999999776482582
                             }
                         ],
                         "layer": 0,
@@ -895,6 +1049,20 @@
                                 "meshName": "shield1.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "ditherOffset": 0.0,
+                                "ditherPower": 0.4000000059604645,
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.009999999776482582
                             }
                         ],
                         "layer": 0,
@@ -1069,7 +1237,7 @@
                                 1.0
                             ],
                             "scale": [
-                                400.0,
+                                470.0,
                                 100.0,
                                 1.0
                             ]
@@ -1159,6 +1327,122 @@
                             ]
                         }
                     }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "alpha": 1.0,
+                                "enable": true,
+                                "image": "UI_CheckBoxBack.png",
+                                "name": "UIRenderer",
+                                "priority": 0
+                            },
+                            {
+                                "enable": true,
+                                "name": "Button",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 2,
+                        "name": "CheckBoxBack",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                100.0,
+                                660.0,
+                                0.6000000238418579
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                75.0,
+                                75.0,
+                                1.0
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "alpha": 1.0,
+                                "enable": false,
+                                "image": "UI_CheckBox.png",
+                                "name": "UIRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 2,
+                        "name": "CheckMark",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                104.4000015258789,
+                                651.5,
+                                0.5900000333786011
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                95.0,
+                                85.0,
+                                1.0
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "alpha": 1.0,
+                                "enable": true,
+                                "image": "UI_InvincibleText.png",
+                                "name": "UIRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 2,
+                        "name": "InvincibleText",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                297.70001220703125,
+                                657.0,
+                                0.5800000429153442
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                320.0,
+                                80.0,
+                                1.0
+                            ]
+                        }
+                    }
                 }
             ],
             "gameObject": {
@@ -1168,8 +1452,10 @@
                         "backObjName": "SelectBackImage",
                         "buttonObjNames": [
                             "StartImage",
-                            "EndImage"
+                            "EndImage",
+                            "CheckBoxBack"
                         ],
+                        "checkImageObj": "CheckMark",
                         "defaultId": 0,
                         "enable": true,
                         "fadeObj": "Fade",
@@ -1180,7 +1466,7 @@
                             {
                                 "target": [
                                     260.0,
-                                    460.0,
+                                    465.0,
                                     0.0
                                 ]
                             },
@@ -1190,9 +1476,16 @@
                                     570.0,
                                     0.0
                                 ]
+                            },
+                            {
+                                "target": [
+                                    270.0,
+                                    660.0,
+                                    0.0
+                                ]
                             }
                         ],
-                        "vertSpeed": 1
+                        "vertSpeed": -1
                     }
                 ],
                 "layer": 2,
@@ -1202,7 +1495,10 @@
                     "child": [
                         "SelectBackImage",
                         "StartImage",
-                        "EndImage"
+                        "EndImage",
+                        "CheckBoxBack",
+                        "CheckMark",
+                        "InvincibleText"
                     ],
                     "pos": [
                         50.0,

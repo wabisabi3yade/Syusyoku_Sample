@@ -940,7 +940,7 @@
                                                             "level": 2
                                                         }
                                                     ],
-                                                    "time": 1.0
+                                                    "time": 1.2000000476837158
                                                 },
                                                 {
                                                     "attackInfos": [
@@ -948,7 +948,7 @@
                                                             "break": 30.0,
                                                             "camShake": {
                                                                 "fadeOut": false,
-                                                                "power": 5.0,
+                                                                "power": 3.0,
                                                                 "shakeVec": [
                                                                     1.0,
                                                                     1.0,
@@ -961,7 +961,7 @@
                                                             "hitSE": {
                                                                 "loop": false,
                                                                 "pitch": 0.0,
-                                                                "soundName": "damage2.wav",
+                                                                "soundName": "sword2.wav",
                                                                 "useListener": true,
                                                                 "volume": 0.17000000178813934
                                                             },
@@ -977,7 +977,7 @@
                                                             "level": 3
                                                         }
                                                     ],
-                                                    "time": 2.0
+                                                    "time": 2.4000000953674316
                                                 }
                                             ],
                                             "chargeOffset": [
@@ -1246,39 +1246,37 @@
                 "active": true,
                 "components": [
                     {
-                        "battleBGM": {
-                            "loop": true,
-                            "pitch": 0.0,
-                            "soundName": "battle.wav",
-                            "useListener": false,
-                            "volume": 0.20000000298023224
+                        "battleDirection": {
+                            "fade": "Fade",
+                            "gameOver": "GameOverText",
+                            "gameStartCurve": {
+                                "easeKind": 0,
+                                "endValue": 1.0,
+                                "endVector": 0.6970750093460083,
+                                "plotDatas": [
+                                    {
+                                        "interp": 1,
+                                        "time": 0.20000000298023224,
+                                        "value": 0.4000000059604645,
+                                        "vector": 0.0
+                                    },
+                                    {
+                                        "interp": 0,
+                                        "time": 0.800000011920929,
+                                        "value": 0.550000011920929,
+                                        "vector": 0.0
+                                    }
+                                ],
+                                "startInterp": 0,
+                                "startValue": 0.0,
+                                "startVector": 0.7993320226669312,
+                                "useHermite": true
+                            },
+                            "start": "GameStartText",
+                            "uiAnim": true,
+                            "win": "WinText"
                         },
                         "enable": true,
-                        "fade": "Fade",
-                        "gameOver": "GameOverText",
-                        "gameStartCurve": {
-                            "easeKind": 0,
-                            "endValue": 1.0,
-                            "endVector": 0.6067706346511841,
-                            "plotDatas": [
-                                {
-                                    "interp": 1,
-                                    "time": 0.25,
-                                    "value": 0.47999998927116394,
-                                    "vector": 0.02830730378627777
-                                },
-                                {
-                                    "interp": 0,
-                                    "time": 0.75,
-                                    "value": 0.5199999809265137,
-                                    "vector": 0.03796174377202988
-                                }
-                            ],
-                            "startInterp": 0,
-                            "startValue": 0.0,
-                            "startVector": 0.9642249345779419,
-                            "useHermite": true
-                        },
                         "moveAreaRect": [
                             20.5,
                             -20.5,
@@ -1286,10 +1284,7 @@
                             -20.5
                         ],
                         "name": "BattleManager",
-                        "priority": 0,
-                        "start": "GameStartText",
-                        "uiAnim": false,
-                        "win": "WinText"
+                        "priority": 0
                     }
                 ],
                 "layer": 0,
@@ -1538,7 +1533,7 @@
                             "actData": [
                                 {
                                     "data": {
-                                        "isIdleOnly": true,
+                                        "isIdleOnly": false,
                                         "warpMotion": {
                                             "useWarp": false
                                         }
@@ -2821,60 +2816,6 @@
             }
         },
         {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "isShadow": true,
-                        "materials": [
-                            "M_Rock1"
-                        ],
-                        "meshName": "desertRock11.fbx",
-                        "name": "MeshRenderer",
-                        "priority": 0
-                    },
-                    {
-                        "color": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "ditherOffset": 3.0,
-                        "ditherPower": 0.4000000059604645,
-                        "enable": true,
-                        "name": "OutLineRenderer",
-                        "priority": 0,
-                        "scale": 0.07000000029802322
-                    }
-                ],
-                "layer": 0,
-                "name": "Rock14",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        -25.5,
-                        1.2999999523162842,
-                        17.399999618530273
-                    ],
-                    "rotation": [
-                        -0.08036001771688461,
-                        0.6103947162628174,
-                        -0.10285607725381851,
-                        0.7812689542770386
-                    ],
-                    "scale": [
-                        8.0,
-                        6.699999809265137,
-                        3.6000001430511475
-                    ]
-                }
-            }
-        },
-        {
             "childs": [
                 {
                     "childs": [
@@ -3933,6 +3874,60 @@
                         1.0,
                         1.0,
                         1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "isShadow": true,
+                        "materials": [
+                            "M_Rock1"
+                        ],
+                        "meshName": "desertRock11.fbx",
+                        "name": "MeshRenderer",
+                        "priority": 0
+                    },
+                    {
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "ditherOffset": 3.0,
+                        "ditherPower": 0.4000000059604645,
+                        "enable": true,
+                        "name": "OutLineRenderer",
+                        "priority": 0,
+                        "scale": 0.07000000029802322
+                    }
+                ],
+                "layer": 0,
+                "name": "Rock14",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        -25.5,
+                        1.2999999523162842,
+                        17.399999618530273
+                    ],
+                    "rotation": [
+                        -0.08036001771688461,
+                        0.6103947162628174,
+                        -0.10285607725381851,
+                        0.7812689542770386
+                    ],
+                    "scale": [
+                        8.0,
+                        6.699999809265137,
+                        3.6000001430511475
                     ]
                 }
             }

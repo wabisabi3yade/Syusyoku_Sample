@@ -213,6 +213,7 @@
     <ClCompile Include="CameraMoveState_Base.cpp" />
     <ClCompile Include="CameraOnMoveState.cpp" />
     <ClCompile Include="CP_AudioListener.cpp" />
+    <ClCompile Include="BattleDirection.cpp" />
     <ClCompile Include="CP_PlaySound.cpp" />
     <ClCompile Include="CP_SoundManager.cpp" />
     <ClCompile Include="IBoneSupplier.cpp" />
@@ -459,6 +460,7 @@
     <ClInclude Include="CameraMoveState_Base.h" />
     <ClInclude Include="CameraOnMoveState.h" />
     <ClInclude Include="CP_AudioListener.h" />
+    <ClInclude Include="BattleDirection.h" />
     <ClInclude Include="CP_PlaySound.h" />
     <ClInclude Include="CP_SoundManager.h" />
     <ClInclude Include="IApplyDepthShadow.h" />

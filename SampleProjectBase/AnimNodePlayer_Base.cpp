@@ -272,17 +272,6 @@ namespace HashiTaku
 		// ロード時とトランスフォームのスケール
 		if (_isWorldScaling)
 		{
-			if (!pPlayAnimNode->GetIsRootMotionXZ())
-			{
-				_rootMotionPos.x = 0.0f;
-				_rootMotionPos.z = 0.0f;
-			}
-
-			if (!pPlayAnimNode->GetIsRootMotionY())
-			{
-				_rootMotionPos.y = 0.0f;
-			}
-
 			_rootMotionPos *= pAssetBoneList->GetLoadScale();
 			_rootMotionPos = Vector3::Transform(_rootMotionPos, Matrix::CreateFromQuaternion(pAssetBoneList->GetLoadRotation()));
 			_rootMotionPos *= pObjectTransform->GetScale();

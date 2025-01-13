@@ -18,11 +18,6 @@ namespace HashiTaku
 	{
 		if (pTargetObject)
 			pTargetObject->RemoveTargeter(*this);
-
-		if (CP_BattleManager* pBattle = CP_BattleManager::GetInstance())
-		{
-			pBattle->RemoveCamMove(*this);
-		}
 	}
 
 	void CP_CameraMove::Init()
@@ -55,14 +50,6 @@ namespace HashiTaku
 
 		if (go)	// あったらトランスフォームを取得
 			pFollowTransform = &go->GetConstTransform();
-	}
-
-	void CP_CameraMove::Awake()
-	{
-		if (CP_BattleManager* pBattle = CP_BattleManager::GetInstance())
-		{
-			pBattle->SetCameraMove(*this);
-		}
 	}
 
 	void CP_CameraMove::Start()

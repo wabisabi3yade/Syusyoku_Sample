@@ -116,7 +116,6 @@ namespace HashiTaku
 
 	void CP_ButtonGroup::Update()
 	{
-
 		if (maxButtonCnt == 0) return;	// ƒ{ƒ^ƒ“‚ª1‚Â‚àİ’è‚³‚ê‚Ä‚¢‚È‚¢‚È‚ç
 		if (!canInput) return;	// ‘€ì‚Å‚«‚È‚¢‚È‚ç”²‚¯‚é
 

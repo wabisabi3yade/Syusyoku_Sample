@@ -44,8 +44,10 @@ namespace HashiTaku
 			targeter->RemoveNotify(*this);
 	}
 
-	void CP_Enemy::Awake()
+	void CP_Enemy::Start()
 	{
+		CP_Character::Start();
+
 		// バトルマネジャーがあるなら敵を追加する
 		if (CP_BattleManager* pBattle = CP_BattleManager::GetInstance())
 		{

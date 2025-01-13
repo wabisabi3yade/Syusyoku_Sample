@@ -35,7 +35,7 @@ namespace HashiTaku
 		/// @brief ターゲット側に死んだことを通知
 		void OnRemoveNotifyToTargeter();
 	protected:
-		void Awake() override;
+		void Start() override;
 		void OnDestroy() override;
 
 		/// @brief 敵名をセット

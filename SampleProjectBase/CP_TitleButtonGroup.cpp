@@ -7,7 +7,8 @@
 namespace HashiTaku
 {
 	CP_TitleButtonGroup::CP_TitleButtonGroup() :
-		pFade(nullptr)
+		pFade(nullptr),
+		pCheckImage(nullptr)
 	{
 		// サイズ変更
 		SetMaxButtonCnt(static_cast<u_int>(ButtonType::MaxNum));
@@ -17,6 +18,7 @@ namespace HashiTaku
 	{
 		auto data = CP_ButtonGroup::Save();
 		data["fadeObj"] = fadeObjName;
+		data["checkImageObj"] = checkImageObjName;
 
 		return data;
 	}
@@ -25,6 +27,7 @@ namespace HashiTaku
 	{
 		CP_ButtonGroup::Load(_data);
 		LoadJsonString("fadeObj", fadeObjName, _data);
+		LoadJsonString("checkImageObj",checkImageObjName, _data);
 	}
 
 	void CP_TitleButtonGroup::Start()
@@ -38,19 +41,36 @@ namespace HashiTaku
 
 	void CP_TitleButtonGroup::FindObject()
 	{
-		GameObject* pObj =
-			InSceneSystemManager::GetInstance()->GetSceneObjects().GetSceneObject(fadeObjName);
-		if (!pObj) return;
+		SceneObjects& sceneObjs = InSceneSystemManager::GetInstance()->GetSceneObjects();
 
-		pFade = pObj->GetComponent<CP_Fade>();
-		if (!pFade) return;
-
-		// フェード開けに入力できるように
-		canInput = false;
-		pFade->SetOnEndFunction([&]()
+		// フェード
+		GameObject* pObj = sceneObjs.GetSceneObject(fadeObjName);
+		if (pObj)
+		{
+			pFade = pObj->GetComponent<CP_Fade>();
+			if (pFade)
 			{
-				canInput = true;
-			});
+				// フェード開けに入力できるように
+				canInput = false;
+				pFade->SetOnEndFunction([&]()
+					{
+						canInput = true;
+					});
+			}
+		}
+		
+		// チェックマーク
+		pObj = sceneObjs.GetSceneObject(checkImageObjName);
+		if (pObj)
+		{
+			pCheckImage = pObj->GetComponent<CP_UIRenderer>();
+			if (pCheckImage)
+			{
+				// 無敵フラグにチェックマークを合わせる
+				bool isInvincible = CP_Player::GetIsDebugInvincible();
+				pCheckImage->SetEnable(isInvincible);
+			}
+		}
 	}
 
 	void CP_TitleButtonGroup::OnPushStart()
@@ -93,6 +113,18 @@ namespace HashiTaku
 		canInput = false;
 	}
 
+	void CP_TitleButtonGroup::OnPushCheck()
+	{
+		// 無敵フラグを切り替える
+		bool isDebugInvincible = CP_Player::GetIsDebugInvincible();
+		isDebugInvincible = !isDebugInvincible;
+
+		CP_Player::SetIsDebugInvincible(isDebugInvincible);
+
+		if (pCheckImage)
+			pCheckImage->SetEnable(isDebugInvincible);
+	}
+
 	void CP_TitleButtonGroup::ButtonSetup()
 	{
 		u_int buttonCnt = static_cast<u_int>(ButtonType::MaxNum);
@@ -113,11 +145,14 @@ namespace HashiTaku
 				{
 					OnPushEnd();
 				});
-	}
 
-	void CP_TitleButtonGroup::ChangeBattleScene()
-	{
-
+		// チェックマーク
+		pButton = buttonGroup[static_cast<u_int>(ButtonType::Check)];
+		if (pButton)
+			pButton->SetEventFunction([&]()
+				{
+					OnPushCheck();
+				});
 	}
 
 	void CP_TitleButtonGroup::ImGuiDebug()
@@ -126,9 +161,20 @@ namespace HashiTaku
 		CP_ButtonGroup::ImGuiDebug();
 
 		static char input[IM_INPUT_BUF] = "\0";
-		std::strcpy(input, fadeObjName.c_str());
+		ImGui::PushID("Title");
 		ImGui::InputText("objName", input, IM_INPUT_BUF);
-		fadeObjName = input;
+		ImGui::PopID();
+
+		if (ImGui::Button("Set Fade"))
+			fadeObjName = input;
+		ImGui::SameLine();
+		ImGui::Text(fadeObjName.c_str());
+
+		if (ImGui::Button("Set CheckImage"))
+			checkImageObjName = input;
+		ImGui::SameLine();
+		ImGui::Text(checkImageObjName.c_str());
+
 #endif // EDIT
 	}
 }
