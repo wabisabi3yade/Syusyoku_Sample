@@ -260,14 +260,40 @@ namespace HashiTaku
 	}
 
 
-	void AnimNodePlayer_Base::ApplyLoadTransform(DXSimp::Vector3& _rootMotionPos) const
+	void AnimNodePlayer_Base::CalcRootMotion(DXSimp::Vector3& _rootMotionPos, bool _isWorldScaling) const
 	{
 		using namespace DXSimp;
 
-		_rootMotionPos *= pAssetBoneList->GetLoadScale();
-		_rootMotionPos = Vector3::Transform(_rootMotionPos, Matrix::CreateFromQuaternion(pAssetBoneList->GetLoadRotation()));
+		// 初期姿勢からの移動量を求める
+		u_int rootBoneId = pAssetBoneList->GetRootBoneId();
+		DXSimp::Vector3 bindPosePos = pAssetBoneList->GetBone(rootBoneId)->GetLocalNodeTransform().position;
+		_rootMotionPos = _rootMotionPos - bindPosePos;
 
-		_rootMotionPos *= pObjectTransform->GetScale();
+		// ロード時とトランスフォームのスケール
+		if (_isWorldScaling)
+		{
+			if (!pPlayAnimNode->GetIsRootMotionXZ())
+			{
+				_rootMotionPos.x = 0.0f;
+				_rootMotionPos.z = 0.0f;
+			}
+
+			if (!pPlayAnimNode->GetIsRootMotionY())
+			{
+				_rootMotionPos.y = 0.0f;
+			}
+
+			_rootMotionPos *= pAssetBoneList->GetLoadScale();
+			_rootMotionPos = Vector3::Transform(_rootMotionPos, Matrix::CreateFromQuaternion(pAssetBoneList->GetLoadRotation()));
+			_rootMotionPos *= pObjectTransform->GetScale();
+		}
+		else
+		{
+			if (!pPlayAnimNode->GetIsMinusRootMotionY())
+			{
+				_rootMotionPos.y = 0.0f;
+			}
+		}
 	}
 
 	float AnimNodePlayer_Base::GetPlayerSpeed() const

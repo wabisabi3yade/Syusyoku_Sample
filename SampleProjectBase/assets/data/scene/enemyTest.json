@@ -16,24 +16,6 @@
                     {
                         "enable": true,
                         "moveController": {
-                            "shakeLevels": [
-                                {
-                                    "duration": 0.5099999904632568,
-                                    "power": 0.20000000298023224
-                                },
-                                {
-                                    "duration": 0.30000001192092896,
-                                    "power": 0.20000000298023224
-                                },
-                                {
-                                    "duration": 0.8199999928474426,
-                                    "power": 0.07999999821186066
-                                },
-                                {
-                                    "duration": 0.4000000059604645,
-                                    "power": 0.20000000298023224
-                                }
-                            ],
                             "stateDatas": [
                                 {
                                     "parameter": {
@@ -50,6 +32,7 @@
                                         "horiSpeed": 10.0,
                                         "idleHeight": 2.0,
                                         "lookOffsetY": 2.4000000953674316,
+                                        "lookSpeedRate": 10.0,
                                         "moveFov": 65.0,
                                         "normalFov": 50.0,
                                         "returnVert": 3.0,
@@ -61,15 +44,38 @@
                                 {
                                     "parameter": {
                                         "canFovMovement": 1.0,
-                                        "fovChangeRate": 3.0,
-                                        "height": 3.0,
-                                        "hori": 3.0,
-                                        "lookOffset": [
+                                        "centerAngle": -90.0,
+                                        "chargeShake": {
+                                            "fadeOut": false,
+                                            "power": 1.0,
+                                            "shakeVec": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "speed": 1.0,
+                                            "time": 0.30000001192092896
+                                        },
+                                        "deadZone": [
                                             0.0,
                                             0.0
                                         ],
+                                        "disHorizon": 5.0,
+                                        "fovChangeRate": 3.0,
+                                        "heightMax": 7.0,
+                                        "heightMin": 1.0,
+                                        "horiSpeed": 10.0,
+                                        "idleHeight": 2.0,
+                                        "lookOffsetY": 2.0,
+                                        "lookSpeedRate": 10.0,
+                                        "moveEase": 0,
                                         "moveFov": 65.0,
-                                        "normalFov": 50.0
+                                        "moveFovTime": 2.0,
+                                        "normalFov": 50.0,
+                                        "returnVert": 3.0,
+                                        "rotateSpeed": 120.0,
+                                        "targetFov": 30.0,
+                                        "verticalSpeed": 10.0
                                     },
                                     "stateType": 1
                                 },
@@ -87,6 +93,21 @@
                                         "normalFov": 50.0
                                     },
                                     "stateType": 2
+                                },
+                                {
+                                    "parameter": {
+                                        "canFovMovement": 1.0,
+                                        "fovChangeRate": 3.0,
+                                        "height": 3.0,
+                                        "hori": 3.0,
+                                        "lookOffset": [
+                                            0.0,
+                                            0.0
+                                        ],
+                                        "moveFov": 65.0,
+                                        "normalFov": 50.0
+                                    },
+                                    "stateType": 3
                                 }
                             ]
                         },
@@ -120,6 +141,47 @@
             }
         },
         {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "X_Left": "Sunset_left.png",
+                        "X_Right": "Sunset_right.png",
+                        "Y_Bottom": "Sunset_down.png",
+                        "Y_Top": "Sunset_up.png",
+                        "Z_Back": "Sunset_back.png",
+                        "Z_Front": "Sunset_front.png",
+                        "enable": true,
+                        "name": "SkyBox",
+                        "priority": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "SkyBox",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
             "childs": [
                 {
                     "childs": [
@@ -132,6 +194,8 @@
                                         "components": [
                                             {
                                                 "enable": true,
+                                                "isShadow": true,
+                                                "materials": null,
                                                 "meshName": "Sword15_FBX.fbx",
                                                 "name": "MeshRenderer",
                                                 "priority": 0
@@ -276,6 +340,8 @@
                 "components": [
                     {
                         "enable": true,
+                        "isShadow": true,
+                        "materials": null,
                         "meshName": "Uriel A Plotexia.fbx",
                         "name": "MeshRenderer",
                         "priority": 0
@@ -365,29 +431,56 @@
                                         "atkInfos": [
                                             {
                                                 "damage": 3.5999999046325684,
+                                                "hitSE": {
+                                                    "loop": false,
+                                                    "pitch": 0.0,
+                                                    "useListener": false,
+                                                    "volume": 0.5
+                                                },
                                                 "hitVfx": {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
                                                     "scale": 1.0,
                                                     "speed": 1.0,
                                                     "startFrame": 0
                                                 },
+                                                "isCamShake": false,
                                                 "level": 0
                                             },
                                             {
                                                 "damage": 5.400000095367432,
+                                                "hitSE": {
+                                                    "loop": false,
+                                                    "pitch": 0.0,
+                                                    "useListener": false,
+                                                    "volume": 0.5
+                                                },
                                                 "hitVfx": {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
                                                     "scale": 1.0,
                                                     "speed": 1.0,
                                                     "startFrame": 0
                                                 },
+                                                "isCamShake": false,
                                                 "level": 0
                                             },
                                             {
                                                 "damage": 7.0,
+                                                "hitSE": {
+                                                    "loop": false,
+                                                    "pitch": 0.0,
+                                                    "useListener": false,
+                                                    "volume": 0.5
+                                                },
                                                 "hitVfx": {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
                                                     "scale": 1.0,
                                                     "speed": 1.0,
                                                     "startFrame": 0
                                                 },
+                                                "isCamShake": false,
                                                 "level": 0
                                             }
                                         ],
@@ -422,11 +515,20 @@
                                         "atkInfos": [
                                             {
                                                 "damage": 0.0,
+                                                "hitSE": {
+                                                    "loop": false,
+                                                    "pitch": 0.0,
+                                                    "useListener": false,
+                                                    "volume": 0.5
+                                                },
                                                 "hitVfx": {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
                                                     "scale": 1.0,
                                                     "speed": 1.0,
                                                     "startFrame": 0
                                                 },
+                                                "isCamShake": false,
                                                 "level": 0
                                             }
                                         ],
@@ -443,11 +545,20 @@
                                         "atkInfos": [
                                             {
                                                 "damage": 0.0,
+                                                "hitSE": {
+                                                    "loop": false,
+                                                    "pitch": 0.0,
+                                                    "useListener": false,
+                                                    "volume": 0.5
+                                                },
                                                 "hitVfx": {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
                                                     "scale": 1.0,
                                                     "speed": 1.0,
                                                     "startFrame": 0
                                                 },
+                                                "isCamShake": false,
                                                 "level": 0
                                             }
                                         ],
@@ -464,11 +575,20 @@
                                         "atkInfos": [
                                             {
                                                 "damage": 6.699999809265137,
+                                                "hitSE": {
+                                                    "loop": false,
+                                                    "pitch": 0.0,
+                                                    "useListener": false,
+                                                    "volume": 0.5
+                                                },
                                                 "hitVfx": {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
                                                     "scale": 1.0,
                                                     "speed": 1.0,
                                                     "startFrame": 0
                                                 },
+                                                "isCamShake": false,
                                                 "level": 3
                                             }
                                         ],
@@ -587,47 +707,6 @@
                         1.2000000476837158,
                         1.2000000476837158,
                         1.2000000476837158
-                    ]
-                }
-            }
-        },
-        {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "X_Left": "Sunset_left.png",
-                        "X_Right": "Sunset_right.png",
-                        "Y_Bottom": "Sunset_down.png",
-                        "Y_Top": "Sunset_up.png",
-                        "Z_Back": "Sunset_back.png",
-                        "Z_Front": "Sunset_front.png",
-                        "enable": true,
-                        "name": "SkyBox",
-                        "priority": 0
-                    }
-                ],
-                "layer": 0,
-                "name": "SkyBox",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
                     ]
                 }
             }

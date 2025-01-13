@@ -20,7 +20,8 @@ AnimationNode_Base::AnimationNode_Base(const std::string& _nodeName, NodeType _t
 	isLoop(true), 
 	isFinish(false),
 	isRootMotionPosXZ(false),
-	isRootMotionPosY(false)
+	isRootMotionPosY(false),
+	isMinusRootMotionPosY(false)
 {
 	pCurveSpeed = std::make_unique<AnimationCurve>();
 }
@@ -84,6 +85,11 @@ bool AnimationNode_Base::GetIsRootMotionY() const
 	return isRootMotionPosY;
 }
 
+bool HashiTaku::AnimationNode_Base::GetIsMinusRootMotionY() const
+{
+	return isMinusRootMotionPosY;
+}
+
 float AnimationNode_Base::GetPlaySpeedTimes() const
 {
 	return playNodeSpeedTimes;
@@ -102,6 +108,7 @@ json AnimationNode_Base::Save()
 	nodeData["isLoop"] = isLoop;
 	nodeData["isRMXZ"] = isRootMotionPosXZ;
 	nodeData["isRMY"] = isRootMotionPosY;
+	nodeData["isMinusRMY"] = isMinusRootMotionPosY;
 	nodeData["animationCurve"] = pCurveSpeed->Save();
 	return nodeData;
 }
@@ -112,6 +119,7 @@ void AnimationNode_Base::Load(const json& _data)
 	LoadJsonBoolean("isLoop", isLoop, _data);
 	LoadJsonBoolean("isRMXZ", isRootMotionPosXZ, _data);
 	LoadJsonBoolean("isRMY", isRootMotionPosY, _data);
+	LoadJsonBoolean("isMinusRMY", isMinusRootMotionPosY, _data);
 
 	json loadData;
 	if (LoadJsonData("animationCurve", loadData, _data))
@@ -139,6 +147,7 @@ void AnimationNode_Base::ImGuiSetParameter()
 	ImGui::Text("RootMotion");
 	ImGui::Checkbox("XZ", &isRootMotionPosXZ); ImGui::SameLine();
 	ImGui::Checkbox("Y", &isRootMotionPosY); ImGui::SameLine();
+	ImGui::Checkbox("MinusY", &isMinusRootMotionPosY);
 
 	ImGuiMethod::PushItemSmallWidth();
 	ImGui::DragFloat("Speed", &playNodeSpeedTimes, 0.01f, 0.0f, 100.0f);

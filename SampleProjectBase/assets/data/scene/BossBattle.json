@@ -1518,7 +1518,7 @@
                         ],
                         "center": [
                             0.0,
-                            1.0099999904632568,
+                            1.0800000429153442,
                             0.0
                         ],
                         "enable": true,
@@ -2116,7 +2116,7 @@
                                         ],
                                         "atkTimeCnt": 1,
                                         "fallOffset": 1.100000023841858,
-                                        "jumpHeight": 2.4000000953674316,
+                                        "jumpHeight": 3.5999999046325684,
                                         "jumpHeightCurve": {
                                             "easeKind": 0,
                                             "endValue": 0.0,
