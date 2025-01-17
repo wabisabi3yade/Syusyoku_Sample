@@ -16,6 +16,7 @@ namespace HashiTaku
 			Player_Rolling,	// ローリング
 			Player_RockOn,	// ロックオン
 			Player_Guard,	// ガード
+			Pose,	// ポーズ
 			Max_BoolNum
 		};
 		/// @brief ボタンの種類数

@@ -47,6 +47,7 @@ namespace HashiTaku
 		ResistComponnent<CP_UISlider>();
 		ResistComponnent<CP_Button>();
 		ResistComponnent<CP_TitleButtonGroup>();
+		ResistComponnent<CP_BattleButtonGroup>();
 		ResistComponnent<CP_Fade>();
 
 		// エフェクト

@@ -58,11 +58,17 @@ namespace HashiTaku
 		/// @brief 演出の経過時間
 		float animationElapsedTime;
 
+		/// @brief 勝利時のタイムスケール
+		float winTimeScale;
+
 		/// @brief 演出の段階
 		int directionStep;
 
 		/// @brief UIのアニメーションを行うか？
 		bool isUIAnimation;
+
+		/// @brief 開始時のフェード中か？
+		bool isStartFading;
 	public:
 		BattleDirection();
 		~BattleDirection() {}
@@ -84,6 +90,10 @@ namespace HashiTaku
 		/// @brief 敗北時の演出を始める
 		/// @param _targetTransform カメラが映すターゲットのトランスフォーム
 		void OnBeginLoseDirection(const Transform* _targetTransform);
+
+		/// @brief 現在の演出の状態を取得する
+		/// @return 現在の演出の状態
+		DirectionState GetDirectionState() const;
 
 		/// @brief セーブする
 		/// @param _data セーブシーンデータ
@@ -115,6 +125,8 @@ namespace HashiTaku
 		void OnEndDirection();
 
 		void ImGuiDebug() override;
+		// 必要なオブジェクトの名前を編集
+		void ImGuiSetObject();
 	};
 }
 

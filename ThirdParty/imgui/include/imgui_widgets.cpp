@@ -4775,7 +4775,7 @@ bool ImGui::InputTextEx(const char* label, const char* hint, char* buf, int buf_
                     {
                         IM_ASSERT(!is_readonly);
                         IM_ASSERT(callback_data.BufTextLen == (int)strlen(callback_data.Buf)); // You need to maintain BufTextLen if you change the text!
-                        InputTextReconcileUndoStateAfterUserCallback(state, callback_data.Buf, callback_data.BufTextLen); // FIXME: Move the rest of this block inside function and rename to InputTextReconcileStateAfterUserCallback() ?
+                        InputTextReconcileUndoStateAfterUserCallback(state, callback_data.Buf, callback_data.BufTextLen); // FIXME: Follow the rest of this block inside function and rename to InputTextReconcileStateAfterUserCallback() ?
                         if (callback_data.BufTextLen > backup_current_text_length && is_resizable)
                             state->TextW.resize(state->TextW.Size + (callback_data.BufTextLen - backup_current_text_length)); // Worse case scenario resize
                         state->CurLenW = ImTextStrFromUtf8(state->TextW.Data, state->TextW.Size, callback_data.Buf, NULL);

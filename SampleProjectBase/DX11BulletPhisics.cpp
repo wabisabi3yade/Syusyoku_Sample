@@ -3,6 +3,7 @@
 #include "CP_RigidBody.h"
 #include "CollisionInfo.h"
 #include "GameObject.h"
+#include "InSceneSystemManager.h"
 
 namespace HashiTaku
 {
@@ -122,11 +123,11 @@ namespace HashiTaku
 
 	}
 
-	void DX11BulletPhisics::Update()
+	void DX11BulletPhisics::Update(float _deltaTime)
 	{
 		// シミュレーションのステップを進める
 		pDynamicsWorld->stepSimulation(
-			Bullet::ToBtScalar(MainApplication::DeltaTime()),
+			Bullet::ToBtScalar(_deltaTime),
 			maxSubSteps
 		);
 

@@ -1291,7 +1291,6 @@
                             "groundCheckName": "PlayerGroundCollision"
                         },
                         "camObjName": "Camera",
-                        "debugInvicible": false,
                         "enable": true,
                         "hpBarObjName": "Player_HpBar",
                         "maxHp": 100.0,
@@ -1300,7 +1299,7 @@
                         "weaponObjName": "Weapon"
                     },
                     {
-                        "animConName": "ANC_Player",
+                        "animConName": "ANC_Test",
                         "enable": true,
                         "name": "Animation",
                         "priority": 1

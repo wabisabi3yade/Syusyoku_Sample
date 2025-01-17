@@ -1,11 +1,11 @@
 #pragma once
-#include "CameraOnMoveState.h"
+#include "CameraFollowMove.h"
 #include "CalcPerlinShakeVector.h"
 
 namespace HashiTaku
 {
 	/// @brief プレイヤーのチャージ攻撃時のカメラステート
-	class CameraChargeAttack : public CameraOnMoveState
+	class CameraChargeAttack : public CameraFollowMove
 	{
 		/// @brief チャージ中のシェイクを計算する
 		CalcPerlinShakeVector calcChargeingShake;

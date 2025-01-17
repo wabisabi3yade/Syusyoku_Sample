@@ -65,7 +65,8 @@ namespace HashiTaku
 		/// @brief Awakeの次に呼び出される処理
 		void StartCall();
 		/// @brief 毎フレーム更新する処理
-		void UpdateCall();
+		/// @param _sceneDeltaScale 今フレームのシーンのΔt速度倍率 
+		void UpdateCall(float _sceneDeltaScale);
 		/// @brief Updateよりも後に更新される処理
 		void LateUpdateCall();
 		/// @brief 描画処理
@@ -175,9 +176,10 @@ namespace HashiTaku
 		/// @return レイヤーの種類
 		Layer::Type GetLayer() const;
 	private:
-		/// @brief 経過時間を更新する
-		void UpdateDeltaTime();
-
+		/// @brief オブジェクトΔtを更新する
+		/// @param _sceneDeltaScale シーンのΔt速度倍率 
+		void UpdateDeltaTime(float _sceneDeltaScale);
+		
 		/// @brief アクティブ状態を切り替えた時に起こす処理
 		void OnActiveTrue();
 

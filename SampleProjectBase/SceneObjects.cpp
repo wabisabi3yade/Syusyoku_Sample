@@ -43,14 +43,17 @@ namespace HashiTaku
 
 	void SceneObjects::Update()
 	{
+		// シーンのタイムスケールを取得
+		float sceneTimeScale = InSceneSystemManager::GetInstance()->GetTimeScale();
+
 		for (auto& obj : objList)
 		{
-			obj.second->UpdateCall();
+			obj.second->UpdateCall(sceneTimeScale);
 		}
 
 		for (auto& ui : uiList)
 		{
-			ui.second->UpdateCall();
+			ui.second->UpdateCall(sceneTimeScale);
 		}
 	}
 

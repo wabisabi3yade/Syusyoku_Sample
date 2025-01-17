@@ -234,7 +234,7 @@
                     "child": null,
                     "pos": [
                         1.100000023841858,
-                        -5.0,
+                        -5.050000190734863,
                         -13.0
                     ],
                     "rotation": [
@@ -1455,6 +1455,44 @@
                             "EndImage",
                             "CheckBoxBack"
                         ],
+                        "buttonParameter": [
+                            {
+                                "buttonPos": [
+                                    200.0,
+                                    461.79998779296875,
+                                    0.0
+                                ],
+                                "selectOffset": [
+                                    65.0,
+                                    0.0,
+                                    0.10000000149011612
+                                ]
+                            },
+                            {
+                                "buttonPos": [
+                                    200.0,
+                                    569.5,
+                                    -0.20000000298023224
+                                ],
+                                "selectOffset": [
+                                    65.0,
+                                    0.0,
+                                    0.10000000149011612
+                                ]
+                            },
+                            {
+                                "buttonPos": [
+                                    50.0,
+                                    660.0,
+                                    0.0
+                                ],
+                                "selectOffset": [
+                                    220.0,
+                                    -1.0,
+                                    0.10000000149011612
+                                ]
+                            }
+                        ],
                         "checkImageObj": "CheckMark",
                         "defaultId": 0,
                         "enable": true,
@@ -1462,29 +1500,6 @@
                         "horiSpeed": 0,
                         "name": "TitleButtonGroup",
                         "priority": 0,
-                        "selectTargetPos": [
-                            {
-                                "target": [
-                                    260.0,
-                                    465.0,
-                                    0.0
-                                ]
-                            },
-                            {
-                                "target": [
-                                    260.0,
-                                    570.0,
-                                    0.0
-                                ]
-                            },
-                            {
-                                "target": [
-                                    270.0,
-                                    660.0,
-                                    0.0
-                                ]
-                            }
-                        ],
                         "vertSpeed": -1
                     }
                 ],
@@ -1532,10 +1547,10 @@
                         "priority": 0
                     },
                     {
-                        "closeTime": 1.0,
+                        "closeTime": 2.0,
                         "enable": true,
                         "name": "Fade",
-                        "openTime": 1.0,
+                        "openTime": 2.0,
                         "priority": 0,
                         "startOpen": true
                     }

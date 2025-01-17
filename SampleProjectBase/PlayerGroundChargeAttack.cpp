@@ -122,7 +122,8 @@ namespace HashiTaku
 		GetAnimation()->SetInt(CHARGE_STEP_PARAMNAME, 1);	// チャージの段階
 
 		// チャージ中にゲームパッド振動し続ける
-		InSceneSystemManager::GetInstance()->GetInput().BeginVibration(chargePadShakePower, 1000.0f);
+		InSceneSystemManager::GetInstance()->GetInput().
+			BeginVibration(chargePadShakePower, 1000.0f);
 	}
 
 
@@ -144,6 +145,9 @@ namespace HashiTaku
 	{
 		// チャージのエフェクトを消す
 		DX11EffecseerManager::GetInstance()->DestroyVfx(chargeVfxHandle);
+
+		// チャージ中からカメラを通常に戻す
+		ChangeCameraNormaleState();
 	}
 
 	void PlayerGroundChargeAttack::ChangeCameraChargeState()
@@ -160,6 +164,20 @@ namespace HashiTaku
 
 		// カメラステートを変更
 		pCamMove->ChangeState(CP_CameraMove::CameraState::Charge);
+	}
+
+	void PlayerGroundChargeAttack::ChangeCameraNormaleState()
+	{
+		// カメラを通常状態に戻す
+		if (!pCamMove) return;
+
+		CameraChargeAttack* pCamCharge = static_cast<CameraChargeAttack*>(
+			pCamMove->GetState(CP_CameraMove::CameraState::Charge)
+			);
+		if (pCamCharge) pCamCharge->EndChargingShake();
+
+		pCamMove->ChangeState(CP_CameraMove::CameraState::Follow);
+
 	}
 
 	void PlayerGroundChargeAttack::OnChangeAttackTimes()
@@ -203,7 +221,7 @@ namespace HashiTaku
 
 		lastChargingTime = curChargingTime;
 
-		
+
 	}
 
 	void PlayerGroundChargeAttack::CreateChargeVfx()
@@ -238,16 +256,8 @@ namespace HashiTaku
 		// パッド振動をやめる
 		InSceneSystemManager::GetInstance()->GetInput().BeginVibration(0.0f, 0.0f);
 
-		// カメラを通常状態に戻す
-		if (pCamMove)
-		{
-			CameraChargeAttack* pCamCharge = static_cast<CameraChargeAttack*>(
-				pCamMove->GetState(CP_CameraMove::CameraState::Charge)
-				);
-			if (pCamCharge) pCamCharge->EndChargingShake();
-
-			pCamMove->ChangeState(CP_CameraMove::CameraState::Move);
-		}
+		// カメラを通常に戻す
+		ChangeCameraNormaleState();
 
 		// 与えるダメージ量を求める（溜めた分だけダメージアップ）
 		u_int atkTimes = GetAttackTimes();

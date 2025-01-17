@@ -30,8 +30,13 @@ namespace HashiTaku
 		manager->SetCurveLoader(Effekseer::MakeRefPtr<Effekseer::CurveLoader>());
 	}
 
-	void DX11EffecseerManager::BeginDraw()
+	void DX11EffecseerManager::Reset()
 	{
+		// 全てのエフェクトを削除
+		AllEffectDestroy();
+
+		// ポーズを止める
+		isPause = false;
 	}
 
 	void DX11EffecseerManager::EffectDraw()
@@ -44,6 +49,16 @@ namespace HashiTaku
 
 	void DX11EffecseerManager::Update()
 	{
+		// ポーズ状態なら更新しない
+		if (isPause) return;
+
+		// 存在しているか確認
+		UpdateCheckExist();
+
+		// シーンのタイムスケールを合わせる
+		UpdateTimeScale();
+
+		// エフェクトの更新
 		manager->Update();
 	}
 
@@ -77,10 +92,17 @@ namespace HashiTaku
 			_eularAngles.y * Mathf::degToRad,
 			_eularAngles.z * Mathf::degToRad);
 
-		// 速度
-		manager->SetSpeed(handle, _playSpeed);
+		// 速度(タイムスケールも考慮する)
+		float sceneTimeScale = InSceneSystemManager::GetInstance()->GetTimeScale();
+		manager->SetSpeed(handle, _playSpeed * sceneTimeScale);
 
-		return  handle;
+		// 追加
+		PlayHandleParameter newParameter;
+		newParameter.handle = handle;
+		newParameter.baseSpeed = _playSpeed;
+		playingHandleList.push_back(newParameter);
+
+		return handle;
 	}
 
 	Effekseer::Handle DX11EffecseerManager::Play(const CreateVfxInfo& _createVfx, const DXSimp::Vector3& _pos,
@@ -110,6 +132,11 @@ namespace HashiTaku
 		return retHand;
 	}
 
+	void DX11EffecseerManager::SetPause(bool _setPause)
+	{
+		isPause = _setPause;
+	}
+
 	void DX11EffecseerManager::ChangeColor(Effekseer::Handle _efkHandle, const DXSimp::Color& _color)
 	{
 		manager->SetAllColor(_efkHandle,
@@ -122,6 +149,12 @@ namespace HashiTaku
 	void DX11EffecseerManager::DestroyVfx(const Effekseer::Handle _deleteHandle)
 	{
 		manager->StopEffect(_deleteHandle);
+
+		// 対応したハンドルを削除
+		playingHandleList.remove_if([&](const PlayHandleParameter& _handleParam)
+			{
+				return _handleParam.handle == _deleteHandle;
+			});
 	}
 
 	const Effekseer::ManagerRef& DX11EffecseerManager::GetManager() const
@@ -129,12 +162,45 @@ namespace HashiTaku
 		return manager;
 	}
 
-	DX11EffecseerManager::DX11EffecseerManager() : pRenderer(nullptr)
+	DX11EffecseerManager::DX11EffecseerManager() : 
+		pRenderer(nullptr),
+		prevTimeScale(1.0f),
+		isPause(false)
 	{
 	}
 
 	DX11EffecseerManager::~DX11EffecseerManager()
 	{
+	}
+
+	void DX11EffecseerManager::UpdateTimeScale()
+	{
+		// 現在のタイムスケールを取得し、前回と差がないなら更新しない
+		float curTimeScale = InSceneSystemManager::GetInstance()->GetTimeScale();
+		if (abs(curTimeScale - prevTimeScale) < Mathf::epsilon) return;
+
+		prevTimeScale = curTimeScale;
+
+		// エフェクト全体のタイムスケールを変更
+		for (auto& playHandle : playingHandleList)
+		{
+			// ベースの速度　×　シーンのタイムスケール
+			manager->SetPaused(playHandle.handle, true);
+		}
+	}
+
+	void DX11EffecseerManager::UpdateCheckExist()
+	{
+		// エフェクトのハンドルリスト
+		auto endItr = playingHandleList.end();
+		for (auto itr = playingHandleList.begin(); itr != endItr;)
+		{
+			// 存在していないならハンドルリストから削除
+			if (!ExistEffect(itr->handle))
+				itr = playingHandleList.erase(itr);
+			else
+				++itr;
+		}
 	}
 
 	void DX11EffecseerManager::UpdateCamMatrix()

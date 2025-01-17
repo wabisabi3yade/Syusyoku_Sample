@@ -8,6 +8,8 @@
 
 namespace HashiTaku
 {
+	constexpr auto TITLE_SCENE_NAME("Title");	// タイトルのシーン名
+
 	void CP_BattleManager::Init()
 	{
 		SingletonComponent::Init();
@@ -52,6 +54,49 @@ namespace HashiTaku
 		return pPlayer;
 	}
 
+	void CP_BattleManager::BeginPose()
+	{
+		if (isPosing) return;
+		// 演出だったらポーズを行わない
+		if (pBattleDirection->GetDirectionState() !=
+			BattleDirection::DirectionState::Wait) return;
+
+		isPosing = true;
+
+		// シーン内のタイムスケールを0にする
+		pInSceneManager->SetTimeScale(0.0f);
+
+		// エフェクトを停止させる
+		DX11EffecseerManager::GetInstance()->SetPause(true);
+
+		// ポーズ中のボタンを表示
+		if (pPoseButtons)
+			pPoseButtons->OpenDisplay();
+
+		// 各オブジェクトを停止
+		StopObjects();
+	}
+
+	void CP_BattleManager::EndPose()
+	{
+		if (!isPosing) return;
+
+		isPosing = false;
+
+		// シーン内のタイムスケールを等速に戻す
+		pInSceneManager->SetTimeScale(1.0f);
+
+		// エフェクトを停止させる
+		DX11EffecseerManager::GetInstance()->SetPause(false);
+
+		// ポーズ中のボタンを非表示
+		if (pPoseButtons)
+			pPoseButtons->CloseDisplay();
+
+		// 各オブジェクトを戻す
+		ActiveObjects();
+	}
+
 	const CP_BattleManager::EnemyList& CP_BattleManager::GetEnemyList()
 	{
 		return enemyList;
@@ -59,7 +104,7 @@ namespace HashiTaku
 	void CP_BattleManager::OnPlayerWin()
 	{
 		// オブジェクトを止める
-		StopObjects();
+	/*	StopObjects();*/
 		if (static_cast<u_int>(enemyList.size()) == 0) return;	// 敵がいないなら
 		Transform& bossTransform = (*enemyList.begin())->GetTransform();
 
@@ -83,6 +128,7 @@ namespace HashiTaku
 		auto data = SingletonComponent::Save();
 
 		SaveJsonVector4("moveAreaRect", moveAreaRect, data);
+		data["poseButtonName"] = poseButtonName;
 		data["battleDirection"] = pBattleDirection->Save();
 
 		return data;
@@ -93,7 +139,7 @@ namespace HashiTaku
 		SingletonComponent::Load(_data);
 
 		LoadJsonVector4("moveAreaRect", moveAreaRect, _data);
-
+		LoadJsonString("poseButtonName", poseButtonName, _data);
 		json loadData;
 		if (LoadJsonData("battleDirection", loadData, _data))
 		{
@@ -103,8 +149,9 @@ namespace HashiTaku
 
 	void CP_BattleManager::Awake()
 	{
-
 		SingletonComponent::Awake();
+
+		pInSceneManager = InSceneSystemManager::GetInstance();
 
 		// カメラ移動クラスを取得
 		CP_Camera& camera = InSceneSystemManager::GetInstance()->GetMainCamera();
@@ -114,12 +161,23 @@ namespace HashiTaku
 		pBattleDirection->Init(pCamMove);
 	}
 
+	void CP_BattleManager::Start()
+	{
+		// オブジェクトを探す
+		FindObject();
+	}
+
 	void CP_BattleManager::Update()
 	{
-		pBattleDirection->Update(DeltaTime());
+		// シーンのタイムスケールを考慮しないようにする
+		pBattleDirection->Update(MainApplication::DeltaTime());
 
+		// 演出開始されていないなら
 		if (!isDirectionStart)
 			FadeStart();
+
+		// 入力更新処理
+		InputUpdate();
 	}
 
 	void CP_BattleManager::LateUpdate()
@@ -148,6 +206,33 @@ namespace HashiTaku
 #endif // EDIT
 	}
 
+	void CP_BattleManager::FindObject()
+	{
+		// シーン内からオブジェクトを探す
+		SceneObjects& sceneObjs = pInSceneManager->GetSceneObjects();
+
+		// ポーズ時のボタン
+		GameObject* pObj = sceneObjs.GetSceneObject(poseButtonName);
+		if (pObj)
+		{
+			pPoseButtons = pObj->GetComponent<CP_BattleButtonGroup>();
+		}
+	}
+
+	void CP_BattleManager::InputUpdate()
+	{
+		GameInput& input = pInSceneManager->GetInput();
+
+		// ポーズボタンが押されたら
+		if (input.GetButtonDown(GameInput::ButtonType::Pose))
+		{
+			if (!isPosing) // ポーズ中でないならポーズする
+				BeginPose();
+			else
+				EndPose();
+		}
+	}
+
 	void CP_BattleManager::FadeStart()
 	{
 		isDirectionStart = true;
@@ -168,7 +253,7 @@ namespace HashiTaku
 	void CP_BattleManager::EndBattle()
 	{
 		// タイトルシーンに移動
-		SceneManager::GetInstance()->ChangeSceneRequest("Title");
+		SceneManager::GetInstance()->ChangeSceneRequest(TITLE_SCENE_NAME);
 	}
 
 	void CP_BattleManager::MoveAreaUpdate()
@@ -225,6 +310,13 @@ namespace HashiTaku
 #ifdef EDIT
 		ImGui::Checkbox("IsDisplay", &isDebugDisplay);
 		ImGui::DragFloat4("AreaRect", &moveAreaRect.x, 0.01f);
+
+		// ポーズボタン
+		static char input[IM_INPUT_BUF] = "\0";
+		ImGui::InputText("##input", input, IM_INPUT_BUF);
+		if (ImGui::Button("Pose Button"))
+			poseButtonName = input;
+		ImGui::Text(poseButtonName.c_str());
 
 		ImGuiMethod::LineSpaceSmall();
 		ImGui::Text("Direction");

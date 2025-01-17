@@ -55,7 +55,10 @@ namespace HashiTaku
 		void Init();
 
 		/// @brief 更新処理
-		void Update();
+
+		/// @brief 更新処理
+		/// @param _deltaTime Δt
+		void Update(float _deltaTime);
 
 		/// @brief 当たっているオブジェクトのコールバックを呼び出す
 		void CollisionCallBack();

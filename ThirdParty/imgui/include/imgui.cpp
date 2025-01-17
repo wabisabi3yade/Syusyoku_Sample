@@ -132,7 +132,7 @@ CODE
    - Click [X]:                     Close a window, available when 'bool* p_open' is passed to ImGui::Begin().
    - Click ^, Double-Click title:   Collapse window.
    - Drag on corner/border:         Resize window (double-click to auto fit window to its contents).
-   - Drag on any empty space:       Move window (unless io.ConfigWindowsMoveFromTitleBarOnly = true).
+   - Drag on any empty space:       Follow window (unless io.ConfigWindowsMoveFromTitleBarOnly = true).
    - Left-click outside popup:      Close popup stack (right-click over underlying popup: Partially close popup stack).
 
  - TEXT EDITOR
@@ -152,7 +152,7 @@ CODE
      - CTRL+Click                   Input text into a Slider or Drag widget.
    - Extended features with `io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard`:
      - Tab, SHIFT+Tab:              Cycle through every items.
-     - Arrow keys                   Move through items using directional navigation. Tweak value.
+     - Arrow keys                   Follow through items using directional navigation. Tweak value.
      - Arrow keys + Alt, Shift      Tweak slower, tweak faster (when using arrow keys).
      - Enter                        Activate item (prefer text input when possible).
      - Space                        Activate item (prefer tweaking with arrows when possible).
@@ -160,7 +160,7 @@ CODE
      - Page Up, Page Down           Previous page, next page.
      - Home, End                    Scroll to top, scroll to bottom.
      - Alt                          Toggle between scrolling layer and menu layer.
-     - CTRL+Tab then Ctrl+Arrows    Move window. Hold SHIFT to resize instead of moving.
+     - CTRL+Tab then Ctrl+Arrows    Follow window. Hold SHIFT to resize instead of moving.
    - Output when ImGuiConfigFlags_NavEnableKeyboard set,
      - io.WantCaptureKeyboard flag is set when keyboard is claimed.
      - io.NavActive: true when a window is focused and it doesn't have the ImGuiWindowFlags_NoNavInputs flag set.
@@ -7404,7 +7404,7 @@ void ImGui::FocusWindow(ImGuiWindow* window, ImGuiFocusRequestFlags flags)
         ClosePopupsOverWindow(window, false);
     }
 
-    // Move the root window to the top of the pile
+    // Follow the root window to the top of the pile
     IM_ASSERT(window == NULL || window->RootWindow != NULL);
     ImGuiWindow* focus_front_window = window ? window->RootWindow : NULL; // NB: In docking branch this is window->RootWindowDockStop
     ImGuiWindow* display_front_window = window ? window->RootWindow : NULL;
@@ -11826,7 +11826,7 @@ static void ImGui::NavProcessItem()
         }
     }
 
-    // Process Move Request (scoring for navigation)
+    // Process Follow Request (scoring for navigation)
     // FIXME-NAV: Consider policy for double scoring (scoring from NavScoringRect + scoring from a rect wrapped according to current wrapping policy)
     if (g.NavMoveScoringItems && (item_flags & ImGuiItemFlags_Disabled) == 0)
     {
@@ -12177,7 +12177,7 @@ static void ImGui::NavUpdate()
     ImGuiIO& io = g.IO;
 
     io.WantSetMousePos = false;
-    //if (g.NavScoringDebugCount > 0) IMGUI_DEBUG_LOG_NAV("[nav] NavScoringDebugCount %d for '%s' layer %d (Init:%d, Move:%d)\n", g.NavScoringDebugCount, g.NavWindow ? g.NavWindow->Name : "NULL", g.NavLayer, g.NavInitRequest || g.NavInitResultId != 0, g.NavMoveRequest);
+    //if (g.NavScoringDebugCount > 0) IMGUI_DEBUG_LOG_NAV("[nav] NavScoringDebugCount %d for '%s' layer %d (Init:%d, Follow:%d)\n", g.NavScoringDebugCount, g.NavWindow ? g.NavWindow->Name : "NULL", g.NavLayer, g.NavInitRequest || g.NavInitResultId != 0, g.NavMoveRequest);
 
     // Set input source based on which keys are last pressed (as some features differs when used with Gamepad vs Keyboard)
     // FIXME-NAV: Now that keys are separated maybe we can get rid of NavInputSource?
@@ -12617,7 +12617,7 @@ void ImGui::NavMoveRequestApplyResult()
         g.NavLastValidSelectionUserData = result->SelectionUserData;
 
     // Restore last preferred position for current axis
-    // (storing in RootWindowForNav-> as the info is desirable at the beginning of a Move Request. In theory all storage should use RootWindowForNav..)
+    // (storing in RootWindowForNav-> as the info is desirable at the beginning of a Follow Request. In theory all storage should use RootWindowForNav..)
     if ((g.NavMoveFlags & ImGuiNavMoveFlags_IsTabbing) == 0)
     {
         preferred_scoring_pos_rel[axis] = result->RectRel.GetCenter()[axis];
@@ -12997,7 +12997,7 @@ static void ImGui::NavUpdateWindowing()
             g.NavWindowingToggleLayer = false;
     }
 
-    // Move window
+    // Follow window
     if (g.NavWindowingTarget && !(g.NavWindowingTarget->Flags & ImGuiWindowFlags_NoMove))
     {
         ImVec2 nav_move_dir;
@@ -13050,7 +13050,7 @@ static void ImGui::NavUpdateWindowing()
     {
         ClearActiveID();
 
-        // Move to parent menu if necessary
+        // Follow to parent menu if necessary
         ImGuiWindow* new_nav_window = g.NavWindow;
         while (new_nav_window->ParentWindow
             && (new_nav_window->DC.NavLayersActiveMask & (1 << ImGuiNavLayer_Menu)) == 0

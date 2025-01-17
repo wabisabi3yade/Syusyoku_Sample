@@ -7,14 +7,24 @@ namespace HashiTaku
 	/// @brief ボタンをグループ化して、管理する
 	class CP_ButtonGroup : public Component
 	{
-		/// @brief セレクトイメージの座標先
-		std::vector<DXSimp::Vector3> selectTargetPos;
+		/// @brief ボタンのパラメータ
+		struct ButtonParameter
+		{
+			/// @brief ボタンコンポーネント
+			CP_Button* pButton{ nullptr };
+
+			/// @brief 表示するときのボタンの座標
+			DXSimp::Vector3 buttonPos;
+		};
+
+		/// @brief セレクトイメージの座標先オフセット（ボタンの座標から）
+		std::vector<DXSimp::Vector3> selectOffsetPosFromButton;
 
 		/// @brief デフォルトのボタンのID
 		u_int defaultSelectButtonId;
 	protected:
-		/// @brief ボタンのグループ
-		std::vector<CP_Button*> buttonGroup;
+		/// @brief ボタンパラメータのグループ
+		std::vector<ButtonParameter> buttonParameterGroup;
 
 		/// @brief ボタンのコンポーネントを持つオブジェクト
 		std::vector<std::string> buttonObjNames;
@@ -47,6 +57,12 @@ namespace HashiTaku
 		/// @param _canMove 移動できるかフラグ
 		void SetCanMove(bool _canMove);
 
+		/// @brief ボタンを表示する
+		virtual void OpenDisplay();
+
+		/// @brief ボタンを閉じる
+		virtual void CloseDisplay();
+
 		json Save() override;
 		void Load(const json& _data) override;
 	protected:
@@ -62,6 +78,13 @@ namespace HashiTaku
 
 		/// @brief セレクトの背景イメージを選択中のボタンへ移動
 		void MoveSelectBackImage();
+
+		/// @brief 設定しているボタンの座標へボタン画像を移動させる
+		void SettingButtonPosition();
+
+		/// @brief ボタンを表示させるか？
+		/// @param _isDisplay 表示させるか？
+		virtual void SetDisplayButtons(bool _isDisplay);
 
 		/// @brief 最大数をセット
 		/// @param _max 最大数

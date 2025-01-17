@@ -40,9 +40,9 @@ namespace HashiTaku
 
 	void PlayerMoveState::UpdateBehavior()
 	{
-		Move();
-
 		ApplyRootMotion();
+		
+		Move();
 
 		Rotation();
 	}
@@ -141,6 +141,8 @@ namespace HashiTaku
 
 			if (rootMotion > Mathf::epsilon)
 			{
+				HASHI_DEBUG_LOG("a" + std::to_string(GetRB().GetVelocity().Length()));
+
 				float animPlaySpeed = currentSpeed / rootMotion;
 
 				pAnimation->SetCurNodePlayerSpeed(animPlaySpeed);

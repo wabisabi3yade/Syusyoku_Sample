@@ -20,6 +20,30 @@ namespace HashiTaku
 		canInput = _canMove;
 	}
 
+	void CP_ButtonGroup::OpenDisplay()
+	{
+		canInput = true;
+		curSelectButtonId = 0;	// 初期位置に移動
+
+		// ボタンを表示
+		SetDisplayButtons(true);
+
+		// ボタンの座標を変更する
+		SettingButtonPosition();
+
+		// 選択イメージを移動
+		MoveSelectBackImage();
+	}
+
+	void CP_ButtonGroup::CloseDisplay()
+	{
+		// 入力不可にする
+		canInput = false;
+
+		// ボタン等を非表示させる
+		SetDisplayButtons(false);
+	}
+
 	json CP_ButtonGroup::Save()
 	{
 		auto data = Component::Save();
@@ -30,11 +54,12 @@ namespace HashiTaku
 		data["buttonObjNames"] = buttonObjNames;
 		data["backObjName"] = backImageObjName;
 
-		auto& targetData = data["selectTargetPos"];
+		auto& targetData = data["buttonParameter"];
 		for (int b_i = 0; b_i < maxButtonCnt; b_i++)
 		{
 			json posData;
-			SaveJsonVector3("target", selectTargetPos[b_i], posData);
+			SaveJsonVector3("buttonPos", buttonParameterGroup[b_i].buttonPos, posData);
+			SaveJsonVector3("selectOffset", selectOffsetPosFromButton[b_i], posData);
 			targetData.push_back(posData);
 		}
 
@@ -64,14 +89,13 @@ namespace HashiTaku
 
 		// 座標
 		json targetData;
-		if (LoadJsonDataArray("selectTargetPos", targetData, _data))
+		if (LoadJsonDataArray("buttonParameter", targetData, _data))
 		{
 			int i = 0;
 			for (auto& posData : targetData)
 			{
-				DXSimp::Vector3 pos;
-				LoadJsonVector3("target", pos, posData);
-				selectTargetPos[i] = pos;
+				LoadJsonVector3("buttonPos", buttonParameterGroup[i].buttonPos, posData);
+				LoadJsonVector3("selectOffset", selectOffsetPosFromButton[i], posData);
 				i++;
 			}
 		}
@@ -79,12 +103,12 @@ namespace HashiTaku
 
 	void CP_ButtonGroup::Start()
 	{
-		if (static_cast<u_int>(buttonGroup.size()) < defaultSelectButtonId)
+		if (static_cast<u_int>(buttonParameterGroup.size()) < defaultSelectButtonId)
 		{
 			HASHI_DEBUG_LOG("デフォルトのIDがボタンの数を超えています");
 			defaultSelectButtonId = 0;
 		}
-		if (static_cast<u_int>(buttonGroup.size()) == 0)
+		if (static_cast<u_int>(buttonParameterGroup.size()) == 0)
 		{
 			HASHI_DEBUG_LOG("ボタンが1つもありません");
 		}
@@ -107,7 +131,7 @@ namespace HashiTaku
 			pGO = sceneObjs.GetSceneObject(buttonObjNames[b_i]);
 			if (!pGO) continue;
 			CP_Button* pGetButton = pGO->GetComponent<CP_Button>();
-			buttonGroup[b_i] = pGetButton;
+			buttonParameterGroup[b_i].pButton = pGetButton;
 
 			if (!pGetButton)	// ボタン取得出来なかったら
 				HASHI_DEBUG_LOG(buttonObjNames[b_i] + "からボタンが取得できませんでした");
@@ -183,9 +207,9 @@ namespace HashiTaku
 		}
 
 		// 決定したらそのボタンのイベントを発生させる
-		if (isDecide && buttonGroup[curSelectButtonId])
+		if (isDecide && buttonParameterGroup[curSelectButtonId].pButton)
 		{
-			buttonGroup[curSelectButtonId]->OnEvent();
+			buttonParameterGroup[curSelectButtonId].pButton->OnEvent();
 		}
 	}
 
@@ -199,19 +223,48 @@ namespace HashiTaku
 
 		// 選択されているボタンの座標を取得
 		Transform& backImageTrans = pSelectBackImage->GetTransform();
-		DXSimp::Vector3 buttonPos = selectTargetPos[curSelectButtonId];
+
+		// ボタンからのオフセット座標に選択イメージを移動させる
+		DXSimp::Vector3 buttonPos = buttonParameterGroup[curSelectButtonId].buttonPos + 
+			selectOffsetPosFromButton[curSelectButtonId];
 
 		// Z座標以外を反映させる
 		buttonPos.z = backImageTrans.GetPosition().z;
 		backImageTrans.SetPosition(buttonPos);
 	}
 
+	void CP_ButtonGroup::SettingButtonPosition()
+	{
+		// ボタンのオブジェクト座標を設定下座標へ移動
+		for (u_int b_i = 0; b_i < maxButtonCnt; b_i++)
+		{
+			CP_Button* pButton = buttonParameterGroup[b_i].pButton;
+			if (!pButton) continue;
+			
+			// 移動させる
+			pButton->GetTransform().SetPosition(buttonParameterGroup[b_i].buttonPos);
+		}
+	}
+
+	void CP_ButtonGroup::SetDisplayButtons(bool _isDisplay)
+	{
+		// ボタン
+		for (auto& buttonParam : buttonParameterGroup)
+		{
+			buttonParam.pButton->GetGameObject().SetActive(_isDisplay);
+		}
+
+		// 選択イメージ
+		if (pSelectBackImage)
+			pSelectBackImage->GetGameObject().SetActive(_isDisplay);
+	}
+
 	void CP_ButtonGroup::SetMaxButtonCnt(int _max)
 	{
 		maxButtonCnt = _max;
-		buttonGroup.resize(maxButtonCnt);
+		buttonParameterGroup.resize(maxButtonCnt);
 		buttonObjNames.resize(maxButtonCnt);
-		selectTargetPos.resize(maxButtonCnt);
+		selectOffsetPosFromButton.resize(maxButtonCnt);
 	}
 
 	void CP_ButtonGroup::ImGuiDebug()
@@ -238,7 +291,10 @@ namespace HashiTaku
 			if (ImGui::Button("Set"))
 				buttonObjNames[b_i] = inputText;
 
-			ImGui::DragFloat3("Pos", &selectTargetPos[b_i].x);
+			// ボタン座標
+			ImGui::DragFloat3("ButtonPos", &buttonParameterGroup[b_i].buttonPos.x);
+			// セレクトの位置
+			ImGui::DragFloat3("SelectOffset", &selectOffsetPosFromButton[b_i].x);
 
 			ImGui::PopID();
 		}

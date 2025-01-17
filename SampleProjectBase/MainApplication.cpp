@@ -142,9 +142,9 @@ namespace HashiTaku
 
 			ImGuiMethod::NewFrame();
 
-			// 終了処理チェック
-			if (EscapeCheck())
-				return;
+			//// 終了処理チェック
+			//if (EscapeCheck())
+			//	return;
 
 			// 入力更新
 			pInput->Update();

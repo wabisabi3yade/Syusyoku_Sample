@@ -6030,7 +6030,7 @@
                             "startVector": 0.0,
                             "useHermite": true
                         },
-                        "isLoop": true,
+                        "isLoop": false,
                         "isMinusRMY": false,
                         "isRMXZ": false,
                         "isRMY": false,
@@ -10812,6 +10812,10 @@
             "pathName": ""
         },
         {
+            "assetName": "UI_Back.png",
+            "pathName": "assets/texture/ui/UI_Back.png"
+        },
+        {
             "assetName": "UI_BarBack.png",
             "pathName": "assets/texture/ui/UI_BarBack.png"
         },
@@ -10874,6 +10878,10 @@
         {
             "assetName": "UI_StartText.png",
             "pathName": "assets/texture/ui/UI_StartText.png"
+        },
+        {
+            "assetName": "UI_Title.png",
+            "pathName": "assets/texture/ui/UI_Title.png"
         },
         {
             "assetName": "UI_TitleImage.png",

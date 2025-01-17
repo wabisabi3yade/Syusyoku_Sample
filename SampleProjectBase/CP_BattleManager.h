@@ -9,7 +9,9 @@ namespace HashiTaku
 	class CP_Player;
 	class CP_Enemy;
 	class CP_CameraMove;
+	class CP_BattleButtonGroup;
 	class BattleDirectionEndObserver;
+	class InSceneSystemManager;
 
 	/// @brief 戦闘のマネージャーコンポーネント
 	class CP_BattleManager : public SingletonComponent<CP_BattleManager>
@@ -25,6 +27,9 @@ namespace HashiTaku
 		/// @brief 敵全体リスト
 		EnemyList enemyList;
 
+		/// @brief ポーズ中に表示するボタンのオブジェクト名
+		std::string poseButtonName;
+
 		/// @brief 戦闘の演出を行う
 		std::unique_ptr<BattleDirection> pBattleDirection;
 
@@ -35,7 +40,13 @@ namespace HashiTaku
 		CP_Player* pPlayer{ nullptr };
 
 		/// @brief カメラ移動クラス
-		CP_CameraMove* pCamMove;
+		CP_CameraMove* pCamMove{ nullptr };
+
+		/// @brief ポーズ中にボタンを表示する
+		CP_BattleButtonGroup* pPoseButtons{ nullptr };
+
+		/// @brief シーン内マネジャー
+		InSceneSystemManager* pInSceneManager{ nullptr };
 
 		/// @brief XZ座標のエリア制限
 		// x : X_R,	y: X_L, z : Y_T, w : Y_B
@@ -43,6 +54,9 @@ namespace HashiTaku
 
 		/// @brief 演出開始したか
 		bool isDirectionStart{ false };
+
+		/// @brief ポーズ中か？
+		bool isPosing{ false };
 #ifdef EDIT
 		bool isDebugDisplay{ false };
 #endif // EDIT
@@ -71,6 +85,12 @@ namespace HashiTaku
 		/// @return プレイヤー
 		CP_Player* GetPlayerObject();
 
+		/// @brief バトル中にポーズ開始する
+		void BeginPose();
+
+		/// @brief ポーズを終了する
+		void EndPose();
+
 		/// @brief 敵リストを取得する
 		/// @return 
 		const EnemyList& GetEnemyList();
@@ -85,9 +105,16 @@ namespace HashiTaku
 		void Load(const json& _data) override;
 	private:
 		void Awake() override;
+		void Start() override;
 		void Update() override;
 		void LateUpdate() override;
 		void Draw() override;
+
+		/// @brief 必要なオブジェクトを探す
+		void FindObject();
+
+		/// @brief 入力更新
+		void InputUpdate();
 
 		/// @brief フェードを開始する
 		void FadeStart();

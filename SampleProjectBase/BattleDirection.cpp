@@ -5,20 +5,22 @@
 namespace HashiTaku
 {
 	// GameStart関連
-	constexpr float START_FADE_TIME(0.6f);	// フェード時間
-	constexpr float START_FADE_ALPHA(0.3f);	// フェードの一旦止めるα値
+	constexpr float START_FIRST_FADE_TIME(0.6f);	// フェード時間(少し開ける)
+	constexpr float START_FIRST_FADE_ALPHA(0.3f);	// フェードの一旦止めるα値(少し開ける)
 	constexpr float START_MOVE_TIME(2.4f);	// 文字の移動時間
 	constexpr float START_START_POS_X(1600.0f);	// 文字の開始目標時間
 	constexpr float START_TARGET_POS_X(-400.0f);	// 文字の移動先目標時間
+	constexpr float START_FADE_POS_X(-400.0f);	// 文字の移動先目標時間
+	constexpr float START_SECOND_FADE_TIME(0.1f);	// フェードを開ける時間(完全に開ける)
 
 	// 勝利時演出
-	constexpr float WIN_FADE_INTERVAL(3.0f);	// フェードまでの時間
+	constexpr float WIN_FADE_INTERVAL(7.0f);	// フェードまでの時間
 	constexpr float WIN_FADE_ALPHA(0.5f);	// フェードの一旦止めるα値
 	constexpr float WIN_FADE_TIME(2.0f);	// 文字とフェードの時間
 	constexpr float WIN_DISPLAY_TIME(4.0f);	// 文字とフェードの時間
 	constexpr float WIN_CLOSE_FADE_TIME(1.3f);	// 閉じるフェード時間
 
-	BattleDirection::BattleDirection() : 
+	BattleDirection::BattleDirection() :
 		pFade(nullptr),
 		pGameStartObj(nullptr),
 		pGameOverObj(nullptr),
@@ -26,8 +28,10 @@ namespace HashiTaku
 		pCamMove(nullptr),
 		curState(DirectionState::Wait),
 		animationElapsedTime(0.0f),
+		winTimeScale(0.2f),
 		directionStep(0),
-		isUIAnimation(true)
+		isUIAnimation(true),
+		isStartFading(false)
 	{
 	}
 
@@ -59,11 +63,12 @@ namespace HashiTaku
 
 	void BattleDirection::OnBeginStartDirection()
 	{
+		curState = DirectionState::Start;
+
 #ifdef EDIT
 		// 演出なし
 		if (!isUIAnimation)
 		{
-			curState = DirectionState::Start;
 			// 開始演出が終了したことを伝える
 			OnEndDirection();
 			return;
@@ -73,14 +78,16 @@ namespace HashiTaku
 		// フェードがないなら
 		if (!pFade)
 		{
-			curState = DirectionState::Start;
 			// 開始演出が終了したことを伝える
 			OnEndDirection();
 			return;
 		}
 
+		isStartFading = true;
+
 		// フェード開けたらスタート演出に入る
-		pFade->OpenFade(START_FADE_TIME, START_FADE_ALPHA);
+		pFade->CloseFade(0.0f, 1.0f);	// 塗りつぶしから開始
+		pFade->OpenFade(START_FIRST_FADE_TIME, START_FIRST_FADE_ALPHA);
 		pFade->SetOnEndFunction([&]()
 			{
 				OnBeginStart();
@@ -97,7 +104,7 @@ namespace HashiTaku
 		curState = DirectionState::Win;
 
 		// ほぼ同タイミングで起きた場合に重複しないようにする
-		if (!_targetTransform || curState == DirectionState::Lose)
+		if (!_targetTransform || curState == DirectionState::Lose || !pWinObj)
 		{
 			OnEndDirection();
 			return;
@@ -105,6 +112,12 @@ namespace HashiTaku
 		// パラメータをリセット
 		animationElapsedTime = 0.0f;
 		directionStep = 0;
+
+		// タイムスケールを遅くする
+		InSceneSystemManager::GetInstance()->SetTimeScale(winTimeScale);
+
+		// 文字をアクティブ状態に
+		pWinObj->GetGameObject().SetActive(true);
 
 		// カメラ演出を始める
 		if (!pCamMove) return;	// カメラがないなら
@@ -129,9 +142,17 @@ namespace HashiTaku
 
 		animationElapsedTime = 0.0f;
 
+		// 文字をアクティブ状態に
+		pGameOverObj->GetGameObject().SetActive(true);
+
 		// カメラ演出を始める
 		if (!pCamMove) return;	// カメラがないなら
 		pCamMove->OnPlayerWin(*_targetTransform);
+	}
+
+	BattleDirection::DirectionState BattleDirection::GetDirectionState() const
+	{
+		return curState;
 	}
 
 	json BattleDirection::Save()
@@ -191,14 +212,14 @@ namespace HashiTaku
 
 	void BattleDirection::OnBeginStart()
 	{
-		curState = DirectionState::Start;
-
 		// リセット
 		animationElapsedTime = 0.0f;
+		isStartFading = false;
 
 		if (pGameStartObj)
 		{
 			// 文字を初期の位置に配置
+			pGameStartObj->SetActive(true);
 			Transform& trans = pGameStartObj->GetTransform();
 			DXSimp::Vector3 startPos = trans.GetPosition();
 			startPos.x = START_START_POS_X;
@@ -210,6 +231,8 @@ namespace HashiTaku
 
 	void BattleDirection::StartUpdate(float _deltaTime)
 	{
+		if (isStartFading) return;	// 最初のフェード中は文字を動かさない
+
 		animationElapsedTime += _deltaTime;
 
 		float curPosX = Mathf::Lerp(
@@ -226,7 +249,9 @@ namespace HashiTaku
 		// 時間が過ぎたら終了
 		if (animationElapsedTime > START_MOVE_TIME)
 		{
-			pFade->OpenFade(0.0f);
+			// フェードを開ける
+			pGameStartObj->SetActive(false);
+			pFade->OpenFade(START_SECOND_FADE_TIME);
 			OnEndDirection();
 		}
 	}
@@ -240,8 +265,11 @@ namespace HashiTaku
 			if (animationElapsedTime > WIN_FADE_INTERVAL)
 			{
 				animationElapsedTime = 0.0f;
+				// フェードを行う
 				pWinObj->CloseFade(WIN_FADE_TIME, 1.0f);
 				pFade->CloseFade(WIN_FADE_TIME, WIN_FADE_ALPHA);
+				// タイムスケールを元に戻す
+				InSceneSystemManager::GetInstance()->SetTimeScale(1.0f);
 				directionStep = 1;
 			}
 
@@ -284,6 +312,7 @@ namespace HashiTaku
 
 		switch (directionStep)
 		{
+
 		case 0:
 			if (animationElapsedTime > WIN_FADE_INTERVAL)
 			{
@@ -337,8 +366,20 @@ namespace HashiTaku
 
 	void BattleDirection::ImGuiDebug()
 	{
+#ifdef EDIT
+		ImGui::Checkbox("UIAnimation", &isUIAnimation);
+
+		// ゲームスタートの移動割合
 		gameStartCurve.ImGuiCall();
 
+		// オブジェクト
+		ImGuiSetObject();
+#endif EDIT
+	}
+
+	void BattleDirection::ImGuiSetObject()
+	{
+#ifdef EDIT
 		static char input[IM_INPUT_BUF] = "\0";
 		ImGui::InputText("ObjName", input, IM_INPUT_BUF);
 
@@ -357,8 +398,7 @@ namespace HashiTaku
 		if (ImGui::Button("Set GameOver")) gameOverObjName = input;
 		ImGui::SameLine();
 		ImGui::Text(gameOverObjName.c_str());
-
-		ImGui::Checkbox("UIAnimation", &isUIAnimation);
+#endif // EDIT
 
 	}
 }

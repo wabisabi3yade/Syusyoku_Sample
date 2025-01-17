@@ -87,6 +87,9 @@ namespace HashiTaku
 		/// @brief カメラをチャージ状態に編子うする
 		void ChangeCameraChargeState();
 
+		/// @brief 通常状態のカメラに戻す
+		void ChangeCameraNormaleState();
+
 		/// @brief 攻撃回数を変えたときの処理
 		void OnChangeAttackTimes() override;
 

@@ -211,9 +211,11 @@
     <ClCompile Include="CameraGameOverState.cpp" />
     <ClCompile Include="CameraMoveController.cpp" />
     <ClCompile Include="CameraMoveState_Base.cpp" />
-    <ClCompile Include="CameraOnMoveState.cpp" />
+    <ClCompile Include="CameraFollowMove.cpp" />
+    <ClCompile Include="CameraWinState.cpp" />
     <ClCompile Include="CP_AudioListener.cpp" />
     <ClCompile Include="BattleDirection.cpp" />
+    <ClCompile Include="CP_BattleButtonGroup.cpp" />
     <ClCompile Include="CP_PlaySound.cpp" />
     <ClCompile Include="CP_SoundManager.cpp" />
     <ClCompile Include="IBoneSupplier.cpp" />
@@ -458,9 +460,11 @@
     <ClInclude Include="CameraGameOverState.h" />
     <ClInclude Include="CameraMoveController.h" />
     <ClInclude Include="CameraMoveState_Base.h" />
-    <ClInclude Include="CameraOnMoveState.h" />
+    <ClInclude Include="CameraFollowMove.h" />
+    <ClInclude Include="CameraWinState.h" />
     <ClInclude Include="CP_AudioListener.h" />
     <ClInclude Include="BattleDirection.h" />
+    <ClInclude Include="CP_BattleButtonGroup.h" />
     <ClInclude Include="CP_PlaySound.h" />
     <ClInclude Include="CP_SoundManager.h" />
     <ClInclude Include="IApplyDepthShadow.h" />

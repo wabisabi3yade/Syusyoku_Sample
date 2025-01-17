@@ -1587,14 +1587,14 @@ enum ImGuiNavLayer
 // Storage for navigation query/results
 struct ImGuiNavItemData
 {
-    ImGuiWindow*        Window;         // Init,Move    // Best candidate window (result->ItemWindow->RootWindowForNav == request->Window)
-    ImGuiID             ID;             // Init,Move    // Best candidate item ID
-    ImGuiID             FocusScopeId;   // Init,Move    // Best candidate focus scope ID
-    ImRect              RectRel;        // Init,Move    // Best candidate bounding box in window relative space
-    ImGuiItemFlags      InFlags;        // ????,Move    // Best candidate item flags
-    float               DistBox;        //      Move    // Best candidate box distance to current NavId
-    float               DistCenter;     //      Move    // Best candidate center distance to current NavId
-    float               DistAxial;      //      Move    // Best candidate axial distance to current NavId
+    ImGuiWindow*        Window;         // Init,Follow    // Best candidate window (result->ItemWindow->RootWindowForNav == request->Window)
+    ImGuiID             ID;             // Init,Follow    // Best candidate item ID
+    ImGuiID             FocusScopeId;   // Init,Follow    // Best candidate focus scope ID
+    ImRect              RectRel;        // Init,Follow    // Best candidate bounding box in window relative space
+    ImGuiItemFlags      InFlags;        // ????,Follow    // Best candidate item flags
+    float               DistBox;        //      Follow    // Best candidate box distance to current NavId
+    float               DistCenter;     //      Follow    // Best candidate center distance to current NavId
+    float               DistAxial;      //      Follow    // Best candidate axial distance to current NavId
     ImGuiSelectionUserData SelectionUserData;//I+Mov    // Best candidate SetNextItemSelectionData() value.
 
     ImGuiNavItemData()  { ClearColor(); }
@@ -2058,13 +2058,13 @@ struct ImGuiContext
     bool                    NavDisableHighlight;                // When user starts using mouse, we hide gamepad/keyboard highlight (NB: but they are still available, which is why NavDisableHighlight isn't always != NavDisableMouseHover)
     bool                    NavDisableMouseHover;               // When user starts using gamepad/keyboard, we hide mouse hovering highlight until mouse is touched again.
 
-    // Navigation: Init & Move Requests
+    // Navigation: Init & Follow Requests
     bool                    NavAnyRequest;                      // ~~ NavMoveRequest || NavInitRequest this is to perform early out in ItemAdd()
     bool                    NavInitRequest;                     // Init request for appearing window to select first item
     bool                    NavInitRequestFromMove;
     ImGuiNavItemData        NavInitResult;                      // Init request result (first item of the window, or one for which SetItemDefaultFocus() was called)
-    bool                    NavMoveSubmitted;                   // Move request submitted, will process result on next NewFrame()
-    bool                    NavMoveScoringItems;                // Move request submitted, still scoring incoming items
+    bool                    NavMoveSubmitted;                   // Follow request submitted, will process result on next NewFrame()
+    bool                    NavMoveScoringItems;                // Follow request submitted, still scoring incoming items
     bool                    NavMoveForwardToNextFrame;
     ImGuiNavMoveFlags       NavMoveFlags;
     ImGuiScrollFlags        NavMoveScrollFlags;

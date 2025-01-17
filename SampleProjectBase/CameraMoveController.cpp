@@ -2,8 +2,9 @@
 #include "CameraMoveController.h"
 #include "GameObject.h"
 
-#include "CameraOnMoveState.h"
+#include "CameraFollowMove.h"
 #include "CameraChargeAttack.h"
+#include "CameraWinState.h"
 #include "CameraGameOverState.h"
 
 namespace HashiTaku
@@ -16,13 +17,13 @@ namespace HashiTaku
 		using enum CameraState;
 
 		// ステートを作成
-		CreateState<CameraOnMoveState>(Move);
+		CreateState<CameraFollowMove>(Follow);
 		CreateState<CameraChargeAttack>(Charge);
-		CreateState<CameraGameOverState>(Win);
+		CreateState<CameraWinState>(Win);
 		CreateState<CameraGameOverState>(Lose);
 
 		// デフォルト状態をセット
-		SetDefaultNode(Move);
+		SetDefaultNode(Follow);
 	}
 
 	void CameraMoveController::Begin(CP_Camera& _camera)
@@ -113,8 +114,8 @@ namespace HashiTaku
 		StateNode_Base* pState = GetNode(CameraState::Win);
 		if (!pState) return;
 
-		CameraGameOverState* pGameOver = static_cast<CameraGameOverState*>(pState);
-		pGameOver->SetTargetTransform(_targetTransform);
+		CameraWinState* pWinState = static_cast<CameraWinState*>(pState);
+		pWinState->SetTargetTransform(_targetTransform);
 
 		ChangeState(CameraState::Win, true);
 	}
@@ -201,8 +202,8 @@ namespace HashiTaku
 		DXSimp::Vector3 initPos;
 
 		// 通常移動カメラからカメラのトランスフォームを初期化
-		auto& stateNode = stateNodeList[CameraMoveState_Base::CameraState::Move];
-		if (auto moveState = dynamic_cast<CameraOnMoveState*>(stateNode.get()))
+		auto& stateNode = stateNodeList[CameraMoveState_Base::CameraState::Follow];
+		if (auto moveState = dynamic_cast<CameraFollowMove*>(stateNode.get()))
 		{
 			moveState->InitCameraTransform();
 		}

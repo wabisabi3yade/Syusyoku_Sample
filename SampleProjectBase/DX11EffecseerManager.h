@@ -12,6 +12,18 @@ namespace HashiTaku
 	private:
 		friend class Singleton_Base<DX11EffecseerManager>;
 
+		struct PlayHandleParameter
+		{
+			/// @brief エフェクトのハンドル
+			Effekseer::Handle handle{ -1 };
+
+			/// @brief ベースの再生速度
+			float baseSpeed{ 1.0f };
+		};
+
+		/// @brief 現在再生しているエフェクトのハンドルリスト
+		std::list<PlayHandleParameter> playingHandleList;
+
 		/// @brief エフェクシアの描画変数
 		EffekseerRendererDX11::RendererRef renderer;
 
@@ -21,6 +33,10 @@ namespace HashiTaku
 		/// @brief D3D描画クラス
 		D3D11_Renderer* pRenderer;
 
+		/// @brief 前フレームのタイムスケール
+		float prevTimeScale;
+
+		bool isPause;
 	public:
 		/// @brief エフェクトの何もなしを表すハンドル
 		static constexpr int NONE_VFX_HANDLE{ -9999 };
@@ -29,8 +45,8 @@ namespace HashiTaku
 		/// @brief 初期化関数
 		void Init();
 
-		/// @brief 描画開始処理（カメラ行列更新前）
-		void BeginDraw();
+		/// @brief 状態をリセットする
+		void Reset();
 
 		/// @brief 描画する
 		void EffectDraw();
@@ -66,6 +82,9 @@ namespace HashiTaku
 			const DXSimp::Vector3& _pos,
 			const DXSimp::Vector3& _eularAngles = DXSimp::Vector3::Zero);
 
+		/// @brief 全てのエフェクトを停止する
+		void SetPause(bool _setPause);
+
 		/// @brief 色を変更するなら
 		/// @param _efkHandle エフェクトのハンドル
 		/// @param _color 色
@@ -81,6 +100,12 @@ namespace HashiTaku
 	private:
 		DX11EffecseerManager();
 		~DX11EffecseerManager();
+
+		/// @brief エフェクト全体のタイムスケールをシーンに合わせる
+		void UpdateTimeScale();
+
+		/// @brief エフェクトが存在しているかどうかチェック
+		void UpdateCheckExist();
 
 		/// @brief カメラ行列をセット
 		void UpdateCamMatrix();

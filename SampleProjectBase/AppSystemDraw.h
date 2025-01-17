@@ -20,6 +20,13 @@ namespace HashiTaku
 		AppSystemDraw();
 		~AppSystemDraw() {}
 		void ImGuiDebug() override;
+
+		void ImGuiSceneTimeScale();
+
+		// 物理エンジン関係
+		void ImGuiPhisics();
+
+		// レンダーターゲット関係
 		void ImGuiRenderTarget();
 	};
 }

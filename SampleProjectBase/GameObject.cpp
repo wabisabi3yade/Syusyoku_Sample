@@ -11,9 +11,10 @@ namespace HashiTaku
 {
 	using namespace DXSimp;
 
-	void GameObject::UpdateDeltaTime()
+	void GameObject::UpdateDeltaTime(float _sceneDeltaScale)
 	{
-		deltaTime = deltaTimeSpeed * MainApplication::DeltaTime();
+		// シーンのΔtスケール ×　オブジェクトの速度　× Δt
+		deltaTime = _sceneDeltaScale * deltaTimeSpeed * MainApplication::DeltaTime();
 	}
 
 	void GameObject::ImGuiSetParent()
@@ -199,12 +200,12 @@ namespace HashiTaku
 		pStartComponents.clear();
 	}
 
-	void GameObject::UpdateCall()
+	void GameObject::UpdateCall(float _sceneDeltaScale)
 	{
 		if (!isActive) return;
 
 		// 経過時間を更新する
-		UpdateDeltaTime();
+		UpdateDeltaTime(_sceneDeltaScale);
 
 		// Update
 		for (auto& comp : pActiveComponents)
@@ -337,13 +338,13 @@ namespace HashiTaku
 		// アクティブから外す
 		pActiveComponents.remove(&_removeComonent);
 
-		// Awake処理がまだなら
-		if (!_removeComonent.GetIsAlreadyAwake())
-			pAwakeComponents.remove(&_removeComonent);
+		//// Awake処理がまだなら
+		//if (!_removeComonent.GetIsAlreadyAwake())
+		//	pAwakeComponents.remove(&_removeComonent);
 
-		// Start処理がまだなら
-		if (!_removeComonent.GetIsAlreadyStart())
-			pStartComponents.remove(&_removeComonent);
+		//// Start処理がまだなら
+		//if (!_removeComonent.GetIsAlreadyStart())
+		//	pStartComponents.remove(&_removeComonent);
 	}
 
 	void GameObject::AddActiveComponent(Component& _addComonent)
@@ -359,13 +360,13 @@ namespace HashiTaku
 		if (!IsExistActiveComponent(_addComonent))
 			pActiveComponents.push_back(&_addComonent);
 
-		// Awakeになかったら
-		if (!_addComonent.GetIsAlreadyAwake() && !IsExistAwakeComponent(_addComonent))
-			/*pAwakeComponents.push_back(&_addComonent);*/ _addComonent.AwakeCall();
+		//// Awakeになかったら
+		//if (!_addComonent.GetIsAlreadyAwake() && !IsExistAwakeComponent(_addComonent))
+		//	/*pAwakeComponents.push_back(&_addComonent);*/ _addComonent.AwakeCall();
 
-		// Startになかったら
-		if (!_addComonent.GetIsAlreadyStart() && !IsExistStartComponent(_addComonent))
-			/*pStartComponents.push_back(&_addComonent);*/ _addComonent.StartCall();
+		//// Startになかったら
+		//if (!_addComonent.GetIsAlreadyStart() && !IsExistStartComponent(_addComonent))
+		//	/*pStartComponents.push_back(&_addComonent);*/ _addComonent.StartCall();
 	}
 
 	void GameObject::OnActiveTrue()

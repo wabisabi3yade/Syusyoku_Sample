@@ -127,11 +127,10 @@ namespace HashiTaku
 
 	void CP_TitleButtonGroup::ButtonSetup()
 	{
-		u_int buttonCnt = static_cast<u_int>(ButtonType::MaxNum);
-
 		// 関数を設定していく
 		// スタート
-		CP_Button* pButton = buttonGroup[static_cast<u_int>(ButtonType::Start)];
+		CP_Button* pButton = 
+			buttonParameterGroup[static_cast<u_int>(ButtonType::Start)].pButton;
 		if (pButton)
 			pButton->SetEventFunction([&]()
 				{
@@ -139,7 +138,8 @@ namespace HashiTaku
 				});
 
 		// エンド
-		pButton = buttonGroup[static_cast<u_int>(ButtonType::End)];
+		pButton = 
+			buttonParameterGroup[static_cast<u_int>(ButtonType::End)].pButton;
 		if (pButton)
 			pButton->SetEventFunction([&]()
 				{
@@ -147,7 +147,8 @@ namespace HashiTaku
 				});
 
 		// チェックマーク
-		pButton = buttonGroup[static_cast<u_int>(ButtonType::Check)];
+		pButton = 
+			buttonParameterGroup[static_cast<u_int>(ButtonType::Check)].pButton;
 		if (pButton)
 			pButton->SetEventFunction([&]()
 				{
@@ -162,7 +163,7 @@ namespace HashiTaku
 
 		static char input[IM_INPUT_BUF] = "\0";
 		ImGui::PushID("Title");
-		ImGui::InputText("objName", input, IM_INPUT_BUF);
+		ImGui::InputText("ObjName", input, IM_INPUT_BUF);
 		ImGui::PopID();
 
 		if (ImGui::Button("Set Fade"))

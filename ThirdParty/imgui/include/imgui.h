@@ -1405,24 +1405,24 @@ enum ImGuiKey : int
     // (download controller mapping PNG/PSD at http://dearimgui.com/controls_sheets)
     ImGuiKey_GamepadStart,          // Menu (Xbox)      + (Switch)   Start/Options (PS)
     ImGuiKey_GamepadBack,           // View (Xbox)      - (Switch)   Share (PS)
-    ImGuiKey_GamepadFaceLeft,       // X (Xbox)         Y (Switch)   Square (PS)        // Tap: Toggle Menu. Hold: Windowing mode (Focus/Move/Resize windows)
+    ImGuiKey_GamepadFaceLeft,       // X (Xbox)         Y (Switch)   Square (PS)        // Tap: Toggle Menu. Hold: Windowing mode (Focus/Follow/Resize windows)
     ImGuiKey_GamepadFaceRight,      // B (Xbox)         A (Switch)   Circle (PS)        // Cancel / Close / Exit
     ImGuiKey_GamepadFaceUp,         // Y (Xbox)         X (Switch)   Triangle (PS)      // Text Input / On-screen Keyboard
     ImGuiKey_GamepadFaceDown,       // A (Xbox)         B (Switch)   Cross (PS)         // Activate / Open / Toggle / Tweak
-    ImGuiKey_GamepadDpadLeft,       // D-pad Left                                       // Move / Tweak / Resize Window (in Windowing mode)
-    ImGuiKey_GamepadDpadRight,      // D-pad Right                                      // Move / Tweak / Resize Window (in Windowing mode)
-    ImGuiKey_GamepadDpadUp,         // D-pad Up                                         // Move / Tweak / Resize Window (in Windowing mode)
-    ImGuiKey_GamepadDpadDown,       // D-pad Down                                       // Move / Tweak / Resize Window (in Windowing mode)
+    ImGuiKey_GamepadDpadLeft,       // D-pad Left                                       // Follow / Tweak / Resize Window (in Windowing mode)
+    ImGuiKey_GamepadDpadRight,      // D-pad Right                                      // Follow / Tweak / Resize Window (in Windowing mode)
+    ImGuiKey_GamepadDpadUp,         // D-pad Up                                         // Follow / Tweak / Resize Window (in Windowing mode)
+    ImGuiKey_GamepadDpadDown,       // D-pad Down                                       // Follow / Tweak / Resize Window (in Windowing mode)
     ImGuiKey_GamepadL1,             // L Bumper (Xbox)  L (Switch)   L1 (PS)            // Tweak Slower / Focus Previous (in Windowing mode)
     ImGuiKey_GamepadR1,             // R Bumper (Xbox)  R (Switch)   R1 (PS)            // Tweak Faster / Focus Next (in Windowing mode)
     ImGuiKey_GamepadL2,             // L Trig. (Xbox)   ZL (Switch)  L2 (PS) [Analog]
     ImGuiKey_GamepadR2,             // R Trig. (Xbox)   ZR (Switch)  R2 (PS) [Analog]
     ImGuiKey_GamepadL3,             // L Stick (Xbox)   L3 (Switch)  L3 (PS)
     ImGuiKey_GamepadR3,             // R Stick (Xbox)   R3 (Switch)  R3 (PS)
-    ImGuiKey_GamepadLStickLeft,     // [Analog]                                         // Move Window (in Windowing mode)
-    ImGuiKey_GamepadLStickRight,    // [Analog]                                         // Move Window (in Windowing mode)
-    ImGuiKey_GamepadLStickUp,       // [Analog]                                         // Move Window (in Windowing mode)
-    ImGuiKey_GamepadLStickDown,     // [Analog]                                         // Move Window (in Windowing mode)
+    ImGuiKey_GamepadLStickLeft,     // [Analog]                                         // Follow Window (in Windowing mode)
+    ImGuiKey_GamepadLStickRight,    // [Analog]                                         // Follow Window (in Windowing mode)
+    ImGuiKey_GamepadLStickUp,       // [Analog]                                         // Follow Window (in Windowing mode)
+    ImGuiKey_GamepadLStickDown,     // [Analog]                                         // Follow Window (in Windowing mode)
     ImGuiKey_GamepadRStickLeft,     // [Analog]
     ImGuiKey_GamepadRStickRight,    // [Analog]
     ImGuiKey_GamepadRStickUp,       // [Analog]

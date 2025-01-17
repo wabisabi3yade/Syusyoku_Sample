@@ -78,6 +78,7 @@ namespace HashiTaku
 		buttonLinks[static_cast<u_int>(Player_Rolling)] = { Shikaku, DIK_LSHIFT };
 		buttonLinks[static_cast<u_int>(Player_RockOn)] = { R1, DIK_LCONTROL };
 		buttonLinks[static_cast<u_int>(Player_Guard)] = { Maru, DIK_E };
+		buttonLinks[static_cast<u_int>(Pose)] = { Option, DIK_ESCAPE };
 	}
 
 	void GameInput::InitValueSettings()

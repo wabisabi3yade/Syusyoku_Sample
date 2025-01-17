@@ -420,7 +420,7 @@
                         ],
                         "isKinematic": false,
                         "isTrigger": false,
-                        "mass": 1.059999942779541,
+                        "mass": 1.0,
                         "name": "RigidBody",
                         "priority": 0
                     },
@@ -1131,7 +1131,6 @@
                             "groundCheckName": "PlayerGroundCollision"
                         },
                         "camObjName": "Camera",
-                        "debugInvicible": false,
                         "enable": true,
                         "hpBarObjName": "Player_HpBar",
                         "maxHp": 100.0,
@@ -1284,7 +1283,21 @@
                             -20.5
                         ],
                         "name": "BattleManager",
+                        "poseButtonName": "ButtonGroup",
                         "priority": 0
+                    },
+                    {
+                        "enable": true,
+                        "isBGM": true,
+                        "name": "PlaySound",
+                        "priority": 0,
+                        "sound": {
+                            "loop": true,
+                            "pitch": 0.0,
+                            "soundName": "battle.wav",
+                            "useListener": false,
+                            "volume": 0.17000000178813934
+                        }
                     }
                 ],
                 "layer": 0,
@@ -1342,7 +1355,7 @@
                                                 "enable": true,
                                                 "name": "OutLineRenderer",
                                                 "priority": 0,
-                                                "scale": 0.10000000149011612
+                                                "scale": 0.019999999552965164
                                             }
                                         ],
                                         "layer": 0,
@@ -1533,7 +1546,7 @@
                             "actData": [
                                 {
                                     "data": {
-                                        "isIdleOnly": false,
+                                        "isIdleOnly": true,
                                         "warpMotion": {
                                             "useWarp": false
                                         }
@@ -2232,7 +2245,7 @@
                         "breakBarName": "Enemy_BreakGageBar",
                         "enable": true,
                         "hpBarName": "Enemy_GageBar",
-                        "maxHp": 200.0,
+                        "maxHp": 1.0,
                         "name": "Boss",
                         "priority": 0,
                         "weaponName": "Boss_Weapon"
@@ -2555,31 +2568,38 @@
                                 },
                                 {
                                     "parameter": {
-                                        "canFovMovement": 1.0,
-                                        "fovChangeRate": 3.0,
-                                        "height": 3.0,
-                                        "hori": 3.0,
-                                        "lookOffset": [
-                                            0.0,
+                                        "firstWaitTime": 0.5,
+                                        "fovEaseOnMove": 0,
+                                        "fovEaseOnZoom": 0,
+                                        "lookEase": 0,
+                                        "moveEase": 0,
+                                        "moveTime": 1.0,
+                                        "randVecMax": [
+                                            1.0,
+                                            0.75,
                                             0.0
                                         ],
-                                        "moveFov": 65.0,
-                                        "normalFov": 50.0
+                                        "randVecMin": [
+                                            -1.0,
+                                            0.5,
+                                            -1.0
+                                        ],
+                                        "secondWaitTime": 0.5,
+                                        "targetFovOnMove": 45.0,
+                                        "targetToDistance": 5.0,
+                                        "zoomTargetFov": 30.0,
+                                        "zoomTime": 0.5
                                     },
                                     "stateType": 2
                                 },
                                 {
                                     "parameter": {
-                                        "canFovMovement": 1.0,
-                                        "fovChangeRate": 3.0,
                                         "height": 3.0,
                                         "hori": 3.0,
                                         "lookOffset": [
                                             0.0,
                                             0.0
-                                        ],
-                                        "moveFov": 65.0,
-                                        "normalFov": 50.0
+                                        ]
                                     },
                                     "stateType": 3
                                 }
@@ -3366,7 +3386,7 @@
                             },
                             {
                                 "enable": true,
-                                "friction": 20.0,
+                                "friction": 8.0,
                                 "isAwake": false,
                                 "isFreezeRot": [
                                     false,
@@ -4221,20 +4241,20 @@
                         "transform": {
                             "child": null,
                             "pos": [
-                                -23.600000381469727,
+                                -22.700000762939453,
                                 0.0,
-                                33.0
+                                31.600000381469727
                             ],
                             "rotation": [
                                 0.18976379930973053,
                                 0.9762497544288635,
-                                0.01994485966861248,
-                                0.10260733217000961
+                                0.019944865256547928,
+                                0.10260730236768723
                             ],
                             "scale": [
-                                7.999997138977051,
+                                7.99999475479126,
                                 11.199999809265137,
-                                7.999987602233887
+                                7.999981880187988
                             ]
                         }
                     }
@@ -4984,6 +5004,92 @@
                 "active": true,
                 "components": [
                     {
+                        "backObjName": "SelectButtonImage",
+                        "buttonObjNames": [
+                            "RetryText",
+                            "TitleText",
+                            "BackText"
+                        ],
+                        "buttonParameter": [
+                            {
+                                "buttonPos": [
+                                    300.0,
+                                    500.0,
+                                    0.10000000149011612
+                                ],
+                                "selectOffset": [
+                                    10.0,
+                                    0.0,
+                                    0.10000000149011612
+                                ]
+                            },
+                            {
+                                "buttonPos": [
+                                    640.0,
+                                    500.0,
+                                    0.10000000149011612
+                                ],
+                                "selectOffset": [
+                                    10.0,
+                                    0.0,
+                                    0.10000000149011612
+                                ]
+                            },
+                            {
+                                "buttonPos": [
+                                    980.0,
+                                    500.0,
+                                    0.10000000149011612
+                                ],
+                                "selectOffset": [
+                                    10.0,
+                                    0.0,
+                                    0.10000000149011612
+                                ]
+                            }
+                        ],
+                        "closeFadeTime": 1.0,
+                        "defaultId": 0,
+                        "enable": true,
+                        "fadeObjName": "Fade",
+                        "frontFadeName": "FrontFade",
+                        "horiSpeed": 1,
+                        "name": "BattleButtonGroup",
+                        "poseFadeAlpha": 0.699999988079071,
+                        "priority": 0,
+                        "vertSpeed": 0
+                    }
+                ],
+                "layer": 2,
+                "name": "ButtonGroup",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
                         "alpha": 1.0,
                         "enable": true,
                         "image": "UI_EnemyText.png",
@@ -5071,7 +5177,7 @@
         {
             "childs": null,
             "gameObject": {
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "alpha": 1.0,
@@ -5097,7 +5203,7 @@
                     "pos": [
                         1700.0,
                         360.0,
-                        -0.4000000059604645
+                        0.5
                     ],
                     "rotation": [
                         -0.0,
@@ -5116,7 +5222,7 @@
         {
             "childs": null,
             "gameObject": {
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "closeTime": 1.0,
@@ -5142,7 +5248,7 @@
                     "pos": [
                         636.4000244140625,
                         150.0,
-                        0.10000000149011612
+                        0.4000000059604645
                     ],
                     "rotation": [
                         -0.0,
@@ -5161,7 +5267,7 @@
         {
             "childs": null,
             "gameObject": {
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "closeTime": 1.0,
@@ -5187,7 +5293,7 @@
                     "pos": [
                         636.0,
                         150.0,
-                        0.0
+                        0.30000001192092896
                     ],
                     "rotation": [
                         -0.0,
@@ -5198,6 +5304,285 @@
                     "scale": [
                         475.0,
                         200.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "alpha": 1.0,
+                        "enable": true,
+                        "name": "UIRenderer",
+                        "priority": 0
+                    }
+                ],
+                "layer": 2,
+                "name": "SelectBackImage",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": [
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": false,
+                        "components": [
+                            {
+                                "alpha": 1.0,
+                                "enable": true,
+                                "image": "UI_Retry.png",
+                                "name": "UIRenderer",
+                                "priority": 0
+                            },
+                            {
+                                "enable": true,
+                                "name": "Button",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 2,
+                        "name": "RetryText",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                -300.0,
+                                9.0,
+                                0.10000000149011612
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                300.0,
+                                100.0,
+                                1.0
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": false,
+                        "components": [
+                            {
+                                "alpha": 1.0,
+                                "enable": true,
+                                "image": "UI_Title.png",
+                                "name": "UIRenderer",
+                                "priority": 0
+                            },
+                            {
+                                "enable": true,
+                                "name": "Button",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 2,
+                        "name": "TitleText",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                0.0,
+                                0.0,
+                                0.10000000149011612
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                300.0,
+                                100.0,
+                                1.0
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": false,
+                        "components": [
+                            {
+                                "alpha": 1.0,
+                                "enable": true,
+                                "image": "UI_Back.png",
+                                "name": "UIRenderer",
+                                "priority": 0
+                            },
+                            {
+                                "enable": true,
+                                "name": "Button",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 2,
+                        "name": "BackText",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                300.0,
+                                0.0,
+                                0.10000000149011612
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                300.0,
+                                100.0,
+                                1.0
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": null,
+                    "gameObject": {
+                        "active": false,
+                        "components": [
+                            {
+                                "alpha": 1.0,
+                                "enable": true,
+                                "image": "UI_SelectImage.png",
+                                "name": "UIRenderer",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 2,
+                        "name": "SelectButtonImage",
+                        "tag": 0,
+                        "transform": {
+                            "child": null,
+                            "pos": [
+                                317.0,
+                                0.0,
+                                0.20000001788139343
+                            ],
+                            "rotation": [
+                                -0.0,
+                                0.0,
+                                -0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                300.0,
+                                110.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            ],
+            "gameObject": {
+                "active": false,
+                "components": null,
+                "layer": 2,
+                "name": "ButtonImages",
+                "tag": 0,
+                "transform": {
+                    "child": [
+                        "RetryText",
+                        "TitleText",
+                        "BackText",
+                        "SelectButtonImage"
+                    ],
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": false,
+                "components": [
+                    {
+                        "closeTime": 1.0,
+                        "enable": true,
+                        "name": "Fade",
+                        "openTime": 1.0,
+                        "priority": 0,
+                        "startOpen": false
+                    },
+                    {
+                        "alpha": 0.0,
+                        "enable": true,
+                        "image": "black.png",
+                        "name": "UIRenderer",
+                        "priority": 0
+                    }
+                ],
+                "layer": 2,
+                "name": "FrontFade",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        640.0,
+                        320.0,
+                        -0.20000000298023224
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        2000.0,
+                        5000.0,
                         1.0
                     ]
                 }
