@@ -60,7 +60,7 @@ namespace HashiTaku
 	void CameraTargetMove::CheckTransitionUpdate()
 	{
 		if (!pInput->GetButton(GameInput::ButtonType::Player_RockOn))
-			ChangeState(CameraState::Move);
+			ChangeState(CameraState::Follow);
 	}
 
 	bool CameraTargetMove::CanUpdate()

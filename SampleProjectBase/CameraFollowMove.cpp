@@ -1,12 +1,12 @@
 #include "pch.h"
-#include "CameraOnMoveState.h"
+#include "CameraFollowMove.h"
 #include "InSceneSystemManager.h"
 
 namespace HashiTaku
 {
-	float CameraOnMoveState::centerAngle = 90.0f;
+	float CameraFollowMove::centerAngle = 90.0f;
 
-	CameraOnMoveState::CameraOnMoveState() :
+	CameraFollowMove::CameraFollowMove() :
 		idleHeight(2.0f),
 		currentHeight(2.0f),
 		cameraHeightMax(7.0f),
@@ -18,13 +18,17 @@ namespace HashiTaku
 		distanceHorizon(5.0f),
 		lookTargetOffsetY(2.0f),
 		lookSpeedRate(10.0f),
+		moveFov(65.0f),
+		normalFov(50.0f),
+		fovChangeRate(3.0f),
+		canFovChangeMovement(1.0f),
 		isFollowLooking(false),
 		isTargeting(false)
 	{
 		pInput = &InSceneSystemManager::GetInstance()->GetInput();
 	}
 
-	void CameraOnMoveState::InitCameraTransform()
+	void CameraFollowMove::InitCameraTransform()
 	{
 		Transform& camTransform = GetCamera().GetTransform();
 
@@ -48,7 +52,7 @@ namespace HashiTaku
 		camTransform.SetRotation(camTargetRot);
 	}
 
-	json CameraOnMoveState::Save()
+	json CameraFollowMove::Save()
 	{
 		auto data = CameraMoveState_Base::Save();
 
@@ -64,11 +68,15 @@ namespace HashiTaku
 		data["disHorizon"] = distanceHorizon;
 		data["lookOffsetY"] = lookTargetOffsetY;
 		data["lookSpeedRate"] = lookSpeedRate;
+		data["moveFov"] = moveFov;
+		data["normalFov"] = normalFov;
+		data["fovChangeRate"] = fovChangeRate;
+		data["canFovMovement"] = canFovChangeMovement;
 
 		return data;
 	}
 
-	void CameraOnMoveState::Load(const json& _data)
+	void CameraFollowMove::Load(const json& _data)
 	{
 		CameraMoveState_Base::Load(_data);
 
@@ -84,9 +92,13 @@ namespace HashiTaku
 		LoadJsonFloat("disHorizon", distanceHorizon, _data);
 		LoadJsonFloat("lookOffsetY", lookTargetOffsetY, _data);
 		LoadJsonFloat("lookSpeedRate", lookSpeedRate, _data);
+		LoadJsonFloat("moveFov", moveFov, _data);
+		LoadJsonFloat("normalFov", normalFov, _data);
+		LoadJsonFloat("fovChangeRate", fovChangeRate, _data);
+		LoadJsonFloat("canFovMovement", canFovChangeMovement, _data);
 	}
 
-	void CameraOnMoveState::OnStartBehavior()
+	void CameraFollowMove::OnStartBehavior()
 	{
 		// 現在の高さを取得
 		currentHeight =
@@ -97,7 +109,7 @@ namespace HashiTaku
 		isFollowLooking = true;
 	}
 
-	void CameraOnMoveState::UpdateBehavior()
+	void CameraFollowMove::UpdateBehavior()
 	{
 		Transform& camTransform = GetCamera().GetTransform();
 		cameraPos = GetBasePosition();
@@ -118,15 +130,18 @@ namespace HashiTaku
 
 		// 注視点更新
 		LookUpdate();
+
+		// 視野角移動
+		FovUpdate();
 	}
 
-	void CameraOnMoveState::NormalUpdate()
+	void CameraFollowMove::NormalUpdate()
 	{
 		// オブジェクトを中心に回転移動
 		RotationMove();
 	}
 
-	void CameraOnMoveState::TargetUpdate()
+	void CameraFollowMove::TargetUpdate()
 	{
 		const DXSimp::Vector3& followPos = GetFollowPosition();
 		const DXSimp::Vector3& lookAtPos = pCamController->GetLookAtWorldPos();
@@ -147,15 +162,37 @@ namespace HashiTaku
 		centerAngle = atan2f(lookToFollowVec.z, lookToFollowVec.x) * Mathf::radToDeg;
 	}
 
-	void CameraOnMoveState::OnEndBehavior()
+	void CameraFollowMove::FovUpdate()
+	{
+		// 追従先のオブジェクトないなら
+		if (!pCamController->GetHasFollowObject()) return;
+
+		CP_Camera& camera = GetCamera();
+		float deltaTime = DeltaTime();
+
+		// 前フレームから追従先が動いているか取得
+		DXSimp::Vector3 moveDis = GetFollowPosition() - pCamController->GetPrevFollowPos();
+		bool isTargetMoving = moveDis.Length() > canFovChangeMovement * deltaTime;
+
+		float curFov = camera.GetFov();
+
+		// 移動量によって視野角を変える
+		curFov = Mathf::Lerp(curFov,
+			isTargetMoving ? moveFov : normalFov,
+			fovChangeRate * deltaTime);
+
+		camera.SetFov(curFov);
+	}
+
+	void CameraFollowMove::OnEndBehavior()
 	{
 	}
 
-	void CameraOnMoveState::CheckTransitionUpdate()
+	void CameraFollowMove::CheckTransitionUpdate()
 	{
 	}
 
-	void CameraOnMoveState::InputUpdate()
+	void CameraFollowMove::InputUpdate()
 	{
 		isTargeting = pInput->GetButton(GameInput::ButtonType::Player_RockOn);
 
@@ -175,7 +212,7 @@ namespace HashiTaku
 		inputVal.y *= vecY;
 	}
 
-	void CameraOnMoveState::VerticalMove()
+	void CameraFollowMove::VerticalMove()
 	{
 		float inputMag = inputVal.Length();
 		if (abs(inputVal.y) > inpDeadZone.y)	// 入力があるなら
@@ -197,7 +234,7 @@ namespace HashiTaku
 		cameraPos.y = followPos.y + currentHeight;
 	}
 
-	void CameraOnMoveState::RotationMove()
+	void CameraFollowMove::RotationMove()
 	{
 		float deltaTime = DeltaTime();
 
@@ -217,7 +254,7 @@ namespace HashiTaku
 		cameraPos = DXSimp::Vector3::Lerp(cameraPos, targetCamPos, horiSpeedToTarget * deltaTime);
 	}
 
-	void CameraOnMoveState::LookUpdate()
+	void CameraFollowMove::LookUpdate()
 	{
 		Transform& camTrans = GetCamera().GetTransform();
 
@@ -247,7 +284,7 @@ namespace HashiTaku
 		camTrans.SetRotation(lookRot);
 	}
 
-	void CameraOnMoveState::ImGuiDebug()
+	void CameraFollowMove::ImGuiDebug()
 	{
 		CameraMoveState_Base::ImGuiDebug();
 
@@ -274,5 +311,13 @@ namespace HashiTaku
 		ImGui::Text("Look");
 		ImGui::DragFloat("lookOffsetY", &lookTargetOffsetY, 0.01f);
 		ImGui::DragFloat("lookRate", &lookSpeedRate, 0.01f);
+
+		ImGuiMethod::LineSpaceSmall();
+
+		ImGui::Text("Look");
+		ImGui::DragFloat("moveFov", &moveFov, 0.01f, 0.0f, 180.0f);
+		ImGui::DragFloat("normalFov", &normalFov, 0.01f, 0.0f, 180.0f);
+		ImGui::DragFloat("fovRate", &fovChangeRate, 0.001f, 0.0f, 180.0f);
+		ImGui::DragFloat("changeMovement", &canFovChangeMovement, 0.001f, 0.0f, 1000.0f);
 	}
 }

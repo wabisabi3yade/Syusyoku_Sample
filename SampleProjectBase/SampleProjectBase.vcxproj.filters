@@ -940,6 +940,15 @@
     <Filter Include="ソース ファイル\Component\PlaySound">
       <UniqueIdentifier>{5be12b8c-6860-46f2-82cc-dd3205068512}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\BattleDirection">
+      <UniqueIdentifier>{b5c5732c-5fce-4db6-8c99-cf93f85b81de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\ButtonGroup\Battle">
+      <UniqueIdentifier>{113a0b7d-ceb3-4810-a7dd-7d298f28bcb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera\State\Win">
+      <UniqueIdentifier>{8c1370c5-082e-4025-9064-248e134ce895}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1586,7 +1595,7 @@
     <ClCompile Include="CP_CylinderCollider.cpp">
       <Filter>ソース ファイル\Component\Collider\Cylinder</Filter>
     </ClCompile>
-    <ClCompile Include="CameraOnMoveState.cpp">
+    <ClCompile Include="CameraFollowMove.cpp">
       <Filter>ソース ファイル\InGame\Camera\State\Move</Filter>
     </ClCompile>
     <ClCompile Include="CP_Button.cpp">
@@ -1724,8 +1733,17 @@
     <ClCompile Include="ANE_PlaySound.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="BattleDirection.cpp">
+      <Filter>ソース ファイル\Component\InGame\BattleDirection</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_BattleButtonGroup.cpp">
+      <Filter>ソース ファイル\Component\ButtonGroup\Battle</Filter>
+    </ClCompile>
     <ClCompile Include="CP_PlaySound.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Component\PlaySound</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraWinState.cpp">
+      <Filter>ソース ファイル\InGame\Camera\State\Win</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2407,7 +2425,7 @@
     <ClInclude Include="CP_CylinderCollider.h">
       <Filter>ソース ファイル\Component\Collider\Cylinder</Filter>
     </ClInclude>
-    <ClInclude Include="CameraOnMoveState.h">
+    <ClInclude Include="CameraFollowMove.h">
       <Filter>ソース ファイル\InGame\Camera\State\Move</Filter>
     </ClInclude>
     <ClInclude Include="CP_Button.h">
@@ -2557,8 +2575,17 @@
     <ClInclude Include="ANE_PlaySound.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="BattleDirection.h">
+      <Filter>ソース ファイル\Component\InGame\BattleDirection</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_BattleButtonGroup.h">
+      <Filter>ソース ファイル\Component\ButtonGroup\Battle</Filter>
+    </ClInclude>
     <ClInclude Include="CP_PlaySound.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Component\PlaySound</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraWinState.h">
+      <Filter>ソース ファイル\InGame\Camera\State\Win</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -8,6 +8,13 @@ namespace HashiTaku
 {
 	using namespace SceneFunction;
 
+	InSceneSystemManager::InSceneSystemManager() : 
+		pMainCamera(nullptr),
+		timeScale(1.0f),
+		isNullCamera(true) 
+	{
+	}
+
 	InSceneSystemManager::~InSceneSystemManager()
 	{
 		pSceneObjects.reset();
@@ -88,6 +95,11 @@ namespace HashiTaku
 		return *pShadowDrawer;
 	}
 
+	float InSceneSystemManager::GetTimeScale() const
+	{
+		return timeScale;
+	}
+
 	bool InSceneSystemManager::GetIsNullCamera() const
 	{
 		return isNullCamera;
@@ -100,6 +112,12 @@ namespace HashiTaku
 
 		pMainCamera = &_camera;
 		isNullCamera = false;
+	}
+
+	void InSceneSystemManager::SetTimeScale(float _timeScale)
+	{
+		// 0–¢–ž‚É‚Í‚µ‚È‚¢
+		timeScale = std::max(0.0f, _timeScale);
 	}
 
 	void InSceneSystemManager::DeleteCamera(CP_Camera& _camera)

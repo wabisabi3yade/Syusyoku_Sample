@@ -44,7 +44,8 @@ namespace HashiTaku
 		sceneObjects.Start();
 
 		// 物理シミュレーションを進める
-		pBulletEngine->Update();
+		float deltaTime = pInSceneSystem->GetTimeScale() * MainApplication::DeltaTime();
+		pBulletEngine->Update(deltaTime);
 
 		// シーン内の更新処理
 		sceneObjects.Update();
@@ -104,8 +105,8 @@ namespace HashiTaku
 	{
 		InSceneSystemManager::Delete();
 
-		// エフェクトを削除
-		pEffectManager->AllEffectDestroy();
+		// エフェクトマネジャーの状態をリセット
+		pEffectManager->Reset();
 
 		// サウンドを終了
 		DXSoundManager::GetInstance()->StopAll();

@@ -74,9 +74,10 @@ namespace HashiTaku
 		static float EaseValue(float _ratio, EaseKind _easeType);
 
 		/// @brief ImGui設定
-		/// @param _easeFunc 関数オブジェクト
 		/// @param _nowEase 現在のイージング
-		static bool ImGuiSelect(EaseKind& _nowEase);
+		/// @param _caption キャプション
+		static bool ImGuiSelect(EaseKind& _nowEase, 
+			const std::string& _caption = "Easing");
 
 	private:
 		/// @brief 初期化　シーンマネージャーで

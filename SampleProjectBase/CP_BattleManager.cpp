@@ -8,19 +8,20 @@
 
 namespace HashiTaku
 {
-	// GameStart関連
-	constexpr float START_FADE_TIME(0.6f);	// フェード時間
-	constexpr float START_FADE_ALPHA(0.3f);	// フェードの一旦止めるα値
-	constexpr float START_MOVE_TIME(2.4f);	// 文字の移動時間
-	constexpr float START_START_POS_X(1600.0f);	// 文字の開始目標時間
-	constexpr float START_TARGET_POS_X(-400.0f);	// 文字の移動先目標時間
+	constexpr auto TITLE_SCENE_NAME("Title");	// タイトルのシーン名
 
-	// 勝利時演出
-	constexpr float WIN_FADE_INTERVAL(3.0f);	// フェードまでの時間
-	constexpr float WIN_FADE_ALPHA(0.5f);	// フェードの一旦止めるα値
-	constexpr float WIN_FADE_TIME(2.0f);	// 文字とフェードの時間
-	constexpr float WIN_DISPLAY_TIME(4.0f);	// 文字とフェードの時間
-	constexpr float WIN_CLOSE_FADE_TIME(1.3f);	// 閉じるフェード時間
+	void CP_BattleManager::Init()
+	{
+		SingletonComponent::Init();
+
+		// オブザーバーを作成
+		pDirectionEndObserver = std::make_unique<BattleDirectionEndObserver>();
+
+		// 演出作成
+		pBattleDirection = std::make_unique<BattleDirection>();
+		// オブザーバー追加
+		pBattleDirection->AddObserver(*pDirectionEndObserver);
+	}
 
 	void CP_BattleManager::SetPlayer(CP_Player& _playerObj)
 	{
@@ -36,11 +37,6 @@ namespace HashiTaku
 		enemyList.push_back(&_enemyObj);
 	}
 
-	void CP_BattleManager::SetCameraMove(CP_CameraMove& _camMove)
-	{
-		pCamMove = &_camMove;
-	}
-
 	void CP_BattleManager::RemovePlayer(CP_Player& _playerObj)
 	{
 		if (pPlayer != &_playerObj) return;
@@ -53,63 +49,78 @@ namespace HashiTaku
 		enemyList.remove(&_enemyObj);
 	}
 
-	void CP_BattleManager::RemoveCamMove(CP_CameraMove& _camMove)
-	{
-		if (pCamMove != &_camMove) return;
-		pCamMove = nullptr;
-	}
-
-
 	CP_Player* CP_BattleManager::GetPlayerObject()
 	{
 		return pPlayer;
+	}
+
+	void CP_BattleManager::BeginPose()
+	{
+		if (isPosing) return;
+		// 演出だったらポーズを行わない
+		if (pBattleDirection->GetDirectionState() !=
+			BattleDirection::DirectionState::Wait) return;
+
+		isPosing = true;
+
+		// シーン内のタイムスケールを0にする
+		pInSceneManager->SetTimeScale(0.0f);
+
+		// エフェクトを停止させる
+		DX11EffecseerManager::GetInstance()->SetPause(true);
+
+		// ポーズ中のボタンを表示
+		if (pPoseButtons)
+			pPoseButtons->OpenDisplay();
+
+		// 各オブジェクトを停止
+		StopObjects();
+	}
+
+	void CP_BattleManager::EndPose()
+	{
+		if (!isPosing) return;
+
+		isPosing = false;
+
+		// シーン内のタイムスケールを等速に戻す
+		pInSceneManager->SetTimeScale(1.0f);
+
+		// エフェクトを停止させる
+		DX11EffecseerManager::GetInstance()->SetPause(false);
+
+		// ポーズ中のボタンを非表示
+		if (pPoseButtons)
+			pPoseButtons->CloseDisplay();
+
+		// 各オブジェクトを戻す
+		ActiveObjects();
 	}
 
 	const CP_BattleManager::EnemyList& CP_BattleManager::GetEnemyList()
 	{
 		return enemyList;
 	}
-
-	CP_BattleManager::BattleState CP_BattleManager::GetCurState() const
-	{
-		return curBattleState;
-	}
-
 	void CP_BattleManager::OnPlayerWin()
 	{
-		// ほぼ同タイミングで起きた場合に重複しないようにする
-		if (curBattleState == BattleState::Lose) return;
-		curBattleState = BattleState::Win;
-
 		// オブジェクトを止める
-		StopObjects();
-		animationElapsedTime = 0.0f;
-
-		// カメラ演出を始める
-		if (!pCamMove) return;	// カメラがないなら
+	/*	StopObjects();*/
 		if (static_cast<u_int>(enemyList.size()) == 0) return;	// 敵がいないなら
-
 		Transform& bossTransform = (*enemyList.begin())->GetTransform();
-		pCamMove->OnPlayerWin(bossTransform);
+
+		// 勝利演出を開始する
+		pBattleDirection->OnBeginWinDirection(&bossTransform);
 	}
 
 	void CP_BattleManager::OnPlayerLose()
 	{
-		// ほぼ同タイミングで起きた場合に重複しないようにする
-		if (curBattleState == BattleState::Win) return;
-
-		curBattleState = BattleState::Lose;
-
 		// オブジェクトを止める
 		StopObjects();
-		animationElapsedTime = 0.0f;
+		if (static_cast<u_int>(enemyList.size()) == 0) return;	// 敵がいないなら
+		Transform& bossTransform = (*enemyList.begin())->GetTransform();
 
-		// カメラ演出を始める
-		if (!pCamMove) return;	// カメラがないなら
-		if (!pPlayer) return;	// 敵がいないなら
-
-		Transform& playerTransform = pPlayer->GetTransform();
-		pCamMove->OnPlayerWin(playerTransform);
+		// 敗北演出
+		pBattleDirection->OnBeginLoseDirection(&bossTransform);
 	}
 
 	json CP_BattleManager::Save()
@@ -117,18 +128,8 @@ namespace HashiTaku
 		auto data = SingletonComponent::Save();
 
 		SaveJsonVector4("moveAreaRect", moveAreaRect, data);
-
-		data["fade"] = fadeObjName;
-		data["start"] = startObjName;
-		data["win"] = winObjName;
-		data["gameOver"] = gameOverObjName;
-		data["gameStartCurve"] = gameStartCurve.Save();
-
-		data["battleBGM"] = battleBGMParameter.Save();
-#ifdef EDIT
-		data["uiAnim"] = isUIAnimation;
-#endif // EDIT
-
+		data["poseButtonName"] = poseButtonName;
+		data["battleDirection"] = pBattleDirection->Save();
 
 		return data;
 	}
@@ -138,53 +139,45 @@ namespace HashiTaku
 		SingletonComponent::Load(_data);
 
 		LoadJsonVector4("moveAreaRect", moveAreaRect, _data);
-
-		LoadJsonString("fade", fadeObjName, _data);
-		LoadJsonString("start", startObjName, _data);
-		LoadJsonString("win", winObjName, _data);
-		LoadJsonString("gameOver", gameOverObjName, _data);
-
+		LoadJsonString("poseButtonName", poseButtonName, _data);
 		json loadData;
-		if (LoadJsonData("gameStartCurve", loadData, _data))
+		if (LoadJsonData("battleDirection", loadData, _data))
 		{
-			gameStartCurve.Load(loadData);
+			pBattleDirection->Load(loadData);
 		}
+	}
 
-		if (LoadJsonData("battleBGM", loadData, _data))
-		{
-			battleBGMParameter.Load(loadData);
-		}
+	void CP_BattleManager::Awake()
+	{
+		SingletonComponent::Awake();
 
-#ifdef EDIT
-		LoadJsonBoolean("uiAnim", isUIAnimation, _data);
-#endif // EDIT
+		pInSceneManager = InSceneSystemManager::GetInstance();
+
+		// カメラ移動クラスを取得
+		CP_Camera& camera = InSceneSystemManager::GetInstance()->GetMainCamera();
+		pCamMove = camera.GetGameObject().GetComponent<CP_CameraMove>();
+
+		// バトル演出の初期処理
+		pBattleDirection->Init(pCamMove);
 	}
 
 	void CP_BattleManager::Start()
 	{
+		// オブジェクトを探す
 		FindObject();
-
-		FadeStart();
-
-		PlayBGM();
 	}
 
 	void CP_BattleManager::Update()
 	{
-		switch (curBattleState)
-		{
-		case CP_BattleManager::BattleState::Start:
-			StartUpdate();
-			break;
-		case CP_BattleManager::BattleState::Win:
-			WinUpdate();
-			break;
-		case CP_BattleManager::BattleState::Lose:
-			LoseUpdate();
-			break;
-		default:
-			break;
-		}
+		// シーンのタイムスケールを考慮しないようにする
+		pBattleDirection->Update(MainApplication::DeltaTime());
+
+		// 演出開始されていないなら
+		if (!isDirectionStart)
+			FadeStart();
+
+		// 入力更新処理
+		InputUpdate();
 	}
 
 	void CP_BattleManager::LateUpdate()
@@ -215,233 +208,57 @@ namespace HashiTaku
 
 	void CP_BattleManager::FindObject()
 	{
-		SceneObjects& sceneObjs = InSceneSystemManager::GetInstance()->GetSceneObjects();
+		// シーン内からオブジェクトを探す
+		SceneObjects& sceneObjs = pInSceneManager->GetSceneObjects();
 
-		GameObject* pGo = sceneObjs.GetSceneObject(fadeObjName);
-		if (pGo)
+		// ポーズ時のボタン
+		GameObject* pObj = sceneObjs.GetSceneObject(poseButtonName);
+		if (pObj)
 		{
-			pFade = pGo->GetComponent<CP_Fade>();
+			pPoseButtons = pObj->GetComponent<CP_BattleButtonGroup>();
 		}
-		pGo = sceneObjs.GetSceneObject(winObjName);
-		if (pGo)
-		{
-			pWinObj = pGo->GetComponent<CP_Fade>();
-		}
-		pGo = sceneObjs.GetSceneObject(gameOverObjName);
-		if (pGo)
-		{
-			pGameOverObj = pGo->GetComponent<CP_Fade>();
-		}
+	}
 
-		pGameStartObj = sceneObjs.GetSceneObject(startObjName);
+	void CP_BattleManager::InputUpdate()
+	{
+		GameInput& input = pInSceneManager->GetInput();
+
+		// ポーズボタンが押されたら
+		if (input.GetButtonDown(GameInput::ButtonType::Pose))
+		{
+			if (!isPosing) // ポーズ中でないならポーズする
+				BeginPose();
+			else
+				EndPose();
+		}
 	}
 
 	void CP_BattleManager::FadeStart()
 	{
-#ifdef EDIT
-		// 演出なし
-		if (!isUIAnimation)
-		{
-			// バトルに移行する
-			curBattleState = BattleState::Battle;
-			return;
-		}
-#endif // EDIT
-
-		// フェードがないなら
-		if (!pFade)
-		{
-			// バトルに移行する
-			curBattleState = BattleState::Battle;
-			return;
-		}
-
-		// フェード開けたらスタート演出に入る
-		pFade->OpenFade(START_FADE_TIME, START_FADE_ALPHA);
-		pFade->SetOnEndFunction([&]()
-			{
-				OnBeginStart();
-			});
+		isDirectionStart = true;
 
 		// オブジェクトを動けないようにする
 		StopObjects();
 
-		// カメラも動かさない
-		if (pCamMove)
-			pCamMove->SetEnable(false);
-	}
-
-	void CP_BattleManager::PlayBGM()
-	{
-		auto pSound = CP_SoundManager::GetInstance();
-		if (!pSound) return;
-
-		pSound->PlayBGM(battleBGMParameter);
-	}
-
-	void CP_BattleManager::OnBeginStart()
-	{
-		curBattleState = BattleState::Start;
-		animationElapsedTime = 0.0f;
-
-		if (pGameStartObj)
-		{
-			Transform& trans = pGameStartObj->GetTransform();
-			DXSimp::Vector3 startPos = trans.GetPosition();
-			startPos.x = START_START_POS_X;
-			pGameStartObj->GetTransform().SetPosition(startPos);
-		}
-		else
-			OnBeginBattle();
-	}
-
-	void CP_BattleManager::StartUpdate()
-	{
-		animationElapsedTime += DeltaTime();
-
-		float curPosX = Mathf::Lerp(
-			START_START_POS_X,
-			START_TARGET_POS_X,
-			gameStartCurve.GetValue(animationElapsedTime / START_MOVE_TIME));
-
-		Transform& trans = pGameStartObj->GetTransform();
-		DXSimp::Vector3 startPos = trans.GetPosition();
-		startPos.x = curPosX;
-		pGameStartObj->GetTransform().SetPosition(startPos);
-
-		if (animationElapsedTime > START_MOVE_TIME)
-		{
-			OnBeginBattle();
-			pFade->OpenFade(0.0f);
-		}
+		// ゲームスタートの演出
+		pBattleDirection->OnBeginStartDirection();
 	}
 
 	void CP_BattleManager::OnBeginBattle()
 	{
-		curBattleState = BattleState::Battle;
-
 		// 活動状態にする
 		ActiveObjects();
 	}
 
-	void CP_BattleManager::WinUpdate()
+	void CP_BattleManager::EndBattle()
 	{
-		if (!pWinObj) return;
-		if (!pFade) return;
-
-		switch (step)
-		{
-		case 0:
-			animationElapsedTime += DeltaTime();
-
-			if (animationElapsedTime > WIN_FADE_INTERVAL)
-			{
-				animationElapsedTime = 0.0f;
-				pWinObj->CloseFade(WIN_FADE_TIME, 1.0f);
-				pFade->CloseFade(WIN_FADE_TIME, WIN_FADE_ALPHA);
-				step = 1;
-			}
-
-			break;
-
-		case 1:
-			animationElapsedTime += DeltaTime();
-
-			if (animationElapsedTime > WIN_FADE_TIME)
-			{
-				animationElapsedTime = 0.0f;
-				step = 2;
-			}
-
-			break;
-
-		case 2:
-			animationElapsedTime += DeltaTime();
-
-			if (animationElapsedTime > WIN_DISPLAY_TIME)
-			{
-				animationElapsedTime = 0.0f;
-				step = 3;
-				pWinObj->OpenFade(WIN_CLOSE_FADE_TIME);
-				pFade->CloseFade(WIN_CLOSE_FADE_TIME);
-			}
-
-			break;
-
-		case 3:
-			animationElapsedTime += DeltaTime();
-
-
-			pFade->SetOnEndFunction([&]()
-				{
-					SceneManager::GetInstance()->ChangeSceneRequest("Title");
-				});
-
-			break;
-		}
-	}
-
-	void CP_BattleManager::LoseUpdate()
-	{
-		if (!pGameOverObj) return;
-		if (!pFade) return;
-
-		switch (step)
-		{
-		case 0:
-			animationElapsedTime += DeltaTime();
-
-			if (animationElapsedTime > WIN_FADE_INTERVAL)
-			{
-				animationElapsedTime = 0.0f;
-				pGameOverObj->CloseFade(WIN_FADE_TIME, 1.0f);
-				pFade->CloseFade(WIN_FADE_TIME, WIN_FADE_ALPHA);
-				step = 1;
-			}
-
-			break;
-
-		case 1:
-			animationElapsedTime += DeltaTime();
-
-			if (animationElapsedTime > WIN_FADE_TIME)
-			{
-				animationElapsedTime = 0.0f;
-				step = 2;
-			}
-
-			break;
-
-		case 2:
-			animationElapsedTime += DeltaTime();
-
-			if (animationElapsedTime > WIN_DISPLAY_TIME)
-			{
-				animationElapsedTime = 0.0f;
-				step = 3;
-				pGameOverObj->OpenFade(WIN_CLOSE_FADE_TIME);
-				pFade->CloseFade(WIN_CLOSE_FADE_TIME);
-			}
-
-			break;
-
-		case 3:
-			animationElapsedTime += DeltaTime();
-
-
-			pFade->SetOnEndFunction([&]()
-				{
-					SceneManager::GetInstance()->ChangeSceneRequest("Title");
-				});
-
-			break;
-		}
+		// タイトルシーンに移動
+		SceneManager::GetInstance()->ChangeSceneRequest(TITLE_SCENE_NAME);
 	}
 
 	void CP_BattleManager::MoveAreaUpdate()
 	{
 		// 移動範囲内に制限
-
 		if (pPlayer)
 			PositionClamp(pPlayer->GetTransform());
 
@@ -464,6 +281,7 @@ namespace HashiTaku
 
 	void CP_BattleManager::ActiveObjects()
 	{
+		// 各オブジェクトのアクティブ状態に
 		if (pPlayer)
 			pPlayer->SetEnable(true);
 
@@ -476,55 +294,65 @@ namespace HashiTaku
 
 	void CP_BattleManager::StopObjects()
 	{
+		// 各オブジェクトの非アクティブ状態に
 		if (pPlayer)
 			pPlayer->SetEnable(false);
 
 		for (auto& enemy : enemyList)
 			enemy->SetEnable(false);
+
+		if (pCamMove)
+			pCamMove->SetEnable(false);
 	}
 
 	void CP_BattleManager::ImGuiDebug()
 	{
 #ifdef EDIT
-
 		ImGui::Checkbox("IsDisplay", &isDebugDisplay);
 		ImGui::DragFloat4("AreaRect", &moveAreaRect.x, 0.01f);
 
-		ImGuiMethod::LineSpaceSmall();
-
-		battleBGMParameter.ImGuiCall();
-
-		ImGuiMethod::LineSpaceSmall();
+		// ポーズボタン
 		static char input[IM_INPUT_BUF] = "\0";
-		ImGui::InputText("ObjName", input, IM_INPUT_BUF);
-		if (ImGui::Button("Set Fade")) fadeObjName = input;
-		ImGui::SameLine();
-		ImGui::Text(fadeObjName.c_str());
+		ImGui::InputText("##input", input, IM_INPUT_BUF);
+		if (ImGui::Button("Pose Button"))
+			poseButtonName = input;
+		ImGui::Text(poseButtonName.c_str());
 
-		if (ImGui::Button("Set Start")) startObjName = input;
-		ImGui::SameLine();
-		ImGui::Text(startObjName.c_str());
-
-		if (ImGui::Button("Set Win")) winObjName = input;
-		ImGui::SameLine();
-		ImGui::Text(winObjName.c_str());
-
-		if (ImGui::Button("Set GameOver")) gameOverObjName = input;
-		ImGui::SameLine();
-		ImGui::Text(gameOverObjName.c_str());
-
-		ImGui::Checkbox("UIAnimation", &isUIAnimation);
-
-		ImGuiStart();
+		ImGuiMethod::LineSpaceSmall();
+		ImGui::Text("Direction");
+		pBattleDirection->ImGuiCall();
 #endif // EDIT
 	}
 
-	void CP_BattleManager::ImGuiStart()
+	BattleDirectionEndObserver::BattleDirectionEndObserver() :
+		IObserver("BattleDirectionEndObserver")
 	{
-		if (!ImGuiMethod::TreeNode("Start")) return;
+		pBattleManager = CP_BattleManager::GetInstance();
+	}
 
-		gameStartCurve.ImGuiCall();
+	void BattleDirectionEndObserver::ObserverUpdate(const int& _value)
+	{
+		BattleDirection::DirectionState dirState =
+			static_cast<BattleDirection::DirectionState>(_value);
 
-		ImGui::TreePop();
+		// 状態によって行う処理を変える
+		switch (dirState)
+		{
+		case BattleDirection::DirectionState::Start:
+			pBattleManager->OnBeginBattle();
+			break;
+
+		case BattleDirection::DirectionState::Win:
+			pBattleManager->EndBattle();
+			break;
+
+		case BattleDirection::DirectionState::Lose:
+			pBattleManager->EndBattle();
+			break;
+
+		default:
+			break;
+		}
+
 	}
 }

@@ -78,9 +78,6 @@ namespace HashiTaku
 		/// @brief 閉める更新処理
 		void CloseUpdate();
 
-		/// @brief フェードの速度を求める
-		void CalcFadeSpeed();
-
 		/// @brief 開ける更新
 		void OpenUpdate();
 

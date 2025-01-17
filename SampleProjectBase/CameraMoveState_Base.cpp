@@ -10,11 +10,7 @@ namespace HashiTaku
 
 	CameraMoveState_Base::CameraMoveState_Base() :
 		pCamController(nullptr),
-		pInput(nullptr),
-		moveFov(65.0f),
-		normalFov(50.0f),
-		fovChangeRate(3.0f),
-		canFovChangeMovement(1.0f)
+		pInput(nullptr)		
 	{
 	}
 
@@ -34,8 +30,6 @@ namespace HashiTaku
 	{
 		UpdateBehavior();
 
-		FovUpdate();
-
 		CheckTransitionUpdate();
 	}
 
@@ -47,21 +41,11 @@ namespace HashiTaku
 	json CameraMoveState_Base::Save()
 	{
 		json data;
-
-		data["moveFov"] = moveFov;
-		data["normalFov"] = normalFov;
-		data["fovChangeRate"] = fovChangeRate;
-		data["canFovMovement"] = canFovChangeMovement;
-
 		return data;
 	}
 
 	void CameraMoveState_Base::Load(const json& _data)
 	{
-		LoadJsonFloat("moveFov", moveFov, _data);
-		LoadJsonFloat("normalFov", normalFov, _data);
-		LoadJsonFloat("fovChangeRate", fovChangeRate, _data);
-		LoadJsonFloat("canFovMovement", canFovChangeMovement, _data);
 	}
 
 	void CameraMoveState_Base::CheckTransitionUpdate()
@@ -109,31 +93,6 @@ namespace HashiTaku
 
 	void CameraMoveState_Base::ImGuiDebug()
 	{
-		ImGui::DragFloat("moveFov", &moveFov, 0.01f, 0.0f, 180.0f);
-		ImGui::DragFloat("normalFov", &normalFov, 0.01f, 0.0f, 180.0f);
-		ImGui::DragFloat("fovRate", &fovChangeRate, 0.001f, 0.0f, 180.0f);
-		ImGui::DragFloat("changeMovement", &canFovChangeMovement, 0.001f, 0.0f, 1000.0f);
 	}
 
-	void CameraMoveState_Base::FovUpdate()
-	{
-		// 追従先のオブジェクトないなら
-		if (!pCamController->GetHasFollowObject()) return;
-
-		CP_Camera& camera = GetCamera();
-		float deltaTime = DeltaTime();
-
-		// 前フレームから追従先が動いているか取得
-		DXSimp::Vector3 moveDis = GetFollowPosition() - pCamController->GetPrevFollowPos();
-		bool isTargetMoving = moveDis.Length() > canFovChangeMovement * deltaTime;
-
-		float curFov = camera.GetFov();
-
-		// 移動量によって視野角を変える
-		curFov = Mathf::Lerp(curFov,
-			isTargetMoving ? moveFov : normalFov,
-			fovChangeRate * deltaTime);
-
-		camera.SetFov(curFov);
-	}
 }

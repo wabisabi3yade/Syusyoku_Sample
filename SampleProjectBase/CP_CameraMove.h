@@ -68,7 +68,6 @@ namespace HashiTaku
 		json Save() override;
 		void Load(const json& _data) override;
 	private:
-		void Awake() override;
 		void Start() override;
 		void LateUpdate() override;
 

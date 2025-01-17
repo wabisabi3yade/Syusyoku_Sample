@@ -13,14 +13,21 @@ namespace HashiTaku
 		{
 			Start,
 			End,
+			Check,
 			MaxNum
 		};
 
 		/// @brief フェードオブジェクト名
 		std::string fadeObjName;
 
+		/// @brief チェックマークオブジェクト名
+		std::string checkImageObjName;
+
 		/// @brief フェード
 		CP_Fade* pFade;
+
+		/// @brief チェックマークのイメージ
+		CP_UIRenderer* pCheckImage;
 	public:
 		CP_TitleButtonGroup();
 		~CP_TitleButtonGroup() {}
@@ -39,11 +46,11 @@ namespace HashiTaku
 		/// @brief 終了ボタンを押したときの処理
 		void OnPushEnd();
 
+		/// @brief チェックマークを押したときの処理
+		void OnPushCheck();
+
 		/// @brief ボタンの初期化
 		void ButtonSetup();
-
-		/// @brief バトルシーンに移行
-		void ChangeBattleScene();
 
 		void ImGuiDebug() override;
 	};

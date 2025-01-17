@@ -4,7 +4,7 @@
 namespace HashiTaku
 {
 	/// @brief プレイヤー移動時のカメラの行動
-	class CameraOnMoveState : public CameraMoveState_Base
+	class CameraFollowMove : public CameraMoveState_Base
 	{
 		/// @brief カメラポジション
 		DXSimp::Vector3 cameraPos;
@@ -59,9 +59,21 @@ namespace HashiTaku
 
 		/// @brief ターゲット処理するか？
 		bool isTargeting;
+
+		/// @brief ターゲット移動時のfov
+		float moveFov;
+
+		/// @brief 通常時Fov
+		float normalFov;
+
+		/// @brief fovの変動率
+		float fovChangeRate;
+
+		/// @brief fov変動する追従先の移動量
+		float canFovChangeMovement;
 	public:
-		CameraOnMoveState();
-		virtual ~CameraOnMoveState() {}
+		CameraFollowMove();
+		virtual ~CameraFollowMove() {}
 
 		/// @brief 初期座標を渡す
 		void InitCameraTransform();
@@ -86,6 +98,9 @@ namespace HashiTaku
 
 		/// @brief ターゲット時の更新処理
 		void TargetUpdate();
+
+		/// @brief 移動での視野角移動
+		void FovUpdate();
 
 		/// @brief 遷移確認
 		void CheckTransitionUpdate() override;

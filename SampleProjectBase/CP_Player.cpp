@@ -13,14 +13,15 @@ namespace HashiTaku
 	// 死んだときのアニメーションパラメータ名
 	constexpr auto DEAD_ANIMPARAM("deadTrigger");
 
+	bool CP_Player::isDebugInvicible = false;
+
 	CP_Player::CP_Player() :
 		pAnimation(nullptr),
 		pWeapon(nullptr),
 		pCameraMove(nullptr),
 		pHpSlider(nullptr),
 		pAttackCollisionFlag(nullptr),
-		hitStopBeforeAnimSpeed(0.0f),
-		isDebugInvicible(false)
+		hitStopBeforeAnimSpeed(0.0f)
 	{
 	}
 
@@ -31,6 +32,11 @@ namespace HashiTaku
 		pWeapon->SetAttackInfo(_setAttackInfo);
 
 		pAnimation->SetBool(ATKCOL_ANIMPARAM, false);
+	}
+
+	void CP_Player::SetIsDebugInvincible(bool _setBool)
+	{
+		isDebugInvicible = _setBool;
 	}
 
 	void CP_Player::Init()
@@ -44,16 +50,17 @@ namespace HashiTaku
 	void CP_Player::Awake()
 	{
 		CP_Character::Awake();
-
-		if (CP_BattleManager* pBattle = CP_BattleManager::GetInstance())
-		{
-			pBattle->SetPlayer(*this);
-		}
 	}
 
 	void CP_Player::Start()
 	{
 		CP_Character::Start();
+
+		// バトルマネジャーに登録する
+		if (CP_BattleManager* pBattle = CP_BattleManager::GetInstance())
+		{
+			pBattle->SetPlayer(*this);
+		}
 
 		// 必要オブジェクトをセット
 		SetRequireObject();
@@ -189,6 +196,11 @@ namespace HashiTaku
 		return *pAttackCollisionFlag;
 	}
 
+	bool CP_Player::GetIsDebugInvincible()
+	{
+		return isDebugInvicible;
+	}
+
 	json CP_Player::Save()
 	{
 		auto data = CP_Character::Save();
@@ -196,9 +208,6 @@ namespace HashiTaku
 		data["weaponObjName"] = weaponObjName;
 		data["camObjName"] = cameraObjName;
 		data["hpBarObjName"] = hpBarObjName;
-#ifdef EDIT
-		data["debugInvicible"] = isDebugInvicible;
-#endif // EDIT
 		return data;
 	}
 
@@ -212,11 +221,6 @@ namespace HashiTaku
 		LoadJsonString("weaponObjName", weaponObjName, _data);
 		LoadJsonString("camObjName", cameraObjName, _data);
 		LoadJsonString("hpBarObjName", hpBarObjName, _data);
-
-#ifdef EDIT
-		LoadJsonBoolean("debugInvicible", isDebugInvicible, _data);
-#endif // EDIT
-
 	}
 
 	void CP_Player::SetWeaponAttackFlag()

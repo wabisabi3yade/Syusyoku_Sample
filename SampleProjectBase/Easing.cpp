@@ -11,15 +11,18 @@ namespace HashiTaku
 
 	float Easing::EaseValue(float _ratio, EaseKind _easeType)
 	{
+		// 0.0`1.0‚ÅƒNƒ‰ƒ“ƒv
+		_ratio = std::clamp(_ratio, 0.0f, 1.0f);
+
 		return easeList[_easeType]->Get(_ratio);
 	}
 
-	bool Easing::ImGuiSelect(EaseKind& _nowEase)
+	bool Easing::ImGuiSelect(EaseKind& _nowEase, const std::string& _caption)
 	{
 #ifdef EDIT
 		u_int easeId = static_cast<u_int>(_nowEase);
 
-		if (ImGuiMethod::ComboBox("Easing", easeId, easeNames))
+		if (ImGuiMethod::ComboBox(_caption, easeId, easeNames))
 		{
 			_nowEase = static_cast<EaseKind>(easeId);
 			return true;

@@ -14,25 +14,12 @@ namespace HashiTaku
 	public:
 		enum  class CameraState
 		{
-			Move,	// 移動時
+			Follow,	// 移動時
 			Charge,	// チャージ時
 			Win,	// プレイヤー勝利
 			Lose,	// プレイヤー負け
 			None
-		};
-
-	private:
-		/// @brief ターゲット移動時のfov
-		float moveFov;
-
-		/// @brief 通常時Fov
-		float normalFov;
-
-		/// @brief fovの変動率
-		float fovChangeRate;
-
-		/// @brief fov変動する追従先の移動量
-		float canFovChangeMovement;
+		};		
 	protected:
 		/// @brief カメラの行動コントローラ
 		CameraMoveController* pCamController;
@@ -97,9 +84,5 @@ namespace HashiTaku
 		float DeltaTime() const;
 
 		void ImGuiDebug() override;
-
-	private:
-		/// @brief 視野角の更新処理
-		void FovUpdate();
 	};
 }

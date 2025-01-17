@@ -15,7 +15,7 @@ namespace HashiTaku
 
 	void CameraChargeAttack::OnStartBehavior()
 	{
-		CameraOnMoveState::OnStartBehavior();
+		CameraFollowMove::OnStartBehavior();
 
 		BeginMoveFov(chargeTargetFov, moveTargetFovTime);
 
@@ -25,7 +25,7 @@ namespace HashiTaku
 
 	void CameraChargeAttack::UpdateBehavior()
 	{
-		CameraOnMoveState::UpdateBehavior();
+		CameraFollowMove::UpdateBehavior();
 
 		// Ž‹–ìŠp‚ð‹·‚­‚·‚é
 		UpdateFovMove();
@@ -68,7 +68,7 @@ namespace HashiTaku
 
 	json CameraChargeAttack::Save()
 	{
-		auto data = CameraOnMoveState::Save();
+		auto data = CameraFollowMove::Save();
 
 		data["moveFovTime"] = moveTargetFovTime;
 		data["targetFov"] = chargeTargetFov;
@@ -80,7 +80,7 @@ namespace HashiTaku
 
 	void CameraChargeAttack::Load(const json& _data)
 	{
-		CameraOnMoveState::Load(_data);
+		CameraFollowMove::Load(_data);
 
 		LoadJsonFloat("moveFovTime", moveTargetFovTime, _data);
 		LoadJsonFloat("targetFov", chargeTargetFov, _data);
@@ -113,7 +113,7 @@ namespace HashiTaku
 
 	void CameraChargeAttack::ImGuiDebug()
 	{
-		CameraOnMoveState::ImGuiDebug();
+		CameraFollowMove::ImGuiDebug();
 
 		ImGuiMethod::LineSpaceSmall();
 		ImGui::Text("Charge");

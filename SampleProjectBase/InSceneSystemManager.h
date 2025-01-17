@@ -27,10 +27,13 @@ namespace HashiTaku
 		/// @brief 影描画機能クラス
 		std::unique_ptr<ShadowDrawer> pShadowDrawer;
 
+		/// @brief シーン内のΔtの速度倍率
+		float timeScale;
+
 		/// @brief カメラがNullObjectかどうか
 		bool isNullCamera;
 
-		InSceneSystemManager() : pMainCamera(nullptr), isNullCamera(true) {}
+		InSceneSystemManager();
 		~InSceneSystemManager();
 
 	public:
@@ -66,12 +69,20 @@ namespace HashiTaku
 		/// @return 影描画クラス
 		ShadowDrawer& GetShadowDrawer();
 
+		/// @brief Δtの速度倍率を取得
+		/// @return Δtの速度倍率
+		float GetTimeScale() const;
+
 		/// @brief カメラがセットされていないか？
 		/// @return カメラがセットされていないか？
 		bool GetIsNullCamera() const;
 
 		// カメラをセットする
 		void SetCamera(CP_Camera& _camera);
+
+		/// @brief Δtの速度倍率をセット
+		/// @param _timeScale 速度倍率(1.0が等速)
+		void SetTimeScale(float _timeScale);
 
 		/// @brief カメラを削除する
 		/// @param _camera 削除するカメラ

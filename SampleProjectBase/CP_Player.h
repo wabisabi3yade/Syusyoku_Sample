@@ -42,7 +42,7 @@ namespace HashiTaku
 		float hitStopBeforeAnimSpeed;
 
 		/// @brief デバッグの無敵フラグ
-		bool isDebugInvicible;
+		static bool isDebugInvicible;
 	public:
 		CP_Player();
 		~CP_Player() {}
@@ -60,9 +60,17 @@ namespace HashiTaku
 		/// @param _setAttackInfo 攻撃情報
 		void SetAttackInfo(const AttackInformation& _setAttackInfo);
 
+		/// @brief デバッグ用の無敵フラグをセットする
+		/// @param _setBool 無敵にするか？
+		static void SetIsDebugInvincible(bool _setBool);
+
 		/// @brief 攻撃フラグを取得
 		/// @return 攻撃フラグ
 		bool GetIsAttackFlag() const;
+
+		/// @brief デバッグ用無敵フラグを取得
+		/// @return デバッグ用無敵か？
+		static bool GetIsDebugInvincible();
 
 		json Save() override;
 		void Load(const json& _data) override;
