@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "CameraWinState.h"
 
+#ifdef EDIT
+#include "CP_BattleManager.h"
+#include "CP_Player.h"
+#endif // EDIT
+
 namespace HashiTaku
 {
 	CameraWinState::CameraWinState() :
@@ -33,14 +38,14 @@ namespace HashiTaku
 		DXSimp::Vector3 lookTargetPos = pTargetTransform->GetPosition() +
 			centerPosOffset;
 
-		// 視点対象までの回転量を求める
-		DXSimp::Vector3 lookVec = lookTargetPos - GetBasePosition();
-		lookVec.Normalize();
-		lookTargetRotation = Quat::RotateToVector(lookVec);
-
 		// 中心点からのベクトルを乱数で求め、カメラの移動先を求める
 		DXSimp::Vector3 targetToVecFromcCenter = GetRandomTargetVec();
 		moveTargetPos = lookTargetPos + targetToVecFromcCenter * targetToDistance;
+
+		// 視点対象までの回転量を求める
+		DXSimp::Vector3 lookVec = lookTargetPos - moveTargetPos;
+		lookVec.Normalize();
+		lookTargetRotation = Quat::RotateToVector(lookVec);
 	}
 
 	json CameraWinState::Save()
@@ -54,6 +59,7 @@ namespace HashiTaku
 		data["moveTime"] = moveTime;
 		data["targetFovOnMove"] = targetFovOnMove;
 		data["targetToDistance"] = targetToDistance;
+		SaveJsonVector3("centerPosOffset", centerPosOffset, data);
 		SaveJsonVector3("randVecMax", randTargetVecMax, data);
 		SaveJsonVector3("randVecMin", randTargetVecMin, data);
 
@@ -81,6 +87,7 @@ namespace HashiTaku
 		LoadJsonFloat("moveTime", moveTime, _data);
 		LoadJsonFloat("targetFovOnMove", targetFovOnMove, _data);
 		LoadJsonFloat("targetToDistance", targetToDistance, _data);
+		LoadJsonVector3("centerPosOffset", centerPosOffset, _data);
 		LoadJsonVector3("randVecMax", randTargetVecMax, _data);
 		LoadJsonVector3("randVecMin", randTargetVecMin, _data);
 
@@ -105,6 +112,8 @@ namespace HashiTaku
 
 	void CameraWinState::UpdateBehavior()
 	{
+		HASHI_DEBUG_LOG(std::string(magic_enum::enum_name(curStep)));
+
 		// 各ステップの更新処理
 		switch (curStep)
 		{
@@ -231,6 +240,8 @@ namespace HashiTaku
 
 	void CameraWinState::ZoomUpdate()
 	{
+		elapsedTime += MainApplication::DeltaTime();
+
 		// 視野角を移動
 		float fovRate = Easing::EaseValue(elapsedTime / zoomTime, fovEaseKindOnMove);
 		float curFov = std::lerp(beginFov, targetFovOnZoom, fovRate);
@@ -260,6 +271,17 @@ namespace HashiTaku
 		ImGuiZoom();
 
 		ImGuiWait();
+
+		if (ImGui::Button("Start"))
+		{
+			CP_BattleManager* pBattle = CP_BattleManager::GetInstance();
+			if (!pBattle) return;
+
+			CP_Player* pPlayer = pBattle->GetPlayerObject();
+			if (!pPlayer) return;
+			SetTargetTransform(pPlayer->GetTransform());
+			ChangeState(CameraState::Win);
+		}
 #endif // EDIT	
 	}
 
@@ -271,8 +293,9 @@ namespace HashiTaku
 		ImGui::DragFloat("moveTime", &moveTime, 0.1f, 0.01f, 100.0f);
 		ImGui::DragFloat3("vecMax", &randTargetVecMax.x, 0.1f, 0.0f, 1.0f);
 		ImGui::DragFloat3("vecMin", &randTargetVecMin.x, 0.1f, 0.0f, 1.0f);
+		ImGui::DragFloat3("centerPosOffset", &centerPosOffset.x, 0.01f, 0.0f, 100.0f);
 		ImGui::DragFloat("targetDis", &targetToDistance, 0.01f, 0.0f, 100.0f);
-		ImGui::DragFloat("fov", &targetFovOnMove, 0.01f, 0.0f, 100.0f);
+		ImGui::DragFloat("targetFov", &targetFovOnMove, 0.01f, 0.0f, 100.0f);
 		Easing::ImGuiSelect(moveEaseKind, "move");
 		Easing::ImGuiSelect(lookEaseKind, "look");
 		Easing::ImGuiSelect(fovEaseKindOnMove, "fov");

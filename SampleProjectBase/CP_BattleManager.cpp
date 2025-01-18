@@ -74,7 +74,7 @@ namespace HashiTaku
 			pPoseButtons->OpenDisplay();
 
 		// 各オブジェクトを停止
-		StopObjects();
+		StopObjects(true);
 	}
 
 	void CP_BattleManager::EndPose()
@@ -104,18 +104,16 @@ namespace HashiTaku
 	void CP_BattleManager::OnPlayerWin()
 	{
 		// オブジェクトを止める
-	/*	StopObjects();*/
-		if (static_cast<u_int>(enemyList.size()) == 0) return;	// 敵がいないなら
-		Transform& bossTransform = (*enemyList.begin())->GetTransform();
+		StopObjects(false);
 
 		// 勝利演出を開始する
-		pBattleDirection->OnBeginWinDirection(&bossTransform);
+		pBattleDirection->OnBeginWinDirection(&pPlayer->GetTransform());
 	}
 
 	void CP_BattleManager::OnPlayerLose()
 	{
 		// オブジェクトを止める
-		StopObjects();
+		StopObjects(false);
 		if (static_cast<u_int>(enemyList.size()) == 0) return;	// 敵がいないなら
 		Transform& bossTransform = (*enemyList.begin())->GetTransform();
 
@@ -238,7 +236,7 @@ namespace HashiTaku
 		isDirectionStart = true;
 
 		// オブジェクトを動けないようにする
-		StopObjects();
+		StopObjects(true);
 
 		// ゲームスタートの演出
 		pBattleDirection->OnBeginStartDirection();
@@ -292,7 +290,7 @@ namespace HashiTaku
 			pCamMove->SetEnable(true);
 	}
 
-	void CP_BattleManager::StopObjects()
+	void CP_BattleManager::StopObjects(bool _isCameraStop)
 	{
 		// 各オブジェクトの非アクティブ状態に
 		if (pPlayer)
@@ -301,7 +299,7 @@ namespace HashiTaku
 		for (auto& enemy : enemyList)
 			enemy->SetEnable(false);
 
-		if (pCamMove)
+		if (_isCameraStop && pCamMove)
 			pCamMove->SetEnable(false);
 	}
 

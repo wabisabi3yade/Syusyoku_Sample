@@ -50,6 +50,9 @@ namespace HashiTaku
 		/// @param _shakeParam カメラ揺れパラメータ
 		void BeginShake(const PerlinShakeParameter& _shakeParam);
 
+		/// @brief シェイクを止める
+		void StopShake();
+
 		/// @brief ターゲットとするオブジェクトをセット（外したい場合nullptr）
 		/// @param _pTransform ゲームオブジェクト 
 		void SetFollowTransform(const Transform* _pTransform);

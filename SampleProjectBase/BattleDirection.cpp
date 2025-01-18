@@ -14,7 +14,7 @@ namespace HashiTaku
 	constexpr float START_SECOND_FADE_TIME(0.1f);	// フェードを開ける時間(完全に開ける)
 
 	// 勝利時演出
-	constexpr float WIN_FADE_INTERVAL(7.0f);	// フェードまでの時間
+	constexpr float WIN_FADE_INTERVAL(3.0f);	// フェードまでの時間
 	constexpr float WIN_FADE_ALPHA(0.5f);	// フェードの一旦止めるα値
 	constexpr float WIN_FADE_TIME(2.0f);	// 文字とフェードの時間
 	constexpr float WIN_DISPLAY_TIME(4.0f);	// 文字とフェードの時間
@@ -116,6 +116,10 @@ namespace HashiTaku
 		// タイムスケールを遅くする
 		InSceneSystemManager::GetInstance()->SetTimeScale(winTimeScale);
 
+		// カメラを揺らす
+		if (pCamMove)
+			pCamMove->ShakeCamera(winShakeParam);
+
 		// 文字をアクティブ状態に
 		pWinObj->GetGameObject().SetActive(true);
 
@@ -139,8 +143,11 @@ namespace HashiTaku
 		}
 
 		curState = DirectionState::Lose;
-
 		animationElapsedTime = 0.0f;
+
+		// カメラシェイクを止める
+		if (pCamMove)
+			pCamMove->StopShake();
 
 		// 文字をアクティブ状態に
 		pGameOverObj->GetGameObject().SetActive(true);
@@ -164,6 +171,8 @@ namespace HashiTaku
 		data["win"] = winObjName;
 		data["gameOver"] = gameOverObjName;
 		data["gameStartCurve"] = gameStartCurve.Save();
+		data["winTimeScale"] = winTimeScale;
+		data["winShake"] = winShakeParam.Save();
 #ifdef EDIT
 		data["uiAnim"] = isUIAnimation;
 #endif // EDIT
@@ -176,11 +185,16 @@ namespace HashiTaku
 		LoadJsonString("start", startObjName, _data);
 		LoadJsonString("win", winObjName, _data);
 		LoadJsonString("gameOver", gameOverObjName, _data);
+		LoadJsonFloat("winTimeScale", winTimeScale, _data);
 
 		json loadData;
 		if (LoadJsonData("gameStartCurve", loadData, _data))
 		{
 			gameStartCurve.Load(loadData);
+		}
+		if (LoadJsonData("winShake", loadData, _data))
+		{
+			winShakeParam.Load(loadData);
 		}
 #ifdef EDIT
 		LoadJsonBoolean("uiAnim", isUIAnimation, _data);
@@ -372,9 +386,21 @@ namespace HashiTaku
 		// ゲームスタートの移動割合
 		gameStartCurve.ImGuiCall();
 
+		ImGuiWinDirection();
+
 		// オブジェクト
 		ImGuiSetObject();
 #endif EDIT
+	}
+
+	void BattleDirection::ImGuiWinDirection()
+	{
+		if (!ImGuiMethod::TreeNode("Win")) return;
+
+		ImGui::DragFloat("winTimeScale", &winTimeScale, 0.01f, 0.0f, 1.0f);
+		winShakeParam.ImGuiCall();
+
+		ImGui::TreePop();
 	}
 
 	void BattleDirection::ImGuiSetObject()

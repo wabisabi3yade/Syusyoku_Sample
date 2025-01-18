@@ -85,6 +85,11 @@ namespace HashiTaku
 		perlinShake.BeginShake(_shakeParam);
 	}
 
+	void CameraMoveController::StopShake()
+	{
+		perlinShake.EndShake();
+	}
+
 	void CameraMoveController::SetFollowTransform(const Transform* _pTransform)
 	{
 		pFollowTransform = _pTransform;

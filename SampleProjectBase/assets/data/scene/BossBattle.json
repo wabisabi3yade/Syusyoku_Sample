@@ -1273,7 +1273,19 @@
                             },
                             "start": "GameStartText",
                             "uiAnim": true,
-                            "win": "WinText"
+                            "win": "WinText",
+                            "winShake": {
+                                "fadeOut": true,
+                                "power": 0.5,
+                                "shakeVec": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "speed": 4.0,
+                                "time": 0.30000001192092896
+                            },
+                            "winTimeScale": 0.20000000298023224
                         },
                         "enable": true,
                         "moveAreaRect": [
@@ -2245,7 +2257,7 @@
                         "breakBarName": "Enemy_BreakGageBar",
                         "enable": true,
                         "hpBarName": "Enemy_GageBar",
-                        "maxHp": 1.0,
+                        "maxHp": 200.0,
                         "name": "Boss",
                         "priority": 0,
                         "weaponName": "Boss_Weapon"
@@ -2568,27 +2580,32 @@
                                 },
                                 {
                                     "parameter": {
-                                        "firstWaitTime": 0.5,
-                                        "fovEaseOnMove": 0,
-                                        "fovEaseOnZoom": 0,
-                                        "lookEase": 0,
-                                        "moveEase": 0,
-                                        "moveTime": 1.0,
+                                        "centerPosOffset": [
+                                            0.0,
+                                            0.800000011920929,
+                                            0.0
+                                        ],
+                                        "firstWaitTime": 0.10000000149011612,
+                                        "fovEaseOnMove": 20,
+                                        "fovEaseOnZoom": 2,
+                                        "lookEase": 20,
+                                        "moveEase": 20,
+                                        "moveTime": 0.5,
                                         "randVecMax": [
                                             1.0,
-                                            0.75,
-                                            0.0
+                                            0.5,
+                                            1.0
                                         ],
                                         "randVecMin": [
                                             -1.0,
-                                            0.5,
+                                            0.30000001192092896,
                                             -1.0
                                         ],
-                                        "secondWaitTime": 0.5,
+                                        "secondWaitTime": 1.0,
                                         "targetFovOnMove": 45.0,
-                                        "targetToDistance": 5.0,
+                                        "targetToDistance": 6.0,
                                         "zoomTargetFov": 30.0,
-                                        "zoomTime": 0.5
+                                        "zoomTime": 0.6000000238418579
                                     },
                                     "stateType": 2
                                 },
@@ -2831,6 +2848,60 @@
                         1.0,
                         1.0,
                         1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "isShadow": true,
+                        "materials": [
+                            "M_Rock1"
+                        ],
+                        "meshName": "desertRock11.fbx",
+                        "name": "MeshRenderer",
+                        "priority": 0
+                    },
+                    {
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "ditherOffset": 3.0,
+                        "ditherPower": 0.4000000059604645,
+                        "enable": true,
+                        "name": "OutLineRenderer",
+                        "priority": 0,
+                        "scale": 0.07000000029802322
+                    }
+                ],
+                "layer": 0,
+                "name": "Rock14",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        -25.5,
+                        1.2999999523162842,
+                        17.399999618530273
+                    ],
+                    "rotation": [
+                        -0.08036001771688461,
+                        0.6103947162628174,
+                        -0.10285607725381851,
+                        0.7812689542770386
+                    ],
+                    "scale": [
+                        8.0,
+                        6.699999809265137,
+                        3.6000001430511475
                     ]
                 }
             }
@@ -3894,60 +3965,6 @@
                         1.0,
                         1.0,
                         1.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "isShadow": true,
-                        "materials": [
-                            "M_Rock1"
-                        ],
-                        "meshName": "desertRock11.fbx",
-                        "name": "MeshRenderer",
-                        "priority": 0
-                    },
-                    {
-                        "color": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "ditherOffset": 3.0,
-                        "ditherPower": 0.4000000059604645,
-                        "enable": true,
-                        "name": "OutLineRenderer",
-                        "priority": 0,
-                        "scale": 0.07000000029802322
-                    }
-                ],
-                "layer": 0,
-                "name": "Rock14",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        -25.5,
-                        1.2999999523162842,
-                        17.399999618530273
-                    ],
-                    "rotation": [
-                        -0.08036001771688461,
-                        0.6103947162628174,
-                        -0.10285607725381851,
-                        0.7812689542770386
-                    ],
-                    "scale": [
-                        8.0,
-                        6.699999809265137,
-                        3.6000001430511475
                     ]
                 }
             }
