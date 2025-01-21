@@ -233,10 +233,10 @@ namespace HashiTaku
 		int id = static_cast<int>(AnimInterpolateKind::CrossFade);
 		ImGui::RadioButton("CrossFade", &selectTransition, id);
 
-		ImGui::SameLine();
+		/*ImGui::SameLine();
 
 		id = static_cast<int>(AnimInterpolateKind::Inertialization);
-		ImGui::RadioButton("Inertialization", &selectTransition, id);
+		ImGui::RadioButton("Inertialization", &selectTransition, id);*/
 
 		interpolateKind = static_cast<AnimInterpolateKind>(selectTransition);
 #endif // EDIT

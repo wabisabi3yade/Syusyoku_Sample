@@ -73,11 +73,11 @@ namespace HashiTaku
 		using enum ButtonType;
 		using enum GamePad::PadFlag;
 		buttonLinks[static_cast<u_int>(Player_Attack)] = { Sankaku, DIK_RETURN };
-		buttonLinks[static_cast<u_int>(Player_ChargeAttack)] = { R2, DIK_RSHIFT };
-		buttonLinks[static_cast<u_int>(Player_Jump)] = { Batsu, DIK_SPACE };
-		buttonLinks[static_cast<u_int>(Player_Rolling)] = { Shikaku, DIK_LSHIFT };
+		buttonLinks[static_cast<u_int>(Player_ChargeAttack)] = { Maru, DIK_RSHIFT };
+		buttonLinks[static_cast<u_int>(Player_Jump)] = { R2, DIK_SPACE };
+		buttonLinks[static_cast<u_int>(Player_Rolling)] = { Batsu, DIK_LSHIFT };
 		buttonLinks[static_cast<u_int>(Player_RockOn)] = { R1, DIK_LCONTROL };
-		buttonLinks[static_cast<u_int>(Player_Guard)] = { Maru, DIK_E };
+		buttonLinks[static_cast<u_int>(Player_Guard)] = { Shikaku, DIK_E };
 		buttonLinks[static_cast<u_int>(Pose)] = { Option, DIK_ESCAPE };
 	}
 

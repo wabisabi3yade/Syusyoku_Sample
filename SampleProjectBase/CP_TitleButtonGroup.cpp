@@ -6,6 +6,8 @@
 
 namespace HashiTaku
 {
+	constexpr auto BATTLE_SCENE_NAME("BossBattle");
+
 	CP_TitleButtonGroup::CP_TitleButtonGroup() :
 		pFade(nullptr),
 		pCheckImage(nullptr)
@@ -48,15 +50,6 @@ namespace HashiTaku
 		if (pObj)
 		{
 			pFade = pObj->GetComponent<CP_Fade>();
-			if (pFade)
-			{
-				// フェード開けに入力できるように
-				canInput = false;
-				pFade->SetOnEndFunction([&]()
-					{
-						canInput = true;
-					});
-			}
 		}
 		
 		// チェックマーク
@@ -82,12 +75,12 @@ namespace HashiTaku
 
 			pFade->SetOnEndFunction([&]()
 				{
-					SceneManager::GetInstance()->ChangeSceneRequest("BossBattle");
+					SceneManager::GetInstance()->ChangeSceneRequest(BATTLE_SCENE_NAME);
 				});
 		}
 		else
 		{
-			SceneManager::GetInstance()->ChangeSceneRequest("BossBattle");
+			SceneManager::GetInstance()->ChangeSceneRequest(BATTLE_SCENE_NAME);
 		}
 
 		canInput = false;
