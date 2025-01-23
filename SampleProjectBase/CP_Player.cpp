@@ -69,7 +69,8 @@ namespace HashiTaku
 
 		//アニメーション関係生成
 		pAnimation = gameObject->GetComponent<CP_Animation>();
-		pAttackCollisionFlag = pAnimation->GetParameterPointer<bool>(ATKCOL_ANIMPARAM);
+		if (pAnimation)
+			pAttackCollisionFlag = pAnimation->GetParameterPointer<bool>(ATKCOL_ANIMPARAM);
 
 		// アクションコントローラー開始処理
 		pAction->Init(pAnimation, pRb);

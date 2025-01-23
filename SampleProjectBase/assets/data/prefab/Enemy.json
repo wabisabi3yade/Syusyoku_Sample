@@ -11,9 +11,25 @@
                                 "components": [
                                     {
                                         "enable": true,
+                                        "isShadow": true,
+                                        "materials": null,
                                         "meshName": "Sword15_FBX.fbx",
                                         "name": "MeshRenderer",
                                         "priority": 0
+                                    },
+                                    {
+                                        "color": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "ditherOffset": 0.0,
+                                        "ditherPower": 1.0,
+                                        "enable": true,
+                                        "name": "OutLineRenderer",
+                                        "priority": 0,
+                                        "scale": 0.019999999552965164
                                     }
                                 ],
                                 "layer": 0,
@@ -22,20 +38,20 @@
                                 "transform": {
                                     "child": null,
                                     "pos": [
-                                        0.6579986214637756,
-                                        -0.010017452761530876,
-                                        7.689996242523193
+                                        0.6579986810684204,
+                                        -0.11001741886138916,
+                                        7.689998149871826
                                     ],
                                     "rotation": [
-                                        -0.6008124947547913,
+                                        -0.600812554359436,
                                         0.7962931990623474,
                                         -0.05046877637505531,
                                         -0.04893164336681366
                                     ],
                                     "scale": [
-                                        1.6800007820129395,
-                                        1.679998755455017,
-                                        1.68000066280365
+                                        1.680000901222229,
+                                        1.6799989938735962,
+                                        1.680000901222229
                                     ]
                                 }
                             }
@@ -95,19 +111,19 @@
                             ],
                             "pos": [
                                 0.6580001711845398,
-                                -0.01001274585723877,
+                                -0.11001275479793549,
                                 7.689997673034668
                             ],
                             "rotation": [
-                                -0.6008126139640808,
-                                0.7962931990623474,
-                                -0.05046878382563591,
-                                -0.0489317812025547
+                                -0.600812554359436,
+                                0.7962931394577026,
+                                -0.05046877637505531,
+                                -0.048931777477264404
                             ],
                             "scale": [
                                 1.4000006914138794,
-                                1.399999976158142,
-                                1.4000006914138794
+                                1.4000000953674316,
+                                1.400000810623169
                             ]
                         }
                     }
@@ -131,8 +147,8 @@
                         "Boss_Weapon"
                     ],
                     "pos": [
-                        0.7000004053115845,
-                        -0.22000955045223236,
+                        0.7000004649162292,
+                        -0.3200095593929291,
                         7.619998931884766
                     ],
                     "rotation": [
@@ -155,13 +171,15 @@
         "components": [
             {
                 "enable": true,
+                "isShadow": true,
+                "materials": null,
                 "meshName": "Uriel A Plotexia.fbx",
                 "name": "MeshRenderer",
                 "priority": 0
             },
             {
                 "enable": true,
-                "friction": 2.0,
+                "friction": 0.029999999329447746,
                 "isAwake": true,
                 "isFreezeRot": [
                     true,
@@ -182,14 +200,14 @@
                 ],
                 "center": [
                     0.0,
-                    1.149999976158142,
+                    1.0800000429153442,
                     0.0
                 ],
                 "enable": true,
-                "height": 1.3300000429153442,
+                "height": 1.1399999856948853,
                 "name": "CapsuleCollider",
                 "priority": 0,
-                "radius": 0.5299999713897705
+                "radius": 0.5099999904632568
             },
             {
                 "animConName": "ANC_Boss",
@@ -214,7 +232,6 @@
                                 "moveAcceleration": 7.300000190734863,
                                 "moveMaxSpeed": 2.200000047683716,
                                 "moveRotateSpeed": 10.0,
-                                "transNearDistance": 2.0,
                                 "warpMotion": {
                                     "useWarp": false
                                 }
@@ -226,7 +243,6 @@
                                 "moveAcceleration": 6.599999904632568,
                                 "moveMaxSpeed": 8.899999618530273,
                                 "moveRotateSpeed": 10.0,
-                                "transNearDistance": 2.0,
                                 "warpMotion": {
                                     "useWarp": false
                                 }
@@ -246,18 +262,135 @@
                                 "atkInfos": [
                                     {
                                         "damage": 1.0,
+                                        "hitSE": {
+                                            "loop": false,
+                                            "pitch": 0.0,
+                                            "soundName": "damage1.wav",
+                                            "useListener": true,
+                                            "volume": 0.27000001072883606
+                                        },
+                                        "hitVfx": {
+                                            "applyColor": false,
+                                            "lookCam": false,
+                                            "scale": 1.0,
+                                            "speed": 1.0,
+                                            "startFrame": 0
+                                        },
+                                        "isCamShake": false,
                                         "level": 0
                                     },
                                     {
                                         "damage": 2.0999999046325684,
+                                        "hitSE": {
+                                            "loop": false,
+                                            "pitch": 0.0,
+                                            "soundName": "damage1.wav",
+                                            "useListener": true,
+                                            "volume": 0.27000001072883606
+                                        },
+                                        "hitVfx": {
+                                            "applyColor": false,
+                                            "lookCam": false,
+                                            "scale": 1.0,
+                                            "speed": 1.0,
+                                            "startFrame": 0
+                                        },
+                                        "isCamShake": false,
                                         "level": 0
                                     },
                                     {
+                                        "camShake": {
+                                            "fadeOut": true,
+                                            "power": 2.0,
+                                            "shakeVec": [
+                                                1.0,
+                                                0.5,
+                                                0.0
+                                            ],
+                                            "speed": 0.6000000238418579,
+                                            "time": 0.6000000238418579
+                                        },
                                         "damage": 5.099999904632568,
-                                        "level": 3
+                                        "hitSE": {
+                                            "loop": false,
+                                            "pitch": 0.0,
+                                            "soundName": "damage2.wav",
+                                            "useListener": true,
+                                            "volume": 0.27000001072883606
+                                        },
+                                        "hitVfx": {
+                                            "applyColor": false,
+                                            "lookCam": false,
+                                            "scale": 1.0,
+                                            "speed": 1.0,
+                                            "startFrame": 0
+                                        },
+                                        "isCamShake": true,
+                                        "level": 2
                                     }
                                 ],
                                 "atkTimeCnt": 3,
+                                "rotCurve": {
+                                    "easeKind": 0,
+                                    "endValue": 0.0,
+                                    "endVector": 0.0,
+                                    "plotDatas": [
+                                        {
+                                            "interp": 1,
+                                            "time": 0.1080000028014183,
+                                            "value": 1.0,
+                                            "vector": 0.0
+                                        },
+                                        {
+                                            "interp": 1,
+                                            "time": 0.1599999964237213,
+                                            "value": 1.0,
+                                            "vector": 0.0
+                                        },
+                                        {
+                                            "interp": 1,
+                                            "time": 0.1679999977350235,
+                                            "value": 0.10000000149011612,
+                                            "vector": 0.0
+                                        },
+                                        {
+                                            "interp": 1,
+                                            "time": 0.3149999976158142,
+                                            "value": 0.10000000149011612,
+                                            "vector": 0.0
+                                        },
+                                        {
+                                            "interp": 1,
+                                            "time": 0.34299999475479126,
+                                            "value": 1.0,
+                                            "vector": 0.0
+                                        },
+                                        {
+                                            "interp": 1,
+                                            "time": 0.4320000112056732,
+                                            "value": 1.0,
+                                            "vector": 0.0
+                                        },
+                                        {
+                                            "interp": 1,
+                                            "time": 0.4620000123977661,
+                                            "value": 0.10000000149011612,
+                                            "vector": 0.0
+                                        },
+                                        {
+                                            "interp": 1,
+                                            "time": 0.8420000076293945,
+                                            "value": 0.10000000149011612,
+                                            "vector": 0.0
+                                        }
+                                    ],
+                                    "startInterp": 1,
+                                    "startValue": 0.0,
+                                    "startVector": 0.0,
+                                    "useHermite": true
+                                },
+                                "rotTimes": 5.0,
+                                "useRotCurve": true,
                                 "warpMotion": {
                                     "allWarpStep": 3,
                                     "useWarp": true,
@@ -268,15 +401,35 @@
                                             "fromRootMotion": true,
                                             "moveCurveXZ": {
                                                 "easeKind": 0,
-                                                "endValue": 1.0,
+                                                "endValue": 0.0,
                                                 "endVector": 0.0,
-                                                "plotDatas": null,
-                                                "startInterp": 1,
-                                                "startValue": 1.0,
-                                                "startVector": 0.0,
+                                                "plotDatas": [
+                                                    {
+                                                        "interp": 1,
+                                                        "time": 0.4644927680492401,
+                                                        "value": 1.0,
+                                                        "vector": 0.0
+                                                    },
+                                                    {
+                                                        "interp": 0,
+                                                        "time": 0.5590000152587891,
+                                                        "value": 0.20000000298023224,
+                                                        "vector": 1.9159034490585327
+                                                    },
+                                                    {
+                                                        "interp": 1,
+                                                        "time": 0.7490000128746033,
+                                                        "value": 1.0,
+                                                        "vector": 0.0
+                                                    }
+                                                ],
+                                                "startInterp": 0,
+                                                "startValue": 0.0,
+                                                "startVector": 1.9801077842712402,
                                                 "useHermite": true
                                             },
-                                            "movementXZ": 3.0
+                                            "movementXZ": 5.0,
+                                            "targetOffset": -1.0
                                         },
                                         {
                                             "beginRatio": 0.31200000643730164,
@@ -292,7 +445,8 @@
                                                 "startVector": 0.0,
                                                 "useHermite": true
                                             },
-                                            "movementXZ": 4.0
+                                            "movementXZ": 5.0,
+                                            "targetOffset": -1.0
                                         },
                                         {
                                             "beginRatio": 0.5429999828338623,
@@ -308,7 +462,8 @@
                                                 "startVector": 0.0,
                                                 "useHermite": true
                                             },
-                                            "movementXZ": 3.0
+                                            "movementXZ": 5.0,
+                                            "targetOffset": -1.0
                                         }
                                     ]
                                 }
@@ -317,14 +472,352 @@
                         },
                         {
                             "data": {
+                                "canBreak": 8.0,
+                                "knockDistance": 7.0,
+                                "warpMotion": {
+                                    "allWarpStep": 1,
+                                    "useWarp": true,
+                                    "warpStructs": [
+                                        {
+                                            "beginRatio": 0.0,
+                                            "endRatio": 1.0,
+                                            "fromRootMotion": true,
+                                            "moveCurveXZ": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": null,
+                                                "startInterp": 1,
+                                                "startValue": 1.0,
+                                                "startVector": 0.0,
+                                                "useHermite": true
+                                            },
+                                            "movementXZ": -10.0,
+                                            "targetOffset": 0.0
+                                        }
+                                    ]
+                                }
+                            },
+                            "typeString": "BreakEnd_Knock"
+                        },
+                        {
+                            "data": {
+                                "warpMotion": {
+                                    "useWarp": false
+                                }
+                            },
+                            "typeString": "Break_Idle"
+                        },
+                        {
+                            "data": {
                                 "atkInfos": [
                                     {
-                                        "damage": 7.300000190734863,
+                                        "damage": 3.0,
+                                        "hitSE": {
+                                            "loop": false,
+                                            "pitch": 0.0,
+                                            "soundName": "damage1.wav",
+                                            "useListener": true,
+                                            "volume": 0.27000001072883606
+                                        },
+                                        "hitVfx": {
+                                            "applyColor": false,
+                                            "lookCam": false,
+                                            "scale": 1.0,
+                                            "speed": 1.0,
+                                            "startFrame": 0
+                                        },
+                                        "isCamShake": false,
+                                        "level": 1
+                                    },
+                                    {
+                                        "camShake": {
+                                            "fadeOut": true,
+                                            "power": 2.5,
+                                            "shakeVec": [
+                                                1.0,
+                                                0.4000000059604645,
+                                                0.0
+                                            ],
+                                            "speed": 0.5,
+                                            "time": 0.6000000238418579
+                                        },
+                                        "damage": 5.0,
+                                        "hitSE": {
+                                            "loop": false,
+                                            "pitch": 0.0,
+                                            "soundName": "damage2.wav",
+                                            "useListener": true,
+                                            "volume": 0.27000001072883606
+                                        },
+                                        "hitVfx": {
+                                            "applyColor": false,
+                                            "lookCam": false,
+                                            "scale": 1.0,
+                                            "speed": 1.0,
+                                            "startFrame": 0
+                                        },
+                                        "isCamShake": true,
+                                        "level": 2
+                                    }
+                                ],
+                                "atkTimeCnt": 2,
+                                "rotCurve": {
+                                    "easeKind": 0,
+                                    "endValue": 0.0,
+                                    "endVector": 0.0,
+                                    "plotDatas": [
+                                        {
+                                            "interp": 1,
+                                            "time": 0.38100001215934753,
+                                            "value": 1.0,
+                                            "vector": 0.0
+                                        },
+                                        {
+                                            "interp": 1,
+                                            "time": 0.38199999928474426,
+                                            "value": 0.10000000149011612,
+                                            "vector": 0.0
+                                        },
+                                        {
+                                            "interp": 1,
+                                            "time": 0.4690000116825104,
+                                            "value": 0.0,
+                                            "vector": 0.0
+                                        },
+                                        {
+                                            "interp": 1,
+                                            "time": 0.47099998593330383,
+                                            "value": 1.0,
+                                            "vector": 0.0
+                                        },
+                                        {
+                                            "interp": 1,
+                                            "time": 0.5860000252723694,
+                                            "value": 1.0,
+                                            "vector": 0.0
+                                        },
+                                        {
+                                            "interp": 1,
+                                            "time": 0.5889999866485596,
+                                            "value": 0.10000000149011612,
+                                            "vector": 0.0
+                                        },
+                                        {
+                                            "interp": 1,
+                                            "time": 0.6069999933242798,
+                                            "value": 0.0,
+                                            "vector": 0.0
+                                        }
+                                    ],
+                                    "startInterp": 1,
+                                    "startValue": 1.0,
+                                    "startVector": 0.0,
+                                    "useHermite": true
+                                },
+                                "rotTimes": 3.0,
+                                "useRotCurve": true,
+                                "warpMotion": {
+                                    "allWarpStep": 2,
+                                    "useWarp": true,
+                                    "warpStructs": [
+                                        {
+                                            "beginRatio": 0.36899998784065247,
+                                            "endRatio": 0.546999990940094,
+                                            "fromRootMotion": false,
+                                            "moveCurveXZ": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": null,
+                                                "startInterp": 0,
+                                                "startValue": 0.0,
+                                                "startVector": 2.0,
+                                                "useHermite": true
+                                            },
+                                            "movementXZ": 4.0,
+                                            "targetOffset": -1.0
+                                        },
+                                        {
+                                            "beginRatio": 0.5400000214576721,
+                                            "endRatio": 1.0,
+                                            "fromRootMotion": false,
+                                            "moveCurveXZ": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": [
+                                                    {
+                                                        "interp": 1,
+                                                        "time": 0.27173912525177,
+                                                        "value": 0.9135135412216187,
+                                                        "vector": 0.43346160650253296
+                                                    }
+                                                ],
+                                                "startInterp": 0,
+                                                "startValue": 0.0,
+                                                "startVector": 2.0,
+                                                "useHermite": true
+                                            },
+                                            "movementXZ": 5.5,
+                                            "targetOffset": -1.0
+                                        }
+                                    ]
+                                }
+                            },
+                            "typeString": "CombAttack2"
+                        },
+                        {
+                            "data": {
+                                "atkInfos": [
+                                    {
+                                        "camShake": {
+                                            "fadeOut": true,
+                                            "power": 2.0,
+                                            "shakeVec": [
+                                                1.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "speed": 0.5,
+                                            "time": 0.4000000059604645
+                                        },
+                                        "damage": 8.0,
+                                        "hitSE": {
+                                            "loop": false,
+                                            "pitch": 0.0,
+                                            "soundName": "damage1.wav",
+                                            "useListener": true,
+                                            "volume": 0.27000001072883606
+                                        },
+                                        "hitVfx": {
+                                            "applyColor": false,
+                                            "lookCam": false,
+                                            "scale": 1.0,
+                                            "speed": 1.0,
+                                            "startFrame": 0
+                                        },
+                                        "isCamShake": true,
+                                        "level": 2
+                                    },
+                                    {
+                                        "camShake": {
+                                            "fadeOut": true,
+                                            "power": 2.0,
+                                            "shakeVec": [
+                                                1.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "speed": 0.6000000238418579,
+                                            "time": 0.5
+                                        },
+                                        "damage": 8.0,
+                                        "hitSE": {
+                                            "loop": false,
+                                            "pitch": 0.0,
+                                            "soundName": "damage2.wav",
+                                            "useListener": true,
+                                            "volume": 0.27000001072883606
+                                        },
+                                        "hitVfx": {
+                                            "applyColor": false,
+                                            "lookCam": false,
+                                            "scale": 1.0,
+                                            "speed": 1.0,
+                                            "startFrame": 0
+                                        },
+                                        "isCamShake": true,
+                                        "level": 2
+                                    }
+                                ],
+                                "atkTimeCnt": 2,
+                                "rotCurve": {
+                                    "easeKind": 0,
+                                    "endValue": 0.0,
+                                    "endVector": 0.0,
+                                    "plotDatas": [
+                                        {
+                                            "interp": 0,
+                                            "time": 0.19099999964237213,
+                                            "value": 1.0,
+                                            "vector": 0.22761602699756622
+                                        },
+                                        {
+                                            "interp": 1,
+                                            "time": 0.2680000066757202,
+                                            "value": 0.0,
+                                            "vector": 0.0
+                                        },
+                                        {
+                                            "interp": 0,
+                                            "time": 0.41600000858306885,
+                                            "value": 0.0,
+                                            "vector": 1.5187337398529053
+                                        },
+                                        {
+                                            "interp": 1,
+                                            "time": 0.5590000152587891,
+                                            "value": 1.0,
+                                            "vector": 0.0
+                                        },
+                                        {
+                                            "interp": 1,
+                                            "time": 0.5609999895095825,
+                                            "value": 0.0,
+                                            "vector": 0.0
+                                        }
+                                    ],
+                                    "startInterp": 1,
+                                    "startValue": 1.0,
+                                    "startVector": 0.08959775418043137,
+                                    "useHermite": true
+                                },
+                                "rotTimes": 1.0,
+                                "useRotCurve": true,
+                                "warpMotion": {
+                                    "useWarp": false
+                                }
+                            },
+                            "typeString": "CombAttack3"
+                        },
+                        {
+                            "data": {
+                                "atkInfos": [
+                                    {
+                                        "camShake": {
+                                            "fadeOut": true,
+                                            "power": 2.5,
+                                            "shakeVec": [
+                                                1.0,
+                                                1.0,
+                                                0.0
+                                            ],
+                                            "speed": 0.4000000059604645,
+                                            "time": 0.5
+                                        },
+                                        "damage": 15.0,
+                                        "hitSE": {
+                                            "loop": false,
+                                            "pitch": 0.0,
+                                            "soundName": "damage1.wav",
+                                            "useListener": true,
+                                            "volume": 0.30000001192092896
+                                        },
+                                        "hitVfx": {
+                                            "applyColor": false,
+                                            "lookCam": false,
+                                            "scale": 1.0,
+                                            "speed": 1.0,
+                                            "startFrame": 0
+                                        },
+                                        "isCamShake": true,
                                         "level": 3
                                     }
                                 ],
+                                "atkTimeCnt": 1,
                                 "fallOffset": 1.100000023841858,
-                                "jumpHeight": 2.4000000953674316,
+                                "jumpHeight": 3.5999999046325684,
                                 "jumpHeightCurve": {
                                     "easeKind": 0,
                                     "endValue": 0.0,
@@ -390,8 +883,44 @@
                                     "useHermite": true
                                 },
                                 "maxHoriSpeed": 500.0,
-                                "rotSpeed": 2.0,
+                                "rotCurve": {
+                                    "easeKind": 0,
+                                    "endValue": 0.0,
+                                    "endVector": 0.0,
+                                    "plotDatas": [
+                                        {
+                                            "interp": 1,
+                                            "time": 0.19599999487400055,
+                                            "value": 1.0,
+                                            "vector": 0.0
+                                        },
+                                        {
+                                            "interp": 1,
+                                            "time": 0.2150000035762787,
+                                            "value": 0.5,
+                                            "vector": 0.0
+                                        },
+                                        {
+                                            "interp": 1,
+                                            "time": 0.3720000088214874,
+                                            "value": 0.5,
+                                            "vector": 0.0
+                                        },
+                                        {
+                                            "interp": 1,
+                                            "time": 0.37400001287460327,
+                                            "value": 0.0,
+                                            "vector": 0.0
+                                        }
+                                    ],
+                                    "startInterp": 1,
+                                    "startValue": 0.0,
+                                    "startVector": 0.0,
+                                    "useHermite": true
+                                },
+                                "rotTimes": 15.0,
                                 "speedCof": 2.0,
+                                "useRotCurve": true,
                                 "warpMotion": {
                                     "useWarp": false
                                 }
@@ -401,17 +930,32 @@
                     ],
                     "defaultState": 0,
                     "disLengthList": [
-                        2.0,
                         4.0,
-                        6.0
+                        8.0,
+                        10.0
                     ]
                 },
+                "breakBarName": "Enemy_BreakGageBar",
                 "enable": true,
                 "hpBarName": "Enemy_GageBar",
-                "maxHp": 100.0,
+                "maxHp": 200.0,
                 "name": "Boss",
                 "priority": 0,
                 "weaponName": "Boss_Weapon"
+            },
+            {
+                "color": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ditherOffset": 0.0,
+                "ditherPower": 1.0,
+                "enable": true,
+                "name": "OutLineRenderer",
+                "priority": 0,
+                "scale": 0.009999999776482582
             }
         ],
         "layer": 0,
@@ -423,7 +967,7 @@
             ],
             "pos": [
                 0.0,
-                0.20000000298023224,
+                0.10000000149011612,
                 6.5
             ],
             "rotation": [

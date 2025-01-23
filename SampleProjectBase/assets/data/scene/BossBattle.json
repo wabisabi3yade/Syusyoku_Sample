@@ -1272,7 +1272,7 @@
                                 "useHermite": true
                             },
                             "start": "GameStartText",
-                            "uiAnim": true,
+                            "uiAnim": false,
                             "win": "WinText",
                             "winShake": {
                                 "fadeOut": true,
@@ -1308,7 +1308,7 @@
                             "pitch": 0.0,
                             "soundName": "battle.wav",
                             "useListener": false,
-                            "volume": 0.17000000178813934
+                            "volume": 0.10000000149011612
                         }
                     }
                 ],
@@ -1605,7 +1605,7 @@
                                                     "pitch": 0.0,
                                                     "soundName": "damage1.wav",
                                                     "useListener": true,
-                                                    "volume": 0.17000000178813934
+                                                    "volume": 0.27000001072883606
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -1624,7 +1624,7 @@
                                                     "pitch": 0.0,
                                                     "soundName": "damage1.wav",
                                                     "useListener": true,
-                                                    "volume": 0.17000000178813934
+                                                    "volume": 0.27000001072883606
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -1654,7 +1654,7 @@
                                                     "pitch": 0.0,
                                                     "soundName": "damage2.wav",
                                                     "useListener": true,
-                                                    "volume": 0.17000000178813934
+                                                    "volume": 0.27000001072883606
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -1739,12 +1739,31 @@
                                                     "fromRootMotion": true,
                                                     "moveCurveXZ": {
                                                         "easeKind": 0,
-                                                        "endValue": 1.0,
+                                                        "endValue": 0.0,
                                                         "endVector": 0.0,
-                                                        "plotDatas": null,
-                                                        "startInterp": 1,
-                                                        "startValue": 1.0,
-                                                        "startVector": 0.0,
+                                                        "plotDatas": [
+                                                            {
+                                                                "interp": 1,
+                                                                "time": 0.4644927680492401,
+                                                                "value": 1.0,
+                                                                "vector": 0.0
+                                                            },
+                                                            {
+                                                                "interp": 0,
+                                                                "time": 0.5590000152587891,
+                                                                "value": 0.20000000298023224,
+                                                                "vector": 1.9159034490585327
+                                                            },
+                                                            {
+                                                                "interp": 1,
+                                                                "time": 0.7490000128746033,
+                                                                "value": 1.0,
+                                                                "vector": 0.0
+                                                            }
+                                                        ],
+                                                        "startInterp": 0,
+                                                        "startValue": 0.0,
+                                                        "startVector": 1.9801077842712402,
                                                         "useHermite": true
                                                     },
                                                     "movementXZ": 5.0,
@@ -1837,7 +1856,7 @@
                                                     "pitch": 0.0,
                                                     "soundName": "damage1.wav",
                                                     "useListener": true,
-                                                    "volume": 0.17000000178813934
+                                                    "volume": 0.27000001072883606
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -1852,7 +1871,7 @@
                                             {
                                                 "camShake": {
                                                     "fadeOut": true,
-                                                    "power": 1.0,
+                                                    "power": 2.5,
                                                     "shakeVec": [
                                                         1.0,
                                                         0.4000000059604645,
@@ -1867,7 +1886,7 @@
                                                     "pitch": 0.0,
                                                     "soundName": "damage2.wav",
                                                     "useListener": true,
-                                                    "volume": 0.17000000178813934
+                                                    "volume": 0.27000001072883606
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -1992,7 +2011,7 @@
                                             {
                                                 "camShake": {
                                                     "fadeOut": true,
-                                                    "power": 1.0,
+                                                    "power": 2.0,
                                                     "shakeVec": [
                                                         1.0,
                                                         0.0,
@@ -2007,7 +2026,7 @@
                                                     "pitch": 0.0,
                                                     "soundName": "damage1.wav",
                                                     "useListener": true,
-                                                    "volume": 0.17000000178813934
+                                                    "volume": 0.27000001072883606
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -2022,7 +2041,7 @@
                                             {
                                                 "camShake": {
                                                     "fadeOut": true,
-                                                    "power": 1.0,
+                                                    "power": 2.0,
                                                     "shakeVec": [
                                                         1.0,
                                                         0.0,
@@ -2037,7 +2056,7 @@
                                                     "pitch": 0.0,
                                                     "soundName": "damage2.wav",
                                                     "useListener": true,
-                                                    "volume": 0.17000000178813934
+                                                    "volume": 0.27000001072883606
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -2106,22 +2125,22 @@
                                             {
                                                 "camShake": {
                                                     "fadeOut": true,
-                                                    "power": 1.5,
+                                                    "power": 2.5,
                                                     "shakeVec": [
                                                         1.0,
-                                                        0.6000000238418579,
+                                                        1.0,
                                                         0.0
                                                     ],
                                                     "speed": 0.4000000059604645,
-                                                    "time": 0.30000001192092896
+                                                    "time": 0.5
                                                 },
                                                 "damage": 15.0,
                                                 "hitSE": {
                                                     "loop": false,
                                                     "pitch": 0.0,
-                                                    "soundName": "damage2.wav",
+                                                    "soundName": "damage1.wav",
                                                     "useListener": true,
-                                                    "volume": 0.20000000298023224
+                                                    "volume": 0.30000001192092896
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -4479,7 +4498,8 @@
                     {
                         "enable": true,
                         "name": "SoundManager",
-                        "priority": 0
+                        "priority": 0,
+                        "volumeTimes": 2.0
                     }
                 ],
                 "layer": 0,

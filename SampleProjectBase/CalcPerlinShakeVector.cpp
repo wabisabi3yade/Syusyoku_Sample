@@ -127,6 +127,8 @@ namespace HashiTaku
 		// オフセット値を求める
 		CalcShakeOffset(_outVector);
 
+
+
 		// 時間が0以上　かつ　全体時間を過ぎたら終わる
 		if (curShakeParameter.time > 0.0f &&
 			shakeElapsedTime > curShakeParameter.time)

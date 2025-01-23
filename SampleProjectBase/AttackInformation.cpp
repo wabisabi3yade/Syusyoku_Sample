@@ -8,7 +8,7 @@ namespace HashiTaku
 	// ヒットストップフレーム
 	std::array<u_int, static_cast<u_int>(AttackInformation::AttackLevel::MaxNum)>  AttackInformation::hitStopFrames =
 	{
-		4, 8, 12, 15
+		12, 18, 24, 30
 	};
 	// パッド振動力
 	std::array<float, static_cast<u_int>(AttackInformation::AttackLevel::MaxNum)>  AttackInformation::padShakePowers =

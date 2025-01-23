@@ -377,7 +377,7 @@
                 ],
                 "isKinematic": false,
                 "isTrigger": false,
-                "mass": 1.059999942779541,
+                "mass": 1.0,
                 "name": "RigidBody",
                 "priority": 0
             },
@@ -897,7 +897,7 @@
                                                     "level": 2
                                                 }
                                             ],
-                                            "time": 1.0
+                                            "time": 1.2000000476837158
                                         },
                                         {
                                             "attackInfos": [
@@ -905,7 +905,7 @@
                                                     "break": 30.0,
                                                     "camShake": {
                                                         "fadeOut": false,
-                                                        "power": 5.0,
+                                                        "power": 3.0,
                                                         "shakeVec": [
                                                             1.0,
                                                             1.0,
@@ -918,7 +918,7 @@
                                                     "hitSE": {
                                                         "loop": false,
                                                         "pitch": 0.0,
-                                                        "soundName": "damage2.wav",
+                                                        "soundName": "sword2.wav",
                                                         "useListener": true,
                                                         "volume": 0.17000000178813934
                                                     },
@@ -934,7 +934,7 @@
                                                     "level": 3
                                                 }
                                             ],
-                                            "time": 2.0
+                                            "time": 2.4000000953674316
                                         }
                                     ],
                                     "chargeOffset": [
@@ -1088,7 +1088,6 @@
                     "groundCheckName": "PlayerGroundCollision"
                 },
                 "camObjName": "Camera",
-                "debugInvicible": false,
                 "enable": true,
                 "hpBarObjName": "Player_HpBar",
                 "maxHp": 100.0,

@@ -391,7 +391,7 @@
                                             3
                                         ],
                                         "enable": true,
-                                        "isDebugDisplay": false,
+                                        "isDebugDisplay": true,
                                         "name": "Weapon",
                                         "priority": 0
                                     },
@@ -1299,7 +1299,7 @@
                         "weaponObjName": "Weapon"
                     },
                     {
-                        "animConName": "ANC_Player",
+                        "animConName": "ANC_MixiamoPlayer",
                         "enable": true,
                         "name": "Animation",
                         "priority": 1

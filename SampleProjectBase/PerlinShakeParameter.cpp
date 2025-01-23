@@ -3,6 +3,15 @@
 
 namespace HashiTaku
 {
+	PerlinShakeParameter::PerlinShakeParameter() : 
+		power(1.0f),
+		minPowerRatio(0.0f),
+		time(0.3f),
+		speed(1.0f),
+		isFadeOut(false)
+	{
+	}
+
 	json PerlinShakeParameter::Save()
 	{
 		json shakeData;

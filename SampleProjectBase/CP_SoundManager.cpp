@@ -5,13 +5,37 @@ namespace HashiTaku
 {
 	int CP_SoundManager::PlaySE(const PlaySoundParameter& _seParameter, const DXSimp::Vector3& _soundPos)
 	{
-		return pDXSoundManager->Play(_seParameter, _soundPos);
+		return pDXSoundManager->Play(_seParameter, _soundPos, volumeTimes);
+	}
+
+	json CP_SoundManager::Save()
+	{
+		json data = SingletonComponent::Save();
+
+		data["volumeTimes"] = volumeTimes;
+
+		return data;
+	}
+
+	void CP_SoundManager::Load(const json& _data)
+	{
+		SingletonComponent::Load(_data);
+
+		LoadJsonFloat("volumeTimes", volumeTimes, _data);
+	}
+
+	void CP_SoundManager::ImGuiDebug()
+	{
+		SingletonComponent::ImGuiDebug();
+
+		ImGui::DragFloat("volume", &volumeTimes, 0.01f, 0.0f, 10.0f);
 	}
 
 	void CP_SoundManager::Awake()
 	{
 		SingletonComponent::Awake();
 
+		// DirectXのサウンドマネジャーを取得
 		pDXSoundManager = DXSoundManager::GetInstance();
 	}
 
@@ -19,6 +43,7 @@ namespace HashiTaku
 	{
 		SingletonComponent::OnDestroy();
 
+		// BGMを再生しているなら停止させる
 		if (curPlayBGMId != -1)
 		{
 			pDXSoundManager->StopSound(curPlayBGMId);
@@ -33,8 +58,7 @@ namespace HashiTaku
 			pDXSoundManager->StopSound(curPlayBGMId);
 		}
 
-		curPlayBGMId = pDXSoundManager->Play(_bgmParameter);
-
+		curPlayBGMId = pDXSoundManager->Play(_bgmParameter, DXSimp::Vector3::Zero, volumeTimes);
 		return curPlayBGMId;
 	}
 }
