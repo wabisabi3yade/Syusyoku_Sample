@@ -282,6 +282,7 @@ namespace HashiTaku
 			data["blendAnim"] = pBlendAnimation->GetAssetName();
 
 		data["beginBoneId"] = beginBlendBoneId;
+		data["beginBlendFlame"] = beginBlendPlayFrame;
 		data["meshSpaceBlend"] = isMeshSpaceRotationBlend;
 		data["blendDepth"] = blendDepth;
 
@@ -292,7 +293,7 @@ namespace HashiTaku
 	{
 		AnimationNode_Base::Load(_data);
 
-		LoadJsonUnsigned("blendBeginFrame", beginBlendPlayFrame, _data);
+		LoadJsonUnsigned("beginBlendFlame", beginBlendPlayFrame, _data);
 		LoadJsonBoolean("meshSpaceBlend", isMeshSpaceRotationBlend, _data);
 		LoadJsonUnsigned("blendDepth", blendDepth, _data);
 		json blendCurveData;

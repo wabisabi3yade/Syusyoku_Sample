@@ -10,18 +10,21 @@ namespace HashiTaku
 		DXSimp::Vector3 shakeVec;
 
 		/// @brief 揺れの力
-		float power{ 1.0f };
+		float power;
+
+		/// @brief 最低限に揺らすパワー
+		float minPowerRatio;
 
 		/// @brief 揺らす時間
-		float time{ 0.3f };
+		float time;
 
 		/// @brief 揺らす速度
-		float speed{ 1.0f };
+		float speed;
 
 		/// @brief フェードアウトするか？
-		bool isFadeOut{ false };
+		bool isFadeOut;
 
-		PerlinShakeParameter() = default;
+		PerlinShakeParameter();
 		~PerlinShakeParameter() = default;
 
 		json Save() override;

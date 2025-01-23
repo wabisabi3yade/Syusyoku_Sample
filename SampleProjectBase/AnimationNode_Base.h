@@ -57,21 +57,22 @@ namespace HashiTaku
 			NodeType _type);
 		virtual ~AnimationNode_Base() {}
 
-		// ノード名をセット
+		/// @brief ノード名をセット
 		void SetNodeName(const std::string& _nodeName);
 
-		// ループするかセット
+		/// @brief ループするかセット
 		void SetIsLoop(bool _isLoop);
 
 		/// @brief 終了フラグをセットする
 		void SetFinish();
 
-		// ノード名取得
+		/// @brief ノード名取得
 		const std::string& GetNodeName() const;
 
-		// ノードの種類を取得
+		/// @brief ノードの種類を取得
 		NodeType GetNodeType() const;
-		// 再生時間を取得
+
+		/// @brief 再生時間を取得
 		float GetAnimationTime() const;
 
 		/// @brief 全体キー数を求める
@@ -82,7 +83,7 @@ namespace HashiTaku
 		/// @return ループ再生フラグ
 		bool GetIsLoop() const;
 
-		// アニメーション終了フラグを取得する
+		/// @brief アニメーション終了フラグを取得する
 		bool GetIsFinish() const;
 
 		/// @brief XZ軸をルートモーションで移動するか？
@@ -112,8 +113,7 @@ namespace HashiTaku
 		// ノードのパラメーター設定
 		void ImGuiSetParameter();
 	protected:
-
-		// 再生時間をセットする
+		/// @brief 再生時間をセットする
 		void SetAnimationTime(float _time);
 
 		void ImGuiDebug() override;

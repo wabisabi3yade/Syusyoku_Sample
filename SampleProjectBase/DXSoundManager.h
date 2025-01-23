@@ -81,9 +81,11 @@ namespace HashiTaku
 		/// @brief 再生処理
 		/// @param _soundParameter 再生するサウンド情報
 		/// @param _soundPos サウンドのワールド座標
+		/// @param _volumeTimes 音量の倍率
 		/// @return 再生しているサウンドのID
 		int Play(const PlaySoundParameter& _soundParameter,
-			const DXSimp::Vector3& _soundPos = DXSimp::Vector3::Zero);
+			const DXSimp::Vector3& _soundPos = DXSimp::Vector3::Zero,
+			float _volumeTimes = 1.0f);
 
 		/// @brief 再生中の音を全て停止する
 		void StopAll();

@@ -92,13 +92,15 @@ namespace HashiTaku
 		return playId;
 	}
 
-	int DXSoundManager::Play(const PlaySoundParameter& _soundParameter, const DXSimp::Vector3& _soundPos)
+	int DXSoundManager::Play(const PlaySoundParameter& _soundParameter, 
+		const DXSimp::Vector3& _soundPos,
+		float _volumeTimes)
 	{
 		if (!_soundParameter.pSound) return -1;
 
 		// 再生する
 		return Play(*_soundParameter.pSound,
-			_soundParameter.volume,
+			_soundParameter.volume * _volumeTimes,	// パラメータ音量　×　全体の倍率
 			_soundParameter.pitch,
 			_soundParameter.isLoop,
 			_soundParameter.isUseLisneter,

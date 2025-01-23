@@ -37,6 +37,9 @@ namespace HashiTaku
 		/// @param _shakeCamParam カメラ揺れパラメータ
 		void ShakeCamera(const PerlinShakeParameter& _shakeCamParam);
 
+		/// @brief シェイクを止める
+		void StopShake();
+
 		/// @brief 対象とするゲームオブジェクトをセット
 		/// @param _targetTransform 対象のオブジェクト(nullptrで外す)
 		void SetFollowTransform(const Transform* _targetTransform);

@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "AnimationCurve.h"
 #include "IObserever.h"
+#include "PerlinShakeParameter.h"
 
 namespace HashiTaku
 {
@@ -24,6 +25,9 @@ namespace HashiTaku
 	private:
 		/// @brief ゲームスタートの速度カーブ
 		AnimationCurve gameStartCurve;
+
+		/// @brief 勝利時に揺らすパラメータ
+		PerlinShakeParameter winShakeParam;
 
 		/// @brief フェードオブジェクト名
 		std::string fadeObjName;
@@ -125,6 +129,8 @@ namespace HashiTaku
 		void OnEndDirection();
 
 		void ImGuiDebug() override;
+		// 勝利時の演出
+		void ImGuiWinDirection();
 		// 必要なオブジェクトの名前を編集
 		void ImGuiSetObject();
 	};

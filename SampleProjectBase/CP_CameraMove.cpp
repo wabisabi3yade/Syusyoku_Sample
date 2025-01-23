@@ -31,6 +31,11 @@ namespace HashiTaku
 		pMoveController->BeginShake(_shakeCamParam);
 	}
 
+	void CP_CameraMove::StopShake()
+	{
+		pMoveController->StopShake();
+	}
+
 	bool CP_CameraMove::IsCanUpdate()
 	{
 #ifdef EDIT

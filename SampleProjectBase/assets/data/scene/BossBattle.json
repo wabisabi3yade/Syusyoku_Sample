@@ -1272,8 +1272,20 @@
                                 "useHermite": true
                             },
                             "start": "GameStartText",
-                            "uiAnim": true,
-                            "win": "WinText"
+                            "uiAnim": false,
+                            "win": "WinText",
+                            "winShake": {
+                                "fadeOut": true,
+                                "power": 0.5,
+                                "shakeVec": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "speed": 4.0,
+                                "time": 0.30000001192092896
+                            },
+                            "winTimeScale": 0.20000000298023224
                         },
                         "enable": true,
                         "moveAreaRect": [
@@ -1296,7 +1308,7 @@
                             "pitch": 0.0,
                             "soundName": "battle.wav",
                             "useListener": false,
-                            "volume": 0.17000000178813934
+                            "volume": 0.10000000149011612
                         }
                     }
                 ],
@@ -1593,7 +1605,7 @@
                                                     "pitch": 0.0,
                                                     "soundName": "damage1.wav",
                                                     "useListener": true,
-                                                    "volume": 0.17000000178813934
+                                                    "volume": 0.27000001072883606
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -1612,7 +1624,7 @@
                                                     "pitch": 0.0,
                                                     "soundName": "damage1.wav",
                                                     "useListener": true,
-                                                    "volume": 0.17000000178813934
+                                                    "volume": 0.27000001072883606
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -1642,7 +1654,7 @@
                                                     "pitch": 0.0,
                                                     "soundName": "damage2.wav",
                                                     "useListener": true,
-                                                    "volume": 0.17000000178813934
+                                                    "volume": 0.27000001072883606
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -1727,12 +1739,31 @@
                                                     "fromRootMotion": true,
                                                     "moveCurveXZ": {
                                                         "easeKind": 0,
-                                                        "endValue": 1.0,
+                                                        "endValue": 0.0,
                                                         "endVector": 0.0,
-                                                        "plotDatas": null,
-                                                        "startInterp": 1,
-                                                        "startValue": 1.0,
-                                                        "startVector": 0.0,
+                                                        "plotDatas": [
+                                                            {
+                                                                "interp": 1,
+                                                                "time": 0.4644927680492401,
+                                                                "value": 1.0,
+                                                                "vector": 0.0
+                                                            },
+                                                            {
+                                                                "interp": 0,
+                                                                "time": 0.5590000152587891,
+                                                                "value": 0.20000000298023224,
+                                                                "vector": 1.9159034490585327
+                                                            },
+                                                            {
+                                                                "interp": 1,
+                                                                "time": 0.7490000128746033,
+                                                                "value": 1.0,
+                                                                "vector": 0.0
+                                                            }
+                                                        ],
+                                                        "startInterp": 0,
+                                                        "startValue": 0.0,
+                                                        "startVector": 1.9801077842712402,
                                                         "useHermite": true
                                                     },
                                                     "movementXZ": 5.0,
@@ -1825,7 +1856,7 @@
                                                     "pitch": 0.0,
                                                     "soundName": "damage1.wav",
                                                     "useListener": true,
-                                                    "volume": 0.17000000178813934
+                                                    "volume": 0.27000001072883606
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -1840,7 +1871,7 @@
                                             {
                                                 "camShake": {
                                                     "fadeOut": true,
-                                                    "power": 1.0,
+                                                    "power": 2.5,
                                                     "shakeVec": [
                                                         1.0,
                                                         0.4000000059604645,
@@ -1855,7 +1886,7 @@
                                                     "pitch": 0.0,
                                                     "soundName": "damage2.wav",
                                                     "useListener": true,
-                                                    "volume": 0.17000000178813934
+                                                    "volume": 0.27000001072883606
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -1980,7 +2011,7 @@
                                             {
                                                 "camShake": {
                                                     "fadeOut": true,
-                                                    "power": 1.0,
+                                                    "power": 2.0,
                                                     "shakeVec": [
                                                         1.0,
                                                         0.0,
@@ -1995,7 +2026,7 @@
                                                     "pitch": 0.0,
                                                     "soundName": "damage1.wav",
                                                     "useListener": true,
-                                                    "volume": 0.17000000178813934
+                                                    "volume": 0.27000001072883606
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -2010,7 +2041,7 @@
                                             {
                                                 "camShake": {
                                                     "fadeOut": true,
-                                                    "power": 1.0,
+                                                    "power": 2.0,
                                                     "shakeVec": [
                                                         1.0,
                                                         0.0,
@@ -2025,7 +2056,7 @@
                                                     "pitch": 0.0,
                                                     "soundName": "damage2.wav",
                                                     "useListener": true,
-                                                    "volume": 0.17000000178813934
+                                                    "volume": 0.27000001072883606
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -2094,22 +2125,22 @@
                                             {
                                                 "camShake": {
                                                     "fadeOut": true,
-                                                    "power": 1.5,
+                                                    "power": 2.5,
                                                     "shakeVec": [
                                                         1.0,
-                                                        0.6000000238418579,
+                                                        1.0,
                                                         0.0
                                                     ],
                                                     "speed": 0.4000000059604645,
-                                                    "time": 0.30000001192092896
+                                                    "time": 0.5
                                                 },
                                                 "damage": 15.0,
                                                 "hitSE": {
                                                     "loop": false,
                                                     "pitch": 0.0,
-                                                    "soundName": "damage2.wav",
+                                                    "soundName": "damage1.wav",
                                                     "useListener": true,
-                                                    "volume": 0.20000000298023224
+                                                    "volume": 0.30000001192092896
                                                 },
                                                 "hitVfx": {
                                                     "applyColor": false,
@@ -2245,7 +2276,7 @@
                         "breakBarName": "Enemy_BreakGageBar",
                         "enable": true,
                         "hpBarName": "Enemy_GageBar",
-                        "maxHp": 1.0,
+                        "maxHp": 200.0,
                         "name": "Boss",
                         "priority": 0,
                         "weaponName": "Boss_Weapon"
@@ -2568,27 +2599,32 @@
                                 },
                                 {
                                     "parameter": {
-                                        "firstWaitTime": 0.5,
-                                        "fovEaseOnMove": 0,
-                                        "fovEaseOnZoom": 0,
-                                        "lookEase": 0,
-                                        "moveEase": 0,
-                                        "moveTime": 1.0,
+                                        "centerPosOffset": [
+                                            0.0,
+                                            0.800000011920929,
+                                            0.0
+                                        ],
+                                        "firstWaitTime": 0.10000000149011612,
+                                        "fovEaseOnMove": 20,
+                                        "fovEaseOnZoom": 2,
+                                        "lookEase": 20,
+                                        "moveEase": 20,
+                                        "moveTime": 0.5,
                                         "randVecMax": [
                                             1.0,
-                                            0.75,
-                                            0.0
+                                            0.5,
+                                            1.0
                                         ],
                                         "randVecMin": [
                                             -1.0,
-                                            0.5,
+                                            0.30000001192092896,
                                             -1.0
                                         ],
-                                        "secondWaitTime": 0.5,
+                                        "secondWaitTime": 1.0,
                                         "targetFovOnMove": 45.0,
-                                        "targetToDistance": 5.0,
+                                        "targetToDistance": 6.0,
                                         "zoomTargetFov": 30.0,
-                                        "zoomTime": 0.5
+                                        "zoomTime": 0.6000000238418579
                                     },
                                     "stateType": 2
                                 },
@@ -2831,6 +2867,60 @@
                         1.0,
                         1.0,
                         1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "isShadow": true,
+                        "materials": [
+                            "M_Rock1"
+                        ],
+                        "meshName": "desertRock11.fbx",
+                        "name": "MeshRenderer",
+                        "priority": 0
+                    },
+                    {
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "ditherOffset": 3.0,
+                        "ditherPower": 0.4000000059604645,
+                        "enable": true,
+                        "name": "OutLineRenderer",
+                        "priority": 0,
+                        "scale": 0.07000000029802322
+                    }
+                ],
+                "layer": 0,
+                "name": "Rock14",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        -25.5,
+                        1.2999999523162842,
+                        17.399999618530273
+                    ],
+                    "rotation": [
+                        -0.08036001771688461,
+                        0.6103947162628174,
+                        -0.10285607725381851,
+                        0.7812689542770386
+                    ],
+                    "scale": [
+                        8.0,
+                        6.699999809265137,
+                        3.6000001430511475
                     ]
                 }
             }
@@ -3899,60 +3989,6 @@
             }
         },
         {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "isShadow": true,
-                        "materials": [
-                            "M_Rock1"
-                        ],
-                        "meshName": "desertRock11.fbx",
-                        "name": "MeshRenderer",
-                        "priority": 0
-                    },
-                    {
-                        "color": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "ditherOffset": 3.0,
-                        "ditherPower": 0.4000000059604645,
-                        "enable": true,
-                        "name": "OutLineRenderer",
-                        "priority": 0,
-                        "scale": 0.07000000029802322
-                    }
-                ],
-                "layer": 0,
-                "name": "Rock14",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        -25.5,
-                        1.2999999523162842,
-                        17.399999618530273
-                    ],
-                    "rotation": [
-                        -0.08036001771688461,
-                        0.6103947162628174,
-                        -0.10285607725381851,
-                        0.7812689542770386
-                    ],
-                    "scale": [
-                        8.0,
-                        6.699999809265137,
-                        3.6000001430511475
-                    ]
-                }
-            }
-        },
-        {
             "childs": [
                 {
                     "childs": null,
@@ -4462,7 +4498,8 @@
                     {
                         "enable": true,
                         "name": "SoundManager",
-                        "priority": 0
+                        "priority": 0,
+                        "volumeTimes": 2.0
                     }
                 ],
                 "layer": 0,

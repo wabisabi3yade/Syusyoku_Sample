@@ -140,6 +140,8 @@ namespace HashiTaku
 		/// @param _data ロードするデータ 
 		void Load(const json& _data) override;
 
+		/// @brief アニメーションパラメータが編集・削除したときの実行関数
+		/// @param _notifyData 編集・削除内容
 		void AcceptAnimParamData(const AnimParam::NotificationData& _notifyData);
 	private:
 		// ImGuiで補間の種類を編集

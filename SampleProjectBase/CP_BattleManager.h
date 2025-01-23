@@ -136,7 +136,8 @@ namespace HashiTaku
 		void ActiveObjects();
 
 		/// @brief オブジェクトを止めるようにする
-		void StopObjects();
+		/// @param _isCameraStop カメラも止めるか？
+		void StopObjects(bool _isCameraStop);
 
 		void ImGuiDebug() override;
 	};

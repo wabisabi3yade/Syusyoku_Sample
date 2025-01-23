@@ -185,7 +185,7 @@ namespace HashiTaku
 		for (auto& playHandle : playingHandleList)
 		{
 			// ベースの速度　×　シーンのタイムスケール
-			manager->SetPaused(playHandle.handle, true);
+			manager->SetSpeed(playHandle.handle, playHandle.baseSpeed * curTimeScale);
 		}
 	}
 
