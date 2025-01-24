@@ -77,9 +77,10 @@ namespace HashiTaku
 		const AnimationParameters& originParams = pAnimController->GetAnimationParameters();
 		pCopyAnimParameters = std::make_unique<AnimationParameters>(originParams);
 
+		// アニメーションを変更したことを通知するサブジェクト
 		pChangeAnimSubject = std::make_unique<ChangeAnimSubject>();
 
-		// デフォルトノードから再生を始める
+		// アニメーションを管理クラスのデフォルトノードから再生を始める
 		SetDefault();
 
 		// ノード再生から始める
@@ -88,20 +89,23 @@ namespace HashiTaku
 
 	void AnimControllPlayer::SetDefault()
 	{
-		// デフォルトノードを取得
+		// アニメーション管理クラスのデフォルトノードを取得
 		const AnimNodeInfo& defaultNodeInfo = *pAnimController->GetDefaultNode();
 
-		// ノード再生を変更
+		// ノードプレイヤーを作成し、デフォルトノードをセット
 		ChangeNodePlayer(*defaultNodeInfo.pAnimNode);
 
 		// 通知イベントをコピーする
 		const AnimNotifyList& originNotifys = defaultNodeInfo.notifyList;
-		pCurNodePlayer->CopyNotifys(originNotifys, *pCopyAnimParameters, *pObjectTransform);
+		pCurNodePlayer->CopyNotifys(originNotifys, 
+			*pCopyAnimParameters,
+			*pObjectTransform);
 
 		// 遷移条件確認クラスを作成
 		const auto& transArrows = defaultNodeInfo.transitionArrows;
 		const auto* groupArrows = pAnimController->GetGroupArrows(defaultNodeInfo.groupArrowsName);
-		pTransChecker = std::make_unique<AnimTransitionChecker>(*pCopyAnimParameters, transArrows,
+		pTransChecker = std::make_unique<AnimTransitionChecker>(*pCopyAnimParameters, 
+			transArrows,
 			groupArrows);
 	}
 

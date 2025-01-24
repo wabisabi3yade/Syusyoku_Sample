@@ -29,8 +29,8 @@ namespace HashiTaku
 
 	void CP_Animation::Awake()
 	{
-		if (!pSkeletalMesh)
-			CopyBoneList();
+		if (!pSkeletalMesh) // 設定されていないなら
+			CopyBoneList(); // アセットのボーンから実際に動かすボーンを作成
 
 		// アニメーションコントローラー準備
 		SetupAnimCon();
@@ -288,8 +288,10 @@ namespace HashiTaku
 
 	void CP_Animation::SetupAnimCon()
 	{
+		// ボーンが設定されていないなら
 		if (!pMoveBoneList) return;
 
+		// アニメーションコントローラーを再生するクラスを作成し、コントローラーをセットする
 		pAnimConPlayer = std::make_unique<AnimControllPlayer>(*pAnimController, *pMoveBoneList, GetTransform());
 	}
 
