@@ -153,47 +153,6 @@
             }
         },
         {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "X_Left": "Sunset_left.png",
-                        "X_Right": "Sunset_right.png",
-                        "Y_Bottom": "Sunset_down.png",
-                        "Y_Top": "Sunset_up.png",
-                        "Z_Back": "Sunset_back.png",
-                        "Z_Front": "Sunset_front.png",
-                        "enable": true,
-                        "name": "SkyBox",
-                        "priority": 0
-                    }
-                ],
-                "layer": 0,
-                "name": "SkyBox",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            }
-        },
-        {
             "childs": [
                 {
                     "childs": [
@@ -233,20 +192,20 @@
                                         "transform": {
                                             "child": null,
                                             "pos": [
-                                                1.277306079864502,
-                                                0.28998252749443054,
-                                                4.0664191246032715
+                                                0.6579964756965637,
+                                                0.08998258411884308,
+                                                4.7899980545043945
                                             ],
                                             "rotation": [
-                                                -0.5804391503334045,
-                                                0.728729784488678,
-                                                0.16313573718070984,
-                                                -0.3246999680995941
+                                                -0.6008124947547913,
+                                                0.7962931990623474,
+                                                -0.050469301640987396,
+                                                -0.04893091320991516
                                             ],
                                             "scale": [
-                                                1.6800007820129395,
-                                                1.6799993515014648,
-                                                1.6800007820129395
+                                                1.6800000667572021,
+                                                1.6799989938735962,
+                                                1.6800004243850708
                                             ]
                                         }
                                     }
@@ -305,20 +264,20 @@
                                         "Boss_WeaponModel"
                                     ],
                                     "pos": [
-                                        1.277307152748108,
-                                        0.2899872660636902,
-                                        4.066418170928955
+                                        0.6579980254173279,
+                                        0.08998724818229675,
+                                        4.789998531341553
                                     ],
                                     "rotation": [
-                                        -0.5804391503334045,
-                                        0.7287296652793884,
-                                        0.16313575208187103,
-                                        -0.32470008730888367
+                                        -0.6008126139640808,
+                                        0.7962931990623474,
+                                        -0.05046930909156799,
+                                        -0.048931069672107697
                                     ],
                                     "scale": [
-                                        1.4000011682510376,
+                                        1.400001049041748,
                                         1.400000810623169,
-                                        1.4000016450881958
+                                        1.4000017642974854
                                     ]
                                 }
                             }
@@ -342,19 +301,19 @@
                                 "Boss_Weapon"
                             ],
                             "pos": [
-                                1.2630817890167236,
-                                0.0799904465675354,
-                                3.986034631729126
+                                0.6999983787536621,
+                                -0.12000951170921326,
+                                4.71999979019165
                             ],
                             "rotation": [
                                 0.0,
-                                0.9366723895072937,
+                                1.0,
                                 0.0,
-                                -0.3502069115638733
+                                4.619359685875679e-07
                             ],
                             "scale": [
                                 1.399999737739563,
-                                1.3999996185302734,
+                                1.3999993801116943,
                                 1.399999737739563
                             ]
                         }
@@ -1162,19 +1121,608 @@
                     ],
                     "pos": [
                         0.0,
-                        0.5,
+                        0.30000001192092896,
                         3.5999999046325684
                     ],
                     "rotation": [
                         0.0,
-                        0.9366723895072937,
+                        1.0,
                         0.0,
-                        -0.3502069115638733
+                        4.76837158203125e-07
                     ],
                     "scale": [
-                        1.4000000953674316,
+                        1.4000002145767212,
                         1.399999976158142,
-                        1.4000000953674316
+                        1.4000002145767212
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "X_Left": "Sunset_left.png",
+                        "X_Right": "Sunset_right.png",
+                        "Y_Bottom": "Sunset_down.png",
+                        "Y_Top": "Sunset_up.png",
+                        "Z_Back": "Sunset_back.png",
+                        "Z_Front": "Sunset_front.png",
+                        "enable": true,
+                        "name": "SkyBox",
+                        "priority": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "SkyBox",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "action": {
+                            "air": {
+                                "actData": [
+                                    {
+                                        "data": {
+                                            "acceleration": 40.0,
+                                            "decade": 2.0,
+                                            "maxSpeed": 10.0,
+                                            "rotateSpeed": 7.0
+                                        },
+                                        "typeString": "Move"
+                                    }
+                                ],
+                                "downForcePower": 0.0
+                            },
+                            "ground": {
+                                "actData": [
+                                    {
+                                        "data": null,
+                                        "typeString": "Idle"
+                                    },
+                                    {
+                                        "data": {
+                                            "acceleration": 40.0,
+                                            "decade": 2.0,
+                                            "maxSpeed": 10.0,
+                                            "rotateSpeed": 7.0
+                                        },
+                                        "typeString": "Move"
+                                    },
+                                    {
+                                        "data": {
+                                            "acceleration": 40.0,
+                                            "decade": 2.0,
+                                            "maxSpeed": 10.0,
+                                            "rotateSpeed": 7.0
+                                        },
+                                        "typeString": "TargetMove"
+                                    },
+                                    {
+                                        "data": {
+                                            "attackCnt": 1,
+                                            "attackInfos": [
+                                                {
+                                                    "break": 1.0,
+                                                    "damage": 0.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
+                                                    "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
+                                                    "isCamShake": false,
+                                                    "level": 0
+                                                }
+                                            ],
+                                            "forwardCurve": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": null,
+                                                "startInterp": 1,
+                                                "startValue": 1.0,
+                                                "startVector": 0.0,
+                                                "useHermite": true
+                                            },
+                                            "isMoveFwd": false,
+                                            "maxDistance": 10.0,
+                                            "nextCombAttack": 99
+                                        },
+                                        "typeString": "Attack11"
+                                    },
+                                    {
+                                        "data": {
+                                            "attackCnt": 1,
+                                            "attackInfos": [
+                                                {
+                                                    "break": 1.0,
+                                                    "damage": 0.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
+                                                    "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
+                                                    "isCamShake": false,
+                                                    "level": 0
+                                                }
+                                            ],
+                                            "forwardCurve": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": null,
+                                                "startInterp": 1,
+                                                "startValue": 1.0,
+                                                "startVector": 0.0,
+                                                "useHermite": true
+                                            },
+                                            "isMoveFwd": false,
+                                            "maxDistance": 10.0,
+                                            "nextCombAttack": 99
+                                        },
+                                        "typeString": "Attack12"
+                                    },
+                                    {
+                                        "data": {
+                                            "attackCnt": 1,
+                                            "attackInfos": [
+                                                {
+                                                    "break": 1.0,
+                                                    "damage": 0.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
+                                                    "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
+                                                    "isCamShake": false,
+                                                    "level": 0
+                                                }
+                                            ],
+                                            "cancelAnim": 0.3799999952316284,
+                                            "forwardCurve": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": null,
+                                                "startInterp": 1,
+                                                "startValue": 1.0,
+                                                "startVector": 0.0,
+                                                "useHermite": true
+                                            },
+                                            "horiCurve": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": null,
+                                                "startInterp": 1,
+                                                "startValue": 1.0,
+                                                "startVector": 0.0,
+                                                "useHermite": true
+                                            },
+                                            "horiDis": 5.0,
+                                            "isMoveFwd": false,
+                                            "maxDistance": 10.0,
+                                            "nextCombAttack": 99,
+                                            "slashAnim": 0.4650000035762787,
+                                            "slashBegin": 0.699999988079071
+                                        },
+                                        "typeString": "SpecialAtkHi"
+                                    },
+                                    {
+                                        "data": {
+                                            "attackCnt": 1,
+                                            "attackInfos": [
+                                                {
+                                                    "break": 1.0,
+                                                    "damage": 0.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
+                                                    "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
+                                                    "isCamShake": false,
+                                                    "level": 0
+                                                }
+                                            ],
+                                            "forwardCurve": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": null,
+                                                "startInterp": 1,
+                                                "startValue": 1.0,
+                                                "startVector": 0.0,
+                                                "useHermite": true
+                                            },
+                                            "isMoveFwd": false,
+                                            "maxDistance": 10.0,
+                                            "nextCombAttack": 99
+                                        },
+                                        "typeString": "Attack13"
+                                    },
+                                    {
+                                        "data": {
+                                            "attackCnt": 1,
+                                            "attackInfos": [
+                                                {
+                                                    "break": 1.0,
+                                                    "damage": 0.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
+                                                    "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
+                                                    "isCamShake": false,
+                                                    "level": 0
+                                                }
+                                            ],
+                                            "forwardCurve": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": null,
+                                                "startInterp": 1,
+                                                "startValue": 1.0,
+                                                "startVector": 0.0,
+                                                "useHermite": true
+                                            },
+                                            "isMoveFwd": false,
+                                            "maxDistance": 10.0,
+                                            "nextCombAttack": 99
+                                        },
+                                        "typeString": "Attack14"
+                                    },
+                                    {
+                                        "data": {
+                                            "attackCnt": 1,
+                                            "attackInfos": [
+                                                {
+                                                    "break": 1.0,
+                                                    "damage": 0.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
+                                                    "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
+                                                    "isCamShake": false,
+                                                    "level": 0
+                                                }
+                                            ],
+                                            "forwardCurve": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": null,
+                                                "startInterp": 1,
+                                                "startValue": 1.0,
+                                                "startVector": 0.0,
+                                                "useHermite": true
+                                            },
+                                            "isMoveFwd": false,
+                                            "maxDistance": 10.0,
+                                            "nextCombAttack": 99
+                                        },
+                                        "typeString": "SpecialAtkGuard"
+                                    },
+                                    {
+                                        "data": {
+                                            "attackCnt": 1,
+                                            "attackInfos": [
+                                                {
+                                                    "break": 1.0,
+                                                    "damage": 0.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
+                                                    "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
+                                                    "isCamShake": false,
+                                                    "level": 0
+                                                }
+                                            ],
+                                            "chargeInfos": [
+                                                {
+                                                    "attackInfos": [
+                                                        {
+                                                            "break": 1.0,
+                                                            "damage": 0.0,
+                                                            "hitSE": {
+                                                                "loop": false,
+                                                                "pitch": 0.0,
+                                                                "useListener": false,
+                                                                "volume": 0.5
+                                                            },
+                                                            "hitVfx": {
+                                                                "applyColor": false,
+                                                                "lookCam": false,
+                                                                "scale": 1.0,
+                                                                "speed": 1.0,
+                                                                "startFrame": 0
+                                                            },
+                                                            "isCamShake": false,
+                                                            "level": 0
+                                                        }
+                                                    ],
+                                                    "time": 1.0
+                                                },
+                                                {
+                                                    "attackInfos": [
+                                                        {
+                                                            "break": 1.0,
+                                                            "damage": 0.0,
+                                                            "hitSE": {
+                                                                "loop": false,
+                                                                "pitch": 0.0,
+                                                                "useListener": false,
+                                                                "volume": 0.5
+                                                            },
+                                                            "hitVfx": {
+                                                                "applyColor": false,
+                                                                "lookCam": false,
+                                                                "scale": 1.0,
+                                                                "speed": 1.0,
+                                                                "startFrame": 0
+                                                            },
+                                                            "isCamShake": false,
+                                                            "level": 0
+                                                        }
+                                                    ],
+                                                    "time": 1.0
+                                                },
+                                                {
+                                                    "attackInfos": [
+                                                        {
+                                                            "break": 1.0,
+                                                            "damage": 0.0,
+                                                            "hitSE": {
+                                                                "loop": false,
+                                                                "pitch": 0.0,
+                                                                "useListener": false,
+                                                                "volume": 0.5
+                                                            },
+                                                            "hitVfx": {
+                                                                "applyColor": false,
+                                                                "lookCam": false,
+                                                                "scale": 1.0,
+                                                                "speed": 1.0,
+                                                                "startFrame": 0
+                                                            },
+                                                            "isCamShake": false,
+                                                            "level": 0
+                                                        }
+                                                    ],
+                                                    "time": 1.0
+                                                }
+                                            ],
+                                            "chargeOffset": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "chargeOffsetTime": 0.0,
+                                            "chargeVfx": {
+                                                "applyColor": false,
+                                                "lookCam": false,
+                                                "scale": 1.0,
+                                                "speed": 1.0,
+                                                "startFrame": 0
+                                            },
+                                            "charhePadPower": 0.4000000059604645,
+                                            "forwardCurve": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": null,
+                                                "startInterp": 1,
+                                                "startValue": 1.0,
+                                                "startVector": 0.0,
+                                                "useHermite": true
+                                            },
+                                            "isMoveFwd": false,
+                                            "maxDistance": 10.0,
+                                            "maxTime": 5.0,
+                                            "nextCombAttack": 99,
+                                            "releaseVfx": {
+                                                "applyColor": false,
+                                                "lookCam": false,
+                                                "scale": 1.0,
+                                                "speed": 1.0,
+                                                "startFrame": 0
+                                            },
+                                            "releaseVfxOffset": 0.0
+                                        },
+                                        "typeString": "ChargeAttack1"
+                                    },
+                                    {
+                                        "data": {
+                                            "crouchTime": 0.30000001192092896,
+                                            "jumpPower": 10.0
+                                        },
+                                        "typeString": "BeginJump"
+                                    },
+                                    {
+                                        "data": {
+                                            "canParryTime": 4,
+                                            "parryAngle": 180.0,
+                                            "vfxInfo": {
+                                                "applyColor": false,
+                                                "lookCam": false,
+                                                "scale": 1.0,
+                                                "speed": 1.0,
+                                                "startFrame": 0
+                                            },
+                                            "vfxOffset": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ]
+                                        },
+                                        "typeString": "Guard"
+                                    },
+                                    {
+                                        "data": {
+                                            "invicibleTime": 0.4000000059604645,
+                                            "rollingDistance": 5.0,
+                                            "speedCurve": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": null,
+                                                "startInterp": 1,
+                                                "startValue": 1.0,
+                                                "startVector": 0.0,
+                                                "useHermite": true
+                                            }
+                                        },
+                                        "typeString": "Rolling"
+                                    },
+                                    {
+                                        "data": {
+                                            "knockCurve": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": null,
+                                                "startInterp": 1,
+                                                "startValue": 1.0,
+                                                "startVector": 0.0,
+                                                "useHermite": true
+                                            },
+                                            "knockDis": 0.0
+                                        },
+                                        "typeString": "Damage_S"
+                                    },
+                                    {
+                                        "data": {
+                                            "knockCurve": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": null,
+                                                "startInterp": 1,
+                                                "startValue": 1.0,
+                                                "startVector": 0.0,
+                                                "useHermite": true
+                                            },
+                                            "knockDis": 0.0
+                                        },
+                                        "typeString": "Damage_L"
+                                    }
+                                ]
+                            },
+                            "groundCheckName": ""
+                        },
+                        "camObjName": "",
+                        "enable": true,
+                        "hpBarObjName": "",
+                        "maxHp": 1.0,
+                        "name": "Player",
+                        "priority": 0,
+                        "weaponObjName": ""
+                    }
+                ],
+                "layer": 0,
+                "name": "Player",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
                     ]
                 }
             }

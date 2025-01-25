@@ -117,7 +117,8 @@ namespace HashiTaku
 
 #ifdef EDIT
 		// アクション側で表示させたいデバッグ描画
-		pActionController->DebugDisplay();
+		if (pActionController)
+			pActionController->DebugDisplay();
 #endif // EDIT
 	}
 

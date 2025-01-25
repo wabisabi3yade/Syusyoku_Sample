@@ -133,6 +133,10 @@ namespace HashiTaku
 		/// @return 敵の座標
 		DXSimp::Vector3 GetAtkEnemyPos();
 
+		/// @brief 処理を行える状態か？
+		/// @return 処理を行える状態か取得
+		bool CanDoProcess() const;
+
 		/// @brief その方向に入力できているか確認する
 		/// @param _checkVector 確認したい方向
 		/// @return できているか？

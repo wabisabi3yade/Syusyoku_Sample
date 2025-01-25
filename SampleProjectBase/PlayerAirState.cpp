@@ -6,13 +6,20 @@ namespace HashiTaku
 {
 	void PlayerAirState::OnStart()
 	{
+		// 処理できる状態か？
+		if (!CanDoProcess()) return;
+
 		PlayerActState_Base::OnStart();
 
+		// 開始処理
 		OnStartBehavior();
 	}
 
 	void PlayerAirState::Update()
 	{
+		// 処理できる状態か？
+		if (!CanDoProcess()) return;
+
 		InputUpdate();
 
 		PlayerActState_Base::Update();
@@ -24,6 +31,9 @@ namespace HashiTaku
 
 	void PlayerAirState::OnEnd()
 	{
+		// 処理できる状態か？
+		if (!CanDoProcess()) return;
+
 		PlayerActState_Base::OnEnd();
 
 		OnEndBehavior();
