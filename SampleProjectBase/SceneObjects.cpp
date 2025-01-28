@@ -180,7 +180,8 @@ namespace HashiTaku
 			return;
 		}
 
-		const json prefabData = json::parse(f);
+		json prefabData = json::parse(f);
+
 		// プレハブをロード
 		LoadObject(prefabData);
 		LateLoadObject(prefabData);

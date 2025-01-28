@@ -47,6 +47,11 @@ namespace HashiTaku
 		pAction = std::make_unique<PlayerAction>(*this);
 	}
 
+	void CP_Player::OnWeaponAttacking()
+	{
+		
+	}
+
 	void CP_Player::Awake()
 	{
 		CP_Character::Awake();
@@ -118,7 +123,13 @@ namespace HashiTaku
 		// 武器コンポーネントを取得
 		GameObject* pFindObj = sceneObjs.GetSceneObject(weaponObjName);
 		if (pFindObj)
-			pWeapon = pFindObj->GetComponent<CP_Weapon>();
+		{
+			if (pWeapon = pFindObj->GetComponent<CP_Weapon>())
+			{
+				// 自分の座標を渡す
+				pWeapon->SetWeaponOwner(*this);
+			}
+		}
 
 		// カメラ移動クラス
 		pFindObj = sceneObjs.GetSceneObject(cameraObjName);
@@ -222,6 +233,11 @@ namespace HashiTaku
 		LoadJsonString("weaponObjName", weaponObjName, _data);
 		LoadJsonString("camObjName", cameraObjName, _data);
 		LoadJsonString("hpBarObjName", hpBarObjName, _data);
+	}
+
+	const DXSimp::Vector3& CP_Player::GetOwnerWorldPos() const
+	{
+		return GetTransform().GetPosition();
 	}
 
 	void CP_Player::SetWeaponAttackFlag()

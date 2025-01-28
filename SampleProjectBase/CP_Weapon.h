@@ -3,6 +3,7 @@
 #include "AttackInformation.h"
 #include "IDamageable.h"
 #include "Tag.h"
+#include "IWeaponOwner.h"
 
 namespace HashiTaku
 {
@@ -23,8 +24,8 @@ namespace HashiTaku
 		/// @brief 一回の攻撃判定で重複しないように記録する用リスト
 		std::vector<const CP_RigidBody*> attackedRbs;
 
-		/// @brief この武器を持つオブジェクトの座標
-		const DXSimp::Vector3* pHaveObjectPos;
+		/// @brief 武器所有者のポインタ
+		IWeaponOwner* pWeaponOwner;
 
 		/// @brief 攻撃タグの数
 		u_int attackTagCnt;
@@ -52,9 +53,9 @@ namespace HashiTaku
 		/// @param _isAttackCollision 
 		void SetIsAttackCollision(bool _isAttackCollision);
 
-		/// @brief 所有オブジェクトの座標のポインタ
-		/// @param _pWorldPos ワールド座標
-		void SetHaveObjPosPointer(const DXSimp::Vector3* _pWorldPos);
+		/// @brief 所有者をセットする
+		/// @param _weaponOwner 所有者
+		void SetWeaponOwner(IWeaponOwner& _weaponOwner);
 
 		/// @brief 攻撃済みコリジョンをリセット
 		void ClearAttackedRb();

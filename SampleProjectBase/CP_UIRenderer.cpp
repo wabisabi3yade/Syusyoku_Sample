@@ -53,9 +53,9 @@ namespace HashiTaku
 		ReCreatePolygon();
 	}
 
-	void CP_UIRenderer::SetTexture(const Texture& _setTexture)
+	void CP_UIRenderer::SetTexture(const Texture* _pSetTexture)
 	{
-		pTexture = &_setTexture;
+		pTexture = _pSetTexture;
 	}
 
 	void CP_UIRenderer::SetUV(const DXSimp::Vector2& _startUV, const DXSimp::Vector2& _endUV)

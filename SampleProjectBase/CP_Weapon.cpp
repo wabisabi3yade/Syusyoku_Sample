@@ -18,8 +18,8 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 #endif // EDIT
 
 	CP_Weapon::CP_Weapon() :
-		pHaveObjectPos(nullptr),
 		pAtkInfomation(nullptr),
+		pWeaponOwner(nullptr),
 		attackTagCnt(0),
 		isAttackCollision(false)
 	{
@@ -67,9 +67,9 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 		isAttackCollision = _isAttackCollision;
 	}
 
-	void CP_Weapon::SetHaveObjPosPointer(const DXSimp::Vector3* _pWorldPos)
+	void CP_Weapon::SetWeaponOwner(IWeaponOwner& _weaponOwner)
 	{
-		pHaveObjectPos = _pWorldPos;
+		pWeaponOwner = &_weaponOwner;
 	}
 
 	void CP_Weapon::ClearAttackedRb()
@@ -126,10 +126,19 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 	void CP_Weapon::OnAttack(IDamageable& _damager, const DXSimp::Vector3& _contactPos)
 	{
 		// 攻撃処理
-		DXSimp::Vector3 haveObjPos;	// 所有オブジェクトの座標を取得する
-		if (pHaveObjectPos) haveObjPos = *pHaveObjectPos;
+		
+		DXSimp::Vector3 haveObjPos;
+		// ダメージを与える側の処理
+		if (pWeaponOwner)
+		{
+			// 攻撃を与えた側のコールバック
+			pWeaponOwner->OnWeaponAttacking();
 
-		// ダメージを与える
+			// 所有オブジェクトの座標を取得する
+			haveObjPos = pWeaponOwner->GetOwnerWorldPos();
+		}
+			
+		// ダメージを食らう側の処理
 		_damager.OnDamage(*pAtkInfomation, haveObjPos, _contactPos);
 	}
 
