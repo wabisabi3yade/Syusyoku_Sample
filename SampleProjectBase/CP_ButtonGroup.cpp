@@ -236,7 +236,7 @@ namespace HashiTaku
 	void CP_ButtonGroup::SettingButtonPosition()
 	{
 		// ボタンのオブジェクト座標を設定下座標へ移動
-		for (u_int b_i = 0; b_i < maxButtonCnt; b_i++)
+		for (int b_i = 0; b_i < maxButtonCnt; b_i++)
 		{
 			CP_Button* pButton = buttonParameterGroup[b_i].pButton;
 			if (!pButton) continue;

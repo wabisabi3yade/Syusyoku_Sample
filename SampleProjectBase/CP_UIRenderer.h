@@ -39,8 +39,8 @@ namespace HashiTaku
 		void OnChangeRotation();
 
 		/// @brief テクスチャをセット
-		/// @param _setTexture セットするテクスチャ
-		void SetTexture(const Texture& _setTexture);
+		/// @param _pSetTexture セットするテクスチャ
+		void SetTexture(const Texture* _pSetTexture);
 
 		/// @brief UV座標をセット
 		/// @param _startUV 開始UV

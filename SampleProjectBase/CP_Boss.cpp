@@ -27,6 +27,7 @@ namespace HashiTaku
 	{
 		CP_Enemy::Init();
 
+		// アクションコントローラーにセット
 		pActionController = std::make_unique<BossActionController>(*this);
 	}
 
@@ -67,6 +68,11 @@ namespace HashiTaku
 			pActionController->Load(actionControllerData);
 	}
 
+	const DXSimp::Vector3& CP_Boss::GetOwnerWorldPos() const
+	{
+		return GetTransform().GetPosition();
+	}
+
 	void CP_Boss::Awake()
 	{
 		CP_Enemy::Awake();
@@ -92,7 +98,7 @@ namespace HashiTaku
 		// アニメーションパラメータのアドレスを取得
 		pCanAttack = pAnimation->GetParameterPointer<bool>(CAN_ATTACK_ANIMPARAM);
 
-		// アクションコントローラー初期化s
+		// アクションコントローラー初期化
 		pActionController->Init(pAnimation, pRb);
 	}
 
@@ -117,7 +123,8 @@ namespace HashiTaku
 
 #ifdef EDIT
 		// アクション側で表示させたいデバッグ描画
-		pActionController->DebugDisplay();
+		if (pActionController)
+			pActionController->DebugDisplay();
 #endif // EDIT
 	}
 
@@ -166,7 +173,7 @@ namespace HashiTaku
 		if (pWeapon = pFindObj->GetComponent<CP_Weapon>())
 		{
 			// 自分の座標を渡す
-			pWeapon->SetHaveObjPosPointer(&GetTransform().GetPosition());
+			pWeapon->SetWeaponOwner(*this);
 		}
 
 		// 体力バー

@@ -162,8 +162,9 @@ namespace HashiTaku
 		// カーブ上での速度
 		float animCurveSpeed = pPlayAnimNode->GetCurveValue(curPlayRatio);
 
+		// 再生速度を求める
 		/*
-		コントローラー速度 ×
+		コントローラーの速度 ×
 		プレイヤーの再生速度　×
 		アニメーションカーブでの速度　×
 		ノードの速度倍率

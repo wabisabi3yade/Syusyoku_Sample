@@ -949,6 +949,12 @@
     <Filter Include="ソース ファイル\InGame\Camera\State\Win">
       <UniqueIdentifier>{8c1370c5-082e-4025-9064-248e134ce895}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Weapon\IWeaponOwner">
+      <UniqueIdentifier>{5909d599-4ceb-4926-af04-da86058f5547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\UI\StylishUI">
+      <UniqueIdentifier>{b69f3f67-7a0b-4d29-998b-42cc58938235}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1718,20 +1724,11 @@
     <ClCompile Include="VS_Ground.cpp">
       <Filter>ソース ファイル\Graphics\Shader\Vertex\Ground</Filter>
     </ClCompile>
-    <ClCompile Include="PS_Ground.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="IBoneSupplier.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="CP_SoundManager.cpp">
       <Filter>ソース ファイル\Component\SoundManager</Filter>
     </ClCompile>
     <ClCompile Include="CP_AudioListener.cpp">
       <Filter>ソース ファイル\Component\AudioListener</Filter>
-    </ClCompile>
-    <ClCompile Include="ANE_PlaySound.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="BattleDirection.cpp">
       <Filter>ソース ファイル\Component\InGame\BattleDirection</Filter>
@@ -1744,6 +1741,15 @@
     </ClCompile>
     <ClCompile Include="CameraWinState.cpp">
       <Filter>ソース ファイル\InGame\Camera\State\Win</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_StylishUI.cpp">
+      <Filter>ソース ファイル\Component\UI\StylishUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ANE_PlaySound.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="PS_Ground.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\Ground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2560,20 +2566,11 @@
     <ClInclude Include="VS_Ground.h">
       <Filter>ソース ファイル\Graphics\Shader\Vertex\Ground</Filter>
     </ClInclude>
-    <ClInclude Include="PS_Ground.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="IBoneSupplier.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="CP_SoundManager.h">
       <Filter>ソース ファイル\Component\SoundManager</Filter>
     </ClInclude>
     <ClInclude Include="CP_AudioListener.h">
       <Filter>ソース ファイル\Component\AudioListener</Filter>
-    </ClInclude>
-    <ClInclude Include="ANE_PlaySound.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="BattleDirection.h">
       <Filter>ソース ファイル\Component\InGame\BattleDirection</Filter>
@@ -2587,16 +2584,25 @@
     <ClInclude Include="CameraWinState.h">
       <Filter>ソース ファイル\InGame\Camera\State\Win</Filter>
     </ClInclude>
+    <ClInclude Include="CP_StylishUI.h">
+      <Filter>ソース ファイル\Component\UI\StylishUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IBoneSupplier.h">
+      <Filter>ソース ファイル\Component\Animation\IBoneBufferSupplier</Filter>
+    </ClInclude>
+    <ClInclude Include="ANE_PlaySound.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="PS_Ground.h">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="IWeaponOwner.h">
+      <Filter>ソース ファイル\Component\InGame\Weapon\IWeaponOwner</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SampleProjectBase.rc">
       <Filter>リソース ファイル</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
-    <None Include="ClassDiagram3.cd" />
   </ItemGroup>
 </Project>

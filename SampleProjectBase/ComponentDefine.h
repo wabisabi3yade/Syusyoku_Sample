@@ -44,6 +44,7 @@
 #include "CP_TitleButtonGroup.h"
 #include "CP_BattleButtonGroup.h"
 #include "CP_Fade.h"
+#include "CP_StylishUI.h"
 
 // エフェクト
 #include "CP_VisualEffect.h"

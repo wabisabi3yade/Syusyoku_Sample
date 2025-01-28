@@ -169,6 +169,17 @@ namespace HashiTaku
 		return atkEnemyPos;
 	}
 
+	bool PlayerActState_Base::CanDoProcess() const
+	{
+		// アニメーションがなければ
+		if (!pActionController->GetAnimation()) return false;
+
+		// RBがないなら
+		if (!pActionController->GetRB()) return false;
+
+		return true;
+	}
+
 	bool PlayerActState_Base::IsInputVector(InputVector _checkVector)
 	{
 		// 入力値を取得

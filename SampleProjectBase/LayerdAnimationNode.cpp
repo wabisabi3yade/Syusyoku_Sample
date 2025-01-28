@@ -183,15 +183,19 @@ namespace HashiTaku
 		float _baseRatio,
 		float _blendRatio) const
 	{
-		// ベース側
+		// ベースのボーングループにのみアニメーションを反映させる
+		// （ベース側アニメーション）
 		u_int baseBoneCnt = static_cast<u_int>(baseAnimBoneIds.size());
 		for (u_int b_i = 0; b_i < baseBoneCnt; b_i++)
 		{
 			u_int uBoneId = static_cast<u_int>(baseAnimBoneIds[b_i]);
-			pBaseAnimation->GetTransformByRatio(uBoneId, _baseRatio, _outTransforms[uBoneId]);
+			pBaseAnimation->GetTransformByRatio(uBoneId, 
+				_baseRatio,
+				_outTransforms[uBoneId]);
 		}
 
-		// ブレンド側
+		// ブレンドのボーングループにのみアニメーションを反映させる
+		// （ブレンド側アニメーション）
 		u_int blendBoneCnt = static_cast<u_int>(blendAnimBoneIds.size());
 		for (u_int b_i = 0; b_i < blendBoneCnt; b_i++)
 		{
@@ -356,18 +360,20 @@ namespace HashiTaku
 
 	void LayerdAnimationNode::SeparateBoneGroup(const TreeNode& _treeNode)
 	{
+		// ツリーノードに対応したボーンがあるか確認
 		if (_treeNode.HasBone())
 		{
+			// ボーンのインデックスを取得
 			u_int boneId = _treeNode.GetBoneIdx();
 
-			if (boneId == beginBlendBoneId) // ブレンド開始ボーンだったら
+			if (boneId == beginBlendBoneId) // ブレンド開始のボーンだったら
 			{
 				// ブレンドグループを作成する
 				CreateBlendBoneGroup(_treeNode);
 				return; // 以降のボーンは処理しない
 			}
 
-			baseAnimBoneIds.push_back(boneId);	// ベースに追加
+			baseAnimBoneIds.push_back(boneId);	// ベース側に追加
 		}
 
 		u_int childCnt = _treeNode.GetChildNum();

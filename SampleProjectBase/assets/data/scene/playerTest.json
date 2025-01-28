@@ -3,82 +3,8 @@
         {
             "childs": null,
             "gameObject": {
-                "active": true,
+                "active": false,
                 "components": [
-                    {
-                        "distance": 1000.0,
-                        "enable": true,
-                        "fov": 45.0,
-                        "name": "Camera",
-                        "priority": 0,
-                        "viewSlot": 0
-                    }
-                ],
-                "layer": 1,
-                "name": "Camera",
-                "tag": 1,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        0.0,
-                        2.5999999046325684,
-                        3.0
-                    ],
-                    "rotation": [
-                        -0.0,
-                        0.0,
-                        -3.135998540926624e-14,
-                        1.0
-                    ],
-                    "scale": [
-                        4.200000286102295,
-                        0.9999996423721313,
-                        0.9999998807907104
-                    ]
-                }
-            }
-        },
-        {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "AABB": false,
-                        "angles": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "center": [
-                            0.0,
-                            -0.10000000149011612,
-                            0.0
-                        ],
-                        "enable": true,
-                        "length": [
-                            1.0,
-                            0.20000000298023224,
-                            1.0
-                        ],
-                        "name": "BoxCollider",
-                        "priority": 0
-                    },
-                    {
-                        "enable": true,
-                        "friction": 20.0,
-                        "isAwake": false,
-                        "isFreezeRot": [
-                            false,
-                            false,
-                            false
-                        ],
-                        "isKinematic": false,
-                        "isTrigger": false,
-                        "mass": 0.0,
-                        "name": "RigidBody",
-                        "priority": 0
-                    },
                     {
                         "alpha": 1.0,
                         "enable": true,
@@ -108,7 +34,7 @@
                     "child": null,
                     "pos": [
                         0.0,
-                        0.0,
+                        -1.2000000476837158,
                         0.0
                     ],
                     "rotation": [
@@ -121,6 +47,44 @@
                         100.0,
                         1.0,
                         100.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "distance": 1000.0,
+                        "enable": true,
+                        "fov": 25.0,
+                        "name": "Camera",
+                        "priority": 0,
+                        "viewSlot": 0
+                    }
+                ],
+                "layer": 1,
+                "name": "Camera",
+                "tag": 1,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        1.899999976158142,
+                        3.0
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -3.135998540926624e-14,
+                        1.0
+                    ],
+                    "scale": [
+                        4.200000286102295,
+                        0.9999996423721313,
+                        0.9999998807907104
                     ]
                 }
             }
@@ -241,20 +205,20 @@
                                         "transform": {
                                             "child": null,
                                             "pos": [
-                                                0.08480697870254517,
-                                                1.409999132156372,
-                                                7.987789154052734
+                                                -0.09351759403944016,
+                                                0.6999993920326233,
+                                                9.92154598236084
                                             ],
                                             "rotation": [
-                                                -0.1749931126832962,
-                                                0.050850506871938705,
-                                                0.7147188782691956,
-                                                0.6752544045448303
+                                                0.7228975892066956,
+                                                0.6716678738594055,
+                                                0.13734829425811768,
+                                                -0.08612053096294403
                                             ],
                                             "scale": [
                                                 1.0000007152557373,
-                                                0.8000009059906006,
-                                                1.0
+                                                0.800001323223114,
+                                                0.9999996423721313
                                             ]
                                         }
                                     }
@@ -271,20 +235,20 @@
                                         "Shield_Mesh"
                                     ],
                                     "pos": [
-                                        9.977463832910871e-07,
-                                        1.4099990129470825,
-                                        7.899994850158691
+                                        6.1236340798132e-07,
+                                        0.6999995112419128,
+                                        9.999999046325684
                                     ],
                                     "rotation": [
-                                        -0.0,
-                                        -0.09584448486566544,
-                                        -0.0,
-                                        0.9953962564468384
+                                        0.0,
+                                        0.9990482330322266,
+                                        0.0,
+                                        0.0436188206076622
                                     ],
                                     "scale": [
-                                        1.0000007152557373,
+                                        1.0000016689300537,
                                         1.0,
-                                        1.0000007152557373
+                                        1.0000016689300537
                                     ]
                                 }
                             }
@@ -308,20 +272,20 @@
                                 "Shield"
                             ],
                             "pos": [
-                                -2.371125589206713e-07,
-                                1.409998893737793,
-                                7.900000095367432
+                                5.960463909104874e-07,
+                                0.6999995708465576,
+                                10.0
                             ],
                             "rotation": [
-                                -0.0,
-                                -0.09584445506334305,
-                                -0.0,
-                                0.9953963160514832
+                                0.0,
+                                0.9990482330322266,
+                                0.0,
+                                0.043618783354759216
                             ],
                             "scale": [
-                                1.0000008344650269,
+                                1.0000022649765015,
                                 1.0,
-                                1.0000008344650269
+                                1.0000022649765015
                             ]
                         }
                     }
@@ -364,20 +328,20 @@
                                         "transform": {
                                             "child": null,
                                             "pos": [
-                                                0.19890671968460083,
-                                                1.559998869895935,
-                                                7.920893669128418
+                                                -0.20000039041042328,
+                                                0.849997878074646,
+                                                10.000007629394531
                                             ],
                                             "rotation": [
-                                                0.20086675882339478,
-                                                0.122274249792099,
-                                                -0.6084373593330383,
-                                                0.7579614520072937
+                                                -0.618116021156311,
+                                                0.7505233883857727,
+                                                -0.1687488853931427,
+                                                -0.1617746204137802
                                             ],
                                             "scale": [
-                                                1.2000011205673218,
-                                                1.2000014781951904,
-                                                1.2000019550323486
+                                                1.2000030279159546,
+                                                1.2000010013580322,
+                                                1.2000032663345337
                                             ]
                                         }
                                     }
@@ -394,38 +358,6 @@
                                         "isDebugDisplay": false,
                                         "name": "Weapon",
                                         "priority": 0
-                                    },
-                                    {
-                                        "angles": [
-                                            0.0,
-                                            0.0,
-                                            0.0
-                                        ],
-                                        "center": [
-                                            0.0,
-                                            1.100000023841858,
-                                            0.0
-                                        ],
-                                        "enable": true,
-                                        "height": 1.5399999618530273,
-                                        "name": "CapsuleCollider",
-                                        "priority": 0,
-                                        "radius": 0.5
-                                    },
-                                    {
-                                        "enable": true,
-                                        "friction": 0.0,
-                                        "isAwake": false,
-                                        "isFreezeRot": [
-                                            false,
-                                            false,
-                                            false
-                                        ],
-                                        "isKinematic": false,
-                                        "isTrigger": true,
-                                        "mass": 1.0,
-                                        "name": "RigidBody",
-                                        "priority": 0
                                     }
                                 ],
                                 "layer": 0,
@@ -436,20 +368,20 @@
                                         "Weapon_Model"
                                     ],
                                     "pos": [
-                                        0.19890691339969635,
-                                        1.5599994659423828,
-                                        7.920902729034424
+                                        -0.20000115036964417,
+                                        0.8500001430511475,
+                                        9.999999046325684
                                     ],
                                     "rotation": [
-                                        0.20086681842803955,
-                                        0.12227404862642288,
-                                        -0.6084374785423279,
-                                        0.7579613327980042
+                                        -0.6181160807609558,
+                                        0.7505233287811279,
+                                        -0.1687489002943039,
+                                        -0.16177436709403992
                                     ],
                                     "scale": [
-                                        1.0000004768371582,
-                                        1.000000238418579,
-                                        1.0000001192092896
+                                        1.0,
+                                        0.9999992251396179,
+                                        0.9999997019767761
                                     ]
                                 }
                             }
@@ -473,86 +405,20 @@
                                 "Weapon"
                             ],
                             "pos": [
-                                -2.371125589206713e-07,
-                                1.4099996089935303,
-                                7.900000095367432
+                                5.960463909104874e-07,
+                                0.7000002861022949,
+                                10.0
                             ],
                             "rotation": [
-                                -0.0,
-                                -0.05233471095561981,
-                                -0.0,
-                                0.9986295700073242
+                                0.0,
+                                1.0,
+                                0.0,
+                                -4.76837158203125e-07
                             ],
                             "scale": [
-                                0.9999999403953552,
+                                0.9999992847442627,
                                 1.0,
-                                0.9999999403953552
-                            ]
-                        }
-                    }
-                },
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "friction": 0.5,
-                                "isAwake": false,
-                                "isFreezeRot": [
-                                    false,
-                                    false,
-                                    false
-                                ],
-                                "isKinematic": false,
-                                "isTrigger": true,
-                                "mass": 1.0,
-                                "name": "RigidBody",
-                                "priority": 0
-                            },
-                            {
-                                "angles": [
-                                    0.0,
-                                    0.0,
-                                    0.0
-                                ],
-                                "center": [
-                                    0.0,
-                                    0.0,
-                                    0.0
-                                ],
-                                "enable": true,
-                                "name": "SphereCollider",
-                                "priority": 0,
-                                "radius": 0.20000000298023224
-                            },
-                            {
-                                "enable": true,
-                                "name": "GroundCheck",
-                                "priority": 0
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "PlayerGroundCollision",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                -2.371125589206713e-07,
-                                1.4099996089935303,
-                                7.900000095367432
-                            ],
-                            "rotation": [
-                                -0.0,
-                                -0.05233471095561981,
-                                -0.0,
-                                0.9986295700073242
-                            ],
-                            "scale": [
-                                0.9999999403953552,
-                                1.0,
-                                0.9999999403953552
+                                0.9999992847442627
                             ]
                         }
                     }
@@ -567,21 +433,6 @@
                         "materials": null,
                         "meshName": "Knight.fbx",
                         "name": "MeshRenderer",
-                        "priority": 0
-                    },
-                    {
-                        "enable": true,
-                        "friction": 1.0,
-                        "isAwake": true,
-                        "isFreezeRot": [
-                            true,
-                            true,
-                            true
-                        ],
-                        "isKinematic": false,
-                        "isTrigger": true,
-                        "mass": 0.0,
-                        "name": "RigidBody",
                         "priority": 0
                     },
                     {
@@ -1305,23 +1156,6 @@
                         "priority": 1
                     },
                     {
-                        "angles": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "center": [
-                            0.0,
-                            1.0499999523162842,
-                            0.0
-                        ],
-                        "enable": true,
-                        "height": 1.1399999856948853,
-                        "name": "CapsuleCollider",
-                        "priority": 0,
-                        "radius": 0.49000000953674316
-                    },
-                    {
                         "color": [
                             0.0,
                             0.0,
@@ -1342,24 +1176,328 @@
                 "transform": {
                     "child": [
                         "Player_LeftHand",
-                        "Player_RightHand",
-                        "PlayerGroundCollision"
+                        "Player_RightHand"
                     ],
                     "pos": [
                         0.0,
-                        1.409999966621399,
-                        7.900000095367432
+                        0.699999988079071,
+                        10.0
                     ],
                     "rotation": [
-                        -0.0,
-                        -0.05233471095561981,
-                        -0.0,
-                        0.9986295700073242
+                        0.0,
+                        1.0,
+                        0.0,
+                        -4.76837158203125e-07
                     ],
                     "scale": [
                         0.9999999403953552,
                         1.0,
                         0.9999999403953552
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": null,
+                "layer": 0,
+                "name": "WeaponMesh",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": [
+                {
+                    "childs": [
+                        {
+                            "childs": null,
+                            "gameObject": {
+                                "active": false,
+                                "components": [
+                                    {
+                                        "enable": true,
+                                        "isShadow": true,
+                                        "materials": null,
+                                        "meshName": "Knight_Sword.fbx",
+                                        "name": "MeshRenderer",
+                                        "priority": 0
+                                    },
+                                    {
+                                        "color": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "ditherOffset": 0.0,
+                                        "ditherPower": 1.0,
+                                        "enable": true,
+                                        "name": "OutLineRenderer",
+                                        "priority": 0,
+                                        "scale": 0.019999999552965164
+                                    }
+                                ],
+                                "layer": 0,
+                                "name": "Weapon1",
+                                "tag": 0,
+                                "transform": {
+                                    "child": null,
+                                    "pos": [
+                                        0.5999999642372131,
+                                        0.949999988079071,
+                                        9.999999046325684
+                                    ],
+                                    "rotation": [
+                                        -0.6181160807609558,
+                                        0.7505233883857727,
+                                        -0.1687488555908203,
+                                        -0.16177448630332947
+                                    ],
+                                    "scale": [
+                                        1.200000524520874,
+                                        1.2000004053115845,
+                                        1.200000524520874
+                                    ]
+                                }
+                            }
+                        }
+                    ],
+                    "gameObject": {
+                        "active": false,
+                        "components": [
+                            {
+                                "enable": true,
+                                "grabName": "mixamorig:RightHand",
+                                "name": "Rig",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "RightHand",
+                        "tag": 0,
+                        "transform": {
+                            "child": [
+                                "Weapon1"
+                            ],
+                            "pos": [
+                                0.800000011920929,
+                                0.800000011920929,
+                                10.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                1.0,
+                                0.0,
+                                -4.76837158203125e-07
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                },
+                {
+                    "childs": [
+                        {
+                            "childs": [
+                                {
+                                    "childs": null,
+                                    "gameObject": {
+                                        "active": false,
+                                        "components": [
+                                            {
+                                                "enable": true,
+                                                "isShadow": true,
+                                                "materials": null,
+                                                "meshName": "shield1.fbx",
+                                                "name": "MeshRenderer",
+                                                "priority": 0
+                                            },
+                                            {
+                                                "color": [
+                                                    0.0,
+                                                    0.0,
+                                                    0.0,
+                                                    1.0
+                                                ],
+                                                "ditherOffset": 0.0,
+                                                "ditherPower": 1.0,
+                                                "enable": true,
+                                                "name": "OutLineRenderer",
+                                                "priority": 0,
+                                                "scale": 0.019999999552965164
+                                            }
+                                        ],
+                                        "layer": 0,
+                                        "name": "ShiedMesh",
+                                        "tag": 0,
+                                        "transform": {
+                                            "child": null,
+                                            "pos": [
+                                                0.6999999284744263,
+                                                0.800000011920929,
+                                                9.929999351501465
+                                            ],
+                                            "rotation": [
+                                                0.7282006144523621,
+                                                0.66727215051651,
+                                                0.10568524152040482,
+                                                -0.11533598601818085
+                                            ],
+                                            "scale": [
+                                                1.0,
+                                                0.8000001311302185,
+                                                1.0
+                                            ]
+                                        }
+                                    }
+                                }
+                            ],
+                            "gameObject": {
+                                "active": false,
+                                "components": null,
+                                "layer": 0,
+                                "name": "Shield1",
+                                "tag": 0,
+                                "transform": {
+                                    "child": [
+                                        "ShiedMesh"
+                                    ],
+                                    "pos": [
+                                        0.800000011920929,
+                                        0.800000011920929,
+                                        10.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        1.0,
+                                        0.0,
+                                        -4.76837158203125e-07
+                                    ],
+                                    "scale": [
+                                        1.0,
+                                        1.0,
+                                        1.0
+                                    ]
+                                }
+                            }
+                        }
+                    ],
+                    "gameObject": {
+                        "active": false,
+                        "components": [
+                            {
+                                "enable": true,
+                                "grabName": "mixamorig:LeftHand",
+                                "name": "Rig",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "LeftHand",
+                        "tag": 0,
+                        "transform": {
+                            "child": [
+                                "Shield1"
+                            ],
+                            "pos": [
+                                0.800000011920929,
+                                0.800000011920929,
+                                10.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                1.0,
+                                0.0,
+                                -4.76837158203125e-07
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            ],
+            "gameObject": {
+                "active": false,
+                "components": [
+                    {
+                        "enable": true,
+                        "isShadow": true,
+                        "materials": null,
+                        "meshName": "Knight.fbx",
+                        "name": "MeshRenderer",
+                        "priority": 0
+                    },
+                    {
+                        "animConName": "Test2",
+                        "enable": true,
+                        "name": "Animation",
+                        "priority": 0
+                    },
+                    {
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "ditherOffset": 0.0,
+                        "ditherPower": 1.0,
+                        "enable": true,
+                        "name": "OutLineRenderer",
+                        "priority": 0,
+                        "scale": 0.009999999776482582
+                    }
+                ],
+                "layer": 0,
+                "name": "Player1",
+                "tag": 0,
+                "transform": {
+                    "child": [
+                        "RightHand",
+                        "LeftHand"
+                    ],
+                    "pos": [
+                        0.800000011920929,
+                        0.800000011920929,
+                        10.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        1.0,
+                        0.0,
+                        -4.76837158203125e-07
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
                     ]
                 }
             }

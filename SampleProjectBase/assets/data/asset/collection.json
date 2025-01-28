@@ -4213,8 +4213,8 @@
                                 "isActive": true,
                                 "isHaveExit": false,
                                 "priority": -1,
-                                "targetRatio": 0.23000000417232513,
-                                "transEase": 0.23000000417232513,
+                                "targetRatio": 0.14000000059604645,
+                                "transEase": 0.14000000059604645,
                                 "transTime": 0.25
                             },
                             "toName": "Attack3"
@@ -6428,7 +6428,7 @@
                 {
                     "name": "isGround",
                     "type": 0,
-                    "value": false
+                    "value": true
                 },
                 {
                     "name": "chargeSteps",
@@ -7547,11 +7547,11 @@
                                 "conditionList": null,
                                 "exitRatio": 0.4000000059604645,
                                 "interpolate": 0,
-                                "isActive": false,
+                                "isActive": true,
                                 "isHaveExit": true,
                                 "priority": 0,
-                                "targetRatio": 0.07999999821186066,
-                                "transEase": 0.07999999821186066,
+                                "targetRatio": 0.4099999964237213,
+                                "transEase": 0.4099999964237213,
                                 "transTime": 0.10000000149011612
                             },
                             "toName": "AirAttack1"
@@ -7575,7 +7575,7 @@
                                 "conditionList": null,
                                 "exitRatio": 0.4099999964237213,
                                 "interpolate": 0,
-                                "isActive": true,
+                                "isActive": false,
                                 "isHaveExit": true,
                                 "priority": 0,
                                 "targetRatio": 0.0,
@@ -7599,33 +7599,39 @@
                             "plotDatas": [
                                 {
                                     "interp": 1,
-                                    "time": 0.14000000059604645,
-                                    "value": 0.800000011920929,
-                                    "vector": 0.0
+                                    "time": 0.44699999690055847,
+                                    "value": 0.4000000059604645,
+                                    "vector": -1.0021693706512451
                                 },
                                 {
                                     "interp": 0,
-                                    "time": 0.3499999940395355,
-                                    "value": 0.800000011920929,
-                                    "vector": 0.0
+                                    "time": 0.47999998927116394,
+                                    "value": 0.4000000059604645,
+                                    "vector": 1.9988347291946411
                                 },
                                 {
                                     "interp": 1,
-                                    "time": 0.4869999885559082,
+                                    "time": 0.6809999942779541,
+                                    "value": 1.7999999523162842,
+                                    "vector": -1.730560302734375
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.6819999814033508,
                                     "value": 0.30000001192092896,
-                                    "vector": 0.0
+                                    "vector": -0.028120433911681175
                                 }
                             ],
-                            "startInterp": 0,
-                            "startValue": 0.20000000298023224,
+                            "startInterp": 1,
+                            "startValue": 1.0,
                             "startVector": -0.2249634712934494,
                             "useHermite": true
                         },
-                        "baseAnim": "knight_AirDownBody1.fbx",
-                        "beginBlendFlame": 8,
+                        "baseAnim": "knight_AirDownBody3.fbx",
+                        "beginBlendFlame": 0,
                         "beginBoneId": 2,
                         "blendAnim": "knight_AirSlash1.fbx",
-                        "blendBeginFrame": 8,
+                        "blendBeginFrame": 0,
                         "blendCurve": {
                             "easeKind": 0,
                             "endValue": 0.6000000238418579,
@@ -7634,19 +7640,19 @@
                                 {
                                     "interp": 1,
                                     "time": 0.4880000054836273,
-                                    "value": 0.6000000238418579,
+                                    "value": 0.800000011920929,
                                     "vector": 0.0
                                 },
                                 {
-                                    "interp": 0,
+                                    "interp": 1,
                                     "time": 0.48899999260902405,
-                                    "value": 2.0,
-                                    "vector": 0.7229343056678772
+                                    "value": 1.600000023841858,
+                                    "vector": 0.0
                                 },
                                 {
                                     "interp": 1,
                                     "time": 0.7450000047683716,
-                                    "value": 2.0,
+                                    "value": 1.600000023841858,
                                     "vector": 0.0
                                 },
                                 {
@@ -7657,12 +7663,12 @@
                                 }
                             ],
                             "startInterp": 1,
-                            "startValue": 0.6000000238418579,
+                            "startValue": 0.800000011920929,
                             "startVector": 0.0,
                             "useHermite": true
                         },
                         "blendDepth": 3,
-                        "isLoop": false,
+                        "isLoop": true,
                         "isMinusRMY": true,
                         "isRMXZ": false,
                         "isRMY": false,
@@ -7673,7 +7679,7 @@
                         {
                             "arrowParam": {
                                 "conditionList": null,
-                                "exitRatio": 0.9900000095367432,
+                                "exitRatio": 0.75,
                                 "interpolate": 0,
                                 "isActive": true,
                                 "isHaveExit": true,
@@ -7919,7 +7925,7 @@
                         },
                         "isLoop": false,
                         "isMinusRMY": false,
-                        "isRMXZ": false,
+                        "isRMXZ": true,
                         "isRMY": false,
                         "speed": 1.0
                     },
@@ -11711,11 +11717,12 @@
             "animParameter": null,
             "assetName": "ANC_Test",
             "boneList": "Knight.fbx",
-            "defaultNode": "TestAirAtk",
+            "defaultNode": "Air",
             "groupArrows": null,
             "nodeInfoData": [
                 {
                     "animNode": {
+                        "animName": "knight_AirSlash1.fbx",
                         "animationCurve": {
                             "easeKind": 0,
                             "endValue": 1.0,
@@ -11726,12 +11733,22 @@
                             "startVector": 0.0,
                             "useHermite": true
                         },
-                        "baseAnim": "knight_AirDownBody1.fbx",
-                        "beginBlendFlame": 0,
-                        "beginBoneId": 2,
-                        "blendAnim": "knight_AirSlash1.fbx",
-                        "blendBeginFrame": 0,
-                        "blendCurve": {
+                        "isLoop": true,
+                        "isMinusRMY": false,
+                        "isRMXZ": false,
+                        "isRMY": false,
+                        "speed": 1.0
+                    },
+                    "arrowDataList": null,
+                    "groupArrowName": "",
+                    "nodeName": "A",
+                    "nodeType": 0,
+                    "notifyList": null
+                },
+                {
+                    "animNode": {
+                        "animName": "knight_AirDownBody3.fbx",
+                        "animationCurve": {
                             "easeKind": 0,
                             "endValue": 1.0,
                             "endVector": 0.0,
@@ -11741,18 +11758,16 @@
                             "startVector": 0.0,
                             "useHermite": true
                         },
-                        "blendDepth": 3,
                         "isLoop": true,
                         "isMinusRMY": false,
                         "isRMXZ": false,
                         "isRMY": false,
-                        "meshSpaceBlend": true,
                         "speed": 1.0
                     },
                     "arrowDataList": null,
                     "groupArrowName": "",
-                    "nodeName": "TestAirAtk",
-                    "nodeType": 2,
+                    "nodeName": "Air",
+                    "nodeType": 0,
                     "notifyList": null
                 }
             ],
@@ -11837,6 +11852,41 @@
                     "arrowDataList": null,
                     "groupArrowName": "",
                     "nodeName": "StandUp",
+                    "nodeType": 0,
+                    "notifyList": null
+                }
+            ],
+            "playSpeed": 1.0
+        },
+        {
+            "animParameter": null,
+            "assetName": "Test2",
+            "boneList": "Knight.fbx",
+            "defaultNode": "Slash",
+            "groupArrows": null,
+            "nodeInfoData": [
+                {
+                    "animNode": {
+                        "animName": "knight_AirSlash1.fbx",
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startInterp": 1,
+                            "startValue": 1.0,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "isLoop": true,
+                        "isMinusRMY": false,
+                        "isRMXZ": false,
+                        "isRMY": false,
+                        "speed": 1.0
+                    },
+                    "arrowDataList": null,
+                    "groupArrowName": "",
+                    "nodeName": "Slash",
                     "nodeType": 0,
                     "notifyList": null
                 }
@@ -11939,6 +11989,12 @@
             "assetName": "knight_AirDownBody2.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_AirDownBody2.fbx",
+            "rightHand": true
+        },
+        {
+            "assetName": "knight_AirDownBody3.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_AirDownBody3.fbx",
             "rightHand": true
         },
         {

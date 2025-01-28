@@ -49,6 +49,7 @@ namespace HashiTaku
 		ResistComponnent<CP_TitleButtonGroup>();
 		ResistComponnent<CP_BattleButtonGroup>();
 		ResistComponnent<CP_Fade>();
+		ResistComponnent<CP_StylishUI>();
 
 		// エフェクト
 		ResistComponnent<CP_VisualEffect>();

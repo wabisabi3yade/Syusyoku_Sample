@@ -218,7 +218,7 @@
     <ClCompile Include="CP_BattleButtonGroup.cpp" />
     <ClCompile Include="CP_PlaySound.cpp" />
     <ClCompile Include="CP_SoundManager.cpp" />
-    <ClCompile Include="IBoneSupplier.cpp" />
+    <ClCompile Include="CP_StylishUI.cpp" />
     <ClCompile Include="PerlinShakeParameter.cpp" />
     <ClCompile Include="CameraTargetMove.cpp" />
     <ClCompile Include="ChangeAnimObserver.cpp" />
@@ -467,9 +467,11 @@
     <ClInclude Include="CP_BattleButtonGroup.h" />
     <ClInclude Include="CP_PlaySound.h" />
     <ClInclude Include="CP_SoundManager.h" />
+    <ClInclude Include="CP_StylishUI.h" />
     <ClInclude Include="IApplyDepthShadow.h" />
     <ClInclude Include="IBoneSupplier.h" />
     <ClInclude Include="ITransformSetter.h" />
+    <ClInclude Include="IWeaponOwner.h" />
     <ClInclude Include="PerlinShakeParameter.h" />
     <ClInclude Include="CameraTargetMove.h" />
     <ClInclude Include="ChangeAnimObserver.h" />
@@ -687,12 +689,6 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SampleProjectBase.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
-    <None Include="ClassDiagram3.cd" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

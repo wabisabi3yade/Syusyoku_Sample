@@ -1,5 +1,6 @@
 #pragma once
 #include "CP_Enemy.h"
+#include "IWeaponOwner.h"
 #include "CP_Weapon.h"
 #include "BossActionController.h"
 #include "IUISlider.h"
@@ -7,7 +8,7 @@
 namespace HashiTaku
 {
 	/// @brief ボスのコンポーネント
-	class CP_Boss : public CP_Enemy
+	class CP_Boss : public CP_Enemy, public IWeaponOwner
 	{
 		/// @brief 武器名
 		std::string weaponObjName;
@@ -76,6 +77,13 @@ namespace HashiTaku
 		/// @brief ロードする
 		/// @param _data ロードするシーンデータ 
 		void Load(const json& _data) override;
+
+		/// @brief 所有者のワールド座標を取得する
+		/// @return 所有者のワールド座標
+		const DXSimp::Vector3& GetOwnerWorldPos() const override;
+
+		/// @brief 武器による攻撃ヒットさせたときに起こす処理
+		void OnWeaponAttacking() override {};
 	private:
 		void Awake() override;
 		void Start() override;
@@ -105,10 +113,6 @@ namespace HashiTaku
 		/// @brief ブレイク終了時の処理
 		void OnBreakEnd();
 
-		/// @brief 各クラスのダメージを受けたときの処理
-		/// @param _attackInfo 攻撃情報
-		/// 
-		
 		/// @brief 各クラスのダメージを受けたときの処理
 		/// @param _attackInfo 攻撃情報
 		/// @param _attackerPos 攻撃した側の座標

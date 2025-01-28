@@ -119,26 +119,42 @@ namespace HashiTaku
 
 	bool PlayerAction::GetCanInput() const
 	{
-		assert(pIsCanInput);
+#ifdef EDIT
+		if (!pAnimation) return false;
+		if (!pIsCanInput) return false;
+#endif // EDIT
+
 		return *pIsCanInput;
 	}
 
 	bool PlayerAction::GetCanCancel() const
 	{
-		assert(pIsCanCancel);
+#ifdef EDIT
+		if (!pAnimation) return false;
+		if (!pIsCanCancel) return false;
+#endif // EDIT
+
 		return *pIsCanCancel;
 	}
 
 	bool PlayerAction::GetCanAttack() const
 	{
-		assert(pIsCanAttack);
+#ifdef EDIT
+		if (!pAnimation) return false;
+		if (!pIsCanAttack) return false;
+#endif // EDIT
+
 		return *pIsCanAttack;
 	}
 
 	bool PlayerAction::GetCanMove() const
 	{
-		assert(pIsCanMove);
-		return *pIsCanMove; return false;
+#ifdef EDIT
+		if (!pAnimation) return false;
+		if (!pIsCanMove) return false;
+#endif // EDIT
+
+		return *pIsCanMove; 
 	}
 
 	bool PlayerAction::GetIsGround() const
