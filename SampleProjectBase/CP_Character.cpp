@@ -158,6 +158,13 @@ namespace HashiTaku
 	void CP_Character::OnTakeDamage(const AttackInformation& _attackInfo,
 		const DXSimp::Vector3& _contactPos)
 	{
+		// ‘Ì—Í‚ðŒ¸‚ç‚·
+		DecadeHp(_attackInfo.GetDamageValue());
+
+		// ‘Ì—Í‚ª‚È‚­‚È‚Á‚½‚ç
+		if (currentHP <= 0.0f)
+			OnDeath();
+
 		// ƒJƒƒ‰‚ð—h‚ç‚·
 		if (_attackInfo.GetIsCamShake() && pCamMove)
 		{
@@ -170,10 +177,6 @@ namespace HashiTaku
 
 		// ƒqƒbƒg‰¹‚ðÄ¶
 		CreateSoundFX(_attackInfo, _contactPos);
-
-		// ‘Ì—Í‚ª‚È‚­‚È‚Á‚½‚ç
-		if (currentHP <= 0.0f)
-			OnDeath();
 	}
 
 	void CP_Character::CreateHitVfx(const AttackInformation& _attackInfo,

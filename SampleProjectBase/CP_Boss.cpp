@@ -73,6 +73,11 @@ namespace HashiTaku
 		return GetTransform().GetPosition();
 	}
 
+	void CP_Boss::OnAcceptParry(const AcceptParryInfo& _acceptInfo)
+	{
+		// ブレイクゲージを取得する
+	}
+
 	void CP_Boss::Awake()
 	{
 		CP_Enemy::Awake();
@@ -205,7 +210,7 @@ namespace HashiTaku
 
 		// 体力バーにも反映
 		if (pHpBar)
-			pHpBar->SetCurrentValue(currentHP);
+			pHpBar->SetCurrentValue(GetCurrentHP());
 	}
 
 	void CP_Boss::AddBreakValue(float _add)
@@ -254,10 +259,11 @@ namespace HashiTaku
 	{
 		if (!CP_Enemy::OnDamageBehavior(_attackInfo, _attackerPos)) return false;
 
-		// ブレイク値を加算
+		// ブレイク値を加算(プレイヤーからの攻撃なら)
 		const PlayerAttackInformation* pPlayerAtkInfo =
-			static_cast<const PlayerAttackInformation*>(&_attackInfo);
-		AddBreakValue(pPlayerAtkInfo->GetBreakValue());
+			dynamic_cast<const PlayerAttackInformation*>(&_attackInfo);
+		if (pPlayerAtkInfo)
+			AddBreakValue(pPlayerAtkInfo->GetBreakValue());
 
 		pActionController->OnDamage(_attackInfo, _attackerPos);
 

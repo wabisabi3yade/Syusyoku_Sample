@@ -36,7 +36,7 @@ namespace HashiTaku
 
 	void PerlinShakeParameter::ImGuiDebug()
 	{
-		if (!ImGuiMethod::TreeNode("CamShake")) return;
+		if (!ImGuiMethod::TreeNode("Shake Parameter")) return;
 
 		ImGui::Checkbox("FadeOut", &isFadeOut);
 		ImGui::DragFloat3("Vector", &shakeVec.x, 0.01f);

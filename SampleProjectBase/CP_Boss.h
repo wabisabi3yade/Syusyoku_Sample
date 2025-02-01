@@ -59,6 +59,10 @@ namespace HashiTaku
 		/// @param _attackInfo 攻撃情報
 		void SetAttackInfo(const AttackInformation& _attackInfo);
 
+		/// @brief 体力をセット
+		/// @param _setHp 体力
+		void SetCurrentHP(float _setHp) override;
+
 		/// @brief ブレイク値をセット
 		/// @param _set セット
 		void SetBreakValue(float _set);
@@ -84,6 +88,10 @@ namespace HashiTaku
 
 		/// @brief 武器による攻撃ヒットさせたときに起こす処理
 		void OnWeaponAttacking(const AttackInformation& _atkInfo) override {};
+
+		/// @brief パリィされたときの処理
+		/// @param _acceptInfo パリィからの情報
+		void OnAcceptParry(const AcceptParryInfo& _acceptInfo) override;
 	private:
 		void Awake() override;
 		void Start() override;
@@ -122,10 +130,6 @@ namespace HashiTaku
 
 		/// @brief 死んだときの処理
 		void OnDeathBehavior() override;
-
-		/// @brief 体力をセット
-		/// @param _setHp 体力
-		void SetCurrentHP(float _setHp)override;
 
 		void ImGuiDebug() override;
 	};

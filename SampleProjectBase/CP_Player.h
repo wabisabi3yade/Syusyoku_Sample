@@ -82,6 +82,10 @@ namespace HashiTaku
 		/// @param _setBool 無敵にするか？
 		static void SetIsDebugInvincible(bool _setBool);
 
+		/// @brief 体力をセット
+		/// @param _setHp 体力
+		void SetCurrentHP(float _setHp) override;
+
 		/// @brief 攻撃フラグを取得
 		/// @return 攻撃フラグ
 		bool GetIsAttackFlag() const;
@@ -123,6 +127,14 @@ namespace HashiTaku
 		/// @brief プレイヤーのダメージ処理
 		bool OnDamageBehavior(const AttackInformation& _attackInfo,
 			const DXSimp::Vector3& _attackerPos) override;
+
+		/// @brief ダメージ受けたときの処理
+		/// @param _attackInfo 攻撃情報
+		/// @param _contactPos 衝突地点
+		virtual void OnTakeDamage(const AttackInformation& _attackInfo,
+			const DXSimp::Vector3& _contactPos);
+
+		/// @brief 死んだ時の処理
 		void OnDeathBehavior() override;
 
 		void ImGuiDebug() override;

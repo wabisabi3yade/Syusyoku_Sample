@@ -69,9 +69,6 @@ namespace HashiTaku
 	bool CP_Enemy::OnDamageBehavior(const AttackInformation& _attackInfo,
 		const DXSimp::Vector3& _attackerPos)
 	{
-		// HP‚ðŒ¸‚ç‚·
-		DecadeHp(_attackInfo.GetDamageValue());
-
 		return true;
 	}
 

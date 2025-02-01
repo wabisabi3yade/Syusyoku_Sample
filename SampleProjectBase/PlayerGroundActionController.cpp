@@ -122,8 +122,8 @@ namespace HashiTaku
 		PlayerGuardState& guardState = static_cast<PlayerGuardState&>(*pCurrentNode);
 		if (!guardState.GetCanParry(_enemyPos)) return false;
 
-		// パリィ処理
-		guardState.OnParry();
+		// パリィ処理を行うように指示
+		guardState.SetPerfomParry();
 		return true;
 	}
 
@@ -131,6 +131,9 @@ namespace HashiTaku
 		const DXSimp::Vector3& _attackerPos)
 	{
 		using enum AttackInformation::AttackLevel;
+
+		// デバッグ無敵ならノック状態に移行しない
+		if (CP_Player::GetIsDebugInvincible()) return;
 
 		// ノックのベクトルを求める
 		DXSimp::Vector3 knockVec =

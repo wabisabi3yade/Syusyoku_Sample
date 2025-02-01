@@ -13,7 +13,7 @@ namespace HashiTaku
 		isUseRotateCurve(false)
 	{
 		// 1つは用意する
-		AttackInformation attackInfo;
+		BossAttackInformation attackInfo;
 		attackInfos.push_back(attackInfo);
 
 #ifdef EDIT
@@ -91,7 +91,7 @@ namespace HashiTaku
 			attackInfos.clear();	// 今の情報をリセット
 			for (auto& atkLoadData : atkLoadDatas)
 			{
-				AttackInformation atkInfo;
+				BossAttackInformation atkInfo;
 				atkInfo.Load(atkLoadData);
 				attackInfos.push_back(atkInfo);
 			}

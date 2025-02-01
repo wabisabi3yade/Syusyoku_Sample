@@ -1,10 +1,11 @@
 #pragma once
 #include "CP_Character.h"
 #include "ITargetAccepter.h"
+#include "IParryAccepter.h"
 
 namespace HashiTaku
 {
-	class CP_Enemy : public CP_Character, public ITargetAccepter
+	class CP_Enemy : public CP_Character, public ITargetAccepter, public IParryAccepter
 	{
 		/// @brief 敵の名称
 		std::string enemyName;
@@ -34,6 +35,10 @@ namespace HashiTaku
 
 		/// @brief ターゲット側に死んだことを通知
 		void OnRemoveNotifyToTargeter();
+
+		/// @brief パリィされたときの処理
+		/// @param _acceptInfo パリィからの情報
+		virtual void OnAcceptParry(const AcceptParryInfo& _acceptInfo) = 0;
 	protected:
 		void Start() override;
 		void OnDestroy() override;

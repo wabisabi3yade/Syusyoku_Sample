@@ -955,6 +955,12 @@
     <Filter Include="ソース ファイル\Component\UI\StylishUI">
       <UniqueIdentifier>{b69f3f67-7a0b-4d29-998b-42cc58938235}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\Guard\IParryAccepter">
+      <UniqueIdentifier>{0adb4bf9-0d25-49b7-b3b3-c7a74dff87b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Attack\Information\Enemy">
+      <UniqueIdentifier>{b6c00924-761a-4b48-a548-722f0db8781b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1750,6 +1756,12 @@
     </ClCompile>
     <ClCompile Include="PS_Ground.cpp">
       <Filter>ソース ファイル\Graphics\Shader\Pixel\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="IParryAccepter.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="BossAttackInformation.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2598,6 +2610,12 @@
     </ClInclude>
     <ClInclude Include="IWeaponOwner.h">
       <Filter>ソース ファイル\Component\InGame\Weapon\IWeaponOwner</Filter>
+    </ClInclude>
+    <ClInclude Include="IParryAccepter.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="BossAttackInformation.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

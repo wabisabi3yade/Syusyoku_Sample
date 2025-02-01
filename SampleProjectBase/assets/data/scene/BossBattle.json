@@ -957,7 +957,7 @@
                                                                 "speed": 2.0,
                                                                 "time": 0.6000000238418579
                                                             },
-                                                            "damage": 50.0,
+                                                            "damage": 40.0,
                                                             "hitSE": {
                                                                 "loop": false,
                                                                 "pitch": 0.0,
@@ -1007,7 +1007,7 @@
                                             },
                                             "isMoveFwd": false,
                                             "maxDistance": 10.0,
-                                            "maxTime": 3.0,
+                                            "maxTime": 3.5,
                                             "nextCombAttack": 99,
                                             "releaseVfx": {
                                                 "applyColor": false,
@@ -1033,6 +1033,19 @@
                                             "addStylishPointParry": 200.0,
                                             "canParryTime": 12,
                                             "parryAngle": 100.0,
+                                            "parryCamShake": {
+                                                "fadeOut": true,
+                                                "power": 2.0,
+                                                "shakeVec": [
+                                                    1.0,
+                                                    1.0,
+                                                    0.75
+                                                ],
+                                                "speed": 0.4000000059604645,
+                                                "time": 0.30000001192092896
+                                            },
+                                            "parryPadVibePower": 0.4000000059604645,
+                                            "parryPadVibeTime": 0.20000000298023224,
                                             "parrySEs": [
                                                 {
                                                     "loop": false,
@@ -1561,7 +1574,7 @@
                             "actData": [
                                 {
                                     "data": {
-                                        "isIdleOnly": true,
+                                        "isIdleOnly": false,
                                         "warpMotion": {
                                             "useWarp": false
                                         }
@@ -1648,7 +1661,7 @@
                                                         0.5,
                                                         0.0
                                                     ],
-                                                    "speed": 0.6000000238418579,
+                                                    "speed": 1.0,
                                                     "time": 0.6000000238418579
                                                 },
                                                 "damage": 5.099999904632568,
@@ -1880,7 +1893,7 @@
                                                         0.4000000059604645,
                                                         0.0
                                                     ],
-                                                    "speed": 0.5,
+                                                    "speed": 1.0,
                                                     "time": 0.6000000238418579
                                                 },
                                                 "damage": 5.0,
@@ -2020,7 +2033,7 @@
                                                         0.0,
                                                         0.0
                                                     ],
-                                                    "speed": 0.5,
+                                                    "speed": 1.0,
                                                     "time": 0.4000000059604645
                                                 },
                                                 "damage": 8.0,
@@ -2048,12 +2061,12 @@
                                                     "shakeVec": [
                                                         1.0,
                                                         0.0,
-                                                        0.0
+                                                        0.30000001192092896
                                                     ],
-                                                    "speed": 0.6000000238418579,
+                                                    "speed": 1.0,
                                                     "time": 0.5
                                                 },
-                                                "damage": 8.0,
+                                                "damage": 10.0,
                                                 "hitSE": {
                                                     "loop": false,
                                                     "pitch": 0.0,
@@ -2132,9 +2145,9 @@
                                                     "shakeVec": [
                                                         1.0,
                                                         1.0,
-                                                        0.0
+                                                        0.5
                                                     ],
-                                                    "speed": 0.4000000059604645,
+                                                    "speed": 1.0,
                                                     "time": 0.5
                                                 },
                                                 "damage": 15.0,
@@ -2870,6 +2883,60 @@
                         1.0,
                         1.0,
                         1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "isShadow": true,
+                        "materials": [
+                            "M_Rock1"
+                        ],
+                        "meshName": "desertRock11.fbx",
+                        "name": "MeshRenderer",
+                        "priority": 0
+                    },
+                    {
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "ditherOffset": 3.0,
+                        "ditherPower": 0.4000000059604645,
+                        "enable": true,
+                        "name": "OutLineRenderer",
+                        "priority": 0,
+                        "scale": 0.07000000029802322
+                    }
+                ],
+                "layer": 0,
+                "name": "Rock14",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        -25.5,
+                        1.2999999523162842,
+                        17.399999618530273
+                    ],
+                    "rotation": [
+                        -0.08036001771688461,
+                        0.6103947162628174,
+                        -0.10285607725381851,
+                        0.7812689542770386
+                    ],
+                    "scale": [
+                        8.0,
+                        6.699999809265137,
+                        3.6000001430511475
                     ]
                 }
             }
@@ -3938,60 +4005,6 @@
             }
         },
         {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "isShadow": true,
-                        "materials": [
-                            "M_Rock1"
-                        ],
-                        "meshName": "desertRock11.fbx",
-                        "name": "MeshRenderer",
-                        "priority": 0
-                    },
-                    {
-                        "color": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "ditherOffset": 3.0,
-                        "ditherPower": 0.4000000059604645,
-                        "enable": true,
-                        "name": "OutLineRenderer",
-                        "priority": 0,
-                        "scale": 0.07000000029802322
-                    }
-                ],
-                "layer": 0,
-                "name": "Rock14",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        -25.5,
-                        1.2999999523162842,
-                        17.399999618530273
-                    ],
-                    "rotation": [
-                        -0.08036001771688461,
-                        0.6103947162628174,
-                        -0.10285607725381851,
-                        0.7812689542770386
-                    ],
-                    "scale": [
-                        8.0,
-                        6.699999809265137,
-                        3.6000001430511475
-                    ]
-                }
-            }
-        },
-        {
             "childs": [
                 {
                     "childs": null,
@@ -4756,18 +4769,18 @@
                                         "texName": "UI_RankA.png"
                                     },
                                     {
-                                        "decadeSpeed": 40.0,
+                                        "decadeSpeed": 80.0,
                                         "enterPoint": 2500.0,
                                         "texName": "UI_RankS.png"
                                     },
                                     {
-                                        "decadeSpeed": 40.0,
-                                        "enterPoint": 3000.0,
+                                        "decadeSpeed": 80.0,
+                                        "enterPoint": 3200.0,
                                         "texName": "UI_RankSS.png"
                                     },
                                     {
-                                        "decadeSpeed": 50.0,
-                                        "enterPoint": 3500.0,
+                                        "decadeSpeed": 80.0,
+                                        "enterPoint": 4000.0,
                                         "texName": "UI_RankSSS.png"
                                     }
                                 ],

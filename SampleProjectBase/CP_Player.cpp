@@ -42,6 +42,15 @@ namespace HashiTaku
 		isDebugInvicible = _setBool;
 	}
 
+	void CP_Player::SetCurrentHP(float _setHp)
+	{
+		CP_Character::SetCurrentHP(_setHp);
+
+		// スライダーにも反映
+		if (pHpSlider)
+			pHpSlider->SetCurrentValue(GetCurrentHP());
+	}
+
 	void CP_Player::Init()
 	{
 		CP_Character::Init();
@@ -298,9 +307,6 @@ namespace HashiTaku
 	bool CP_Player::OnDamageBehavior(const AttackInformation& _attackInfo,
 		const DXSimp::Vector3& _attackerPos)
 	{
-		// デバッグ無敵
-		if (isDebugInvicible) return false;
-
 		// アクション内でダメージ受けているかチェック
 		bool isAcceptDamage = false;	// ダメージ受けたかフラグ
 		pAction->OnDamage(_attackInfo, _attackerPos, &isAcceptDamage);
@@ -308,13 +314,18 @@ namespace HashiTaku
 		// ダメージ受けていたら
 		if (!isAcceptDamage) return false;
 
-		float atkDamageValue = _attackInfo.GetDamageValue();
-
-		// 体力を減らす
-		DecadePlayerHp(atkDamageValue);
-		AddStylishPoint(-atkDamageValue * stylishPointRatioFromAcceptDmg);
+		// デバッグ無敵なら
+		if (isDebugInvicible) return false;
 
 		return true;
+	}
+
+	void CP_Player::OnTakeDamage(const AttackInformation& _attackInfo, const DXSimp::Vector3& _contactPos)
+	{
+		CP_Character::OnTakeDamage(_attackInfo, _contactPos);
+
+		// スタイリッシュポイントを減らす
+		AddStylishPoint(-_attackInfo.GetDamageValue() * stylishPointRatioFromAcceptDmg);
 	}
 
 	void CP_Player::OnDeathBehavior()

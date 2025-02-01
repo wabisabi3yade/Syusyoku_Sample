@@ -175,6 +175,10 @@ namespace HashiTaku
 		/// @return 前のランク
 		StylishRank GetPrevRank(StylishRank _targetRank) const;
 
+		/// @brief 現在のランクをポイントから取得する
+		/// @return 現在のランク
+		StylishRank GetCurrentRankFromPoint();
+
 		/// @brief 現在最大のランク状態か取得する
 		/// @return 現在最大のランク状態か？
 		bool GetIsCurMaxRank() const;

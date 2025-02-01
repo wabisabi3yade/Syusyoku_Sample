@@ -219,6 +219,8 @@
     <ClCompile Include="CP_PlaySound.cpp" />
     <ClCompile Include="CP_SoundManager.cpp" />
     <ClCompile Include="CP_StylishUI.cpp" />
+    <ClCompile Include="BossAttackInformation.cpp" />
+    <ClCompile Include="IParryAccepter.cpp" />
     <ClCompile Include="PerlinShakeParameter.cpp" />
     <ClCompile Include="CameraTargetMove.cpp" />
     <ClCompile Include="ChangeAnimObserver.cpp" />
@@ -468,8 +470,10 @@
     <ClInclude Include="CP_PlaySound.h" />
     <ClInclude Include="CP_SoundManager.h" />
     <ClInclude Include="CP_StylishUI.h" />
+    <ClInclude Include="BossAttackInformation.h" />
     <ClInclude Include="IApplyDepthShadow.h" />
     <ClInclude Include="IBoneSupplier.h" />
+    <ClInclude Include="IParryAccepter.h" />
     <ClInclude Include="ITransformSetter.h" />
     <ClInclude Include="IWeaponOwner.h" />
     <ClInclude Include="PerlinShakeParameter.h" />

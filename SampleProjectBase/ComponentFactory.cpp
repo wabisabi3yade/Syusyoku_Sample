@@ -31,7 +31,6 @@ namespace HashiTaku
 		ResistComponnent<CP_Player>();
 
 		// 敵
-		ResistComponnent<CP_Enemy>();
 		ResistComponnent<CP_Boss>();
 
 		// キャラクター共通

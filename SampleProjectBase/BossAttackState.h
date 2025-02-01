@@ -1,6 +1,6 @@
 #pragma once
 #include "BossActState_Base.h"
-#include "AttackInformation.h"
+#include "BossAttackInformation.h"
 
 namespace HashiTaku
 {
@@ -24,7 +24,7 @@ namespace HashiTaku
 
 	protected:
 		/// @brief 攻撃情報リスト(単発なら最初の情報を使用する)
-		std::vector<AttackInformation> attackInfos;
+		std::vector<BossAttackInformation> attackInfos;
 
 	public:
 		BossAttackState();
