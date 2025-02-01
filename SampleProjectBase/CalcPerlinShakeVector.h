@@ -4,7 +4,7 @@
 namespace HashiTaku
 {
 	/// @brief パーリンノイズでシェイクするベクトルを計算するクラス
-	class CalcPerlinShakeVector
+	class PerlinShake
 	{
 		/// @brief 現在揺らしているパラメータ
 		PerlinShakeParameter curShakeParameter;
@@ -12,16 +12,19 @@ namespace HashiTaku
 		/// @brief 乱数で決めたパーリンノイズのオフセット値(毎回変わる)
 		DXSimp::Vector3 randPerlinOffset;
 
+		/// @brief 計算して求めたシェイクのオフセット
+		DXSimp::Vector3 shakeOffset;
+
 		/// @brief 揺らしてからの経過時間
 		float shakeElapsedTime;
 
 		/// @brief 揺れているか？
 		bool isShaking;
 	public:
-		CalcPerlinShakeVector();
-		~CalcPerlinShakeVector() = default;
+		PerlinShake();
+		~PerlinShake() = default;
 
-		void CalcurateVector(float _deltaTime, DXSimp::Vector3& _outVector);
+		void Update(float _deltaTime);
 
 		/// @brief 揺れを開始する
 		/// @param _vector 揺れの方向
@@ -45,6 +48,8 @@ namespace HashiTaku
 		/// @brief 揺れているか取得する
 		/// @return 揺れているフラグ
 		bool GetIsShaking() const;
+
+		const DXSimp::Vector3& GetShakeOffset() const;
 	private:
 		/// @brief 揺れのオフセット値を取得する
 		/// @param _outVector 求めたカメラの揺れベクトル

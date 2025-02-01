@@ -42,6 +42,13 @@ namespace HashiTaku
 		/// @return 変更したか？
 		template<AssetConcept T>
 		static bool ImGuiGetCombobox(const std::string& _caption, std::string& _currentName);
+
+	private:
+#ifdef EDIT
+		// アセット無しをコンボボックスで選択したときの名前
+		static constexpr auto NULL_ASSET_NAME{ "NullAsset" };
+#endif // EDIT
+
 	};
 
 	template<AssetConcept T>
@@ -63,10 +70,19 @@ namespace HashiTaku
 
 #ifdef EDIT
 		AssetList& assetList = pAssetCollection->GetAssetList<T>();
+
+		// アセット名配列
 		std::vector<const std::string*> assetNames;
 		for (auto& asset : assetList)
 		{
 			assetNames.push_back(&asset.first);
+		}
+
+		// nullにしたいとき用
+		if (ImGui::Button("Null"))
+		{
+			_currentName = NULL_ASSET_NAME;
+			return true;
 		}
 
 		isChange = ImGuiMethod::ComboBox(_caption, _currentName, assetNames);

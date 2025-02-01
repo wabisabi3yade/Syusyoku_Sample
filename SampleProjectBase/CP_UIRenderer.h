@@ -69,6 +69,9 @@ namespace HashiTaku
 
 		void ImGuiDebug() override;
 	private:
+		/// @brief •`‰æ‚Å‚«‚é‚©Žæ“¾
+		bool GetCanDraw() const;
+
 		/// @brief •`‰æ
 		void Draw() override;
 

@@ -116,8 +116,7 @@ namespace HashiTaku
 
 	void Transform::SetScale(const DXSimp::Vector3& _scale)
 	{
-		//scale = _scale;
-		localScale = scale / pParent->GetScale();
+		localScale = _scale / pParent->GetScale();
 
 		UpdateLocalMatrix();
 

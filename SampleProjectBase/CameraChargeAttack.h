@@ -8,7 +8,7 @@ namespace HashiTaku
 	class CameraChargeAttack : public CameraFollowMove
 	{
 		/// @brief チャージ中のシェイクを計算する
-		CalcPerlinShakeVector calcChargeingShake;
+		PerlinShake calcChargeingShake;
 
 		/// @brief チャージ中のシェイク状態
 		PerlinShakeParameter chargeingShakeParam;

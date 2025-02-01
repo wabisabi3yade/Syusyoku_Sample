@@ -1,6 +1,5 @@
 #pragma once
 #include "Component.h"
-#include "AttackInformation.h"
 #include "IDamageable.h"
 #include "Tag.h"
 #include "IWeaponOwner.h"

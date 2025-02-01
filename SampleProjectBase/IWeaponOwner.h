@@ -1,4 +1,5 @@
 #pragma once
+#include "AttackInformation.h"
 
 namespace HashiTaku
 {
@@ -15,7 +16,7 @@ namespace HashiTaku
 		virtual const DXSimp::Vector3& GetOwnerWorldPos() const = 0;
 
 		/// @brief •Ší‚É‚æ‚éUŒ‚ƒqƒbƒg‚³‚¹‚½‚Æ‚«‚É‹N‚±‚·ˆ—
-		virtual void OnWeaponAttacking() = 0;
+		virtual void OnWeaponAttacking(const AttackInformation& _atkInfo) = 0;
 	};
 
 }

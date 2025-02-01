@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "CalcPerlinShakeVector.h"
 
 namespace HashiTaku
 {
@@ -12,7 +13,7 @@ namespace HashiTaku
 		/// @brief ランク
 		enum class StylishRank
 		{
-			None,	// なにもなし(一番下)
+			None = 0,	// なにもなし(一番下)
 			D,
 			C,
 			B,
@@ -21,6 +22,13 @@ namespace HashiTaku
 			SS,
 			SSS,
 			MaxNum
+		};
+
+		enum class RankupDirectionState
+		{
+			Wait,	// 待機
+			Scaling,	// スケーリング
+			Shaking	// シェイク
 		};
 
 		/// @brief ランクごとのパラメータ
@@ -39,20 +47,35 @@ namespace HashiTaku
 		/// @brief ランクのパラメータリスト
 		std::array<RankParameter, static_cast<u_int>(StylishRank::MaxNum)> rankParameters;
 
-		/// @brief ランク描画オブジェクト名
-		std::string rankUIRendererName;
+		/// @brief ランク上がったときに文字をシェイクするときの計算クラス
+		std::unique_ptr<PerlinShake> pRankupShakeVector;
+
+		/// @brief ランク上がったときのシェイクパラメータ
+		PerlinShakeParameter rankupShakeParam;
 
 		/// @brief スタイリッシュゲージオブジェクト名
 		std::string stylishGageName;
 
-		/// @brief UI描画
-		CP_UIRenderer* pUIRenderer;
+		/// @brief スタイリッシュゲージグループオブジェクト名
+		std::string gageGroupObjName;
+
+		/// @brief ランク描画
+		CP_UIRenderer* pStylishRankRenderer;
 
 		/// @brief スタイリッシュゲージ
 		CP_UISlider* pStylishGage;
 
+		/// @brief ゲージのグループオブジェクト
+		GameObject* pGageGroupObj;
+
 		/// @brief 現在のスタイリッシュランク
 		StylishRank curStylishRank;
+
+		/// @brief ランクUIの基礎座標
+		DXSimp::Vector3 rankUIBasePos;
+
+		/// @brief ランクUIの基礎スケール
+		DXSimp::Vector3 rankUIBaseScale;
 
 		/// @brief 現在のスタイリッシュポイント
 		float curStylishPoint;
@@ -63,8 +86,20 @@ namespace HashiTaku
 		/// @brief 減るまでの経過時間
 		float elapsedToDecadeTime;
 
-		/// @brief ポイントが減り続けているか？
-		bool isPointDecading;
+		/// @brief 現在のランク演出状態
+		RankupDirectionState curRankupDirState;
+
+		/// @brief ランク上がったときに使用するイージング
+		EaseKind rankupEase;
+
+		/// @brief ランク上がったときのスケール変更時間
+		float rankupScalingTime;
+		
+		/// @brief ランクの上がったときの演出での開始スケール倍率
+		float rankupScalingRatio;
+
+		/// @brief ランク上がったときの演出経過時間
+		float elapsedRankupDirectionTime;
 	public:
 		CP_StylishUI();
 		~CP_StylishUI() {}
@@ -76,11 +111,41 @@ namespace HashiTaku
 		/// @brief スタイリッシュポイントを減算
 		/// @param _decadePoint 減算するポイント 
 		void DecadeStylishPoint(float _decadePoint);
+
+		/// @brief セーブする
+		/// @param _data セーブシーンデータ
+		json Save() override;
+
+		// ランクパラメータのセーブ処理
+		json SaveRankParameters();
+
+		/// @brief ロードする
+		/// @param _data ロードするシーンデータ 
+		void Load(const json& _data) override;
+
+		// ランクパラメータのロード処理
+		void LoadRankParameters(const json& _rankParamData);
 	private:
+		void Start() override;
 		void Update() override;
+
+		/// @brief ランク上がったときに必要なパラメータの初期化
+		void InitRankupParam();
+
+		/// @brief 必要なオブジェクトを取得
+		void FindRequireObject();
 
 		/// @brief ポイントを減らす更新処理
 		void DecadePointUpdate();
+
+		/// @brief ランク上がったときの更新処理
+		void RankupDirectionUpdate(); 
+
+		/// @brief ランク上がったときのスケーリング処理
+		void RankupScalingUpdate();
+	
+		/// @brief ランク上がったときのシェイク処理
+		void RankupShakeUpdate();
 
 		/// @brief 入るためのランクポイントを取得
 		/// @param _checkRank 確認したいランク
@@ -92,6 +157,9 @@ namespace HashiTaku
 
 		/// @brief 現在のポイントをゲージに反映
 		void ApplyStylishGage();
+
+		/// @brief ランクが上がったときの画像の演出
+		void BeginRankUpDirection();
 
 		/// @brief 活動できるか取得
 		/// @return 活動できるか？
@@ -112,6 +180,15 @@ namespace HashiTaku
 		bool GetIsCurMaxRank() const;
 
 		void ImGuiDebug() override;
+
+		// ランク上がったとき関連
+		void ImGuiRankupDirection();
+
+		// ランクパラメータ編集
+		void ImGuiRankParameter();
+
+		// オブジェクト名編集
+		void ImGuiSetObject();
 	};
 }
 

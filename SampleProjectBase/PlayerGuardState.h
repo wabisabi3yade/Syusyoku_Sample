@@ -26,6 +26,9 @@ namespace HashiTaku
 		/// @brief ガードすることができる正面の角度
 		float canParryForwardAngle;
 
+		/// @brief パリィ成功時に増やすスタイリッシュポイント
+		float addStylishPointOnParry;
+
 		/// @brief パリィできる状態
 		bool canParry;
 	public:
@@ -67,9 +70,6 @@ namespace HashiTaku
 
 		/// @brief ゲージを消費して強力な一撃
 		void ReleaseAttack();
-
-		/// @brief パリィ時の行動
-		void GuardParry();
 
 		/// @brief パリィエフェクトを生成
 		void CreateParryVfx();
