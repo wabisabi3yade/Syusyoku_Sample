@@ -10,8 +10,12 @@ namespace HashiTaku
 	constexpr auto PARRYTRIGGER_NAME("parryTrigger");
 
 	PlayerGuardState::PlayerGuardState() :
-		canParry(false), sustainParryFrame(4), parryElapsedFrame(0), parryAddGuardGage(25.0f),
-		canParryForwardAngle(180.0f)
+		canParry(false), 
+		sustainParryFrame(4),
+		parryElapsedFrame(0),
+		parryAddGuardGage(25.0f),
+		canParryForwardAngle(180.0f),
+		addStylishPointOnParry(200.0f)
 	{
 	}
 
@@ -40,8 +44,8 @@ namespace HashiTaku
 		GetAnimation()->SetBool(GUARD_PARAMNAME, false);
 
 		// キャンセル全てできるようにする
-		GetAnimation()->SetBool(CANCEL_PARAMNAME, true);
-		GetAnimation()->SetBool(CANATK_PARAMNAME, false);
+	/*	GetAnimation()->SetBool(CANCEL_PARAMNAME, true);
+		GetAnimation()->SetBool(CANATK_PARAMNAME, false);*/
 
 		// エフェクトを出す
 		CreateParryVfx();
@@ -49,11 +53,12 @@ namespace HashiTaku
 		// 効果音を鳴らす
 		PlayParrySE();
 
+		// スタイリッシュポイントを加算
+		GetPlayer().AddStylishPoint(addStylishPointOnParry);
+
 		// 前入力されていたら
 		if (IsInputVector(InputVector::Forward))
 			ReleaseAttack();	// 攻撃に派生
-		else
-			GuardParry();
 	}
 
 	json PlayerGuardState::Save()
@@ -63,6 +68,7 @@ namespace HashiTaku
 		data["parryAngle"] = canParryForwardAngle;
 		SaveJsonVector3("vfxOffset", createVfxOffset, data);
 		data["vfxInfo"] = parryEffectInfo.Save();
+		data["addStylishPointParry"] = addStylishPointOnParry;
 		for (auto& itr : parrySoundParameters)
 		{
 			data["parrySEs"].push_back(itr.Save());
@@ -77,6 +83,7 @@ namespace HashiTaku
 		LoadJsonUnsigned("canParryTime", sustainParryFrame, _data);
 		LoadJsonFloat("parryAngle", canParryForwardAngle, _data);
 		LoadJsonVector3("vfxOffset", createVfxOffset, _data);
+		LoadJsonFloat("addStylishPointParry", addStylishPointOnParry, _data);
 		json loadData;
 		if (LoadJsonData("vfxInfo", loadData, _data))
 		{
@@ -152,10 +159,6 @@ namespace HashiTaku
 		ChangeState(PlayerState::SpecialAtkGuard);
 	}
 
-	void PlayerGuardState::GuardParry()
-	{
-	}
-
 	void PlayerGuardState::CreateParryVfx()
 	{
 		Transform& transform = GetMyTransform();
@@ -194,17 +197,17 @@ namespace HashiTaku
 	{
 		PlayerGroundState::ImGuiDebug();
 
-		// パリィフレーム
+		// パリィ
 		int imInt = static_cast<int>(sustainParryFrame);
-		ImGui::DragInt("canParry", &imInt, 1, 0, 100);
+		ImGui::DragInt("CanParry", &imInt, 1, 0, 100);
 		sustainParryFrame = static_cast<u_int>(imInt);
-
-		ImGui::DragFloat("parryAngle", &canParryForwardAngle, 0.1f, 0.0f, 360.0f);
+		ImGui::DragFloat("ParryAngle", &canParryForwardAngle, 0.1f, 0.0f, 360.0f);
+		ImGui::DragFloat("AddStylishPoint", &addStylishPointOnParry, 0.1f, 0.0f, 10000.0f);
 
 		// エフェクト
 		ImGuiMethod::LineSpaceSmall();
 		ImGui::Text("Parry Vfx");
-		ImGui::DragFloat3("offset", &createVfxOffset.x, 0.01f);
+		ImGui::DragFloat3("Offset", &createVfxOffset.x, 0.01f);
 		parryEffectInfo.ImGuiCall();
 
 		// サウンド

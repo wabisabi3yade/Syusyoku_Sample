@@ -9,6 +9,7 @@ namespace HashiTaku
 {
 	class CP_Weapon;
 	class CP_CameraMove;
+	class CP_StylishUI;
 
 	class CP_Player : public CP_Character, public IWeaponOwner
 	{
@@ -39,11 +40,20 @@ namespace HashiTaku
 		/// @brief hpゲージ
 		IUISlider* pHpSlider;
 
+		/// @brief スタイリッシュUI
+		CP_StylishUI* pStylishUI;
+
 		/// @brief 攻撃フラグ
 		const bool* pAttackCollisionFlag;
 
 		/// @brief ヒットストップする前の再生速度
 		float hitStopBeforeAnimSpeed;
+
+		/// @brief 攻撃ダメージ値からスタイリッシュポイントへの倍率
+		float stylishPointRatioFromAtkDmg;
+
+		/// @brief 受けたダメージ値からスタイリッシュポイントへの倍率
+		float stylishPointRatioFromAcceptDmg;
 
 		/// @brief デバッグの無敵フラグ
 		static bool isDebugInvicible;
@@ -59,6 +69,10 @@ namespace HashiTaku
 
 		/// @brief ヒットストップ終了した時の処理
 		void OnHitStopEnd() override;
+
+		/// @brief スタイリッシュポイントを加算
+		/// @param _addPoint 加算する値
+		void AddStylishPoint(float _addPoint);
 
 		/// @brief 攻撃情報をセットする
 		/// @param _setAttackInfo 攻撃情報
@@ -84,7 +98,7 @@ namespace HashiTaku
 		const DXSimp::Vector3& GetOwnerWorldPos() const override;
 
 		/// @brief 武器による攻撃ヒットさせたときに起こす処理
-		void OnWeaponAttacking() override;
+		void OnWeaponAttacking(const AttackInformation& _atkInfo) override;
 	private:
 		void Awake() override;
 		void Start() override;

@@ -97,9 +97,9 @@ namespace HashiTaku
 	{
 		if (!calcChargeingShake.GetIsShaking()) return;
 
-		// チャージ中のシェイクを求める
-		DXSimp::Vector3 shakeOffset;
-		calcChargeingShake.CalcurateVector(DeltaTime(), shakeOffset);
+		// チャージ中のシェイクの更新をする
+		calcChargeingShake.Update(DeltaTime());
+		const DXSimp::Vector3& shakeOffset = calcChargeingShake.GetShakeOffset();
 
 		// カメラの向きを考慮したワールド空間の揺れを求めて、ベース座標に加算
 		const Transform& camTrans = GetCamera().GetTransform();

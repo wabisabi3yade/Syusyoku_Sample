@@ -6,13 +6,13 @@ namespace HashiTaku
 	constexpr float MAX_SHAKE_ELAPSED(10000.0f);	// 揺れの最大時間
 	constexpr float MAX_RAND_PERLINOFFSET(50.0f); // パーリンノイズのオフセット値の最大値
 
-	CalcPerlinShakeVector::CalcPerlinShakeVector() :
+	PerlinShake::PerlinShake() :
 		shakeElapsedTime(0.0f),
 		isShaking(false)
 	{
 	}
 
-	void CalcPerlinShakeVector::BeginShake(const DXSimp::Vector3& _vector, 
+	void PerlinShake::BeginShake(const DXSimp::Vector3& _vector, 
 		float _power,
 		float _time,
 		float _speed,
@@ -33,7 +33,7 @@ namespace HashiTaku
 		randPerlinOffset.z = Random::Range<float>(0.0f, MAX_RAND_PERLINOFFSET);
 	}
 
-	void CalcPerlinShakeVector::BeginShake(const PerlinShakeParameter& _shakeParam)
+	void PerlinShake::BeginShake(const PerlinShakeParameter& _shakeParam)
 	{
 		BeginShake(_shakeParam.shakeVec,
 			_shakeParam.power,
@@ -42,17 +42,25 @@ namespace HashiTaku
 			_shakeParam.isFadeOut);
 	}
 
-	void CalcPerlinShakeVector::EndShake()
+	void PerlinShake::EndShake()
 	{
 		isShaking = false;
+
+		// オフセットをリセット
+		shakeOffset = DXSimp::Vector3::Zero;
 	}
 
-	bool CalcPerlinShakeVector::GetIsShaking() const
+	bool PerlinShake::GetIsShaking() const
 	{
 		return isShaking;
 	}
 
-	void CalcPerlinShakeVector::CalcShakeOffset(DXSimp::Vector3& _outVector)
+	const DXSimp::Vector3& PerlinShake::GetShakeOffset() const
+	{
+		return shakeOffset;
+	}
+
+	void PerlinShake::CalcShakeOffset(DXSimp::Vector3& _outVector)
 	{
 		float speed = curShakeParameter.speed;
 
@@ -113,9 +121,9 @@ namespace HashiTaku
 		}
 	}
 
-	void CalcPerlinShakeVector::CalcurateVector(float _deltaTime, DXSimp::Vector3& _outVector)
+	void PerlinShake::Update(float _deltaTime)
 	{
-		_outVector = DXSimp::Vector3::Zero;
+		shakeOffset = DXSimp::Vector3::Zero;
 
 		if (!isShaking) return;
 
@@ -125,9 +133,7 @@ namespace HashiTaku
 		shakeElapsedTime = Mathf::Repeat(shakeElapsedTime, MAX_SHAKE_ELAPSED);
 
 		// オフセット値を求める
-		CalcShakeOffset(_outVector);
-
-
+		CalcShakeOffset(shakeOffset);
 
 		// 時間が0以上　かつ　全体時間を過ぎたら終わる
 		if (curShakeParameter.time > 0.0f &&

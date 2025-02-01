@@ -102,6 +102,8 @@ namespace HashiTaku
 
 	void CP_UIRenderer::Draw()
 	{
+		if (!GetCanDraw()) return;
+
 		// 準備
 		DrawSetup();
 
@@ -124,7 +126,7 @@ namespace HashiTaku
 
 		// シェーダーの設定
 		TexEnable texEnable;
-		texEnable.isTexEnable = pTexture != nullptr;
+		texEnable.isTexEnable = true;
 		texEnable.alpha = alpha;
 
 		// 投影
@@ -157,5 +159,12 @@ namespace HashiTaku
 		{
 			pTexture = AssetGetter::GetAsset<Texture>(texName);
 		}
+	}
+
+	bool CP_UIRenderer::GetCanDraw() const
+	{
+		if (!pTexture) return false;
+
+		return true;
 	}
 }

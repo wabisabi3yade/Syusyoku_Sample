@@ -132,7 +132,7 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 		if (pWeaponOwner)
 		{
 			// 攻撃を与えた側のコールバック
-			pWeaponOwner->OnWeaponAttacking();
+			pWeaponOwner->OnWeaponAttacking(*pAtkInfomation);
 
 			// 所有オブジェクトの座標を取得する
 			haveObjPos = pWeaponOwner->GetOwnerWorldPos();

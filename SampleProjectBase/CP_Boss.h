@@ -83,7 +83,7 @@ namespace HashiTaku
 		const DXSimp::Vector3& GetOwnerWorldPos() const override;
 
 		/// @brief •Ší‚É‚æ‚éUŒ‚ƒqƒbƒg‚³‚¹‚½‚Æ‚«‚É‹N‚±‚·ˆ—
-		void OnWeaponAttacking() override {};
+		void OnWeaponAttacking(const AttackInformation& _atkInfo) override {};
 	private:
 		void Awake() override;
 		void Start() override;

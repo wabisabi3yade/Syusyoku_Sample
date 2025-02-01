@@ -21,7 +21,10 @@ namespace HashiTaku
 		pCameraMove(nullptr),
 		pHpSlider(nullptr),
 		pAttackCollisionFlag(nullptr),
-		hitStopBeforeAnimSpeed(0.0f)
+		pStylishUI(nullptr),
+		hitStopBeforeAnimSpeed(0.0f),
+		stylishPointRatioFromAtkDmg(10.0f),
+		stylishPointRatioFromAcceptDmg(30.0f)
 	{
 	}
 
@@ -47,9 +50,10 @@ namespace HashiTaku
 		pAction = std::make_unique<PlayerAction>(*this);
 	}
 
-	void CP_Player::OnWeaponAttacking()
+	void CP_Player::OnWeaponAttacking(const AttackInformation& _atkInfo)
 	{
-		
+		// ダメージ値に応じたスタイリッシュポイントを加算
+		AddStylishPoint(_atkInfo.GetDamageValue() * stylishPointRatioFromAtkDmg);
 	}
 
 	void CP_Player::Awake()
@@ -144,6 +148,12 @@ namespace HashiTaku
 			pHpSlider->SetMaxValue(maxHP);
 			pHpSlider->SetCurrentValue(currentHP);
 		}
+
+		pFindObj = sceneObjs.GetSceneObject(stylishUIName);
+		if (pFindObj)
+		{
+			pStylishUI = pFindObj->GetComponent<CP_StylishUI>();
+		}
 	}
 
 	void CP_Player::OnHitStopBegin()
@@ -156,11 +166,23 @@ namespace HashiTaku
 		CP_Character::OnHitStopEnd();
 	}
 
+	void CP_Player::AddStylishPoint(float _addPoint)
+	{
+		if (!pStylishUI) return;
+
+		if (_addPoint > 0.0f) // +なら
+			pStylishUI->AddStylishPoint(_addPoint);
+		else // -なら
+			pStylishUI->DecadeStylishPoint(-_addPoint);
+	}
+
 	void CP_Player::ImGuiDebug()
 	{
 		CP_Character::ImGuiDebug();
 		ImGuiFindObj();
 		ImGui::Checkbox("DebugInvicible", &isDebugInvicible);
+		ImGui::DragFloat("AtkStylishRatio", &stylishPointRatioFromAtkDmg, 0.01f, 0.0f, 10000.0f);
+		ImGui::DragFloat("AcceptStylishRatio", &stylishPointRatioFromAcceptDmg, 0.01f, 0.0f, 10000.0f);
 
 		static bool isWindow = true;
 		if (ImGui::Button("Window"))
@@ -200,6 +222,13 @@ namespace HashiTaku
 		{
 			hpBarObjName = input;
 		}
+
+		text = "StylishUI:" + stylishUIName;
+		ImGui::Text(text.c_str());
+		if (ImGui::Button("Set StylishUI"))
+		{
+			stylishUIName = input;
+		}
 #endif //  EDIT
 	}
 
@@ -220,6 +249,9 @@ namespace HashiTaku
 		data["weaponObjName"] = weaponObjName;
 		data["camObjName"] = cameraObjName;
 		data["hpBarObjName"] = hpBarObjName;
+		data["stylishUIName"] = stylishUIName;
+		data["stylishRatio"] = stylishPointRatioFromAtkDmg;
+		data["stylishRatioAcceptDmg"] = stylishPointRatioFromAcceptDmg;
 		return data;
 	}
 
@@ -233,6 +265,9 @@ namespace HashiTaku
 		LoadJsonString("weaponObjName", weaponObjName, _data);
 		LoadJsonString("camObjName", cameraObjName, _data);
 		LoadJsonString("hpBarObjName", hpBarObjName, _data);
+		LoadJsonString("stylishUIName", stylishUIName, _data);
+		LoadJsonFloat("stylishRatio", stylishPointRatioFromAtkDmg, _data);
+		LoadJsonFloat("stylishRatioAcceptDmg", stylishPointRatioFromAcceptDmg, _data);
 	}
 
 	const DXSimp::Vector3& CP_Player::GetOwnerWorldPos() const
@@ -266,13 +301,18 @@ namespace HashiTaku
 		// デバッグ無敵
 		if (isDebugInvicible) return false;
 
-		bool isAcceptDamage = false;	// アクション内でダメージ受けているかチェック
+		// アクション内でダメージ受けているかチェック
+		bool isAcceptDamage = false;	// ダメージ受けたかフラグ
 		pAction->OnDamage(_attackInfo, _attackerPos, &isAcceptDamage);
 
 		// ダメージ受けていたら
 		if (!isAcceptDamage) return false;
+
+		float atkDamageValue = _attackInfo.GetDamageValue();
+
 		// 体力を減らす
-		DecadePlayerHp(_attackInfo.GetDamageValue());
+		DecadePlayerHp(atkDamageValue);
+		AddStylishPoint(-atkDamageValue * stylishPointRatioFromAcceptDmg);
 
 		return true;
 	}

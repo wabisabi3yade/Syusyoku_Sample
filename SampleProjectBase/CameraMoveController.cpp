@@ -54,8 +54,7 @@ namespace HashiTaku
 	void CameraMoveController::ShakeUpdate()
 	{
 		// パーリンノイズでシェイクするオフセット値を求める
-		perlinShake.CalcurateVector(pCamera->DeltaTime(),
-			curShakeOffsetPos);
+		perlinShake.Update(pCamera->DeltaTime());
 	}
 
 	void CameraMoveController::UpdateFinalPos()
@@ -66,9 +65,11 @@ namespace HashiTaku
 		DXSimp::Vector3 worldShakeOffset;
 		if (perlinShake.GetIsShaking())
 		{
-			worldShakeOffset = camTransform.Right() * curShakeOffsetPos.x +
-				camTransform.Up() * curShakeOffsetPos.y +
-				camTransform.Forward() * curShakeOffsetPos.z;
+			const DXSimp::Vector3& shakeOffset = perlinShake.GetShakeOffset();
+
+			worldShakeOffset = camTransform.Right() * shakeOffset.x +
+				camTransform.Up() * shakeOffset.y +
+				camTransform.Forward() * shakeOffset.z;
 		}
 
 		// 座標をセット

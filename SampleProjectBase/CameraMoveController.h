@@ -14,13 +14,10 @@ namespace HashiTaku
 		using CameraState = CameraMoveState_Base::CameraState;
 	private:
 		/// @brief パーリンシェイク
-		CalcPerlinShakeVector perlinShake;
+		PerlinShake perlinShake;
 
 		/// @brief カメラの現在の座標(カメラ揺れを実装するのでオブジェクトと別で持っておく)
 		DXSimp::Vector3 curBaseCameraPos;
-
-		/// @brief 現在のカメラ揺れでずらしているオフセット座標
-		DXSimp::Vector3 curShakeOffsetPos;
 
 		/// @brief 前フレームのフォローしている座標
 		DXSimp::Vector3 prevFollowPos;

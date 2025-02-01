@@ -257,6 +257,12 @@ namespace HashiTaku
 #endif // EDIT
 	}
 
+	void ImGuiMethod::Text(const std::string& _text, const float _f)
+	{
+		std::string text = _text + ":" + std::to_string(_f);
+		ImGui::Text(text.c_str());
+	}
+
 	void ImGuiMethod::Text(const std::string& _text, const bool _b)
 	{
 		std::string statusStr = _b ? "true" : "false";

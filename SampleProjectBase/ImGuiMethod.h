@@ -104,8 +104,9 @@ namespace HashiTaku
 		static void Text(const DXSimp::Quaternion& _q);
 
 		/// @brief boolをテキスト
-		/// @param _b 表示するテキスト
-		/// 
+		/// @param _text 表示するテキスト
+		/// @param _f 表示させたいパラメータ
+		static void Text(const std::string& _text, const float _f);
 
 		/// @brief boolをテキスト
 		/// @param _text 表示するテキスト
