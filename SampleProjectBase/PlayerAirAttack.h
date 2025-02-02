@@ -11,7 +11,7 @@ namespace HashiTaku
 		PlayerState nextCombAtkState;
 
 		/// @brief 攻撃情報リスト(単発なら最初の情報を使用する)
-		std::vector<PlayerAttackInformation> attackInfos;
+		std::vector<std::unique_ptr<PlayerAttackInformation>> attackInfos;
 
 		/// @brief 全体の攻撃情報何個あるか
 		u_int attackTimeCnt;
@@ -20,6 +20,9 @@ namespace HashiTaku
 		~PlayerAirAttack() {}
 
 	private:
+		/// @brief 初期か処理
+		void InitState() override;
+
 		/// @brief 開始
 		void OnStartBehavior() override;
 
@@ -34,6 +37,10 @@ namespace HashiTaku
 		/// @param _toAnimNodeName 遷移先のアニメーションノード名
 		void OnAnimationEnd(const std::string& _fromAnimNodeName,
 			const std::string& _toAnimNodeName) override;
+
+		/// @brief 攻撃情報を作成
+		/// @return 攻撃情報
+		std::unique_ptr<PlayerAttackInformation> CreateAttackInfo();
 
 		/// @brief コンビネーション攻撃の入力更新
 		void UpdateCombInput();

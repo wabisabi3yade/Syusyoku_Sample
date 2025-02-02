@@ -18,9 +18,9 @@ namespace HashiTaku
 	CP_Player::CP_Player() :
 		pAnimation(nullptr),
 		pWeapon(nullptr),
-		pCameraMove(nullptr),
 		pHpSlider(nullptr),
 		pAttackCollisionFlag(nullptr),
+		pCameraMove(nullptr),
 		pStylishUI(nullptr),
 		hitStopBeforeAnimSpeed(0.0f),
 		stylishPointRatioFromAtkDmg(10.0f),
@@ -28,7 +28,7 @@ namespace HashiTaku
 	{
 	}
 
-	void CP_Player::SetAttackInfo(const AttackInformation& _setAttackInfo)
+	void CP_Player::SetAttackInfo(AttackInformation& _setAttackInfo)
 	{
 		if (!pWeapon) return;
 
@@ -42,6 +42,15 @@ namespace HashiTaku
 		isDebugInvicible = _setBool;
 	}
 
+	void CP_Player::SetCurrentHP(float _setHp)
+	{
+		CP_Character::SetCurrentHP(_setHp);
+
+		// スライダーにも反映
+		if (pHpSlider)
+			pHpSlider->SetCurrentValue(GetCurrentHP());
+	}
+
 	void CP_Player::Init()
 	{
 		CP_Character::Init();
@@ -50,10 +59,33 @@ namespace HashiTaku
 		pAction = std::make_unique<PlayerAction>(*this);
 	}
 
-	void CP_Player::OnWeaponAttacking(const AttackInformation& _atkInfo)
+	void CP_Player::OnAttacking(const AttackInformation& _atkInfo,
+		const DXSimp::Vector3& _contactWorldPos)
 	{
 		// ダメージ値に応じたスタイリッシュポイントを加算
 		AddStylishPoint(_atkInfo.GetDamageValue() * stylishPointRatioFromAtkDmg);
+
+		// パッド振動
+		InSceneSystemManager::GetInstance()->GetInput().
+			BeginVibration(_atkInfo.GetPadShakePower(), _atkInfo.GetPadShakeTime());
+
+		// ヒットストップ
+		if (CP_HitStopManager* pHitStop = CP_HitStopManager::GetInstance())
+		{
+			pHitStop->HitStopBegin(_atkInfo.GetHitStopFlame());
+		}
+
+		// カメラを揺らす
+		if (_atkInfo.GetIsCamShake() && pCameraMove)
+		{
+			pCameraMove->ShakeCamera(_atkInfo.GetCamShakeParam());
+		}
+
+		// エフェクト
+		CreateVfx(_atkInfo.GetHitVfxInfo(), _contactWorldPos);
+
+		// サウンド
+		CreateSoundFX(_atkInfo.GetHitSEParam(), _contactWorldPos);
 	}
 
 	void CP_Player::Awake()
@@ -270,7 +302,7 @@ namespace HashiTaku
 		LoadJsonFloat("stylishRatioAcceptDmg", stylishPointRatioFromAcceptDmg, _data);
 	}
 
-	const DXSimp::Vector3& CP_Player::GetOwnerWorldPos() const
+	const DXSimp::Vector3& CP_Player::GetAttackerWorldPos() const
 	{
 		return GetTransform().GetPosition();
 	}
@@ -295,26 +327,36 @@ namespace HashiTaku
 			pHpSlider->SetCurrentValue(currentHP);
 	}
 
-	bool CP_Player::OnDamageBehavior(const AttackInformation& _attackInfo,
-		const DXSimp::Vector3& _attackerPos)
+	bool CP_Player::OnDamageBehavior(AttackInformation& _attackInfo)
 	{
-		// デバッグ無敵
-		if (isDebugInvicible) return false;
-
 		// アクション内でダメージ受けているかチェック
 		bool isAcceptDamage = false;	// ダメージ受けたかフラグ
-		pAction->OnDamage(_attackInfo, _attackerPos, &isAcceptDamage);
+		pAction->OnDamage(_attackInfo, &isAcceptDamage);
 
 		// ダメージ受けていたら
 		if (!isAcceptDamage) return false;
 
-		float atkDamageValue = _attackInfo.GetDamageValue();
-
-		// 体力を減らす
-		DecadePlayerHp(atkDamageValue);
-		AddStylishPoint(-atkDamageValue * stylishPointRatioFromAcceptDmg);
+		// デバッグ無敵なら
+		if (isDebugInvicible) return false;
 
 		return true;
+	}
+
+	void CP_Player::OnTakeDamage(const AttackInformation& _attackInfo, const DXSimp::Vector3& _contactPos)
+	{
+		CP_Character::OnTakeDamage(_attackInfo, _contactPos);
+
+		// スタイリッシュポイントを減らす
+		AddStylishPoint(-_attackInfo.GetDamageValue() * stylishPointRatioFromAcceptDmg);
+
+		// ダメージSE
+		CreateSoundFX(_attackInfo.GetHitSEParam(), _contactPos);
+
+		// カメラを揺らす
+		if (pCameraMove)
+		{
+			pCameraMove->ShakeCamera(_attackInfo.GetCamShakeParam());
+		}
 	}
 
 	void CP_Player::OnDeathBehavior()

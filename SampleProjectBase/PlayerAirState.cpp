@@ -4,6 +4,11 @@
 
 namespace HashiTaku
 {
+	bool PlayerAirState::OnDamage(AttackInformation& _attackInfo)
+	{
+		return true;
+	}
+
 	void PlayerAirState::OnStart()
 	{
 		// ˆ—‚Å‚«‚éó‘Ô‚©H

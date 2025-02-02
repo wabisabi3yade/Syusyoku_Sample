@@ -70,6 +70,8 @@ namespace HashiTaku
 			worldShakeOffset = camTransform.Right() * shakeOffset.x +
 				camTransform.Up() * shakeOffset.y +
 				camTransform.Forward() * shakeOffset.z;
+
+			HASHI_DEBUG_LOG("ゆれゆれ");
 		}
 
 		// 座標をセット
@@ -84,6 +86,8 @@ namespace HashiTaku
 	void CameraMoveController::BeginShake(const PerlinShakeParameter& _shakeParam)
 	{
 		perlinShake.BeginShake(_shakeParam);
+
+		HASHI_DEBUG_LOG("開始");
 	}
 
 	void CameraMoveController::StopShake()
@@ -124,6 +128,11 @@ namespace HashiTaku
 		pWinState->SetTargetTransform(_targetTransform);
 
 		ChangeState(CameraState::Win, true);
+	}
+
+	void CameraMoveController::OnPlayerLose()
+	{
+		ChangeState(CameraState::Lose, true);
 	}
 
 	float CameraMoveController::GetFov() const

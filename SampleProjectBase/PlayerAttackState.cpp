@@ -18,10 +18,12 @@ namespace HashiTaku
 		attackTimeCnt(1),
 		isMoveForward(false)
 	{
+	}
 
+	void PlayerAttackState::InitState()
+	{
 		attackInfos.resize(1);	// 攻撃情報を最低1作成しておく
-		PlayerAttackInformation atkInfo;
-		attackInfos.push_back(atkInfo);
+		attackInfos[0] = CreateAttackInfo();
 
 		// カーブ名をセット
 		progressDistanceCurve.SetCurveName("AtkMoveSpd");
@@ -83,6 +85,11 @@ namespace HashiTaku
 			ChangeState(PlayerState::Idle);
 	}
 
+	std::unique_ptr<PlayerAttackInformation> PlayerAttackState::CreateAttackInfo()
+	{
+		return std::make_unique<PlayerAttackInformation>(&pActionController->GetPlayer());
+	}
+
 	void PlayerAttackState::SetAttackTimes(u_int _attackTimes)
 	{
 		attackTimeCnt = _attackTimes;
@@ -95,7 +102,7 @@ namespace HashiTaku
 		assert(curAttackTime <= static_cast<u_int>(attackInfos.size()) && "攻撃回数が終えています");
 
 		// 現在の攻撃回数目の情報を送る
-		GetPlayer().SetAttackInfo(attackInfos[curAttackTime - 1]);
+		GetPlayer().SetAttackInfo(*attackInfos[curAttackTime - 1]);
 	}
 
 	void PlayerAttackState::UpdateReAttack()
@@ -137,8 +144,14 @@ namespace HashiTaku
 
 	void PlayerAttackState::OnChangeAttackTimes()
 	{
-		// 攻撃情報を更新
+		// 攻撃回数分の情報を用意
+		u_int prevAttackTimes = static_cast<u_int>(attackInfos.size());
 		attackInfos.resize(attackTimeCnt);
+
+		for (; prevAttackTimes < attackTimeCnt; prevAttackTimes++)
+		{
+			attackInfos[prevAttackTimes] = CreateAttackInfo();
+		}
 	}
 
 	PlayerAttackInformation* PlayerAttackState::GetPlayerAtkInfo(u_int _atkIdx)
@@ -150,7 +163,7 @@ namespace HashiTaku
 			return nullptr;
 		}
 			
-		return &attackInfos[_atkIdx];
+		return attackInfos[_atkIdx].get();
 	}
 
 	u_int PlayerAttackState::GetAttackTimes() const
@@ -190,7 +203,7 @@ namespace HashiTaku
 		{
 			std::string caption = "Step:" + std::to_string(a_i);
 			if(!ImGuiMethod::TreeNode(caption)) continue;
-			attackInfos[a_i].ImGuiCall();
+			attackInfos[a_i]->ImGuiCall();
 			ImGui::TreePop();
 		}
 
@@ -275,7 +288,7 @@ namespace HashiTaku
 		auto& attackInfoDatas = data["attackInfos"];
 		for (u_int i = 0; i < attackTimeCnt; i++)
 		{
-			attackInfoDatas.push_back(attackInfos[i].Save());
+			attackInfoDatas.push_back(attackInfos[i]->Save());
 		}
 
 		return data;
@@ -302,7 +315,7 @@ namespace HashiTaku
 
 			for (auto& atkInfoData : attackDatas)
 			{
-				attackInfos[arrayIdx].Load(atkInfoData);
+				attackInfos[arrayIdx]->Load(atkInfoData);
 				arrayIdx++;
 			}
 		}

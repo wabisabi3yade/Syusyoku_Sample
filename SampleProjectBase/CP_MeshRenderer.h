@@ -19,6 +19,9 @@ namespace HashiTaku
 		/// @brief 使用するマテリアル（ないときはメッシュのマテリアルを使用する）
 		std::vector<Material*> setMaterials;
 
+		/// @brief メッシュの位置オフセット
+		DXSimp::Vector3 offsetMeshPosition;
+
 		/// @brief 影を描画するクラス
 		ShadowDrawer* pShadowDrawer;
 
@@ -52,9 +55,17 @@ namespace HashiTaku
 		void SetVertexShader(const std::string& _vsName);
 		void SetPixelShader(const std::string& _psName);
 
+		/// @brief メッシュのオフセットをセット
+		/// @param _offsetPos セットするオフセット座標
+		void SetMeshOffset(const DXSimp::Vector3& _offsetPos);
+
 		/// @brief 描画するメッシュを取得
 		/// @return メッシュ群
 		Mesh_Group* GetRenderMesh();
+		
+		/// @brief メッシュの座標オフセットを取得
+		/// @return メッシュの座標オフセット
+		const DXSimp::Vector3& GetMeshOffsetPos() const;
 
 		/// @brief 深度書き込みを行う
 		void WriteDepth() override;

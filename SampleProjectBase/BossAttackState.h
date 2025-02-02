@@ -1,6 +1,6 @@
 #pragma once
 #include "BossActState_Base.h"
-#include "AttackInformation.h"
+#include "BossAttackInformation.h"
 
 namespace HashiTaku
 {
@@ -24,11 +24,14 @@ namespace HashiTaku
 
 	protected:
 		/// @brief 攻撃情報リスト(単発なら最初の情報を使用する)
-		std::vector<AttackInformation> attackInfos;
+		std::vector<std::unique_ptr<BossAttackInformation>> attackInfos;
 
 	public:
 		BossAttackState();
 		virtual ~BossAttackState() {}
+
+		/// @brief ステートの初期化
+		void InitState() override;
 
 		/// @brief 開始
 		void OnStartBehavior() override;
@@ -47,8 +50,11 @@ namespace HashiTaku
 		/// @brief 向きを更新する
 		void RotateUpdate();
 
-		void ImGuiDebug() override;
+		/// @brief 攻撃情報を作成
+		/// @return 攻撃情報
+		std::unique_ptr<BossAttackInformation> CreateAttackInfo();
 
+		void ImGuiDebug() override;
 	private:
 		/// @brief コンビネーション攻撃の攻撃に合わせて攻撃情報を更新する
 		void UpdateReAttack();

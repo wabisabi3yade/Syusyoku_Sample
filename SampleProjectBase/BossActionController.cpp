@@ -74,8 +74,8 @@ namespace HashiTaku
 		return true;
 	}
 
-	void BossActionController::OnDamage(const AttackInformation& _atkInfo,
-		const DXSimp::Vector3& _attackerPos, bool* _pAcceptDamage)
+	void BossActionController::OnDamage(AttackInformation& _atkInfo,
+		bool* _pAcceptDamage)
 	{
 		assert(pCurrentNode && "Œ»Ý‚Ìƒm[ƒh‚ªÝ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
 		CastBossAct(pCurrentNode)->OnDamage();
@@ -115,7 +115,7 @@ namespace HashiTaku
 		pPlayerObject = &_playerObj;
 	}
 
-	void BossActionController::SetAttackInfo(const AttackInformation& _atkInfo)
+	void BossActionController::SetAttackInfo(AttackInformation& _atkInfo)
 	{
 		GetBoss().SetAttackInfo(_atkInfo);
 	}

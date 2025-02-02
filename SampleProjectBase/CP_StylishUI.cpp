@@ -14,7 +14,7 @@ namespace HashiTaku
 		pStylishRankRenderer(nullptr),
 		pStylishGage(nullptr),
 		pGageGroupObj(nullptr),
-		curStylishRank(StylishRank::None),
+		curStylishRank(StylishRank::SSS),
 		curStylishPoint(0),
 		decadeBeginTime(7.0f),
 		elapsedToDecadeTime(0.0f),
@@ -40,7 +40,7 @@ namespace HashiTaku
 		if (curStylishPoint >= GetEnterRankPoint(nextRank))
 		{
 			// 達したら次のランクへ
-			ChangeRank(nextRank);
+			ChangeRank(GetCurrentRankFromPoint());
 		}
 
 		// スライダーに反映
@@ -57,7 +57,7 @@ namespace HashiTaku
 		if (curStylishPoint < GetEnterRankPoint(curStylishRank))
 		{
 			// 前のランクへ
-			ChangeRank(GetPrevRank(curStylishRank));
+			ChangeRank(GetCurrentRankFromPoint());
 		}
 
 		// スライダーに反映
@@ -156,7 +156,7 @@ namespace HashiTaku
 
 		// オブジェクトを取得
 		FindRequireObject();
-		
+
 		// ランクなしから始まる
 		ChangeRank(StylishRank::None);
 	}
@@ -259,8 +259,8 @@ namespace HashiTaku
 		// スケーリング
 		DXSimp::Vector3 beginScale = rankUIBaseScale * rankupScalingRatio;
 		beginScale.z = rankUIBaseScale.z;
-		DXSimp::Vector3 curScale = DXSimp::Vector3::Lerp(beginScale, 
-			rankUIBaseScale, 
+		DXSimp::Vector3 curScale = DXSimp::Vector3::Lerp(beginScale,
+			rankUIBaseScale,
 			timeRatio);
 		pStylishRankRenderer->GetTransform().SetScale(curScale);
 
@@ -312,6 +312,9 @@ namespace HashiTaku
 
 	void CP_StylishUI::ChangeRank(StylishRank _targetRank)
 	{
+		// 現在のランクと同じなら処理しない
+		if (curStylishRank == _targetRank) return;
+
 		// 変更前のランク取得
 		StylishRank prevRank = curStylishRank;
 
@@ -339,7 +342,7 @@ namespace HashiTaku
 			if (pGageGroupObj)
 				pGageGroupObj->SetActive(false);
 		}
-		else if(prevRank == StylishRank::None) // 前回のランクがなしからなら
+		else if (prevRank == StylishRank::None) // 前回のランクがなしからなら
 		{
 			if (pGageGroupObj)
 				pGageGroupObj->SetActive(true);	// ゲージグループを表示
@@ -377,7 +380,7 @@ namespace HashiTaku
 		if (!pStylishRankRenderer) return;
 
 		Transform& rankUiTransform = GetTransform();
-		
+
 		// ランクにUIを演出の初期状態にする
 		elapsedRankupDirectionTime = 0.0f;
 		curRankupDirState = RankupDirectionState::Scaling;
@@ -406,6 +409,23 @@ namespace HashiTaku
 
 		u_int prevRankId = static_cast<u_int>(curStylishRank) - 1;
 		return static_cast<StylishRank>(prevRankId);
+	}
+
+	CP_StylishUI::StylishRank CP_StylishUI::GetCurrentRankFromPoint()
+	{
+		int rankCnt = static_cast<u_int>(StylishRank::MaxNum);
+
+		// 上のランクから見ていき、現在のポイントが必要なポイントより初めて上になるランクが現在のランク
+		for (int r_i = rankCnt - 1; r_i >= 0; r_i--)
+		{
+			if (curStylishPoint < rankParameters[r_i].requireEnterPoints)
+				continue;
+
+			return static_cast<StylishRank>(r_i);
+		}
+
+		HASHI_DEBUG_LOG("正常にランクを取得できませんでした");
+		return StylishRank::None;
 	}
 
 	bool CP_StylishUI::GetIsCurMaxRank() const
@@ -444,7 +464,7 @@ namespace HashiTaku
 		Easing::ImGuiSelect(rankupEase, "Rankup Ease");
 		ImGui::DragFloat("Scaling Time", &rankupScalingTime, 0.01f, 0.0f, 100.0f);
 		ImGui::DragFloat("Scaling Ratio", &rankupScalingRatio, 0.01f, 1.0f, 100.0f);
-		
+
 		rankupShakeParam.ImGuiCall();
 
 		ImGui::TreePop();

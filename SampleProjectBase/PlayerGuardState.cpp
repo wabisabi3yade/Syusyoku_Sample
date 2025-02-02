@@ -2,6 +2,7 @@
 #include "PlayerGuardState.h"
 #include "CP_Player.h"
 #include "CP_SoundManager.h"
+#include "InSceneSystemManager.h"
 
 namespace HashiTaku
 {
@@ -10,16 +11,20 @@ namespace HashiTaku
 	constexpr auto PARRYTRIGGER_NAME("parryTrigger");
 
 	PlayerGuardState::PlayerGuardState() :
-		canParry(false), 
+		pCameraMove(nullptr),
 		sustainParryFrame(4),
 		parryElapsedFrame(0),
-		parryAddGuardGage(25.0f),
+		parryStrengthRate(1.0f),
 		canParryForwardAngle(180.0f),
-		addStylishPointOnParry(200.0f)
+		addStylishPointOnParry(200.0f),
+		parryPadVibePower(0.4f),
+		parryPadVibeTime(0.2f),
+		canParry(false),
+		isPerformParryFrame(false)
 	{
 	}
 
-	bool PlayerGuardState::GetCanParry(const DXSimp::Vector3& _enemyPos)
+	bool PlayerGuardState::CheckCanParry(const DXSimp::Vector3& _enemyPos)
 	{
 		if (!canParry) return false;
 
@@ -35,6 +40,29 @@ namespace HashiTaku
 		return true;
 	}
 
+	void PlayerGuardState::SetPerfomParry(IParryAccepter* _pParryAccepter)
+	{
+		// 次の更新処理でパリィ処理を行う
+		isPerformParryFrame = true;
+
+		// インターフェースがあるなら追加する
+		if (_pParryAccepter)
+			parryAccepters.push_back(_pParryAccepter);
+	}
+
+	bool PlayerGuardState::OnDamage(AttackInformation& _attackInfo)
+	{	
+		// パリィできるか確認し、できないなら処理を終える
+		if (!CheckCanParry(_attackInfo.GetAttackerWorldPos())) return true;
+
+		// パリィ処理を行うように指示
+		IParryAccepter* pParryAccept = dynamic_cast<IParryAccepter*>(_attackInfo.GetAttacker());
+		SetPerfomParry(pParryAccept);
+
+		// ダメージ処理は起こさない
+		return false;
+	}
+
 	void PlayerGuardState::OnParry()
 	{
 		// パリィトリガーをtrue
@@ -43,9 +71,8 @@ namespace HashiTaku
 		// アニメーション
 		GetAnimation()->SetBool(GUARD_PARAMNAME, false);
 
-		// キャンセル全てできるようにする
-	/*	GetAnimation()->SetBool(CANCEL_PARAMNAME, true);
-		GetAnimation()->SetBool(CANATK_PARAMNAME, false);*/
+		// 攻撃をパリィしたことを伝える
+		NotifyParryAccepters();
 
 		// エフェクトを出す
 		CreateParryVfx();
@@ -53,22 +80,33 @@ namespace HashiTaku
 		// 効果音を鳴らす
 		PlayParrySE();
 
+		// カメラをシェイク
+		CameraShakeOnParry();
+
+		// コントローラーを振動させる
+		PadVibrationOnParry();
+
 		// スタイリッシュポイントを加算
 		GetPlayer().AddStylishPoint(addStylishPointOnParry);
 
-		// 前入力されていたら
-		if (IsInputVector(InputVector::Forward))
+		// 前入力　かつ　ターゲットボタン　が押されていたら
+		if (IsInputVector(InputVector::Forward) && 
+			pPlayerInput->GetButton(GameInput::ButtonType::Player_RockOn))
 			ReleaseAttack();	// 攻撃に派生
 	}
 
 	json PlayerGuardState::Save()
 	{
 		auto data = PlayerGroundState::Save();
+		data["parryStrengthRate"] = parryStrengthRate;
 		data["canParryTime"] = sustainParryFrame;
 		data["parryAngle"] = canParryForwardAngle;
 		SaveJsonVector3("vfxOffset", createVfxOffset, data);
 		data["vfxInfo"] = parryEffectInfo.Save();
+		data["parryCamShake"] = parryCamShakeParam.Save();
 		data["addStylishPointParry"] = addStylishPointOnParry;
+		data["parryPadVibePower"] = parryPadVibePower;
+		data["parryPadVibeTime"] = parryPadVibeTime;
 		for (auto& itr : parrySoundParameters)
 		{
 			data["parrySEs"].push_back(itr.Save());
@@ -81,13 +119,21 @@ namespace HashiTaku
 	{
 		PlayerGroundState::Load(_data);
 		LoadJsonUnsigned("canParryTime", sustainParryFrame, _data);
+		LoadJsonFloat("parryStrengthRate", parryStrengthRate, _data);
 		LoadJsonFloat("parryAngle", canParryForwardAngle, _data);
 		LoadJsonVector3("vfxOffset", createVfxOffset, _data);
 		LoadJsonFloat("addStylishPointParry", addStylishPointOnParry, _data);
+		LoadJsonFloat("parryPadVibePower", parryPadVibePower, _data);
+		LoadJsonFloat("parryPadVibeTime", parryPadVibeTime, _data);
 		json loadData;
 		if (LoadJsonData("vfxInfo", loadData, _data))
 		{
 			parryEffectInfo.Load(loadData);
+		}
+
+		if (LoadJsonData("parryCamShake", loadData, _data))
+		{
+			parryCamShakeParam.Load(loadData);
 		}
 
 		if (LoadJsonDataArray("parrySEs", loadData, _data))
@@ -116,10 +162,13 @@ namespace HashiTaku
 		// パリィできる時間の更新
 		ParryTimeUpdate();
 
-		CP_RigidBody& rb = GetRB();
-		DXSimp::Vector3 velocity;
-		velocity.y = rb.GetVelocity().y;
-		GetRB().SetVelocity(velocity);
+		// パリィを行うのかチェックする
+		CheckPerformParry();
+
+		//CP_RigidBody& rb = GetRB();
+		//DXSimp::Vector3 velocity;
+		//velocity.y = rb.GetVelocity().y;
+		//GetRB().SetVelocity(velocity);
 	}
 
 	void PlayerGuardState::OnEndBehavior()
@@ -153,6 +202,20 @@ namespace HashiTaku
 		}
 	}
 
+	void PlayerGuardState::CheckPerformParry()
+	{
+		// ダメージ処理時に行わない理由は攻撃ヒット判定と同時にガードすると、
+		// パリィのアニメーションが行われなかったのでコールバック関数内ではなく更新処理内で行うようにする
+
+		// 行わないなら処理しない
+		if (!isPerformParryFrame) return;
+
+		// パリィを繰り出す
+		isPerformParryFrame = false;
+		OnParry();
+		
+	}
+
 	void PlayerGuardState::ReleaseAttack()
 	{
 		// 攻撃に変更
@@ -175,6 +238,26 @@ namespace HashiTaku
 			transform.GetEularAngles());
 	}
 
+	void PlayerGuardState::CameraShakeOnParry()
+	{
+		if (!pCameraMove) // カメラ移動クラスがなければ
+		{
+			// カメラ移動クラスを取得
+			pCameraMove =
+				InSceneSystemManager::GetInstance()->GetMainCamera().GetGameObject().GetComponent<CP_CameraMove>();
+
+			if (!pCameraMove) return;
+		}
+
+		// カメラシェイクする
+		pCameraMove->ShakeCamera(parryCamShakeParam);
+	}
+
+	void PlayerGuardState::PadVibrationOnParry()
+	{
+		InSceneSystemManager::GetInstance()->GetInput().BeginVibration(parryPadVibePower, parryPadVibeTime);
+	}
+
 	void PlayerGuardState::PlayParrySE()
 	{
 		// シーン内にサウンドマネジャーがあるか確認
@@ -191,6 +274,21 @@ namespace HashiTaku
 
 		// プレイヤーからSEを再生
 		pSoundManager->PlaySE(*soundItr, GetMyTransform().GetPosition());
+	}
+
+	void PlayerGuardState::NotifyParryAccepters()
+	{
+		// 通知先に伝えるパラメーター
+		AcceptParryInfo acceptParryInfo;
+		acceptParryInfo.parryStrengthRate = parryStrengthRate;
+
+		// 通知する
+		for (auto& accepter : parryAccepters)
+		{
+			accepter->OnAcceptParry(acceptParryInfo);
+		}
+
+		parryAccepters.clear();
 	}
 
 	void PlayerGuardState::ImGuiDebug()
@@ -210,6 +308,10 @@ namespace HashiTaku
 		ImGui::DragFloat3("Offset", &createVfxOffset.x, 0.01f);
 		parryEffectInfo.ImGuiCall();
 
+		// カメラシェイク
+		ImGuiMethod::LineSpaceSmall();
+		parryCamShakeParam.ImGuiCall();
+
 		// サウンド
 		ImGuiMethod::LineSpaceSmall();
 		ImGui::Text("Parry SE");
@@ -221,7 +323,7 @@ namespace HashiTaku
 			{
 				if (ImGui::Button("X"))
 					isDelete = true;
-				
+
 				itr->ImGuiCall();
 
 				ImGui::TreePop();
@@ -238,5 +340,11 @@ namespace HashiTaku
 			PlaySoundParameter add;
 			parrySoundParameters.push_back(add);
 		}
+
+		// パッド振動
+		ImGuiMethod::LineSpaceSmall();
+		ImGui::Text("Pad Vibe");
+		ImGui::DragFloat("VibePower", &parryPadVibePower, 0.01f, 0.0f, 1.0f);
+		ImGui::DragFloat("VibeTime", &parryPadVibeTime, 0.01f, 0.0f, 100.0f);
 	}
 }

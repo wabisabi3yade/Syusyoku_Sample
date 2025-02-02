@@ -219,6 +219,7 @@
     <ClCompile Include="CP_PlaySound.cpp" />
     <ClCompile Include="CP_SoundManager.cpp" />
     <ClCompile Include="CP_StylishUI.cpp" />
+    <ClCompile Include="BossAttackInformation.cpp" />
     <ClCompile Include="PerlinShakeParameter.cpp" />
     <ClCompile Include="CameraTargetMove.cpp" />
     <ClCompile Include="ChangeAnimObserver.cpp" />
@@ -274,7 +275,7 @@
     <ClCompile Include="AnimNodePlayer_Base.cpp" />
     <ClCompile Include="MyClass2.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
-    <ClCompile Include="CalcPerlinShakeVector.cpp" />
+    <ClCompile Include="PerlinShake.cpp" />
     <ClCompile Include="PlayerAction.cpp" />
     <ClCompile Include="PlayerActionController_Base.cpp" />
     <ClCompile Include="PlayerAirActionController.cpp" />
@@ -468,10 +469,13 @@
     <ClInclude Include="CP_PlaySound.h" />
     <ClInclude Include="CP_SoundManager.h" />
     <ClInclude Include="CP_StylishUI.h" />
+    <ClInclude Include="BossAttackInformation.h" />
     <ClInclude Include="IApplyDepthShadow.h" />
+    <ClInclude Include="IAttacker_AcceptParry.h" />
     <ClInclude Include="IBoneSupplier.h" />
+    <ClInclude Include="IParryAccepter.h" />
     <ClInclude Include="ITransformSetter.h" />
-    <ClInclude Include="IWeaponOwner.h" />
+    <ClInclude Include="IAttacker.h" />
     <ClInclude Include="PerlinShakeParameter.h" />
     <ClInclude Include="CameraTargetMove.h" />
     <ClInclude Include="ChangeAnimObserver.h" />
@@ -522,7 +526,6 @@
     <ClInclude Include="IAnimInterpolate.h" />
     <ClInclude Include="IAnimParametersSetter.h" />
     <ClInclude Include="IAssetCreater.h" />
-    <ClInclude Include="IAttacker.h" />
     <ClInclude Include="IClassNameGetter.h" />
     <ClInclude Include="IDamageable.h" />
     <ClInclude Include="HitStopper_Base.h" />
@@ -541,7 +544,7 @@
     <ClInclude Include="MyClass2.h" />
     <ClInclude Include="NullTransform.h" />
     <ClInclude Include="PerlinNoise.h" />
-    <ClInclude Include="CalcPerlinShakeVector.h" />
+    <ClInclude Include="PerlinShake.h" />
     <ClInclude Include="PlayerAction.h" />
     <ClInclude Include="PlayerActionController_Base.h" />
     <ClInclude Include="PlayerAirActionController.h" />

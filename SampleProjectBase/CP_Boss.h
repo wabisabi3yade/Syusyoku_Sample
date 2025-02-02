@@ -1,14 +1,15 @@
 #pragma once
 #include "CP_Enemy.h"
-#include "IWeaponOwner.h"
+#include "IAttacker_AcceptParry.h"
 #include "CP_Weapon.h"
 #include "BossActionController.h"
+#include "BossAttackInformation.h"
 #include "IUISlider.h"
 
 namespace HashiTaku
 {
 	/// @brief ボスのコンポーネント
-	class CP_Boss : public CP_Enemy, public IWeaponOwner
+	class CP_Boss : public CP_Enemy, public IAttacker_AcceptParry
 	{
 		/// @brief 武器名
 		std::string weaponObjName;
@@ -28,11 +29,17 @@ namespace HashiTaku
 		/// @brief 武器オブジェクト
 		CP_Weapon* pWeapon;
 
+		/// @brief カメラ移動
+		CP_CameraMove* pCameraMove;
+
 		/// @brief 体力バー
 		IUISlider* pHpBar;
 
 		/// @brief ブレイクゲージバー
 		IUISlider* pBreakBar;
+
+		/// @brief 最新の攻撃情報
+		const BossAttackInformation* pRecentlyAttackInformation;
 
 		/// @brief 攻撃判定
 		const bool* pCanAttack;
@@ -57,11 +64,16 @@ namespace HashiTaku
 
 		/// @brief 攻撃情報をセット
 		/// @param _attackInfo 攻撃情報
-		void SetAttackInfo(const AttackInformation& _attackInfo);
+		void SetAttackInfo(AttackInformation& _attackInfo);
+
+		/// @brief 体力をセット
+		/// @param _setHp 体力
+		void SetCurrentHP(float _setHp) override;
 
 		/// @brief ブレイク値をセット
 		/// @param _set セット
-		void SetBreakValue(float _set);
+		/// @param _canBreak 最大値を超えたときにブレイクするようにするか？
+		void SetBreakValue(float _set, bool _canBreak = true);
 
 		/// @brief ブレイクしているか取得
 		/// @return ブレイクしているか？
@@ -80,10 +92,17 @@ namespace HashiTaku
 
 		/// @brief 所有者のワールド座標を取得する
 		/// @return 所有者のワールド座標
-		const DXSimp::Vector3& GetOwnerWorldPos() const override;
+		const DXSimp::Vector3& GetAttackerWorldPos() const override;
 
-		/// @brief 武器による攻撃ヒットさせたときに起こす処理
-		void OnWeaponAttacking(const AttackInformation& _atkInfo) override {};
+		/// @brief 攻撃ヒットさせたときに起こす処理
+		/// @param _atkInfo 攻撃情報
+		/// @param _contactWorldPos 衝突地点（ワールド座標）
+		void OnAttacking(const AttackInformation& _atkInfo,
+			const DXSimp::Vector3& _contactWorldPos) override;
+
+		/// @brief パリィされたときの処理
+		/// @param _acceptInfo パリィからの情報
+		void OnAcceptParry(const AcceptParryInfo& _acceptInfo) override;
 	private:
 		void Awake() override;
 		void Start() override;
@@ -105,7 +124,8 @@ namespace HashiTaku
 
 		/// @brief ブレイク値を加算する
 		/// @param _add 加算値
-		void AddBreakValue(float _add);
+		/// @param _canBreak 最大値を超えたときにブレイクするようにするか？
+		void AddBreakValue(float _add, bool _canBreak = true);
 
 		/// @brief ブレイクした時の処理
 		void OnBreak();
@@ -117,15 +137,10 @@ namespace HashiTaku
 		/// @param _attackInfo 攻撃情報
 		/// @param _attackerPos 攻撃した側の座標
 		/// @return ダメージを受けたか？
-		bool OnDamageBehavior(const AttackInformation& _attackInfo,
-			const DXSimp::Vector3& _attackerPos) override;
+		bool OnDamageBehavior(AttackInformation& _attackInfo) override;
 
 		/// @brief 死んだときの処理
 		void OnDeathBehavior() override;
-
-		/// @brief 体力をセット
-		/// @param _setHp 体力
-		void SetCurrentHP(float _setHp)override;
 
 		void ImGuiDebug() override;
 	};

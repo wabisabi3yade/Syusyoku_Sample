@@ -1,20 +1,26 @@
 #pragma once
+#include "AttackInformation.h"
 
 namespace HashiTaku
 {
-	class IDamageable;
-
-	// 攻撃をするインターフェース
+	/// @brief 攻撃するオブジェクトのインターフェース
 	class IAttacker
 	{
 
 	public:
-		IAttacker() {}
-		virtual ~IAttacker() {}
+		IAttacker() = default;
+		virtual ~IAttacker() = default;
 
-		/// @brief 攻撃処理
-		/// @param _damager 攻撃与える対象
-		virtual void OnAttack(IDamageable& _damager) = 0;
+		/// @brief 攻撃者のワールド座標を取得する
+		/// @return 所有者のワールド座標
+		virtual const DXSimp::Vector3& GetAttackerWorldPos() const = 0;
+
+		/// @brief 攻撃ヒットさせたときに起こす処理
+		/// @param _atkInfo 攻撃情報
+		/// @param _contactWorldPos 衝突地点（ワールド座標）
+		virtual void OnAttacking(const AttackInformation& _atkInfo, 
+			const DXSimp::Vector3& _contactWorldPos) = 0;
 	};
+
 }
 

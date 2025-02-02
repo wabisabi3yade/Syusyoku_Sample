@@ -43,8 +43,7 @@ namespace HashiTaku
 
 		/// @brief ダメージ受けたときのアクション処理
 		/// @param _atkInfo 攻撃情報
-		virtual void OnDamage(const AttackInformation& _atkInfo,
-			const DXSimp::Vector3& _attackerPos,
+		virtual void OnDamage(AttackInformation& _atkInfo,
 			bool* _pAcceptDamage = nullptr) {};
 
 		/// @brief アニメーション変更オブザーバーを取得

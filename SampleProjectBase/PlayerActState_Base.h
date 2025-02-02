@@ -6,6 +6,7 @@
 #include "CP_Animation.h"
 #include "ITargetAccepter.h"
 #include "PlayerAnimReference.h"
+#include "AttackInformation.h"
 
 namespace HashiTaku
 {
@@ -65,6 +66,11 @@ namespace HashiTaku
 		/// @brief 更新処理呼び出し
 		void Update() override;
 
+		/// @brief ステート側のダメージ処理
+		/// @param _attackInfo 受けた攻撃情報
+		/// @return ダメージ処理を行うか？
+		virtual bool OnDamage(AttackInformation& _attackInfo) = 0;
+
 		/// @brief キャンセルタイプを取得
 		/// @return キャンセルタイプ
 		CancelType GetCancelType() const;
@@ -81,6 +87,9 @@ namespace HashiTaku
 		/// @param _data ロードするデータ 
 		void Load(const json& _data) override;
 	protected:
+		/// @brief ステートの初期化処理
+		virtual void InitState() {}
+
 		/// @brief 速度をクリアする
 		/// @param _applyY Y軸にも反映させるか
 		void ClearVelocity(bool _applyY = true);
@@ -92,6 +101,11 @@ namespace HashiTaku
 		/// @brief 無敵にするか？
 		/// @param _isInvicible 無敵
 		void SetInvicible(bool _isInvicible);
+
+		/// @brief 他のプレイヤーのステートを取得する
+		/// @param _getStateId ステートのId
+		/// @return 指定したステート(無ければnullptr)
+		PlayerActState_Base* GetPlayerState(int _getStateId);
 
 		/// @brief プレイヤーを取得する
 		/// @return プレイヤー

@@ -33,6 +33,12 @@ namespace HashiTaku
 			None = 99
 		};
 
+	public:
+		/// @brief ステート側のダメージ処理
+		/// @param _attackInfo 受けた攻撃情報
+		/// @return ダメージ処理を行うか？
+		bool OnDamage(AttackInformation& _attackInfo) override;
+
 	protected:
 		/// @brief 開始処理呼び出し
 		void OnStart() override;

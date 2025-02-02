@@ -35,6 +35,9 @@ namespace HashiTaku
 		pActionController = &_actController;
 		cancelType = _cancelType;
 		statePriority = _priority;
+
+		// ステートの初期化
+		InitState();
 	}
 
 	void PlayerActState_Base::Update()
@@ -102,6 +105,11 @@ namespace HashiTaku
 	const ITargetAccepter* PlayerActState_Base::GetTargetAccepter()
 	{
 		return pActionController->GetTargetAccepter();
+	}
+
+	PlayerActState_Base* PlayerActState_Base::GetPlayerState(int _getStateId)
+	{
+		return pActionController->GetPlayerState(_getStateId);
 	}
 
 	CP_Player& PlayerActState_Base::GetPlayer()

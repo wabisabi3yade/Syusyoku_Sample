@@ -59,8 +59,7 @@ namespace HashiTaku
 		bool ChangeState(BossActState_Base::BossState _nextState, bool _isForce = false);
 
 		/// @brief ダメージ時処理
-		void OnDamage(const AttackInformation& _atkInfo,
-			const DXSimp::Vector3& _attackerPos,
+		void OnDamage(AttackInformation& _atkInfo,
 			bool* _pAcceptDamage = nullptr) override;
 
 		/// @brief デバッグ描画
@@ -77,7 +76,7 @@ namespace HashiTaku
 
 		/// @brief 攻撃情報をセット
 		/// @param _atkInfo 攻撃情報
-		void SetAttackInfo(const AttackInformation& _atkInfo);
+		void SetAttackInfo(AttackInformation& _atkInfo);
 
 		/// @brief ボスコンポーネントを取得
 		CP_Boss& GetBoss();

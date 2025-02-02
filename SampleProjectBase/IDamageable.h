@@ -13,10 +13,8 @@ namespace HashiTaku
 
 		/// @brief ダメージを受けたときの処理
 		/// @param _attackInfo 攻撃情報
-		/// @param _attackerPos 攻撃したものの座標
 		/// @param _contactPos 衝突地点座標
-		virtual void OnDamage(const AttackInformation& _attackInfo,
-			const DXSimp::Vector3& _attackerPos,
+		virtual void OnDamage(AttackInformation& _attackInfo,
 			const DXSimp::Vector3& _contactPos) = 0;
 
 		/// @brief 死んだときの処理

@@ -2,7 +2,8 @@
 #include "Component.h"
 #include "IDamageable.h"
 #include "Tag.h"
-#include "IWeaponOwner.h"
+#include "IAttacker.h"
+#include "IParryAccepter.h"
 
 namespace HashiTaku
 {
@@ -15,7 +16,7 @@ namespace HashiTaku
 		static constexpr u_int ATTACK_TAG_MAX{ 3 };
 
 		/// @brief 攻撃情報
-		const AttackInformation* pAtkInfomation;
+		AttackInformation* pAtkInfomation;
 
 		/// @brief 攻撃にあたるタグ
 		std::array<Tag::Type, ATTACK_TAG_MAX> attackableTags;
@@ -24,7 +25,7 @@ namespace HashiTaku
 		std::vector<const CP_RigidBody*> attackedRbs;
 
 		/// @brief 武器所有者のポインタ
-		IWeaponOwner* pWeaponOwner;
+		IAttacker* pAttacker;
 
 		/// @brief 攻撃タグの数
 		u_int attackTagCnt;
@@ -46,7 +47,7 @@ namespace HashiTaku
 
 		/// @brief 攻撃情報をセットする
 		/// @param _attackInformation 攻撃情報
-		void SetAttackInfo(const AttackInformation& _attackInformation);
+		void SetAttackInfo(AttackInformation& _attackInformation);
 
 		/// @brief 武器の攻撃判定コリジョン
 		/// @param _isAttackCollision 
@@ -54,7 +55,7 @@ namespace HashiTaku
 
 		/// @brief 所有者をセットする
 		/// @param _weaponOwner 所有者
-		void SetWeaponOwner(IWeaponOwner& _weaponOwner);
+		void SetWeaponOwner(IAttacker& _weaponOwner);
 
 		/// @brief 攻撃済みコリジョンをリセット
 		void ClearAttackedRb();

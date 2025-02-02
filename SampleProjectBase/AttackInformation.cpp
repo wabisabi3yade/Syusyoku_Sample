@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "AttackInformation.h"
+#include "IAttacker.h"
 #include "AssetGetter.h"
 #include "VisualEffect.h"
 
@@ -22,7 +23,8 @@ namespace HashiTaku
 		0.2f, 0.2f, 0.4f, 0.6f
 	};
 
-	AttackInformation::AttackInformation() :
+	AttackInformation::AttackInformation(IAttacker* _pAttacker) : 
+		pAttacker(_pAttacker),
 		atkDamage(0.0f),
 		atkLevel(AttackLevel::Low),
 		isCamShake(false)
@@ -40,6 +42,20 @@ namespace HashiTaku
 		atkLevel = _atkLevel;
 	}
 
+	void AttackInformation::NotifyHitAttack(const DXSimp::Vector3& _contactPos)
+	{
+		pAttacker->OnAttacking(*this, _contactPos);
+	}
+
+	DXSimp::Vector3 AttackInformation::GetAttackerWorldPos() const
+	{
+#ifdef EDIT
+		if (!pAttacker) return DXSimp::Vector3::Zero;
+#endif // EDIT
+
+		return pAttacker->GetAttackerWorldPos();
+	}
+
 	const CreateVfxInfo& AttackInformation::GetHitVfxInfo() const
 	{
 		return hitVfxInfo;
@@ -53,6 +69,11 @@ namespace HashiTaku
 	const PlaySoundParameter& AttackInformation::GetHitSEParam() const
 	{
 		return hitSoundParameter;
+	}
+
+	IAttacker* AttackInformation::GetAttacker()
+	{
+		return pAttacker;
 	}
 
 	float AttackInformation::GetDamageValue() const

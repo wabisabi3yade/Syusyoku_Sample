@@ -14,7 +14,7 @@ namespace HashiTaku
 		PlayerState nextCombAtkState;
 
 		/// @brief 攻撃情報リスト(単発なら最初の情報を使用する)
-		std::vector<PlayerAttackInformation> attackInfos;
+		std::vector<std::unique_ptr<PlayerAttackInformation>> attackInfos;
 
 		/// @brief 前に進む距離カーブ
 		AnimationCurve progressDistanceCurve;
@@ -47,11 +47,16 @@ namespace HashiTaku
 		void Load(const json& _data) override;
 	protected:
 		// State共通処理
+		void InitState() override;
 		void OnStartBehavior() override;
 		void UpdateBehavior() override;
 		void OnEndBehavior() override;
 
 		void OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName) override;
+
+		/// @brief 攻撃情報を作成
+		/// @return 攻撃情報
+		std::unique_ptr<PlayerAttackInformation> CreateAttackInfo();
 
 		/// @brief 攻撃回数をセット
 		void SetAttackTimes(u_int _attackTimes);

@@ -60,7 +60,7 @@ namespace HashiTaku
 		/// @brief プレイヤーのステートを取得
 		/// @param _playerStateId 取得したいステートのID
 		/// @return プレイヤーのアクション
-		PlayerActState_Base* GetPlayerAction(int _playerStateId);
+		PlayerActState_Base* GetPlayerState(int _playerStateId);
 
 		const ITargetAccepter* GetTargetAccepter() const;
 

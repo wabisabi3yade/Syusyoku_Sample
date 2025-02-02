@@ -19,7 +19,7 @@ namespace HashiTaku
 
 		/// @brief チャージ段階ごとの攻撃情報
 		using ChargeLevelAtkInfos = 
-			std::array<PlayerAttackInformation, static_cast<u_int>(ChargeLevel::MaxNum)>;
+			std::array<std::unique_ptr<PlayerAttackInformation>, static_cast<u_int>(ChargeLevel::MaxNum)>;
 
 		/// @brief チャージレベルごとの攻撃情報(各攻撃の)
 		std::vector<ChargeLevelAtkInfos> chargeAtkInfos;
@@ -75,6 +75,9 @@ namespace HashiTaku
 		json Save() override;
 		void Load(const json& _data) override;
 	private:
+		/// @brief 初期化処理
+		void InitState() override;
+
 		/// @brief 開始
 		void OnStartBehavior() override;
 

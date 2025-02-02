@@ -2,6 +2,7 @@
 #include "BossAttackState.h"
 #include "BossActionController.h"
 #include "CP_Animation.h"
+#include "CP_Boss.h"
 
 
 namespace HashiTaku
@@ -12,9 +13,12 @@ namespace HashiTaku
 		curAttackTime(1),
 		isUseRotateCurve(false)
 	{
+	}
+
+	void BossAttackState::InitState()
+	{
 		// 1つは用意する
-		AttackInformation attackInfo;
-		attackInfos.push_back(attackInfo);
+		attackInfos.push_back(CreateAttackInfo());
 
 #ifdef EDIT
 		rotSpeedCurve.SetCurveName("Rotate Speed");
@@ -29,7 +33,7 @@ namespace HashiTaku
 		pActionController->GetAnimation()->SetTrigger(ATTACKTRIGGER_ANIMPARAM_NAME);
 
 		// 攻撃情報をセットする
-		pActionController->SetAttackInfo(attackInfos[0]);
+		pActionController->SetAttackInfo(*attackInfos[0]);
 
 		// 初期化
 		curAttackTime = 1;	// 1段目から入る
@@ -64,7 +68,7 @@ namespace HashiTaku
 		auto& atkInfoData = data["atkInfos"];
 		for (auto& saveAtkInfo : attackInfos)
 		{
-			atkInfoData.push_back(saveAtkInfo.Save());
+			atkInfoData.push_back(saveAtkInfo->Save());
 		}
 
 		data["useRotCurve"] = isUseRotateCurve;
@@ -91,9 +95,9 @@ namespace HashiTaku
 			attackInfos.clear();	// 今の情報をリセット
 			for (auto& atkLoadData : atkLoadDatas)
 			{
-				AttackInformation atkInfo;
-				atkInfo.Load(atkLoadData);
-				attackInfos.push_back(atkInfo);
+				std::unique_ptr<BossAttackInformation> pAtkInfo = CreateAttackInfo();
+				pAtkInfo->Load(atkLoadData);
+				attackInfos.push_back(std::move(pAtkInfo));
 			}
 		}
 
@@ -127,6 +131,12 @@ namespace HashiTaku
 		bossTransform.SetRotation(bossRot);
 	}
 
+	std::unique_ptr<BossAttackInformation> BossAttackState::CreateAttackInfo()
+	{			
+		// 攻撃情報を生成
+		return std::make_unique<BossAttackInformation>(&pActionController->GetBoss());
+	}
+
 	void BossAttackState::ImGuiDebug()
 	{
 		BossActState_Base::ImGuiDebug();
@@ -144,7 +154,7 @@ namespace HashiTaku
 
 			std::string text = "Step" + std::to_string(a_i);
 			ImGui::Text(text.c_str());
-			attackInfos[a_i].ImGuiCall();
+			attackInfos[a_i]->ImGuiCall();
 			ImGuiMethod::LineSpaceSmall();
 
 			ImGui::TreePop();
@@ -190,7 +200,7 @@ namespace HashiTaku
 			"攻撃情報が攻撃回数以下です");
 
 		// 対応した攻撃情報をセットする
-		pActionController->SetAttackInfo(attackInfos[curAttackTime - 1]);
+		pActionController->SetAttackInfo(*attackInfos[curAttackTime - 1]);
 	}
 
 	void BossAttackState::SetAttackTimeCnt(u_int _attackTime)
@@ -203,7 +213,13 @@ namespace HashiTaku
 		}
 #endif // EDIT
 
-		attackTimeCnt = _attackTime;
+		u_int prevAttackCnt = static_cast<u_int>(attackInfos.size());
 		attackInfos.resize(_attackTime);	// 攻撃情報も合わせる
+
+		// 生成した数、攻撃情報をを生成
+		for (; prevAttackCnt < _attackTime; prevAttackCnt++)
+		{
+			attackInfos[prevAttackCnt] = CreateAttackInfo();
+		}
 	}
 }

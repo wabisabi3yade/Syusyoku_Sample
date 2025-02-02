@@ -33,10 +33,8 @@ namespace HashiTaku
 
 		/// @brief ダメージ受けたときのアクション処理
 		/// @param _atkInfo 攻撃情報
-		/// @param _attackerPos 攻撃委敵の座標
 		/// @param _pAcceptDamage ダメージ受けたか？
-		void OnDamage(const AttackInformation& _atkInfo,
-			const DXSimp::Vector3& _attackerPos,
+		void OnDamage(AttackInformation& _atkInfo,
 			bool* _pAcceptDamage = nullptr) override;
 
 		/// @brief ターゲット中か取得する
@@ -47,9 +45,14 @@ namespace HashiTaku
 		/// @return カメラ
 		CP_Camera& GetCamera();
 
-		/// @brief 現在のプレイヤーの状態を取得する
-		/// @return 現在のプレイヤーの状態
-		PlayerGroundState::PlayerState GetCurrentState() const;
+		/// @brief 現在の地上行動のステートを取得する
+	/// @return 地上行動のステート
+		PlayerGroundState* GetCurrentGroundState();
+
+
+		/// @brief 現在のプレイヤーの状態タイプを取得する
+		/// @return 現在のプレイヤーの状態タイプ
+		PlayerGroundState::PlayerState GetCurrentStateType() const;
 
 		/// @brief 各Stateの文字列を取得する
 		/// @param _stateId 状態のID
@@ -75,16 +78,10 @@ namespace HashiTaku
 		/// @return 更新できるか？
 		bool GetCanUpdate();
 
-		/// @brief パリィできているか確認
-		/// @param _enemyPos 敵座標
-		/// @return パリィできたか？
-		bool OnDamageParryCheck(const DXSimp::Vector3& _enemyPos);
-
 		/// @brief ノック状態に遷移
 		/// @param _atkInfo 攻撃情報
 		/// @param _attackerPos 攻撃敵の座標
-		void ChangeKnockState(const AttackInformation& _atkInfo,
-			const DXSimp::Vector3& _attackerPos);
+		void ChangeKnockState(const AttackInformation& _atkInfo);
 
 		void ImGuiDebug() override;
 	private:

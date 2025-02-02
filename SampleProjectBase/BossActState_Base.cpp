@@ -26,6 +26,9 @@ namespace HashiTaku
 	{
 		stateType = _stateType;
 		pActionController = &_actController;
+
+		// 各ステート初期化
+		InitState();
 	}
 
 	void BossActState_Base::OnStart()
@@ -228,8 +231,6 @@ namespace HashiTaku
 				(curWarp.endAnimRatio - curWarp.beginAnimRatio);
 
 			curProgressRatio = curWarp.pHoriMovementCurve->GetValue(curAnimRatioOnSplit);
-
-			HASHI_DEBUG_LOG(std::to_string(curAnimRatioOnSplit));
 		}
 
 		// 前回からの差を求める

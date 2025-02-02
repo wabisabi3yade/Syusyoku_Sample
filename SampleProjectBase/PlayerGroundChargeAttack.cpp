@@ -20,14 +20,6 @@ namespace HashiTaku
 		chargeVfxHandle(NONE_VFX_HANDLE),
 		isCharging(false)
 	{
-		// 初期化
-		u_int levelCnt = static_cast<u_int>(ChargeLevel::MaxNum);
-		for (u_int c_i = 0; c_i < levelCnt; c_i++)
-		{
-			chargeTimes[c_i] = 1.0f;
-		}
-
-		chargeAtkInfos.resize(1);	// 最低1用意
 	}
 
 	json PlayerGroundChargeAttack::Save()
@@ -53,7 +45,7 @@ namespace HashiTaku
 			u_int attackTimes = GetAttackTimes();
 			for (u_int a_i = 0; a_i < attackTimes; a_i++)
 			{
-				atkInfoDatas.push_back(chargeAtkInfos[a_i][l_i].Save());
+				atkInfoDatas.push_back(chargeAtkInfos[a_i][l_i]->Save());
 			}
 
 			// チャージ時間
@@ -99,8 +91,23 @@ namespace HashiTaku
 
 				// 配列が用意されていないなら
 				if (static_cast<int>(chargeAtkInfos.size()) <= a_i) break;
-				chargeAtkInfos[a_i][l_i].Load(attackInfoData[a_i]);
+				chargeAtkInfos[a_i][l_i]->Load(attackInfoData[a_i]);
 			}
+		}
+	}
+
+	void PlayerGroundChargeAttack::InitState()
+	{
+		chargeAtkInfos.resize(1);	// 最低1用意
+
+		// 初期化
+		u_int levelCnt = static_cast<u_int>(ChargeLevel::MaxNum);
+		for (u_int c_i = 0; c_i < levelCnt; c_i++)
+		{
+			// 攻撃情報を初期化
+			chargeAtkInfos[0][c_i] = CreateAttackInfo();
+
+			chargeTimes[c_i] = 1.0f;
 		}
 	}
 
@@ -184,9 +191,21 @@ namespace HashiTaku
 	{
 		PlayerAttackState::OnChangeAttackTimes();
 
+		
 		u_int atktimes = GetAttackTimes();
+		u_int prevTimes = static_cast<u_int>(chargeAtkInfos.size());
+		u_int chargeCnt = static_cast<u_int>(ChargeLevel::MaxNum);
 		// サイズを変更
 		chargeAtkInfos.resize(atktimes);
+
+		// 追加した分の攻撃情報を生成
+		for (; prevTimes < atktimes; prevTimes++)
+		{
+			for (u_int c_i = 0; c_i < chargeCnt; c_i++)
+			{
+				chargeAtkInfos[prevTimes][c_i] = CreateAttackInfo();
+			}
+		}
 	}
 
 	void PlayerGroundChargeAttack::CheckInputRelease()
@@ -269,7 +288,7 @@ namespace HashiTaku
 
 			// 攻撃ごとのダメージ情報を上書きする
 			u_int chargeId = static_cast<u_int>(curChargeLevel);
-			*pAtkInfo = chargeAtkInfos[a_i][chargeId];
+			*pAtkInfo = *chargeAtkInfos[a_i][chargeId];
 		}
 
 		// チャージエフェクトを消す
@@ -333,7 +352,7 @@ namespace HashiTaku
 					std::string levelStr = std::string(magic_enum::enum_name(c));
 					if (ImGuiMethod::TreeNode(levelStr))
 					{
-						chargeAtkInfos[a_i][l_i].ImGuiCall();
+						chargeAtkInfos[a_i][l_i]->ImGuiCall();
 						ImGui::TreePop();
 					}
 				}

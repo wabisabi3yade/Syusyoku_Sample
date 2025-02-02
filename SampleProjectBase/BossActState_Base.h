@@ -138,6 +138,9 @@ namespace HashiTaku
 		json Save() override;
 		void Load(const json& _data) override;
 	protected:
+		/// @brief ステートの初期化
+		virtual void InitState() {}
+
 		/// @brief 状態切り替え開始処理
 		virtual void OnStartBehavior() {}
 

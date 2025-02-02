@@ -66,6 +66,9 @@ namespace HashiTaku
 		/// @param _targetTransform 映す対象トランスフォーム
 		void OnPlayerWin(const Transform& _targetTransform);
 
+		/// @brief プレイヤー勝利時の処理
+		void OnPlayerLose();
+
 		virtual void ImGuiDebug() override;
 
 		json Save() override;

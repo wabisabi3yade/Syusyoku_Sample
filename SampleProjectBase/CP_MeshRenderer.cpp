@@ -42,10 +42,16 @@ namespace HashiTaku
 
 		RenderParam& rendererParam = Direct3D11::GetInstance()->GetRenderer()->GetParameter();
 
-		// WVP求める
+		// ワールド行列を求める
 		Transform& transform = GetTransform();
+		// メッシュオフセット行列を求める
+		DXSimp::Matrix meshOffsetMtx; meshOffsetMtx.Translation(offsetMeshPosition);
 		auto& wvp = rendererParam.GetWVP();
-		wvp.world = CalcLoadMtx() * transform.GetWorldMatrix();
+
+		// ロード行列　×　オフセット座標　×　ワールド行列
+		wvp.world = CalcLoadMtx() *
+			transform.GetWorldMatrix() * 
+			meshOffsetMtx;
 		wvp.world = wvp.world.Transpose();
 
 		// メッシュ描画
@@ -79,6 +85,10 @@ namespace HashiTaku
 		pRenderMesh->SetPixelShader(_psName);
 	}
 
+	void CP_MeshRenderer::SetMeshOffset(const DXSimp::Vector3& _offsetPos)
+	{
+		offsetMeshPosition = _offsetPos;
+	}
 
 	Material* CP_MeshRenderer::GetMaterial(u_int _meshIdx)
 	{
@@ -187,6 +197,11 @@ namespace HashiTaku
 	Mesh_Group* CP_MeshRenderer::GetRenderMesh()
 	{
 		return pRenderMesh;
+	}
+
+	const DXSimp::Vector3& CP_MeshRenderer::GetMeshOffsetPos() const
+	{
+		return offsetMeshPosition;
 	}
 
 	void CP_MeshRenderer::WriteDepth()

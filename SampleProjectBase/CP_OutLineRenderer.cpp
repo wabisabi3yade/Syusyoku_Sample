@@ -54,10 +54,8 @@ namespace HashiTaku
 
 	void CP_OutLineRenderer::Draw()
 	{
-#ifdef EDIT
 		// 描画するものがないなら
 		if (!pRenderMesh) return;
-#endif // EDIT
 
 		// 描画準備
 		DrawSetup();
@@ -81,14 +79,16 @@ namespace HashiTaku
 		RenderParam& rendererParam = pRenderer->GetParameter();
 
 		pRenderer->SetCullingMode(D3D11_CULL_FRONT);
-		
+
 		// シェーダーにバッファを送る
 		// (ここではライト、カメラ座標などの1ループで1度しか送らないものは送らない)
 		Transform& transform = GetTransform();
 		auto& wvp = rendererParam.GetWVP();
 
 		// ワールド行列作成
-		wvp.world = MakeLoadMatrix() * transform.GetWorldMatrix();
+		// オフセット行列作成
+		DXSimp::Matrix offsetMtx; offsetMtx.Translation(pMeshRenderer->GetMeshOffsetPos());
+		wvp.world = MakeLoadMatrix() * transform.GetWorldMatrix() * offsetMtx;
 		wvp.world = wvp.world.Transpose();
 
 		// バッファーを送る
@@ -124,17 +124,17 @@ namespace HashiTaku
 	void CP_OutLineRenderer::GetRenderMesh()
 	{
 		// メッシュを取得する
-		CP_MeshRenderer* pMeshRender = GetGameObject().GetComponent<CP_MeshRenderer>();
-		if (!pMeshRender)	// ないなら
+		pMeshRenderer = GetGameObject().GetComponent<CP_MeshRenderer>();
+		if (!pMeshRenderer)	// ないなら
 		{
 			// 活動しないようにする
 			SetEnable(false);
 			return;
 		}
 
-		pRenderMesh = pMeshRender->GetRenderMesh();
+		pRenderMesh = pMeshRenderer->GetRenderMesh();
 		// メッシュレンダラーより描画を遅くする
-		SetPriority(pMeshRender->GetPriority() + 1);
+		SetPriority(pMeshRenderer->GetPriority() + 1);
 	}
 
 	void CP_OutLineRenderer::SetUseShader()
