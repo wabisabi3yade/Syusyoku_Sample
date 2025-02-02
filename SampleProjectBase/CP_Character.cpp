@@ -45,14 +45,13 @@ namespace HashiTaku
 		return isDead;
 	}
 
-	void CP_Character::OnDamage(const AttackInformation& _attackInfo,
-		const DXSimp::Vector3& _attackerPos,
+	void CP_Character::OnDamage(AttackInformation& _attackInfo,
 		const DXSimp::Vector3& _contactPos)
 	{
 		if (isInvicible) return;
 
 		// 各派生のダメージ処理
-		bool isDamage = OnDamageBehavior(_attackInfo, _attackerPos);
+		bool isDamage = OnDamageBehavior(_attackInfo);
 
 		// ダメージを受けていないなら
 		if (!isDamage) return;

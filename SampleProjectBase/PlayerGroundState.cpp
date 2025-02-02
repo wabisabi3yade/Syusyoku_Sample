@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "PlayerGroundState.h"
 #include "PlayerGroundActionController.h"
+#include "CP_Player.h"
 
 namespace HashiTaku
 {
@@ -34,6 +35,11 @@ namespace HashiTaku
 		PlayerActState_Base::OnEnd();
 
 		OnEndBehavior();
+	}
+
+	bool PlayerGroundState::OnDamage(AttackInformation& _attackInfo)
+	{
+		return true;
 	}
 
 	json PlayerGroundState::Save()
@@ -103,7 +109,7 @@ namespace HashiTaku
 		// スティックの入力量が大きければ
 		if (inputMag > CAN_MOVECANCEL_INPUT)
 		{
-			PlayerState curState = CastGroundController().GetCurrentState();
+			PlayerState curState = CastGroundController().GetCurrentStateType();
 			bool isTarget = pActionController->GetIsTargeting();
 			// 同じ種類の移動→移動はしないようにする
 			// ターゲット時ならターゲット移動

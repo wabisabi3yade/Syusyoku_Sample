@@ -66,8 +66,7 @@ namespace HashiTaku
 		}
 	}
 
-	bool CP_Enemy::OnDamageBehavior(const AttackInformation& _attackInfo,
-		const DXSimp::Vector3& _attackerPos)
+	bool CP_Enemy::OnDamageBehavior(AttackInformation& _attackInfo)
 	{
 		return true;
 	}

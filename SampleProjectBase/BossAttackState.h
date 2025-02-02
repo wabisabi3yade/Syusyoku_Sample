@@ -24,7 +24,7 @@ namespace HashiTaku
 
 	protected:
 		/// @brief 攻撃情報リスト(単発なら最初の情報を使用する)
-		std::vector<BossAttackInformation> attackInfos;
+		std::vector<std::unique_ptr<BossAttackInformation>> attackInfos;
 
 	public:
 		BossAttackState();
@@ -47,8 +47,11 @@ namespace HashiTaku
 		/// @brief 向きを更新する
 		void RotateUpdate();
 
-		void ImGuiDebug() override;
+		/// @brief 攻撃情報を作成
+		/// @return 攻撃情報
+		std::unique_ptr<BossAttackInformation> CreateAttackInfo();
 
+		void ImGuiDebug() override;
 	private:
 		/// @brief コンビネーション攻撃の攻撃に合わせて攻撃情報を更新する
 		void UpdateReAttack();

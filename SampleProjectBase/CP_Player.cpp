@@ -28,7 +28,7 @@ namespace HashiTaku
 	{
 	}
 
-	void CP_Player::SetAttackInfo(const AttackInformation& _setAttackInfo)
+	void CP_Player::SetAttackInfo(AttackInformation& _setAttackInfo)
 	{
 		if (!pWeapon) return;
 
@@ -59,7 +59,7 @@ namespace HashiTaku
 		pAction = std::make_unique<PlayerAction>(*this);
 	}
 
-	void CP_Player::OnWeaponAttacking(const AttackInformation& _atkInfo)
+	void CP_Player::OnAttacking(const AttackInformation& _atkInfo)
 	{
 		// ダメージ値に応じたスタイリッシュポイントを加算
 		AddStylishPoint(_atkInfo.GetDamageValue() * stylishPointRatioFromAtkDmg);
@@ -279,7 +279,7 @@ namespace HashiTaku
 		LoadJsonFloat("stylishRatioAcceptDmg", stylishPointRatioFromAcceptDmg, _data);
 	}
 
-	const DXSimp::Vector3& CP_Player::GetOwnerWorldPos() const
+	const DXSimp::Vector3& CP_Player::GetAttackerWorldPos() const
 	{
 		return GetTransform().GetPosition();
 	}
@@ -304,12 +304,11 @@ namespace HashiTaku
 			pHpSlider->SetCurrentValue(currentHP);
 	}
 
-	bool CP_Player::OnDamageBehavior(const AttackInformation& _attackInfo,
-		const DXSimp::Vector3& _attackerPos)
+	bool CP_Player::OnDamageBehavior(AttackInformation& _attackInfo)
 	{
 		// アクション内でダメージ受けているかチェック
 		bool isAcceptDamage = false;	// ダメージ受けたかフラグ
-		pAction->OnDamage(_attackInfo, _attackerPos, &isAcceptDamage);
+		pAction->OnDamage(_attackInfo, &isAcceptDamage);
 
 		// ダメージ受けていたら
 		if (!isAcceptDamage) return false;

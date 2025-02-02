@@ -80,17 +80,17 @@ namespace HashiTaku
 		return ChangeState(static_cast<int>(_nextActionState), _isForce);
 	}
 
-	void PlayerGroundActionController::OnDamage(const AttackInformation& _atkInfo,
-		const DXSimp::Vector3& _attackerPos, bool* _pAcceptDamage)
+	void PlayerGroundActionController::OnDamage(AttackInformation& _atkInfo,
+		bool* _pAcceptDamage)
 	{
 		if (_pAcceptDamage)
 			*_pAcceptDamage = false;
 
-		// パリィできたら移行の処理は行わない
-		if (OnDamageParryCheck(_attackerPos)) return;
+		// 各状態のダメージ処理を行い、ダメージ処理を行わないなら以降は処理しない
+		if (!GetCurrentGroundState()->OnDamage(_atkInfo)) return;
 
 		// ノック状態に移行
-		ChangeKnockState(_atkInfo, _attackerPos);
+		ChangeKnockState(_atkInfo);
 
 		if (_pAcceptDamage)
 			*_pAcceptDamage = true;
@@ -106,29 +106,22 @@ namespace HashiTaku
 		return pAction->GetCamera();
 	}
 
-	PlayerGroundState::PlayerState PlayerGroundActionController::GetCurrentState() const
+	PlayerGroundState* PlayerGroundActionController::GetCurrentGroundState()
+	{
+		// 現在の状態を取得する
+		StateNode_Base* curNode = GetCurrentNode();
+		if (!curNode) return nullptr;
+
+		// キャストして地上行動にする
+		return static_cast<PlayerGroundState*>(curNode);
+	}
+
+	PlayerGroundState::PlayerState PlayerGroundActionController::GetCurrentStateType() const
 	{
 		return static_cast<PlayerGroundState::PlayerState>(currentStateKey);
 	}
 
-	bool PlayerGroundActionController::OnDamageParryCheck(const DXSimp::Vector3& _enemyPos)
-	{
-		// 今パリィできるか確認する
-		// 今ガード状態でないなら
-		GroundState currentState = static_cast<GroundState>(currentStateKey);
-		if (currentState != GroundState::Guard) return false;
-
-		// パリィできるフレーム内か確認
-		PlayerGuardState& guardState = static_cast<PlayerGuardState&>(*pCurrentNode);
-		if (!guardState.GetCanParry(_enemyPos)) return false;
-
-		// パリィ処理を行うように指示
-		guardState.SetPerfomParry();
-		return true;
-	}
-
-	void PlayerGroundActionController::ChangeKnockState(const AttackInformation& _atkInfo,
-		const DXSimp::Vector3& _attackerPos)
+	void PlayerGroundActionController::ChangeKnockState(const AttackInformation& _atkInfo)
 	{
 		using enum AttackInformation::AttackLevel;
 
@@ -137,7 +130,7 @@ namespace HashiTaku
 
 		// ノックのベクトルを求める
 		DXSimp::Vector3 knockVec =
-			GetMyTransform().GetPosition() - _attackerPos;
+			GetMyTransform().GetPosition() - _atkInfo.GetAttackerWorldPos();
 		knockVec.y = 0.0f; knockVec.Normalize();
 
 		// ダメージのレベルでのけぞりモーションを変更

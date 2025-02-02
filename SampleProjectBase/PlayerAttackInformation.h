@@ -9,7 +9,9 @@ namespace HashiTaku
 		/// @brief ブレイク値
 		float breakValue;
 	public:
-		PlayerAttackInformation();
+		/// @brief コンストラクタ
+		/// @param _pAttacker 攻撃者
+		PlayerAttackInformation(IAttacker* _pAttacker);
 		~PlayerAttackInformation() {}
 
 		/// @brief ブレイク値を取得する

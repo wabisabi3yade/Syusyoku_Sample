@@ -14,7 +14,7 @@ namespace HashiTaku
 		pCameraMove(nullptr),
 		sustainParryFrame(4),
 		parryElapsedFrame(0),
-		parryAddGuardGage(25.0f),
+		parryStrengthRate(1.0f),
 		canParryForwardAngle(180.0f),
 		addStylishPointOnParry(200.0f),
 		parryPadVibePower(0.4f),
@@ -24,7 +24,7 @@ namespace HashiTaku
 	{
 	}
 
-	bool PlayerGuardState::GetCanParry(const DXSimp::Vector3& _enemyPos)
+	bool PlayerGuardState::CheckCanParry(const DXSimp::Vector3& _enemyPos)
 	{
 		if (!canParry) return false;
 
@@ -40,10 +40,27 @@ namespace HashiTaku
 		return true;
 	}
 
-	void PlayerGuardState::SetPerfomParry()
+	void PlayerGuardState::SetPerfomParry(IParryAccepter* _pParryAccepter)
 	{
 		// 次の更新処理でパリィ処理を行う
 		isPerformParryFrame = true;
+
+		// インターフェースがあるなら追加する
+		if (_pParryAccepter)
+			parryAccepters.push_back(_pParryAccepter);
+	}
+
+	bool PlayerGuardState::OnDamage(AttackInformation& _attackInfo)
+	{	
+		// パリィできるか確認し、できないなら処理を終える
+		if (!CheckCanParry(_attackInfo.GetAttackerWorldPos())) return true;
+
+		// パリィ処理を行うように指示
+		IParryAccepter* pParryAccept = dynamic_cast<IParryAccepter*>(_attackInfo.GetAttacker());
+		SetPerfomParry(pParryAccept);
+
+		// ダメージ処理は起こさない
+		return false;
 	}
 
 	void PlayerGuardState::OnParry()
@@ -69,14 +86,16 @@ namespace HashiTaku
 		// スタイリッシュポイントを加算
 		GetPlayer().AddStylishPoint(addStylishPointOnParry);
 
-		// 前入力されていたら
-		if (IsInputVector(InputVector::Forward))
+		// 前入力　かつ　ターゲットボタン　が押されていたら
+		if (IsInputVector(InputVector::Forward) && 
+			pPlayerInput->GetButton(GameInput::ButtonType::Player_RockOn))
 			ReleaseAttack();	// 攻撃に派生
 	}
 
 	json PlayerGuardState::Save()
 	{
 		auto data = PlayerGroundState::Save();
+		data["parryStrengthRate"] = parryStrengthRate;
 		data["canParryTime"] = sustainParryFrame;
 		data["parryAngle"] = canParryForwardAngle;
 		SaveJsonVector3("vfxOffset", createVfxOffset, data);
@@ -97,6 +116,7 @@ namespace HashiTaku
 	{
 		PlayerGroundState::Load(_data);
 		LoadJsonUnsigned("canParryTime", sustainParryFrame, _data);
+		LoadJsonFloat("parryStrengthRate", parryStrengthRate, _data);
 		LoadJsonFloat("parryAngle", canParryForwardAngle, _data);
 		LoadJsonVector3("vfxOffset", createVfxOffset, _data);
 		LoadJsonFloat("addStylishPointParry", addStylishPointOnParry, _data);
@@ -251,6 +271,19 @@ namespace HashiTaku
 
 		// プレイヤーからSEを再生
 		pSoundManager->PlaySE(*soundItr, GetMyTransform().GetPosition());
+	}
+
+	void PlayerGuardState::NotifyParryAccepters()
+	{
+		// 通知先に伝えるパラメーター
+		AcceptParryInfo acceptParryInfo;
+		acceptParryInfo.parryStrengthRate = parryStrengthRate;
+
+		// 通知する
+		for (auto& accepter : parryAccepters)
+		{
+			accepter->OnAcceptParry(acceptParryInfo);
+		}
 	}
 
 	void PlayerGuardState::ImGuiDebug()

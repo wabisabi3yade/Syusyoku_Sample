@@ -19,7 +19,7 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 
 	CP_Weapon::CP_Weapon() :
 		pAtkInfomation(nullptr),
-		pWeaponOwner(nullptr),
+		pAttacker(nullptr),
 		attackTagCnt(0),
 		isAttackCollision(false)
 	{
@@ -55,7 +55,7 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 		AddAttackedRb(*_otherColInfo.pRigidBodyCp);
 	}
 
-	void CP_Weapon::SetAttackInfo(const AttackInformation& _attackInformation)
+	void CP_Weapon::SetAttackInfo(AttackInformation& _attackInformation)
 	{
 		pAtkInfomation = &_attackInformation;
 		// 攻撃済みをクリア
@@ -67,9 +67,9 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 		isAttackCollision = _isAttackCollision;
 	}
 
-	void CP_Weapon::SetWeaponOwner(IWeaponOwner& _weaponOwner)
+	void CP_Weapon::SetWeaponOwner(IAttacker& _weaponOwner)
 	{
-		pWeaponOwner = &_weaponOwner;
+		pAttacker = &_weaponOwner;
 	}
 
 	void CP_Weapon::ClearAttackedRb()
@@ -126,20 +126,19 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 	void CP_Weapon::OnAttack(IDamageable& _damager, const DXSimp::Vector3& _contactPos)
 	{
 		// 攻撃処理
-		
 		DXSimp::Vector3 haveObjPos;
 		// ダメージを与える側の処理
-		if (pWeaponOwner)
+		if (pAttacker)
 		{
 			// 攻撃を与えた側のコールバック
-			pWeaponOwner->OnWeaponAttacking(*pAtkInfomation);
+			pAttacker->OnAttacking(*pAtkInfomation);
 
 			// 所有オブジェクトの座標を取得する
-			haveObjPos = pWeaponOwner->GetOwnerWorldPos();
+			haveObjPos = pAttacker->GetAttackerWorldPos();
 		}
 			
 		// ダメージを食らう側の処理
-		_damager.OnDamage(*pAtkInfomation, haveObjPos, _contactPos);
+		_damager.OnDamage(*pAtkInfomation, _contactPos);
 	}
 
 	void CP_Weapon::AddAttackedRb(const CP_RigidBody& _rb)

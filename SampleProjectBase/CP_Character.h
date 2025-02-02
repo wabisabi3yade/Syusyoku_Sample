@@ -63,8 +63,7 @@ namespace HashiTaku
 
 		/// @brief ダメージを受けたときの処理
 		/// @param _attackInfo 攻撃情報
-		void OnDamage(const AttackInformation& _attackInfo,
-			const DXSimp::Vector3& _attackerPos,
+		void OnDamage(AttackInformation& _attackInfo,
 			const DXSimp::Vector3& _contactPos) override;
 
 		/// @brief 死んだときの処理
@@ -106,8 +105,7 @@ namespace HashiTaku
 		/// @param _attackInfo 攻撃情報
 		/// @param _attackerPos 攻撃した側の座標
 		/// @return ダメージを受けたか？
-		virtual bool OnDamageBehavior(const AttackInformation& _attackInfo,
-			const DXSimp::Vector3& _attackerPos) = 0;
+		virtual bool OnDamageBehavior(AttackInformation& _attackInfo) = 0;
 
 		/// @brief ダメージ受けたときの処理
 		/// @param _attackInfo 攻撃情報

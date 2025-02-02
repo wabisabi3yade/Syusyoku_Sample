@@ -16,6 +16,7 @@ namespace HashiTaku
 		pHpBar(nullptr),
 		pBreakBar(nullptr),
 		pCanAttack(nullptr),
+		pRecentlyAttackInformation(nullptr),
 		curBreakValue(0.0f),
 		decadeBreakSpeed(10.0f),
 		maxBreakValue(100.0f),
@@ -31,10 +32,13 @@ namespace HashiTaku
 		pActionController = std::make_unique<BossActionController>(*this);
 	}
 
-	void CP_Boss::SetAttackInfo(const AttackInformation& _attackInfo)
+	void CP_Boss::SetAttackInfo(AttackInformation& _attackInfo)
 	{
-		if (!pWeapon) return;
+		// 最新の攻撃情報を更新
+		pRecentlyAttackInformation = static_cast<const BossAttackInformation*>(&_attackInfo);
 
+		// 武器に攻撃情報をセット
+		if (!pWeapon) return;
 		pWeapon->SetAttackInfo(_attackInfo);
 	}
 
@@ -68,14 +72,23 @@ namespace HashiTaku
 			pActionController->Load(actionControllerData);
 	}
 
-	const DXSimp::Vector3& CP_Boss::GetOwnerWorldPos() const
+	const DXSimp::Vector3& CP_Boss::GetAttackerWorldPos() const
 	{
 		return GetTransform().GetPosition();
 	}
 
 	void CP_Boss::OnAcceptParry(const AcceptParryInfo& _acceptInfo)
 	{
-		// ブレイクゲージを取得する
+		// ブレイクゲージを加算する (パリィされ増えるブレイク値　×　パリィの強度値)
+		float addBreakValue = pRecentlyAttackInformation->GetBreakValueOnParry() *
+			_acceptInfo.parryStrengthRate;
+		AddBreakValue(addBreakValue);
+
+		// パリィ時によろける攻撃にしているならよろける
+		if (pRecentlyAttackInformation->GetIsStunOnParry())
+		{
+			HASHI_DEBUG_LOG("よろける");
+		}
 	}
 
 	void CP_Boss::Awake()
@@ -254,10 +267,9 @@ namespace HashiTaku
 		pAnimation->SetBool(BREAK_ANIMPARAM, false);
 	}
 
-	bool CP_Boss::OnDamageBehavior(const AttackInformation& _attackInfo,
-		const DXSimp::Vector3& _attackerPos)
+	bool CP_Boss::OnDamageBehavior(AttackInformation& _attackInfo)
 	{
-		if (!CP_Enemy::OnDamageBehavior(_attackInfo, _attackerPos)) return false;
+		if (!CP_Enemy::OnDamageBehavior(_attackInfo)) return false;
 
 		// ブレイク値を加算(プレイヤーからの攻撃なら)
 		const PlayerAttackInformation* pPlayerAtkInfo =
@@ -265,7 +277,7 @@ namespace HashiTaku
 		if (pPlayerAtkInfo)
 			AddBreakValue(pPlayerAtkInfo->GetBreakValue());
 
-		pActionController->OnDamage(_attackInfo, _attackerPos);
+		pActionController->OnDamage(_attackInfo);
 
 		return true;
 	}

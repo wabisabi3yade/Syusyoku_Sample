@@ -1,14 +1,15 @@
 #pragma once
 #include "CP_Enemy.h"
-#include "IWeaponOwner.h"
+#include "IAttacker_AcceptParry.h"
 #include "CP_Weapon.h"
 #include "BossActionController.h"
+#include "BossAttackInformation.h"
 #include "IUISlider.h"
 
 namespace HashiTaku
 {
 	/// @brief ボスのコンポーネント
-	class CP_Boss : public CP_Enemy, public IWeaponOwner
+	class CP_Boss : public CP_Enemy, public IAttacker_AcceptParry
 	{
 		/// @brief 武器名
 		std::string weaponObjName;
@@ -34,6 +35,9 @@ namespace HashiTaku
 		/// @brief ブレイクゲージバー
 		IUISlider* pBreakBar;
 
+		/// @brief 最新の攻撃情報
+		const BossAttackInformation* pRecentlyAttackInformation;
+
 		/// @brief 攻撃判定
 		const bool* pCanAttack;
 
@@ -57,7 +61,7 @@ namespace HashiTaku
 
 		/// @brief 攻撃情報をセット
 		/// @param _attackInfo 攻撃情報
-		void SetAttackInfo(const AttackInformation& _attackInfo);
+		void SetAttackInfo(AttackInformation& _attackInfo);
 
 		/// @brief 体力をセット
 		/// @param _setHp 体力
@@ -84,10 +88,10 @@ namespace HashiTaku
 
 		/// @brief 所有者のワールド座標を取得する
 		/// @return 所有者のワールド座標
-		const DXSimp::Vector3& GetOwnerWorldPos() const override;
+		const DXSimp::Vector3& GetAttackerWorldPos() const override;
 
 		/// @brief 武器による攻撃ヒットさせたときに起こす処理
-		void OnWeaponAttacking(const AttackInformation& _atkInfo) override {};
+		void OnAttacking(const AttackInformation& _atkInfo) override {};
 
 		/// @brief パリィされたときの処理
 		/// @param _acceptInfo パリィからの情報
@@ -125,8 +129,7 @@ namespace HashiTaku
 		/// @param _attackInfo 攻撃情報
 		/// @param _attackerPos 攻撃した側の座標
 		/// @return ダメージを受けたか？
-		bool OnDamageBehavior(const AttackInformation& _attackInfo,
-			const DXSimp::Vector3& _attackerPos) override;
+		bool OnDamageBehavior(AttackInformation& _attackInfo) override;
 
 		/// @brief 死んだときの処理
 		void OnDeathBehavior() override;

@@ -58,7 +58,7 @@ namespace HashiTaku
 		if (!stateNodeList.contains(_setState)) return;
 
 		// 移動キャンセルは他のキャンセルがないときだけ行う
-		CancelType cancelType = GetPlayerAction(_setState)->GetCancelType();
+		CancelType cancelType = GetPlayerState(_setState)->GetCancelType();
 		if (reserveCancelState != STATE_NONE_ID && cancelType == CancelType::Move)
 			return;
 
@@ -77,7 +77,7 @@ namespace HashiTaku
 		curFlameCancelState = _setState;
 	}
 
-	PlayerActState_Base* PlayerActionController_Base::GetPlayerAction(int _playerStateId)
+	PlayerActState_Base* PlayerActionController_Base::GetPlayerState(int _playerStateId)
 	{
 		StateNode_Base* pState = GetNode(_playerStateId);
 		if (!pState) return nullptr;
@@ -172,7 +172,7 @@ namespace HashiTaku
 		if (reserveCancelState == STATE_NONE_ID) return;	// 予約されていないなら
 
 		bool canTransition = false;	// 遷移できるかフラグ
-		switch (GetPlayerAction(reserveCancelState)->GetCancelType())
+		switch (GetPlayerState(reserveCancelState)->GetCancelType())
 		{
 		case CancelType::Action:
 			canTransition = GetCanAction();

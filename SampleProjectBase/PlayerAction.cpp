@@ -177,12 +177,10 @@ namespace HashiTaku
 		pTargetAccepter = nullptr;
 	}
 
-	void PlayerAction::OnDamage(const AttackInformation& _atkInfo,
-		const DXSimp::Vector3& _attackerPos,
+	void PlayerAction::OnDamage(AttackInformation& _atkInfo,
 		bool* _pAcceptDamage)
 	{
 		pCurrentController->OnDamage(_atkInfo,
-			_attackerPos,
 			_pAcceptDamage);
 	}
 

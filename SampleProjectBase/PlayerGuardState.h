@@ -1,6 +1,7 @@
 #pragma once
 #include "PlayerGroundState.h"
 #include "PerlinShakeParameter.h"
+#include "IParryAccepter.h"
 
 namespace HashiTaku
 {
@@ -17,6 +18,9 @@ namespace HashiTaku
 		/// @brief パリィの効果音
 		std::list<PlaySoundParameter> parrySoundParameters;
 
+		/// @brief 攻撃をパリィされた側リスト
+		std::list<IParryAccepter*> parryAccepters;
+
 		/// @brief パリィエフェクトを生成する場所のオフセット(オブジェクトから)
 		DXSimp::Vector3 createVfxOffset;
 
@@ -28,9 +32,9 @@ namespace HashiTaku
 
 		/// @brief 経過時間
 		u_int parryElapsedFrame;
-
-		/// @brief パリィで増えるゲージ
-		float parryAddGuardGage;
+		
+		/// @brief パリィの強度（パリィ受けた側の処理での調整パラメーター）
+		float parryStrengthRate;
 
 		/// @brief パリィすることができる正面の角度
 		float canParryForwardAngle;
@@ -53,12 +57,9 @@ namespace HashiTaku
 		PlayerGuardState();
 		~PlayerGuardState() {}
 
-		/// @brief パリィできるか確認
-		/// @return パリィできるか？
-		bool GetCanParry(const DXSimp::Vector3& _enemyPos);
-
 		/// @brief パリィ成功処理を行うようにする
-		void SetPerfomParry();
+		/// @param _pParryAccepter パリィされたオブジェクト(インターフェースがないならnullptr)
+		void SetPerfomParry(IParryAccepter* _pParryAccepter);
 
 		/// @brief セーブする
 		/// @return セーブデータ
@@ -83,6 +84,11 @@ namespace HashiTaku
 		void OnAnimationEnd(const std::string& _fromAnimNodeName,
 			const std::string& _toAnimNodeName) override;
 
+		/// @brief ステート側のダメージ処理
+		/// @param _attackInfo 受けた攻撃情報
+		/// @return ダメージ処理を行うか？
+		bool OnDamage(AttackInformation& _attackInfo) override;
+
 		/// @brief パリィ時の行動
 		void OnParry();
 
@@ -106,6 +112,13 @@ namespace HashiTaku
 
 		/// @brief 効果音を鳴らす
 		void PlayParrySE();
+
+		/// @brief パリィされたことを伝える
+		void NotifyParryAccepters();
+
+		/// @brief パリィできるか確認
+		/// @return パリィできるか？
+		bool CheckCanParry(const DXSimp::Vector3& _enemyPos);
 
 		void ImGuiDebug() override;
 	private:

@@ -220,6 +220,7 @@
     <ClCompile Include="CP_SoundManager.cpp" />
     <ClCompile Include="CP_StylishUI.cpp" />
     <ClCompile Include="BossAttackInformation.cpp" />
+    <ClCompile Include="IAttacker_AcceptParry.cpp" />
     <ClCompile Include="IParryAccepter.cpp" />
     <ClCompile Include="PerlinShakeParameter.cpp" />
     <ClCompile Include="CameraTargetMove.cpp" />
@@ -472,10 +473,11 @@
     <ClInclude Include="CP_StylishUI.h" />
     <ClInclude Include="BossAttackInformation.h" />
     <ClInclude Include="IApplyDepthShadow.h" />
+    <ClInclude Include="IAttacker_AcceptParry.h" />
     <ClInclude Include="IBoneSupplier.h" />
     <ClInclude Include="IParryAccepter.h" />
     <ClInclude Include="ITransformSetter.h" />
-    <ClInclude Include="IWeaponOwner.h" />
+    <ClInclude Include="IAttacker.h" />
     <ClInclude Include="PerlinShakeParameter.h" />
     <ClInclude Include="CameraTargetMove.h" />
     <ClInclude Include="ChangeAnimObserver.h" />
@@ -526,7 +528,6 @@
     <ClInclude Include="IAnimInterpolate.h" />
     <ClInclude Include="IAnimParametersSetter.h" />
     <ClInclude Include="IAssetCreater.h" />
-    <ClInclude Include="IAttacker.h" />
     <ClInclude Include="IClassNameGetter.h" />
     <ClInclude Include="IDamageable.h" />
     <ClInclude Include="HitStopper_Base.h" />

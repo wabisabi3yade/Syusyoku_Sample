@@ -3,6 +3,7 @@
 
 namespace HashiTaku
 {
+	class IAttacker;
 	class VisualEffect;
 
 	/// @brief  攻撃の情報
@@ -37,8 +38,15 @@ namespace HashiTaku
 
 		/// @brief カメラを揺らすか？
 		bool isCamShake;
+
+	protected:
+		/// @brief 攻撃者情報
+		IAttacker* pAttacker;
+
 	public:
-		AttackInformation();
+		/// @brief コンストラクタ
+		/// @param _pAttacker 攻撃者
+		AttackInformation(IAttacker* _pAttacker);
 		virtual ~AttackInformation() {}
 
 		/// @brief ダメージ値をセット
@@ -48,6 +56,13 @@ namespace HashiTaku
 		/// @brief 攻撃レベルをセット
 		/// @param _atkLevel 攻撃レベル
 		void SetAttackLevel(AttackLevel _atkLevel);
+
+		/// @brief 攻撃者に攻撃が当たったことを通知
+		void NotifyHitAttack();
+
+		/// @brief 攻撃者のワールド座標を取得する
+		/// @return 攻撃者のワールド座標
+		DXSimp::Vector3 GetAttackerWorldPos() const;
 
 		/// @brief ヒットエフェクト情報を取得する
 		/// @return ヒットエフェクト情報
@@ -60,6 +75,10 @@ namespace HashiTaku
 		/// @brief ヒットSEを取得
 		/// @return ヒットSE
 		const PlaySoundParameter& GetHitSEParam() const;
+
+		/// @brief 攻撃者のインターフェースを取得する
+		/// @return 攻撃者のインターフェース
+		IAttacker* GetAttacker();
 
 		/// @brief ダメージ値を取得
 		/// @return ダメージ値

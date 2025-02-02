@@ -176,10 +176,8 @@ namespace HashiTaku
 
 		/// @brief ダメージ受けたときのアクション処理
 		/// @param _atkInfo 攻撃情報
-		/// @param _attackerPos 攻撃委敵の座標
 		/// @param _pAcceptDamage ダメージ受けたか？
-		void OnDamage(const AttackInformation& _atkInfo,
-			const DXSimp::Vector3& _attackerPos,
+		void OnDamage(AttackInformation& _atkInfo,
 			bool* _pAcceptDamage = nullptr);
 
 		/// @brief 地面に付いた瞬間の処理

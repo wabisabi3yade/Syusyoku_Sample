@@ -733,9 +733,6 @@
     <Filter Include="ソース ファイル\InGame\Attack\IDamageable">
       <UniqueIdentifier>{ab2c7d85-ac80-46de-a213-7d88be8f1496}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\InGame\Attack\IAttacker">
-      <UniqueIdentifier>{753bcb83-00c6-4e7f-9d0a-5c0cb27e7d63}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\System\Tag">
       <UniqueIdentifier>{988b4f81-a66d-4eef-8758-f35438d16df4}</UniqueIdentifier>
     </Filter>
@@ -949,9 +946,6 @@
     <Filter Include="ソース ファイル\InGame\Camera\State\Win">
       <UniqueIdentifier>{8c1370c5-082e-4025-9064-248e134ce895}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\InGame\Weapon\IWeaponOwner">
-      <UniqueIdentifier>{5909d599-4ceb-4926-af04-da86058f5547}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Component\UI\StylishUI">
       <UniqueIdentifier>{b69f3f67-7a0b-4d29-998b-42cc58938235}</UniqueIdentifier>
     </Filter>
@@ -960,6 +954,12 @@
     </Filter>
     <Filter Include="ソース ファイル\InGame\Attack\Information\Enemy">
       <UniqueIdentifier>{b6c00924-761a-4b48-a548-722f0db8781b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Weapon\IAttacker">
+      <UniqueIdentifier>{5909d599-4ceb-4926-af04-da86058f5547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Weapon\IAttacker\IAttacker_AcceptParry">
+      <UniqueIdentifier>{658aeec2-3f70-4c9f-bf42-15eecd7708a1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1763,6 +1763,9 @@
     <ClCompile Include="BossAttackInformation.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="IAttacker_AcceptParry.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -2431,9 +2434,6 @@
     <ClInclude Include="PlayerDamageState.h">
       <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Damage</Filter>
     </ClInclude>
-    <ClInclude Include="IAttacker.h">
-      <Filter>ソース ファイル\InGame\Attack\IAttacker</Filter>
-    </ClInclude>
     <ClInclude Include="BossAttackState.h">
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Attack</Filter>
     </ClInclude>
@@ -2608,13 +2608,16 @@
     <ClInclude Include="PS_Ground.h">
       <Filter>ソース ファイル\Graphics\Shader\Pixel\Ground</Filter>
     </ClInclude>
-    <ClInclude Include="IWeaponOwner.h">
-      <Filter>ソース ファイル\Component\InGame\Weapon\IWeaponOwner</Filter>
+    <ClInclude Include="IAttacker.h">
+      <Filter>ソース ファイル\Component\InGame\Weapon\IAttacker</Filter>
     </ClInclude>
     <ClInclude Include="IParryAccepter.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="BossAttackInformation.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="IAttacker_AcceptParry.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

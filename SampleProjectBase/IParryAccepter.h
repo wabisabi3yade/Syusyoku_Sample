@@ -4,9 +4,6 @@ namespace HashiTaku
 {
 	struct AcceptParryInfo
 	{
-		/// @brief パリィで受け流した攻撃値
-		float parryDamageValue{ 0.0f };
-
 		/// @brief パリィの強度による倍率
 		float parryStrengthRate{ 1.0f };
 	};

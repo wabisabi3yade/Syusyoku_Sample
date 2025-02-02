@@ -104,6 +104,11 @@ namespace HashiTaku
 		return pActionController->GetTargetAccepter();
 	}
 
+	PlayerActState_Base* PlayerActState_Base::GetPlayerState(int _getStateId)
+	{
+		return pActionController->GetPlayerState(_getStateId);
+	}
+
 	CP_Player& PlayerActState_Base::GetPlayer()
 	{
 		return pActionController->GetPlayer();

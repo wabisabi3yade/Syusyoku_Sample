@@ -5,7 +5,7 @@
 
 namespace HashiTaku
 {
-	class CP_Enemy : public CP_Character, public ITargetAccepter, public IParryAccepter
+	class CP_Enemy : public CP_Character, public ITargetAccepter
 	{
 		/// @brief 敵の名称
 		std::string enemyName;
@@ -35,10 +35,6 @@ namespace HashiTaku
 
 		/// @brief ターゲット側に死んだことを通知
 		void OnRemoveNotifyToTargeter();
-
-		/// @brief パリィされたときの処理
-		/// @param _acceptInfo パリィからの情報
-		virtual void OnAcceptParry(const AcceptParryInfo& _acceptInfo) = 0;
 	protected:
 		void Start() override;
 		void OnDestroy() override;
@@ -51,8 +47,7 @@ namespace HashiTaku
 		/// @param _attackInfo 攻撃情報
 		/// @param _attackerPos 攻撃した側の座標
 		/// @return ダメージを受けたか？
-		bool OnDamageBehavior(const AttackInformation& _attackInfo,
-			const DXSimp::Vector3& _attackerPos) override;
+		bool OnDamageBehavior(AttackInformation& _attackInfo) override;
 
 		/// @brief ダメージ受けたときの処理
 		/// @param _attackInfo 攻撃情報

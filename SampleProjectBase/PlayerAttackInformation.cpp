@@ -3,7 +3,9 @@
 
 namespace HashiTaku
 {
-	PlayerAttackInformation::PlayerAttackInformation() : breakValue(1.0f)
+	PlayerAttackInformation::PlayerAttackInformation(IAttacker* _pAttacker) : 
+		AttackInformation(_pAttacker),
+		breakValue(1.0f)
 	{
 	}
 

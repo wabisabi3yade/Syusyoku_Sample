@@ -1,6 +1,6 @@
 #pragma once
 #include "CP_Character.h"
-#include "IWeaponOwner.h"
+#include "IAttacker.h"
 #include "PlayerAction.h"
 #include "AttackInformation.h"
 #include "IUISlider.h"
@@ -11,7 +11,7 @@ namespace HashiTaku
 	class CP_CameraMove;
 	class CP_StylishUI;
 
-	class CP_Player : public CP_Character, public IWeaponOwner
+	class CP_Player : public CP_Character, public IAttacker
 	{
 		/// @brief 武器のオブジェクト名
 		std::string weaponObjName;
@@ -76,7 +76,7 @@ namespace HashiTaku
 
 		/// @brief 攻撃情報をセットする
 		/// @param _setAttackInfo 攻撃情報
-		void SetAttackInfo(const AttackInformation& _setAttackInfo);
+		void SetAttackInfo(AttackInformation& _setAttackInfo);
 
 		/// @brief デバッグ用の無敵フラグをセットする
 		/// @param _setBool 無敵にするか？
@@ -99,10 +99,10 @@ namespace HashiTaku
 
 		/// @brief 所有者のワールド座標を取得する
 		/// @return 所有者のワールド座標
-		const DXSimp::Vector3& GetOwnerWorldPos() const override;
+		const DXSimp::Vector3& GetAttackerWorldPos() const override;
 
 		/// @brief 武器による攻撃ヒットさせたときに起こす処理
-		void OnWeaponAttacking(const AttackInformation& _atkInfo) override;
+		void OnAttacking(const AttackInformation& _atkInfo) override;
 	private:
 		void Awake() override;
 		void Start() override;
@@ -125,8 +125,7 @@ namespace HashiTaku
 		void DecadePlayerHp(float _damageVal);
 
 		/// @brief プレイヤーのダメージ処理
-		bool OnDamageBehavior(const AttackInformation& _attackInfo,
-			const DXSimp::Vector3& _attackerPos) override;
+		bool OnDamageBehavior(AttackInformation& _attackInfo) override;
 
 		/// @brief ダメージ受けたときの処理
 		/// @param _attackInfo 攻撃情報

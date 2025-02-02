@@ -1615,6 +1615,7 @@
                                     "data": {
                                         "atkInfos": [
                                             {
+                                                "addBreakOnParry": 5.099999904632568,
                                                 "damage": 1.0,
                                                 "hitSE": {
                                                     "loop": false,
@@ -1634,6 +1635,7 @@
                                                 "level": 0
                                             },
                                             {
+                                                "addBreakOnParry": 2.0,
                                                 "damage": 2.0999999046325684,
                                                 "hitSE": {
                                                     "loop": false,
@@ -1653,6 +1655,7 @@
                                                 "level": 0
                                             },
                                             {
+                                                "addBreakOnParry": 2.0,
                                                 "camShake": {
                                                     "fadeOut": true,
                                                     "power": 2.0,
@@ -1866,6 +1869,7 @@
                                     "data": {
                                         "atkInfos": [
                                             {
+                                                "addBreakOnParry": 2.0,
                                                 "damage": 3.0,
                                                 "hitSE": {
                                                     "loop": false,
@@ -1885,6 +1889,7 @@
                                                 "level": 1
                                             },
                                             {
+                                                "addBreakOnParry": 2.0,
                                                 "camShake": {
                                                     "fadeOut": true,
                                                     "power": 2.5,
@@ -2025,6 +2030,7 @@
                                     "data": {
                                         "atkInfos": [
                                             {
+                                                "addBreakOnParry": 2.0,
                                                 "camShake": {
                                                     "fadeOut": true,
                                                     "power": 2.0,
@@ -2055,6 +2061,7 @@
                                                 "level": 2
                                             },
                                             {
+                                                "addBreakOnParry": 2.0,
                                                 "camShake": {
                                                     "fadeOut": true,
                                                     "power": 2.0,
@@ -2139,6 +2146,7 @@
                                     "data": {
                                         "atkInfos": [
                                             {
+                                                "addBreakOnParry": 2.0,
                                                 "camShake": {
                                                     "fadeOut": true,
                                                     "power": 2.5,
@@ -2883,60 +2891,6 @@
                         1.0,
                         1.0,
                         1.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "isShadow": true,
-                        "materials": [
-                            "M_Rock1"
-                        ],
-                        "meshName": "desertRock11.fbx",
-                        "name": "MeshRenderer",
-                        "priority": 0
-                    },
-                    {
-                        "color": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "ditherOffset": 3.0,
-                        "ditherPower": 0.4000000059604645,
-                        "enable": true,
-                        "name": "OutLineRenderer",
-                        "priority": 0,
-                        "scale": 0.07000000029802322
-                    }
-                ],
-                "layer": 0,
-                "name": "Rock14",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        -25.5,
-                        1.2999999523162842,
-                        17.399999618530273
-                    ],
-                    "rotation": [
-                        -0.08036001771688461,
-                        0.6103947162628174,
-                        -0.10285607725381851,
-                        0.7812689542770386
-                    ],
-                    "scale": [
-                        8.0,
-                        6.699999809265137,
-                        3.6000001430511475
                     ]
                 }
             }
@@ -4000,6 +3954,60 @@
                         1.0,
                         1.0,
                         1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "isShadow": true,
+                        "materials": [
+                            "M_Rock1"
+                        ],
+                        "meshName": "desertRock11.fbx",
+                        "name": "MeshRenderer",
+                        "priority": 0
+                    },
+                    {
+                        "color": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "ditherOffset": 3.0,
+                        "ditherPower": 0.4000000059604645,
+                        "enable": true,
+                        "name": "OutLineRenderer",
+                        "priority": 0,
+                        "scale": 0.07000000029802322
+                    }
+                ],
+                "layer": 0,
+                "name": "Rock14",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        -25.5,
+                        1.2999999523162842,
+                        17.399999618530273
+                    ],
+                    "rotation": [
+                        -0.08036001771688461,
+                        0.6103947162628174,
+                        -0.10285607725381851,
+                        0.7812689542770386
+                    ],
+                    "scale": [
+                        8.0,
+                        6.699999809265137,
+                        3.6000001430511475
                     ]
                 }
             }

@@ -12,8 +12,7 @@ namespace HashiTaku
 		attackTimeCnt(1)
 	{
 		attackInfos.resize(1);	// UŒ‚î•ñ‚ğÅ’á1ì¬‚µ‚Ä‚¨‚­
-		PlayerAttackInformation atkInfo;
-		attackInfos.push_back(atkInfo);
+		attackInfos[0] = CreateAttackInfo();
 	}
 
 	void PlayerAirAttack::OnStartBehavior()
@@ -53,6 +52,11 @@ namespace HashiTaku
 			ChangeState(PlayerState::Move);
 	}
 
+	std::unique_ptr<PlayerAttackInformation> PlayerAirAttack::CreateAttackInfo()
+	{
+		return std::make_unique<PlayerAttackInformation>(&pActionController->GetPlayer());
+	}
+
 	void PlayerAirAttack::UpdateCombInput()
 	{
 		if (!pActionController->GetCanInput()) return;	// “ü—Íó‚¯•t‚¯‚Ä‚¢‚È‚¢‚È‚ç
@@ -82,7 +86,7 @@ namespace HashiTaku
 	void PlayerAirAttack::UpdateAttackInfo()
 	{
 		// Œ»İ‚ÌUŒ‚‰ñ”–Ú‚Ìî•ñ‚ğ‘—‚é
-		GetPlayer().SetAttackInfo(attackInfos[0]);
+		GetPlayer().SetAttackInfo(*attackInfos[0]);
 	}
 
 	void PlayerAirAttack::ClearVelocityY()
