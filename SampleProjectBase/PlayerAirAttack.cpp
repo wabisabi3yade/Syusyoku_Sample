@@ -11,6 +11,10 @@ namespace HashiTaku
 		nextCombAtkState(PlayerState::None),
 		attackTimeCnt(1)
 	{
+	}
+
+	void PlayerAirAttack::InitState()
+	{
 		attackInfos.resize(1);	// UŒ‚î•ñ‚ğÅ’á1ì¬‚µ‚Ä‚¨‚­
 		attackInfos[0] = CreateAttackInfo();
 	}

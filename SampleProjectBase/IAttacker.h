@@ -16,7 +16,10 @@ namespace HashiTaku
 		virtual const DXSimp::Vector3& GetAttackerWorldPos() const = 0;
 
 		/// @brief 攻撃ヒットさせたときに起こす処理
-		virtual void OnAttacking(const AttackInformation& _atkInfo) = 0;
+		/// @param _atkInfo 攻撃情報
+		/// @param _contactWorldPos 衝突地点（ワールド座標）
+		virtual void OnAttacking(const AttackInformation& _atkInfo, 
+			const DXSimp::Vector3& _contactWorldPos) = 0;
 	};
 
 }

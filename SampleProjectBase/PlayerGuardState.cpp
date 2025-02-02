@@ -71,6 +71,9 @@ namespace HashiTaku
 		// アニメーション
 		GetAnimation()->SetBool(GUARD_PARAMNAME, false);
 
+		// 攻撃をパリィしたことを伝える
+		NotifyParryAccepters();
+
 		// エフェクトを出す
 		CreateParryVfx();
 
@@ -284,6 +287,8 @@ namespace HashiTaku
 		{
 			accepter->OnAcceptParry(acceptParryInfo);
 		}
+
+		parryAccepters.clear();
 	}
 
 	void PlayerGuardState::ImGuiDebug()

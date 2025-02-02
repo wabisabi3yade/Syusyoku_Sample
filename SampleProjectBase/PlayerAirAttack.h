@@ -20,6 +20,9 @@ namespace HashiTaku
 		~PlayerAirAttack() {}
 
 	private:
+		/// @brief ‰Šú‚©ˆ—
+		void InitState() override;
+
 		/// @brief ŠJn
 		void OnStartBehavior() override;
 

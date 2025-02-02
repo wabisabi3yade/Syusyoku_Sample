@@ -154,7 +154,7 @@ namespace HashiTaku
 
 		// カメラ演出を始める
 		if (!pCamMove) return;	// カメラがないなら
-		pCamMove->OnPlayerWin(*_targetTransform);
+		pCamMove->OnPlayerLose();
 	}
 
 	BattleDirection::DirectionState BattleDirection::GetDirectionState() const

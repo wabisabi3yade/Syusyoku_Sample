@@ -12,6 +12,7 @@ namespace HashiTaku
 
 	CP_Boss::CP_Boss() :
 		pAnimation(nullptr),
+		pCameraMove(nullptr),
 		pWeapon(nullptr),
 		pHpBar(nullptr),
 		pBreakBar(nullptr),
@@ -77,12 +78,17 @@ namespace HashiTaku
 		return GetTransform().GetPosition();
 	}
 
+	void CP_Boss::OnAttacking(const AttackInformation& _atkInfo, const DXSimp::Vector3& _contactWorldPos)
+	{
+	}
+
 	void CP_Boss::OnAcceptParry(const AcceptParryInfo& _acceptInfo)
 	{
 		// ブレイクゲージを加算する (パリィされ増えるブレイク値　×　パリィの強度値)
+		// パリィではブレイクしないようにする
 		float addBreakValue = pRecentlyAttackInformation->GetBreakValueOnParry() *
 			_acceptInfo.parryStrengthRate;
-		AddBreakValue(addBreakValue);
+		AddBreakValue(addBreakValue, false);
 
 		// パリィ時によろける攻撃にしているならよろける
 		if (pRecentlyAttackInformation->GetIsStunOnParry())
@@ -215,6 +221,12 @@ namespace HashiTaku
 				pBreakBar->SetCurrentValue(curBreakValue);
 			}
 		}
+
+		// カメラ移動
+		pCameraMove = InSceneSystemManager::GetInstance()->
+			GetMainCamera().
+			GetGameObject().
+			GetComponent<CP_CameraMove>();
 	}
 
 	void CP_Boss::SetCurrentHP(float _setHp)
@@ -226,16 +238,16 @@ namespace HashiTaku
 			pHpBar->SetCurrentValue(GetCurrentHP());
 	}
 
-	void CP_Boss::AddBreakValue(float _add)
+	void CP_Boss::AddBreakValue(float _add, bool _canBreak)
 	{
 		// ブレイク中は加算しない
 		if (isBreaking) return;
 
 		curBreakValue += _add;
-		SetBreakValue(curBreakValue);
+		SetBreakValue(curBreakValue, _canBreak);
 	}
 
-	void CP_Boss::SetBreakValue(float _set)
+	void CP_Boss::SetBreakValue(float _set, bool _canBreak)
 	{
 		// セットする
 		curBreakValue = _set;
@@ -243,7 +255,10 @@ namespace HashiTaku
 		if (curBreakValue >= maxBreakValue)
 		{
 			curBreakValue = maxBreakValue;
-			OnBreak();
+
+			// ブレイクできるならブレイクする
+			if (_canBreak)
+				OnBreak();
 		}
 		else if (curBreakValue <= Mathf::epsilon)	// 0になったら
 		{
@@ -277,6 +292,7 @@ namespace HashiTaku
 		if (pPlayerAtkInfo)
 			AddBreakValue(pPlayerAtkInfo->GetBreakValue());
 
+		// アクション側のダメージ処理
 		pActionController->OnDamage(_attackInfo);
 
 		return true;

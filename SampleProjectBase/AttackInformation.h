@@ -58,7 +58,8 @@ namespace HashiTaku
 		void SetAttackLevel(AttackLevel _atkLevel);
 
 		/// @brief 攻撃者に攻撃が当たったことを通知
-		void NotifyHitAttack();
+		/// @param _contactPos 衝突地点
+		void NotifyHitAttack(const DXSimp::Vector3& _contactPos);
 
 		/// @brief 攻撃者のワールド座標を取得する
 		/// @return 攻撃者のワールド座標

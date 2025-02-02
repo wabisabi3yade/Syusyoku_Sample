@@ -118,6 +118,11 @@ namespace HashiTaku
 		pMoveController->OnPlayerWin(_targetTransform);
 	}
 
+	void CP_CameraMove::OnPlayerLose()
+	{
+		pMoveController->OnPlayerLose();
+	}
+
 	void CP_CameraMove::ImGuiDebug()
 	{
 		ImGuiSetTarget();

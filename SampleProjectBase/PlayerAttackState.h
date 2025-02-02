@@ -47,6 +47,7 @@ namespace HashiTaku
 		void Load(const json& _data) override;
 	protected:
 		// State‹¤’Êˆ—
+		void InitState() override;
 		void OnStartBehavior() override;
 		void UpdateBehavior() override;
 		void OnEndBehavior() override;

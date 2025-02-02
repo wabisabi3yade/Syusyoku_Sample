@@ -87,6 +87,9 @@ namespace HashiTaku
 		/// @param _data ロードするデータ 
 		void Load(const json& _data) override;
 	protected:
+		/// @brief ステートの初期化処理
+		virtual void InitState() {}
+
 		/// @brief 速度をクリアする
 		/// @param _applyY Y軸にも反映させるか
 		void ClearVelocity(bool _applyY = true);

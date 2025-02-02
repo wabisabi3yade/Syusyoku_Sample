@@ -13,6 +13,10 @@ namespace HashiTaku
 		curAttackTime(1),
 		isUseRotateCurve(false)
 	{
+	}
+
+	void BossAttackState::InitState()
+	{
 		// 1‚Â‚Í—pˆÓ‚·‚é
 		attackInfos.push_back(CreateAttackInfo());
 

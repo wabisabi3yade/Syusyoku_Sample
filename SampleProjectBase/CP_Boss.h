@@ -29,6 +29,9 @@ namespace HashiTaku
 		/// @brief 武器オブジェクト
 		CP_Weapon* pWeapon;
 
+		/// @brief カメラ移動
+		CP_CameraMove* pCameraMove;
+
 		/// @brief 体力バー
 		IUISlider* pHpBar;
 
@@ -69,7 +72,8 @@ namespace HashiTaku
 
 		/// @brief ブレイク値をセット
 		/// @param _set セット
-		void SetBreakValue(float _set);
+		/// @param _canBreak 最大値を超えたときにブレイクするようにするか？
+		void SetBreakValue(float _set, bool _canBreak = true);
 
 		/// @brief ブレイクしているか取得
 		/// @return ブレイクしているか？
@@ -90,8 +94,11 @@ namespace HashiTaku
 		/// @return 所有者のワールド座標
 		const DXSimp::Vector3& GetAttackerWorldPos() const override;
 
-		/// @brief 武器による攻撃ヒットさせたときに起こす処理
-		void OnAttacking(const AttackInformation& _atkInfo) override {};
+		/// @brief 攻撃ヒットさせたときに起こす処理
+		/// @param _atkInfo 攻撃情報
+		/// @param _contactWorldPos 衝突地点（ワールド座標）
+		void OnAttacking(const AttackInformation& _atkInfo,
+			const DXSimp::Vector3& _contactWorldPos) override;
 
 		/// @brief パリィされたときの処理
 		/// @param _acceptInfo パリィからの情報
@@ -117,7 +124,8 @@ namespace HashiTaku
 
 		/// @brief ブレイク値を加算する
 		/// @param _add 加算値
-		void AddBreakValue(float _add);
+		/// @param _canBreak 最大値を超えたときにブレイクするようにするか？
+		void AddBreakValue(float _add, bool _canBreak = true);
 
 		/// @brief ブレイクした時の処理
 		void OnBreak();

@@ -8,7 +8,8 @@ namespace HashiTaku
 	// アクションできる左スティックの入力量
 	constexpr float CAN_ACTION_STICKINPUT(0.7f);
 
-	PlayerAction::PlayerAction(CP_Player& _player) :
+	PlayerAction::PlayerAction(CP_Player& _player):
+		pPlayer(&_player),
 		pGroundChecker(nullptr),
 		pBattleManager(nullptr),
 		pTargetAccepter(nullptr),
@@ -27,7 +28,6 @@ namespace HashiTaku
 		prevIsTargeting(false)
 	{
 		InSceneSystemManager* pInsceneSysytem = InSceneSystemManager::GetInstance();
-		pPlayer = &_player;
 		pInput = &pInsceneSysytem->GetInput();
 		pGroundController = std::make_unique<PlayerGroundActionController>(*this, _player);
 		pAirController = std::make_unique<PlayerAirActionController>(*this, _player);

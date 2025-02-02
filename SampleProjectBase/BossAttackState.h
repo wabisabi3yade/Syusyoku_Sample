@@ -30,6 +30,9 @@ namespace HashiTaku
 		BossAttackState();
 		virtual ~BossAttackState() {}
 
+		/// @brief ステートの初期化
+		void InitState() override;
+
 		/// @brief 開始
 		void OnStartBehavior() override;
 

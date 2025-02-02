@@ -1,6 +1,6 @@
 #pragma once
 #include "Component.h"
-#include "CalcPerlinShakeVector.h"
+#include "PerlinShake.h"
 
 namespace HashiTaku
 {

@@ -18,9 +18,9 @@ namespace HashiTaku
 	CP_Player::CP_Player() :
 		pAnimation(nullptr),
 		pWeapon(nullptr),
-		pCameraMove(nullptr),
 		pHpSlider(nullptr),
 		pAttackCollisionFlag(nullptr),
+		pCameraMove(nullptr),
 		pStylishUI(nullptr),
 		hitStopBeforeAnimSpeed(0.0f),
 		stylishPointRatioFromAtkDmg(10.0f),
@@ -59,10 +59,33 @@ namespace HashiTaku
 		pAction = std::make_unique<PlayerAction>(*this);
 	}
 
-	void CP_Player::OnAttacking(const AttackInformation& _atkInfo)
+	void CP_Player::OnAttacking(const AttackInformation& _atkInfo,
+		const DXSimp::Vector3& _contactWorldPos)
 	{
 		// ダメージ値に応じたスタイリッシュポイントを加算
 		AddStylishPoint(_atkInfo.GetDamageValue() * stylishPointRatioFromAtkDmg);
+
+		// パッド振動
+		InSceneSystemManager::GetInstance()->GetInput().
+			BeginVibration(_atkInfo.GetPadShakePower(), _atkInfo.GetPadShakeTime());
+
+		// ヒットストップ
+		if (CP_HitStopManager* pHitStop = CP_HitStopManager::GetInstance())
+		{
+			pHitStop->HitStopBegin(_atkInfo.GetHitStopFlame());
+		}
+
+		// カメラを揺らす
+		if (_atkInfo.GetIsCamShake() && pCameraMove)
+		{
+			pCameraMove->ShakeCamera(_atkInfo.GetCamShakeParam());
+		}
+
+		// エフェクト
+		CreateVfx(_atkInfo.GetHitVfxInfo(), _contactWorldPos);
+
+		// サウンド
+		CreateSoundFX(_atkInfo.GetHitSEParam(), _contactWorldPos);
 	}
 
 	void CP_Player::Awake()
@@ -325,6 +348,15 @@ namespace HashiTaku
 
 		// スタイリッシュポイントを減らす
 		AddStylishPoint(-_attackInfo.GetDamageValue() * stylishPointRatioFromAcceptDmg);
+
+		// ダメージSE
+		CreateSoundFX(_attackInfo.GetHitSEParam(), _contactPos);
+
+		// カメラを揺らす
+		if (pCameraMove)
+		{
+			pCameraMove->ShakeCamera(_attackInfo.GetCamShakeParam());
+		}
 	}
 
 	void CP_Player::OnDeathBehavior()

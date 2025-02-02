@@ -1,6 +1,6 @@
 #pragma once
 #include "CameraFollowMove.h"
-#include "CalcPerlinShakeVector.h"
+#include "PerlinShake.h"
 
 namespace HashiTaku
 {

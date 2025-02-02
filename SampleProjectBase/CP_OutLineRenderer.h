@@ -5,6 +5,7 @@
 
 namespace HashiTaku
 {
+	class CP_MeshRenderer;
 	class Mesh_Group;
 	class IBoneBufferSupplier;
 
@@ -53,6 +54,9 @@ namespace HashiTaku
 
 		/// @brief ボーンのバッファ供給クラス
 		IBoneBufferSupplier* pBoneBuffer;
+
+		/// @brief メッシュ描画
+		CP_MeshRenderer* pMeshRenderer;
 
 		/// @brief 描画するメッシュ
 		Mesh_Group* pRenderMesh;

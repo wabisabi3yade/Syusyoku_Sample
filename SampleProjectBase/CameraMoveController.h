@@ -1,6 +1,6 @@
 #pragma once
 #include "CameraMoveState_Base.h"
-#include "CalcPerlinShakeVector.h"
+#include "PerlinShake.h"
 #include "ITargetAccepter.h"
 
 namespace HashiTaku
@@ -67,6 +67,8 @@ namespace HashiTaku
 		void SetFov(float _setDegree);
 
 		void OnPlayerWin(const Transform& _targetTransform);
+
+		void OnPlayerLose();
 
 		/// @brief ‹–ìŠp‚ğæ“¾(’PˆÊFdeg)
 		/// @return ‹–ìŠp

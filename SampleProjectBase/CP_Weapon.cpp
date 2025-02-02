@@ -131,7 +131,7 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 		if (pAttacker)
 		{
 			// 攻撃を与えた側のコールバック
-			pAttacker->OnAttacking(*pAtkInfomation);
+			pAttacker->OnAttacking(*pAtkInfomation, _contactPos);
 
 			// 所有オブジェクトの座標を取得する
 			haveObjPos = pAttacker->GetAttackerWorldPos();

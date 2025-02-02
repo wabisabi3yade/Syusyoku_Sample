@@ -75,6 +75,9 @@ namespace HashiTaku
 		json Save() override;
 		void Load(const json& _data) override;
 	private:
+		/// @brief ‰Šú‰»ˆ—
+		void InitState() override;
+
 		/// @brief ŠJn
 		void OnStartBehavior() override;
 

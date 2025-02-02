@@ -35,6 +35,9 @@ namespace HashiTaku
 		pActionController = &_actController;
 		cancelType = _cancelType;
 		statePriority = _priority;
+
+		// ステートの初期化
+		InitState();
 	}
 
 	void PlayerActState_Base::Update()

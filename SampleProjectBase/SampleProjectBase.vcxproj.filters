@@ -1703,7 +1703,7 @@
     <ClCompile Include="PerlinShakeParameter.cpp">
       <Filter>ソース ファイル\InGame\PerlinShake\Parameter</Filter>
     </ClCompile>
-    <ClCompile Include="CalcPerlinShakeVector.cpp">
+    <ClCompile Include="PerlinShake.cpp">
       <Filter>ソース ファイル\InGame\PerlinShake</Filter>
     </ClCompile>
     <ClCompile Include="ANE_CreateVfx.cpp">
@@ -1757,14 +1757,8 @@
     <ClCompile Include="PS_Ground.cpp">
       <Filter>ソース ファイル\Graphics\Shader\Pixel\Ground</Filter>
     </ClCompile>
-    <ClCompile Include="IParryAccepter.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="BossAttackInformation.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="IAttacker_AcceptParry.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2545,7 +2539,7 @@
     <ClInclude Include="PerlinShakeParameter.h">
       <Filter>ソース ファイル\InGame\PerlinShake\Parameter</Filter>
     </ClInclude>
-    <ClInclude Include="CalcPerlinShakeVector.h">
+    <ClInclude Include="PerlinShake.h">
       <Filter>ソース ファイル\InGame\PerlinShake</Filter>
     </ClInclude>
     <ClInclude Include="ANE_CreateVfx.h">
@@ -2612,13 +2606,13 @@
       <Filter>ソース ファイル\Component\InGame\Weapon\IAttacker</Filter>
     </ClInclude>
     <ClInclude Include="IParryAccepter.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="BossAttackInformation.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Guard\IParryAccepter</Filter>
     </ClInclude>
     <ClInclude Include="IAttacker_AcceptParry.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Component\InGame\Weapon\IAttacker\IAttacker_AcceptParry</Filter>
+    </ClInclude>
+    <ClInclude Include="BossAttackInformation.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

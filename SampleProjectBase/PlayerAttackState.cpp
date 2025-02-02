@@ -18,7 +18,10 @@ namespace HashiTaku
 		attackTimeCnt(1),
 		isMoveForward(false)
 	{
+	}
 
+	void PlayerAttackState::InitState()
+	{
 		attackInfos.resize(1);	// UŒ‚î•ñ‚ğÅ’á1ì¬‚µ‚Ä‚¨‚­
 		attackInfos[0] = CreateAttackInfo();
 
@@ -141,8 +144,14 @@ namespace HashiTaku
 
 	void PlayerAttackState::OnChangeAttackTimes()
 	{
-		// UŒ‚î•ñ‚ğXV
+		// UŒ‚‰ñ”•ª‚Ìî•ñ‚ğ—pˆÓ
+		u_int prevAttackTimes = static_cast<u_int>(attackInfos.size());
 		attackInfos.resize(attackTimeCnt);
+
+		for (; prevAttackTimes < attackTimeCnt; prevAttackTimes++)
+		{
+			attackInfos[prevAttackTimes] = CreateAttackInfo();
+		}
 	}
 
 	PlayerAttackInformation* PlayerAttackState::GetPlayerAtkInfo(u_int _atkIdx)

@@ -766,14 +766,14 @@
                                                     "break": 15.0,
                                                     "camShake": {
                                                         "fadeOut": true,
-                                                        "power": 1.0,
+                                                        "power": 1.5,
                                                         "shakeVec": [
                                                             1.0,
-                                                            0.0,
+                                                            0.5,
                                                             0.0
                                                         ],
-                                                        "speed": 0.30000001192092896,
-                                                        "time": 0.10000000149011612
+                                                        "speed": 0.6000000238418579,
+                                                        "time": 0.4000000059604645
                                                     },
                                                     "damage": 5.0,
                                                     "hitSE": {
@@ -798,14 +798,14 @@
                                                     "break": 18.0,
                                                     "camShake": {
                                                         "fadeOut": true,
-                                                        "power": 1.399999976158142,
+                                                        "power": 2.0,
                                                         "shakeVec": [
                                                             1.0,
-                                                            0.0,
-                                                            0.0
+                                                            0.5,
+                                                            0.5
                                                         ],
-                                                        "speed": 0.30000001192092896,
-                                                        "time": 0.10000000149011612
+                                                        "speed": 0.800000011920929,
+                                                        "time": 0.6000000238418579
                                                     },
                                                     "damage": 6.199999809265137,
                                                     "hitSE": {
@@ -1062,6 +1062,7 @@
                                                     "volume": 0.5
                                                 }
                                             ],
+                                            "parryStrengthRate": 1.0,
                                             "vfxInfo": {
                                                 "applyColor": false,
                                                 "lookCam": false,
@@ -1289,7 +1290,7 @@
                                 "useHermite": true
                             },
                             "start": "GameStartText",
-                            "uiAnim": false,
+                            "uiAnim": true,
                             "win": "WinText",
                             "winShake": {
                                 "fadeOut": true,
@@ -1323,6 +1324,7 @@
                         "sound": {
                             "loop": true,
                             "pitch": 0.0,
+                            "soundName": "battle.wav",
                             "useListener": false,
                             "volume": 0.10000000149011612
                         }
@@ -1615,7 +1617,7 @@
                                     "data": {
                                         "atkInfos": [
                                             {
-                                                "addBreakOnParry": 5.099999904632568,
+                                                "addBreakOnParry": 2.5,
                                                 "damage": 1.0,
                                                 "hitSE": {
                                                     "loop": false,
@@ -1632,10 +1634,11 @@
                                                     "startFrame": 0
                                                 },
                                                 "isCamShake": false,
+                                                "isStunOnParry": false,
                                                 "level": 0
                                             },
                                             {
-                                                "addBreakOnParry": 2.0,
+                                                "addBreakOnParry": 2.5,
                                                 "damage": 2.0999999046325684,
                                                 "hitSE": {
                                                     "loop": false,
@@ -1652,10 +1655,11 @@
                                                     "startFrame": 0
                                                 },
                                                 "isCamShake": false,
+                                                "isStunOnParry": false,
                                                 "level": 0
                                             },
                                             {
-                                                "addBreakOnParry": 2.0,
+                                                "addBreakOnParry": 5.0,
                                                 "camShake": {
                                                     "fadeOut": true,
                                                     "power": 2.0,
@@ -1683,6 +1687,7 @@
                                                     "startFrame": 0
                                                 },
                                                 "isCamShake": true,
+                                                "isStunOnParry": true,
                                                 "level": 2
                                             }
                                         ],
@@ -1869,7 +1874,7 @@
                                     "data": {
                                         "atkInfos": [
                                             {
-                                                "addBreakOnParry": 2.0,
+                                                "addBreakOnParry": 3.0,
                                                 "damage": 3.0,
                                                 "hitSE": {
                                                     "loop": false,
@@ -1886,10 +1891,11 @@
                                                     "startFrame": 0
                                                 },
                                                 "isCamShake": false,
+                                                "isStunOnParry": false,
                                                 "level": 1
                                             },
                                             {
-                                                "addBreakOnParry": 2.0,
+                                                "addBreakOnParry": 5.0,
                                                 "camShake": {
                                                     "fadeOut": true,
                                                     "power": 2.5,
@@ -1917,6 +1923,7 @@
                                                     "startFrame": 0
                                                 },
                                                 "isCamShake": true,
+                                                "isStunOnParry": true,
                                                 "level": 2
                                             }
                                         ],
@@ -2030,7 +2037,7 @@
                                     "data": {
                                         "atkInfos": [
                                             {
-                                                "addBreakOnParry": 2.0,
+                                                "addBreakOnParry": 4.0,
                                                 "camShake": {
                                                     "fadeOut": true,
                                                     "power": 2.0,
@@ -2058,10 +2065,11 @@
                                                     "startFrame": 0
                                                 },
                                                 "isCamShake": true,
+                                                "isStunOnParry": false,
                                                 "level": 2
                                             },
                                             {
-                                                "addBreakOnParry": 2.0,
+                                                "addBreakOnParry": 6.0,
                                                 "camShake": {
                                                     "fadeOut": true,
                                                     "power": 2.0,
@@ -2089,6 +2097,7 @@
                                                     "startFrame": 0
                                                 },
                                                 "isCamShake": true,
+                                                "isStunOnParry": true,
                                                 "level": 2
                                             }
                                         ],
@@ -2146,7 +2155,7 @@
                                     "data": {
                                         "atkInfos": [
                                             {
-                                                "addBreakOnParry": 2.0,
+                                                "addBreakOnParry": 9.5,
                                                 "camShake": {
                                                     "fadeOut": true,
                                                     "power": 2.5,
@@ -2174,6 +2183,7 @@
                                                     "startFrame": 0
                                                 },
                                                 "isCamShake": true,
+                                                "isStunOnParry": true,
                                                 "level": 3
                                             }
                                         ],
@@ -2299,6 +2309,52 @@
                         },
                         "breakBarName": "Enemy_BreakGageBar",
                         "enable": true,
+                        "hitShakeParams": [
+                            {
+                                "fadeOut": false,
+                                "power": 1.0,
+                                "shakeVec": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "speed": 1.0,
+                                "time": 2.0
+                            },
+                            {
+                                "fadeOut": false,
+                                "power": 2.0,
+                                "shakeVec": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "speed": 1.0,
+                                "time": 2.0
+                            },
+                            {
+                                "fadeOut": false,
+                                "power": 2.0,
+                                "shakeVec": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "speed": 1.0,
+                                "time": 5.0
+                            },
+                            {
+                                "fadeOut": false,
+                                "power": 2.0,
+                                "shakeVec": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "speed": 1.0,
+                                "time": 5.0
+                            }
+                        ],
                         "hpBarName": "Enemy_GageBar",
                         "maxHp": 200.0,
                         "name": "Boss",

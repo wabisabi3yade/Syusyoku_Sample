@@ -20,18 +20,6 @@ namespace HashiTaku
 		chargeVfxHandle(NONE_VFX_HANDLE),
 		isCharging(false)
 	{
-		chargeAtkInfos.resize(1);	// ç≈í·1ópà”
-
-		// èâä˙âª
-		u_int levelCnt = static_cast<u_int>(ChargeLevel::MaxNum);
-		for (u_int c_i = 0; c_i < levelCnt; c_i++)
-		{
-			// çUåÇèÓïÒÇèâä˙âª
-			chargeAtkInfos[0][c_i] = CreateAttackInfo();
-
-			chargeTimes[c_i] = 1.0f;
-		}
-
 	}
 
 	json PlayerGroundChargeAttack::Save()
@@ -105,6 +93,21 @@ namespace HashiTaku
 				if (static_cast<int>(chargeAtkInfos.size()) <= a_i) break;
 				chargeAtkInfos[a_i][l_i]->Load(attackInfoData[a_i]);
 			}
+		}
+	}
+
+	void PlayerGroundChargeAttack::InitState()
+	{
+		chargeAtkInfos.resize(1);	// ç≈í·1ópà”
+
+		// èâä˙âª
+		u_int levelCnt = static_cast<u_int>(ChargeLevel::MaxNum);
+		for (u_int c_i = 0; c_i < levelCnt; c_i++)
+		{
+			// çUåÇèÓïÒÇèâä˙âª
+			chargeAtkInfos[0][c_i] = CreateAttackInfo();
+
+			chargeTimes[c_i] = 1.0f;
 		}
 	}
 

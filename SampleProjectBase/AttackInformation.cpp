@@ -42,9 +42,9 @@ namespace HashiTaku
 		atkLevel = _atkLevel;
 	}
 
-	void AttackInformation::NotifyHitAttack()
+	void AttackInformation::NotifyHitAttack(const DXSimp::Vector3& _contactPos)
 	{
-		pAttacker->OnAttacking(*this);
+		pAttacker->OnAttacking(*this, _contactPos);
 	}
 
 	DXSimp::Vector3 AttackInformation::GetAttackerWorldPos() const
