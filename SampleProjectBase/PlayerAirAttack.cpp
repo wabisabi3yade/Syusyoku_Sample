@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "PlayerAirAttack.h"
+#include "PlayerAirActionController.h"
 #include "CP_Player.h"
 
 namespace HashiTaku

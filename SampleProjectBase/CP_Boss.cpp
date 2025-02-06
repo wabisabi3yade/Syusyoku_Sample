@@ -132,7 +132,7 @@ namespace HashiTaku
 
 		CP_Enemy::Update();
 
-		pActionController->UpdateCall();
+		pActionController->Update();
 
 		// ブレイク更新
 		BreakUpdate();

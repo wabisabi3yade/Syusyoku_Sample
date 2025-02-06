@@ -28,8 +28,8 @@
 // [SECTION] Enums and Types
 // [SECTION] Callbacks
 // [SECTION] Contexts
-// [SECTION] Begin/End Plot
-// [SECTION] Begin/End Subplot
+// [SECTION] Init/End Plot
+// [SECTION] Init/End Subplot
 // [SECTION] Setup
 // [SECTION] SetNext
 // [SECTION] Plot Items
@@ -613,7 +613,7 @@ IMPLOT_API void SetCurrentContext(ImPlotContext* ctx);
 IMPLOT_API void SetImGuiContext(ImGuiContext* ctx);
 
 //-----------------------------------------------------------------------------
-// [SECTION] Begin/End Plot
+// [SECTION] Init/End Plot
 //-----------------------------------------------------------------------------
 
 // Starts a 2D plotting context. If this function returns true, EndPlot() MUST
@@ -639,7 +639,7 @@ IMPLOT_API bool BeginPlot(const char* title_id, const ImVec2& size=ImVec2(-1,0),
 IMPLOT_API void EndPlot();
 
 //-----------------------------------------------------------------------------
-// [SECTION] Begin/End Subplots
+// [SECTION] Init/End Subplots
 //-----------------------------------------------------------------------------
 
 // Starts a subdivided plotting context. If the function returns true,
@@ -806,7 +806,7 @@ IMPLOT_API void SetNextAxesToFit();
 //-----------------------------------------------------------------------------
 
 // The main plotting API is provied below. Call these functions between
-// Begin/EndPlot and after any Setup API calls. Each plots data on the current
+// Init/EndPlot and after any Setup API calls. Each plots data on the current
 // x and y axes, which can be changed with `SetAxis/Axes`.
 //
 // The templated functions are explicitly instantiated in implot_items.cpp.
@@ -999,8 +999,8 @@ IMPLOT_API void CancelPlotSelection();
 // Use ImPlotCond_Always if you need to forcefully set this every frame.
 IMPLOT_API void HideNextItem(bool hidden = true, ImPlotCond cond = ImPlotCond_Once);
 
-// Use the following around calls to Begin/EndPlot to align l/r/t/b padding.
-// Consider using Begin/EndSubplots first. They are more feature rich and
+// Use the following around calls to Init/EndPlot to align l/r/t/b padding.
+// Consider using Init/EndSubplots first. They are more feature rich and
 // accomplish the same behaviour by default. The functions below offer lower
 // level control of plot alignment.
 
@@ -1014,7 +1014,7 @@ IMPLOT_API void EndAlignedPlots();
 // [SECTION] Legend Utils
 //-----------------------------------------------------------------------------
 
-// Begin a popup for a legend entry.
+// Init a popup for a legend entry.
 IMPLOT_API bool BeginLegendPopup(const char* label_id, ImGuiMouseButton mouse_button=1);
 // End a popup for a legend entry.
 IMPLOT_API void EndLegendPopup();
@@ -1169,7 +1169,7 @@ IMPLOT_API void PushColormap(const char* name);
 IMPLOT_API void PopColormap(int count = 1);
 
 // Returns the next color from the current colormap and advances the colormap for the current plot.
-// Can also be used with no return value to skip colors if desired. You need to call this between Begin/EndPlot!
+// Can also be used with no return value to skip colors if desired. You need to call this between Init/EndPlot!
 IMPLOT_API ImVec4 NextColormapColor();
 
 // Colormap utils. If cmap = IMPLOT_AUTO (default), the current colormap is assumed.
@@ -1219,11 +1219,11 @@ IMPLOT_API void ItemIcon(const ImVec4& col);
 IMPLOT_API void ItemIcon(ImU32 col);
 IMPLOT_API void ColormapIcon(ImPlotColormap cmap);
 
-// Get the plot draw list for custom rendering to the current plot area. Call between Begin/EndPlot.
+// Get the plot draw list for custom rendering to the current plot area. Call between Init/EndPlot.
 IMPLOT_API ImDrawList* GetPlotDrawList();
-// Push clip rect for rendering to current plot area. The rect can be expanded or contracted by #expand pixels. Call between Begin/EndPlot.
+// Push clip rect for rendering to current plot area. The rect can be expanded or contracted by #expand pixels. Call between Init/EndPlot.
 IMPLOT_API void PushPlotClipRect(float expand=0);
-// Pop plot clip rect. Call between Begin/EndPlot.
+// Pop plot clip rect. Call between Init/EndPlot.
 IMPLOT_API void PopPlotClipRect();
 
 // Shows ImPlot style selector dropdown menu.

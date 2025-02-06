@@ -274,7 +274,6 @@
     <ClCompile Include="AnimLayerdNodePlayer.cpp" />
     <ClCompile Include="MaterialCreater.cpp" />
     <ClCompile Include="AnimNodePlayer_Base.cpp" />
-    <ClCompile Include="MyClass2.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
     <ClCompile Include="PerlinShake.cpp" />
     <ClCompile Include="PlayerAction.cpp" />
@@ -346,7 +345,6 @@
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MathUseful.cpp" />
     <ClCompile Include="Mesh_Group.cpp" />
-    <ClCompile Include="MyClass.cpp" />
     <ClCompile Include="AnimationChannel.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="PlaneMesh.cpp" />
@@ -543,7 +541,6 @@
     <ClInclude Include="AnimLayerdNodePlayer.h" />
     <ClInclude Include="MaterialCreater.h" />
     <ClInclude Include="AnimNodePlayer_Base.h" />
-    <ClInclude Include="MyClass2.h" />
     <ClInclude Include="NullTransform.h" />
     <ClInclude Include="PerlinNoise.h" />
     <ClInclude Include="PerlinShake.h" />
@@ -623,7 +620,6 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="MathUseful.h" />
     <ClInclude Include="Mesh_Group.h" />
-    <ClInclude Include="MyClass.h" />
     <ClInclude Include="AnimationChannel.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="PlaneMesh.h" />

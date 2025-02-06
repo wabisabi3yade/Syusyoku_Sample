@@ -2,12 +2,28 @@
 
 namespace HashiTaku
 {
-	class StateNode_Base;
+	/// @brief ステートマシンで使用するノード
+	class StateNode_Base
+	{
+
+	public:
+		StateNode_Base() {}
+		virtual ~StateNode_Base() {}
+
+		/// @brief 状態切り替え開始処理
+		virtual void OnStart() {}
+
+		/// @brief 更新処理
+		virtual void Update() {}
+
+		/// @brief 状態切り替え終了処理
+		virtual void OnEnd() {}
+	};
 
 	/// @brief ステートマシン基底
 	/// @tparam T ノードを登録するときのキーの型
 	template<class T>
-	class StateMachine_Base
+	class StateMachine_Base : public StateNode_Base
 	{
 		/// @brief ステートマシン名
 		std::string stateMachineName;
@@ -34,11 +50,15 @@ namespace HashiTaku
 		/// @brief このフレームで遷移は行うか？
 		bool isChangeCurFlame;
 	public:
+		StateMachine_Base();
+
+		/// @brief コンストラクタ
+		/// @param _stateMachineName ステートマシンの名称(デバッグ用)
 		StateMachine_Base(const std::string& _stateMachineName);
 		virtual ~StateMachine_Base() {}
 
-		/// @brief 更新関数呼び出し
-		void UpdateCall();
+		/// @brief 更新処理
+		void Update() override;
 
 		/// @brief ノードを追加する
 		/// @param _registKey 追加するキー
@@ -53,7 +73,7 @@ namespace HashiTaku
 		/// @param _changeKey 変更するノードのキー
 		/// @param _isForceChange 強制的に変更する
 		/// @return 遷移成功したか？
-		bool ChangeNode(const T& _changeKey, bool _isForceChange = false);
+		virtual bool ChangeNode(const T& _changeKey, bool _isForceChange = false);
 
 		/// @brief デフォルトノードを設定する
 		/// @param _defaultKey デフォルトノードを指定するキー
@@ -68,11 +88,7 @@ namespace HashiTaku
 		StateNode_Base* GetNode(const T& _key);
 
 	protected:
-		/// @brief 開始処理
-		void Begin();
-
-		/// @brief 更新処理
-		virtual void Update();
+		void Init();
 
 		/// @brief 前回のステートを取得する
 		/// @param _outState 前回のステートを受け取る変数
@@ -82,24 +98,6 @@ namespace HashiTaku
 		/// @param _changeKey 遷移先キー
 		/// @return 変更できるか？
 		bool CanChengeNode(const T& _changeKey);
-	};
-
-	/// @brief ステートマシンで使用するノード
-	class StateNode_Base
-	{
-
-	public:
-		StateNode_Base() {}
-		virtual ~StateNode_Base() {}
-
-		/// @brief 状態切り替え開始処理
-		virtual void OnStart() {}
-
-		/// @brief 更新処理
-		virtual void Update() {}
-
-		/// @brief 状態切り替え終了処理
-		virtual void OnEnd() {}
 	};
 
 	/// @brief アニメーションをするステートマシンで使用するノード
@@ -116,19 +114,29 @@ namespace HashiTaku
 	};
 
 	template<class T>
-	inline StateMachine_Base<T>::StateMachine_Base(const std::string& _stateMachineName)
-		: stateMachineName(_stateMachineName), pCurrentNode(nullptr), pDefaultNode(nullptr)
+	inline StateMachine_Base<T>::StateMachine_Base() :
+		stateMachineName("Noname StateMachine"),
+		pCurrentNode(nullptr), 
+		pDefaultNode(nullptr)
 	{
 	}
 
 	template<class T>
-	inline void StateMachine_Base<T>::UpdateCall()
+	inline StateMachine_Base<T>::StateMachine_Base(const std::string& _stateMachineName): 
+		stateMachineName(_stateMachineName), 
+		pCurrentNode(nullptr), 
+		pDefaultNode(nullptr)
+	{
+	}
+
+	template<class T>
+	inline void StateMachine_Base<T>::Update()
 	{
 		// 外部からのコールバックで変更しているかもなのでリセット
 		isChangeCurFlame = false;
 
 		// 更新
-		Update();
+		pCurrentNode->Update();
 
 		// リセット
 		isChangeCurFlame = false;
@@ -201,7 +209,7 @@ namespace HashiTaku
 	}
 
 	template<class T>
-	inline void StateMachine_Base<T>::Begin()
+	inline void StateMachine_Base<T>::Init()
 	{
 		pCurrentNode = pDefaultNode;
 
@@ -215,12 +223,6 @@ namespace HashiTaku
 		if (isChangeCurFlame) return false;
 
 		return true;
-	}
-
-	template<class T>
-	inline void StateMachine_Base<T>::Update()
-	{
-		pCurrentNode->Update();
 	}
 
 	template<class T>

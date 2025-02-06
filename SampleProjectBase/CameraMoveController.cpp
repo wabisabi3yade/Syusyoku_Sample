@@ -26,13 +26,13 @@ namespace HashiTaku
 		SetDefaultNode(Follow);
 	}
 
-	void CameraMoveController::Begin(CP_Camera& _camera)
+	void CameraMoveController::Init(CP_Camera& _camera)
 	{
 		pCamera = &_camera;
 
 		InitCameraPos();
 
-		StateMachine_Base::Begin();
+		StateMachine_Base::Init();
 	}
 
 	void CameraMoveController::Update()

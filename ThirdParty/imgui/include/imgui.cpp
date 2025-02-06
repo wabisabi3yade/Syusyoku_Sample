@@ -129,7 +129,7 @@ CODE
  - MOUSE CONTROLS
    - Mouse wheel:                   Scroll vertically.
    - SHIFT+Mouse wheel:             Scroll horizontally.
-   - Click [X]:                     Close a window, available when 'bool* p_open' is passed to ImGui::Begin().
+   - Click [X]:                     Close a window, available when 'bool* p_open' is passed to ImGui::Init().
    - Click ^, Double-Click title:   Collapse window.
    - Drag on corner/border:         Resize window (double-click to auto fit window to its contents).
    - Drag on any empty space:       Follow window (unless io.ConfigWindowsMoveFromTitleBarOnly = true).
@@ -346,7 +346,7 @@ CODE
 
         // Most of your application code here
         ImGui::Text("Hello, world!");
-        MyGameUpdate(); // may use any Dear ImGui functions, e.g. ImGui::Begin("My window"); ImGui::Text("Hello, world!"); ImGui::End();
+        MyGameUpdate(); // may use any Dear ImGui functions, e.g. ImGui::Init("My window"); ImGui::Text("Hello, world!"); ImGui::End();
         MyGameRender(); // may use any Dear ImGui functions as well!
 
         // Render dear imgui, swap buffers
@@ -498,7 +498,7 @@ CODE
  - 2023/05/22 (1.89.6) - listbox: commented out obsolete/redirecting functions that were marked obsolete more than two years ago:
                            - ListBoxHeader()  -> use BeginListBox() (note how two variants of ListBoxHeader() existed. Check commented versions in imgui.h for reference)
                            - ListBoxFooter()  -> use EndListBox()
- - 2023/05/15 (1.89.6) - clipper: commented out obsolete redirection constructor 'ImGuiListClipper(int items_count, float items_height = -1.0f)' that was marked obsolete in 1.79. Use default constructor + clipper.Begin().
+ - 2023/05/15 (1.89.6) - clipper: commented out obsolete redirection constructor 'ImGuiListClipper(int items_count, float items_height = -1.0f)' that was marked obsolete in 1.79. Use default constructor + clipper.Init().
  - 2023/05/15 (1.89.6) - clipper: renamed ImGuiListClipper::ForceDisplayRangeByIndices() to ImGuiListClipper::IncludeRangeByIndices().
  - 2023/03/14 (1.89.4) - commented out redirecting enums/functions names that were marked obsolete two years ago:
                            - ImGuiSliderFlags_ClampOnInput        -> use ImGuiSliderFlags_AlwaysClamp
@@ -537,11 +537,11 @@ CODE
  - 2022/09/02 (1.89) - obsoleted using SetCursorPos()/SetCursorScreenPos() to extend parent window/cell boundaries.
                        this relates to when moving the cursor position beyond current boundaries WITHOUT submitting an item.
                          - previously this would make the window content size ~200x200:
-                              Begin(...) + SetCursorScreenPos(GetCursorScreenPos() + ImVec2(200,200)) + End();
+                              Init(...) + SetCursorScreenPos(GetCursorScreenPos() + ImVec2(200,200)) + End();
                          - instead, please submit an item:
-                              Begin(...) + SetCursorScreenPos(GetCursorScreenPos() + ImVec2(200,200)) + Dummy(ImVec2(0,0)) + End();
+                              Init(...) + SetCursorScreenPos(GetCursorScreenPos() + ImVec2(200,200)) + Dummy(ImVec2(0,0)) + End();
                          - alternative:
-                              Begin(...) + Dummy(ImVec2(200,200)) + End();
+                              Init(...) + Dummy(ImVec2(200,200)) + End();
                          - content size is now only extended when submitting an item!
                          - with '#define IMGUI_DISABLE_OBSOLETE_FUNCTIONS' this will now be detected and assert.
                          - without '#define IMGUI_DISABLE_OBSOLETE_FUNCTIONS' this will silently be fixed until we obsolete it.
@@ -640,7 +640,7 @@ CODE
                       - removed redirecting functions names that were marked obsolete in 1.61 (May 2018):
                         - InputFloat (... int decimal_precision ...) -> use InputFloat (... const char* format ...) with format = "%.Xf" where X is your value for decimal_precision.
                         - same for InputFloat2()/InputFloat3()/InputFloat4() variants taking a `int decimal_precision` parameter.
- - 2020/10/05 (1.79) - removed ImGuiListClipper: Renamed constructor parameters which created an ambiguous alternative to using the ImGuiListClipper::Begin() function, with misleading edge cases (note: imgui_memory_editor <0.40 from imgui_club/ used this old clipper API. Update your copy if needed).
+ - 2020/10/05 (1.79) - removed ImGuiListClipper: Renamed constructor parameters which created an ambiguous alternative to using the ImGuiListClipper::Init() function, with misleading edge cases (note: imgui_memory_editor <0.40 from imgui_club/ used this old clipper API. Update your copy if needed).
  - 2020/09/25 (1.79) - renamed ImGuiSliderFlags_ClampOnInput to ImGuiSliderFlags_AlwaysClamp. Kept redirection enum (will obsolete sooner because previous name was added recently).
  - 2020/09/25 (1.79) - renamed style.TabMinWidthForUnselectedCloseButton to style.TabMinWidthForCloseButton.
  - 2020/09/21 (1.79) - renamed OpenPopupContextItem() back to OpenPopupOnItemClick(), reverting the change from 1.77. For varieties of reason this is more self-explanatory.
@@ -679,7 +679,7 @@ CODE
  - 2019/11/19 (1.74) - renamed IMGUI_DISABLE_FORMAT_STRING_FUNCTIONS to IMGUI_DISABLE_DEFAULT_FORMAT_FUNCTIONS for consistency.
  - 2019/11/19 (1.74) - renamed IMGUI_DISABLE_MATH_FUNCTIONS to IMGUI_DISABLE_DEFAULT_MATH_FUNCTIONS for consistency.
  - 2019/10/22 (1.74) - removed redirecting functions/enums that were marked obsolete in 1.52 (October 2017):
-                       - Begin() [old 5 args version]        -> use Begin() [3 args], use SetNextWindowSize() SetNextWindowBgAlpha() if needed
+                       - Init() [old 5 args version]        -> use Init() [3 args], use SetNextWindowSize() SetNextWindowBgAlpha() if needed
                        - IsRootWindowOrAnyChildHovered()     -> use IsWindowHovered(ImGuiHoveredFlags_RootAndChildWindows)
                        - AlignFirstTextHeightToWidgets()     -> use AlignTextToFramePadding()
                        - SetNextWindowPosCenter()            -> use SetNextWindowPos() with a pivot of (0.5f, 0.5f)
@@ -705,7 +705,7 @@ CODE
  - 2019/02/01 (1.68) - removed io.DisplayVisibleMin/DisplayVisibleMax (which were marked obsolete and removed from viewport/docking branch already).
  - 2019/01/06 (1.67) - renamed io.InputCharacters[], marked internal as was always intended. Please don't access directly, and use AddInputCharacter() instead!
  - 2019/01/06 (1.67) - renamed ImFontAtlas::GlyphRangesBuilder to ImFontGlyphRangesBuilder. Kept redirection typedef (will obsolete).
- - 2018/12/20 (1.67) - made it illegal to call Begin("") with an empty string. This somehow half-worked before but had various undesirable side-effects.
+ - 2018/12/20 (1.67) - made it illegal to call Init("") with an empty string. This somehow half-worked before but had various undesirable side-effects.
  - 2018/12/10 (1.67) - renamed io.ConfigResizeWindowsFromEdges to io.ConfigWindowsResizeFromEdges as we are doing a large pass on configuration flags.
  - 2018/10/12 (1.66) - renamed misc/stl/imgui_stl.* to misc/cpp/imgui_stdlib.* in prevision for other C++ helper files.
  - 2018/09/28 (1.66) - renamed SetScrollHere() to SetScrollHereY(). Kept redirection function (will obsolete).
@@ -762,7 +762,7 @@ CODE
  - 2017/12/12 (1.53) - renamed ImGuiTreeNodeFlags_AllowOverlapMode to ImGuiTreeNodeFlags_AllowItemOverlap. Kept redirection enum (will obsolete).
  - 2017/12/10 (1.53) - removed SetNextWindowContentWidth(), prefer using SetNextWindowContentSize(). Kept redirection function (will obsolete).
  - 2017/11/27 (1.53) - renamed ImGuiTextBuffer::append() helper to appendf(), appendv() to appendfv(). If you copied the 'Log' demo in your code, it uses appendv() so that needs to be renamed.
- - 2017/11/18 (1.53) - Style, Begin: removed ImGuiWindowFlags_ShowBorders window flag. Borders are now fully set up in the ImGuiStyle structure (see e.g. style.FrameBorderSize, style.WindowBorderSize). Use ImGui::ShowStyleEditor() to look them up.
+ - 2017/11/18 (1.53) - Style, Init: removed ImGuiWindowFlags_ShowBorders window flag. Borders are now fully set up in the ImGuiStyle structure (see e.g. style.FrameBorderSize, style.WindowBorderSize). Use ImGui::ShowStyleEditor() to look them up.
                        Please note that the style system will keep evolving (hopefully stabilizing in Q1 2018), and so custom styles will probably subtly break over time. It is recommended you use the StyleColorsClassic(), StyleColorsDark(), StyleColorsLight() functions.
  - 2017/11/18 (1.53) - Style: removed ImGuiCol_ComboBg in favor of combo boxes using ImGuiCol_PopupBg for consistency.
  - 2017/11/18 (1.53) - Style: renamed ImGuiCol_ChildWindowBg to ImGuiCol_ChildBg.
@@ -775,7 +775,7 @@ CODE
                          IsItemHoveredRect()        --> IsItemHovered(ImGuiHoveredFlags_RectOnly)
                          IsMouseHoveringAnyWindow() --> IsWindowHovered(ImGuiHoveredFlags_AnyWindow)
                          IsMouseHoveringWindow()    --> IsWindowHovered(ImGuiHoveredFlags_AllowWhenBlockedByPopup | ImGuiHoveredFlags_AllowWhenBlockedByActiveItem) [weird, old behavior]
- - 2017/10/17 (1.52) - marked the old 5-parameters version of Begin() as obsolete (still available). Use SetNextWindowSize()+Begin() instead!
+ - 2017/10/17 (1.52) - marked the old 5-parameters version of Init() as obsolete (still available). Use SetNextWindowSize()+Init() instead!
  - 2017/10/11 (1.52) - renamed AlignFirstTextHeightToWidgets() to AlignTextToFramePadding(). Kept inline redirection function (will obsolete).
  - 2017/09/26 (1.52) - renamed ImFont::Glyph to ImFontGlyph. Kept redirection typedef (will obsolete).
  - 2017/09/25 (1.52) - removed SetNextWindowPosCenter() because SetNextWindowPos() now has the optional pivot information to do the same and more. Kept redirection function (will obsolete).
@@ -2821,7 +2821,7 @@ void ImGuiTextIndex::append(const char* base, int old_size, int new_size)
 //-----------------------------------------------------------------------------
 
 // FIXME-TABLE: This prevents us from using ImGuiListClipper _inside_ a table cell.
-// The problem we have is that without a Begin/End scheme for rows using the clipper is ambiguous.
+// The problem we have is that without a Init/End scheme for rows using the clipper is ambiguous.
 static bool GetSkipItemForListClipping()
 {
     ImGuiContext& g = *GImGui;
@@ -2950,7 +2950,7 @@ void ImGuiListClipper::End()
 void ImGuiListClipper::IncludeItemsByIndex(int item_begin, int item_end)
 {
     ImGuiListClipperData* data = (ImGuiListClipperData*)TempData;
-    IM_ASSERT(DisplayStart < 0); // Only allowed after Begin() and if there has not been a specified range yet.
+    IM_ASSERT(DisplayStart < 0); // Only allowed after Init() and if there has not been a specified range yet.
     IM_ASSERT(item_begin <= item_end);
     if (item_begin < item_end)
         data->Ranges.push_back(ImGuiListClipperRange::FromIndices(item_begin, item_end));
@@ -4111,7 +4111,7 @@ bool ImGui::IsItemHovered(ImGuiHoveredFlags flags)
         if ((g.LastItemData.InFlags & ImGuiItemFlags_Disabled) && !(flags & ImGuiHoveredFlags_AllowWhenDisabled))
             return false;
 
-        // Special handling for calling after Begin() which represent the title bar or tab.
+        // Special handling for calling after Init() which represent the title bar or tab.
         // When the window is skipped/collapsed (SkipItems==true) that last item will never be overwritten so we need to detect the case.
         if (id == window->MoveId && window->WriteAccessed)
             return false;
@@ -4892,8 +4892,8 @@ void ImGui::NewFrame()
     Begin("Debug##Default");
     IM_ASSERT(g.CurrentWindow->IsFallbackWindow == true);
 
-    // [DEBUG] When io.ConfigDebugBeginReturnValue is set, we make Begin()/BeginChild() return false at different level of the window-stack,
-    // allowing to validate correct Begin/End behavior in user code.
+    // [DEBUG] When io.ConfigDebugBeginReturnValue is set, we make Init()/BeginChild() return false at different level of the window-stack,
+    // allowing to validate correct Init/End behavior in user code.
 #ifndef IMGUI_DISABLE_DEBUG_TOOLS
     if (g.IO.ConfigDebugBeginReturnValueLoop)
         g.DebugBeginReturnValueCullDepth = (g.DebugBeginReturnValueCullDepth == -1) ? 0 : ((g.DebugBeginReturnValueCullDepth + ((g.FrameCount % 4) == 0 ? 1 : 0)) % 10);
@@ -5279,9 +5279,9 @@ ImVec2 ImGui::CalcTextSize(const char* text, const char* text_end, bool hide_tex
 
 // Find window given position, search front-to-back
 // - Typically write output back to g.HoveredWindow and g.HoveredWindowUnderMovingWindow.
-// - FIXME: Note that we have an inconsequential lag here: OuterRectClipped is updated in Begin(), so windows moved programmatically
+// - FIXME: Note that we have an inconsequential lag here: OuterRectClipped is updated in Init(), so windows moved programmatically
 //   with SetWindowPos() and not SetNextWindowPos() will have that rectangle lagging by a frame at the time FindHoveredWindow() is
-//   called, aka before the next Begin(). Moving window isn't affected.
+//   called, aka before the next Init(). Moving window isn't affected.
 // - The 'find_first_and_in_any_viewport = true' mode is only used by TestEngine. It is simpler to maintain here.
 void ImGui::FindHoveredWindowEx(const ImVec2& pos, bool find_first_and_in_any_viewport, ImGuiWindow** out_hovered_window, ImGuiWindow** out_hovered_window_under_moving_window)
 {
@@ -5551,7 +5551,7 @@ bool ImGui::BeginChildEx(const char* name, ImGuiID id, const ImVec2& size_arg, I
     g.NextWindowData.ChildFlags = child_flags;
 
     // Forward size
-    // Important: Begin() has special processing to switch condition to ImGuiCond_FirstUseEver for a given axis when ImGuiChildFlags_ResizeXXX is set.
+    // Important: Init() has special processing to switch condition to ImGuiCond_FirstUseEver for a given axis when ImGuiChildFlags_ResizeXXX is set.
     // (the alternative would to store conditional flags per axis, which is possible but more code)
     const ImVec2 size_avail = GetContentRegionAvail();
     const ImVec2 size_default((child_flags & ImGuiChildFlags_AutoResizeX) ? 0.0f : size_avail.x, (child_flags & ImGuiChildFlags_AutoResizeY) ? 0.0f : size_avail.y);
@@ -5575,7 +5575,7 @@ bool ImGui::BeginChildEx(const char* name, ImGuiID id, const ImVec2& size_arg, I
     if ((child_flags & ImGuiChildFlags_Border) == 0)
         g.Style.ChildBorderSize = 0.0f;
 
-    // Begin into window
+    // Init into window
     const bool ret = Begin(temp_window_name, NULL, window_flags);
 
     // Restore style
@@ -6359,7 +6359,7 @@ void ImGui::RenderWindowTitleBarContents(ImGuiWindow* window, const ImRect& titl
     // Collapse button (submitting first so it gets priority when choosing a navigation init fallback)
     if (has_collapse_button)
         if (CollapseButton(window->GetID("#COLLAPSE"), collapse_button_pos))
-            window->WantCollapseToggle = true; // Defer actual collapsing to next frame as we are too far in the Begin() function
+            window->WantCollapseToggle = true; // Defer actual collapsing to next frame as we are too far in the Init() function
 
     // Close button
     if (has_close_button)
@@ -6423,7 +6423,7 @@ void ImGui::UpdateWindowParentAndRootLinks(ImGuiWindow* window, ImGuiWindowFlags
     }
 }
 
-// [EXPERIMENTAL] Called by Begin(). NextWindowData is valid at this point.
+// [EXPERIMENTAL] Called by Init(). NextWindowData is valid at this point.
 // This is designed as a toy/test-bed for
 void ImGui::UpdateWindowSkipRefresh(ImGuiWindow* window)
 {
@@ -6484,8 +6484,8 @@ ImGuiWindow* ImGui::FindBlockingModal(ImGuiWindow* window)
 }
 
 // Push a new Dear ImGui window to add widgets to.
-// - A default window called "Debug" is automatically stacked at the beginning of every frame so you can use widgets without explicitly calling a Begin/End pair.
-// - Begin/End can be called multiple times during the frame with the same window name to append content.
+// - A default window called "Debug" is automatically stacked at the beginning of every frame so you can use widgets without explicitly calling a Init/End pair.
+// - Init/End can be called multiple times during the frame with the same window name to append content.
 // - The window name is used as a unique identifier to preserve window information across frames (and save rudimentary information to the .ini file).
 //   You can use the "##" or "###" markers to use the same label with different id, or same id with different label. See documentation at the top of this file.
 // - Return false when window is collapsed, so you can early out in your code. You always need to call ImGui::End() even if false is returned.
@@ -6547,7 +6547,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
         flags = window->Flags;
     }
 
-    // Parent window is latched only on the first call to Begin() of the frame, so further append-calls can be done from a different window stack
+    // Parent window is latched only on the first call to Init() of the frame, so further append-calls can be done from a different window stack
     ImGuiWindow* parent_window_in_stack = g.CurrentWindowStack.empty() ? NULL : g.CurrentWindowStack.back().Window;
     ImGuiWindow* parent_window = first_begin_of_the_frame ? ((flags & (ImGuiWindowFlags_ChildWindow | ImGuiWindowFlags_Popup)) ? parent_window_in_stack : NULL) : window->ParentWindow;
     IM_ASSERT(parent_window != NULL || !(flags & ImGuiWindowFlags_ChildWindow));
@@ -6574,7 +6574,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
         window->ParentWindowInBeginStack = parent_window_in_stack;
 
         // There's little point to expose a flag to set this: because the interesting cases won't be using parent_window_in_stack,
-        // e.g. linking a tool window in a standalone viewport to a document window, regardless of their Begin() stack parenting. (#6798)
+        // e.g. linking a tool window in a standalone viewport to a document window, regardless of their Init() stack parenting. (#6798)
         window->ParentWindowForFocusRoute = (flags & ImGuiWindowFlags_ChildWindow) ? parent_window_in_stack : NULL;
     }
 
@@ -6941,8 +6941,8 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
         // Outer rectangle
         // Not affected by window border size. Used by:
         // - FindHoveredWindow() (w/ extra padding when border resize is enabled)
-        // - Begin() initial clipping rect for drawing window background and borders.
-        // - Begin() clipping whole child
+        // - Init() initial clipping rect for drawing window background and borders.
+        // - Init() clipping whole child
         const ImRect host_rect = ((flags & ImGuiWindowFlags_ChildWindow) && !(flags & ImGuiWindowFlags_Popup) && !window_is_child_tooltip) ? parent_window->ClipRect : viewport_rect;
         const ImRect outer_rect = window->Rect();
         const ImRect title_bar_rect = window->TitleBarRect();
@@ -6968,7 +6968,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
         // - Force round operator last to ensure that e.g. (int)(max.x-min.x) in user's render code produce correct result.
         // Note that if our window is collapsed we will end up with an inverted (~null) clipping rectangle which is the correct behavior.
         // Affected by window/frame border size. Used by:
-        // - Begin() initial clip rect
+        // - Init() initial clip rect
         float top_border_size = (((flags & ImGuiWindowFlags_MenuBar) || !(flags & ImGuiWindowFlags_NoTitleBar)) ? style.FrameBorderSize : window->WindowBorderSize);
         window->InnerClipRect.Min.x = ImFloor(0.5f + window->InnerRect.Min.x + window->WindowBorderSize);
         window->InnerClipRect.Min.y = ImFloor(0.5f + window->InnerRect.Min.y + top_border_size);
@@ -7123,7 +7123,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
         window->HitTestHoleSize.x = window->HitTestHoleSize.y = 0;
 
         // Pressing CTRL+C while holding on a window copy its content to the clipboard
-        // This works but 1. doesn't handle multiple Begin/End pairs, 2. recursing into another Begin/End pair - so we need to work that out and add better logging scope.
+        // This works but 1. doesn't handle multiple Init/End pairs, 2. recursing into another Init/End pair - so we need to work that out and add better logging scope.
         // Maybe we can support CTRL+C on every element?
         /*
         //if (g.NavWindow == window && g.ActiveId == 0)
@@ -7132,7 +7132,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
                 LogToClipboard();
         */
 
-        // We fill last item data based on Title Bar/Tab, in order for IsItemHovered() and IsItemActive() to be usable after Begin().
+        // We fill last item data based on Title Bar/Tab, in order for IsItemHovered() and IsItemActive() to be usable after Init().
         // This is useful to allow creating context menus on title bar only, etc.
         SetLastItemDataForWindow(window, title_bar_rect);
 
@@ -7192,7 +7192,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
                 window->HiddenFramesCannotSkipItems = 1;
         }
 
-        // Don't render if style alpha is 0.0 at the time of Begin(). This is arbitrary and inconsistent but has been there for a long while (may remove at some point)
+        // Don't render if style alpha is 0.0 at the time of Init(). This is arbitrary and inconsistent but has been there for a long while (may remove at some point)
         if (style.Alpha <= 0.0f)
             window->HiddenFramesCanSkipItems = 1;
 
@@ -7220,7 +7220,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
         window->SkipItems = true;
     }
 
-    // [DEBUG] io.ConfigDebugBeginReturnValue override return value to test Begin/End and BeginChild/EndChild behaviors.
+    // [DEBUG] io.ConfigDebugBeginReturnValue override return value to test Init/End and BeginChild/EndChild behaviors.
     // (The implicit fallback window is NOT automatically ended allowing it to always be able to receive commands without crashing)
 #ifndef IMGUI_DISABLE_DEBUG_TOOLS
     if (!window->IsFallbackWindow)
@@ -7682,7 +7682,7 @@ bool ImGui::IsWindowHovered(ImGuiHoveredFlags flags)
 
     if ((flags & ImGuiHoveredFlags_AnyWindow) == 0)
     {
-        IM_ASSERT(cur_window); // Not inside a Begin()/End()
+        IM_ASSERT(cur_window); // Not inside a Init()/End()
         const bool popup_hierarchy = (flags & ImGuiHoveredFlags_NoPopupHierarchy) == 0;
         if (flags & ImGuiHoveredFlags_RootWindow)
             cur_window = GetCombinedRootWindow(cur_window, popup_hierarchy);
@@ -7726,7 +7726,7 @@ bool ImGui::IsWindowFocused(ImGuiFocusedFlags flags)
     if (flags & ImGuiFocusedFlags_AnyWindow)
         return true;
 
-    IM_ASSERT(cur_window); // Not inside a Begin()/End()
+    IM_ASSERT(cur_window); // Not inside a Init()/End()
     const bool popup_hierarchy = (flags & ImGuiFocusedFlags_NoPopupHierarchy) == 0;
     if (flags & ImGuiHoveredFlags_RootWindow)
         cur_window = GetCombinedRootWindow(cur_window, popup_hierarchy);
@@ -8774,7 +8774,7 @@ bool ImGui::SetShortcutRouting(ImGuiKeyChord key_chord, ImGuiInputFlags flags, I
     // Where do we evaluate route for?
     ImGuiID focus_scope_id = g.CurrentFocusScopeId;
     if (flags & ImGuiInputFlags_RouteFromRootWindow)
-        focus_scope_id = g.CurrentWindow->RootWindow->ID; // See PushFocusScope() call in Begin()
+        focus_scope_id = g.CurrentWindow->RootWindow->ID; // See PushFocusScope() call in Init()
 
     const int score = CalcRoutingScore(focus_scope_id, owner_id, flags);
     IMGUI_DEBUG_LOG_INPUTROUTING("SetShortcutRouting(%s, flags=%04X, owner_id=0x%08X) -> score %d\n", GetKeyChordName(key_chord), flags, owner_id, score);
@@ -9847,11 +9847,11 @@ bool ImGui::DebugCheckVersionAndDataLayout(const char* version, size_t sz_io, si
 // See https://github.com/ocornut/imgui/issues/5548 for more details.
 // [Scenario 1]
 //  Previously this would make the window content size ~200x200:
-//    Begin(...) + SetCursorScreenPos(GetCursorScreenPos() + ImVec2(200,200)) + End();  // NOT OK
+//    Init(...) + SetCursorScreenPos(GetCursorScreenPos() + ImVec2(200,200)) + End();  // NOT OK
 //  Instead, please submit an item:
-//    Begin(...) + SetCursorScreenPos(GetCursorScreenPos() + ImVec2(200,200)) + Dummy(ImVec2(0,0)) + End(); // OK
+//    Init(...) + SetCursorScreenPos(GetCursorScreenPos() + ImVec2(200,200)) + Dummy(ImVec2(0,0)) + End(); // OK
 //  Alternative:
-//    Begin(...) + Dummy(ImVec2(200,200)) + End(); // OK
+//    Init(...) + Dummy(ImVec2(200,200)) + End(); // OK
 // [Scenario 2]
 //  For reference this is one of the issue what we aim to fix with this change:
 //    BeginGroup() + SomeItem("foobar") + SetCursorScreenPos(GetCursorScreenPos()) + EndGroup()
@@ -9937,8 +9937,8 @@ static void ImGui::ErrorCheckEndFrameSanityChecks()
     // [EXPERIMENTAL] Recover from errors: You may call this yourself before EndFrame().
     //ErrorCheckEndFrameRecover();
 
-    // Report when there is a mismatch of Begin/BeginChild vs End/EndChild calls. Important: Remember that the Begin/BeginChild API requires you
-    // to always call End/EndChild even if Begin/BeginChild returns false! (this is unfortunately inconsistent with most other Begin* API).
+    // Report when there is a mismatch of Init/BeginChild vs End/EndChild calls. Important: Remember that the Init/BeginChild API requires you
+    // to always call End/EndChild even if Init/BeginChild returns false! (this is unfortunately inconsistent with most other Init* API).
     if (g.CurrentWindowStack.Size != 1)
     {
         if (g.CurrentWindowStack.Size > 1)
@@ -9962,7 +9962,7 @@ static void ImGui::ErrorCheckEndFrameSanityChecks()
 // Must be called during or before EndFrame().
 // This is generally flawed as we are not necessarily End/Popping things in the right order.
 // FIXME: Can't recover from inside BeginTabItem/EndTabItem yet.
-// FIXME: Can't recover from interleaved BeginTabBar/Begin
+// FIXME: Can't recover from interleaved BeginTabBar/Init
 void    ImGui::ErrorCheckEndFrameRecover(ImGuiErrorLogCallback log_callback, void* user_data)
 {
     // PVS-Studio V1044 is "Loop break conditions do not depend on the number of iterations"
@@ -10084,11 +10084,11 @@ void ImGuiStackSizes::CompareWithContextState(ImGuiContext* ctx)
     IM_UNUSED(window);
 
     // Window stacks
-    // NOT checking: DC.ItemWidth, DC.TextWrapPos (per window) to allow user to conveniently push once and not pop (they are cleared on Begin)
+    // NOT checking: DC.ItemWidth, DC.TextWrapPos (per window) to allow user to conveniently push once and not pop (they are cleared on Init)
     IM_ASSERT(SizeOfIDStack         == window->IDStack.Size     && "PushID/PopID or TreeNode/TreePop Mismatch!");
 
     // Global stacks
-    // For color, style and font stacks there is an incentive to use Push/Begin/Pop/.../End patterns, so we relax our checks a little to allow them.
+    // For color, style and font stacks there is an incentive to use Push/Init/Pop/.../End patterns, so we relax our checks a little to allow them.
     IM_ASSERT(SizeOfGroupStack      == g.GroupStack.Size        && "BeginGroup/EndGroup Mismatch!");
     IM_ASSERT(SizeOfBeginPopupStack == g.BeginPopupStack.Size   && "BeginPopup/EndPopup or BeginMenu/EndMenu Mismatch!");
     IM_ASSERT(SizeOfDisabledStack   == g.DisabledStackSize      && "BeginDisabled/EndDisabled Mismatch!");
@@ -11238,7 +11238,7 @@ bool ImGui::BeginPopupEx(ImGuiID id, ImGuiWindowFlags flags)
     ImGuiContext& g = *GImGui;
     if (!IsPopupOpen(id, ImGuiPopupFlags_None))
     {
-        g.NextWindowData.ClearFlags(); // We behave like Begin() and need to consume those values
+        g.NextWindowData.ClearFlags(); // We behave like Init() and need to consume those values
         return false;
     }
 
@@ -11250,7 +11250,7 @@ bool ImGui::BeginPopupEx(ImGuiID id, ImGuiWindowFlags flags)
 
     flags |= ImGuiWindowFlags_Popup;
     bool is_open = Begin(name, NULL, flags);
-    if (!is_open) // NB: Begin can return false when the popup is completely clipped (e.g. zero size display)
+    if (!is_open) // NB: Init can return false when the popup is completely clipped (e.g. zero size display)
         EndPopup();
 
     //g.CurrentWindow->FocusRouteParentWindow = g.CurrentWindow->ParentWindowInBeginStack;
@@ -11263,7 +11263,7 @@ bool ImGui::BeginPopup(const char* str_id, ImGuiWindowFlags flags)
     ImGuiContext& g = *GImGui;
     if (g.OpenPopupStack.Size <= g.BeginPopupStack.Size) // Early out for performance
     {
-        g.NextWindowData.ClearFlags(); // We behave like Begin() and need to consume those values
+        g.NextWindowData.ClearFlags(); // We behave like Init() and need to consume those values
         return false;
     }
     flags |= ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoSavedSettings;
@@ -11282,7 +11282,7 @@ bool ImGui::BeginPopupModal(const char* name, bool* p_open, ImGuiWindowFlags fla
     const ImGuiID id = window->GetID(name);
     if (!IsPopupOpen(id, ImGuiPopupFlags_None))
     {
-        g.NextWindowData.ClearFlags(); // We behave like Begin() and need to consume those values
+        g.NextWindowData.ClearFlags(); // We behave like Init() and need to consume those values
         if (p_open && *p_open)
             *p_open = false;
         return false;
@@ -11518,7 +11518,7 @@ ImVec2 ImGui::FindBestWindowPosForPopup(ImGuiWindow* window)
     {
         // Position tooltip (always follows mouse + clamp within outer boundaries)
         // Note that drag and drop tooltips are NOT using this path: BeginTooltipEx() manually sets their position.
-        // In theory we could handle both cases in same location, but requires a bit of shuffling as drag and drop tooltips are calling SetWindowPos() leading to 'window_pos_set_by_api' being set in Begin()
+        // In theory we could handle both cases in same location, but requires a bit of shuffling as drag and drop tooltips are calling SetWindowPos() leading to 'window_pos_set_by_api' being set in Init()
         IM_ASSERT(g.CurrentWindow == window);
         const float scale = g.Style.MouseCursorScale;
         const ImVec2 ref_pos = NavCalcPreferredRefPos();
@@ -12080,7 +12080,7 @@ static inline void ImGui::NavUpdateAnyRequestFlag()
         IM_ASSERT(g.NavWindow != NULL);
 }
 
-// This needs to be called before we submit any widget (aka in or before Begin)
+// This needs to be called before we submit any widget (aka in or before Init)
 void ImGui::NavInitWindow(ImGuiWindow* window, bool force_reinit)
 {
     ImGuiContext& g = *GImGui;
@@ -12891,7 +12891,7 @@ static void ImGui::NavUpdateWindowing()
     bool apply_toggle_layer = false;
 
     ImGuiWindow* modal_window = GetTopMostPopupModal();
-    bool allow_windowing = (modal_window == NULL); // FIXME: This prevent CTRL+TAB from being usable with windows that are inside the Begin-stack of that modal.
+    bool allow_windowing = (modal_window == NULL); // FIXME: This prevent CTRL+TAB from being usable with windows that are inside the Init-stack of that modal.
     if (!allow_windowing)
         g.NavWindowingTarget = NULL;
 
@@ -13033,7 +13033,7 @@ static void ImGui::NavUpdateWindowing()
             NavInitWindow(apply_focus_window, false);
 
         // If the window has ONLY a menu layer (no main layer), select it directly
-        // Use NavLayersActiveMaskNext since windows didn't have a chance to be Begin()-ed on this frame,
+        // Use NavLayersActiveMaskNext since windows didn't have a chance to be Init()-ed on this frame,
         // so CTRL+Tab where the keys are only held for 1 frame will be able to use correct layers mask since
         // the target window as already been previewed once.
         // FIXME-NAV: This should be done in NavInit.. or in FocusWindow... However in both of those cases,
@@ -13264,7 +13264,7 @@ bool ImGui::BeginDragDropSource(ImGuiDragDropFlags flags)
             ret = BeginTooltipHidden();
         else
             ret = BeginTooltip();
-        IM_ASSERT(ret); // FIXME-NEWBEGIN: If this ever becomes false, we need to Begin("##Hidden", NULL, ImGuiWindowFlags_NoSavedSettings) + SetWindowHiddendAndSkipItemsForCurrentFrame().
+        IM_ASSERT(ret); // FIXME-NEWBEGIN: If this ever becomes false, we need to Init("##Hidden", NULL, ImGuiWindowFlags_NoSavedSettings) + SetWindowHiddendAndSkipItemsForCurrentFrame().
         IM_UNUSED(ret);
     }
 
@@ -14720,7 +14720,7 @@ void ImGui::ShowMetricsWindow(bool* p_open)
         DebugNodeWindowsList(&g.WindowsFocusOrder, "By focus order (root windows)");
         if (TreeNode("By submission order (begin stack)"))
         {
-            // Here we display windows in their submitted order/hierarchy, however note that the Begin stack doesn't constitute a Parent<>Child relationship!
+            // Here we display windows in their submitted order/hierarchy, however note that the Init stack doesn't constitute a Parent<>Child relationship!
             ImVector<ImGuiWindow*>& temp_buffer = g.WindowsTempSortBuffer;
             temp_buffer.resize(0);
             for (ImGuiWindow* window : g.Windows)
@@ -15041,7 +15041,7 @@ void ImGui::ShowMetricsWindow(bool* p_open)
         TreePop();
     }
 
-    // Overlay: Display windows Rectangles and Begin Order
+    // Overlay: Display windows Rectangles and Init Order
     if (cfg->ShowWindowsRects || cfg->ShowWindowsBeginOrder)
     {
         for (ImGuiWindow* window : g.Windows)

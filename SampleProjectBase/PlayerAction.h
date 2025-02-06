@@ -1,6 +1,5 @@
 #pragma once
-#include "PlayerGroundActionController.h"
-#include "PlayerAirActionController.h"
+#include "PlayerActionController_Base.h"
 #include "ITargetAccepter.h"
 #include "IGroundNotifyer.h"
 
@@ -11,6 +10,7 @@ namespace HashiTaku
 
 	/// @brief プレイヤーアクションクラス
 	class PlayerAction :
+		public StateMachine_Base<PlayerActionController_Base::ActionPlace>,
 		public IObjectTargeter,
 		public IImGuiUser,
 		public ISaveLoad,
@@ -42,19 +42,11 @@ namespace HashiTaku
 		/// @brief 接地チェッカーオブジェクト名
 		std::string groundCheckerName;
 
+		/// @brief 現在のアクションコントローラー
+		PlayerActionController_Base* pCurActionController;
+
 		/// @brief 地面判定を確認するコンポーネント
 		CP_GroundCheck* pGroundChecker;
-
-		/// @brief 地上行動のアクションコントローラー
-		std::unique_ptr<PlayerGroundActionController>
-			pGroundController;
-
-		/// @brief 空中行動のアクションコントローラー
-		std::unique_ptr<PlayerAirActionController>
-			pAirController;
-
-		/// @brief 現在使用しているコントローラークラス
-		PlayerActionController_Base* pCurrentController;
 
 		/// @brief 入力クラス
 		GameInput* pInput;
@@ -89,9 +81,6 @@ namespace HashiTaku
 		/// @brief 移動可能のポインタ
 		const bool* pIsCanMove;
 
-		/// @brief 現在の場所属性
-		ActionPlace currentPlace;
-
 		/// @brief 空中に変更したときにどの状態へ繋げるか変数
 		GroundToAir reserveAirTransition;
 
@@ -115,15 +104,21 @@ namespace HashiTaku
 		PlayerAction(CP_Player& _player);
 		~PlayerAction();
 
+		/// @brief 初期化処理
+		/// @param _pAnimation アニメーションコンポーネント
+		/// @param _pRigidBody Rb
 		void Init(CP_Animation* _pAnimation,
 			CP_RigidBody* _pRigidBody);
 
 		/// @brief 更新処理
-		void Update();
+		void Update() override;
 
-		/// @brief アクションの場所を変更する
-		/// @param _setPlaceTransition どう変更するか指定する
-		void OnChangePlace();
+		/// @brief ノードを変更する
+		/// @param _changeKey 変更するノードのキー
+		/// @param _isForceChange 強制的に変更する
+		/// @return 遷移成功したか？
+		bool ChangeNode(const ActionPlace& _changeKey,
+			bool _isForceChange = false) override;
 
 		/// @brief カメラ取得
 		/// @return カメラ
@@ -192,13 +187,6 @@ namespace HashiTaku
 		/// @brief 接地チェッカーを探して取得
 		void FindGroundChecker();
 
-		/// @brief 更新できるか取得
-		/// @return 更新できるか？
-		bool GetCanUpdate();
-
-		/// @brief アクション更新
-		void ActionUpdate();
-
 		/// @brief  ターゲット開始時のお処理
 		void OnBeginTargeting();
 
@@ -216,6 +204,11 @@ namespace HashiTaku
 
 		/// @brief 空中から地上への処理
 		void OnAirToGround();
+
+		/// @brief 指定したアクションコントローラーを取得
+		/// @param _place 指定する場所
+		/// @return アクションコントローラー
+		PlayerActionController_Base* GetActionController(ActionPlace _place);
 
 		void ImGuiDebug() override;
 

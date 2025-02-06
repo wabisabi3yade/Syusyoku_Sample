@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "PlayerAction.h"
+#include "PlayerGroundActionController.h"
+#include "PlayerAirActionController.h"
 #include "InSceneSystemManager.h"
 #include "PlayerAnimReference.h"
 
@@ -27,10 +29,18 @@ namespace HashiTaku
 		isTargeting(false),
 		prevIsTargeting(false)
 	{
+		// 入力クラス取得
 		InSceneSystemManager* pInsceneSysytem = InSceneSystemManager::GetInstance();
 		pInput = &pInsceneSysytem->GetInput();
-		pGroundController = std::make_unique<PlayerGroundActionController>(*this, _player);
-		pAirController = std::make_unique<PlayerAirActionController>(*this, _player);
+
+		// 各コントローラー生成
+		stateNodeList[ActionPlace::Ground] = 
+			std::make_unique<PlayerGroundActionController>(*this, _player);
+		stateNodeList[ActionPlace::Air] = 
+			std::make_unique<PlayerAirActionController>(*this, _player);
+
+		// 地上から始める
+		SetDefaultNode(ActionPlace::Ground);
 	}
 
 	PlayerAction::~PlayerAction()
@@ -66,28 +76,63 @@ namespace HashiTaku
 		FindGroundChecker();
 
 		// アクション初期化
-		pGroundController->Init(pAnimation, _pRigidBody);
-		pAirController->Init(pAnimation, _pRigidBody);
+		for (auto& node : stateNodeList)
+		{
+			PlayerActionController_Base& actCon = *GetActionController(node.first);
 
-		pCurrentController = pGroundController.get();
-		currentPlace = ActionPlace::Ground;
+			actCon.Init(pAnimation, _pRigidBody);
+		}
+
+		// ステートマシンの初期化
+		StateMachine_Base::Init();
+		pCurActionController = GetActionController(currentStateKey);
 	}
 
 	void PlayerAction::Update()
 	{
-		pCurrentController->UpdateCall();
+		// 現在のアクションコントローラーを更新
+		StateMachine_Base::Update();
 
+		// ターゲットの更新
 		UpdateTargeting();
 
+		// 地上判定の更新
 		UpdateGround();
 	}
 
-	void PlayerAction::OnChangePlace()
+	bool PlayerAction::ChangeNode(const ActionPlace& _changeKey, bool _isForceChange)
 	{
+		// アクションコントローラーを変更
+		bool isSuccess = StateMachine_Base::ChangeNode(_changeKey, _isForceChange);
+		if (!isSuccess) return false;	// 変更に成功しなかったなら終える
+
+		// 更新
+		pCurActionController = GetActionController(currentStateKey);
+
+		// どの場所に移動したか？
+		switch (currentStateKey)
+		{
+		case ActionPlace::Ground:
+			OnAirToGround();
+			break;
+		case ActionPlace::Air:
+			OnGroundToAir();
+			break;
+
+		default:
+			break;
+		}
+
+		return true;
 	}
 
 	CP_Camera& PlayerAction::GetCamera()
 	{
+		if (!pCamera)
+		{
+			assert(!"カメラが設定されていません");
+		}
+
 		return *pCamera;
 	}
 
@@ -180,7 +225,7 @@ namespace HashiTaku
 	void PlayerAction::OnDamage(AttackInformation& _atkInfo,
 		bool* _pAcceptDamage)
 	{
-		pCurrentController->OnDamage(_atkInfo,
+		pCurActionController->OnDamage(_atkInfo,
 			_pAcceptDamage);
 	}
 
@@ -212,8 +257,8 @@ namespace HashiTaku
 
 		data["groundCheckName"] = groundCheckerName;
 
-		data["ground"] = pGroundController->Save();
-		data["air"] = pAirController->Save();
+		data["ground"] = GetActionController(ActionPlace::Ground)->Save();
+		data["air"] = GetActionController(ActionPlace::Air)->Save();
 
 		return data;
 	}
@@ -225,11 +270,11 @@ namespace HashiTaku
 		json loadData;
 		if (LoadJsonData("ground", loadData, _data))
 		{
-			pGroundController->Load(loadData);
+			GetActionController(ActionPlace::Ground)->Load(loadData);
 		}
 		if (LoadJsonData("air", loadData, _data))
 		{
-			pAirController->Load(loadData);
+			GetActionController(ActionPlace::Air)->Load(loadData);
 		}
 	}
 
@@ -252,18 +297,6 @@ namespace HashiTaku
 
 		// 接地チェッカーにセットする
 		pGroundChecker->SetGroundNotifyer(*this);
-	}
-
-	bool PlayerAction::GetCanUpdate()
-	{
-		if (!pCamera) return false;
-
-		return true;
-	}
-
-	void PlayerAction::ActionUpdate()
-	{
-		pCurrentController->UpdateCall();
 	}
 
 	void PlayerAction::OnBeginTargeting()
@@ -323,9 +356,6 @@ namespace HashiTaku
 		// 前フレームと同じなら処理しない
 		if (isGround == prevIsGround) return;
 
-		// 変更前の終了処理
-		pCurrentController->OnEnd();
-
 		if (isGround) 	// 地上へ移行
 			OnAirToGround();
 		else	// 空中へ移行
@@ -336,16 +366,18 @@ namespace HashiTaku
 
 	void PlayerAction::OnGroundToAir()
 	{
-		currentPlace = ActionPlace::Air;
-
-		// 現在のコントローラーを変更
-		pCurrentController = pAirController.get();
+		// 空中アクションコントローラーを取得
+		PlayerActionController_Base* pAirController = GetActionController(ActionPlace::Air);
 
 		// 空中のエントリー状態をを設定
 		switch (reserveAirTransition)
 		{
-		case PlayerAction::GroundToAir::ToAirMove:
-			pAirController->ChangeAirState(PlayerAirActionController::AirState::Move);
+		case GroundToAir::ToAirMove:
+		{
+			int moveStateId = static_cast<int>(PlayerAirActionController::AirState::Move);
+			pAirController->ChangeState(moveStateId, true);
+		}
+			
 			break;
 
 		default:
@@ -358,22 +390,29 @@ namespace HashiTaku
 
 	void PlayerAction::OnAirToGround()
 	{
-		currentPlace = ActionPlace::Ground;
-
-		// 現在のコントローラーを変更
-		pCurrentController = pGroundController.get();
+		// 空中アクションコントローラーを取得
+		PlayerActionController_Base* pGroundController = 
+			GetActionController(ActionPlace::Ground);
 
 		// 地上のエントリー状態をを設定
 		switch (reserveGroundTransition)
 		{
 		case AirToGround::AirToLanding:
-			pGroundController->
-				ChangeGroundState(PlayerGroundActionController::GroundState::Idle, true);
+		{
+			int idleStateId = static_cast<int>(PlayerGroundActionController::GroundState::Idle);
+			pGroundController->ChangeState(idleStateId, true);
+		}
+			
 			break;
+
 		case AirToGround::AirToGroundKnock:
-			pGroundController->
-				ChangeGroundState(PlayerGroundActionController::GroundState::Move, true);
+		{
+			int moveStateId = static_cast<int>(PlayerGroundActionController::GroundState::Move);
+			pGroundController->ChangeState(moveStateId, true);
+		}
+			
 			break;
+
 		default:
 			break;
 		}
@@ -382,21 +421,35 @@ namespace HashiTaku
 		reserveGroundTransition = AirToGround::AirToLanding;
 	}
 
+	PlayerActionController_Base* PlayerAction::GetActionController(ActionPlace _place)
+	{
+		PlayerActionController_Base* pActCon = nullptr;
+
+#ifdef EDIT
+		pActCon = dynamic_cast<PlayerActionController_Base*>(stateNodeList.at(_place).get());
+		assert(pActCon && "アクションコントローラーが正常に取得できません");
+		if (!pActCon) return nullptr;
+#else
+		pActCon = static_cast<PlayerActionController_Base*>(stateNodeList.at(_place).get());
+#endif // EDIT
+
+		return pActCon;
+	}
+
 	void PlayerAction::ImGuiDebug()
 	{
 		ImGuiMethod::Text("isGround", isGround);
 		ImGuiMethod::Text("IsTargeting", isTargeting);
-		ImGui::Text("Place:%s", std::string(magic_enum::enum_name(currentPlace)).c_str());
+		ImGui::Text("Place:%s", std::string(magic_enum::enum_name(currentStateKey)).c_str());
 
-		if (ImGuiMethod::TreeNode("Ground"))
+		// 各アクションコントローラーの編集
+		for (auto& node : stateNodeList)
 		{
-			pGroundController->ImGuiCall();
-			ImGui::TreePop();
-		}
+			PlayerActionController_Base* pActionCon = GetActionController(node.first);
+			std::string placeStr = std::string(magic_enum::enum_name(node.first));
 
-		if (ImGuiMethod::TreeNode("Air"))
-		{
-			pAirController->ImGuiCall();
+			if (!ImGuiMethod::TreeNode(placeStr)) continue;
+			pActionCon->ImGuiCall();
 			ImGui::TreePop();
 		}
 	}

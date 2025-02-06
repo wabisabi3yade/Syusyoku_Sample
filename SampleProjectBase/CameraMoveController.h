@@ -41,7 +41,10 @@ namespace HashiTaku
 
 		/// @brief 開始処理
 		/// @param _camera カメラコンポーネント
-		void Begin(CP_Camera& _camera);
+		void Init(CP_Camera& _camera);
+
+		/// @brief 更新処理
+		void Update() override;
 
 		/// @brief ステートを変更
 		/// @param _cameraState 変更先のステート
@@ -112,9 +115,6 @@ namespace HashiTaku
 	private:
 		/// @brief カメラの座標を初期化
 		void InitCameraPos();
-
-		/// @brief 更新処理
-		void Update() override;
 
 		/// @brief カメラ揺れの更新
 		void ShakeUpdate();

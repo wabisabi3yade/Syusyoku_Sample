@@ -68,7 +68,7 @@ namespace HashiTaku
 			assert(!"Cameraコンポーネントをつけてください");
 
 		pMoveController->SetFollowTransform(pFollowTransform);
-		pMoveController->Begin(*pCamera);	// 初期処理
+		pMoveController->Init(*pCamera);	// 初期処理
 	}
 
 	void CP_CameraMove::LateUpdate()
@@ -76,7 +76,7 @@ namespace HashiTaku
 		if (!IsCanUpdate()) return;
 
 		// カメラ移動を更新
-		pMoveController->UpdateCall();
+		pMoveController->Update();
 	}
 
 	void CP_CameraMove::SetFollowTransform(const Transform* _followTransform)

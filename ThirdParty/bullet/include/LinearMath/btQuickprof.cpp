@@ -556,7 +556,7 @@ void CProfileManager::CleanupMemory(void)
 }
 
 /***********************************************************************************************
- * CProfileManager::Start_Profile -- Begin a named profile                                    *
+ * CProfileManager::Start_Profile -- Init a named profile                                    *
  *                                                                                             *
  * Steps one level deeper into the tree, if a child already exists with the specified name     *
  * then it accumulates the profiling; otherwise a new child node is added to the profile tree. *

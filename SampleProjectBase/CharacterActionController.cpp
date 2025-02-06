@@ -24,7 +24,7 @@ namespace HashiTaku
 		pRigidBody = _pRigidBody;
 
 		// ステートマシン共通開始処理
-		StateMachine_Base::Begin();
+		StateMachine_Base::Init();
 	}
 
 	void CharacterActionController::AddForce(const DXSimp::Vector3& _power)

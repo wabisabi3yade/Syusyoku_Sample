@@ -1238,9 +1238,6 @@
     <ClCompile Include="PlaneMesh.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\Plane</Filter>
     </ClCompile>
-    <ClCompile Include="MyClass.cpp">
-      <Filter>ヘッダー ファイル\template</Filter>
-    </ClCompile>
     <ClCompile Include="ComponentFactory.cpp">
       <Filter>ソース ファイル\Component\Factory</Filter>
     </ClCompile>
@@ -1495,9 +1492,6 @@
     </ClCompile>
     <ClCompile Include="ChangeAnimObserver.cpp">
       <Filter>ソース ファイル\Animation\AnimationObserver\ChangeAnimObserver</Filter>
-    </ClCompile>
-    <ClCompile Include="MyClass2.cpp">
-      <Filter>ヘッダー ファイル\template</Filter>
     </ClCompile>
     <ClCompile Include="AttackInformation.cpp">
       <Filter>ソース ファイル\InGame\Attack\Information</Filter>
@@ -2002,9 +1996,6 @@
     <ClInclude Include="IPrototype.h">
       <Filter>ソース ファイル\System\Prototype</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass.h">
-      <Filter>ヘッダー ファイル\template</Filter>
-    </ClInclude>
     <ClInclude Include="ComponentFactory.h">
       <Filter>ソース ファイル\Component\Factory</Filter>
     </ClInclude>
@@ -2317,9 +2308,6 @@
     <ClInclude Include="ChangeAnimObserver.h">
       <Filter>ソース ファイル\Animation\AnimationObserver\ChangeAnimObserver</Filter>
     </ClInclude>
-    <ClInclude Include="MyClass2.h">
-      <Filter>ヘッダー ファイル\template</Filter>
-    </ClInclude>
     <ClInclude Include="AttackInformation.h">
       <Filter>ソース ファイル\InGame\Attack\Information</Filter>
     </ClInclude>
@@ -2621,7 +2609,7 @@
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Attack</Filter>
     </ClInclude>
     <ClInclude Include="IActionController.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\InGame\Character\ActionState\InterFace</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
