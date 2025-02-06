@@ -29,17 +29,19 @@ namespace HashiTaku
 	{
 		BossActState_Base::OnStartBehavior();
 
+		BossActionController& actionCon = GetBossActionController();
+
 		// 攻撃トリガー
-		pActionController->GetAnimation()->SetTrigger(ATTACKTRIGGER_ANIMPARAM_NAME);
+		actionCon.SetAnimationTrigger(ATTACKTRIGGER_ANIMPARAM_NAME);
 
 		// 攻撃情報をセットする
-		pActionController->SetAttackInfo(*attackInfos[0]);
+		actionCon.SetAttackInfo(*attackInfos[0]);
 
 		// 初期化
 		curAttackTime = 1;	// 1段目から入る
 
 		// プレイヤーめがけてワープするようにする
-		SetWarpTargetPosReference(GetPlayerTransform().GetPosition());
+		SetWarpTargetPosReference(GetPlayerTransform()->GetPosition());
 	}
 
 	void BossAttackState::UpdateBehavior()
@@ -115,12 +117,13 @@ namespace HashiTaku
 	{
 		if (!isUseRotateCurve) return;
 		float animRatio = GetAnimation()->GetCurrentPlayRatio();
-		Transform& bossTransform = GetBossTransform();
+		Transform& bossTransform = GetMyTransform();
 
 		float rotSpeed = rotSpeedCurve.GetValue(animRatio);
 
 		// プレイヤーへのベクトルを求める
-		DXSimp::Vector3 vecToPlayer = GetPlayerTransform().GetPosition() - bossTransform.GetPosition();
+		DXSimp::Vector3 vecToPlayer = GetPlayerTransform()->GetPosition() - 
+			bossTransform.GetPosition();
 		vecToPlayer.y = 0.0f;
 		vecToPlayer.Normalize();
 		DXSimp::Quaternion targetRot = Quat::RotateToVector(vecToPlayer);
@@ -134,7 +137,7 @@ namespace HashiTaku
 	std::unique_ptr<BossAttackInformation> BossAttackState::CreateAttackInfo()
 	{			
 		// 攻撃情報を生成
-		return std::make_unique<BossAttackInformation>(&pActionController->GetBoss());
+		return std::make_unique<BossAttackInformation>(&GetBossActionController().GetBoss());
 	}
 
 	void BossAttackState::ImGuiDebug()
@@ -180,8 +183,11 @@ namespace HashiTaku
 
 	void BossAttackState::UpdateReAttack()
 	{
+		// ボスアクションコントローラー
+		BossActionController& bossActCon = GetBossActionController();
+
 		// リアタックのタイミングでないなら
-		if (!(pActionController->GetReAttack())) return;
+		if (!(bossActCon.GetReAttack())) return;
 
 		// リアタックフラグを降ろす
 		GetAnimation()->SetBool(REATTACK_PARAMNAME, false);
@@ -200,7 +206,7 @@ namespace HashiTaku
 			"攻撃情報が攻撃回数以下です");
 
 		// 対応した攻撃情報をセットする
-		pActionController->SetAttackInfo(*attackInfos[curAttackTime - 1]);
+		bossActCon.SetAttackInfo(*attackInfos[curAttackTime - 1]);
 	}
 
 	void BossAttackState::SetAttackTimeCnt(u_int _attackTime)

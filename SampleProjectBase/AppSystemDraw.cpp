@@ -30,6 +30,9 @@ namespace HashiTaku
 		// 物理エンジン
 		ImGuiPhisics();
 
+		// Effekseer
+		ImGuiEffekseer();
+
 		// アセット
 		AssetDisplay::Draw();
 
@@ -73,6 +76,19 @@ namespace HashiTaku
 			ImGui::TreePop();
 		}
 #endif // EDIT
+	}
+
+	void AppSystemDraw::ImGuiEffekseer()
+	{
+#ifdef EDIT
+		if (!ImGuiMethod::TreeNode("VFX")) return;
+
+		bool* isDisplay = &DX11EffecseerManager::GetInstance()->isVfxDisplay;
+		ImGui::Checkbox("Display VFX", isDisplay);
+
+		ImGui::TreePop();
+#endif // EDIT
+
 	}
 
 	void AppSystemDraw::ImGuiRenderTarget()

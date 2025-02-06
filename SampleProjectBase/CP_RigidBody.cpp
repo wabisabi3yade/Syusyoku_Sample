@@ -198,14 +198,6 @@ namespace HashiTaku
 		CastRigidBody().setLinearVelocity(Bullet::ToBtVector3(_velocity));
 	}
 
-	void CP_RigidBody::ClearVelocity()
-	{
-		if (!collider || isTrigger) return;
-
-		// ‘¬“x‚ğ‘ã“ü
-		CastRigidBody().setLinearVelocity(btVector3(0.0, 0.0, 0.0));
-	}
-
 	CollisionTypeJudge& CP_RigidBody::GetColTypeJudge() const
 	{
 		assert(collider && "collider‚ªì¬‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");

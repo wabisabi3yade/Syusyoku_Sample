@@ -125,11 +125,15 @@ namespace HashiTaku
 		return static_cast<CP_Boss&>(GetCharacter());
 	}
 
-	CP_Player& BossActionController::GetPlayer()
+	CP_Player* BossActionController::GetPlayer()
 	{
-		assert(pPlayerObject && "プレイヤーが設定されていません");
+		if (!pPlayerObject)
+		{
+			HASHI_DEBUG_LOG("プレイヤーがいません");
+			return nullptr;
+		}
 
-		return *pPlayerObject;
+		return pPlayerObject;
 	}
 
 	bool BossActionController::GetIsBreaking()

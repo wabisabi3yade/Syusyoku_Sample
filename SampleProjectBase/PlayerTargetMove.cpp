@@ -89,13 +89,15 @@ namespace HashiTaku
 			moveAxis.y = sinf(ang) * 0.5f + BLEND_OFFSET;
 		}
 
-		pActionController->SetAnimationFloat(MOVEAXIS_X_PARAMNAME, moveAxis.x);
-		pActionController->SetAnimationFloat(MOVEAXIS_Y_PARAMNAME, moveAxis.y);
+		IActionController& actCon = GetActionController();
+		actCon.SetAnimationFloat(MOVEAXIS_X_PARAMNAME, moveAxis.x);
+		actCon.SetAnimationFloat(MOVEAXIS_Y_PARAMNAME, moveAxis.y);
 	}
 
 	void PlayerTargetMove::ApplyRootMotion()
 	{
-		CP_Animation* pAnimation = pActionController->GetAnimation();
+		IActionController& actCon = GetActionController();
+		CP_Animation* pAnimation = actCon.GetAnimation();
 		if (!pAnimation) return;
 
 		float rootMotion = pAnimation->GetMotionPosSpeedPerSec().Length();

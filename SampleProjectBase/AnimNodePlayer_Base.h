@@ -94,6 +94,10 @@ namespace HashiTaku
 		/// @param 再生割合
 		void SetCurPlayRatio(float _playRatio);
 
+		/// @brief 現在の再生フレームをセット
+		/// @param 再生フレーム
+		void SetCurPlayFrame(u_int _playFrame);
+
 		/// @brief 再生速度倍率をセット
 		/// @param 再生速度倍率
 		void SetPlaySpeedTimes(float _playSpeed);
@@ -105,6 +109,10 @@ namespace HashiTaku
 		/// @brief 1フレーム前の再生割合を取得
 		/// @return 1フレーム前の再生割合
 		float GetLastPlayRatio() const;
+
+		/// @brief 現在の再生フレームを取得する
+		/// @return 現在の再生フレーム
+		u_int GetCurPlayFrame() const;
 
 		/// @brief ノード再生速度を取得
 		/// @return ノード再生速度

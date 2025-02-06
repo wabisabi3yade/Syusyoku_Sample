@@ -19,7 +19,6 @@ namespace HashiTaku
 	namespace DXSimp = DXSimp;
 
 	PlayerActState_Base::PlayerActState_Base() :
-		pActionController(nullptr),
 		cancelType(CancelType::None),
 		statePriority(-1),
 		targetLookRotateSpeed(40.0f),
@@ -32,7 +31,7 @@ namespace HashiTaku
 		CancelType _cancelType,
 		int _priority)
 	{
-		pActionController = &_actController;
+		CharacterActState_Base::Init(_actController);
 		cancelType = _cancelType;
 		statePriority = _priority;
 
@@ -70,11 +69,12 @@ namespace HashiTaku
 	void PlayerActState_Base::ClearVelocity(bool _applyY)
 	{
 		DXSimp::Vector3 set;
+		IActionController& actCon = GetActionController();
 		if (!_applyY) // y軸反映させたくないなら
 		{
-			set.y = GetRB().GetVelocity().y;
+			set.y = actCon.GetVelocity().y;
 		}
-		GetRB().SetVelocity(set);
+		actCon.SetVelocity(set);
 	}
 
 	void PlayerActState_Base::SetTargetAtEnemy(bool _isLook)
@@ -87,44 +87,29 @@ namespace HashiTaku
 		GetPlayer().SetIsInvicible(_isInvicible);
 	}
 
-	CP_RigidBody& PlayerActState_Base::GetRB()
-	{
-		return *pActionController->GetRB();
-	}
-
-	Transform& PlayerActState_Base::GetMyTransform()
-	{
-		return pActionController->GetMyTransform();
-	}
-
 	CP_Animation* PlayerActState_Base::GetAnimation()
 	{
-		return pActionController->GetAnimation();
+		return GetActionController().GetAnimation();
 	}
 
 	const ITargetAccepter* PlayerActState_Base::GetTargetAccepter()
 	{
-		return pActionController->GetTargetAccepter();
+		return GetPlayerActionController().GetTargetAccepter();
 	}
 
 	PlayerActState_Base* PlayerActState_Base::GetPlayerState(int _getStateId)
 	{
-		return pActionController->GetPlayerState(_getStateId);
+		return GetPlayerActionController().GetPlayerState(_getStateId);
 	}
 
 	CP_Player& PlayerActState_Base::GetPlayer()
 	{
-		return pActionController->GetPlayer();
+		return GetPlayerActionController().GetPlayer();
 	}
 
-	float PlayerActState_Base::DeltaTime() const
+	float PlayerActState_Base::GetDeltaSpeed()
 	{
-		return pActionController->GetCharacter().DeltaTime();
-	}
-
-	float PlayerActState_Base::GetDeltaSpeed() const
-	{
-		return pActionController->GetCharacter().GetDeltaSpeed();
+		return GetActionController().GetCharacter().GetDeltaSpeed();
 	}
 
 	DXSimp::Vector2 PlayerActState_Base::GetInputLeftStick() const
@@ -132,13 +117,13 @@ namespace HashiTaku
 		return pPlayerInput->GetValue(GameInput::ValueType::Player_Move);
 	}
 
-	DXSimp::Vector2 PlayerActState_Base::GetInputLeftStickFromCam() const
+	DXSimp::Vector2 PlayerActState_Base::GetInputLeftStickFromCam()
 	{
 		// 入力値を取得
 		DXSimp::Vector2 inputVec = GetInputLeftStick();
 
 		// カメラから見た入力とする
-		const Transform& camTrans = pActionController->GetCamera().GetTransform();
+		const Transform& camTrans = GetPlayerActionController().GetCamera().GetTransform();
 		DXSimp::Vector3 inputVecByCam = inputVec.x * camTrans.Right() +
 			inputVec.y * camTrans.Forward();
 		inputVec = { inputVecByCam.x, inputVecByCam.z };
@@ -149,10 +134,12 @@ namespace HashiTaku
 
 	DXSimp::Vector3 PlayerActState_Base::GetAtkEnemyPos()
 	{
+		PlayerActionController_Base& actCon = GetPlayerActionController();
+
 		// ターゲットしているなら
-		if (pActionController->GetIsTargeting())
+		if (actCon.GetIsTargeting())
 		{
-			auto* pAccepter = pActionController->GetTargetAccepter();
+			auto* pAccepter = actCon .GetTargetAccepter();
 			if (pAccepter)
 				return pAccepter->GetWorldPos();
 		}
@@ -177,25 +164,16 @@ namespace HashiTaku
 		return atkEnemyPos;
 	}
 
-	bool PlayerActState_Base::CanDoProcess() const
-	{
-		// アニメーションがなければ
-		if (!pActionController->GetAnimation()) return false;
-
-		// RBがないなら
-		if (!pActionController->GetRB()) return false;
-
-		return true;
-	}
-
 	bool PlayerActState_Base::IsInputVector(InputVector _checkVector)
 	{
 		// 入力値を取得
 		DXSimp::Vector2 inputVec = GetInputLeftStick();
 		if (inputVec.Length() < CAN_ACTION_STICKINPUT) return false;	// 傾きが十分でないなら
 
+		PlayerActionController_Base& actCon = GetPlayerActionController();
+
 		// カメラから見た入力とする
-		const Transform& camTrans = pActionController->GetCamera().GetTransform();
+		const Transform& camTrans = actCon.GetCamera().GetTransform();
 		DXSimp::Vector3 inputVecByCam = inputVec.x * camTrans.Right() +
 			inputVec.y * camTrans.Forward();
 		inputVec = { inputVecByCam.x, inputVecByCam.z };
@@ -205,7 +183,7 @@ namespace HashiTaku
 		DXSimp::Vector3 baseVec;
 
 		// ターゲット時で敵がいるなら　敵の方向ベクトルを基準ベクトルに
-		if (pActionController->GetIsTargeting() &&
+		if (actCon.GetIsTargeting() &&
 			GetTargetAccepter())
 		{
 			DXSimp::Vector3 targetObjVec =
@@ -243,7 +221,7 @@ namespace HashiTaku
 		if (!pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack)) return false;
 
 		// ターゲットしていないなら
-		if (!pActionController->GetIsTargeting()) return false;
+		if (!GetPlayerActionController().GetIsTargeting()) return false;
 
 		if (!IsInputVector(_inputVecter)) return false;
 
@@ -255,10 +233,11 @@ namespace HashiTaku
 		// ターゲットの方向見ないなら
 		if (!isTargetLookAtEnemy) return;
 
-		const ITargetAccepter* pTargetObj = pActionController->GetTargetAccepter();
+		PlayerActionController_Base& actCon = GetPlayerActionController();
+		const ITargetAccepter* pTargetObj = actCon.GetTargetAccepter();
 		if (!pTargetObj) return;	// ターゲットがいないなら
 
-		Transform& transform = pActionController->GetMyTransform();
+		Transform& transform = actCon.GetMyTransform();
 
 		// ターゲットへのベクトルを求める
 		const DXSimp::Vector3& playerPos = transform.GetPosition();
@@ -269,8 +248,14 @@ namespace HashiTaku
 		// 回転させる
 		DXSimp::Quaternion targetRot = Quat::RotateToVector(vector);
 		DXSimp::Quaternion myRot = transform.GetRotation();
-		myRot = DXSimp::Quaternion::Slerp(myRot, targetRot, targetLookRotateSpeed * DeltaTime());
+		myRot = DXSimp::Quaternion::Slerp(myRot, 
+			targetRot, 
+			targetLookRotateSpeed * DeltaTime());
 
 		transform.SetRotation(myRot);
+	}
+	PlayerActionController_Base& PlayerActState_Base::GetPlayerActionController()
+	{
+		return GetDeliverActionController<PlayerActionController_Base>();
 	}
 }

@@ -46,9 +46,6 @@ namespace HashiTaku
 		/// @brief ターゲット時に敵を見る行動にするか？
 		bool isTargetLookAtEnemy;
 	protected:
-		/// @brief プレイヤーアクションコントローラー
-		PlayerActionController_Base* pActionController;
-
 		/// @brief ゲーム入力クラス
 		static GameInput* pPlayerInput;
 	public:
@@ -111,14 +108,6 @@ namespace HashiTaku
 		/// @return プレイヤー
 		CP_Player& GetPlayer();
 
-		/// @brief RigidBodyを取得
-		/// @return RigidBody
-		CP_RigidBody& GetRB();
-
-		/// @brief プレイヤーのトランスフォームを取得
-		/// @return トランスフォーム
-		Transform& GetMyTransform();
-
 		/// @brief アニメーションを取得する
 		/// @return アニメーション
 		CP_Animation* GetAnimation();
@@ -127,13 +116,9 @@ namespace HashiTaku
 		/// @return ターゲット先のポインタ
 		const ITargetAccepter* GetTargetAccepter();
 
-		/// @brief Δtを取得
-		/// @return Δt
-		float DeltaTime() const;
-
 		/// @brief Δtを進める速度を取得
 		/// @return Δt進める速度
-		float GetDeltaSpeed() const;
+		float GetDeltaSpeed();
 
 		/// @brief コントローラーの左スティックの入力を取得
 		/// @return 左スティックの入力
@@ -141,15 +126,11 @@ namespace HashiTaku
 
 		/// @brief カメラから見たコントローラーの左スティックの入力を取得
 		/// @return カメラから見た左スティックの入力(yにZ軸成分)
-		DXSimp::Vector2 GetInputLeftStickFromCam() const;
+		DXSimp::Vector2 GetInputLeftStickFromCam();
 
 		/// @brief 攻撃する敵の座標を取得する
 		/// @return 敵の座標
 		DXSimp::Vector3 GetAtkEnemyPos();
-
-		/// @brief 処理を行える状態か？
-		/// @return 処理を行える状態か取得
-		bool CanDoProcess() const;
 
 		/// @brief その方向に入力できているか確認する
 		/// @param _checkVector 確認したい方向
@@ -169,6 +150,10 @@ namespace HashiTaku
 	private:
 		/// @brief ターゲットの方向を見る
 		void UpdateTargetLook();
+
+		/// @brief プレイヤーのアクションコントローラーを取得する
+		/// @return プレイヤーのアクションコントローラー
+		PlayerActionController_Base& GetPlayerActionController();
 	protected:
 		// アニメーションコントローラ内のプレイヤー名
 		constexpr static auto SPEEDRATIO_PARAMNAME{ "speed" };

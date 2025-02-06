@@ -28,10 +28,10 @@ namespace HashiTaku
 		UpdateAttackInfo();
 
 		// 攻撃フラグを立てる
-		pActionController->SetAnimationTrigger(ATTACKTRIGGER_PARAMNAME);
+		GetActionController().SetAnimationTrigger(ATTACKTRIGGER_PARAMNAME);
 
 		// 下に落ちなくする
-		CastAirController().SetIsDownForce(false);
+		GetAirController().SetIsDownForce(false);
 		ClearVelocity(true);
 	}
 
@@ -47,7 +47,7 @@ namespace HashiTaku
 	void PlayerAirAttack::OnEndBehavior()
 	{
 		// 落ちるようにする
-		CastAirController().SetIsDownForce(true);
+		GetAirController().SetIsDownForce(true);
 	}
 
 	void PlayerAirAttack::OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName)
@@ -58,16 +58,18 @@ namespace HashiTaku
 
 	std::unique_ptr<PlayerAttackInformation> PlayerAirAttack::CreateAttackInfo()
 	{
-		return std::make_unique<PlayerAttackInformation>(&pActionController->GetPlayer());
+		return std::make_unique<PlayerAttackInformation>(&GetAirController().GetPlayer());
 	}
 
 	void PlayerAirAttack::UpdateCombInput()
 	{
-		if (!pActionController->GetCanInput()) return;	// 入力受け付けていないなら
+		PlayerAirActionController& actCon = GetAirController();
+
+		if (!actCon.GetCanInput()) return;	// 入力受け付けていないなら
 
 		// 予約状態にセット
 		if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
-			pActionController->SetReserveState(static_cast<int>(nextCombAtkState));
+			actCon.SetReserveState(static_cast<int>(nextCombAtkState));
 	}
 
 	void PlayerAirAttack::LookAtEnemy()
@@ -95,7 +97,13 @@ namespace HashiTaku
 
 	void PlayerAirAttack::ClearVelocityY()
 	{
-		CP_RigidBody& rb = GetRB();
-		rb.ClearVelocity();
+		IActionController& actCon = GetActionController();
+
+		// y速度だけ0にする
+		DXSimp::Vector3 curVelocity;
+		actCon.GetVelocity(curVelocity);
+		curVelocity.y = 0.0f;
+
+		GetActionController().SetVelocity(curVelocity);
 	}
 }

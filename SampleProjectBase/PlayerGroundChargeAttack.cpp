@@ -163,7 +163,7 @@ namespace HashiTaku
 		if (!pCamMove)
 		{
 			// カメラ移動コンポーネント取得
-			GameObject& cameraObj = pActionController->GetCamera().GetGameObject();
+			GameObject& cameraObj = GetGroundController().GetCamera().GetGameObject();
 			pCamMove = cameraObj.GetComponent<CP_CameraMove>();
 
 			if (!pCamMove) return;	// 取得できないなら

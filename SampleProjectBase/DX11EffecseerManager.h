@@ -35,12 +35,19 @@ namespace HashiTaku
 
 		/// @brief 前フレームのタイムスケール
 		float prevTimeScale;
-
+		
+		/// @brief エフェクトを完全に停止させる
 		bool isPause;
+
 	public:
 		/// @brief エフェクトの何もなしを表すハンドル
 		static constexpr int NONE_VFX_HANDLE{ -9999 };
 
+
+#ifdef EDIT
+		// エフェクトを表示させるか？
+		bool isVfxDisplay{ true };
+#endif // EDIT
 	public:
 		/// @brief 初期化関数
 		void Init();

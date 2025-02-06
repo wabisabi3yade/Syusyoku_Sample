@@ -108,9 +108,6 @@ namespace HashiTaku
 		// ワープモーション開始時の座標
 		DXSimp::Vector3 warpStartPos;
 #endif
-	protected:
-		/// @brief アクションコントローラー
-		BossActionController* pActionController;
 	public:
 		BossActState_Base();
 		virtual ~BossActState_Base() {}
@@ -128,6 +125,10 @@ namespace HashiTaku
 
 		/// @brief 状態切り替え終了処理
 		void OnEnd() override;
+
+		/// @brief ボスのアクションコントローラーを取得
+		/// @return ボスのアクションコントローラー
+		BossActionController& GetBossActionController();
 
 		/// @brief ダメージ時処理
 		virtual void OnDamage();
@@ -167,24 +168,12 @@ namespace HashiTaku
 		void SetWarpTargetPos(const DXSimp::Vector3& _targetPos);
 
 		/// @brief トランスフォームを取得する
-		/// @return ボスのトランスフォーム
-		Transform& GetBossTransform();
-
-		/// @brief トランスフォームを取得する
 		/// @return プレイヤーのトランスフォーム
-		Transform& GetPlayerTransform();
+		Transform* GetPlayerTransform();
 
 		/// @brief アニメーションコントローラポーネントを取得
 		/// @return コンポーネント
 		CP_Animation* GetAnimation();
-
-		/// @brief Rbを取得
-		/// @return Rbコンポーネント
-		CP_RigidBody& GetRB();
-
-		/// @brief 経過時間を取得する
-		/// @return 経過時間
-		float DeltaTime() const;
 
 		void ImGuiDebug() override;
 	private:

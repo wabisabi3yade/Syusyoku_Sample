@@ -44,9 +44,9 @@ namespace HashiTaku
 	void BossBreakEndKnock::CalcKnockTargetPos()
 	{
 		// ブレイク値をリセット
-		pActionController->GetBoss().SetBreakValue(0.0f);
+		GetBossActionController().GetBoss().SetBreakValue(0.0f);
 
-		Transform& transform = GetBossTransform();
+		Transform& transform = GetMyTransform();
 		DXSimp::Vector3 targetPos =
 			transform.GetPosition() - transform.Forward() * knockDistance;
 

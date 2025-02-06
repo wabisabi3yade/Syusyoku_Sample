@@ -35,19 +35,23 @@ namespace HashiTaku
 #ifdef EDIT
 		if (isIdleOnly) return;
 #endif
-
 		using ActDis = BossActionController::ActDistance;
+
+		Transform* pPlayerTrans = GetPlayerTransform();
+		if (!pPlayerTrans) return;
+
+		BossActionController& bossActCon = GetBossActionController();
 
 		// ‹——£‚ð‹‚ß‚é
 		DXSimp::Vector3 playerToDistance =
-			GetPlayerTransform().GetPosition() - GetBossTransform().GetPosition();
+			pPlayerTrans->GetPosition() - GetMyTransform().GetPosition();
 		float playerToLength = playerToDistance.Length();
 
 		// ‚Ç‚Ì‹——£‚©Žæ“¾
-		ActDis curDisType = pActionController->JudgeActDistance(playerToLength);
+		ActDis curDisType = bossActCon.JudgeActDistance(playerToLength);
 
 		// ŽŸ‚Ìó‘Ô‚ðƒ‰ƒ“ƒ_ƒ€‚ÅŽó‚¯Žæ‚é
-		nextState = pActionController->RandState(curDisType);
+		nextState = bossActCon.RandState(curDisType);
 
 		// Œˆ‚Ü‚Á‚½‚±‚Æ‚ð“`‚¦‚é
 		isDecideNextState = true;

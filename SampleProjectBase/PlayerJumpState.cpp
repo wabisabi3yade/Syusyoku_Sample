@@ -73,7 +73,7 @@ namespace HashiTaku
 		isAlreadyJump = true;
 
 		// è„Ç…îÚÇ‘
-		GetRB().AddImpulse(Vec3::Up * jumpPower);
+		GetActionController().AddImpulse(Vec3::Up * jumpPower);
 	}
 
 	void PlayerJumpState::LookInputVectorInstant()

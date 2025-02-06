@@ -38,7 +38,7 @@ namespace HashiTaku
 	void BossJumpAttack::DebugDisplay()
 	{
 #ifdef EDIT
-		const Transform& t = GetBossTransform();
+		const Transform& t = GetMyTransform();
 		Geometory::SetPosition(t.GetPosition() + t.Forward() * fallPosOffset);
 		Geometory::SetScale(DXSimp::Vector3::One * 0.1f);
 		Geometory::DrawSphere();
@@ -92,15 +92,19 @@ namespace HashiTaku
 		VertivalMove();
 
 		// 速度をRbに渡す
-		GetRB().SetVelocity(curMoveSpeed);
+		GetActionController().SetVelocity(curMoveSpeed);
 	}
 
 	void BossJumpAttack::HorizonMove()
 	{
 		// プレイヤーとの距離を見て速度を変更しながら、近づいてくる
-		Transform& bossTrans = GetBossTransform();
-		const DXSimp::Vector3& playerPos = GetPlayerTransform().GetPosition();
+		Transform& bossTrans = GetMyTransform();
+		Transform* pPlayerTrans = GetPlayerTransform();
+		if (!pPlayerTrans) return;
+
+		const DXSimp::Vector3& playerPos = pPlayerTrans->GetPosition();
 		float deltaTime = DeltaTime();
+		// アニメーションの現在の割合
 		float animRatio = GetAnimation()->GetCurrentPlayRatio();
 
 		// 速度係数を取得する
@@ -134,7 +138,7 @@ namespace HashiTaku
 	{
 		if (DeltaTime() < Mathf::epsilon) return;
 
-		Transform& bossTrans = GetBossTransform();
+		Transform& bossTrans = GetMyTransform();
 		float deltaTime = DeltaTime();
 		float animRatio = GetAnimation()->GetCurrentPlayRatio();
 

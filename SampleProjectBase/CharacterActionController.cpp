@@ -27,6 +27,32 @@ namespace HashiTaku
 		StateMachine_Base::Begin();
 	}
 
+	void CharacterActionController::AddForce(const DXSimp::Vector3& _power)
+	{
+#ifdef EDIT
+		if (!pRigidBody)
+		{
+			HASHI_DEBUG_LOG("RigidBody‚ª‚ ‚è‚Ü‚¹‚ñ");
+			return;
+		}
+#endif // EDIT
+
+		pRigidBody->AddForce(_power);
+	}
+
+	void CharacterActionController::AddImpulse(const DXSimp::Vector3& _power)
+	{
+#ifdef EDIT
+		if (!pRigidBody)
+		{
+			HASHI_DEBUG_LOG("RigidBody‚ª‚ ‚è‚Ü‚¹‚ñ");
+			return;
+		}
+#endif // EDIT
+
+		pRigidBody->AddImpulse(_power);
+	}
+
 
 	CharacterChangeAnimObserver& CharacterActionController::GetChangeAnimObserver()
 	{
@@ -36,11 +62,6 @@ namespace HashiTaku
 	Transform& CharacterActionController::GetMyTransform()
 	{
 		return pCharacter->GetTransform();
-	}
-
-	CP_RigidBody* CharacterActionController::GetRB()
-	{
-		return pRigidBody;
 	}
 
 	void CharacterActionController::DebugDisplay()
@@ -79,6 +100,39 @@ namespace HashiTaku
 		pAnimation->SetTrigger(_paramName);
 	}
 
+	void CharacterActionController::GetVelocity(DXSimp::Vector3& _outVelocity)
+	{
+#ifdef EDIT
+		if (!pRigidBody)
+		{
+			HASHI_DEBUG_LOG("RigidBody‚ª‚ ‚è‚Ü‚¹‚ñ");
+			return;
+		}
+#endif // EDIT
+
+		_outVelocity = pRigidBody->GetVelocity();
+	}
+
+	DXSimp::Vector3 CharacterActionController::GetVelocity() const
+	{
+		if (!pRigidBody) return DXSimp::Vector3::Zero;
+
+		return pRigidBody->GetVelocity();
+	}
+
+	void CharacterActionController::SetVelocity(const DXSimp::Vector3& _velocity)
+	{
+#ifdef EDIT
+		if (!pRigidBody)
+		{
+			HASHI_DEBUG_LOG("RigidBody‚ª‚ ‚è‚Ü‚¹‚ñ");
+			return;
+		}
+#endif // EDIT
+
+		pRigidBody->SetVelocity(_velocity);
+	}
+
 	bool CharacterActionController::GetAnimationBool(const std::string& _paramName)
 	{
 		if (!CheckHaveAnimation()) return false;
@@ -95,6 +149,11 @@ namespace HashiTaku
 	{
 		if (!CheckHaveAnimation()) return 0.0f;
 		return pAnimation->GetFloat(_paramName);
+	}
+
+	float CharacterActionController::DeltaTime() const
+	{
+		return pCharacter->DeltaTime();
 	}
 
 	json CharacterActionController::Save()

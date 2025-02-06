@@ -43,9 +43,9 @@ namespace HashiTaku
 	void BossGroundMove::OnEndBehavior()
 	{
 		// ブレンドアニメーションの速度を渡す
-		pActionController->GetAnimation()->SetFloat(SPEED_ANIMPARAM_NAME, 0.0f);
+		GetActionController().SetAnimationFloat(SPEED_ANIMPARAM_NAME, 0.0f);
 
-		GetRB().SetVelocity({ 0.0f, 0.0f ,0.0f });
+		GetActionController().SetVelocity({0.0f, 0.0f ,0.0f});
 	}
 
 	void BossGroundMove::TransitionCheckUpdate()
@@ -53,7 +53,7 @@ namespace HashiTaku
 		// 近距離範囲に入っているか
 		if (CheckNearTransition())
 		{
-			pActionController->ChangeState(BossState::Idle);
+			GetBossActionController().ChangeState(BossState::Idle);
 		}
 
 	}
@@ -63,11 +63,15 @@ namespace HashiTaku
 		using namespace DXSimp;
 		float deltaTime = DeltaTime();
 
-		Transform& myTransform = GetBossTransform();
-		Transform& playerTrans = GetPlayerTransform();
+		Transform& myTransform = GetMyTransform();
+		Transform* playerTrans = GetPlayerTransform();
+#ifdef EDIT
+		if (!playerTrans) return;
+#endif // EDIT
+
 
 		// プレイヤーへの方向ベクトルを求める
-		Vector3 targetVec = playerTrans.GetPosition() - myTransform.GetPosition();
+		Vector3 targetVec = playerTrans->GetPosition() - myTransform.GetPosition();
 		targetVec.y = 0.0f;
 		targetVec.Normalize();
 
@@ -85,7 +89,7 @@ namespace HashiTaku
 		using namespace DXSimp;
 
 		float deltaTime = DeltaTime();
-		Transform& myTransform = pActionController->GetBoss().GetTransform();
+		Transform& myTransform = GetMyTransform();
 
 		// 加速
 		currentSpeed += acceleration * deltaTime;
@@ -95,9 +99,11 @@ namespace HashiTaku
 		Vector3 movement = myTransform.Forward() * currentSpeed;
 
 		// 移動する(y座標は反映させない)
-		auto& pRb = GetRB();
-		movement.y = pRb.GetVelocity().y;
-		pRb.SetVelocity(movement);
+		BossActionController& bossActCon = GetBossActionController();
+		DXSimp::Vector3 curVelocity;
+		bossActCon.GetVelocity(curVelocity);
+		movement.y = curVelocity.y;
+		bossActCon.SetVelocity(movement);
 
 		CP_Animation* pAnimation = GetAnimation();
 		if (!pAnimation) return;
@@ -121,14 +127,19 @@ namespace HashiTaku
 	{
 		using namespace DXSimp;
 
+		Transform* pPlayerTrans = GetPlayerTransform();
+		BossActionController& bossActCon = GetBossActionController();
+
+		if (!pPlayerTrans) return false;
+
 		// プレイヤーとの距離
-		Vector3 playerToDis = GetPlayerTransform().GetPosition() -
-			GetBossTransform().GetPosition();
+		Vector3 playerToDis = pPlayerTrans->GetPosition() -
+			GetMyTransform().GetPosition();
 		float distanceLen = playerToDis.Length();
 
 		// 範囲外なら
 		float shortDis =
-			pActionController->GetActDistanceLength(BossActionController::ActDistance::Short);
+			bossActCon .GetActDistanceLength(BossActionController::ActDistance::Short);
 		if (distanceLen > shortDis) return false;
 
 		return true;

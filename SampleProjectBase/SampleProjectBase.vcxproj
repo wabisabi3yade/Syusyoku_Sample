@@ -213,6 +213,7 @@
     <ClCompile Include="CameraMoveState_Base.cpp" />
     <ClCompile Include="CameraFollowMove.cpp" />
     <ClCompile Include="CameraWinState.cpp" />
+    <ClCompile Include="CharacterActState_Base.cpp" />
     <ClCompile Include="CP_AudioListener.cpp" />
     <ClCompile Include="BattleDirection.cpp" />
     <ClCompile Include="CP_BattleButtonGroup.cpp" />
@@ -470,6 +471,7 @@
     <ClInclude Include="CP_SoundManager.h" />
     <ClInclude Include="CP_StylishUI.h" />
     <ClInclude Include="BossAttackInformation.h" />
+    <ClInclude Include="IActionController.h" />
     <ClInclude Include="IApplyDepthShadow.h" />
     <ClInclude Include="IAttacker_AcceptParry.h" />
     <ClInclude Include="IBoneSupplier.h" />

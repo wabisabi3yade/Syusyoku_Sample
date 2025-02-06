@@ -11,6 +11,6 @@ namespace HashiTaku
 
 	void PlayerIdleState::OnStartBehavior()
 	{
-		pActionController->SetAnimationFloat(SPEEDRATIO_PARAMNAME, 0.0f);
+		GetActionController().SetAnimationFloat(SPEEDRATIO_PARAMNAME, 0.0f);
 	}
 }

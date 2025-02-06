@@ -26,6 +26,9 @@ namespace HashiTaku
 		// 物理エンジン関係
 		void ImGuiPhisics();
 
+		// Vfx関係
+		void ImGuiEffekseer();
+
 		// レンダーターゲット関係
 		void ImGuiRenderTarget();
 	};

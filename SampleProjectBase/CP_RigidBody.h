@@ -113,9 +113,6 @@ namespace HashiTaku
 		/// @param _velocity 速度
 		void SetVelocity(const DXSimp::Vector3& _velocity);
 
-		/// @brief 速度をクリアする
-		void ClearVelocity();
-
 		/// @brief 衝突オブジェクトを取得する
 		/// @param _outObject 結果オブジェクト
 		btCollisionObject& GetCollisionObject();

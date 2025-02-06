@@ -11,9 +11,6 @@ namespace HashiTaku
 
 	void PlayerAirState::OnStart()
 	{
-		// 処理できる状態か？
-		if (!CanDoProcess()) return;
-
 		PlayerActState_Base::OnStart();
 
 		// 開始処理
@@ -22,9 +19,6 @@ namespace HashiTaku
 
 	void PlayerAirState::Update()
 	{
-		// 処理できる状態か？
-		if (!CanDoProcess()) return;
-
 		InputUpdate();
 
 		PlayerActState_Base::Update();
@@ -36,9 +30,6 @@ namespace HashiTaku
 
 	void PlayerAirState::OnEnd()
 	{
-		// 処理できる状態か？
-		if (!CanDoProcess()) return;
-
 		PlayerActState_Base::OnEnd();
 
 		OnEndBehavior();
@@ -48,14 +39,14 @@ namespace HashiTaku
 	{
 	}
 
-	PlayerAirActionController& PlayerAirState::CastAirController()
+	PlayerAirActionController& PlayerAirState::GetAirController()
 	{
-		return static_cast<PlayerAirActionController&>(*pActionController);
+		return GetDeliverActionController<PlayerAirActionController>();
 	}
 
 	void PlayerAirState::ChangeState(PlayerState _nextState, bool _isForce)
 	{
-		CastAirController().ChangeAirState(_nextState, _isForce);
+		GetAirController().ChangeAirState(_nextState, _isForce);
 	}
 
 	void PlayerAirState::ImGuiDebug()
@@ -75,7 +66,7 @@ namespace HashiTaku
 
 	void PlayerAirState::InputUpdate()
 	{
-		if (!pActionController->GetCanInput()) return;
+		if (!GetAirController().GetCanInput()) return;
 
 		using enum GameInput::ButtonType;
 	}
