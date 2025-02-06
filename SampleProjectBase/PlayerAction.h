@@ -187,10 +187,6 @@ namespace HashiTaku
 		/// @brief 接地チェッカーを探して取得
 		void FindGroundChecker();
 
-		/// @brief 更新できるか取得
-		/// @return 更新できるか？
-		bool GetCanUpdate();
-
 		/// @brief  ターゲット開始時のお処理
 		void OnBeginTargeting();
 

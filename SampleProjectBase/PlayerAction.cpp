@@ -128,6 +128,11 @@ namespace HashiTaku
 
 	CP_Camera& PlayerAction::GetCamera()
 	{
+		if (!pCamera)
+		{
+			assert(!"カメラが設定されていません");
+		}
+
 		return *pCamera;
 	}
 
@@ -292,13 +297,6 @@ namespace HashiTaku
 
 		// 接地チェッカーにセットする
 		pGroundChecker->SetGroundNotifyer(*this);
-	}
-
-	bool PlayerAction::GetCanUpdate()
-	{
-		if (!pCamera) return false;
-
-		return true;
 	}
 
 	void PlayerAction::OnBeginTargeting()
