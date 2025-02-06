@@ -5,6 +5,10 @@
 
 namespace HashiTaku
 {
+
+	// ヒットストップ中に進める速度
+	constexpr float TIMESPEED_ON_HITSTOP(0.015f);
+	
 	CP_Character::CP_Character() :
 		currentHP(0.0f),
 		maxHP(1.0f),
@@ -73,7 +77,7 @@ namespace HashiTaku
 		// オブジェクトの経過速度を止める
 		GameObject& go = GetGameObject();
 		hsBeforeDeltaTime = go.GetDeltaSpeed();
-		go.SetDeltaTimeSpeed(0.0f);
+		go.SetDeltaTimeSpeed(TIMESPEED_ON_HITSTOP);
 	}
 
 	void CP_Character::OnHitStopEnd()
@@ -144,15 +148,21 @@ namespace HashiTaku
 #endif // EDIT
 	}
 
-	void CP_Character::OnTakeDamage(const AttackInformation& _attackInfo,
-		const DXSimp::Vector3& _contactPos)
+	void CP_Character::OnTakeDamage(const AttackInformation& _atkInfo,
+		const DXSimp::Vector3& _contactWorldPos)
 	{
 		// 体力を減らす
-		DecadeHp(_attackInfo.GetDamageValue());
+		DecadeHp(_atkInfo.GetDamageValue());
 
 		// 体力がなくなったら
 		if (currentHP <= 0.0f)
 			OnDeath();
+
+		// エフェクト
+		CreateVfx(_atkInfo.GetHitVfxInfo(), _contactWorldPos);
+
+		// サウンド
+		CreateSoundFX(_atkInfo.GetHitSEParam(), _contactWorldPos);
 	}
 
 	void CP_Character::CreateVfx(const CreateVfxInfo& _vfxInfo,

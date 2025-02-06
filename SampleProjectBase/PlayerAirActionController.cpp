@@ -78,11 +78,10 @@ namespace HashiTaku
 	void PlayerAirActionController::AddDownForce()
 	{
 		if (!isDownForce) return;
+		if (!pRigidBody) return;
 
 		// ‰ºŒü‚«‚É—Í‚ð‰Á‚¦‚é
-		GetRB()->AddForce(Vec3::Up * downForcePower);
-
-		HASHI_DEBUG_LOG("down");
+		pRigidBody->AddForce(Vec3::Up * downForcePower);
 	}
 
 	void PlayerAirActionController::ImGuiDebug()

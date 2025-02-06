@@ -176,6 +176,20 @@ namespace HashiTaku
 		pAnimConPlayer->GetCurNodePlayer().SetCurPlayRatio(_playRatio);
 	}
 
+	void CP_Animation::SetPlayFrame(u_int _playFrame)
+	{
+#ifdef EDIT
+		if (!pAnimConPlayer)
+		{
+			HASHI_DEBUG_LOG("アニメーション再生が作成されていません");
+			return;
+		}
+#endif // EDIT
+
+		pAnimConPlayer->GetCurNodePlayer().SetCurPlayFrame(_playFrame);
+
+	}
+
 	void CP_Animation::AddChangeAnimObserver(ChangeAnimObserver& _observer)
 	{
 		if (!pAnimConPlayer)
@@ -242,6 +256,19 @@ namespace HashiTaku
 #endif // EDIT
 
 		return pAnimConPlayer->GetCurNodePlayer().GetCurPlayRatio();
+	}
+
+	u_int CP_Animation::GetCurrentPlayFrame() const
+	{
+#ifdef EDIT
+		if (!pAnimConPlayer)
+		{
+			HASHI_DEBUG_LOG("アニメーション再生が作成されていません");
+			return 0;
+		}
+#endif // EDIT
+
+		return pAnimConPlayer->GetCurNodePlayer().GetCurPlayFrame();
 	}
 
 	BoneList* CP_Animation::GetMoveBoneList()

@@ -77,7 +77,7 @@ namespace HashiTaku
 		if (prevAnimRatio > animRatio)
 		{
 			isKnockMoving = false;	// ˆÚ“®‚ğI‚¦‚é
-			GetRB().SetVelocity(DXSimp::Vector3::Zero);
+			GetActionController().SetVelocity(DXSimp::Vector3::Zero);
 			return;
 		}
 
@@ -85,9 +85,8 @@ namespace HashiTaku
 		float curKnockSpeed = knockSpeedCurve.GetValue(animRatio) * maxKnockMoveSpeed;
 
 		// ˆÚ“®‘¬“x‚ğ‹‚ß‚é(Œã‚ë‚ÉˆÚ“®)
-		DXSimp::Vector3 moveSpeed =
-			-GetMyTransform().Forward() * curKnockSpeed;
-		GetRB().SetVelocity(moveSpeed);
+		DXSimp::Vector3 moveSpeed = -GetMyTransform().Forward() * curKnockSpeed;
+		GetActionController().SetVelocity(moveSpeed);
 
 		prevAnimRatio = animRatio;
 	}

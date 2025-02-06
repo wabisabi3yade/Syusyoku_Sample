@@ -63,7 +63,7 @@ namespace HashiTaku
 
 		/// @brief 空中行動のコントローラーにキャスト
 		/// @return 空中行動コントローラー
-		PlayerAirActionController& CastAirController();
+		PlayerAirActionController& GetAirController();
 
 		/// @brief 状態を遷移する
 		/// @param _changeSate 遷移先の状態

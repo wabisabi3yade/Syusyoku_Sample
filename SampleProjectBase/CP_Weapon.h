@@ -71,8 +71,9 @@ namespace HashiTaku
 		void Draw() override;
 
 		/// @brief 攻撃できるか取得
+		/// @param _targetObject 対象のオブジェクト
 		/// @return 攻撃できるか？
-		bool CanAttack() const;
+		bool CanAttack(const CollisionInfo& _otherColInfo) const;
 
 		/// @brief 攻撃処理
 		/// @param _damager 攻撃与える対象

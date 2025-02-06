@@ -961,6 +961,9 @@
     <Filter Include="ソース ファイル\Component\InGame\Weapon\IAttacker\IAttacker_AcceptParry">
       <UniqueIdentifier>{658aeec2-3f70-4c9f-bf42-15eecd7708a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\InGame\Character\ActionState\InterFace">
+      <UniqueIdentifier>{7e7f76a9-a2ae-4557-b974-981037e9d753}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1759,6 +1762,9 @@
     </ClCompile>
     <ClCompile Include="BossAttackInformation.cpp">
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterActState_Base.cpp">
+      <Filter>ソース ファイル\InGame\Character\ActionState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2613,6 +2619,9 @@
     </ClInclude>
     <ClInclude Include="BossAttackInformation.h">
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="IActionController.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

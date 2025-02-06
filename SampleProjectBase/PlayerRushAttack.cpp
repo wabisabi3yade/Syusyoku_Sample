@@ -51,7 +51,7 @@ namespace HashiTaku
 		PlayerAttackState::OnStartBehavior();
 
 		// ターゲット先を取得する
-		pTargetObj = pActionController->GetTargetAccepter();
+		pTargetObj = GetGroundController().GetTargetAccepter();
 
 		// リセット
 		prevDistanceHori = 0.0f;
@@ -82,9 +82,10 @@ namespace HashiTaku
 		if (deltaTime < Mathf::epsilon) return;	// Δtが0なら
 
 		Transform& playerTrans = GetPlayer().GetGameObject().GetTransform();
+		PlayerGroundActionController& actCon = GetGroundController();
 
 		// アニメーションの割合を取得する
-		CP_Animation* pAnimation = pActionController->GetAnimation();
+		CP_Animation* pAnimation = actCon.GetAnimation();
 		if (!pAnimation) return;
 		float animPlayRatio = pAnimation->GetCurrentPlayRatio();
 
@@ -98,7 +99,7 @@ namespace HashiTaku
 		float horiSpeed = diffHoriDis / deltaTime;
 
 		// 進める
-		GetRB().SetVelocity(playerTrans.Forward() * horiSpeed);
+		actCon.SetVelocity(playerTrans.Forward() * horiSpeed);
 
 		// 次フレームの為に更新
 		prevDistanceHori = horiDistance;
@@ -112,7 +113,7 @@ namespace HashiTaku
 			// アニメーションを斬り始めるようにする
 			pAnimation->SetPlayRatio(slashBeginAnimRatio);
 
-			GetRB().SetVelocity(DXSimp::Vector3::Zero);
+			actCon.SetVelocity(DXSimp::Vector3::Zero);
 		}
 	}
 

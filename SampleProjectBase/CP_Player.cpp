@@ -13,6 +13,12 @@ namespace HashiTaku
 	// 死んだときのアニメーションパラメータ名
 	constexpr auto DEAD_ANIMPARAM("deadTrigger");
 
+	// アニメーション巻き戻し関係
+	// ヒットストップを行うレベル(これ以上のレベルなら)
+	constexpr AttackInformation::AttackLevel REWIND_ANIM_ATKLV(AttackInformation::AttackLevel::High);	
+	// アニメーションを巻き戻すフレーム数
+	constexpr u_int REWIND_ANIM_BACKFRAME(1);	
+
 	bool CP_Player::isDebugInvicible = false;
 
 	CP_Player::CP_Player() :
@@ -63,29 +69,21 @@ namespace HashiTaku
 		const DXSimp::Vector3& _contactWorldPos)
 	{
 		// ダメージ値に応じたスタイリッシュポイントを加算
-		AddStylishPoint(_atkInfo.GetDamageValue() * stylishPointRatioFromAtkDmg);
+		float addStylishPoint = CalculateStylishPoint(_atkInfo.GetDamageValue());
+		AddStylishPoint(addStylishPoint);
 
 		// パッド振動
 		InSceneSystemManager::GetInstance()->GetInput().
 			BeginVibration(_atkInfo.GetPadShakePower(), _atkInfo.GetPadShakeTime());
 
-		// ヒットストップ
-		if (CP_HitStopManager* pHitStop = CP_HitStopManager::GetInstance())
-		{
-			pHitStop->HitStopBegin(_atkInfo.GetHitStopFlame());
-		}
+		// ヒットストップを行う
+		PlayAttackHitStop(_atkInfo);
 
 		// カメラを揺らす
 		if (_atkInfo.GetIsCamShake() && pCameraMove)
 		{
 			pCameraMove->ShakeCamera(_atkInfo.GetCamShakeParam());
 		}
-
-		// エフェクト
-		CreateVfx(_atkInfo.GetHitVfxInfo(), _contactWorldPos);
-
-		// サウンド
-		CreateSoundFX(_atkInfo.GetHitSEParam(), _contactWorldPos);
 	}
 
 	void CP_Player::Awake()
@@ -150,6 +148,40 @@ namespace HashiTaku
 		if (GetDead()) return false;
 
 		return true;
+	}
+
+	float CP_Player::CalculateStylishPoint(float _damageValue) const
+	{
+		return _damageValue * stylishPointRatioFromAtkDmg;
+	}
+
+	void CP_Player::PlayAttackHitStop(const AttackInformation& _atkInfo)
+	{
+		// ヒットストップマネジャーを取得する
+		CP_HitStopManager* pHitStop = CP_HitStopManager::GetInstance();
+		if (!pHitStop) return;	// 無ければヒットストップを行わない
+
+		// ヒットストップを始める
+		pHitStop->HitStopBegin(_atkInfo.GetHitStopFlame());
+
+		// アニメーションを巻き戻すヒットストップを行う
+		u_int atkId = static_cast<u_int>(_atkInfo.GetAttackLevel());
+		u_int animBackAtkId = static_cast<u_int>(REWIND_ANIM_ATKLV);
+		if (atkId >= animBackAtkId)	// 巻き戻すレベル以上なら
+		{
+			// アニメーションを巻き戻す
+			RewindAnimation();
+		}
+	}
+
+	void CP_Player::RewindAnimation()
+	{
+		if (!pAnimation) return;
+
+		// アニメーションのフレーム数を巻き戻す
+		u_int curAnimFrame = pAnimation->GetCurrentPlayFrame();
+		pAnimation->SetPlayFrame(curAnimFrame - REWIND_ANIM_BACKFRAME);
+		HASHI_DEBUG_LOG("巻き戻す");
 	}
 
 	void CP_Player::SetRequireObject()

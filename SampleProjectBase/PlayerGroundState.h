@@ -80,7 +80,7 @@ namespace HashiTaku
 		void ChangeState(PlayerState _nextState, bool _isForce = false);
 
 		/// @brief 地上行動コントローラーに変換
-		PlayerGroundActionController& CastGroundController();
+		PlayerGroundActionController& GetGroundController();
 
 	private:
 		/// @brief 入力更新

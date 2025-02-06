@@ -35,29 +35,38 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 		DebugAttackFlag();
 	}
 
+	bool CP_Weapon::CanAttack(const CollisionInfo& _otherColInfo) const
+	{
+		if (!isAttackCollision) return false; // 攻撃フラグがついていないなら
+		if (!pAtkInfomation) return false;	// 攻撃情報が無かったら
+
+		GameObject& gameObject = _otherColInfo.pRigidBodyCp->GetGameObject();
+		if (!CheckAttackableTag(gameObject)) return false;	// タグチェック
+		if (!CheckAttackedRb(*_otherColInfo.pRigidBodyCp)) return false;	// 攻撃済みチェック
+
+		return true;
+	}
+
 	void CP_Weapon::OnCollisionStay(const CollisionInfo& _otherColInfo)
 	{
 		// 攻撃できるかチェック
-		if (!CanAttack()) return;
-
-		GameObject& gameObject = _otherColInfo.pRigidBodyCp->GetGameObject();
-		if (!CheckAttackableTag(gameObject)) return;	// タグチェック
-		if (!CheckAttackedRb(*_otherColInfo.pRigidBodyCp)) return;	// 攻撃済みチェック
+		if (!CanAttack(_otherColInfo)) return;
 
 		// ダメージインターフェースあるかチェック
-		IDamageable* pDamager = gameObject.GetComponent<IDamageable>();
+		IDamageable* pDamager = _otherColInfo.pRigidBodyCp->GetGameObject().GetComponent<IDamageable>();
 		if (!pDamager) return;
 
 		// 攻撃する
 		OnAttack(*pDamager, _otherColInfo.contactPoint);
 
-		// 追加する
+		//	攻撃したオブジェクトとして追加する
 		AddAttackedRb(*_otherColInfo.pRigidBodyCp);
 	}
 
 	void CP_Weapon::SetAttackInfo(AttackInformation& _attackInformation)
 	{
 		pAtkInfomation = &_attackInformation;
+
 		// 攻撃済みをクリア
 		ClearAttackedRb();
 	}
@@ -113,14 +122,6 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 		LoadJsonBoolean("isDebugDisplay", isDebugAttackDisplay, _data);
 #endif // EDIT
 
-	}
-
-	bool CP_Weapon::CanAttack() const
-	{
-		if (!isAttackCollision) return false; // 攻撃フラグがついていないなら
-		if (!pAtkInfomation) return false;	// 攻撃情報が無かったら
-
-		return true;
 	}
 
 	void CP_Weapon::OnAttack(IDamageable& _damager, const DXSimp::Vector3& _contactPos)

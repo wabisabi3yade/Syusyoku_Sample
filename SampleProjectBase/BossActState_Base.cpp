@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "BossActState_Base.h"
-#include "BossActionController.h"
 #include "CP_Boss.h"
 #include "CP_Player.h"
 
@@ -12,7 +11,6 @@ namespace HashiTaku
 
 	BossActState_Base::BossActState_Base() :
 		stateType(BossState::None),
-		pActionController(nullptr),
 		pWarpTargetPos(nullptr),
 		lastProgressRatio(0.0f),
 		allWarpSteps(0),
@@ -24,8 +22,8 @@ namespace HashiTaku
 
 	void BossActState_Base::Init(BossState _stateType, BossActionController& _actController)
 	{
+		CharacterActState_Base::Init(_actController);
 		stateType = _stateType;
-		pActionController = &_actController;
 
 		// 各ステート初期化
 		InitState();
@@ -61,10 +59,15 @@ namespace HashiTaku
 		isWarpMoving = false;
 	}
 
+	BossActionController& BossActState_Base::GetBossActionController()
+	{
+		return GetDeliverActionController<BossActionController>();
+	}
+
 	void BossActState_Base::OnDamage()
 	{
 		// ブレイク中にのみのけぞる
-		if (!pActionController->GetIsBreaking()) return;
+		if (!GetBossActionController().GetIsBreaking()) return;
 
 		// ブレイク終了ノックできるか確認
 		if (GetCanBreakEndKdnock())
@@ -88,7 +91,7 @@ namespace HashiTaku
 		Geometory::DrawSphere();
 
 		// ボスの座標
-		Geometory::SetPosition(GetBossTransform().GetPosition());
+		Geometory::SetPosition(GetMyTransform().GetPosition());
 		Geometory::SetScale(DXSimp::Vector3::One * scale);
 		Geometory::SetColor({ 0, 1, 1 });
 		Geometory::DrawSphere();
@@ -119,7 +122,7 @@ namespace HashiTaku
 
 	void BossActState_Base::ChangeState(BossState _nextState, bool _isForce)
 	{
-		pActionController->ChangeState(_nextState, _isForce);
+		GetBossActionController().ChangeState(_nextState, _isForce);
 	}
 
 	void BossActState_Base::CalcWarpDistance(const DXSimp::Vector3& _targetWorldPos)
@@ -127,13 +130,13 @@ namespace HashiTaku
 		if (!isUseWarpMotion) return;
 
 #ifdef EDIT
-		warpStartPos = GetBossTransform().GetPosition();
+		warpStartPos = GetMyTransform().GetPosition();
 #endif // EDIT
 
 		WarpMotionParam& curWarp = warpMotionParams[curWarpStep - 1];
 
 		// 距離を求める
-		disToWarpTargePos = _targetWorldPos - GetBossTransform().GetPosition();
+		disToWarpTargePos = _targetWorldPos -GetMyTransform().GetPosition();
 
 		// オフセット値を反映する
 		DXSimp::Vector2 distanceXZ = { disToWarpTargePos.x, disToWarpTargePos.z };
@@ -164,29 +167,21 @@ namespace HashiTaku
 		warpTargetPos = _targetPos;
 	}
 
-	Transform& BossActState_Base::GetBossTransform()
+	Transform* BossActState_Base::GetPlayerTransform()
 	{
-		return pActionController->GetBoss().GetTransform();
-	}
+		// プレイヤーがいなければ
+		CP_Player* pPlayer = GetBossActionController().GetPlayer();
+		if (!pPlayer)
+		{
+			return nullptr;
+		}
 
-	Transform& BossActState_Base::GetPlayerTransform()
-	{
-		return pActionController->GetPlayer().GetTransform();
+		return &pPlayer->GetTransform();
 	}
 
 	CP_Animation* BossActState_Base::GetAnimation()
 	{
-		return pActionController->GetAnimation();
-	}
-
-	CP_RigidBody& BossActState_Base::GetRB()
-	{
-		return *pActionController->GetRB();
-	}
-
-	float BossActState_Base::DeltaTime() const
-	{
-		return pActionController->GetCharacter().DeltaTime();
+		return GetActionController().GetAnimation();
 	}
 
 	void BossActState_Base::ImGuiDebug()
@@ -240,7 +235,7 @@ namespace HashiTaku
 		// 今回進む距離を求め、秒速に変換してRBに速度を渡す
 		DXSimp::Vector3 moveSpeed = disToWarpTargePos * diffCurveValue / deltaTime;
 		moveSpeed.y = 0.0f;
-		GetRB().SetVelocity(moveSpeed);
+		GetActionController().SetVelocity(moveSpeed);
 	}
 
 	void BossActState_Base::CheckTransNextWarp(float _animRatio)
@@ -279,13 +274,16 @@ namespace HashiTaku
 
 	bool BossActState_Base::GetCanBreakEndKdnock()
 	{
+		BossActionController& bossActCon = GetBossActionController();
+
 		// ブレイク終了できるブレイク値を取得する
-		StateNode_Base* pState = pActionController->GetNode(static_cast<int>(BossState::BreakEnd_Knock));
+		StateNode_Base* pState = GetBossActionController().
+			GetNode(static_cast<int>(BossState::BreakEnd_Knock));
 		if (!pState) return false;
 
 		// 今ブレイクできるか
 		const BossBreakEndKnock& breakKnock = static_cast<const BossBreakEndKnock&>(*pState);
-		if (pActionController->GetBoss().GetBreakValue() > breakKnock.GetCanBreakValue())
+		if (bossActCon.GetBoss().GetBreakValue() > breakKnock.GetCanBreakValue())
 			return false;
 
 		return true;

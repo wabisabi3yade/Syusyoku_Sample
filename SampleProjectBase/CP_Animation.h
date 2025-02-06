@@ -84,6 +84,10 @@ namespace HashiTaku
 		/// @param _playRatio 再生割合
 		void SetPlayRatio(float _playRatio);
 
+		/// @brief 現在再生しているアニメーションのフレームをセット
+		/// @param _playFrame 再生フレーム
+		void SetPlayFrame(u_int _playFrame);
+
 		/// @brief 指定したbool変数に値を取得
 		/// @param _paramName パラメーター名
 		/// @param _isBool 取得する値
@@ -121,6 +125,10 @@ namespace HashiTaku
 		/// @brief プレイヤー再生割合を取得する
 		/// @return 現在の再生割合
 		float GetCurrentPlayRatio() const;
+
+		/// @brief プレイヤー再生フレームを取得する
+		/// @return 現在の再生フレーム
+		u_int GetCurrentPlayFrame() const;
 
 		/// @brief 実際に動かすボーンリストを取得する
 		/// @return ボーンリスト

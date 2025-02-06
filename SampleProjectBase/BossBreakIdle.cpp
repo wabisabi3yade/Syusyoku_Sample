@@ -6,7 +6,7 @@ namespace HashiTaku
 {
 	void BossBreakIdle::TransitionCheckUpdate()
 	{
-		if (!pActionController->GetIsBreaking())
+		if (!GetBossActionController().GetIsBreaking())
 			ChangeState(BossState::Idle);
 	}
 }

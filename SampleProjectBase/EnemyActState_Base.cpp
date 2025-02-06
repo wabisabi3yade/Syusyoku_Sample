@@ -5,6 +5,5 @@ namespace HashiTaku
 {
 	EnemyActState_Base::EnemyActState_Base()
 	{
-
 	}
 }

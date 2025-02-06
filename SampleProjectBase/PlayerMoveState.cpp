@@ -85,7 +85,7 @@ namespace HashiTaku
 		float deltaSpeed = GetDeltaSpeed();
 
 		// 移動方向・移動量決定
-		Transform& camTransform = pActionController->GetCamera().GetTransform();
+		Transform& camTransform = GetGroundController().GetCamera().GetTransform();
 		DXSimp::Vector3 camForwardVec = camTransform.Forward();
 		DXSimp::Vector3 camRightVec = camTransform.Right();
 		DXSimp::Vector2 input = GetInputLeftStick();
@@ -119,14 +119,15 @@ namespace HashiTaku
 
 		DXSimp::Vector3 moveSpeed = moveVector * currentSpeed * deltaSpeed;
 
-		CP_RigidBody& rb = GetRB();
-		moveSpeed.y = rb.GetVelocity().y;
+		// y軸はそのまま
+		IActionController& actCon = GetActionController();
+		moveSpeed.y = actCon.GetVelocity().y;
 
 		// 移動
-		rb.SetVelocity(moveSpeed);
+		actCon.SetVelocity(moveSpeed);
 
 		// アニメーションのブレンド割合をセット
-		pActionController->SetAnimationFloat(SPEEDRATIO_PARAMNAME, currentSpeed / maxSpeed);
+		actCon.SetAnimationFloat(SPEEDRATIO_PARAMNAME, currentSpeed / maxSpeed);
 	}
 
 	void PlayerMoveState::ApplyRootMotion()
@@ -134,15 +135,13 @@ namespace HashiTaku
 		// ルートモーションと移動速度から移動速度の再生速度を調整する
 		if (IsRunning())
 		{
-			CP_Animation* pAnimation = pActionController->GetAnimation();
+			CP_Animation* pAnimation = GetActionController().GetAnimation();
 			if (!pAnimation) return;
 
 			float rootMotion = abs(pAnimation->GetMotionPosSpeedPerSec().z);
 
 			if (rootMotion > Mathf::epsilon)
 			{
-				HASHI_DEBUG_LOG("a" + std::to_string(GetRB().GetVelocity().Length()));
-
 				float animPlaySpeed = currentSpeed / rootMotion;
 
 				pAnimation->SetCurNodePlayerSpeed(animPlaySpeed);

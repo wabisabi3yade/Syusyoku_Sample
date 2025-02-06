@@ -52,9 +52,10 @@ namespace HashiTaku
 	{
 		using namespace DXSimp;
 		Transform& transform = GetPlayer().GetTransform();
+		PlayerGroundActionController& actCon = GetGroundController();
 
 		// 向く方向を求める
-		Transform& camTransform = pActionController->GetCamera().GetTransform();
+		Transform& camTransform = actCon.GetCamera().GetTransform();
 		Vector3 camForwardVec = camTransform.Forward();
 		Vector3 camRightVec = camTransform.Right();
 		Vector2 input = GetInputLeftStick();
@@ -78,7 +79,7 @@ namespace HashiTaku
 		GetPlayer().SetIsInvicible(true);
 
 		// アニメーションの反映
-		pActionController->GetAnimation()->SetTrigger(ROLLING_ANIMPARAM);
+		GetActionController().SetAnimationTrigger(ROLLING_ANIMPARAM);
 	}
 
 	void PlayerRollingMove::Move()
@@ -89,15 +90,16 @@ namespace HashiTaku
 		if (deltaTime < Mathf::epsilon) return;
 
 		Transform& transform = GetPlayer().GetTransform();
+		IActionController& actCon = GetActionController();
 
 		// アニメーションの再生割合から進む距離を求める
-		float animPlayRatio = pActionController->GetAnimation()->GetCurrentPlayRatio();
+		float animPlayRatio = actCon.GetAnimation()->GetCurrentPlayRatio();
 		float curveDistance = pDistanceCurve->GetValue(animPlayRatio) * rollingDistance;
 
 		// 前回との差分値を求める
 		float moveDistance = curveDistance - prevProgressDistance;
 
-		GetRB().SetVelocity(transform.Forward() * moveDistance / deltaTime);
+		actCon.SetVelocity(transform.Forward() * moveDistance / deltaTime);
 
 		// 次フレームの為に更新
 		prevProgressDistance = curveDistance;
@@ -110,7 +112,7 @@ namespace HashiTaku
 		CP_Player& player = GetPlayer();
 
 		if (player.GetIsInvicible() && elapsedTime > invicibleTime)
-			pActionController->GetPlayer().SetIsInvicible(false);
+			GetGroundController(). GetPlayer().SetIsInvicible(false);
 	}
 
 	void PlayerRollingMove::ImGuiDebug()

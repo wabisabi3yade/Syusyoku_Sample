@@ -117,10 +117,10 @@ namespace HashiTaku
 		virtual bool OnDamageBehavior(AttackInformation& _attackInfo) = 0;
 
 		/// @brief ダメージ受けたときの処理
-		/// @param _attackInfo 攻撃情報
-		/// @param _contactPos 衝突地点
-		virtual void OnTakeDamage(const AttackInformation& _attackInfo,
-			const DXSimp::Vector3& _contactPos);
+		/// @param _atkInfo 攻撃情報
+		/// @param _contactWorldPos 衝突地点
+		virtual void OnTakeDamage(const AttackInformation& _atkInfo,
+			const DXSimp::Vector3& _contactWorldPos);
 
 		/// @brief 各クラスのダメージを受けたときの処理
 		/// @param _attackInfo 攻撃情報

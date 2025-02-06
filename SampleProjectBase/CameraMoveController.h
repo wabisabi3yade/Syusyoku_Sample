@@ -30,6 +30,11 @@ namespace HashiTaku
 
 		/// @brief カメラの注視オブジェクト
 		const ITargetAccepter* pLookAtTransform;
+
+#ifdef EDIT
+		// デバッグでシェイクさせるのか
+		bool isDebugShake = true;
+#endif // EDIT
 	public:
 		CameraMoveController();
 		~CameraMoveController() {}

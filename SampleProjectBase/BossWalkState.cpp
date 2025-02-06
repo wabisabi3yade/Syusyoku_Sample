@@ -23,11 +23,14 @@ namespace HashiTaku
 	{
 		BossGroundMove::TransitionCheckUpdate();
 
+		Transform* pPlayerTransform = GetPlayerTransform();
+		if (!pPlayerTransform) return;
+
 		// ˆê’è‹——£—£‚ê‚½‚ç‰“‹——£UŒ‚
 		DXSimp::Vector3 distance =
-			GetPlayerTransform().GetPosition() - GetBossTransform().GetPosition();
+			pPlayerTransform->GetPosition() - GetMyTransform().GetPosition();
 		distance.y = 0.0f;
-		if (distance.Length() > pActionController->GetActDistanceLength(BossActionController::ActDistance::Far))
+		if (distance.Length() > GetBossActionController().GetActDistanceLength(BossActionController::ActDistance::Far))
 		{
 			ChangeState(BossState::Idle);
 		}

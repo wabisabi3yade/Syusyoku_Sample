@@ -85,6 +85,11 @@ namespace HashiTaku
 
 	void CameraMoveController::BeginShake(const PerlinShakeParameter& _shakeParam)
 	{
+#ifdef EDIT
+		if (!isDebugShake) return;
+#endif // EDIT
+
+
 		perlinShake.BeginShake(_shakeParam);
 
 		HASHI_DEBUG_LOG("開始");
@@ -236,8 +241,7 @@ namespace HashiTaku
 
 	void CameraMoveController::ImGuiDebug()
 	{
-		//ImGuiShakeDebug();
-
+#ifdef EDIT
 		// 現在のステート名
 		std::string curStateName = "current:" + GetStateName(currentStateKey);
 		ImGui::Text(curStateName.c_str());
@@ -256,6 +260,9 @@ namespace HashiTaku
 				ImGui::TreePop();
 			}
 		}
+
+		ImGui::Checkbox("IsShake", &isDebugShake);
+#endif // EDIT
 	}
 
 	void CameraMoveController::LoadStates(const json& _data)

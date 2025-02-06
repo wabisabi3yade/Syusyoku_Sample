@@ -79,6 +79,11 @@ namespace HashiTaku
 		const DXSimp::Vector3& _eularAngles,
 		int _startFrame)
 	{
+#ifdef EDIT
+		if (!isVfxDisplay) return NONE_VFX_HANDLE;
+#endif // EDIT
+
+
 		// Effekseer‘¤‚ÅÄ¶‚ðs‚¤
 		Effekseer::Vector3D pos = { _pos.x, _pos.y, _pos.z };
 		Effekseer::Handle handle = manager->Play(_effect, pos, _startFrame);

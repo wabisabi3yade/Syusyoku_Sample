@@ -368,7 +368,7 @@
             },
             {
                 "enable": true,
-                "friction": 1.0,
+                "friction": 0.10000000149011612,
                 "isAwake": true,
                 "isFreezeRot": [
                     true,
@@ -723,14 +723,14 @@
                                             "break": 15.0,
                                             "camShake": {
                                                 "fadeOut": true,
-                                                "power": 1.0,
+                                                "power": 1.5,
                                                 "shakeVec": [
                                                     1.0,
-                                                    0.0,
+                                                    0.5,
                                                     0.0
                                                 ],
-                                                "speed": 0.30000001192092896,
-                                                "time": 0.10000000149011612
+                                                "speed": 0.6000000238418579,
+                                                "time": 0.4000000059604645
                                             },
                                             "damage": 5.0,
                                             "hitSE": {
@@ -755,14 +755,14 @@
                                             "break": 18.0,
                                             "camShake": {
                                                 "fadeOut": true,
-                                                "power": 1.399999976158142,
+                                                "power": 2.0,
                                                 "shakeVec": [
                                                     1.0,
-                                                    0.0,
-                                                    0.0
+                                                    0.5,
+                                                    0.5
                                                 ],
-                                                "speed": 0.30000001192092896,
-                                                "time": 0.10000000149011612
+                                                "speed": 0.800000011920929,
+                                                "time": 0.6000000238418579
                                             },
                                             "damage": 6.199999809265137,
                                             "hitSE": {
@@ -914,7 +914,7 @@
                                                         "speed": 2.0,
                                                         "time": 0.6000000238418579
                                                     },
-                                                    "damage": 50.0,
+                                                    "damage": 40.0,
                                                     "hitSE": {
                                                         "loop": false,
                                                         "pitch": 0.0,
@@ -964,7 +964,7 @@
                                     },
                                     "isMoveFwd": false,
                                     "maxDistance": 10.0,
-                                    "maxTime": 3.0,
+                                    "maxTime": 3.5,
                                     "nextCombAttack": 99,
                                     "releaseVfx": {
                                         "applyColor": false,
@@ -987,8 +987,22 @@
                             },
                             {
                                 "data": {
+                                    "addStylishPointParry": 200.0,
                                     "canParryTime": 12,
                                     "parryAngle": 100.0,
+                                    "parryCamShake": {
+                                        "fadeOut": true,
+                                        "power": 2.0,
+                                        "shakeVec": [
+                                            1.0,
+                                            1.0,
+                                            0.75
+                                        ],
+                                        "speed": 0.4000000059604645,
+                                        "time": 0.30000001192092896
+                                    },
+                                    "parryPadVibePower": 0.4000000059604645,
+                                    "parryPadVibeTime": 0.20000000298023224,
                                     "parrySEs": [
                                         {
                                             "loop": false,
@@ -1005,6 +1019,7 @@
                                             "volume": 0.5
                                         }
                                     ],
+                                    "parryStrengthRate": 1.0,
                                     "vfxInfo": {
                                         "applyColor": false,
                                         "lookCam": false,
@@ -1093,6 +1108,9 @@
                 "maxHp": 100.0,
                 "name": "Player",
                 "priority": 0,
+                "stylishRatio": 40.0,
+                "stylishRatioAcceptDmg": 100.0,
+                "stylishUIName": "StylishUI",
                 "weaponObjName": "Weapon"
             },
             {

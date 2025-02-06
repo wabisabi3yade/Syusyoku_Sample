@@ -117,6 +117,18 @@ namespace HashiTaku
 		/// @return 更新できるか？
 		bool CanUpdate();
 
+		/// @brief ダメージ値からスタイリッシュポイントを計算する
+		/// @param _damageValue ダメージ値
+		/// @return 計算したスタイリッシュポイント
+		float CalculateStylishPoint(float _damageValue) const;
+
+		/// @brief 攻撃時のヒットストップを行う
+		/// @param _atkInfo 攻撃情報
+		void PlayAttackHitStop(const AttackInformation& _atkInfo);
+
+		/// @brief アニメーションを巻き戻す
+		void RewindAnimation();
+
 		/// @brief 武器のオブジェクトをセットする
 		void SetRequireObject();
 

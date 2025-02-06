@@ -83,7 +83,7 @@ namespace HashiTaku
 
 		/// @brief プレイヤーを取得する
 		/// @return プレイヤーオブジェクト
-		CP_Player& GetPlayer();
+		CP_Player* GetPlayer();
 
 		/// @brief ブレイクしているか取得
 		/// @return ブレイク処理

@@ -15,7 +15,7 @@ namespace HashiTaku
 	void BossDamageState::OnStartBehavior()
 	{
 		// ダメージトリガーをONにする
-		pActionController->SetAnimationTrigger(DAMAGETRIGGER_ANIMPARAM_NAME);
+		GetActionController().SetAnimationTrigger(DAMAGETRIGGER_ANIMPARAM_NAME);
 
 		// プレイヤーに向ける
 		LookPlayer();
@@ -29,9 +29,13 @@ namespace HashiTaku
 
 	void BossDamageState::LookPlayer()
 	{
+		BossActionController& bossActCon = GetBossActionController();
+		Transform* pPlayerTrans = GetPlayerTransform();
+		if (!pPlayerTrans) return;
+
 		// 方向ベクトルを求める(yは無視)
-		Transform& myTransform = pActionController->GetCharacter().GetTransform();
-		DXSimp::Vector3 playerPos = pActionController->GetPlayer().GetTransform().GetPosition();
+		Transform& myTransform = bossActCon.GetCharacter().GetTransform();
+		DXSimp::Vector3 playerPos = pPlayerTrans->GetPosition();
 		DXSimp::Vector3 bossPos = myTransform.GetPosition();
 		DXSimp::Vector3 targetVec = playerPos - bossPos;
 		targetVec.y = 0.0f;

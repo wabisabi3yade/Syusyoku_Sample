@@ -31,6 +31,8 @@ namespace HashiTaku
 
 	void PlayerAttackState::OnStartBehavior()
 	{
+		PlayerGroundActionController& actCon = GetGroundController();
+
 		if (!pIsReAttack)
 			pIsReAttack = GetAnimation()->GetParameterPointer<bool>(REATTACK_PARAMNAME);
 
@@ -42,7 +44,7 @@ namespace HashiTaku
 
 		// 距離を見て敵へ向かわせるか判断
 		DXSimp::Vector3 vecToEnemy = atkPos - GetMyTransform().GetPosition(); vecToEnemy.y = 0.0f;
-		if (pActionController->GetIsTargeting() || vecToEnemy.Length() < INSTANTLOOK_DISTANCE)
+		if (actCon.GetIsTargeting() || vecToEnemy.Length() < INSTANTLOOK_DISTANCE)
 		{
 			// 進む距離を求める
 			CalcProgressDis(atkPos);
@@ -55,7 +57,7 @@ namespace HashiTaku
 		UpdateAttackInfo();
 
 		// 攻撃フラグを立てる
-		pActionController->SetAnimationTrigger(ATTACKTRIGGER_PARAMNAME);
+		actCon.SetAnimationTrigger(ATTACKTRIGGER_PARAMNAME);
 
 		// パラメータリセット
 		prevProgressDistance = 0.0f;
@@ -87,7 +89,7 @@ namespace HashiTaku
 
 	std::unique_ptr<PlayerAttackInformation> PlayerAttackState::CreateAttackInfo()
 	{
-		return std::make_unique<PlayerAttackInformation>(&pActionController->GetPlayer());
+		return std::make_unique<PlayerAttackInformation>(&GetGroundController().GetPlayer());
 	}
 
 	void PlayerAttackState::SetAttackTimes(u_int _attackTimes)
@@ -124,10 +126,11 @@ namespace HashiTaku
 
 	void PlayerAttackState::UpdateCombInput()
 	{
-		if (!pActionController->GetCanInput()) return;	// 入力受け付けていないなら
+		PlayerGroundActionController& actCon = GetGroundController();
+		if (!actCon.GetCanInput()) return;	// 入力受け付けていないなら
 
 		if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
-			pActionController->SetReserveState(static_cast<int>(nextCombAtkState));
+			actCon.SetReserveState(static_cast<int>(nextCombAtkState));
 	}
 
 	void PlayerAttackState::CalcProgressDis(const DXSimp::Vector3& _atkEnemyPos)
@@ -233,11 +236,12 @@ namespace HashiTaku
 		using namespace DXSimp;
 
 		float deltaTime = DeltaTime();
+		IActionController& actCon = GetActionController();
 		if (deltaTime < Mathf::epsilon) return;
 
 		if (!isMoveForward) return;
 
-		CP_Animation* pAnimation = pActionController->GetAnimation();
+		CP_Animation* pAnimation = actCon.GetAnimation();
 		if (!pAnimation) return;
 
 		// カーブから進む料を取得
@@ -249,7 +253,7 @@ namespace HashiTaku
 		Transform& transform = GetPlayer().GetTransform();
 
 		// 座標に反映
-		GetRB().SetVelocity(transform.Forward() * curSpeed);
+		actCon.SetVelocity(transform.Forward() * curSpeed);
 
 		prevProgressDistance = curDis;
 	}

@@ -1576,7 +1576,7 @@
                             "actData": [
                                 {
                                     "data": {
-                                        "isIdleOnly": false,
+                                        "isIdleOnly": true,
                                         "warpMotion": {
                                             "useWarp": false
                                         }
@@ -2356,7 +2356,7 @@
                             }
                         ],
                         "hpBarName": "Enemy_GageBar",
-                        "maxHp": 200.0,
+                        "maxHp": 200000.0,
                         "name": "Boss",
                         "priority": 0,
                         "weaponName": "Boss_Weapon"

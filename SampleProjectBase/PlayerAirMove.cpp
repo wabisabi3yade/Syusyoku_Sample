@@ -42,7 +42,7 @@ namespace HashiTaku
 	void PlayerAirMove::OnStartBehavior()
 	{
 		// ステート開始時のジャンプ速度を取得
-		enterJumpSpeed = GetRB().GetVelocity().y;
+		enterJumpSpeed = GetActionController().GetVelocity().y;
 		HASHI_DEBUG_LOG(std::to_string(enterJumpSpeed));
 
 		moveVector = DXSimp::Vector3::Zero;
@@ -60,7 +60,7 @@ namespace HashiTaku
 		float deltaSpeed = GetDeltaSpeed();
 
 		// 移動方向・移動量決定
-		Transform& camTransform = pActionController->GetCamera().GetTransform();
+		Transform& camTransform = GetAirController().GetCamera().GetTransform();
 		DXSimp::Vector3 camForwardVec = camTransform.Forward();
 		DXSimp::Vector3 camRightVec = camTransform.Right();
 		DXSimp::Vector2 input = GetInputLeftStick();
@@ -94,14 +94,14 @@ namespace HashiTaku
 
 		DXSimp::Vector3 moveSpeed = moveVector * currentSpeed * deltaSpeed;
 
-		CP_RigidBody& rb = GetRB();
-		moveSpeed.y = rb.GetVelocity().y;
+		IActionController& actCon = GetActionController();
+		moveSpeed.y = actCon.GetVelocity().y;
 
 		// 移動
-		rb.SetVelocity(moveSpeed);
+		actCon.SetVelocity(moveSpeed);
 
 		// アニメーションのブレンド割合をセット
-		pActionController->SetAnimationFloat(SPEEDRATIO_PARAMNAME, currentSpeed / maxSpeed);
+		actCon.SetAnimationFloat(SPEEDRATIO_PARAMNAME, currentSpeed / maxSpeed);
 	}
 
 	void PlayerAirMove::Rotation()

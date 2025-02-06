@@ -120,6 +120,15 @@ namespace HashiTaku
 		p_RootMotionPos = GetRootMotionPos(lastPlayRatio);
 	}
 
+	void AnimNodePlayer_Base::SetCurPlayFrame(u_int _playFrame)
+	{
+		// 全体のキー数から割合を求める
+		float playRatio = static_cast<float>(_playFrame) / pPlayAnimNode->GetAllKeyFrame();
+		
+		// 割合をセットする
+		SetCurPlayRatio(playRatio);
+	}
+
 	void AnimNodePlayer_Base::SetPlaySpeedTimes(float _playSpeed)
 	{
 		playerSpeedTimes = _playSpeed;
@@ -133,6 +142,12 @@ namespace HashiTaku
 	float AnimNodePlayer_Base::GetLastPlayRatio() const
 	{
 		return lastPlayRatio;
+	}
+
+	u_int AnimNodePlayer_Base::GetCurPlayFrame() const
+	{
+		// 割合　×　全体のフレーム数から現在のフレーム数を取得する
+		return static_cast<u_int>(curPlayRatio * pPlayAnimNode->GetAllKeyFrame());
 	}
 
 	float AnimNodePlayer_Base::GetNodePlaySpeed() const
