@@ -344,7 +344,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
     if (no_background)      window_flags |= ImGuiWindowFlags_NoBackground;
     if (no_bring_to_front)  window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus;
     if (unsaved_document)   window_flags |= ImGuiWindowFlags_UnsavedDocument;
-    if (no_close)           p_open = NULL; // Don't pass our bool* to Begin
+    if (no_close)           p_open = NULL; // Don't pass our bool* to Init
 
     // We specify a default position/size in case there's no data in the .ini file.
     // We only do it to make the demo applications a little more welcoming, but typically this isn't required.
@@ -1746,7 +1746,7 @@ static void ShowDemoWindowWidgets()
                 ImGui::Checkbox(names[n], &opened[n]);
             }
 
-            // Passing a bool* to BeginTabItem() is similar to passing one to Begin():
+            // Passing a bool* to BeginTabItem() is similar to passing one to Init():
             // the underlying bool will be set to false when the tab is closed.
             if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags))
             {
@@ -3409,7 +3409,7 @@ static void ShowDemoWindowLayout()
         ImGui::Text("%.0f/%.0f", scroll_x, scroll_max_x);
         if (scroll_x_delta != 0.0f)
         {
-            // Demonstrate a trick: you can use Begin to set yourself in the context of another window
+            // Demonstrate a trick: you can use Init to set yourself in the context of another window
             // (here we are already out of your child window)
             ImGui::BeginChild("scrolling");
             ImGui::SetScrollX(ImGui::GetScrollX() + scroll_x_delta);
@@ -3630,14 +3630,14 @@ static void ShowDemoWindowPopups()
     // - They block normal mouse hovering detection outside them. (*)
     // - Unless modal, they can be closed by clicking anywhere outside them, or by pressing ESCAPE.
     // - Their visibility state (~bool) is held internally by Dear ImGui instead of being held by the programmer as
-    //   we are used to with regular Begin() calls. User can manipulate the visibility state by calling OpenPopup().
+    //   we are used to with regular Init() calls. User can manipulate the visibility state by calling OpenPopup().
     // (*) One can use IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByPopup) to bypass it and detect hovering even
     //     when normally blocked by a popup.
     // Those three properties are connected. The library needs to hold their visibility state BECAUSE it can close
     // popups at any time.
 
     // Typical use for regular windows:
-    //   bool my_tool_is_active = false; if (ImGui::PadFlag("Open")) my_tool_is_active = true; [...] if (my_tool_is_active) Begin("My Tool", &my_tool_is_active) { [...] } End();
+    //   bool my_tool_is_active = false; if (ImGui::PadFlag("Open")) my_tool_is_active = true; [...] if (my_tool_is_active) Init("My Tool", &my_tool_is_active) { [...] } End();
     // Typical use for popups:
     //   if (ImGui::PadFlag("Open")) ImGui::OpenPopup("MyPopup"); if (ImGui::BeginPopup("MyPopup") { [...] EndPopup(); }
 
@@ -7191,7 +7191,7 @@ struct ExampleAppConsole
             return;
         }
 
-        // As a specific feature guaranteed by the library, after calling Begin() the last Item represent the title bar.
+        // As a specific feature guaranteed by the library, after calling Init() the last Item represent the title bar.
         // So e.g. IsItemHovered() will return true when hovering the title bar.
         // Here we create a context menu only available from the title bar.
         if (ImGui::BeginPopupContextItem())
@@ -7253,7 +7253,7 @@ struct ExampleAppConsole
             //      for (int i = 0; i < Items.Size; i++)
             //   With:
             //      ImGuiListClipper clipper;
-            //      clipper.Begin(Items.Size);
+            //      clipper.Init(Items.Size);
             //      while (clipper.Step())
             //         for (int i = clipper.DisplayStart; i < clipper.DisplayEnd; i++)
             // - That your items are evenly spaced (same height)
@@ -7617,7 +7617,7 @@ static void ShowExampleAppLog(bool* p_open)
     static ExampleAppLog log;
 
     // For the demo: add a debug button _BEFORE_ the normal log window contents
-    // We take advantage of a rarely used feature: multiple calls to Begin()/End() are appending to the _same_ window.
+    // We take advantage of a rarely used feature: multiple calls to Init()/End() are appending to the _same_ window.
     // Most of the contents of the window will be added by the log.ObjectDraw() call.
     ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
     ImGui::Begin("Example: Log", p_open);
@@ -7638,7 +7638,7 @@ static void ShowExampleAppLog(bool* p_open)
     }
     ImGui::End();
 
-    // Actually call in the regular Log helper (which will Begin() into the same window as we just did)
+    // Actually call in the regular Log helper (which will Init() into the same window as we just did)
     log.Draw("Example: Log", p_open);
 }
 

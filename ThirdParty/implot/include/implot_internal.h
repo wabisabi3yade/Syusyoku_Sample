@@ -1420,7 +1420,7 @@ IMPLOT_API ImVec2 CalcLegendSize(ImPlotItemGroup& items, const ImVec2& pad, cons
 IMPLOT_API bool ClampLegendRect(ImRect& legend_rect, const ImRect& outer_rect, const ImVec2& pad);
 // Renders legend entries into a bounding box
 IMPLOT_API bool ShowLegendEntries(ImPlotItemGroup& items, const ImRect& legend_bb, bool interactable, const ImVec2& pad, const ImVec2& spacing, bool vertical, ImDrawList& DrawList);
-// Shows an alternate legend for the plot identified by #title_id, outside of the plot frame (can be called before or after of Begin/EndPlot but must occur in the same ImGui window! This is not thoroughly tested nor scrollable!).
+// Shows an alternate legend for the plot identified by #title_id, outside of the plot frame (can be called before or after of Init/EndPlot but must occur in the same ImGui window! This is not thoroughly tested nor scrollable!).
 IMPLOT_API void ShowAltLegend(const char* title_id, bool vertical = true, const ImVec2 size = ImVec2(0,0), bool interactable = true);
 // Shows a legend's context menu.
 IMPLOT_API bool ShowLegendContextMenu(ImPlotLegend& legend, bool visible);
@@ -1436,7 +1436,7 @@ IMPLOT_API void LabelAxisValue(const ImPlotAxis& axis, double value, char* buff,
 // [SECTION] Styling Utils
 //-----------------------------------------------------------------------------
 
-// Get styling data for next item (call between Begin/EndItem)
+// Get styling data for next item (call between Init/EndItem)
 static inline const ImPlotNextItemData& GetItemData() { return GImPlot->NextItemData; }
 
 // Returns true if a color is set to be automatically determined

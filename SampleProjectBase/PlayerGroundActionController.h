@@ -26,6 +26,9 @@ namespace HashiTaku
 		/// @param ターゲット時に一緒に見るカメラ
 		void Init(CP_Animation* _animation, CP_RigidBody* _pRigidBody) override;
 
+		/// @brief 現在の更新処理
+		void Update() override;
+
 		/// @brief 行動状態を切り替える
 		/// @param _nextActionName 次の状態の名前
 		/// @param _isForce 強制で切り替えするか？
@@ -46,7 +49,7 @@ namespace HashiTaku
 		CP_Camera& GetCamera();
 
 		/// @brief 現在の地上行動のステートを取得する
-	/// @return 地上行動のステート
+		/// @return 地上行動のステート
 		PlayerGroundState* GetCurrentGroundState();
 
 
@@ -64,9 +67,6 @@ namespace HashiTaku
 		/// @return 状態のID
 		int GetStateId(const std::string& _stateName);
 	private:
-		/// @brief 現在の更新処理
-		void Update() override;
-
 		/// @brief 新しくStateを生成
 		/// @tparam T 対応している行動クラス
 		/// @param _actionState アクション名

@@ -1867,7 +1867,7 @@ void ImGui::TableBeginRow(ImGuiTable* table)
     table->RowCellDataCurrent = -1;
     table->IsInsideRow = true;
 
-    // Begin frozen rows
+    // Init frozen rows
     float next_y1 = table->RowPosY2;
     if (table->CurrentRow == 0 && table->FreezeRowsCount > 0)
         next_y1 = window->DC.CursorPos.y = table->OuterRect.Min.y;

@@ -755,7 +755,7 @@ void btDbvtBroadphase::benchmark(btBroadphaseInterface* pbi)
 	static const int nexperiments = sizeof(experiments) / sizeof(experiments[0]);
 	btAlignedObjectArray<btBroadphaseBenchmark::Object*> objects;
 	btClock wallclock;
-	/* Begin			*/
+	/* Init			*/
 	for (int iexp = 0; iexp < nexperiments; ++iexp)
 	{
 		const btBroadphaseBenchmark::Experiment& experiment = experiments[iexp];

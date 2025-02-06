@@ -53,6 +53,11 @@ namespace HashiTaku
 		/// @brief  終了処理
 		void OnEnd();
 
+		/// @brief 状態を遷移
+		/// @param _nextActionState アクションのID
+		/// @param _isForce 強制して変更するか？
+		bool ChangeState(int _nextActionState, bool _isForce = false);
+
 		/// @brief 予約状態をセットする
 		/// @param _setState 予約する状態
 		void SetReserveState(int _setState);
@@ -97,11 +102,6 @@ namespace HashiTaku
 		/// @param _actionName アクション名
 		/// @param _cancelType キャンセルタイプ
 		template <class T> void CreateState(int _actionState, CancelType _cancelType);
-
-		/// @brief 状態を遷移
-		/// @param _nextActionState アクションのID
-		/// @param _isForce 強制して変更するか？
-		bool ChangeState(int _nextActionState, bool _isForce = false);
 	private:
 		/// @brief 更新できるか取得
 		/// @return 更新できるか？

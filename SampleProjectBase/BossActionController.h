@@ -52,6 +52,9 @@ namespace HashiTaku
 		/// @param _pRigidBody リジッドボディ
 		void Init(CP_Animation* _pAnimation, CP_RigidBody* _pRigidBody) override;
 
+		/// @brief 更新処理
+		void Update() override;
+
 		/// @brief ステートを変更
 		/// @param _nextState 次のステート
 		/// @param _isForce　強制切り替え
@@ -106,9 +109,6 @@ namespace HashiTaku
 		json Save() override;
 		void Load(const json& _data) override;
 	private:
-		/// @brief 更新処理
-		void Update() override;
-
 		/// @brief ボスのステートを作成
 		/// @tparam T ボスの行動クラス
 		/// @param _createState 作成したいステート
