@@ -12,9 +12,9 @@
 namespace HashiTaku
 {
 	CP_Enemy::CP_Enemy() :
-		pReserveShakeParam(nullptr)
+		pReserveShakeParam(nullptr),
+		pMeshRenderer(nullptr)
 	{
-		SetEnemyName("Boss");
 	}
 
 	const std::string& CP_Enemy::GetEnemyName() const
@@ -152,18 +152,16 @@ namespace HashiTaku
 		return true;
 	}
 
-	void CP_Enemy::OnTakeDamage(const AttackInformation& _attackInfo, const DXSimp::Vector3& _contactPos)
+	void CP_Enemy::OnTakeDamage(const DamageInfo& _damageInfo)
 	{
-		CP_Character::OnTakeDamage(_attackInfo, _contactPos);
+		CP_Character::OnTakeDamage(_damageInfo);
 
 		// —h‚ê‚é‚æ‚¤‚É‚·‚é
-		u_int atkLevelId = static_cast<u_int>(_attackInfo.GetAttackLevel());
+		u_int atkLevelId = static_cast<u_int>(_damageInfo.pAttackInformation->GetAttackLevel());
 		pReserveShakeParam = &acceptDamageShakeParams[atkLevelId];
 
 		// UŒ‚‚ÌŒü‚«‚É‚ä‚ç‚·
-		DXSimp::Vector3 attackVec = GetTransform().GetPosition() - _contactPos;
-		attackVec.Normalize();
-		pReserveShakeParam->shakeVec = Vec3::Abs(attackVec);
+		pReserveShakeParam->shakeVec = Vec3::Abs(_damageInfo.attackVector);
 
 		// —h‚ê‚ð—\–ñ
 		acceptDamageShake.BeginShake(*pReserveShakeParam);

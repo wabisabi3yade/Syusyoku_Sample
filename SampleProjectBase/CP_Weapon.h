@@ -24,6 +24,12 @@ namespace HashiTaku
 		/// @brief 一回の攻撃判定で重複しないように記録する用リスト
 		std::vector<const CP_RigidBody*> attackedRbs;
 
+		/// @brief 1フレーム前の武器の座標
+		DXSimp::Vector3 prevWeaponPos;
+
+		/// @brief 攻撃の方向
+		DXSimp::Vector3 attackVector;
+
 		/// @brief 武器所有者のポインタ
 		IAttacker* pAttacker;
 
@@ -68,7 +74,11 @@ namespace HashiTaku
 		/// @param _data ロードするシーンデータ 
 		void Load(const json& _data) override;
 	private:
+		void Update() override;
 		void Draw() override;
+
+		/// @brief 攻撃方向を更新する
+		void UpdateAttackVector();
 
 		/// @brief 攻撃できるか取得
 		/// @param _targetObject 対象のオブジェクト

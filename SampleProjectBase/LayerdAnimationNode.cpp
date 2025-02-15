@@ -277,7 +277,6 @@ namespace HashiTaku
 	{
 		auto data = AnimationNode_Base::Save();
 
-		data["blendBeginFrame"] = beginBlendPlayFrame;
 		data["blendCurve"] = blendSpeedCurve.Save();
 
 		if (pBaseAnimation)
@@ -316,7 +315,6 @@ namespace HashiTaku
 		if (LoadJsonString("blendAnim", loadStr, _data))
 		{
 			pBlendAnimation = AssetGetter::GetAsset<AnimationData>(loadStr);
-			beginBlendPlayFrame = 0;
 		}
 		if (LoadJsonInteger("beginBoneId", beginBlendBoneId, _data))
 		{

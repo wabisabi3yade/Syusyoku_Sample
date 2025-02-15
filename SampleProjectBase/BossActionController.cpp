@@ -125,7 +125,7 @@ namespace HashiTaku
 		return static_cast<CP_Boss&>(GetCharacter());
 	}
 
-	CP_Player* BossActionController::GetPlayer()
+	const CP_Player* BossActionController::GetPlayer()
 	{
 		if (!pPlayerObject)
 		{
@@ -254,13 +254,22 @@ namespace HashiTaku
 		pIsReAttack = GetAnimation()->GetParameterPointer<bool>(BossActState_Base::REATTACK_PARAMNAME);
 	}
 
+	bool BossActionController::FindPlayer()
+	{
+		// バトルマネジャーを取得
+		CP_BattleManager* pBattle = CP_BattleManager::GetInstance();
+		if (!pBattle) return false;
+
+		// プレイヤーオブジェクトを取得
+		pPlayerObject = pBattle->GetPlayerObject();
+		if (!pPlayerObject) return false;
+
+		return true;
+	}
+
 	bool BossActionController::IsCanBossUpdate()
 	{
 #ifdef EDIT
-		if (!pPlayerObject)
-		{
-			return false;
-		}
 		if (!pAnimation)
 		{
 			return false;
@@ -271,6 +280,12 @@ namespace HashiTaku
 		}
 #endif
 
+		// プレイヤーオブジェクトを探す
+		if (!pPlayerObject)
+		{
+			return FindPlayer();
+		}
+	
 		return true;
 	}
 

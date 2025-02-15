@@ -170,7 +170,7 @@ namespace HashiTaku
 	Transform* BossActState_Base::GetPlayerTransform()
 	{
 		// ƒvƒŒƒCƒ„[‚ª‚¢‚È‚¯‚ê‚Î
-		CP_Player* pPlayer = GetBossActionController().GetPlayer();
+		const CP_Player* pPlayer = GetBossActionController().GetPlayer();
 		if (!pPlayer)
 		{
 			return nullptr;

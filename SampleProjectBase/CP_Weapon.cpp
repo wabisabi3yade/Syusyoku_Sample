@@ -30,9 +30,30 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 		}
 	}
 
+	void CP_Weapon::Update()
+	{
+		// 攻撃の方向を更新する
+		UpdateAttackVector();
+	}
+
 	void CP_Weapon::Draw()
 	{
 		DebugAttackFlag();
+	}
+
+	void CP_Weapon::UpdateAttackVector()
+	{
+		// 現在の座標から攻撃の方向を求める
+		DXSimp::Vector3 currentPos = GetTransform().GetPosition();
+
+		if (isAttackCollision)	// 攻撃しているときだけ
+		{
+			attackVector = currentPos - prevWeaponPos;
+			attackVector.Normalize();
+		}
+	
+		// 更新する
+		prevWeaponPos = currentPos;
 	}
 
 	bool CP_Weapon::CanAttack(const CollisionInfo& _otherColInfo) const
@@ -137,9 +158,15 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 			// 所有オブジェクトの座標を取得する
 			haveObjPos = pAttacker->GetAttackerWorldPos();
 		}
+
+		// ダメージ情報をまとめる
+		DamageInfo damageInfo;
+		damageInfo.pAttackInformation = pAtkInfomation;
+		damageInfo.contactPos = _contactPos;
+		damageInfo.attackVector = attackVector;
 			
 		// ダメージを食らう側の処理
-		_damager.OnDamage(*pAtkInfomation, _contactPos);
+		_damager.OnDamage(damageInfo);
 	}
 
 	void CP_Weapon::AddAttackedRb(const CP_RigidBody& _rb)
