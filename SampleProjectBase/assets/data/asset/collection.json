@@ -6438,7 +6438,7 @@
             ],
             "assetName": "ANC_Player",
             "boneList": "Knight.fbx",
-            "defaultNode": "HelmBreaker",
+            "defaultNode": "A",
             "groupArrows": [
                 {
                     "arrows": [
@@ -7524,7 +7524,7 @@
             "nodeInfoData": [
                 {
                     "animNode": {
-                        "animName": "knight_Idle1.fbx",
+                        "animName": "knight_FallLoop.fbx",
                         "animationCurve": {
                             "easeKind": 0,
                             "endValue": 1.0,
@@ -7601,14 +7601,14 @@
                         {
                             "arrowParam": {
                                 "conditionList": null,
-                                "exitRatio": 0.949999988079071,
+                                "exitRatio": 0.800000011920929,
                                 "interpolate": 0,
                                 "isActive": true,
                                 "isHaveExit": true,
                                 "priority": 0,
-                                "targetRatio": 0.0,
-                                "transEase": 0.0,
-                                "transTime": 0.20000000298023224
+                                "targetRatio": 0.36800000071525574,
+                                "transEase": 0.36800000071525574,
+                                "transTime": 0.07000000029802322
                             },
                             "toName": "HelmBreaker"
                         }
@@ -10571,31 +10571,87 @@
                     "animNode": {
                         "animationCurve": {
                             "easeKind": 0,
-                            "endValue": 1.0,
+                            "endValue": 0.0,
                             "endVector": 0.0,
-                            "plotDatas": null,
+                            "plotDatas": [
+                                {
+                                    "interp": 0,
+                                    "time": 0.3720000088214874,
+                                    "value": 0.5,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.42899999022483826,
+                                    "value": 1.0,
+                                    "vector": -0.11900000274181366
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.5130000114440918,
+                                    "value": 1.0,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.5350000262260437,
+                                    "value": 0.05000000074505806,
+                                    "vector": 0.0
+                                }
+                            ],
                             "startInterp": 1,
-                            "startValue": 1.0,
+                            "startValue": 0.5,
                             "startVector": 0.0,
                             "useHermite": true
                         },
                         "baseAnim": "knight_AirDownBody3.fbx",
-                        "beginBlendFlame": 0,
+                        "beginBlendFlame": 63,
                         "beginBoneId": 2,
-                        "blendAnim": "knight_ChargeAttack2.fbx",
+                        "blendAnim": "knight_ChargeAttack3.fbx",
                         "blendCurve": {
                             "easeKind": 0,
-                            "endValue": 1.0,
+                            "endValue": 0.0,
                             "endVector": 0.0,
-                            "plotDatas": null,
+                            "plotDatas": [
+                                {
+                                    "interp": 1,
+                                    "time": 0.25,
+                                    "value": 0.30000001192092896,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.2919999957084656,
+                                    "value": 8.0,
+                                    "vector": 0.939612865447998
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.29899999499320984,
+                                    "value": 4.5,
+                                    "vector": 1.252817153930664
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.35899999737739563,
+                                    "value": 4.5,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.36000001430511475,
+                                    "value": 0.0,
+                                    "vector": 0.0
+                                }
+                            ],
                             "startInterp": 1,
-                            "startValue": 1.0,
+                            "startValue": 0.699999988079071,
                             "startVector": 0.0,
                             "useHermite": true
                         },
                         "blendDepth": 3,
-                        "isLoop": false,
-                        "isMinusRMY": false,
+                        "isLoop": true,
+                        "isMinusRMY": true,
                         "isRMXZ": false,
                         "isRMY": false,
                         "meshSpaceBlend": true,
@@ -10605,7 +10661,61 @@
                         {
                             "arrowParam": {
                                 "conditionList": null,
-                                "exitRatio": 0.9100000262260437,
+                                "exitRatio": 0.550000011920929,
+                                "interpolate": 0,
+                                "isActive": false,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "A"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 0.550000011920929,
+                                "interpolate": 0,
+                                "isActive": true,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.3400000035762787,
+                                "transEase": 0.3400000035762787,
+                                "transTime": 0.07000000029802322
+                            },
+                            "toName": "HelmBreaker_Landing"
+                        }
+                    ],
+                    "groupArrowName": "",
+                    "nodeName": "HelmBreaker",
+                    "nodeType": 2,
+                    "notifyList": null
+                },
+                {
+                    "animNode": {
+                        "animName": "knight_ChargeAttack3.fbx",
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startInterp": 1,
+                            "startValue": 1.0,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "isLoop": false,
+                        "isMinusRMY": false,
+                        "isRMXZ": false,
+                        "isRMY": false,
+                        "speed": 3.0
+                    },
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 0.8299999833106995,
                                 "interpolate": 0,
                                 "isActive": true,
                                 "isHaveExit": true,
@@ -10618,8 +10728,8 @@
                         }
                     ],
                     "groupArrowName": "",
-                    "nodeName": "HelmBreaker",
-                    "nodeType": 2,
+                    "nodeName": "HelmBreaker_Landing",
+                    "nodeType": 0,
                     "notifyList": null
                 },
                 {
