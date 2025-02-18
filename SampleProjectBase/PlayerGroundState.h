@@ -33,8 +33,8 @@ namespace HashiTaku
 			Attack14,
 
 			// 地上必殺攻撃
-			SpecialAtkHi = 30,
-			SpecialAtkLow,
+			RushAttack = 30,
+			SlashHigh,
 			SpecialAtkGuard,	// ガードパリィ時の攻撃
 			ChargeAttack1,	// 溜め攻撃
 
@@ -84,6 +84,6 @@ namespace HashiTaku
 
 	private:
 		/// @brief 入力更新
-		void InputUpdate();
+		void InputStateUpdate() override;
 	};
 }

@@ -87,6 +87,10 @@ namespace HashiTaku
 		/// @param _mass 質量
 		void SetMass(float _mass);
 
+		/// @brief オブジェクト自体の重力を設定
+		/// @param _gravity 重力
+		void SetCustomGravity(const DXSimp::Vector3& _gravity);
+
 		/// @brief 質量をセットする
 		/// @param _friction セットする摩擦係数
 		void SetFriction(float _friction);

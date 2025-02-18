@@ -18,6 +18,11 @@ namespace HashiTaku
 		pActionController->SetVelocity(_velocity);
 	}
 
+	void CharacterActState_Base::AddImpulse(const DXSimp::Vector3& _power)
+	{
+		pActionController->AddImpulse(_power);
+	}
+
 	float CharacterActState_Base::DeltaTime() const
 	{
 		return pActionController->DeltaTime();

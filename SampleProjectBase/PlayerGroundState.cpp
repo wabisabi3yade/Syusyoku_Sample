@@ -21,8 +21,6 @@ namespace HashiTaku
 
 	void PlayerGroundState::Update()
 	{
-		InputUpdate();
-
 		PlayerActState_Base::Update();
 
 		UpdateBehavior();
@@ -62,7 +60,7 @@ namespace HashiTaku
 		return GetDeliverActionController<PlayerGroundActionController>();
 	}
 
-	void PlayerGroundState::InputUpdate()
+	void PlayerGroundState::InputStateUpdate()
 	{
 		PlayerGroundActionController& actionCon = GetGroundController();
 
@@ -95,7 +93,12 @@ namespace HashiTaku
 		// ëOìÀêiçUåÇ
 		if (IsSpecialAtkInput(InputVector::Forward))
 		{
-			actionCon.SetReserveState(static_cast<int>(SpecialAtkHi));
+			actionCon.SetReserveState(static_cast<int>(RushAttack));
+		}
+		// ëOìÀêiçUåÇ
+		if (IsSpecialAtkInput(InputVector::Back))
+		{
+			actionCon.SetReserveState(static_cast<int>(SlashHigh));
 		}
 		// çUåÇ
 		if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))

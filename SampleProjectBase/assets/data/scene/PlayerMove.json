@@ -3577,22 +3577,20 @@
                                             "attackCnt": 1,
                                             "attackInfos": [
                                                 {
-                                                    "break": 8.0,
-                                                    "damage": 2.0,
+                                                    "break": 1.0,
+                                                    "damage": 0.0,
                                                     "hitSE": {
                                                         "loop": false,
                                                         "pitch": 0.0,
-                                                        "soundName": "sword2.wav",
-                                                        "useListener": true,
-                                                        "volume": 0.17000000178813934
+                                                        "useListener": false,
+                                                        "volume": 0.5
                                                     },
                                                     "hitVfx": {
                                                         "applyColor": false,
                                                         "lookCam": false,
-                                                        "name": "hit01",
-                                                        "scale": 0.30000001192092896,
-                                                        "speed": 0.699999988079071,
-                                                        "startFrame": 2
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
                                                     },
                                                     "isCamShake": false,
                                                     "level": 0
@@ -3613,33 +3611,20 @@
                                                 "easeKind": 0,
                                                 "endValue": 1.0,
                                                 "endVector": 0.0,
-                                                "plotDatas": [
-                                                    {
-                                                        "interp": 0,
-                                                        "time": 0.20000000298023224,
-                                                        "value": 0.0,
-                                                        "vector": 1.6519999504089355
-                                                    },
-                                                    {
-                                                        "interp": 0,
-                                                        "time": 0.5569999814033508,
-                                                        "value": 0.9309999942779541,
-                                                        "vector": 0.28700000047683716
-                                                    }
-                                                ],
+                                                "plotDatas": null,
                                                 "startInterp": 1,
-                                                "startValue": 0.0,
+                                                "startValue": 1.0,
                                                 "startVector": 0.0,
                                                 "useHermite": true
                                             },
-                                            "horiDis": 11.0,
+                                            "horiDis": 5.0,
                                             "isMoveFwd": false,
                                             "maxDistance": 10.0,
                                             "nextCombAttack": 99,
-                                            "slashAnim": 0.4429999887943268,
-                                            "slashBegin": 4.0
+                                            "slashAnim": 0.4650000035762787,
+                                            "slashBegin": 0.699999988079071
                                         },
-                                        "typeString": "SpecialAtkHi"
+                                        "typeString": "RushAttack"
                                     },
                                     {
                                         "data": {
@@ -3759,6 +3744,58 @@
                                             "nextCombAttack": 20
                                         },
                                         "typeString": "Attack14"
+                                    },
+                                    {
+                                        "data": {
+                                            "attackCnt": 1,
+                                            "attackInfos": [
+                                                {
+                                                    "break": 1.0,
+                                                    "damage": 0.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
+                                                    "hitVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
+                                                    "isCamShake": false,
+                                                    "level": 0
+                                                }
+                                            ],
+                                            "forwardCurve": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": null,
+                                                "startInterp": 1,
+                                                "startValue": 1.0,
+                                                "startVector": 0.0,
+                                                "useHermite": true
+                                            },
+                                            "isMoveFwd": false,
+                                            "jumpAnimRatio": 0.0,
+                                            "jumpMovementCurve": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": null,
+                                                "startInterp": 1,
+                                                "startValue": 1.0,
+                                                "startVector": 0.0,
+                                                "useHermite": true
+                                            },
+                                            "maxDistance": 10.0,
+                                            "maxJumpMovement": 5.0,
+                                            "nextCombAttack": 99
+                                        },
+                                        "typeString": "SlashHigh"
                                     },
                                     {
                                         "data": {

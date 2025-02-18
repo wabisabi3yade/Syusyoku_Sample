@@ -6438,7 +6438,7 @@
             ],
             "assetName": "ANC_Player",
             "boneList": "Knight.fbx",
-            "defaultNode": "SlashHigh_Air",
+            "defaultNode": "Idle",
             "groupArrows": [
                 {
                     "arrows": [
@@ -6607,6 +6607,34 @@
                                 "transTime": 0.20000000298023224
                             },
                             "toNode": "RushAttack"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 31,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isActive": true,
+                                "isHaveExit": false,
+                                "priority": 14,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toNode": "SlashHigh"
                         },
                         {
                             "param": {
@@ -6908,6 +6936,34 @@
                                 "transTime": 0.10000000149011612
                             },
                             "toNode": "Attack1"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 31,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isActive": true,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toNode": "SlashHigh"
                         }
                     ],
                     "name": "Move"
@@ -7596,7 +7652,7 @@
                                 "transEase": 0.0,
                                 "transTime": 0.10000000149011612
                             },
-                            "toName": "SlashHigh_Air"
+                            "toName": "SlashHigh"
                         },
                         {
                             "arrowParam": {
@@ -11604,7 +11660,7 @@
                     "animNode": {
                         "animationCurve": {
                             "easeKind": 0,
-                            "endValue": 1.0,
+                            "endValue": 0.019999999552965164,
                             "endVector": 0.0,
                             "plotDatas": [
                                 {
@@ -11627,15 +11683,15 @@
                                 },
                                 {
                                     "interp": 1,
-                                    "time": 0.2980000078678131,
-                                    "value": 0.30000001192092896,
-                                    "vector": 0.0
+                                    "time": 0.36800000071525574,
+                                    "value": 0.6000000238418579,
+                                    "vector": -1.5831694602966309
                                 },
                                 {
                                     "interp": 1,
-                                    "time": 0.45591938495635986,
-                                    "value": 1.0,
-                                    "vector": 0.0
+                                    "time": 0.5193954706192017,
+                                    "value": 0.6000000238418579,
+                                    "vector": -0.7915847301483154
                                 }
                             ],
                             "startInterp": 1,
@@ -11650,7 +11706,7 @@
                         "blendCurve": {
                             "easeKind": 0,
                             "endValue": 0.009999999776482582,
-                            "endVector": 0.0,
+                            "endVector": 0.30000001192092896,
                             "plotDatas": [
                                 {
                                     "interp": 1,
@@ -11709,8 +11765,14 @@
                                 {
                                     "interp": 1,
                                     "time": 0.35600000619888306,
-                                    "value": 0.009999999776482582,
+                                    "value": 0.30000001192092896,
                                     "vector": -0.5442679524421692
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.5350000262260437,
+                                    "value": 0.0,
+                                    "vector": -0.12213397026062012
                                 }
                             ],
                             "startInterp": 0,
@@ -11721,7 +11783,7 @@
                         "blendDepth": 2,
                         "isLoop": false,
                         "isMinusRMY": false,
-                        "isRMXZ": false,
+                        "isRMXZ": true,
                         "isRMY": false,
                         "meshSpaceBlend": true,
                         "speed": 1.2999999523162842
@@ -11729,48 +11791,82 @@
                     "arrowDataList": [
                         {
                             "arrowParam": {
-                                "conditionList": null,
-                                "exitRatio": 0.800000011920929,
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 1
+                                        },
+                                        "paramName": "isGround",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 0.5,
                                 "interpolate": 0,
                                 "isActive": true,
                                 "isHaveExit": true,
                                 "priority": 0,
                                 "targetRatio": 0.0,
                                 "transEase": 0.0,
-                                "transTime": 0.20000000298023224
+                                "transTime": 0.30000001192092896
                             },
-                            "toName": "A"
+                            "toName": "Fall_Loop"
                         }
                     ],
                     "groupArrowName": "",
-                    "nodeName": "SlashHigh_Air",
+                    "nodeName": "SlashHigh",
                     "nodeType": 2,
-                    "notifyList": null
-                },
-                {
-                    "animNode": {
-                        "animName": "knight_SlashHigh.fbx",
-                        "animationCurve": {
-                            "easeKind": 0,
-                            "endValue": 1.0,
-                            "endVector": 0.0,
-                            "plotDatas": null,
-                            "startInterp": 1,
-                            "startValue": 1.0,
-                            "startVector": 0.0,
-                            "useHermite": true
+                    "notifyList": [
+                        {
+                            "notifyParam": {
+                                "endFrame": 95,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_Cancel",
+                                "parameterNames": [
+                                    "canCancel",
+                                    "canMove",
+                                    "canAttack"
+                                ],
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 59,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
                         },
-                        "isLoop": true,
-                        "isMinusRMY": false,
-                        "isRMXZ": true,
-                        "isRMY": false,
-                        "speed": 1.0
-                    },
-                    "arrowDataList": null,
-                    "groupArrowName": "",
-                    "nodeName": "SlashHigh_Ground",
-                    "nodeType": 0,
-                    "notifyList": null
+                        {
+                            "notifyParam": {
+                                "endFrame": 95,
+                                "isActive": true,
+                                "isUse": [
+                                    false,
+                                    false,
+                                    false,
+                                    false
+                                ],
+                                "notifyName": "ANS_Input",
+                                "parameterNames": [],
+                                "setParameter": [
+                                    false,
+                                    false,
+                                    false,
+                                    false
+                                ],
+                                "startFrame": 57,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        }
+                    ]
                 },
                 {
                     "animNode": {

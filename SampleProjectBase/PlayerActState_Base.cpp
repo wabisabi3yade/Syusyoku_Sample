@@ -27,7 +27,7 @@ namespace HashiTaku
 		pPlayerInput = &InSceneSystemManager::GetInstance()->GetInput();
 	}
 
-	void PlayerActState_Base::Init(PlayerActionController_Base& _actController, 
+	void PlayerActState_Base::Init(PlayerActionController_Base& _actController,
 		CancelType _cancelType,
 		int _priority)
 	{
@@ -42,6 +42,9 @@ namespace HashiTaku
 	void PlayerActState_Base::Update()
 	{
 		CharacterActState_Base::Update();
+
+		// 入力更新
+		InputStateUpdate();
 
 		// ターゲットの方向を見る
 		UpdateTargetLook();
@@ -139,7 +142,7 @@ namespace HashiTaku
 		// ターゲットしているなら
 		if (actCon.GetIsTargeting())
 		{
-			auto* pAccepter = actCon .GetTargetAccepter();
+			auto* pAccepter = actCon.GetTargetAccepter();
 			if (pAccepter)
 				return pAccepter->GetWorldPos();
 		}
@@ -201,7 +204,12 @@ namespace HashiTaku
 		// スティックの方向が一致しているか見る
 		float dot = inputVec.Dot(baseVecXZ);
 
-		return dot > INPUT_VECTOR_DOT ? true : false;
+		// スティックが前ベクトルなら
+		if (_checkVector == InputVector::Forward)
+			return dot > INPUT_VECTOR_DOT ? true : false;
+
+		// 後ろの場合
+		return dot < - INPUT_VECTOR_DOT ? true : false;
 	}
 
 	bool PlayerActState_Base::IsRollingInput() const
@@ -248,8 +256,8 @@ namespace HashiTaku
 		// 回転させる
 		DXSimp::Quaternion targetRot = Quat::RotateToVector(vector);
 		DXSimp::Quaternion myRot = transform.GetRotation();
-		myRot = DXSimp::Quaternion::Slerp(myRot, 
-			targetRot, 
+		myRot = DXSimp::Quaternion::Slerp(myRot,
+			targetRot,
 			targetLookRotateSpeed * DeltaTime());
 
 		transform.SetRotation(myRot);

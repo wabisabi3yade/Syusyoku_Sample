@@ -4,6 +4,10 @@
 
 namespace HashiTaku
 {
+	PlayerAirState::PlayerAirState() : isApplyDownForce(true)
+	{
+	}
+
 	bool PlayerAirState::OnDamage(AttackInformation& _attackInfo)
 	{
 		return true;
@@ -19,7 +23,7 @@ namespace HashiTaku
 
 	void PlayerAirState::Update()
 	{
-		InputUpdate();
+		InputStateUpdate();
 
 		PlayerActState_Base::Update();
 
@@ -39,9 +43,19 @@ namespace HashiTaku
 	{
 	}
 
+	void PlayerAirState::SetIsApplyDownForce(bool _isDownForce)
+	{
+		isApplyDownForce = _isDownForce;
+	}
+
 	PlayerAirActionController& PlayerAirState::GetAirController()
 	{
 		return GetDeliverActionController<PlayerAirActionController>();
+	}
+
+	bool PlayerAirState::GetIsApplyDownForce() const
+	{
+		return isApplyDownForce;
 	}
 
 	void PlayerAirState::ChangeState(PlayerState _nextState, bool _isForce)
@@ -52,6 +66,10 @@ namespace HashiTaku
 	void PlayerAirState::ImGuiDebug()
 	{
 		PlayerActState_Base::ImGuiDebug();
+
+		ImGuiMethod::LineSpaceSmall();
+		ImGui::Text("Air");
+		ImGui::Checkbox("ApplyDownForce", &isApplyDownForce);
 	}
 
 	json PlayerAirState::Save()
@@ -64,7 +82,7 @@ namespace HashiTaku
 		PlayerActState_Base::Load(_data);
 	}
 
-	void PlayerAirState::InputUpdate()
+	void PlayerAirState::InputStateUpdate()
 	{
 		if (!GetAirController().GetCanInput()) return;
 

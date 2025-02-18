@@ -281,6 +281,8 @@
     <ClCompile Include="PlayerAirActionController.cpp" />
     <ClCompile Include="PlayerAirAttack.cpp" />
     <ClCompile Include="PlayerAirMove.cpp" />
+    <ClCompile Include="PlayerAirSlashHigh.cpp" />
+    <ClCompile Include="PlayerSlashHigh.cpp" />
     <ClCompile Include="PlayerAirState.cpp" />
     <ClCompile Include="PlayerAttackInformation.cpp" />
     <ClCompile Include="PlayerDamageState.cpp" />
@@ -549,6 +551,8 @@
     <ClInclude Include="PlayerAirActionController.h" />
     <ClInclude Include="PlayerAirAttack.h" />
     <ClInclude Include="PlayerAirMove.h" />
+    <ClInclude Include="PlayerAirSlashHigh.h" />
+    <ClInclude Include="PlayerSlashHigh.h" />
     <ClInclude Include="PlayerAirState.h" />
     <ClInclude Include="PlayerAnimReference.h" />
     <ClInclude Include="PlayerAttackInformation.h" />

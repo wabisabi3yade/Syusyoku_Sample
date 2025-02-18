@@ -103,6 +103,12 @@ namespace HashiTaku
 		rigid.updateInertiaTensor();
 	}
 
+	void CP_RigidBody::SetCustomGravity(const DXSimp::Vector3& _gravity)
+	{
+		if (!collider || isTrigger) return;
+		CastRigidBody().setGravity(Bullet::ToBtVector3(_gravity));
+	}
+
 	void CP_RigidBody::SetFriction(float _friction)
 	{
 		friction = std::max(_friction, 0.0f);

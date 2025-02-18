@@ -44,6 +44,10 @@ namespace HashiTaku
 		/// @param _velocity 速度
 		void SetVelocity(const DXSimp::Vector3& _velocity);
 
+		/// @brief 衝撃的に動かす
+		/// @param _power パワー
+		void AddImpulse(const DXSimp::Vector3& _power);
+
 		/// @brief オブジェクトのΔtを取得
 		/// @return Δt
 		float DeltaTime() const;

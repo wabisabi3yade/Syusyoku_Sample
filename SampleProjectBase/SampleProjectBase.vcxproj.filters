@@ -964,6 +964,12 @@
     <Filter Include="ソース ファイル\InGame\Character\ActionState\InterFace">
       <UniqueIdentifier>{7e7f76a9-a2ae-4557-b974-981037e9d753}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Air\AirSlashHigh">
+      <UniqueIdentifier>{798ed1ee-cc29-4bc4-9b76-56fdd5a0265e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\SlashHigh">
+      <UniqueIdentifier>{52e4cda8-9b72-4634-b90b-84f755b7f65f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1759,6 +1765,12 @@
     </ClCompile>
     <ClCompile Include="CharacterActState_Base.cpp">
       <Filter>ソース ファイル\InGame\Character\ActionState</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSlashHigh.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\SlashHigh</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAirSlashHigh.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2610,6 +2622,12 @@
     </ClInclude>
     <ClInclude Include="IActionController.h">
       <Filter>ソース ファイル\InGame\Character\ActionState\InterFace</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSlashHigh.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\SlashHigh</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAirSlashHigh.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
