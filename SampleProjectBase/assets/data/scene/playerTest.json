@@ -413,6 +413,38 @@
                         "name": "OutLineRenderer",
                         "priority": 0,
                         "scale": 0.009999999776482582
+                    },
+                    {
+                        "enable": true,
+                        "friction": 0.5,
+                        "isAwake": false,
+                        "isFreezeRot": [
+                            false,
+                            false,
+                            false
+                        ],
+                        "isKinematic": true,
+                        "isTrigger": true,
+                        "mass": 0.0,
+                        "name": "RigidBody",
+                        "priority": 0
+                    },
+                    {
+                        "angles": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "center": [
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "enable": true,
+                        "height": 1.0,
+                        "name": "CapsuleCollider",
+                        "priority": 0,
+                        "radius": 0.5
                     }
                 ],
                 "layer": 1,

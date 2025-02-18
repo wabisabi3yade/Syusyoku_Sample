@@ -7524,7 +7524,7 @@
             "nodeInfoData": [
                 {
                     "animNode": {
-                        "animName": "knight_FallLoop.fbx",
+                        "animName": "knight_Idle1.fbx",
                         "animationCurve": {
                             "easeKind": 0,
                             "endValue": 1.0,
@@ -7564,8 +7564,8 @@
                                 "isActive": false,
                                 "isHaveExit": true,
                                 "priority": 0,
-                                "targetRatio": 0.17000000178813934,
-                                "transEase": 0.17000000178813934,
+                                "targetRatio": 0.1899999976158142,
+                                "transEase": 0.1899999976158142,
                                 "transTime": 0.20000000298023224
                             },
                             "toName": "AirAttack2"
@@ -7587,14 +7587,14 @@
                         {
                             "arrowParam": {
                                 "conditionList": null,
-                                "exitRatio": 0.27000001072883606,
+                                "exitRatio": 0.44999998807907104,
                                 "interpolate": 0,
-                                "isActive": false,
+                                "isActive": true,
                                 "isHaveExit": true,
                                 "priority": 0,
-                                "targetRatio": 0.05999999865889549,
-                                "transEase": 0.05999999865889549,
-                                "transTime": 0.1599999964237213
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
                             },
                             "toName": "SlashHigh_Air"
                         },
@@ -7603,7 +7603,7 @@
                                 "conditionList": null,
                                 "exitRatio": 0.800000011920929,
                                 "interpolate": 0,
-                                "isActive": true,
+                                "isActive": false,
                                 "isHaveExit": true,
                                 "priority": 0,
                                 "targetRatio": 0.36800000071525574,
@@ -7774,7 +7774,7 @@
                             "startVector": 0.0,
                             "useHermite": true
                         },
-                        "baseAnim": "knight_AirDownBody2.fbx",
+                        "baseAnim": "knight_AirDownBody3.fbx",
                         "beginBlendFlame": 0,
                         "beginBoneId": 2,
                         "blendAnim": "knight_AirSlash2.fbx",
@@ -10575,27 +10575,21 @@
                             "endVector": 0.0,
                             "plotDatas": [
                                 {
-                                    "interp": 0,
+                                    "interp": 1,
                                     "time": 0.3720000088214874,
-                                    "value": 0.5,
+                                    "value": 2.0,
                                     "vector": 0.0
                                 },
                                 {
                                     "interp": 1,
-                                    "time": 0.42899999022483826,
-                                    "value": 1.0,
-                                    "vector": -0.11900000274181366
-                                },
-                                {
-                                    "interp": 1,
-                                    "time": 0.5130000114440918,
-                                    "value": 1.0,
+                                    "time": 0.5339999794960022,
+                                    "value": 2.0,
                                     "vector": 0.0
                                 },
                                 {
                                     "interp": 1,
-                                    "time": 0.5350000262260437,
-                                    "value": 0.05000000074505806,
+                                    "time": 0.5379999876022339,
+                                    "value": 0.009999999776482582,
                                     "vector": 0.0
                                 }
                             ],
@@ -11615,64 +11609,112 @@
                             "plotDatas": [
                                 {
                                     "interp": 1,
-                                    "time": 0.13950000703334808,
-                                    "value": 0.5,
+                                    "time": 0.21199999749660492,
+                                    "value": 0.699999988079071,
                                     "vector": 0.0
                                 },
                                 {
                                     "interp": 1,
-                                    "time": 0.45539215207099915,
+                                    "time": 0.2290000021457672,
+                                    "value": 2.0,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.2840000092983246,
+                                    "value": 2.0,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.2980000078678131,
+                                    "value": 0.30000001192092896,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.45591938495635986,
                                     "value": 1.0,
                                     "vector": 0.0
                                 }
                             ],
                             "startInterp": 1,
-                            "startValue": 0.5,
+                            "startValue": 0.699999988079071,
                             "startVector": 0.0,
                             "useHermite": true
                         },
                         "baseAnim": "knight_AirDownBody2.fbx",
-                        "beginBlendFlame": 14,
+                        "beginBlendFlame": 3,
                         "beginBoneId": 2,
                         "blendAnim": "knight_SlashHigh.fbx",
                         "blendCurve": {
                             "easeKind": 0,
-                            "endValue": 0.0,
+                            "endValue": 0.009999999776482582,
                             "endVector": 0.0,
                             "plotDatas": [
                                 {
                                     "interp": 1,
-                                    "time": 0.2619999945163727,
-                                    "value": 0.7870000004768372,
-                                    "vector": -0.5666298270225525
-                                },
-                                {
-                                    "interp": 0,
-                                    "time": 0.2919999957084656,
-                                    "value": 1.399999976158142,
-                                    "vector": 0.3700000047683716
-                                },
-                                {
-                                    "interp": 0,
-                                    "time": 0.3370000123977661,
-                                    "value": 1.399999976158142,
-                                    "vector": -0.520925760269165
+                                    "time": 0.2280000001192093,
+                                    "value": 0.4000000059604645,
+                                    "vector": -10.0
                                 },
                                 {
                                     "interp": 1,
-                                    "time": 0.35100001096725464,
-                                    "value": 0.5910000205039978,
-                                    "vector": -1.1197686195373535
+                                    "time": 0.2290000021457672,
+                                    "value": 0.10000000149011612,
+                                    "vector": -5.43033504486084
                                 },
                                 {
                                     "interp": 1,
-                                    "time": 0.38199999928474426,
-                                    "value": 0.07800000160932541,
-                                    "vector": -2.0
+                                    "time": 0.23899999260902405,
+                                    "value": 2.017864942550659,
+                                    "vector": -0.9746028780937195
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.29499998688697815,
+                                    "value": 1.9891891479492188,
+                                    "vector": -1.7721339464187622
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.30300000309944153,
+                                    "value": 0.10000000149011612,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.30300000309944153,
+                                    "value": 0.10000000149011612,
+                                    "vector": -1.5442678928375244
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.30399999022483826,
+                                    "value": 2.0,
+                                    "vector": -0.8606698513031006
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.3240000009536743,
+                                    "value": 2.0,
+                                    "vector": -1.8860669136047363
+                                },
+                                {
+                                    "interp": 0,
+                                    "time": 0.3440000116825104,
+                                    "value": 0.5989999771118164,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.35600000619888306,
+                                    "value": 0.009999999776482582,
+                                    "vector": -0.5442679524421692
                                 }
                             ],
                             "startInterp": 0,
-                            "startValue": 1.0,
+                            "startValue": 8.0,
                             "startVector": 0.0,
                             "useHermite": true
                         },
