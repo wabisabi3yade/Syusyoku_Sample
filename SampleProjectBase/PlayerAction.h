@@ -69,6 +69,9 @@ namespace HashiTaku
 		/// @brief アニメーション
 		CP_Animation* pAnimation;
 
+		/// @brief 現在の場所
+		ActionPlace currentActPlace;
+
 		/// @brief キャンセルフラグのポインタ
 		const bool* pIsCanCancel;
 
@@ -89,9 +92,6 @@ namespace HashiTaku
 
 		/// @brief 地上かどうか？
 		bool isGround;
-
-		/// @brief 1フレーム前の接地状態
-		bool prevIsGround;
 
 		/// @brief ターゲット中かどうか
 		bool isTargeting;

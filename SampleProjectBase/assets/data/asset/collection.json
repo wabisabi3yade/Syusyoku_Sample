@@ -6438,7 +6438,7 @@
             ],
             "assetName": "ANC_Player",
             "boneList": "Knight.fbx",
-            "defaultNode": "A",
+            "defaultNode": "SlashHigh_Air",
             "groupArrows": [
                 {
                     "arrows": [

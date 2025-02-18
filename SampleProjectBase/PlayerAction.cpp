@@ -23,7 +23,6 @@ namespace HashiTaku
 		pIsCanCancel(nullptr),
 		pIsCanMove(nullptr),
 		isGround(true),
-		prevIsGround(true),
 		reserveAirTransition(GroundToAir::ToAirMove),
 		reserveGroundTransition(AirToGround::AirToLanding),
 		isTargeting(false),
@@ -41,6 +40,7 @@ namespace HashiTaku
 
 		// 地上から始める
 		SetDefaultNode(ActionPlace::Ground);
+		currentActPlace = ActionPlace::Ground;
 	}
 
 	PlayerAction::~PlayerAction()
@@ -108,6 +108,7 @@ namespace HashiTaku
 
 		// 更新
 		pCurActionController = GetActionController(currentStateKey);
+		currentActPlace = _changeKey;
 
 		// どの場所に移動したか？
 		switch (currentStateKey)
@@ -354,12 +355,13 @@ namespace HashiTaku
 	void PlayerAction::UpdateGround()
 	{
 		// 前フレームと同じなら処理しない
+		bool prevIsGround = currentActPlace == ActionPlace::Ground;
 		if (isGround == prevIsGround) return;
 
 		if (isGround) 	// 地上へ移行
-			OnAirToGround();
+			ChangeNode(ActionPlace::Ground);
 		else	// 空中へ移行
-			OnGroundToAir();
+			ChangeNode(ActionPlace::Air);
 
 		prevIsGround = isGround;	// 更新
 	}
@@ -377,7 +379,6 @@ namespace HashiTaku
 			int moveStateId = static_cast<int>(PlayerAirActionController::AirState::Move);
 			pAirController->ChangeState(moveStateId, true);
 		}
-			
 			break;
 
 		default:

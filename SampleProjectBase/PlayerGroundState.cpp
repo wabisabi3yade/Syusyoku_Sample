@@ -81,11 +81,11 @@ namespace HashiTaku
 		{
 			actionCon.SetReserveState(static_cast<int>(Rolling));
 		}
-		//// ジャンプ
-		//if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Jump))
-		//{
-		//	pActionController->SetReserveState(static_cast<int>(BeginJump));
-		//}
+		// ジャンプ
+		if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Jump))
+		{
+			actionCon.SetReserveState(static_cast<int>(BeginJump));
+		}
 
 		// 攻撃キャンセル
 		if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_ChargeAttack))

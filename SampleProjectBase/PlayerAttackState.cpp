@@ -249,6 +249,10 @@ namespace HashiTaku
 		float curveVal = progressDistanceCurve.GetValue(animPlayRatio);
 		float curDis = curveVal * curAtkProgressDis;
 		float curSpeed = (curDis - prevProgressDistance) / deltaTime;
+		if (curSpeed < Mathf::epsilon)	// 速度がマイナスなら0にする
+		{
+			curSpeed = 0.0f;
+		}
 
 		Transform& transform = GetPlayer().GetTransform();
 

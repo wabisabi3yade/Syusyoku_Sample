@@ -3249,10 +3249,10 @@
                                             0.0
                                         ],
                                         "enable": true,
-                                        "height": 1.5399999618530273,
+                                        "height": 1.2899999618530273,
                                         "name": "CapsuleCollider",
                                         "priority": 0,
-                                        "radius": 0.5
+                                        "radius": 0.3499999940395355
                                     },
                                     {
                                         "enable": true,
@@ -4026,7 +4026,7 @@
                                     {
                                         "data": {
                                             "crouchTime": 0.10000000149011612,
-                                            "jumpPower": 20.0
+                                            "jumpPower": 3.0
                                         },
                                         "typeString": "BeginJump"
                                     },
