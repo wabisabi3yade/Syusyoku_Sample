@@ -2,6 +2,7 @@
 #include "PlayerAirActionController.h"
 #include "PlayerAction.h"
 #include "PlayerAirMove.h"
+#include "PlayerAirSlashHigh.h"
 #include "PlayerAirAttack.h"
 
 namespace HashiTaku
@@ -16,6 +17,7 @@ namespace HashiTaku
 		// 行動クラスを生成
 		using enum AirState;
 		CreateState<PlayerAirMove>(Move, CancelType::Move);
+		CreateState<PlayerAirSlashHigh>(SlashHigh_Air, CancelType::None);
 		//CreateState<PlayerAirAttack>(Attack11);
 
 		// デフォルト状態をセット
@@ -32,12 +34,17 @@ namespace HashiTaku
 
 	bool PlayerAirActionController::ChangeAirState(const AirState& _nextActionState, bool _isForce)
 	{
-		return ChangeState(static_cast<int>(_nextActionState), _isForce);
-	}
+		int _nextId = static_cast<int>(_nextActionState);
+		// 遷移する
+		// 失敗したら処理終了
+		if (!ChangeState(static_cast<int>(_nextActionState), _isForce))
+			return false;
 
-	void PlayerAirActionController::SetIsDownForce(bool _isDown)
-	{
-		isDownForce = _isDown;
+		// 下に落ちるようにするか？
+		PlayerAirState* pNextState = GetAirState(_nextActionState);
+		isDownForce = pNextState->GetIsApplyDownForce();
+
+		return true;
 	}
 
 	std::string PlayerAirActionController::GetStateStr(int _stateId)
@@ -60,6 +67,20 @@ namespace HashiTaku
 		return static_cast<int>(state.value());
 	}
 
+	PlayerAirState* PlayerAirActionController::GetAirState(AirState _getState)
+	{
+		PlayerAirState* pGetState = nullptr;
+		int stateId = static_cast<int>(_getState);
+#ifdef EDIT
+		pGetState = dynamic_cast<PlayerAirState*>(GetNode(stateId));
+		assert(pGetState && "ステートが正常に取得できませんでした");
+#else
+		pGetState = static_cast<PlayerAirState*>(GetNode(stateId));
+#endif // EDIT
+
+		return pGetState;
+	}
+
 	json PlayerAirActionController::Save()
 	{
 		auto data = PlayerActionController_Base::Save();
@@ -77,8 +98,8 @@ namespace HashiTaku
 
 	void PlayerAirActionController::AddDownForce()
 	{
-		if (!isDownForce) return;
 		if (!pRigidBody) return;
+
 
 		// 下向きに力を加える
 		pRigidBody->AddForce(Vec3::Up * downForcePower);

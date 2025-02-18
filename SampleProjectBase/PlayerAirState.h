@@ -27,13 +27,25 @@ namespace HashiTaku
 
 			// 必殺攻撃
 			HelmBreaker = 40,	// 兜割り
-			SpecialAtkGuard,	// ガードパリィ時の攻撃
+
+			// 空中切り上げ
+			SlashHigh_Air,
 
 			// 無し
 			None = 99
 		};
 
+		/// @brief 下への力を反映させるか？
+		bool isApplyDownForce;
+
 	public:
+		PlayerAirState();
+		virtual ~PlayerAirState(){}
+
+		/// @brief 下への力を反映させるか取得
+		/// @return 下への力を取得する
+		bool GetIsApplyDownForce() const;
+
 		/// @brief ステート側のダメージ処理
 		/// @param _attackInfo 受けた攻撃情報
 		/// @return ダメージ処理を行うか？
@@ -61,6 +73,10 @@ namespace HashiTaku
 		/// @brief ステート遷移条件のチェック処理
 		virtual void TransitionCheckUpdate();
 
+		/// @brief 下への力を反映させるかセット
+		/// @param _isDownForce 下への力を反映させるか?
+		void SetIsApplyDownForce(bool _isDownForce);
+
 		/// @brief 空中行動のコントローラーにキャスト
 		/// @return 空中行動コントローラー
 		PlayerAirActionController& GetAirController();
@@ -76,7 +92,7 @@ namespace HashiTaku
 		void Load(const json& _data) override;
 	private:
 		/// @brief 入力更新
-		void InputUpdate();
+		void InputStateUpdate();
 
 	protected:
 		// 空中行動から戻るとき先アニメーション名

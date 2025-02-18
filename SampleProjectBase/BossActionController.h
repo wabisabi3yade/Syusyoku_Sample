@@ -36,7 +36,7 @@ namespace HashiTaku
 		std::array<float, static_cast<u_int>(ActDistance::MaxNum)> disLengthList;
 
 		/// @brief プレイヤーオブジェクト
-		CP_Player* pPlayerObject;
+		const CP_Player* pPlayerObject;
 
 		/// @brief リアタックをするトリガー
 		const bool* pIsReAttack;
@@ -86,7 +86,7 @@ namespace HashiTaku
 
 		/// @brief プレイヤーを取得する
 		/// @return プレイヤーオブジェクト
-		CP_Player* GetPlayer();
+		const CP_Player* GetPlayer();
 
 		/// @brief ブレイクしているか取得
 		/// @return ブレイク処理
@@ -118,6 +118,10 @@ namespace HashiTaku
 
 		/// @brief 最初にアニメーションパラメータから取得
 		void GetAnimationParam();
+
+		/// @brief プレイヤーオブジェクトを探す
+		/// @return プレイヤーオブジェクト
+		bool FindPlayer();
 
 		/// @brief ボスの更新処理が行えるか
 		/// @return 行えるか?

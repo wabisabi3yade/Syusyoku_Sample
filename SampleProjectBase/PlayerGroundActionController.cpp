@@ -9,6 +9,7 @@
 #include "PlayerRollingMove.h"
 #include "PlayerGuardState.h"
 #include "PlayerRushAttack.h"
+#include "PlayerSlashHigh.h"
 #include "PlayerGroundChargeAttack.h"
 #include "PlayerDamageState.h"
 #include "PlayerJumpState.h"
@@ -33,7 +34,8 @@ namespace HashiTaku
 		CreateState<PlayerAttackState>(Attack12, CancelType::Attack);
 		CreateState<PlayerAttackState>(Attack13, CancelType::Attack);
 		CreateState<PlayerAttackState>(Attack14, CancelType::Attack);
-		CreateState<PlayerRushAttack>(SpecialAtkHi, CancelType::Attack);
+		CreateState<PlayerRushAttack>(RushAttack, CancelType::Attack);
+		CreateState<PlayerGroundSlashHigh>(SlashHigh, CancelType::Attack);
 		CreateState<PlayerAttackState>(SpecialAtkGuard, CancelType::Attack);
 		CreateState<PlayerGroundChargeAttack>(ChargeAttack1, CancelType::Attack);
 

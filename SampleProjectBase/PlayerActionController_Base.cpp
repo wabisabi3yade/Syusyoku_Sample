@@ -8,7 +8,6 @@ namespace HashiTaku
 {
 	// アニメーションコントローラ内のプレイヤー名
 	constexpr auto STATEANIM_PARAMNAME{ "state" };
-
 	// None状態のID(統一させる)
 	constexpr int STATE_NONE_ID(99);
 

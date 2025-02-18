@@ -23,6 +23,7 @@ namespace HashiTaku
 		maxBreakValue(100.0f),
 		isBreaking(false)
 	{
+		SetEnemyName("Boss");
 	}
 
 	void CP_Boss::Init()
@@ -112,12 +113,6 @@ namespace HashiTaku
 		// コンポーネント取得
 		pAnimation = GetGameObject().GetComponent<CP_Animation>();
 		CP_RigidBody* pRb = GetGameObject().GetComponent<CP_RigidBody>();
-
-		// プレイヤーを取得する
-		if (CP_BattleManager* pBattle = CP_BattleManager::GetInstance())
-		{
-			pActionController->SetPlayer(*pBattle->GetPlayerObject());
-		}
 
 		// アニメーションパラメータのアドレスを取得
 		pCanAttack = pAnimation->GetParameterPointer<bool>(CAN_ATTACK_ANIMPARAM);

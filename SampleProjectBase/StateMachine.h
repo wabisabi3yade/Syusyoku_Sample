@@ -87,6 +87,9 @@ namespace HashiTaku
 		/// @return 指定したノード
 		StateNode_Base* GetNode(const T& _key);
 
+		/// @brief 現在のキーを取得
+		/// @return 現在のキー
+		const T& GetCurrentKey() const;
 	protected:
 		void Init();
 
@@ -206,6 +209,12 @@ namespace HashiTaku
 		isChangeCurFlame = true;
 
 		return true;
+	}
+
+	template<class T>
+	inline const T& StateMachine_Base<T>::GetCurrentKey() const
+	{
+		return currentStateKey;
 	}
 
 	template<class T>

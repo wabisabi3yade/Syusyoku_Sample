@@ -6613,6 +6613,34 @@
                                 "conditionList": [
                                     {
                                         "condition": {
+                                            "iCompare": 31,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isActive": true,
+                                "isHaveExit": false,
+                                "priority": 14,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toNode": "SlashHigh"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
                                             "iCompare": 33,
                                             "iJudgeType": 2
                                         },
@@ -6908,6 +6936,34 @@
                                 "transTime": 0.10000000149011612
                             },
                             "toNode": "Attack1"
+                        },
+                        {
+                            "param": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "iCompare": 31,
+                                            "iJudgeType": 2
+                                        },
+                                        "paramName": "state",
+                                        "typeKind": 1
+                                    },
+                                    {
+                                        "condition": null,
+                                        "paramName": "attackTrigger",
+                                        "typeKind": 3
+                                    }
+                                ],
+                                "exitRatio": 1.0,
+                                "interpolate": 0,
+                                "isActive": true,
+                                "isHaveExit": false,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toNode": "SlashHigh"
                         }
                     ],
                     "name": "Move"
@@ -7524,7 +7580,7 @@
             "nodeInfoData": [
                 {
                     "animNode": {
-                        "animName": "knight_FallLoop.fbx",
+                        "animName": "knight_Idle1.fbx",
                         "animationCurve": {
                             "easeKind": 0,
                             "endValue": 1.0,
@@ -7547,7 +7603,7 @@
                                 "conditionList": null,
                                 "exitRatio": 0.4000000059604645,
                                 "interpolate": 0,
-                                "isActive": true,
+                                "isActive": false,
                                 "isHaveExit": true,
                                 "priority": 0,
                                 "targetRatio": 0.4099999964237213,
@@ -7564,8 +7620,8 @@
                                 "isActive": false,
                                 "isHaveExit": true,
                                 "priority": 0,
-                                "targetRatio": 0.17000000178813934,
-                                "transEase": 0.17000000178813934,
+                                "targetRatio": 0.1899999976158142,
+                                "transEase": 0.1899999976158142,
                                 "transTime": 0.20000000298023224
                             },
                             "toName": "AirAttack2"
@@ -7583,6 +7639,34 @@
                                 "transTime": 0.20000000298023224
                             },
                             "toName": "AirAttack3"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 0.44999998807907104,
+                                "interpolate": 0,
+                                "isActive": true,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.10000000149011612
+                            },
+                            "toName": "SlashHigh"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 0.800000011920929,
+                                "interpolate": 0,
+                                "isActive": false,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.36800000071525574,
+                                "transEase": 0.36800000071525574,
+                                "transTime": 0.07000000029802322
+                            },
+                            "toName": "HelmBreaker"
                         }
                     ],
                     "groupArrowName": "",
@@ -7631,7 +7715,6 @@
                         "beginBlendFlame": 0,
                         "beginBoneId": 2,
                         "blendAnim": "knight_AirSlash1.fbx",
-                        "blendBeginFrame": 0,
                         "blendCurve": {
                             "easeKind": 0,
                             "endValue": 0.6000000238418579,
@@ -7747,11 +7830,10 @@
                             "startVector": 0.0,
                             "useHermite": true
                         },
-                        "baseAnim": "knight_AirDownBody2.fbx",
+                        "baseAnim": "knight_AirDownBody3.fbx",
                         "beginBlendFlame": 0,
                         "beginBoneId": 2,
                         "blendAnim": "knight_AirSlash2.fbx",
-                        "blendBeginFrame": 0,
                         "blendCurve": {
                             "easeKind": 0,
                             "endValue": 0.30000001192092896,
@@ -7845,7 +7927,6 @@
                         "beginBlendFlame": 0,
                         "beginBoneId": 2,
                         "blendAnim": "knight_AirSlash3.fbx",
-                        "blendBeginFrame": 0,
                         "blendCurve": {
                             "easeKind": 0,
                             "endValue": 1.0,
@@ -10544,6 +10625,165 @@
                 },
                 {
                     "animNode": {
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 0.0,
+                            "endVector": 0.0,
+                            "plotDatas": [
+                                {
+                                    "interp": 1,
+                                    "time": 0.3720000088214874,
+                                    "value": 2.0,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.5339999794960022,
+                                    "value": 2.0,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.5379999876022339,
+                                    "value": 0.009999999776482582,
+                                    "vector": 0.0
+                                }
+                            ],
+                            "startInterp": 1,
+                            "startValue": 0.5,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "baseAnim": "knight_AirDownBody3.fbx",
+                        "beginBlendFlame": 63,
+                        "beginBoneId": 2,
+                        "blendAnim": "knight_ChargeAttack3.fbx",
+                        "blendCurve": {
+                            "easeKind": 0,
+                            "endValue": 0.0,
+                            "endVector": 0.0,
+                            "plotDatas": [
+                                {
+                                    "interp": 1,
+                                    "time": 0.25,
+                                    "value": 0.30000001192092896,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.2919999957084656,
+                                    "value": 8.0,
+                                    "vector": 0.939612865447998
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.29899999499320984,
+                                    "value": 4.5,
+                                    "vector": 1.252817153930664
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.35899999737739563,
+                                    "value": 4.5,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.36000001430511475,
+                                    "value": 0.0,
+                                    "vector": 0.0
+                                }
+                            ],
+                            "startInterp": 1,
+                            "startValue": 0.699999988079071,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "blendDepth": 3,
+                        "isLoop": true,
+                        "isMinusRMY": true,
+                        "isRMXZ": false,
+                        "isRMY": false,
+                        "meshSpaceBlend": true,
+                        "speed": 1.0
+                    },
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 0.550000011920929,
+                                "interpolate": 0,
+                                "isActive": false,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "A"
+                        },
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 0.550000011920929,
+                                "interpolate": 0,
+                                "isActive": true,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.3400000035762787,
+                                "transEase": 0.3400000035762787,
+                                "transTime": 0.07000000029802322
+                            },
+                            "toName": "HelmBreaker_Landing"
+                        }
+                    ],
+                    "groupArrowName": "",
+                    "nodeName": "HelmBreaker",
+                    "nodeType": 2,
+                    "notifyList": null
+                },
+                {
+                    "animNode": {
+                        "animName": "knight_ChargeAttack3.fbx",
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 1.0,
+                            "endVector": 0.0,
+                            "plotDatas": null,
+                            "startInterp": 1,
+                            "startValue": 1.0,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "isLoop": false,
+                        "isMinusRMY": false,
+                        "isRMXZ": false,
+                        "isRMY": false,
+                        "speed": 3.0
+                    },
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": null,
+                                "exitRatio": 0.8299999833106995,
+                                "interpolate": 0,
+                                "isActive": true,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.20000000298023224
+                            },
+                            "toName": "A"
+                        }
+                    ],
+                    "groupArrowName": "",
+                    "nodeName": "HelmBreaker_Landing",
+                    "nodeType": 0,
+                    "notifyList": null
+                },
+                {
+                    "animNode": {
                         "animName": "knight_Idle1.fbx",
                         "animationCurve": {
                             "easeKind": 0,
@@ -11418,6 +11658,218 @@
                 },
                 {
                     "animNode": {
+                        "animationCurve": {
+                            "easeKind": 0,
+                            "endValue": 0.019999999552965164,
+                            "endVector": 0.0,
+                            "plotDatas": [
+                                {
+                                    "interp": 1,
+                                    "time": 0.21199999749660492,
+                                    "value": 0.699999988079071,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.2290000021457672,
+                                    "value": 2.0,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.2840000092983246,
+                                    "value": 2.0,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.36800000071525574,
+                                    "value": 0.6000000238418579,
+                                    "vector": -1.5831694602966309
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.5193954706192017,
+                                    "value": 0.6000000238418579,
+                                    "vector": -0.7915847301483154
+                                }
+                            ],
+                            "startInterp": 1,
+                            "startValue": 0.699999988079071,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "baseAnim": "knight_AirDownBody2.fbx",
+                        "beginBlendFlame": 3,
+                        "beginBoneId": 2,
+                        "blendAnim": "knight_SlashHigh.fbx",
+                        "blendCurve": {
+                            "easeKind": 0,
+                            "endValue": 0.009999999776482582,
+                            "endVector": 0.30000001192092896,
+                            "plotDatas": [
+                                {
+                                    "interp": 1,
+                                    "time": 0.2280000001192093,
+                                    "value": 0.4000000059604645,
+                                    "vector": -10.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.2290000021457672,
+                                    "value": 0.10000000149011612,
+                                    "vector": -5.43033504486084
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.23899999260902405,
+                                    "value": 2.017864942550659,
+                                    "vector": -0.9746028780937195
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.29499998688697815,
+                                    "value": 1.9891891479492188,
+                                    "vector": -1.7721339464187622
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.30300000309944153,
+                                    "value": 0.10000000149011612,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.30300000309944153,
+                                    "value": 0.10000000149011612,
+                                    "vector": -1.5442678928375244
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.30399999022483826,
+                                    "value": 2.0,
+                                    "vector": -0.8606698513031006
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.3240000009536743,
+                                    "value": 2.0,
+                                    "vector": -1.8860669136047363
+                                },
+                                {
+                                    "interp": 0,
+                                    "time": 0.3440000116825104,
+                                    "value": 0.5989999771118164,
+                                    "vector": 0.0
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.35600000619888306,
+                                    "value": 0.30000001192092896,
+                                    "vector": -0.5442679524421692
+                                },
+                                {
+                                    "interp": 1,
+                                    "time": 0.5350000262260437,
+                                    "value": 0.0,
+                                    "vector": -0.12213397026062012
+                                }
+                            ],
+                            "startInterp": 0,
+                            "startValue": 8.0,
+                            "startVector": 0.0,
+                            "useHermite": true
+                        },
+                        "blendDepth": 2,
+                        "isLoop": false,
+                        "isMinusRMY": false,
+                        "isRMXZ": true,
+                        "isRMY": false,
+                        "meshSpaceBlend": true,
+                        "speed": 1.2999999523162842
+                    },
+                    "arrowDataList": [
+                        {
+                            "arrowParam": {
+                                "conditionList": [
+                                    {
+                                        "condition": {
+                                            "bJudgeType": 1
+                                        },
+                                        "paramName": "isGround",
+                                        "typeKind": 0
+                                    }
+                                ],
+                                "exitRatio": 0.5,
+                                "interpolate": 0,
+                                "isActive": true,
+                                "isHaveExit": true,
+                                "priority": 0,
+                                "targetRatio": 0.0,
+                                "transEase": 0.0,
+                                "transTime": 0.30000001192092896
+                            },
+                            "toName": "Fall_Loop"
+                        }
+                    ],
+                    "groupArrowName": "",
+                    "nodeName": "SlashHigh",
+                    "nodeType": 2,
+                    "notifyList": [
+                        {
+                            "notifyParam": {
+                                "endFrame": 95,
+                                "isActive": true,
+                                "isUse": [
+                                    true,
+                                    true,
+                                    true,
+                                    true
+                                ],
+                                "notifyName": "ANS_Cancel",
+                                "parameterNames": [
+                                    "canCancel",
+                                    "canMove",
+                                    "canAttack"
+                                ],
+                                "setParameter": [
+                                    false,
+                                    true,
+                                    false,
+                                    true
+                                ],
+                                "startFrame": 59,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        },
+                        {
+                            "notifyParam": {
+                                "endFrame": 95,
+                                "isActive": true,
+                                "isUse": [
+                                    false,
+                                    false,
+                                    false,
+                                    false
+                                ],
+                                "notifyName": "ANS_Input",
+                                "parameterNames": [],
+                                "setParameter": [
+                                    false,
+                                    false,
+                                    false,
+                                    false
+                                ],
+                                "startFrame": 57,
+                                "useFrame": true
+                            },
+                            "notifyType": 3
+                        }
+                    ]
+                },
+                {
+                    "animNode": {
                         "animName": "knight_TargetIdle1.fbx",
                         "animationCurve": {
                             "easeKind": 0,
@@ -12152,6 +12604,12 @@
             "rightHand": true
         },
         {
+            "assetName": "knight_SlashHigh.fbx",
+            "boneListName": "Knight.fbx",
+            "pathName": "assets/animation/player/knight_SlashHigh.fbx",
+            "rightHand": true
+        },
+        {
             "assetName": "knight_SlashUp.fbx",
             "boneListName": "Knight.fbx",
             "pathName": "assets/animation/player/knight_SlashUp.fbx",
@@ -12580,6 +13038,10 @@
             "pathName": ""
         },
         {
+            "assetName": "UI_AttackText.png",
+            "pathName": "assets/texture/ui/UI_AttackText.png"
+        },
+        {
             "assetName": "UI_Back.png",
             "pathName": "assets/texture/ui/UI_Back.png"
         },
@@ -12592,12 +13054,20 @@
             "pathName": "assets/texture/ui/UI_BarFrame.png"
         },
         {
+            "assetName": "UI_ChargeText.png",
+            "pathName": "assets/texture/ui/UI_ChargeText.png"
+        },
+        {
             "assetName": "UI_CheckBox.png",
             "pathName": "assets/texture/ui/UI_CheckBox.png"
         },
         {
             "assetName": "UI_CheckBoxBack.png",
             "pathName": "assets/texture/ui/UI_CheckBoxBack.png"
+        },
+        {
+            "assetName": "UI_DodgeText.png",
+            "pathName": "assets/texture/ui/UI_DodgeText.png"
         },
         {
             "assetName": "UI_EndText.png",
@@ -12630,6 +13100,10 @@
         {
             "assetName": "UI_Menu.png",
             "pathName": "assets/texture/ui/UI_Menu.png"
+        },
+        {
+            "assetName": "UI_ParryText.png",
+            "pathName": "assets/texture/ui/UI_ParryText.png"
         },
         {
             "assetName": "UI_PlayerHpBar.png",
@@ -12686,6 +13160,22 @@
         {
             "assetName": "UI_Win.png",
             "pathName": "assets/texture/ui/UI_Win.png"
+        },
+        {
+            "assetName": "UI_Xbox_A.png",
+            "pathName": "assets/texture/ui/UI_Xbox_A.png"
+        },
+        {
+            "assetName": "UI_Xbox_B.png",
+            "pathName": "assets/texture/ui/UI_Xbox_B.png"
+        },
+        {
+            "assetName": "UI_Xbox_X.png",
+            "pathName": "assets/texture/ui/UI_Xbox_X.png"
+        },
+        {
+            "assetName": "UI_Xbox_Y.png",
+            "pathName": "assets/texture/ui/UI_Xbox_Y.png"
         },
         {
             "assetName": "black.png",

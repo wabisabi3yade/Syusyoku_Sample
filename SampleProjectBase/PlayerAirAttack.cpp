@@ -31,8 +31,6 @@ namespace HashiTaku
 		// UŒ‚ƒtƒ‰ƒO‚ğ—§‚Ä‚é
 		GetActionController().SetAnimationTrigger(ATTACKTRIGGER_PARAMNAME);
 
-		// ‰º‚É—‚¿‚È‚­‚·‚é
-		GetAirController().SetIsDownForce(false);
 		ClearVelocity(true);
 	}
 
@@ -43,12 +41,6 @@ namespace HashiTaku
 
 		// y²‘¬“x‚¾‚¯0‚É
 		ClearVelocityY();
-	}
-
-	void PlayerAirAttack::OnEndBehavior()
-	{
-		// —‚¿‚é‚æ‚¤‚É‚·‚é
-		GetAirController().SetIsDownForce(true);
 	}
 
 	void PlayerAirAttack::OnAnimationEnd(const std::string& _fromAnimNodeName, const std::string& _toAnimNodeName)

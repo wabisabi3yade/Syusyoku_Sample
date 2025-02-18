@@ -374,20 +374,21 @@ namespace HashiTaku
 		return true;
 	}
 
-	void CP_Player::OnTakeDamage(const AttackInformation& _attackInfo, const DXSimp::Vector3& _contactPos)
+	void CP_Player::OnTakeDamage(const DamageInfo& _damageInfo)
 	{
-		CP_Character::OnTakeDamage(_attackInfo, _contactPos);
+		CP_Character::OnTakeDamage(_damageInfo);
 
 		// スタイリッシュポイントを減らす
-		AddStylishPoint(-_attackInfo.GetDamageValue() * stylishPointRatioFromAcceptDmg);
+		AddStylishPoint(-_damageInfo.pAttackInformation->GetDamageValue() *
+			stylishPointRatioFromAcceptDmg);
 
 		// ダメージSE
-		CreateSoundFX(_attackInfo.GetHitSEParam(), _contactPos);
+		CreateSoundFX(_damageInfo.pAttackInformation->GetHitSEParam(), _damageInfo.contactPos);
 
 		// カメラを揺らす
 		if (pCameraMove)
 		{
-			pCameraMove->ShakeCamera(_attackInfo.GetCamShakeParam());
+			pCameraMove->ShakeCamera(_damageInfo.pAttackInformation->GetCamShakeParam());
 		}
 	}
 

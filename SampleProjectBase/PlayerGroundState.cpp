@@ -21,8 +21,6 @@ namespace HashiTaku
 
 	void PlayerGroundState::Update()
 	{
-		InputUpdate();
-
 		PlayerActState_Base::Update();
 
 		UpdateBehavior();
@@ -62,7 +60,7 @@ namespace HashiTaku
 		return GetDeliverActionController<PlayerGroundActionController>();
 	}
 
-	void PlayerGroundState::InputUpdate()
+	void PlayerGroundState::InputStateUpdate()
 	{
 		PlayerGroundActionController& actionCon = GetGroundController();
 
@@ -81,11 +79,11 @@ namespace HashiTaku
 		{
 			actionCon.SetReserveState(static_cast<int>(Rolling));
 		}
-		//// ジャンプ
-		//if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Jump))
-		//{
-		//	pActionController->SetReserveState(static_cast<int>(BeginJump));
-		//}
+		// ジャンプ
+		if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Jump))
+		{
+			actionCon.SetReserveState(static_cast<int>(BeginJump));
+		}
 
 		// 攻撃キャンセル
 		if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_ChargeAttack))
@@ -95,7 +93,12 @@ namespace HashiTaku
 		// 前突進攻撃
 		if (IsSpecialAtkInput(InputVector::Forward))
 		{
-			actionCon.SetReserveState(static_cast<int>(SpecialAtkHi));
+			actionCon.SetReserveState(static_cast<int>(RushAttack));
+		}
+		// 前突進攻撃
+		if (IsSpecialAtkInput(InputVector::Back))
+		{
+			actionCon.SetReserveState(static_cast<int>(SlashHigh));
 		}
 		// 攻撃
 		if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))

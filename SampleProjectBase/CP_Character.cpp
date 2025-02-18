@@ -48,19 +48,18 @@ namespace HashiTaku
 		return isDead;
 	}
 
-	void CP_Character::OnDamage(AttackInformation& _attackInfo,
-		const DXSimp::Vector3& _contactPos)
+	void CP_Character::OnDamage(const DamageInfo& _damageInfo)
 	{
 		if (isInvicible) return;
 
 		// 各派生のダメージ処理
-		bool isDamage = OnDamageBehavior(_attackInfo);
+		bool isDamage = OnDamageBehavior(*_damageInfo.pAttackInformation);
 
 		// ダメージを受けていないなら
 		if (!isDamage) return;
 
 		// ダメージ受けたときの処理
-		OnTakeDamage(_attackInfo, _contactPos);
+		OnTakeDamage(_damageInfo);
 	}
 
 	void CP_Character::OnDeath()
@@ -148,21 +147,20 @@ namespace HashiTaku
 #endif // EDIT
 	}
 
-	void CP_Character::OnTakeDamage(const AttackInformation& _atkInfo,
-		const DXSimp::Vector3& _contactWorldPos)
+	void CP_Character::OnTakeDamage(const DamageInfo& _damageInfo)
 	{
 		// 体力を減らす
-		DecadeHp(_atkInfo.GetDamageValue());
+		DecadeHp(_damageInfo.pAttackInformation->GetDamageValue());
 
 		// 体力がなくなったら
 		if (currentHP <= 0.0f)
 			OnDeath();
 
 		// エフェクト
-		CreateVfx(_atkInfo.GetHitVfxInfo(), _contactWorldPos);
+		CreateVfx(_damageInfo.pAttackInformation->GetHitVfxInfo(), _damageInfo.contactPos);
 
 		// サウンド
-		CreateSoundFX(_atkInfo.GetHitSEParam(), _contactWorldPos);
+		CreateSoundFX(_damageInfo.pAttackInformation->GetHitSEParam(), _damageInfo.contactPos);
 	}
 
 	void CP_Character::CreateVfx(const CreateVfxInfo& _vfxInfo,

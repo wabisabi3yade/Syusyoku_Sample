@@ -1,14 +1,18 @@
 #include "pch.h"
 #include "PlayerAction.h"
-#include "PlayerGroundActionController.h"
-#include "PlayerAirActionController.h"
 #include "InSceneSystemManager.h"
 #include "PlayerAnimReference.h"
 
 namespace HashiTaku
 {
+	using AirState = PlayerAirActionController::AirState;
+	using GroundState = PlayerGroundActionController::GroundState;
+
 	// アクションできる左スティックの入力量
 	constexpr float CAN_ACTION_STICKINPUT(0.7f);
+	// 場所遷移デフォルトステート
+	constexpr GroundState TO_GROUND_DEFAULT(GroundState::Move);	// 地上へ
+	constexpr AirState TO_AIR_DEFAULT(AirState::Move);	// 空中へ
 
 	PlayerAction::PlayerAction(CP_Player& _player):
 		pPlayer(&_player),
@@ -23,9 +27,6 @@ namespace HashiTaku
 		pIsCanCancel(nullptr),
 		pIsCanMove(nullptr),
 		isGround(true),
-		prevIsGround(true),
-		reserveAirTransition(GroundToAir::ToAirMove),
-		reserveGroundTransition(AirToGround::AirToLanding),
 		isTargeting(false),
 		prevIsTargeting(false)
 	{
@@ -41,6 +42,10 @@ namespace HashiTaku
 
 		// 地上から始める
 		SetDefaultNode(ActionPlace::Ground);
+		currentActPlace = ActionPlace::Ground;
+
+		// 特定の遷移の設定
+		PlaceTransitionSetting();
 	}
 
 	PlayerAction::~PlayerAction()
@@ -102,15 +107,8 @@ namespace HashiTaku
 
 	bool PlayerAction::ChangeNode(const ActionPlace& _changeKey, bool _isForceChange)
 	{
-		// アクションコントローラーを変更
-		bool isSuccess = StateMachine_Base::ChangeNode(_changeKey, _isForceChange);
-		if (!isSuccess) return false;	// 変更に成功しなかったなら終える
-
-		// 更新
-		pCurActionController = GetActionController(currentStateKey);
-
 		// どの場所に移動したか？
-		switch (currentStateKey)
+		switch (_changeKey)
 		{
 		case ActionPlace::Ground:
 			OnAirToGround();
@@ -122,6 +120,14 @@ namespace HashiTaku
 		default:
 			break;
 		}
+
+		// アクションコントローラーを変更
+		bool isSuccess = StateMachine_Base::ChangeNode(_changeKey, _isForceChange);
+		if (!isSuccess) return false;	// 変更に成功しなかったなら終える
+
+		// 更新
+		pCurActionController = GetActionController(currentStateKey);
+		currentActPlace = _changeKey;
 
 		return true;
 	}
@@ -278,6 +284,17 @@ namespace HashiTaku
 		}
 	}
 
+	void PlayerAction::PlaceTransitionSetting()
+	{
+		// 地上へ
+		toGroundTransitionMap[AirState::Damage] = GroundState::Damage_L;
+
+
+		// 空中へ
+		// 斬り上げ派生で空中へ
+		toAirTransitionMap[GroundState::SlashHigh] = AirState::SlashHigh_Air;
+	}
+
 	void PlayerAction::FindGroundChecker()
 	{
 		if (groundCheckerName.empty()) return;
@@ -354,12 +371,13 @@ namespace HashiTaku
 	void PlayerAction::UpdateGround()
 	{
 		// 前フレームと同じなら処理しない
+		bool prevIsGround = currentActPlace == ActionPlace::Ground;
 		if (isGround == prevIsGround) return;
 
 		if (isGround) 	// 地上へ移行
-			OnAirToGround();
+			ChangeNode(ActionPlace::Ground);
 		else	// 空中へ移行
-			OnGroundToAir();
+			ChangeNode(ActionPlace::Air);
 
 		prevIsGround = isGround;	// 更新
 	}
@@ -368,57 +386,42 @@ namespace HashiTaku
 	{
 		// 空中アクションコントローラーを取得
 		PlayerActionController_Base* pAirController = GetActionController(ActionPlace::Air);
+		PlayerActionController_Base* pGroundController = 
+			GetActionController(ActionPlace::Ground);
+		
+		// 遷移先のキーを決める
+		AirState toAirState = TO_AIR_DEFAULT;
+		GroundState curGroundState = 
+			static_cast<GroundState>(pGroundController->GetCurrentKey());
 
-		// 空中のエントリー状態をを設定
-		switch (reserveAirTransition)
-		{
-		case GroundToAir::ToAirMove:
-		{
-			int moveStateId = static_cast<int>(PlayerAirActionController::AirState::Move);
-			pAirController->ChangeState(moveStateId, true);
-		}
-			
-			break;
+		// 指定したキーに遷移するなら
+		auto itr = toAirTransitionMap.find(curGroundState);
+		if (itr != toAirTransitionMap.end())
+			toAirState = itr->second;
 
-		default:
-			break;
-		}
-
-		// デフォルトに戻す
-		reserveAirTransition = GroundToAir::ToAirMove;
+		// 遷移
+		pAirController->ChangeState(static_cast<int>(toAirState), true);
 	}
 
 	void PlayerAction::OnAirToGround()
 	{
-		// 空中アクションコントローラーを取得
-		PlayerActionController_Base* pGroundController = 
+		// 空中・地上アクションコントローラーを取得
+		PlayerActionController_Base* pAirController = 
+			GetActionController(ActionPlace::Air);
+		PlayerActionController_Base* pGroundController =
 			GetActionController(ActionPlace::Ground);
 
-		// 地上のエントリー状態をを設定
-		switch (reserveGroundTransition)
-		{
-		case AirToGround::AirToLanding:
-		{
-			int idleStateId = static_cast<int>(PlayerGroundActionController::GroundState::Idle);
-			pGroundController->ChangeState(idleStateId, true);
-		}
-			
-			break;
+		// 遷移先のキーを決める
+		GroundState toGroundState = TO_GROUND_DEFAULT;
+		AirState curAirState = static_cast<AirState>(pAirController->GetCurrentKey());
 
-		case AirToGround::AirToGroundKnock:
-		{
-			int moveStateId = static_cast<int>(PlayerGroundActionController::GroundState::Move);
-			pGroundController->ChangeState(moveStateId, true);
-		}
-			
-			break;
+		// 指定したキーに遷移するなら
+		auto itr = toGroundTransitionMap.find(curAirState);
+		if (itr != toGroundTransitionMap.end())
+			toGroundState = itr->second;
 
-		default:
-			break;
-		}
-
-		// デフォルトに戻す
-		reserveGroundTransition = AirToGround::AirToLanding;
+		// 遷移
+		pGroundController->ChangeState(static_cast<int>(toGroundState), true);
 	}
 
 	PlayerActionController_Base* PlayerAction::GetActionController(ActionPlace _place)

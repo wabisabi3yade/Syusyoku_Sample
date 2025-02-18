@@ -87,6 +87,9 @@ namespace HashiTaku
 		/// @brief ステートの初期化処理
 		virtual void InitState() {}
 
+		/// @brief 入力更新
+		virtual void InputStateUpdate() = 0;
+
 		/// @brief 速度をクリアする
 		/// @param _applyY Y軸にも反映させるか
 		void ClearVelocity(bool _applyY = true);

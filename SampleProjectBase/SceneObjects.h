@@ -6,7 +6,7 @@ namespace HashiTaku
 {
 	class SceneFunction::ObjectFunc;
 
-	using SceneObjectList = std::unordered_map<std::string, std::unique_ptr<GameObject>>;
+	using SceneObjectList = std::map<std::string, std::unique_ptr<GameObject>>;
 
 	// シーンで使用するオブジェクト配列クラス
 	class SceneObjects : public IImGuiUser

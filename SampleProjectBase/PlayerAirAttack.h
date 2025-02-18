@@ -29,9 +29,6 @@ namespace HashiTaku
 		/// @brief 更新処理
 		void UpdateBehavior() override;
 
-		/// @brief 終了
-		void OnEndBehavior() override;
-
 		/// @brief アニメーション終了時の行動
 		/// @param _fromAnimNodeName 遷移元のアニメーションノード名
 		/// @param _toAnimNodeName 遷移先のアニメーションノード名

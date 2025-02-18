@@ -1,5 +1,6 @@
 #pragma once
-#include "PlayerActionController_Base.h"
+#include "PlayerGroundActionController.h"
+#include "PlayerAirActionController.h"
 #include "ITargetAccepter.h"
 #include "IGroundNotifyer.h"
 
@@ -25,20 +26,13 @@ namespace HashiTaku
 			Back	// 後ろ
 		};
 
-		// 空中　→　地上
-		enum class AirToGround
-		{
-			AirToLanding,	// 着地
-			AirToGroundKnock,	// 地上ノックへ
-		};
-
-		// 地上　→　空中
-		enum class GroundToAir
-		{
-			ToAirMove,	// 空中移動へ	
-		};
-
 	private:
+		/// @brief 空中への指定したステートへ移動する為のマップ
+		std::unordered_map<PlayerGroundActionController::GroundState, PlayerAirActionController::AirState> toAirTransitionMap;
+
+		/// @brief 地上への指定したステートへ移動する為のマップ
+		std::unordered_map<PlayerAirActionController::AirState, PlayerGroundActionController::GroundState> toGroundTransitionMap;
+
 		/// @brief 接地チェッカーオブジェクト名
 		std::string groundCheckerName;
 
@@ -69,6 +63,9 @@ namespace HashiTaku
 		/// @brief アニメーション
 		CP_Animation* pAnimation;
 
+		/// @brief 現在の場所
+		ActionPlace currentActPlace;
+
 		/// @brief キャンセルフラグのポインタ
 		const bool* pIsCanCancel;
 
@@ -81,17 +78,8 @@ namespace HashiTaku
 		/// @brief 移動可能のポインタ
 		const bool* pIsCanMove;
 
-		/// @brief 空中に変更したときにどの状態へ繋げるか変数
-		GroundToAir reserveAirTransition;
-
-		/// @brief 地上に変更したときにどの状態へ繋げるか変数
-		AirToGround reserveGroundTransition;
-
 		/// @brief 地上かどうか？
 		bool isGround;
-
-		/// @brief 1フレーム前の接地状態
-		bool prevIsGround;
 
 		/// @brief ターゲット中かどうか
 		bool isTargeting;
@@ -184,6 +172,9 @@ namespace HashiTaku
 		json Save() override;
 		void Load(const json& _data) override;
 	private:
+		/// @brief ある特定のステートから違う場所のステート間を遷移する為の準備
+		void PlaceTransitionSetting();
+
 		/// @brief 接地チェッカーを探して取得
 		void FindGroundChecker();
 
