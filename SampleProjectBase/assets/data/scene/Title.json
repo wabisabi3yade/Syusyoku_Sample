@@ -977,7 +977,7 @@
                         "enable": true,
                         "name": "SoundManager",
                         "priority": 0,
-                        "volumeTimes": 1.0
+                        "volumeTimes": 1.9900000095367432
                     },
                     {
                         "enable": true,

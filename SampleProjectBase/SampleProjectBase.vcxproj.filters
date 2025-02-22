@@ -970,6 +970,15 @@
     <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\SlashHigh">
       <UniqueIdentifier>{52e4cda8-9b72-4634-b90b-84f755b7f65f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Graphics\Blur">
+      <UniqueIdentifier>{a5a90e89-cd05-4ffd-bac9-47dd9e8fc25b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\PostEffect">
+      <UniqueIdentifier>{5a8dc328-8a0b-4273-afbc-5c73bafa4f57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\RenderTargetCollection">
+      <UniqueIdentifier>{8ce4873f-0e49-4076-afba-8e5b54e0729d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_Primitive.hlsl">
@@ -1043,6 +1052,12 @@
     </FxCompile>
     <FxCompile Include="VS_Ground.hlsl">
       <Filter>リソース ファイル\VertexShader\Ground</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_MotionBlur.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_MotionBlur.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1770,6 +1785,18 @@
       <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\SlashHigh</Filter>
     </ClCompile>
     <ClCompile Include="PlayerAirSlashHigh.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PostEffect.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_MotionBlur.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_PostEffect.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTargetCollection.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -2627,6 +2654,18 @@
       <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\SlashHigh</Filter>
     </ClInclude>
     <ClInclude Include="PlayerAirSlashHigh.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PostEffect.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_MotionBlur.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_PostEffect.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTargetCollection.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

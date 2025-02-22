@@ -15,8 +15,13 @@ namespace HashiTaku
 	constexpr float ORIGIN_SCALE(0.15f);	// 原点表示のオブジェクトのスケール
 	constexpr DXSimp::Color ORIGIN_COLOR(1.0f, 1.0f, 0.0f);	// 原点表示のオブジェクトの色
 
-	CP_MeshRenderer::CP_MeshRenderer()
-		: pRenderMesh(nullptr), pShadowDrawer(nullptr), pBoneBuffer(nullptr), isOriginDisplay(false), isShadow(true)
+	CP_MeshRenderer::CP_MeshRenderer() :
+		pRenderMesh(nullptr),
+		pShadowDrawer(nullptr),
+		pBoneBuffer(nullptr),
+		isOriginDisplay(false),
+		isShadow(true),
+		isPostEffect(false)
 	{
 	}
 
@@ -28,6 +33,11 @@ namespace HashiTaku
 
 		// ボーン供給クラスを取得する
 		pBoneBuffer = GetGameObject().GetComponent<IBoneBufferSupplier>();
+	}
+
+	void CP_MeshRenderer::Start()
+	{
+	
 	}
 
 	void CP_MeshRenderer::OnDestroy()
@@ -46,16 +56,16 @@ namespace HashiTaku
 		Transform& transform = GetTransform();
 		// メッシュオフセット行列を求める
 		DXSimp::Matrix meshOffsetMtx; meshOffsetMtx.Translation(offsetMeshPosition);
-		auto& wvp = rendererParam.GetWVP();
+		drawMeshWVP = rendererParam.GetWVP();
 
 		// ロード行列　×　オフセット座標　×　ワールド行列
-		wvp.world = CalcLoadMtx() *
+		drawMeshWVP.world = CalcLoadMtx() *
 			transform.GetWorldMatrix() * 
 			meshOffsetMtx;
-		wvp.world = wvp.world.Transpose();
+		drawMeshWVP.world = drawMeshWVP.world.Transpose();
 
 		// メッシュ描画
-		DrawMesh(wvp);
+		DrawMesh();
 
 		// 原点表示
 		OriginDisplay();
@@ -204,6 +214,11 @@ namespace HashiTaku
 		return offsetMeshPosition;
 	}
 
+	const RenderParam::WVP& CP_MeshRenderer::GetDrawMatrix() const
+	{
+		return drawMeshWVP;
+	}
+
 	void CP_MeshRenderer::WriteDepth()
 	{
 		if (!isShadow) return;
@@ -293,7 +308,7 @@ namespace HashiTaku
 			Matrix::CreateFromYawPitchRoll(loadAngles.y, loadAngles.x, loadAngles.z);
 	}
 
-	void CP_MeshRenderer::DrawMesh(RenderParam::WVP& _wvp)
+	void CP_MeshRenderer::DrawMesh()
 	{
 		// メッシュ数
 		u_int meshCnt = pRenderMesh->GetMeshNum();
@@ -307,14 +322,14 @@ namespace HashiTaku
 			Material* pRenderMaterial = GetMaterial(meshLoop);
 
 			// マテリアルの描画準備
-			MaterialSetup(_wvp, pRenderMaterial);
+			MaterialSetup(pRenderMaterial);
 
 			// メッシュ描画
 			CP_Renderer::DrawMesh(*pSingleMesh);
 		}
 	}
 
-	void CP_MeshRenderer::MaterialSetup(RenderParam::WVP& _wvp, Material* _pMaterial)
+	void CP_MeshRenderer::MaterialSetup(Material* _pMaterial)
 	{
 		if (_pMaterial == nullptr) return;
 
@@ -323,8 +338,8 @@ namespace HashiTaku
 
 		// シェーダーにバッファを送る
 		// (ここではライト、カメラ座標などの1ループで1度しか送らないものは送らない)
-		ShaderSetup(pVS, _wvp, *_pMaterial);
-		ShaderSetup(pPs, _wvp, *_pMaterial);
+		ShaderSetup(pVS, *_pMaterial);
+		ShaderSetup(pPs, *_pMaterial);
 
 		// テクスチャを送る
 		pPs.SetTexture(TEX_DIFUSSE_SLOT, _pMaterial->GetDiffuseTexture());
@@ -334,7 +349,7 @@ namespace HashiTaku
 		pPs.SetGPU();
 	}
 
-	void CP_MeshRenderer::ShaderSetup(Shader& _shader, RenderParam::WVP& _wvp, Material& _material)
+	void CP_MeshRenderer::ShaderSetup(Shader& _shader, Material& _material)
 	{
 		// バッファの種類からスロットの番号に送る
 		u_int bufferNum = _shader.GetBufferNum();
@@ -346,7 +361,7 @@ namespace HashiTaku
 			switch (_shader.GetBufferType(bufLoop))
 			{
 			case WVP:	// WVP行列
-				_shader.UpdateSubResource(bufLoop, &_wvp);
+				_shader.UpdateSubResource(bufLoop, &drawMeshWVP);
 				break;
 
 			case Material:	// マテリアル

@@ -95,7 +95,7 @@ namespace HashiTaku
 		{
 			actionCon.SetReserveState(static_cast<int>(RushAttack));
 		}
-		// ‘O“ËiUŒ‚
+		// a‚èã‚°
 		if (IsSpecialAtkInput(InputVector::Back))
 		{
 			actionCon.SetReserveState(static_cast<int>(SlashHigh));

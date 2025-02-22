@@ -92,7 +92,7 @@ namespace HashiTaku
 
 		/// @brief 現在の再生割合をセット
 		/// @param 再生割合
-		void SetCurPlayRatio(float _playRatio);
+		virtual void SetCurPlayRatio(float _playRatio);
 
 		/// @brief 現在の再生フレームをセット
 		/// @param 再生フレーム
@@ -160,6 +160,11 @@ namespace HashiTaku
 		/// @brief プレイヤー再生速度を取得する
 		/// @return プレイヤーの再生速度
 		float GetPlayerSpeed() const;
+
+		/// @brief 通知で使用する割合を取得
+		/// @param _lastRatio 最後の割合
+		/// @param _curRatio 現在の割合
+		virtual void GetNotifyUseRatio(float& _lastRatio, float& _curRatio) const;
 
 		void ImGuiDebug() override;
 	};

@@ -3438,6 +3438,22 @@
                                             "rotateSpeed": 7.0
                                         },
                                         "typeString": "Move"
+                                    },
+                                    {
+                                        "data": {
+                                            "jumpMovementCurve": {
+                                                "easeKind": 0,
+                                                "endValue": 1.0,
+                                                "endVector": 0.0,
+                                                "plotDatas": null,
+                                                "startInterp": 1,
+                                                "startValue": 1.0,
+                                                "startVector": 0.0,
+                                                "useHermite": true
+                                            },
+                                            "maxJumpMovement": 5.0
+                                        },
+                                        "typeString": "SlashHigh_Air"
                                     }
                                 ],
                                 "downForcePower": -45.0
@@ -3780,19 +3796,10 @@
                                                 "useHermite": true
                                             },
                                             "isMoveFwd": false,
+                                            "judgeTimeAnimRatio": 0.0,
                                             "jumpAnimRatio": 0.0,
-                                            "jumpMovementCurve": {
-                                                "easeKind": 0,
-                                                "endValue": 1.0,
-                                                "endVector": 0.0,
-                                                "plotDatas": null,
-                                                "startInterp": 1,
-                                                "startValue": 1.0,
-                                                "startVector": 0.0,
-                                                "useHermite": true
-                                            },
+                                            "jumpPower": 20.0,
                                             "maxDistance": 10.0,
-                                            "maxJumpMovement": 5.0,
                                             "nextCombAttack": 99
                                         },
                                         "typeString": "SlashHigh"
@@ -3942,6 +3949,32 @@
                                                             "level": 1
                                                         }
                                                     ],
+                                                    "nextSound": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
+                                                    "nextVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
+                                                    "releaseSound": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
+                                                    "releaseVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
                                                     "time": 0.0
                                                 },
                                                 {
@@ -3979,6 +4012,32 @@
                                                             "level": 2
                                                         }
                                                     ],
+                                                    "nextSound": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
+                                                    "nextVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
+                                                    "releaseSound": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
+                                                    "releaseVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
                                                     "time": 1.2000000476837158
                                                 },
                                                 {
@@ -4016,6 +4075,32 @@
                                                             "level": 3
                                                         }
                                                     ],
+                                                    "nextSound": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
+                                                    "nextVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
+                                                    "releaseSound": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "useListener": false,
+                                                        "volume": 0.5
+                                                    },
+                                                    "releaseVfx": {
+                                                        "applyColor": false,
+                                                        "lookCam": false,
+                                                        "scale": 1.0,
+                                                        "speed": 1.0,
+                                                        "startFrame": 0
+                                                    },
                                                     "time": 2.4000000953674316
                                                 }
                                             ],
@@ -4025,14 +4110,6 @@
                                                 0.0
                                             ],
                                             "chargeOffsetTime": -0.30000001192092896,
-                                            "chargeVfx": {
-                                                "applyColor": false,
-                                                "lookCam": true,
-                                                "name": "charge02",
-                                                "scale": 0.800000011920929,
-                                                "speed": 1.5,
-                                                "startFrame": 0
-                                            },
                                             "charhePadPower": 0.4000000059604645,
                                             "forwardCurve": {
                                                 "easeKind": 0,
@@ -4048,14 +4125,6 @@
                                             "maxDistance": 10.0,
                                             "maxTime": 3.5,
                                             "nextCombAttack": 99,
-                                            "releaseVfx": {
-                                                "applyColor": false,
-                                                "lookCam": true,
-                                                "name": "chargeRelease01",
-                                                "scale": 2.0,
-                                                "speed": 1.5,
-                                                "startFrame": 4
-                                            },
                                             "releaseVfxOffset": 1.2000000476837158
                                         },
                                         "typeString": "ChargeAttack1"

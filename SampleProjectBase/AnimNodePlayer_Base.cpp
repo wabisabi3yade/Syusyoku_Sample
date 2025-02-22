@@ -8,7 +8,9 @@
 
 namespace HashiTaku
 {
-	AnimNodePlayer_Base::AnimNodePlayer_Base(const AnimationNode_Base& _playNode, BoneList& _boneList, Transform& _transform) :
+	AnimNodePlayer_Base::AnimNodePlayer_Base(const AnimationNode_Base& _playNode,
+		BoneList& _boneList,
+		Transform& _transform) :
 		pPlayAnimNode(&_playNode),
 		pAssetBoneList(&_boneList),
 		pObjectTransform(&_transform),
@@ -268,10 +270,14 @@ namespace HashiTaku
 
 	void AnimNodePlayer_Base::NotifyUpdate()
 	{
+		// 通知で使用する割合を取得
+		float lastNotifyRatio = 0.0f, curNotifyRatio = 0.0f;
+		GetNotifyUseRatio(lastNotifyRatio, curNotifyRatio);
+
 		// 全て
 		for (auto& pNotify : copyNotifys)
 		{
-			pNotify->Update(lastPlayRatio, curPlayRatio, isJustLoop);
+			pNotify->Update(lastNotifyRatio, curNotifyRatio, isJustLoop);
 		}
 	}
 
@@ -304,6 +310,12 @@ namespace HashiTaku
 	float AnimNodePlayer_Base::GetPlayerSpeed() const
 	{
 		return playerSpeedTimes;
+	}
+
+	void AnimNodePlayer_Base::GetNotifyUseRatio(float& _lastRatio, float& _curRatio) const
+	{
+		_lastRatio = lastPlayRatio;
+		_curRatio = curPlayRatio;
 	}
 
 	void AnimNodePlayer_Base::ImGuiDebug()

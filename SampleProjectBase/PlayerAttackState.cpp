@@ -59,6 +59,9 @@ namespace HashiTaku
 		// 攻撃フラグを立てる
 		actCon.SetAnimationTrigger(ATTACKTRIGGER_PARAMNAME);
 
+		// 速度0
+		ClearVelocity();
+
 		// パラメータリセット
 		prevProgressDistance = 0.0f;
 	}

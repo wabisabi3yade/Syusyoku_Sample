@@ -14,9 +14,10 @@ namespace HashiTaku
 		pBaseAnimation(nullptr),
 		pBlendAnimation(nullptr),
 		beginBlendPlayFrame(0),
+		blendDepth(0),
 		beginBlendBoneId(NOT_SET_BONEID),
 		isMeshSpaceRotationBlend(false),
-		blendDepth(0)
+		isNotifyUseBlend(false)
 	{
 		blendSpeedCurve.SetCurveName("Blend Speed");
 	}
@@ -204,6 +205,11 @@ namespace HashiTaku
 		}
 	}
 
+	bool LayerdAnimationNode::GetIsNotifyUseBlend() const
+	{
+		return isNotifyUseBlend;
+	}
+
 	u_int LayerdAnimationNode::GetAllKeyFrame() const
 	{
 #ifdef EDIT
@@ -284,6 +290,8 @@ namespace HashiTaku
 		if (pBlendAnimation)
 			data["blendAnim"] = pBlendAnimation->GetAssetName();
 
+
+		data["notifyUseBlend"] = isNotifyUseBlend;
 		data["beginBoneId"] = beginBlendBoneId;
 		data["beginBlendFlame"] = beginBlendPlayFrame;
 		data["meshSpaceBlend"] = isMeshSpaceRotationBlend;
@@ -296,6 +304,7 @@ namespace HashiTaku
 	{
 		AnimationNode_Base::Load(_data);
 
+		LoadJsonBoolean("notifyUseBlend", isNotifyUseBlend, _data);
 		LoadJsonUnsigned("beginBlendFlame", beginBlendPlayFrame, _data);
 		LoadJsonBoolean("meshSpaceBlend", isMeshSpaceRotationBlend, _data);
 		LoadJsonUnsigned("blendDepth", blendDepth, _data);
@@ -396,6 +405,7 @@ namespace HashiTaku
 #ifdef EDIT
 		AnimationNode_Base::ImGuiDebug();
 
+		ImGui::Checkbox("NotifyUseRatio", &isNotifyUseBlend);
 		ImGui::Checkbox("MeshSpaceBlend", &isMeshSpaceRotationBlend);
 
 		// ブレンド開始するボーンのIdをセット

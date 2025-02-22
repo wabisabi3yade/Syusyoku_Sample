@@ -39,6 +39,11 @@ namespace HashiTaku
 		LoadJsonFloat("rotateSpeed", rotateSpeed, _data);
 	}
 
+	void PlayerMoveState::OnStartBehavior()
+	{
+		currentSpeed = 0.0f;
+	}
+
 	void PlayerMoveState::UpdateBehavior()
 	{
 		ApplyRootMotion();
@@ -46,10 +51,6 @@ namespace HashiTaku
 		Move();
 
 		Rotation();
-	}
-
-	void PlayerMoveState::OnEndBehavior()
-	{
 	}
 
 	void PlayerMoveState::TransitionCheckUpdate()

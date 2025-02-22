@@ -5,8 +5,14 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg
 
 namespace HashiTaku
 {
-	constexpr SIZE DEFAULT_SIZE = { 1280, 720 };
+//#ifdef EDIT
+//	constexpr SIZE DEFAULT_SIZE = { 1280, 720 };
+//#else
+//	constexpr SIZE DEFAULT_SIZE = { 1920, 1080 };
+//#endif // EDIT
+	
 	constexpr char CLASS_NAME[] = "Duel Knight";
+	constexpr SIZE DEFAULT_SIZE = { 1280, 720 };
 
 	Window::Window()
 	{
