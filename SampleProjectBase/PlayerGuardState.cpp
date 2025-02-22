@@ -155,6 +155,9 @@ namespace HashiTaku
 
 		// アニメーション
 		GetAnimation()->SetBool(GUARD_PARAMNAME, true);
+
+		// 速度をクリアする
+		ClearVelocity();
 	}
 
 	void PlayerGuardState::UpdateBehavior()

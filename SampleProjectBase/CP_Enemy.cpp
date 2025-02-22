@@ -156,14 +156,14 @@ namespace HashiTaku
 	{
 		CP_Character::OnTakeDamage(_damageInfo);
 
-		// 揺れるようにする
+		// 揺れるようにする（攻撃レベルによって大きさ変更）
 		u_int atkLevelId = static_cast<u_int>(_damageInfo.pAttackInformation->GetAttackLevel());
 		pReserveShakeParam = &acceptDamageShakeParams[atkLevelId];
 
 		// 攻撃の向きにゆらす
 		pReserveShakeParam->shakeVec = Vec3::Abs(_damageInfo.attackVector);
 
-		// 揺れを予約
+		// ヒットストップ時に揺れをするように設定
 		acceptDamageShake.BeginShake(*pReserveShakeParam);
 	}
 

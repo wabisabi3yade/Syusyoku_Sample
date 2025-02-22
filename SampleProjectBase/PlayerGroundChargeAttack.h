@@ -27,14 +27,21 @@ namespace HashiTaku
 		/// @brief レベルごとのチャージの時間
 		std::array<float, static_cast<u_int>(ChargeLevel::MaxNum)> chargeTimes;
 
-		/// @brief レベルごとのチャージの色
-		std::array<DXSimp::Color, static_cast<u_int>(ChargeLevel::MaxNum)> chargeVfxColor;
+		/// @brief レベルごとのチャージ完了Vfx
+		std::array<CreateVfxInfo,
+			static_cast<u_int>(ChargeLevel::MaxNum)> chargeCompleteVfxs;
 
-		/// @brief チャージで次の段階に移行した時のエフェクト
-		CreateVfxInfo onNextChargeVfx;
+		/// @brief 攻撃するときに解放するエフェクト
+		std::array<CreateVfxInfo, 
+			static_cast<u_int>(ChargeLevel::MaxNum)> chargeReleaseVfxs;
 
-		/// @brief チャージ攻撃に移行するエフェクト
-		CreateVfxInfo chargeReleaseVfx;
+		/// @brief チャージ完了サウンド
+		std::array<PlaySoundParameter, 
+			static_cast<u_int>(ChargeLevel::MaxNum)> chargeCompleteSounds;
+
+		/// @brief 解放サウンド
+		std::array<PlaySoundParameter,
+			static_cast<u_int>(ChargeLevel::MaxNum)> chargeReleaseSounds;
 
 		/// @brief チャージエフェクトのオフセット座標
 		DXSimp::Vector3 chargeVfxOffset;
@@ -104,7 +111,7 @@ namespace HashiTaku
 		void ChargingUpdate();
 
 		/// @brief チャージのエフェクトを出す
-		void CreateChargeVfx();
+		void CreateChargeVfx(ChargeLevel _chargeLevel);
 
 		/// @brief 次のチャージレベルへ移行
 		void NextChargeLevel();

@@ -6,12 +6,14 @@ namespace HashiTaku
 {
 	AnimLayerdNodePlayer::AnimLayerdNodePlayer(const AnimationNode_Base& _playNode, BoneList& _boneList, Transform& _transform) :
 		AnimNodePlayer_Base(_playNode, _boneList, _transform),
-		curBlendPlayRatio(0.0f)
+		curBlendPlayRatio(0.0f),
+		lastBlendPlayRatio(0.0f)
 	{
 		const LayerdAnimationNode& layerNode = static_cast<const LayerdAnimationNode&>(_playNode);
 
 		// ノードで決められた再生割合から始める
 		curBlendPlayRatio = layerNode.GetBeginBlendPlayRatio();
+		lastBlendPlayRatio = curBlendPlayRatio - Mathf::epsilon;
 	}
 
 	void AnimLayerdNodePlayer::ProgressPlayRatio(float _controllerSpeed)
@@ -31,7 +33,7 @@ namespace HashiTaku
 		// 進める
 		curBlendPlayRatio += speed * deltaTime / animTime;
 		if (curBlendPlayRatio > 1.0f)
-			curBlendPlayRatio -= 1.0f;
+			curBlendPlayRatio = Mathf::Repeat(curBlendPlayRatio, 1.0f);
 	}
 
 	void AnimLayerdNodePlayer::Update(std::vector<BoneTransform>& _outTransforms)
@@ -67,6 +69,20 @@ namespace HashiTaku
 		CalcRootMotion(rootMotionPos, _isWorldScaling);
 
 		return rootMotionPos;
+	}
+
+	void AnimLayerdNodePlayer::GetNotifyUseRatio(float& _lastRatio, float& _curRatio) const
+	{
+		const LayerdAnimationNode& layerdNode = static_cast<const LayerdAnimationNode&>(*pPlayAnimNode);
+
+		// ベース側
+		_lastRatio = GetLastPlayRatio();
+		_curRatio = GetCurPlayRatio();
+
+		if (!layerdNode.GetIsNotifyUseBlend()) return;
+		// ブレンド側なら
+		_lastRatio = lastBlendPlayRatio;
+		_curRatio = curBlendPlayRatio;
 	}
 
 	void AnimLayerdNodePlayer::ImGuiDebug()

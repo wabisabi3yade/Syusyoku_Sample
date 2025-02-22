@@ -178,10 +178,10 @@ namespace HashiTaku
 	{
 		if (!pAnimation) return;
 
-		// アニメーションのフレーム数を巻き戻す
+		// 現在のフレーム数を取得
 		u_int curAnimFrame = pAnimation->GetCurrentPlayFrame();
+		// アニメーションの指定した1フレーム数を巻き戻す
 		pAnimation->SetPlayFrame(curAnimFrame - REWIND_ANIM_BACKFRAME);
-		HASHI_DEBUG_LOG("巻き戻す");
 	}
 
 	void CP_Player::SetRequireObject()

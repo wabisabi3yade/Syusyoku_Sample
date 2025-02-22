@@ -52,6 +52,18 @@ namespace HashiTaku
 		/// @return Δt
 		float DeltaTime() const;
 
+		/// @brief エフェクトを出す
+		/// @param _vfxInfo エフェクト情報
+		/// @param _createPos 生成する座標
+		void CreateVfx(const CreateVfxInfo& _vfxInfo, 
+			const DXSimp::Vector3& _createPos);
+
+		/// @brief SEを再生
+		/// @param _attackInfo 攻撃情報
+		/// @param 当たり判定の衝突地点
+		void CreateSoundFX(const PlaySoundParameter& _soundParam,
+			const DXSimp::Vector3& _soundPos);
+
 		/// @brief アクションコントローラーのインターフェースを取得
 		/// @return アクションコントローラー
 		IActionController& GetActionController();

@@ -39,6 +39,9 @@ namespace HashiTaku
 
 		/// @brief メッシュのローカル空間内で回転量をブレンド
 		bool isMeshSpaceRotationBlend;
+
+		/// @brief 通知イベントをブレンド側の割合で処理するか？
+		bool isNotifyUseBlend;
 	public:
 		/// @brief コンストラクタ
 		/// @param _boneList ボーンリスト
@@ -89,6 +92,10 @@ namespace HashiTaku
 		/// @return メッシュ空間内でブレンドを行うか
 		bool GetMotionSpaceRotationBlend() const;
 
+		/// @brief ブレンド側で通知を取得するか
+		/// @return ブレンド側で通知を取得するか?
+		bool GetIsNotifyUseBlend() const;
+
 		json Save() override;
 		void Load(const json& _data) override;
 	private:
@@ -119,7 +126,6 @@ namespace HashiTaku
 		/// @param_baseRatio ベースのアニメーション側の割合
 		/// @param _blendRatio ブレンド側のアニメーション割合
 		void GetLocalSpaceBlendTransform(std::vector<BoneTransform>& _outTransforms, float _baseRatio, float _blendRatio) const;
-
 
 		/// @brief ブレンド開始ボーンをセットする
 		/// @param _beginBoneId ブレンド開始ボーンのId

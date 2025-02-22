@@ -21,6 +21,10 @@ namespace HashiTaku
 		chargeVfxHandle(NONE_VFX_HANDLE),
 		isCharging(false)
 	{
+		for (auto& time : chargeTimes)
+		{
+			time = 0.0f;
+		}
 	}
 
 	json PlayerGroundChargeAttack::Save()
@@ -29,9 +33,7 @@ namespace HashiTaku
 		data["maxTime"] = maxChargeTime;
 		data["chargeOffsetTime"] = chargeVfxCreateTimeOffset;
 		SaveJsonVector3("chargeOffset", chargeVfxOffset, data);
-		data["chargeVfx"] = onNextChargeVfx.Save();
 		data["releaseVfxOffset"] = chargeReleaseVfxOffsetY;
-		data["releaseVfx"] = chargeReleaseVfx.Save();
 		data["charhePadPower"] = chargePadShakePower;
 
 		// チャージ段階ごとの情報
@@ -51,6 +53,11 @@ namespace HashiTaku
 
 			// チャージ時間
 			chargeData["time"] = chargeTimes[l_i];
+			// エフェクト
+			chargeData["nextVfx"] = chargeCompleteVfxs[l_i].Save();
+			chargeData["releaseVfx"] = chargeReleaseVfxs[l_i].Save();
+			chargeData["nextSound"] = chargeCompleteSounds[l_i].Save();
+			chargeData["releaseSound"] = chargeReleaseSounds[l_i].Save();
 			chargeInfoDatas.push_back(chargeData);
 		}
 
@@ -64,17 +71,8 @@ namespace HashiTaku
 		LoadJsonFloat("chargeOffsetTime", chargeVfxCreateTimeOffset, _data);
 		LoadJsonFloat("charhePadPower", chargePadShakePower, _data);
 		LoadJsonVector3("chargeOffset", chargeVfxOffset, _data);
-		json vfxData;
-		if (LoadJsonData("chargeVfx", vfxData, _data))
-		{
-			onNextChargeVfx.Load(vfxData);
-		}
-
 		LoadJsonFloat("releaseVfxOffset", chargeReleaseVfxOffsetY, _data);
-		if (LoadJsonData("releaseVfx", vfxData, _data))
-		{
-			chargeReleaseVfx.Load(vfxData);
-		}
+	
 
 		json chargeDatas;
 		if (!LoadJsonDataArray("chargeInfos", chargeDatas, _data)) return;
@@ -85,14 +83,30 @@ namespace HashiTaku
 			LoadJsonFloat("time", chargeTimes[l_i], chargeData);
 
 			int a_i = -1;
-			json attackInfoData;
-			if (LoadJsonDataArray("attackInfos", attackInfoData, chargeData))
+			json chargeParamData;
+			if (LoadJsonDataArray("attackInfos", chargeParamData, chargeData))
 			{
 				a_i++;
 
 				// 配列が用意されていないなら
 				if (static_cast<int>(chargeAtkInfos.size()) <= a_i) break;
-				chargeAtkInfos[a_i][l_i]->Load(attackInfoData[a_i]);
+				chargeAtkInfos[a_i][l_i]->Load(chargeParamData[a_i]);
+			}
+			if (LoadJsonData("nextVfx", chargeParamData, chargeData))
+			{
+				chargeCompleteVfxs[l_i].Load(chargeParamData);
+			}
+			if (LoadJsonData("releaseVfx", chargeParamData, chargeData))
+			{
+				chargeReleaseVfxs[l_i].Load(chargeParamData);
+			}
+			if (LoadJsonData("nextSound", chargeParamData, chargeData))
+			{
+				chargeCompleteSounds[l_i].Load(chargeParamData);
+			}
+			if (LoadJsonData("releaseSound", chargeParamData, chargeData))
+			{
+				chargeReleaseSounds[l_i].Load(chargeParamData);
 			}
 		}
 	}
@@ -156,6 +170,9 @@ namespace HashiTaku
 
 		// チャージ中からカメラを通常に戻す
 		ChangeCameraNormaleState();
+
+		// 振動を終える
+		InSceneSystemManager::GetInstance()->GetInput().BeginVibration(0.0f, 0.0f);
 	}
 
 	void PlayerGroundChargeAttack::ChangeCameraChargeState()
@@ -192,7 +209,7 @@ namespace HashiTaku
 	{
 		PlayerAttackState::OnChangeAttackTimes();
 
-		
+
 		u_int atktimes = GetAttackTimes();
 		u_int prevTimes = static_cast<u_int>(chargeAtkInfos.size());
 		u_int chargeCnt = static_cast<u_int>(ChargeLevel::MaxNum);
@@ -228,7 +245,7 @@ namespace HashiTaku
 			// エフェクトを出すタイミングになった瞬間なら
 			if (curChargingTime > chargeTimes[nextLevelId] + chargeVfxCreateTimeOffset &&
 				lastChargingTime < chargeTimes[nextLevelId] + chargeVfxCreateTimeOffset)
-				CreateChargeVfx();
+				CreateChargeVfx(static_cast<ChargeLevel>(nextLevelId));
 
 			// チャージ時間が来たら
 			if (curChargingTime > chargeTimes[nextLevelId])
@@ -241,15 +258,14 @@ namespace HashiTaku
 
 		lastChargingTime = curChargingTime;
 
-
 	}
 
-	void PlayerGroundChargeAttack::CreateChargeVfx()
+	void PlayerGroundChargeAttack::CreateChargeVfx(ChargeLevel _chargeLevel)
 	{
 		// エフェクトを出す
 		DXSimp::Vector3 effectPos = GetMyTransform().GetPosition();
 		chargeVfxHandle = DX11EffecseerManager::GetInstance()->Play(
-			onNextChargeVfx,
+			chargeCompleteVfxs[static_cast<int>(_chargeLevel)],
 			effectPos + chargeVfxOffset);
 	}
 
@@ -263,13 +279,13 @@ namespace HashiTaku
 		// チャージのエフェクトのハンドルをリセット
 		chargeVfxHandle = NONE_VFX_HANDLE;
 
-		HASHI_DEBUG_LOG("チャージ段階：" + std::string(magic_enum::enum_name(curChargeLevel)));
+		// チャージ完了サウンドを再生
+		const DXSimp::Vector3& playerPos = GetMyTransform().GetPosition();
+		CreateSoundFX(chargeCompleteSounds[nextLevelId], playerPos);
 	}
 
 	void PlayerGroundChargeAttack::OnChargeEnd()
 	{
-		HASHI_DEBUG_LOG("チャージ終了");
-
 		isCharging = false;	// 溜め終了
 		GetAnimation()->SetBool(CHARGE_PARAMNAME, false);
 
@@ -298,25 +314,58 @@ namespace HashiTaku
 			pVfxManager->DestroyVfx(chargeVfxHandle);
 
 		// 攻撃移行時のエフェクトを出す
+		// 座標
 		DXSimp::Vector3 vfxPos = GetMyTransform().GetPosition() +
 			Vec3::Up * chargeReleaseVfxOffsetY;
-		pVfxManager->Play(chargeReleaseVfx, vfxPos);
+		pVfxManager->Play(chargeReleaseVfxs[static_cast<int>(curChargeLevel)],
+			vfxPos);
+
+		// 解放サウンド再生
+		CreateSoundFX(chargeReleaseSounds[static_cast<int>(curChargeLevel)],
+			vfxPos);
 	}
 
 	void PlayerGroundChargeAttack::ImGuiDebug()
 	{
 		ImGui::DragFloat("MaxTime", &maxChargeTime, 0.01f, 0.0f, 100.0f);
 
-		if (ImGuiMethod::TreeNode("Charge Time"))
+		// チャージレベルごとの編集
+		u_int chargeCnt = static_cast<u_int>(ChargeLevel::MaxNum);
+		for (u_int c_i = 0; c_i < chargeCnt; c_i++)
 		{
-			// チャージレベルごとの
-			u_int chargeCnt = static_cast<u_int>(ChargeLevel::MaxNum);
-			for (u_int c_i = 1; c_i < chargeCnt; c_i++)
+			ChargeLevel c = static_cast<ChargeLevel>(c_i);
+			std::string levelStr = std::string(magic_enum::enum_name(c));
+
+			if (!ImGuiMethod::TreeNode(levelStr)) continue;
+
+			// チャージ時間
+			ImGui::DragFloat("Charge Time", &chargeTimes[c_i], 0.01f, 0.0f, 100.0f);
+
+			// チャージしたときのvfx
+			ImGui::PushID(0);
+			ImGui::Text("Complete");
+			chargeCompleteVfxs[c_i].ImGuiCall();
+			if (ImGuiMethod::TreeNode("Sound"))
 			{
-				ChargeLevel c = static_cast<ChargeLevel>(c_i);
-				std::string levelStr = std::string(magic_enum::enum_name(c));
-				ImGui::DragFloat(levelStr.c_str(), &chargeTimes[c_i], 0.01f, 0.0f, 100.0f);
+				chargeCompleteSounds[c_i].ImGuiCall();
+				ImGui::TreePop();
 			}
+			ImGui::PopID();
+
+			ImGuiMethod::LineSpaceSmall();
+
+			// 解放したときのvfx
+			ImGui::PushID(1);
+			ImGui::Text("Release");
+			chargeReleaseVfxs[c_i].ImGuiCall();
+			if (ImGuiMethod::TreeNode("Sound"))
+			{
+				chargeReleaseSounds[c_i].ImGuiCall();
+				ImGui::TreePop();
+			}
+			ImGui::PopID();
+
+			ImGuiMethod::LineSpaceSmall();
 
 			ImGui::TreePop();
 		}
@@ -325,12 +374,10 @@ namespace HashiTaku
 		ImGui::Text("ChargeVfx");
 		ImGui::DragFloat("ChargeOffsetTime", &chargeVfxCreateTimeOffset, 0.01f);
 		ImGui::DragFloat3("ChargeOffsetPos", &chargeVfxOffset.x, 0.1f);
-		onNextChargeVfx.ImGuiCall();
 		ImGui::PopID();
 		ImGuiMethod::LineSpaceSmall();
 		ImGui::Text("ChargeReleaseVfx");
 		ImGui::DragFloat("ReleaseOffsetY", &chargeReleaseVfxOffsetY, 0.1f);
-		chargeReleaseVfx.ImGuiCall();
 
 		ImGuiAttackInfo();
 

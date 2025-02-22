@@ -27,6 +27,12 @@ namespace HashiTaku
 		{
 			// 再生していない時でも同期させる
 			DX11BulletPhisics::GetInstance()->UpdateTransformDxToBt();
+
+			// excキーを押すと終了
+			if (MainApplication::GetInput().GetKeyboard().GetKeyDown(DIK_ESCAPE))
+			{
+				MainApplication::ExitRequest();
+			}
 		}
 
 		// ImGuiによる編集
@@ -136,6 +142,12 @@ namespace HashiTaku
 		if (ImGui::Button("Save"))
 		{
 			SceneSave();
+		}
+
+		// アプリを終了する
+		if (ImGui::Button("End App"))
+		{
+			MainApplication::ExitRequest();
 		}
 #endif // EDIT
 	}

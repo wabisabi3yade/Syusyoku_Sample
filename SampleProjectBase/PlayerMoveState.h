@@ -40,8 +40,8 @@ namespace HashiTaku
 		void Load(const json& _data) override;
 
 	protected:
+		void OnStartBehavior() override;
 		void UpdateBehavior() override;
-		void OnEndBehavior() override;
 
 		void TransitionCheckUpdate() override;
 

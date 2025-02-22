@@ -9,6 +9,8 @@ namespace HashiTaku
 		/// @brief ブレンド側の現在の再生割合
 		float curBlendPlayRatio;
 
+		/// @brief ブレンド側の1フレーム前のの再生割合
+		float lastBlendPlayRatio;
 	public:
 		AnimLayerdNodePlayer(const AnimationNode_Base& _playNode, BoneList& _boneList, Transform& _transform);
 		~AnimLayerdNodePlayer() {}
@@ -30,6 +32,11 @@ namespace HashiTaku
 		DXSimp::Vector3 GetRootMotionPos(float _ratio, bool _isWorldScaling = true) const override;
 
 	private:
+		/// @brief 通知で使用する割合を取得
+		/// @param _lastRatio 最後の割合
+		/// @param _curRatio 現在の割合
+		void GetNotifyUseRatio(float& _lastRatio, float& _curRatio) const;
+
 		void ImGuiDebug() override;
 	};
 }

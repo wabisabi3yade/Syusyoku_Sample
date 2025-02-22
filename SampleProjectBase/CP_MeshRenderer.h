@@ -13,14 +13,17 @@ namespace HashiTaku
 	// メッシュ描画コンポーネント
 	class CP_MeshRenderer : public CP_Renderer, public IApplyShadowDepth
 	{
-		/// @brief 描画するメッシュ群
-		Mesh_Group* pRenderMesh{ nullptr };
+		/// @brief 現在フレームの描画行列
+		RenderParam::WVP drawMeshWVP;
 
 		/// @brief 使用するマテリアル（ないときはメッシュのマテリアルを使用する）
 		std::vector<Material*> setMaterials;
 
 		/// @brief メッシュの位置オフセット
 		DXSimp::Vector3 offsetMeshPosition;
+
+		/// @brief 描画するメッシュ群
+		Mesh_Group* pRenderMesh{ nullptr };
 
 		/// @brief 影を描画するクラス
 		ShadowDrawer* pShadowDrawer;
@@ -33,12 +36,18 @@ namespace HashiTaku
 
 		/// @brief 影を描画させるか？
 		bool isShadow;
+
+		/// @brief ポストエフェクトをかけるオブジェクトか？
+		bool isPostEffect;
 	public:
 		CP_MeshRenderer();
 		~CP_MeshRenderer() {}
 
 		/// @brief 初期化
 		void Init() override;
+
+		/// @brief 開始
+		void Start() override;
 
 		/// @brief 削除時処理
 		void OnDestroy() override;
@@ -67,6 +76,10 @@ namespace HashiTaku
 		/// @return メッシュの座標オフセット
 		const DXSimp::Vector3& GetMeshOffsetPos() const;
 
+		/// @brief 描画行列を取得
+		/// @return 描画行列(WVP)
+		const RenderParam::WVP& GetDrawMatrix() const;
+
 		/// @brief 深度書き込みを行う
 		void WriteDepth() override;
 
@@ -85,18 +98,16 @@ namespace HashiTaku
 		DXSimp::Matrix CalcLoadMtx();
 
 		/// @brief メッシュを描画
-		void DrawMesh(RenderParam::WVP& _wvp);
+		void DrawMesh();
 
 		/// @brief マテリアルの準備
-		/// @param _wvp wvp行列
 		/// @param _pMaterial　マテリアル
-		void MaterialSetup(RenderParam::WVP& _wvp, Material* _pMaterial);
+		void MaterialSetup(Material* _pMaterial);
 
 		/// @brief シェーダーの準備
 		/// @param _shader シェーダー
-		/// @param _wvp wvp行列
 		/// @param _material マテリアル
-		void ShaderSetup(Shader& _shader, RenderParam::WVP& _wvp, Material& _material);
+		void ShaderSetup(Shader& _shader, Material& _material);
 
 		/// @brief ローカル軸を考慮したオフセットに変換
 		/// @param _worldOffset 変換したいオフセット

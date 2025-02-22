@@ -51,7 +51,7 @@ namespace HashiTaku
 		PlayerAttackState::UpdateBehavior();
 
 		// ジャンプ切り替えチェック
-		CheckJumpUpdate();
+		CheckJumpJudgeUpdate();
 
 		// ジャンプ開始するか更新処理
 		CheckBeginJumpUpdate();
@@ -76,7 +76,7 @@ namespace HashiTaku
 		prevAnimRatio = curPlayAnimRatio;
 	}
 
-	void PlayerGroundSlashHigh::CheckJumpUpdate()
+	void PlayerGroundSlashHigh::CheckJumpJudgeUpdate()
 	{
 		// 判断済みなら処理しない
 		if (isAlreadyJudge) return;
@@ -89,6 +89,7 @@ namespace HashiTaku
 		{
 			// ジャンプ判断処理
 			OnJudgeTransJump();
+			HASHI_DEBUG_LOG("b");
 		}
 
 		// 次フレームの為の更新

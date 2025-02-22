@@ -366,8 +366,8 @@ namespace HashiTaku
 
 		btRigidBody& btRigid = CastRigidBody();
 		btRigid.setFriction(friction);
-		btRigid.setDamping(0.0f, 0.0f);  // 線形ダンピングと回転ダンピングを追加
-		btRigid.setRestitution(0.0f);
+		//btRigid.setDamping(0.6, 0.6);  // 線形ダンピングと回転ダンピングを追加
+		//btRigid.setRestitution(0.0);
 
 
 		if (isAwaking)	// 常に計算するならスリーブ状態にしない

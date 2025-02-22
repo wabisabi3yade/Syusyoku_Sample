@@ -1,5 +1,5 @@
 #pragma once
-#include "RenderTarget.h"
+#include "PostEffect.h"
 #include "DepthStencil.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
@@ -18,7 +18,7 @@ namespace HashiTaku
 		/// @brief 深度を書き込むときのライトからの行列
 		RenderParam::WVP lightMatrix;
 
-		/// @brief 深度を書き込むレンダーターゲット
+		/// @brief 情報を書き込むレンダーターゲット
 		std::unique_ptr<RenderTarget> pRenderTarget;
 
 		/// @brief 深度ステンシル

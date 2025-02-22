@@ -1,5 +1,6 @@
 #include "CharacterActState_Base.h"
 #include "pch.h"
+#include "CP_SoundManager.h"
 
 namespace HashiTaku
 {
@@ -26,6 +27,21 @@ namespace HashiTaku
 	float CharacterActState_Base::DeltaTime() const
 	{
 		return pActionController->DeltaTime();
+	}
+
+	void CharacterActState_Base::CreateVfx(const CreateVfxInfo& _vfxInfo, const DXSimp::Vector3& _createPos)
+	{
+		DX11EffecseerManager::GetInstance()->Play(_vfxInfo, _createPos);
+	}
+
+	void CharacterActState_Base::CreateSoundFX(const PlaySoundParameter& _soundParam, const DXSimp::Vector3& _soundPos)
+	{
+		// シーン内のサウンドマネージャーを取得
+		CP_SoundManager* pSoundManager = CP_SoundManager::GetInstance();
+		if (!pSoundManager) return;	// ないなら処理しない
+
+		// 再生
+		pSoundManager->PlaySE(_soundParam, _soundPos);
 	}
 
 	IActionController& CharacterActState_Base::GetActionController()

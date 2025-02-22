@@ -49,7 +49,7 @@ namespace HashiTaku
 		void CheckBeginJumpUpdate();
 
 		/// @brief ジャンプ切り替え更新チェック
-		void CheckJumpUpdate();
+		void CheckJumpJudgeUpdate();
 
 		/// @brief ジャンプできるか取得する
 		/// @param 現在のアニメーションの割合
