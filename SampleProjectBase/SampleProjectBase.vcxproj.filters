@@ -1053,10 +1053,16 @@
     <FxCompile Include="VS_Ground.hlsl">
       <Filter>リソース ファイル\VertexShader\Ground</Filter>
     </FxCompile>
-    <FxCompile Include="PS_MotionBlur.hlsl">
+    <FxCompile Include="PS_DrawMotionVector.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
-    <FxCompile Include="VS_MotionBlur.hlsl">
+    <FxCompile Include="VS_DrawMotionVector.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_FullScreenQuad.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_FullScreenQuad.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
     </FxCompile>
   </ItemGroup>

@@ -5,6 +5,6 @@ template<typename T>
 class IGetRenderPara
 {
 public:
-	virtual T GetParaObject() = 0;
+	virtual T GetResourceObject() = 0;
 };
 

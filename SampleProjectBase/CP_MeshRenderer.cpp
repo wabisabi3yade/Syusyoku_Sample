@@ -19,6 +19,7 @@ namespace HashiTaku
 		pRenderMesh(nullptr),
 		pShadowDrawer(nullptr),
 		pBoneBuffer(nullptr),
+		pRenderTargetCol(nullptr),
 		isOriginDisplay(false),
 		isShadow(true),
 		isPostEffect(false)
@@ -33,11 +34,13 @@ namespace HashiTaku
 
 		// ボーン供給クラスを取得する
 		pBoneBuffer = GetGameObject().GetComponent<IBoneBufferSupplier>();
+
+		// レンダターゲットコレクションを取得
+		pRenderTargetCol = &Direct3D11::GetInstance()->GetRenderer()->GetRTCollection();
 	}
 
 	void CP_MeshRenderer::Start()
 	{
-	
 	}
 
 	void CP_MeshRenderer::OnDestroy()
@@ -50,19 +53,8 @@ namespace HashiTaku
 	{
 		if (!IsCanDraw()) return;
 
-		RenderParam& rendererParam = Direct3D11::GetInstance()->GetRenderer()->GetParameter();
-
-		// ワールド行列を求める
-		Transform& transform = GetTransform();
-		// メッシュオフセット行列を求める
-		DXSimp::Matrix meshOffsetMtx; meshOffsetMtx.Translation(offsetMeshPosition);
-		drawMeshWVP = rendererParam.GetWVP();
-
-		// ロード行列　×　オフセット座標　×　ワールド行列
-		drawMeshWVP.world = CalcLoadMtx() *
-			transform.GetWorldMatrix() * 
-			meshOffsetMtx;
-		drawMeshWVP.world = drawMeshWVP.world.Transpose();
+		// 描画準備
+		DrawSetup();
 
 		// メッシュ描画
 		DrawMesh();
@@ -295,6 +287,31 @@ namespace HashiTaku
 		if (pRenderMesh == nullptr) return false;
 
 		return true;
+	}
+
+	void CP_MeshRenderer::DrawSetup()
+	{
+		D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
+		RenderParam& rendererParam = renderer.GetParameter();
+
+		// ワールド行列を求める
+		Transform& transform = GetTransform();
+
+		// メッシュオフセット行列を求める
+		DXSimp::Matrix meshOffsetMtx; meshOffsetMtx.Translation(offsetMeshPosition);
+		drawMeshWVP = rendererParam.GetWVP();
+
+		// ロード行列　×　オフセット座標　×　ワールド行列
+		drawMeshWVP.world = CalcLoadMtx() *
+			transform.GetWorldMatrix() *
+			meshOffsetMtx;
+		drawMeshWVP.world = drawMeshWVP.world.Transpose();
+
+		// レンダーターゲットをシーン描画に変える
+		pRenderTargetCol->SetRenderTarget(RenderTargetCollection::RenderTargetType::SceneDraw, true);
+
+		// ブレンドステートを解除
+		renderer.SetBlendState(BlendState::BlendStateType::None);
 	}
 
 	DXSimp::Matrix CP_MeshRenderer::CalcLoadMtx()

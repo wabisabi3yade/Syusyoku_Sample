@@ -8,9 +8,14 @@ namespace HashiTaku
 {
 	Scene::Scene(const std::string& _sceneName) : sceneName(_sceneName)
 	{
+		// 描画
+		pRenderer = Direct3D11::GetInstance()->GetRenderer();
+
+		// シーン内システム
 		pInSceneSystem = InSceneSystemManager::GetInstance();
 		pInSceneSystem->Init();
 
+		// エフェクトマネージャー
 		pEffectManager = DX11EffecseerManager::GetInstance();
 
 		// ロードする
@@ -71,11 +76,17 @@ namespace HashiTaku
 		// 線描画
 		Geometory::DrawLine();
 
-		// シーン内の描画処理
+		//// シーン内の描画処理
 		sceneObjects.ObjectDraw();
 
-		// エフェクト描画
+		//// エフェクト描画
 		pEffectManager->EffectDraw();
+
+		// スクリーンに書き込むように設定
+		pRenderer->SetBaseRenderTarget();
+
+		// レンダターゲットをポリゴンに描画
+		//pRenderer->RenderFullScreenQuad();
 
 		// シーン内の描画処理
 		sceneObjects.UIDraw();
@@ -128,7 +139,7 @@ namespace HashiTaku
 		ShadowDrawer& shadowDrawer = pInSceneSystem->GetShadowDrawer();
 
 		// 画面クリアなど準備
-		Direct3D11::GetInstance()->GetRenderer()->SetUpDraw();
+		pRenderer->SetUpDraw();
 
 		// 光源の更新処理
 		sceneLights.Update();

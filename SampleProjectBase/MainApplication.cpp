@@ -3,7 +3,6 @@
 // システム関連
 #include "SceneManager.h"
 #include "AssetCollection.h"
-#include "ShaderCollection.h"
 #include "DX11BulletPhisics.h"
 #include "DXSoundManager.h"
 
@@ -37,6 +36,7 @@ namespace HashiTaku
 		// ImGuiの終了処理
 		ImGuiMethod::Terminal();
 
+		// サウンドマネージャーを初期解放
 		DXSoundManager::GetInstance()->FastRelease();
 
 		// アセット管理解放
@@ -46,7 +46,6 @@ namespace HashiTaku
 		SceneManager::Delete();
 		DXSoundManager::Delete();
 		DX11EffecseerManager::Delete();
-		ShaderCollection::Delete();
 		Direct3D11::Delete();
 	}
 
@@ -99,8 +98,6 @@ namespace HashiTaku
 
 		InputSetup(hwnd);
 
-		ShaderSetup();
-
 		// 乱数クラス初期化
 		Random::Init();
 
@@ -141,10 +138,6 @@ namespace HashiTaku
 			if (result == false) break;
 
 			ImGuiMethod::NewFrame();
-
-			//// 終了処理チェック
-			//if (EscapeCheck())
-			//	return;
 
 			// 入力更新
 			pInput->Update();
@@ -220,12 +213,6 @@ namespace HashiTaku
 
 		// アセットロードする
 		AssetSaveLoader::Load();
-	}
-
-	void MainApplication::ShaderSetup()
-	{
-		ShaderCollection* shCol = ShaderCollection::GetInstance();
-		shCol->Init();
 	}
 
 	void MainApplication::SceneManagerSetup()

@@ -48,6 +48,7 @@
 
 // エフェクト
 #include "CP_VisualEffect.h"
+#include "CP_MotionBlur.h"
 
 // サウンド
 #include "CP_AudioListener.h"

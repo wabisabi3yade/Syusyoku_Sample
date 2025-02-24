@@ -6,6 +6,7 @@ namespace HashiTaku
 	/// @brief レンダーターゲットや深度テクスチャの基底
 	class D3DTexture_Base : public Texture
 	{
+
 	protected:
 		/// @brief テクスチャ
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> pTexture;
@@ -33,6 +34,9 @@ namespace HashiTaku
 	/// @brief レンダーターゲットクラス
 	class RenderTarget : public D3DTexture_Base
 	{
+		/// @brief クリア時の指定色
+		DXSimp::Color clearColor;
+
 		/// @brief  レンダーターゲットビュー
 		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> pRTV;
 
@@ -46,8 +50,12 @@ namespace HashiTaku
 		/// @param _format descのフォーマット
 		/// @param _width 横幅
 		/// @param _height 高さ
+		/// @param _clearColor クリア時の色
 		/// @return 作成成功したか？
-		bool Create(DXGI_FORMAT _format, UINT _width, UINT _height);
+		bool Create(DXGI_FORMAT _format, 
+			UINT _width, 
+			UINT _height,
+			const DXSimp::Color& _clearColor = {0.0f, 0.0f, 0.0f, 1.0f});
 
 		/// @brief レンダーターゲットビューを取得
 		/// @return レンダーターゲットビュー

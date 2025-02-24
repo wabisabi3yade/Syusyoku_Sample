@@ -129,6 +129,9 @@ namespace HashiTaku
 		if (drawLines.size() <= 0) return;
 
 		D3D11_Renderer* pRenderer = Direct3D11::GetInstance()->GetRenderer();
+		// •`‰ææ‚ÍƒV[ƒ“•`‰æ
+		pRenderer->GetRTCollection().SetRenderTarget
+		(RenderTargetCollection::RenderTargetType::SceneDraw, true);
 		ID3D11Device* pDevice = pRenderer->GetDevice();
 		ID3D11DeviceContext* pDeviceContext = pRenderer->GetDeviceContext();
 

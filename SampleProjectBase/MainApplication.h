@@ -1,6 +1,4 @@
 #pragma once
-
-#include "Singleton_Base.h"
 #include "Window.h"
 #include "InputClass.h"
 #include "VariableFrameRate.h"
@@ -92,9 +90,6 @@ namespace HashiTaku
 
 		/// @brief アセット関係のシステムの初期化
 		static void AssetSysytemSetup();
-
-		/// @brief シェーダーの初期化
-		static void ShaderSetup();
 
 		/// @brief シーンマネージャー初期化
 		static void SceneManagerSetup();

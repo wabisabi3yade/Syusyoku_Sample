@@ -52,6 +52,7 @@ namespace HashiTaku
 
 		// エフェクト
 		ResistComponnent<CP_VisualEffect>();
+		ResistComponnent<CP_MotionBlur>();
 		
 		// サウンド
 		ResistComponnent<CP_AudioListener>();

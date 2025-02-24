@@ -1,4 +1,5 @@
 #pragma once
+#include "Singleton_Base.h"
 
 namespace HashiTaku
 {

@@ -40,6 +40,9 @@ namespace HashiTaku
 
 		// レンダラー取得
 		D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
+		renderer.GetRTCollection().SetRenderTarget
+		(RenderTargetCollection::RenderTargetType::SceneDraw, true);
+		renderer.SetBlendState(BlendState::BlendStateType::None);
 
 		// ワールド変換行列の座標にモデルの座標を入れる
 		RenderParam::WVP wvp = renderer.GetParameter().GetWVP();
@@ -52,14 +55,15 @@ namespace HashiTaku
 		PixelShader* usePixelShader = &pMaterial->GetPixelShader();
 		if (pDrawPS) usePixelShader = pDrawPS;
 
+		// マテリアルのパラメータ
 		MaterialParameter& materialParam = pMaterial->GetMaterialParameter();
 		materialParam.isTextureEnable = pSprite->GetIsTexEnable();
 
 		Texture* pTex = pSprite->GetTexture();
 
 		useVertexShader->UpdateSubResource(0, &wvp);
-		/*useVertexShader->UpdateSubResource(1, &materialParam);*/
 
+		// テクスチャの設定
 		TexParam texEnable;
 		texEnable.isTexEnable = materialParam.isTextureEnable;
 		texEnable.alpha = alpha;

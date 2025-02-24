@@ -46,6 +46,8 @@ namespace HashiTaku
 		LoadShader<VertexShader>("VS_OutLineAnimation.cso");
 		LoadShader<VS_WorldPosition>("VS_BackObject.cso");
 		LoadShader<VS_Ground>("VS_Ground.cso");
+		LoadShader<VertexShader>("VS_FullScreenQuad.cso");
+		LoadShader<VertexShader>("VS_DrawMotionVector.cso");
 		defaultVS = "VS_WorldPosition";
 
 		// ピクセルシェーダー
@@ -59,6 +61,8 @@ namespace HashiTaku
 		LoadShader<PS_BackObject>("PS_BackObject.cso");
 		LoadShader<PixelShader>("PS_DepthWrite.cso");
 		LoadShader<PS_Ground>("PS_Ground.cso");
+		LoadShader<PixelShader>("PS_FullScreenQuad.cso");
+		LoadShader<PixelShader>("PS_DrawMotionVector.cso");
 		defaultPS = "PS_Unlit";
 	}
 

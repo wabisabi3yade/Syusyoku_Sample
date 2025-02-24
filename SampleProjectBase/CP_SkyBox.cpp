@@ -23,7 +23,10 @@ namespace HashiTaku
 		"Z_Back"
 	};
 
-	CP_SkyBox::CP_SkyBox() : pMaterial(nullptr), size(DEFAULT_SIZE)
+	CP_SkyBox::CP_SkyBox() : 
+		pMaterial(nullptr), 
+		pRTCollection(nullptr),
+		size(DEFAULT_SIZE)
 	{
 		for (u_int t_i = 0; t_i < FACE_CNT; t_i++)
 		{
@@ -47,11 +50,18 @@ namespace HashiTaku
 	void CP_SkyBox::Init()
 	{
 		pSpriteDrawer = std::make_unique<SpriteDrawer>();
+
+		// レンダーターゲット管理取得
+		pRTCollection = &Direct3D11::GetInstance()->GetRenderer()->GetRTCollection();
 	}
 
 	void CP_SkyBox::Draw()
 	{
 		if (!IsCanDraw()) return;
+
+		// シーン描画に行う
+		pRTCollection->SetRenderTarget
+		(RenderTargetCollection::RenderTargetType::SceneDraw, true);
 
 		for (u_int f_i = 0; f_i < FACE_CNT; f_i++)
 		{

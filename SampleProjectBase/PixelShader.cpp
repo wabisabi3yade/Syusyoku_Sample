@@ -10,16 +10,11 @@ namespace HashiTaku
 			CreatePixelShader(_pData, _dataSize, NULL, &pPxShader);
 	}
 
-	PixelShader::~PixelShader()
-	{
-		SAFE_RELEASE(pPxShader);
-	}
-
 	void PixelShader::SetGPU()
 	{
 		ID3D11DeviceContext* pContext = Direct3D11::GetInstance()->GetRenderer()->GetDeviceContext();
 		// シェーダーを送る
-		pContext->PSSetShader(pPxShader, nullptr, 0);
+		pContext->PSSetShader(pPxShader.Get(), nullptr, 0);
 		// 定数バッファを送る
 		for (int i = 0; i < pBuffers.size(); i++)
 			pContext->PSSetConstantBuffers(i, 1, &pBuffers[i]);

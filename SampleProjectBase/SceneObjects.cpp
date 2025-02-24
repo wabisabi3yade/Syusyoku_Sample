@@ -600,6 +600,8 @@ namespace HashiTaku
 			1.0f,
 			0
 		);
+
+		renderer.SetBaseRenderTarget();
 	}
 
 	void SceneObjects::UIDrawEnd()

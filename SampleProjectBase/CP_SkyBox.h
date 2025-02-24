@@ -33,6 +33,9 @@ namespace HashiTaku
 		/// @brief スプライト描画
 		std::unique_ptr<SpriteDrawer> pSpriteDrawer;
 
+		/// @brief レンダーターゲット管理
+		RenderTargetCollection* pRTCollection;
+
 		/// @brief 使用するマテリアル
 		Material* pMaterial;
 

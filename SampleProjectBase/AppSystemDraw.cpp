@@ -2,6 +2,7 @@
 #include "AppSystemDraw.h"
 #include "AssetDisplay.h"
 #include "DX11BulletPhisics.h"
+#include "RenderTargetCollection.h"
 #include "InSceneSystemManager.h"
 
 namespace HashiTaku
@@ -96,9 +97,37 @@ namespace HashiTaku
 #ifdef EDIT
 		if (!ImGuiMethod::TreeNode("RenderTarget")) return;
 
-		auto& pShadowDrawer = InSceneSystemManager::GetInstance()->GetShadowDrawer();
-		pShadowDrawer.ImGuiCall();
+		// 影
+		if (ImGuiMethod::TreeNode("Shadow"))
+		{
+			auto& pShadowDrawer = InSceneSystemManager::GetInstance()->GetShadowDrawer();
+			pShadowDrawer.ImGuiCall();
+			ImGui::TreePop();
+		}
 
+		// レンダーターゲットを取得して描画
+		u_int rtvNum = static_cast<u_int>(RenderTargetCollection::RenderTargetType::MaxNum);
+		for (u_int r_i = 0; r_i < rtvNum; r_i++)
+		{
+			RenderTargetCollection* pRTCol = &Direct3D11::GetInstance()->GetRenderer()->GetRTCollection();
+
+			// レンダーターゲットをを取得する
+			RenderTargetCollection::RenderTargetType rtvType = 
+				static_cast<RenderTargetCollection::RenderTargetType>(r_i);
+			RenderTarget* pRtv = pRTCol->GetRenderTarget(rtvType);
+			if (!pRtv) continue;
+
+			// 描画
+			std::string typeStr = std::string(magic_enum::enum_name(rtvType));
+			if (ImGuiMethod::TreeNode(typeStr))
+			{
+				ImVec2 viewportSize = ImGui::GetContentRegionAvail();
+				ImGui::Image((void*)&pRtv->GetSRV(), viewportSize);
+				
+				ImGui::TreePop();
+			}
+		}
+		
 		ImGui::TreePop();
 #endif // EDIT
 	}
