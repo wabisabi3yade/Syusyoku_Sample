@@ -124,6 +124,9 @@ namespace HashiTaku
 		// レンダラー取得
 		D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
 
+		// ブレンドステートをアルファに変更
+		renderer.SetBlendState(BlendState::BlendStateType::Alpha);
+
 		// シェーダーの設定
 		TexEnable texEnable;
 		texEnable.isTexEnable = true;

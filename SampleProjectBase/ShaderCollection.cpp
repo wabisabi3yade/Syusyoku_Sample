@@ -46,6 +46,8 @@ namespace HashiTaku
 		LoadShader<VertexShader>("VS_OutLineAnimation.cso");
 		LoadShader<VS_WorldPosition>("VS_BackObject.cso");
 		LoadShader<VS_Ground>("VS_Ground.cso");
+		LoadShader<VertexShader>("VS_FullScreenQuad.cso");
+		LoadShader<VertexShader>("VS_DrawMotionVector.cso");
 		defaultVS = "VS_WorldPosition";
 
 		// ピクセルシェーダー
@@ -59,6 +61,14 @@ namespace HashiTaku
 		LoadShader<PS_BackObject>("PS_BackObject.cso");
 		LoadShader<PixelShader>("PS_DepthWrite.cso");
 		LoadShader<PS_Ground>("PS_Ground.cso");
+		LoadShader<PixelShader>("PS_FullScreenQuad.cso");
+		LoadShader<PixelShader>("PS_DrawMotionVector.cso");
+		LoadShader<PixelShader>("PS_Luminance.cso");
+		LoadShader<PixelShader>("PS_GausianVertBlur.cso");
+		LoadShader<PixelShader>("PS_GaussianHoriBlur.cso");
+		LoadShader<PixelShader>("PS_KawaseBlurCombine.cso");
+		LoadShader<PixelShader>("PS_TextureCombine.cso");
+		LoadShader<PixelShader>("PS_MotionBlur.cso");
 		defaultPS = "PS_Unlit";
 	}
 
@@ -89,7 +99,8 @@ namespace HashiTaku
 		auto itr = shaderList.find(_shaderName);
 		if (itr == shaderList.end())	// シェーダーがなければ
 		{
-			HASHI_DEBUG_LOG(_shaderName + " が見つかりませんでした");
+			std::string message = _shaderName + " が見つかりませんでした";
+			assert(!message.c_str());
 			return nullptr;
 		}
 
@@ -97,7 +108,9 @@ namespace HashiTaku
 #ifdef EDIT
 		if (retPtr == nullptr)
 		{
-			HASHI_DEBUG_LOG(_shaderName + "指定したシェーダー名は頂点シェーダーではありません");
+			std::string message =
+				_shaderName + "指定したシェーダーは頂点シェーダーではありません";
+			assert(!message.c_str());
 			return nullptr;
 		}
 #endif
@@ -110,7 +123,8 @@ namespace HashiTaku
 		auto itr = shaderList.find(_shaderName);
 		if (itr == shaderList.end())	// 同じ名前のシェーダーを見つけたら
 		{
-			HASHI_DEBUG_LOG(_shaderName + " が見つかりませんでした");
+			std::string message = _shaderName + " が見つかりませんでした";
+			assert(!message.c_str());
 			return nullptr;
 		}
 
@@ -118,8 +132,9 @@ namespace HashiTaku
 #ifdef EDIT
 		if (retPtr == nullptr)
 		{
-
-			HASHI_DEBUG_LOG(_shaderName + "指定したシェーダーはピクセルシェーダーではありません");
+			std::string message =
+				_shaderName + "指定したシェーダーはピクセルシェーダーではありません";
+			assert(!message.c_str());
 			return nullptr;
 		}
 #endif

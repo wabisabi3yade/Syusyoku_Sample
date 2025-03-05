@@ -60,7 +60,8 @@ namespace HashiTaku
 
 		/// @brief ダメージを受けたときの処理
 		/// @param _damageInfo ダメージ情報
-		void OnDamage(const DamageInfo& _damageInfo) override;
+		/// @return ダメージを受けたか？
+		bool OnDamage(const DamageInfo& _damageInfo) override;
 
 		/// @brief 死んだときの処理
 		void OnDeath();
@@ -99,9 +100,11 @@ namespace HashiTaku
 
 		/// @brief エフェクトを出す
 		/// @param _attackInfo 攻撃情報
-		/// @param 当たり判定の衝突地点
+		/// @param _createPos エフェクトを出す座標
+		/// @param _angles 角度
 		void CreateVfx(const CreateVfxInfo& _vfxInfo,
-			const DXSimp::Vector3& _createPos);
+			const DXSimp::Vector3& _createPos,
+			const DXSimp::Vector3& _angles = DXSimp::Vector3::Zero);
 
 		/// @brief SEを再生
 		/// @param _attackInfo 攻撃情報

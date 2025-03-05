@@ -3,17 +3,17 @@
 namespace HashiTaku
 {
 	/// @brief レンダーターゲットの管理クラス
-	class RenderTargetCollection : public Singleton_Base<RenderTargetCollection>
+	class RenderTargetCollection
 	{
-		friend class Singleton_Base<RenderTargetCollection>;
-
 	public:
 		/// @brief レンダーターゲットの種類
 		enum class RenderTargetType
 		{
 			SceneDraw,	// シーン描画
-			Blur,	// ブラー
-			Bloom,	// ブルーム
+			MotionVector,	// 移動ベクトル
+			MotionBlur,	// モーションブラー
+			Luminance,	// ブルーム
+			CombineBlur,	// ブラー組み合わせ
 			MaxNum
 		};
 
@@ -24,15 +24,25 @@ namespace HashiTaku
 
 		/// @brief 描画クラス
 		D3D11_Renderer* pRenderer;
-
-		RenderTargetCollection();
-		~RenderTargetCollection() {}
 	public:
+		RenderTargetCollection(D3D11_Renderer& renderer);
+		~RenderTargetCollection() {}
+
 		/// @brief レンダーターゲットを描画先に設定
 		/// @param _setRTType レンダーターゲットを設定
-		void SetRenderTarget(RenderTargetType _setRTType);
+		/// @param Zバッファの書き込みをするか？
+		void SetRenderTarget(RenderTargetType _setRTType, bool _useDepthStencil);
 
-		void GetRenderTarget(RenderTargetType _setRTType);
+		/// @brief レンダーターゲットを取得する
+		/// @param _setRTType レンダーターゲットの種類
+		/// @return レンダーターゲット
+		RenderTarget* GetRenderTarget(RenderTargetType _setRTType);
+
+		/// @brief レンダーターゲットをクリアする
+		void Clear();
+	private:
+		/// @brief レンダーターゲットを作成
+		void CreateRenderTargets();
 	};
 }
 

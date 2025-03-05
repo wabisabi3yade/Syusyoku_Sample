@@ -10,20 +10,26 @@
 
 namespace HashiTaku
 {
-	constexpr float DEFAULT_FOV = 45.0f;
-	constexpr float DEFAULT_NEARZ = 0.1f;
-	constexpr float DEFAULT_FARZ = 1000.0f;
+	// フルスクリーンクアッドで描画するシェーダー
+	constexpr const char* DRAW_RT_VSNAME("VS_FullScreenQuad");
+	constexpr const char* DRAW_RT_PSNAME("PS_FullScreenQuad");
 
-	D3D11_Renderer::D3D11_Renderer(HWND _hWnd)
-	{
-		pRenderParam = std::make_unique<RenderParam>();
+	// モーションブラー
+	constexpr const char* DRAW_MOTIONBLUR_PSNAME("PS_MotionBlur");
 
-		bool isSuccess = Init(_hWnd);   // 初期化
-		if (!isSuccess)
-			HASHI_DEBUG_LOG("D3D11描画クラス初期化でエラー");
+	// 輝度抽出・ブラー画像組み合わせのピクセルシェーダー
+	constexpr const char* DRAW_LUMINANCE_PSNAME("PS_Luminance");
+	constexpr const char* COMBINE_BLUR_PSNAME("PS_KawaseBlurCombine");
+	constexpr const char* COMBINE_TEX_PSNAME("PS_TextureCombine");
 
-		// フルスクリーンするか確認
-		CheckFullScreen(_hWnd);
+	D3D11_Renderer::D3D11_Renderer() :
+		pRenderTargetView(nullptr),
+		pDrawRTVS(nullptr),
+		pDrawRTPS(nullptr),
+		pLuminancePS(nullptr),
+		pCombineBlurPS(nullptr),
+		pCombineTexPS(nullptr)
+	{	
 	}
 
 	RenderParam& D3D11_Renderer::GetParameter()
@@ -40,6 +46,11 @@ namespace HashiTaku
 	ID3D11DepthStencilView* D3D11_Renderer::GetDepthStencil()
 	{
 		return pDepthStencilView.Get();
+	}
+
+	RenderTargetCollection& D3D11_Renderer::GetRTCollection()
+	{
+		return *pRTCollection;
 	}
 
 	u_int D3D11_Renderer::GetWindowWidth() const
@@ -67,6 +78,21 @@ namespace HashiTaku
 
 		isResult = InitBackBuffer();
 		if (!isResult) return false;
+
+		// 描画パラメータを作成
+		pRenderParam = std::make_unique<RenderParam>();
+
+		// シェーダー管理初期化
+		ShaderCollection::GetInstance()->Init();
+
+		// レンダターゲット管理作成
+		pRTCollection = std::make_unique<RenderTargetCollection>(*this);
+
+		// レンダターゲット書き込み先ポリゴン作成
+		CreateFullScreenMesh();
+
+		// フルスクリーンするか確認
+		CheckFullScreen(_hWnd);
 
 		return true;
 	}
@@ -199,7 +225,7 @@ namespace HashiTaku
 		pD3DDevice->CreateDepthStencilState(&depthWriteDesc, &pDepthWriteState);
 
 		// 深度書き込むようにする
-		SerDepthWrite(true);
+		SetDepthWrite(true);
 
 		// ビューポートの設定
 		D3D11_VIEWPORT viewport;
@@ -212,20 +238,15 @@ namespace HashiTaku
 		pDeviceContext->RSSetViewports(1, &viewport);
 		viewPorts.push_back(viewport);	// 追加
 
-		// ブレンドステート初期化
-		pBlendState = std::make_unique<BlendState>();
-		bool isResult = pBlendState->Init(*pD3DDevice.Get());
-		if (!isResult)
-			return false;
-		// OMにブレンドステートオブジェクトを設定
-		// OMは出力(Output)マネージャーのこと
-		FLOAT BlendFactor[4] = { 0.f, 0.f, 0.f, 0.f };
-		// RenderTargetが1つのときは基本的に考慮不要で0xffffffff
-		pDeviceContext->OMSetBlendState(pBlendState->GetParaObject(), BlendFactor, 0xffffffff);
+		// ブレンドステート作成
+		CreateBlendState();
+
+		// なにもなしをセット
+		SetBlendState(BlendState::BlendStateType::None);
 
 		// サンプラー初期化
 		pSampler = std::make_unique<Sampler>();
-		isResult = pSampler->Init(*pD3DDevice.Get());
+		bool isResult = pSampler->Init(*pD3DDevice.Get());
 		if (!isResult)
 			return false;
 		// サンプラー
@@ -252,6 +273,133 @@ namespace HashiTaku
 		return true;
 	}
 
+	void D3D11_Renderer::ApplyBloom()
+	{
+		using enum RenderTargetCollection::RenderTargetType;
+
+		// 輝度抽出する
+		pRTCollection->SetRenderTarget(Luminance, false);
+		SetBlendState(BlendState::BlendStateType::None);
+
+		// バッファをGPUに送る
+		pLuminancePS->SetTexture(0, pRTCollection->GetRenderTarget(SceneDraw));
+		pDrawRTVS->SetGPU();
+		pLuminancePS->SetGPU();
+
+		// メッシュを描画
+		DrawFullScreenMesh();
+
+		// 川瀬式ブルームをかける
+		const RenderTarget* pLuminanceTex = pRTCollection->GetRenderTarget(Luminance);
+		// 加算合成
+		SetBlendState(BlendState::BlendStateType::Additive);
+
+		// ダウンスケールして画像をぼかす
+		for (u_int b_i = 0; b_i < KAWASE_BLUR_CNT; b_i++)
+		{
+			GausianBlur& gausianBlur = *kawaseBloomBlurs[b_i];
+
+			// 次回へ渡す
+			pLuminanceTex = &gausianBlur.ApplyBlur(*pLuminanceTex);
+
+			// ブラー画像を生成し、
+			pCombineBlurPS->SetTexture(b_i, pLuminanceTex);
+		}
+		
+		// ブラー画像を組み合わせる
+		pCombineBlurPS->SetGPU();
+		pRTCollection->SetRenderTarget(CombineBlur, false);
+		DrawFullScreenMesh();
+
+		// シーン描画に組み合わせる
+		pRTCollection->SetRenderTarget(SceneDraw, false);
+		pCombineTexPS->SetTexture(0,pRTCollection->GetRenderTarget(SceneDraw));
+		pCombineTexPS->SetTexture(1,pRTCollection->GetRenderTarget(CombineBlur));
+		pCombineTexPS->SetGPU();
+		DrawFullScreenMesh();
+	}
+
+	void D3D11_Renderer::ApplyMotionBlur()
+	{
+		using enum RenderTargetCollection::RenderTargetType;
+
+		// モーションブラー画像を生成
+		// レンダーターゲット
+		pRTCollection->SetRenderTarget(MotionBlur, false);
+
+		SetBlendState(BlendState::BlendStateType::None);
+
+		// バッファをGPUに送る
+		pMotionBlurPS->SetTexture(0, pRTCollection->GetRenderTarget(SceneDraw));
+		pMotionBlurPS->SetTexture(1, pRTCollection->GetRenderTarget(MotionVector));
+		pDrawRTVS->SetGPU();
+		pMotionBlurPS->SetGPU();
+		// メッシュを描画
+		DrawFullScreenMesh();
+
+		//// シーン描画に組み合わせる
+		//pRTCollection->SetRenderTarget(SceneDraw, false);
+		//pCombineTexPS->SetTexture(0, pRTCollection->GetRenderTarget(SceneDraw));
+		//pCombineTexPS->SetTexture(1, pRTCollection->GetRenderTarget(MotionBlur));
+		//pCombineTexPS->SetGPU();
+		//DrawFullScreenMesh();
+	}
+
+	void D3D11_Renderer::CreateFullScreenMesh()
+	{
+		// 画面全体に描画するポリゴン
+		pDrawRTMesh = std::make_unique<PlaneMesh>();
+
+		// 頂点座標を変更する
+		std::array<DXSimp::Vector3, 4> vertexPosList;
+		vertexPosList[0] = DXSimp::Vector3(-1.0f, 1.0f, 0.0f);
+		vertexPosList[1] = DXSimp::Vector3(1.0f, 1.0f, 0.0f);
+		vertexPosList[2] = DXSimp::Vector3(-1.0f, -1.0f, 0.0f);
+		vertexPosList[3] = DXSimp::Vector3(1.0f, -1.0f, 0.0f);
+		pDrawRTMesh->SetVertexPos(vertexPosList);
+
+		// 描画する頂点
+		auto* shCol = ShaderCollection::GetInstance();
+		pDrawRTVS = shCol->GetVertexShader(DRAW_RT_VSNAME);
+		pDrawRTPS = shCol->GetPixelShader(DRAW_RT_PSNAME);
+		pLuminancePS = shCol->GetPixelShader(DRAW_LUMINANCE_PSNAME);
+		pCombineBlurPS = shCol->GetPixelShader(COMBINE_BLUR_PSNAME);
+		pCombineTexPS = shCol->GetPixelShader(COMBINE_TEX_PSNAME);
+		pMotionBlurPS = shCol->GetPixelShader(DRAW_MOTIONBLUR_PSNAME);
+
+		// ブラークラスを生成
+		// ダウンスケールの倍率
+		u_int downScale = 1;
+		for (u_int b_i = 0; b_i < KAWASE_BLUR_CNT; b_i++)
+		{
+			downScale *= 2;	// 次のダウンスケールを求める
+
+			// レンダーターゲットのサイズを計算
+			u_int rtWidth = screenWidth / downScale;
+			u_int rtHeight = screenHeight / downScale;
+
+			kawaseBloomBlurs[b_i] = std::make_unique<GausianBlur>(rtWidth, rtHeight);
+		}
+	}
+
+	void D3D11_Renderer::CreateBlendState()
+	{
+		// ブレンドステートの種類分作成する
+		u_int typeCnt = static_cast<u_int>(BlendState::BlendStateType::MaxNum);
+		for (u_int bt_i = 0; bt_i < typeCnt; bt_i++)
+		{
+			BlendState::BlendStateType type = 
+				static_cast<BlendState::BlendStateType>(bt_i);
+			std::unique_ptr<BlendState> pCreateState = std::make_unique<BlendState>();
+
+			// 作成
+			bool isSuccess = pCreateState->Init(*pD3DDevice.Get(), type);
+			if (!isSuccess) continue;
+
+			blendStateList[bt_i] = std::move(pCreateState);
+		}
+	}
+
 	void D3D11_Renderer::CheckFullScreen(HWND _hWnd)
 	{
 		// フルスクリーンにするか
@@ -261,7 +409,12 @@ namespace HashiTaku
 			MB_YESNO | MB_ICONQUESTION);
 
 		if (pushButton == IDYES)
-			pSwapChain->SetFullscreenState(TRUE, NULL);
+		{
+			pSwapChain->SetFullscreenState(TRUE, NULL);	// フルスクリーン
+			SetCursor(NULL);	// カーソルを消す
+		}
+			
+
 #endif // _DEBUG
 	}
 
@@ -272,6 +425,8 @@ namespace HashiTaku
 
 		// スワップ チェインをウインドウ モードにする
 		if (pSwapChain) pSwapChain->SetFullscreenState(FALSE, nullptr);
+
+		ShaderCollection::Delete();
 
 		// 取得したインターフェイスの開放
 		SAFE_RELEASE(pRenderTargetView);
@@ -304,7 +459,7 @@ namespace HashiTaku
 		}
 	}
 
-	void D3D11_Renderer::SerDepthWrite(bool _isWrite)
+	void D3D11_Renderer::SetDepthWrite(bool _isWrite)
 	{
 		if (_isWrite)
 		{
@@ -316,7 +471,25 @@ namespace HashiTaku
 		}
 	}
 
-	void D3D11_Renderer::SetRenderTerget(u_int _cnt, RenderTarget* _pRrenderTarget, DepthStencil* _pDepthStencil)
+	void D3D11_Renderer::SetBlendState(BlendState::BlendStateType _setBlendState)
+	{
+		// OMは出力(Output)マネージャーのこと
+		FLOAT BlendFactor[4] = { 1.f, 1.f, 1.f, 1.f };
+
+		// セットするブレンドステートを取得
+		ID3D11BlendState* pSetBlendState = 
+			blendStateList[static_cast<u_int>(_setBlendState)]->GetResourceObject();
+
+		// RenderTargetが1つのときは基本的に考慮不要で0xffffffff
+		pDeviceContext->OMSetBlendState(pSetBlendState, BlendFactor, 0xffffffff);
+	}
+
+	void D3D11_Renderer::SetRenderTerget(u_int _cnt, RenderTarget* _pRrenderTarget, DepthStencil& _depthStencil)
+	{
+		SetRenderTerget(_cnt, _pRrenderTarget, _depthStencil.GetView());
+	}
+
+	void D3D11_Renderer::SetRenderTerget(u_int _cnt, RenderTarget* _pRrenderTarget, ID3D11DepthStencilView* _pDepthStencilView)
 	{
 		static ID3D11RenderTargetView* rtvs[1];
 		rtvs[0] = _pRrenderTarget->GetView();
@@ -325,8 +498,8 @@ namespace HashiTaku
 		pDeviceContext->OMSetRenderTargets(
 			_cnt,
 			rtvs,
-			_pDepthStencil ?
-			_pDepthStencil->GetView() : nullptr
+			_pDepthStencilView ?
+			_pDepthStencilView : nullptr
 		);
 
 		D3D11_VIEWPORT& vp = viewPorts[0];
@@ -359,6 +532,47 @@ namespace HashiTaku
 		pDeviceContext->RSSetViewports(1, &vp);
 	}
 
+	void D3D11_Renderer::RenderFullScreenQuad()
+	{
+		using enum RenderTargetCollection::RenderTargetType;
+
+		// シーン描画びブルーム処理をかける
+		ApplyBloom();
+
+		// モーションブラー
+		ApplyMotionBlur();
+
+		// スクリーンに描画
+		SetBaseRenderTarget();
+
+		SetBlendState(BlendState::BlendStateType::None);
+
+		// 描画する
+		pDeviceContext->IASetPrimitiveTopology(pDrawRTMesh->GetTopology());
+
+		// バッファをGPUに送る
+		pDrawRTPS->SetTexture(0, pRTCollection->GetRenderTarget(SceneDraw));
+		pDrawRTVS->SetGPU();
+		pDrawRTPS->SetGPU();
+
+		// メッシュを描画
+		DrawFullScreenMesh();
+	}
+
+	void D3D11_Renderer::DrawFullScreenMesh()
+	{
+		// バッファをGPUに送る
+		pDeviceContext->IASetPrimitiveTopology(pDrawRTMesh->GetTopology());
+		pDrawRTMesh->GetVertexBuffer().SetGPU();
+		pDrawRTMesh->GetIndexBuffer().SetGPU();
+
+		pDeviceContext->DrawIndexed(
+			pDrawRTMesh->GetIndexNum(),
+			0,
+			0
+		);
+	}
+
 	void D3D11_Renderer::SetUpDraw()
 	{
 		if (!pDeviceContext || !pRenderTargetView) return;
@@ -373,5 +587,8 @@ namespace HashiTaku
 
 		// 深度バッファをリセットする
 		pDeviceContext->ClearDepthStencilView(pDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+		// レンダーターゲットをクリアする
+		pRTCollection->Clear();
 	}
 }

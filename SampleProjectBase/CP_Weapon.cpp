@@ -12,15 +12,19 @@
 namespace HashiTaku
 {
 #ifdef EDIT
-constexpr DXSimp::Color ATTACK_COLOR(1.0f, 1.0f, 0.0f);
-constexpr DXSimp::Color NO_ATTACK_COLOR(0.0f, 0.0f, 1.0f);
-constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
+	constexpr DXSimp::Color ATTACK_COLOR(1.0f, 1.0f, 0.0f);
+	constexpr DXSimp::Color NO_ATTACK_COLOR(0.0f, 0.0f, 1.0f);
+	constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 #endif // EDIT
 
 	CP_Weapon::CP_Weapon() :
 		pAtkInfomation(nullptr),
 		pAttacker(nullptr),
+		pVfxManager(nullptr),
+		pSoundManager(nullptr),
+		pCameraTransform(nullptr),
 		attackTagCnt(0),
+		attackVectorCnt(3),
 		isAttackCollision(false)
 	{
 		// 初期化
@@ -30,7 +34,18 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 		}
 	}
 
-	void CP_Weapon::Update()
+	void CP_Weapon::Start()
+	{
+		// エフェクト・サウンドマネージャー
+		pVfxManager = DX11EffecseerManager::GetInstance();
+		pSoundManager = CP_SoundManager::GetInstance();
+
+		// カメラのトランスフォーム取得
+		pCameraTransform =
+			&InSceneSystemManager::GetInstance()->GetMainCamera().GetTransform();
+	}
+
+	void CP_Weapon::LateUpdate()
 	{
 		// 攻撃の方向を更新する
 		UpdateAttackVector();
@@ -38,20 +53,41 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 
 	void CP_Weapon::Draw()
 	{
+#ifdef EDIT
 		DebugAttackFlag();
+
+		if (isDebugMeasDisplay)
+		{
+			Geometory::SetPosition(GetMeasAtkVecWorldPos());
+			Geometory::SetScale(DXSimp::Vector3::One * 0.3f);
+			Geometory::DrawSphere();
+		}
+
+		// 攻撃ベクトルを表示
+		constexpr float length = 3.0f;
+		Geometory::AddLine(hitPos,
+			hitPos + hitAtkVector * length,
+			DXSimp::Color(1.0f, 0.0f, 0.0f, 0.0f));
+#endif // EDIT
 	}
 
 	void CP_Weapon::UpdateAttackVector()
 	{
-		// 現在の座標から攻撃の方向を求める
-		DXSimp::Vector3 currentPos = GetTransform().GetPosition();
+		// 攻撃ベクトルを求める
+		DXSimp::Vector3 currentPos = GetMeasAtkVecWorldPos();
+		DXSimp::Vector3 vec = currentPos - prevWeaponPos;
+		vec.Normalize();
 
-		if (isAttackCollision)	// 攻撃しているときだけ
+		// 攻撃ベクトルをリストに追加する
+		attackVectorList.push_back(vec);
+
+		// 持つ数が上限を超えたら
+		if (static_cast<u_int>(attackVectorList.size()) > attackVectorCnt)
 		{
-			attackVector = currentPos - prevWeaponPos;
-			attackVector.Normalize();
+			// 1番前を除く
+			attackVectorList.pop_front();
 		}
-	
+
 		// 更新する
 		prevWeaponPos = currentPos;
 	}
@@ -111,6 +147,8 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 	{
 		auto data = Component::Save();
 
+		SaveJsonVector3("measAtkOffset", measAtkVecOffsetPos, data);
+
 		auto& attackTagDatas = data["attackableTags"];
 		for (u_int t_i = 0; t_i < attackTagCnt; t_i++)
 		{
@@ -128,6 +166,8 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 		using namespace HashiTaku;
 
 		Component::Load(_data);
+
+		LoadJsonVector3("measAtkOffset", measAtkVecOffsetPos, _data);
 
 		json attackTagDatas;
 		if (LoadJsonDataArray("attackableTags", attackTagDatas, _data))
@@ -163,10 +203,64 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 		DamageInfo damageInfo;
 		damageInfo.pAttackInformation = pAtkInfomation;
 		damageInfo.contactPos = _contactPos;
-		damageInfo.attackVector = attackVector;
-			
+
+		// リストのベクトルを平均したものを攻撃ベクトルとする
+		DXSimp::Vector3 sumVec;
+		for (auto& vec : attackVectorList)
+		{
+			sumVec += vec;
+		}
+		sumVec.Normalize();
+		damageInfo.attackVector = sumVec;
+
+#ifdef EDIT
+		hitPos = _contactPos;	// デバッグ用
+		//hitAtkVector = sumVec;
+#endif // EDIT
+
 		// ダメージを食らう側の処理
-		_damager.OnDamage(damageInfo);
+		bool isAttackSuccess = _damager.OnDamage(damageInfo);
+
+		// 攻撃成功したら
+		if (isAttackSuccess)
+		{
+			OnAttackSuccess(damageInfo);
+		}
+	}
+
+	void CP_Weapon::OnAttackSuccess(const DamageInfo& _damageInfo)
+	{
+		// ヒットエフェクト
+
+		// 当たった角度を考慮してエフェクトを回転する
+		DXSimp::Vector3 angles;
+		const DXSimp::Vector3& atkVec = _damageInfo.pAttackInformation->GetAttackVector();
+		const Transform& attackerTransform = pAttacker->GetAttackerTransform();
+		DXSimp::Vector3 worldVec = attackerTransform.Right() * atkVec.x;
+		worldVec += attackerTransform.Up() * atkVec.y;
+		worldVec += attackerTransform.Forward() * atkVec.z;
+		worldVec.Normalize();
+
+#ifdef EDIT
+		hitAtkVector = worldVec;
+#endif // EDIT
+
+		angles = CalcSlashWorldAngles(worldVec);
+
+		HASHI_DEBUG_LOG("x" + std::to_string(angles.x)
+		+ "y" + std::to_string(angles.y) +
+			"z" +  std::to_string(angles.z));
+
+		pVfxManager->Play(_damageInfo.pAttackInformation->GetHitVfxInfo(),
+			_damageInfo.contactPos,
+			angles);
+
+		// サウンド
+		if (pSoundManager)
+		{
+			pSoundManager->PlaySE(_damageInfo.pAttackInformation->GetHitSEParam(),
+				_damageInfo.contactPos);
+		}
 	}
 
 	void CP_Weapon::AddAttackedRb(const CP_RigidBody& _rb)
@@ -239,6 +333,29 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 		attackTagCnt--;	// 減らす
 	}
 
+	DXSimp::Vector3 CP_Weapon::GetMeasAtkVecWorldPos() const
+	{
+		const Transform& transform = GetTransform();
+		DXSimp::Vector3 measPos = transform.GetPosition();
+		measPos += transform.Up() * measAtkVecOffsetPos.y;
+		measPos += transform.Right() * measAtkVecOffsetPos.x;
+		measPos += transform.Forward() * measAtkVecOffsetPos.z;
+
+		return measPos;
+	}
+
+	DXSimp::Vector3 CP_Weapon::CalcSlashWorldAngles(
+		const DXSimp::Vector3& _slashWorldVec) const
+	{
+		DXSimp::Vector3 angles;
+		angles.y = std::atan2(_slashWorldVec.z, _slashWorldVec.x); // Y軸回転 (Z軸回転)
+
+		angles.z = std::atan2(_slashWorldVec.y, std::sqrt(_slashWorldVec.x *
+			_slashWorldVec.x + _slashWorldVec.z * _slashWorldVec.z)); // X軸回転
+
+		return angles * Mathf::radToDeg;
+	}
+
 	void CP_Weapon::ImGuiDebug()
 	{
 #ifdef EDIT
@@ -270,7 +387,10 @@ constexpr DXSimp::Vector3 DISPLAY_SCALE(1.0f, 1.0f, 1.0f);
 		ImGuiMethod::LineSpaceSmall();
 
 		ImGui::Checkbox("Attack", &isAttackCollision);
-		ImGui::Checkbox("Display", &isDebugAttackDisplay);
+		ImGui::Checkbox("ColDisplay", &isDebugAttackDisplay);
+		ImGui::DragScalar("AtkVecCnt", ImGuiDataType_U32, &attackVectorCnt);
+		ImGui::DragFloat3("Meas Offset", &measAtkVecOffsetPos.x, 0.01f);
+		ImGui::Checkbox("MeasDisplay", &isDebugMeasDisplay);
 #endif // EDIT
 	}
 }

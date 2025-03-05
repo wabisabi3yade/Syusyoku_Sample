@@ -24,11 +24,16 @@ namespace HashiTaku
 		/// @brief ヒットエフェクト情報
 		CreateVfxInfo hitVfxInfo;
 
+		//std::vector<CreateVfxInfo>
+
 		/// @brief カメラを揺らすパラメータ
 		PerlinShakeParameter pCamShakeParam;
 
 		/// @brief ヒット音のパラメータ
 		PlaySoundParameter hitSoundParameter;
+
+		/// @brief 攻撃方向
+		DXSimp::Vector3 attackVector;
 
 		/// @brief 攻撃時のダメージ
 		float atkDamage;
@@ -64,6 +69,10 @@ namespace HashiTaku
 		/// @brief 攻撃者のワールド座標を取得する
 		/// @return 攻撃者のワールド座標
 		DXSimp::Vector3 GetAttackerWorldPos() const;
+
+		/// @brief 攻撃ベクトルを取得する
+		/// @return 攻撃ベクトル
+		const DXSimp::Vector3& GetAttackVector() const;
 
 		/// @brief ヒットエフェクト情報を取得する
 		/// @return ヒットエフェクト情報

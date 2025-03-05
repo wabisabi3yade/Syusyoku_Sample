@@ -110,14 +110,14 @@ float4 main(PS_IN pin) : SV_TARGET
     // ライトビュースクリーン空間からZ値を計算
     float zInLVP = pin.lightSpacePos.z;
     
-    if(shadowMapUV.x > 0.0f && shadowMapUV.x < 1.0f && shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f)
+    if (shadowMapUV.x > 0.0f && shadowMapUV.x < 1.0f && shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f)
     {
         // シャドウレシーバーを落とす
         // シャドウマップから値をサンプリング
         float2 shadowValue = depthTex.Sample(mySampler, shadowMapUV).xy;
         
         // このピクセルが遮蔽されているか確認
-        if(zInLVP > shadowValue.r && zInLVP <= 1.0f)
+        if (zInLVP > shadowValue.r && zInLVP <= 1.0f)
         {
             // 遮蔽されているならチェビコフの不等式を利用して光が当たる確立を求める
             float depth_sq = shadowValue.x * shadowValue.x;

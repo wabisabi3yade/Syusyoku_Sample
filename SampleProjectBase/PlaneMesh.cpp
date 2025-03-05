@@ -37,6 +37,7 @@ namespace HashiTaku
 		indicies[1] = 1;
 		indicies[2] = 2;
 		indicies[3] = 3;
+
 		// バッファ作成
 		InitBuffer();
 
@@ -47,6 +48,18 @@ namespace HashiTaku
 	PlaneMesh::PlaneMesh()
 	{
 		MakePlane();
+	}
+
+	void PlaneMesh::SetVertexPos(const std::array<DXSimp::Vector3, 4>& _vertexPosList)
+	{
+		verticies[0].position = _vertexPosList[0];	// 左上
+		verticies[1].position = _vertexPosList[1];	// 右上
+		verticies[2].position = _vertexPosList[2];		// 左下
+		verticies[3].position = _vertexPosList[3];	// 右下
+
+		// 頂点バッファ作成
+		u_int size = static_cast<u_int>(verticies.size() * sizeof(Vertex));
+		pVertexBuffer->CreateBuffer(size, 0, verticies.data());
 	}
 
 	void PlaneMesh::SetUV(const DXSimp::Vector2& _startUV, const DXSimp::Vector2& _endUV)

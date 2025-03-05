@@ -550,6 +550,11 @@
                                         ],
                                         "enable": true,
                                         "isDebugDisplay": false,
+                                        "measAtkOffset": [
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
                                         "name": "Weapon",
                                         "priority": 0
                                     }
@@ -672,7 +677,7 @@
                             "actData": [
                                 {
                                     "data": {
-                                        "isIdleOnly": false,
+                                        "isIdleOnly": true,
                                         "warpMotion": {
                                             "useWarp": false
                                         }
@@ -714,6 +719,11 @@
                                         "atkInfos": [
                                             {
                                                 "addBreakOnParry": 2.5,
+                                                "attackVector": [
+                                                    0.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
                                                 "damage": 1.0,
                                                 "hitSE": {
                                                     "loop": false,
@@ -735,6 +745,11 @@
                                             },
                                             {
                                                 "addBreakOnParry": 2.5,
+                                                "attackVector": [
+                                                    0.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
                                                 "damage": 2.0999999046325684,
                                                 "hitSE": {
                                                     "loop": false,
@@ -756,6 +771,11 @@
                                             },
                                             {
                                                 "addBreakOnParry": 5.0,
+                                                "attackVector": [
+                                                    0.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
                                                 "camShake": {
                                                     "fadeOut": true,
                                                     "power": 2.0,
@@ -971,6 +991,11 @@
                                         "atkInfos": [
                                             {
                                                 "addBreakOnParry": 3.0,
+                                                "attackVector": [
+                                                    0.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
                                                 "damage": 3.0,
                                                 "hitSE": {
                                                     "loop": false,
@@ -992,6 +1017,11 @@
                                             },
                                             {
                                                 "addBreakOnParry": 5.0,
+                                                "attackVector": [
+                                                    0.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
                                                 "camShake": {
                                                     "fadeOut": true,
                                                     "power": 2.5,
@@ -1134,6 +1164,11 @@
                                         "atkInfos": [
                                             {
                                                 "addBreakOnParry": 4.0,
+                                                "attackVector": [
+                                                    0.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
                                                 "camShake": {
                                                     "fadeOut": true,
                                                     "power": 2.0,
@@ -1166,6 +1201,11 @@
                                             },
                                             {
                                                 "addBreakOnParry": 6.0,
+                                                "attackVector": [
+                                                    0.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
                                                 "camShake": {
                                                     "fadeOut": true,
                                                     "power": 2.0,
@@ -1252,6 +1292,11 @@
                                         "atkInfos": [
                                             {
                                                 "addBreakOnParry": 9.5,
+                                                "attackVector": [
+                                                    0.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
                                                 "camShake": {
                                                     "fadeOut": true,
                                                     "power": 2.5,
@@ -3234,6 +3279,11 @@
                                         ],
                                         "enable": true,
                                         "isDebugDisplay": false,
+                                        "measAtkOffset": [
+                                            0.0,
+                                            1.0700000524520874,
+                                            0.0
+                                        ],
                                         "name": "Weapon",
                                         "priority": 0
                                     },
@@ -3512,6 +3562,11 @@
                                             "attackCnt": 1,
                                             "attackInfos": [
                                                 {
+                                                    "attackVector": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        0.0
+                                                    ],
                                                     "break": 5.0,
                                                     "camShake": {
                                                         "fadeOut": true,
@@ -3534,10 +3589,10 @@
                                                     },
                                                     "hitVfx": {
                                                         "applyColor": false,
-                                                        "lookCam": false,
+                                                        "lookCam": true,
                                                         "name": "hit01",
-                                                        "scale": 0.25,
-                                                        "speed": 0.699999988079071,
+                                                        "scale": 0.30000001192092896,
+                                                        "speed": 0.75,
                                                         "startFrame": 2
                                                     },
                                                     "isCamShake": true,
@@ -3565,6 +3620,11 @@
                                             "attackCnt": 1,
                                             "attackInfos": [
                                                 {
+                                                    "attackVector": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
                                                     "break": 6.0,
                                                     "camShake": {
                                                         "fadeOut": true,
@@ -3589,7 +3649,7 @@
                                                         "applyColor": false,
                                                         "lookCam": false,
                                                         "name": "hit01",
-                                                        "scale": 0.25,
+                                                        "scale": 0.30000001192092896,
                                                         "speed": 0.699999988079071,
                                                         "startFrame": 2
                                                     },
@@ -3618,6 +3678,11 @@
                                             "attackCnt": 1,
                                             "attackInfos": [
                                                 {
+                                                    "attackVector": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
                                                     "break": 1.0,
                                                     "damage": 2.0,
                                                     "hitSE": {
@@ -3687,6 +3752,11 @@
                                             "attackCnt": 1,
                                             "attackInfos": [
                                                 {
+                                                    "attackVector": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
                                                     "break": 8.0,
                                                     "camShake": {
                                                         "fadeOut": true,
@@ -3740,6 +3810,11 @@
                                             "attackCnt": 1,
                                             "attackInfos": [
                                                 {
+                                                    "attackVector": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
                                                     "break": 10.0,
                                                     "camShake": {
                                                         "fadeOut": true,
@@ -3806,6 +3881,11 @@
                                             "attackCnt": 1,
                                             "attackInfos": [
                                                 {
+                                                    "attackVector": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
                                                     "break": 1.0,
                                                     "damage": 3.0,
                                                     "hitSE": {
@@ -3851,6 +3931,11 @@
                                             "attackCnt": 2,
                                             "attackInfos": [
                                                 {
+                                                    "attackVector": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
                                                     "break": 15.0,
                                                     "camShake": {
                                                         "fadeOut": true,
@@ -3883,6 +3968,11 @@
                                                     "level": 2
                                                 },
                                                 {
+                                                    "attackVector": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
                                                     "break": 18.0,
                                                     "camShake": {
                                                         "fadeOut": true,
@@ -3936,6 +4026,11 @@
                                             "attackCnt": 1,
                                             "attackInfos": [
                                                 {
+                                                    "attackVector": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
                                                     "break": 1.0,
                                                     "damage": 0.0,
                                                     "hitSE": {
@@ -3959,6 +4054,11 @@
                                                 {
                                                     "attackInfos": [
                                                         {
+                                                            "attackVector": [
+                                                                0.0,
+                                                                0.0,
+                                                                0.0
+                                                            ],
                                                             "break": 6.0,
                                                             "camShake": {
                                                                 "fadeOut": true,
@@ -4022,6 +4122,11 @@
                                                 {
                                                     "attackInfos": [
                                                         {
+                                                            "attackVector": [
+                                                                0.0,
+                                                                0.0,
+                                                                0.0
+                                                            ],
                                                             "break": 15.0,
                                                             "camShake": {
                                                                 "fadeOut": true,
@@ -4095,6 +4200,11 @@
                                                 {
                                                     "attackInfos": [
                                                         {
+                                                            "attackVector": [
+                                                                0.0,
+                                                                0.0,
+                                                                0.0
+                                                            ],
                                                             "break": 30.0,
                                                             "camShake": {
                                                                 "fadeOut": false,
@@ -4138,7 +4248,7 @@
                                                         "applyColor": false,
                                                         "lookCam": true,
                                                         "name": "charge02",
-                                                        "scale": 1.7999999523162842,
+                                                        "scale": 1.100000023841858,
                                                         "speed": 1.5,
                                                         "startFrame": 0
                                                     },

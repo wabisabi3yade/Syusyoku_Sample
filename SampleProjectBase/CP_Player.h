@@ -90,6 +90,10 @@ namespace HashiTaku
 		/// @return 攻撃フラグ
 		bool GetIsAttackFlag() const;
 
+		/// @brief 攻撃者のトランスフォーム
+		/// @return 所有者のトランスフォーム
+		const Transform& GetAttackerTransform() const;
+
 		/// @brief デバッグ用無敵フラグを取得
 		/// @return デバッグ用無敵か？
 		static bool GetIsDebugInvincible();

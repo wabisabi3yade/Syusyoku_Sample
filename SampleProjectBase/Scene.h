@@ -11,6 +11,9 @@ namespace HashiTaku
 		/// @brief シーン名
 		std::string sceneName;
 
+		/// @brief 描画クラス
+		D3D11_Renderer* pRenderer;
+
 		/// @brief シーン内システムマネジャー
 		InSceneSystemManager* pInSceneSystem;
 

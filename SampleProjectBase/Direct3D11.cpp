@@ -8,16 +8,14 @@ namespace HashiTaku
 
 	Direct3D11::~Direct3D11()
 	{
-		Release();
-	}
-
-	void Direct3D11::Release()
-	{
-		CLASS_DELETE(pRenderer);
 	}
 
 	void Direct3D11::Init(HWND _hwnd)
 	{
-		pRenderer = new D3D11_Renderer(_hwnd);
+		pRenderer = std::make_unique<D3D11_Renderer>();
+		if (!pRenderer->Init(_hwnd))
+		{
+			assert(!"D3D11描画クラス初期化でエラー");
+		}			
 	}
 }

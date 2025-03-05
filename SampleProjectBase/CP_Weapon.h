@@ -8,6 +8,7 @@
 namespace HashiTaku
 {
 	class CP_RigidBody;
+	class CP_SoundManager;
 
 	/// @brief 武器コンポーネント
 	class CP_Weapon : public Component
@@ -24,11 +25,23 @@ namespace HashiTaku
 		/// @brief 一回の攻撃判定で重複しないように記録する用リスト
 		std::vector<const CP_RigidBody*> attackedRbs;
 
+		/// @brief エフェクトマネージャー
+		DX11EffecseerManager* pVfxManager;
+
+		/// @brief サウンドマネージャー
+		CP_SoundManager* pSoundManager;
+
+		/// @brief カメラのトランスフォーム
+		const Transform* pCameraTransform;
+
+		/// @brief 攻撃の方向を測定するオフセット座標
+		DXSimp::Vector3 measAtkVecOffsetPos;
+
 		/// @brief 1フレーム前の武器の座標
 		DXSimp::Vector3 prevWeaponPos;
-
-		/// @brief 攻撃の方向
-		DXSimp::Vector3 attackVector;
+		
+		/// @brief 攻撃方向のリスト
+		std::list<DXSimp::Vector3> attackVectorList;
 
 		/// @brief 武器所有者のポインタ
 		IAttacker* pAttacker;
@@ -36,12 +49,21 @@ namespace HashiTaku
 		/// @brief 攻撃タグの数
 		u_int attackTagCnt;
 
+		/// @brief 攻撃方向の数
+		u_int attackVectorCnt;
+
 		/// @brief 攻撃判定コリジョン
 		bool isAttackCollision;
 
 #ifdef EDIT
 		/// @brief 攻撃フラグ描画
 		bool isDebugAttackDisplay{ true };
+		/// @brief デバッグ攻撃ベクトル描画
+		bool isDebugMeasDisplay{ false };
+		/// @brief 攻撃場所
+		DXSimp::Vector3 hitPos;
+		/// @brief 攻撃のベクトル
+		DXSimp::Vector3 hitAtkVector;
 #endif // EDIT
 
 	public:
@@ -74,7 +96,8 @@ namespace HashiTaku
 		/// @param _data ロードするシーンデータ 
 		void Load(const json& _data) override;
 	private:
-		void Update() override;
+		void Start() override;
+		void LateUpdate() override;
 		void Draw() override;
 
 		/// @brief 攻撃方向を更新する
@@ -89,6 +112,9 @@ namespace HashiTaku
 		/// @param _damager 攻撃与える対象
 		/// @param _contactPos 衝突地点
 		void OnAttack(IDamageable& _damager, const DXSimp::Vector3& _contactPos);
+
+		/// @brief 攻撃成功したら起こす処理
+		void OnAttackSuccess(const DamageInfo& _damageInfo);
 
 		/// @brief 既に攻撃したかリストに追加
 		/// @param _rb 攻撃済みのRb
@@ -114,6 +140,15 @@ namespace HashiTaku
 		/// @brief 最後尾の攻撃できるタグを削除
 		/// @param _addTag タグ
 		void RemoveBackAttackableTag();
+
+		/// @brief 攻撃ベクトルを測定するワールド座標を取得
+		/// @return 攻撃ベクトルを測定するワールド座標
+		DXSimp::Vector3 GetMeasAtkVecWorldPos() const;
+
+		/// @brief 斬った方向から角度を求める
+		/// @param _slashWorldVec ワールド軸の斬った方向
+		/// @return 斬った角度
+		DXSimp::Vector3 CalcSlashWorldAngles(const DXSimp::Vector3& _slashWorldVec) const;
 
 		void ImGuiDebug() override;
 	};

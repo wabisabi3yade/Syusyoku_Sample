@@ -2,8 +2,6 @@
 #include "CP_Renderer.h"
 #include "IApplyDepthShadow.h"
 #include "IBoneSupplier.h"
-
-// 描画に必要
 #include "Mesh_Group.h"
 
 namespace HashiTaku
@@ -30,6 +28,9 @@ namespace HashiTaku
 
 		/// @brief ボーンバッファを供給してくれるクラス
 		IBoneBufferSupplier* pBoneBuffer;
+
+		/// @brief レンダターゲットコレクション
+		RenderTargetCollection* pRenderTargetCol;
 
 		/// @brief オブジェクトの原点を表示するか
 		bool isOriginDisplay;
@@ -92,6 +93,9 @@ namespace HashiTaku
 		/// @brief 描画できるのか返す
 		/// @return 描画できるか？
 		bool IsCanDraw();
+
+		/// @brief 描画準備
+		void DrawSetup();
 
 		/// @brief ロード時のオフセット行列計算
 		/// @return ロード行列

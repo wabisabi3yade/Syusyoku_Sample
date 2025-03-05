@@ -79,11 +79,11 @@ namespace HashiTaku
 		{
 			actionCon.SetReserveState(static_cast<int>(Rolling));
 		}
-		// ÉWÉÉÉìÉv
-		if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Jump))
-		{
-			actionCon.SetReserveState(static_cast<int>(BeginJump));
-		}
+		//// ÉWÉÉÉìÉv
+		//if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Jump))
+		//{
+		//	actionCon.SetReserveState(static_cast<int>(BeginJump));
+		//}
 
 		// çUåÇÉLÉÉÉìÉZÉã
 		if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_ChargeAttack))
@@ -95,11 +95,11 @@ namespace HashiTaku
 		{
 			actionCon.SetReserveState(static_cast<int>(RushAttack));
 		}
-		// éaÇËè„Ç∞
-		if (IsSpecialAtkInput(InputVector::Back))
-		{
-			actionCon.SetReserveState(static_cast<int>(SlashHigh));
-		}
+		//// éaÇËè„Ç∞
+		//if (IsSpecialAtkInput(InputVector::Back))
+		//{
+		//	actionCon.SetReserveState(static_cast<int>(SlashHigh));
+		//}
 		// çUåÇ
 		if (pPlayerInput->GetButtonDown(GameInput::ButtonType::Player_Attack))
 		{

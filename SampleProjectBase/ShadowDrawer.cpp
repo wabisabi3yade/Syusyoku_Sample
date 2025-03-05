@@ -38,7 +38,8 @@ namespace HashiTaku
 		pRenderer = Direct3D11::GetInstance()->GetRenderer();
 		pRenderTarget->Create(DXGI_FORMAT_R32G32B32A32_FLOAT,
 			TEXTURE_WIDTH,
-			TEXTURE_HEIGHT);
+			TEXTURE_HEIGHT,
+			DXSimp::Color(1.0f, 1.0f, 1.0f, 1.0f));
 
 		// シェーダー取得
 		auto* pShCol = ShaderCollection::GetInstance();
@@ -61,7 +62,7 @@ namespace HashiTaku
 		CalcLightMatrix();
 
 		// レンダーターゲット切り替える(頂点シェーダーはそれぞれの描画で使用しているものを使用)
-		pRenderer->SetRenderTerget(1, pRenderTarget.get(), pDepthStencil.get());
+		pRenderer->SetRenderTerget(1, pRenderTarget.get(), *pDepthStencil);
 		pDepthWritePS->SetGPU();
 
 		// 深度書き込んでいく

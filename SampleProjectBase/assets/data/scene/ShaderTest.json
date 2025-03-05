@@ -44,6 +44,96 @@
                 "active": true,
                 "components": [
                     {
+                        "enable": true,
+                        "isLoop": true,
+                        "isTrimming": false,
+                        "name": "VisualEffect",
+                        "playSpeed": 1.0,
+                        "priority": 0,
+                        "vfxName": "slash03"
+                    }
+                ],
+                "layer": 0,
+                "name": "Fire",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "alpha": 1.0,
+                        "enable": true,
+                        "name": "SpriteRenderer",
+                        "priority": 0,
+                        "sprite": {
+                            "texName": "ground1_Diffuse.png",
+                            "uvDivNum": [
+                                0.0,
+                                0.0
+                            ],
+                            "uvEnd": [
+                                1.0,
+                                1.0
+                            ],
+                            "uvStart": [
+                                0.0,
+                                0.0
+                            ]
+                        }
+                    }
+                ],
+                "layer": 0,
+                "name": "Ground",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        50.0,
+                        1.0,
+                        50.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
                         "X_Left": "Sunset_left.png",
                         "X_Right": "Sunset_right.png",
                         "Y_Bottom": "Sunset_down.png",

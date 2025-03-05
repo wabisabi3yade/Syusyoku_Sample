@@ -590,6 +590,8 @@ namespace HashiTaku
 		D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
 		CP_Camera& camera = InSceneSystemManager::GetInstance()->GetMainCamera();
 
+		renderer.SetBaseRenderTarget();
+
 		// UI•`‰æ‚Ì‚½‚ß•½s“Š‰e‚ÉØ‚è‘Ö‚¦
 		camera.SetOrthographic();
 
@@ -600,6 +602,8 @@ namespace HashiTaku
 			1.0f,
 			0
 		);
+
+		renderer.SetBaseRenderTarget();
 	}
 
 	void SceneObjects::UIDrawEnd()

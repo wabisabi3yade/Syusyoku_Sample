@@ -94,6 +94,10 @@ namespace HashiTaku
 		/// @return 所有者のワールド座標
 		const DXSimp::Vector3& GetAttackerWorldPos() const override;
 
+		/// @brief トランスフォームを取得する
+		/// @return トランスフォーム
+		const Transform& GetAttackerTransform() const override;
+
 		/// @brief 攻撃ヒットさせたときに起こす処理
 		/// @param _atkInfo 攻撃情報
 		/// @param _contactWorldPos 衝突地点（ワールド座標）
