@@ -79,6 +79,11 @@ namespace HashiTaku
 		return GetTransform().GetPosition();
 	}
 
+	const Transform& CP_Boss::GetAttackerTransform() const
+	{
+		return GetTransform();
+	}
+
 	void CP_Boss::OnAttacking(const AttackInformation& _atkInfo, const DXSimp::Vector3& _contactWorldPos)
 	{
 	}

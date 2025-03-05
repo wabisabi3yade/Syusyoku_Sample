@@ -94,6 +94,7 @@ namespace HashiTaku
 
 	void RenderTarget::Clear()
 	{
+		//pRenderer->GetDeviceContext()->ClearRenderTargetView(pRTV.Get(), clearColor);
 		pRenderer->GetDeviceContext()->ClearRenderTargetView(pRTV.Get(), clearColor);
 	}
 

@@ -48,18 +48,20 @@ namespace HashiTaku
 		return isDead;
 	}
 
-	void CP_Character::OnDamage(const DamageInfo& _damageInfo)
+	bool CP_Character::OnDamage(const DamageInfo& _damageInfo)
 	{
-		if (isInvicible) return;
+		if (isInvicible) return false;
 
 		// 各派生のダメージ処理
 		bool isDamage = OnDamageBehavior(*_damageInfo.pAttackInformation);
 
 		// ダメージを受けていないなら
-		if (!isDamage) return;
+		if (!isDamage) return false;
 
 		// ダメージ受けたときの処理
 		OnTakeDamage(_damageInfo);
+
+		return true;
 	}
 
 	void CP_Character::OnDeath()
@@ -155,19 +157,14 @@ namespace HashiTaku
 		// 体力がなくなったら
 		if (currentHP <= 0.0f)
 			OnDeath();
-
-		// エフェクト
-		CreateVfx(_damageInfo.pAttackInformation->GetHitVfxInfo(), _damageInfo.contactPos);
-
-		// サウンド
-		CreateSoundFX(_damageInfo.pAttackInformation->GetHitSEParam(), _damageInfo.contactPos);
 	}
 
 	void CP_Character::CreateVfx(const CreateVfxInfo& _vfxInfo,
-		const DXSimp::Vector3& _createPos)
+		const DXSimp::Vector3& _createPos,
+		const DXSimp::Vector3& _angles)
 	{
 		// 再生
-		DX11EffecseerManager::GetInstance()->Play(_vfxInfo, _createPos);
+		DX11EffecseerManager::GetInstance()->Play(_vfxInfo, _createPos, _angles);
 	}
 
 	void CP_Character::CreateSoundFX(const PlaySoundParameter& _soundParam,

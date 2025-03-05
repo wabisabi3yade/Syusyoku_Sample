@@ -301,6 +301,11 @@ namespace HashiTaku
 		return *pAttackCollisionFlag;
 	}
 
+	const Transform& CP_Player::GetAttackerTransform() const
+	{
+		return GetTransform();
+	}
+
 	bool CP_Player::GetIsDebugInvincible()
 	{
 		return isDebugInvicible;

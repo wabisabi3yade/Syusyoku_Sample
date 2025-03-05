@@ -13295,6 +13295,16 @@
             "assetName": "impactAura01",
             "loadScale": 1.0,
             "pathName": "assets/vfx/impactAura01.efk"
+        },
+        {
+            "assetName": "slash02",
+            "loadScale": 1.0,
+            "pathName": "assets/vfx/slash02.efk"
+        },
+        {
+            "assetName": "slash03",
+            "loadScale": 1.0,
+            "pathName": "assets/vfx/slash03.efk"
         }
     ]
 }

@@ -44,6 +44,45 @@
                 "active": true,
                 "components": [
                     {
+                        "enable": true,
+                        "isLoop": true,
+                        "isTrimming": false,
+                        "name": "VisualEffect",
+                        "playSpeed": 1.0,
+                        "priority": 0,
+                        "vfxName": "slash03"
+                    }
+                ],
+                "layer": 0,
+                "name": "Fire",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
                         "alpha": 1.0,
                         "enable": true,
                         "name": "SpriteRenderer",
@@ -85,49 +124,6 @@
                         50.0,
                         1.0,
                         50.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": null,
-            "gameObject": {
-                "active": true,
-                "components": [
-                    {
-                        "enable": true,
-                        "isShadow": true,
-                        "materials": null,
-                        "meshName": "Knight.fbx",
-                        "name": "MeshRenderer",
-                        "priority": 0
-                    },
-                    {
-                        "enable": true,
-                        "name": "MotionBlur",
-                        "priority": 0
-                    }
-                ],
-                "layer": 0,
-                "name": "Obj",
-                "tag": 0,
-                "transform": {
-                    "child": null,
-                    "pos": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
                     ]
                 }
             }

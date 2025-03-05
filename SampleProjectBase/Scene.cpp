@@ -82,11 +82,8 @@ namespace HashiTaku
 		//// エフェクト描画
 		pEffectManager->EffectDraw();
 
-		// スクリーンに書き込むように設定
-		pRenderer->SetBaseRenderTarget();
-
 		// レンダターゲットをポリゴンに描画
-		//pRenderer->RenderFullScreenQuad();
+		pRenderer->RenderFullScreenQuad();
 
 		// シーン内の描画処理
 		sceneObjects.UIDraw();

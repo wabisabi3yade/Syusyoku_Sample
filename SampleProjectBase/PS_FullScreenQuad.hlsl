@@ -8,14 +8,14 @@ struct PS_IN
 };
 
 Texture2D sceneTex : register(t0);
-Texture2D blurTex : register(t1);
+//Texture2D blurTex : register(t1);
 
 SamplerState mySampler : register(s0); // ƒTƒ“ƒvƒ‰[
 
 float4 main(PS_IN pin) : SV_TARGET
 {
     float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
-    float2 motionVector = blurTex.Sample(mySampler, pin.uv).rg;
+    //float2 motionVector = blurTex.Sample(mySampler, pin.uv).rg;
     
     color = sceneTex.Sample(mySampler, pin.uv);
     

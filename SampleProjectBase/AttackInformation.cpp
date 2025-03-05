@@ -9,7 +9,7 @@ namespace HashiTaku
 	// ヒットストップフレーム
 	std::array<u_int, static_cast<u_int>(AttackInformation::AttackLevel::MaxNum)>  AttackInformation::hitStopFrames =
 	{
-		10, 14, 18, 22
+		4, 10, 18, 22
 	};
 	// パッド振動力
 	std::array<float, static_cast<u_int>(AttackInformation::AttackLevel::MaxNum)>  AttackInformation::padShakePowers =
@@ -54,6 +54,11 @@ namespace HashiTaku
 #endif // EDIT
 
 		return pAttacker->GetAttackerWorldPos();
+	}
+
+	const DXSimp::Vector3& AttackInformation::GetAttackVector() const
+	{
+		return attackVector;
 	}
 
 	const CreateVfxInfo& AttackInformation::GetHitVfxInfo() const
@@ -114,6 +119,7 @@ namespace HashiTaku
 		data["isCamShake"] = isCamShake;
 		if (isCamShake)
 			data["camShake"] = pCamShakeParam.Save();
+		SaveJsonVector3("attackVector", attackVector, data);
 		data["hitSE"] = hitSoundParameter.Save();
 		data["damage"] = atkDamage;
 		data["level"] = atkLevel;
@@ -135,6 +141,7 @@ namespace HashiTaku
 			if (LoadJsonData("camShake", loadData, _data))
 				pCamShakeParam.Load(loadData);
 		}
+		LoadJsonVector3("attackVector", attackVector, _data);
 		if (LoadJsonData("hitSE", loadData, _data))
 		{
 			hitSoundParameter.Load(loadData);
@@ -210,6 +217,9 @@ namespace HashiTaku
 		{
 			SetAttackLevel(static_cast<AttackLevel>(id));
 		}
+
+		// 攻撃ベクトル
+		ImGui::DragFloat3("Vector", &attackVector.x, 0.01f, -1.0f, 1.0f);
 
 		// エフェクト
 		hitVfxInfo.ImGuiCall();

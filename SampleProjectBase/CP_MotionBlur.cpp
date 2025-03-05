@@ -75,7 +75,7 @@ namespace HashiTaku
 	{
 		// 速度ベクトルを書き込むレンダーターゲットに変更
 		pRTCollection->
-			SetRenderTarget(RenderTargetCollection::RenderTargetType::Blur, false);
+			SetRenderTarget(RenderTargetCollection::RenderTargetType::MotionVector, true);
 
 		/// @brief テクスチャに速度ベクトルを書き込む
 		struct WVPBuffer

@@ -26,7 +26,7 @@ namespace HashiTaku
 
 		/// @brief ダメージを受けたときの処理
 		/// @param _damageInfo ダメージ情報
-		virtual void OnDamage(const DamageInfo& _damageInfo) = 0;
+		virtual bool OnDamage(const DamageInfo& _damageInfo) = 0;
 
 		/// @brief 死んだときの処理
 		virtual void OnDeath() = 0;

@@ -36,17 +36,29 @@ namespace HashiTaku
 				DXSimp::Vector2(1.0f, 1.0f),  
 				DXGI_FORMAT_R8G8B8A8_UNORM };
 
-			// ブラー
-			rtCreateParam[static_cast<u_int>(Blur)] =
+			// モーションベクトル
+			rtCreateParam[static_cast<u_int>(MotionVector)] =
 			{ DXSimp::Color(0.0f, 0.0f, 0.0f, 1.0f),
 				DXSimp::Vector2(0.5f, 0.5f),
 				DXGI_FORMAT_R16G16B16A16_FLOAT};
 
-			// ブルーム
-			rtCreateParam[static_cast<u_int>(Bloom)] =
+			// モーションブラー
+			rtCreateParam[static_cast<u_int>(MotionBlur)] =
 			{ DXSimp::Color(0.0f, 0.0f, 0.0f, 1.0f),
 				DXSimp::Vector2(0.5f, 0.5f),
 				DXGI_FORMAT_R16G16B16A16_FLOAT };
+
+			// 輝度
+			rtCreateParam[static_cast<u_int>(Luminance)] =
+			{ DXSimp::Color(0.0f, 0.0f, 0.0f, 1.0f),
+				DXSimp::Vector2(1.0f, 1.0f),
+				DXGI_FORMAT_R32G32B32A32_FLOAT };
+
+			// 川瀬式ブラー組み合わせ
+			rtCreateParam[static_cast<u_int>(CombineBlur)] =
+			{ DXSimp::Color(0.0f, 0.0f, 0.0f, 1.0f),
+				DXSimp::Vector2(1.0f, 1.0f),
+				DXGI_FORMAT_R32G32B32A32_FLOAT };
 		}
 
 		// 各レンダーターゲット作成

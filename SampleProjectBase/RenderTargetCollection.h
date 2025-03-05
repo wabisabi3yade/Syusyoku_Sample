@@ -10,8 +10,10 @@ namespace HashiTaku
 		enum class RenderTargetType
 		{
 			SceneDraw,	// シーン描画
-			Blur,	// ブラー
-			Bloom,	// ブルーム
+			MotionVector,	// 移動ベクトル
+			MotionBlur,	// モーションブラー
+			Luminance,	// ブルーム
+			CombineBlur,	// ブラー組み合わせ
 			MaxNum
 		};
 

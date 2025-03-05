@@ -10,16 +10,25 @@
 
 namespace HashiTaku
 {
-	constexpr float DEFAULT_FOV = 45.0f;
-	constexpr float DEFAULT_NEARZ = 0.1f;
-	constexpr float DEFAULT_FARZ = 1000.0f;
+	// フルスクリーンクアッドで描画するシェーダー
 	constexpr const char* DRAW_RT_VSNAME("VS_FullScreenQuad");
 	constexpr const char* DRAW_RT_PSNAME("PS_FullScreenQuad");
+
+	// モーションブラー
+	constexpr const char* DRAW_MOTIONBLUR_PSNAME("PS_MotionBlur");
+
+	// 輝度抽出・ブラー画像組み合わせのピクセルシェーダー
+	constexpr const char* DRAW_LUMINANCE_PSNAME("PS_Luminance");
+	constexpr const char* COMBINE_BLUR_PSNAME("PS_KawaseBlurCombine");
+	constexpr const char* COMBINE_TEX_PSNAME("PS_TextureCombine");
 
 	D3D11_Renderer::D3D11_Renderer() :
 		pRenderTargetView(nullptr),
 		pDrawRTVS(nullptr),
-		pDrawRTPS(nullptr)
+		pDrawRTPS(nullptr),
+		pLuminancePS(nullptr),
+		pCombineBlurPS(nullptr),
+		pCombineTexPS(nullptr)
 	{	
 	}
 
@@ -264,6 +273,78 @@ namespace HashiTaku
 		return true;
 	}
 
+	void D3D11_Renderer::ApplyBloom()
+	{
+		using enum RenderTargetCollection::RenderTargetType;
+
+		// 輝度抽出する
+		pRTCollection->SetRenderTarget(Luminance, false);
+		SetBlendState(BlendState::BlendStateType::None);
+
+		// バッファをGPUに送る
+		pLuminancePS->SetTexture(0, pRTCollection->GetRenderTarget(SceneDraw));
+		pDrawRTVS->SetGPU();
+		pLuminancePS->SetGPU();
+
+		// メッシュを描画
+		DrawFullScreenMesh();
+
+		// 川瀬式ブルームをかける
+		const RenderTarget* pLuminanceTex = pRTCollection->GetRenderTarget(Luminance);
+		// 加算合成
+		SetBlendState(BlendState::BlendStateType::Additive);
+
+		// ダウンスケールして画像をぼかす
+		for (u_int b_i = 0; b_i < KAWASE_BLUR_CNT; b_i++)
+		{
+			GausianBlur& gausianBlur = *kawaseBloomBlurs[b_i];
+
+			// 次回へ渡す
+			pLuminanceTex = &gausianBlur.ApplyBlur(*pLuminanceTex);
+
+			// ブラー画像を生成し、
+			pCombineBlurPS->SetTexture(b_i, pLuminanceTex);
+		}
+		
+		// ブラー画像を組み合わせる
+		pCombineBlurPS->SetGPU();
+		pRTCollection->SetRenderTarget(CombineBlur, false);
+		DrawFullScreenMesh();
+
+		// シーン描画に組み合わせる
+		pRTCollection->SetRenderTarget(SceneDraw, false);
+		pCombineTexPS->SetTexture(0,pRTCollection->GetRenderTarget(SceneDraw));
+		pCombineTexPS->SetTexture(1,pRTCollection->GetRenderTarget(CombineBlur));
+		pCombineTexPS->SetGPU();
+		DrawFullScreenMesh();
+	}
+
+	void D3D11_Renderer::ApplyMotionBlur()
+	{
+		using enum RenderTargetCollection::RenderTargetType;
+
+		// モーションブラー画像を生成
+		// レンダーターゲット
+		pRTCollection->SetRenderTarget(MotionBlur, false);
+
+		SetBlendState(BlendState::BlendStateType::None);
+
+		// バッファをGPUに送る
+		pMotionBlurPS->SetTexture(0, pRTCollection->GetRenderTarget(SceneDraw));
+		pMotionBlurPS->SetTexture(1, pRTCollection->GetRenderTarget(MotionVector));
+		pDrawRTVS->SetGPU();
+		pMotionBlurPS->SetGPU();
+		// メッシュを描画
+		DrawFullScreenMesh();
+
+		//// シーン描画に組み合わせる
+		//pRTCollection->SetRenderTarget(SceneDraw, false);
+		//pCombineTexPS->SetTexture(0, pRTCollection->GetRenderTarget(SceneDraw));
+		//pCombineTexPS->SetTexture(1, pRTCollection->GetRenderTarget(MotionBlur));
+		//pCombineTexPS->SetGPU();
+		//DrawFullScreenMesh();
+	}
+
 	void D3D11_Renderer::CreateFullScreenMesh()
 	{
 		// 画面全体に描画するポリゴン
@@ -278,10 +359,27 @@ namespace HashiTaku
 		pDrawRTMesh->SetVertexPos(vertexPosList);
 
 		// 描画する頂点
-		pDrawRTVS = ShaderCollection::GetInstance()->GetVertexShader(DRAW_RT_VSNAME);
-		pDrawRTPS = ShaderCollection::GetInstance()->GetPixelShader(DRAW_RT_PSNAME);
+		auto* shCol = ShaderCollection::GetInstance();
+		pDrawRTVS = shCol->GetVertexShader(DRAW_RT_VSNAME);
+		pDrawRTPS = shCol->GetPixelShader(DRAW_RT_PSNAME);
+		pLuminancePS = shCol->GetPixelShader(DRAW_LUMINANCE_PSNAME);
+		pCombineBlurPS = shCol->GetPixelShader(COMBINE_BLUR_PSNAME);
+		pCombineTexPS = shCol->GetPixelShader(COMBINE_TEX_PSNAME);
+		pMotionBlurPS = shCol->GetPixelShader(DRAW_MOTIONBLUR_PSNAME);
 
-		assert(pDrawRTVS && pDrawRTPS && "頂点・ピクセルシェーダーが取得できません");
+		// ブラークラスを生成
+		// ダウンスケールの倍率
+		u_int downScale = 1;
+		for (u_int b_i = 0; b_i < KAWASE_BLUR_CNT; b_i++)
+		{
+			downScale *= 2;	// 次のダウンスケールを求める
+
+			// レンダーターゲットのサイズを計算
+			u_int rtWidth = screenWidth / downScale;
+			u_int rtHeight = screenHeight / downScale;
+
+			kawaseBloomBlurs[b_i] = std::make_unique<GausianBlur>(rtWidth, rtHeight);
+		}
 	}
 
 	void D3D11_Renderer::CreateBlendState()
@@ -311,7 +409,12 @@ namespace HashiTaku
 			MB_YESNO | MB_ICONQUESTION);
 
 		if (pushButton == IDYES)
-			pSwapChain->SetFullscreenState(TRUE, NULL);
+		{
+			pSwapChain->SetFullscreenState(TRUE, NULL);	// フルスクリーン
+			SetCursor(NULL);	// カーソルを消す
+		}
+			
+
 #endif // _DEBUG
 	}
 
@@ -381,15 +484,13 @@ namespace HashiTaku
 		pDeviceContext->OMSetBlendState(pSetBlendState, BlendFactor, 0xffffffff);
 	}
 
-	void D3D11_Renderer::SetRenderTerget(u_int _cnt, RenderTarget* _pRrenderTarget, DepthStencil* _pDepthStencil)
+	void D3D11_Renderer::SetRenderTerget(u_int _cnt, RenderTarget* _pRrenderTarget, DepthStencil& _depthStencil)
 	{
-		SetRenderTerget(_cnt, _pRrenderTarget, _pDepthStencil->GetView());
+		SetRenderTerget(_cnt, _pRrenderTarget, _depthStencil.GetView());
 	}
 
 	void D3D11_Renderer::SetRenderTerget(u_int _cnt, RenderTarget* _pRrenderTarget, ID3D11DepthStencilView* _pDepthStencilView)
 	{
-		return;
-
 		static ID3D11RenderTargetView* rtvs[1];
 		rtvs[0] = _pRrenderTarget->GetView();
 
@@ -435,15 +536,33 @@ namespace HashiTaku
 	{
 		using enum RenderTargetCollection::RenderTargetType;
 
+		// シーン描画びブルーム処理をかける
+		ApplyBloom();
+
+		// モーションブラー
+		ApplyMotionBlur();
+
+		// スクリーンに描画
+		SetBaseRenderTarget();
+
 		SetBlendState(BlendState::BlendStateType::None);
 
+		// 描画する
+		pDeviceContext->IASetPrimitiveTopology(pDrawRTMesh->GetTopology());
+
+		// バッファをGPUに送る
 		pDrawRTPS->SetTexture(0, pRTCollection->GetRenderTarget(SceneDraw));
-		//pDrawRTPS->SetTexture(1, pRTCollection->GetRenderTarget(Blur));
 		pDrawRTVS->SetGPU();
 		pDrawRTPS->SetGPU();
 
-		pDeviceContext->IASetPrimitiveTopology(pDrawRTMesh->GetTopology());
+		// メッシュを描画
+		DrawFullScreenMesh();
+	}
+
+	void D3D11_Renderer::DrawFullScreenMesh()
+	{
 		// バッファをGPUに送る
+		pDeviceContext->IASetPrimitiveTopology(pDrawRTMesh->GetTopology());
 		pDrawRTMesh->GetVertexBuffer().SetGPU();
 		pDrawRTMesh->GetIndexBuffer().SetGPU();
 
