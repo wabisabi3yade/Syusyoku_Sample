@@ -1449,7 +1449,7 @@
                                 "time": 5.0
                             }
                         ],
-                        "hpBarName": "Enemy_GageBar",
+                        "hpBarName": "Enemy_Gage",
                         "maxHp": 200.0,
                         "name": "Boss",
                         "priority": 0,
@@ -4512,7 +4512,7 @@
                         },
                         "camObjName": "Camera",
                         "enable": true,
-                        "hpBarObjName": "Player_HpBar",
+                        "hpBarObjName": "Player_HpBarGroup",
                         "maxHp": 100.0,
                         "name": "Player",
                         "priority": 0,
@@ -5330,6 +5330,130 @@
                                     ]
                                 }
                             }
+                        },
+                        {
+                            "childs": [
+                                {
+                                    "childs": null,
+                                    "gameObject": {
+                                        "active": true,
+                                        "components": [
+                                            {
+                                                "alpha": 1.0,
+                                                "currentValue": 1.0,
+                                                "enable": true,
+                                                "image": "UI_EnemyStanBar.png",
+                                                "maxValue": 1.0,
+                                                "minValue": 0.0,
+                                                "name": "UISlider",
+                                                "priority": 0
+                                            }
+                                        ],
+                                        "layer": 2,
+                                        "name": "Enemy_HpBackGage",
+                                        "tag": 0,
+                                        "transform": {
+                                            "child": null,
+                                            "pos": [
+                                                176.45999145507813,
+                                                657.2999877929688,
+                                                0.9909999966621399
+                                            ],
+                                            "rotation": [
+                                                -0.0,
+                                                0.0,
+                                                -0.0,
+                                                1.0
+                                            ],
+                                            "scale": [
+                                                927.4099731445313,
+                                                23.919998168945313,
+                                                1.0
+                                            ]
+                                        }
+                                    }
+                                },
+                                {
+                                    "childs": null,
+                                    "gameObject": {
+                                        "active": true,
+                                        "components": [
+                                            {
+                                                "alpha": 1.0,
+                                                "currentValue": 1.0,
+                                                "enable": true,
+                                                "image": "UI_EnemyHpBar.png",
+                                                "maxValue": 1.0,
+                                                "minValue": 0.0,
+                                                "name": "UISlider",
+                                                "priority": 0
+                                            }
+                                        ],
+                                        "layer": 2,
+                                        "name": "Enemy_HpFrontGage",
+                                        "tag": 0,
+                                        "transform": {
+                                            "child": null,
+                                            "pos": [
+                                                176.45999145507813,
+                                                657.2999877929688,
+                                                0.9900000095367432
+                                            ],
+                                            "rotation": [
+                                                -0.0,
+                                                0.0,
+                                                -0.0,
+                                                1.0
+                                            ],
+                                            "scale": [
+                                                927.4099731445313,
+                                                23.919998168945313,
+                                                1.0
+                                            ]
+                                        }
+                                    }
+                                }
+                            ],
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "backMoveEase": 5,
+                                        "backMoveTime": 0.800000011920929,
+                                        "backName": "Enemy_HpBackGage",
+                                        "backWaitTime": 0.30000001192092896,
+                                        "enable": true,
+                                        "frontName": "Enemy_HpFrontGage",
+                                        "name": "Gage",
+                                        "priority": 0
+                                    }
+                                ],
+                                "layer": 2,
+                                "name": "Enemy_Gage",
+                                "tag": 0,
+                                "transform": {
+                                    "child": [
+                                        "Enemy_HpBackGage",
+                                        "Enemy_HpFrontGage"
+                                    ],
+                                    "pos": [
+                                        176.45999145507813,
+                                        657.2999877929688,
+                                        0.9900000095367432
+                                    ],
+                                    "rotation": [
+                                        -0.0,
+                                        0.0,
+                                        -0.0,
+                                        1.0
+                                    ],
+                                    "scale": [
+                                        927.4099731445313,
+                                        23.919998168945313,
+                                        1.0
+                                    ]
+                                }
+                            }
                         }
                     ],
                     "gameObject": {
@@ -5342,7 +5466,7 @@
                             "child": [
                                 "Enemy_GageFrame",
                                 "Enemy_GageBack",
-                                "Enemy_GageBarGroup"
+                                "Enemy_Gage"
                             ],
                             "pos": [
                                 640.0,
@@ -6189,40 +6313,124 @@
                             }
                         },
                         {
-                            "childs": null,
+                            "childs": [
+                                {
+                                    "childs": null,
+                                    "gameObject": {
+                                        "active": true,
+                                        "components": [
+                                            {
+                                                "alpha": 1.0,
+                                                "currentValue": 1.0,
+                                                "enable": true,
+                                                "image": "UI_PlayerHpBar.png",
+                                                "maxValue": 1.0,
+                                                "minValue": 0.0,
+                                                "name": "UISlider",
+                                                "priority": 0
+                                            }
+                                        ],
+                                        "layer": 2,
+                                        "name": "Player_HpBar",
+                                        "tag": 0,
+                                        "transform": {
+                                            "child": null,
+                                            "pos": [
+                                                37.649600982666016,
+                                                66.48390197753906,
+                                                0.8989999890327454
+                                            ],
+                                            "rotation": [
+                                                -0.0,
+                                                0.0,
+                                                -0.0,
+                                                1.0
+                                            ],
+                                            "scale": [
+                                                650.9064331054688,
+                                                27.496700286865234,
+                                                1.0
+                                            ]
+                                        }
+                                    }
+                                },
+                                {
+                                    "childs": null,
+                                    "gameObject": {
+                                        "active": true,
+                                        "components": [
+                                            {
+                                                "alpha": 1.0,
+                                                "currentValue": 1.0,
+                                                "enable": true,
+                                                "image": "UI_EnemyHpBar.png",
+                                                "maxValue": 1.0,
+                                                "minValue": 0.0,
+                                                "name": "UISlider",
+                                                "priority": 0
+                                            }
+                                        ],
+                                        "layer": 2,
+                                        "name": "Player_HpBackBar",
+                                        "tag": 0,
+                                        "transform": {
+                                            "child": null,
+                                            "pos": [
+                                                37.649600982666016,
+                                                66.48390197753906,
+                                                0.8999999761581421
+                                            ],
+                                            "rotation": [
+                                                -0.0,
+                                                0.0,
+                                                -0.0,
+                                                1.0
+                                            ],
+                                            "scale": [
+                                                650.9064331054688,
+                                                27.496700286865234,
+                                                1.0
+                                            ]
+                                        }
+                                    }
+                                }
+                            ],
                             "gameObject": {
                                 "active": true,
                                 "components": [
                                     {
-                                        "alpha": 1.0,
-                                        "currentValue": 1.0,
+                                        "backMoveEase": 0,
+                                        "backMoveTime": 1.0,
+                                        "backName": "Player_HpBackBar",
+                                        "backWaitTime": 1.0,
                                         "enable": true,
-                                        "image": "UI_PlayerHpBar.png",
-                                        "maxValue": 1.0,
-                                        "minValue": 0.0,
-                                        "name": "UISlider",
+                                        "frontName": "Player_HpBar",
+                                        "name": "Gage",
                                         "priority": 0
                                     }
                                 ],
                                 "layer": 2,
-                                "name": "Player_HpBar",
+                                "name": "Player_HpBarGroup",
                                 "tag": 0,
                                 "transform": {
-                                    "child": null,
+                                    "child": [
+                                        "Player_HpBar",
+                                        "Player_HpBackBar"
+                                    ],
                                     "pos": [
                                         37.649600982666016,
                                         66.48390197753906,
-                                        0.8999987840652466
+                                        0.8999999761581421
                                     ],
                                     "rotation": [
-                                        -4.790052798853139e-07,
+                                        -0.0,
                                         0.0,
                                         -0.0,
                                         1.0
                                     ],
                                     "scale": [
-                                        650.9065551757813,
-                                        27.4967041015625,
+                                        650.9064331054688,
+                                        27.496700286865234,
                                         1.0
                                     ]
                                 }
@@ -6239,7 +6447,7 @@
                             "child": [
                                 "Player_HpFrame",
                                 "Player_HpBack",
-                                "Player_HpBar"
+                                "Player_HpBarGroup"
                             ],
                             "pos": [
                                 17.600000381469727,

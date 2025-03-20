@@ -61,6 +61,11 @@ namespace HashiTaku
 		ApplySlider();
 	}
 
+	float CP_UISlider::GetCurentValue() const
+	{
+		return currentValue;
+	}
+
 	json CP_UISlider::Save()
 	{
 		auto data = CP_UIRenderer::Save();

@@ -26,5 +26,9 @@ namespace HashiTaku
 		/// @brief 最小値をセット
 		/// @param _minVal 最小値
 		virtual void SetMinValue(float _minVal) = 0;
+
+		/// @brief 現在の値を取得
+		/// @return 現在値
+		virtual float GetCurentValue() const = 0;
 	};
 }
