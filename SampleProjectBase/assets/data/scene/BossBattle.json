@@ -478,9 +478,9 @@
                                                 ],
                                                 "ditherOffset": 0.0,
                                                 "ditherPower": 1.0,
-                                                "enable": true,
+                                                "enable": false,
                                                 "name": "OutLineRenderer",
-                                                "priority": 0,
+                                                "priority": -1,
                                                 "scale": 0.019999999552965164
                                             }
                                         ],
@@ -678,7 +678,7 @@
                             "actData": [
                                 {
                                     "data": {
-                                        "isIdleOnly": false,
+                                        "isIdleOnly": true,
                                         "warpMotion": {
                                             "useWarp": false
                                         }
@@ -1394,6 +1394,7 @@
                                     "typeString": "JumpAttack"
                                 }
                             ],
+                            "debugDisplay": true,
                             "defaultState": 0,
                             "disLengthList": [
                                 4.0,
@@ -1402,6 +1403,7 @@
                             ]
                         },
                         "breakBarName": "Enemy_BreakGageBar",
+                        "canBreak": true,
                         "enable": true,
                         "hitShakeParams": [
                             {
@@ -3485,6 +3487,7 @@
                                         "typeString": "SlashHigh_Air"
                                     }
                                 ],
+                                "debugDisplay": true,
                                 "downForcePower": -45.0
                             },
                             "ground": {
@@ -4506,7 +4509,8 @@
                                         },
                                         "typeString": "Damage_L"
                                     }
-                                ]
+                                ],
+                                "debugDisplay": true
                             },
                             "groundCheckName": "PlayerGroundCollision"
                         },

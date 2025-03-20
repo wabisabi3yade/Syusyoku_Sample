@@ -55,6 +55,12 @@ namespace HashiTaku
 
 		/// @brief ブレイクしているか？
 		bool isBreaking;
+
+#ifdef EDIT
+		// ブレイクするか？
+		bool isCanBreak{ true };
+#endif // EDIT
+
 	public:
 		CP_Boss();
 		~CP_Boss() {}

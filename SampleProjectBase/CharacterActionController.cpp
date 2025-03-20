@@ -67,8 +67,6 @@ namespace HashiTaku
 	void CharacterActionController::DebugDisplay()
 	{
 #ifdef EDIT
-		if (!isDebugDisplay) return;
-
 		// デバッグ描画を行う
 		if (pCurrentNode)
 			static_cast<CharacterActState_Base&>(*pCurrentNode).DebugDisplay();
@@ -160,6 +158,11 @@ namespace HashiTaku
 	{
 		json data;
 
+#ifdef EDIT
+		data["debugDisplay"] = isDebugDisplay;
+#endif // EDIT
+
+
 		for (auto& node : stateNodeList)
 		{
 			json actData;
@@ -174,6 +177,11 @@ namespace HashiTaku
 
 	void CharacterActionController::Load(const json& _data)
 	{
+#ifdef EDIT
+		LoadJsonBoolean("debugDisplay", isDebugDisplay, _data);
+#endif // EDIT
+
+
 		json actDataList;
 		// ステートごとのパラメータをロードする
 		if (LoadJsonDataArray("actData", actDataList, _data))
@@ -240,6 +248,17 @@ namespace HashiTaku
 	CP_Animation* CharacterActionController::GetAnimation()
 	{
 		return pAnimation;
+	}
+
+	void CharacterActionController::DebugDisplayCall()
+	{
+#ifdef EDIT
+		if (!isDebugDisplay) return;
+
+		// デバッグ描画処理
+		DebugDisplay();
+#endif // EDIT
+
 	}
 
 	CharacterChangeAnimObserver::CharacterChangeAnimObserver(CharacterActionController& _playerActCon,

@@ -50,8 +50,10 @@ namespace HashiTaku
 
 	void CP_OutLineRenderer::Start()
 	{
+		// メッシュを取得
 		GetRenderMesh();
 
+		// 使うシェーダーを取得
 		SetUseShader();
 	}
 

@@ -64,11 +64,11 @@ namespace HashiTaku
 			Geometory::DrawSphere();
 		}
 
-		// 攻撃ベクトルを表示
-		constexpr float length = 3.0f;
-		Geometory::AddLine(hitPos,
-			hitPos + hitAtkVector * length,
-			DXSimp::Color(1.0f, 0.0f, 0.0f, 0.0f));
+		//// 攻撃ベクトルを表示
+		//constexpr float length = 3.0f;
+		//Geometory::AddLine(hitPos,
+		//	hitPos + hitAtkVector * length,
+		//	DXSimp::Color(1.0f, 0.0f, 0.0f, 0.0f));
 #endif // EDIT
 	}
 

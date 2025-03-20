@@ -1,0 +1,97 @@
+{
+    "childs": null,
+    "gameObject": {
+        "active": true,
+        "components": [
+            {
+                "battleDirection": {
+                    "fade": "Fade",
+                    "gameOver": "GameOverText",
+                    "gameStartCurve": {
+                        "easeKind": 0,
+                        "endValue": 1.0,
+                        "endVector": 0.6970750093460083,
+                        "plotDatas": [
+                            {
+                                "interp": 1,
+                                "time": 0.20000000298023224,
+                                "value": 0.4000000059604645,
+                                "vector": 0.0
+                            },
+                            {
+                                "interp": 0,
+                                "time": 0.800000011920929,
+                                "value": 0.550000011920929,
+                                "vector": 0.0
+                            }
+                        ],
+                        "startInterp": 0,
+                        "startValue": 0.0,
+                        "startVector": 0.7993320226669312,
+                        "useHermite": true
+                    },
+                    "start": "GameStartText",
+                    "uiAnim": false,
+                    "win": "WinText",
+                    "winShake": {
+                        "fadeOut": true,
+                        "power": 0.5,
+                        "shakeVec": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "speed": 4.0,
+                        "time": 0.30000001192092896
+                    },
+                    "winTimeScale": 0.20000000298023224
+                },
+                "enable": true,
+                "moveAreaRect": [
+                    20.5,
+                    -20.5,
+                    20.5,
+                    -20.5
+                ],
+                "name": "BattleManager",
+                "poseButtonName": "ButtonGroup",
+                "priority": 0
+            },
+            {
+                "enable": true,
+                "isBGM": true,
+                "name": "PlaySound",
+                "priority": 0,
+                "sound": {
+                    "loop": true,
+                    "pitch": 0.0,
+                    "soundName": "battle.wav",
+                    "useListener": false,
+                    "volume": 0.17000000178813934
+                }
+            }
+        ],
+        "layer": 0,
+        "name": "BattleManager",
+        "tag": 0,
+        "transform": {
+            "child": null,
+            "pos": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        }
+    }
+}

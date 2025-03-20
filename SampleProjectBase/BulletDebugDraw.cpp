@@ -11,7 +11,7 @@ namespace HashiTaku
 	constexpr float CONTACT_DRAW_LENGTH(0.5f);	// ÚG“_‚ğ•`‰æ‚·‚é‚Æ‚«‚Ìü‚Ì’·‚³
 
 	BulletDebugDraw::BulletDebugDraw()
-		: debugMode(DBG_DrawWireframe), isDisplay(true)
+		: debugMode(DBG_DrawWireframe), isDisplay(false)
 	{
 	}
 
