@@ -164,7 +164,7 @@ namespace HashiTaku
 		const DXSimp::Vector3& _angles)
 	{
 		// Ä¶
-		DX11EffecseerManager::GetInstance()->Play(_vfxInfo, _createPos, _angles);
+		DX11EffekseerManager::GetInstance()->Play(_vfxInfo, _createPos, _angles);
 	}
 
 	void CP_Character::CreateSoundFX(const PlaySoundParameter& _soundParam,

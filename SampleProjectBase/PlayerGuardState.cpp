@@ -236,7 +236,7 @@ namespace HashiTaku
 		createVfxPos += transform.Forward() * createVfxOffset.z;
 
 		// 再生
-		DX11EffecseerManager::GetInstance()->Play(parryEffectInfo,
+		DX11EffekseerManager::GetInstance()->Play(parryEffectInfo,
 			createVfxPos,
 			transform.GetEularAngles());
 	}
@@ -307,9 +307,12 @@ namespace HashiTaku
 
 		// エフェクト
 		ImGuiMethod::LineSpaceSmall();
-		ImGui::Text("Parry Vfx");
-		ImGui::DragFloat3("Offset", &createVfxOffset.x, 0.01f);
-		parryEffectInfo.ImGuiCall();
+		if (ImGuiMethod::TreeNode("VFX Info"))
+		{
+			ImGui::DragFloat3("Offset", &createVfxOffset.x, 0.01f);
+			parryEffectInfo.ImGuiCall();
+			ImGui::TreePop();
+		}
 
 		// カメラシェイク
 		ImGuiMethod::LineSpaceSmall();

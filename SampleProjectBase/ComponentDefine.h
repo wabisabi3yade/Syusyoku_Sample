@@ -36,6 +36,7 @@
 // ƒCƒ“ƒQ[ƒ€“à
 #include "CP_HitStopManager.h"
 #include "CP_BattleManager.h"
+#include "CP_Gage.h"
 
 // UI
 #include "CP_UIRenderer.h"

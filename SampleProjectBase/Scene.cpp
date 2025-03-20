@@ -16,7 +16,7 @@ namespace HashiTaku
 		pInSceneSystem->Init();
 
 		// エフェクトマネージャー
-		pEffectManager = DX11EffecseerManager::GetInstance();
+		pEffectManager = DX11EffekseerManager::GetInstance();
 
 		// ロードする
 		SceneLoad();

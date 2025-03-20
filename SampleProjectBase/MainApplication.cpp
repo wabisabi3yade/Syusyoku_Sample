@@ -45,7 +45,7 @@ namespace HashiTaku
 		// シングルトンインスタンスを解放
 		SceneManager::Delete();
 		DXSoundManager::Delete();
-		DX11EffecseerManager::Delete();
+		DX11EffekseerManager::Delete();
 		Direct3D11::Delete();
 	}
 
@@ -105,7 +105,7 @@ namespace HashiTaku
 		Easing::Init();
 
 		// エフェクシア初期化
-		DX11EffecseerManager::GetInstance()->Init();
+		DX11EffekseerManager::GetInstance()->Init();
 
 		// サウンド初期化
 		DXSoundManager::GetInstance()->Init();

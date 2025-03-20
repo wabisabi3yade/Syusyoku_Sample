@@ -9,6 +9,7 @@ namespace HashiTaku
 		isStunOnParry(false)
 	{
 	}
+
 	void BossAttackInformation::NotifyAcceptParry(const AcceptParryInfo& _acceptInfo)
 	{
 		// ’Ê’m‚·‚é

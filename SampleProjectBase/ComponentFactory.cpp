@@ -40,6 +40,7 @@ namespace HashiTaku
 		// ƒCƒ“ƒQ[ƒ€“à
 		ResistComponnent<CP_HitStopManager>();
 		ResistComponnent<CP_BattleManager>();
+		ResistComponnent<CP_Gage>();
 
 		// UI
 		ResistComponnent<CP_UIRenderer>();

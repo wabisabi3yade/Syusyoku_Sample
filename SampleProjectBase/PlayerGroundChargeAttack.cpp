@@ -166,7 +166,7 @@ namespace HashiTaku
 	void PlayerGroundChargeAttack::OnEndBehavior()
 	{
 		// チャージのエフェクトを消す
-		DX11EffecseerManager::GetInstance()->DestroyVfx(chargeVfxHandle);
+		DX11EffekseerManager::GetInstance()->DestroyVfx(chargeVfxHandle);
 
 		// チャージ中からカメラを通常に戻す
 		ChangeCameraNormaleState();
@@ -264,7 +264,7 @@ namespace HashiTaku
 	{
 		// エフェクトを出す
 		DXSimp::Vector3 effectPos = GetMyTransform().GetPosition();
-		chargeVfxHandle = DX11EffecseerManager::GetInstance()->Play(
+		chargeVfxHandle = DX11EffekseerManager::GetInstance()->Play(
 			chargeCompleteVfxs[static_cast<int>(_chargeLevel)],
 			effectPos + chargeVfxOffset);
 	}
@@ -309,7 +309,7 @@ namespace HashiTaku
 		}
 
 		// チャージエフェクトを消す
-		auto* pVfxManager = DX11EffecseerManager::GetInstance();
+		auto* pVfxManager = DX11EffekseerManager::GetInstance();
 		if (chargeVfxHandle != NONE_VFX_HANDLE)
 			pVfxManager->DestroyVfx(chargeVfxHandle);
 

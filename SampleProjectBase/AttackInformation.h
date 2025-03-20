@@ -21,10 +21,8 @@ namespace HashiTaku
 		};
 
 	private:
-		/// @brief ヒットエフェクト情報
-		CreateVfxInfo hitVfxInfo;
-
-		//std::vector<CreateVfxInfo>
+		/// @brief ヒットエフェクト情報リスト
+		std::list<CreateVfxInfo> hitVfxInfoList;
 
 		/// @brief カメラを揺らすパラメータ
 		PerlinShakeParameter pCamShakeParam;
@@ -74,9 +72,9 @@ namespace HashiTaku
 		/// @return 攻撃ベクトル
 		const DXSimp::Vector3& GetAttackVector() const;
 
-		/// @brief ヒットエフェクト情報を取得する
-		/// @return ヒットエフェクト情報
-		const CreateVfxInfo& GetHitVfxInfo() const;
+		/// @brief ヒットエフェクトリストを取得する
+		/// @return ヒットエフェクトリスト
+		const std::list<CreateVfxInfo>& GetHitVfxList() const;
 
 		/// @brief カメラを揺らすパラメータを取得
 		/// @return カメラを揺らすパラメータ
@@ -120,6 +118,8 @@ namespace HashiTaku
 
 		void ImGuiDebug() override;
 	private:
+		/// @brief ヒットエフェクトの編集
+		void ImGuiHitVfx();
 
 		// 攻撃レベルで変更するパラメータ
 		void ImGuiLevelParamerter();

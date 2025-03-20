@@ -7,10 +7,10 @@ namespace HashiTaku
 	class VisualEffect;
 
 	/// @brief DX11環境で初期化や解放などを行うクラス
-	class DX11EffecseerManager : public Singleton_Base<DX11EffecseerManager>
+	class DX11EffekseerManager : public Singleton_Base<DX11EffekseerManager>
 	{
 	private:
-		friend class Singleton_Base<DX11EffecseerManager>;
+		friend class Singleton_Base<DX11EffekseerManager>;
 
 		struct PlayHandleParameter
 		{
@@ -105,8 +105,8 @@ namespace HashiTaku
 		/// @return エフェクシアマネジャー変数
 		const Effekseer::ManagerRef& GetManager() const;
 	private:
-		DX11EffecseerManager();
-		~DX11EffecseerManager();
+		DX11EffekseerManager();
+		~DX11EffekseerManager();
 
 		/// @brief エフェクト全体のタイムスケールをシーンに合わせる
 		void UpdateTimeScale();
@@ -141,8 +141,8 @@ namespace HashiTaku
 		/// @brief エフェクト色
 		DXSimp::Color effectColor{ DXSimp::Vector4::One };
 
-		/// @brief エフェクト名
-		VisualEffect* pHitVfx{ nullptr };
+		/// @brief エフェクトデータ
+		VisualEffect* pVfxData{ nullptr };
 
 		/// @brief  スケール
 		float scale{ 1.0f };

@@ -31,7 +31,7 @@ namespace HashiTaku
 
 	void CharacterActState_Base::CreateVfx(const CreateVfxInfo& _vfxInfo, const DXSimp::Vector3& _createPos)
 	{
-		DX11EffecseerManager::GetInstance()->Play(_vfxInfo, _createPos);
+		DX11EffekseerManager::GetInstance()->Play(_vfxInfo, _createPos);
 	}
 
 	void CharacterActState_Base::CreateSoundFX(const PlaySoundParameter& _soundParam, const DXSimp::Vector3& _soundPos)

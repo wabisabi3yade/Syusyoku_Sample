@@ -8768,7 +8768,7 @@
                                     false,
                                     false
                                 ],
-                                "startFrame": 41,
+                                "startFrame": 40,
                                 "useFrame": true
                             },
                             "notifyType": 3
@@ -9817,7 +9817,7 @@
                                     false,
                                     false
                                 ],
-                                "startFrame": 80,
+                                "startFrame": 77,
                                 "useFrame": true
                             },
                             "notifyType": 3
@@ -9837,14 +9837,14 @@
                                 "vfxInfo": {
                                     "applyColor": true,
                                     "color": [
-                                        1.0,
-                                        0.7594936490058899,
-                                        0.0,
+                                        0.700421929359436,
+                                        0.5201818943023682,
+                                        0.2689383924007416,
                                         1.0
                                     ],
                                     "lookCam": false,
                                     "name": "Impact02",
-                                    "scale": 0.6000000238418579,
+                                    "scale": 0.7300000190734863,
                                     "speed": 1.5,
                                     "startFrame": 12
                                 }
@@ -13263,48 +13263,124 @@
     "vfx": [
         {
             "assetName": "Fire01",
+            "color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
             "loadScale": 0.10000000149011612,
             "pathName": "assets/vfx/Fire01.efk"
         },
         {
             "assetName": "Impact02",
+            "color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
             "loadScale": 1.0,
             "pathName": "assets/vfx/Impact02.efk"
         },
         {
             "assetName": "Parry01",
+            "color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
             "loadScale": 1.0,
             "pathName": "assets/vfx/Parry01.efk"
         },
         {
             "assetName": "charge02",
+            "color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
             "loadScale": 1.0,
             "pathName": "assets/vfx/charge02.efk"
         },
         {
             "assetName": "chargeRelease01",
+            "color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
             "loadScale": 1.0,
             "pathName": "assets/vfx/chargeRelease01.efk"
         },
         {
             "assetName": "hit01",
+            "color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
             "loadScale": 1.0,
             "pathName": "assets/vfx/hit01.efk"
         },
         {
             "assetName": "impactAura01",
+            "color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
             "loadScale": 1.0,
             "pathName": "assets/vfx/impactAura01.efk"
         },
         {
             "assetName": "slash02",
+            "color": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
             "loadScale": 1.0,
             "pathName": "assets/vfx/slash02.efk"
         },
         {
             "assetName": "slash03",
+            "color": [
+                1.0,
+                0.45490196347236633,
+                0.04313725605607033,
+                1.0
+            ],
             "loadScale": 1.0,
             "pathName": "assets/vfx/slash03.efk"
+        },
+        {
+            "assetName": "slash03_Center",
+            "color": [
+                1.0,
+                0.45490196347236633,
+                0.04313725605607033,
+                1.0
+            ],
+            "loadScale": 1.0,
+            "pathName": "assets/vfx/slash03_Center.efk"
+        },
+        {
+            "assetName": "slash03_Line",
+            "color": [
+                1.0,
+                0.45490196347236633,
+                0.04313725605607033,
+                1.0
+            ],
+            "loadScale": 1.0,
+            "pathName": "assets/vfx/slash03_Line.efk"
         }
     ]
 }

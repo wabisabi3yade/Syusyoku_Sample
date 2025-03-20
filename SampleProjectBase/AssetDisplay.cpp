@@ -5,6 +5,7 @@
 #include "AssetLoader.h"
 #include "MaterialCreater.h"
 #include "SkeletalMesh.h"
+#include "VisualEffect.h"
 
 #include "AnimControllerCreater.h"
 
@@ -132,7 +133,24 @@ namespace HashiTaku
 
 		// 表示
 		AssetList& assets = pAssetCollection->GetAssetList<VisualEffect>();
-		Display(assets);
+		
+		// エフェクト編集
+		for (auto& vfx : assets)
+		{
+			if (!ImGuiMethod::TreeNode(vfx.first)) continue;
+			VisualEffect& editVfx = static_cast<VisualEffect&>(*vfx.second);
+
+			// 色
+			DXSimp::Color vfxColor = editVfx.GetVfxColor();
+			if (ImGui::ColorEdit4("Color", &vfxColor.x))
+			{
+				editVfx.SetVfxColor(vfxColor);
+			}
+
+
+			ImGui::TreePop();
+		}
+
 
 		// ロードする
 		static char createVFX[IM_INPUT_BUF];
