@@ -29,10 +29,9 @@ namespace HashiTaku
 	{
 		float prevCurValue = currentValue;
 		currentValue = _setValue;
-
-#ifdef EDIT
+		
 		if (!GetIsSettingSlider()) return;
-#endif // EDIT
+
 		// 正面スライダーは反映
 		pFrontSlider->SetCurrentValue(std::clamp(_setValue, minValue, maxValue));
 		// 変更前より値が減ったら
@@ -55,9 +54,8 @@ namespace HashiTaku
 	{
 		maxValue = std::max(_maxVal, minValue);
 
-#ifdef EDIT
 		if (!GetIsSettingSlider()) return;
-#endif // EDIT
+
 		// 両スライダーの最大値をセット
 		pFrontSlider->SetMaxValue(maxValue);
 		pBackSlider->SetMaxValue(maxValue);
@@ -67,9 +65,8 @@ namespace HashiTaku
 	{
 		minValue = std::min(_minVal, maxValue);
 
-#ifdef EDIT
 		if (!GetIsSettingSlider()) return;
-#endif // EDIT
+
 		// 両スライダーの最低値をセット
 		pFrontSlider->SetMinValue(minValue);
 		pBackSlider->SetMinValue(minValue);

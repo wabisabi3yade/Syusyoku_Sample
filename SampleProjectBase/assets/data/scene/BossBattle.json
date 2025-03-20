@@ -5342,7 +5342,7 @@
                                                 "alpha": 1.0,
                                                 "currentValue": 1.0,
                                                 "enable": true,
-                                                "image": "UI_EnemyStanBar.png",
+                                                "image": "UI_GageRed.png",
                                                 "maxValue": 1.0,
                                                 "minValue": 0.0,
                                                 "name": "UISlider",
@@ -5382,7 +5382,7 @@
                                                 "alpha": 1.0,
                                                 "currentValue": 1.0,
                                                 "enable": true,
-                                                "image": "UI_EnemyHpBar.png",
+                                                "image": "UI_GagePurple.png",
                                                 "maxValue": 1.0,
                                                 "minValue": 0.0,
                                                 "name": "UISlider",
@@ -5535,7 +5535,7 @@
                                         "alpha": 1.0,
                                         "currentValue": 0.0,
                                         "enable": true,
-                                        "image": "UI_EnemyStanBar.png",
+                                        "image": "UI_GageOrange.png",
                                         "maxValue": 1.0,
                                         "minValue": 0.0,
                                         "name": "UISlider",
@@ -6294,8 +6294,8 @@
                                 "transform": {
                                     "child": null,
                                     "pos": [
-                                        364.2801513671875,
-                                        67.20001983642578,
+                                        364.2802429199219,
+                                        67.20000457763672,
                                         0.9009999632835388
                                     ],
                                     "rotation": [
@@ -6305,8 +6305,8 @@
                                         1.0
                                     ],
                                     "scale": [
-                                        649.5314331054688,
-                                        23.980003356933594,
+                                        649.531494140625,
+                                        26.950000762939453,
                                         1.0000004768371582
                                     ]
                                 }
@@ -6323,7 +6323,7 @@
                                                 "alpha": 1.0,
                                                 "currentValue": 1.0,
                                                 "enable": true,
-                                                "image": "UI_PlayerHpBar.png",
+                                                "image": "UI_GageGreen.png",
                                                 "maxValue": 1.0,
                                                 "minValue": 0.0,
                                                 "name": "UISlider",
@@ -6363,7 +6363,7 @@
                                                 "alpha": 1.0,
                                                 "currentValue": 1.0,
                                                 "enable": true,
-                                                "image": "UI_EnemyHpBar.png",
+                                                "image": "UI_GageRed.png",
                                                 "maxValue": 1.0,
                                                 "minValue": 0.0,
                                                 "name": "UISlider",
@@ -6376,8 +6376,8 @@
                                         "transform": {
                                             "child": null,
                                             "pos": [
-                                                37.649600982666016,
-                                                66.48390197753906,
+                                                37.64960479736328,
+                                                66.48391723632813,
                                                 0.8999999761581421
                                             ],
                                             "rotation": [
@@ -6400,7 +6400,7 @@
                                 "components": [
                                     {
                                         "backMoveEase": 0,
-                                        "backMoveTime": 1.0,
+                                        "backMoveTime": 4.0,
                                         "backName": "Player_HpBackBar",
                                         "backWaitTime": 1.0,
                                         "enable": true,
@@ -6647,7 +6647,7 @@
                                         "alpha": 1.0,
                                         "currentValue": 0.0,
                                         "enable": true,
-                                        "image": "UI_EnemyStanBar.png",
+                                        "image": "UI_GageOrange.png",
                                         "maxValue": 1.0,
                                         "minValue": 0.0,
                                         "name": "UISlider",
