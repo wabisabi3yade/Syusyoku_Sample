@@ -25,6 +25,7 @@ namespace HashiTaku
 		pCameraTransform(nullptr),
 		attackTagCnt(0),
 		attackVectorCnt(3),
+		hitVfxOffsetPos(0.0f),
 		isAttackCollision(false)
 	{
 		// 初期化
@@ -37,7 +38,7 @@ namespace HashiTaku
 	void CP_Weapon::Start()
 	{
 		// エフェクト・サウンドマネージャー
-		pVfxManager = DX11EffecseerManager::GetInstance();
+		pVfxManager = DX11EffekseerManager::GetInstance();
 		pSoundManager = CP_SoundManager::GetInstance();
 
 		// カメラのトランスフォーム取得
@@ -148,6 +149,7 @@ namespace HashiTaku
 		auto data = Component::Save();
 
 		SaveJsonVector3("measAtkOffset", measAtkVecOffsetPos, data);
+		data["hitVfxOffset"] = hitVfxOffsetPos;
 
 		auto& attackTagDatas = data["attackableTags"];
 		for (u_int t_i = 0; t_i < attackTagCnt; t_i++)
@@ -168,6 +170,7 @@ namespace HashiTaku
 		Component::Load(_data);
 
 		LoadJsonVector3("measAtkOffset", measAtkVecOffsetPos, _data);
+		LoadJsonFloat("hitVfxOffset", hitVfxOffsetPos, _data);
 
 		json attackTagDatas;
 		if (LoadJsonDataArray("attackableTags", attackTagDatas, _data))
@@ -230,10 +233,20 @@ namespace HashiTaku
 
 	void CP_Weapon::OnAttackSuccess(const DamageInfo& _damageInfo)
 	{
-		// ヒットエフェクト
+		// ヒットエフェクトを再生
+		CreateHitVfx(_damageInfo);
 
+		// サウンド再生
+		if (pSoundManager)
+		{
+			pSoundManager->PlaySE(_damageInfo.pAttackInformation->GetHitSEParam(),
+				_damageInfo.contactPos);
+		}
+	}
+
+	void CP_Weapon::CreateHitVfx(const DamageInfo& _damageInfo)
+	{
 		// 当たった角度を考慮してエフェクトを回転する
-		DXSimp::Vector3 angles;
 		const DXSimp::Vector3& atkVec = _damageInfo.pAttackInformation->GetAttackVector();
 		const Transform& attackerTransform = pAttacker->GetAttackerTransform();
 		DXSimp::Vector3 worldVec = attackerTransform.Right() * atkVec.x;
@@ -241,25 +254,25 @@ namespace HashiTaku
 		worldVec += attackerTransform.Forward() * atkVec.z;
 		worldVec.Normalize();
 
+		// デバッグ用
 #ifdef EDIT
 		hitAtkVector = worldVec;
 #endif // EDIT
 
-		angles = CalcSlashWorldAngles(worldVec);
+		// エフェクトはカメラの手前に少し移動させる
+		DXSimp::Vector3 createVfxOffset = -1 * pCameraTransform->Forward() * hitVfxOffsetPos;
+		createVfxOffset.y = 0.0f;	// y座標はずらさない
 
-		HASHI_DEBUG_LOG("x" + std::to_string(angles.x)
-		+ "y" + std::to_string(angles.y) +
-			"z" +  std::to_string(angles.z));
+		// ワールド座標系ベクトルからワールド座標回転角度に変換
+		DXSimp::Vector3 angles = CalcSlashWorldAngles(worldVec);
 
-		pVfxManager->Play(_damageInfo.pAttackInformation->GetHitVfxInfo(),
-			_damageInfo.contactPos,
-			angles);
-
-		// サウンド
-		if (pSoundManager)
+		// エフェクトを再生
+		const auto& hitVfxList = _damageInfo.pAttackInformation->GetHitVfxList();
+		for (auto& hitVfx : hitVfxList)
 		{
-			pSoundManager->PlaySE(_damageInfo.pAttackInformation->GetHitSEParam(),
-				_damageInfo.contactPos);
+			pVfxManager->Play(hitVfx,
+				_damageInfo.contactPos + createVfxOffset,
+				angles);
 		}
 	}
 
@@ -348,10 +361,11 @@ namespace HashiTaku
 		const DXSimp::Vector3& _slashWorldVec) const
 	{
 		DXSimp::Vector3 angles;
-		angles.y = std::atan2(_slashWorldVec.z, _slashWorldVec.x); // Y軸回転 (Z軸回転)
+		angles.y = -std::atan2(_slashWorldVec.z, _slashWorldVec.x); // Y軸回転
 
-		angles.z = std::atan2(_slashWorldVec.y, std::sqrt(_slashWorldVec.x *
-			_slashWorldVec.x + _slashWorldVec.z * _slashWorldVec.z)); // X軸回転
+		angles.z = std::atan2(_slashWorldVec.y, 
+			std::sqrt(_slashWorldVec.x * _slashWorldVec.x + 
+				_slashWorldVec.z * _slashWorldVec.z)); // Z軸回転
 
 		return angles * Mathf::radToDeg;
 	}
@@ -388,7 +402,7 @@ namespace HashiTaku
 
 		ImGui::Checkbox("Attack", &isAttackCollision);
 		ImGui::Checkbox("ColDisplay", &isDebugAttackDisplay);
-		ImGui::DragScalar("AtkVecCnt", ImGuiDataType_U32, &attackVectorCnt);
+		ImGui::DragFloat("HitVfxOffsetPos",&hitVfxOffsetPos, 0.01f);
 		ImGui::DragFloat3("Meas Offset", &measAtkVecOffsetPos.x, 0.01f);
 		ImGui::Checkbox("MeasDisplay", &isDebugMeasDisplay);
 #endif // EDIT

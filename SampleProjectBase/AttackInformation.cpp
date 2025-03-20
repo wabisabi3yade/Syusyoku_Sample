@@ -6,6 +6,9 @@
 
 namespace HashiTaku
 {
+	/// @brief ヒットエフェクト登録可能最大数
+	constexpr u_int MAX_RESIST_HITVFX(10);
+
 	// ヒットストップフレーム
 	std::array<u_int, static_cast<u_int>(AttackInformation::AttackLevel::MaxNum)>  AttackInformation::hitStopFrames =
 	{
@@ -61,9 +64,9 @@ namespace HashiTaku
 		return attackVector;
 	}
 
-	const CreateVfxInfo& AttackInformation::GetHitVfxInfo() const
+	const std::list<CreateVfxInfo>& AttackInformation::GetHitVfxList() const
 	{
-		return hitVfxInfo;
+		return hitVfxInfoList;
 	}
 
 	const PerlinShakeParameter& AttackInformation::GetCamShakeParam() const
@@ -114,8 +117,13 @@ namespace HashiTaku
 	json AttackInformation::Save()
 	{
 		json data;
+		// ヒットエフェクトセーブ
+		json& hitVfxDatas = data["hitVfxDatas"];
+		for (auto& hitVfx : hitVfxInfoList)
+		{
+			hitVfxDatas.push_back(hitVfx.Save());
+		}
 
-		data["hitVfx"] = hitVfxInfo.Save();
 		data["isCamShake"] = isCamShake;
 		if (isCamShake)
 			data["camShake"] = pCamShakeParam.Save();
@@ -130,9 +138,17 @@ namespace HashiTaku
 	void AttackInformation::Load(const json& _data)
 	{
 		json loadData;
-		if (LoadJsonData("hitVfx", loadData, _data))
+		// ヒットエフェクト
+		if (LoadJsonDataArray("hitVfxDatas", loadData, _data))
 		{
-			hitVfxInfo.Load(loadData);
+			u_int vfxCnt = static_cast<u_int>(loadData.size());
+			hitVfxInfoList.resize(vfxCnt);
+			u_int loop = 0;
+			for (auto& vfx : hitVfxInfoList)
+			{
+				vfx.Load(loadData[loop]);
+				loop++;
+			}
 		}
 
 		LoadJsonBoolean("isCamShake", isCamShake, _data);
@@ -141,6 +157,7 @@ namespace HashiTaku
 			if (LoadJsonData("camShake", loadData, _data))
 				pCamShakeParam.Load(loadData);
 		}
+
 		LoadJsonVector3("attackVector", attackVector, _data);
 		if (LoadJsonData("hitSE", loadData, _data))
 		{
@@ -221,8 +238,8 @@ namespace HashiTaku
 		// 攻撃ベクトル
 		ImGui::DragFloat3("Vector", &attackVector.x, 0.01f, -1.0f, 1.0f);
 
-		// エフェクト
-		hitVfxInfo.ImGuiCall();
+		// エフェクト編集
+		ImGuiHitVfx();
 
 		// カメラシェイク
 		ImGui::Checkbox("IsCameraShake", &isCamShake);
@@ -237,5 +254,45 @@ namespace HashiTaku
 		}
 
 		ImGuiLevelParamerter();
+	}
+
+	void AttackInformation::ImGuiHitVfx()
+	{
+		if (!ImGuiMethod::TreeNode("Hit Vfx")) return;
+
+		// ヒットエフェクト編集する
+		u_int vfxCnt = hitVfxInfoList.size();
+		u_int loop = 0;
+		for (auto itr = hitVfxInfoList.begin(); itr != hitVfxInfoList.end();)
+		{
+			// 削除したか
+			bool isDelete = false;
+			if (ImGuiMethod::TreeNode(std::to_string(loop)))
+			{
+				isDelete = ImGui::Button("X");	// 削除ボタン
+				itr->ImGuiCall();
+				ImGui::TreePop();
+			}
+
+			// 削除するなら
+			if (isDelete)
+			{
+				itr = hitVfxInfoList.erase(itr);
+				continue;
+			}
+
+			// 次に進める
+			++itr;
+			loop++;
+		}
+
+		// エフェクト追加
+		if (ImGui::Button("+"))
+		{
+			// 追加
+			hitVfxInfoList.resize(std::min(vfxCnt + 1, MAX_RESIST_HITVFX));
+		}
+
+		ImGui::TreePop();
 	}
 }

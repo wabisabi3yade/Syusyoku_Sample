@@ -8,7 +8,7 @@ namespace HashiTaku
 {
 	constexpr u_int EFFECT_DRAW_MAX(5000);	// 最大のエフェクト描画数
 
-	void DX11EffecseerManager::Init()
+	void DX11EffekseerManager::Init()
 	{
 		pRenderer = Direct3D11::GetInstance()->GetRenderer();
 		ID3D11Device& device = *pRenderer->GetDevice();
@@ -30,7 +30,7 @@ namespace HashiTaku
 		manager->SetCurveLoader(Effekseer::MakeRefPtr<Effekseer::CurveLoader>());
 	}
 
-	void DX11EffecseerManager::Reset()
+	void DX11EffekseerManager::Reset()
 	{
 		// 全てのエフェクトを削除
 		AllEffectDestroy();
@@ -39,7 +39,7 @@ namespace HashiTaku
 		isPause = false;
 	}
 
-	void DX11EffecseerManager::EffectDraw()
+	void DX11EffekseerManager::EffectDraw()
 	{
 		renderer->BeginRendering();
 		UpdateCamMatrix();
@@ -47,7 +47,7 @@ namespace HashiTaku
 		renderer->EndRendering();
 	}
 
-	void DX11EffecseerManager::Update()
+	void DX11EffekseerManager::Update()
 	{
 		// ポーズ状態なら更新しない
 		if (isPause) return;
@@ -62,17 +62,17 @@ namespace HashiTaku
 		manager->Update();
 	}
 
-	void DX11EffecseerManager::AllEffectDestroy()
+	void DX11EffekseerManager::AllEffectDestroy()
 	{
 		manager->StopAllEffects();
 	}
 
-	bool DX11EffecseerManager::ExistEffect(Effekseer::Handle _vfxHandle) const
+	bool DX11EffekseerManager::ExistEffect(Effekseer::Handle _vfxHandle) const
 	{
 		return manager->Exists(_vfxHandle);
 	}
 
-	Effekseer::Handle DX11EffecseerManager::Play(const Effekseer::EffectRef& _effect,
+	Effekseer::Handle DX11EffekseerManager::Play(const Effekseer::EffectRef& _effect,
 		float _playSpeed,
 		const DXSimp::Vector3& _pos,
 		const DXSimp::Vector3& _scale,
@@ -110,10 +110,10 @@ namespace HashiTaku
 		return handle;
 	}
 
-	Effekseer::Handle DX11EffecseerManager::Play(const CreateVfxInfo& _createVfx, const DXSimp::Vector3& _pos,
+	Effekseer::Handle DX11EffekseerManager::Play(const CreateVfxInfo& _createVfx, const DXSimp::Vector3& _pos,
 		const DXSimp::Vector3& _eularAngles)
 	{
-		if (!_createVfx.pHitVfx) return -1;
+		if (!_createVfx.pVfxData) return -1;
 
 		DXSimp::Vector3 eularAngles = _eularAngles;
 		// 向くならカメラを向く角度を求める
@@ -123,12 +123,15 @@ namespace HashiTaku
 		}
 
 		// 再生する
-		Effekseer::Handle retHand = Play(_createVfx.pHitVfx->GetEffect(),
+		Effekseer::Handle retHand = Play(_createVfx.pVfxData->GetEffect(),
 			_createVfx.speed,
 			_pos,
 			_createVfx.scale * DXSimp::Vector3::One,
 			eularAngles,
 			_createVfx.startFrame);
+
+		// エフェクトデータに付与されている色反映
+		ChangeColor(retHand, _createVfx.pVfxData->GetVfxColor());
 
 		// 色を変更するなら変更
 		if (_createVfx.isApplyColor)
@@ -137,12 +140,12 @@ namespace HashiTaku
 		return retHand;
 	}
 
-	void DX11EffecseerManager::SetPause(bool _setPause)
+	void DX11EffekseerManager::SetPause(bool _setPause)
 	{
 		isPause = _setPause;
 	}
 
-	void DX11EffecseerManager::ChangeColor(Effekseer::Handle _efkHandle, const DXSimp::Color& _color)
+	void DX11EffekseerManager::ChangeColor(Effekseer::Handle _efkHandle, const DXSimp::Color& _color)
 	{
 		manager->SetAllColor(_efkHandle,
 			{ static_cast<uint8_t>(_color.R() * 255.0f),
@@ -151,7 +154,7 @@ namespace HashiTaku
 			static_cast<uint8_t>(_color.A() * 255.0f) });
 	}
 
-	void DX11EffecseerManager::DestroyVfx(const Effekseer::Handle _deleteHandle)
+	void DX11EffekseerManager::DestroyVfx(const Effekseer::Handle _deleteHandle)
 	{
 		manager->StopEffect(_deleteHandle);
 
@@ -162,23 +165,23 @@ namespace HashiTaku
 			});
 	}
 
-	const Effekseer::ManagerRef& DX11EffecseerManager::GetManager() const
+	const Effekseer::ManagerRef& DX11EffekseerManager::GetManager() const
 	{
 		return manager;
 	}
 
-	DX11EffecseerManager::DX11EffecseerManager() : 
+	DX11EffekseerManager::DX11EffekseerManager() : 
 		pRenderer(nullptr),
 		prevTimeScale(1.0f),
 		isPause(false)
 	{
 	}
 
-	DX11EffecseerManager::~DX11EffecseerManager()
+	DX11EffekseerManager::~DX11EffekseerManager()
 	{
 	}
 
-	void DX11EffecseerManager::UpdateTimeScale()
+	void DX11EffekseerManager::UpdateTimeScale()
 	{
 		// 現在のタイムスケールを取得し、前回と差がないなら更新しない
 		float curTimeScale = InSceneSystemManager::GetInstance()->GetTimeScale();
@@ -194,7 +197,7 @@ namespace HashiTaku
 		}
 	}
 
-	void DX11EffecseerManager::UpdateCheckExist()
+	void DX11EffekseerManager::UpdateCheckExist()
 	{
 		// エフェクトのハンドルリスト
 		auto endItr = playingHandleList.end();
@@ -208,7 +211,7 @@ namespace HashiTaku
 		}
 	}
 
-	void DX11EffecseerManager::UpdateCamMatrix()
+	void DX11EffekseerManager::UpdateCamMatrix()
 	{
 		InSceneSystemManager* pInSceneSystem = InSceneSystemManager::GetInstance();
 
@@ -231,7 +234,7 @@ namespace HashiTaku
 		);
 	}
 
-	void DX11EffecseerManager::CalcLookCameraAngles(const DXSimp::Vector3& _efkPos, DXSimp::Vector3& _outAngles)
+	void DX11EffekseerManager::CalcLookCameraAngles(const DXSimp::Vector3& _efkPos, DXSimp::Vector3& _outAngles)
 	{
 		DXSimp::Vector3 camPos =
 			InSceneSystemManager::GetInstance()->GetMainCamera().GetTransform().GetPosition();
@@ -241,7 +244,7 @@ namespace HashiTaku
 		_outAngles.y = Quat::RotateToVector(vec).ToEuler().y * Mathf::radToDeg;
 	}
 
-	void DX11EffecseerManager::CreateEffekseerMtx(const DXSimp::Matrix& _dxMtx, Effekseer::Matrix44& _outMtx)
+	void DX11EffekseerManager::CreateEffekseerMtx(const DXSimp::Matrix& _dxMtx, Effekseer::Matrix44& _outMtx)
 	{
 		_outMtx.Values[0][0] = _dxMtx._11;
 		_outMtx.Values[0][1] = _dxMtx._12;
@@ -264,7 +267,7 @@ namespace HashiTaku
 		_outMtx.Values[3][3] = _dxMtx._44;
 	}
 
-	Effekseer::Vector3D DX11EffecseerManager::CreateEffekseerVector3(const DXSimp::Vector3& _dxVec3)
+	Effekseer::Vector3D DX11EffekseerManager::CreateEffekseerVector3(const DXSimp::Vector3& _dxVec3)
 	{
 		return Effekseer::Vector3D(_dxVec3.x, _dxVec3.y, _dxVec3.z);
 	}
@@ -273,8 +276,8 @@ namespace HashiTaku
 	{
 		json vfxData;
 
-		if (pHitVfx)
-			vfxData["name"] = pHitVfx->GetAssetName();
+		if (pVfxData)
+			vfxData["name"] = pVfxData->GetAssetName();
 		vfxData["applyColor"] = isApplyColor;
 		if (isApplyColor) SaveJsonVector4("color", effectColor, vfxData);
 		vfxData["lookCam"] = isLookCamera;
@@ -290,7 +293,7 @@ namespace HashiTaku
 		std::string vfxName;
 		if (LoadJsonString("name", vfxName, _data))
 		{
-			pHitVfx = AssetGetter::GetAsset<VisualEffect>(vfxName);
+			pVfxData = AssetGetter::GetAsset<VisualEffect>(vfxName);
 		}
 		if (LoadJsonBoolean("applyColor", isApplyColor, _data))
 		{
@@ -305,17 +308,12 @@ namespace HashiTaku
 	void CreateVfxInfo::ImGuiDebug()
 	{
 #ifdef EDIT
-		if (!ImGuiMethod::TreeNode("Vfx Info")) return;
-
-		// ヒット時エフェクト
-		if (ImGui::Button("Clear"))
-			pHitVfx = nullptr;
 		std::string vfxName = "Null";
-		if (pHitVfx)
-			vfxName = pHitVfx->GetAssetName();
+		if (pVfxData)
+			vfxName = pVfxData->GetAssetName();
 		if (AssetGetter::ImGuiGetCombobox<VisualEffect>("HitVfx", vfxName))
 		{
-			pHitVfx = AssetGetter::GetAsset<VisualEffect>(vfxName);
+			pVfxData = AssetGetter::GetAsset<VisualEffect>(vfxName);
 		}
 
 		// 各パラメータ
@@ -326,8 +324,6 @@ namespace HashiTaku
 		ImGui::DragFloat("Scale", &scale, 0.01f, 0.0f, 1000.0f);
 		ImGui::DragFloat("Speed", &speed, 0.01f, 0.0f, 1000.0f);
 		ImGui::DragInt("StartFrame", &startFrame, 1.0f, 0, 200);
-
-		ImGui::TreePop();
 #endif
 	}
 }

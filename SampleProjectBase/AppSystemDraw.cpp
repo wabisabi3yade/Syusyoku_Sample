@@ -84,7 +84,7 @@ namespace HashiTaku
 #ifdef EDIT
 		if (!ImGuiMethod::TreeNode("VFX")) return;
 
-		bool* isDisplay = &DX11EffecseerManager::GetInstance()->isVfxDisplay;
+		bool* isDisplay = &DX11EffekseerManager::GetInstance()->isVfxDisplay;
 		ImGui::Checkbox("Display VFX", isDisplay);
 
 		ImGui::TreePop();

@@ -18,7 +18,7 @@ namespace HashiTaku
 		InSceneSystemManager* pInSceneSystem;
 
 		/// @brief エフェクトマネジャー
-		DX11EffecseerManager* pEffectManager;
+		DX11EffekseerManager* pEffectManager;
 	public:
 		Scene(const std::string& _name);
 		virtual ~Scene();

@@ -21,7 +21,7 @@ namespace HashiTaku
 
 	void CP_VisualEffect::Init()
 	{
-		pDxVfxManager = DX11EffecseerManager::GetInstance();
+		pDxVfxManager = DX11EffekseerManager::GetInstance();
 	}
 
 	void CP_VisualEffect::SetPlaySpeed(float _playSpeed)

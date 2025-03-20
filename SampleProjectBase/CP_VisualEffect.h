@@ -9,7 +9,7 @@ namespace HashiTaku
 	class CP_VisualEffect : public Component
 	{
 		/// @brief DirectXのエフェクトマネジャー
-		DX11EffecseerManager* pDxVfxManager;
+		DX11EffekseerManager* pDxVfxManager;
 
 		
 

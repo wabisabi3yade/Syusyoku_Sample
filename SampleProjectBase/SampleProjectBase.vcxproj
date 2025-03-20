@@ -277,9 +277,9 @@
     <ClCompile Include="CP_AudioListener.cpp" />
     <ClCompile Include="BattleDirection.cpp" />
     <ClCompile Include="CP_BattleButtonGroup.cpp" />
+    <ClCompile Include="CP_Gage.cpp" />
     <ClCompile Include="CP_MotionBlur.cpp" />
     <ClCompile Include="CP_PlaySound.cpp" />
-    <ClCompile Include="CP_PostEffect.cpp" />
     <ClCompile Include="CP_SoundManager.cpp" />
     <ClCompile Include="CP_StylishUI.cpp" />
     <ClCompile Include="BossAttackInformation.cpp" />
@@ -363,7 +363,6 @@
     <ClCompile Include="PlayerActState_Base.cpp" />
     <ClCompile Include="HashiTaku_Random.cpp" />
     <ClCompile Include="Polygon2D.cpp" />
-    <ClCompile Include="PostEffect.cpp" />
     <ClCompile Include="PS_BackObject.cpp" />
     <ClCompile Include="PS_Ground.cpp" />
     <ClCompile Include="PS_OutLine.cpp" />
@@ -532,9 +531,9 @@
     <ClInclude Include="CP_AudioListener.h" />
     <ClInclude Include="BattleDirection.h" />
     <ClInclude Include="CP_BattleButtonGroup.h" />
+    <ClInclude Include="CP_Gage.h" />
     <ClInclude Include="CP_MotionBlur.h" />
     <ClInclude Include="CP_PlaySound.h" />
-    <ClInclude Include="CP_PostEffect.h" />
     <ClInclude Include="CP_SoundManager.h" />
     <ClInclude Include="CP_StylishUI.h" />
     <ClInclude Include="BossAttackInformation.h" />
@@ -639,7 +638,6 @@
     <ClInclude Include="PlayerActState_Base.h" />
     <ClInclude Include="HashiTaku_Random.h" />
     <ClInclude Include="Polygon2D.h" />
-    <ClInclude Include="PostEffect.h" />
     <ClInclude Include="PS_BackObject.h" />
     <ClInclude Include="PS_Ground.h" />
     <ClInclude Include="PS_OutLine.h" />

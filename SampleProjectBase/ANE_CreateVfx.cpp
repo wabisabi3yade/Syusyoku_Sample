@@ -6,7 +6,7 @@ namespace HashiTaku
 	ANE_CreateVfx::ANE_CreateVfx() : 
 		AnimationNotifyEvent(NotifyType::ANE_CreateVfx),
 		pTransform(nullptr),
-		vfxHandle(DX11EffecseerManager::NONE_VFX_HANDLE),
+		vfxHandle(DX11EffekseerManager::NONE_VFX_HANDLE),
 		isExitDestroy(false)
 	{
 	}
@@ -56,7 +56,7 @@ namespace HashiTaku
 #endif // EDIT
 
 
-		DX11EffecseerManager* pVfxManager = DX11EffecseerManager::GetInstance();
+		DX11EffekseerManager* pVfxManager = DX11EffekseerManager::GetInstance();
 
 		// エフェクトの座標を求める
 		DXSimp::Vector3 createPos =	pTransform->GetPosition();
@@ -69,9 +69,9 @@ namespace HashiTaku
 
 	void ANE_CreateVfx::OnTerminal()
 	{
-		if (isExitDestroy && vfxHandle != DX11EffecseerManager::NONE_VFX_HANDLE)
+		if (isExitDestroy && vfxHandle != DX11EffekseerManager::NONE_VFX_HANDLE)
 		{
-			DX11EffecseerManager::GetInstance()->DestroyVfx(vfxHandle);
+			DX11EffekseerManager::GetInstance()->DestroyVfx(vfxHandle);
 		}
 	}
 
@@ -81,7 +81,11 @@ namespace HashiTaku
 
 		ImGui::Checkbox("ExitDestroy", &isExitDestroy);
 		ImGui::DragFloat3("OffsetPos", &createOffsetPos.x, 0.1f);
-		vfxInfo.ImGuiCall();
+		if (ImGuiMethod::TreeNode("VFX Info"))
+		{
+			vfxInfo.ImGuiCall();
+			ImGui::TreePop();
+		}
 	}
 }
 

@@ -588,7 +588,7 @@ namespace HashiTaku
 
 	VisualEffect* AssetLoader::VFXLoadForEffekseer(const std::string& _pathName, float _loadScale)
 	{
-		DX11EffecseerManager* pEffekseerManager = DX11EffecseerManager::GetInstance();
+		DX11EffekseerManager* pEffekseerManager = DX11EffekseerManager::GetInstance();
 		const auto& manager = pEffekseerManager->GetManager();
 
 		// string¨u16String‚É•ÏŠ·

@@ -26,7 +26,7 @@ namespace HashiTaku
 		std::vector<const CP_RigidBody*> attackedRbs;
 
 		/// @brief エフェクトマネージャー
-		DX11EffecseerManager* pVfxManager;
+		DX11EffekseerManager* pVfxManager;
 
 		/// @brief サウンドマネージャー
 		CP_SoundManager* pSoundManager;
@@ -51,6 +51,9 @@ namespace HashiTaku
 
 		/// @brief 攻撃方向の数
 		u_int attackVectorCnt;
+
+		/// @brief ヒットエフェクトを手前に発生するオフセット距離
+		float hitVfxOffsetPos;
 
 		/// @brief 攻撃判定コリジョン
 		bool isAttackCollision;
@@ -115,6 +118,10 @@ namespace HashiTaku
 
 		/// @brief 攻撃成功したら起こす処理
 		void OnAttackSuccess(const DamageInfo& _damageInfo);
+
+		/// @brief ヒットエフェクトを作成し、再生する
+		/// @param _damageInfo ダメージ情報
+		void CreateHitVfx(const DamageInfo& _damageInfo);
 
 		/// @brief 既に攻撃したかリストに追加
 		/// @param _rb 攻撃済みのRb

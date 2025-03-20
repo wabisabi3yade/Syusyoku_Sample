@@ -33,6 +33,11 @@ namespace HashiTaku
 	{
 		PlayerGroundActionController& actCon = GetGroundController();
 
+		// パラメータリセット
+		prevProgressDistance = 0.0f;
+		curAttackTime = 1;
+
+		// リアタックフラグ取得
 		if (!pIsReAttack)
 			pIsReAttack = GetAnimation()->GetParameterPointer<bool>(REATTACK_PARAMNAME);
 
@@ -61,9 +66,6 @@ namespace HashiTaku
 
 		// 速度0
 		ClearVelocity();
-
-		// パラメータリセット
-		prevProgressDistance = 0.0f;
 	}
 
 	void PlayerAttackState::UpdateBehavior()

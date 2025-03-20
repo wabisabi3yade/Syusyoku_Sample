@@ -542,12 +542,9 @@ namespace HashiTaku
 		// モーションブラー
 		ApplyMotionBlur();
 
-		// スクリーンに描画
+		// スクリーンに四角形を描画
 		SetBaseRenderTarget();
-
 		SetBlendState(BlendState::BlendStateType::None);
-
-		// 描画する
 		pDeviceContext->IASetPrimitiveTopology(pDrawRTMesh->GetTopology());
 
 		// バッファをGPUに送る

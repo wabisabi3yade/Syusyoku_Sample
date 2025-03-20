@@ -67,7 +67,7 @@ namespace HashiTaku
 		pInSceneManager->SetTimeScale(0.0f);
 
 		// エフェクトを停止させる
-		DX11EffecseerManager::GetInstance()->SetPause(true);
+		DX11EffekseerManager::GetInstance()->SetPause(true);
 
 		// ポーズ中のボタンを表示
 		if (pPoseButtons)
@@ -87,7 +87,7 @@ namespace HashiTaku
 		pInSceneManager->SetTimeScale(1.0f);
 
 		// エフェクトを停止させる
-		DX11EffecseerManager::GetInstance()->SetPause(false);
+		DX11EffekseerManager::GetInstance()->SetPause(false);
 
 		// ポーズ中のボタンを非表示
 		if (pPoseButtons)

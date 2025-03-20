@@ -123,15 +123,6 @@
     <Filter Include="ソース ファイル\Scene\InSceneSystem">
       <UniqueIdentifier>{b54ce796-f7aa-42ab-a133-8a4a2882bec4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\Renderer">
-      <UniqueIdentifier>{c8d276b6-693f-456b-b610-b6732ac7bc87}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\Renderer\Sprite">
-      <UniqueIdentifier>{30886fe2-c05e-43c7-aa35-50c3cfd6e5e7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\Renderer\Mesh">
-      <UniqueIdentifier>{d2c3155c-bdfb-4186-b232-b76b637eab9b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\Sprite">
       <UniqueIdentifier>{1a41ed64-d240-4aa2-994b-29cad816077b}</UniqueIdentifier>
     </Filter>
@@ -167,9 +158,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Buffer\Interface">
       <UniqueIdentifier>{e51dfb6c-9168-4783-bdb0-0997e7af955a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\Renderer\Base">
-      <UniqueIdentifier>{e042d57d-0041-48e4-9ab9-365bdbd9bde3}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Mesh\Sphere">
       <UniqueIdentifier>{5268db00-a05b-40ef-8ccc-481a51095ac4}</UniqueIdentifier>
@@ -478,15 +466,6 @@
     <Filter Include="ソース ファイル\Graphics\Mesh\2D">
       <UniqueIdentifier>{1d7ee4ec-717a-42b7-90ae-b3101ba64030}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\UI">
-      <UniqueIdentifier>{c0288711-4bcc-43c4-b00d-d0e2dd11c2d9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\UI\Renderer">
-      <UniqueIdentifier>{da3fbc61-0f64-450e-8914-6fb9e62fe7f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\UI\Slider">
-      <UniqueIdentifier>{259f007e-cc8f-4406-9da3-c91615ee613c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Method\StateMachine">
       <UniqueIdentifier>{42bff392-568b-45c2-b400-a40f82d130f4}</UniqueIdentifier>
     </Filter>
@@ -603,9 +582,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Component\VFX">
       <UniqueIdentifier>{2b7b1691-01e0-4ebc-84ac-89c7898f3ff0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\OutLine">
-      <UniqueIdentifier>{c2248bd5-6fe0-412b-b7b0-c41baaf6391f}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Component\HitStopManager">
       <UniqueIdentifier>{63249c5d-525d-4d54-ad72-f133c036bb9f}</UniqueIdentifier>
@@ -847,9 +823,6 @@
     <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\BreakEndKnock">
       <UniqueIdentifier>{922b5564-1ad2-47a7-91cf-4f4a9df35690}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\UI\Fade">
-      <UniqueIdentifier>{392f792b-0e3e-4e36-8adb-a11e4154b468}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\JumpAttack">
       <UniqueIdentifier>{895815e6-92fc-4e24-9814-1d2538ab20f5}</UniqueIdentifier>
     </Filter>
@@ -946,9 +919,6 @@
     <Filter Include="ソース ファイル\InGame\Camera\State\Win">
       <UniqueIdentifier>{8c1370c5-082e-4025-9064-248e134ce895}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\UI\StylishUI">
-      <UniqueIdentifier>{b69f3f67-7a0b-4d29-998b-42cc58938235}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\Guard\IParryAccepter">
       <UniqueIdentifier>{0adb4bf9-0d25-49b7-b3b3-c7a74dff87b6}</UniqueIdentifier>
     </Filter>
@@ -973,11 +943,47 @@
     <Filter Include="ソース ファイル\Graphics\Blur">
       <UniqueIdentifier>{a5a90e89-cd05-4ffd-bac9-47dd9e8fc25b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics\PostEffect">
-      <UniqueIdentifier>{5a8dc328-8a0b-4273-afbc-5c73bafa4f57}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\RenderTargetCollection">
       <UniqueIdentifier>{8ce4873f-0e49-4076-afba-8e5b54e0729d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics">
+      <UniqueIdentifier>{2a21bc8c-19b8-41f7-b197-79e18aca473a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\OutLine">
+      <UniqueIdentifier>{c2248bd5-6fe0-412b-b7b0-c41baaf6391f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\Renderer">
+      <UniqueIdentifier>{c8d276b6-693f-456b-b610-b6732ac7bc87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\Renderer\Sprite">
+      <UniqueIdentifier>{30886fe2-c05e-43c7-aa35-50c3cfd6e5e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\Renderer\Mesh">
+      <UniqueIdentifier>{d2c3155c-bdfb-4186-b232-b76b637eab9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\Renderer\Base">
+      <UniqueIdentifier>{e042d57d-0041-48e4-9ab9-365bdbd9bde3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\UI">
+      <UniqueIdentifier>{c0288711-4bcc-43c4-b00d-d0e2dd11c2d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\UI\Renderer">
+      <UniqueIdentifier>{da3fbc61-0f64-450e-8914-6fb9e62fe7f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\UI\Slider">
+      <UniqueIdentifier>{259f007e-cc8f-4406-9da3-c91615ee613c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\UI\Fade">
+      <UniqueIdentifier>{392f792b-0e3e-4e36-8adb-a11e4154b468}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\UI\StylishUI">
+      <UniqueIdentifier>{b69f3f67-7a0b-4d29-998b-42cc58938235}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\MotionBlur">
+      <UniqueIdentifier>{a6cf48c8-a2b6-48a5-8fc0-ca1916dc697f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\UI\Gage">
+      <UniqueIdentifier>{e1ec5106-6fe4-45d7-983a-41e0306eef62}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1227,10 +1233,10 @@
       <Filter>ソース ファイル\Component\Collider\Sphere</Filter>
     </ClCompile>
     <ClCompile Include="CP_SpriteRenderer.cpp">
-      <Filter>ソース ファイル\Component\Renderer\Sprite</Filter>
+      <Filter>ソース ファイル\Component\Graphics\Renderer\Sprite</Filter>
     </ClCompile>
     <ClCompile Include="CP_MeshRenderer.cpp">
-      <Filter>ソース ファイル\Component\Renderer\Mesh</Filter>
+      <Filter>ソース ファイル\Component\Graphics\Renderer\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>ソース ファイル\Graphics\Sprite</Filter>
@@ -1278,7 +1284,7 @@
       <Filter>ソース ファイル\Graphics\Buffer\Index</Filter>
     </ClCompile>
     <ClCompile Include="CP_Renderer.cpp">
-      <Filter>ソース ファイル\Component\Renderer\Base</Filter>
+      <Filter>ソース ファイル\Component\Graphics\Renderer\Base</Filter>
     </ClCompile>
     <ClCompile Include="PlaneMesh.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\Plane</Filter>
@@ -1521,7 +1527,7 @@
       <Filter>ソース ファイル\Graphics\Mesh\2D</Filter>
     </ClCompile>
     <ClCompile Include="CP_UIRenderer.cpp">
-      <Filter>ソース ファイル\Component\UI\Renderer</Filter>
+      <Filter>ソース ファイル\Component\Graphics\UI\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="AnimationNotifyEvent.cpp">
       <Filter>ソース ファイル\Animation\AnimationNotify\Event\Base</Filter>
@@ -1533,7 +1539,7 @@
       <Filter>ソース ファイル\Animation\AnimationNotify\State\ChangeParameter</Filter>
     </ClCompile>
     <ClCompile Include="CP_UISlider.cpp">
-      <Filter>ソース ファイル\Component\UI\Slider</Filter>
+      <Filter>ソース ファイル\Component\Graphics\UI\Slider</Filter>
     </ClCompile>
     <ClCompile Include="ChangeAnimObserver.cpp">
       <Filter>ソース ファイル\Animation\AnimationObserver\ChangeAnimObserver</Filter>
@@ -1632,7 +1638,7 @@
       <Filter>ソース ファイル\Component\VFX</Filter>
     </ClCompile>
     <ClCompile Include="CP_OutLineRenderer.cpp">
-      <Filter>ソース ファイル\Component\OutLine</Filter>
+      <Filter>ソース ファイル\Component\Graphics\OutLine</Filter>
     </ClCompile>
     <ClCompile Include="ITargetAccepter.cpp">
       <Filter>ソース ファイル\InGame\ITargeter</Filter>
@@ -1710,7 +1716,7 @@
       <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\JumpAttack</Filter>
     </ClCompile>
     <ClCompile Include="CP_Fade.cpp">
-      <Filter>ソース ファイル\Component\UI\Fade</Filter>
+      <Filter>ソース ファイル\Component\Graphics\UI\Fade</Filter>
     </ClCompile>
     <ClCompile Include="PlayerAttackInformation.cpp">
       <Filter>ソース ファイル\InGame\Attack\Information\Player</Filter>
@@ -1791,7 +1797,7 @@
       <Filter>ソース ファイル\InGame\Camera\State\Win</Filter>
     </ClCompile>
     <ClCompile Include="CP_StylishUI.cpp">
-      <Filter>ソース ファイル\Component\UI\StylishUI</Filter>
+      <Filter>ソース ファイル\Component\Graphics\UI\StylishUI</Filter>
     </ClCompile>
     <ClCompile Include="ANE_PlaySound.cpp">
       <Filter>ソース ファイル\Animation\AnimationNotify\Event\Sound</Filter>
@@ -1808,22 +1814,19 @@
     <ClCompile Include="PlayerSlashHigh.cpp">
       <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\SlashHigh</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerAirSlashHigh.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="PostEffect.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="CP_MotionBlur.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CP_PostEffect.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderTargetCollection.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Component\Graphics\MotionBlur</Filter>
     </ClCompile>
     <ClCompile Include="GausianBlur.cpp">
+      <Filter>ソース ファイル\Graphics\Blur</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAirSlashHigh.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Air\AirSlashHigh</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTargetCollection.cpp">
+      <Filter>ソース ファイル\Graphics\RenderTargetCollection</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Gage.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1994,10 +1997,10 @@
       <Filter>ソース ファイル\Component\Collider\Sphere</Filter>
     </ClInclude>
     <ClInclude Include="CP_SpriteRenderer.h">
-      <Filter>ソース ファイル\Component\Renderer\Sprite</Filter>
+      <Filter>ソース ファイル\Component\Graphics\Renderer\Sprite</Filter>
     </ClInclude>
     <ClInclude Include="CP_MeshRenderer.h">
-      <Filter>ソース ファイル\Component\Renderer\Mesh</Filter>
+      <Filter>ソース ファイル\Component\Graphics\Renderer\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Sprite.h">
       <Filter>ソース ファイル\Graphics\Sprite</Filter>
@@ -2051,7 +2054,7 @@
       <Filter>ソース ファイル\Asset\Set</Filter>
     </ClInclude>
     <ClInclude Include="CP_Renderer.h">
-      <Filter>ソース ファイル\Component\Renderer\Base</Filter>
+      <Filter>ソース ファイル\Component\Graphics\Renderer\Base</Filter>
     </ClInclude>
     <ClInclude Include="PlaneMesh.h">
       <Filter>ソース ファイル\Graphics\Mesh\Plane</Filter>
@@ -2351,7 +2354,7 @@
       <Filter>ソース ファイル\Graphics\Mesh\2D</Filter>
     </ClInclude>
     <ClInclude Include="CP_UIRenderer.h">
-      <Filter>ソース ファイル\Component\UI\Renderer</Filter>
+      <Filter>ソース ファイル\Component\Graphics\UI\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="AnimationNotifyEvent.h">
       <Filter>ソース ファイル\Animation\AnimationNotify\Event\Base</Filter>
@@ -2369,7 +2372,7 @@
       <Filter>ソース ファイル\Animation\AnimationNotify\IAnimParametersSetter</Filter>
     </ClInclude>
     <ClInclude Include="CP_UISlider.h">
-      <Filter>ソース ファイル\Component\UI\Slider</Filter>
+      <Filter>ソース ファイル\Component\Graphics\UI\Slider</Filter>
     </ClInclude>
     <ClInclude Include="ChangeAnimObserver.h">
       <Filter>ソース ファイル\Animation\AnimationObserver\ChangeAnimObserver</Filter>
@@ -2474,7 +2477,7 @@
       <Filter>ソース ファイル\Component\VFX</Filter>
     </ClInclude>
     <ClInclude Include="CP_OutLineRenderer.h">
-      <Filter>ソース ファイル\Component\OutLine</Filter>
+      <Filter>ソース ファイル\Component\Graphics\OutLine</Filter>
     </ClInclude>
     <ClInclude Include="ITargetAccepter.h">
       <Filter>ソース ファイル\InGame\ITargeter</Filter>
@@ -2558,7 +2561,7 @@
       <Filter>ソース ファイル\Component\ButtonGroup\Title</Filter>
     </ClInclude>
     <ClInclude Include="CP_Fade.h">
-      <Filter>ソース ファイル\Component\UI\Fade</Filter>
+      <Filter>ソース ファイル\Component\Graphics\UI\Fade</Filter>
     </ClInclude>
     <ClInclude Include="PlayerAttackInformation.h">
       <Filter>ソース ファイル\InGame\Attack\Information\Player</Filter>
@@ -2588,7 +2591,7 @@
       <Filter>ソース ファイル\Component\GroundChecker</Filter>
     </ClInclude>
     <ClInclude Include="IUISlider.h">
-      <Filter>ソース ファイル\Component\UI\Slider</Filter>
+      <Filter>ソース ファイル\Component\Graphics\UI\Slider</Filter>
     </ClInclude>
     <ClInclude Include="PlayerGroundChargeAttack.h">
       <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\ChargeAttack</Filter>
@@ -2627,7 +2630,7 @@
       <Filter>ソース ファイル\Graphics\Shadow</Filter>
     </ClInclude>
     <ClInclude Include="IApplyDepthShadow.h">
-      <Filter>ソース ファイル\Component\Renderer</Filter>
+      <Filter>ソース ファイル\Component\Graphics\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="VS_Ground.h">
       <Filter>ソース ファイル\Graphics\Shader\Vertex\Ground</Filter>
@@ -2651,7 +2654,7 @@
       <Filter>ソース ファイル\InGame\Camera\State\Win</Filter>
     </ClInclude>
     <ClInclude Include="CP_StylishUI.h">
-      <Filter>ソース ファイル\Component\UI\StylishUI</Filter>
+      <Filter>ソース ファイル\Component\Graphics\UI\StylishUI</Filter>
     </ClInclude>
     <ClInclude Include="IBoneSupplier.h">
       <Filter>ソース ファイル\Component\Animation\IBoneBufferSupplier</Filter>
@@ -2680,22 +2683,19 @@
     <ClInclude Include="PlayerSlashHigh.h">
       <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\SlashHigh</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerAirSlashHigh.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="PostEffect.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="CP_MotionBlur.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CP_PostEffect.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderTargetCollection.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Component\Graphics\MotionBlur</Filter>
     </ClInclude>
     <ClInclude Include="GausianBlur.h">
+      <Filter>ソース ファイル\Graphics\Blur</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAirSlashHigh.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Air\AirSlashHigh</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTargetCollection.h">
+      <Filter>ソース ファイル\Graphics\RenderTargetCollection</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Gage.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
