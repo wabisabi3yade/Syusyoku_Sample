@@ -51,6 +51,10 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
+                                "materials": [
+                                    "M_Pillar"
+                                ],
                                 "meshName": "Pillar1.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -86,6 +90,20 @@
                                 "name": "CylinderCollider",
                                 "priority": 0,
                                 "radius": 1.059999942779541
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "ditherOffset": 3.0,
+                                "ditherPower": 0.4000000059604645,
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.07000000029802322
                             }
                         ],
                         "layer": 0,
@@ -163,6 +181,10 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
+                                "materials": [
+                                    "M_Pillar"
+                                ],
                                 "meshName": "Pillar1.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -198,6 +220,20 @@
                                 "mass": 0.0,
                                 "name": "RigidBody",
                                 "priority": 0
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "ditherOffset": 3.0,
+                                "ditherPower": 0.4000000059604645,
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.07000000029802322
                             }
                         ],
                         "layer": 0,
@@ -275,6 +311,10 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
+                                "materials": [
+                                    "M_Pillar"
+                                ],
                                 "meshName": "Pillar1.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -310,6 +350,20 @@
                                 "name": "CylinderCollider",
                                 "priority": 0,
                                 "radius": 1.059999942779541
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "ditherOffset": 3.0,
+                                "ditherPower": 0.4000000059604645,
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.07000000029802322
                             }
                         ],
                         "layer": 0,
@@ -387,6 +441,10 @@
                         "components": [
                             {
                                 "enable": true,
+                                "isShadow": true,
+                                "materials": [
+                                    "M_Pillar"
+                                ],
                                 "meshName": "Pillar1.fbx",
                                 "name": "MeshRenderer",
                                 "priority": 0
@@ -409,7 +467,7 @@
                                 "radius": 1.059999942779541
                             },
                             {
-                                "enable": true,
+                                "enable": false,
                                 "friction": 0.0,
                                 "isAwake": false,
                                 "isFreezeRot": [
@@ -422,6 +480,20 @@
                                 "mass": 0.0,
                                 "name": "RigidBody",
                                 "priority": 0
+                            },
+                            {
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "ditherOffset": 3.0,
+                                "ditherPower": 0.4000000059604645,
+                                "enable": true,
+                                "name": "OutLineRenderer",
+                                "priority": 0,
+                                "scale": 0.07000000029802322
                             }
                         ],
                         "layer": 0,
@@ -477,7 +549,7 @@
                     },
                     {
                         "enable": true,
-                        "friction": 20.0,
+                        "friction": 8.0,
                         "isAwake": false,
                         "isFreezeRot": [
                             false,
@@ -491,6 +563,9 @@
                         "priority": 0
                     },
                     {
+                        "alpha": 1.0,
+                        "drawPSName": "PS_Ground",
+                        "drawVSName": "VS_Ground",
                         "enable": true,
                         "name": "SpriteRenderer",
                         "priority": 0,
@@ -546,6 +621,7 @@
                 "active": true,
                 "components": [
                     {
+                        "alpha": 1.0,
                         "enable": true,
                         "name": "SpriteRenderer",
                         "priority": 0,
@@ -596,6 +672,7 @@
                 "active": true,
                 "components": [
                     {
+                        "alpha": 1.0,
                         "enable": true,
                         "name": "SpriteRenderer",
                         "priority": 0,
@@ -646,6 +723,7 @@
                 "active": true,
                 "components": [
                     {
+                        "alpha": 1.0,
                         "enable": true,
                         "name": "SpriteRenderer",
                         "priority": 0,
@@ -696,6 +774,7 @@
                 "active": true,
                 "components": [
                     {
+                        "alpha": 1.0,
                         "enable": true,
                         "name": "SpriteRenderer",
                         "priority": 0,
@@ -746,6 +825,7 @@
                 "active": true,
                 "components": [
                     {
+                        "alpha": 1.0,
                         "enable": true,
                         "name": "SpriteRenderer",
                         "priority": 0,
@@ -796,6 +876,7 @@
                 "active": true,
                 "components": [
                     {
+                        "alpha": 1.0,
                         "enable": true,
                         "name": "SpriteRenderer",
                         "priority": 0,
@@ -846,6 +927,7 @@
                 "active": true,
                 "components": [
                     {
+                        "alpha": 1.0,
                         "enable": true,
                         "name": "SpriteRenderer",
                         "priority": 0,
@@ -896,6 +978,7 @@
                 "active": true,
                 "components": [
                     {
+                        "alpha": 1.0,
                         "enable": true,
                         "name": "SpriteRenderer",
                         "priority": 0,
@@ -939,648 +1022,6 @@
                     ]
                 }
             }
-        },
-        {
-            "childs": [
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "meshName": "desertRock15.fbx",
-                                "name": "MeshRenderer",
-                                "priority": 0
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Rock6",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                -25.600000381469727,
-                                -0.4000000059604645,
-                                -16.799999237060547
-                            ],
-                            "rotation": [
-                                -0.11866487562656403,
-                                0.517413854598999,
-                                0.07271794974803925,
-                                0.8443421721458435
-                            ],
-                            "scale": [
-                                5.000004291534424,
-                                8.100000381469727,
-                                2.3000025749206543
-                            ]
-                        }
-                    }
-                },
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "meshName": "desertRock11.fbx",
-                                "name": "MeshRenderer",
-                                "priority": 0
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Rock7",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                -30.600000381469727,
-                                -3.0,
-                                17.399999618530273
-                            ],
-                            "rotation": [
-                                0.24039505422115326,
-                                0.6135275363922119,
-                                0.029180696234107018,
-                                0.7516266703605652
-                            ],
-                            "scale": [
-                                12.600006103515625,
-                                10.300000190734863,
-                                8.200004577636719
-                            ]
-                        }
-                    }
-                },
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "meshName": "desertRock11.fbx",
-                                "name": "MeshRenderer",
-                                "priority": 0
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Rock9",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                -35.79999923706055,
-                                -0.8999999761581421,
-                                -0.20000000298023224
-                            ],
-                            "rotation": [
-                                -0.2714499235153198,
-                                0.16692157089710236,
-                                0.047863997519016266,
-                                0.9466578960418701
-                            ],
-                            "scale": [
-                                12.399998664855957,
-                                14.699999809265137,
-                                14.40000057220459
-                            ]
-                        }
-                    }
-                }
-            ],
-            "gameObject": {
-                "active": true,
-                "components": null,
-                "layer": 0,
-                "name": "LeftWall",
-                "tag": 0,
-                "transform": {
-                    "child": [
-                        "Rock6",
-                        "Rock7",
-                        "Rock9"
-                    ],
-                    "pos": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": [
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "meshName": "desertRock11.fbx",
-                                "name": "MeshRenderer",
-                                "priority": 0
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Rock1",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                1.899999976158142,
-                                1.2999999523162842,
-                                -26.700000762939453
-                            ],
-                            "rotation": [
-                                -0.07787430286407471,
-                                -0.009561765007674694,
-                                -0.12149371206760406,
-                                0.9894864559173584
-                            ],
-                            "scale": [
-                                4.999999523162842,
-                                20.0,
-                                4.999999523162842
-                            ]
-                        }
-                    }
-                },
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "meshName": "desertRock15.fbx",
-                                "name": "MeshRenderer",
-                                "priority": 0
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Rock5",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                16.799999237060547,
-                                -0.20000000298023224,
-                                -26.30000114440918
-                            ],
-                            "rotation": [
-                                -0.10188014060258865,
-                                -0.024923162534832954,
-                                -0.15647269785404205,
-                                0.9820975661277771
-                            ],
-                            "scale": [
-                                9.40000057220459,
-                                11.899999618530273,
-                                2.9999992847442627
-                            ]
-                        }
-                    }
-                },
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "meshName": "desertRock15.fbx",
-                                "name": "MeshRenderer",
-                                "priority": 0
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Rock4",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                -15.100000381469727,
-                                -0.4000000059604645,
-                                -35.099998474121094
-                            ],
-                            "rotation": [
-                                -0.0,
-                                -0.6494482755661011,
-                                -0.0,
-                                0.7604057192802429
-                            ],
-                            "scale": [
-                                9.0,
-                                10.399999618530273,
-                                15.00000286102295
-                            ]
-                        }
-                    }
-                }
-            ],
-            "gameObject": {
-                "active": true,
-                "components": null,
-                "layer": 0,
-                "name": "BackWall",
-                "tag": 0,
-                "transform": {
-                    "child": [
-                        "Rock1",
-                        "Rock5",
-                        "Rock4"
-                    ],
-                    "pos": [
-                        0.0,
-                        0.0,
-                        1.899999976158142
-                    ],
-                    "rotation": [
-                        -0.0,
-                        0.0,
-                        -0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": [
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "meshName": "desertRock11.fbx",
-                                "name": "MeshRenderer",
-                                "priority": 0
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Rock3",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                30.700000762939453,
-                                -0.05000000074505806,
-                                -0.699999988079071
-                            ],
-                            "rotation": [
-                                0.4848098158836365,
-                                0.0,
-                                -0.0,
-                                0.8746196031570435
-                            ],
-                            "scale": [
-                                7.199999809265137,
-                                14.0,
-                                8.300000190734863
-                            ]
-                        }
-                    }
-                },
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "meshName": "desertRock15.fbx",
-                                "name": "MeshRenderer",
-                                "priority": 0
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Rock2",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                27.700000762939453,
-                                -1.5,
-                                18.700000762939453
-                            ],
-                            "rotation": [
-                                -0.20636215806007385,
-                                -0.1192064955830574,
-                                -0.02533813565969467,
-                                0.9708565473556519
-                            ],
-                            "scale": [
-                                3.4000000953674316,
-                                10.199999809265137,
-                                7.5
-                            ]
-                        }
-                    }
-                },
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "meshName": "desertRock11.fbx",
-                                "name": "MeshRenderer",
-                                "priority": 0
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Rock",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                30.0,
-                                -2.9000000953674316,
-                                -15.399999618530273
-                            ],
-                            "rotation": [
-                                0.3906514346599579,
-                                0.8230807185173035,
-                                -0.29094767570495605,
-                                0.2920258045196533
-                            ],
-                            "scale": [
-                                9.999999046325684,
-                                12.800000190734863,
-                                7.999997615814209
-                            ]
-                        }
-                    }
-                },
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "meshName": "desertRock15.fbx",
-                                "name": "MeshRenderer",
-                                "priority": 0
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Rock12",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                32.0,
-                                -0.699999988079071,
-                                -7.900000095367432
-                            ],
-                            "rotation": [
-                                -0.0,
-                                0.0,
-                                -0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                6.599999904632568,
-                                7.5,
-                                3.0
-                            ]
-                        }
-                    }
-                }
-            ],
-            "gameObject": {
-                "active": true,
-                "components": null,
-                "layer": 0,
-                "name": "RightWall",
-                "tag": 0,
-                "transform": {
-                    "child": [
-                        "Rock3",
-                        "Rock2",
-                        "Rock",
-                        "Rock12"
-                    ],
-                    "pos": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            }
-        },
-        {
-            "childs": [
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "meshName": "desertRock15.fbx",
-                                "name": "MeshRenderer",
-                                "priority": 0
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Rock8",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                -23.600000381469727,
-                                0.0,
-                                33.0
-                            ],
-                            "rotation": [
-                                0.18976379930973053,
-                                0.9762497544288635,
-                                0.01994485966861248,
-                                0.10260733217000961
-                            ],
-                            "scale": [
-                                7.999997138977051,
-                                11.199999809265137,
-                                7.999987602233887
-                            ]
-                        }
-                    }
-                },
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "meshName": "desertRock11.fbx",
-                                "name": "MeshRenderer",
-                                "priority": 0
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Rock10",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                2.5999999046325684,
-                                0.0,
-                                26.200000762939453
-                            ],
-                            "rotation": [
-                                0.5000002384185791,
-                                0.0,
-                                -0.0,
-                                0.8660252690315247
-                            ],
-                            "scale": [
-                                6.0,
-                                10.699999809265137,
-                                6.000000476837158
-                            ]
-                        }
-                    }
-                },
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "meshName": "desertRock15.fbx",
-                                "name": "MeshRenderer",
-                                "priority": 0
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Rock11",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                17.0,
-                                0.0,
-                                27.899999618530273
-                            ],
-                            "rotation": [
-                                -0.0,
-                                0.0,
-                                -0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                5.900000095367432,
-                                20.0,
-                                4.800000190734863
-                            ]
-                        }
-                    }
-                },
-                {
-                    "childs": null,
-                    "gameObject": {
-                        "active": true,
-                        "components": [
-                            {
-                                "enable": true,
-                                "meshName": "desertRock11.fbx",
-                                "name": "MeshRenderer",
-                                "priority": 0
-                            }
-                        ],
-                        "layer": 0,
-                        "name": "Rock13",
-                        "tag": 0,
-                        "transform": {
-                            "child": null,
-                            "pos": [
-                                -7.300000190734863,
-                                0.30000001192092896,
-                                25.600000381469727
-                            ],
-                            "rotation": [
-                                -0.0,
-                                0.0,
-                                -0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                4.800000190734863,
-                                9.0,
-                                4.800000190734863
-                            ]
-                        }
-                    }
-                }
-            ],
-            "gameObject": {
-                "active": true,
-                "components": null,
-                "layer": 0,
-                "name": "FrontWall",
-                "tag": 0,
-                "transform": {
-                    "child": [
-                        "Rock8",
-                        "Rock10",
-                        "Rock11",
-                        "Rock13"
-                    ],
-                    "pos": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            }
         }
     ],
     "gameObject": {
@@ -1599,11 +1040,7 @@
                 "Ground6",
                 "Ground5",
                 "Ground8",
-                "Ground7",
-                "LeftWall",
-                "BackWall",
-                "RightWall",
-                "FrontWall"
+                "Ground7"
             ],
             "pos": [
                 0.0,

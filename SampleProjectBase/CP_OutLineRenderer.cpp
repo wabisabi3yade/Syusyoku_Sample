@@ -14,8 +14,11 @@ namespace HashiTaku
 	constexpr auto ANIMVS_NAME = "VS_OutLineAnimation";
 	constexpr auto PS_NAME = "PS_OutLine";
 
-	CP_OutLineRenderer::CP_OutLineRenderer()
-		: pUseVetrexShader(nullptr), pRenderMesh(nullptr), pBoneBuffer(nullptr)
+	CP_OutLineRenderer::CP_OutLineRenderer() : 
+		pUseVetrexShader(nullptr), 
+		pRenderMesh(nullptr),
+		pMeshRenderer(nullptr),
+		pBoneBuffer(nullptr)
 	{
 	}
 
@@ -47,8 +50,10 @@ namespace HashiTaku
 
 	void CP_OutLineRenderer::Start()
 	{
+		// メッシュを取得
 		GetRenderMesh();
 
+		// 使うシェーダーを取得
 		SetUseShader();
 	}
 

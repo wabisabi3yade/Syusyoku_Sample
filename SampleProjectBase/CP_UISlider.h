@@ -48,6 +48,10 @@ namespace HashiTaku
 		/// @param _minVal Å¬’l
 		void SetMinValue(float _minVal);
 
+		/// @brief Œ»İ‚Ì’l‚ğæ“¾
+		/// @return Œ»İ’l
+		float GetCurentValue() const;
+
 		json Save() override;
 		void Load(const json& _data) override;
 

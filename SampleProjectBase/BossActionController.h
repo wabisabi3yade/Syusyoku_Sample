@@ -65,9 +65,6 @@ namespace HashiTaku
 		void OnDamage(AttackInformation& _atkInfo,
 			bool* _pAcceptDamage = nullptr) override;
 
-		/// @brief デバッグ描画
-		void DebugDisplay() override;
-
 		/// @brief 乱数で距離のステートを取得
 		/// @param _actDistance 距離
 		/// @return ボスのステート
@@ -145,6 +142,9 @@ namespace HashiTaku
 		/// @param _stateName　状態名
 		/// @return 状態のID
 		int GetStateId(const std::string& _stateName) override;
+
+		/// @brief デバッグ描画
+		void DebugDisplay() override;
 
 		void ImGuiDebug() override;
 	};

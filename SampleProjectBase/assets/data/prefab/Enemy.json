@@ -26,9 +26,9 @@
                                         ],
                                         "ditherOffset": 0.0,
                                         "ditherPower": 1.0,
-                                        "enable": true,
+                                        "enable": false,
                                         "name": "OutLineRenderer",
-                                        "priority": 0,
+                                        "priority": -1,
                                         "scale": 0.019999999552965164
                                     }
                                 ],
@@ -38,20 +38,20 @@
                                 "transform": {
                                     "child": null,
                                     "pos": [
-                                        0.6579986810684204,
-                                        -0.11001741886138916,
-                                        7.689998149871826
+                                        0.6579988598823547,
+                                        -0.2100173979997635,
+                                        7.689999103546143
                                     ],
                                     "rotation": [
                                         -0.600812554359436,
                                         0.7962931990623474,
-                                        -0.05046877637505531,
-                                        -0.04893164336681366
+                                        -0.05046878755092621,
+                                        -0.04893165081739426
                                     ],
                                     "scale": [
                                         1.680000901222229,
-                                        1.6799989938735962,
-                                        1.680000901222229
+                                        1.6799992322921753,
+                                        1.6800007820129395
                                     ]
                                 }
                             }
@@ -97,7 +97,13 @@
                                     2
                                 ],
                                 "enable": true,
+                                "hitVfxOffset": 0.0,
                                 "isDebugDisplay": false,
+                                "measAtkOffset": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
                                 "name": "Weapon",
                                 "priority": 0
                             }
@@ -111,19 +117,19 @@
                             ],
                             "pos": [
                                 0.6580001711845398,
-                                -0.11001275479793549,
+                                -0.21001280844211578,
                                 7.689997673034668
                             ],
                             "rotation": [
-                                -0.600812554359436,
-                                0.7962931394577026,
-                                -0.05046877637505531,
-                                -0.048931777477264404
+                                -0.6008126139640808,
+                                0.7962931990623474,
+                                -0.050468772649765015,
+                                -0.0489317812025547
                             ],
                             "scale": [
-                                1.4000006914138794,
-                                1.4000000953674316,
-                                1.400000810623169
+                                1.400001049041748,
+                                1.4000004529953003,
+                                1.4000014066696167
                             ]
                         }
                     }
@@ -147,8 +153,8 @@
                         "Boss_Weapon"
                     ],
                     "pos": [
-                        0.7000004649162292,
-                        -0.3200095593929291,
+                        0.700000524520874,
+                        -0.4200096130371094,
                         7.619998931884766
                     ],
                     "rotation": [
@@ -262,6 +268,11 @@
                                 "atkInfos": [
                                     {
                                         "addBreakOnParry": 2.5,
+                                        "attackVector": [
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
                                         "damage": 1.0,
                                         "hitSE": {
                                             "loop": false,
@@ -270,19 +281,18 @@
                                             "useListener": true,
                                             "volume": 0.27000001072883606
                                         },
-                                        "hitVfx": {
-                                            "applyColor": false,
-                                            "lookCam": false,
-                                            "scale": 1.0,
-                                            "speed": 1.0,
-                                            "startFrame": 0
-                                        },
+                                        "hitVfxDatas": null,
                                         "isCamShake": false,
                                         "isStunOnParry": false,
                                         "level": 0
                                     },
                                     {
                                         "addBreakOnParry": 2.5,
+                                        "attackVector": [
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
                                         "damage": 2.0999999046325684,
                                         "hitSE": {
                                             "loop": false,
@@ -291,19 +301,18 @@
                                             "useListener": true,
                                             "volume": 0.27000001072883606
                                         },
-                                        "hitVfx": {
-                                            "applyColor": false,
-                                            "lookCam": false,
-                                            "scale": 1.0,
-                                            "speed": 1.0,
-                                            "startFrame": 0
-                                        },
+                                        "hitVfxDatas": null,
                                         "isCamShake": false,
                                         "isStunOnParry": false,
                                         "level": 0
                                     },
                                     {
                                         "addBreakOnParry": 5.0,
+                                        "attackVector": [
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
                                         "camShake": {
                                             "fadeOut": true,
                                             "power": 2.0,
@@ -323,13 +332,7 @@
                                             "useListener": true,
                                             "volume": 0.27000001072883606
                                         },
-                                        "hitVfx": {
-                                            "applyColor": false,
-                                            "lookCam": false,
-                                            "scale": 1.0,
-                                            "speed": 1.0,
-                                            "startFrame": 0
-                                        },
+                                        "hitVfxDatas": null,
                                         "isCamShake": true,
                                         "isStunOnParry": true,
                                         "level": 2
@@ -519,6 +522,11 @@
                                 "atkInfos": [
                                     {
                                         "addBreakOnParry": 3.0,
+                                        "attackVector": [
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
                                         "damage": 3.0,
                                         "hitSE": {
                                             "loop": false,
@@ -527,19 +535,18 @@
                                             "useListener": true,
                                             "volume": 0.27000001072883606
                                         },
-                                        "hitVfx": {
-                                            "applyColor": false,
-                                            "lookCam": false,
-                                            "scale": 1.0,
-                                            "speed": 1.0,
-                                            "startFrame": 0
-                                        },
+                                        "hitVfxDatas": null,
                                         "isCamShake": false,
                                         "isStunOnParry": false,
                                         "level": 1
                                     },
                                     {
                                         "addBreakOnParry": 5.0,
+                                        "attackVector": [
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
                                         "camShake": {
                                             "fadeOut": true,
                                             "power": 2.5,
@@ -559,13 +566,7 @@
                                             "useListener": true,
                                             "volume": 0.27000001072883606
                                         },
-                                        "hitVfx": {
-                                            "applyColor": false,
-                                            "lookCam": false,
-                                            "scale": 1.0,
-                                            "speed": 1.0,
-                                            "startFrame": 0
-                                        },
+                                        "hitVfxDatas": null,
                                         "isCamShake": true,
                                         "isStunOnParry": true,
                                         "level": 2
@@ -682,6 +683,11 @@
                                 "atkInfos": [
                                     {
                                         "addBreakOnParry": 4.0,
+                                        "attackVector": [
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
                                         "camShake": {
                                             "fadeOut": true,
                                             "power": 2.0,
@@ -701,19 +707,18 @@
                                             "useListener": true,
                                             "volume": 0.27000001072883606
                                         },
-                                        "hitVfx": {
-                                            "applyColor": false,
-                                            "lookCam": false,
-                                            "scale": 1.0,
-                                            "speed": 1.0,
-                                            "startFrame": 0
-                                        },
+                                        "hitVfxDatas": null,
                                         "isCamShake": true,
                                         "isStunOnParry": false,
                                         "level": 2
                                     },
                                     {
                                         "addBreakOnParry": 6.0,
+                                        "attackVector": [
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
                                         "camShake": {
                                             "fadeOut": true,
                                             "power": 2.0,
@@ -733,13 +738,7 @@
                                             "useListener": true,
                                             "volume": 0.27000001072883606
                                         },
-                                        "hitVfx": {
-                                            "applyColor": false,
-                                            "lookCam": false,
-                                            "scale": 1.0,
-                                            "speed": 1.0,
-                                            "startFrame": 0
-                                        },
+                                        "hitVfxDatas": null,
                                         "isCamShake": true,
                                         "isStunOnParry": true,
                                         "level": 2
@@ -800,6 +799,11 @@
                                 "atkInfos": [
                                     {
                                         "addBreakOnParry": 9.5,
+                                        "attackVector": [
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
                                         "camShake": {
                                             "fadeOut": true,
                                             "power": 2.5,
@@ -819,13 +823,7 @@
                                             "useListener": true,
                                             "volume": 0.30000001192092896
                                         },
-                                        "hitVfx": {
-                                            "applyColor": false,
-                                            "lookCam": false,
-                                            "scale": 1.0,
-                                            "speed": 1.0,
-                                            "startFrame": 0
-                                        },
+                                        "hitVfxDatas": null,
                                         "isCamShake": true,
                                         "isStunOnParry": true,
                                         "level": 3
@@ -999,7 +997,7 @@
                         "time": 5.0
                     }
                 ],
-                "hpBarName": "Enemy_GageBar",
+                "hpBarName": "Enemy_Gage",
                 "maxHp": 200.0,
                 "name": "Boss",
                 "priority": 0,
@@ -1029,7 +1027,7 @@
             ],
             "pos": [
                 0.0,
-                0.10000000149011612,
+                0.0,
                 6.5
             ],
             "rotation": [

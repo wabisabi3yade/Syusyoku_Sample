@@ -7,9 +7,16 @@ namespace HashiTaku
 	CP_Gage::CP_Gage() : 
 		pFrontSlider(nullptr),
 		pBackSlider(nullptr),
+		backMoveEase(EaseKind::Linear),
+		backState(BackState::NotUpdate),
 		currentValue(0.0f),
 		maxValue(10.0f),
-		minValue(0.0f)
+		minValue(0.0f),
+		backValueOnDecade(0.0f),
+		backMoveTime(1.0f),
+		backMoveElapsedTime(0.0f),
+		backWaitTime(1.0f),
+		decadeElapsedTime(0.0f)
 	{
 	}
 
@@ -20,21 +27,34 @@ namespace HashiTaku
 
 	void CP_Gage::SetCurrentValue(float _setValue)
 	{
-#ifdef EDIT
+		float prevCurValue = currentValue;
+		currentValue = _setValue;
+		
 		if (!GetIsSettingSlider()) return;
-#endif // EDIT
 
 		// 正面スライダーは反映
-		pFrontSlider->SetCurrentRatio(std::clamp(_setValue, minValue, maxValue));
+		pFrontSlider->SetCurrentValue(std::clamp(_setValue, minValue, maxValue));
+		// 変更前より値が減ったら
+		if (currentValue < prevCurValue)
+		{
+			// 後ろスライダーを待機状態にする
+			backState = BackState::Wait;
+			decadeElapsedTime = 0.0f;
+			backValueOnDecade = prevCurValue;
+			pBackSlider->SetCurrentValue(backValueOnDecade);
+		}
+		else
+		{
+			// 増えた場合、正面スライダーの値と同期させる
+			pBackSlider->SetCurrentValue(currentValue);
+		}
 	}
 
 	void CP_Gage::SetMaxValue(float _maxVal)
 	{
-#ifdef EDIT
-		if (!GetIsSettingSlider()) return;
-#endif // EDIT
-
 		maxValue = std::max(_maxVal, minValue);
+
+		if (!GetIsSettingSlider()) return;
 
 		// 両スライダーの最大値をセット
 		pFrontSlider->SetMaxValue(maxValue);
@@ -43,15 +63,18 @@ namespace HashiTaku
 
 	void CP_Gage::SetMinValue(float _minVal)
 	{
-#ifdef EDIT
-		if (!GetIsSettingSlider()) return;
-#endif // EDIT
-
 		minValue = std::min(_minVal, maxValue);
+
+		if (!GetIsSettingSlider()) return;
 
 		// 両スライダーの最低値をセット
 		pFrontSlider->SetMinValue(minValue);
 		pBackSlider->SetMinValue(minValue);
+	}
+
+	float CP_Gage::GetCurentValue() const
+	{
+		return currentValue;
 	}
 
 	json CP_Gage::Save()
@@ -60,6 +83,9 @@ namespace HashiTaku
 
 		data["frontName"] = frontObjName;
 		data["backName"] = backObjName;
+		data["backMoveTime"] = backMoveTime;
+		data["backWaitTime"] = backWaitTime;
+		data["backMoveEase"] = backMoveEase;
 
 		return data;
 	}
@@ -70,6 +96,9 @@ namespace HashiTaku
 
 		LoadJsonString("frontName", frontObjName, _data);
 		LoadJsonString("backName", backObjName, _data);
+		LoadJsonFloat("backMoveTime", backMoveTime, _data);
+		LoadJsonFloat("backWaitTime", backWaitTime, _data);
+		LoadJsonEnum<EaseKind>("backMoveEase", backMoveEase, _data);
 	}
 
 	void CP_Gage::Start()
@@ -81,10 +110,59 @@ namespace HashiTaku
 		// 最大値と最小値をセット
 		if (GetIsSettingSlider())
 		{
-			pFrontSlider->SetMaxValue(maxValue);
-			pFrontSlider->SetMinValue(minValue);
-			pBackSlider->SetMaxValue(maxValue);
-			pBackSlider->SetMinValue(minValue);
+			SetMaxValue(maxValue);
+			SetMinValue(minValue);
+			SetCurrentValue(currentValue);
+		}
+	}
+
+	void CP_Gage::Update()
+	{
+		// 後ろスライダーの更新処理
+		BackSliderUpdate();
+	}
+
+	void CP_Gage::BackSliderUpdate()
+	{
+#ifdef EDIT
+		if (!GetIsSettingSlider()) return;
+#endif // EDIT
+
+		switch (backState)
+		{
+		case BackState::Wait:	// 待機
+		{
+			decadeElapsedTime += DeltaTime();
+
+			// 経過時間が待機時間超えたら
+			if (decadeElapsedTime > backWaitTime)
+			{
+				backMoveElapsedTime = 0.0f;
+				backState = BackState::Move;
+			}
+		}
+			break;
+
+		case BackState::Move:	// 移動
+		{
+			backMoveElapsedTime += DeltaTime();
+
+			// 後ろスライダーの値を減らす
+			float backValue = std::lerp(backValueOnDecade,
+				currentValue,
+				Easing::EaseValue(backMoveElapsedTime / backMoveTime, backMoveEase));
+
+			// 後ろスライダーに反映
+			pBackSlider->SetCurrentValue(backValue);
+
+			// 移動を終えたら更新終了
+			if (backMoveElapsedTime > backMoveTime)
+				backState = BackState::NotUpdate;
+		}
+			break;
+
+		default:
+			break;
 		}
 	}
 
@@ -103,6 +181,10 @@ namespace HashiTaku
 	{
 #ifdef EDIT
 		Component::ImGuiDebug();
+
+		ImGui::DragFloat("Back MoveTime", &backMoveTime, 0.1f, 0.0f, 1000.0f);
+		Easing::ImGuiSelect(backMoveEase, "Back MoveEase");
+		ImGui::DragFloat("Back WaitTime", &backWaitTime, 0.1f, 0.0f, 1000.0f);
 
 		// 入力
 		static char input[IM_INPUT_BUF];

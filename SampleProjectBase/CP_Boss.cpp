@@ -58,6 +58,10 @@ namespace HashiTaku
 		data["hpBarName"] = hpBarObjName;
 		data["breakBarName"] = breakBarObjName;
 
+#ifdef EDIT
+		data["canBreak"] = isCanBreak;
+#endif // EDIT
+
 		return data;
 	}
 
@@ -68,6 +72,11 @@ namespace HashiTaku
 		LoadJsonString("weaponName", weaponObjName, _data);
 		LoadJsonString("hpBarName", hpBarObjName, _data);
 		LoadJsonString("breakBarName", breakBarObjName, _data);
+
+#ifdef EDIT
+		LoadJsonBoolean("canBreak", isCanBreak, _data);
+#endif // EDIT
+
 
 		json actionControllerData;
 		if (LoadJsonData("actionController", actionControllerData, _data))
@@ -148,7 +157,7 @@ namespace HashiTaku
 #ifdef EDIT
 		// アクション側で表示させたいデバッグ描画
 		if (pActionController)
-			pActionController->DebugDisplay();
+			pActionController->DebugDisplayCall();
 #endif // EDIT
 	}
 
@@ -184,7 +193,8 @@ namespace HashiTaku
 		}
 
 		// スライダーに反映
-		pBreakBar->SetCurrentValue(curBreakValue);
+		if (pBreakBar)
+			pBreakBar->SetCurrentValue(curBreakValue);
 	}
 
 	void CP_Boss::FindRequaireObject()
@@ -267,11 +277,17 @@ namespace HashiTaku
 		}
 
 		// スライダーに反映
-		pBreakBar->SetCurrentValue(curBreakValue);
+		if (pBreakBar)
+			pBreakBar->SetCurrentValue(curBreakValue);
 	}
 
 	void CP_Boss::OnBreak()
 	{
+#ifdef EDIT
+		if (!isCanBreak) return;
+#endif // EDIT
+
+
 		isBreaking = true;
 		pAnimation->SetBool(BREAK_ANIMPARAM, true);
 	}
@@ -321,6 +337,9 @@ namespace HashiTaku
 
 	void CP_Boss::ImGuiDebug()
 	{
+#ifdef EDIT
+		CP_Enemy::ImGuiDebug();
+
 		// オブジェクト名をセット
 		static char input[IM_INPUT_BUF];
 		ImGui::InputText("ObjName", input, IM_INPUT_BUF);
@@ -341,8 +360,10 @@ namespace HashiTaku
 
 		CP_Enemy::ImGuiDebug();
 		ImGuiMethod::Text("IsBreaking", isBreaking);
+		ImGui::Checkbox("Can Break", &isCanBreak);
 		pActionController->ImGuiCall();
 
 		ImGui::End();
+#endif
 	}
 }

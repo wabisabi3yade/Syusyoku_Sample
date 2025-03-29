@@ -68,8 +68,8 @@ namespace HashiTaku
 		/// @return アニメーションコンポーネント
 		CP_Animation* GetAnimation() override;
 
-		/// @brief デバッグ描画を行う
-		virtual void DebugDisplay();
+		/// @brief デバッグ描画呼び出し
+		void DebugDisplayCall();
 
 		/// @brief 速度をセット
 		/// @param _velocity 速度
@@ -141,6 +141,9 @@ namespace HashiTaku
 		/// @param _stateName　状態名
 		/// @return 状態のID
 		virtual int GetStateId(const std::string& _stateName) = 0;
+
+		/// @brief デバッグ描画を行う
+		virtual void DebugDisplay();
 
 		virtual void ImGuiDebug();
 	};

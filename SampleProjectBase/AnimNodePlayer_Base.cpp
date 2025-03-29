@@ -239,7 +239,7 @@ namespace HashiTaku
 		{
 			// 前回のルートモーションを初期化する
 			p_RootMotionPos = GetRootMotionPos(0.0f);
-		}
+		}	
 
 		// 移動座標
 		Vector3 curPos = GetRootMotionPos(curPlayRatio);
