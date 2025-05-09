@@ -3,39 +3,49 @@
 #include "D3D11_Renderer.h"
 #include "RenderParam.h"
 
-using namespace DirectX;
-using namespace SimpleMath;
-
-const RenderParam::WVP& RenderParam::GetWVP(const Transform& _transform)
+namespace HashiTaku
 {
-	// 変換行列を作成
-	// 移動行列
-	Matrix t = XMMatrixTranslation(
-		_transform.position.x,
-		_transform.position.y,
-		_transform.position.z
-	);
+	RenderParam::WVP& RenderParam::GetWVP()
+	{
+		return wvp;
+	}
 
-	// スケーリング行列
-	Matrix s = XMMatrixScaling(
-		_transform.scale.x,
-		_transform.scale.y,
-		_transform.scale.z
-	);
+	RenderParam::WVP& RenderParam::GetWVP(const Transform& _transform)
+	{
+		return GetWVP(_transform.GetPosition(), _transform.GetScale(), _transform.GetRotation());
+	}
 
-	// 回転行列
-	Matrix r = Matrix::CreateFromYawPitchRoll(
-		_transform.rotation.y * Mathf::degToRad,
-		_transform.rotation.x * Mathf::degToRad,
-		_transform.rotation.z * Mathf::degToRad
-	);
+	RenderParam::WVP& RenderParam::GetWVP(const DXSimp::Vector3& _position,
+		const DXSimp::Vector3& _scale,
+		const DXSimp::Quaternion& _rotation)
+	{
+		// 変換行列を作成
+		// 移動行列
+		DXSimp::Matrix t = DX::XMMatrixTranslation(
+			_position.x,
+			_position.y,
+			_position.z
+		);
 
-	Matrix worldMtx = s * r * t;	// ワールド変換行列を作成
+		// スケーリング行列
+		DXSimp::Matrix s = DX::XMMatrixScaling(
+			_scale.x,
+			_scale.y,
+			_scale.z
+		);
 
-	worldMtx = worldMtx.Transpose();
+		// 回転行列
+		DXSimp::Matrix r = DXSimp::Matrix::CreateFromQuaternion(_rotation);
 
-	wvp.world = worldMtx;
+		DXSimp::Matrix worldMtx = s * r * t;	// ワールド変換行列を作成
 
-	return wvp;
+		wvp.world = worldMtx;
+
+		return wvp;
+	}
+
+	const DXSimp::Matrix& RenderParam::GetProjectionMatrix() const
+	{
+		return wvp.projection;
+	}
 }
-

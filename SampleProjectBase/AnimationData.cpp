@@ -1,303 +1,358 @@
 #include "pch.h"
 #include "AnimationData.h"
+#include "SkeletalMesh.h"
+#include "CatmulSplineInterp.h"
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
-using namespace DirectX::SimpleMath;
-
-bool AnimationData::HasScaleTwoKeys(u_int _nodeId) const
+namespace HashiTaku
 {
-	return pAnimationData->mChannels[_nodeId]->mNumScalingKeys >= 2;
-}
+	using namespace DXSimp;
 
-bool AnimationData::HasQuatTwoKeys(u_int _nodeId) const
-{
-	return pAnimationData->mChannels[_nodeId]->mNumRotationKeys >= 2;
-}
-
-bool AnimationData::HasPosTwoKeys(u_int _nodeId) const
-{
-	return pAnimationData->mChannels[_nodeId]->mNumPositionKeys >= 2;
-}
-
-void AnimationData::SetAiScene(const aiScene* _pAiScene)
-{
-	pAiScene = _pAiScene;
-
-	pAnimationData = pAiScene->mAnimations[0];
-
-	// ボーンのサイズを合わせる
-	u_int nodeNum = pAnimationData->mNumChannels;
-	boneIndicies.resize(nodeNum);
-
-	// アニメーションの全体時間を求める
-	CalculateAnimTime();
-}
-
-void AnimationData::SetBoneIdx(u_int _nodeId, u_int _boneIdx)
-{
-	assert(static_cast<u_int>(boneIndicies.size()) < _nodeId);
-
-	boneIndicies[_nodeId] = _boneIdx;
-}
-
-std::string AnimationData::GetBoneName(u_int _nodeId)
-{
-	assert(pAnimationData->mNumChannels > _nodeId && "ノードIDが配列外を指しています");
-
-	return pAnimationData->mChannels[_nodeId]->mNodeName.C_Str();
-}
-
-u_int AnimationData::GetChannelCount()
-{
-	return pAnimationData->mNumChannels;
-}
-
-DirectX::SimpleMath::Vector3 AnimationData::GetScale(u_int _nodeId, float _playingTime) const
-{
-	// 2キー以上なければ補間出来ないので
-	if (!HasScaleTwoKeys(_nodeId))
+	AnimationData::AnimationData() :
+		animationTime_s(0.0f), timePerKey_s(0.0f), allFrameCnt(0), rootBoneId(-1),
+		isRightHand(false)
 	{
-		// 最初のキー値を返す
-		return GetScaleByKey(_nodeId, 0);
 	}
 
-	Vector3 animScale;
-
-	const aiNodeAnim* pAiNodeAnim = pAnimationData->mChannels[_nodeId];
-
-	// 一つ前・次のスケーリングキー取得
-	u_int prevKey = FindPreviousScaleKey(_playingTime, pAiNodeAnim);
-	u_int nextKey = prevKey + 1;
-
-	// 最大キーを超えたら最初に戻す
-	if (nextKey >= pAiNodeAnim->mNumScalingKeys)
-		nextKey = 0;
-
-	// 前のスケール値
-	aiVector3D aiPrevScale = pAiNodeAnim->mScalingKeys[prevKey].mValue;
-
-	// 次のスケール値
-	aiVector3D aiNextScale = pAiNodeAnim->mScalingKeys[nextKey].mValue;
-
-	animScale.x = aiNextScale.x;
-	animScale.y = aiNextScale.y;
-	animScale.z = aiNextScale.z;
-
-	return animScale;
-}
-
-DirectX::SimpleMath::Quaternion AnimationData::GetQuaternion(u_int _nodeId, float _playingTime) const
-{
-	// 2キー以上なければ補間出来ないので
-	if (!HasQuatTwoKeys(_nodeId))
+	void AnimationData::AddAnimationChannel(std::unique_ptr<AnimationChannel> _pAnimNode)
 	{
-		// 最初のキー値を返す
-		return GetQuatByKey(_nodeId, 0);
+		pAnimChannels.push_back(std::move(_pAnimNode));
 	}
 
-	Quaternion animQuat;
-
-	const aiNodeAnim* pAiNodeAnim = pAnimationData->mChannels[_nodeId];
-
-	// 一つ前・次の回転キー取得
-	u_int prevKey = FindPreviousRotKey(_playingTime, pAiNodeAnim);
-	u_int nextKey = prevKey + 1;
-
-	// 最大キーを超えたら最初に戻す
-	if (nextKey >= pAiNodeAnim->mNumRotationKeys)
-		nextKey = 0;
-
-	// 前のクォータニオン
-	aiQuaternion aiQuat = pAiNodeAnim->mRotationKeys[prevKey].mValue;
-
-	// 次のクォータニオン
-	aiQuat = pAiNodeAnim->mRotationKeys[nextKey].mValue;
-	animQuat.x = aiQuat.x;
-	animQuat.y = aiQuat.y;
-	animQuat.z = aiQuat.z;
-	animQuat.w = aiQuat.w;
-
-	// 正規化
-	animQuat.Normalize();
-
-	return animQuat;
-}
-
-DirectX::SimpleMath::Vector3 AnimationData::GetPosition(u_int _nodeId, float _playingTime) const
-{
-	// 2キー以上なければ補間出来ないので
-	if (!HasPosTwoKeys(_nodeId))
+	const AnimationChannel* AnimationData::FindChannel(u_int _boneIdx) const
 	{
-		// 最初のキー値を返す
-		return GetPosByKey(_nodeId, 0);
-	}
+		auto itr = std::find_if(pAnimChannels.begin(), pAnimChannels.end(),
+			[&](const std::unique_ptr<AnimationChannel>& channel)
+			{
+				return channel->GetBodeIdx() == _boneIdx;
+			});
 
-	Vector3 animPos;
-
-	const aiNodeAnim* pAiNodeAnim = pAnimationData->mChannels[_nodeId];
-
-	// 一つ前・次のスケーリングキー取得
-	u_int prevKey = FindPreviousPosKey(_playingTime, pAiNodeAnim);
-	u_int nextKey = prevKey + 1;
-
-	// 最大キーを超えたら最初に戻す
-	if (nextKey >= pAiNodeAnim->mNumPositionKeys)
-		nextKey = 0;
-
-	// 前のスケール値
-	aiVector3D aiPrevPos = pAiNodeAnim->mPositionKeys[prevKey].mValue;
-
-	// 次のスケール値
-	aiVector3D aiNextPos = pAiNodeAnim->mPositionKeys[nextKey].mValue;
-
-	animPos.x = aiNextPos.x;
-	animPos.y = aiNextPos.y;
-	animPos.z = aiNextPos.z;
-
-	return animPos;
-}
-
-float AnimationData::GetAnimationTime() const
-{
-	return animationTime;
-}
-
-const aiNode* AnimationData::GetRootNode()
-{
-	return pAiScene->mRootNode;
-}
-
-const aiNodeAnim* AnimationData::GetAiNodeAnim(const std::string& _nodeName)
-{
-	for (u_int c_i = 0; c_i < pAnimationData->mNumChannels; c_i++)
-	{
-		if (pAnimationData->mChannels[c_i]->mNodeName.C_Str() == _nodeName)
+		if (itr == pAnimChannels.end())
 		{
-			return pAnimationData->mChannels[c_i];
+			return nullptr;
 		}
+
+		return (*itr).get();
 	}
 
-	assert(!"アニメーションノードが見つかりませんでした");
-	return nullptr;
-}
-
-void AnimationData::CalculateAnimTime()
-{
-	// アニメーションの全体ティック数
-	double durationTicks = pAnimationData->mDuration;
-
-	// 1秒間のティック数を求める
-	// mTicksPerSecondが0なら1秒間のティックは1
-	double ticksPerSecond =
-		pAnimationData->mTicksPerSecond != 0 ? pAnimationData->mTicksPerSecond : 1.0f;
-
-	// 時間を求める
-	double time = durationTicks / ticksPerSecond;
-
-	animationTime = static_cast<float>(time);
-}
-
-u_int AnimationData::FindPreviousRotKey(float _playingTime, const aiNodeAnim* _pAiNodeAnim) const
-{
-	assert(_pAiNodeAnim->mNumRotationKeys > 0 && "回転キーありません");
-
-	// 時間から以前のキーを取得
-	for (u_int k_i = 0; k_i < _pAiNodeAnim->mNumRotationKeys - 1; k_i++)
+	void AnimationData::CalcRootMotion(u_int _rootBoneId)
 	{
-		if (_playingTime < _pAiNodeAnim->mRotationKeys[k_i + 1].mTime)
-			return k_i;
+		rootBoneId = _rootBoneId;
+
+		// 配列内のルートモーションにあたるチャンネルを探す
+		AnimationChannel* pFind = pAnimChannels[0].get();
+		for (auto& c : pAnimChannels)
+		{
+			if (rootBoneId == c->GetBodeIdx())
+			{
+				pFind = c.get();
+				break;
+			}
+		}
+
+		// 秒速の移動速度を求める
+		DXSimp::Vector3 startPos = GetRootMotionPos(0.0f);
+		Vector3 endPos = GetRootMotionPos(1.0f);
+		Vector3 moveDistance = endPos - startPos;
+		rootMovePosPerSec = Vec3::Abs(moveDistance / animationTime_s);
 	}
 
-	/*assert(!"回転キーが正常に取得できませんでした");*/
-	std::string message = std::string(_pAiNodeAnim->mNodeName.C_Str());
-	message += " 回転キーが正常に取得できませんでした";
-	HASHI_DEBUG_LOG(message);
-	return 0;
-}
-
-u_int AnimationData::FindPreviousScaleKey(float _playingTime, const aiNodeAnim* _pAiNodeAnim) const
-{
-	assert(_pAiNodeAnim->mNumScalingKeys > 0 && "スケーリングキーありません");
-
-	// 時間から以前のキーを取得
-	for (u_int k_i = 0; k_i < _pAiNodeAnim->mNumScalingKeys - 1; k_i++)
+	void AnimationData::SetBoneListName(const std::string& _boneListName)
 	{
-		if (_playingTime < _pAiNodeAnim->mScalingKeys[k_i + 1].mTime)
-			return k_i;
+		boneListName = _boneListName;
 	}
-	std::string message = std::string(_pAiNodeAnim->mNodeName.C_Str());
-	message += " スケーリングキーが正常に取得できませんでした";
-	/*assert(!message.c_str());*/
-	HASHI_DEBUG_LOG(message);
-	return 0;
-}
 
-u_int AnimationData::FindPreviousPosKey(float _playingTime, const aiNodeAnim* _pAiNodeAnim) const
-{
-	assert(_pAiNodeAnim->mNumPositionKeys > 0 && "座標キーありません");
-
-	// 時間から以前のキーを取得
-	for (u_int k_i = 0; k_i < _pAiNodeAnim->mNumPositionKeys - 1; k_i++)
+	void AnimationData::SetAnimationTime(float _animTime)
 	{
-		if (_playingTime < _pAiNodeAnim->mPositionKeys[k_i + 1].mTime)
-			return k_i;
+		assert(_animTime >= 0.0f);
+		animationTime_s = std::max(_animTime, 0.0f);
 	}
 
-	assert(!"座標キーが正常に取得できませんでした");
-	return 0;
-}
+	void AnimationData::SetAllFrameCnt(u_int _allFrameCnt)
+	{
+		allFrameCnt = _allFrameCnt;
+	}
 
-DirectX::SimpleMath::Vector3 AnimationData::GetScaleByKey(u_int _nodeId, u_int _key) const
-{
-	aiNodeAnim* aiNodeAnim = pAnimationData->mChannels[_nodeId];
+	void AnimationData::SetTimePerKey(float _timePerKey)
+	{
+		assert(_timePerKey >= 0.0f);
+		timePerKey_s = std::max(_timePerKey, 0.0f);
+	}
 
-	// キー数より多い数字がきたら
-	assert(aiNodeAnim->mNumScalingKeys > _key);
+	void AnimationData::SetIsRightHand(bool _isRightHand)
+	{
+		isRightHand = _isRightHand;
+	}
 
-	aiVector3D aiScale = aiNodeAnim->mScalingKeys[_key].mValue;
+	std::string AnimationData::GetBoneName(u_int _nodeId) const
+	{
+		assert(_nodeId < static_cast<u_int>(pAnimChannels.size()) && "ノードIDが配列外を指しています");
 
-	Vector3 scale;
-	scale.x = aiScale.x;
-	scale.y = aiScale.y;
-	scale.z = aiScale.z;
+		return pAnimChannels[_nodeId]->GetName();
+	}
 
-	return scale;
-}
+	u_int AnimationData::GetBoneIdx(u_int _nodeId) const
+	{
+		assert(_nodeId < static_cast<u_int>(pAnimChannels.size()) && "ノードIDが配列外を指しています");
 
-DirectX::SimpleMath::Quaternion AnimationData::GetQuatByKey(u_int _nodeId, u_int _key) const
-{
-	aiNodeAnim* aiNodeAnim = pAnimationData->mChannels[_nodeId];
+		return pAnimChannels[_nodeId]->GetBodeIdx();
+	}
 
-	// キー数より多い数字がきたら
-	assert(aiNodeAnim->mNumRotationKeys > _key);
+	u_int AnimationData::GetChannelCount() const
+	{
+		return static_cast<u_int>(pAnimChannels.size());
+	}
 
-	aiQuaternion aiQuat = aiNodeAnim->mRotationKeys[_key].mValue;
+	u_int AnimationData::GetAllAnimationFrame() const
+	{
+		return allFrameCnt;
+	}
 
-	Quaternion quat;
-	quat.x = aiQuat.x;
-	quat.y = aiQuat.y;
-	quat.z = aiQuat.z;
-	quat.w = aiQuat.w;
+	u_int AnimationData::GetRatioToFrame(float _ratio)
+	{
+		return static_cast<u_int>(allFrameCnt * _ratio);
+	}
 
-	return quat;
-}
+	bool AnimationData::GetScaleByRatio(u_int _boneId, float _playingRatio, DXSimp::Vector3& _outScale) const
+	{
+		const AnimationChannel* channel = FindChannel(_boneId);
 
-DirectX::SimpleMath::Vector3 AnimationData::GetPosByKey(u_int _nodeId, u_int _key) const
-{
-	aiNodeAnim* aiNodeAnim = pAnimationData->mChannels[_nodeId];
+		// 対応したボーンがないなら
+		if (channel == nullptr) return false;
 
-	// キー数より多い数字がきたら
-	assert(aiNodeAnim->mNumPositionKeys > _key);
+		if (channel->GetScaleKeyCnt() == 1)	// 1つだと補間しない
+		{
+			_outScale = channel->GetScaleKey(0).parameter;
+			return true;
+		}
 
-	aiVector3D aiPos = aiNodeAnim->mPositionKeys[_key].mValue;
+		u_int prevKeyNum = channel->FindPrevScaleKey(_playingRatio);
+		u_int nextKeyNum = prevKeyNum + 1;
 
-	Vector3 pos;
-	pos.x = aiPos.x;
-	pos.y = aiPos.y;
-	pos.z = aiPos.z;
+		if (nextKeyNum >= channel->GetScaleKeyCnt())
+			nextKeyNum = 0;
 
-	return pos;
+		const AnimKey_V3& prevKey = channel->GetScaleKey(prevKeyNum);
+		const AnimKey_V3& nextKey = channel->GetScaleKey(nextKeyNum);
+
+		float deltaKeyNum = nextKey.startKeyNum - prevKey.startKeyNum;
+
+		// 割合からキー数を取得
+		float playingKeyNum = channel->GetScaleKeyByRatio(_playingRatio);
+
+		// 割合
+		float ratio = (playingKeyNum - prevKey.startKeyNum) / deltaKeyNum;
+
+		// 線形補間
+		_outScale = Vector3::Lerp(prevKey.parameter, nextKey.parameter, ratio);
+
+		return true;
+	}
+
+	bool AnimationData::GetQuaternionByRatio(u_int _boneId, float _playingRatio, DXSimp::Quaternion& _outRot) const
+	{
+		const AnimationChannel* channel = FindChannel(_boneId);
+
+		// 対応したボーンがないなら
+		if (channel == nullptr) return false;
+
+		if (channel->GetQuatKeyCnt() == 1)	// 1つだと補間しない
+		{
+			_outRot = channel->GetQuatKey(0).parameter;
+			return true;
+		}
+
+		u_int prevKeyNum = channel->FindPrevQuatKey(_playingRatio);
+		u_int nextKeyNum = channel->GetNextQuatKey(prevKeyNum);
+
+		const AnimKey_Q& prevKey = channel->GetQuatKey(prevKeyNum);
+		const AnimKey_Q& nextKey = channel->GetQuatKey(nextKeyNum);
+
+		float deltaKeyNum = nextKey.startKeyNum - prevKey.startKeyNum;
+
+		// 割合からキー数を取得
+		float playingKeyNum = channel->GetQuatKeyByRatio(_playingRatio);
+
+		// 割合
+		float ratio = (playingKeyNum - prevKey.startKeyNum) / deltaKeyNum;
+
+		// 球面線形補間
+		_outRot = Quaternion::Slerp(prevKey.parameter, nextKey.parameter, ratio);
+
+		return true;
+	}
+
+	bool AnimationData::GetPositionByRatio(u_int _boneId, float _playingRatio, DXSimp::Vector3& _outPos) const
+	{
+		const AnimationChannel* channel = FindChannel(_boneId);
+
+		// 対応したボーンがないなら
+		if (channel == nullptr) return false;
+
+		if (channel->GetPosKeyCnt() == 1)	// 1つだと補間しない
+		{
+			_outPos = channel->GetPosKey(0).parameter;
+			return true;
+		}
+
+		u_int prevKeyNum = channel->FindPrevPosKey(_playingRatio);
+		u_int nextKeyNum = channel->GetNextPosKey(prevKeyNum);
+
+		const AnimKey_V3& prevKey = channel->GetPosKey(prevKeyNum);
+		const AnimKey_V3& nextKey = channel->GetPosKey(nextKeyNum);
+
+		float deltaKeyNum = nextKey.startKeyNum - prevKey.startKeyNum;
+
+		// 割合からキー数を取得
+		float playingKeyNum = channel->GetPosKeyByRatio(_playingRatio);
+
+		// 割合
+		float ratio = (playingKeyNum - prevKey.startKeyNum) / deltaKeyNum;
+
+		//// 線形補間
+		_outPos = Vector3::Lerp(prevKey.parameter, nextKey.parameter, ratio);
+
+		return true;
+	}
+
+	bool AnimationData::GetTransformByRatio(u_int _boneId, float _playingRatio, BoneTransform& _outTransform) const
+	{
+		bool hasAnimation = GetPositionByRatio(_boneId, _playingRatio, _outTransform.position);
+		if (!hasAnimation) return false;	// 対応したアニメーションがないなら
+
+		GetScaleByRatio(_boneId, _playingRatio, _outTransform.scale);
+		GetQuaternionByRatio(_boneId, _playingRatio, _outTransform.rotation);
+
+		return true;
+	}
+
+	DXSimp::Vector3 AnimationData::GetScaleByKey(u_int _boneId, u_int _playingKey) const
+	{
+		const AnimationChannel* channel = FindChannel(_boneId);
+
+		if (!channel) return Vector3::One;
+		if (_playingKey > channel->GetScaleKeyCnt() - 1)
+		{
+			HASHI_DEBUG_LOG("指定したキーが最大数を超えています");
+			_playingKey = channel->GetScaleKeyCnt();
+		}
+
+		return channel->GetScaleKey(_playingKey).parameter;
+	}
+
+	DXSimp::Quaternion AnimationData::GetQuaternioneByKey(u_int _boneId, u_int _playingKey) const
+	{
+		const AnimationChannel* channel = FindChannel(_boneId);
+
+		if (!channel) return Quaternion::Identity;
+		if (_playingKey > channel->GetQuatKeyCnt() - 1)
+		{
+			HASHI_DEBUG_LOG("指定したキーが最大数を超えています");
+			_playingKey = channel->GetQuatKeyCnt();
+		}
+
+		return channel->GetQuatKey(_playingKey).parameter;
+	}
+
+	DXSimp::Vector3 AnimationData::GetPositioneByKey(u_int _boneId, u_int _playingKey) const
+	{
+		const AnimationChannel* channel = FindChannel(_boneId);
+
+		if (!channel) return Vector3::Zero;
+		if (_playingKey > channel->GetPosKeyCnt() - 1)
+		{
+			HASHI_DEBUG_LOG("指定したキーが最大数を超えています");
+			_playingKey = channel->GetPosKeyCnt();
+		}
+
+		return channel->GetPosKey(_playingKey).parameter;
+	}
+
+	BoneTransform AnimationData::GetTransformByKey(u_int _boneId, u_int _playingKey) const
+	{
+		BoneTransform boneTransform;
+
+		boneTransform.position = GetPositioneByKey(_boneId, _playingKey);
+		boneTransform.scale = GetScaleByKey(_boneId, _playingKey);
+		boneTransform.rotation = GetQuaternioneByKey(_boneId, _playingKey);
+
+		return boneTransform;
+	}
+
+	const DXSimp::Vector3& AnimationData::GetRootMotionPosSpeedPerSec() const
+	{
+		return rootMovePosPerSec;
+	}
+
+	DXSimp::Vector3 AnimationData::GetRootMotionPos(float _ratio) const
+	{
+		const AnimationChannel* pRootChannel = FindChannel(rootBoneId);
+
+		if (pRootChannel->GetPosKeyCnt() == 1)	// 1つだと補間しない
+		{
+			return pRootChannel->GetPosKey(0).parameter;
+		}
+
+		u_int prevKeyNum = pRootChannel->FindPrevPosKey(_ratio);
+		u_int nextKeyNum = pRootChannel->GetNextPosKey(prevKeyNum);
+
+		const AnimKey_V3& prevKey = pRootChannel->GetPosKey(prevKeyNum);
+		const AnimKey_V3& nextKey = pRootChannel->GetPosKey(nextKeyNum);
+
+		float deltaKeyNum = nextKey.startKeyNum - prevKey.startKeyNum;
+
+		// 割合からキー数を取得
+		float playingKeyNum = pRootChannel->GetPosKeyByRatio(_ratio);
+
+		// 割合
+		float ratio = (playingKeyNum - prevKey.startKeyNum) / deltaKeyNum;
+
+		//// 線形補間
+		Vector3 calcPos = Vector3::Lerp(prevKey.parameter, nextKey.parameter, ratio);
+
+		return calcPos;
+	}
+
+	DXSimp::Quaternion AnimationData::GetRootMotionRot(float _ratio) const
+	{
+		const AnimationChannel* pRootChannel = FindChannel(rootBoneId);
+
+		if (pRootChannel->GetQuatKeyCnt() == 1)	// 1つだと補間しない
+		{
+			return pRootChannel->GetQuatKey(0).parameter;
+		}
+
+		u_int prevKeyNum = pRootChannel->FindPrevQuatKey(_ratio);
+		u_int nextKeyNum = pRootChannel->GetNextQuatKey(prevKeyNum);
+
+		const AnimKey_Q& prevKey = pRootChannel->GetQuatKey(prevKeyNum);
+		const AnimKey_Q& nextKey = pRootChannel->GetQuatKey(nextKeyNum);
+
+		float deltaKeyNum = nextKey.startKeyNum - prevKey.startKeyNum;
+
+		// 割合からキー数を取得
+		float playingKeyNum = pRootChannel->GetQuatKeyByRatio(_ratio);
+
+		// 割合
+		float ratio = (playingKeyNum - prevKey.startKeyNum) / deltaKeyNum;
+
+		// 球面線形補間
+		Quaternion calcQuat = Quaternion::Slerp(prevKey.parameter, nextKey.parameter, ratio);
+
+		return calcQuat;
+	}
+
+	float AnimationData::GetAnimationTime() const
+	{
+		return animationTime_s;
+	}
+
+	json AnimationData::Save()
+	{
+		auto data = AssetPath_Base::Save();
+
+		data["boneListName"] = boneListName;
+		data["rightHand"] = isRightHand;
+
+		return data;
+	}
 }

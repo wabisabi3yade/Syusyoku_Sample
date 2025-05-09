@@ -1,0 +1,97 @@
+{
+    "childs": [
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "endFrame": 35,
+                        "isLoop": true,
+                        "isTrimming": true,
+                        "name": "VisualEffect",
+                        "playSpeed": 0.5910000205039978,
+                        "priority": 0,
+                        "startFrame": 20,
+                        "vfxName": "Fire01"
+                    }
+                ],
+                "layer": 0,
+                "name": "Fire",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        5.699999809265137,
+                        6.099999904632568,
+                        -18.600000381469727
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.399999976158142,
+                        2.4000000953674316,
+                        1.2999999523162842
+                    ]
+                }
+            }
+        }
+    ],
+    "gameObject": {
+        "active": true,
+        "components": [
+            {
+                "enable": true,
+                "meshName": "Pillar1.fbx",
+                "name": "MeshRenderer",
+                "priority": 0
+            },
+            {
+                "angles": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "center": [
+                    0.0,
+                    2.5999999046325684,
+                    -0.10000000149011612
+                ],
+                "enable": true,
+                "height": 5.21999979019165,
+                "name": "CylinderCollider",
+                "priority": 0,
+                "radius": 1.059999942779541
+            }
+        ],
+        "layer": 0,
+        "name": "Pillar1",
+        "tag": 0,
+        "transform": {
+            "child": [
+                "Fire"
+            ],
+            "pos": [
+                5.699999809265137,
+                0.10000000149011612,
+                -18.5
+            ],
+            "rotation": [
+                -0.0,
+                0.0,
+                -0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.5,
+                1.0
+            ]
+        }
+    }
+}

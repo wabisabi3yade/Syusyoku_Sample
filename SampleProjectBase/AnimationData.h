@@ -1,95 +1,173 @@
 #pragma once
-#include "Asset_Base.h"
+#include "AssetPath_Base.h"
 
-struct aiScene;
-struct aiAnimation;
-struct aiNodeAnim;
-struct aiNode;
+#include "AnimationChannel.h"
 
-/// @brief アニメーションのデータクラス
-class AnimationData : public Asset_Base
-{ 
-private:
+namespace HashiTaku
+{
+	struct BoneTransform;
 
-	// ↓Assimpの型から独自の型へ変換させる 20240722
-	const aiScene* pAiScene;
+	/// @brief アニメーションのデータクラス
+	class AnimationData : public AssetPath_Base
+	{
+	private:
+		/// @brief アニメーションチャンネルリスト
+		std::vector<std::unique_ptr<AnimationChannel>> pAnimChannels;
 
-	// ↓Assimpの型から独自の型へ変換させる 20240722
-	const aiAnimation* pAnimationData;
+		/// @brief ルートモーションのアニメーションチャンネル
+		std::unique_ptr<AnimationChannel> pRootMotionChannels;
 
-	// アニメーションのボーンID配列
-	std::vector<u_int> boneIndicies;
+		/// @brief 対応ボーンリスト名
+		std::string boneListName;
 
-	/// @brief アニメーションの時間
-	float animationTime;
+		/// @brief ルートモーションで移動する移動速度
+		DXSimp::Vector3 rootMovePosPerSec;
 
-public:
-	AnimationData() : pAiScene(nullptr), pAnimationData(nullptr), animationTime(0.0f) {}
-	~AnimationData() {}
+		/// @brief ルートボーンのインデックス(-1は設定なし)
+		u_int rootBoneId;
 
-	// ノードに2キー以上あるか確認する(各パラメータ)
-	// 引数：_nodeId ノードID
-	// 戻り値：2つ以上あるか？
-	bool HasScaleTwoKeys(u_int _nodeId) const;
-	bool HasQuatTwoKeys(u_int _nodeId) const;
-	bool HasPosTwoKeys(u_int _nodeId) const;
+		/// @brief アニメーションの時間(s)
+		float animationTime_s;
 
-	// アニメーションセット
-	void SetAiScene(const aiScene* _pAiScene);
+		/// @brief 1キーごとの時間(s)
+		float timePerKey_s;
 
-	/// @brief ノードに対応したボーンのIDをセットする
-	/// @param _nodeId ノードID 
-	void SetBoneIdx(u_int _nodeId, u_int _boneIdx);
+		/// @brief 全体のフレーム数
+		u_int allFrameCnt;
 
-	/// @brief 〇番目のノードに対応するボーン名を取得
-	/// @param _nodeId ノードのId
-	/// @return ボーンの名前
-	std::string GetBoneName(u_int _nodeId);
+		/// @brief 右手系か？
+		bool isRightHand;
+	public:
+		AnimationData();
+		~AnimationData() {}
 
-	// チャンネルの数を取得
-	u_int GetChannelCount();
+		/// @brief アニメーションノードを追加する
+		/// @param _pAnimNode アニメーションノード
+		void AddAnimationChannel(std::unique_ptr<AnimationChannel> _pAnimNode);
 
-	/// @brief スケールを求める
-	/// @param _nodeId ノードID
-	/// @param _playingTime 再生時間
-	/// @return アニメーションのスケール
-	DirectX::SimpleMath::Vector3 GetScale(u_int _nodeId, float _playingTime) const;
+		/// @brief ボーンIDからチャンネルを取得
+		/// @param _boneIdx ボーンID
+		/// @return アニメーションチャンネル
+		const AnimationChannel* FindChannel(u_int _boneIdx) const;
 
-	/// @brief クォータニオンを求める
-	/// @param _nodeId ノードID
-	/// @param _playingTime 再生時間
-	/// @return アニメーションのクォータニオン
-	DirectX::SimpleMath::Quaternion GetQuaternion(u_int _nodeId, float _playingTime) const;
+		/// @brief ルートモーション関係のパラメータを求める
+		void CalcRootMotion(u_int _rootBoneId);
 
-	/// @brief 座標を求める
-	/// @param _nodeId ノードID
-	/// @param _playingTime 再生時間
-	/// @return アニメーションの座標
-	DirectX::SimpleMath::Vector3 GetPosition(u_int _nodeId, float _playingTime) const;
+		// ボーンリスト名をセット
+		void SetBoneListName(const std::string& _boneListName);
 
-	// アニメーション全体の時間を取得
-	float GetAnimationTime() const;
+		// アニメーション時間をセット
+		void SetAnimationTime(float _animTime);
 
-	// 階層のルートであるノードを返す
-	const aiNode* GetRootNode();
+		/// @brief 全体のアニメーションのフレーム数をセット
+		/// @param _allFrameCnt 全体のフレーム数
+		void SetAllFrameCnt(u_int _allFrameCnt);
 
-	// ノード名からアニメーションノードを取得 
-	const aiNodeAnim* GetAiNodeAnim(const std::string& _nodeName);
+		// 1キーごとのの時間をセット
+		void SetTimePerKey(float _timePerKey);
 
-private:
-	/// @brief アニメーションの再生時間を求める
-	void CalculateAnimTime();
+		// 右手系かセット
+		void SetIsRightHand(bool _isRightHand);
 
-	// 再生時間から各パラメータのキーを取得する
-	// 引数：_playingTime 再生時間　_pAiNodeAnim ノード
-	u_int FindPreviousRotKey(float _playingTime, const aiNodeAnim* _pAiNodeAnim) const;
-	u_int FindPreviousScaleKey(float _playingTime, const aiNodeAnim* _pAiNodeAnim) const;
-	u_int FindPreviousPosKey(float _playingTime, const aiNodeAnim* _pAiNodeAnim) const;
+		/// @brief 〇番目のノードに対応するボーン名を取得
+		/// @param _nodeId ノードのId
+		/// @return ボーンの名前
+		std::string GetBoneName(u_int _nodeId) const;
 
-	// 各パラメータをノードIDとキー値から取得する
-	// 引数：_nodeId ノードID　 u_int _key キー
-	DirectX::SimpleMath::Vector3 GetScaleByKey(u_int _nodeId, u_int _key) const;
-	DirectX::SimpleMath::Quaternion GetQuatByKey(u_int _nodeId, u_int _key) const;
-	DirectX::SimpleMath::Vector3 GetPosByKey(u_int _nodeId, u_int _key) const;
-};
+		/// @brief 〇番目のノードに対応するボーンIDを取得
+		/// @param _nodeId ノードのId
+		/// @return ボーンID
+		u_int GetBoneIdx(u_int _nodeId) const;
 
+		// チャンネルの数を取得
+		u_int GetChannelCount() const;
+
+		/// @brief アニメーションのキー数を取得
+		/// @return アニメーションのキー数
+		u_int GetAllAnimationFrame() const;
+
+		/// @brief 割合からキーに変換
+		/// @param _ratio 割合
+		/// @return キー
+		u_int GetRatioToFrame(float _ratio);
+
+		/// @brief スケールを求める
+		/// @param _boneId ボーンID
+		/// @param_playingRatio 再生割合
+		/// @param _outScale アニメーションのスケール
+		/// @return 対応したアニメーションが存在していたか？
+		bool GetScaleByRatio(u_int _boneId, 
+			float _playingRatio,
+			DXSimp::Vector3& _outScale) const;
+
+		/// @brief クォータニオンを求める
+		/// @param _boneId ボーンID
+		/// @param _playingRatio 再生割合
+		/// @param _outRotアニメーションのクォータニオン
+		/// @return 対応したアニメーションが存在していたか？
+		bool GetQuaternionByRatio(u_int _boneId, 
+			float _playingRatio, 
+			DXSimp::Quaternion& _outRot) const;
+
+		/// @brief 座標を求める
+		/// @param _boneId ボーンID
+		/// @param _playingRatio 再生割合
+		/// @param _outPos アニメーションの座標
+		/// @return 対応したアニメーションが存在していたか？
+		bool GetPositionByRatio(u_int _boneId,
+			float _playingRatio, 
+			DXSimp::Vector3& _outPos) const;
+
+		/// @brief トランスフォーム取得
+		/// @param _boneId ボーンID
+		/// @param _playingRatio 再生割合
+		/// @param _outTransform 結果ボーントランスフォーム
+		/// @return 対応したアニメーションが存在していたか？
+		bool GetTransformByRatio(u_int _boneId, float _playingRatio, BoneTransform& _outTransform) const;
+
+		/// @brief スケールを求める
+		/// @param _boneId ボーンID
+		/// @param _requestKey 取得するキー
+		/// @return アニメーションのスケール
+		DXSimp::Vector3 GetScaleByKey(u_int _boneId, u_int _playingKey) const;
+
+		/// @brief クォータニオンを求める
+		/// @param _boneId ボーンID
+		/// @param _requestKey 取得するキー
+		/// @return アニメーションのクォータニオン
+		DXSimp::Quaternion GetQuaternioneByKey(u_int _boneId, u_int _playingKey) const;
+
+		/// @brief 座標を求める
+		/// @param _boneId ボーンID
+		/// @param _requestKey 取得するキー
+		/// @return アニメーションの座標
+		DXSimp::Vector3 GetPositioneByKey(u_int _boneId, u_int _playingKey) const;
+
+		/// @brief トランスフォーム取得
+		/// @param _boneId ボーンID
+		/// @param _requestKey 取得するキー
+		/// @return ボーンのトランスフォーム
+		BoneTransform GetTransformByKey(u_int _boneId, u_int _playingKey) const;
+
+		/// @brief ルートモーションの移動速度を求める(秒
+		/// @return ルートモーションの移動速度
+		const DXSimp::Vector3& GetRootMotionPosSpeedPerSec() const;
+
+		/// @brief ルートモーションの移動座標を割合から取得する
+		/// @param _ratio 取得したい割合
+		/// @return ルートモーションでの移動座標
+		DXSimp::Vector3 GetRootMotionPos(float _ratio) const;
+
+		/// @brief ルートモーションの回転量を割合から取得する
+		/// @param _ratio 取得したい割合
+		/// @return ルートモーションでの移動座標
+		DXSimp::Quaternion GetRootMotionRot(float _ratio) const;
+
+		// アニメーション全体の時間を取得
+		float GetAnimationTime() const;
+
+		/// @brief セーブ
+		/// @return データ
+		json Save() override;
+	};
+}

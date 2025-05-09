@@ -3,9 +3,12 @@
 // アセット管理
 #include "AssetCollection.h"
 
-AssetCollection* AssetContacter::pAssetCollection = nullptr;
-
-void AssetContacter::SetAssetCollection(AssetCollection& _assetCollection)
+namespace HashiTaku
 {
-	pAssetCollection = &_assetCollection;
+	AssetCollection* AssetContacter::pAssetCollection = nullptr;
+
+	void AssetContacter::SetAssetCollection(AssetCollection& _assetCollection)
+	{
+		pAssetCollection = &_assetCollection;
+	}
 }

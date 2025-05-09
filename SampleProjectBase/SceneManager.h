@@ -1,40 +1,67 @@
 #pragma once
 #include "Singleton_Base.h"
+#include "EditScene.h"
 
-class BroadScene_Base;
-class ChangeBroadScene;
-class SceneMoveInfo;
-
-class SceneManager :public Singleton_Base<SceneManager>
+namespace HashiTaku
 {
-	friend class Singleton_Base<SceneManager>;
+	/// @brief シーンマネジャー
+	class SceneManager : public Singleton_Base<SceneManager>, public IImGuiUser
+	{
+		friend class Singleton_Base<SceneManager>;
 
-	static SceneManager* pInstance;	// インスタンス
-	BroadScene_Base* pNowBroadScene = nullptr;	// 今実行している大局シーン
-	ChangeBroadScene* pChaneBroad = nullptr;	// 大局シーンを遷移するクラス
-	SceneMoveInfo* pMoveInfo;	// シーン遷移情報
+		/// @brief シーンリスト
+		std::list<std::string> sceneList;
 
-	SceneManager();
-	~SceneManager();
+		/// @brief 現在のシーン名
+		std::string nowSceneName;
 
-	/// @brief アセットの準備
-	void AssetSetup();
+		/// @brief 現在再生しているシーン
+		std::unique_ptr<Scene> pNowScene;
 
-	void CheckChangeBroad();	// シーンを遷移するか確認する
+		/// @brief 次のシーン名
+		std::string nextSceneName;
 
-	// 解放処理
-	void Release();
+		/// @brief 変更するか？
+		bool isChange;
 
-public:
+		SceneManager();
+		~SceneManager();
 
-	// 実行関数
-	void Exec();
+	public:
+		// 実行関数
+		void Exec();
 
-private:
-	/// @brief マテリアルの準備
-	void MaterialSetup();
+		/// @brief シーンを変更するようにリクエストする
+		/// @param _sceneName シーン名
+		void ChangeSceneRequest(const std::string& _sceneName);
 
-	/// @brief メッシュの準備
-	void BasicMeshSetup();
-};
+	private:
+		/// @brief  準備
+		void Setup();
 
+		/// @brief 全シーン名を準備
+		void SetupSceneList();
+
+		/// @brief アセットの準備
+		void AssetSetup();
+
+		/// @brief マテリアルの準備
+		void MaterialSetup();
+
+		/// @brief シーンを変更する
+		/// @param _sceneName シーン名
+		/// @param _isEditScene EditSceneか？
+		void ChangeScene(const std::string& _sceneName, bool _isEditScene = false);
+
+		// 解放処理
+		void Release();
+
+		/// @brief シーンを作成
+		/// @param _sceneName シーン名
+		void CreateScene(const std::string& _sceneName);
+
+		void ImGuiDebug() override;
+		void ImGuiChangeScene();
+		void ImGuiCreateScene();
+	};
+}

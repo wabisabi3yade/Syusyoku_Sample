@@ -6,122 +6,102 @@
 // コンポーネントインクルードヘッダー
 #include "ComponentDefine.h"
 
-using namespace DirectX::SimpleMath;
-
-void CP_BoxCollider::CheckCollisionAABB(CP_Collider& _box1, CP_Collider& _box2)
+namespace HashiTaku
 {
+	CP_BoxCollider::CP_BoxCollider():
+		CP_Collider(CP_Collider::ShapeType::Box), 
+		length(DXSimp::Vector3::One)
+	{
+	}
 
-}
+	void CP_BoxCollider::Init()
+	{
+		CP_Collider::Init();
+	}
 
-void CP_BoxCollider::CheckCollisionOBB(CP_Collider& _box1, CP_Collider& _box2)
-{
-}
+	void CP_BoxCollider::CreateShape()
+	{
+		// ボックス形状作成
+		DXSimp::Vector3 worldLength;
+		CalcWorldLength(worldLength);
 
-CP_BoxCollider& CP_BoxCollider::operator=(const CP_BoxCollider& _other)
-{
-	if (this == &_other) return *this;
-	CP_Collider::operator=(_other);
+		btVector3 btLength;
+		btLength.setValue(worldLength.x, worldLength.y, worldLength.z);
+		pCollisionShape = std::make_unique<btBoxShape>(btLength * 0.5);
+	}
 
-	// パラメータ代入
-	posOffset = _other.posOffset;
-	angleOffset = _other.angleOffset;
-	size = _other.size;
-	isAABB = _other.isAABB;
+	void CP_BoxCollider::ImGuiDebug()
+	{
+		CP_Collider::ImGuiDebug();
 
-	return *this;
-}
+		ImGui::Checkbox("AABB", &isAABB);
 
-void CP_BoxCollider::Init()
-{
-	name = "BoxCollider";
+		DXSimp::Vector3 changeFloat = length;
+		if (ImGuiMethod::DragFloat3(changeFloat, "length", 0.01f))
+			SetLength(changeFloat);
+	}
 
-	CP_Collider::Init();	// 追加処理をする
+	void CP_BoxCollider::SetLength(const DXSimp::Vector3& _length)
+	{
+		length = _length;
 
-	size = Vector3::One;
-	type = CP_Collider::Type::Box;	// ボックスに設定する
+		RecreateShape();
+	}
 
-	// モデルのサイズから判定の大きさを決める
-	SizeFromModelSize();
-}
+	const DXSimp::Vector3& CP_BoxCollider::GetLength() const
+	{
+		return length;
+	}
 
-void CP_BoxCollider::Draw()
-{
-	// ボックス表示
-	const Transform& t = gameObject->transform;
+	json CP_BoxCollider::Save()
+	{
+		auto data = CP_Collider::Save();
 
-	// オブジェクトのスケールも考慮する
-	Vector3 pos_w = t.position + posOffset * t.scale;
-	Geometory::SetPosition(pos_w);
+		SaveJsonVector3("length", length, data);
 
-	Vector3 scale_w = t.scale * size;
-	Geometory::SetScale(scale_w);
+		data["AABB"] = isAABB;
 
-	Vector3 rotation_w;
+		return data;
+	}
 
-	if (!isAABB)
-		rotation_w = t.rotation + angleOffset;
+	void CP_BoxCollider::Load(const json& _data)
+	{
+		CP_Collider::Load(_data);
 
-	Geometory::SetRotation(rotation_w);
+		DXSimp::Vector3 loadLength;
+		if (LoadJsonVector3("length", loadLength, _data))
+			SetLength(loadLength);
 
-	// 色
-	Geometory::SetColor(CP_Collider::normalColor);
+		LoadJsonBoolean("AABB", isAABB, _data);
+	}
 
-	// 何かに当たってるなら
-	if (hitColliders.size() > 0)	
-		Geometory::SetColor(CP_Collider::hitColor);		// 色を変える
+	void CP_BoxCollider::SizeFromModelSize()
+	{
+		// メッシュレンダラーを取得
+		CP_MeshRenderer* pMeshRenderer = gameObject->GetComponent<CP_MeshRenderer>();
 
-	Geometory::DrawCube(true);
-}
+		if (pMeshRenderer == nullptr) return;
 
-void CP_BoxCollider::ImGuiSetting()
-{
-	ImGui::Checkbox("AABB", &isAABB);
-	ImGuiMethod::DragFloat3(posOffset, "posOffset");
-	ImGuiMethod::DragFloat3(angleOffset, "angleOffset");
-	ImGuiMethod::DragFloat3(size, "size");
-}
+		const Mesh_Group* pModel = pMeshRenderer->GetRenderMesh();
 
-DirectX::SimpleMath::Vector3 CP_BoxCollider::GetWorldCenterPos() const
-{
-	return GetTransform().position + posOffset * GetTransform().scale;
-}
+		if (pModel == nullptr) return;
 
-DirectX::SimpleMath::Vector3 CP_BoxCollider::GetWorldRotation() const
-{
-	return GetTransform().rotation + angleOffset;
-}
+		// サイズ取得
+		DXSimp::Vector3 modelSize = pModel->GetSize();
 
-DirectX::SimpleMath::Vector3 CP_BoxCollider::GetWorldScale() const
-{
-	return GetTransform().scale * size;
-}
+		// サイズを取得していなかったら終わる
+		if (modelSize.x <= Mathf::epsilon) return;
 
-bool CP_BoxCollider::CollisionBox(CP_Collider& _box1, CP_Collider& _box2)
-{
-	// AABBとOBBで処理を変える
+		length = modelSize;
+		centerOffset = pModel->GetCenterPosition();
+	}
 
+	void CP_BoxCollider::LengthUpdate()
+	{
+	}
 
-
-	return false;
-}
-
-void CP_BoxCollider::SizeFromModelSize()
-{
-	// メッシュレンダラーを取得
-	CP_MeshRenderer* pMeshRenderer = gameObject->GetComponent<CP_MeshRenderer>();
-
-	if (pMeshRenderer == nullptr) return;
-
-	const Mesh_Group* pModel = pMeshRenderer->GetRenderMesh();
-
-	if (pModel == nullptr) return;
-
-	// サイズ取得
-	Vector3 modelSize = pModel->GetSize();
-
-	// サイズを取得していなかったら終わる
-	if (modelSize.x == 0.0f) return;
-
-	size = modelSize;
-	posOffset = pModel->GetCenterPosition();
+	void CP_BoxCollider::CalcWorldLength(DXSimp::Vector3& _out)
+	{
+		_out = GetTransform().GetScale() * length;
+	}
 }

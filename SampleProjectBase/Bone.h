@@ -1,80 +1,90 @@
 #pragma once
 
-/// @brief アニメーション時の頂点への影響度
-struct Weight
+namespace HashiTaku
 {
-	/// @brief ボーン名(デバッグ用)
-	std::string boneName{ "" };
+	/// @brief  ボーンのトランスフォーム
+	struct BoneTransform
+	{
+		DXSimp::Vector3 position;
+		DXSimp::Vector3 scale{ 1.0f, 1.0f, 1.0f };
+		DXSimp::Quaternion rotation;
+	};
 
-	/// @brief メッシュ名(デバッグ用)
-	std::string meshName{ "" };
+	/// @brief モデルの1ボーンだけのクラス
+	class Bone
+	{
+		/// @brief ボーン名(デバッグ用)
+		std::string boneName;
 
-	/// @brief 頂点への影響度(0～1)
-	float weight{ 0.0f };
+		/// @brief コンビネーション行列
+		DXSimp::Matrix combinationMatrix;
 
-	/// @brief 頂点インデックス
-	int	vertexIndex{ 0 };
-};
+		/// @brief ボーンオフセット行列
+		DXSimp::Matrix offsetMatrix;
 
-/// @brief モデルの1ボーンだけのクラス
-class Bone
-{
-	/// @brief ボーン名(デバッグ用)
-	std::string boneName;
+		/// @brief ボーンの姿勢行列
+		DXSimp::Matrix globalMatrix;
 
-	/// @brief メッシュ名(デバッグ用)
-	std::string meshName;
+		/// @brief アニメーションのトランスフォーム
+		BoneTransform animationTransform;
 
-	/// @brief アーマチュア名(デバッグ用)
-	std::string armatureName;
+		/// @brief 親ボーンからの初期姿勢トランスフォーム
+		BoneTransform localNodeTransform;
 
-	/// @brief コンビネーション行列
-	DirectX::SimpleMath::Matrix combinationMatrix;
+		/// @brief ボーンインデックス
+		u_int boneIdx;
+	public:
+		Bone() : boneName(""), boneIdx(0) {}
+		Bone(const Bone& _other);
+		~Bone() {}
+		Bone& operator=(const Bone& _other);
 
-	/// @brief アニメーション行列
-	DirectX::SimpleMath::Matrix animationMatrix;
+		/// @brief コンビネーション行列を作成
+		/// @param _parentMtx 親ノードまでのローカルトランスフォーム
+		void CreateCombMtx(const DXSimp::Matrix& _parentMtx);
 
-	/// @brief ボーンオフセット行列
-	DirectX::SimpleMath::Matrix offsetMatrix;
+		/// @brief ローカル空間でのボーン座標
+		/// @param _parentMtx 親ノードまでのローカルトランスフォーム
+		/// @param _offsetMtx オフセット行列
+		void CreateGlobalMtx(const DXSimp::Matrix& _parentMtx, const DXSimp::Matrix& _offsetMtx);
 
-	/// @brief ボーンインデックス
-	u_int boneIdx;
+		// 名前セット
+		void SetBoneName(const std::string& _boneName);
 
-	/// @brief ウェイト値
-	std::vector<Weight> weights;
+		// 行列セット
+		void SetOffeetMtx(const DXSimp::Matrix& _offsetMatrix);
 
-public:
-	Bone() : boneName(""), meshName(""), armatureName(""), boneIdx(0) {}
-	~Bone() {}
+		/// @brief ローカルノード行列をセット
+		/// @param _nodeMatrix ノード行列
+		void SetLocalNodeMtx(const DXSimp::Matrix& _nodeMatrix);
 
-	/// @brief ウェイトを配列に追加する
-	/// @param _weight ウェイト
-	void AddWeight(const Weight& _weight);
+		/// @brief ボーンのアニメーショントランスフォームの参照を取得
+		/// @return アニメーショントランスフォームの参照
+		BoneTransform& GetRefelenceAnimTransform();
 
-	// 名前セット
-	void SetBoneName(const std::string& _boneName);
-	void SetMeshName(const std::string& _meshName);
-	void SetArmatureName(const std::string& _armatureName);
+		// インデックスセット
+		void SetIndex(u_int _idx);
 
-	// 行列セット
-	void SetAnimationMtx(const DirectX::SimpleMath::Matrix& _animationMatrix);
-	void SetOffeetMtx(const DirectX::SimpleMath::Matrix& _offsetMatrix);
+		// 名前取得
+		std::string GetBoneName() const;
 
-	// インデックスセット
-	void SetIndex(u_int _idx);
+		// 行列を取得
+		const DXSimp::Matrix& GetCombMtx() const;
+		DXSimp::Matrix GetAnimMtx() const;
+		const DXSimp::Matrix& GetOffsetMtx() const;
+		const DXSimp::Matrix& GetGlobalMtx() const;
 
-	// 名前取得
-	std::string GetBoneName() const;
-	std::string GetMeshName() const;
-	std::string GetArmatureName() const;
+		// トランスフォームを取得
+		const BoneTransform& GetAnimationTransform() const;
 
-	// 行列を取得
-	DirectX::SimpleMath::Matrix& GetCombMtx();
-	DirectX::SimpleMath::Matrix& GetAnimMtx();
-	DirectX::SimpleMath::Matrix& GetOffsetMtx();
+		/// @brief 初期姿勢ローカルトランスフォームを取得
+		/// @return 初期姿勢ローカルトランスフォーム
+		const BoneTransform& GetLocalNodeTransform() const;
 
-	void CreateCombMtx(const DirectX::SimpleMath::Matrix& _parentMtx);
+		// インデックスを取得
+		u_int GetIndex() const;
 
-	// インデックスを取得
-	u_int GetIndex();
-};
+	private:
+		void Copy(const Bone& _other);
+	};
+}

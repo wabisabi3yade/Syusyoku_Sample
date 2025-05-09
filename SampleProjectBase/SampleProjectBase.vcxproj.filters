@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="リソース ファイル">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -34,42 +30,6 @@
     <Filter Include="ソース ファイル\Scene\SceneManager">
       <UniqueIdentifier>{f9797062-9c55-4a6c-baed-e07a2277e087}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Scene\Test">
-      <UniqueIdentifier>{e4b6ed63-52b2-4a99-9528-c6086552660f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\Test\BroadScene">
-      <UniqueIdentifier>{bb122568-91e8-499c-a030-c25dce1677f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\Test\SubScene">
-      <UniqueIdentifier>{a80e53bb-2990-4524-abda-cf5fa1c94bce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\BroadScene">
-      <UniqueIdentifier>{ad402460-ec50-4210-a177-c1bc80af3852}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\BroadScene\BroadScane_Base">
-      <UniqueIdentifier>{0f654507-8770-4faa-9cbd-8b3b2c691e81}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\BroadScene\ChangeScene">
-      <UniqueIdentifier>{f721e346-9d6a-434a-bcb2-41103e4b8a18}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\SubScene">
-      <UniqueIdentifier>{43ee46ab-9faa-4d86-9b0b-234b5bbe5229}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\SubScene\SubScene_Base">
-      <UniqueIdentifier>{85f77007-a692-4725-a382-d9a0995088e8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\SubScene\ChangeScene">
-      <UniqueIdentifier>{84b06df8-0600-4031-90c8-29686042e611}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\SceneMoveInfo">
-      <UniqueIdentifier>{7ed6a9c7-5047-4dae-87fc-54f777f9a701}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\SceneMoveInfo\RunningState">
-      <UniqueIdentifier>{05aa3335-234a-486b-8b54-dd6f6cdaa1c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\Test\ChangeSub">
-      <UniqueIdentifier>{aec81818-b41f-433d-8562-cf6f5e640d44}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\System\pch">
       <UniqueIdentifier>{8c29c4da-c53b-415b-8ae0-a5554f701a24}</UniqueIdentifier>
     </Filter>
@@ -82,12 +42,6 @@
     <Filter Include="ソース ファイル\System\Transform">
       <UniqueIdentifier>{d3eb84ad-7e35-417a-9ffc-d5938579ae06}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object">
-      <UniqueIdentifier>{55c4fa45-2e89-43b4-91f6-f99c07eb6859}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Camera">
-      <UniqueIdentifier>{6a26953d-a672-405b-952f-60d285febe89}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\System\ImGui">
       <UniqueIdentifier>{3a4f88db-e57c-4ce8-9c11-57982a744aca}</UniqueIdentifier>
     </Filter>
@@ -99,30 +53,6 @@
     </Filter>
     <Filter Include="ソース ファイル\System\ImGui\ImGui">
       <UniqueIdentifier>{65a46e3a-d104-4ba9-bbba-6c4a1a612f0f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\Tag">
-      <UniqueIdentifier>{988b4f81-a66d-4eef-8758-f35438d16df4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\TankFire">
-      <UniqueIdentifier>{d4db0105-4185-4068-8f42-f57819645494}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\TankFire\ChangeSub">
-      <UniqueIdentifier>{58733c0a-0731-4438-9236-0be8e83cfd5b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\TankFire\SubScene">
-      <UniqueIdentifier>{e6273f7e-7454-4fe7-8739-0d37deeb5863}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\TankFire\BroadScene">
-      <UniqueIdentifier>{a5887d5e-dc54-4947-bffb-467f1f55c4a4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\TankFire\SubScene\InGame">
-      <UniqueIdentifier>{20231241-ed76-454f-af9b-1ce0d9e965a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\TankFire\SubScene\Title">
-      <UniqueIdentifier>{55b9c26e-8608-40e1-b899-9bf3507cef0c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene\TankFire\SubScene\Result">
-      <UniqueIdentifier>{11db7113-88cb-4f3e-83ac-e139c9c32672}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\System\JISToUTF8">
       <UniqueIdentifier>{044f28fe-fa18-4027-b4b8-860014ccfae3}</UniqueIdentifier>
@@ -139,12 +69,6 @@
     <Filter Include="ソース ファイル\Component\InGame">
       <UniqueIdentifier>{2e409227-6957-4c53-a14b-b823bba68a51}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\InGame\Player">
-      <UniqueIdentifier>{44a70ce8-ddd0-445a-b29f-38a25df60c0c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\InGame\Player\PlayerMove">
-      <UniqueIdentifier>{6c7be51c-6d1a-480a-89c3-1083e505d0d7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Component\InGame\Camera">
       <UniqueIdentifier>{76d719ff-9c96-4140-9f9b-437adc20c404}</UniqueIdentifier>
     </Filter>
@@ -154,53 +78,17 @@
     <Filter Include="ソース ファイル\Component\Collider\Sphere">
       <UniqueIdentifier>{43f104c6-d005-4633-a3d8-0ae524b6de22}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\Collider\CollisionChecker">
-      <UniqueIdentifier>{ee02f005-9104-4dc7-80e5-56016c5bdf4e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\SceneObjects">
-      <UniqueIdentifier>{4b5fda20-e416-43b8-99cd-92e298c295f2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Component\Collider\Base">
       <UniqueIdentifier>{0157a627-13bf-479e-b143-2b1c12827e0c}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Component\InGame\Camera\CameraMove">
       <UniqueIdentifier>{6b4aa409-ce39-44d4-b402-3a73fef4490a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\InGame\Camera\CameraInput">
-      <UniqueIdentifier>{82bec4ac-dc99-4c37-a7ba-9b5b3727bd14}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\System\Application">
       <UniqueIdentifier>{5466729c-5537-4707-b5b1-05328d8fd375}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\System\Application\DirectX3D11">
       <UniqueIdentifier>{b04cefbf-b898-49b0-95d6-17faa5e46b0f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\System\Application\DirectX3D11\Render">
-      <UniqueIdentifier>{80e102d7-e0fd-43b9-9a50-a1df9c440f43}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\System\Application\DirectX3D11\Render\BlendState">
-      <UniqueIdentifier>{e46d00a0-0292-4162-9bb5-01ed5a935ebd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\System\Application\DirectX3D11\Render\CbSet">
-      <UniqueIdentifier>{beac274c-3daf-40c2-8f23-58d0ac398439}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\System\Application\DirectX3D11\Render\D3D11_Renderer">
-      <UniqueIdentifier>{a41c40b7-d197-4bfd-96a9-b698e0e82856}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\System\Application\DirectX3D11\Render\View">
-      <UniqueIdentifier>{c234daf4-e652-4ee1-a90e-8a9a60a9a141}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\System\Application\DirectX3D11\Render\RenderParam">
-      <UniqueIdentifier>{7c9d4fd5-d3da-448f-af4d-a491c239d133}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\System\Application\DirectX3D11\Render\Projection">
-      <UniqueIdentifier>{c1b93871-cebf-4d8d-a674-d96b47a06c5b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\System\Application\DirectX3D11\Render\Projection\PerspectiveProj">
-      <UniqueIdentifier>{571bfd00-895f-4fc2-a3bb-f8979231d705}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\System\Application\DirectX3D11\Render\Sampler">
-      <UniqueIdentifier>{ef2a43b5-a26c-496b-80e2-a491592009f1}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\System\Application\MainApplication">
       <UniqueIdentifier>{52bc151c-6b6b-4f7e-b980-0fbd87175227}</UniqueIdentifier>
@@ -220,20 +108,8 @@
     <Filter Include="ソース ファイル\System\Application\Input\Keyboard">
       <UniqueIdentifier>{67dedc71-2688-4e08-8632-ead66bf81b9e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\System\GameMode">
-      <UniqueIdentifier>{9c95c819-a91d-411a-80fd-9a3899e66cc7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Component\InGame\Test">
       <UniqueIdentifier>{3c61951c-e04f-4483-8c93-ee48a0b9497f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\TankFireObj">
-      <UniqueIdentifier>{edfb3745-ef82-405e-ada1-6969c13f46aa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\TankFireObj\Tank">
-      <UniqueIdentifier>{30742376-b87f-4e1a-8e2c-fb6837c989bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\GameObject">
-      <UniqueIdentifier>{54651696-70bc-4ca7-ba6d-128c5dc1b8e4}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Geometory">
       <UniqueIdentifier>{8ad7004a-18e3-467b-b982-788b90b03a7c}</UniqueIdentifier>
@@ -241,38 +117,11 @@
     <Filter Include="ソース ファイル\System\Json">
       <UniqueIdentifier>{0e2f16b8-5e83-4119-867e-087426684a3a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\System\Json\SaveJsonValue">
-      <UniqueIdentifier>{c5ddcc57-61e7-4c28-8254-6882c301f71c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\System\Json\Save">
       <UniqueIdentifier>{e8e81301-115a-4a0a-93dd-3fa9d701854e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Component\InGame\Bullet">
-      <UniqueIdentifier>{dfebd937-7ad1-49d9-9a20-14cf68f37213}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\InGame\Player\PlayerInput">
-      <UniqueIdentifier>{3ead3f7f-0159-4fa0-bb22-adcd1bbdcafa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\System\Useful">
-      <UniqueIdentifier>{7a7bde62-f1ee-405c-bca3-eb0e4517e016}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\System\Useful\CUseful">
-      <UniqueIdentifier>{8d2e074a-3358-4341-94a5-dcfabc90dfaf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\System\Useful\MathUseful">
-      <UniqueIdentifier>{4c0f1f54-09cf-4963-af1b-02fdd0832fe5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Scene\InSceneSystem">
       <UniqueIdentifier>{b54ce796-f7aa-42ab-a133-8a4a2882bec4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\Renderer">
-      <UniqueIdentifier>{c8d276b6-693f-456b-b610-b6732ac7bc87}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\Renderer\Sprite">
-      <UniqueIdentifier>{30886fe2-c05e-43c7-aa35-50c3cfd6e5e7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\Renderer\Mesh">
-      <UniqueIdentifier>{d2c3155c-bdfb-4186-b232-b76b637eab9b}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Sprite">
       <UniqueIdentifier>{1a41ed64-d240-4aa2-994b-29cad816077b}</UniqueIdentifier>
@@ -283,29 +132,11 @@
     <Filter Include="ソース ファイル\System\ShaderCollection">
       <UniqueIdentifier>{88a9f50c-2731-4458-9ed8-c1fe343fcaf2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics\Shader">
-      <UniqueIdentifier>{5ab34369-180c-463a-a98c-0888e0f123e3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Asset">
-      <UniqueIdentifier>{a26d63dc-8a9b-49c0-931a-460745a76043}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Asset\Loader">
-      <UniqueIdentifier>{6fb219dd-20f3-4daf-838c-d6ecf47f452f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Asset\Get">
-      <UniqueIdentifier>{a0b7a1e8-da1e-4da0-bfdc-0cdbf998ba55}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Scene\SceneFunction">
       <UniqueIdentifier>{873b7fd4-8efe-4072-b1f3-edf202c51acb}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Scene\SceneFunction\GameObject">
       <UniqueIdentifier>{561d5b96-25b2-4652-b462-abca12791b72}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Asset\Collection">
-      <UniqueIdentifier>{0914fd39-6184-4c51-bbf5-0a403f0e3bdd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Asset\Display">
-      <UniqueIdentifier>{a6513ca5-8784-4484-b15a-f0da6b60d05a}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Mesh">
       <UniqueIdentifier>{da97f189-bf52-4ca3-a034-e91971362e8d}</UniqueIdentifier>
@@ -315,12 +146,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Mesh\SkeletalMesh">
       <UniqueIdentifier>{3809995c-1437-4c7a-ab17-d7c291a74efb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Asset\Asset_Base">
-      <UniqueIdentifier>{5e4258b4-aaaa-48c5-9f60-b10c8a265734}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Asset\IAssetContacter">
-      <UniqueIdentifier>{333b47f0-4487-44d6-b0ee-473ec0bc5c9b}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Buffer">
       <UniqueIdentifier>{4fac6332-97e3-4d69-8966-9c1e468ac2b8}</UniqueIdentifier>
@@ -333,12 +158,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Buffer\Interface">
       <UniqueIdentifier>{e51dfb6c-9168-4783-bdb0-0997e7af955a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Asset\Set">
-      <UniqueIdentifier>{9fd6fdb1-928a-4b90-84b7-151791e0d456}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Component\Renderer\Base">
-      <UniqueIdentifier>{e042d57d-0041-48e4-9ab9-365bdbd9bde3}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Graphics\Mesh\Sphere">
       <UniqueIdentifier>{5268db00-a05b-40ef-8ccc-481a51095ac4}</UniqueIdentifier>
@@ -355,47 +174,11 @@
     <Filter Include="ソース ファイル\System\Prototype">
       <UniqueIdentifier>{8b44edf1-50c2-4f9c-b724-f1e67abf683a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\template">
-      <UniqueIdentifier>{3413918b-02ea-4457-9d59-ea33c05fc5e5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Component\Factory">
       <UniqueIdentifier>{59c4033c-957f-4e5b-bd6b-1be4ed5e0fbc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics\Shader\Vertex">
-      <UniqueIdentifier>{ce397238-d551-440c-a98a-9990ab849981}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics\Shader\Pixel">
-      <UniqueIdentifier>{ef35cfd6-c110-4ce9-af99-9a564f62db66}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics\Shader\Base">
-      <UniqueIdentifier>{54f60261-d464-492f-94cd-725c9e08a910}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\Base">
-      <UniqueIdentifier>{d1452bc8-852a-4657-b55e-a8cb11c4af52}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\Base">
-      <UniqueIdentifier>{906f26d9-26c2-4f10-a59a-deec38027e49}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\World">
-      <UniqueIdentifier>{be6b606f-cba9-4ed5-8c1b-d82595971065}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\OutLine">
-      <UniqueIdentifier>{6d9f9bbf-d058-49a1-8f01-3308bac93c5d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\Unlit">
-      <UniqueIdentifier>{62285b9b-b13a-4a48-90bb-923d7ff90ed0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\Gouraud">
-      <UniqueIdentifier>{5c5f5a2b-4fd4-4219-9474-b9a8fcb8112f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\Lit">
-      <UniqueIdentifier>{023695c9-70cd-4b26-803d-53a8a07213f8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Scene\SceneFunction\SF_Light">
       <UniqueIdentifier>{5659979c-5dac-4fb1-b2b8-1258f1f7db18}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\Geometory">
-      <UniqueIdentifier>{cbda257e-1421-40b1-b730-b6fe0adc5d6e}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Component\Animation">
       <UniqueIdentifier>{8488f8d3-f124-4e8f-a712-b2701cde8db4}</UniqueIdentifier>
@@ -424,30 +207,796 @@
     <Filter Include="ソース ファイル\Animation">
       <UniqueIdentifier>{a11adc7e-fbdb-4ba4-8603-cb26ed4d9386}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Animation\AnimationData">
-      <UniqueIdentifier>{e36a3d30-c6cd-4c11-9242-337369ae187b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Animation\NodeAnim">
-      <UniqueIdentifier>{57f40450-fae2-4e11-b412-be9f6b0cc442}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode">
       <UniqueIdentifier>{d44aa57b-8f2d-4ef1-a0a4-0d076eb8d695}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Graphics\Mesh\MeshGroup">
+      <UniqueIdentifier>{092d1475-cec9-4248-840b-91e6725f7546}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationController">
+      <UniqueIdentifier>{8fc2ee27-4adf-4e9e-a7ed-7c12971b0fc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method">
+      <UniqueIdentifier>{97c74d9a-604c-4101-a84b-21cf9d7de430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\Useful">
+      <UniqueIdentifier>{7a7bde62-f1ee-405c-bca3-eb0e4517e016}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\Useful\MathUseful">
+      <UniqueIdentifier>{4c0f1f54-09cf-4963-af1b-02fdd0832fe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\Interpolate">
+      <UniqueIdentifier>{4e16815d-644a-47ba-ad51-330b3af1802b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\Interpolation">
+      <UniqueIdentifier>{5c5008da-592a-46a2-949d-45c20cc62cbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\Interpolation\Ease">
+      <UniqueIdentifier>{dec3ba62-c7fc-4fb1-a900-89708a0951b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\Interpolate\Inertial">
+      <UniqueIdentifier>{d4f80aad-a5d1-4b02-a602-d79224bab1b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\Interpolation\Ease\Function">
+      <UniqueIdentifier>{5a0a1e68-942c-4537-8c48-9c07c48df1d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimNode">
+      <UniqueIdentifier>{4a782538-0eeb-4285-9173-56a211c77dea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimNode\Single">
+      <UniqueIdentifier>{9eb5cc6a-89a5-466e-bed5-e5c9c2baf463}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimNode\Blend">
+      <UniqueIdentifier>{d0a695e2-7790-421a-bf72-b2df994ea1c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game">
+      <UniqueIdentifier>{ec24e437-56cb-46e1-a163-c0afcf9d909f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationObserver">
+      <UniqueIdentifier>{8fd6faa5-22ea-4057-adcb-8b28d6760af5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\Observe">
+      <UniqueIdentifier>{9c82779b-423c-4c8a-9678-f49bf3689f32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\NewScene">
+      <UniqueIdentifier>{3488b5cd-7fde-47f6-a2bf-4954d67b7489}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\SaveLoad">
+      <UniqueIdentifier>{c41bb637-2180-4783-83dc-6cd1d9c14167}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Player">
+      <UniqueIdentifier>{8f20992c-476d-48af-ab1a-565fb4cd2840}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet">
+      <UniqueIdentifier>{7e975cb2-f733-4690-ab3c-d2922af551a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet\DXToBullet">
+      <UniqueIdentifier>{4254fa20-86b0-4af5-9173-e95190449434}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet\import">
+      <UniqueIdentifier>{52663022-face-4cfb-91c6-43d4b100c9bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Collider\RigidBody">
+      <UniqueIdentifier>{95fb55dd-2a3d-43a3-8a7f-2f7991a7802c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet\DebugDraw">
+      <UniqueIdentifier>{11045193-0bd7-46a5-a305-506cfbcaff66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\ImGui\Interface">
+      <UniqueIdentifier>{64aa98e0-1abe-41e9-ae1b-894e2166dc66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimTransitionArrow">
+      <UniqueIdentifier>{1ea9a2ba-7aa3-42c6-b471-735411e3b752}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationData">
+      <UniqueIdentifier>{e36a3d30-c6cd-4c11-9242-337369ae187b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\Channel">
+      <UniqueIdentifier>{57f40450-fae2-4e11-b412-be9f6b0cc442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimNode\Base">
+      <UniqueIdentifier>{914716c0-f649-4d87-944b-d8d45449ad5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\Interpolate\Catmul">
+      <UniqueIdentifier>{060507b4-1142-4237-a32b-304a2d682538}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\Interpolate\CrossFade">
+      <UniqueIdentifier>{c5d0c1fe-212e-4edb-9f1b-aa170a7e4ca3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\Interpolate\Interface">
+      <UniqueIdentifier>{af461be4-b806-4c86-afee-9f961675a2a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\Render">
+      <UniqueIdentifier>{80e102d7-e0fd-43b9-9a50-a1df9c440f43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\Render\BlendState">
+      <UniqueIdentifier>{e46d00a0-0292-4162-9bb5-01ed5a935ebd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\Render\View">
+      <UniqueIdentifier>{c234daf4-e652-4ee1-a90e-8a9a60a9a141}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\Render\RenderParam">
+      <UniqueIdentifier>{7c9d4fd5-d3da-448f-af4d-a491c239d133}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\Render\Projection">
+      <UniqueIdentifier>{c1b93871-cebf-4d8d-a674-d96b47a06c5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\Render\Projection\PerspectiveProj">
+      <UniqueIdentifier>{571bfd00-895f-4fc2-a3bb-f8979231d705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\Render\Sampler">
+      <UniqueIdentifier>{ef2a43b5-a26c-496b-80e2-a491592009f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Application\DirectX3D11\D3D11_Renderer">
+      <UniqueIdentifier>{a41c40b7-d197-4bfd-96a9-b698e0e82856}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\DepthStencil">
+      <UniqueIdentifier>{0f77b6db-a9a6-4fe9-9453-4d85f28c4336}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\RenderTarget">
+      <UniqueIdentifier>{60198280-e569-4ec9-a123-b06af48d8de9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet\Callback">
+      <UniqueIdentifier>{96055a68-3ab4-43da-a400-c2717a29e6db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet\PhysicsEngine">
+      <UniqueIdentifier>{a42daa8f-175c-4c8b-b507-028604f46bff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Sprite\Drawer">
+      <UniqueIdentifier>{f78a12b9-8f83-4cd7-9a90-ea95740bfd77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\SkyBox">
+      <UniqueIdentifier>{5197527b-98a8-4fc6-968c-8e9157f342c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet\Test">
+      <UniqueIdentifier>{a5aeacce-e9bc-4e92-b0f4-45f4a32d28cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify">
+      <UniqueIdentifier>{1b855690-063d-4417-ab64-ac10706e0312}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event">
+      <UniqueIdentifier>{f9754356-d852-4070-b0e8-13b9694105d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\State">
+      <UniqueIdentifier>{36bcc241-e81b-40e3-a9e6-ef31c64e4aad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\IAnimationNotify">
+      <UniqueIdentifier>{a22e08c0-d965-436f-8b63-e3e75d37df5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\DebugLog">
+      <UniqueIdentifier>{c1fa6d37-0e8c-494c-ba50-a8db6113738f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\State\DebugLog">
+      <UniqueIdentifier>{69aba161-90c1-40a7-933a-39554802c8ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\Respawner">
+      <UniqueIdentifier>{c4bc0c3d-e09a-45d6-a04d-5e082bb2202e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\AnimationNotifyFactory">
+      <UniqueIdentifier>{0f45c75f-2e3f-4310-badf-c70f29235b0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Camera">
+      <UniqueIdentifier>{6a26953d-a672-405b-952f-60d285febe89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\template">
+      <UniqueIdentifier>{3413918b-02ea-4457-9d59-ea33c05fc5e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\TypeName">
+      <UniqueIdentifier>{a7f0cabf-f61d-4f9b-8be0-75d4abfe72a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimTransitionArrow\Button">
+      <UniqueIdentifier>{bdc19cae-5bf9-4368-b5de-d45df261d9a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Respawner">
+      <UniqueIdentifier>{2b656b14-cf49-43bc-b3fb-caedbed283dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\TransCondition">
+      <UniqueIdentifier>{26d6ccaa-6c1b-4baa-bf76-17945ca88870}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\TransCondition\Boolean">
+      <UniqueIdentifier>{f9de96e9-dffd-41f3-aa5d-3c508710edc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\TransCondition\Integer">
+      <UniqueIdentifier>{e82d1918-500d-4e94-9857-b4002b4c4ca7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\TransCondition\Float">
+      <UniqueIdentifier>{5e42a348-04ee-4231-b194-5d69785f3640}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\TransCondition\Base">
+      <UniqueIdentifier>{553bb374-367d-4a18-9021-8290edcb281d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Random">
+      <UniqueIdentifier>{d4935691-8de9-4159-9627-7b5d1952294f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\TransCondition\Creater">
+      <UniqueIdentifier>{282c9446-36ac-4892-84b3-20d74d621aa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationPameters">
+      <UniqueIdentifier>{d78781e3-3f17-4ca1-a572-6cc82b233ef0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationPameters\Trigger">
+      <UniqueIdentifier>{417e5fb0-e652-49e6-a75a-fb4a18d42e35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\TransCondition\Trigger">
+      <UniqueIdentifier>{870980fb-4b11-4299-b300-70887fda948f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationPameters\removeObserver">
+      <UniqueIdentifier>{b56ad7f4-27ec-4299-a051-8a15a6420d86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimControllPlayer">
+      <UniqueIdentifier>{ab57e764-1dbf-4659-85a1-5a916a4070a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationPameters\Base">
+      <UniqueIdentifier>{ad716e0c-6bd2-43ad-9827-db15a97867e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationPameters\Origin">
+      <UniqueIdentifier>{222ca021-1fbc-42ee-b4bc-b060a2d20487}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationPameters\Copy">
+      <UniqueIdentifier>{607275a5-2cc3-4b3b-91a7-098c765fdf6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimControllPlayer\NodePlayer">
+      <UniqueIdentifier>{6b69ad4a-22bc-49ef-8162-56de7deea6b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimControllPlayer\NodePlayer\BlendNodePlayer">
+      <UniqueIdentifier>{2a0ae525-0c0c-49da-a03e-b8f2757f771d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimControllPlayer\NodePlayer\NodePlayer_Base">
+      <UniqueIdentifier>{dd7e13e3-1f18-4fd0-815b-ed488aa6e0d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimControllPlayer\NodePlayer\SingleNodePlayer">
+      <UniqueIdentifier>{82916ae5-3002-42ac-969d-5aaa78fb7480}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimControllPlayer\TransitionChecker">
+      <UniqueIdentifier>{f371e2fa-8810-4801-8f37-ee608d7a3298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\SystemDraw">
+      <UniqueIdentifier>{67933a3e-6739-46f8-bc0a-99cbcc12782e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet\CollisionInfo">
+      <UniqueIdentifier>{c0486cea-d8a8-466f-8a36-1798c02af0bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Collider\Capsule">
+      <UniqueIdentifier>{04d960d7-cbdb-4f20-8a03-46cfe52a63ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Mesh\2D">
+      <UniqueIdentifier>{1d7ee4ec-717a-42b7-90ae-b3101ba64030}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Method\StateMachine">
+      <UniqueIdentifier>{42bff392-568b-45c2-b400-a40f82d130f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\Base">
+      <UniqueIdentifier>{478c572e-8910-45f7-bbcf-67bc21430454}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\State\Base">
+      <UniqueIdentifier>{47e95638-2833-456c-a82f-87634fd7c68a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\State\ChangeParameter">
+      <UniqueIdentifier>{c58a80d2-a175-43c0-8b35-519907c95306}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\IAnimParametersSetter">
+      <UniqueIdentifier>{bd013dbf-59e1-44fd-a2d4-34e87b52f746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationObserver\ChangeAnimObserver">
+      <UniqueIdentifier>{aad0a846-08ed-43aa-a25b-73332a308eea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Rig">
+      <UniqueIdentifier>{1bbb90cd-7de8-4a67-902c-e3d039dd90b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Character">
+      <UniqueIdentifier>{b19c4dd4-0ca0-4fd0-8554-deb86180625e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Enemy">
+      <UniqueIdentifier>{081f6fa9-ed67-4920-a268-4979895dd4f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Weapon">
+      <UniqueIdentifier>{ee42c855-ec56-4212-89cc-f6b4cf07a8c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Singleton">
+      <UniqueIdentifier>{8c63b18e-c12e-4ef8-8766-dd2a16ef4539}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\AnimationCurve">
+      <UniqueIdentifier>{1cf20d1f-8aaa-46da-9e92-2990afd1dd0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\ImGui\ImPlot">
+      <UniqueIdentifier>{88dc33e0-f5dd-4334-a65b-bc3e1b1527b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Boss">
+      <UniqueIdentifier>{fbc59e98-d5f9-4a2c-a62d-0f7ca38ed6c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationPameters\NewFilter1">
+      <UniqueIdentifier>{98c24367-84b0-49b0-a920-e3fea59a1c52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationPameters\IAnimParamSetter">
+      <UniqueIdentifier>{dded9990-a1dc-4379-9c1a-bf81219a70a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\SceneEditer">
+      <UniqueIdentifier>{7ed6a9c7-5047-4dae-87fc-54f777f9a701}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader">
+      <UniqueIdentifier>{5ab34369-180c-463a-a98c-0888e0f123e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Vertex">
+      <UniqueIdentifier>{ce397238-d551-440c-a98a-9990ab849981}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\Base">
+      <UniqueIdentifier>{d1452bc8-852a-4657-b55e-a8cb11c4af52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\Gouraud">
+      <UniqueIdentifier>{5c5f5a2b-4fd4-4219-9474-b9a8fcb8112f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\SkinAnimation">
+      <UniqueIdentifier>{bd649246-a2d6-4a62-b4e0-1d28a10c3311}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\Primitive">
+      <UniqueIdentifier>{cbda257e-1421-40b1-b730-b6fe0adc5d6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\Toon">
+      <UniqueIdentifier>{a75208f5-2090-4613-9b5b-2c1c7a6ea832}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Pixel">
+      <UniqueIdentifier>{ef35cfd6-c110-4ce9-af99-9a564f62db66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\Base">
+      <UniqueIdentifier>{906f26d9-26c2-4f10-a59a-deec38027e49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\Unlit">
+      <UniqueIdentifier>{62285b9b-b13a-4a48-90bb-923d7ff90ed0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\TexColor">
+      <UniqueIdentifier>{d7cbca95-6ee4-4195-b332-5c656e152d42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Base">
+      <UniqueIdentifier>{54f60261-d464-492f-94cd-725c9e08a910}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\VS_Object">
+      <UniqueIdentifier>{479e427c-5306-4063-a9e5-ffb5d3e8f05a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter">
+      <UniqueIdentifier>{3e15c111-0798-4478-89c4-15cad16afe66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Effect">
+      <UniqueIdentifier>{92b70c80-2df1-4126-be51-c67de92e5d28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Effect\DX11EffecseerManager">
+      <UniqueIdentifier>{8846c3da-289d-4247-8121-d08d67a865dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\WorldPosition">
+      <UniqueIdentifier>{4c00a6ec-e64f-4d40-b548-7c33b6357371}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\Toon">
+      <UniqueIdentifier>{f634eda5-f768-4b58-88a5-7041621c14b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Collision">
+      <UniqueIdentifier>{5129898d-5a60-46fd-bbec-b5837c36e0d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Collision\CollisionTypeJudge">
+      <UniqueIdentifier>{13f0554e-7b52-4850-a7dc-fd4ef58f66df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Effect\VFX">
+      <UniqueIdentifier>{19e1e296-d736-4147-bac9-f6613df9476a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\VFX">
+      <UniqueIdentifier>{2b7b1691-01e0-4ebc-84ac-89c7898f3ff0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\HitStopManager">
+      <UniqueIdentifier>{63249c5d-525d-4d54-ad72-f133c036bb9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\BattleManager">
+      <UniqueIdentifier>{11171953-3aa3-492c-b43b-ad29c6e81082}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset">
+      <UniqueIdentifier>{a26d63dc-8a9b-49c0-931a-460745a76043}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Loader">
+      <UniqueIdentifier>{6fb219dd-20f3-4daf-838c-d6ecf47f452f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Get">
+      <UniqueIdentifier>{a0b7a1e8-da1e-4da0-bfdc-0cdbf998ba55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Collection">
+      <UniqueIdentifier>{0914fd39-6184-4c51-bbf5-0a403f0e3bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Display">
+      <UniqueIdentifier>{a6513ca5-8784-4484-b15a-f0da6b60d05a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Asset_Base">
+      <UniqueIdentifier>{5e4258b4-aaaa-48c5-9f60-b10c8a265734}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\IAssetContacter">
+      <UniqueIdentifier>{333b47f0-4487-44d6-b0ee-473ec0bc5c9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Set">
+      <UniqueIdentifier>{9fd6fdb1-928a-4b90-84b7-151791e0d456}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Creater">
+      <UniqueIdentifier>{44856d4f-ce3f-41e6-abd2-d33017fe20c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\Creater\Material">
+      <UniqueIdentifier>{e6f51b7a-e972-4329-b590-ab33c6425c28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Asset\AssetSaveLoad">
+      <UniqueIdentifier>{e920b94b-d20d-453e-9d2a-5a37f71f5329}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame">
+      <UniqueIdentifier>{55c4fa45-2e89-43b4-91f6-f99c07eb6859}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player">
+      <UniqueIdentifier>{f762aecb-5591-4a8a-8c14-1ff5ea162329}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action">
+      <UniqueIdentifier>{734f0100-f685-4552-a879-1602de240990}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState">
+      <UniqueIdentifier>{30b7385e-e266-4a05-8e63-0b4ecc32555c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Base">
+      <UniqueIdentifier>{492cca82-3a6e-47dd-bd72-21b904e2eaee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\Controller">
+      <UniqueIdentifier>{8007b5fd-3163-4427-92a4-a7ace58b8af8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy">
+      <UniqueIdentifier>{dc9b3105-0e1c-48a6-9f59-8b3065fa9e87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Enemy_Base">
+      <UniqueIdentifier>{77650a39-b459-41b7-966d-5118a1f49605}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Enemy_Base\Controller">
+      <UniqueIdentifier>{faca9ea9-e734-4ae7-95e6-890e921d7e8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Enemy_Base\ActState">
+      <UniqueIdentifier>{d90dea02-8363-4070-bc79-0a0e2976d853}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss">
+      <UniqueIdentifier>{5f2984ea-6160-4ded-acc8-5a37d0709189}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\Controller">
+      <UniqueIdentifier>{d19170bc-d61c-4810-be00-8b9faa46c397}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState">
+      <UniqueIdentifier>{54c2c2c0-6ac1-4f51-a8ec-bc6659198d6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\BossAct_Base">
+      <UniqueIdentifier>{b5375f29-655e-4426-af57-d2ccb5eda953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\Move">
+      <UniqueIdentifier>{72c9ce00-a1e9-4ec8-b2c5-c25b83bdb458}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\Ground">
+      <UniqueIdentifier>{4b72b850-47e2-4154-ad11-c3dd8293cca8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\Damage">
+      <UniqueIdentifier>{8ae26436-5c09-42e2-91e6-3d54ef3ef5c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\Idle">
+      <UniqueIdentifier>{545b3d9e-caef-4425-959e-398832bdd930}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Character">
+      <UniqueIdentifier>{ad09703f-2b45-4a4f-9910-67888da99373}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Character\ActionState">
+      <UniqueIdentifier>{ae4f9f80-96f4-43ce-9c88-fb3950800b94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera">
+      <UniqueIdentifier>{42963d73-08e2-4d8f-8208-32a17577e4d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera\Controller">
+      <UniqueIdentifier>{5ff96db3-4852-4e95-a133-c2a2525a6d74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera\State">
+      <UniqueIdentifier>{c1514f2a-4b35-4b24-a894-b820746f4a17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera\State\Move">
+      <UniqueIdentifier>{8111d62c-0679-43a8-a7e3-83d4319f3a10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera\State\Base">
+      <UniqueIdentifier>{99d6c39a-9b1d-4e02-9dcc-4e3d860ab86f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\ITargeter">
+      <UniqueIdentifier>{3fa1c02a-1e34-463b-adeb-5cc177ac9265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Attack">
+      <UniqueIdentifier>{20c2d3de-34df-4e16-bfb2-e323b6d14c3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Attack\Information">
+      <UniqueIdentifier>{612ab13f-3e57-455e-a59a-3200c7d49c5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Attack\IDamageable">
+      <UniqueIdentifier>{ab2c7d85-ac80-46de-a213-7d88be8f1496}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\Tag">
+      <UniqueIdentifier>{988b4f81-a66d-4eef-8758-f35438d16df4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\GameObject">
+      <UniqueIdentifier>{54651696-70bc-4ca7-ba6d-128c5dc1b8e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\SceneObjects">
+      <UniqueIdentifier>{4b5fda20-e416-43b8-99cd-92e298c295f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\Attack">
+      <UniqueIdentifier>{6e12c62b-ea29-452a-bba4-150f66d5365e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Collider\Cylinder">
+      <UniqueIdentifier>{9df9eb26-c86d-48da-b9e0-d9754bbb46dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera\State\Target">
+      <UniqueIdentifier>{c103a246-7170-4072-8df8-012169b25b52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Button">
+      <UniqueIdentifier>{b54bed7e-988f-4559-b2fe-3e38781386c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\ButtonGroup">
+      <UniqueIdentifier>{d2e90e45-216a-4261-a7af-78ed16dfa6e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\ButtonGroup\Title">
+      <UniqueIdentifier>{744eef72-07b5-42ee-9904-0bd13a0b0957}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shadow">
+      <UniqueIdentifier>{0d77d069-9eb9-421f-8297-2f15797cd4fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Sound">
+      <UniqueIdentifier>{ec9e47da-f6b6-4a9d-a6c9-2dcd1e18a81f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Sound\Manager">
+      <UniqueIdentifier>{d47ed0d5-505e-4dfe-b88f-29feabbf5da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Sound\Asset">
+      <UniqueIdentifier>{53e3975b-510e-4e97-80f4-7af7828cb900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\Controller\Base">
+      <UniqueIdentifier>{8e1018be-fcdd-47bf-991e-35a65770f867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Character\Controller">
+      <UniqueIdentifier>{4b012229-53de-4677-87e1-5c4bd8a90312}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\Controller\Ground">
+      <UniqueIdentifier>{5ecc8b59-0edc-4ee3-809d-ca217fc5dce6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\Controller\Air">
+      <UniqueIdentifier>{e3a3cb10-039f-4179-986b-ff41881482e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerAction">
+      <UniqueIdentifier>{460d29f6-5ad2-41cb-888f-7473ae7841c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Air">
+      <UniqueIdentifier>{31be5e33-6d90-4bf3-b203-46c170ea415b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground">
+      <UniqueIdentifier>{dca9d650-43d6-4426-ad2b-88ed2fbd4685}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\Attack">
+      <UniqueIdentifier>{524a883d-d5ba-414d-86a7-c8dd375fabee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\Damage">
+      <UniqueIdentifier>{decc60b5-b129-4992-9ceb-e0c9fce69e44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\Guard">
+      <UniqueIdentifier>{e1b71816-1567-4f01-bebc-516ff818b860}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\Idle">
+      <UniqueIdentifier>{a089199f-2d9b-4703-8356-fe11a5e3c6fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\Jump">
+      <UniqueIdentifier>{a1c0647e-c047-4bb8-ba12-c7e1ef113e9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\Move">
+      <UniqueIdentifier>{10a12211-e7fc-402b-94f0-347b6af8ff71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\Rolling">
+      <UniqueIdentifier>{34ca5317-7d82-4283-9c98-bc8d4dcd88ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\RushAttack">
+      <UniqueIdentifier>{49ff38db-7ed7-4667-a402-fad7eb68fdc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\Target">
+      <UniqueIdentifier>{f8125145-3108-4eff-b3aa-c7c99e0ece36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Air\Move">
+      <UniqueIdentifier>{24cb22a4-16d7-48fa-9b25-86f76088602e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Air\Base">
+      <UniqueIdentifier>{3046ecd3-fd1e-48ef-9433-c9b2382b0c01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\Base">
+      <UniqueIdentifier>{b19bf90d-078f-4f5e-9ee9-86196e4d3e13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Air\Attack">
+      <UniqueIdentifier>{a17b6fec-399b-41bc-8a5f-56ed7611d9db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimNode\Layerd">
+      <UniqueIdentifier>{ef3d9ba5-0661-41f2-816f-409d2fb0742b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimControllPlayer\NodePlayer\LayerdNodePlayer">
+      <UniqueIdentifier>{58f3bed1-2d37-455b-9e55-1fb49d1fa172}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Attack\Information\Player">
+      <UniqueIdentifier>{034b2e9c-2b2f-4300-8ac0-ce826389cbf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\BreakIdle">
+      <UniqueIdentifier>{2efe6b2e-9db3-472d-9f74-4b8c488d254b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\BreakEndKnock">
+      <UniqueIdentifier>{922b5564-1ad2-47a7-91cf-4f4a9df35690}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\JumpAttack">
+      <UniqueIdentifier>{895815e6-92fc-4e24-9814-1d2538ab20f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Enemy\Boss\ActionState\Walk">
+      <UniqueIdentifier>{4476129f-e6a0-47a3-8d0c-59c97d9cc743}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationController\Creater">
+      <UniqueIdentifier>{20cccec9-f21a-4a25-bcf5-973c61d832e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera\State\GameOver">
+      <UniqueIdentifier>{4584bff5-e608-4dea-813f-72cdd9d104ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\ButtonGroup\Base">
+      <UniqueIdentifier>{0e91e8a1-337f-4953-84bd-6ff63373df94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\GroundChecker">
+      <UniqueIdentifier>{c284bd1d-f0fa-4db9-a7e9-59bcdee0afac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\ChargeAttack">
+      <UniqueIdentifier>{f6a32c37-3da1-40c5-a3ef-7a73835c58b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System\PerlinNoise">
+      <UniqueIdentifier>{c44c6e00-3b85-4309-9240-e40186f31588}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\PerlinShake">
+      <UniqueIdentifier>{e88f1067-4010-4bb8-8864-3da5c1eb5fad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\PerlinShake\Parameter">
+      <UniqueIdentifier>{31fc32ed-0e12-4670-92df-0eb43422b2da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\CreateVfx">
+      <UniqueIdentifier>{a7188c60-bf7d-4d2d-9054-a75b7d4d16a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\ITransfiormSetter">
+      <UniqueIdentifier>{f6d914cd-6fa2-43f8-9f94-a6c004e814e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\CameraShake">
+      <UniqueIdentifier>{e963cdc1-6c87-49e9-a18d-00369aeae517}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera\State\ChargeAttack">
+      <UniqueIdentifier>{4c1a00e6-a7b2-40bd-81c8-26a56c0eba9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\PadShake">
+      <UniqueIdentifier>{a4d828b4-4f41-4124-b197-f87441f4fe94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\VertexShader\BackObject">
+      <UniqueIdentifier>{97636ff4-a774-4cda-b787-759845768bf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\PixelShader\BackObject">
+      <UniqueIdentifier>{30bd2e94-7d17-4e27-8db1-e3f13fb1c465}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\BackObject">
+      <UniqueIdentifier>{b358a1c9-c45b-481a-9704-a1882cb76ef0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\OutLine">
+      <UniqueIdentifier>{a27c87fc-8307-4c28-ae08-bc6526b7f903}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\VertexShader\OutLine">
+      <UniqueIdentifier>{de13c24a-b537-4035-892c-044b13c455ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\PixelShader\PS_Ground">
+      <UniqueIdentifier>{f28aa3e3-6465-4343-bfcf-15a7c8c0a274}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\VertexShader\Ground">
+      <UniqueIdentifier>{9971fb44-a153-4405-ad11-a5cbcd13b280}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Vertex\Ground">
+      <UniqueIdentifier>{0b711532-d084-46cb-b1ac-a9f4e50fe22e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Shader\Pixel\Ground">
+      <UniqueIdentifier>{6f94315d-89d0-4923-971c-3a0ff924399a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Animation\IBoneBufferSupplier">
+      <UniqueIdentifier>{7a524518-00d3-4dc4-bf82-f02a5fd5773e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\SoundManager">
+      <UniqueIdentifier>{63eafe5d-7d4d-4d41-ab8a-2110e70df41c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\AudioListener">
+      <UniqueIdentifier>{06701e64-c4bd-4b76-9bb5-2180c8426262}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Animation\AnimationNotify\Event\Sound">
+      <UniqueIdentifier>{a137c1cd-02d6-4a4d-a8ea-65121ba0ae01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\PlaySound">
+      <UniqueIdentifier>{5be12b8c-6860-46f2-82cc-dd3205068512}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\BattleDirection">
+      <UniqueIdentifier>{b5c5732c-5fce-4db6-8c99-cf93f85b81de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\ButtonGroup\Battle">
+      <UniqueIdentifier>{113a0b7d-ceb3-4810-a7dd-7d298f28bcb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Camera\State\Win">
+      <UniqueIdentifier>{8c1370c5-082e-4025-9064-248e134ce895}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\Guard\IParryAccepter">
+      <UniqueIdentifier>{0adb4bf9-0d25-49b7-b3b3-c7a74dff87b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Attack\Information\Enemy">
+      <UniqueIdentifier>{b6c00924-761a-4b48-a548-722f0db8781b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Weapon\IAttacker">
+      <UniqueIdentifier>{5909d599-4ceb-4926-af04-da86058f5547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\InGame\Weapon\IAttacker\IAttacker_AcceptParry">
+      <UniqueIdentifier>{658aeec2-3f70-4c9f-bf42-15eecd7708a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Character\ActionState\InterFace">
+      <UniqueIdentifier>{7e7f76a9-a2ae-4557-b974-981037e9d753}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Air\AirSlashHigh">
+      <UniqueIdentifier>{798ed1ee-cc29-4bc4-9b76-56fdd5a0265e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\InGame\Player\Action\PlayerState\Ground\SlashHigh">
+      <UniqueIdentifier>{52e4cda8-9b72-4634-b90b-84f755b7f65f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\Blur">
+      <UniqueIdentifier>{a5a90e89-cd05-4ffd-bac9-47dd9e8fc25b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics\RenderTargetCollection">
+      <UniqueIdentifier>{8ce4873f-0e49-4076-afba-8e5b54e0729d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics">
+      <UniqueIdentifier>{2a21bc8c-19b8-41f7-b197-79e18aca473a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\OutLine">
+      <UniqueIdentifier>{c2248bd5-6fe0-412b-b7b0-c41baaf6391f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\Renderer">
+      <UniqueIdentifier>{c8d276b6-693f-456b-b610-b6732ac7bc87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\Renderer\Sprite">
+      <UniqueIdentifier>{30886fe2-c05e-43c7-aa35-50c3cfd6e5e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\Renderer\Mesh">
+      <UniqueIdentifier>{d2c3155c-bdfb-4186-b232-b76b637eab9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\Renderer\Base">
+      <UniqueIdentifier>{e042d57d-0041-48e4-9ab9-365bdbd9bde3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\UI">
+      <UniqueIdentifier>{c0288711-4bcc-43c4-b00d-d0e2dd11c2d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\UI\Renderer">
+      <UniqueIdentifier>{da3fbc61-0f64-450e-8914-6fb9e62fe7f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\UI\Slider">
+      <UniqueIdentifier>{259f007e-cc8f-4406-9da3-c91615ee613c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\UI\Fade">
+      <UniqueIdentifier>{392f792b-0e3e-4e36-8adb-a11e4154b468}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\UI\StylishUI">
+      <UniqueIdentifier>{b69f3f67-7a0b-4d29-998b-42cc58938235}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\MotionBlur">
+      <UniqueIdentifier>{a6cf48c8-a2b6-48a5-8fc0-ca1916dc697f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Graphics\UI\Gage">
+      <UniqueIdentifier>{e1ec5106-6fe4-45d7-983a-41e0306eef62}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="PS_Geometory.hlsl">
+    <FxCompile Include="PS_Primitive.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
     <FxCompile Include="PS_TexNotEnable.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
-    <FxCompile Include="PS_Lit.hlsl">
-      <Filter>リソース ファイル\PixelShader</Filter>
-    </FxCompile>
     <FxCompile Include="PS_Unlit.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
-    <FxCompile Include="VS_Geometory.hlsl">
+    <FxCompile Include="VS_Primitive.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
     </FxCompile>
     <FxCompile Include="VS_Gouraud.hlsl">
@@ -456,22 +1005,103 @@
     <FxCompile Include="VS_WorldPosition.hlsl">
       <Filter>リソース ファイル\VertexShader</Filter>
     </FxCompile>
+    <FxCompile Include="PS_TexColor.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_SkinAnimation.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_Line.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_Line.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_Shadow.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_Sprite.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_UI.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_UI.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_Toon.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_ShadowObject.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_OutLine.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_BackObject.hlsl">
+      <Filter>リソース ファイル\VertexShader\BackObject</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_BackObject.hlsl">
+      <Filter>リソース ファイル\PixelShader\BackObject</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_OutLine.hlsl">
+      <Filter>リソース ファイル\VertexShader\OutLine</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_OutLineAnimation.hlsl">
+      <Filter>リソース ファイル\VertexShader\OutLine</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_DepthWrite.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_Ground.hlsl">
+      <Filter>リソース ファイル\PixelShader\PS_Ground</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_Ground.hlsl">
+      <Filter>リソース ファイル\VertexShader\Ground</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_DrawMotionVector.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_DrawMotionVector.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_FullScreenQuad.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_FullScreenQuad.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_Luminance.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_GaussianHoriBlur.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_GausianVertBlur.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_KawaseBlurCombine.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_TextureCombine.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_MotionBlur.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="BlendState.cpp">
-      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\BlendState</Filter>
+      <Filter>ソース ファイル\System\Application\Render\BlendState</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>ソース ファイル\Object\Camera</Filter>
+    <ClCompile Include="CP_Camera.cpp">
+      <Filter>ソース ファイル\Component\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Direct3D11.cpp">
       <Filter>ソース ファイル\System\Application\DirectX3D11</Filter>
     </ClCompile>
     <ClCompile Include="D3D11_Renderer.cpp">
-      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\D3D11_Renderer</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\D3D11_Renderer</Filter>
     </ClCompile>
     <ClCompile Include="MainApplication.cpp">
       <Filter>ソース ファイル\System\Application\MainApplication</Filter>
@@ -480,61 +1110,34 @@
       <Filter>ソース ファイル\System\MessageError</Filter>
     </ClCompile>
     <ClCompile Include="RenderParam.cpp">
-      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\RenderParam</Filter>
+      <Filter>ソース ファイル\System\Application\Render\RenderParam</Filter>
     </ClCompile>
     <ClCompile Include="SetUpPerspectiveProj.cpp">
-      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\Projection\PerspectiveProj</Filter>
+      <Filter>ソース ファイル\System\Application\Render\Projection\PerspectiveProj</Filter>
     </ClCompile>
     <ClCompile Include="SetUpViewTrans.cpp">
-      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\View</Filter>
+      <Filter>ソース ファイル\System\Application\Render\View</Filter>
     </ClCompile>
     <ClCompile Include="Window.cpp">
       <Filter>ソース ファイル\System\Application\Window</Filter>
     </ClCompile>
-    <ClCompile Include="BroadScene_Base.cpp">
-      <Filter>ソース ファイル\Scene\BroadScene\BroadScane_Base</Filter>
-    </ClCompile>
-    <ClCompile Include="ChangeBroadScene.cpp">
-      <Filter>ソース ファイル\Scene\BroadScene\ChangeScene</Filter>
-    </ClCompile>
-    <ClCompile Include="ChangeSubScene.cpp">
-      <Filter>ソース ファイル\Scene\SubScene\ChangeScene</Filter>
-    </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>ソース ファイル\Scene\SceneManager</Filter>
     </ClCompile>
-    <ClCompile Include="SceneMoveInfo.cpp">
-      <Filter>ソース ファイル\Scene\SceneMoveInfo</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneRunningState.cpp">
-      <Filter>ソース ファイル\Scene\SceneMoveInfo\RunningState</Filter>
-    </ClCompile>
-    <ClCompile Include="SubScene_Base.cpp">
-      <Filter>ソース ファイル\Scene\SubScene\SubScene_Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Test_Broad.cpp">
-      <Filter>ソース ファイル\Scene\Test\BroadScene</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>ソース ファイル\System\pch</Filter>
-    </ClCompile>
-    <ClCompile Include="Test_ChangeSubScene.cpp">
-      <Filter>ソース ファイル\Scene\Test\ChangeSub</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>ソース ファイル\Graphics\Texture</Filter>
     </ClCompile>
     <ClCompile Include="Sampler.cpp">
-      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\Sampler</Filter>
+      <Filter>ソース ファイル\System\Application\Render\Sampler</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>ソース ファイル\System\Transform</Filter>
     </ClCompile>
     <ClCompile Include="VariableFrameRate.cpp">
       <Filter>ソース ファイル\System\Application\FramerRate</Filter>
-    </ClCompile>
-    <ClCompile Include="AssetCollection.cpp">
-      <Filter>ソース ファイル\Asset\Collection</Filter>
     </ClCompile>
     <ClCompile Include="ImGuiMethod.cpp">
       <Filter>ソース ファイル\System\ImGui\ImGuiMethod</Filter>
@@ -543,31 +1146,16 @@
       <Filter>ソース ファイル\System\ImGui\ImGuiDebugLog</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>ソース ファイル\Object\GameObject</Filter>
+      <Filter>ソース ファイル\System\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="SceneObjects.cpp">
-      <Filter>ソース ファイル\Object\SceneObjects</Filter>
+      <Filter>ソース ファイル\System\SceneObjects</Filter>
     </ClCompile>
     <ClCompile Include="Cube.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\Cube</Filter>
     </ClCompile>
     <ClCompile Include="Tag.cpp">
-      <Filter>ソース ファイル\Object\Tag</Filter>
-    </ClCompile>
-    <ClCompile Include="Tank_ChangeSub.cpp">
-      <Filter>ソース ファイル\Scene\TankFire\ChangeSub</Filter>
-    </ClCompile>
-    <ClCompile Include="Tank_InGameSub.cpp">
-      <Filter>ソース ファイル\Scene\TankFire\SubScene\InGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Tank_ResultSub.cpp">
-      <Filter>ソース ファイル\Scene\TankFire\SubScene\Result</Filter>
-    </ClCompile>
-    <ClCompile Include="Tank_TitleSub.cpp">
-      <Filter>ソース ファイル\Scene\TankFire\SubScene\Title</Filter>
-    </ClCompile>
-    <ClCompile Include="Tank_BroadScene.cpp">
-      <Filter>ソース ファイル\Scene\TankFire\BroadScene</Filter>
+      <Filter>ソース ファイル\System\Tag</Filter>
     </ClCompile>
     <ClCompile Include="JISToUTF8.cpp">
       <Filter>ソース ファイル\System\JISToUTF8</Filter>
@@ -577,9 +1165,6 @@
     </ClCompile>
     <ClCompile Include="GamePad.cpp">
       <Filter>ソース ファイル\System\Application\Input\GamePad</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerMove.cpp">
-      <Filter>ソース ファイル\Component\InGame\Player\PlayerMove</Filter>
     </ClCompile>
     <ClCompile Include="InputClass.cpp">
       <Filter>ソース ファイル\System\Application\Input</Filter>
@@ -593,41 +1178,20 @@
     <ClCompile Include="Sphere.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\Sphere</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionChecker.cpp">
-      <Filter>ソース ファイル\Component\Collider\CollisionChecker</Filter>
-    </ClCompile>
     <ClCompile Include="MathUseful.cpp">
-      <Filter>ソース ファイル\System\Useful\MathUseful</Filter>
+      <Filter>ソース ファイル\Method\Useful\MathUseful</Filter>
     </ClCompile>
-    <ClCompile Include="CameraMove.cpp">
+    <ClCompile Include="CP_CameraMove.cpp">
       <Filter>ソース ファイル\Component\InGame\Camera\CameraMove</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraInput.cpp">
-      <Filter>ソース ファイル\Component\InGame\Camera\CameraInput</Filter>
     </ClCompile>
     <ClCompile Include="GameKey.cpp">
       <Filter>ソース ファイル\System\Application\Input\Keyboard</Filter>
     </ClCompile>
-    <ClCompile Include="GameMode.cpp">
-      <Filter>ソース ファイル\System\GameMode</Filter>
-    </ClCompile>
     <ClCompile Include="SaveJson.cpp">
       <Filter>ソース ファイル\System\Json\Save</Filter>
     </ClCompile>
-    <ClCompile Include="SaveJsonValue.cpp">
-      <Filter>ソース ファイル\System\Json\SaveJsonValue</Filter>
-    </ClCompile>
-    <ClCompile Include="BulletMove.cpp">
-      <Filter>ソース ファイル\Component\InGame\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerInput.cpp">
-      <Filter>ソース ファイル\Component\InGame\Player\PlayerInput</Filter>
-    </ClCompile>
     <ClCompile Include="SF_GameObject.cpp">
       <Filter>ソース ファイル\Scene\SceneFunction\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>ソース ファイル\Graphics\Light</Filter>
     </ClCompile>
     <ClCompile Include="PointLight.cpp">
       <Filter>ソース ファイル\Graphics\Light\PointLight</Filter>
@@ -643,9 +1207,6 @@
     </ClCompile>
     <ClCompile Include="InSceneSystemManager.cpp">
       <Filter>ソース ファイル\Scene\InSceneSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="SinCurve.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="..\ThirdParty\imgui\include\imgui.cpp">
       <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
@@ -672,10 +1233,10 @@
       <Filter>ソース ファイル\Component\Collider\Sphere</Filter>
     </ClCompile>
     <ClCompile Include="CP_SpriteRenderer.cpp">
-      <Filter>ソース ファイル\Component\Renderer\Sprite</Filter>
+      <Filter>ソース ファイル\Component\Graphics\Renderer\Sprite</Filter>
     </ClCompile>
     <ClCompile Include="CP_MeshRenderer.cpp">
-      <Filter>ソース ファイル\Component\Renderer\Mesh</Filter>
+      <Filter>ソース ファイル\Component\Graphics\Renderer\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>ソース ファイル\Graphics\Sprite</Filter>
@@ -692,9 +1253,6 @@
     <ClCompile Include="CP_Collider.cpp">
       <Filter>ソース ファイル\Component\Collider\Base</Filter>
     </ClCompile>
-    <ClCompile Include="AssetGetter.cpp">
-      <Filter>ソース ファイル\Asset\Get</Filter>
-    </ClCompile>
     <ClCompile Include="AssetLoader.cpp">
       <Filter>ソース ファイル\Asset\Loader</Filter>
     </ClCompile>
@@ -703,9 +1261,6 @@
     </ClCompile>
     <ClCompile Include="SingleMesh.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\Single</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh_Group.cpp">
-      <Filter>ソース ファイル\Graphics\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="SkeletalMesh.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh</Filter>
@@ -728,17 +1283,11 @@
     <ClCompile Include="IndexBuffer.cpp">
       <Filter>ソース ファイル\Graphics\Buffer\Index</Filter>
     </ClCompile>
-    <ClCompile Include="AssetSetter.cpp">
-      <Filter>ソース ファイル\Asset\Set</Filter>
-    </ClCompile>
     <ClCompile Include="CP_Renderer.cpp">
-      <Filter>ソース ファイル\Component\Renderer\Base</Filter>
+      <Filter>ソース ファイル\Component\Graphics\Renderer\Base</Filter>
     </ClCompile>
     <ClCompile Include="PlaneMesh.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\Plane</Filter>
-    </ClCompile>
-    <ClCompile Include="MyClass.cpp">
-      <Filter>ヘッダー ファイル\template</Filter>
     </ClCompile>
     <ClCompile Include="ComponentFactory.cpp">
       <Filter>ソース ファイル\Component\Factory</Filter>
@@ -761,8 +1310,8 @@
     <ClCompile Include="PS_Unlit.cpp">
       <Filter>ソース ファイル\Graphics\Shader\Pixel\Unlit</Filter>
     </ClCompile>
-    <ClCompile Include="VS_Geometory.cpp">
-      <Filter>ソース ファイル\Graphics\Shader\Vertex\Geometory</Filter>
+    <ClCompile Include="VS_Primitive.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\Primitive</Filter>
     </ClCompile>
     <ClCompile Include="CP_Animation.cpp">
       <Filter>ソース ファイル\Component\Animation</Filter>
@@ -776,8 +1325,509 @@
     <ClCompile Include="TreeNode.cpp">
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode</Filter>
     </ClCompile>
-    <ClCompile Include="NodeAnim.cpp">
-      <Filter>ソース ファイル\Animation\NodeAnim</Filter>
+    <ClCompile Include="AnimationChannel.cpp">
+      <Filter>ソース ファイル\Animation\Channel</Filter>
+    </ClCompile>
+    <ClCompile Include="VS_SkinnedAnimation.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\SkinAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="PS_TexColor.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\TexColor</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh_Group.cpp">
+      <Filter>ソース ファイル\Graphics\Mesh\MeshGroup</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationController.cpp">
+      <Filter>ソース ファイル\Animation\AnimationController</Filter>
+    </ClCompile>
+    <ClCompile Include="InertInterpAnimation.cpp">
+      <Filter>ソース ファイル\Animation\Interpolate\Inertial</Filter>
+    </ClCompile>
+    <ClCompile Include="Easing.cpp">
+      <Filter>ソース ファイル\Method\Interpolation\Ease</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationNode_Base.cpp">
+      <Filter>ソース ファイル\Animation\AnimNode\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleAnimationNode.cpp">
+      <Filter>ソース ファイル\Animation\AnimNode\Single</Filter>
+    </ClCompile>
+    <ClCompile Include="BlendAnimationNode.cpp">
+      <Filter>ソース ファイル\Animation\AnimNode\Blend</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMoveState.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="GameInput.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="IAnimationObserver.cpp">
+      <Filter>ソース ファイル\Animation\AnimationObserver</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Rig.cpp">
+      <Filter>ソース ファイル\Component\Rig</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_EaseTest.cpp">
+      <Filter>ソース ファイル\Component\InGame\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>ソース ファイル\Scene\NewScene</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Player.cpp">
+      <Filter>ソース ファイル\Component\InGame\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetPath_Base.cpp">
+      <Filter>ソース ファイル\Asset\Asset_Base</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetSaveLoad.cpp">
+      <Filter>ソース ファイル\Asset\AssetSaveLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\bullet\include\btBulletCollisionAll.cpp">
+      <Filter>ソース ファイル\Bullet\import</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\bullet\include\btBulletDynamicsAll.cpp">
+      <Filter>ソース ファイル\Bullet\import</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\bullet\include\btLinearMathAll.cpp">
+      <Filter>ソース ファイル\Bullet\import</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11BulletPhisics.cpp">
+      <Filter>ソース ファイル\Bullet\PhysicsEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimTransitionArrow.cpp">
+      <Filter>ソース ファイル\Animation\AnimTransitionArrow</Filter>
+    </ClCompile>
+    <ClCompile Include="CatmulSplineInterp.cpp">
+      <Filter>ソース ファイル\Animation\Interpolate\Catmul</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletDebugDraw.cpp">
+      <Filter>ソース ファイル\Bullet\DebugDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="IImGuiUser.cpp">
+      <Filter>ソース ファイル\System\ImGui\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="DXToBullet.cpp">
+      <Filter>ソース ファイル\Bullet\DXToBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="CrossFadeAnimation.cpp">
+      <Filter>ソース ファイル\Animation\Interpolate\CrossFade</Filter>
+    </ClCompile>
+    <ClCompile Include="DepthStencil.cpp">
+      <Filter>ソース ファイル\Graphics\DepthStencil</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTarget.cpp">
+      <Filter>ソース ファイル\Graphics\RenderTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletContactCallBack.cpp">
+      <Filter>ソース ファイル\Bullet\Callback</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteDrawer.cpp">
+      <Filter>ソース ファイル\Graphics\Sprite\Drawer</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_SkyBox.cpp">
+      <Filter>ソース ファイル\Component\SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="IAnimInterpolate.cpp">
+      <Filter>ソース ファイル\Animation\Interpolate\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialCreater.cpp">
+      <Filter>ソース ファイル\Asset\Creater\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletTest.cpp">
+      <Filter>ソース ファイル\Bullet\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationNotify_Base.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\IAnimationNotify</Filter>
+    </ClCompile>
+    <ClCompile Include="ANS_DebugLog.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\State\DebugLog</Filter>
+    </ClCompile>
+    <ClCompile Include="ANE_DebugLog.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\DebugLog</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationNotifyFactory.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\AnimationNotifyFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonTransArrow.cpp">
+      <Filter>ソース ファイル\Animation\AnimTransitionArrow\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentRespawner.cpp">
+      <Filter>ソース ファイル\Component\Respawner</Filter>
+    </ClCompile>
+    <ClCompile Include="TransCondition_Base.cpp">
+      <Filter>ソース ファイル\Animation\TransCondition\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="FloatTransCondition.cpp">
+      <Filter>ソース ファイル\Animation\TransCondition\Float</Filter>
+    </ClCompile>
+    <ClCompile Include="BoolTransCondition.cpp">
+      <Filter>ソース ファイル\Animation\TransCondition\Boolean</Filter>
+    </ClCompile>
+    <ClCompile Include="HashiTaku_Random.cpp">
+      <Filter>ソース ファイル\System\Random</Filter>
+    </ClCompile>
+    <ClCompile Include="TransConditionCreater.cpp">
+      <Filter>ソース ファイル\Animation\TransCondition\Creater</Filter>
+    </ClCompile>
+    <ClCompile Include="IntTransCondition.cpp">
+      <Filter>ソース ファイル\Animation\TransCondition\Integer</Filter>
+    </ClCompile>
+    <ClCompile Include="TriggerType.cpp">
+      <Filter>ソース ファイル\Animation\AnimationPameters\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="TriggerTransCondition.cpp">
+      <Filter>ソース ファイル\Animation\TransCondition\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimParamRemoveObserver.cpp">
+      <Filter>ソース ファイル\Animation\AnimationPameters\removeObserver</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimControllPlayer.cpp">
+      <Filter>ソース ファイル\Animation\AnimControllPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimSingleNodePlayer.cpp">
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\SingleNodePlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimNodePlayer_Base.cpp">
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\NodePlayer_Base</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationParameters.cpp">
+      <Filter>ソース ファイル\Animation\AnimationPameters\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CopyAnimationParameters.cpp">
+      <Filter>ソース ファイル\Animation\AnimationPameters\Copy</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimBlendNodePlayer.cpp">
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\BlendNodePlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerIdleState.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimTransitionChecker.cpp">
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\TransitionChecker</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerTargetMove.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Target</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerActState_Base.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="AppSystemDraw.cpp">
+      <Filter>ソース ファイル\System\SystemDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_RigidBody.cpp">
+      <Filter>ソース ファイル\Component\Collider\RigidBody</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionTypeJudge.cpp">
+      <Filter>ソース ファイル\System\Collision\CollisionTypeJudge</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_CapsuleCollider.cpp">
+      <Filter>ソース ファイル\Component\Collider\Capsule</Filter>
+    </ClCompile>
+    <ClCompile Include="Polygon2D.cpp">
+      <Filter>ソース ファイル\Graphics\Mesh\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_UIRenderer.cpp">
+      <Filter>ソース ファイル\Component\Graphics\UI\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationNotifyEvent.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationNotifyState.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\State\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="ANS_ChangeParameter.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\State\ChangeParameter</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_UISlider.cpp">
+      <Filter>ソース ファイル\Component\Graphics\UI\Slider</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeAnimObserver.cpp">
+      <Filter>ソース ファイル\Animation\AnimationObserver\ChangeAnimObserver</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackInformation.cpp">
+      <Filter>ソース ファイル\InGame\Attack\Information</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Weapon.cpp">
+      <Filter>ソース ファイル\Component\InGame\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Character.cpp">
+      <Filter>ソース ファイル\Component\InGame\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_HitStopManager.cpp">
+      <Filter>ソース ファイル\Component\HitStopManager</Filter>
+    </ClCompile>
+    <ClCompile Include="HitStopper_Base.cpp">
+      <Filter>ソース ファイル\Component\HitStopManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\implot\include\implot.cpp">
+      <Filter>ソース ファイル\System\ImGui\ImPlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\implot\include\implot_items.cpp">
+      <Filter>ソース ファイル\System\ImGui\ImPlot</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Enemy.cpp">
+      <Filter>ソース ファイル\Component\InGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationCurve.cpp">
+      <Filter>ソース ファイル\System\AnimationCurve</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerRushAttack.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\RushAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerRollingMove.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Rolling</Filter>
+    </ClCompile>
+    <ClCompile Include="BossActState_Base.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\BossAct_Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterActionController.cpp">
+      <Filter>ソース ファイル\InGame\Character\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyActionController.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Enemy_Base\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyActState_Base.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Enemy_Base\ActState</Filter>
+    </ClCompile>
+    <ClCompile Include="BossActionController.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="EditScene.cpp">
+      <Filter>ソース ファイル\Scene\SceneEditer</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_BattleManager.cpp">
+      <Filter>ソース ファイル\Component\InGame\BattleManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Boss.cpp">
+      <Filter>ソース ファイル\Component\InGame\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="ANE_ChangeParameter.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter</Filter>
+    </ClCompile>
+    <ClCompile Include="VS_Object.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\VS_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="VS_WorldPosition.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\WorldPosition</Filter>
+    </ClCompile>
+    <ClCompile Include="PS_Toon.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\Toon</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraMoveController.cpp">
+      <Filter>ソース ファイル\InGame\Camera\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraMoveState_Base.cpp">
+      <Filter>ソース ファイル\InGame\Camera\State\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="BossDamageState.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Damage</Filter>
+    </ClCompile>
+    <ClCompile Include="BossIdleState.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="VisualEffect.cpp">
+      <Filter>ソース ファイル\Graphics\Effect\VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11EffecseerManager.cpp">
+      <Filter>ソース ファイル\Graphics\Effect\DX11EffecseerManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_VisualEffect.cpp">
+      <Filter>ソース ファイル\Component\VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_OutLineRenderer.cpp">
+      <Filter>ソース ファイル\Component\Graphics\OutLine</Filter>
+    </ClCompile>
+    <ClCompile Include="ITargetAccepter.cpp">
+      <Filter>ソース ファイル\InGame\ITargeter</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAttackState.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDamageState.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Damage</Filter>
+    </ClCompile>
+    <ClCompile Include="BossAttackState.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_CylinderCollider.cpp">
+      <Filter>ソース ファイル\Component\Collider\Cylinder</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraFollowMove.cpp">
+      <Filter>ソース ファイル\InGame\Camera\State\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Button.cpp">
+      <Filter>ソース ファイル\Component\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="DXSoundManager.cpp">
+      <Filter>ソース ファイル\Sound\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundAsset.cpp">
+      <Filter>ソース ファイル\Sound\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="BossGroundMove.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerActionController_Base.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\Controller\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerGuardState.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Guard</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerJumpState.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Jump</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAirActionController.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\Controller\Air</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerGroundActionController.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\Controller\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerGroundState.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAirState.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Air\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAirMove.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Air\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAirAttack.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Air\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="LayerdAnimationNode.cpp">
+      <Filter>ソース ファイル\Animation\AnimNode\Layerd</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimLayerdNodePlayer.cpp">
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\LayerdNodePlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="BossBreakEndKnock.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\BreakEndKnock</Filter>
+    </ClCompile>
+    <ClCompile Include="BossBreakIdle.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\BreakIdle</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_TitleButtonGroup.cpp">
+      <Filter>ソース ファイル\Component\ButtonGroup\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="BossJumpAttack.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\JumpAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Fade.cpp">
+      <Filter>ソース ファイル\Component\Graphics\UI\Fade</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAttackInformation.cpp">
+      <Filter>ソース ファイル\InGame\Attack\Information\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAction.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerAction</Filter>
+    </ClCompile>
+    <ClCompile Include="BossWalkState.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Walk</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimControllerCreater.cpp">
+      <Filter>ソース ファイル\Animation\AnimationController\Creater</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraGameOverState.cpp">
+      <Filter>ソース ファイル\InGame\Camera\State\GameOver</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraTargetMove.cpp">
+      <Filter>ソース ファイル\InGame\Camera\State\Target</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_ButtonGroup.cpp">
+      <Filter>ソース ファイル\Component\ButtonGroup\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_GroundCheck.cpp">
+      <Filter>ソース ファイル\Component\GroundChecker</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerGroundChargeAttack.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\ChargeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="PerlinNoise.cpp">
+      <Filter>ソース ファイル\System\PerlinNoise</Filter>
+    </ClCompile>
+    <ClCompile Include="PerlinShakeParameter.cpp">
+      <Filter>ソース ファイル\InGame\PerlinShake\Parameter</Filter>
+    </ClCompile>
+    <ClCompile Include="PerlinShake.cpp">
+      <Filter>ソース ファイル\InGame\PerlinShake</Filter>
+    </ClCompile>
+    <ClCompile Include="ANE_CreateVfx.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\CreateVfx</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraChargeAttack.cpp">
+      <Filter>ソース ファイル\InGame\Camera\State\ChargeAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="ANE_CameraShake.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\CameraShake</Filter>
+    </ClCompile>
+    <ClCompile Include="ANE_PadShake.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\PadShake</Filter>
+    </ClCompile>
+    <ClCompile Include="PS_BackObject.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\BackObject</Filter>
+    </ClCompile>
+    <ClCompile Include="PS_OutLine.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\OutLine</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowDrawer.cpp">
+      <Filter>ソース ファイル\Graphics\Shadow</Filter>
+    </ClCompile>
+    <ClCompile Include="VS_Ground.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_SoundManager.cpp">
+      <Filter>ソース ファイル\Component\SoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_AudioListener.cpp">
+      <Filter>ソース ファイル\Component\AudioListener</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleDirection.cpp">
+      <Filter>ソース ファイル\Component\InGame\BattleDirection</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_BattleButtonGroup.cpp">
+      <Filter>ソース ファイル\Component\ButtonGroup\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_PlaySound.cpp">
+      <Filter>ソース ファイル\Component\PlaySound</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraWinState.cpp">
+      <Filter>ソース ファイル\InGame\Camera\State\Win</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_StylishUI.cpp">
+      <Filter>ソース ファイル\Component\Graphics\UI\StylishUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ANE_PlaySound.cpp">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="PS_Ground.cpp">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="BossAttackInformation.cpp">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterActState_Base.cpp">
+      <Filter>ソース ファイル\InGame\Character\ActionState</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSlashHigh.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\SlashHigh</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_MotionBlur.cpp">
+      <Filter>ソース ファイル\Component\Graphics\MotionBlur</Filter>
+    </ClCompile>
+    <ClCompile Include="GausianBlur.cpp">
+      <Filter>ソース ファイル\Graphics\Blur</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAirSlashHigh.cpp">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Air\AirSlashHigh</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTargetCollection.cpp">
+      <Filter>ソース ファイル\Graphics\RenderTargetCollection</Filter>
+    </ClCompile>
+    <ClCompile Include="CP_Gage.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -785,49 +1835,37 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="BlendState.h">
-      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\BlendState</Filter>
+      <Filter>ソース ファイル\System\Application\Render\BlendState</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>ソース ファイル\Object\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="CbProjectionSet.h">
-      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\CbSet</Filter>
-    </ClInclude>
-    <ClInclude Include="CbTransformSet.h">
-      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\CbSet</Filter>
-    </ClInclude>
-    <ClInclude Include="CbViewSet.h">
-      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\CbSet</Filter>
+    <ClInclude Include="CP_Camera.h">
+      <Filter>ソース ファイル\Component\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Direct3D11.h">
       <Filter>ソース ファイル\System\Application\DirectX3D11</Filter>
     </ClInclude>
     <ClInclude Include="D3D11_Renderer.h">
-      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\D3D11_Renderer</Filter>
+      <Filter>ソース ファイル\System\Application\DirectX3D11\D3D11_Renderer</Filter>
     </ClInclude>
     <ClInclude Include="ISetUpProjection.h">
-      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\Projection</Filter>
+      <Filter>ソース ファイル\System\Application\Render\Projection</Filter>
     </ClInclude>
     <ClInclude Include="IGetRenderResource.h">
-      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\RenderParam</Filter>
+      <Filter>ソース ファイル\System\Application\Render\RenderParam</Filter>
     </ClInclude>
     <ClInclude Include="IGetRenderPara.h">
-      <Filter>ソース ファイル\System\Application\DirectX3D11\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="MainApplication.h">
-      <Filter>ソース ファイル\System\Application\MainApplication</Filter>
+      <Filter>ソース ファイル\System\Application\Render</Filter>
     </ClInclude>
     <ClInclude Include="MessageError.h">
       <Filter>ソース ファイル\System\MessageError</Filter>
     </ClInclude>
     <ClInclude Include="RenderParam.h">
-      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\RenderParam</Filter>
+      <Filter>ソース ファイル\System\Application\Render\RenderParam</Filter>
     </ClInclude>
     <ClInclude Include="SetUpPerspectiveProj.h">
-      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\Projection\PerspectiveProj</Filter>
+      <Filter>ソース ファイル\System\Application\Render\Projection\PerspectiveProj</Filter>
     </ClInclude>
     <ClInclude Include="SetUpViewTrans.h">
-      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\View</Filter>
+      <Filter>ソース ファイル\System\Application\Render\View</Filter>
     </ClInclude>
     <ClInclude Include="Singleton_Base.h">
       <Filter>ソース ファイル\System\Singleton_Base</Filter>
@@ -835,41 +1873,17 @@
     <ClInclude Include="Window.h">
       <Filter>ソース ファイル\System\Application\Window</Filter>
     </ClInclude>
-    <ClInclude Include="BroadScene_Base.h">
-      <Filter>ソース ファイル\Scene\BroadScene\BroadScane_Base</Filter>
-    </ClInclude>
-    <ClInclude Include="ChangeBroadScene.h">
-      <Filter>ソース ファイル\Scene\BroadScene\ChangeScene</Filter>
-    </ClInclude>
-    <ClInclude Include="ChangeSubScene.h">
-      <Filter>ソース ファイル\Scene\SubScene\ChangeScene</Filter>
-    </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>ソース ファイル\Scene\SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="SceneMoveInfo.h">
-      <Filter>ソース ファイル\Scene\SceneMoveInfo</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneRunningState.h">
-      <Filter>ソース ファイル\Scene\SceneMoveInfo\RunningState</Filter>
-    </ClInclude>
-    <ClInclude Include="SubScene_Base.h">
-      <Filter>ソース ファイル\Scene\SubScene\SubScene_Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Test_Broad.h">
-      <Filter>ソース ファイル\Scene\Test\BroadScene</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>ソース ファイル\System\pch</Filter>
-    </ClInclude>
-    <ClInclude Include="Test_ChangeSubScene.h">
-      <Filter>ソース ファイル\Scene\Test\ChangeSub</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>ソース ファイル\Graphics\Texture</Filter>
     </ClInclude>
     <ClInclude Include="Sampler.h">
-      <Filter>ソース ファイル\System\Application\DirectX3D11\Render\Sampler</Filter>
+      <Filter>ソース ファイル\System\Application\Render\Sampler</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>ソース ファイル\System\Transform</Filter>
@@ -887,31 +1901,16 @@
       <Filter>ソース ファイル\System\ImGui\ImGuiDebugLog</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>ソース ファイル\Object\GameObject</Filter>
+      <Filter>ソース ファイル\System\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="SceneObjects.h">
-      <Filter>ソース ファイル\Object\SceneObjects</Filter>
+      <Filter>ソース ファイル\System\SceneObjects</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h">
       <Filter>ソース ファイル\Graphics\Mesh\Cube</Filter>
     </ClInclude>
     <ClInclude Include="Tag.h">
-      <Filter>ソース ファイル\Object\Tag</Filter>
-    </ClInclude>
-    <ClInclude Include="Tank_ChangeSub.h">
-      <Filter>ソース ファイル\Scene\TankFire\ChangeSub</Filter>
-    </ClInclude>
-    <ClInclude Include="Tank_InGameSub.h">
-      <Filter>ソース ファイル\Scene\TankFire\SubScene\InGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Tank_ResultSub.h">
-      <Filter>ソース ファイル\Scene\TankFire\SubScene\Result</Filter>
-    </ClInclude>
-    <ClInclude Include="Tank_TitleSub.h">
-      <Filter>ソース ファイル\Scene\TankFire\SubScene\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="Tank_BroadScene.h">
-      <Filter>ソース ファイル\Scene\TankFire\BroadScene</Filter>
+      <Filter>ソース ファイル\System\Tag</Filter>
     </ClInclude>
     <ClInclude Include="JISToUTF8.h">
       <Filter>ソース ファイル\System\JISToUTF8</Filter>
@@ -921,9 +1920,6 @@
     </ClInclude>
     <ClInclude Include="GamePad.h">
       <Filter>ソース ファイル\System\Application\Input\GamePad</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerMove.h">
-      <Filter>ソース ファイル\Component\InGame\Player\PlayerMove</Filter>
     </ClInclude>
     <ClInclude Include="InputClass.h">
       <Filter>ソース ファイル\System\Application\Input</Filter>
@@ -937,35 +1933,17 @@
     <ClInclude Include="Sphere.h">
       <Filter>ソース ファイル\Graphics\Mesh\Sphere</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionChecker.h">
-      <Filter>ソース ファイル\Component\Collider\CollisionChecker</Filter>
-    </ClInclude>
     <ClInclude Include="MathUseful.h">
-      <Filter>ソース ファイル\System\Useful\MathUseful</Filter>
+      <Filter>ソース ファイル\Method\Useful\MathUseful</Filter>
     </ClInclude>
-    <ClInclude Include="CameraMove.h">
+    <ClInclude Include="CP_CameraMove.h">
       <Filter>ソース ファイル\Component\InGame\Camera\CameraMove</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraInput.h">
-      <Filter>ソース ファイル\Component\InGame\Camera\CameraInput</Filter>
     </ClInclude>
     <ClInclude Include="GameKey.h">
       <Filter>ソース ファイル\System\Application\Input\Keyboard</Filter>
     </ClInclude>
-    <ClInclude Include="GameMode.h">
-      <Filter>ソース ファイル\System\GameMode</Filter>
-    </ClInclude>
-    <ClInclude Include="SaveJsonValue.h">
-      <Filter>ソース ファイル\System\Json\SaveJsonValue</Filter>
-    </ClInclude>
     <ClInclude Include="SaveJson.h">
       <Filter>ソース ファイル\System\Json\Save</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletMove.h">
-      <Filter>ソース ファイル\Component\InGame\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerInput.h">
-      <Filter>ソース ファイル\Component\InGame\Player\PlayerInput</Filter>
     </ClInclude>
     <ClInclude Include="SF_GameObject.h">
       <Filter>ソース ファイル\Scene\SceneFunction\GameObject</Filter>
@@ -990,9 +1968,6 @@
     </ClInclude>
     <ClInclude Include="InSceneSystemManager.h">
       <Filter>ソース ファイル\Scene\InSceneSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="SinCurve.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="..\ThirdParty\imgui\include\imconfig.h">
       <Filter>ソース ファイル\System\ImGui\ImGui</Filter>
@@ -1022,10 +1997,10 @@
       <Filter>ソース ファイル\Component\Collider\Sphere</Filter>
     </ClInclude>
     <ClInclude Include="CP_SpriteRenderer.h">
-      <Filter>ソース ファイル\Component\Renderer\Sprite</Filter>
+      <Filter>ソース ファイル\Component\Graphics\Renderer\Sprite</Filter>
     </ClInclude>
     <ClInclude Include="CP_MeshRenderer.h">
-      <Filter>ソース ファイル\Component\Renderer\Mesh</Filter>
+      <Filter>ソース ファイル\Component\Graphics\Renderer\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Sprite.h">
       <Filter>ソース ファイル\Graphics\Sprite</Filter>
@@ -1054,9 +2029,6 @@
     <ClInclude Include="SingleMesh.h">
       <Filter>ソース ファイル\Graphics\Mesh\Single</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh_Group.h">
-      <Filter>ソース ファイル\Graphics\Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="SkeletalMesh.h">
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh</Filter>
     </ClInclude>
@@ -1082,7 +2054,7 @@
       <Filter>ソース ファイル\Asset\Set</Filter>
     </ClInclude>
     <ClInclude Include="CP_Renderer.h">
-      <Filter>ソース ファイル\Component\Renderer\Base</Filter>
+      <Filter>ソース ファイル\Component\Graphics\Renderer\Base</Filter>
     </ClInclude>
     <ClInclude Include="PlaneMesh.h">
       <Filter>ソース ファイル\Graphics\Mesh\Plane</Filter>
@@ -1092,9 +2064,6 @@
     </ClInclude>
     <ClInclude Include="IPrototype.h">
       <Filter>ソース ファイル\System\Prototype</Filter>
-    </ClInclude>
-    <ClInclude Include="MyClass.hpp">
-      <Filter>ヘッダー ファイル\template</Filter>
     </ClInclude>
     <ClInclude Include="ComponentFactory.h">
       <Filter>ソース ファイル\Component\Factory</Filter>
@@ -1120,8 +2089,8 @@
     <ClInclude Include="ShaderDefine.h">
       <Filter>ソース ファイル\Graphics\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="VS_Geometory.h">
-      <Filter>ソース ファイル\Graphics\Shader\Vertex\Geometory</Filter>
+    <ClInclude Include="VS_Primitive.h">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\Primitive</Filter>
     </ClInclude>
     <ClInclude Include="CP_Animation.h">
       <Filter>ソース ファイル\Component\Animation</Filter>
@@ -1138,8 +2107,601 @@
     <ClInclude Include="TreeNode.h">
       <Filter>ソース ファイル\Graphics\Mesh\SkeletalMesh\TreeNode</Filter>
     </ClInclude>
-    <ClInclude Include="NodeAnim.h">
-      <Filter>ソース ファイル\Animation\NodeAnim</Filter>
+    <ClInclude Include="AnimationChannel.h">
+      <Filter>ソース ファイル\Animation\Channel</Filter>
     </ClInclude>
+    <ClInclude Include="VS_SkinnedAnimation.h">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\SkinAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="PS_TexColor.h">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\TexColor</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh_Group.h">
+      <Filter>ソース ファイル\Graphics\Mesh\MeshGroup</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationController.h">
+      <Filter>ソース ファイル\Animation\AnimationController</Filter>
+    </ClInclude>
+    <ClInclude Include="InertInterpAnimation.h">
+      <Filter>ソース ファイル\Animation\Interpolate\Inertial</Filter>
+    </ClInclude>
+    <ClInclude Include="Easing.hpp">
+      <Filter>ソース ファイル\Method\Interpolation\Ease</Filter>
+    </ClInclude>
+    <ClInclude Include="EaseFunction.hpp">
+      <Filter>ソース ファイル\Method\Interpolation\Ease\Function</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationNode_Base.h">
+      <Filter>ソース ファイル\Animation\AnimNode\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleAnimationNode.h">
+      <Filter>ソース ファイル\Animation\AnimNode\Single</Filter>
+    </ClInclude>
+    <ClInclude Include="BlendAnimationNode.h">
+      <Filter>ソース ファイル\Animation\AnimNode\Blend</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMoveState.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="GameInput.h">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="IObserever.h">
+      <Filter>ソース ファイル\Method\Observe</Filter>
+    </ClInclude>
+    <ClInclude Include="IAnimationObserver.h">
+      <Filter>ソース ファイル\Animation\AnimationObserver</Filter>
+    </ClInclude>
+    <ClInclude Include="NullTransform.h">
+      <Filter>ソース ファイル\System\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Rig.h">
+      <Filter>ソース ファイル\Component\Rig</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_EaseTest.h">
+      <Filter>ソース ファイル\Component\InGame\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="ISaveLoad.h">
+      <Filter>ソース ファイル\Method\SaveLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Player.h">
+      <Filter>ソース ファイル\Component\InGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetPath_Base.h">
+      <Filter>ソース ファイル\Asset\Asset_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetConcept.h">
+      <Filter>ソース ファイル\Asset\Asset_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetSaveLoad.h">
+      <Filter>ソース ファイル\Asset\AssetSaveLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="DXToBullet.h">
+      <Filter>ソース ファイル\Bullet\DXToBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\bullet\include\btBulletCollisionCommon.h">
+      <Filter>ソース ファイル\Bullet\import</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\bullet\include\btBulletDynamicsCommon.h">
+      <Filter>ソース ファイル\Bullet\import</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11BulletPhisics.h">
+      <Filter>ソース ファイル\Bullet\PhysicsEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApplication.h">
+      <Filter>ソース ファイル\System\Application\MainApplication</Filter>
+    </ClInclude>
+    <ClInclude Include="IImGuiUser.h">
+      <Filter>ソース ファイル\System\ImGui\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>ソース ファイル\Scene\NewScene</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimTransitionArrow.h">
+      <Filter>ソース ファイル\Animation\AnimTransitionArrow</Filter>
+    </ClInclude>
+    <ClInclude Include="CatmulSplineInterp.h">
+      <Filter>ソース ファイル\Animation\Interpolate\Catmul</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletDebugDraw.h">
+      <Filter>ソース ファイル\Bullet\DebugDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="CrossFadeAnimation.h">
+      <Filter>ソース ファイル\Animation\Interpolate\CrossFade</Filter>
+    </ClInclude>
+    <ClInclude Include="InterpolateKind.h">
+      <Filter>ソース ファイル\Animation\Interpolate</Filter>
+    </ClInclude>
+    <ClInclude Include="IAnimInterpolate.h">
+      <Filter>ソース ファイル\Animation\Interpolate\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthStencil.h">
+      <Filter>ソース ファイル\Graphics\DepthStencil</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTarget.h">
+      <Filter>ソース ファイル\Graphics\RenderTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletContactCallBack.h">
+      <Filter>ソース ファイル\Bullet\Callback</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteDrawer.h">
+      <Filter>ソース ファイル\Graphics\Sprite\Drawer</Filter>
+    </ClInclude>
+    <ClInclude Include="IAssetCreater.h">
+      <Filter>ソース ファイル\Asset\Creater</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_SkyBox.h">
+      <Filter>ソース ファイル\Component\SkyBox</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialCreater.h">
+      <Filter>ソース ファイル\Asset\Creater\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletTest.h">
+      <Filter>ソース ファイル\Bullet\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationNotify_Base.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\IAnimationNotify</Filter>
+    </ClInclude>
+    <ClInclude Include="ANS_DebugLog.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\State\DebugLog</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimNotifyRespawner.h">
+      <Filter>ソース ファイル\Method\Respawner</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationNotifyFactory.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\AnimationNotifyFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="ANE_DebugLog.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\DebugLog</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimNotifyDefine.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify</Filter>
+    </ClInclude>
+    <ClInclude Include="IClassNameGetter.h">
+      <Filter>ソース ファイル\Method\TypeName</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentConcept.h">
+      <Filter>ソース ファイル\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonTransArrow.h">
+      <Filter>ソース ファイル\Animation\AnimTransitionArrow\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentRespawner.h">
+      <Filter>ソース ファイル\Component\Respawner</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimNotifyConcept.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify</Filter>
+    </ClInclude>
+    <ClInclude Include="TransCondition_Base.h">
+      <Filter>ソース ファイル\Animation\TransCondition\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatTransCondition.h">
+      <Filter>ソース ファイル\Animation\TransCondition\Float</Filter>
+    </ClInclude>
+    <ClInclude Include="BoolTransCondition.h">
+      <Filter>ソース ファイル\Animation\TransCondition\Boolean</Filter>
+    </ClInclude>
+    <ClInclude Include="HashiTaku_Random.h">
+      <Filter>ソース ファイル\System\Random</Filter>
+    </ClInclude>
+    <ClInclude Include="TransConditionCreater.h">
+      <Filter>ソース ファイル\Animation\TransCondition\Creater</Filter>
+    </ClInclude>
+    <ClInclude Include="IntTransCondition.h">
+      <Filter>ソース ファイル\Animation\TransCondition\Integer</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationParameterType.h">
+      <Filter>ソース ファイル\Animation\AnimationPameters</Filter>
+    </ClInclude>
+    <ClInclude Include="TriggerType.h">
+      <Filter>ソース ファイル\Animation\AnimationPameters\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="TriggerTransCondition.h">
+      <Filter>ソース ファイル\Animation\TransCondition\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimParamRemoveObserver.h">
+      <Filter>ソース ファイル\Animation\AnimationPameters\removeObserver</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimControllPlayer.h">
+      <Filter>ソース ファイル\Animation\AnimControllPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimSingleNodePlayer.h">
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\SingleNodePlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimNodePlayer_Base.h">
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\NodePlayer_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationParameters.h">
+      <Filter>ソース ファイル\Animation\AnimationPameters\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CopyAnimationParameters.h">
+      <Filter>ソース ファイル\Animation\AnimationPameters\Copy</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimBlendNodePlayer.h">
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\BlendNodePlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerIdleState.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimTransitionChecker.h">
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\TransitionChecker</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerTargetMove.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Target</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerActState_Base.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="AppSystemDraw.h">
+      <Filter>ソース ファイル\System\SystemDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_RigidBody.h">
+      <Filter>ソース ファイル\Component\Collider\RigidBody</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionTypeJudge.h">
+      <Filter>ソース ファイル\System\Collision\CollisionTypeJudge</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionInfo.h">
+      <Filter>ソース ファイル\Bullet\CollisionInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_CapsuleCollider.h">
+      <Filter>ソース ファイル\Component\Collider\Capsule</Filter>
+    </ClInclude>
+    <ClInclude Include="Polygon2D.h">
+      <Filter>ソース ファイル\Graphics\Mesh\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_UIRenderer.h">
+      <Filter>ソース ファイル\Component\Graphics\UI\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationNotifyEvent.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationNotifyState.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\State\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="ANS_ChangeParameter.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\State\ChangeParameter</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>ソース ファイル\Method\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="IAnimParametersSetter.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\IAnimParametersSetter</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_UISlider.h">
+      <Filter>ソース ファイル\Component\Graphics\UI\Slider</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangeAnimObserver.h">
+      <Filter>ソース ファイル\Animation\AnimationObserver\ChangeAnimObserver</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackInformation.h">
+      <Filter>ソース ファイル\InGame\Attack\Information</Filter>
+    </ClInclude>
+    <ClInclude Include="IDamageable.h">
+      <Filter>ソース ファイル\InGame\Attack\IDamageable</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Weapon.h">
+      <Filter>ソース ファイル\Component\InGame\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Character.h">
+      <Filter>ソース ファイル\Component\InGame\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="SingletonComponent.h">
+      <Filter>ソース ファイル\Component\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_HitStopManager.h">
+      <Filter>ソース ファイル\Component\HitStopManager</Filter>
+    </ClInclude>
+    <ClInclude Include="HitStopper_Base.h">
+      <Filter>ソース ファイル\Component\HitStopManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\implot\include\implot.h">
+      <Filter>ソース ファイル\System\ImGui\ImPlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\implot\include\implot_internal.h">
+      <Filter>ソース ファイル\System\ImGui\ImPlot</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Enemy.h">
+      <Filter>ソース ファイル\Component\InGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationCurve.h">
+      <Filter>ソース ファイル\System\AnimationCurve</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerRushAttack.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\RushAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerRollingMove.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Rolling</Filter>
+    </ClInclude>
+    <ClInclude Include="BossActState_Base.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\BossAct_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterActionController.h">
+      <Filter>ソース ファイル\InGame\Character\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterActState_Base.h">
+      <Filter>ソース ファイル\InGame\Character\ActionState</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyActionController.h">
+      <Filter>ソース ファイル\InGame\Enemy\Enemy_Base\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyActState_Base.h">
+      <Filter>ソース ファイル\InGame\Enemy\Enemy_Base\ActState</Filter>
+    </ClInclude>
+    <ClInclude Include="BossActionController.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="EditScene.h">
+      <Filter>ソース ファイル\Scene\SceneEditer</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_BattleManager.h">
+      <Filter>ソース ファイル\Component\InGame\BattleManager</Filter>
+    </ClInclude>
+    <ClInclude Include="BossGroundState.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="ANE_ChangeParameter.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\ChangeParameter</Filter>
+    </ClInclude>
+    <ClInclude Include="VS_Object.h">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\VS_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="VS_WorldPosition.h">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\WorldPosition</Filter>
+    </ClInclude>
+    <ClInclude Include="PS_Toon.h">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\Toon</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraMoveController.h">
+      <Filter>ソース ファイル\InGame\Camera\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraMoveState_Base.h">
+      <Filter>ソース ファイル\InGame\Camera\State\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="BossDamageState.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Damage</Filter>
+    </ClInclude>
+    <ClInclude Include="BossIdleState.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="VisualEffect.h">
+      <Filter>ソース ファイル\Graphics\Effect\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11EffecseerManager.h">
+      <Filter>ソース ファイル\Graphics\Effect\DX11EffecseerManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_VisualEffect.h">
+      <Filter>ソース ファイル\Component\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_OutLineRenderer.h">
+      <Filter>ソース ファイル\Component\Graphics\OutLine</Filter>
+    </ClInclude>
+    <ClInclude Include="ITargetAccepter.h">
+      <Filter>ソース ファイル\InGame\ITargeter</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Boss.h">
+      <Filter>ソース ファイル\Component\InGame\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAttackState.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDamageState.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Damage</Filter>
+    </ClInclude>
+    <ClInclude Include="BossAttackState.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="BossJumpAttack.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\JumpAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_CylinderCollider.h">
+      <Filter>ソース ファイル\Component\Collider\Cylinder</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraFollowMove.h">
+      <Filter>ソース ファイル\InGame\Camera\State\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Button.h">
+      <Filter>ソース ファイル\Component\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="DXSoundManager.h">
+      <Filter>ソース ファイル\Sound\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundAsset.h">
+      <Filter>ソース ファイル\Sound\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="BossGroundMove.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerActionController_Base.h">
+      <Filter>ソース ファイル\InGame\Player\Action\Controller\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerGuardState.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Guard</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerJumpState.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Jump</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAirActionController.h">
+      <Filter>ソース ファイル\InGame\Player\Action\Controller\Air</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerGroundActionController.h">
+      <Filter>ソース ファイル\InGame\Player\Action\Controller\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerGroundState.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAirState.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Air\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAirMove.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Air\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAirAttack.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Air\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="LayerdAnimationNode.h">
+      <Filter>ソース ファイル\Animation\AnimNode\Layerd</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimLayerdNodePlayer.h">
+      <Filter>ソース ファイル\Animation\AnimControllPlayer\NodePlayer\LayerdNodePlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="BossBreakEndKnock.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\BreakEndKnock</Filter>
+    </ClInclude>
+    <ClInclude Include="BossBreakIdle.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\BreakIdle</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAnimReference.h">
+      <Filter>ソース ファイル\InGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_TitleButtonGroup.h">
+      <Filter>ソース ファイル\Component\ButtonGroup\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Fade.h">
+      <Filter>ソース ファイル\Component\Graphics\UI\Fade</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAttackInformation.h">
+      <Filter>ソース ファイル\InGame\Attack\Information\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAction.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerAction</Filter>
+    </ClInclude>
+    <ClInclude Include="BossWalkState.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Walk</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimControllerCreater.h">
+      <Filter>ソース ファイル\Animation\AnimationController\Creater</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraGameOverState.h">
+      <Filter>ソース ファイル\InGame\Camera\State\GameOver</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraTargetMove.h">
+      <Filter>ソース ファイル\InGame\Camera\State\Target</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_ButtonGroup.h">
+      <Filter>ソース ファイル\Component\ButtonGroup\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_GroundCheck.h">
+      <Filter>ソース ファイル\Component\GroundChecker</Filter>
+    </ClInclude>
+    <ClInclude Include="IGroundNotifyer.h">
+      <Filter>ソース ファイル\Component\GroundChecker</Filter>
+    </ClInclude>
+    <ClInclude Include="IUISlider.h">
+      <Filter>ソース ファイル\Component\Graphics\UI\Slider</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerGroundChargeAttack.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\ChargeAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="PerlinNoise.h">
+      <Filter>ソース ファイル\System\PerlinNoise</Filter>
+    </ClInclude>
+    <ClInclude Include="PerlinShakeParameter.h">
+      <Filter>ソース ファイル\InGame\PerlinShake\Parameter</Filter>
+    </ClInclude>
+    <ClInclude Include="PerlinShake.h">
+      <Filter>ソース ファイル\InGame\PerlinShake</Filter>
+    </ClInclude>
+    <ClInclude Include="ANE_CreateVfx.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\CreateVfx</Filter>
+    </ClInclude>
+    <ClInclude Include="ITransformSetter.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\ITransfiormSetter</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraChargeAttack.h">
+      <Filter>ソース ファイル\InGame\Camera\State\ChargeAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="ANE_CameraShake.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\CameraShake</Filter>
+    </ClInclude>
+    <ClInclude Include="ANE_PadShake.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\PadShake</Filter>
+    </ClInclude>
+    <ClInclude Include="PS_BackObject.h">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\BackObject</Filter>
+    </ClInclude>
+    <ClInclude Include="PS_OutLine.h">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\OutLine</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowDrawer.h">
+      <Filter>ソース ファイル\Graphics\Shadow</Filter>
+    </ClInclude>
+    <ClInclude Include="IApplyDepthShadow.h">
+      <Filter>ソース ファイル\Component\Graphics\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="VS_Ground.h">
+      <Filter>ソース ファイル\Graphics\Shader\Vertex\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_SoundManager.h">
+      <Filter>ソース ファイル\Component\SoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_AudioListener.h">
+      <Filter>ソース ファイル\Component\AudioListener</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleDirection.h">
+      <Filter>ソース ファイル\Component\InGame\BattleDirection</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_BattleButtonGroup.h">
+      <Filter>ソース ファイル\Component\ButtonGroup\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_PlaySound.h">
+      <Filter>ソース ファイル\Component\PlaySound</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraWinState.h">
+      <Filter>ソース ファイル\InGame\Camera\State\Win</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_StylishUI.h">
+      <Filter>ソース ファイル\Component\Graphics\UI\StylishUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IBoneSupplier.h">
+      <Filter>ソース ファイル\Component\Animation\IBoneBufferSupplier</Filter>
+    </ClInclude>
+    <ClInclude Include="ANE_PlaySound.h">
+      <Filter>ソース ファイル\Animation\AnimationNotify\Event\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="PS_Ground.h">
+      <Filter>ソース ファイル\Graphics\Shader\Pixel\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="IAttacker.h">
+      <Filter>ソース ファイル\Component\InGame\Weapon\IAttacker</Filter>
+    </ClInclude>
+    <ClInclude Include="IParryAccepter.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\Guard\IParryAccepter</Filter>
+    </ClInclude>
+    <ClInclude Include="IAttacker_AcceptParry.h">
+      <Filter>ソース ファイル\Component\InGame\Weapon\IAttacker\IAttacker_AcceptParry</Filter>
+    </ClInclude>
+    <ClInclude Include="BossAttackInformation.h">
+      <Filter>ソース ファイル\InGame\Enemy\Boss\ActionState\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="IActionController.h">
+      <Filter>ソース ファイル\InGame\Character\ActionState\InterFace</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSlashHigh.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Ground\SlashHigh</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_MotionBlur.h">
+      <Filter>ソース ファイル\Component\Graphics\MotionBlur</Filter>
+    </ClInclude>
+    <ClInclude Include="GausianBlur.h">
+      <Filter>ソース ファイル\Graphics\Blur</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAirSlashHigh.h">
+      <Filter>ソース ファイル\InGame\Player\Action\PlayerState\Air\AirSlashHigh</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTargetCollection.h">
+      <Filter>ソース ファイル\Graphics\RenderTargetCollection</Filter>
+    </ClInclude>
+    <ClInclude Include="CP_Gage.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SampleProjectBase.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

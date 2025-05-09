@@ -1,0 +1,1546 @@
+{
+    "childs": [
+        {
+            "childs": [
+                {
+                    "childs": [
+                        {
+                            "childs": null,
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "enable": true,
+                                        "isShadow": true,
+                                        "materials": null,
+                                        "meshName": "shield1.fbx",
+                                        "name": "MeshRenderer",
+                                        "priority": 0
+                                    },
+                                    {
+                                        "color": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "ditherOffset": 0.0,
+                                        "ditherPower": 1.0,
+                                        "enable": true,
+                                        "name": "OutLineRenderer",
+                                        "priority": 0,
+                                        "scale": 0.019999999552965164
+                                    }
+                                ],
+                                "layer": 0,
+                                "name": "Shield_Mesh",
+                                "tag": 0,
+                                "transform": {
+                                    "child": null,
+                                    "pos": [
+                                        0.09351862221956253,
+                                        0.010002868250012398,
+                                        -11.521551132202148
+                                    ],
+                                    "rotation": [
+                                        -0.13734862208366394,
+                                        0.0861201360821724,
+                                        0.7228975296020508,
+                                        0.6716678738594055
+                                    ],
+                                    "scale": [
+                                        1.0000004768371582,
+                                        0.8000001907348633,
+                                        0.9999988675117493
+                                    ]
+                                }
+                            }
+                        }
+                    ],
+                    "gameObject": {
+                        "active": true,
+                        "components": null,
+                        "layer": 0,
+                        "name": "Shield",
+                        "tag": 0,
+                        "transform": {
+                            "child": [
+                                "Shield_Mesh"
+                            ],
+                            "pos": [
+                                3.324726094433572e-07,
+                                0.009999999776482582,
+                                -11.600004196166992
+                            ],
+                            "rotation": [
+                                -0.0,
+                                -0.04361942410469055,
+                                -0.0,
+                                0.9990482330322266
+                            ],
+                            "scale": [
+                                1.0000007152557373,
+                                1.0,
+                                1.0000007152557373
+                            ]
+                        }
+                    }
+                }
+            ],
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "grabName": "mixamorig:LeftHand",
+                        "name": "Rig",
+                        "priority": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "Player_LeftHand",
+                "tag": 0,
+                "transform": {
+                    "child": [
+                        "Shield"
+                    ],
+                    "pos": [
+                        0.0,
+                        0.009999999776482582,
+                        -11.600000381469727
+                    ],
+                    "rotation": [
+                        -0.0,
+                        -0.04361933469772339,
+                        -0.0,
+                        0.9990482330322266
+                    ],
+                    "scale": [
+                        1.0000007152557373,
+                        1.0,
+                        1.0000007152557373
+                    ]
+                }
+            }
+        },
+        {
+            "childs": [
+                {
+                    "childs": [
+                        {
+                            "childs": null,
+                            "gameObject": {
+                                "active": true,
+                                "components": [
+                                    {
+                                        "enable": true,
+                                        "isShadow": true,
+                                        "materials": null,
+                                        "meshName": "Knight_Sword.fbx",
+                                        "name": "MeshRenderer",
+                                        "priority": 0
+                                    },
+                                    {
+                                        "color": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "ditherOffset": 0.0,
+                                        "ditherPower": 1.0,
+                                        "enable": true,
+                                        "name": "OutLineRenderer",
+                                        "priority": 0,
+                                        "scale": 0.019999999552965164
+                                    }
+                                ],
+                                "layer": 0,
+                                "name": "Weapon_Model",
+                                "tag": 0,
+                                "transform": {
+                                    "child": null,
+                                    "pos": [
+                                        0.2000013142824173,
+                                        0.16000419855117798,
+                                        -11.600014686584473
+                                    ],
+                                    "rotation": [
+                                        0.1687491536140442,
+                                        0.1617741882801056,
+                                        -0.618116021156311,
+                                        0.7505235075950623
+                                    ],
+                                    "scale": [
+                                        1.2000008821487427,
+                                        1.2000012397766113,
+                                        1.200000524520874
+                                    ]
+                                }
+                            }
+                        }
+                    ],
+                    "gameObject": {
+                        "active": true,
+                        "components": [
+                            {
+                                "attackableTags": [
+                                    3
+                                ],
+                                "enable": true,
+                                "hitVfxOffset": 0.20000000298023224,
+                                "isDebugDisplay": false,
+                                "measAtkOffset": [
+                                    0.0,
+                                    1.0700000524520874,
+                                    0.0
+                                ],
+                                "name": "Weapon",
+                                "priority": 0
+                            },
+                            {
+                                "angles": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "center": [
+                                    0.0,
+                                    1.100000023841858,
+                                    0.0
+                                ],
+                                "enable": true,
+                                "height": 1.4500000476837158,
+                                "name": "CapsuleCollider",
+                                "priority": 0,
+                                "radius": 0.3499999940395355
+                            },
+                            {
+                                "enable": true,
+                                "friction": 0.0,
+                                "isAwake": false,
+                                "isFreezeRot": [
+                                    false,
+                                    false,
+                                    false
+                                ],
+                                "isKinematic": false,
+                                "isTrigger": true,
+                                "mass": 1.0,
+                                "name": "RigidBody",
+                                "priority": 0
+                            }
+                        ],
+                        "layer": 0,
+                        "name": "Weapon",
+                        "tag": 0,
+                        "transform": {
+                            "child": [
+                                "Weapon_Model"
+                            ],
+                            "pos": [
+                                0.20000267028808594,
+                                0.15999962389469147,
+                                -11.600004196166992
+                            ],
+                            "rotation": [
+                                0.16874916851520538,
+                                0.1617741733789444,
+                                -0.6181161403656006,
+                                0.7505233287811279
+                            ],
+                            "scale": [
+                                1.0000001192092896,
+                                1.0000001192092896,
+                                0.9999999403953552
+                            ]
+                        }
+                    }
+                }
+            ],
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "grabName": "mixamorig:RightHand",
+                        "name": "Rig",
+                        "priority": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "Player_RightHand",
+                "tag": 0,
+                "transform": {
+                    "child": [
+                        "Weapon"
+                    ],
+                    "pos": [
+                        0.0,
+                        0.009999999776482582,
+                        -11.600000381469727
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        },
+        {
+            "childs": null,
+            "gameObject": {
+                "active": true,
+                "components": [
+                    {
+                        "enable": true,
+                        "friction": 0.5,
+                        "isAwake": false,
+                        "isFreezeRot": [
+                            false,
+                            false,
+                            false
+                        ],
+                        "isKinematic": false,
+                        "isTrigger": true,
+                        "mass": 1.0,
+                        "name": "RigidBody",
+                        "priority": 0
+                    },
+                    {
+                        "angles": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "center": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "enable": true,
+                        "name": "SphereCollider",
+                        "priority": 0,
+                        "radius": 0.20000000298023224
+                    },
+                    {
+                        "enable": true,
+                        "name": "GroundCheck",
+                        "priority": 0
+                    }
+                ],
+                "layer": 0,
+                "name": "PlayerGroundCollision",
+                "tag": 0,
+                "transform": {
+                    "child": null,
+                    "pos": [
+                        0.0,
+                        0.009999999776482582,
+                        -11.600000381469727
+                    ],
+                    "rotation": [
+                        -0.0,
+                        0.0,
+                        -0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ]
+                }
+            }
+        }
+    ],
+    "gameObject": {
+        "active": true,
+        "components": [
+            {
+                "enable": true,
+                "isShadow": true,
+                "materials": null,
+                "meshName": "Knight.fbx",
+                "name": "MeshRenderer",
+                "priority": 0
+            },
+            {
+                "enable": true,
+                "friction": 0.800000011920929,
+                "isAwake": true,
+                "isFreezeRot": [
+                    true,
+                    true,
+                    true
+                ],
+                "isKinematic": false,
+                "isTrigger": false,
+                "mass": 1.0,
+                "name": "RigidBody",
+                "priority": 0
+            },
+            {
+                "action": {
+                    "air": {
+                        "actData": [
+                            {
+                                "data": {
+                                    "acceleration": 20.0,
+                                    "decade": 100.0,
+                                    "maxSpeed": 8.0,
+                                    "rotateSpeed": 7.0
+                                },
+                                "typeString": "Move"
+                            },
+                            {
+                                "data": {
+                                    "jumpMovementCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": [
+                                            {
+                                                "interp": 1,
+                                                "time": 0.3199999928474426,
+                                                "value": 0.0,
+                                                "vector": 0.6433818936347961
+                                            },
+                                            {
+                                                "interp": 0,
+                                                "time": 0.32899999618530273,
+                                                "value": 0.09099999815225601,
+                                                "vector": 0.13479572534561157
+                                            },
+                                            {
+                                                "interp": 1,
+                                                "time": 0.4690000116825104,
+                                                "value": 0.9599999785423279,
+                                                "vector": 0.2342473715543747
+                                            },
+                                            {
+                                                "interp": 1,
+                                                "time": 0.5,
+                                                "value": 1.0,
+                                                "vector": 0.0
+                                            }
+                                        ],
+                                        "startInterp": 1,
+                                        "startValue": 0.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "maxJumpMovement": 4.0
+                                },
+                                "typeString": "SlashHigh_Air"
+                            }
+                        ],
+                        "downForcePower": -45.0
+                    },
+                    "ground": {
+                        "actData": [
+                            {
+                                "data": null,
+                                "typeString": "Idle"
+                            },
+                            {
+                                "data": {
+                                    "acceleration": 60.0,
+                                    "decade": 100.0,
+                                    "maxSpeed": 10.0,
+                                    "rotateSpeed": 10.0
+                                },
+                                "typeString": "Move"
+                            },
+                            {
+                                "data": {
+                                    "acceleration": 40.0,
+                                    "decade": 100.0,
+                                    "maxSpeed": 5.0,
+                                    "rotateSpeed": 40.0
+                                },
+                                "typeString": "TargetMove"
+                            },
+                            {
+                                "data": {
+                                    "attackCnt": 1,
+                                    "attackInfos": [
+                                        {
+                                            "attackVector": [
+                                                -1.0,
+                                                -0.75,
+                                                0.0
+                                            ],
+                                            "break": 5.0,
+                                            "camShake": {
+                                                "fadeOut": true,
+                                                "power": 0.15000000596046448,
+                                                "shakeVec": [
+                                                    1.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
+                                                "speed": 0.4000000059604645,
+                                                "time": 0.05999999865889549
+                                            },
+                                            "damage": 2.0,
+                                            "hitSE": {
+                                                "loop": false,
+                                                "pitch": 0.0,
+                                                "soundName": "sword1.wav",
+                                                "useListener": true,
+                                                "volume": 0.25
+                                            },
+                                            "hitVfxDatas": [
+                                                {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
+                                                    "name": "slash03_Line",
+                                                    "scale": 1.399999976158142,
+                                                    "speed": 1.5,
+                                                    "startFrame": 45
+                                                },
+                                                {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
+                                                    "name": "slash03_Center",
+                                                    "scale": 1.399999976158142,
+                                                    "speed": 2.200000047683716,
+                                                    "startFrame": 45
+                                                }
+                                            ],
+                                            "isCamShake": true,
+                                            "level": 0
+                                        }
+                                    ],
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "isMoveFwd": false,
+                                    "maxDistance": 10.0,
+                                    "nextCombAttack": 21
+                                },
+                                "typeString": "Attack11"
+                            },
+                            {
+                                "data": {
+                                    "attackCnt": 1,
+                                    "attackInfos": [
+                                        {
+                                            "attackVector": [
+                                                1.0,
+                                                0.7599999904632568,
+                                                0.0
+                                            ],
+                                            "break": 6.0,
+                                            "camShake": {
+                                                "fadeOut": true,
+                                                "power": 0.15000000596046448,
+                                                "shakeVec": [
+                                                    1.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
+                                                "speed": 0.4000000059604645,
+                                                "time": 0.05999999865889549
+                                            },
+                                            "damage": 2.9000000953674316,
+                                            "hitSE": {
+                                                "loop": false,
+                                                "pitch": 0.0,
+                                                "soundName": "sword1.wav",
+                                                "useListener": true,
+                                                "volume": 0.17000000178813934
+                                            },
+                                            "hitVfxDatas": [
+                                                {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
+                                                    "name": "slash03_Line",
+                                                    "scale": 1.2000000476837158,
+                                                    "speed": 1.5,
+                                                    "startFrame": 45
+                                                },
+                                                {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
+                                                    "name": "slash03_Center",
+                                                    "scale": 1.2000000476837158,
+                                                    "speed": 2.200000047683716,
+                                                    "startFrame": 45
+                                                }
+                                            ],
+                                            "isCamShake": true,
+                                            "level": 0
+                                        }
+                                    ],
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "isMoveFwd": false,
+                                    "maxDistance": 10.0,
+                                    "nextCombAttack": 22
+                                },
+                                "typeString": "Attack12"
+                            },
+                            {
+                                "data": {
+                                    "attackCnt": 1,
+                                    "attackInfos": [
+                                        {
+                                            "attackVector": [
+                                                0.5,
+                                                -1.0,
+                                                0.0
+                                            ],
+                                            "break": 1.0,
+                                            "damage": 3.0,
+                                            "hitSE": {
+                                                "loop": false,
+                                                "pitch": 0.0,
+                                                "soundName": "sword2.wav",
+                                                "useListener": true,
+                                                "volume": 0.25
+                                            },
+                                            "hitVfxDatas": [
+                                                {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
+                                                    "name": "slash03_Line",
+                                                    "scale": 2.0,
+                                                    "speed": 1.5,
+                                                    "startFrame": 47
+                                                },
+                                                {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
+                                                    "name": "slash03_Center",
+                                                    "scale": 1.600000023841858,
+                                                    "speed": 2.0,
+                                                    "startFrame": 47
+                                                }
+                                            ],
+                                            "isCamShake": false,
+                                            "level": 1
+                                        }
+                                    ],
+                                    "cancelAnim": 0.3799999952316284,
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "horiCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": [
+                                            {
+                                                "interp": 0,
+                                                "time": 0.20000000298023224,
+                                                "value": 0.0,
+                                                "vector": 1.6519999504089355
+                                            },
+                                            {
+                                                "interp": 0,
+                                                "time": 0.5569999814033508,
+                                                "value": 0.9309999942779541,
+                                                "vector": 0.28700000047683716
+                                            }
+                                        ],
+                                        "startInterp": 1,
+                                        "startValue": 0.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "horiDis": 11.0,
+                                    "isMoveFwd": false,
+                                    "maxDistance": 10.0,
+                                    "nextCombAttack": 99,
+                                    "slashAnim": 0.4429999887943268,
+                                    "slashBegin": 2.200000047683716
+                                },
+                                "typeString": "RushAttack"
+                            },
+                            {
+                                "data": {
+                                    "attackCnt": 1,
+                                    "attackInfos": [
+                                        {
+                                            "attackVector": [
+                                                1.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "break": 8.0,
+                                            "camShake": {
+                                                "fadeOut": true,
+                                                "power": 0.15000000596046448,
+                                                "shakeVec": [
+                                                    1.0,
+                                                    0.0,
+                                                    0.0
+                                                ],
+                                                "speed": 0.4000000059604645,
+                                                "time": 0.05999999865889549
+                                            },
+                                            "damage": 4.0,
+                                            "hitSE": {
+                                                "loop": false,
+                                                "pitch": 0.0,
+                                                "soundName": "sword1.wav",
+                                                "useListener": true,
+                                                "volume": 0.17000000178813934
+                                            },
+                                            "hitVfxDatas": [
+                                                {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
+                                                    "name": "slash03_Line",
+                                                    "scale": 1.399999976158142,
+                                                    "speed": 1.5,
+                                                    "startFrame": 45
+                                                },
+                                                {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
+                                                    "name": "slash03_Center",
+                                                    "scale": 1.399999976158142,
+                                                    "speed": 2.200000047683716,
+                                                    "startFrame": 45
+                                                }
+                                            ],
+                                            "isCamShake": true,
+                                            "level": 0
+                                        }
+                                    ],
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "isMoveFwd": false,
+                                    "maxDistance": 10.0,
+                                    "nextCombAttack": 23
+                                },
+                                "typeString": "Attack13"
+                            },
+                            {
+                                "data": {
+                                    "attackCnt": 1,
+                                    "attackInfos": [
+                                        {
+                                            "attackVector": [
+                                                0.0,
+                                                -1.0,
+                                                0.0
+                                            ],
+                                            "break": 10.0,
+                                            "camShake": {
+                                                "fadeOut": true,
+                                                "power": 1.0,
+                                                "shakeVec": [
+                                                    1.0,
+                                                    0.6000000238418579,
+                                                    0.0
+                                                ],
+                                                "speed": 1.0,
+                                                "time": 0.30000001192092896
+                                            },
+                                            "damage": 7.0,
+                                            "hitSE": {
+                                                "loop": false,
+                                                "pitch": 0.0,
+                                                "soundName": "sword2.wav",
+                                                "useListener": true,
+                                                "volume": 0.17000000178813934
+                                            },
+                                            "hitVfxDatas": [
+                                                {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
+                                                    "name": "slash03_Line",
+                                                    "scale": 2.0,
+                                                    "speed": 1.5,
+                                                    "startFrame": 45
+                                                },
+                                                {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
+                                                    "name": "slash03_Center",
+                                                    "scale": 1.600000023841858,
+                                                    "speed": 1.7999999523162842,
+                                                    "startFrame": 45
+                                                }
+                                            ],
+                                            "isCamShake": true,
+                                            "level": 2
+                                        }
+                                    ],
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": [
+                                            {
+                                                "interp": 0,
+                                                "time": 0.2720000147819519,
+                                                "value": 0.0,
+                                                "vector": 2.0
+                                            },
+                                            {
+                                                "interp": 1,
+                                                "time": 0.6000000238418579,
+                                                "value": 1.0,
+                                                "vector": 0.0
+                                            }
+                                        ],
+                                        "startInterp": 1,
+                                        "startValue": 0.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "isMoveFwd": true,
+                                    "maxDistance": 2.700000047683716,
+                                    "nextCombAttack": 20
+                                },
+                                "typeString": "Attack14"
+                            },
+                            {
+                                "data": {
+                                    "attackCnt": 1,
+                                    "attackInfos": [
+                                        {
+                                            "attackVector": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "break": 1.0,
+                                            "damage": 3.0,
+                                            "hitSE": {
+                                                "loop": false,
+                                                "pitch": 0.0,
+                                                "soundName": "sword2.wav",
+                                                "useListener": true,
+                                                "volume": 0.25
+                                            },
+                                            "hitVfxDatas": [
+                                                {
+                                                    "applyColor": false,
+                                                    "lookCam": false,
+                                                    "scale": 1.0,
+                                                    "speed": 1.0,
+                                                    "startFrame": 0
+                                                }
+                                            ],
+                                            "isCamShake": false,
+                                            "level": 1
+                                        }
+                                    ],
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "isMoveFwd": false,
+                                    "judgeTimeAnimRatio": 0.25999999046325684,
+                                    "jumpAnimRatio": 0.30000001192092896,
+                                    "jumpPower": 20.0,
+                                    "maxDistance": 10.0,
+                                    "nextCombAttack": 99
+                                },
+                                "typeString": "SlashHigh"
+                            },
+                            {
+                                "data": {
+                                    "attackCnt": 2,
+                                    "attackInfos": [
+                                        {
+                                            "attackVector": [
+                                                -1.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "break": 15.0,
+                                            "camShake": {
+                                                "fadeOut": true,
+                                                "power": 1.5,
+                                                "shakeVec": [
+                                                    1.0,
+                                                    0.5,
+                                                    0.0
+                                                ],
+                                                "speed": 0.6000000238418579,
+                                                "time": 0.4000000059604645
+                                            },
+                                            "damage": 5.0,
+                                            "hitSE": {
+                                                "loop": false,
+                                                "pitch": 0.0,
+                                                "soundName": "sword1.wav",
+                                                "useListener": true,
+                                                "volume": 0.17000000178813934
+                                            },
+                                            "hitVfxDatas": [
+                                                {
+                                                    "applyColor": true,
+                                                    "color": [
+                                                        1.0,
+                                                        0.2823529541492462,
+                                                        0.2823529541492462,
+                                                        1.0
+                                                    ],
+                                                    "lookCam": false,
+                                                    "name": "slash03_Line",
+                                                    "scale": 2.200000047683716,
+                                                    "speed": 1.2000000476837158,
+                                                    "startFrame": 45
+                                                },
+                                                {
+                                                    "applyColor": true,
+                                                    "color": [
+                                                        1.0,
+                                                        0.2823529541492462,
+                                                        0.2823529541492462,
+                                                        1.0
+                                                    ],
+                                                    "lookCam": false,
+                                                    "name": "slash03_Center",
+                                                    "scale": 2.200000047683716,
+                                                    "speed": 2.0,
+                                                    "startFrame": 45
+                                                }
+                                            ],
+                                            "isCamShake": true,
+                                            "level": 2
+                                        },
+                                        {
+                                            "attackVector": [
+                                                1.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "break": 18.0,
+                                            "camShake": {
+                                                "fadeOut": true,
+                                                "power": 2.0,
+                                                "shakeVec": [
+                                                    1.0,
+                                                    0.5,
+                                                    0.5
+                                                ],
+                                                "speed": 0.800000011920929,
+                                                "time": 0.6000000238418579
+                                            },
+                                            "damage": 6.199999809265137,
+                                            "hitSE": {
+                                                "loop": false,
+                                                "pitch": 0.0,
+                                                "soundName": "sword2.wav",
+                                                "useListener": true,
+                                                "volume": 0.18000000715255737
+                                            },
+                                            "hitVfxDatas": [
+                                                {
+                                                    "applyColor": true,
+                                                    "color": [
+                                                        1.0,
+                                                        0.2823529541492462,
+                                                        0.2823529541492462,
+                                                        1.0
+                                                    ],
+                                                    "lookCam": false,
+                                                    "name": "slash03_Line",
+                                                    "scale": 3.0,
+                                                    "speed": 1.2000000476837158,
+                                                    "startFrame": 45
+                                                },
+                                                {
+                                                    "applyColor": true,
+                                                    "color": [
+                                                        1.0,
+                                                        0.2823529541492462,
+                                                        0.2823529541492462,
+                                                        1.0
+                                                    ],
+                                                    "lookCam": false,
+                                                    "name": "slash03_Center",
+                                                    "scale": 2.200000047683716,
+                                                    "speed": 1.7999999523162842,
+                                                    "startFrame": 45
+                                                }
+                                            ],
+                                            "isCamShake": true,
+                                            "level": 3
+                                        }
+                                    ],
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "isMoveFwd": false,
+                                    "maxDistance": 10.0,
+                                    "nextCombAttack": 99
+                                },
+                                "typeString": "SpecialAtkGuard"
+                            },
+                            {
+                                "data": {
+                                    "attackCnt": 1,
+                                    "attackInfos": [
+                                        {
+                                            "attackVector": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "break": 1.0,
+                                            "damage": 0.0,
+                                            "hitSE": {
+                                                "loop": false,
+                                                "pitch": 0.0,
+                                                "useListener": false,
+                                                "volume": 0.5
+                                            },
+                                            "hitVfxDatas": null,
+                                            "isCamShake": false,
+                                            "level": 0
+                                        }
+                                    ],
+                                    "chargeInfos": [
+                                        {
+                                            "attackInfos": [
+                                                {
+                                                    "attackVector": [
+                                                        0.0,
+                                                        -1.0,
+                                                        0.0
+                                                    ],
+                                                    "break": 6.0,
+                                                    "camShake": {
+                                                        "fadeOut": true,
+                                                        "power": 1.0,
+                                                        "shakeVec": [
+                                                            0.20000000298023224,
+                                                            1.0,
+                                                            0.0
+                                                        ],
+                                                        "speed": 0.6000000238418579,
+                                                        "time": 0.20000000298023224
+                                                    },
+                                                    "damage": 8.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "soundName": "sword1.wav",
+                                                        "useListener": true,
+                                                        "volume": 0.17000000178813934
+                                                    },
+                                                    "hitVfxDatas": [
+                                                        {
+                                                            "applyColor": false,
+                                                            "lookCam": false,
+                                                            "name": "slash03_Line",
+                                                            "scale": 2.0,
+                                                            "speed": 1.5,
+                                                            "startFrame": 45
+                                                        },
+                                                        {
+                                                            "applyColor": false,
+                                                            "lookCam": false,
+                                                            "name": "slash03_Center",
+                                                            "scale": 1.5,
+                                                            "speed": 2.0,
+                                                            "startFrame": 45
+                                                        }
+                                                    ],
+                                                    "isCamShake": true,
+                                                    "level": 1
+                                                }
+                                            ],
+                                            "nextSound": {
+                                                "loop": false,
+                                                "pitch": 0.0,
+                                                "useListener": false,
+                                                "volume": 0.5
+                                            },
+                                            "nextVfx": {
+                                                "applyColor": false,
+                                                "lookCam": true,
+                                                "scale": 0.800000011920929,
+                                                "speed": 1.5,
+                                                "startFrame": 0
+                                            },
+                                            "releaseSound": {
+                                                "loop": false,
+                                                "pitch": 0.0,
+                                                "useListener": false,
+                                                "volume": 0.5
+                                            },
+                                            "releaseVfx": {
+                                                "applyColor": false,
+                                                "lookCam": false,
+                                                "scale": 1.0,
+                                                "speed": 1.0,
+                                                "startFrame": 0
+                                            },
+                                            "time": 0.0
+                                        },
+                                        {
+                                            "attackInfos": [
+                                                {
+                                                    "attackVector": [
+                                                        0.0,
+                                                        -1.0,
+                                                        0.0
+                                                    ],
+                                                    "break": 15.0,
+                                                    "camShake": {
+                                                        "fadeOut": true,
+                                                        "power": 2.0,
+                                                        "shakeVec": [
+                                                            0.4000000059604645,
+                                                            1.0,
+                                                            0.0
+                                                        ],
+                                                        "speed": 0.5,
+                                                        "time": 0.4000000059604645
+                                                    },
+                                                    "damage": 15.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "soundName": "sword2.wav",
+                                                        "useListener": true,
+                                                        "volume": 0.17000000178813934
+                                                    },
+                                                    "hitVfxDatas": [
+                                                        {
+                                                            "applyColor": false,
+                                                            "lookCam": false,
+                                                            "name": "slash03_Line",
+                                                            "scale": 2.200000047683716,
+                                                            "speed": 1.2999999523162842,
+                                                            "startFrame": 45
+                                                        },
+                                                        {
+                                                            "applyColor": false,
+                                                            "lookCam": false,
+                                                            "name": "slash03_Center",
+                                                            "scale": 1.7000000476837158,
+                                                            "speed": 2.0,
+                                                            "startFrame": 45
+                                                        }
+                                                    ],
+                                                    "isCamShake": true,
+                                                    "level": 2
+                                                }
+                                            ],
+                                            "nextSound": {
+                                                "loop": false,
+                                                "pitch": -0.20000000298023224,
+                                                "soundName": "chargeComplete1.wav",
+                                                "useListener": true,
+                                                "volume": 0.15000000596046448
+                                            },
+                                            "nextVfx": {
+                                                "applyColor": true,
+                                                "color": [
+                                                    0.42799776792526245,
+                                                    0.7932489514350891,
+                                                    0.013388179242610931,
+                                                    1.0
+                                                ],
+                                                "lookCam": true,
+                                                "name": "charge02",
+                                                "scale": 1.0,
+                                                "speed": 1.5,
+                                                "startFrame": 0
+                                            },
+                                            "releaseSound": {
+                                                "loop": false,
+                                                "pitch": 0.0,
+                                                "soundName": "chargeRelease.wav",
+                                                "useListener": true,
+                                                "volume": 0.5
+                                            },
+                                            "releaseVfx": {
+                                                "applyColor": false,
+                                                "lookCam": true,
+                                                "name": "chargeRelease01",
+                                                "scale": 1.0,
+                                                "speed": 1.5,
+                                                "startFrame": 4
+                                            },
+                                            "time": 1.2000000476837158
+                                        },
+                                        {
+                                            "attackInfos": [
+                                                {
+                                                    "attackVector": [
+                                                        0.0,
+                                                        -1.0,
+                                                        0.0
+                                                    ],
+                                                    "break": 30.0,
+                                                    "camShake": {
+                                                        "fadeOut": false,
+                                                        "power": 3.0,
+                                                        "shakeVec": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "speed": 2.0,
+                                                        "time": 0.44999998807907104
+                                                    },
+                                                    "damage": 30.0,
+                                                    "hitSE": {
+                                                        "loop": false,
+                                                        "pitch": 0.0,
+                                                        "soundName": "sword2.wav",
+                                                        "useListener": true,
+                                                        "volume": 0.17000000178813934
+                                                    },
+                                                    "hitVfxDatas": [
+                                                        {
+                                                            "applyColor": true,
+                                                            "color": [
+                                                                1.0,
+                                                                0.2823529541492462,
+                                                                0.2823529541492462,
+                                                                1.0
+                                                            ],
+                                                            "lookCam": false,
+                                                            "name": "slash03_Line",
+                                                            "scale": 3.0,
+                                                            "speed": 0.800000011920929,
+                                                            "startFrame": 45
+                                                        },
+                                                        {
+                                                            "applyColor": true,
+                                                            "color": [
+                                                                1.0,
+                                                                0.2823529541492462,
+                                                                0.2823529541492462,
+                                                                1.0
+                                                            ],
+                                                            "lookCam": false,
+                                                            "name": "slash03_Center",
+                                                            "scale": 3.0,
+                                                            "speed": 1.0,
+                                                            "startFrame": 45
+                                                        }
+                                                    ],
+                                                    "isCamShake": true,
+                                                    "level": 3
+                                                }
+                                            ],
+                                            "nextSound": {
+                                                "loop": false,
+                                                "pitch": 0.4000000059604645,
+                                                "soundName": "chargeComplete1.wav",
+                                                "useListener": true,
+                                                "volume": 0.25
+                                            },
+                                            "nextVfx": {
+                                                "applyColor": false,
+                                                "lookCam": true,
+                                                "name": "charge02",
+                                                "scale": 1.100000023841858,
+                                                "speed": 1.5,
+                                                "startFrame": 0
+                                            },
+                                            "releaseSound": {
+                                                "loop": false,
+                                                "pitch": 0.0,
+                                                "soundName": "chargeRelease.wav",
+                                                "useListener": true,
+                                                "volume": 0.5
+                                            },
+                                            "releaseVfx": {
+                                                "applyColor": true,
+                                                "color": [
+                                                    1.0,
+                                                    0.607594907283783,
+                                                    0.0,
+                                                    1.0
+                                                ],
+                                                "lookCam": true,
+                                                "name": "chargeRelease01",
+                                                "scale": 2.4000000953674316,
+                                                "speed": 1.5,
+                                                "startFrame": 4
+                                            },
+                                            "time": 2.4000000953674316
+                                        }
+                                    ],
+                                    "chargeOffset": [
+                                        0.03200000151991844,
+                                        1.2000000476837158,
+                                        0.0
+                                    ],
+                                    "chargeOffsetTime": -0.30000001192092896,
+                                    "charhePadPower": 0.4000000059604645,
+                                    "forwardCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "isMoveFwd": false,
+                                    "maxDistance": 10.0,
+                                    "maxTime": 3.5,
+                                    "nextCombAttack": 99,
+                                    "releaseVfxOffset": 1.2000000476837158
+                                },
+                                "typeString": "ChargeAttack1"
+                            },
+                            {
+                                "data": {
+                                    "crouchTime": 0.10000000149011612,
+                                    "jumpPower": 18.0
+                                },
+                                "typeString": "BeginJump"
+                            },
+                            {
+                                "data": {
+                                    "addStylishPointParry": 200.0,
+                                    "canParryTime": 12,
+                                    "parryAngle": 100.0,
+                                    "parryCamShake": {
+                                        "fadeOut": true,
+                                        "power": 2.0,
+                                        "shakeVec": [
+                                            1.0,
+                                            1.0,
+                                            0.75
+                                        ],
+                                        "speed": 0.4000000059604645,
+                                        "time": 0.30000001192092896
+                                    },
+                                    "parryPadVibePower": 0.4000000059604645,
+                                    "parryPadVibeTime": 0.20000000298023224,
+                                    "parrySEs": [
+                                        {
+                                            "loop": false,
+                                            "pitch": 0.0,
+                                            "soundName": "parry1.wav",
+                                            "useListener": true,
+                                            "volume": 0.5
+                                        },
+                                        {
+                                            "loop": false,
+                                            "pitch": 0.0,
+                                            "soundName": "parry2.wav",
+                                            "useListener": true,
+                                            "volume": 0.5
+                                        }
+                                    ],
+                                    "parryStrengthRate": 1.0,
+                                    "vfxInfo": {
+                                        "applyColor": false,
+                                        "lookCam": false,
+                                        "name": "Parry01",
+                                        "scale": 1.0,
+                                        "speed": 1.600000023841858,
+                                        "startFrame": 0
+                                    },
+                                    "vfxOffset": [
+                                        0.27000001072883606,
+                                        1.4700000286102295,
+                                        0.550000011920929
+                                    ]
+                                },
+                                "typeString": "Guard"
+                            },
+                            {
+                                "data": {
+                                    "invicibleTime": 0.4000000059604645,
+                                    "rollingDistance": 10.0,
+                                    "speedCurve": {
+                                        "easeKind": 5,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": false
+                                    }
+                                },
+                                "typeString": "Rolling"
+                            },
+                            {
+                                "data": {
+                                    "knockCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 1.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": null,
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": false
+                                    },
+                                    "knockDis": 0.0
+                                },
+                                "typeString": "Damage_S"
+                            },
+                            {
+                                "data": {
+                                    "knockCurve": {
+                                        "easeKind": 0,
+                                        "endValue": 0.0,
+                                        "endVector": 0.0,
+                                        "plotDatas": [
+                                            {
+                                                "interp": 0,
+                                                "time": 0.37599998712539673,
+                                                "value": 1.0,
+                                                "vector": 0.0
+                                            },
+                                            {
+                                                "interp": 1,
+                                                "time": 0.5180000066757202,
+                                                "value": 0.0,
+                                                "vector": 0.0
+                                            }
+                                        ],
+                                        "startInterp": 1,
+                                        "startValue": 1.0,
+                                        "startVector": 0.0,
+                                        "useHermite": true
+                                    },
+                                    "knockDis": 18.100000381469727
+                                },
+                                "typeString": "Damage_L"
+                            }
+                        ]
+                    },
+                    "groundCheckName": "PlayerGroundCollision"
+                },
+                "camObjName": "Camera",
+                "enable": true,
+                "hpBarObjName": "Player_HpBarGroup",
+                "maxHp": 100.0,
+                "name": "Player",
+                "priority": 0,
+                "stylishRatio": 40.0,
+                "stylishRatioAcceptDmg": 100.0,
+                "stylishUIName": "StylishUI",
+                "weaponObjName": "Weapon"
+            },
+            {
+                "animConName": "ANC_Player",
+                "enable": true,
+                "name": "Animation",
+                "priority": 1
+            },
+            {
+                "angles": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "center": [
+                    0.0,
+                    1.0499999523162842,
+                    0.0
+                ],
+                "enable": true,
+                "height": 1.1399999856948853,
+                "name": "CapsuleCollider",
+                "priority": 0,
+                "radius": 0.49000000953674316
+            },
+            {
+                "color": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ditherOffset": 0.0,
+                "ditherPower": 1.0,
+                "enable": true,
+                "name": "OutLineRenderer",
+                "priority": 0,
+                "scale": 0.009999999776482582
+            }
+        ],
+        "layer": 1,
+        "name": "Player",
+        "tag": 2,
+        "transform": {
+            "child": [
+                "Player_LeftHand",
+                "Player_RightHand",
+                "PlayerGroundCollision"
+            ],
+            "pos": [
+                0.0,
+                0.009999999776482582,
+                -11.600000381469727
+            ],
+            "rotation": [
+                -0.0,
+                0.0,
+                -0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        }
+    }
+}

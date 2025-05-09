@@ -1,0 +1,36 @@
+{
+    "childs": null,
+    "gameObject": {
+        "active": true,
+        "components": [
+            {
+                "enable": true,
+                "meshName": "desertRock11.fbx",
+                "name": "MeshRenderer",
+                "priority": 0
+            }
+        ],
+        "layer": 0,
+        "name": "Rock",
+        "tag": 0,
+        "transform": {
+            "child": null,
+            "pos": [
+                29.899999618530273,
+                -2.799999952316284,
+                -10.600000381469727
+            ],
+            "rotation": [
+                0.0,
+                0.8038570880889893,
+                0.0,
+                0.5948224663734436
+            ],
+            "scale": [
+                9.99999713897705,
+                10.0,
+                8.000000953674316
+            ]
+        }
+    }
+}

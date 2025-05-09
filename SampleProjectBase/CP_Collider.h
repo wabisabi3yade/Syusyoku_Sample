@@ -1,55 +1,104 @@
 #pragma once
 #include "Component.h"
 
-class Tag;
-class Layer;
+#include <btBulletDynamicsCommon.h>
+#include "DXToBullet.h"
 
-// 当たり判定基礎クラス
-class CP_Collider :
-    public Component
+namespace HashiTaku
 {
-public :
-    enum Type   // 当たり判定の種類
-    {
-        Box,    // ボックス
-        Sphere, // 球
-        Num
-    };
+	class Tag;
+	class Layer;
 
-protected:
-    Type type;  // タイプ
+	// 当たり判定基礎クラス
+	class CP_Collider : public Component
+	{
+	public:
+		enum class ShapeType   // 形状の種類
+		{
+			Box,    // ボックス
+			Sphere, // 球
+			Cyllinder,  // 円柱
+			Capsule,    // カプセル
+			Num
+		};
 
-   // 今フレーム・前フレームで当たった判定
-    std::list<CP_Collider*> hitColliders;
-    std::list<CP_Collider*> o_hitColliders; 
+	private:
+		/// @brief 既に形状は作成されたか？
+		bool isCreateCompound;
 
-    // 当たってない・当たってるときの当たり判定の色
-    static const DirectX::SimpleMath::Color normalColor;
-    static const DirectX::SimpleMath::Color hitColor;
- 
-    virtual ~CP_Collider();
-public:
-    using Component::Component;
-    CP_Collider& operator=(const CP_Collider& _other);
+	protected:
+		ShapeType type;  // タイプ
 
-    void Init()override;   
-    // 判定に当たったコライダー追加
-    void SetHitCollider(CP_Collider& _hitCollider) { hitColliders.push_back(&_hitCollider); }
-    // 判定をリセット
-    void ResetColliders() { hitColliders.clear(); } 
+		/// @brief 中心座標と角度のオフセットを設定するための親コリジョン
+		std::unique_ptr<btCompoundShape> pCompound;
 
-    Type GetType()const { return type; }    // 種類を取得
+		/// @brief コリジョンの形状
+		std::unique_ptr<btCollisionShape> pCollisionShape;
 
-private:
-#ifdef EDIT
-    // これに当たると色を変える
-    std::list<Tag> colorTags;   
-    std::list<Layer> colorLayers;
-#endif // EDIT
+		/// @brief 中心座標オフセット
+		DXSimp::Vector3 centerOffset;
 
-public:
-    // 色を変えるタグ・レイヤーを設定
-    void SetTagColor(const Tag& _tag); 
-    void SetLayerColor(const Layer& _layer);
-};
+		/// @brief 角度オフセット
+		DXSimp::Vector3 angleOffset;
 
+	public:
+		CP_Collider() : type(ShapeType::Num), isCreateCompound(false) {}
+		CP_Collider(ShapeType _type);
+		virtual ~CP_Collider() {}
+		CP_Collider(const CP_Collider& _other);
+
+		CP_Collider& operator=(const CP_Collider& _other);
+
+		// コンポーネント共通関数
+		void Init() override;
+		void OnDestroy() override;
+
+		/// @brief コリジョンの中心座標オフセットをセット
+		/// @param _offset オフセット座標
+		void SetCenterOffset(const DXSimp::Vector3& _offset);
+
+		/// @brief コリジョンの角度オフセットをセット
+		/// @param _offset オフセット角度
+		void SetAngleOffset(const DXSimp::Vector3& _offset);
+
+		/// @brief 衝突形状取得
+		/// @return 衝突形状
+		btCollisionShape& GetColliderShape();
+
+		// 種類を取得
+		ShapeType GetType()const;
+
+		bool GetIsCreateCompound() const;
+
+		void ImGuiDebug() override;
+
+		virtual json Save() override;
+		virtual void Load(const json& _data) override;
+	private:
+		void Copy(const CP_Collider& _other);
+
+		/// @brief RigidBodyの形状をとる
+		void RemoveShapeFromRb();
+
+	protected:
+		// コンポーネント共通関数
+		void OnEnableTrue() override;
+		void OnEnableFalse() override;
+		void OnChangeScale() override;
+
+		/// @brief 形状を作成し直し、コンパウンドに追加
+		void RecreateShape();
+
+		/// @brief 各コリジョン形状を作成する
+		virtual void CreateShape() = 0;
+
+		/// @brief RigidBpdyコンポーネントに形状を送る
+		void SendShapeToRb();
+
+		/// @brief コンパウンドから形状を削除
+		void RemoveFromCompound();
+
+		/// @brief コンパウンドに形状を追加
+		void AddToCompound();
+	};
+}

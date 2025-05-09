@@ -3,83 +3,64 @@
 #include "Geometory.h"
 #include "GameObject.h"
 
-constexpr float VERTEX_RADIUS(0.5f);	// 頂点作成時の半径
-
-using namespace DirectX::SimpleMath;
-
-CP_SphereCollider& CP_SphereCollider::operator=(const CP_SphereCollider& _other)
+namespace HashiTaku
 {
-	if (this == &_other) return *this;
-	CP_Collider::operator=(_other);
-
-	radius = _other.radius;
-	posOffset = _other.posOffset;
-
-	return *this;
-}
-
-void CP_SphereCollider::Init()
-{
-	name = "SphereCollider";
-
-	CP_Collider::Init();	// 追加処理する
-
-	radius = VERTEX_RADIUS;	// 半径を初期化
-	type = Type::Sphere;	// 球と設定する
-}
-
-void CP_SphereCollider::Draw()
-{
-	// あたり判定描画
-	const Transform& t = gameObject->transform;
-	Vector3 centerPos = t.position + posOffset * t.scale;	// 中心座標
-	Geometory::SetPosition(centerPos);
-
-	// 大きさを求める
-	float scale = radius / VERTEX_RADIUS;
-	Geometory::SetScale(Vector3::One * scale);
-
-	// 当たってるかで色変える
-	Geometory::SetColor(normalColor);
-	if (hitColliders.size() > 0)
-		Geometory::SetColor(hitColor);
-	Geometory::DrawSphere(true);
-}
-
-void CP_SphereCollider::ImGuiSetting()
-{
-	ImGui::DragFloat("radius", &radius);
-	ImGuiMethod::DragFloat3(posOffset, "posOffset");
-}
-
-DirectX::SimpleMath::Vector3 CP_SphereCollider::GetCenterPos() const
-{
-	const Transform& t = gameObject->transform;
-	return t.position + posOffset * t.scale;
-}
-
-bool CP_SphereCollider::CollisionSphere(CP_Collider& _sphere1, CP_Collider& _sphere2)
-{
-	// これ以前に種類をチェックし安全なので実行速度重視でstatoc_cast変換する
-	CP_SphereCollider& s1 = static_cast<CP_SphereCollider&>(_sphere1);
-	CP_SphereCollider& s2 = static_cast<CP_SphereCollider&>(_sphere2);
-
-	// 球の中心座標同士の長さを求める
-	Vector3 vec = s1.GetCenterPos() - s2.GetCenterPos();
-	float length = vec.Length();
-
-	// 長さが足した2つの球の半径以下なら当たっていると判定する
-	if (length <= s1.GetRadius() + s2.GetRadius())
+	void CP_SphereCollider::Draw()
 	{
-		s1.SetHitCollider(s2);
-		s2.SetHitCollider(s1);
-		return true;
 	}
 
-	return false;
-}
+	void CP_SphereCollider::ImGuiDebug()
+	{
+		CP_Collider::ImGuiDebug();
 
-bool CP_SphereCollider::CollisionBox(CP_Collider& _sphere, CP_Collider& _box)
-{
-	return false;
+		float changeRadius = radius;
+		if (ImGui::DragFloat("radius", &changeRadius, 0.01f, 0.0f, 1000.0f))
+			SetRadius(changeRadius);
+	}
+
+	float CP_SphereCollider::GetRadius() const
+	{
+		return radius;
+	}
+
+	json CP_SphereCollider::Save()
+	{
+		json data = CP_Collider::Save();
+
+		data["radius"] = radius;
+		return data;
+	}
+
+	void CP_SphereCollider::Load(const json& _data)
+	{
+		CP_Collider::Load(_data);
+
+		if (LoadJsonFloat("radius", radius, _data))
+			SetRadius(radius);
+	}
+
+	void CP_SphereCollider::CreateShape()
+	{
+		float worldRadius = 1.0f;
+		ApplyObjectScale(worldRadius);
+		pCollisionShape = std::make_unique<btSphereShape>(Bullet::ToBtScalar(worldRadius));
+	}
+
+	void CP_SphereCollider::SetRadius(float _radius)
+	{
+		radius = _radius;
+		RecreateShape();
+	}
+
+	void CP_SphereCollider::ApplyObjectScale(float& _outRadius)
+	{
+		// スケール値で3軸の中の一番大きい値を掛ける
+		Transform& transform = GetTransform();
+		DXSimp::Vector3 scale = transform.GetScale();
+		float maxVal = scale.x;
+		maxVal = std::max(maxVal, scale.y);
+		maxVal = std::max(maxVal, scale.z);
+
+		_outRadius = radius * maxVal;
+	}
 }

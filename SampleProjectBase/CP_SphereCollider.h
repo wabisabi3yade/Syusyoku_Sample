@@ -1,26 +1,36 @@
 #pragma once
 #include "CP_Collider.h"
 
-class CP_SphereCollider : public CP_Collider
+namespace HashiTaku
 {
-	// 半径
-	float radius;	
-	// オフセット
-	DirectX::SimpleMath::Vector3 posOffset;	
-public:
-	using CP_Collider::CP_Collider;
-	CP_SphereCollider& operator=(const CP_SphereCollider& _other);
-	~CP_SphereCollider(){};
+	class CP_SphereCollider : public CP_Collider
+	{
+		// 半径
+		float radius;
+	public:
+		CP_SphereCollider() : CP_Collider(CP_Collider::ShapeType::Sphere), radius(0.5f) {}
+		~CP_SphereCollider() {};
 
-	void Init() override;
-	
-	void Draw() override;
-	void ImGuiSetting() override;
+		// コンポーネント共通関数
+		void Draw() override;
 
-	float GetRadius() { return radius; }
-	DirectX::SimpleMath::Vector3 GetCenterPos()const;
+		/// @brief 半径を取得する
+		/// @return 半径
+		float GetRadius() const;
 
-	static bool CollisionSphere(CP_Collider& _sphere1, CP_Collider& _sphere2);
-	static bool CollisionBox(CP_Collider& _sphere, CP_Collider& _box);
-};
+		void ImGuiDebug() override;
 
+		json Save() override;
+		void Load(const json& _data) override;
+	private:
+		/// @brief 形状作成
+		void CreateShape() override;
+
+		/// @brief 半径をセット
+		void SetRadius(float _radius);
+
+		/// @brief オブジェクトのスケール値を適用する
+		/// @param _outRadius 計算した半径
+		void ApplyObjectScale(float& _outRadius);
+	};
+}

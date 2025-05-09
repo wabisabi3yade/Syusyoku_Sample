@@ -1,267 +1,453 @@
 #include "pch.h"
 #include "CP_Animation.h"
-
 #include "GameObject.h"
-
-// アニメーション
-#include "AnimationData.h"
-
-// メッシュ
 #include "SkeletalMesh.h"
 #include "CP_MeshRenderer.h"
-
-// アセット取得
 #include "AssetGetter.h"
+#include "AnimationController.h"
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
-using namespace DirectX::SimpleMath;
-
-void CP_Animation::Init()
+namespace HashiTaku
 {
-	name = "CP_Animation";
+	// ボーン行列のスロット番号
+	constexpr int SHBUFFER_BONE_SLOT(1);
 
-	// レンダラーに設定しているスケルタルメッシュを取得
-	CP_MeshRenderer* pMR = gameObject->GetComponent<CP_MeshRenderer>();
-	SkeletalMesh* pSetMesh = dynamic_cast<SkeletalMesh*>(pMR->GetRenderMesh());
-
-	if (pSetMesh != nullptr)
+	CP_Animation::CP_Animation() :
+		pSkeletalMesh(nullptr), pAnimController(nullptr), boneCnt(0)
 	{
-		pSkeletalMesh = pSetMesh;
-	}
-}
-
-void CP_Animation::LateUpdate()
-{
-	if (!isPlaying) return;
-	if (pCurrentAnimation == nullptr) return;
-
-	assert(pSkeletalMesh != nullptr && "スケルタルメッシュ非設定");
-
-	// 再生時間を進める
-	ProgressPlayTime();
-
-	// アニメーション行列を更新
-	UpdateAnimationMtx();
-
-	// コンビネーション行列を更新
-	UpdateBoneCombMtx();
-}
-
-void CP_Animation::ImGuiSetting()
-{
-	ImGui::Checkbox("Play", &isPlaying);
-
-	// コンボボックス
-	std::string currentName = "";
-	if (pCurrentAnimation != nullptr)
-		currentName = pCurrentAnimation->GetName();
-
-	std::vector<std::string> animNames;
-	for (auto& anim : pHaveAnimations)
-	{
-		animNames.push_back(anim->GetName());
-	}
-	bool isChange = ImGuiMethod::ComboBox(TO_UTF8("アニメーション"), currentName, animNames);
-	if (isChange)
-	{
-		PlayAnimation(currentName);
 	}
 
-}
-
-void CP_Animation::PlayAnimation(const std::string& _animName)
-{
-	// 名前からアニメーションを再生する
-	AnimationData* pPlayAnim = FindAnimaton(_animName);
-	if (pPlayAnim == nullptr) return;
-
-	pCurrentAnimation = pPlayAnim;
-	isPlaying = true;
-}
-
-void CP_Animation::AddAnimations(AnimationData& _addAnim)
-{
-	pHaveAnimations.push_back(&_addAnim);
-}
-
-void CP_Animation::AddAnimations(const std::string& _animName)
-{
-	AnimationData* pAnimData = AssetGetter::GetAsset<AnimationData>(_animName);
-
-	if (pAnimData == nullptr)
-		return;
-
-	pHaveAnimations.push_back(pAnimData);
-}
-
-void CP_Animation::RemoveAnimations(const std::string& _animName)
-{
-	// 削除したか確認するために
-	// 要素数を取得
-	u_int num = static_cast<u_int>(pHaveAnimations.size());
-
-	// 名前が同じアニメーションを探して取り除く
-	pHaveAnimations.remove_if([&](AnimationData* pAnim)
+	void CP_Animation::Init()
+	{
+		for (u_int i = 0; i < BoneCombMtricies::MAX_BONEMTX; i++)
 		{
-			return pAnim->GetName() == _animName;
-		});
-
-	if (static_cast<u_int>(pHaveAnimations.size()) != num)
-		HASHI_DEBUG_LOG("正常に削除されました");
-}
-
-void CP_Animation::SetSkeletalMesh(SkeletalMesh& _skeletalMesh)
-{
-	pSkeletalMesh = &_skeletalMesh;
-}
-
-void CP_Animation::ProgressPlayTime()
-{
-	// 時間を進める
-	playingTime_s += playSpeed * MainApplication::DeltaTime();
-
-	if (playingTime_s > pCurrentAnimation->GetAnimationTime())
-		playingTime_s = 0.0f;
-}
-
-void CP_Animation::UpdateBoneCombMtx()
-{
-	const aiNode* pRootNode = pCurrentAnimation->GetRootNode();
-
-	// ノードを辿って全体のコンビネーション行列を更新していく
-	UpdateNodeHierarchy(*pRootNode, Matrix::Identity);
-}
-
-void CP_Animation::UpdateNodeHierarchy(const aiNode& _aiNode, const Matrix& _parentMtx)
-{
-	std::string nodeName = _aiNode.mName.C_Str();
-
-	Bone* pBone = GetBoneByName(nodeName);
-
-	// コンビネーション行列を求める (ボーンオフセット * アニメーション * 逆オフセット * 親までの行列)
-	pBone->CreateCombMtx(_parentMtx);
-
-	// ワールド変換の行列を更新させる
-	Matrix toWorldMtx = _parentMtx * pBone->GetAnimMtx();
-
-	// 子ノードの行列を更新（再帰的）
-	for (u_int c_i = 0; c_i < _aiNode.mNumChildren; c_i++)
-	{
-		UpdateNodeHierarchy(*_aiNode.mChildren[c_i], toWorldMtx);
-	}
-}
-
-void CP_Animation::UpdateAnimationMtx()
-{
-	// ボーン数分ループしてコンビネーション行列を作成
-	for (unsigned int c_i = 0; c_i < pCurrentAnimation->GetChannelCount(); c_i++)
-	{
-		std::string boneName = pCurrentAnimation->GetBoneName(c_i);
-
-		Bone* pBone = GetBoneByName(boneName);
-
-		// 再生時間から各パラメータを取得
-		// スケール
-		Vector3 animScale = pCurrentAnimation->GetScale(c_i, playingTime_s);
-
-		//クォータニオン
-		Quaternion animQuat = pCurrentAnimation->GetQuaternion(c_i, playingTime_s);
-
-		// 座標
-		Vector3 animPos = pCurrentAnimation->GetPosition(c_i, playingTime_s);
-
-		HASHI_DEBUG_LOG("quat" +std::to_string(animQuat.x) + " " +
-			std::to_string(animQuat.y) + " " +
-			std::to_string(animQuat.z) + " " + 
-			std::to_string(animQuat.w));
-
-		HASHI_DEBUG_LOG("scale" + std::to_string(animScale.x) + " " +
-			std::to_string(animScale.y) + " " +
-			std::to_string(animScale.z));
-
-		HASHI_DEBUG_LOG("pos" + std::to_string(animPos.x) + " " +
-			std::to_string(animPos.y) + " " +
-			std::to_string(animPos.z));
-
-		// アニメーション行列を作成
-		Matrix scaleMtx = Matrix::CreateScale(animScale);
-		Matrix rotationMtx = Matrix::CreateFromQuaternion(animQuat);
-		Matrix transformMtx = Matrix::CreateTranslation(animPos);
-		Matrix animationMtx = scaleMtx * rotationMtx * transformMtx;
-
-		// ボーンにアニメーション行列をセット
-		pBone->SetAnimationMtx(animationMtx);
-	}
-}
-
-Bone* CP_Animation::GetBoneByName(const std::string& _boneName)
-{
-	assert(pSkeletalMesh != nullptr);
-
-	Bone* pRetBone = nullptr;
-
-	const std::vector<BonePerMesh>& bones = pSkeletalMesh->GetBones();
-
-	// メッシュの数を取得
-	u_int meshCnt = static_cast<u_int>(bones.size());
-
-	// 一つずつ確認していく
-	// メッシュ数ループ
-	for (u_int m_i = 0; m_i < meshCnt; m_i++)
-	{
-		// メッシュ内のボーンの数を取得
-		const BonePerMesh& bonePerMesh = bones[m_i];
-		u_int boneCnt = static_cast<u_int>(bonePerMesh.size());
-
-		// ボーン数ループ
-		for (u_int b_i = 0; b_i < boneCnt; b_i++)
-		{
-			if (bonePerMesh[b_i]->GetBoneName() != _boneName)
-				continue;
-
-			// 見つけたら
-			pRetBone = bonePerMesh[b_i].get();
-			break;
+			boneCombBuffer.matrix[i] = DXSimp::Matrix::Identity.Transpose();
 		}
 
-		if (pRetBone != nullptr)
-			break;
+		// ボーンのコピーを行う
+		CopyBoneList();
 	}
 
-	assert(pRetBone != nullptr && "ボーンが見つかりませんでした");
+	void CP_Animation::Awake()
+	{
+		if (!pSkeletalMesh) // 設定されていないなら
+			CopyBoneList(); // アセットのボーンから実際に動かすボーンを作成
 
-	return nullptr;
-}
+		// アニメーションコントローラー準備
+		SetupAnimCon();
+	}
 
-AnimationData* CP_Animation::FindAnimaton(const std::string& _animName)
-{
-	// 同じ名前のアニメーションを探索
-	auto itr = std::find_if(pHaveAnimations.begin(), pHaveAnimations.end(),
-		[&](AnimationData* pAnim)
+	void CP_Animation::Update()
+	{
+		if (!IsCanPlay()) return;
+
+		// アニメーション行列を更新
+		UpdateAnimationMtx();
+
+		// コンビネーション行列を更新
+		UpdateBoneCombMtx();
+
+		UpdateBoneBuffer();
+	}
+
+	void CP_Animation::Draw()
+	{
+		// ボーン行列をバッファとして送信
+		UpdateBoneBuffer();
+	}
+
+	void CP_Animation::ImGuiDebug()
+	{
+		// コントローラー名表示
+		std::string text = "controllerName:";
+		std::string controllerName = "Null";
+		if (pAnimController)
+			controllerName = pAnimController->GetAssetName();
+		text += controllerName;
+		ImGui::Text(text.c_str());
+
+		// コントローラー変更
+		if (AssetGetter::ImGuiGetCombobox<AnimationController>("animationController", controllerName))
 		{
-			return pAnim->GetName() == _animName;
-		});
+			AnimationController* pGetAnimCon = AssetGetter::GetAsset<AnimationController>(controllerName);
+			if (pGetAnimCon)
+				SetAnimationController(*pGetAnimCon);
+		}
 
-	if (itr == pHaveAnimations.end())
-	{
-		HASHI_DEBUG_LOG(_animName + "が見つかりませんでした");
-		return nullptr;
+		// コントローラー再生
+		if (pAnimConPlayer)
+			pAnimConPlayer->ImGuiCall();
 	}
 
-	return *itr;
-}
-
-void CP_Animation::ConnectBoneId(AnimationData& _connectAnim)
-{
-	if (pSkeletalMesh == nullptr)
+	void CP_Animation::SetBool(const std::string& _paramName, bool _isBool)
 	{
-		HASHI_DEBUG_LOG("先にスケルタルメッシュを設定してください");
-		return;
+#ifdef EDIT
+		// コピーアニメーションパラメータがあるか確認
+		if (!IsExistCopyAnimParameter()) return;
+#endif // EDIT
+
+		pAnimConPlayer->GetCopyAnimParameters().SetBool(_paramName, _isBool);
 	}
 
+	void CP_Animation::SetInt(const std::string& _paramName, int _intVal)
+	{
+#ifdef EDIT
+		// コピーアニメーションパラメータがあるか確認
+		if (!IsExistCopyAnimParameter()) return;
+#endif // EDIT
 
+		pAnimConPlayer->GetCopyAnimParameters().SetInt(_paramName, _intVal);
+	}
 
+	void CP_Animation::SetFloat(const std::string& _paramName, float _floatVal)
+	{
+#ifdef EDIT
+		// コピーアニメーションパラメータがあるか確認
+		if (!IsExistCopyAnimParameter()) return;
+#endif // EDIT
+
+		pAnimConPlayer->GetCopyAnimParameters().SetFloat(_paramName, _floatVal);
+	}
+
+	void CP_Animation::SetTrigger(const std::string& _paramName)
+	{
+#ifdef EDIT
+		// コピーアニメーションパラメータがあるか確認
+		if (!IsExistCopyAnimParameter()) return;
+#endif // EDIT
+
+		pAnimConPlayer->GetCopyAnimParameters().SetTrigger(_paramName);
+	}
+
+	bool CP_Animation::GetBool(const std::string& _paramName)
+	{
+#ifdef EDIT
+		// コピーアニメーションパラメータがあるか確認
+		if (!IsExistCopyAnimParameter()) return false;
+#endif // EDIT
+
+		return pAnimConPlayer->GetCopyAnimParameters().GetBool(_paramName);
+	}
+
+	int CP_Animation::GetInt(const std::string& _paramName)
+	{
+#ifdef EDIT
+		// コピーアニメーションパラメータがあるか確認
+		if (!IsExistCopyAnimParameter()) return 0;
+#endif // EDIT
+
+		return pAnimConPlayer->GetCopyAnimParameters().GetInt(_paramName);
+	}
+
+	float CP_Animation::GetFloat(const std::string& _paramName)
+	{
+#ifdef EDIT
+		// コピーアニメーションパラメータがあるか確認
+		if (!IsExistCopyAnimParameter()) return 0.0f;
+#endif // EDIT
+
+		return pAnimConPlayer->GetCopyAnimParameters().GetFloat(_paramName);
+	}
+
+	void CP_Animation::SetAnimationController(AnimationController& _controller)
+	{
+		pAnimController = &_controller;
+	}
+
+	void CP_Animation::SetControllerPlaySpeed(float _setSpeed)
+	{
+		pAnimConPlayer->SetCurrentPlaySpeed(_setSpeed);
+	}
+
+	void CP_Animation::SetCurNodePlayerSpeed(float _setSpeed)
+	{
+		pAnimConPlayer->GetCurNodePlayer().SetPlaySpeedTimes(_setSpeed);
+	}
+
+	void CP_Animation::SetPlayRatio(float _playRatio)
+	{
+#ifdef EDIT
+		if (!pAnimConPlayer)
+		{
+			HASHI_DEBUG_LOG("アニメーション再生が作成されていません");
+			return;
+		}
+#endif // EDIT
+
+		pAnimConPlayer->GetCurNodePlayer().SetCurPlayRatio(_playRatio);
+	}
+
+	void CP_Animation::SetPlayFrame(u_int _playFrame)
+	{
+#ifdef EDIT
+		if (!pAnimConPlayer)
+		{
+			HASHI_DEBUG_LOG("アニメーション再生が作成されていません");
+			return;
+		}
+#endif // EDIT
+
+		pAnimConPlayer->GetCurNodePlayer().SetCurPlayFrame(_playFrame);
+
+	}
+
+	void CP_Animation::AddChangeAnimObserver(ChangeAnimObserver& _observer)
+	{
+		if (!pAnimConPlayer)
+		{
+			HASHI_DEBUG_LOG("アニメーション再生クラスが生成していないので追加できません");
+			return;
+		}
+
+		pAnimConPlayer->AddChangeAnimObserver(_observer);
+	}
+
+	void CP_Animation::RemoveChangeAnimObserver(ChangeAnimObserver& _observer)
+	{
+		pAnimConPlayer->RemoveChangeAnimObserver(_observer);
+	}
+
+	const DXSimp::Vector3& CP_Animation::GetMotionPosSpeedPerSec() const
+	{
+#ifdef EDIT
+		if (!pAnimConPlayer)
+		{
+			HASHI_DEBUG_LOG("アニメーション再生が作成されていません");
+			return  DXSimp::Vector3::Zero;
+		}
+#endif // EDIT
+
+		return pAnimConPlayer->GetCurNodePlayer().GetRootMotionSpeed();
+	}
+
+	DXSimp::Vector3 CP_Animation::GetCurAnimRMPos(float _ratio)
+	{
+#ifdef EDIT
+		if (!pAnimConPlayer)
+		{
+			HASHI_DEBUG_LOG("アニメーション再生が作成されていません");
+			return  DXSimp::Vector3::Zero;
+		}
+#endif // EDIT
+
+		return pAnimConPlayer->GetCurNodePlayer().GetRootMotionPos(_ratio, true);
+	}
+
+	float CP_Animation::GetControllerPlaySpeed() const
+	{
+#ifdef EDIT
+		if (!pAnimConPlayer)
+		{
+			HASHI_DEBUG_LOG("アニメーション再生が作成されていません");
+			return 0.0f;
+		}
+#endif // EDIT
+
+		return pAnimConPlayer->GetCurrentPlaySpeed();
+	}
+
+	float CP_Animation::GetCurrentPlayRatio() const
+	{
+#ifdef EDIT
+		if (!pAnimConPlayer)
+		{
+			HASHI_DEBUG_LOG("アニメーション再生が作成されていません");
+			return 0.0f;
+		}
+#endif // EDIT
+
+		return pAnimConPlayer->GetCurNodePlayer().GetCurPlayRatio();
+	}
+
+	u_int CP_Animation::GetCurrentPlayFrame() const
+	{
+#ifdef EDIT
+		if (!pAnimConPlayer)
+		{
+			HASHI_DEBUG_LOG("アニメーション再生が作成されていません");
+			return 0;
+		}
+#endif // EDIT
+
+		return pAnimConPlayer->GetCurNodePlayer().GetCurPlayFrame();
+	}
+
+	BoneList* CP_Animation::GetMoveBoneList()
+	{
+		return pMoveBoneList.get();
+	}
+
+	u_int CP_Animation::GetBoneCnt() const
+	{
+		if (!pSkeletalMesh) return 0;
+
+		return pSkeletalMesh->GetBoneCnt();
+	}
+
+	BoneCombMtricies* CP_Animation::GetBoneBuffer()
+	{
+		return &boneCombBuffer;
+	}
+
+	json CP_Animation::Save()
+	{
+		auto data = Component::Save();
+
+		if (pAnimController)
+		{
+			data["animConName"] = pAnimController->GetAssetName();
+		}
+
+		return data;
+	}
+
+	void CP_Animation::Load(const json& _data)
+	{
+		Component::Load(_data);
+
+		std::string animConName = "";
+		if (LoadJsonString("animConName", animConName, _data))
+		{
+			AnimationController* pLoadController = AssetGetter::GetAsset<AnimationController>(animConName);
+			if (pLoadController)
+				SetAnimationController(*pLoadController);
+		}
+	}
+
+	void CP_Animation::SetupAnimCon()
+	{
+		// ボーンが設定されていないなら
+		if (!pMoveBoneList) return;
+
+		// アニメーションコントローラーを再生するクラスを作成し、コントローラーをセットする
+		pAnimConPlayer = std::make_unique<AnimControllPlayer>(*pAnimController, *pMoveBoneList, GetTransform());
+	}
+
+	void CP_Animation::CopyBoneList()
+	{
+		CP_MeshRenderer* pMr = gameObject->GetComponent<CP_MeshRenderer>();
+		if (!pMr) return;
+
+		// レンダラーに設定しているスケルタルメッシュを取得
+		pSkeletalMesh = dynamic_cast<SkeletalMesh*>(pMr->GetRenderMesh());
+		if (!pSkeletalMesh) return;
+
+		// アニメーションするボーンをコピーし、作成
+		pMoveBoneList = std::make_unique<BoneList>(pSkeletalMesh->GetBoneList());
+
+		// モデル関係
+		pMr->SetVertexShader("VS_SkinAnimation");
+	}
+
+	void CP_Animation::UpdateAnimationMtx()
+	{
+		// アニメーションプレイヤーで更新する
+		pAnimConPlayer->Update(DeltaTime());
+	}
+
+	bool CP_Animation::IsCanPlay()
+	{
+#ifdef EDIT
+		// アニメーションコントローラー非設定
+		if (pAnimController == nullptr) return false;
+		assert(pMoveBoneList && "アニメーションするボーンが作成されていません");
+#endif // EDIT
+
+		return true;
+	}
+
+	bool CP_Animation::IsExistCopyAnimParameter()
+	{
+		if (!pAnimConPlayer)
+		{
+			HASHI_DEBUG_LOG("シーンを開始後呼び出してください");
+			return false;
+		}
+
+		return true;
+	}
+
+	void CP_Animation::UpdateBoneCombMtx()
+	{
+		using namespace DXSimp;
+
+		const TreeNode* pRootNode = pSkeletalMesh->GetRootNode();
+
+		// ルートポジション座標を引いて、メッシュを移動させないようにする(y座標は反映しない)
+		Vector3 rootPos;
+		pAnimConPlayer->GetCurrentRootPos(rootPos);
+		//rootPos.y = 0.0f;
+		rootPos *= -1.0f;
+		Matrix posMtx = Matrix::CreateTranslation(rootPos);
+
+		// ロードの回転、スケール
+		Vector3 loadScales = Vector3::One * pSkeletalMesh->GetLoadOffsetScale();
+		Vector3 loadAngles = pSkeletalMesh->GetLoadOffsetAngles();
+		rootOffsetMtx =
+			Matrix::CreateScale(Vector3::One * loadScales) * Mtx::CreateRoratateMtx(loadAngles);
+
+		// ノードを辿って全体のコンビネーション行列を更新していく
+		UpdateNodeHierarchy(*pRootNode, posMtx);
+	}
+
+	void CP_Animation::UpdateNodeHierarchy(const TreeNode& _treeNode,
+		const DXSimp::Matrix& _parentMtx)
+	{
+		DXSimp::Matrix nodeMatrix = DXSimp::Matrix::Identity;
+
+		// 対応したボーンがあるなら
+		if (_treeNode.HasBone())
+		{
+			u_int boneId = _treeNode.GetBoneIdx();
+			Bone& moveBone = *pMoveBoneList->GetBone(boneId);
+			nodeMatrix = moveBone.GetAnimMtx();
+
+			// ローカル空間内のボーン座標を求める
+			moveBone.CreateGlobalMtx(_parentMtx, rootOffsetMtx);
+
+			// コンビネーション行列を求める
+			moveBone.CreateCombMtx(_parentMtx);
+
+			// バッファとして用意しておく
+			boneCombBuffer.matrix[boneId] = moveBone.GetCombMtx().Transpose();
+		}
+
+		DXSimp::Matrix toWorldMtx = nodeMatrix * _parentMtx;
+
+		// 再帰的にボーンを更新していく
+		for (u_int c_i = 0; c_i < _treeNode.GetChildNum(); c_i++)
+		{
+			UpdateNodeHierarchy(*_treeNode.GetChild(c_i), toWorldMtx);
+		}
+	}
+
+	void CP_Animation::UpdateBoneBuffer()
+	{
+		//if (!pSkeletalMesh) return;
+
+		//if (pMoveBoneList)	// 動かすボーンがあるか
+		//{
+		//	u_int bufferCnt = static_cast<u_int>(pMoveBoneList->GetBoneCnt());
+		//	// ボーン数ループ
+		//	for (u_int b_i = 0; b_i < bufferCnt; b_i++)
+		//	{
+		//		const Bone& bone = *pMoveBoneList->GetBone(b_i);
+
+		//		// ボーンのID番目に行列を入れる
+		//		boneCombBuffer.matrix[bone.GetIndex()] = bone.GetCombMtx();
+
+		//		// シェーダーに渡すので転置行列を作成
+		//		boneCombBuffer.matrix[bone.GetIndex()] =
+		//			boneCombBuffer.matrix[bone.GetIndex()].Transpose();
+		//	}
+		//}
+
+		//// シェーダーにボーン行列を渡す
+		//u_int mtrlCnt = pSkeletalMesh->GetMaterialNum();
+		//for (u_int m_i = 0; m_i < mtrlCnt; m_i++)
+		//{
+		//	Material* pMaterial = pSkeletalMesh->GetMaterial(m_i);
+		//	/*pMaterial->GetVertexShader().Map(1, &boneComb, sizeof(BoneCombMtricies));*/
+		//	pMaterial->GetVertexShader().UpdateSubResource(1, &boneCombBuffer);
+		//}
+	}
 }

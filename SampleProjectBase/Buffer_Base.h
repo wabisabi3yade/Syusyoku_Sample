@@ -1,31 +1,34 @@
 #pragma once
 
-//ID3D11バッファの基底クラス
-class Buffer_Base
+namespace HashiTaku
 {
-protected:
-	/// @brief バッファ
-	Microsoft::WRL::ComPtr<ID3D11Buffer> pBuffer;
+	//ID3D11バッファの基底クラス
+	class Buffer_Base
+	{
+	protected:
+		/// @brief バッファ
+		Microsoft::WRL::ComPtr<ID3D11Buffer> pBuffer;
 
-public:
-	Buffer_Base() {};
-	virtual ~Buffer_Base() {};
+	public:
+		Buffer_Base() {};
+		virtual ~Buffer_Base() {};
 
-	/// @brief バッファを作成
-	/// @param _allSize 全体のサイズ
-	/// @param _elementSize 要素のサイズ
-	/// @param pInitData データ
-	/// @return 成功フラグ
-	virtual bool CreateBuffer(u_int _allSize, u_int _elementSize, void* pInitData) = 0;
+		/// @brief バッファを作成
+		/// @param _allSize 全体のサイズ
+		/// @param _elementSize 要素のサイズ
+		/// @param pInitData データ
+		/// @return 成功フラグ
+		virtual bool CreateBuffer(u_int _allSize, u_int _elementSize, void* pInitData) = 0;
 
-	/// @brief バッファを取得する
-	/// @return バッファ
-	const ID3D11Buffer& GetBuffer()const;
+		/// @brief バッファを取得する
+		/// @return バッファ
+		const ID3D11Buffer& GetBuffer()const;
 
-	/// @brief GPUに送信する
-	virtual void SetGPU() const = 0;
+		/// @brief GPUに送信する
+		virtual void SetGPU() const = 0;
 
-	/// @brief バッファを更新する
-	/// @param _updateData 上書きするデータ
-	void UpdateBuffer(void* _updateData) const;
-};
+		/// @brief バッファを更新する
+		/// @param _updateData 上書きするデータ
+		void UpdateBuffer(void* _updateData) const;
+	};
+}

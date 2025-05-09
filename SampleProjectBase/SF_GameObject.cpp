@@ -1,43 +1,50 @@
 #include "pch.h"
 #include "SF_GameObject.h"
-#include "GameObject.h"
 
 // システム
 #include "InSceneSystemManager.h"
 
-using namespace SceneFunction;
-
-// 便利関数 宣言 
-GameObject& AddSceneObject(std::unique_ptr<GameObject> _pAddObject);
-
-GameObject& ObjectFunc::Instantiate(const GameObject& _obj, const DirectX::SimpleMath::Vector3& _worldPos)
+namespace HashiTaku
 {
-	// 新しく確保、コピーする
-	std::unique_ptr<GameObject> pCreateObject = std::make_unique<GameObject>(_obj);
+	using namespace SceneFunction;
 
-	// 初期座標設定
-	pCreateObject->transform.position = _worldPos;
+	GameObject& SceneFunction::ObjectFunc::AddSceneObject(std::unique_ptr<GameObject> _pAddObject)
+	{
+		SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->GetSceneObjects();
 
-	// シーンオブジェクトに追加
-	GameObject& retuenObject = AddSceneObject(std::move(pCreateObject));
+		return *sceneObjects.SetObject(std::move(_pAddObject));
+	}
 
-	return retuenObject;
-}
+	//GameObject& ObjectFunc::Instantiate(const GameObject& _obj, const DXSimp::Vector3& _worldPos)
+	//{
+	//	// 新しく確保、コピーする
+	//	std::unique_ptr<GameObject> pCreateObject = std::make_unique<GameObject>(_obj);
+	//
+	//	// 初期座標設定
+	//	pCreateObject->GetTransform().SetPosition(_worldPos);
+	//
+	//	// シーンオブジェクトに追加
+	//	GameObject& retuenObject = AddSceneObject(std::move(pCreateObject));
+	//
+	//	return retuenObject;
+	//}
 
-GameObject& SceneFunction::ObjectFunc::CreateEmpty(std::string _objectName)
-{
-	std::unique_ptr<GameObject> pCreateObject = std::make_unique<GameObject>();
-	pCreateObject->SetName(_objectName);
+	GameObject& SceneFunction::ObjectFunc::CreateEmpty(const std::string& _objectName)
+	{
+		std::unique_ptr<GameObject> pCreateObject = std::make_unique<GameObject>();
+		pCreateObject->SetName(_objectName);
 
-	// シーンオブジェクトに登録する
-	return AddSceneObject(std::move(pCreateObject));
-}
+		// シーンオブジェクトに登録する
+		return AddSceneObject(std::move(pCreateObject));
+	}
 
-// 便利関数 定義
+	void SceneFunction::ObjectFunc::DeleteObject(const std::string& _deleteName)
+	{
+		SceneObjects& sceneObjs = InSceneSystemManager::GetInstance()->GetSceneObjects();
 
-GameObject& AddSceneObject(std::unique_ptr<GameObject> _pAddObject)
-{
-	SceneObjects& sceneObjects = InSceneSystemManager::GetInstance()->GetSceneObjects();
+		GameObject* go = sceneObjs.GetSceneObject(_deleteName);
+		if (!go) return;
 
-	return *sceneObjects.SetObject(std::move(_pAddObject));
+		go->SetDestroy();
+	}
 }

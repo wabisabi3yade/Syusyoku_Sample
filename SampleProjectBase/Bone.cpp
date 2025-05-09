@@ -1,87 +1,116 @@
 #include "pch.h"
 #include "Bone.h"
 
-using namespace DirectX::SimpleMath;
-
-void Bone::AddWeight(const Weight& _weight)
+namespace HashiTaku
 {
-	weights.push_back(_weight);
-}
+	using namespace DXSimp;
 
-void Bone::SetBoneName(const std::string& _boneName)
-{
-	boneName = _boneName;
-}
+	Bone::Bone(const Bone& _other)
+	{
+		Copy(_other);
+	}
 
-void Bone::SetMeshName(const std::string& _meshName)
-{
-	meshName = _meshName;
-}
+	Bone& Bone::operator=(const Bone& _other)
+	{
+		Copy(_other);
 
-void Bone::SetArmatureName(const std::string& _armatureName)
-{
-	armatureName = _armatureName;
-}
+		return *this;
+	}
 
-void Bone::SetCombinationMtx(const DirectX::SimpleMath::Matrix& _combinationMatrix)
-{
-	combinationMatrix = _combinationMatrix;
-}
+	void Bone::CreateCombMtx(const DXSimp::Matrix& _parentMtx)
+	{
+		combinationMatrix = offsetMatrix * GetAnimMtx() * _parentMtx;
+	}
 
-void Bone::SetAnimationMtx(const DirectX::SimpleMath::Matrix& _animationMatrix)
-{
-	animationMatrix = _animationMatrix;
-}
+	void Bone::CreateGlobalMtx(const DXSimp::Matrix& _parentMtx, const DXSimp::Matrix& _offsetMtx)
+	{
+		globalMatrix = GetAnimMtx() * _parentMtx * _offsetMtx;
+	}
 
-void Bone::SetOffeetMtx(const DirectX::SimpleMath::Matrix& _offsetMatrix)
-{
-	offsetMatrix = _offsetMatrix;
-}
+	void Bone::SetBoneName(const std::string& _boneName)
+	{
+		boneName = _boneName;
+	}
 
-void Bone::SetIndex(u_int _idx)
-{
-	boneIdx = _idx;
-}
+	void Bone::SetOffeetMtx(const DXSimp::Matrix& _offsetMatrix)
+	{
+		offsetMatrix = _offsetMatrix;
+	}
 
-std::string Bone::GetBoneName() const
-{
-	return boneName;
-}
+	void Bone::SetLocalNodeMtx(const DXSimp::Matrix& _nodeMatrix)
+	{
+		// ツリーノードからの初期行列をトランスフォームに変換し、代入
+		Mtx::GetTransformFromWldMtx(
+			_nodeMatrix,
+			localNodeTransform.position,
+			localNodeTransform.scale,
+			localNodeTransform.rotation
+			);
+	}
 
-std::string Bone::GetMeshName() const
-{
-	return meshName;
-}
+	BoneTransform& Bone::GetRefelenceAnimTransform()
+	{
+		return animationTransform;
+	}
 
-std::string Bone::GetArmatureName() const
-{
-	return armatureName;
-}
+	void Bone::SetIndex(u_int _idx)
+	{
+		boneIdx = _idx;
+	}
 
-DirectX::SimpleMath::Matrix& Bone::GetCombMtx()
-{
-	return combinationMatrix;
-}
+	std::string Bone::GetBoneName() const
+	{
+		return boneName;
+	}
 
-DirectX::SimpleMath::Matrix& Bone::GetAnimMtx()
-{
-	return animationMatrix;
-}
+	const DXSimp::Matrix& Bone::GetCombMtx() const
+	{
+		return combinationMatrix;
+	}
 
-DirectX::SimpleMath::Matrix& Bone::GetOffsetMtx()
-{
-	return offsetMatrix;
-}
+	DXSimp::Matrix Bone::GetAnimMtx() const
+	{
+		// アニメーション行列を作成
+		Matrix scaleMtx = Matrix::CreateScale(animationTransform.scale);
+		Matrix rotationMtx = Matrix::CreateFromQuaternion(animationTransform.rotation);
+		Matrix transformMtx = Matrix::CreateTranslation(animationTransform.position);
+		Matrix animationMtx = scaleMtx * rotationMtx * transformMtx;
 
-void Bone::CreateCombMtx(const DirectX::SimpleMath::Matrix& _parentMtx)
-{
-	Matrix inverseMtx = offsetMatrix;
-	inverseMtx.Invert();
+		return animationMtx;
+	}
 
-	combinationMatrix = offsetMatrix * animationMatrix * inverseMtx * _parentMtx;
-}
+	const DXSimp::Matrix& Bone::GetOffsetMtx() const
+	{
+		return offsetMatrix;
+	}
 
-u_int Bone::GetIndex()
-{
-	return boneIdx;
+	const DXSimp::Matrix& Bone::GetGlobalMtx() const
+	{
+		return globalMatrix;
+	}
+
+	const BoneTransform& Bone::GetAnimationTransform() const
+	{
+		return animationTransform;
+	}
+
+	const BoneTransform& Bone::GetLocalNodeTransform() const
+	{
+		return localNodeTransform;
+	}
+
+	u_int Bone::GetIndex() const
+	{
+		return boneIdx;
+	}
+
+	void Bone::Copy(const Bone& _other)
+	{
+		if (this == &_other) return;
+
+		boneName = _other.boneName;
+		offsetMatrix = _other.offsetMatrix;
+		localNodeTransform = _other.localNodeTransform;
+		boneIdx = _other.boneIdx;
+	}
 }

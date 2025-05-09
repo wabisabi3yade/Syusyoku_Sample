@@ -27,24 +27,6 @@ struct DirectionLight
     float dummy;
 };
 
-// ポイントライト
-struct PointLight
-{
-    LightBase base;
-    float range; // 範囲
-    float3 dummy;
-};
-
-// スポットライト
-struct SpotLight
-{
-    LightBase base;
-    float3 direction; // 方向
-    float distance; // 距離
-    float angleRange; // 角度範囲
-    float3 dummy;
-};
-
 // Slot0 座標変換
 cbuffer WVP : register(b0)
 {
@@ -52,7 +34,6 @@ cbuffer WVP : register(b0)
     matrix view;
     matrix projection;
 };
-
 
 // Slot1 マテリアル
 cbuffer MaterialBuffer : register(b1)
@@ -64,15 +45,15 @@ cbuffer MaterialBuffer : register(b1)
 cbuffer BufLight : register(b2)
 {
     DirectionLight dirL;
-    PointLight pointL;
-    SpotLight spotL;
+    //PointLight pointL;
+    //SpotLight spotL;
 };
 
-struct VS_INPUT
+struct VS_IN
 {
     float3 pos : POSITION; // 頂点座標（モデル座標系）
-    float2 uv : TEXCOORD0; // uv座標
     float4 color : COLOR0; // 頂点色
+    float2 uv : TEXCOORD0; // uv座標
     float3 normal : NORMAL0; // 法線ベクトル
 };
 
@@ -105,7 +86,7 @@ float4 CalcDirLight(float3 _normal)
     return color;
 }
 
-VS_OUTPUT main(VS_INPUT vin)
+VS_OUTPUT main(VS_IN vin)
 {
     VS_OUTPUT output;
     output.pos = float4(vin.pos, 1.0f);
@@ -116,9 +97,14 @@ VS_OUTPUT main(VS_INPUT vin)
 
 	// 頂点シェーダーで陰の計算
     float3 N = vin.normal;
-	// 計算前に手を加える
-    N = mul(N, (float3x3) world);
-    output.normal = N;
+    
+    float3x3 rotationMatrix = (float3x3) world;
+    rotationMatrix[0] = normalize(rotationMatrix[0]);
+    rotationMatrix[1] = normalize(rotationMatrix[1]);
+    rotationMatrix[2] = normalize(rotationMatrix[2]);
+    
+    N = mul(N, rotationMatrix);
+    output.normal = normalize(N);
     
 	// マテリアル色
     output.color = material.diffuse;

@@ -3,82 +3,93 @@
 #include "VertexShader.h"
 #include "PixelShader.h"
 
-struct MaterialParameter
+namespace HashiTaku
 {
-	/// @brief 色
-	DirectX::SimpleMath::Color diffuse;
+	struct MaterialParameter
+	{
+		/// @brief 色
+		DXSimp::Color diffuse;
 
-	/// @brief 環境光
-	DirectX::SimpleMath::Color ambient;
+		/// @brief 環境光
+		DXSimp::Color ambient;
 
-	/// @brief 鏡面反射
-	DirectX::SimpleMath::Color specular;
+		/// @brief 鏡面反射
+		DXSimp::Color specular;
 
-	/// @brief 自発光
-	DirectX::SimpleMath::Color emissive;
+		/// @brief 自発光
+		DXSimp::Color emissive;
 
-	/// @brief 光沢
-	float shiness;
+		/// @brief 光沢
+		float shiness;
 
-	/// @brief テクスチャ使用フラグ
-	int isTextureEnable;
+		/// @brief テクスチャ使用フラグ
+		int isTextureEnable;
 
-	float dummy1, dummy2;
-};
+		float dummy1, dummy2;
+	};
 
-// モデルの表面データ
-class Material : public Asset_Base
-{
-	/// @brief パラメータ
-	MaterialParameter parameter;
+	// モデルの表面データ
+	class Material : public Asset_Base, public IImGuiUser
+	{
+		/// @brief パラメータ
+		MaterialParameter parameter;
 
-	/// @brief テクスチャ
-	Texture* pDiffuseTexture;
+		/// @brief テクスチャ
+		Texture* pDiffuseTexture;
 
-	/// @brief 法線テクスチャ
-	Texture* pNormalTexture;
+		/// @brief 法線テクスチャ
+		Texture* pNormalTexture;
 
-	/// @brief 頂点シェーダー
-	VertexShader* pVertexShader;
+		/// @brief 頂点シェーダー
+		VertexShader* pVertexShader;
 
-	/// @brief ピクセルシェーダー
-	PixelShader* pPixelShader;
-public:
-	Material();
-	Material(const std::string& _vsName, const std::string& _psName);
-	~Material();
+		/// @brief ピクセルシェーダー
+		PixelShader* pPixelShader;
+	public:
+		Material();
+		Material(const std::string& _vsName, const std::string& _psName);
+		~Material();
 
-	/// @brief 描画準備
-	/// @param _wvp wvp行列
-	void DrawSetup(RenderParam::WVP& _wvp);
+		/// @brief 描画準備
+		/// @param _wvp wvp行列
+		void DrawSetup(RenderParam::WVP& _wvp);
 
-	// マテリアル・各パラメータをセット
-	void SetMaterialParameter(const MaterialParameter& _mat) { parameter = _mat; }
-	void SetDiffuse(const DirectX::SimpleMath::Color& _diffuse) { parameter.diffuse = _diffuse; }
-	void SetAmbeint(const DirectX::SimpleMath::Color& _ambient) { parameter.ambient = _ambient; }
-	void SetSpecular(const DirectX::SimpleMath::Color& _specular) { parameter.specular = _specular; }
-	void SetEmissive(const DirectX::SimpleMath::Color& _emmisive) { parameter.emissive = _emmisive; }
-	void SetShiness(float _shiness) { parameter.shiness = _shiness; }
-	void SetTextureEnable(bool _isTextureEnable) { parameter.isTextureEnable = _isTextureEnable; }
+		// マテリアル・各パラメータをセット
+		void SetMaterialParameter(const MaterialParameter& _mat) { parameter = _mat; }
+		void SetDiffuse(const DXSimp::Color& _diffuse) { parameter.diffuse = _diffuse; }
+		void SetAmbeint(const DXSimp::Color& _ambient) { parameter.ambient = _ambient; }
+		void SetSpecular(const DXSimp::Color& _specular) { parameter.specular = _specular; }
+		void SetEmissive(const DXSimp::Color& _emmisive) { parameter.emissive = _emmisive; }
+		void SetShiness(float _shiness) { parameter.shiness = _shiness; }
+		void SetTextureEnable(bool _isTextureEnable) { parameter.isTextureEnable = _isTextureEnable; }
 
-	// 各テクスチャをセット
-	void SetDiffuseTexture(Texture& _diffuseTex);
-	void SetNormalTexture(Texture& _normalTex) { pNormalTexture = &_normalTex; }
+		// 各テクスチャをセット
+		void SetDiffuseTexture(Texture& _diffuseTex);
+		void SetNormalTexture(Texture& _normalTex) { pNormalTexture = &_normalTex; }
 
-	VertexShader& GetVertexShader()const { return *pVertexShader; }
-	PixelShader& GetPixelShader()const { return *pPixelShader; }
+		// 頂点・ピクセルシェーダーをセット
+		void SetVertexShader(const std::string& _vsName);
+		void SetVertexShader(VertexShader& _vsShader);
+		void SetPixelShader(const std::string& _psName);
+		void SetPixelShader(PixelShader& _psShader);
 
-	MaterialParameter& GetMaterialParameter() { return parameter; }
+		VertexShader& GetVertexShader()const { return *pVertexShader; }
+		PixelShader& GetPixelShader()const { return *pPixelShader; }
 
-	Texture* GetDiffuseTexture()const { return pDiffuseTexture; }
-	Texture* GetNormalTexture()const { return pNormalTexture; }
+		MaterialParameter& GetMaterialParameter() { return parameter; }
 
-	void ImGuiSetting();
+		Texture* GetDiffuseTexture()const { return pDiffuseTexture; }
+		Texture* GetNormalTexture()const { return pNormalTexture; }
 
-private:
-	/// @brief マテリアルのパラメータ初期化
-	void InitParameter();
+		json Save() override;
+		void Load(const json& _data) override;
+	private:
+		/// @brief マテリアルのパラメータ初期化
+		void InitParameter();
 
-	/// @brief シェーダーの準備
-	void ShaderSetup(Shader& _shader, RenderParam::WVP& _wvp);
-};
+		/// @brief シェーダーの準備
+		void ShaderSetup(Shader& _shader, RenderParam::WVP& _wvp);
+
+		void ImGuiDebug() override;
+	};
+}

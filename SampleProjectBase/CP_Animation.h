@@ -1,93 +1,192 @@
 #pragma once
 #include "Component.h"
+#include "IBoneSupplier.h"
+#include "IAnimationObserver.h"
+#include "AnimControllPlayer.h"
 
-// モデル
-class SkeletalMesh;
-class Bone;
-
-// アニメーションデータ
-class AnimationData;
-
-// assimp
-struct aiNode;
-
-/// @brief アニメーションコンポーネント
-class CP_Animation : public Component
+namespace HashiTaku
 {
-	/// @brief スケルタルメッシュ
-	SkeletalMesh* pSkeletalMesh;
+	// モデル
+	class TreeNode;
+	class CP_MeshRenderer;
 
-	/// @brief 現在のアニメーション
-	AnimationData* pCurrentAnimation;
+	/// @brief アニメーションコンポーネント
+	class CP_Animation : public Component, public IBoneBufferSupplier
+	{
+		/// @brief ボーンのコンビネーション行列のバッファー
+		BoneCombMtricies boneCombBuffer;
 
-	/// @brief このコンポーネントにあるアニメーション
-	std::list<AnimationData*> pHaveAnimations;
+		/// @brief ルートボーンに対するオフセット行列
+		DXSimp::Matrix rootOffsetMtx;
 
-	/// @brief 現在再生しているアニメーションの時間(単位：s)
-	float playingTime_s;
+		/// @brief スケルタルメッシュ
+		SkeletalMesh* pSkeletalMesh;
 
-	/// @brief 再生速度
-	float playSpeed;
+		/// @brief 実際に動かすボーン
+		std::unique_ptr<BoneList> pMoveBoneList;
 
-	/// @brief 再生中か？
-	bool isPlaying;
+		/// @brief アニメーションコントローラー
+		AnimationController* pAnimController;
 
-public:
-	CP_Animation() : pSkeletalMesh(nullptr), pCurrentAnimation(nullptr), playingTime_s(0.0f),
-		playSpeed(1.0f) , isPlaying(false) {}
-	~CP_Animation() {}
+		/// @brief アニメーションコントローラ再生機能
+		std::unique_ptr<AnimControllPlayer> pAnimConPlayer;
 
-	void Init() override;
+		/// @brief ボーンの数
+		u_int boneCnt;
+	public:
+		CP_Animation();
+		virtual ~CP_Animation() {}
 
-	void LateUpdate() override;
+		/// @brief 初期化
+		void Init() override;
 
-	void ImGuiSetting() override;
+		//void OnDestroy() override;
 
-	/// @brief アニメーションを再生する
-	/// @param _animName 再生したいアニメーションの名前
-	void PlayAnimation(const std::string& _animName);
+		/// @brief アニメーション変更オブザーバーを追加
+		/// @param _observer オブザーバー
+		void AddChangeAnimObserver(ChangeAnimObserver& _observer);
 
-	/// @brief アニメーションを追加する
-	/// @param _addAnim 追加するアニメーション
-	void AddAnimations(AnimationData& _addAnim);
+		/// @brief アニメーション変更オブザーバーを削除
+		/// @param _observer オブザーバー
+		void RemoveChangeAnimObserver(ChangeAnimObserver& _observer);
 
-	/// @brief アニメーションを追加する
-	/// @param _animName 追加するアニメーションの名前
-	void AddAnimations(const std::string& _animName);
+		/// @brief 指定したbool変数に値をセット
+		/// @param _paramName パラメーター名
+		/// @param _isBool セットする値
+		void SetBool(const std::string& _paramName, bool _isBool);
 
-	/// @brief アニメーションを外す
-	/// @param _animName 外したいアニメーションの名前
-	void RemoveAnimations(const std::string& _animName);
+		/// @brief 指定したint変数に値をセット
+		/// @param _paramName パラメーター名
+		/// @param _intVall セットする値
+		void SetInt(const std::string& _paramName, int _intVal);
 
-	/// @brief スケルタルメッシュをセット
-	/// @param _skeletalMesh 
-	void SetSkeletalMesh(SkeletalMesh& _skeletalMesh);
-private:
+		/// @brief 指定したfloat変数に値をセット
+		/// @param _paramName パラメーター名
+		/// @param _floatVal セットする値
+		void SetFloat(const std::string& _paramName, float _floatVal);
 
-	/// @brief 再生時間を進める
-	void ProgressPlayTime();
+		/// @brief 指定したトリガー変数をtrueにする
+		/// @param _paramName パラメーター名
+		void SetTrigger(const std::string& _paramName);
 
-	/// @brief ボーンコンビネーション行列を更新
-	void UpdateBoneCombMtx();
+		// アニメーションコントローラーをセット
+		void SetAnimationController(AnimationController& _controller);
 
-	/// @brief 子ノードのコンビネーション行列を更新する（再帰関数）
-	/// @param _aiNode 更新するノード
-	/// @param _parentMtx ワールド変換するための親までの行列
-	void UpdateNodeHierarchy(const aiNode& _aiNode, const DirectX::SimpleMath::Matrix& _parentMtx);
+		/// @brief コントローラープレイヤーの再生速度をセットする
+		/// @param _setSpeed スピードをセット
+		void SetControllerPlaySpeed(float _setSpeed);
 
-	/// @brief ボーンのコンビネーション行列を更新
-	void UpdateAnimationMtx();
+		/// @brief 現在のノード再生速度をセットする
+		/// @param _setSpeed スピードをセット
+		void SetCurNodePlayerSpeed(float _setSpeed);
 
-	// 消す
-	Bone* GetBoneByName(const std::string& _boneName);
+		/// @brief 現在再生しているアニメーションの再生割合をセット
+		/// @param _playRatio 再生割合
+		void SetPlayRatio(float _playRatio);
 
-	/// @brief 所持しているアニメーションを探す
-	/// @param _animName 
-	/// @return 
-	AnimationData* FindAnimaton(const std::string& _animName);
+		/// @brief 現在再生しているアニメーションのフレームをセット
+		/// @param _playFrame 再生フレーム
+		void SetPlayFrame(u_int _playFrame);
 
-	/// @brief アニメーションの情報にボーンのIDをリンクさせる
-	/// @param _connectAnim リンクするアニメーション
-	void ConnectBoneId(AnimationData& _connectAnim);
-};
+		/// @brief 指定したbool変数に値を取得
+		/// @param _paramName パラメーター名
+		/// @param _isBool 取得する値
+		bool GetBool(const std::string& _paramName);
 
+		/// @brief 指定したint変数に値を取得
+		/// @param _paramName パラメーター名
+		/// @param _intVall 取得する値
+		int GetInt(const std::string& _paramName);
+
+		/// @brief 指定したfloat変数に値を取得
+		/// @param _paramName パラメーター名
+		/// @param _floatVal 取得する値
+		float GetFloat(const std::string& _paramName);
+
+		/// @brief アニメーションパラメータのポインターを取得する
+		/// @tparam T パラメータのフラグ
+		/// @param _paramName パラメータ名
+		/// @return アニメーションパラメータのポインター
+		template<AnimParam::AnimParamConcept T>
+		const T* GetParameterPointer(const std::string& _paramName) const;
+
+		/// @brief 現在再生しているアニメーションのルートモーションの座標移動速度を渡す
+		/// @return 座標移動速度(s)
+		const DXSimp::Vector3& GetMotionPosSpeedPerSec() const;
+
+		/// @brief 現在のアニメーションのルートモーション座標を取得
+		/// @param 取得する割合
+		DXSimp::Vector3 GetCurAnimRMPos(float _ratio);
+
+		/// @brief プレイヤー再生速度を取得する
+		/// @return 現在の再生速度
+		float GetControllerPlaySpeed() const;
+
+		/// @brief プレイヤー再生割合を取得する
+		/// @return 現在の再生割合
+		float GetCurrentPlayRatio() const;
+
+		/// @brief プレイヤー再生フレームを取得する
+		/// @return 現在の再生フレーム
+		u_int GetCurrentPlayFrame() const;
+
+		/// @brief 実際に動かすボーンリストを取得する
+		/// @return ボーンリスト
+		BoneList* GetMoveBoneList();
+
+		/// @brief ボーン数を取得
+		/// @return ボーン数
+		u_int GetBoneCnt() const;
+
+		/// @brief ボーン行列のバッファを取得する
+		/// @return ボーン行列のバッファ(転置済み)
+		BoneCombMtricies* GetBoneBuffer() override;
+
+		json Save() override;
+		void Load(const json& _data) override;
+	private:
+		void Awake() override;
+		void Update() override;
+		void Draw() override;
+
+		/// @brief アニメーションコントローラーの準備
+		void SetupAnimCon();
+
+		/// @brief Rendererからボーンをコピーし、動かすボーンを作成 
+		void CopyBoneList();
+
+		/// @brief 再生できる状態か？
+		/// @return 再生できるか
+		bool IsCanPlay();
+
+		/// @brief コピーされたパラメータが存在しているか
+		/// @return 存在している
+		bool IsExistCopyAnimParameter();
+
+		/// @brief ボーンコンビネーション行列を更新
+		void UpdateBoneCombMtx();
+
+		/// @brief 子ノードのコンビネーション行列を更新する（再帰関数）
+		/// @param _treeNode 更新するノード
+		/// @param _parentMtx ワールド変換するための親までの行列
+		void UpdateNodeHierarchy(const TreeNode& _treeNode, const DXSimp::Matrix& _parentMtx);
+
+		/// @brief ボーンのコンビネーション行列を更新
+		void UpdateAnimationMtx();
+
+		/// @brief シェーダーのバッファを更新する
+		void UpdateBoneBuffer();
+
+		void ImGuiDebug() override;
+	};
+
+	template<AnimParam::AnimParamConcept T>
+	inline const T* CP_Animation::GetParameterPointer(const std::string& _paramName) const
+	{
+		if (!pAnimConPlayer) return nullptr;
+
+		// パラメータから取得する
+		auto pValue = pAnimConPlayer->GetCopyAnimParameters().GetValueAddress(_paramName);
+		return std::get_if<T>(pValue);
+	}
+}

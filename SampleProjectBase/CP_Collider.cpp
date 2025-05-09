@@ -4,63 +4,187 @@
 
 #include "InSceneSystemManager.h"
 
-using namespace DirectX::SimpleMath;
-
-const Color CP_Collider::normalColor = { 1,1,1,0.8f };
-const Color CP_Collider::hitColor = { 1,0,0,1 };
-
-CP_Collider::~CP_Collider()
+namespace HashiTaku
 {
-	// 当たり判定チェッカーから削除する
-	CollisionChecker& colCheck = InSceneSystemManager::GetInstance()->GetCollisonChecker();
-	colCheck.PopCollider(*this);
-}
+	CP_Collider::CP_Collider(ShapeType _type) : type(_type), isCreateCompound(false)
+	{
+	}
 
-CP_Collider& CP_Collider::operator=(const CP_Collider& _other)
-{
-	if (this == &_other) return *this;
-	Component::operator=(_other);
+	CP_Collider::CP_Collider(const CP_Collider& _other)
+	{
+		Copy(_other);
+	}
 
-	this->type = _other.type;
+	CP_Collider& CP_Collider::operator=(const CP_Collider& _other)
+	{
+		Copy(_other);
 
-#ifdef EDIT
-	// これに当たると色を変える
-	colorTags = _other.colorTags;
-	colorLayers = _other.colorLayers;
-#endif // EDIT
+		return *this;
+	}
 
-	return *this;
-}
+	void CP_Collider::Init()
+	{
+		pCompound = std::make_unique<btCompoundShape>();
+		isCreateCompound = true;
 
-void CP_Collider::Init()
-{
-	// シーン内の当たり判定チェッカーに追加する
-	CollisionChecker& colCheck = InSceneSystemManager::GetInstance()->GetCollisonChecker();
-	colCheck.AddCollider(*this);
-}
+		CreateShape();
 
-void CP_Collider::SetTagColor(const Tag& _tag)
-{
-#ifdef EDIT
+		AddToCompound();
 
+		SendShapeToRb();
+	}
 
+	void CP_Collider::OnDestroy()
+	{
+		RemoveShapeFromRb();
+	}
 
+	void CP_Collider::SetCenterOffset(const DXSimp::Vector3& _offset)
+	{
+		centerOffset = _offset;
+		RemoveFromCompound();
+		AddToCompound();
+	}
 
+	void CP_Collider::SetAngleOffset(const DXSimp::Vector3& _offset)
+	{
+		angleOffset = _offset;
+		RemoveFromCompound();
+		AddToCompound();
+	}
 
+	btCollisionShape& CP_Collider::GetColliderShape()
+	{
+		return *pCompound;
+	}
 
+	CP_Collider::ShapeType CP_Collider::GetType() const
+	{
+		return type;
+	}
 
-#endif // EDIT
-}
+	bool CP_Collider::GetIsCreateCompound() const
+	{
+		return isCreateCompound;
+	}
 
-void CP_Collider::SetLayerColor(const Layer& _layer)
-{
-#ifdef EDIT
-	
+	void CP_Collider::ImGuiDebug()
+	{
+		if (ImGui::Button("Set Shape"))
+			RecreateShape();
 
+		bool isChange = false;
+		bool isAngChange = false;
+		isChange = ImGuiMethod::DragFloat3(centerOffset, "center", 0.1f);
+		isAngChange = ImGuiMethod::DragFloat3(angleOffset, "angles");
 
+		if (isChange || isAngChange)
+		{
+			RemoveFromCompound();
+			AddToCompound();
+		}
+	}
 
+	json CP_Collider::Save()
+	{
+		auto data = Component::Save();
 
+		SaveJsonVector3("center", centerOffset, data);
+		SaveJsonVector3("angles", angleOffset, data);
 
+		return data;
+	}
 
-#endif // EDIT
+	void CP_Collider::Load(const json& _data)
+	{
+		Component::Load(_data);
+
+		LoadJsonVector3("center", centerOffset, _data);
+		LoadJsonVector3("angles", angleOffset, _data);
+
+		// RecreateShapeは各派生コライダーに描く
+	}
+
+	void CP_Collider::Copy(const CP_Collider& _other)
+	{
+		if (this == &_other) return;
+
+		Component::operator=(_other);
+	}
+
+	void CP_Collider::RemoveShapeFromRb()
+	{
+		if (!gameObject) return;
+
+		CP_RigidBody* pRb = gameObject->GetComponent<CP_RigidBody>();
+		if (pRb)
+			pRb->RemoveColliderShape(*this);
+	}
+
+	void CP_Collider::OnEnableTrue()
+	{
+		SendShapeToRb();
+	}
+
+	void CP_Collider::OnEnableFalse()
+	{
+		RemoveShapeFromRb();
+	}
+
+	void CP_Collider::OnChangeScale()
+	{
+		RecreateShape();
+	}
+
+	void CP_Collider::RecreateShape()
+	{
+		// コリジョン形状を一旦削除
+		RemoveFromCompound();
+
+		// 形状をもう一度作成
+		CreateShape();
+
+		// コンパウンドに追加
+		AddToCompound();
+	}
+
+	void CP_Collider::SendShapeToRb()
+	{
+		CP_RigidBody* pRb = gameObject->GetComponent<CP_RigidBody>();
+		if (!pRb)
+		{
+			HASHI_DEBUG_LOG("RigidBodyがありません");
+			return;
+		}
+
+		pRb->SetColliderShape(*this);
+	}
+
+	void CP_Collider::RemoveFromCompound()
+	{
+		if (pCollisionShape)
+			pCompound->removeChildShape(pCollisionShape.get());
+	}
+
+	void CP_Collider::AddToCompound()
+	{
+		using namespace DXSimp;
+
+		if (pCollisionShape)
+		{
+			btTransform btTrans;
+			btTrans.setIdentity();
+
+			Transform& transform = GetTransform();
+			Vector3 worldOffset = GetTransform().GetScale() * centerOffset;
+			btTrans.setOrigin(Bullet::ToBtVector3(worldOffset));
+			btTrans.setRotation(Bullet::ToBtQuaeternion(Quat::ToQuaternion(angleOffset)));
+
+			pCompound->addChildShape(btTrans, pCollisionShape.get());
+		}
+		else
+		{
+			HASHI_DEBUG_LOG("形状を先に作成してください");
+		}
+	}
 }

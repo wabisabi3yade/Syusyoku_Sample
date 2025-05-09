@@ -6,25 +6,20 @@ cbuffer WVP : register(b0)
     matrix projection;
 };
 
-struct Material
+// Slot1 ライトビュー行列
+cbuffer WVP : register(b1)
 {
-    float4 diffuse; // 色
-    float4 ambient; // 環境光
-    float4 specular; // 鏡面反射
-    float4 emissive; // 自発光
-    float shininess; // 光沢
+    matrix Lworld;
+    matrix Lview;
+    matrix Lprojection;
 };
-// Slot1 マテリアル
-cbuffer MaterialBuffer : register(b1)
-{
-    Material material;
-};
+
 
 struct VS_INPUT
 {
     float3 pos : POSITION; // 頂点座標（モデル座標系）
-    float2 uv : TEXCOORD0; // uv座標
     float4 color : COLOR0; // 頂点色
+    float2 uv : TEXCOORD0; // uv座標
     float3 normal : NORMAL0; // 法線ベクトル
 };
 
@@ -41,6 +36,8 @@ struct VS_OUTPUT
     float3 normal : NORMAL0;
     // ワールド座標
     float4 worldPos : POSITION0;
+    // ライトビュー空間座標
+    float4 lightSpacePos : POSITION1;
 };
 
 VS_OUTPUT main(VS_INPUT vin)
@@ -57,14 +54,20 @@ VS_OUTPUT main(VS_INPUT vin)
     pos = mul(pos, view);
     pos = mul(pos, projection);
     output.pos = pos;
-    
-    // 頂点カラーとマテリアルの色と乗算
-    output.color.rgb = vin.color.rgb * material.diffuse.rgb;
-    output.color.a = vin.color.a * material.diffuse.a;
-  
+    output.color = vin.color;
     output.uv = vin.uv;
     
-    output.normal = mul(vin.normal, (float3x3) world);
+    // ライトビュー空間座標を求める
+    output.lightSpacePos = mul(output.worldPos, Lview);
+    output.lightSpacePos = mul(output.lightSpacePos, Lprojection);
+
+    float3x3 rotationMatrix = (float3x3)world;
+    rotationMatrix[0] = normalize(rotationMatrix[0]);
+    rotationMatrix[1] = normalize(rotationMatrix[1]);
+    rotationMatrix[2] = normalize(rotationMatrix[2]);
+    
+    output.normal = mul(vin.normal, rotationMatrix);
+    output.normal = normalize(output.normal);
 
     return output;
 }

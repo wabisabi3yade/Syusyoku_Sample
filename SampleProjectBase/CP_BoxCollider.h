@@ -1,43 +1,47 @@
 #pragma once
 #include "CP_Collider.h"
 
-class CP_BoxCollider :
-	public CP_Collider
+namespace HashiTaku
 {
-	// 座標オフセット
-	DirectX::SimpleMath::Vector3 posOffset;
-	// 傾き
-	DirectX::SimpleMath::Vector3 angleOffset;  
-	// 大きさ
-	DirectX::SimpleMath::Vector3 size; 
-	// AABBフラグ
-	bool isAABB = false;	
+	class CP_BoxCollider : public CP_Collider
+	{
+		/// @brief 長さ
+		DXSimp::Vector3 length;
 
-	static void CheckCollisionAABB(CP_Collider& _box1, CP_Collider& _box2);
-	static void CheckCollisionOBB(CP_Collider& _box1, CP_Collider& _box2);
-public:
-	using CP_Collider::CP_Collider;
-	CP_BoxCollider& operator=(const CP_BoxCollider& _other);
+		// AABBフラグ
+		bool isAABB = false;
 
-	void Init();
-	void Draw() override;
+	public:
+		CP_BoxCollider();
+		~CP_BoxCollider() {}
 
-	void ImGuiSetting() override;
+		/// @brief 長さをセットする
+		/// @param _length 
+		void SetLength(const DXSimp::Vector3& _length);
 
-	void SetOffset(const DirectX::SimpleMath::Vector3& _offset) { posOffset = _offset; } 
-	void SetAngle(const DirectX::SimpleMath::Vector3& _angle) { angleOffset = _angle; }    // 角度
-	void SetSize(const DirectX::SimpleMath::Vector3& _size) { size = _size; } // 大きさ
+		/// @brief 長さを取得する
+		/// @return ボックスの長さ
+		const DXSimp::Vector3& GetLength()const;
 
-	// ワールド座標系へ変換
-	DirectX::SimpleMath::Vector3 GetWorldCenterPos()const;
-	DirectX::SimpleMath::Vector3 GetWorldRotation()const;
-	DirectX::SimpleMath::Vector3 GetWorldScale()const;
+		json Save() override;
+		void Load(const json& _data) override;
 
-	static bool CollisionBox(CP_Collider& _box1, CP_Collider& _box2);
+	private:
+		void Init();
 
-private:
+		/// @brief ボックスの形状を作成
+		void CreateShape() override;
 
-	/// @brief モデルのサイズから当たり判定の大きさを決める
-	void SizeFromModelSize();
-};
+		/// @brief モデルのサイズから当たり判定の大きさを決める
+		void SizeFromModelSize();
 
+		/// @brief 長さ更新
+		void LengthUpdate();
+
+		/// @brief ワールド座標に計算
+		/// @param ワールド座標での長さ
+		void CalcWorldLength(DXSimp::Vector3& _out);
+
+		void ImGuiDebug() override;
+	};
+}

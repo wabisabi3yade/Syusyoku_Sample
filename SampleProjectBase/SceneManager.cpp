@@ -1,84 +1,202 @@
 #include "SceneManager.h"
-#include "BroadScene_Base.h"
-#include "ChangeBroadScene.h"
-#include "Test_ChangeSubScene.h"
-#include "Tank_ChangeSub.h"
-#include "SceneMoveInfo.h"
-#include "ShaderCollection.h"
 
-#include "InSceneSystemManager.h"
+#include "GameInput.h"
+#include "ComponentFactory.h"
+#include "DX11BulletPhisics.h"
+#include "AnimationNotifyFactory.h"
 
 // アセット初期化
 #include "AssetSetter.h"
-#include "Geometory.h"
 #include "Material.h"
-#include "StaticMesh.h"
-#include "Cube.h"
-
-SceneManager* SceneManager::pInstance = nullptr;	// インスタンスの初期化
-
-SceneManager::SceneManager()
+#include "Geometory.h"
+namespace HashiTaku
 {
-	AssetSetup();
-	
-	// 初期シーンの情報
-	int initSub = Tank_ChangeSub::Scene::InGame;
-	BroadType::Type initBroad = BroadType::Tank;
+	namespace fs = std::filesystem;
 
-	// シーン遷移情報を確保(初期シーン情報を引数に)
-	pMoveInfo = new SceneMoveInfo(initSub ,initBroad);
+	SceneManager::SceneManager() : isChange(false)
+	{
+		Setup();
 
-	// 大局シーン変換クラスを確保
-	pChaneBroad = new ChangeBroadScene(pMoveInfo);
-	// 初期シーンに遷移する
-	pNowBroadScene = pChaneBroad->OnChangeBroad();
-}
+		ChangeScene("Title", true);
+	}
 
-SceneManager::~SceneManager()
-{
-	Release();
-}
+	SceneManager::~SceneManager()
+	{
+		Release();
+	}
 
-void SceneManager::AssetSetup()
-{
-	// デフォであるマテリアルを作成
-	MaterialSetup();
+	void SceneManager::Setup()
+	{
+		// Bullet物理エンジン初期化
+		DX11BulletPhisics::GetInstance()->Init();
 
-	// 基本オブジェクトの初期化
-	Geometory::Init();
-}
+		// アセット関連
+		AssetSetup();
 
-void SceneManager::CheckChangeBroad()
-{
-	// 稼働状態終了じゃないなら処理は通らない
-	if (pMoveInfo->GetRunningState() != SceneRunningState::RUNNING_STATE::FINISH)
-		return;
+		// コンポーネント初期化
+		ComponentFactory::GetInstance()->Init();
 
-	// ↓稼働終了なら
-	pNowBroadScene = pChaneBroad->OnChangeBroad();
-}
+		// シーンリストを準備
+		SetupSceneList();
+	}
 
-void SceneManager::Release()
-{
-	CLASS_DELETE(pChaneBroad);
-	CLASS_DELETE(pMoveInfo);
+	void SceneManager::SetupSceneList()
+	{
+		std::string folderPath = "assets/data/scene";
 
-	Geometory::Release();
-	InSceneSystemManager::Delete();
-}
+		// シーンフォルダにあるシーンファイルを取得する
+		for (const auto& entry : fs::recursive_directory_iterator(folderPath))
+		{
+			if (!entry.is_regular_file() || entry.path().extension() != ".json") continue;
 
-void SceneManager::Exec()
-{
-	// 大局シーンの実行
-	pNowBroadScene->Exec();
+			// ファイルのパスを出力
+			sceneList.push_back(entry.path().stem().string());
+		}
+	}
 
-	// シーン遷移するかどうか確認
-	CheckChangeBroad();
-}
+	void SceneManager::AssetSetup()
+	{
+		// デフォであるマテリアルを作成
+		MaterialSetup();
 
-void SceneManager::MaterialSetup()
-{
-	// Unlitマテリアル作成
-	std::unique_ptr<Material> pUnlit = std::make_unique<Material>();
-	AssetSetter::SetAsset("M_Unlit", std::move(pUnlit));
+		// 基本オブジェクトの初期化
+		Geometory::Init();
+	}
+
+	void SceneManager::Release()
+	{
+		pNowScene.reset();
+		ComponentFactory::Delete();
+		Geometory::Release();
+		DX11BulletPhisics::Delete();
+	}
+
+	void SceneManager::CreateScene(const std::string& _sceneName)
+	{
+		auto itr = std::find(sceneList.begin(), sceneList.end(), _sceneName);
+
+		if (itr != sceneList.end())	// シーン名が重複していたら
+		{
+			HASHI_DEBUG_LOG(_sceneName + "既にシーン名が使われています");
+			return;
+		}
+
+		sceneList.push_back(_sceneName);
+	}
+
+	void SceneManager::ImGuiDebug()
+	{
+#ifdef EDIT
+		ImGui::Begin("SceneList");
+
+		ImGuiChangeScene();
+
+		ImGuiCreateScene();
+
+		ImGui::End();
+#endif
+	}
+
+	void SceneManager::ImGuiChangeScene()
+	{
+#ifdef EDIT
+		ImGui::Text(TO_UTF8("シーン名 " + nowSceneName));
+
+		// 再生のみのシーン
+		ImGui::Text("Play Only");
+		for (auto& name : sceneList)
+		{
+			if (ImGui::Button(name.c_str()))
+				ChangeScene(name);
+		}
+
+		ImGui::Text("--------------");
+
+		// 編集できるシーン
+		ImGui::Text("Edit");
+		ImGui::PushID("Edit");
+		for (auto& name : sceneList)
+		{
+			if (ImGui::Button(name.c_str()))
+				ChangeScene(name, true);
+		}
+		ImGui::PopID();
+#endif
+	}
+
+	void SceneManager::ImGuiCreateScene()
+	{
+#ifdef EDIT
+		constexpr u_int buf = 256;
+		static char input[buf];
+		ImGui::InputText("name", input, buf);
+
+		if (ImGui::Button("New Scene"))
+			CreateScene(input);
+#endif
+	}
+
+	void SceneManager::Exec()
+	{
+		// シーンの実行
+		pNowScene->Exec();
+
+		ImGuiCall();
+
+		// リクエストされているなら
+		if (isChange)
+			ChangeScene(nextSceneName);
+	}
+
+	void SceneManager::ChangeSceneRequest(const std::string& _sceneName)
+	{
+		auto itr = std::find(sceneList.begin(), sceneList.end(), _sceneName);
+
+		if (itr == sceneList.end())	// シーン名がないなら
+		{
+			HASHI_DEBUG_LOG(_sceneName + "シーン名がありません");
+			return;
+		}
+
+		nextSceneName = _sceneName;
+		isChange = true;
+	}
+
+	void SceneManager::ChangeScene(const std::string& _sceneName, bool _isEditScene)
+	{
+		isChange = false;
+
+		auto itr = std::find(sceneList.begin(), sceneList.end(), _sceneName);
+
+		if (itr == sceneList.end())	// シーン名がないなら
+		{
+			HASHI_DEBUG_LOG(_sceneName + "シーン名がありません");
+			return;
+		}
+
+		pNowScene.reset();
+		nowSceneName = _sceneName;
+
+#ifdef EDIT
+		// 編集するシーンかどうか
+		if (!_isEditScene)
+			pNowScene = std::make_unique<Scene>(_sceneName);
+		else
+			pNowScene = std::make_unique<EditScene>(_sceneName);
+#else
+		pNowScene = std::make_unique<Scene>(_sceneName);
+#endif // EDIT
+
+
+
+		HASHI_DEBUG_LOG(_sceneName + "へ移行");
+	}
+
+	void SceneManager::MaterialSetup()
+	{
+		// Unlitマテリアル作成
+		std::unique_ptr<Material> pUnlit = std::make_unique<Material>();
+		pUnlit->SetIsntSave();
+		AssetSetter::SetAsset("M_Unlit", std::move(pUnlit));
+	}
 }

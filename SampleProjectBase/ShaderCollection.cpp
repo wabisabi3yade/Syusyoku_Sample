@@ -1,152 +1,144 @@
 #include "ShaderCollection.h"
-
 #include "ShaderDefine.h"
 
-// csoファイルが入っているフォルダまでのパス名
-constexpr const char* FILE_FOLDER = "assets/Shader/";
-
-void ShaderCollection::LoadFromCSO()
+namespace HashiTaku
 {
-	LoadVS();
-	
-	LoadPS();
-}
-
-void ShaderCollection::LoadVS()
-{
-	// 頂点シェーダーを作成
-	// csoファイルの名前
-	std::vector<std::string> vFileNames
+	std::vector<const std::string*> ShaderCollection::GetVSNameList()
 	{
-		"VS_Gouraud.cso",
-		"VS_Geometory.cso"
-	};
+		std::vector<const std::string*> nameList;
 
-	// セットする名前
-	std::vector<std::string> vShaderNames
-	{
-		"VS_Gouraud",
-		"VS_Geometory"
-	};
-	defaultVS = vShaderNames[0];
+		// 頂点シェーダーの名前を取得
+		for (auto& shader : shaderList)
+		{
+			if (shader.second->GetShaderType() == Shader::Type::Vertex)
+				nameList.push_back(&shader.first);
+		}
 
-	// 頂点シェーダー読み込み配列
-	std::vector<std::unique_ptr<VertexShader>> pVsShaderList;
-
-	// グロー
-	std::unique_ptr<VertexShader> pVShader = std::make_unique<VS_Gouraud>();
-	pVsShaderList.push_back(std::move(pVShader));
-
-	pVShader = std::make_unique<VS_Geometory>();
-	pVsShaderList.push_back(std::move(pVShader));
-
-	for (int vsCount = 0; vsCount < static_cast<int>(pVsShaderList.size()); vsCount++)
-	{
-		// ロードする全体のパス名
-		std::string loadFilePath = FILE_FOLDER + vFileNames[vsCount];
-		pVsShaderList[vsCount]->LoadCsoFile(loadFilePath.c_str());
-		pVsShaderList[vsCount]->SetName(vShaderNames[vsCount]);
-
-		// 配列に追加する
-		pShaders.emplace(vShaderNames[vsCount], std::move(pVsShaderList[vsCount]));
-	}
-}
-
-void ShaderCollection::LoadPS()
-{
-	// ピクセルシェーダーを作成
-	// csoファイルの名前
-	std::vector<std::string> pFileNames
-	{
-		"PS_Unlit.cso",
-		"PS_Geometory.cso"
-	};
-	// セットする名前
-	std::vector<std::string> pShaderNames
-	{
-		"PS_Unlit",
-		"PS_Geometory"
-	};
-	defaultPS = pShaderNames[0];
-
-
-	std::vector<std::unique_ptr<PixelShader>> pPsShaderList;
-
-	// アンリット
-	std::unique_ptr<PixelShader> pPShader = std::make_unique<PS_Unlit>();
-	pPsShaderList.push_back(std::move(pPShader));
-
-	pPShader = std::make_unique<PixelShader>();
-	pPsShaderList.push_back(std::move(pPShader));
-
-	for (int psCount = 0; psCount < static_cast<int>(pPsShaderList.size()); psCount++)
-	{
-		// ロードする全体のパス名
-		std::string loadFilePath = FILE_FOLDER + pFileNames[psCount];
-		pPsShaderList[psCount]->LoadCsoFile(loadFilePath.c_str());
-		pPsShaderList[psCount]->SetName((pShaderNames[psCount]));
-
-		// 配列に追加する
-		pShaders.emplace(pShaderNames[psCount], std::move(pPsShaderList[psCount]));
-	}
-}
-
-void ShaderCollection::Init()
-{
-	LoadFromCSO();	// csoファイルをロードする
-}
-
-void ShaderCollection::UniqueUpdateBuffer()
-{
-	// オブジェクトごとに依存しないバッファ更新
-	for (auto& shader : pShaders)
-	{
-		shader.second->OnceUpdateBuffer();
-	}
-}
-
-VertexShader* ShaderCollection::GetVertexShader(const std::string& _shaderName)
-{
-	auto itr = pShaders.find(_shaderName);
-	if (itr == pShaders.end())	// 同じ名前のシェーダーを見つけたら
-	{
-		HASHI_DEBUG_LOG(_shaderName + " が見つかりませんでした");
-		return nullptr;
+		return nameList;
 	}
 
-	VertexShader* retPtr = dynamic_cast<VertexShader*>(itr->second.get());
+	std::vector<const std::string*> ShaderCollection::GetPSNameList()
+	{
+		std::vector<const std::string*> nameList;
+
+		// 頂点シェーダーの名前を取得
+		for (auto& shader : shaderList)
+		{
+			if (shader.second->GetShaderType() == Shader::Type::Pixel)
+				nameList.push_back(&shader.first);
+		}
+
+		return nameList;
+	}
+
+	void ShaderCollection::LoadFromCSO()
+	{
+		// 頂点シェーダー
+		LoadShader<VertexShader>("VS_Object.cso");
+		LoadShader<VS_Gouraud>("VS_Gouraud.cso");
+		LoadShader<VS_Primitive>("VS_Primitive.cso");
+		LoadShader<VS_SkinnedAnimation>("VS_SkinAnimation.cso");
+		LoadShader<VertexShader>("VS_Line.cso");
+		LoadShader<VS_WorldPosition>("VS_WorldPosition.cso");
+		LoadShader<VertexShader>("VS_Sprite.cso");
+		LoadShader<VertexShader>("VS_UI.cso");
+		LoadShader<VertexShader>("VS_OutLine.cso");
+		LoadShader<VertexShader>("VS_OutLineAnimation.cso");
+		LoadShader<VS_WorldPosition>("VS_BackObject.cso");
+		LoadShader<VS_Ground>("VS_Ground.cso");
+		LoadShader<VertexShader>("VS_FullScreenQuad.cso");
+		LoadShader<VertexShader>("VS_DrawMotionVector.cso");
+		defaultVS = "VS_WorldPosition";
+
+		// ピクセルシェーダー
+		LoadShader<PS_Toon>("PS_Toon.cso");
+		LoadShader<PS_TexColor>("PS_TexColor.cso");
+		LoadShader<PS_Unlit>("PS_Unlit.cso");
+		LoadShader<PixelShader>("PS_Primitive.cso");
+		LoadShader<PixelShader>("PS_Line.cso");
+		LoadShader<PixelShader>("PS_UI.cso");
+		LoadShader<PS_OutLine>("PS_OutLine.cso");
+		LoadShader<PS_BackObject>("PS_BackObject.cso");
+		LoadShader<PixelShader>("PS_DepthWrite.cso");
+		LoadShader<PS_Ground>("PS_Ground.cso");
+		LoadShader<PixelShader>("PS_FullScreenQuad.cso");
+		LoadShader<PixelShader>("PS_DrawMotionVector.cso");
+		LoadShader<PixelShader>("PS_Luminance.cso");
+		LoadShader<PixelShader>("PS_GausianVertBlur.cso");
+		LoadShader<PixelShader>("PS_GaussianHoriBlur.cso");
+		LoadShader<PixelShader>("PS_KawaseBlurCombine.cso");
+		LoadShader<PixelShader>("PS_TextureCombine.cso");
+		LoadShader<PixelShader>("PS_MotionBlur.cso");
+		defaultPS = "PS_Unlit";
+	}
+
+	void ShaderCollection::Init()
+	{
+		LoadFromCSO();	// csoファイルをロードする
+	}
+
+	void ShaderCollection::InitAssets()
+	{
+		for (auto& shader : shaderList)
+		{
+			shader.second->InitAssets();
+		}
+	}
+
+	void ShaderCollection::UniqueUpdateBuffer()
+	{
+		// オブジェクトごとに依存しないバッファ更新
+		for (auto& shader : shaderList)
+		{
+			shader.second->OnceUpdateBuffer();
+		}
+	}
+
+	VertexShader* ShaderCollection::GetVertexShader(const std::string& _shaderName)
+	{
+		auto itr = shaderList.find(_shaderName);
+		if (itr == shaderList.end())	// シェーダーがなければ
+		{
+			std::string message = _shaderName + " が見つかりませんでした";
+			assert(!message.c_str());
+			return nullptr;
+		}
+
+		VertexShader* retPtr = dynamic_cast<VertexShader*>(itr->second.get());
 #ifdef EDIT
-	if (retPtr == nullptr)
-	{
-
-		HASHI_DEBUG_LOG(_shaderName + "指定したシェーダー名は頂点シェーダーではありません");
-		return nullptr;
-	}
+		if (retPtr == nullptr)
+		{
+			std::string message =
+				_shaderName + "指定したシェーダーは頂点シェーダーではありません";
+			assert(!message.c_str());
+			return nullptr;
+		}
 #endif
 
-	return retPtr;
-}
-
-PixelShader* ShaderCollection::GetPixelShader(const std::string& _shaderName)
-{
-	auto itr = pShaders.find(_shaderName);
-	if (itr == pShaders.end())	// 同じ名前のシェーダーを見つけたら
-	{
-		HASHI_DEBUG_LOG(_shaderName + " が見つかりませんでした");
-		return nullptr;
+		return retPtr;
 	}
 
-	PixelShader* retPtr = dynamic_cast<PixelShader*>(itr->second.get());
+	PixelShader* ShaderCollection::GetPixelShader(const std::string& _shaderName)
+	{
+		auto itr = shaderList.find(_shaderName);
+		if (itr == shaderList.end())	// 同じ名前のシェーダーを見つけたら
+		{
+			std::string message = _shaderName + " が見つかりませんでした";
+			assert(!message.c_str());
+			return nullptr;
+		}
+
+		PixelShader* retPtr = dynamic_cast<PixelShader*>(itr->second.get());
 #ifdef EDIT
-	if (retPtr == nullptr)
-	{
-
-		HASHI_DEBUG_LOG(_shaderName + "指定したシェーダーはピクセルシェーダーではありません");
-		return nullptr;
-	}
+		if (retPtr == nullptr)
+		{
+			std::string message =
+				_shaderName + "指定したシェーダーはピクセルシェーダーではありません";
+			assert(!message.c_str());
+			return nullptr;
+		}
 #endif
 
-	return retPtr;
+		return retPtr;
+	}
 }
-
-

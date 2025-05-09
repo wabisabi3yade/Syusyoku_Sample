@@ -1,0 +1,41 @@
+{
+    "childs": null,
+    "gameObject": {
+        "active": true,
+        "components": [
+            {
+                "enable": true,
+                "endFrame": 35,
+                "isLoop": true,
+                "isTrimming": true,
+                "name": "VisualEffect",
+                "playSpeed": 0.5910000205039978,
+                "priority": 0,
+                "startFrame": 20,
+                "vfxName": "Fire01"
+            }
+        ],
+        "layer": 0,
+        "name": "Fire",
+        "tag": 0,
+        "transform": {
+            "child": null,
+            "pos": [
+                5.699999809265137,
+                6.099999904632568,
+                -18.600000381469727
+            ],
+            "rotation": [
+                -0.0,
+                0.0,
+                -0.0,
+                1.0
+            ],
+            "scale": [
+                1.399999976158142,
+                2.4000000953674316,
+                1.2999999523162842
+            ]
+        }
+    }
+}

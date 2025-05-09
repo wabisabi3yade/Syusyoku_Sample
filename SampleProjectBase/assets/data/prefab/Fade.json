@@ -1,0 +1,45 @@
+{
+    "childs": null,
+    "gameObject": {
+        "active": true,
+        "components": [
+            {
+                "alpha": 0.0,
+                "enable": true,
+                "image": "black.png",
+                "name": "UIRenderer",
+                "priority": 0
+            },
+            {
+                "closeTime": 1.0,
+                "enable": true,
+                "name": "Fade",
+                "openTime": 1.0,
+                "priority": 0,
+                "startOpen": true
+            }
+        ],
+        "layer": 2,
+        "name": "Fade",
+        "tag": 0,
+        "transform": {
+            "child": null,
+            "pos": [
+                640.0,
+                360.0,
+                -0.20000000298023224
+            ],
+            "rotation": [
+                -0.0,
+                0.0,
+                -0.0,
+                1.0
+            ],
+            "scale": [
+                2000.0,
+                5000.0,
+                1.0
+            ]
+        }
+    }
+}

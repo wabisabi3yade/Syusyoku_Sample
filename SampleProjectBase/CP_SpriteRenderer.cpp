@@ -8,103 +8,195 @@
 
 #include "InSceneSystemManager.h"
 
-void CP_SpriteRenderer::MaterialSetup()
+namespace HashiTaku
 {
-	// デフォルトでマテリアルを設定する
-	const std::string MATERIAL_NAME = "M_SpriteUnlit";
-
-	// 既に作成済みなら
-	if (AssetSetter::CheckImport<Material>(MATERIAL_NAME))
+	void CP_SpriteRenderer::MaterialSetup()
 	{
-		pMaterial = AssetGetter::GetAsset<Material>(MATERIAL_NAME);
-		return;
+		// デフォルトでマテリアルを設定する
+		const std::string MATERIAL_NAME = "M_SpriteUnlit";
+
+		// 既に作成済みなら
+		if (AssetSetter::CheckImport<Material>(MATERIAL_NAME))
+		{
+			pMaterial = AssetGetter::GetAsset<Material>(MATERIAL_NAME);
+			return;
+		}
+
+		// マテリアル作成し、アセットをセットする
+		std::unique_ptr<Material> pCreateMaterial = std::make_unique<Material>();
+		pMaterial = AssetSetter::SetAsset(MATERIAL_NAME, std::move(pCreateMaterial));
+		pMaterial->SetPixelShader("PS_TexColor");
+		pMaterial->SetIsntSave();
 	}
 
-	// マテリアル作成し、アセットをセットする
-	std::unique_ptr<Material> pCreateMaterial = std::make_unique<Material>();
-	pMaterial = AssetSetter::SetAsset(MATERIAL_NAME, std::move(pCreateMaterial));
-}
+	void CP_SpriteRenderer::DrawSetup()
+	{
+		struct TexParam
+		{
+			int isTexEnable;
+			float alpha;
+			float dummy[2];
+		};
 
+		// レンダラー取得
+		D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
+		renderer.GetRTCollection().SetRenderTarget
+		(RenderTargetCollection::RenderTargetType::SceneDraw, true);
+		renderer.SetBlendState(BlendState::BlendStateType::None);
 
-void CP_SpriteRenderer::DrawSetup()
-{
-	// レンダラー取得
-	D3D11_Renderer& renderer = *Direct3D11::GetInstance()->GetRenderer();
+		// ワールド変換行列の座標にモデルの座標を入れる
+		RenderParam::WVP wvp = renderer.GetParameter().GetWVP();
+		wvp.world = GetTransform().GetWorldMatrix();
+		wvp.world = wvp.world.Transpose();
 
-	// ワールド変換行列の座標にモデルの座標を入れる
-	RenderParam::WVP wvp = renderer.GetParameter().GetWVP(GetTransform());
+		// シェーダーの設定
+		VertexShader* useVertexShader = &pMaterial->GetVertexShader();
+		if (pDrawVS) useVertexShader = pDrawVS;
+		PixelShader* usePixelShader = &pMaterial->GetPixelShader();
+		if (pDrawPS) usePixelShader = pDrawPS;
 
-	// シェーダーの設定
-	VertexShader& pVs = pMaterial->GetVertexShader();
-	PixelShader& pPs = pMaterial->GetPixelShader();
+		// マテリアルのパラメータ
+		MaterialParameter& materialParam = pMaterial->GetMaterialParameter();
+		materialParam.isTextureEnable = pSprite->GetIsTexEnable();
 
-	pVs.UpdateBuffer(0, &wvp);
-	MaterialParameter& materialParam = pMaterial->GetMaterialParameter();
+		Texture* pTex = pSprite->GetTexture();
 
-	materialParam.isTextureEnable = isTextureEnable;
+		useVertexShader->UpdateSubResource(0, &wvp);
 
-	pVs.UpdateBuffer(1, &materialParam);
+		// テクスチャの設定
+		TexParam texEnable;
+		texEnable.isTexEnable = materialParam.isTextureEnable;
+		texEnable.alpha = alpha;
+		usePixelShader->UpdateSubResource(0, &texEnable);
+		usePixelShader->SetTexture(0, pTex);
 
-	// ディレクションライトの情報を取得
-	//SceneLights& sceneLights = InSceneSystemManager::GetInstance()->GetSceneLights();
-	//DirectionLParameter dirLightParam = sceneLights.GetDirectionParameter();
-	//pVs.UpdateBuffer(2, &dirLightParam);
+		useVertexShader->SetGPU();
+		usePixelShader->SetGPU();
+	}
 
-	pPs.UpdateBuffer(0, &materialParam);
+	CP_SpriteRenderer::CP_SpriteRenderer() : 
+		alpha(1.0f),
+		pDrawVS(nullptr),
+		pDrawPS(nullptr)
+	{
+	}
 
-	Texture& pTex = pSprite->GetTexture();
-	pPs.SetTexture(0, &pTex);
+	void CP_SpriteRenderer::Init()
+	{
+		// スプライト作成
+		pSprite = std::make_unique<Sprite>();
 
-	pVs.SetGPU();
-	pPs.SetGPU();
-}
+		// マテリアル初期化
+		MaterialSetup();
+	}
 
-CP_SpriteRenderer& CP_SpriteRenderer::operator=(const CP_SpriteRenderer& _other)
-{
-	if (this == &_other) return *this;
+	void CP_SpriteRenderer::Draw()
+	{
+		// 描画準備
+		DrawSetup();
 
-	Copy(_other);
+		// 四角形ポリゴンを描画
+		CP_Renderer::DrawMesh(pSprite->GetSquare());
+	}
 
-	return *this;
-}
+	void CP_SpriteRenderer::ImGuiDebug()
+	{
+		ImGui::SliderFloat("Alpha", &alpha, 0.0f, 1.0f);
 
-void CP_SpriteRenderer::Init()
-{
-	name = "SpriteRenderer";
+		std::string texName;
+		if (pSprite->GetIsTexEnable())
+			texName = pSprite->GetTexture()->GetAssetName();
 
-	// スプライト作成
-	pSprite = std::make_unique<Sprite>();
+		if (AssetGetter::ImGuiGetCombobox<Texture>("texture", texName))
+		{
+			Texture* pTex = AssetGetter::GetAsset<Texture>(texName);
+			pSprite->SetTexture(*pTex);
+		}	
 
-	// マテリアル初期化
-	MaterialSetup();
-}
+		ImGuiUseShader();
+	}
 
-void CP_SpriteRenderer::Draw()
-{
-	// 描画準備
-	DrawSetup();
+	void CP_SpriteRenderer::ImGuiUseShader()
+	{
+		// 頂点
+		auto* pShCol = ShaderCollection::GetInstance();
+		std::vector<const std::string*> shaderNames = pShCol->GetVSNameList();
+		std::string useShaderName = "Null";
+		if (pDrawVS)
+			useShaderName = pDrawVS->GetShaderName();
 
-	// 四角形ポリゴンを描画
-	CP_Renderer::DrawMesh(pSprite->GetSquare());
-}
+		if (ImGuiMethod::ComboBox("VSName", useShaderName, shaderNames))
+		{
+			pDrawVS = pShCol->GetVertexShader(useShaderName);
+		}
 
-void CP_SpriteRenderer::SetTexture(Texture& _texture)
-{
-	isTextureEnable = true;
+		// ピクセル
+		shaderNames = pShCol->GetPSNameList();
+		useShaderName = "Null";
+		if (pDrawPS)
+			useShaderName = pDrawPS->GetShaderName();
 
-	// スプライトに渡す
-	pSprite->SetTexture(_texture);
-}
+		if (ImGuiMethod::ComboBox("PSName", useShaderName, shaderNames))
+		{
+			pDrawPS = pShCol->GetPixelShader(useShaderName);
+		}
+	}
 
-void CP_SpriteRenderer::SetMaterial(Material& _material)
-{
-	pMaterial = &_material;
-}
+	void CP_SpriteRenderer::SetTexture(Texture& _texture)
+	{
+		// スプライトに渡す
+		pSprite->SetTexture(_texture);
+	}
 
+	void CP_SpriteRenderer::SetMaterial(Material& _material)
+	{
+		pMaterial = &_material;
+	}
 
-void CP_SpriteRenderer::Copy(const CP_SpriteRenderer& _other)
-{
-	pSprite = std::make_unique<Sprite>(*_other.pSprite);
-	pMaterial = _other.pMaterial;
-	isTextureEnable = _other.isTextureEnable;
+	void CP_SpriteRenderer::SetAlpha(float _alpha)
+	{
+		alpha = std::clamp(alpha, 0.0f, 1.0f);
+	}
+
+	float CP_SpriteRenderer::GetAlpha() const
+	{
+		return alpha;
+	}
+
+	json CP_SpriteRenderer::Save()
+	{
+		auto data = CP_Renderer::Save();
+
+		data["sprite"] = pSprite->Save();
+		data["alpha"] = alpha;
+
+		if (pDrawVS)
+			data["drawVSName"] = pDrawVS->GetShaderName();
+		if (pDrawPS)
+			data["drawPSName"] = pDrawPS->GetShaderName();
+
+		return data;
+	}
+
+	void CP_SpriteRenderer::Load(const json& _data)
+	{
+		CP_Renderer::Load(_data);
+
+		LoadJsonFloat("alpha", alpha, _data);
+
+		if (IsJsonContains(_data, "sprite"))
+		{
+			pSprite->Load(_data["sprite"]);
+		}
+		std::string str;
+		ShaderCollection* pShCol = ShaderCollection::GetInstance();
+		if (LoadJsonString("drawVSName", str, _data))
+		{
+			pDrawVS = pShCol->GetVertexShader(str);
+		}
+		if (LoadJsonString("drawPSName", str, _data))
+		{
+			pDrawPS = pShCol->GetPixelShader(str);
+		}
+	}
 }

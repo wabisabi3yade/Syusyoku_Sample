@@ -1,0 +1,41 @@
+{
+    "childs": null,
+    "gameObject": {
+        "active": true,
+        "components": [
+            {
+                "X_Left": "Sunset_left.png",
+                "X_Right": "Sunset_right.png",
+                "Y_Bottom": "Sunset_down.png",
+                "Y_Top": "Sunset_up.png",
+                "Z_Back": "Sunset_back.png",
+                "Z_Front": "Sunset_front.png",
+                "enable": true,
+                "name": "SkyBox",
+                "priority": 0
+            }
+        ],
+        "layer": 0,
+        "name": "SkyBox",
+        "tag": 0,
+        "transform": {
+            "child": null,
+            "pos": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        }
+    }
+}
